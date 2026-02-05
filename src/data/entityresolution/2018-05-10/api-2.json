@@ -243,7 +243,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetIdMappingWorkflow":{
       "name":"GetIdMappingWorkflow",
@@ -260,7 +261,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetIdNamespace":{
       "name":"GetIdNamespace",
@@ -277,7 +279,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetMatchId":{
       "name":"GetMatchId",
@@ -294,7 +297,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetMatchingJob":{
       "name":"GetMatchingJob",
@@ -311,7 +315,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetMatchingWorkflow":{
       "name":"GetMatchingWorkflow",
@@ -328,7 +333,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPolicy":{
       "name":"GetPolicy",
@@ -345,7 +351,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetProviderService":{
       "name":"GetProviderService",
@@ -362,7 +369,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetSchemaMapping":{
       "name":"GetSchemaMapping",
@@ -379,7 +387,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListIdMappingJobs":{
       "name":"ListIdMappingJobs",
@@ -396,7 +405,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListIdMappingWorkflows":{
       "name":"ListIdMappingWorkflows",
@@ -412,7 +422,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListIdNamespaces":{
       "name":"ListIdNamespaces",
@@ -428,7 +439,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListMatchingJobs":{
       "name":"ListMatchingJobs",
@@ -445,7 +457,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListMatchingWorkflows":{
       "name":"ListMatchingWorkflows",
@@ -461,7 +474,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListProviderServices":{
       "name":"ListProviderServices",
@@ -477,7 +491,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSchemaMappings":{
       "name":"ListSchemaMappings",
@@ -493,7 +508,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -508,7 +524,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutPolicy":{
       "name":"PutPolicy",
@@ -943,6 +960,25 @@
         "description":{"shape":"Description"},
         "mappedInputFields":{"shape":"SchemaInputAttributes"}
       }
+    },
+    "CustomerProfilesDomainArn":{
+      "type":"string",
+      "pattern":"arn:(aws|aws-us-gov|aws-cn):profile:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(domains/[a-zA-Z_0-9-]{1,255})"
+    },
+    "CustomerProfilesIntegrationConfig":{
+      "type":"structure",
+      "required":[
+        "domainArn",
+        "objectTypeArn"
+      ],
+      "members":{
+        "domainArn":{"shape":"CustomerProfilesDomainArn"},
+        "objectTypeArn":{"shape":"CustomerProfilesObjectTypeArn"}
+      }
+    },
+    "CustomerProfilesObjectTypeArn":{
+      "type":"string",
+      "pattern":"arn:(aws|aws-us-gov|aws-cn):profile:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(domains/[a-zA-Z_0-9-]{1,255}/object-types/[a-zA-Z_0-9-]{1,255})"
     },
     "DeleteIdMappingWorkflowInput":{
       "type":"structure",
@@ -1615,8 +1651,8 @@
       "type":"structure",
       "required":["outputS3Path"],
       "members":{
-        "outputS3Path":{"shape":"S3Path"},
-        "KMSArn":{"shape":"KMSArn"}
+        "KMSArn":{"shape":"KMSArn"},
+        "outputS3Path":{"shape":"S3Path"}
       }
     },
     "IdMappingWorkflowOutputSourceConfig":{
@@ -2171,6 +2207,12 @@
       "min":1,
       "pattern":"[a-zA-Z_0-9-=+/]*"
     },
+    "OptionalS3Path":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"$|^s3://[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9](/.*)?"
+    },
     "OutputAttribute":{
       "type":"structure",
       "required":["name"],
@@ -2181,15 +2223,13 @@
     },
     "OutputSource":{
       "type":"structure",
-      "required":[
-        "outputS3Path",
-        "output"
-      ],
+      "required":["output"],
       "members":{
-        "outputS3Path":{"shape":"S3Path"},
         "KMSArn":{"shape":"KMSArn"},
+        "outputS3Path":{"shape":"OptionalS3Path"},
         "output":{"shape":"OutputSourceOutputList"},
-        "applyNormalization":{"shape":"Boolean"}
+        "applyNormalization":{"shape":"Boolean"},
+        "customerProfilesIntegrationConfig":{"shape":"CustomerProfilesIntegrationConfig"}
       }
     },
     "OutputSourceConfig":{

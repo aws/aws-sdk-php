@@ -3,8 +3,7 @@
   "examples": {
     "GetAccountSettings": [
       {
-        "input": {
-        },
+        "input": {},
         "output": {
           "accountSettings": {
             "notificationSubscriptionStatus": "SUBSCRIBED"
@@ -73,8 +72,7 @@
     ],
     "ListCustomerAgreements": [
       {
-        "input": {
-        },
+        "input": {},
         "output": {
           "customerAgreements": [
             {
@@ -102,10 +100,38 @@
         "title": "Invoke ListCustomerAgreements operation"
       }
     ],
-    "ListReports": [
+    "ListReportVersions": [
       {
         "input": {
+          "reportId": "report-abcdef0123456789"
         },
+        "output": {
+          "nextToken": "gPFEGk7CF4wS901w7ppYclt7gPFEGk7CF4wS901w7ppYclt7gPFEGk7CF4wS901w7ppYclt7",
+          "reports": [
+            {
+              "version": 1,
+              "name": "name",
+              "arn": "arn:aws:artifact:us-east-1::report:report-abcdef0123456789:1",
+              "category": "category",
+              "companyName": "companyName",
+              "description": "description",
+              "id": "report-abcdef0123456789",
+              "periodEnd": "2022-04-01T20:32:04Z",
+              "periodStart": "2022-04-01T20:32:04Z",
+              "productName": "productName",
+              "series": "series",
+              "state": "PUBLISHED"
+            }
+          ]
+        },
+        "description": "The ListReportVersions operation returns a collection of report versions\n                        for a given resource.",
+        "id": "example-1",
+        "title": "Invoke ListReportVersions operation"
+      }
+    ],
+    "ListReports": [
+      {
+        "input": {},
         "output": {
           "nextToken": "gPFEGk7CF4wS901w7ppYclt7gPFEGk7CF4wS901w7ppYclt7gPFEGk7CF4wS901w7ppYclt7",
           "reports": [

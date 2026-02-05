@@ -67,7 +67,7 @@ class MultipartUploaderTest extends TestCase
             ->getMock();
         $s3Client->method('executeAsync')
             -> willReturnCallback(function ($command) use ($expected)
-           {
+            {
                 if ($command->getName() === 'CreateMultipartUpload') {
                     return Create::promiseFor(new Result([
                         'UploadId' => 'FooUploadId'
@@ -86,7 +86,7 @@ class MultipartUploaderTest extends TestCase
                     }
                 }
 
-               return Create::promiseFor(new Result([]));
+                return Create::promiseFor(new Result([]));
             });
         $s3Client->method('getCommand')
             -> willReturnCallback(function ($commandName, $args) {
@@ -685,7 +685,7 @@ EOF;
             ->getMock();
         $s3Client->method('executeAsync')
             ->willReturnCallback(function ($command)
-                use (&$abortMultipartCalled, &$abortMultipartCalledTimes) {
+            use (&$abortMultipartCalled, &$abortMultipartCalledTimes) {
                 if ($command->getName() === 'CreateMultipartUpload') {
                     return Create::promiseFor(new Result([
                         'UploadId' => 'TestUploadId'
@@ -952,20 +952,20 @@ EOF;
             )->willReturnCallback(
                 function ($commandName, $args)
                 use (&$calledCommands, $expectedInputArgs) {
-                if (isset($expectedInputArgs[$commandName])) {
-                    $calledCommands[$commandName] = 0;
-                    $expected = $expectedInputArgs[$commandName];
-                    foreach ($expected as $key => $value) {
-                        $this->assertArrayHasKey($key, $args);
-                        $this->assertEquals(
-                            $value,
-                            $args[$key]
-                        );
+                    if (isset($expectedInputArgs[$commandName])) {
+                        $calledCommands[$commandName] = 0;
+                        $expected = $expectedInputArgs[$commandName];
+                        foreach ($expected as $key => $value) {
+                            $this->assertArrayHasKey($key, $args);
+                            $this->assertEquals(
+                                $value,
+                                $args[$key]
+                            );
+                        }
                     }
-                }
 
-                return new Command($commandName, $args);
-            });
+                    return new Command($commandName, $args);
+                });
             $s3Client->method('executeAsync')
                 ->willReturnCallback(function ($command)
                 use ($errorOnPartNumber, $expectsError) {

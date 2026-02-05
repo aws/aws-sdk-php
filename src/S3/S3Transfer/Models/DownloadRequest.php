@@ -18,6 +18,7 @@ final class DownloadRequest extends AbstractTransferRequest
         'concurrency' => 'int',
         'resume_enabled' => 'bool',
         'resume_file_path' => 'string',
+        'target_part_size_bytes' => 'int',
     ];
 
     /** @var string|array|null */

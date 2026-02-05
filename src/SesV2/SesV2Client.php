@@ -93,6 +93,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getDomainDeliverabilityCampaignAsync(array $args = [])
  * @method \Aws\Result getDomainStatisticsReport(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDomainStatisticsReportAsync(array $args = [])
+ * @method \Aws\Result getEmailAddressInsights(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getEmailAddressInsightsAsync(array $args = [])
  * @method \Aws\Result getEmailIdentity(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getEmailIdentityAsync(array $args = [])
  * @method \Aws\Result getEmailIdentityPolicies(array $args = [])

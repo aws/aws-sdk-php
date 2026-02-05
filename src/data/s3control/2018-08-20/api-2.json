@@ -1745,6 +1745,7 @@
         "AdvancedCostOptimizationMetrics":{"shape":"AdvancedCostOptimizationMetrics"},
         "AdvancedDataProtectionMetrics":{"shape":"AdvancedDataProtectionMetrics"},
         "DetailedStatusCodesMetrics":{"shape":"DetailedStatusCodesMetrics"},
+        "AdvancedPerformanceMetrics":{"shape":"AdvancedPerformanceMetrics"},
         "StorageLensGroupLevel":{"shape":"StorageLensGroupLevel"}
       }
     },
@@ -1761,6 +1762,12 @@
       }
     },
     "AdvancedDataProtectionMetrics":{
+      "type":"structure",
+      "members":{
+        "IsEnabled":{"shape":"IsEnabled"}
+      }
+    },
+    "AdvancedPerformanceMetrics":{
       "type":"structure",
       "members":{
         "IsEnabled":{"shape":"IsEnabled"}
@@ -1889,7 +1896,8 @@
         "PrefixLevel":{"shape":"PrefixLevel"},
         "AdvancedCostOptimizationMetrics":{"shape":"AdvancedCostOptimizationMetrics"},
         "AdvancedDataProtectionMetrics":{"shape":"AdvancedDataProtectionMetrics"},
-        "DetailedStatusCodesMetrics":{"shape":"DetailedStatusCodesMetrics"}
+        "DetailedStatusCodesMetrics":{"shape":"DetailedStatusCodesMetrics"},
+        "AdvancedPerformanceMetrics":{"shape":"AdvancedPerformanceMetrics"}
       }
     },
     "BucketLocationConstraint":{
@@ -6570,9 +6578,11 @@
         "Include":{"shape":"Include"},
         "Exclude":{"shape":"Exclude"},
         "DataExport":{"shape":"StorageLensDataExport"},
+        "ExpandedPrefixesDataExport":{"shape":"StorageLensExpandedPrefixesDataExport"},
         "IsEnabled":{"shape":"IsEnabled"},
         "AwsOrg":{"shape":"StorageLensAwsOrg"},
-        "StorageLensArn":{"shape":"StorageLensArn"}
+        "StorageLensArn":{"shape":"StorageLensArn"},
+        "PrefixDelimiter":{"shape":"StorageLensPrefixLevelDelimiter"}
       }
     },
     "StorageLensConfigurationList":{
@@ -6587,7 +6597,8 @@
       "type":"structure",
       "members":{
         "S3BucketDestination":{"shape":"S3BucketDestination"},
-        "CloudWatchMetrics":{"shape":"CloudWatchMetrics"}
+        "CloudWatchMetrics":{"shape":"CloudWatchMetrics"},
+        "StorageLensTableDestination":{"shape":"StorageLensTableDestination"}
       }
     },
     "StorageLensDataExportEncryption":{
@@ -6601,6 +6612,13 @@
           "shape":"SSEKMS",
           "locationName":"SSE-KMS"
         }
+      }
+    },
+    "StorageLensExpandedPrefixesDataExport":{
+      "type":"structure",
+      "members":{
+        "S3BucketDestination":{"shape":"S3BucketDestination"},
+        "StorageLensTableDestination":{"shape":"StorageLensTableDestination"}
       }
     },
     "StorageLensGroup":{
@@ -6702,6 +6720,14 @@
       "type":"integer",
       "max":10,
       "min":1
+    },
+    "StorageLensTableDestination":{
+      "type":"structure",
+      "required":["IsEnabled"],
+      "members":{
+        "IsEnabled":{"shape":"IsEnabled"},
+        "Encryption":{"shape":"StorageLensDataExportEncryption"}
+      }
     },
     "StorageLensTag":{
       "type":"structure",

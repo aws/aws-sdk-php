@@ -405,7 +405,9 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
+        {"shape":"ResourceInUseException"},
         {"shape":"ThrottlingException"}
       ],
       "idempotent":true
@@ -483,6 +485,24 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteEnforcedGuardrailConfiguration":{
+      "name":"DeleteEnforcedGuardrailConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/enforcedGuardrailsConfiguration/{configId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteEnforcedGuardrailConfigurationRequest"},
+      "output":{"shape":"DeleteEnforcedGuardrailConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
       ],
@@ -667,7 +687,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAutomatedReasoningPolicy":{
       "name":"GetAutomatedReasoningPolicy",
@@ -684,7 +705,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAutomatedReasoningPolicyAnnotations":{
       "name":"GetAutomatedReasoningPolicyAnnotations",
@@ -701,7 +723,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAutomatedReasoningPolicyBuildWorkflow":{
       "name":"GetAutomatedReasoningPolicyBuildWorkflow",
@@ -718,7 +741,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAutomatedReasoningPolicyBuildWorkflowResultAssets":{
       "name":"GetAutomatedReasoningPolicyBuildWorkflowResultAssets",
@@ -735,7 +759,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAutomatedReasoningPolicyNextScenario":{
       "name":"GetAutomatedReasoningPolicyNextScenario",
@@ -752,7 +777,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAutomatedReasoningPolicyTestCase":{
       "name":"GetAutomatedReasoningPolicyTestCase",
@@ -769,7 +795,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAutomatedReasoningPolicyTestResult":{
       "name":"GetAutomatedReasoningPolicyTestResult",
@@ -786,7 +813,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCustomModel":{
       "name":"GetCustomModel",
@@ -803,7 +831,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCustomModelDeployment":{
       "name":"GetCustomModelDeployment",
@@ -820,7 +849,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetEvaluationJob":{
       "name":"GetEvaluationJob",
@@ -837,7 +867,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetFoundationModel":{
       "name":"GetFoundationModel",
@@ -854,7 +885,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetFoundationModelAvailability":{
       "name":"GetFoundationModelAvailability",
@@ -871,7 +903,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetGuardrail":{
       "name":"GetGuardrail",
@@ -888,7 +921,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetImportedModel":{
       "name":"GetImportedModel",
@@ -905,7 +939,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetInferenceProfile":{
       "name":"GetInferenceProfile",
@@ -922,7 +957,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetMarketplaceModelEndpoint":{
       "name":"GetMarketplaceModelEndpoint",
@@ -939,7 +975,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetModelCopyJob":{
       "name":"GetModelCopyJob",
@@ -956,7 +993,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetModelCustomizationJob":{
       "name":"GetModelCustomizationJob",
@@ -973,7 +1011,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetModelImportJob":{
       "name":"GetModelImportJob",
@@ -990,7 +1029,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetModelInvocationJob":{
       "name":"GetModelInvocationJob",
@@ -1007,7 +1047,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetModelInvocationLoggingConfiguration":{
       "name":"GetModelInvocationLoggingConfiguration",
@@ -1022,7 +1063,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPromptRouter":{
       "name":"GetPromptRouter",
@@ -1039,7 +1081,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetProvisionedModelThroughput":{
       "name":"GetProvisionedModelThroughput",
@@ -1056,7 +1099,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetUseCaseForModelAccess":{
       "name":"GetUseCaseForModelAccess",
@@ -1072,7 +1116,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAutomatedReasoningPolicies":{
       "name":"ListAutomatedReasoningPolicies",
@@ -1089,7 +1134,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAutomatedReasoningPolicyBuildWorkflows":{
       "name":"ListAutomatedReasoningPolicyBuildWorkflows",
@@ -1106,7 +1152,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAutomatedReasoningPolicyTestCases":{
       "name":"ListAutomatedReasoningPolicyTestCases",
@@ -1123,7 +1170,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAutomatedReasoningPolicyTestResults":{
       "name":"ListAutomatedReasoningPolicyTestResults",
@@ -1141,7 +1189,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCustomModelDeployments":{
       "name":"ListCustomModelDeployments",
@@ -1157,7 +1206,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCustomModels":{
       "name":"ListCustomModels",
@@ -1173,7 +1223,26 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "ListEnforcedGuardrailsConfiguration":{
+      "name":"ListEnforcedGuardrailsConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/enforcedGuardrailsConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"ListEnforcedGuardrailsConfigurationRequest"},
+      "output":{"shape":"ListEnforcedGuardrailsConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "ListEvaluationJobs":{
       "name":"ListEvaluationJobs",
@@ -1189,7 +1258,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListFoundationModelAgreementOffers":{
       "name":"ListFoundationModelAgreementOffers",
@@ -1206,7 +1276,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListFoundationModels":{
       "name":"ListFoundationModels",
@@ -1222,7 +1293,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListGuardrails":{
       "name":"ListGuardrails",
@@ -1239,7 +1311,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListImportedModels":{
       "name":"ListImportedModels",
@@ -1255,7 +1328,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListInferenceProfiles":{
       "name":"ListInferenceProfiles",
@@ -1271,7 +1345,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListMarketplaceModelEndpoints":{
       "name":"ListMarketplaceModelEndpoints",
@@ -1288,7 +1363,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListModelCopyJobs":{
       "name":"ListModelCopyJobs",
@@ -1305,7 +1381,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListModelCustomizationJobs":{
       "name":"ListModelCustomizationJobs",
@@ -1321,7 +1398,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListModelImportJobs":{
       "name":"ListModelImportJobs",
@@ -1337,7 +1415,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListModelInvocationJobs":{
       "name":"ListModelInvocationJobs",
@@ -1353,7 +1432,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPromptRouters":{
       "name":"ListPromptRouters",
@@ -1369,7 +1449,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListProvisionedModelThroughputs":{
       "name":"ListProvisionedModelThroughputs",
@@ -1385,7 +1466,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -1403,6 +1485,25 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
       ]
+    },
+    "PutEnforcedGuardrailConfiguration":{
+      "name":"PutEnforcedGuardrailConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/enforcedGuardrailsConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"PutEnforcedGuardrailConfigurationRequest"},
+      "output":{"shape":"PutEnforcedGuardrailConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
     },
     "PutModelInvocationLoggingConfiguration":{
       "name":"PutModelInvocationLoggingConfiguration",
@@ -1641,6 +1742,24 @@
       ],
       "idempotent":true
     },
+    "UpdateCustomModelDeployment":{
+      "name":"UpdateCustomModelDeployment",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/model-customization/custom-model-deployments/{customModelDeploymentIdentifier}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateCustomModelDeploymentRequest"},
+      "output":{"shape":"UpdateCustomModelDeploymentResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "UpdateGuardrail":{
       "name":"UpdateGuardrail",
       "http":{
@@ -1712,6 +1831,44 @@
       },
       "exception":true
     },
+    "AccountEnforcedGuardrailConfigurationId":{
+      "type":"string",
+      "pattern":"[a-z0-9]+"
+    },
+    "AccountEnforcedGuardrailInferenceInputConfiguration":{
+      "type":"structure",
+      "required":[
+        "guardrailIdentifier",
+        "guardrailVersion",
+        "inputTags"
+      ],
+      "members":{
+        "guardrailIdentifier":{"shape":"GuardrailIdentifier"},
+        "guardrailVersion":{"shape":"GuardrailNumericalVersion"},
+        "inputTags":{"shape":"InputTags"}
+      }
+    },
+    "AccountEnforcedGuardrailOutputConfiguration":{
+      "type":"structure",
+      "members":{
+        "configId":{"shape":"AccountEnforcedGuardrailConfigurationId"},
+        "guardrailArn":{"shape":"GuardrailArn"},
+        "guardrailId":{"shape":"GuardrailId"},
+        "inputTags":{"shape":"InputTags"},
+        "guardrailVersion":{"shape":"GuardrailNumericalVersion"},
+        "createdAt":{"shape":"Timestamp"},
+        "createdBy":{"shape":"String"},
+        "updatedAt":{"shape":"Timestamp"},
+        "updatedBy":{"shape":"String"},
+        "owner":{"shape":"ConfigurationOwner"}
+      }
+    },
+    "AccountEnforcedGuardrailsOutputConfiguration":{
+      "type":"list",
+      "member":{"shape":"AccountEnforcedGuardrailOutputConfiguration"},
+      "max":1,
+      "min":1
+    },
     "AccountId":{
       "type":"string",
       "pattern":"[0-9]{12}"
@@ -1733,8 +1890,7 @@
     },
     "AdditionalModelRequestFieldsValue":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "AgreementAvailability":{
@@ -1883,8 +2039,7 @@
     },
     "AutomatedReasoningCheckNoTranslationsFinding":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AutomatedReasoningCheckResult":{
       "type":"string",
@@ -1926,8 +2081,7 @@
     },
     "AutomatedReasoningCheckTooComplexFinding":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AutomatedReasoningCheckTranslation":{
       "type":"structure",
@@ -2154,7 +2308,7 @@
     },
     "AutomatedReasoningPolicyBuildDocumentDescription":{
       "type":"string",
-      "max":2000,
+      "max":4000,
       "min":0,
       "sensitive":true
     },
@@ -2201,7 +2355,9 @@
       "enum":[
         "BUILD_LOG",
         "QUALITY_REPORT",
-        "POLICY_DEFINITION"
+        "POLICY_DEFINITION",
+        "GENERATED_TEST_CASES",
+        "POLICY_SCENARIOS"
       ]
     },
     "AutomatedReasoningPolicyBuildResultAssets":{
@@ -2209,7 +2365,9 @@
       "members":{
         "policyDefinition":{"shape":"AutomatedReasoningPolicyDefinition"},
         "qualityReport":{"shape":"AutomatedReasoningPolicyDefinitionQualityReport"},
-        "buildLog":{"shape":"AutomatedReasoningPolicyBuildLog"}
+        "buildLog":{"shape":"AutomatedReasoningPolicyBuildLog"},
+        "generatedTestCases":{"shape":"AutomatedReasoningPolicyGeneratedTestCases"},
+        "policyScenarios":{"shape":"AutomatedReasoningPolicyScenarios"}
       },
       "union":true
     },
@@ -2628,6 +2786,30 @@
       "min":0
     },
     "AutomatedReasoningPolicyFormatVersion":{"type":"string"},
+    "AutomatedReasoningPolicyGeneratedTestCase":{
+      "type":"structure",
+      "required":[
+        "queryContent",
+        "guardContent",
+        "expectedAggregatedFindingsResult"
+      ],
+      "members":{
+        "queryContent":{"shape":"AutomatedReasoningPolicyTestQueryContent"},
+        "guardContent":{"shape":"AutomatedReasoningPolicyTestGuardContent"},
+        "expectedAggregatedFindingsResult":{"shape":"AutomatedReasoningCheckResult"}
+      }
+    },
+    "AutomatedReasoningPolicyGeneratedTestCaseList":{
+      "type":"list",
+      "member":{"shape":"AutomatedReasoningPolicyGeneratedTestCase"}
+    },
+    "AutomatedReasoningPolicyGeneratedTestCases":{
+      "type":"structure",
+      "required":["generatedTestCases"],
+      "members":{
+        "generatedTestCases":{"shape":"AutomatedReasoningPolicyGeneratedTestCaseList"}
+      }
+    },
     "AutomatedReasoningPolicyHash":{
       "type":"string",
       "max":128,
@@ -2671,22 +2853,21 @@
     },
     "AutomatedReasoningPolicyPlanning":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AutomatedReasoningPolicyScenario":{
       "type":"structure",
       "required":[
         "expression",
         "alternateExpression",
-        "ruleIds",
-        "expectedResult"
+        "expectedResult",
+        "ruleIds"
       ],
       "members":{
         "expression":{"shape":"AutomatedReasoningPolicyScenarioExpression"},
         "alternateExpression":{"shape":"AutomatedReasoningPolicyScenarioAlternateExpression"},
-        "ruleIds":{"shape":"AutomatedReasoningPolicyDefinitionRuleIdList"},
-        "expectedResult":{"shape":"AutomatedReasoningCheckResult"}
+        "expectedResult":{"shape":"AutomatedReasoningCheckResult"},
+        "ruleIds":{"shape":"AutomatedReasoningPolicyDefinitionRuleIdList"}
       }
     },
     "AutomatedReasoningPolicyScenarioAlternateExpression":{
@@ -2700,6 +2881,17 @@
       "max":1024,
       "min":0,
       "sensitive":true
+    },
+    "AutomatedReasoningPolicyScenarioList":{
+      "type":"list",
+      "member":{"shape":"AutomatedReasoningPolicyScenario"}
+    },
+    "AutomatedReasoningPolicyScenarios":{
+      "type":"structure",
+      "required":["policyScenarios"],
+      "members":{
+        "policyScenarios":{"shape":"AutomatedReasoningPolicyScenarioList"}
+      }
     },
     "AutomatedReasoningPolicySummaries":{
       "type":"list",
@@ -2765,7 +2957,7 @@
     },
     "AutomatedReasoningPolicyTestGuardContent":{
       "type":"string",
-      "max":1024,
+      "max":2048,
       "min":0,
       "sensitive":true
     },
@@ -3068,8 +3260,7 @@
     },
     "CancelAutomatedReasoningPolicyBuildWorkflowResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CloudWatchConfig":{
       "type":"structure",
@@ -3089,6 +3280,10 @@
         "OneMonth",
         "SixMonths"
       ]
+    },
+    "ConfigurationOwner":{
+      "type":"string",
+      "enum":["ACCOUNT"]
     },
     "ConflictException":{
       "type":"structure",
@@ -3116,6 +3311,7 @@
           "idempotencyToken":true
         },
         "policyDefinition":{"shape":"AutomatedReasoningPolicyDefinition"},
+        "kmsKeyId":{"shape":"KmsKeyId"},
         "tags":{"shape":"TagList"}
       }
     },
@@ -3695,6 +3891,25 @@
       "type":"list",
       "member":{"shape":"CustomModelDeploymentSummary"}
     },
+    "CustomModelDeploymentUpdateDetails":{
+      "type":"structure",
+      "required":[
+        "modelArn",
+        "updateStatus"
+      ],
+      "members":{
+        "modelArn":{"shape":"ModelArn"},
+        "updateStatus":{"shape":"CustomModelDeploymentUpdateStatus"}
+      }
+    },
+    "CustomModelDeploymentUpdateStatus":{
+      "type":"string",
+      "enum":[
+        "Updating",
+        "UpdateCompleted",
+        "UpdateFailed"
+      ]
+    },
     "CustomModelName":{
       "type":"string",
       "max":63,
@@ -3739,7 +3954,8 @@
     "CustomizationConfig":{
       "type":"structure",
       "members":{
-        "distillationConfig":{"shape":"DistillationConfig"}
+        "distillationConfig":{"shape":"DistillationConfig"},
+        "rftConfig":{"shape":"RFTConfig"}
       },
       "union":true
     },
@@ -3749,6 +3965,7 @@
         "FINE_TUNING",
         "CONTINUED_PRE_TRAINING",
         "DISTILLATION",
+        "REINFORCEMENT_FINE_TUNING",
         "IMPORTED"
       ]
     },
@@ -3787,8 +4004,7 @@
     },
     "DeleteAutomatedReasoningPolicyBuildWorkflowResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAutomatedReasoningPolicyRequest":{
       "type":"structure",
@@ -3798,13 +4014,17 @@
           "shape":"AutomatedReasoningPolicyArn",
           "location":"uri",
           "locationName":"policyArn"
+        },
+        "force":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"force"
         }
       }
     },
     "DeleteAutomatedReasoningPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAutomatedReasoningPolicyTestCaseRequest":{
       "type":"structure",
@@ -3833,8 +4053,7 @@
     },
     "DeleteAutomatedReasoningPolicyTestCaseResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteCustomModelDeploymentRequest":{
       "type":"structure",
@@ -3849,8 +4068,7 @@
     },
     "DeleteCustomModelDeploymentResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteCustomModelRequest":{
       "type":"structure",
@@ -3865,8 +4083,22 @@
     },
     "DeleteCustomModelResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "DeleteEnforcedGuardrailConfigurationRequest":{
+      "type":"structure",
+      "required":["configId"],
       "members":{
+        "configId":{
+          "shape":"AccountEnforcedGuardrailConfigurationId",
+          "location":"uri",
+          "locationName":"configId"
+        }
       }
+    },
+    "DeleteEnforcedGuardrailConfigurationResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteFoundationModelAgreementRequest":{
       "type":"structure",
@@ -3877,8 +4109,7 @@
     },
     "DeleteFoundationModelAgreementResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteGuardrailRequest":{
       "type":"structure",
@@ -3898,8 +4129,7 @@
     },
     "DeleteGuardrailResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteImportedModelRequest":{
       "type":"structure",
@@ -3914,8 +4144,7 @@
     },
     "DeleteImportedModelResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteInferenceProfileRequest":{
       "type":"structure",
@@ -3930,8 +4159,7 @@
     },
     "DeleteInferenceProfileResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteMarketplaceModelEndpointRequest":{
       "type":"structure",
@@ -3946,18 +4174,15 @@
     },
     "DeleteMarketplaceModelEndpointResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteModelInvocationLoggingConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteModelInvocationLoggingConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePromptRouterRequest":{
       "type":"structure",
@@ -3972,8 +4197,7 @@
     },
     "DeletePromptRouterResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteProvisionedModelThroughputRequest":{
       "type":"structure",
@@ -3988,8 +4212,7 @@
     },
     "DeleteProvisionedModelThroughputResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeregisterMarketplaceModelEndpointRequest":{
       "type":"structure",
@@ -4004,8 +4227,7 @@
     },
     "DeregisterMarketplaceModelEndpointResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DimensionalPriceRate":{
       "type":"structure",
@@ -4041,6 +4263,12 @@
         "AVAILABLE",
         "NOT_AVAILABLE"
       ]
+    },
+    "EpochCount":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
     },
     "ErrorMessage":{
       "type":"string",
@@ -4492,8 +4720,7 @@
     },
     "FilterValue":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "FineTuningJobStatus":{
@@ -4750,6 +4977,7 @@
         "policyId":{"shape":"AutomatedReasoningPolicyId"},
         "description":{"shape":"AutomatedReasoningPolicyDescription"},
         "definitionHash":{"shape":"AutomatedReasoningPolicyHash"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"}
       }
@@ -4843,6 +5071,7 @@
         "createdAt":{"shape":"Timestamp"},
         "status":{"shape":"CustomModelDeploymentStatus"},
         "description":{"shape":"CustomModelDeploymentDescription"},
+        "updateDetails":{"shape":"CustomModelDeploymentUpdateDetails"},
         "failureMessage":{"shape":"ErrorMessage"},
         "lastUpdatedAt":{"shape":"Timestamp"}
       }
@@ -5260,8 +5489,7 @@
     },
     "GetModelInvocationLoggingConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetModelInvocationLoggingConfigurationResponse":{
       "type":"structure",
@@ -5347,8 +5575,7 @@
     },
     "GetUseCaseForModelAccessRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetUseCaseForModelAccessResponse":{
       "type":"structure",
@@ -5356,6 +5583,13 @@
       "members":{
         "formData":{"shape":"AcknowledgementFormDataBody"}
       }
+    },
+    "GraderConfig":{
+      "type":"structure",
+      "members":{
+        "lambdaGrader":{"shape":"LambdaGraderConfig"}
+      },
+      "union":true
     },
     "GuardrailArn":{
       "type":"string",
@@ -6361,6 +6595,13 @@
       "type":"list",
       "member":{"shape":"InferenceType"}
     },
+    "InputTags":{
+      "type":"string",
+      "enum":[
+        "HONOR",
+        "IGNORE"
+      ]
+    },
     "InstanceCount":{
       "type":"integer",
       "box":true,
@@ -6494,6 +6735,19 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "LambdaArn":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_\\.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
+    },
+    "LambdaGraderConfig":{
+      "type":"structure",
+      "required":["lambdaArn"],
+      "members":{
+        "lambdaArn":{"shape":"LambdaArn"}
+      }
     },
     "LegalTerm":{
       "type":"structure",
@@ -6746,6 +7000,24 @@
       "members":{
         "nextToken":{"shape":"PaginationToken"},
         "modelSummaries":{"shape":"CustomModelSummaryList"}
+      }
+    },
+    "ListEnforcedGuardrailsConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListEnforcedGuardrailsConfigurationResponse":{
+      "type":"structure",
+      "required":["guardrailsConfig"],
+      "members":{
+        "guardrailsConfig":{"shape":"AccountEnforcedGuardrailsOutputConfiguration"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListEvaluationJobsRequest":{
@@ -7320,7 +7592,8 @@
         "textDataDeliveryEnabled":{"shape":"Boolean"},
         "imageDataDeliveryEnabled":{"shape":"Boolean"},
         "embeddingDataDeliveryEnabled":{"shape":"Boolean"},
-        "videoDataDeliveryEnabled":{"shape":"Boolean"}
+        "videoDataDeliveryEnabled":{"shape":"Boolean"},
+        "audioDataDeliveryEnabled":{"shape":"Boolean"}
       }
     },
     "MarketplaceModelEndpoint":{
@@ -7977,6 +8250,22 @@
         "lastModifiedTime":{"shape":"Timestamp"}
       }
     },
+    "PutEnforcedGuardrailConfigurationRequest":{
+      "type":"structure",
+      "required":["guardrailInferenceConfig"],
+      "members":{
+        "configId":{"shape":"AccountEnforcedGuardrailConfigurationId"},
+        "guardrailInferenceConfig":{"shape":"AccountEnforcedGuardrailInferenceInputConfiguration"}
+      }
+    },
+    "PutEnforcedGuardrailConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "configId":{"shape":"AccountEnforcedGuardrailConfigurationId"},
+        "updatedAt":{"shape":"Timestamp"},
+        "updatedBy":{"shape":"String"}
+      }
+    },
     "PutModelInvocationLoggingConfigurationRequest":{
       "type":"structure",
       "required":["loggingConfig"],
@@ -7986,8 +8275,7 @@
     },
     "PutModelInvocationLoggingConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutUseCaseForModelAccessRequest":{
       "type":"structure",
@@ -7998,8 +8286,7 @@
     },
     "PutUseCaseForModelAccessResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "QueryTransformationConfiguration":{
       "type":"structure",
@@ -8030,6 +8317,58 @@
       "type":"string",
       "max":1000,
       "min":1
+    },
+    "RFTBatchSize":{
+      "type":"integer",
+      "box":true,
+      "max":512,
+      "min":16
+    },
+    "RFTConfig":{
+      "type":"structure",
+      "members":{
+        "graderConfig":{"shape":"GraderConfig"},
+        "hyperParameters":{"shape":"RFTHyperParameters"}
+      }
+    },
+    "RFTEvalInterval":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "RFTHyperParameters":{
+      "type":"structure",
+      "members":{
+        "epochCount":{"shape":"EpochCount"},
+        "batchSize":{"shape":"RFTBatchSize"},
+        "learningRate":{"shape":"RFTLearningRate"},
+        "maxPromptLength":{"shape":"RFTMaxPromptLength"},
+        "trainingSamplePerPrompt":{"shape":"RFTTrainingSamplePerPrompt"},
+        "inferenceMaxTokens":{"shape":"RFTInferenceMaxTokens"},
+        "reasoningEffort":{"shape":"ReasoningEffort"},
+        "evalInterval":{"shape":"RFTEvalInterval"}
+      }
+    },
+    "RFTInferenceMaxTokens":{
+      "type":"integer",
+      "box":true
+    },
+    "RFTLearningRate":{
+      "type":"float",
+      "box":true,
+      "max":0.001,
+      "min":0.0000001
+    },
+    "RFTMaxPromptLength":{
+      "type":"integer",
+      "box":true
+    },
+    "RFTTrainingSamplePerPrompt":{
+      "type":"integer",
+      "box":true,
+      "max":16,
+      "min":2
     },
     "RagConfigs":{
       "type":"list",
@@ -8075,6 +8414,14 @@
       "type":"string",
       "max":100,
       "min":1
+    },
+    "ReasoningEffort":{
+      "type":"string",
+      "enum":[
+        "low",
+        "medium",
+        "high"
+      ]
     },
     "RegionAvailability":{
       "type":"string",
@@ -8465,8 +8812,7 @@
     },
     "StopEvaluationJobResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopModelCustomizationJobRequest":{
       "type":"structure",
@@ -8481,8 +8827,7 @@
     },
     "StopModelCustomizationJobResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopModelInvocationJobRequest":{
       "type":"structure",
@@ -8497,8 +8842,7 @@
     },
     "StopModelInvocationJobResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "String":{"type":"string"},
     "SubnetId":{
@@ -8561,8 +8905,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -8690,8 +9033,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAutomatedReasoningPolicyAnnotationsRequest":{
       "type":"structure",
@@ -8805,6 +9147,28 @@
         "testCaseId":{"shape":"AutomatedReasoningPolicyTestCaseId"}
       }
     },
+    "UpdateCustomModelDeploymentRequest":{
+      "type":"structure",
+      "required":[
+        "modelArn",
+        "customModelDeploymentIdentifier"
+      ],
+      "members":{
+        "modelArn":{"shape":"CustomModelArn"},
+        "customModelDeploymentIdentifier":{
+          "shape":"CustomModelDeploymentIdentifier",
+          "location":"uri",
+          "locationName":"customModelDeploymentIdentifier"
+        }
+      }
+    },
+    "UpdateCustomModelDeploymentResponse":{
+      "type":"structure",
+      "required":["customModelDeploymentArn"],
+      "members":{
+        "customModelDeploymentArn":{"shape":"CustomModelDeploymentArn"}
+      }
+    },
     "UpdateGuardrailRequest":{
       "type":"structure",
       "required":[
@@ -8889,8 +9253,7 @@
     },
     "UpdateProvisionedModelThroughputResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UsePromptResponse":{"type":"boolean"},
     "ValidationDataConfig":{

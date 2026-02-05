@@ -84,6 +84,7 @@
       "errors":[
         {"shape":"ResourceNotFoundException"}
       ],
+      "readonly":true,
       "staticContextParams":{
         "UseControlPlaneEndpoint":{"value":true}
       }
@@ -99,7 +100,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPlanExecution":{
       "name":"GetPlanExecution",
@@ -112,7 +114,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPlanInRegion":{
       "name":"GetPlanInRegion",
@@ -125,7 +128,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPlanExecutionEvents":{
       "name":"ListPlanExecutionEvents",
@@ -138,7 +142,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPlanExecutions":{
       "name":"ListPlanExecutions",
@@ -151,7 +156,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPlans":{
       "name":"ListPlans",
@@ -161,6 +167,7 @@
       },
       "input":{"shape":"ListPlansRequest"},
       "output":{"shape":"ListPlansResponse"},
+      "readonly":true,
       "staticContextParams":{
         "UseControlPlaneEndpoint":{"value":true}
       }
@@ -175,7 +182,8 @@
       "output":{"shape":"ListPlansInRegionResponse"},
       "errors":[
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListRoute53HealthChecks":{
       "name":"ListRoute53HealthChecks",
@@ -190,9 +198,26 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ],
+      "readonly":true,
       "staticContextParams":{
         "UseControlPlaneEndpoint":{"value":true}
       }
+    },
+    "ListRoute53HealthChecksInRegion":{
+      "name":"ListRoute53HealthChecksInRegion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListRoute53HealthChecksInRegionRequest"},
+      "output":{"shape":"ListRoute53HealthChecksInRegionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"IllegalArgumentException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -206,6 +231,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ],
+      "readonly":true,
       "staticContextParams":{
         "UseControlPlaneEndpoint":{"value":true}
       }
@@ -458,7 +484,7 @@
     },
     "AsgArn":{
       "type":"string",
-      "pattern":"arn:aws:autoscaling:[a-z0-9-]+:\\d{12}:autoScalingGroup:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:autoScalingGroupName/[\\S\\s]{1,255}"
+      "pattern":"arn:aws[a-zA-Z-]*:autoscaling:[a-z0-9-]+:\\d{12}:autoScalingGroup:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:autoScalingGroupName/[\\S\\s]{1,255}"
     },
     "AsgList":{
       "type":"list",
@@ -521,6 +547,7 @@
         "recoveryTimeObjectiveMinutes":{"shape":"CreatePlanRequestRecoveryTimeObjectiveMinutesInteger"},
         "associatedAlarms":{"shape":"AssociatedAlarmMap"},
         "triggers":{"shape":"TriggerList"},
+        "reportConfiguration":{"shape":"ReportConfiguration"},
         "name":{"shape":"PlanName"},
         "regions":{"shape":"RegionList"},
         "recoveryApproach":{"shape":"RecoveryApproach"},
@@ -570,6 +597,57 @@
     "DeletePlanResponse":{
       "type":"structure",
       "members":{}
+    },
+    "DocumentDbClusterArn":{
+      "type":"string",
+      "pattern":"arn:aws[a-zA-Z-]*:rds:[a-z0-9-]+:\\d{12}:cluster:[a-zA-Z0-9][a-zA-Z0-9-_]{0,99}"
+    },
+    "DocumentDbClusterArns":{
+      "type":"list",
+      "member":{"shape":"DocumentDbClusterArn"}
+    },
+    "DocumentDbConfiguration":{
+      "type":"structure",
+      "required":[
+        "behavior",
+        "globalClusterIdentifier",
+        "databaseClusterArns"
+      ],
+      "members":{
+        "timeoutMinutes":{"shape":"DocumentDbConfigurationTimeoutMinutesInteger"},
+        "crossAccountRole":{"shape":"IamRoleArn"},
+        "externalId":{"shape":"String"},
+        "behavior":{"shape":"DocumentDbDefaultBehavior"},
+        "ungraceful":{"shape":"DocumentDbUngraceful"},
+        "globalClusterIdentifier":{"shape":"DocumentDbGlobalClusterIdentifier"},
+        "databaseClusterArns":{"shape":"DocumentDbClusterArns"}
+      }
+    },
+    "DocumentDbConfigurationTimeoutMinutesInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "DocumentDbDefaultBehavior":{
+      "type":"string",
+      "enum":[
+        "switchoverOnly",
+        "failover"
+      ]
+    },
+    "DocumentDbGlobalClusterIdentifier":{
+      "type":"string",
+      "pattern":"[A-Za-z][0-9A-Za-z-:._]*"
+    },
+    "DocumentDbUngraceful":{
+      "type":"structure",
+      "members":{
+        "ungraceful":{"shape":"DocumentDbUngracefulBehavior"}
+      }
+    },
+    "DocumentDbUngracefulBehavior":{
+      "type":"string",
+      "enum":["failover"]
     },
     "Duration":{
       "type":"string",
@@ -636,11 +714,11 @@
     },
     "EcsClusterArn":{
       "type":"string",
-      "pattern":"arn:aws:ecs:[a-z0-9-]+:\\d{12}:cluster/[a-zA-Z0-9_-]{1,255}"
+      "pattern":"arn:aws[a-zA-Z-]*:ecs:[a-z0-9-]+:\\d{12}:cluster/[a-zA-Z0-9_-]{1,255}"
     },
     "EcsServiceArn":{
       "type":"string",
-      "pattern":"arn:aws:ecs:[a-z0-9-]+:\\d{12}:service/[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]{1,255}"
+      "pattern":"arn:aws[a-zA-Z-]*:ecs:[a-z0-9-]+:\\d{12}:service/[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]{1,255}"
     },
     "EcsUngraceful":{
       "type":"structure",
@@ -754,7 +832,8 @@
         "regionSwitchPlanConfig":{"shape":"RegionSwitchPlanConfiguration"},
         "ecsCapacityIncreaseConfig":{"shape":"EcsCapacityIncreaseConfiguration"},
         "eksResourceScalingConfig":{"shape":"EksResourceScalingConfiguration"},
-        "route53HealthCheckConfig":{"shape":"Route53HealthCheckConfiguration"}
+        "route53HealthCheckConfig":{"shape":"Route53HealthCheckConfiguration"},
+        "documentDbConfig":{"shape":"DocumentDbConfiguration"}
       },
       "union":true
     },
@@ -770,7 +849,8 @@
         "Parallel",
         "ECSServiceScaling",
         "EKSResourceScaling",
-        "Route53HealthCheck"
+        "Route53HealthCheck",
+        "DocumentDb"
       ]
     },
     "ExecutionComment":{
@@ -824,7 +904,8 @@
         "stepCanceled",
         "stepPendingApproval",
         "stepExecutionBehaviorChangedToUngraceful",
-        "stepPendingApplicationHealthMonitor"
+        "stepPendingApplicationHealthMonitor",
+        "planEvaluationWarning"
       ]
     },
     "ExecutionId":{"type":"string"},
@@ -851,9 +932,37 @@
         "completedMonitoringApplicationHealth"
       ]
     },
+    "FailedReportErrorCode":{
+      "type":"string",
+      "enum":[
+        "insufficientPermissions",
+        "invalidResource",
+        "configurationError"
+      ]
+    },
+    "FailedReportOutput":{
+      "type":"structure",
+      "members":{
+        "errorCode":{"shape":"FailedReportErrorCode"},
+        "errorMessage":{"shape":"String"}
+      }
+    },
     "Float":{
       "type":"float",
       "box":true
+    },
+    "GeneratedReport":{
+      "type":"structure",
+      "members":{
+        "reportGenerationTime":{"shape":"Timestamp"},
+        "reportOutput":{"shape":"ReportOutput"}
+      }
+    },
+    "GeneratedReportDetails":{
+      "type":"list",
+      "member":{"shape":"GeneratedReport"},
+      "max":1,
+      "min":0
     },
     "GetPlanEvaluationStatusRequest":{
       "type":"structure",
@@ -916,6 +1025,7 @@
         "stepStates":{"shape":"StepStates"},
         "plan":{"shape":"Plan"},
         "actualRecoveryTime":{"shape":"Duration"},
+        "generatedReportDetails":{"shape":"GeneratedReportDetails"},
         "nextToken":{"shape":"String"}
       }
     },
@@ -1173,6 +1283,30 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListRoute53HealthChecksInRegionRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"PlanArn"},
+        "hostedZoneId":{"shape":"Route53HostedZoneId"},
+        "recordName":{"shape":"Route53RecordName"},
+        "maxResults":{"shape":"ListRoute53HealthChecksInRegionRequestMaxResultsInteger"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListRoute53HealthChecksInRegionRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListRoute53HealthChecksInRegionResponse":{
+      "type":"structure",
+      "members":{
+        "healthChecks":{"shape":"Route53HealthCheckList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListRoute53HealthChecksRequest":{
       "type":"structure",
       "required":["arn"],
@@ -1254,6 +1388,7 @@
         "recoveryTimeObjectiveMinutes":{"shape":"PlanRecoveryTimeObjectiveMinutesInteger"},
         "associatedAlarms":{"shape":"AssociatedAlarmMap"},
         "triggers":{"shape":"TriggerList"},
+        "reportConfiguration":{"shape":"ReportConfiguration"},
         "name":{"shape":"PlanName"},
         "regions":{"shape":"RegionList"},
         "recoveryApproach":{"shape":"RecoveryApproach"},
@@ -1330,6 +1465,33 @@
       "key":{"shape":"Region"},
       "value":{"shape":"KubernetesScalingResource"}
     },
+    "ReportConfiguration":{
+      "type":"structure",
+      "members":{
+        "reportOutput":{"shape":"ReportOutputList"}
+      }
+    },
+    "ReportOutput":{
+      "type":"structure",
+      "members":{
+        "s3ReportOutput":{"shape":"S3ReportOutput"},
+        "failedReportOutput":{"shape":"FailedReportOutput"}
+      },
+      "union":true
+    },
+    "ReportOutputConfiguration":{
+      "type":"structure",
+      "members":{
+        "s3Configuration":{"shape":"S3ReportOutputConfiguration"}
+      },
+      "union":true
+    },
+    "ReportOutputList":{
+      "type":"list",
+      "member":{"shape":"ReportOutputConfiguration"},
+      "max":1,
+      "min":1
+    },
     "ResourceArn":{"type":"string"},
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1384,6 +1546,7 @@
         "hostedZoneId":{"shape":"Route53HostedZoneId"},
         "recordName":{"shape":"Route53RecordName"},
         "healthCheckId":{"shape":"Route53HealthCheckId"},
+        "status":{"shape":"Route53HealthCheckStatus"},
         "region":{"shape":"Region"}
       }
     },
@@ -1415,6 +1578,14 @@
     "Route53HealthCheckList":{
       "type":"list",
       "member":{"shape":"Route53HealthCheck"}
+    },
+    "Route53HealthCheckStatus":{
+      "type":"string",
+      "enum":[
+        "healthy",
+        "unhealthy",
+        "unknown"
+      ]
     },
     "Route53HostedZoneId":{
       "type":"string",
@@ -1449,6 +1620,25 @@
         "On",
         "Off"
       ]
+    },
+    "S3ReportOutput":{
+      "type":"structure",
+      "members":{
+        "s3ObjectKey":{"shape":"String"}
+      }
+    },
+    "S3ReportOutputConfiguration":{
+      "type":"structure",
+      "members":{
+        "bucketPath":{"shape":"S3ReportOutputConfigurationBucketPathString"},
+        "bucketOwner":{"shape":"AccountId"}
+      }
+    },
+    "S3ReportOutputConfigurationBucketPathString":{
+      "type":"string",
+      "max":512,
+      "min":3,
+      "pattern":"(?:s3://)?[a-z0-9][a-z0-9-]{1,61}[a-z0-9](?:/[^/ ][^/]*)*/?"
     },
     "Service":{
       "type":"structure",
@@ -1697,7 +1887,8 @@
         "executionRole":{"shape":"IamRoleArn"},
         "recoveryTimeObjectiveMinutes":{"shape":"UpdatePlanRequestRecoveryTimeObjectiveMinutesInteger"},
         "associatedAlarms":{"shape":"AssociatedAlarmMap"},
-        "triggers":{"shape":"TriggerList"}
+        "triggers":{"shape":"TriggerList"},
+        "reportConfiguration":{"shape":"ReportConfiguration"}
       }
     },
     "UpdatePlanRequestRecoveryTimeObjectiveMinutesInteger":{

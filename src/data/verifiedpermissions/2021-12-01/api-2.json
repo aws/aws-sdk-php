@@ -28,7 +28,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "BatchIsAuthorized":{
       "name":"BatchIsAuthorized",
@@ -44,7 +45,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "BatchIsAuthorizedWithToken":{
       "name":"BatchIsAuthorizedWithToken",
@@ -60,7 +62,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "CreateIdentitySource":{
       "name":"CreateIdentitySource",
@@ -222,7 +225,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPolicy":{
       "name":"GetPolicy",
@@ -238,7 +242,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPolicyStore":{
       "name":"GetPolicyStore",
@@ -254,7 +259,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPolicyTemplate":{
       "name":"GetPolicyTemplate",
@@ -270,7 +276,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetSchema":{
       "name":"GetSchema",
@@ -286,7 +293,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "IsAuthorized":{
       "name":"IsAuthorized",
@@ -302,7 +310,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "IsAuthorizedWithToken":{
       "name":"IsAuthorizedWithToken",
@@ -318,7 +327,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListIdentitySources":{
       "name":"ListIdentitySources",
@@ -334,7 +344,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPolicies":{
       "name":"ListPolicies",
@@ -350,7 +361,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPolicyStores":{
       "name":"ListPolicyStores",
@@ -365,7 +377,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPolicyTemplates":{
       "name":"ListPolicyTemplates",
@@ -381,7 +394,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -397,7 +411,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutSchema":{
       "name":"PutSchema",
@@ -798,6 +813,31 @@
       "type":"string",
       "sensitive":true
     },
+    "CedarTagRecordAttribute":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"CedarTagValue"}
+    },
+    "CedarTagSetAttribute":{
+      "type":"list",
+      "member":{"shape":"CedarTagValue"}
+    },
+    "CedarTagValue":{
+      "type":"structure",
+      "members":{
+        "boolean":{"shape":"BooleanAttribute"},
+        "entityIdentifier":{"shape":"EntityIdentifier"},
+        "long":{"shape":"LongAttribute"},
+        "string":{"shape":"StringAttribute"},
+        "set":{"shape":"CedarTagSetAttribute"},
+        "record":{"shape":"CedarTagRecordAttribute"},
+        "ipaddr":{"shape":"IpAddr"},
+        "decimal":{"shape":"Decimal"},
+        "datetime":{"shape":"DatetimeAttribute"},
+        "duration":{"shape":"Duration"}
+      },
+      "union":true
+    },
     "CedarVersion":{
       "type":"string",
       "enum":[
@@ -1177,6 +1217,11 @@
       "key":{"shape":"String"},
       "value":{"shape":"AttributeValue"}
     },
+    "EntityCedarTags":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"CedarTagValue"}
+    },
     "EntityId":{
       "type":"string",
       "max":200,
@@ -1207,7 +1252,8 @@
       "members":{
         "identifier":{"shape":"EntityIdentifier"},
         "attributes":{"shape":"EntityAttributes"},
-        "parents":{"shape":"ParentList"}
+        "parents":{"shape":"ParentList"},
+        "tags":{"shape":"EntityCedarTags"}
       }
     },
     "EntityList":{

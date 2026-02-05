@@ -138,4 +138,18 @@ trait S3EncryptionClientTestingTrait
 
         return $fields;
     }
+
+    private function getValidV3MetadataFields($provider)
+    {
+        $fields = [];
+        // V3-specific fields based on encryptCommitingStream method
+        $fields[MetadataEnvelope::ENCRYPTED_DATA_KEY_V3] = base64_encode('cek');
+        $fields[MetadataEnvelope::CONTENT_CIPHER_V3] = '115'; // Algorithm suite ID for committing
+        $fields[MetadataEnvelope::ENCRYPTION_CONTEXT_V3] = json_encode(['aws:x-amz-cek-alg' => '115']);
+        $fields[MetadataEnvelope::ENCRYPTED_DATA_KEY_ALGORITHM_V3] = '12';
+        $fields[MetadataEnvelope::KEY_COMMITMENT_V3] = base64_encode('commitment_key');
+        $fields[MetadataEnvelope::MESSAGE_ID_V3] = base64_encode('message_id');
+
+        return $fields;
+    }
 }

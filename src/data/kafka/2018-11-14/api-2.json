@@ -596,6 +596,68 @@
         }
       ]
     },
+    "DescribeTopic": {
+      "name": "DescribeTopic",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/clusters/{clusterArn}/topics/{topicName}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeTopicRequest"
+      },
+      "output": {
+        "shape": "DescribeTopicResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        }
+      ]
+    },
+    "DescribeTopicPartitions": {
+      "name": "DescribeTopicPartitions",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/clusters/{clusterArn}/topics/{topicName}/partitions",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeTopicPartitionsRequest"
+      },
+      "output": {
+        "shape": "DescribeTopicPartitionsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        }
+      ]
+    },
     "DescribeVpcConnection": {
       "name": "DescribeVpcConnection",
       "http": {
@@ -1138,6 +1200,37 @@
         }
       ]
     },
+    "ListTopics": {
+      "name": "ListTopics",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/clusters/{clusterArn}/topics",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListTopicsRequest"
+      },
+      "output": {
+        "shape": "ListTopicsResponse"
+      },
+      "errors": [
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
+    },
     "RejectClientVpcConnection": {
       "name": "RejectClientVpcConnection",
       "http": {
@@ -1612,6 +1705,43 @@
         }
       ]
     },
+    "UpdateRebalancing": {
+      "name": "UpdateRebalancing",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/v1/clusters/{clusterArn}/rebalancing",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateRebalancingRequest"
+      },
+      "output": {
+        "shape": "UpdateRebalancingResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        }
+      ]
+    },
     "UpdateReplicationInfo": {
       "name": "UpdateReplicationInfo",
       "http": {
@@ -2043,6 +2173,10 @@
         "StorageMode": {
           "shape": "StorageMode",
           "locationName": "storageMode"
+        },
+        "Rebalancing": {
+          "shape": "Rebalancing",
+          "locationName": "rebalancing"
         },
         "CustomerActionStatus": {
           "shape": "CustomerActionStatus",
@@ -2545,6 +2679,10 @@
           "shape": "__mapOf__string",
           "locationName": "tags"
         },
+        "Rebalancing": {
+          "shape": "Rebalancing",
+          "locationName": "rebalancing"
+        },
         "StorageMode": {
           "shape": "StorageMode",
           "locationName": "storageMode"
@@ -3018,6 +3156,118 @@
         "ServerProperties": {
           "shape": "__blob",
           "locationName": "serverProperties"
+        }
+      }
+    },
+    "DescribeTopicRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "TopicName": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "topicName"
+        }
+      },
+      "required": [
+        "ClusterArn",
+        "TopicName"
+      ]
+    },
+    "DescribeTopicPartitionsRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "TopicName": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "topicName"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        }
+      },
+      "required": [
+        "ClusterArn",
+        "TopicName"
+      ]
+    },
+    "DescribeTopicResponse": {
+      "type": "structure",
+      "members": {
+        "TopicArn": {
+          "shape": "__string",
+          "locationName": "topicArn"
+        },
+        "TopicName": {
+          "shape": "__string",
+          "locationName": "topicName"
+        },
+        "ReplicationFactor": {
+          "shape": "__integer",
+          "locationName": "replicationFactor"
+        },
+        "PartitionCount": {
+          "shape": "__integer",
+          "locationName": "partitionCount"
+        },
+        "Configs": {
+          "shape": "__string",
+          "locationName": "configs"
+        },
+        "Status": {
+          "shape": "TopicState",
+          "locationName": "status"
+        }
+      }
+    },
+    "DescribeTopicPartitionsResponse": {
+      "type": "structure",
+      "members": {
+        "Partitions": {
+          "shape": "__listOfTopicPartitionInfo",
+          "locationName": "partitions"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "TopicPartitionInfo": {
+      "type": "structure",
+      "documentation": "<p>Contains information about a topic partition.</p>",
+      "members": {
+        "Partition": {
+          "shape": "__integer",
+          "locationName": "partition"
+        },
+        "Leader": {
+          "shape": "__integer",
+          "locationName": "leader"
+        },
+        "Replicas": {
+          "shape": "__listOf__integer",
+          "locationName": "replicas"
+        },
+        "Isr": {
+          "shape": "__listOf__integer",
+          "locationName": "isr"
         }
       }
     },
@@ -3817,6 +4067,28 @@
         "SERVERLESS"
       ]
     },
+    "Rebalancing": {
+      "type": "structure",
+      "documentation": "\n            <p>Specifies whether or not intelligent rebalancing is turned on for a newly created MSK Provisioned cluster with Express brokers. Intelligent rebalancing performs automatic partition balancing operations when you scale your clusters up or down. By default, intelligent rebalancing is ACTIVE for all new Express-based clusters.</p>\n         ",
+      "members": {
+        "Status": {
+          "shape": "RebalancingStatus",
+          "locationName": "status",
+          "documentation": "\n            <p>Intelligent rebalancing status. The default intelligent rebalancing status is ACTIVE for all new Express-based clusters.</p>\n         "
+        }
+      },
+      "required": [
+        "Status"
+      ]
+    },
+    "RebalancingStatus": {
+      "type": "string",
+      "documentation": "\n            <p>Intelligent rebalancing status. The default intelligent rebalancing status is ACTIVE for all new Express-based clusters.</p>\n         ",
+      "enum": [
+        "PAUSED",
+        "ACTIVE"
+      ]
+    },
     "ProvisionedRequest": {
       "type": "structure",
       "documentation": "\n            <p>Provisioned cluster request.</p>\n         ",
@@ -3870,6 +4142,11 @@
           "shape": "StorageMode",
           "locationName": "storageMode",
           "documentation": "\n            <p>This controls storage mode for supported storage tiers.</p>\n         "
+        },
+        "Rebalancing": {
+          "shape": "Rebalancing",
+          "locationName": "rebalancing",
+          "documentation": "\n            <p>Specifies if intelligent rebalancing should be turned on for a new MSK Provisioned cluster with Express brokers. For all new Express-based clusters that you create, intelligent rebalancing is turned on by default.</p>\n         "
         }
       },
       "required": [
@@ -3936,6 +4213,11 @@
           "shape": "StorageMode",
           "locationName": "storageMode",
           "documentation": "\n            <p>This controls storage mode for supported storage tiers.</p>\n         "
+        },
+        "Rebalancing": {
+          "shape": "Rebalancing",
+          "locationName": "rebalancing",
+          "documentation": "\n            <p>Specifies if intelligent rebalancing is turned on for your MSK Provisioned cluster with Express brokers. For all new Express-based clusters that you create, intelligent rebalancing is turned on by default.</p>\n         "
         },
         "CustomerActionStatus": {
           "shape": "CustomerActionStatus",
@@ -4299,6 +4581,47 @@
         }
       }
     },
+    "ListTopicsRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        },
+        "TopicNameFilter": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "topicNameFilter"
+        }
+      },
+      "required": [
+        "ClusterArn"
+      ]
+    },
+    "ListTopicsResponse": {
+      "type": "structure",
+      "members": {
+        "Topics": {
+          "shape": "__listOfTopicInfo",
+          "locationName": "topics"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
     "ListReplicatorsRequest": {
       "type": "structure",
       "members": {
@@ -4436,6 +4759,10 @@
         "BrokerCountUpdateInfo": {
           "shape": "BrokerCountUpdateInfo",
           "locationName": "brokerCountUpdateInfo"
+        },
+        "Rebalancing": {
+          "shape": "Rebalancing",
+          "locationName": "rebalancing"
         }
       }
     },
@@ -4878,6 +5205,31 @@
         }
       }
     },
+    "TopicInfo": {
+      "type": "structure",
+      "members": {
+        "TopicArn": {
+          "shape": "__string",
+          "locationName": "topicArn"
+        },
+        "TopicName": {
+          "shape": "__string",
+          "locationName": "topicName"
+        },
+        "ReplicationFactor": {
+          "shape": "__integer",
+          "locationName": "replicationFactor"
+        },
+        "PartitionCount": {
+          "shape": "__integer",
+          "locationName": "partitionCount"
+        },
+        "OutOfSyncReplicaCount": {
+          "shape": "__integer",
+          "locationName": "outOfSyncReplicaCount"
+        }
+      }
+    },
     "VpcConnectivityTls": {
       "type": "structure",
       "members": {
@@ -5026,6 +5378,42 @@
       ]
     },
     "UpdateBrokerCountResponse": {
+      "type": "structure",
+      "members": {
+        "ClusterArn": {
+          "shape": "__string",
+          "locationName": "clusterArn"
+        },
+        "ClusterOperationArn": {
+          "shape": "__string",
+          "locationName": "clusterOperationArn"
+        }
+      }
+    },
+    "UpdateRebalancingRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "CurrentVersion": {
+          "shape": "__string",
+          "locationName": "currentVersion"
+        },
+        "Rebalancing": {
+          "shape": "Rebalancing",
+          "locationName": "rebalancing"
+        }
+      },
+      "required": [
+        "ClusterArn",
+        "CurrentVersion",
+        "Rebalancing"
+      ]
+    },
+    "UpdateRebalancingResponse": {
       "type": "structure",
       "members": {
         "ClusterArn": {
@@ -5572,6 +5960,15 @@
         }
       }
     },
+    "TopicState": {
+      "type": "string",
+      "enum": [
+        "CREATING",
+        "UPDATING",
+        "DELETING",
+        "ACTIVE"
+      ]
+    },
     "VpcConnectionState": {
       "type": "string",
       "enum": [
@@ -5706,6 +6103,10 @@
       "min": 1,
       "max": 16384
     },
+    "__integerMin1": {
+      "type": "integer",
+      "min": 1
+    },
     "__listOfBrokerEBSVolumeInfo": {
       "type": "list",
       "member": {
@@ -5826,6 +6227,18 @@
         "shape": "ReplicatorSummary"
       }
     },
+    "__listOfTopicInfo": {
+      "type": "list",
+      "member": {
+        "shape": "TopicInfo"
+      }
+    },
+    "__listOfTopicPartitionInfo": {
+      "type": "list",
+      "member": {
+        "shape": "TopicPartitionInfo"
+      }
+    },
     "__listOfVpcConnection": {
       "type": "list",
       "member": {
@@ -5848,6 +6261,12 @@
       "type": "list",
       "member": {
         "shape": "__string"
+      }
+    },
+    "__listOf__integer": {
+      "type": "list",
+      "member": {
+        "shape": "__integer"
       }
     },
     "__listOf__stringMax249": {

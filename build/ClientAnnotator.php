@@ -6,12 +6,19 @@ class ClientAnnotator
 {
     /** @var ReflectionClass */
     private $reflection;
+
+    /** @var ReflectionClass|null */
+    private $reflectionInterface;
+
     /** @var string */
     private $endpoint;
+
     /** @var string[] */
     private $versions;
+
     /** @var array */
     private $methods;
+
     /** @var array */
     private $aliases;
 
@@ -19,6 +26,13 @@ class ClientAnnotator
     public function __construct($clientClassName)
     {
         $this->reflection = new ReflectionClass($clientClassName);
+        $this->reflectionInterface = null;
+        // Check if client has an interface
+        $interfaceName = $clientClassName . 'Interface';
+        if (interface_exists($interfaceName)) {
+            $this->reflectionInterface = new ReflectionClass($interfaceName);
+        }
+
         $this->aliases = \Aws\load_compiled_json(__DIR__ . '/../src/data/aliases.json');
     }
 
@@ -35,6 +49,17 @@ class ClientAnnotator
             $this->getDefaultDocComment(),
             '/^\* @method (\\\\Aws\\\\Result|\\\\GuzzleHttp\\\\Promise\\\\Promise) /'
         );
+
+        if ($this->reflectionInterface !== null) {
+            $interfaceUpdater = new ClassAnnotationUpdater(
+                $this->reflectionInterface,
+                $this->getMethodAnnotations(),
+                $this->getDefaultDocComment(),
+                '/^\* @method (\\\\Aws\\\\Result|\\\\GuzzleHttp\\\\Promise\\\\Promise) /'
+            );
+
+            return $interfaceUpdater->update() && $updater->update();
+        }
 
         return $updater->update();
     }

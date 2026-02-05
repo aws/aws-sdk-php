@@ -61,12 +61,12 @@ class RangeGetMultipartDownloaderTest extends TestCase
         $remainingToTransfer = $objectSizeInBytes;
         $mockClient->method('executeAsync')
             -> willReturnCallback(function ($command)
-                use (
-                    $objectSizeInBytes,
-                    $partsCount,
-                    $targetPartSize,
-                    &$remainingToTransfer
-                ) {
+            use (
+                $objectSizeInBytes,
+                $partsCount,
+                $targetPartSize,
+                &$remainingToTransfer
+            ) {
                 $currentPartLength = min(
                     $targetPartSize,
                     $remainingToTransfer
@@ -155,7 +155,7 @@ class RangeGetMultipartDownloaderTest extends TestCase
         $mockClient = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
             ->getMock();
-        
+
         $mockClient->method('getCommand')
             ->willReturnCallback(function ($commandName, $args) {
                 return new Command($commandName, $args);
@@ -495,5 +495,4 @@ class RangeGetMultipartDownloaderTest extends TestCase
 
         $this->assertFileDoesNotExist($resumeFile);
     }
-
 }

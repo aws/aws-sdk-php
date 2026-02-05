@@ -14,6 +14,7 @@
     "CreateRestoreAccessBackupVault": "<p>Creates a restore access backup vault that provides temporary access to recovery points in a logically air-gapped backup vault, subject to MPA approval.</p>",
     "CreateRestoreTestingPlan": "<p>Creates a restore testing plan.</p> <p>The first of two steps to create a restore testing plan. After this request is successful, finish the procedure using CreateRestoreTestingSelection.</p>",
     "CreateRestoreTestingSelection": "<p>This request can be sent after CreateRestoreTestingPlan request returns successfully. This is the second part of creating a resource testing plan, and it must be completed sequentially.</p> <p>This consists of <code>RestoreTestingSelectionName</code>, <code>ProtectedResourceType</code>, and one of the following:</p> <ul> <li> <p> <code>ProtectedResourceArns</code> </p> </li> <li> <p> <code>ProtectedResourceConditions</code> </p> </li> </ul> <p>Each protected resource type can have one single value.</p> <p>A restore testing selection can include a wildcard value (\"*\") for <code>ProtectedResourceArns</code> along with <code>ProtectedResourceConditions</code>. Alternatively, you can include up to 30 specific protected resource ARNs in <code>ProtectedResourceArns</code>.</p> <p>Cannot select by both protected resource types AND specific ARNs. Request will fail if both are included.</p>",
+    "CreateTieringConfiguration": "<p>Creates a tiering configuration.</p> <p>A tiering configuration enables automatic movement of backup data to a lower-cost storage tier based on the age of backed-up objects in the backup vault.</p> <p>Each vault can only have one vault-specific tiering configuration, in addition to any global configuration that applies to all vaults.</p>",
     "DeleteBackupPlan": "<p>Deletes a backup plan. A backup plan can only be deleted after all associated selections of resources have been deleted. Deleting a backup plan deletes the current version of a backup plan. Previous versions, if any, will still exist.</p>",
     "DeleteBackupSelection": "<p>Deletes the resource selection associated with a backup plan that is specified by the <code>SelectionId</code>.</p>",
     "DeleteBackupVault": "<p>Deletes the backup vault identified by its name. A vault can be deleted only if it is empty.</p>",
@@ -25,6 +26,7 @@
     "DeleteReportPlan": "<p>Deletes the report plan specified by a report plan name.</p>",
     "DeleteRestoreTestingPlan": "<p>This request deletes the specified restore testing plan.</p> <p>Deletion can only successfully occur if all associated restore testing selections are deleted first.</p>",
     "DeleteRestoreTestingSelection": "<p>Input the Restore Testing Plan name and Restore Testing Selection name.</p> <p>All testing selections associated with a restore testing plan must be deleted before the restore testing plan can be deleted.</p>",
+    "DeleteTieringConfiguration": "<p>Deletes the tiering configuration specified by a tiering configuration name.</p>",
     "DescribeBackupJob": "<p>Returns backup job details for the specified <code>BackupJobId</code>.</p>",
     "DescribeBackupVault": "<p>Returns metadata about a backup vault specified by its name.</p>",
     "DescribeCopyJob": "<p>Returns metadata associated with creating a copy of a resource.</p>",
@@ -36,6 +38,7 @@
     "DescribeReportJob": "<p>Returns the details associated with creating a report as specified by its <code>ReportJobId</code>.</p>",
     "DescribeReportPlan": "<p>Returns a list of all report plans for an Amazon Web Services account and Amazon Web Services Region.</p>",
     "DescribeRestoreJob": "<p>Returns metadata associated with a restore job that is specified by a job ID.</p>",
+    "DescribeScanJob": "<p>Returns scan job details for the specified ScanJobID.</p>",
     "DisassociateBackupVaultMpaApprovalTeam": "<p>Removes the association between an MPA approval team and a backup vault, disabling the MPA approval workflow for restore operations.</p>",
     "DisassociateRecoveryPoint": "<p>Deletes the specified continuous backup recovery point from Backup and releases control of that continuous backup to the source service, such as Amazon RDS. The source service will continue to create and retain continuous backups using the lifecycle that you specified in your original backup plan.</p> <p>Does not support snapshot backup recovery points.</p>",
     "DisassociateRecoveryPointFromParent": "<p>This action to a specific child (nested) recovery point removes the relationship between the specified recovery point and its parent (composite) recovery point.</p>",
@@ -54,6 +57,7 @@
     "GetRestoreTestingPlan": "<p>Returns <code>RestoreTestingPlan</code> details for the specified <code>RestoreTestingPlanName</code>. The details are the body of a restore testing plan in JSON format, in addition to plan metadata.</p>",
     "GetRestoreTestingSelection": "<p>Returns RestoreTestingSelection, which displays resources and elements of the restore testing plan.</p>",
     "GetSupportedResourceTypes": "<p>Returns the Amazon Web Services resource types supported by Backup.</p>",
+    "GetTieringConfiguration": "<p>Returns <code>TieringConfiguration</code> details for the specified <code>TieringConfigurationName</code>. The details are the body of a tiering configuration in JSON format, in addition to configuration metadata.</p>",
     "ListBackupJobSummaries": "<p>This is a request for a summary of backup jobs created or running within the most recent 30 days. You can include parameters AccountID, State, ResourceType, MessageCategory, AggregationPeriod, MaxResults, or NextToken to filter results.</p> <p>This request returns a summary that contains Region, Account, State, ResourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
     "ListBackupJobs": "<p>Returns a list of existing backup jobs for an authenticated account for the last 30 days. For a longer period of time, consider using these <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html\">monitoring tools</a>.</p>",
     "ListBackupPlanTemplates": "<p>Lists the backup plan templates.</p>",
@@ -79,16 +83,20 @@
     "ListRestoreJobsByProtectedResource": "<p>This returns restore jobs that contain the specified protected resource.</p> <p>You must include <code>ResourceArn</code>. You can optionally include <code>NextToken</code>, <code>ByStatus</code>, <code>MaxResults</code>, <code>ByRecoveryPointCreationDateAfter</code> , and <code>ByRecoveryPointCreationDateBefore</code>.</p>",
     "ListRestoreTestingPlans": "<p>Returns a list of restore testing plans.</p>",
     "ListRestoreTestingSelections": "<p>Returns a list of restore testing selections. Can be filtered by <code>MaxResults</code> and <code>RestoreTestingPlanName</code>.</p>",
+    "ListScanJobSummaries": "<p>This is a request for a summary of scan jobs created or running within the most recent 30 days.</p>",
+    "ListScanJobs": "<p>Returns a list of existing scan jobs for an authenticated account for the last 30 days.</p>",
     "ListTags": "<p>Returns the tags assigned to the resource, such as a target recovery point, backup plan, or backup vault.</p> <p>This operation returns results depending on the resource type used in the value for <code>resourceArn</code>. For example, recovery points of Amazon DynamoDB with Advanced Settings have an ARN (Amazon Resource Name) that begins with <code>arn:aws:backup</code>. Recovery points (backups) of DynamoDB without Advanced Settings enabled have an ARN that begins with <code>arn:aws:dynamodb</code>.</p> <p>When this operation is called and when you include values of <code>resourceArn</code> that have an ARN other than <code>arn:aws:backup</code>, it may return one of the exceptions listed below. To prevent this exception, include only values representing resource types that are fully managed by Backup. These have an ARN that begins <code>arn:aws:backup</code> and they are noted in the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a> table.</p>",
+    "ListTieringConfigurations": "<p>Returns a list of tiering configurations.</p>",
     "PutBackupVaultAccessPolicy": "<p>Sets a resource-based policy that is used to manage access permissions on the target backup vault. Requires a backup vault name and an access policy document in JSON format.</p>",
     "PutBackupVaultLockConfiguration": "<p>Applies Backup Vault Lock to a backup vault, preventing attempts to delete any recovery point stored in or created in a backup vault. Vault Lock also prevents attempts to update the lifecycle policy that controls the retention period of any recovery point currently stored in a backup vault. If specified, Vault Lock enforces a minimum and maximum retention period for future backup and copy jobs that target a backup vault.</p> <note> <p>Backup Vault Lock has been assessed by Cohasset Associates for use in environments that are subject to SEC 17a-4, CFTC, and FINRA regulations. For more information about how Backup Vault Lock relates to these regulations, see the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/samples/cohassetreport.zip\">Cohasset Associates Compliance Assessment.</a> </p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/vault-lock.html\">Backup Vault Lock</a>.</p>",
     "PutBackupVaultNotifications": "<p>Turns on notifications on a backup vault for the specified topic and events.</p>",
     "PutRestoreValidationResult": "<p>This request allows you to send your independent self-run restore test validation results. <code>RestoreJobId</code> and <code>ValidationStatus</code> are required. Optionally, you can input a <code>ValidationStatusMessage</code>.</p>",
     "RevokeRestoreAccessBackupVault": "<p>Revokes access to a restore access backup vault, removing the ability to restore from its recovery points and permanently deleting the vault.</p>",
     "StartBackupJob": "<p>Starts an on-demand backup job for the specified resource.</p>",
-    "StartCopyJob": "<p>Starts a job to create a one-time copy of the specified resource.</p> <p>Does not support continuous backups.</p>",
+    "StartCopyJob": "<p>Starts a job to create a one-time copy of the specified resource.</p> <p>Does not support continuous backups.</p> <p>See <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/recov-point-create-a-copy.html#backup-copy-retry\">Copy job retry</a> for information on how Backup retries copy job operations.</p>",
     "StartReportJob": "<p>Starts an on-demand report job for the specified report plan.</p>",
     "StartRestoreJob": "<p>Recovers the saved resource identified by an Amazon Resource Name (ARN).</p>",
+    "StartScanJob": "<p>Starts scanning jobs for specific resources.</p>",
     "StopBackupJob": "<p>Attempts to cancel a job to create a one-time backup of a resource.</p> <p>This action is not supported for the following services:</p> <ul> <li> <p>Amazon Aurora</p> </li> <li> <p>Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p>Amazon FSx for Lustre</p> </li> <li> <p>Amazon FSx for NetApp ONTAP</p> </li> <li> <p>Amazon FSx for OpenZFS</p> </li> <li> <p>Amazon FSx for Windows File Server</p> </li> <li> <p>Amazon Neptune</p> </li> <li> <p>SAP HANA databases on Amazon EC2 instances</p> </li> <li> <p>Amazon RDS</p> </li> </ul>",
     "TagResource": "<p>Assigns a set of key-value pairs to a resource.</p>",
     "UntagResource": "<p>Removes a set of key-value pairs from a recovery point, backup plan, or backup vault identified by an Amazon Resource Name (ARN)</p> <p>This API is not supported for recovery points for resource types including Aurora, Amazon DocumentDB. Amazon EBS, Amazon FSx, Neptune, and Amazon RDS.</p>",
@@ -100,7 +108,8 @@
     "UpdateRegionSettings": "<p>Updates the current service opt-in settings for the Region.</p> <p>Use the <code>DescribeRegionSettings</code> API to determine the resource types that are supported.</p>",
     "UpdateReportPlan": "<p>Updates the specified report plan.</p>",
     "UpdateRestoreTestingPlan": "<p>This request will send changes to your specified restore testing plan. <code>RestoreTestingPlanName</code> cannot be updated after it is created.</p> <p> <code>RecoveryPointSelection</code> can contain:</p> <ul> <li> <p> <code>Algorithm</code> </p> </li> <li> <p> <code>ExcludeVaults</code> </p> </li> <li> <p> <code>IncludeVaults</code> </p> </li> <li> <p> <code>RecoveryPointTypes</code> </p> </li> <li> <p> <code>SelectionWindowDays</code> </p> </li> </ul>",
-    "UpdateRestoreTestingSelection": "<p>Updates the specified restore testing selection.</p> <p>Most elements except the <code>RestoreTestingSelectionName</code> can be updated with this request.</p> <p>You can use either protected resource ARNs or conditions, but not both.</p>"
+    "UpdateRestoreTestingSelection": "<p>Updates the specified restore testing selection.</p> <p>Most elements except the <code>RestoreTestingSelectionName</code> can be updated with this request.</p> <p>You can use either protected resource ARNs or conditions, but not both.</p>",
+    "UpdateTieringConfiguration": "<p>This request will send changes to your specified tiering configuration. <code>TieringConfigurationName</code> cannot be updated after it is created.</p> <p> <code>ResourceSelection</code> can contain:</p> <ul> <li> <p> <code>Resources</code> </p> </li> <li> <p> <code>TieringDownSettingsInDays</code> </p> </li> <li> <p> <code>ResourceType</code> </p> </li> </ul>"
   },
   "shapes": {
     "ARN": {
@@ -109,8 +118,11 @@
         "AssociateBackupVaultMpaApprovalTeamInput$MpaApprovalTeamArn": "<p>The Amazon Resource Name (ARN) of the MPA approval team to associate with the backup vault.</p>",
         "BackupJob$BackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "BackupJob$RecoveryPointArn": "<p>An ARN that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
+        "BackupJob$EncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the backup. This can be a customer-managed key or an Amazon Web Services managed key, depending on the vault configuration.</p>",
         "BackupJob$ResourceArn": "<p>An ARN that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>",
         "BackupPlansListMember$BackupPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup plan; for example, <code>arn:aws:backup:us-east-1:123456789012:plan:8F81F553-3A74-4A3F-B93D-B3360DC80C50</code>.</p>",
+        "BackupRule$TargetLogicallyAirGappedBackupVaultArn": "<p>The ARN of a logically air-gapped vault. ARN must be in the same account and Region. If provided, supported fully managed resources back up directly to logically air-gapped vault, while other supported resources create a temporary (billable) snapshot in backup vault, then copy it to logically air-gapped vault. Unsupported resources only back up to the specified backup vault.</p>",
+        "BackupRuleInput$TargetLogicallyAirGappedBackupVaultArn": "<p>The ARN of a logically air-gapped vault. ARN must be in the same account and Region. If provided, supported fully managed resources back up directly to logically air-gapped vault, while other supported resources create a temporary (billable) snapshot in backup vault, then copy it to logically air-gapped vault. Unsupported resources only back up to the specified backup vault.</p>",
         "BackupVaultListMember$BackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "BackupVaultListMember$EncryptionKeyArn": "<p>A server-side encryption key you can specify to encrypt your backups from services that support full Backup management; for example, <code>arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>. If you specify a key, you must specify its ARN, not its alias. If you do not specify a key, Backup creates a KMS key for you by default.</p> <p>To learn which Backup services support full Backup management and how Backup handles encryption for backups from services that do not yet support full Backup, see <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/encryption.html\"> Encryption for backups in Backup</a> </p>",
         "CopyAction$DestinationBackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies the destination backup vault for the copied backup. For example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
@@ -118,20 +130,24 @@
         "CopyJob$SourceRecoveryPointArn": "<p>An ARN that uniquely identifies a source recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
         "CopyJob$DestinationBackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a destination copy vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "CopyJob$DestinationRecoveryPointArn": "<p>An ARN that uniquely identifies a destination recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
+        "CopyJob$DestinationEncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the copied backup in the destination vault. This can be a customer-managed key or an Amazon Web Services managed key.</p>",
         "CopyJob$ResourceArn": "<p>The Amazon Web Services resource to be copied; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database.</p>",
         "CreateBackupPlanOutput$BackupPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup plan; for example, <code>arn:aws:backup:us-east-1:123456789012:plan:8F81F553-3A74-4A3F-B93D-B3360DC80C50</code>.</p>",
         "CreateBackupVaultInput$EncryptionKeyArn": "<p>The server-side encryption key that is used to protect your backups; for example, <code>arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>.</p>",
         "CreateBackupVaultOutput$BackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "CreateFrameworkOutput$FrameworkArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>",
         "CreateLegalHoldOutput$LegalHoldArn": "<p>The Amazon Resource Name (ARN) of the legal hold.</p>",
+        "CreateLogicallyAirGappedBackupVaultInput$EncryptionKeyArn": "<p>The ARN of the customer-managed KMS key to use for encrypting the logically air-gapped backup vault. If not specified, the vault will be encrypted with an Amazon Web Services-owned key managed by Amazon Web Services Backup.</p>",
         "CreateLogicallyAirGappedBackupVaultOutput$BackupVaultArn": "<p>The ARN (Amazon Resource Name) of the vault.</p>",
         "CreateReportPlanOutput$ReportPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>",
         "CreateRestoreAccessBackupVaultInput$SourceBackupVaultArn": "<p>The ARN of the source backup vault containing the recovery points to which temporary access is requested.</p>",
         "CreateRestoreAccessBackupVaultOutput$RestoreAccessBackupVaultArn": "<p>The ARN that uniquely identifies the created restore access backup vault.</p>",
+        "CreateTieringConfigurationOutput$TieringConfigurationArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies the created tiering configuration.</p>",
         "DeleteBackupPlanOutput$BackupPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup plan; for example, <code>arn:aws:backup:us-east-1:123456789012:plan:8F81F553-3A74-4A3F-B93D-B3360DC80C50</code>.</p>",
         "DeleteRecoveryPointInput$RecoveryPointArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
         "DescribeBackupJobOutput$BackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "DescribeBackupJobOutput$RecoveryPointArn": "<p>An ARN that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
+        "DescribeBackupJobOutput$EncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the backup. This can be a customer-managed key or an Amazon Web Services managed key, depending on the vault configuration.</p>",
         "DescribeBackupJobOutput$ResourceArn": "<p>An ARN that uniquely identifies a saved resource. The format of the ARN depends on the resource type.</p>",
         "DescribeBackupVaultOutput$BackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "DescribeBackupVaultOutput$EncryptionKeyArn": "<p>The server-side encryption key that is used to protect your backups; for example, <code>arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>.</p>",
@@ -151,6 +167,8 @@
         "DescribeRecoveryPointOutput$EncryptionKeyArn": "<p>The server-side encryption key used to protect your backups; for example, <code>arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>.</p>",
         "DescribeRecoveryPointOutput$ParentRecoveryPointArn": "<p>This is an ARN that uniquely identifies a parent (composite) recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
         "DescribeRestoreJobOutput$RecoveryPointArn": "<p>An ARN that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
+        "DescribeRestoreJobOutput$SourceResourceArn": "<p>The Amazon Resource Name (ARN) of the original resource that was backed up. This provides context about what resource is being restored.</p>",
+        "DescribeRestoreJobOutput$BackupVaultArn": "<p>The Amazon Resource Name (ARN) of the backup vault containing the recovery point being restored. This helps identify vault access policies and permissions.</p>",
         "DescribeRestoreJobOutput$CreatedResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that was created by the restore job.</p> <p>The format of the ARN depends on the resource type of the backed-up resource.</p>",
         "DisassociateRecoveryPointFromParentInput$RecoveryPointArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the child (nested) recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45.</code> </p>",
         "DisassociateRecoveryPointInput$RecoveryPointArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies an Backup recovery point.</p>",
@@ -205,14 +223,19 @@
         "RestoreAccessBackupVaultListMember$RestoreAccessBackupVaultArn": "<p>The ARN of the restore access backup vault.</p>",
         "RestoreJobCreator$RestoreTestingPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a restore testing plan.</p>",
         "RestoreJobsListMember$RecoveryPointArn": "<p>An ARN that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
+        "RestoreJobsListMember$SourceResourceArn": "<p>The Amazon Resource Name (ARN) of the original resource that was backed up. This provides context about what resource is being restored.</p>",
+        "RestoreJobsListMember$BackupVaultArn": "<p>The Amazon Resource Name (ARN) of the backup vault containing the recovery point being restored. This helps identify vault access policies and permissions.</p>",
         "RestoreJobsListMember$CreatedResourceArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>",
         "RevokeRestoreAccessBackupVaultInput$RestoreAccessBackupVaultArn": "<p>The ARN of the restore access backup vault to revoke.</p>",
+        "StartBackupJobInput$LogicallyAirGappedBackupVaultArn": "<p>The ARN of a logically air-gapped vault. ARN must be in the same account and Region. If provided, supported fully managed resources back up directly to logically air-gapped vault, while other supported resources create a temporary (billable) snapshot in backup vault, then copy it to logically air-gapped vault. Unsupported resources only back up to the specified backup vault.</p>",
         "StartBackupJobInput$ResourceArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>",
         "StartBackupJobOutput$RecoveryPointArn": "<p> <i>Note: This field is only returned for Amazon EFS and Advanced DynamoDB resources.</i> </p> <p>An ARN that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
         "StartCopyJobInput$RecoveryPointArn": "<p>An ARN that uniquely identifies a recovery point to use for the copy job; for example, arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45. </p>",
         "StartCopyJobInput$DestinationBackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a destination backup vault to copy to; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "StartRestoreJobInput$RecoveryPointArn": "<p>An ARN that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
         "TagResourceInput$ResourceArn": "<p>The ARN that uniquely identifies the resource.</p>",
+        "TieringConfiguration$TieringConfigurationArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies the tiering configuration.</p>",
+        "TieringConfigurationsListMember$TieringConfigurationArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies the tiering configuration.</p>",
         "UntagResourceInput$ResourceArn": "<p>An ARN that uniquely identifies a resource. The format of the ARN depends on the type of the tagged resource.</p> <p>ARNs that do not include <code>backup</code> are incompatible with tagging. <code>TagResource</code> and <code>UntagResource</code> with invalid ARNs will result in an error. Acceptable ARN content can include <code>arn:aws:backup:us-east</code>. Invalid ARN content may look like <code>arn:aws:ec2:us-east</code>.</p>",
         "UpdateBackupPlanOutput$BackupPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup plan; for example, <code>arn:aws:backup:us-east-1:123456789012:plan:8F81F553-3A74-4A3F-B93D-B3360DC80C50</code>.</p>",
         "UpdateFrameworkOutput$FrameworkArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>",
@@ -221,7 +244,8 @@
         "UpdateRecoveryPointLifecycleInput$RecoveryPointArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
         "UpdateRecoveryPointLifecycleOutput$BackupVaultArn": "<p>An ARN that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "UpdateRecoveryPointLifecycleOutput$RecoveryPointArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
-        "UpdateReportPlanOutput$ReportPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>"
+        "UpdateReportPlanOutput$ReportPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>",
+        "UpdateTieringConfigurationOutput$TieringConfigurationArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies the updated tiering configuration.</p>"
       }
     },
     "AccountId": {
@@ -243,8 +267,10 @@
         "ListRecoveryPointsByBackupVaultInput$BackupVaultAccountId": "<p>This parameter will sort the list of recovery points by account ID.</p>",
         "ListRestoreJobSummariesInput$AccountId": "<p>Returns the job count for the specified account.</p> <p>If the request is sent from a member account or an account not part of Amazon Web Services Organizations, jobs within requestor's account will be returned.</p> <p>Root, admin, and delegated administrator accounts can use the value ANY to return job counts from every account in the organization.</p> <p> <code>AGGREGATE_ALL</code> aggregates job counts from all accounts within the authenticated organization, then returns the sum.</p>",
         "ListRestoreJobsInput$ByAccountId": "<p>The account ID to list the jobs from. Returns only restore jobs associated with the specified account ID.</p>",
+        "ListScanJobSummariesInput$AccountId": "<p>Returns the job count for the specified account.</p> <p>If the request is sent from a member account or an account not part of Amazon Web Services Organizations, jobs within requestor's account will be returned.</p> <p>Root, admin, and delegated administrator accounts can use the value <code>ANY</code> to return job counts from every account in the organization.</p> <p> <code>AGGREGATE_ALL</code> aggregates job counts from all accounts within the authenticated organization, then returns the sum.</p>",
         "RestoreJobSummary$AccountId": "<p>The account ID that owns the jobs within the summary.</p>",
-        "RestoreJobsListMember$AccountId": "<p>The account ID that owns the restore job.</p>"
+        "RestoreJobsListMember$AccountId": "<p>The account ID that owns the restore job.</p>",
+        "ScanJobSummary$AccountId": "<p>The account ID that owns the scan jobs included in this summary.</p>"
       }
     },
     "AdvancedBackupSetting": {
@@ -264,12 +290,20 @@
         "UpdateBackupPlanOutput$AdvancedBackupSettings": "<p>Contains a list of <code>BackupOptions</code> for each resource type.</p>"
       }
     },
+    "AggregatedScanResult": {
+      "base": "<p>Contains aggregated scan results across multiple scan operations, providing a summary of scan status and findings.</p>",
+      "refs": {
+        "RecoveryPointByBackupVault$AggregatedScanResult": "<p>Contains the latest scanning results against the recovery point and currently include <code>FailedScan</code>, <code>Findings</code>, <code>LastComputed</code>.</p>",
+        "RecoveryPointByResource$AggregatedScanResult": "<p>Contains the latest scanning results against the recovery point and currently include <code>FailedScan</code>, <code>Findings</code>, <code>LastComputed</code>.</p>"
+      }
+    },
     "AggregationPeriod": {
       "base": null,
       "refs": {
         "ListBackupJobSummariesInput$AggregationPeriod": "<p>The period for the returned results.</p> <ul> <li> <p> <code>ONE_DAY</code> - The daily job count for the prior 14 days.</p> </li> <li> <p> <code>SEVEN_DAYS</code> - The aggregated job count for the prior 7 days.</p> </li> <li> <p> <code>FOURTEEN_DAYS</code> - The aggregated job count for prior 14 days.</p> </li> </ul>",
         "ListCopyJobSummariesInput$AggregationPeriod": "<p>The period for the returned results.</p> <ul> <li> <p> <code>ONE_DAY</code> - The daily job count for the prior 14 days.</p> </li> <li> <p> <code>SEVEN_DAYS</code> - The aggregated job count for the prior 7 days.</p> </li> <li> <p> <code>FOURTEEN_DAYS</code> - The aggregated job count for prior 14 days.</p> </li> </ul>",
-        "ListRestoreJobSummariesInput$AggregationPeriod": "<p>The period for the returned results.</p> <ul> <li> <p> <code>ONE_DAY</code> - The daily job count for the prior 14 days.</p> </li> <li> <p> <code>SEVEN_DAYS</code> - The aggregated job count for the prior 7 days.</p> </li> <li> <p> <code>FOURTEEN_DAYS</code> - The aggregated job count for prior 14 days.</p> </li> </ul>"
+        "ListRestoreJobSummariesInput$AggregationPeriod": "<p>The period for the returned results.</p> <ul> <li> <p> <code>ONE_DAY</code> - The daily job count for the prior 14 days.</p> </li> <li> <p> <code>SEVEN_DAYS</code> - The aggregated job count for the prior 7 days.</p> </li> <li> <p> <code>FOURTEEN_DAYS</code> - The aggregated job count for prior 14 days.</p> </li> </ul>",
+        "ListScanJobSummariesInput$AggregationPeriod": "<p>The period for the returned results.</p> <ul> <li> <p> <code>ONE_DAY</code>The daily job count for the prior 1 day.</p> </li> <li> <p> <code>SEVEN_DAYS</code>The daily job count for the prior 7 days.</p> </li> <li> <p> <code>FOURTEEN_DAYS</code>The daily job count for the prior 14 days.</p> </li> </ul>"
       }
     },
     "AlreadyExistsException": {
@@ -341,7 +375,7 @@
     "BackupOptions": {
       "base": null,
       "refs": {
-        "AdvancedBackupSetting$BackupOptions": "<p>Specifies the backup option for a selected resource. This option is only available for Windows VSS backup jobs.</p> <p>Valid values: </p> <p>Set to <code>\"WindowsVSS\":\"enabled\"</code> to enable the <code>WindowsVSS</code> backup option and create a Windows VSS backup. </p> <p>Set to <code>\"WindowsVSS\":\"disabled\"</code> to create a regular backup. The <code>WindowsVSS</code> option is not enabled by default.</p> <p>If you specify an invalid option, you get an <code>InvalidParameterValueException</code> exception.</p> <p>For more information about Windows VSS backups, see <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/windows-backups.html\">Creating a VSS-Enabled Windows Backup</a>.</p>",
+        "AdvancedBackupSetting$BackupOptions": "<p>Specifies the backup option for a selected resource. This option is available for Windows VSS backup jobs and S3 backups.</p> <p>Valid values: </p> <p>Set to <code>\"WindowsVSS\":\"enabled\"</code> to enable the <code>WindowsVSS</code> backup option and create a Windows VSS backup. </p> <p>Set to <code>\"WindowsVSS\":\"disabled\"</code> to create a regular backup. The <code>WindowsVSS</code> option is not enabled by default.</p> <p>For S3 backups, set to <code>\"S3BackupACLs\":\"disabled\"</code> to exclude ACLs from the backup, or <code>\"S3BackupObjectTags\":\"disabled\"</code> to exclude object tags from the backup. By default, both ACLs and object tags are included in S3 backups.</p> <p>If you specify an invalid option, you get an <code>InvalidParameterValueException</code> exception.</p> <p>For more information about Windows VSS backups, see <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/windows-backups.html\">Creating a VSS-Enabled Windows Backup</a>.</p>",
         "BackupJob$BackupOptions": "<p>Specifies the backup option for a selected resource. This option is only available for Windows Volume Shadow Copy Service (VSS) backup jobs.</p> <p>Valid values: Set to <code>\"WindowsVSS\":\"enabled\"</code> to enable the <code>WindowsVSS</code> backup option and create a Windows VSS backup. Set to <code>\"WindowsVSS\":\"disabled\"</code> to create a regular backup. If you specify an invalid option, you get an <code>InvalidParameterValueException</code> exception.</p>",
         "DescribeBackupJobOutput$BackupOptions": "<p>Represents the options specified as part of backup plan or on-demand backup job.</p>",
         "StartBackupJobInput$BackupOptions": "<p>The backup option for a selected resource. This option is only available for Windows Volume Shadow Copy Service (VSS) backup jobs.</p> <p>Valid values: Set to <code>\"WindowsVSS\":\"enabled\"</code> to enable the <code>WindowsVSS</code> backup option and create a Windows VSS backup. Set to <code>\"WindowsVSS\"\"disabled\"</code> to create a regular backup. The <code>WindowsVSS</code> option is not enabled by default.</p>"
@@ -531,9 +565,19 @@
         "UpdateRecoveryPointLifecycleInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>"
       }
     },
+    "BackupVaultNameOrWildcard": {
+      "base": null,
+      "refs": {
+        "TieringConfiguration$BackupVaultName": "<p>The name of the backup vault where the tiering configuration applies. Use <code>*</code> to apply to all backup vaults.</p>",
+        "TieringConfigurationInputForCreate$BackupVaultName": "<p>The name of the backup vault where the tiering configuration applies. Use <code>*</code> to apply to all backup vaults.</p>",
+        "TieringConfigurationInputForUpdate$BackupVaultName": "<p>The name of the backup vault where the tiering configuration applies. Use <code>*</code> to apply to all backup vaults.</p>",
+        "TieringConfigurationsListMember$BackupVaultName": "<p>The name of the backup vault where the tiering configuration applies. Use <code>*</code> to apply to all backup vaults.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
+        "AggregatedScanResult$FailedScan": "<p>A Boolean value indicating whether any of the aggregated scans failed.</p>",
         "BackupRule$EnableContinuousBackup": "<p>Specifies whether Backup creates continuous backups. True causes Backup to create continuous backups capable of point-in-time restore (PITR). False (or not specified) causes Backup to create snapshot backups.</p>",
         "BackupRuleInput$EnableContinuousBackup": "<p>Specifies whether Backup creates continuous backups. True causes Backup to create continuous backups capable of point-in-time restore (PITR). False (or not specified) causes Backup to create snapshot backups.</p>",
         "BackupVaultListMember$Locked": "<p>A Boolean value that indicates whether Backup Vault Lock applies to the selected backup vault. If <code>true</code>, Vault Lock prevents delete and update operations on the recovery points in the selected vault.</p>",
@@ -778,6 +822,21 @@
       "base": null,
       "refs": {}
     },
+    "CreateTieringConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateTieringConfigurationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatorRequestId": {
+      "base": null,
+      "refs": {
+        "CreateTieringConfigurationInput$CreatorRequestId": "<p>This is a unique string that identifies the request and allows failed requests to be retried without the risk of running the operation twice. This parameter is optional. If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.</p>",
+        "TieringConfiguration$CreatorRequestId": "<p>This is a unique string that identifies the request and allows failed requests to be retried without the risk of running the operation twice.</p>"
+      }
+    },
     "CronExpression": {
       "base": null,
       "refs": {
@@ -836,6 +895,14 @@
       "refs": {}
     },
     "DeleteRestoreTestingSelectionInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTieringConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTieringConfigurationOutput": {
       "base": null,
       "refs": {}
     },
@@ -931,6 +998,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeScanJobInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeScanJobOutput": {
+      "base": null,
+      "refs": {}
+    },
     "DisassociateBackupVaultMpaApprovalTeamInput": {
       "base": null,
       "refs": {}
@@ -942,6 +1017,16 @@
     "DisassociateRecoveryPointInput": {
       "base": null,
       "refs": {}
+    },
+    "EncryptionKeyType": {
+      "base": null,
+      "refs": {
+        "BackupVaultListMember$EncryptionKeyType": "<p>The type of encryption key used for the backup vault. Valid values are CUSTOMER_MANAGED_KMS_KEY for customer-managed keys or Amazon Web Services_OWNED_KMS_KEY for Amazon Web Services-owned keys.</p>",
+        "DescribeBackupVaultOutput$EncryptionKeyType": "<p>The type of encryption key used for the backup vault. Valid values are CUSTOMER_MANAGED_KMS_KEY for customer-managed keys or Amazon Web Services_OWNED_KMS_KEY for Amazon Web Services-owned keys.</p>",
+        "DescribeRecoveryPointOutput$EncryptionKeyType": "<p>The type of encryption key used for the recovery point. Valid values are CUSTOMER_MANAGED_KMS_KEY for customer-managed keys or Amazon Web Services_OWNED_KMS_KEY for Amazon Web Services-owned keys.</p>",
+        "RecoveryPointByBackupVault$EncryptionKeyType": "<p>The type of encryption key used for the recovery point. Valid values are CUSTOMER_MANAGED_KMS_KEY for customer-managed keys or Amazon Web Services_OWNED_KMS_KEY for Amazon Web Services-owned keys.</p>",
+        "RecoveryPointByResource$EncryptionKeyType": "<p>The type of encryption key used for the recovery point. Valid values are CUSTOMER_MANAGED_KMS_KEY for customer-managed keys or Amazon Web Services_OWNED_KMS_KEY for Amazon Web Services-owned keys.</p>"
+      }
     },
     "ExportBackupPlanTemplateInput": {
       "base": null,
@@ -1113,11 +1198,19 @@
       "base": null,
       "refs": {}
     },
+    "GetTieringConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTieringConfigurationOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GlobalSettings": {
       "base": null,
       "refs": {
-        "DescribeGlobalSettingsOutput$GlobalSettings": "<p>The status of the flag <code>isCrossAccountBackupEnabled</code>.</p>",
-        "UpdateGlobalSettingsInput$GlobalSettings": "<p>A value for <code>isCrossAccountBackupEnabled</code> and a Region. Example: <code>update-global-settings --global-settings isCrossAccountBackupEnabled=false --region us-west-2</code>.</p>"
+        "DescribeGlobalSettingsOutput$GlobalSettings": "<p>The status of the flags <code>isCrossAccountBackupEnabled</code>, <code>isMpaEnabled</code> ('Mpa' refers to multi-party approval), and <code>isDelegatedAdministratorEnabled</code>.</p>",
+        "UpdateGlobalSettingsInput$GlobalSettings": "<p>Inputs can include:</p> <p>A value for <code>isCrossAccountBackupEnabled</code> and a Region. Example: <code>update-global-settings --global-settings isCrossAccountBackupEnabled=false --region us-west-2</code>.</p> <p>A value for Multi-party approval, styled as \"Mpa\": <code>isMpaEnabled</code>. Values can be true or false. Example: <code>update-global-settings --global-settings isMpaEnabled=false --region us-west-2</code>.</p> <p>A value for Backup Service-Linked Role creation, styled as<code>isDelegatedAdministratorEnabled</code>. Values can be true or false. Example: <code>update-global-settings --global-settings isDelegatedAdministratorEnabled=false --region us-west-2</code>.</p>"
       }
     },
     "GlobalSettingsName": {
@@ -1151,6 +1244,7 @@
         "DescribeRestoreJobOutput$IamRoleArn": "<p>Specifies the IAM role ARN used to create the target recovery point; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
         "RecoveryPointByBackupVault$IamRoleArn": "<p>Specifies the IAM role ARN used to create the target recovery point; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
         "RestoreJobsListMember$IamRoleArn": "<p>The IAM role ARN used to create the target recovery point; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
+        "ScanSetting$ScannerRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the scanner uses to access resources; for example, <code>arn:aws:iam::123456789012:role/ScannerRole</code>.</p>",
         "StartBackupJobInput$IamRoleArn": "<p>Specifies the IAM role ARN used to create the target recovery point; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
         "StartCopyJobInput$IamRoleArn": "<p>Specifies the IAM role ARN used to copy the target recovery point; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
         "StartRestoreJobInput$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example: <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
@@ -1269,15 +1363,24 @@
     "Lifecycle": {
       "base": "<p>Specifies the time period, in days, before a recovery point transitions to cold storage or is deleted.</p> <p>Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, on the console, the retention setting must be 90 days greater than the transition to cold after days setting. The transition to cold after days setting can't be changed after a backup has been transitioned to cold.</p> <p>Resource types that can transition to cold storage are listed in the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a> table. Backup ignores this expression for other resource types.</p> <p>To remove the existing lifecycle and retention periods and keep your recovery points indefinitely, specify -1 for <code>MoveToColdStorageAfterDays</code> and <code>DeleteAfterDays</code>.</p>",
       "refs": {
+        "BackupJob$RecoveryPointLifecycle": null,
         "BackupRule$Lifecycle": "<p>The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup transitions and expires backups automatically according to the lifecycle that you define. </p> <p>Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the “retention” setting must be 90 days greater than the “transition to cold after days” setting. The “transition to cold after days” setting cannot be changed after a backup has been transitioned to cold. </p> <p>Resource types that can transition to cold storage are listed in the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a> table. Backup ignores this expression for other resource types.</p>",
         "BackupRuleInput$Lifecycle": "<p>The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup will transition and expire backups automatically according to the lifecycle that you define. </p> <p>Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the “retention” setting must be 90 days greater than the “transition to cold after days” setting. The “transition to cold after days” setting cannot be changed after a backup has been transitioned to cold storage.</p> <p>Resource types that can transition to cold storage are listed in the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a> table. Backup ignores this expression for other resource types.</p> <p>This parameter has a maximum value of 100 years (36,500 days).</p>",
         "CopyAction$Lifecycle": null,
+        "CopyJob$DestinationRecoveryPointLifecycle": null,
+        "DescribeBackupJobOutput$RecoveryPointLifecycle": null,
         "DescribeRecoveryPointOutput$Lifecycle": "<p>The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup transitions and expires backups automatically according to the lifecycle that you define.</p> <p>Backups that are transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the “retention” setting must be 90 days greater than the “transition to cold after days” setting. The “transition to cold after days” setting cannot be changed after a backup has been transitioned to cold. </p> <p>Resource types that can transition to cold storage are listed in the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a> table. Backup ignores this expression for other resource types.</p>",
         "RecoveryPointByBackupVault$Lifecycle": "<p>The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup transitions and expires backups automatically according to the lifecycle that you define. </p> <p>Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the “retention” setting must be 90 days greater than the “transition to cold after days” setting. The “transition to cold after days” setting cannot be changed after a backup has been transitioned to cold. </p> <p>Resource types that can transition to cold storage are listed in the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a> table. Backup ignores this expression for other resource types.</p>",
         "StartBackupJobInput$Lifecycle": "<p>The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup will transition and expire backups automatically according to the lifecycle that you define. </p> <p>Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the “retention” setting must be 90 days greater than the “transition to cold after days” setting. The “transition to cold after days” setting cannot be changed after a backup has been transitioned to cold. </p> <p>Resource types that can transition to cold storage are listed in the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a> table. Backup ignores this expression for other resource types.</p> <p>This parameter has a maximum value of 100 years (36,500 days).</p>",
         "StartCopyJobInput$Lifecycle": null,
         "UpdateRecoveryPointLifecycleInput$Lifecycle": "<p>The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup transitions and expires backups automatically according to the lifecycle that you define. </p> <p>Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the “retention” setting must be 90 days greater than the “transition to cold after days” setting. The “transition to cold after days” setting cannot be changed after a backup has been transitioned to cold. </p>",
         "UpdateRecoveryPointLifecycleOutput$Lifecycle": "<p>The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup transitions and expires backups automatically according to the lifecycle that you define.</p> <p>Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the “retention” setting must be 90 days greater than the “transition to cold after days” setting. The “transition to cold after days” setting cannot be changed after a backup has been transitioned to cold.</p> <p>Resource types that can transition to cold storage are listed in the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a> table. Backup ignores this expression for other resource types.</p>"
+      }
+    },
+    "LifecycleDeleteAfterEvent": {
+      "base": null,
+      "refs": {
+        "Lifecycle$DeleteAfterEvent": "<p>The event after which a recovery point is deleted. A recovery point with both <code>DeleteAfterDays</code> and <code>DeleteAfterEvent</code> will delete after whichever condition is satisfied first. Not valid as an input.</p>"
       }
     },
     "LimitExceededException": {
@@ -1502,11 +1605,41 @@
       "base": null,
       "refs": {}
     },
+    "ListScanJobSummariesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListScanJobSummariesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListScanJobsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListScanJobsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListScanJobsInput$MaxResults": "<p>The maximum number of items to be returned.</p> <p>Valid Range: Minimum value of 1. Maximum value of 1000.</p>"
+      }
+    },
+    "ListScanJobsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsInput": {
       "base": null,
       "refs": {}
     },
     "ListTagsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTieringConfigurationsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTieringConfigurationsOutput": {
       "base": null,
       "refs": {}
     },
@@ -1545,6 +1678,20 @@
         "RestoreJobsListMember$ExpectedCompletionTimeMinutes": "<p>The amount of time in minutes that a job restoring a recovery point is expected to take.</p>"
       }
     },
+    "MalwareScanner": {
+      "base": null,
+      "refs": {
+        "DescribeScanJobOutput$MalwareScanner": "<p>The scanning engine used for the corresponding scan job. Currently only <code>GUARDUTY</code> is supported.</p>",
+        "ListScanJobSummariesInput$MalwareScanner": "<p>Returns only the scan jobs for the specified malware scanner. Currently the only MalwareScanner is <code>GUARDDUTY</code>. But the field also supports <code>ANY</code>, and <code>AGGREGATE_ALL</code>.</p>",
+        "ListScanJobsInput$ByMalwareScanner": "<p>Returns only the scan jobs for the specified malware scanner. Currently only supports <code>GUARDDUTY</code>.</p>",
+        "ScanAction$MalwareScanner": "<p>The malware scanner to use for the scan action. Currently only <code>GUARDDUTY</code> is supported.</p>",
+        "ScanJob$MalwareScanner": "<p>The scanning engine used for the scan job. Currently only <code>GUARDDUTY</code> is supported.</p>",
+        "ScanJobSummary$MalwareScanner": "<p>Specifies the malware scanner used during the scan job. Currently only supports <code>GUARDDUTY</code>.</p>",
+        "ScanResult$MalwareScanner": "<p>The malware scanner used to perform the scan. Currently only <code>GUARDDUTY</code> is supported.</p>",
+        "ScanSetting$MalwareScanner": "<p>The malware scanner to use for scanning. Currently only <code>GUARDDUTY</code> is supported.</p>",
+        "StartScanJobInput$MalwareScanner": "<p>Specifies the malware scanner used during the scan job. Currently only supports <code>GUARDDUTY</code>.</p>"
+      }
+    },
     "MaxFrameworkInputs": {
       "base": null,
       "refs": {
@@ -1576,7 +1723,15 @@
         "ListRestoreJobSummariesInput$MaxResults": "<p>This parameter sets the maximum number of items to be returned.</p> <p>The value is an integer. Range of accepted values is from 1 to 500.</p>",
         "ListRestoreJobsByProtectedResourceInput$MaxResults": "<p>The maximum number of items to be returned.</p>",
         "ListRestoreJobsInput$MaxResults": "<p>The maximum number of items to be returned.</p>",
-        "ListTagsInput$MaxResults": "<p>The maximum number of items to be returned.</p>"
+        "ListScanJobSummariesInput$MaxResults": "<p>The maximum number of items to be returned.</p> <p>The value is an integer. Range of accepted values is from 1 to 500.</p>",
+        "ListTagsInput$MaxResults": "<p>The maximum number of items to be returned.</p>",
+        "ListTieringConfigurationsInput$MaxResults": "<p>The maximum number of items to be returned.</p>"
+      }
+    },
+    "MaxScheduledRunsPreview": {
+      "base": null,
+      "refs": {
+        "GetBackupPlanInput$MaxScheduledRunsPreview": "<p>Number of future scheduled backup runs to preview. When set to 0 (default), no scheduled runs preview is included in the response. Valid range is 0-10.</p>"
       }
     },
     "MessageCategory": {
@@ -1740,7 +1895,8 @@
       "refs": {
         "BackupJobSummary$Region": "<p>The Amazon Web Services Regions within the job summary.</p>",
         "CopyJobSummary$Region": "<p>The Amazon Web Services Regions within the job summary.</p>",
-        "RestoreJobSummary$Region": "<p>The Amazon Web Services Regions within the job summary.</p>"
+        "RestoreJobSummary$Region": "<p>The Amazon Web Services Regions within the job summary.</p>",
+        "ScanJobSummary$Region": "<p>The Amazon Web Services Region where the scan jobs were executed.</p>"
       }
     },
     "ReportDeliveryChannel": {
@@ -1816,7 +1972,7 @@
     "ReportSetting": {
       "base": "<p>Contains detailed information about a report setting.</p>",
       "refs": {
-        "CreateReportPlanInput$ReportSetting": "<p>Identifies the report template for the report. Reports are built using a report template. The report templates are:</p> <p> <code>RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT</code> </p> <p>If the report template is <code>RESOURCE_COMPLIANCE_REPORT</code> or <code>CONTROL_COMPLIANCE_REPORT</code>, this API resource also describes the report coverage by Amazon Web Services Regions and frameworks.</p>",
+        "CreateReportPlanInput$ReportSetting": "<p>Identifies the report template for the report. Reports are built using a report template. The report templates are:</p> <p> <code>RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT | SCAN_JOB_REPORT </code> </p> <p>If the report template is <code>RESOURCE_COMPLIANCE_REPORT</code> or <code>CONTROL_COMPLIANCE_REPORT</code>, this API resource also describes the report coverage by Amazon Web Services Regions and frameworks.</p>",
         "ReportPlan$ReportSetting": "<p>Identifies the report template for the report. Reports are built using a report template. The report templates are:</p> <p> <code>RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT</code> </p> <p>If the report template is <code>RESOURCE_COMPLIANCE_REPORT</code> or <code>CONTROL_COMPLIANCE_REPORT</code>, this API resource also describes the report coverage by Amazon Web Services Regions and frameworks.</p>",
         "UpdateReportPlanInput$ReportSetting": "<p>The report template for the report. Reports are built using a report template. The report templates are:</p> <p> <code>RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT</code> </p> <p>If the report template is <code>RESOURCE_COMPLIANCE_REPORT</code> or <code>CONTROL_COMPLIANCE_REPORT</code>, this API resource also describes the report coverage by Amazon Web Services Regions and frameworks.</p>"
       }
@@ -1834,7 +1990,8 @@
       "base": null,
       "refs": {
         "BackupSelection$Resources": "<p>The Amazon Resource Names (ARNs) of the resources to assign to a backup plan. The maximum number of ARNs is 500 without wildcards, or 30 ARNs with wildcards.</p> <p>If you need to assign many resources to a backup plan, consider a different resource selection strategy, such as assigning all resources of a resource type or refining your resource selection using tags.</p> <p>If you specify multiple ARNs, the resources much match any of the ARNs (OR logic).</p>",
-        "BackupSelection$NotResources": "<p>The Amazon Resource Names (ARNs) of the resources to exclude from a backup plan. The maximum number of ARNs is 500 without wildcards, or 30 ARNs with wildcards.</p> <p>If you need to exclude many resources from a backup plan, consider a different resource selection strategy, such as assigning only one or a few resource types or refining your resource selection using tags.</p>"
+        "BackupSelection$NotResources": "<p>The Amazon Resource Names (ARNs) of the resources to exclude from a backup plan. The maximum number of ARNs is 500 without wildcards, or 30 ARNs with wildcards.</p> <p>If you need to exclude many resources from a backup plan, consider a different resource selection strategy, such as assigning only one or a few resource types or refining your resource selection using tags.</p>",
+        "ResourceSelection$Resources": "<p>An array of strings that either contains ARNs of the associated resources or contains a wildcard <code>*</code> to specify all resources. You can specify up to 100 specific resources per tiering configuration.</p>"
       }
     },
     "ResourceIdentifiers": {
@@ -1846,6 +2003,20 @@
     "ResourceNotFoundException": {
       "base": "<p>A resource that is required for the action doesn't exist.</p>",
       "refs": {}
+    },
+    "ResourceSelection": {
+      "base": "<p>This contains metadata about resource selection for tiering configurations.</p> <p>You can specify up to 5 different resource selections per tiering configuration. Data moved to lower-cost tier remains there until deletion (one-way transition).</p>",
+      "refs": {
+        "ResourceSelections$member": null
+      }
+    },
+    "ResourceSelections": {
+      "base": null,
+      "refs": {
+        "TieringConfiguration$ResourceSelection": "<p>An array of resource selection objects that specify which resources are included in the tiering configuration and their tiering settings.</p>",
+        "TieringConfigurationInputForCreate$ResourceSelection": "<p>An array of resource selection objects that specify which resources are included in the tiering configuration and their tiering settings.</p>",
+        "TieringConfigurationInputForUpdate$ResourceSelection": "<p>An array of resource selection objects that specify which resources are included in the tiering configuration and their tiering settings.</p>"
+      }
     },
     "ResourceType": {
       "base": null,
@@ -1869,14 +2040,17 @@
         "ListRecoveryPointsByBackupVaultInput$ByResourceType": "<p>Returns only recovery points that match the specified resource type(s):</p> <ul> <li> <p> <code>Aurora</code> for Amazon Aurora</p> </li> <li> <p> <code>CloudFormation</code> for CloudFormation</p> </li> <li> <p> <code>DocumentDB</code> for Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p> <code>DynamoDB</code> for Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> for Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> for Amazon FSx</p> </li> <li> <p> <code>Neptune</code> for Amazon Neptune</p> </li> <li> <p> <code>RDS</code> for Amazon Relational Database Service</p> </li> <li> <p> <code>Redshift</code> for Amazon Redshift</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> <li> <p> <code>SAP HANA on Amazon EC2</code> for SAP HANA databases on Amazon Elastic Compute Cloud instances</p> </li> <li> <p> <code>Storage Gateway</code> for Storage Gateway</p> </li> <li> <p> <code>Timestream</code> for Amazon Timestream</p> </li> <li> <p> <code>VirtualMachine</code> for VMware virtual machines</p> </li> </ul>",
         "ListRestoreJobSummariesInput$ResourceType": "<p>Returns the job count for the specified resource type. Use request <code>GetSupportedResourceTypes</code> to obtain strings for supported resource types.</p> <p>The the value ANY returns count of all resource types.</p> <p> <code>AGGREGATE_ALL</code> aggregates job counts for all resource types and returns the sum.</p> <p>The type of Amazon Web Services resource to be backed up; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database.</p>",
         "ListRestoreJobsInput$ByResourceType": "<p>Include this parameter to return only restore jobs for the specified resources:</p> <ul> <li> <p> <code>Aurora</code> for Amazon Aurora</p> </li> <li> <p> <code>CloudFormation</code> for CloudFormation</p> </li> <li> <p> <code>DocumentDB</code> for Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p> <code>DynamoDB</code> for Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> for Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> for Amazon FSx</p> </li> <li> <p> <code>Neptune</code> for Amazon Neptune</p> </li> <li> <p> <code>RDS</code> for Amazon Relational Database Service</p> </li> <li> <p> <code>Redshift</code> for Amazon Redshift</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> <li> <p> <code>SAP HANA on Amazon EC2</code> for SAP HANA databases on Amazon Elastic Compute Cloud instances</p> </li> <li> <p> <code>Storage Gateway</code> for Storage Gateway</p> </li> <li> <p> <code>Timestream</code> for Amazon Timestream</p> </li> <li> <p> <code>VirtualMachine</code> for VMware virtual machines</p> </li> </ul>",
+        "ListScanJobSummariesInput$ResourceType": "<p>Returns the job count for the specified resource type. Use request <code>GetSupportedResourceTypes</code> to obtain strings for supported resource types.</p> <p>The the value <code>ANY</code> returns count of all resource types.</p> <p> <code>AGGREGATE_ALL</code> aggregates job counts for all resource types and returns the sum.</p>",
         "ProtectedResource$ResourceType": "<p>The type of Amazon Web Services resource; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database. For Windows Volume Shadow Copy Service (VSS) backups, the only supported resource type is Amazon EC2.</p>",
         "RecoveryPointByBackupVault$ResourceType": "<p>The type of Amazon Web Services resource saved as a recovery point; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database. For Windows Volume Shadow Copy Service (VSS) backups, the only supported resource type is Amazon EC2.</p>",
         "RecoveryPointMember$ResourceType": "<p>The Amazon Web Services resource type that is saved as a recovery point.</p>",
+        "ResourceSelection$ResourceType": "<p>The type of Amazon Web Services resource; for example, <code>S3</code> for Amazon S3. For tiering configurations, this is currently limited to <code>S3</code>.</p>",
         "ResourceTypeManagementPreference$key": null,
         "ResourceTypeOptInPreference$key": null,
         "ResourceTypes$member": null,
         "RestoreJobSummary$ResourceType": "<p>This value is the job count for the specified resource type. The request <code>GetSupportedResourceTypes</code> returns strings for supported resource types.</p>",
         "RestoreJobsListMember$ResourceType": "<p>The resource type of the listed restore jobs; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database. For Windows Volume Shadow Copy Service (VSS) backups, the only supported resource type is Amazon EC2.</p>",
+        "ScanJobSummary$ResourceType": "<p>The type of Amazon Web Services resource for the scan jobs included in this summary.</p>",
         "StartRestoreJobInput$ResourceType": "<p>Starts a job to restore a recovery point for one of the following resources:</p> <ul> <li> <p> <code>Aurora</code> - Amazon Aurora</p> </li> <li> <p> <code>DocumentDB</code> - Amazon DocumentDB</p> </li> <li> <p> <code>CloudFormation</code> - CloudFormation</p> </li> <li> <p> <code>DynamoDB</code> - Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> - Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> - Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> - Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> - Amazon FSx</p> </li> <li> <p> <code>Neptune</code> - Amazon Neptune</p> </li> <li> <p> <code>RDS</code> - Amazon Relational Database Service</p> </li> <li> <p> <code>Redshift</code> - Amazon Redshift</p> </li> <li> <p> <code>Storage Gateway</code> - Storage Gateway</p> </li> <li> <p> <code>S3</code> - Amazon Simple Storage Service</p> </li> <li> <p> <code>Timestream</code> - Amazon Timestream</p> </li> <li> <p> <code>VirtualMachine</code> - Virtual machines</p> </li> </ul>"
       }
     },
@@ -1904,7 +2078,8 @@
       "base": null,
       "refs": {
         "GetSupportedResourceTypesOutput$ResourceTypes": "<p>Contains a string with the supported Amazon Web Services resource types:</p> <ul> <li> <p> <code>Aurora</code> for Amazon Aurora</p> </li> <li> <p> <code>CloudFormation</code> for CloudFormation</p> </li> <li> <p> <code>DocumentDB</code> for Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p> <code>DynamoDB</code> for Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> for Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> for Amazon FSx</p> </li> <li> <p> <code>Neptune</code> for Amazon Neptune</p> </li> <li> <p> <code>RDS</code> for Amazon Relational Database Service</p> </li> <li> <p> <code>Redshift</code> for Amazon Redshift</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> <li> <p> <code>SAP HANA on Amazon EC2</code> for SAP HANA databases on Amazon Elastic Compute Cloud instances</p> </li> <li> <p> <code>Storage Gateway</code> for Storage Gateway</p> </li> <li> <p> <code>Timestream</code> for Amazon Timestream</p> </li> <li> <p> <code>VirtualMachine</code> for VMware virtual machines</p> </li> </ul>",
-        "IndexAction$ResourceTypes": "<p>0 or 1 index action will be accepted for each BackupRule.</p> <p>Valid values:</p> <ul> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> </ul>"
+        "IndexAction$ResourceTypes": "<p>0 or 1 index action will be accepted for each BackupRule.</p> <p>Valid values:</p> <ul> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> </ul>",
+        "ScanSetting$ResourceTypes": "<p>An array of resource types to be scanned for malware.</p>"
       }
     },
     "RestoreAccessBackupVaultList": {
@@ -2082,6 +2257,161 @@
       "base": null,
       "refs": {}
     },
+    "RuleExecutionType": {
+      "base": null,
+      "refs": {
+        "ScheduledPlanExecutionMember$RuleExecutionType": "<p>The type of backup rule execution. Valid values are <code>CONTINUOUS</code> (point-in-time recovery), <code>SNAPSHOTS</code> (snapshot backups), or <code>CONTINUOUS_AND_SNAPSHOTS</code> (both types combined).</p>"
+      }
+    },
+    "ScanAction": {
+      "base": "<p>Defines a scanning action that specifies the malware scanner and scan mode to use.</p>",
+      "refs": {
+        "ScanActions$member": null
+      }
+    },
+    "ScanActions": {
+      "base": null,
+      "refs": {
+        "BackupRule$ScanActions": "<p>Contains your scanning configuration for the backup rule and includes the malware scanner, and scan mode of either full or incremental.</p>",
+        "BackupRuleInput$ScanActions": "<p>Contains your scanning configuration for the backup rule and includes the malware scanner, and scan mode of either full or incremental.</p>"
+      }
+    },
+    "ScanFinding": {
+      "base": null,
+      "refs": {
+        "ScanFindings$member": null
+      }
+    },
+    "ScanFindings": {
+      "base": null,
+      "refs": {
+        "AggregatedScanResult$Findings": "<p>An array of findings discovered across all aggregated scans.</p>",
+        "ScanResult$Findings": "<p>An array of findings discovered during the scan.</p>"
+      }
+    },
+    "ScanJob": {
+      "base": "<p>Contains metadata about a scan job, including information about the scanning process, results, and associated resources.</p>",
+      "refs": {
+        "ScanJobs$member": null
+      }
+    },
+    "ScanJobCreator": {
+      "base": "<p>Contains identifying information about the creation of a scan job, including the backup plan and rule that initiated the scan.</p>",
+      "refs": {
+        "DescribeScanJobOutput$CreatedBy": null,
+        "ScanJob$CreatedBy": "<p>Contains identifying information about the creation of a scan job.</p>"
+      }
+    },
+    "ScanJobState": {
+      "base": null,
+      "refs": {
+        "ScanResult$ScanJobState": "<p>The final state of the scan job.</p> <p>Valid values: <code>COMPLETED</code> | <code>FAILED</code> | <code>CANCELED</code>.</p>"
+      }
+    },
+    "ScanJobStatus": {
+      "base": null,
+      "refs": {
+        "ListScanJobSummariesInput$State": "<p>Returns only the scan jobs for the specified scanning job state.</p>",
+        "ScanJobSummary$State": "<p>The state of the scan jobs included in this summary.</p> <p>Valid values: <code>CREATED</code> | <code>RUNNING</code> | <code>COMPLETED</code> | <code>COMPLETED_WITH_ISSUES</code> | <code>FAILED</code> | <code>CANCELED</code>.</p>"
+      }
+    },
+    "ScanJobSummary": {
+      "base": "<p>Contains summary information about scan jobs, including counts and metadata for a specific time period and criteria.</p>",
+      "refs": {
+        "ScanJobSummaryList$member": null
+      }
+    },
+    "ScanJobSummaryList": {
+      "base": null,
+      "refs": {
+        "ListScanJobSummariesOutput$ScanJobSummaries": "<p>The summary information.</p>"
+      }
+    },
+    "ScanJobs": {
+      "base": null,
+      "refs": {
+        "ListScanJobsOutput$ScanJobs": "<p>An array of structures containing metadata about your scan jobs returned in JSON format.</p>"
+      }
+    },
+    "ScanMode": {
+      "base": null,
+      "refs": {
+        "DescribeScanJobOutput$ScanMode": "<p>Specifies the scan type used for the scan job.</p>",
+        "ScanAction$ScanMode": "<p>The scanning mode to use for the scan action.</p> <p>Valid values: <code>FULL_SCAN</code> | <code>INCREMENTAL_SCAN</code>.</p>",
+        "ScanJob$ScanMode": "<p>Specifies the scan type use for the scan job.</p> <p>Includes:</p> <p> <code>FULL_SCAN</code> will scan the entire data lineage within the backup.</p> <p> <code>INCREMENTAL_SCAN</code> will scan the data difference between the target recovery point and base recovery point ARN.</p>",
+        "StartScanJobInput$ScanMode": "<p>Specifies the scan type use for the scan job.</p> <p>Includes:</p> <ul> <li> <p> <code>FULL_SCAN</code> will scan the entire data lineage within the backup.</p> </li> <li> <p> <code>INCREMENTAL_SCAN</code> will scan the data difference between the target recovery point and base recovery point ARN.</p> </li> </ul>"
+      }
+    },
+    "ScanResourceType": {
+      "base": null,
+      "refs": {
+        "DescribeScanJobOutput$ResourceType": "<p>The type of Amazon Web Services Resource to be backed up; for example, an Amazon Elastic Block Store (Amazon EBS) volume.</p> <p>Pattern: <code>^[a-zA-Z0-9\\-\\_\\.]{1,50}$</code> </p>",
+        "ListScanJobsInput$ByResourceType": "<p>Returns restore testing selections by the specified restore testing plan name.</p> <ul> <li> <p> <code>EBS</code>for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code>for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>S3</code>for Amazon Simple Storage Service (Amazon S3)</p> </li> </ul> <p>Pattern: <code>^[a-zA-Z0-9\\-\\_\\.]{1,50}$</code> </p>",
+        "ScanJob$ResourceType": "<p>The type of Amazon Web Services resource being scanned; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database.</p>"
+      }
+    },
+    "ScanResult": {
+      "base": "<p>Contains the results of a security scan, including scanner information, scan state, and any findings discovered.</p>",
+      "refs": {
+        "ScanResults$member": null
+      }
+    },
+    "ScanResultInfo": {
+      "base": "<p>Contains information about the results of a scan job.</p>",
+      "refs": {
+        "DescribeScanJobOutput$ScanResult": "<p> Contains the <code>ScanResultsStatus</code> for the scanning job and returns <code>THREATS_FOUND</code> or <code>NO_THREATS_FOUND</code> for completed jobs.</p>",
+        "ScanJob$ScanResult": "<p>Contains the scan results information, including the status of threats found during scanning.</p>"
+      }
+    },
+    "ScanResultStatus": {
+      "base": null,
+      "refs": {
+        "ListScanJobSummariesInput$ScanResultStatus": "<p>Returns only the scan jobs for the specified scan results.</p>",
+        "ListScanJobsInput$ByScanResultStatus": "<p>Returns only the scan jobs for the specified scan results:</p> <ul> <li> <p> <code>THREATS_FOUND</code> </p> </li> <li> <p> <code>NO_THREATS_FOUND</code> </p> </li> </ul>",
+        "ScanJobSummary$ScanResultStatus": "<p>The scan result status for the scan jobs included in this summary.</p> <p>Valid values: <code>THREATS_FOUND</code> | <code>NO_THREATS_FOUND</code>.</p>",
+        "ScanResultInfo$ScanResultStatus": "<p>The status of the scan results.</p> <p>Valid values: <code>THREATS_FOUND</code> | <code>NO_THREATS_FOUND</code>.</p>"
+      }
+    },
+    "ScanResults": {
+      "base": null,
+      "refs": {
+        "DescribeRecoveryPointOutput$ScanResults": "<p>Contains the latest scanning results against the recovery point and currently include <code>MalwareScanner</code>, <code>ScanJobState</code>, <code>Findings</code>, and <code>LastScanTimestamp</code> </p>"
+      }
+    },
+    "ScanSetting": {
+      "base": "<p>Contains configuration settings for malware scanning, including the scanner type, target resource types, and scanner role.</p>",
+      "refs": {
+        "ScanSettings$member": null
+      }
+    },
+    "ScanSettings": {
+      "base": null,
+      "refs": {
+        "BackupPlan$ScanSettings": "<p>Contains your scanning configuration for the backup plan and includes the Malware scanner, your selected resources, and scanner role.</p>",
+        "BackupPlanInput$ScanSettings": "<p>Contains your scanning configuration for the backup rule and includes the malware scanner, and scan mode of either full or incremental.</p>",
+        "UpdateBackupPlanOutput$ScanSettings": "<p>Contains your scanning configuration for the backup plan and includes the Malware scanner, your selected resources, and scanner role.</p>"
+      }
+    },
+    "ScanState": {
+      "base": null,
+      "refs": {
+        "DescribeScanJobOutput$State": "<p>The current state of a scan job.</p>",
+        "ListScanJobsInput$ByState": "<p>Returns only the scan jobs for the specified scanning job state.</p>",
+        "ScanJob$State": "<p>The current state of the scan job.</p> <p>Valid values: <code>CREATED</code> | <code>RUNNING</code> | <code>COMPLETED</code> | <code>COMPLETED_WITH_ISSUES</code> | <code>FAILED</code> | <code>CANCELED</code>.</p>"
+      }
+    },
+    "ScheduledPlanExecutionMember": {
+      "base": "<p>Contains information about a scheduled backup plan execution, including the execution time, rule type, and associated rule identifier.</p>",
+      "refs": {
+        "ScheduledRunsPreview$member": null
+      }
+    },
+    "ScheduledRunsPreview": {
+      "base": null,
+      "refs": {
+        "GetBackupPlanOutput$ScheduledRunsPreview": "<p>List of upcoming scheduled backup runs. Only included when <code>MaxScheduledRunsPreview</code> parameter is greater than 0. Contains up to 10 future backup executions with their scheduled times, execution types, and associated rule IDs.</p>"
+      }
+    },
     "SensitiveStringMap": {
       "base": null,
       "refs": {
@@ -2127,6 +2457,14 @@
       "base": null,
       "refs": {}
     },
+    "StartScanJobInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartScanJobOutput": {
+      "base": null,
+      "refs": {}
+    },
     "StopBackupJobInput": {
       "base": null,
       "refs": {}
@@ -2147,10 +2485,23 @@
         "CreateRestoreTestingSelectionInput$RestoreTestingPlanName": "<p>Input the restore testing plan name that was returned from the related CreateRestoreTestingPlan request.</p>",
         "CreateRestoreTestingSelectionOutput$RestoreTestingPlanArn": "<p>The ARN of the restore testing plan with which the restore testing selection is associated.</p>",
         "CreateRestoreTestingSelectionOutput$RestoreTestingPlanName": "<p>The name of the restore testing plan.</p> <p>The name cannot be changed after creation. The name consists of only alphanumeric characters and underscores. Maximum length is 50.</p>",
-        "CreateRestoreTestingSelectionOutput$RestoreTestingSelectionName": "<p>The name of the restore testing selection for the related restore testing plan.</p>",
+        "CreateRestoreTestingSelectionOutput$RestoreTestingSelectionName": "<p>The name of the restore testing selection for the related restore testing plan.</p> <p>The name cannot be changed after creation. The name consists of only alphanumeric characters and underscores. Maximum length is 50.</p>",
         "DeleteRestoreTestingPlanInput$RestoreTestingPlanName": "<p>Required unique name of the restore testing plan you wish to delete.</p>",
         "DeleteRestoreTestingSelectionInput$RestoreTestingPlanName": "<p>Required unique name of the restore testing plan that contains the restore testing selection you wish to delete.</p>",
         "DeleteRestoreTestingSelectionInput$RestoreTestingSelectionName": "<p>Required unique name of the restore testing selection you wish to delete.</p>",
+        "DescribeScanJobInput$ScanJobId": "<p>Uniquely identifies a request to Backup to scan a resource.</p>",
+        "DescribeScanJobOutput$AccountId": "<p>Returns the account ID that owns the scan job.</p> <p>Pattern: <code>^[0-9]{12}$</code> </p>",
+        "DescribeScanJobOutput$BackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code> </p>",
+        "DescribeScanJobOutput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p> <p>Pattern: <code>^[a-zA-Z0-9\\-\\_\\.]{2,50}$</code> </p>",
+        "DescribeScanJobOutput$IamRoleArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup vault; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
+        "DescribeScanJobOutput$RecoveryPointArn": "<p>An ARN that uniquely identifies the target recovery point for scanning.; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
+        "DescribeScanJobOutput$ResourceArn": "<p>An ARN that uniquely identifies the source resource of the corresponding recovery point ARN.</p>",
+        "DescribeScanJobOutput$ResourceName": "<p>The non-unique name of the resource that belongs to the specified backup.</p>",
+        "DescribeScanJobOutput$ScanBaseRecoveryPointArn": "<p>An ARN that uniquely identifies the base recovery point for scanning. This field will only be populated when an incremental scan job has taken place.</p>",
+        "DescribeScanJobOutput$ScanId": "<p>The scan ID generated by Amazon GuardDuty for the corresponding Scan Job ID request from Backup.</p>",
+        "DescribeScanJobOutput$ScanJobId": "<p>The scan job ID that uniquely identified the request to Backup.</p>",
+        "DescribeScanJobOutput$ScannerRoleArn": "<p>Specifies the scanner IAM role ARN used to for the scan job.</p>",
+        "DescribeScanJobOutput$StatusMessage": "<p>A detailed message explaining the status of the job to back up a resource.</p>",
         "GetRestoreTestingInferredMetadataInput$BackupVaultAccountId": "<p>The account ID of the specified backup vault.</p>",
         "GetRestoreTestingInferredMetadataInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web ServicesRegion where they are created. They consist of letters, numbers, and hyphens.</p>",
         "GetRestoreTestingInferredMetadataInput$RecoveryPointArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>. </p>",
@@ -2164,6 +2515,12 @@
         "ListRestoreTestingSelectionsInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the nexttoken.</p>",
         "ListRestoreTestingSelectionsInput$RestoreTestingPlanName": "<p>Returns restore testing selections by the specified restore testing plan name.</p>",
         "ListRestoreTestingSelectionsOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the nexttoken.</p>",
+        "ListScanJobsInput$ByAccountId": "<p>The account ID to list the jobs from. Returns only backup jobs associated with the specified account ID.</p> <p>If used from an Amazon Web Services Organizations management account, passing <code>*</code> returns all jobs across the organization.</p> <p>Pattern: <code>^[0-9]{12}$</code> </p>",
+        "ListScanJobsInput$ByBackupVaultName": "<p>Returns only scan jobs that will be stored in the specified backup vault. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p> <p>Pattern: <code>^[a-zA-Z0-9\\-\\_\\.]{2,50}$</code> </p>",
+        "ListScanJobsInput$ByRecoveryPointArn": "<p>Returns only the scan jobs that are ran against the specified recovery point.</p>",
+        "ListScanJobsInput$ByResourceArn": "<p>Returns only scan jobs that match the specified resource Amazon Resource Name (ARN).</p>",
+        "ListScanJobsInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListScanJobsOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "RestoreTestingPlanForCreate$RestoreTestingPlanName": "<p>The RestoreTestingPlanName is a unique string that is the name of the restore testing plan. This cannot be changed after creation, and it must consist of only alphanumeric characters and underscores.</p>",
         "RestoreTestingPlanForCreate$ScheduleExpression": "<p>A CRON expression in specified timezone when a restore testing plan is executed. When no CRON expression is provided, Backup will use the default expression <code>cron(0 5 ? * * *)</code>.</p>",
         "RestoreTestingPlanForCreate$ScheduleExpressionTimezone": "<p>Optional. This is the timezone in which the schedule expression is set. By default, ScheduleExpressions are in UTC. You can modify this to a specified timezone.</p>",
@@ -2180,19 +2537,42 @@
         "RestoreTestingPlanForUpdate$ScheduleExpressionTimezone": "<p>Optional. This is the timezone in which the schedule expression is set. By default, ScheduleExpressions are in UTC. You can modify this to a specified timezone.</p>",
         "RestoreTestingSelectionForCreate$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example: <code>arn:aws:iam::123456789012:role/S3Access</code>. </p>",
         "RestoreTestingSelectionForCreate$ProtectedResourceType": "<p>The type of Amazon Web Services resource included in a restore testing selection; for example, an Amazon EBS volume or an Amazon RDS database.</p> <p>Supported resource types accepted include:</p> <ul> <li> <p> <code>Aurora</code> for Amazon Aurora</p> </li> <li> <p> <code>DocumentDB</code> for Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p> <code>DynamoDB</code> for Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> for Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> for Amazon FSx</p> </li> <li> <p> <code>Neptune</code> for Amazon Neptune</p> </li> <li> <p> <code>RDS</code> for Amazon Relational Database Service</p> </li> <li> <p> <code>S3</code> for Amazon S3</p> </li> </ul>",
-        "RestoreTestingSelectionForCreate$RestoreTestingSelectionName": "<p>The unique name of the restore testing selection that belongs to the related restore testing plan.</p>",
+        "RestoreTestingSelectionForCreate$RestoreTestingSelectionName": "<p>The unique name of the restore testing selection that belongs to the related restore testing plan.</p> <p>The name consists of only alphanumeric characters and underscores. Maximum length is 50.</p>",
         "RestoreTestingSelectionForGet$CreatorRequestId": "<p>This identifies the request and allows failed requests to be retried without the risk of running the operation twice. If the request includes a <code>CreatorRequestId</code> that matches an existing backup plan, that plan is returned. This parameter is optional.</p> <p>If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.</p>",
         "RestoreTestingSelectionForGet$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example:<code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
         "RestoreTestingSelectionForGet$ProtectedResourceType": "<p>The type of Amazon Web Services resource included in a resource testing selection; for example, an Amazon EBS volume or an Amazon RDS database.</p>",
         "RestoreTestingSelectionForGet$RestoreTestingPlanName": "<p>The RestoreTestingPlanName is a unique string that is the name of the restore testing plan.</p>",
-        "RestoreTestingSelectionForGet$RestoreTestingSelectionName": "<p>The unique name of the restore testing selection that belongs to the related restore testing plan.</p>",
+        "RestoreTestingSelectionForGet$RestoreTestingSelectionName": "<p>The unique name of the restore testing selection that belongs to the related restore testing plan.</p> <p>The name consists of only alphanumeric characters and underscores. Maximum length is 50.</p>",
         "RestoreTestingSelectionForList$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example: <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
         "RestoreTestingSelectionForList$ProtectedResourceType": "<p>The type of Amazon Web Services resource included in a restore testing selection; for example, an Amazon EBS volume or an Amazon RDS database.</p>",
         "RestoreTestingSelectionForList$RestoreTestingPlanName": "<p>Unique string that is the name of the restore testing plan.</p> <p>The name cannot be changed after creation. The name must consist of only alphanumeric characters and underscores. Maximum length is 50.</p>",
-        "RestoreTestingSelectionForList$RestoreTestingSelectionName": "<p>Unique name of a restore testing selection.</p>",
+        "RestoreTestingSelectionForList$RestoreTestingSelectionName": "<p>Unique name of a restore testing selection.</p> <p>The name consists of only alphanumeric characters and underscores. Maximum length is 50.</p>",
         "RestoreTestingSelectionForUpdate$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example: <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
+        "ScanJob$AccountId": "<p>The account ID that owns the scan job.</p>",
+        "ScanJob$BackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
+        "ScanJob$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>",
+        "ScanJob$IamRoleArn": "<p>Specifies the IAM role ARN used to create the scan job; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
+        "ScanJob$RecoveryPointArn": "<p>An ARN that uniquely identifies the recovery point being scanned; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
+        "ScanJob$ResourceArn": "<p>An ARN that uniquely identifies the source resource of the recovery point being scanned.</p>",
+        "ScanJob$ResourceName": "<p>The non-unique name of the resource that belongs to the specified backup.</p>",
+        "ScanJob$ScanBaseRecoveryPointArn": "<p>An ARN that uniquely identifies the base recovery point for scanning. This field is populated when an incremental scan job has taken place.</p>",
+        "ScanJob$ScanId": "<p>The scan ID generated by the malware scanner for the corresponding scan job.</p>",
+        "ScanJob$ScanJobId": "<p>The unique identifier that identifies the scan job request to Backup.</p>",
+        "ScanJob$ScannerRoleArn": "<p>Specifies the scanner IAM role ARN used for the scan job.</p>",
+        "ScanJob$StatusMessage": "<p>A detailed message explaining the status of the scan job.</p>",
+        "ScanJobCreator$BackupPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup plan; for example, <code>arn:aws:backup:us-east-1:123456789012:plan:8F81F553-3A74-4A3F-B93D-B3360DC80C50</code>.</p>",
+        "ScanJobCreator$BackupPlanId": "<p>The ID of the backup plan.</p>",
+        "ScanJobCreator$BackupPlanVersion": "<p>Unique, randomly generated, Unicode, UTF-8 encoded strings that are at most 1,024 bytes long. Version IDs cannot be edited.</p>",
+        "ScanJobCreator$BackupRuleId": "<p>Uniquely identifies the backup rule that initiated the scan job.</p>",
         "SensitiveStringMap$key": null,
         "SensitiveStringMap$value": null,
+        "StartScanJobInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p> <p>Pattern: <code>^[a-zA-Z0-9\\-\\_]{2,50}$</code> </p>",
+        "StartScanJobInput$IamRoleArn": "<p>Specifies the IAM role ARN used to create the target recovery point; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
+        "StartScanJobInput$IdempotencyToken": "<p>A customer-chosen string that you can use to distinguish between otherwise identical calls to <code>StartScanJob</code>. Retrying a successful request with the same idempotency token results in a success message with no action taken.</p>",
+        "StartScanJobInput$RecoveryPointArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a recovery point. This is your target recovery point for a full scan. If you are running an incremental scan, this will be your a recovery point which has been created after your base recovery point selection.</p>",
+        "StartScanJobInput$ScanBaseRecoveryPointArn": "<p>An ARN that uniquely identifies the base recovery point to be used for incremental scanning.</p>",
+        "StartScanJobInput$ScannerRoleArn": "<p>Specified the IAM scanner role ARN.</p>",
+        "StartScanJobOutput$ScanJobId": "<p>Uniquely identifies a request to Backup to back up a resource.</p>",
         "UpdateRestoreTestingPlanInput$RestoreTestingPlanName": "<p>The name of the restore testing plan name.</p>",
         "UpdateRestoreTestingPlanOutput$RestoreTestingPlanArn": "<p>Unique ARN (Amazon Resource Name) of the restore testing plan.</p>",
         "UpdateRestoreTestingPlanOutput$RestoreTestingPlanName": "<p>The name cannot be changed after creation. The name consists of only alphanumeric characters and underscores. Maximum length is 50.</p>",
@@ -2235,9 +2615,58 @@
         "CreateLegalHoldInput$Tags": "<p>Optional tags to include. A tag is a key-value pair you can use to manage, filter, and search for your resources. Allowed characters include UTF-8 letters, numbers, spaces, and the following characters: + - = . _ : /. </p>",
         "CreateLogicallyAirGappedBackupVaultInput$BackupVaultTags": "<p>The tags to assign to the vault.</p>",
         "CreateRestoreAccessBackupVaultInput$BackupVaultTags": "<p>Optional tags to assign to the restore access backup vault.</p>",
+        "CreateTieringConfigurationInput$TieringConfigurationTags": "<p>The tags to assign to the tiering configuration.</p>",
         "ListTagsOutput$Tags": "<p>Information about the tags.</p>",
         "StartBackupJobInput$RecoveryPointTags": "<p>The tags to assign to the resources.</p>",
         "TagResourceInput$Tags": "<p>Key-value pairs that are used to help organize your resources. You can assign your own metadata to the resources you create. For clarity, this is the structure to assign tags: <code>[{\"Key\":\"string\",\"Value\":\"string\"}]</code>.</p>"
+      }
+    },
+    "TieringConfiguration": {
+      "base": "<p>This contains metadata about a tiering configuration.</p>",
+      "refs": {
+        "GetTieringConfigurationOutput$TieringConfiguration": "<p>Specifies the body of a tiering configuration. Includes <code>TieringConfigurationName</code>.</p>"
+      }
+    },
+    "TieringConfigurationInputForCreate": {
+      "base": "<p>This contains metadata about a tiering configuration for create operations.</p>",
+      "refs": {
+        "CreateTieringConfigurationInput$TieringConfiguration": "<p>A tiering configuration must contain a unique <code>TieringConfigurationName</code> string you create and must contain a <code>BackupVaultName</code> and <code>ResourceSelection</code>. You may optionally include a <code>CreatorRequestId</code> string.</p> <p>The <code>TieringConfigurationName</code> is a unique string that is the name of the tiering configuration. This cannot be changed after creation, and it must consist of only alphanumeric characters and underscores.</p>"
+      }
+    },
+    "TieringConfigurationInputForUpdate": {
+      "base": "<p>This contains metadata about a tiering configuration for update operations.</p>",
+      "refs": {
+        "UpdateTieringConfigurationInput$TieringConfiguration": "<p>Specifies the body of a tiering configuration.</p>"
+      }
+    },
+    "TieringConfigurationName": {
+      "base": null,
+      "refs": {
+        "DeleteTieringConfigurationInput$TieringConfigurationName": "<p>The unique name of a tiering configuration.</p>",
+        "GetTieringConfigurationInput$TieringConfigurationName": "<p>The unique name of a tiering configuration.</p>",
+        "TieringConfiguration$TieringConfigurationName": "<p>The unique name of the tiering configuration. This cannot be changed after creation, and it must consist of only alphanumeric characters and underscores.</p>",
+        "TieringConfigurationInputForCreate$TieringConfigurationName": "<p>The unique name of the tiering configuration. This cannot be changed after creation, and it must consist of only alphanumeric characters and underscores.</p>",
+        "TieringConfigurationsListMember$TieringConfigurationName": "<p>The unique name of the tiering configuration.</p>",
+        "UpdateTieringConfigurationInput$TieringConfigurationName": "<p>The name of a tiering configuration to update.</p>",
+        "UpdateTieringConfigurationOutput$TieringConfigurationName": "<p>This unique string is the name of the tiering configuration.</p>"
+      }
+    },
+    "TieringConfigurationsList": {
+      "base": "<p>A list of tiering configurations.</p>",
+      "refs": {
+        "ListTieringConfigurationsOutput$TieringConfigurations": "<p>An array of tiering configurations returned by the <code>ListTieringConfigurations</code> call.</p>"
+      }
+    },
+    "TieringConfigurationsListMember": {
+      "base": "<p>This contains metadata about a tiering configuration returned in a list.</p>",
+      "refs": {
+        "TieringConfigurationsList$member": null
+      }
+    },
+    "TieringDownSettingsInDays": {
+      "base": null,
+      "refs": {
+        "ResourceSelection$TieringDownSettingsInDays": "<p>The number of days after creation within a backup vault that an object can transition to the low cost warm storage tier. Must be a positive integer between 60 and 36500 days.</p>"
       }
     },
     "Timestamp": {
@@ -2245,6 +2674,10 @@
       "refs": {
         "CreateRestoreTestingPlanOutput$CreationTime": "<p>The date and time a restore testing plan was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
         "CreateRestoreTestingSelectionOutput$CreationTime": "<p>The time that the resource testing selection was created.</p>",
+        "DescribeScanJobOutput$CompletionDate": "<p>The date and time that a backup index finished creation, in Unix format and Coordinated Universal Time (UTC). The value of <code>CompletionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "DescribeScanJobOutput$CreationDate": "<p>The date and time that a backup index finished creation, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "ListScanJobsInput$ByCompleteAfter": "<p>Returns only scan jobs completed after a date expressed in Unix format and Coordinated Universal Time (UTC).</p>",
+        "ListScanJobsInput$ByCompleteBefore": "<p>Returns only backup jobs completed before a date expressed in Unix format and Coordinated Universal Time (UTC).</p>",
         "RestoreTestingPlanForGet$CreationTime": "<p>The date and time that a restore testing plan was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "RestoreTestingPlanForGet$LastExecutionTime": "<p>The last time a restore test was run with the specified restore testing plan. A date and time, in Unix format and Coordinated Universal Time (UTC). The value of <code>LastExecutionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "RestoreTestingPlanForGet$LastUpdateTime": "<p>The date and time that the restore testing plan was updated. This update is in Unix format and Coordinated Universal Time (UTC). The value of <code>LastUpdateTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
@@ -2253,6 +2686,9 @@
         "RestoreTestingPlanForList$LastUpdateTime": "<p>The date and time that the restore testing plan was updated. This update is in Unix format and Coordinated Universal Time (UTC). The value of <code>LastUpdateTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "RestoreTestingSelectionForGet$CreationTime": "<p>The date and time that a restore testing selection was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 201812:11:30.087 AM.</p>",
         "RestoreTestingSelectionForList$CreationTime": "<p>The date and time that a restore testing selection was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26,2018 12:11:30.087 AM.</p>",
+        "ScanJob$CompletionDate": "<p>The date and time that a scan job is completed, in Unix format and Coordinated Universal Time (UTC). The value of <code>CompletionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "ScanJob$CreationDate": "<p>The date and time that a scan job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "StartScanJobOutput$CreationDate": "<p>The date and time that a backup job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "UpdateRestoreTestingPlanOutput$CreationTime": "<p>The time the resource testing plan was created.</p>",
         "UpdateRestoreTestingPlanOutput$UpdateTime": "<p>The time the update completed for the restore testing plan.</p>",
         "UpdateRestoreTestingSelectionOutput$CreationTime": "<p>The time the resource testing selection was updated successfully.</p>",
@@ -2334,6 +2770,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateTieringConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTieringConfigurationOutput": {
+      "base": null,
+      "refs": {}
+    },
     "VaultNames": {
       "base": null,
       "refs": {
@@ -2375,16 +2819,20 @@
     "boolean": {
       "base": null,
       "refs": {
+        "BackupJob$IsEncrypted": "<p>A boolean value indicating whether the backup is encrypted. All backups in Backup are encrypted, but this field indicates the encryption status for transparency.</p>",
         "BackupJob$IsParent": "<p>This is a boolean value indicating this is a parent (composite) backup job.</p>",
         "CopyJob$IsParent": "<p>This is a boolean value indicating this is a parent (composite) copy job.</p>",
+        "DescribeBackupJobOutput$IsEncrypted": "<p>A boolean value indicating whether the backup is encrypted. All backups in Backup are encrypted, but this field indicates the encryption status for transparency.</p>",
         "DescribeBackupJobOutput$IsParent": "<p>This returns the boolean value that a backup job is a parent (composite) job.</p>",
         "DescribeRecoveryPointOutput$IsEncrypted": "<p>A Boolean value that is returned as <code>TRUE</code> if the specified recovery point is encrypted, or <code>FALSE</code> if the recovery point is not encrypted.</p>",
         "DescribeRecoveryPointOutput$IsParent": "<p>This returns the boolean value that a recovery point is a parent (composite) job.</p>",
+        "DescribeRestoreJobOutput$IsParent": "<p>This is a boolean value indicating whether the restore job is a parent (composite) restore job.</p>",
         "ListBackupVaultsInput$ByShared": "<p>This parameter will sort the list of vaults by shared vaults.</p>",
         "ListRecoveryPointsByResourceInput$ManagedByAWSBackupOnly": "<p>This attribute filters recovery points based on ownership.</p> <p>If this is set to <code>TRUE</code>, the response will contain recovery points associated with the selected resources that are managed by Backup.</p> <p>If this is set to <code>FALSE</code>, the response will contain all recovery points associated with the selected resource.</p> <p>Type: Boolean</p>",
         "RecoveryPointByBackupVault$IsEncrypted": "<p>A Boolean value that is returned as <code>TRUE</code> if the specified recovery point is encrypted, or <code>FALSE</code> if the recovery point is not encrypted.</p>",
         "RecoveryPointByBackupVault$IsParent": "<p>This is a boolean value indicating this is a parent (composite) recovery point.</p>",
         "RecoveryPointByResource$IsParent": "<p>This is a boolean value indicating this is a parent (composite) recovery point.</p>",
+        "RestoreJobsListMember$IsParent": "<p>This is a boolean value indicating whether the restore job is a parent (composite) restore job.</p>",
         "StartBackupJobOutput$IsParent": "<p>This is a returned boolean value indicating this is a parent (composite) backup job.</p>",
         "StartCopyJobOutput$IsParent": "<p>This is a returned boolean value indicating this is a parent (composite) copy job.</p>",
         "StartRestoreJobInput$CopySourceTagsToRestoredResource": "<p>This is an optional parameter. If this equals <code>True</code>, tags included in the backup will be copied to the restored resource.</p> <p>This can only be applied to backups created through Backup.</p>"
@@ -2406,7 +2854,8 @@
         "RestoreTestingSelectionForCreate$ValidationWindowHours": "<p>This is amount of hours (0 to 168) available to run a validation script on the data. The data will be deleted upon the completion of the validation script or the end of the specified retention period, whichever comes first.</p>",
         "RestoreTestingSelectionForGet$ValidationWindowHours": "<p>This is amount of hours (1 to 168) available to run a validation script on the data. The data will be deleted upon the completion of the validation script or the end of the specified retention period, whichever comes first.</p>",
         "RestoreTestingSelectionForList$ValidationWindowHours": "<p>This value represents the time, in hours, data is retained after a restore test so that optional validation can be completed.</p> <p>Accepted value is an integer between 0 and 168 (the hourly equivalent of seven days).</p>",
-        "RestoreTestingSelectionForUpdate$ValidationWindowHours": "<p>This value represents the time, in hours, data is retained after a restore test so that optional validation can be completed.</p> <p>Accepted value is an integer between 0 and 168 (the hourly equivalent of seven days).</p>"
+        "RestoreTestingSelectionForUpdate$ValidationWindowHours": "<p>This value represents the time, in hours, data is retained after a restore test so that optional validation can be completed.</p> <p>Accepted value is an integer between 0 and 168 (the hourly equivalent of seven days).</p>",
+        "ScanJobSummary$Count": "<p>The number of scan jobs that match the specified criteria.</p>"
       }
     },
     "long": {
@@ -2426,6 +2875,8 @@
         "AlreadyExistsException$Type": "<p/>",
         "AlreadyExistsException$Context": "<p/>",
         "BackupJob$BackupJobId": "<p>Uniquely identifies a request to Backup to back up a resource.</p>",
+        "BackupJob$VaultType": "<p>The type of backup vault where the recovery point is stored. Valid values are <code>BACKUP_VAULT</code> for standard backup vaults and <code>LOGICALLY_AIR_GAPPED_BACKUP_VAULT</code> for logically air-gapped vaults.</p>",
+        "BackupJob$VaultLockState": "<p>The lock state of the backup vault. For logically air-gapped vaults, this indicates whether the vault is locked in compliance mode. Valid values include <code>LOCKED</code> and <code>UNLOCKED</code>.</p>",
         "BackupJob$StatusMessage": "<p>A detailed message explaining the status of the job to back up a resource.</p>",
         "BackupJob$PercentDone": "<p>Contains an estimated percentage complete of a job at the time the job status was queried.</p>",
         "BackupJob$BackupType": "<p>Represents the type of backup for a backup job.</p>",
@@ -2450,7 +2901,10 @@
         "ConflictException$Type": "<p/>",
         "ConflictException$Context": "<p/>",
         "CopyJob$CopyJobId": "<p>Uniquely identifies a copy job.</p>",
+        "CopyJob$DestinationVaultType": "<p>The type of destination backup vault where the copied recovery point is stored. Valid values are <code>BACKUP_VAULT</code> for standard backup vaults and <code>LOGICALLY_AIR_GAPPED_BACKUP_VAULT</code> for logically air-gapped vaults.</p>",
+        "CopyJob$DestinationVaultLockState": "<p>The lock state of the destination backup vault. For logically air-gapped vaults, this indicates whether the vault is locked in compliance mode. Valid values include <code>LOCKED</code> and <code>UNLOCKED</code>.</p>",
         "CopyJob$StatusMessage": "<p>A detailed message explaining the status of the job to copy a resource.</p>",
+        "CopyJob$CreatedByBackupJobId": "<p>The backup job ID that initiated this copy job. Only applicable to scheduled copy jobs and automatic copy jobs to logically air-gapped vault.</p>",
         "CopyJob$ParentJobId": "<p>This uniquely identifies a request to Backup to copy a resource. The return will be the parent (composite) job ID.</p>",
         "CopyJob$CompositeMemberIdentifier": "<p>The identifier of a resource within a composite group, such as nested (child) recovery point belonging to a composite (parent) stack. The ID is transferred from the <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html#resources-section-structure-syntax\"> logical ID</a> within a stack.</p>",
         "CopyJob$ResourceName": "<p>The non-unique name of the resource that belongs to the specified backup.</p>",
@@ -2473,6 +2927,7 @@
         "CreateLogicallyAirGappedBackupVaultInput$CreatorRequestId": "<p>The ID of the creation request.</p> <p>This parameter is optional. If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.</p>",
         "CreateReportPlanInput$IdempotencyToken": "<p>A customer-chosen string that you can use to distinguish between otherwise identical calls to <code>CreateReportPlanInput</code>. Retrying a successful request with the same idempotency token results in a success message with no action taken.</p>",
         "CreateRestoreAccessBackupVaultInput$CreatorRequestId": "<p>A unique string that identifies the request and allows failed requests to be retried without the risk of executing the operation twice.</p>",
+        "CreateTieringConfigurationOutput$TieringConfigurationName": "<p>This unique string is the name of the tiering configuration.</p> <p>The name cannot be changed after creation. The name consists of only alphanumeric characters and underscores. Maximum length is 200.</p>",
         "DeleteBackupPlanInput$BackupPlanId": "<p>Uniquely identifies a backup plan.</p>",
         "DeleteBackupPlanOutput$BackupPlanId": "<p>Uniquely identifies a backup plan.</p>",
         "DeleteBackupPlanOutput$VersionId": "<p>Unique, randomly generated, Unicode, UTF-8 encoded strings that are at most 1,024 bytes long. Version IDs cannot be edited.</p>",
@@ -2485,6 +2940,8 @@
         "DependencyFailureException$Context": "<p/>",
         "DescribeBackupJobInput$BackupJobId": "<p>Uniquely identifies a request to Backup to back up a resource.</p>",
         "DescribeBackupJobOutput$BackupJobId": "<p>Uniquely identifies a request to Backup to back up a resource.</p>",
+        "DescribeBackupJobOutput$VaultType": "<p>The type of backup vault where the recovery point is stored. Valid values are <code>BACKUP_VAULT</code> for standard backup vaults and <code>LOGICALLY_AIR_GAPPED_BACKUP_VAULT</code> for logically air-gapped vaults.</p>",
+        "DescribeBackupJobOutput$VaultLockState": "<p>The lock state of the backup vault. For logically air-gapped vaults, this indicates whether the vault is locked in compliance mode. Valid values include <code>LOCKED</code> and <code>UNLOCKED</code>.</p>",
         "DescribeBackupJobOutput$StatusMessage": "<p>A detailed message explaining the status of the job to back up a resource.</p>",
         "DescribeBackupJobOutput$PercentDone": "<p>Contains an estimated percentage that is complete of a job at the time the job status was queried.</p>",
         "DescribeBackupJobOutput$BackupType": "<p>Represents the actual backup type selected for a backup job. For example, if a successful Windows Volume Shadow Copy Service (VSS) backup was taken, <code>BackupType</code> returns <code>\"WindowsVSS\"</code>. If <code>BackupType</code> is empty, then the backup type was a regular backup.</p>",
@@ -2509,6 +2966,7 @@
         "DescribeRestoreJobOutput$PercentDone": "<p>Contains an estimated percentage that is complete of a job at the time the job status was queried.</p>",
         "DescribeRestoreJobOutput$ValidationStatusMessage": "<p>The status message.</p>",
         "DescribeRestoreJobOutput$DeletionStatusMessage": "<p>This describes the restore job deletion status.</p>",
+        "DescribeRestoreJobOutput$ParentJobId": "<p>This is the unique identifier of the parent restore job for the selected restore job.</p>",
         "ExportBackupPlanTemplateInput$BackupPlanId": "<p>Uniquely identifies a backup plan.</p>",
         "ExportBackupPlanTemplateOutput$BackupPlanTemplateJson": "<p>The body of a backup plan template in JSON format.</p> <note> <p>This is a signed JSON document that cannot be modified before being passed to <code>GetBackupPlanFromJSON.</code> </p> </note>",
         "FormatList$member": null,
@@ -2580,6 +3038,7 @@
         "ListCopyJobsInput$ByDestinationVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a source backup vault to copy from; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>. </p>",
         "ListCopyJobsInput$ByParentJobId": "<p>This is a filter to list child (nested) jobs based on parent job ID.</p>",
         "ListCopyJobsInput$ByMessageCategory": "<p>This is an optional parameter that can be used to filter out jobs with a MessageCategory which matches the value you input.</p> <p>Example strings may include <code>AccessDenied</code>, <code>SUCCESS</code>, <code>AGGREGATE_ALL</code>, and <code>INVALIDPARAMETERS</code>.</p> <p>View <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html\">Monitoring</a> for a list of accepted strings.</p> <p>The the value ANY returns count of all message categories.</p> <p> <code>AGGREGATE_ALL</code> aggregates job counts for all message categories and returns the sum.</p>",
+        "ListCopyJobsInput$BySourceRecoveryPointArn": "<p>Filters copy jobs by the specified source recovery point ARN.</p>",
         "ListCopyJobsOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return MaxResults number of items, NextToken allows you to return more items in your list starting at the location pointed to by the next token. </p>",
         "ListFrameworksInput$NextToken": "<p>An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.</p>",
         "ListFrameworksOutput$NextToken": "<p>An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.</p>",
@@ -2599,7 +3058,7 @@
         "ListRecoveryPointsByLegalHoldOutput$NextToken": "<p>The next item following a partial list of returned resources.</p>",
         "ListRecoveryPointsByResourceInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "ListRecoveryPointsByResourceOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
-        "ListReportJobsInput$ByStatus": "<p>Returns only report jobs that are in the specified status. The statuses are:</p> <p> <code>CREATED | RUNNING | COMPLETED | FAILED</code> </p>",
+        "ListReportJobsInput$ByStatus": "<p>Returns only report jobs that are in the specified status. The statuses are:</p> <p> <code>CREATED | RUNNING | COMPLETED | FAILED | COMPLETED_WITH_ISSUES</code> </p> <p> Please note that only scanning jobs finish with state completed with issues. For backup jobs this is a console interpretation of a job that finishes in completed state and has a status message.</p>",
         "ListReportJobsInput$NextToken": "<p>An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.</p>",
         "ListReportJobsOutput$NextToken": "<p>An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.</p>",
         "ListReportPlansInput$NextToken": "<p>An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.</p>",
@@ -2612,9 +3071,15 @@
         "ListRestoreJobsByProtectedResourceInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request ismade to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "ListRestoreJobsByProtectedResourceOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows youto return more items in your list starting at the location pointed to by the next token</p>",
         "ListRestoreJobsInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListRestoreJobsInput$ByParentJobId": "<p>This is a filter to list child (nested) restore jobs based on parent restore job ID.</p>",
         "ListRestoreJobsOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListScanJobSummariesInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListScanJobSummariesOutput$AggregationPeriod": "<p>The period for the returned results.</p> <ul> <li> <p> <code>ONE_DAY</code>The daily job count for the prior 1 day.</p> </li> <li> <p> <code>SEVEN_DAYS</code>The daily job count for the prior 7 days.</p> </li> <li> <p> <code>FOURTEEN_DAYS</code>The daily job count for the prior 14 days.</p> </li> </ul> <p>Valid Values: <code>'ONE_DAY'</code> | <code>'SEVEN_DAYS'</code> | <code>'FOURTEEN_DAYS'</code> </p>",
+        "ListScanJobSummariesOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "ListTagsInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "ListTagsOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListTieringConfigurationsInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListTieringConfigurationsOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "MissingParameterValueException$Code": null,
         "MissingParameterValueException$Message": null,
         "MissingParameterValueException$Type": "<p/>",
@@ -2629,8 +3094,12 @@
         "RecoveryPointByResource$ResourceName": "<p>The non-unique name of the resource that belongs to the specified backup.</p>",
         "RecoveryPointByResource$IndexStatusMessage": "<p>A string in the form of a detailed message explaining the status of a backup index associated with the recovery point.</p>",
         "RecoveryPointCreator$BackupPlanId": "<p>Uniquely identifies a backup plan.</p>",
+        "RecoveryPointCreator$BackupPlanName": "<p>The name of the backup plan that created this recovery point. This provides human-readable context about which backup plan was responsible for the backup job.</p>",
         "RecoveryPointCreator$BackupPlanVersion": "<p>Version IDs are unique, randomly generated, Unicode, UTF-8 encoded strings that are at most 1,024 bytes long. They cannot be edited.</p>",
         "RecoveryPointCreator$BackupRuleId": "<p>Uniquely identifies a rule used to schedule the backup of a selection of resources.</p>",
+        "RecoveryPointCreator$BackupRuleName": "<p>The name of the backup rule within the backup plan that created this recovery point. This helps identify which specific rule triggered the backup job.</p>",
+        "RecoveryPointCreator$BackupRuleCron": "<p>The cron expression that defines the schedule for the backup rule. This shows the frequency and timing of when backups are automatically triggered.</p>",
+        "RecoveryPointCreator$BackupRuleTimezone": "<p>The timezone used for the backup rule schedule. This provides context for when backups are scheduled to run in the specified timezone.</p>",
         "ReportDeliveryChannel$S3BucketName": "<p>The unique name of the S3 bucket that receives your reports.</p>",
         "ReportDeliveryChannel$S3KeyPrefix": "<p>The prefix for where Backup Audit Manager delivers your reports to Amazon S3. The prefix is this part of the following path: s3://your-bucket-name/<code>prefix</code>/Backup/us-west-2/year/month/day/report-name. If not specified, there is no prefix.</p>",
         "ReportDestination$S3BucketName": "<p>The unique name of the Amazon S3 bucket that receives your reports.</p>",
@@ -2638,7 +3107,7 @@
         "ReportJob$Status": "<p>The status of a report job. The statuses are:</p> <p> <code>CREATED | RUNNING | COMPLETED | FAILED</code> </p> <p> <code>COMPLETED</code> means that the report is available for your review at your designated destination. If the status is <code>FAILED</code>, review the <code>StatusMessage</code> for the reason.</p>",
         "ReportJob$StatusMessage": "<p>A message explaining the status of the report job.</p>",
         "ReportPlan$DeploymentStatus": "<p>The deployment status of a report plan. The statuses are:</p> <p> <code>CREATE_IN_PROGRESS | UPDATE_IN_PROGRESS | DELETE_IN_PROGRESS | COMPLETED</code> </p>",
-        "ReportSetting$ReportTemplate": "<p>Identifies the report template for the report. Reports are built using a report template. The report templates are:</p> <p> <code>RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT</code> </p>",
+        "ReportSetting$ReportTemplate": "<p>Identifies the report template for the report. Reports are built using a report template. The report templates are:</p> <p> <code>RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT | SCAN_JOB_REPORT</code> </p>",
         "ResourceIdentifiers$member": null,
         "ResourceNotFoundException$Code": null,
         "ResourceNotFoundException$Message": null,
@@ -2647,8 +3116,10 @@
         "RestoreJobsListMember$RestoreJobId": "<p>Uniquely identifies the job that restores a recovery point.</p>",
         "RestoreJobsListMember$StatusMessage": "<p>A detailed message explaining the status of the job to restore a recovery point.</p>",
         "RestoreJobsListMember$PercentDone": "<p>Contains an estimated percentage complete of a job at the time the job status was queried.</p>",
+        "RestoreJobsListMember$ParentJobId": "<p>This is the unique identifier of the parent restore job for the selected restore job.</p>",
         "RestoreJobsListMember$ValidationStatusMessage": "<p>This describes the status of validation run on the indicated restore job.</p>",
         "RestoreJobsListMember$DeletionStatusMessage": "<p>This describes the restore job deletion status.</p>",
+        "ScheduledPlanExecutionMember$RuleId": "<p>The unique identifier of the backup rule that will execute at the scheduled time.</p>",
         "ServiceUnavailableException$Code": null,
         "ServiceUnavailableException$Message": null,
         "ServiceUnavailableException$Type": "<p/>",
@@ -2699,6 +3170,7 @@
     "timestamp": {
       "base": null,
       "refs": {
+        "AggregatedScanResult$LastComputed": "<p>The timestamp when the aggregated scan result was last computed, in Unix format and Coordinated Universal Time (UTC).</p>",
         "BackupJob$CreationDate": "<p>The date and time a backup job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "BackupJob$CompletionDate": "<p>The date and time a job to create a backup job is completed, in Unix format and Coordinated Universal Time (UTC). The value of <code>CompletionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "BackupJob$ExpectedCompletionDate": "<p>The date and time a job to back up resources is expected to be completed, in Unix format and Coordinated Universal Time (UTC). The value of <code>ExpectedCompletionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
@@ -2725,6 +3197,7 @@
         "CreateLogicallyAirGappedBackupVaultOutput$CreationDate": "<p>The date and time when the vault was created.</p> <p>This value is in Unix format, Coordinated Universal Time (UTC), and accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "CreateReportPlanOutput$CreationTime": "<p>The date and time a backup vault is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "CreateRestoreAccessBackupVaultOutput$CreationDate": "<p>&gt;The date and time when the restore access backup vault was created, in Unix format and Coordinated Universal Time </p>",
+        "CreateTieringConfigurationOutput$CreationTime": "<p>The date and time a tiering configuration was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
         "DateRange$FromDate": "<p>This value is the beginning date, inclusive.</p> <p>The date and time are in Unix format and Coordinated Universal Time (UTC), and it is accurate to milliseconds (milliseconds are optional).</p>",
         "DateRange$ToDate": "<p>This value is the end date, inclusive.</p> <p>The date and time are in Unix format and Coordinated Universal Time (UTC), and it is accurate to milliseconds (milliseconds are optional).</p>",
         "DeleteBackupPlanOutput$DeletionDate": "<p>The date and time a backup plan is deleted, in Unix format and Coordinated Universal Time (UTC). The value of <code>DeletionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
@@ -2804,11 +3277,21 @@
         "RestoreJobsListMember$CreationDate": "<p>The date and time a restore job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "RestoreJobsListMember$CompletionDate": "<p>The date and time a job to restore a recovery point is completed, in Unix format and Coordinated Universal Time (UTC). The value of <code>CompletionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "RestoreJobsListMember$RecoveryPointCreationDate": "<p>The date on which a recovery point was created.</p>",
+        "ScanJobSummary$StartTime": "<p>The value of time in number format of a job start time.</p> <p>This value is the time in Unix format, Coordinated Universal Time (UTC), and accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "ScanJobSummary$EndTime": "<p>The value of time in number format of a job end time.</p> <p>This value is the time in Unix format, Coordinated Universal Time (UTC), and accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "ScanResult$LastScanTimestamp": "<p>The timestamp of when the last scan was performed, in Unix format and Coordinated Universal Time (UTC).</p>",
+        "ScheduledPlanExecutionMember$ExecutionTime": "<p>The timestamp when the backup is scheduled to run, in Unix format and Coordinated Universal Time (UTC). The value is accurate to milliseconds.</p>",
         "StartBackupJobOutput$CreationDate": "<p>The date and time that a backup job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "StartCopyJobOutput$CreationDate": "<p>The date and time that a copy job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "TieringConfiguration$CreationTime": "<p>The date and time a tiering configuration was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
+        "TieringConfiguration$LastUpdatedTime": "<p>The date and time a tiering configuration was updated, in Unix format and Coordinated Universal Time (UTC). The value of <code>LastUpdatedTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
+        "TieringConfigurationsListMember$CreationTime": "<p>The date and time a tiering configuration was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
+        "TieringConfigurationsListMember$LastUpdatedTime": "<p>The date and time a tiering configuration was updated, in Unix format and Coordinated Universal Time (UTC). The value of <code>LastUpdatedTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
         "UpdateBackupPlanOutput$CreationDate": "<p>The date and time a backup plan is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "UpdateFrameworkOutput$CreationTime": "<p>The date and time that a framework is created, in ISO 8601 representation. The value of <code>CreationTime</code> is accurate to milliseconds. For example, 2020-07-10T15:00:00.000-08:00 represents the 10th of July 2020 at 3:00 PM 8 hours behind UTC.</p>",
-        "UpdateReportPlanOutput$CreationTime": "<p>The date and time that a report plan is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>"
+        "UpdateReportPlanOutput$CreationTime": "<p>The date and time that a report plan is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "UpdateTieringConfigurationOutput$CreationTime": "<p>The date and time a tiering configuration was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
+        "UpdateTieringConfigurationOutput$LastUpdatedTime": "<p>The date and time a tiering configuration was updated, in Unix format and Coordinated Universal Time (UTC). The value of <code>LastUpdatedTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>"
       }
     }
   }

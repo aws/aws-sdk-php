@@ -5,15 +5,18 @@
     "CreateDeployment": "<p>Creates a deployment for the given workload. Deployments created by this operation are not available in the Launch Wizard console to use the <code>Clone deployment</code> action on.</p>",
     "DeleteDeployment": "<p>Deletes a deployment.</p>",
     "GetDeployment": "<p>Returns information about the deployment.</p>",
+    "GetDeploymentPatternVersion": "<p>Returns information about a deployment pattern version.</p>",
     "GetWorkload": "<p>Returns information about a workload.</p>",
     "GetWorkloadDeploymentPattern": "<p>Returns details for a given workload and deployment pattern, including the available specifications. You can use the <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_ListWorkloads.html\">ListWorkloads</a> operation to discover the available workload names and the <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_ListWorkloadDeploymentPatterns.html\">ListWorkloadDeploymentPatterns</a> operation to discover the available deployment pattern names of a given workload.</p>",
     "ListDeploymentEvents": "<p>Lists the events of a deployment.</p>",
+    "ListDeploymentPatternVersions": "<p>Lists the deployment pattern versions.</p>",
     "ListDeployments": "<p>Lists the deployments that have been created.</p>",
     "ListTagsForResource": "<p>Lists the tags associated with a specified resource.</p>",
     "ListWorkloadDeploymentPatterns": "<p>Lists the workload deployment patterns for a given workload name. You can use the <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_ListWorkloads.html\">ListWorkloads</a> operation to discover the available workload names.</p>",
     "ListWorkloads": "<p>Lists the available workload names. You can use the <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_ListWorkloadDeploymentPatterns.html\">ListWorkloadDeploymentPatterns</a> operation to discover the available deployment patterns for a given workload.</p>",
     "TagResource": "<p>Adds the specified tags to the given resource.</p>",
-    "UntagResource": "<p>Removes the specified tags from the given resource.</p>"
+    "UntagResource": "<p>Removes the specified tags from the given resource.</p>",
+    "UpdateDeployment": "<p>Updates a deployment.</p>"
   },
   "shapes": {
     "AllowedValues": {
@@ -25,28 +28,26 @@
     "Boolean": {
       "base": null,
       "refs": {
-        "CreateDeploymentInput$dryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>"
+        "CreateDeploymentInput$dryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "UpdateDeploymentInput$dryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "UpdateDeploymentInput$force": "<p>Forces the update even if validation warnings are present.</p>"
       }
     },
     "CreateDeploymentInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDeploymentOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDeploymentInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDeploymentOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeploymentConditionalField": {
       "base": "<p>A field that details a condition of the specifications for a deployment.</p>",
@@ -63,7 +64,8 @@
     "DeploymentDataSummary": {
       "base": "<p>A summary of the deployment data.</p>",
       "refs": {
-        "DeploymentDataSummaryList$member": null
+        "DeploymentDataSummaryList$member": null,
+        "UpdateDeploymentOutput$deployment": "<p>The deployment.</p>"
       }
     },
     "DeploymentDataSummaryList": {
@@ -122,7 +124,8 @@
         "DeploymentData$id": "<p>The ID of the deployment.</p>",
         "DeploymentDataSummary$id": "<p>The ID of the deployment.</p>",
         "GetDeploymentInput$deploymentId": "<p>The ID of the deployment.</p>",
-        "ListDeploymentEventsInput$deploymentId": "<p>The ID of the deployment.</p>"
+        "ListDeploymentEventsInput$deploymentId": "<p>The ID of the deployment.</p>",
+        "UpdateDeploymentInput$deploymentId": "<p>The ID of the deployment.</p>"
       }
     },
     "DeploymentName": {
@@ -137,16 +140,65 @@
         "CreateDeploymentInput$deploymentPatternName": "<p>The name of the deployment pattern supported by a given workload. You can use the <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_ListWorkloadDeploymentPatterns.html\"> <code>ListWorkloadDeploymentPatterns</code> </a> operation to discover supported values for this parameter. </p>",
         "DeploymentData$patternName": "<p>The pattern name of the deployment.</p>",
         "DeploymentDataSummary$patternName": "<p>The name of the workload deployment pattern.</p>",
+        "GetDeploymentPatternVersionInput$deploymentPatternName": "<p>The name of the deployment pattern. You can use the <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_ListWorkloadDeploymentPatterns.html\"> <code>ListWorkloadDeploymentPatterns</code> </a> operation to discover supported values for this parameter.</p>",
         "GetWorkloadDeploymentPatternInput$deploymentPatternName": "<p>The name of the deployment pattern.</p>",
+        "ListDeploymentPatternVersionsInput$deploymentPatternName": "<p>The name of the deployment pattern. You can use the <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_ListWorkloadDeploymentPatterns.html\"> <code>ListWorkloadDeploymentPatterns</code> </a> operation to discover supported values for this parameter.</p>",
         "WorkloadDeploymentPatternData$deploymentPatternName": "<p>The name of the deployment pattern.</p>",
         "WorkloadDeploymentPatternDataSummary$deploymentPatternName": "<p>The name of a workload deployment pattern.</p>"
+      }
+    },
+    "DeploymentPatternVersionDataSummary": {
+      "base": "<p>Describes a deployment pattern version summary.</p>",
+      "refs": {
+        "DeploymentPatternVersionDataSummaryList$member": null,
+        "GetDeploymentPatternVersionOutput$deploymentPatternVersion": "<p>The deployment pattern version.</p>"
+      }
+    },
+    "DeploymentPatternVersionDataSummaryList": {
+      "base": null,
+      "refs": {
+        "ListDeploymentPatternVersionsOutput$deploymentPatternVersions": "<p>The deployment pattern versions.</p>"
+      }
+    },
+    "DeploymentPatternVersionFilter": {
+      "base": "<p>A filter for deployment pattern versions. Use this filter to specify criteria for querying deployment pattern versions in Launch Wizard.</p>",
+      "refs": {
+        "FilterList$member": null
+      }
+    },
+    "DeploymentPatternVersionFilterKey": {
+      "base": null,
+      "refs": {
+        "DeploymentPatternVersionFilter$name": "<p>The name of the filter attribute. Specifies which attribute to filter on when querying deployment pattern versions.</p>"
+      }
+    },
+    "DeploymentPatternVersionFilterValues": {
+      "base": null,
+      "refs": {
+        "DeploymentPatternVersionFilter$values": "<p>The values to filter by. Contains the specific values to match against when filtering deployment pattern versions.</p>"
+      }
+    },
+    "DeploymentPatternVersionFilterValuesMemberString": {
+      "base": null,
+      "refs": {
+        "DeploymentPatternVersionFilterValues$member": null
+      }
+    },
+    "DeploymentPatternVersionName": {
+      "base": null,
+      "refs": {
+        "GetDeploymentPatternVersionInput$deploymentPatternVersionName": "<p>The name of the deployment pattern version.</p>",
+        "UpdateDeploymentInput$deploymentPatternVersionName": "<p>The name of the deployment pattern version.</p>",
+        "WorkloadDeploymentPatternData$deploymentPatternVersionName": "<p>The version name of the deployment pattern.</p>",
+        "WorkloadDeploymentPatternDataSummary$deploymentPatternVersionName": "<p>The version name of a workload deployment pattern.</p>"
       }
     },
     "DeploymentSpecifications": {
       "base": null,
       "refs": {
         "CreateDeploymentInput$specifications": "<p>The settings specified for the deployment. These settings define how to deploy and configure your resources created by the deployment. For more information about the specifications required for creating a deployment for a SAP workload, see <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/launch-wizard-specifications-sap.html\">SAP deployment specifications</a>. To retrieve the specifications required to create a deployment for other workloads, use the <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_GetWorkloadDeploymentPattern.html\"> <code>GetWorkloadDeploymentPattern</code> </a> operation.</p>",
-        "DeploymentData$specifications": "<p>The settings specified for the deployment. These settings define how to deploy and configure your resources created by the deployment. For more information about the specifications required for creating a deployment for a SAP workload, see <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/launch-wizard-specifications-sap.html\">SAP deployment specifications</a>. To retrieve the specifications required to create a deployment for other workloads, use the <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_GetWorkloadDeploymentPattern.html\"> <code>GetWorkloadDeploymentPattern</code> </a> operation.</p>"
+        "DeploymentData$specifications": "<p>The settings specified for the deployment. These settings define how to deploy and configure your resources created by the deployment. For more information about the specifications required for creating a deployment for a SAP workload, see <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/launch-wizard-specifications-sap.html\">SAP deployment specifications</a>. To retrieve the specifications required to create a deployment for other workloads, use the <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_GetWorkloadDeploymentPattern.html\"> <code>GetWorkloadDeploymentPattern</code> </a> operation.</p>",
+        "UpdateDeploymentInput$specifications": "<p>The settings specified for the deployment. These settings define how to deploy and configure your resources created by the deployment. For more information about the specifications required for creating a deployment for a SAP workload, see <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/launch-wizard-specifications-sap.html\">SAP deployment specifications</a>. To retrieve the specifications required to create a deployment for other workloads, use the <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_GetWorkloadDeploymentPattern.html\"> <code>GetWorkloadDeploymentPattern</code> </a> operation.</p>"
       }
     },
     "DeploymentSpecificationsData": {
@@ -175,40 +227,47 @@
         "DeploymentEventDataSummary$status": "<p>The status of the deployment event.</p>"
       }
     },
-    "GetDeploymentInput": {
+    "FilterList": {
       "base": null,
       "refs": {
+        "ListDeploymentPatternVersionsInput$filters": "<p>Filters to apply when listing deployment pattern versions.</p>"
       }
+    },
+    "GetDeploymentInput": {
+      "base": null,
+      "refs": {}
     },
     "GetDeploymentOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "GetDeploymentPatternVersionInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDeploymentPatternVersionOutput": {
+      "base": null,
+      "refs": {}
     },
     "GetWorkloadDeploymentPatternInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkloadDeploymentPatternOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkloadInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkloadOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalServerException": {
       "base": "<p>An internal error has occurred. Retry your request, but if the problem persists, contact us with details by posting a question on <a href=\"https://repost.aws/\">re:Post</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KeyString": {
       "base": null,
@@ -218,53 +277,51 @@
     },
     "ListDeploymentEventsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDeploymentEventsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ListDeploymentPatternVersionsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDeploymentPatternVersionsOutput": {
+      "base": null,
+      "refs": {}
     },
     "ListDeploymentsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDeploymentsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkloadDeploymentPatternsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkloadDeploymentPatternsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkloadsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkloadsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxDeploymentEventResults": {
       "base": null,
@@ -287,6 +344,7 @@
     "MaxWorkloadResults": {
       "base": null,
       "refs": {
+        "ListDeploymentPatternVersionsInput$maxResults": "<p>The maximum number of deployment pattern versions to list.</p>",
         "ListWorkloadsInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p>"
       }
     },
@@ -295,6 +353,8 @@
       "refs": {
         "ListDeploymentEventsInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
         "ListDeploymentEventsOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "ListDeploymentPatternVersionsInput$nextToken": "<p>The token for the next set of results.</p>",
+        "ListDeploymentPatternVersionsOutput$nextToken": "<p>The token for the next set of results.</p>",
         "ListDeploymentsInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
         "ListDeploymentsOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "ListWorkloadDeploymentPatternsInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
@@ -305,13 +365,11 @@
     },
     "ResourceLimitException": {
       "base": "<p>You have exceeded an Launch Wizard resource limit. For example, you might have too many deployments in progress.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified workload or deployment resource can't be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SpecificationsConditionalData": {
       "base": null,
@@ -323,18 +381,23 @@
       "base": null,
       "refs": {
         "DeleteDeploymentOutput$statusReason": "<p>The reason for the deployment status.</p>",
-        "DeploymentConditionalField$comparator": "<p>The comparator of the condition.</p> <p>Valid values: <code>Equal | NotEqual</code> </p>",
         "DeploymentConditionalField$name": "<p>The name of the deployment condition.</p>",
         "DeploymentConditionalField$value": "<p>The value of the condition.</p>",
-        "DeploymentData$deploymentArn": "<p>The Amazon Resource Name (ARN) of the deployment.</p>",
+        "DeploymentConditionalField$comparator": "<p>The comparator of the condition.</p> <p>Valid values: <code>Equal | NotEqual</code> </p>",
         "DeploymentData$name": "<p>The name of the deployment.</p>",
         "DeploymentData$resourceGroup": "<p>The resource group of the deployment.</p>",
+        "DeploymentData$deploymentArn": "<p>The Amazon Resource Name (ARN) of the deployment.</p>",
         "DeploymentDataSummary$name": "<p>The name of the deployment</p>",
-        "DeploymentEventDataSummary$description": "<p>The description of the deployment event.</p>",
         "DeploymentEventDataSummary$name": "<p>The name of the deployment event.</p>",
+        "DeploymentEventDataSummary$description": "<p>The description of the deployment event.</p>",
         "DeploymentEventDataSummary$statusReason": "<p>The reason of the deployment event status.</p>",
-        "DeploymentSpecificationsField$description": "<p>The description of the deployment specification.</p>",
+        "DeploymentPatternVersionDataSummary$deploymentPatternVersionName": "<p>The name of the deployment pattern version.</p>",
+        "DeploymentPatternVersionDataSummary$description": "<p>The description of the deployment pattern version.</p>",
+        "DeploymentPatternVersionDataSummary$documentationUrl": "<p>The URL of the documentation for the deployment pattern version.</p>",
+        "DeploymentPatternVersionDataSummary$workloadName": "<p>The name of the workload.</p>",
+        "DeploymentPatternVersionDataSummary$deploymentPatternName": "<p>The name of the deployment pattern.</p>",
         "DeploymentSpecificationsField$name": "<p>The name of the deployment specification.</p>",
+        "DeploymentSpecificationsField$description": "<p>The description of the deployment specification.</p>",
         "DeploymentSpecificationsField$required": "<p>Indicates if the deployment specification is required.</p>",
         "InternalServerException$message": null,
         "ListTagsForResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
@@ -343,17 +406,17 @@
         "TagResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UntagResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "ValidationException$message": null,
-        "WorkloadData$description": "<p>The description of a workload.</p>",
         "WorkloadData$displayName": "<p>The display name of a workload.</p>",
+        "WorkloadData$description": "<p>The description of a workload.</p>",
         "WorkloadData$documentationUrl": "<p>The URL of a workload document.</p>",
         "WorkloadData$iconUrl": "<p>The URL of a workload icon.</p>",
         "WorkloadData$statusMessage": "<p>The message about a workload's status.</p>",
         "WorkloadDataSummary$displayName": "<p>The display name of the workload data.</p>",
-        "WorkloadDeploymentPatternData$description": "<p>The description of the deployment pattern.</p>",
         "WorkloadDeploymentPatternData$displayName": "<p>The display name of the deployment pattern.</p>",
+        "WorkloadDeploymentPatternData$description": "<p>The description of the deployment pattern.</p>",
         "WorkloadDeploymentPatternData$statusMessage": "<p>The status message of the deployment pattern.</p>",
-        "WorkloadDeploymentPatternDataSummary$description": "<p>The description of a workload deployment pattern.</p>",
         "WorkloadDeploymentPatternDataSummary$displayName": "<p>The display name of a workload deployment pattern.</p>",
+        "WorkloadDeploymentPatternDataSummary$description": "<p>The description of a workload deployment pattern.</p>",
         "WorkloadDeploymentPatternDataSummary$statusMessage": "<p>A message about a workload deployment pattern's status.</p>"
       }
     },
@@ -372,13 +435,11 @@
     },
     "TagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -399,25 +460,32 @@
       "base": null,
       "refs": {
         "DeploymentData$createdAt": "<p>The time the deployment was created.</p>",
+        "DeploymentData$modifiedAt": "<p>The time the deployment was last modified.</p>",
         "DeploymentData$deletedAt": "<p>The time the deployment was deleted.</p>",
         "DeploymentDataSummary$createdAt": "<p>The time the deployment was created.</p>",
+        "DeploymentDataSummary$modifiedAt": "<p>The time the deployment was last modified.</p>",
         "DeploymentEventDataSummary$timestamp": "<p>The timestamp of the deployment event.</p>"
       }
     },
     "UntagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "UpdateDeploymentInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDeploymentOutput": {
+      "base": null,
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValueString": {
       "base": null,
@@ -475,8 +543,10 @@
         "CreateDeploymentInput$workloadName": "<p>The name of the workload. You can use the <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_ListWorkloads.html\"> <code>ListWorkloads</code> </a> operation to discover supported values for this parameter.</p>",
         "DeploymentData$workloadName": "<p>The name of the workload.</p>",
         "DeploymentDataSummary$workloadName": "<p>The name of the workload.</p>",
+        "GetDeploymentPatternVersionInput$workloadName": "<p>The name of the workload. You can use the <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_ListWorkloads.html\"> <code>ListWorkloads</code> </a> operation to discover supported values for this parameter.</p>",
         "GetWorkloadDeploymentPatternInput$workloadName": "<p>The name of the workload.</p>",
         "GetWorkloadInput$workloadName": "<p>The name of the workload.</p>",
+        "ListDeploymentPatternVersionsInput$workloadName": "<p>The name of the workload. You can use the <a href=\"https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_ListWorkloads.html\"> <code>ListWorkloads</code> </a> operation to discover supported values for this parameter.</p>",
         "ListWorkloadDeploymentPatternsInput$workloadName": "<p>The name of the workload.</p>",
         "WorkloadData$workloadName": "<p>The name of the workload.</p>",
         "WorkloadDataSummary$workloadName": "<p>The name of the workload.</p>",
@@ -487,12 +557,14 @@
     "WorkloadStatus": {
       "base": null,
       "refs": {
-        "WorkloadData$status": "<p>The status of a workload.</p>"
+        "WorkloadData$status": "<p>The status of a workload.</p> <p> <i>You can list deployments in the <code>DISABLED</code> status.</i> </p>",
+        "WorkloadDataSummary$status": "<p>The status of the workload.</p>"
       }
     },
     "WorkloadVersionName": {
       "base": null,
       "refs": {
+        "UpdateDeploymentInput$workloadVersionName": "<p>The name of the workload version.</p>",
         "WorkloadDeploymentPatternData$workloadVersionName": "<p>The workload version name of the deployment pattern.</p>",
         "WorkloadDeploymentPatternDataSummary$workloadVersionName": "<p>The name of the workload deployment pattern version.</p>"
       }

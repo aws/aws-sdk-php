@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-02-26",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"mgn",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"mgn",
     "serviceFullName":"Application Migration Service",
     "serviceId":"mgn",
@@ -137,8 +138,8 @@
       "output":{"shape":"LaunchConfigurationTemplate"},
       "errors":[
         {"shape":"UninitializedAccountException"},
-        {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
       ]
     },
     "CreateReplicationConfigurationTemplate":{
@@ -152,8 +153,8 @@
       "output":{"shape":"ReplicationConfigurationTemplate"},
       "errors":[
         {"shape":"UninitializedAccountException"},
-        {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
       ]
     },
     "CreateWave":{
@@ -310,7 +311,8 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeJobs":{
       "name":"DescribeJobs",
@@ -324,7 +326,8 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeLaunchConfigurationTemplates":{
       "name":"DescribeLaunchConfigurationTemplates",
@@ -339,7 +342,8 @@
         {"shape":"UninitializedAccountException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeReplicationConfigurationTemplates":{
       "name":"DescribeReplicationConfigurationTemplates",
@@ -354,7 +358,8 @@
         {"shape":"UninitializedAccountException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeSourceServers":{
       "name":"DescribeSourceServers",
@@ -368,7 +373,8 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeVcenterClients":{
       "name":"DescribeVcenterClients",
@@ -383,7 +389,8 @@
         {"shape":"UninitializedAccountException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "DisassociateApplications":{
       "name":"DisassociateApplications",
@@ -460,7 +467,8 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetReplicationConfiguration":{
       "name":"GetReplicationConfiguration",
@@ -474,7 +482,8 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "InitializeService":{
       "name":"InitializeService",
@@ -486,8 +495,8 @@
       "input":{"shape":"InitializeServiceRequest"},
       "output":{"shape":"InitializeServiceResponse"},
       "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
       ]
     },
     "ListApplications":{
@@ -501,7 +510,8 @@
       "output":{"shape":"ListApplicationsResponse"},
       "errors":[
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListConnectors":{
       "name":"ListConnectors",
@@ -515,7 +525,8 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListExportErrors":{
       "name":"ListExportErrors",
@@ -529,7 +540,8 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListExports":{
       "name":"ListExports",
@@ -542,7 +554,8 @@
       "output":{"shape":"ListExportsResponse"},
       "errors":[
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListImportErrors":{
       "name":"ListImportErrors",
@@ -556,7 +569,8 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListImports":{
       "name":"ListImports",
@@ -570,7 +584,8 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListManagedAccounts":{
       "name":"ListManagedAccounts",
@@ -584,7 +599,8 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSourceServerActions":{
       "name":"ListSourceServerActions",
@@ -598,7 +614,8 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -612,10 +629,11 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTemplateActions":{
       "name":"ListTemplateActions",
@@ -629,7 +647,8 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListWaves":{
       "name":"ListWaves",
@@ -642,7 +661,8 @@
       "output":{"shape":"ListWavesResponse"},
       "errors":[
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "MarkAsArchived":{
       "name":"MarkAsArchived",
@@ -877,8 +897,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -939,8 +959,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -1006,8 +1026,8 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
       ]
     },
     "UpdateReplicationConfiguration":{
@@ -1022,8 +1042,8 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"ConflictException"}
       ],
       "idempotent":true
@@ -1040,8 +1060,8 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
       ]
     },
     "UpdateSourceServer":{
@@ -1102,8 +1122,8 @@
     "AccessDeniedException":{
       "type":"structure",
       "members":{
-        "code":{"shape":"LargeBoundedString"},
-        "message":{"shape":"LargeBoundedString"}
+        "message":{"shape":"LargeBoundedString"},
+        "code":{"shape":"LargeBoundedString"}
       },
       "error":{
         "httpStatusCode":403,
@@ -1115,7 +1135,7 @@
       "type":"string",
       "max":12,
       "min":12,
-      "pattern":"[0-9]{12,}"
+      "pattern":".*[0-9]{12,}.*"
     },
     "ActionCategory":{
       "type":"string",
@@ -1137,13 +1157,13 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^[0-9a-zA-Z ():/.,'-_#*; ]*$"
+      "pattern":"[0-9a-zA-Z ():/.,'-_#*; ]*"
     },
     "ActionID":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"[0-9a-zA-Z]$"
+      "pattern":".*[0-9a-zA-Z]"
     },
     "ActionIDs":{
       "type":"list",
@@ -1155,19 +1175,19 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[^\\s\\x00]( *[^\\s\\x00])*$"
+      "pattern":"[^\\s\\x00]( *[^\\s\\x00])*"
     },
     "Application":{
       "type":"structure",
       "members":{
-        "applicationAggregatedStatus":{"shape":"ApplicationAggregatedStatus"},
         "applicationID":{"shape":"ApplicationID"},
         "arn":{"shape":"ARN"},
-        "creationDateTime":{"shape":"ISO8601DatetimeString"},
+        "name":{"shape":"ApplicationName"},
         "description":{"shape":"ApplicationDescription"},
         "isArchived":{"shape":"Boolean"},
+        "applicationAggregatedStatus":{"shape":"ApplicationAggregatedStatus"},
+        "creationDateTime":{"shape":"ISO8601DatetimeString"},
         "lastModifiedDateTime":{"shape":"ISO8601DatetimeString"},
-        "name":{"shape":"ApplicationName"},
         "tags":{"shape":"TagsMap"},
         "waveID":{"shape":"WaveID"}
       }
@@ -1175,8 +1195,8 @@
     "ApplicationAggregatedStatus":{
       "type":"structure",
       "members":{
-        "healthStatus":{"shape":"ApplicationHealthStatus"},
         "lastUpdateDateTime":{"shape":"ISO8601DatetimeString"},
+        "healthStatus":{"shape":"ApplicationHealthStatus"},
         "progressStatus":{"shape":"ApplicationProgressStatus"},
         "totalSourceServers":{"shape":"PositiveInteger"}
       }
@@ -1185,7 +1205,7 @@
       "type":"string",
       "max":600,
       "min":0,
-      "pattern":"^[^\\x00]*$"
+      "pattern":"[^\\x00]*"
     },
     "ApplicationHealthStatus":{
       "type":"string",
@@ -1199,7 +1219,7 @@
       "type":"string",
       "max":21,
       "min":21,
-      "pattern":"^app-[0-9a-zA-Z]{17}$"
+      "pattern":"app-[0-9a-zA-Z]{17}"
     },
     "ApplicationIDs":{
       "type":"list",
@@ -1217,7 +1237,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[^\\s\\x00]( *[^\\s\\x00])*$"
+      "pattern":"[^\\s\\x00]( *[^\\s\\x00])*"
     },
     "ApplicationProgressStatus":{
       "type":"string",
@@ -1235,34 +1255,33 @@
       "type":"structure",
       "required":["applicationID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "applicationID":{"shape":"ApplicationID"}
+        "applicationID":{"shape":"ApplicationID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "ArchiveWaveRequest":{
       "type":"structure",
       "required":["waveID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "waveID":{"shape":"WaveID"}
+        "waveID":{"shape":"WaveID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "AssociateApplicationsRequest":{
       "type":"structure",
       "required":[
-        "applicationIDs",
-        "waveID"
+        "waveID",
+        "applicationIDs"
       ],
       "members":{
-        "accountID":{"shape":"AccountID"},
+        "waveID":{"shape":"WaveID"},
         "applicationIDs":{"shape":"ApplicationIDs"},
-        "waveID":{"shape":"WaveID"}
+        "accountID":{"shape":"AccountID"}
       }
     },
     "AssociateApplicationsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociateSourceServersRequest":{
       "type":"structure",
@@ -1271,9 +1290,9 @@
         "sourceServerIDs"
       ],
       "members":{
-        "accountID":{"shape":"AccountID"},
         "applicationID":{"shape":"ApplicationID"},
-        "sourceServerIDs":{"shape":"AssociateSourceServersRequestSourceServerIDs"}
+        "sourceServerIDs":{"shape":"AssociateSourceServersRequestSourceServerIDs"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "AssociateSourceServersRequestSourceServerIDs":{
@@ -1284,8 +1303,7 @@
     },
     "AssociateSourceServersResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "BandwidthThrottling":{
       "type":"long",
@@ -1319,13 +1337,13 @@
     "ChangeServerLifeCycleStateRequest":{
       "type":"structure",
       "required":[
-        "lifeCycle",
-        "sourceServerID"
+        "sourceServerID",
+        "lifeCycle"
       ],
       "members":{
-        "accountID":{"shape":"AccountID"},
+        "sourceServerID":{"shape":"SourceServerID"},
         "lifeCycle":{"shape":"ChangeServerLifeCycleStateSourceServerLifecycle"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "accountID":{"shape":"AccountID"}
       }
     },
     "ChangeServerLifeCycleStateSourceServerLifecycle":{
@@ -1352,16 +1370,16 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"^[\\.\\-_/#A-Za-z0-9]+$"
+      "pattern":"[\\.\\-_/#A-Za-z0-9]+"
     },
     "ConflictException":{
       "type":"structure",
       "members":{
-        "code":{"shape":"LargeBoundedString"},
-        "errors":{"shape":"ConflictExceptionErrors"},
         "message":{"shape":"LargeBoundedString"},
+        "code":{"shape":"LargeBoundedString"},
         "resourceId":{"shape":"LargeBoundedString"},
-        "resourceType":{"shape":"LargeBoundedString"}
+        "resourceType":{"shape":"LargeBoundedString"},
+        "errors":{"shape":"ConflictExceptionErrors"}
       },
       "error":{
         "httpStatusCode":409,
@@ -1376,25 +1394,25 @@
     "Connector":{
       "type":"structure",
       "members":{
-        "arn":{"shape":"ARN"},
         "connectorID":{"shape":"ConnectorID"},
         "name":{"shape":"ConnectorName"},
-        "ssmCommandConfig":{"shape":"ConnectorSsmCommandConfig"},
         "ssmInstanceID":{"shape":"SsmInstanceID"},
-        "tags":{"shape":"TagsMap"}
+        "arn":{"shape":"ARN"},
+        "tags":{"shape":"TagsMap"},
+        "ssmCommandConfig":{"shape":"ConnectorSsmCommandConfig"}
       }
     },
     "ConnectorArn":{
       "type":"string",
       "max":100,
       "min":27,
-      "pattern":"^arn:[\\w-]+:mgn:([a-z]{2}-(gov-)?[a-z]+-\\d{1})?:(\\d{12})?:connector\\/(connector-[0-9a-zA-Z]{17})$"
+      "pattern":"arn:[\\w-]+:mgn:([a-z]{2}-(gov-)?[a-z]+-\\d{1})?:(\\d{12})?:connector\\/(connector-[0-9a-zA-Z]{17})"
     },
     "ConnectorID":{
       "type":"string",
       "max":27,
       "min":27,
-      "pattern":"^connector-[0-9a-zA-Z]{17}$"
+      "pattern":"connector-[0-9a-zA-Z]{17}"
     },
     "ConnectorIDsFilter":{
       "type":"list",
@@ -1406,19 +1424,19 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[A-Za-z0-9_-]+$"
+      "pattern":"[A-Za-z0-9_-]+"
     },
     "ConnectorSsmCommandConfig":{
       "type":"structure",
       "required":[
-        "cloudWatchOutputEnabled",
-        "s3OutputEnabled"
+        "s3OutputEnabled",
+        "cloudWatchOutputEnabled"
       ],
       "members":{
-        "cloudWatchLogGroupName":{"shape":"CloudWatchLogGroupName"},
-        "cloudWatchOutputEnabled":{"shape":"Boolean"},
+        "s3OutputEnabled":{"shape":"Boolean"},
         "outputS3BucketName":{"shape":"S3BucketName"},
-        "s3OutputEnabled":{"shape":"Boolean"}
+        "cloudWatchOutputEnabled":{"shape":"Boolean"},
+        "cloudWatchLogGroupName":{"shape":"CloudWatchLogGroupName"}
       }
     },
     "ConnectorsList":{
@@ -1435,10 +1453,10 @@
       "type":"structure",
       "required":["name"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "description":{"shape":"ApplicationDescription"},
         "name":{"shape":"ApplicationName"},
-        "tags":{"shape":"TagsMap"}
+        "description":{"shape":"ApplicationDescription"},
+        "tags":{"shape":"TagsMap"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "CreateConnectorRequest":{
@@ -1449,70 +1467,73 @@
       ],
       "members":{
         "name":{"shape":"ConnectorName"},
-        "ssmCommandConfig":{"shape":"ConnectorSsmCommandConfig"},
         "ssmInstanceID":{"shape":"SsmInstanceID"},
-        "tags":{"shape":"TagsMap"}
+        "tags":{"shape":"TagsMap"},
+        "ssmCommandConfig":{"shape":"ConnectorSsmCommandConfig"}
       }
     },
     "CreateLaunchConfigurationTemplateRequest":{
       "type":"structure",
       "members":{
-        "associatePublicIpAddress":{"shape":"Boolean"},
-        "bootMode":{"shape":"BootMode"},
-        "copyPrivateIp":{"shape":"Boolean"},
-        "copyTags":{"shape":"Boolean"},
-        "enableMapAutoTagging":{"shape":"Boolean"},
-        "largeVolumeConf":{"shape":"LaunchTemplateDiskConf"},
-        "launchDisposition":{"shape":"LaunchDisposition"},
-        "licensing":{"shape":"Licensing"},
-        "mapAutoTaggingMpeID":{"shape":"TagValue"},
         "postLaunchActions":{"shape":"PostLaunchActions"},
-        "smallVolumeConf":{"shape":"LaunchTemplateDiskConf"},
-        "smallVolumeMaxSize":{"shape":"PositiveInteger"},
+        "enableMapAutoTagging":{"shape":"Boolean"},
+        "mapAutoTaggingMpeID":{"shape":"TagValue"},
         "tags":{"shape":"TagsMap"},
-        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+        "launchDisposition":{"shape":"LaunchDisposition"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"},
+        "copyPrivateIp":{"shape":"Boolean"},
+        "associatePublicIpAddress":{"shape":"Boolean"},
+        "copyTags":{"shape":"Boolean"},
+        "licensing":{"shape":"Licensing"},
+        "bootMode":{"shape":"BootMode"},
+        "smallVolumeMaxSize":{"shape":"PositiveInteger"},
+        "smallVolumeConf":{"shape":"LaunchTemplateDiskConf"},
+        "largeVolumeConf":{"shape":"LaunchTemplateDiskConf"},
+        "enableParametersEncryption":{"shape":"Boolean"},
+        "parametersEncryptionKey":{"shape":"KmsKeyArn"}
       }
     },
     "CreateReplicationConfigurationTemplateRequest":{
       "type":"structure",
       "required":[
+        "stagingAreaSubnetId",
         "associateDefaultSecurityGroup",
-        "bandwidthThrottling",
-        "createPublicIP",
-        "dataPlaneRouting",
+        "replicationServersSecurityGroupsIDs",
+        "replicationServerInstanceType",
+        "useDedicatedReplicationServer",
         "defaultLargeStagingDiskType",
         "ebsEncryption",
-        "replicationServerInstanceType",
-        "replicationServersSecurityGroupsIDs",
-        "stagingAreaSubnetId",
-        "stagingAreaTags",
-        "useDedicatedReplicationServer"
+        "bandwidthThrottling",
+        "dataPlaneRouting",
+        "createPublicIP",
+        "stagingAreaTags"
       ],
       "members":{
+        "stagingAreaSubnetId":{"shape":"SubnetID"},
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
-        "bandwidthThrottling":{"shape":"BandwidthThrottling"},
-        "createPublicIP":{"shape":"Boolean"},
-        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
+        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
+        "useDedicatedReplicationServer":{"shape":"Boolean"},
         "defaultLargeStagingDiskType":{"shape":"ReplicationConfigurationDefaultLargeStagingDiskType"},
         "ebsEncryption":{"shape":"ReplicationConfigurationEbsEncryption"},
         "ebsEncryptionKeyArn":{"shape":"ARN"},
-        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
-        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
-        "stagingAreaSubnetId":{"shape":"SubnetID"},
+        "bandwidthThrottling":{"shape":"BandwidthThrottling"},
+        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "createPublicIP":{"shape":"Boolean"},
         "stagingAreaTags":{"shape":"TagsMap"},
+        "useFipsEndpoint":{"shape":"Boolean"},
         "tags":{"shape":"TagsMap"},
-        "useDedicatedReplicationServer":{"shape":"Boolean"},
-        "useFipsEndpoint":{"shape":"Boolean"}
+        "internetProtocol":{"shape":"InternetProtocol"}
       }
     },
     "CreateWaveRequest":{
       "type":"structure",
       "required":["name"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "description":{"shape":"WaveDescription"},
         "name":{"shape":"WaveName"},
-        "tags":{"shape":"TagsMap"}
+        "description":{"shape":"WaveDescription"},
+        "tags":{"shape":"TagsMap"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "DataReplicationError":{
@@ -1546,23 +1567,24 @@
     "DataReplicationInfo":{
       "type":"structure",
       "members":{
-        "dataReplicationError":{"shape":"DataReplicationError"},
-        "dataReplicationInitiation":{"shape":"DataReplicationInitiation"},
-        "dataReplicationState":{"shape":"DataReplicationState"},
-        "etaDateTime":{"shape":"ISO8601DatetimeString"},
         "lagDuration":{"shape":"ISO8601DurationString"},
+        "etaDateTime":{"shape":"ISO8601DatetimeString"},
+        "replicatedDisks":{"shape":"DataReplicationInfoReplicatedDisks"},
+        "dataReplicationState":{"shape":"DataReplicationState"},
+        "dataReplicationInitiation":{"shape":"DataReplicationInitiation"},
+        "dataReplicationError":{"shape":"DataReplicationError"},
         "lastSnapshotDateTime":{"shape":"ISO8601DatetimeString"},
-        "replicatedDisks":{"shape":"DataReplicationInfoReplicatedDisks"}
+        "replicatorId":{"shape":"ReplicatorID"}
       }
     },
     "DataReplicationInfoReplicatedDisk":{
       "type":"structure",
       "members":{
-        "backloggedStorageBytes":{"shape":"PositiveInteger"},
         "deviceName":{"shape":"BoundedString"},
+        "totalStorageBytes":{"shape":"PositiveInteger"},
         "replicatedStorageBytes":{"shape":"PositiveInteger"},
         "rescannedStorageBytes":{"shape":"PositiveInteger"},
-        "totalStorageBytes":{"shape":"PositiveInteger"}
+        "backloggedStorageBytes":{"shape":"PositiveInteger"}
       }
     },
     "DataReplicationInfoReplicatedDisks":{
@@ -1574,8 +1596,8 @@
     "DataReplicationInitiation":{
       "type":"structure",
       "members":{
-        "nextAttemptDateTime":{"shape":"ISO8601DatetimeString"},
         "startDateTime":{"shape":"ISO8601DatetimeString"},
+        "nextAttemptDateTime":{"shape":"ISO8601DatetimeString"},
         "steps":{"shape":"DataReplicationInitiationSteps"}
       }
     },
@@ -1637,14 +1659,13 @@
       "type":"structure",
       "required":["applicationID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "applicationID":{"shape":"ApplicationID"}
+        "applicationID":{"shape":"ApplicationID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "DeleteApplicationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteConnectorRequest":{
       "type":"structure",
@@ -1657,14 +1678,13 @@
       "type":"structure",
       "required":["jobID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "jobID":{"shape":"JobID"}
+        "jobID":{"shape":"JobID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "DeleteJobResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteLaunchConfigurationTemplateRequest":{
       "type":"structure",
@@ -1675,8 +1695,7 @@
     },
     "DeleteLaunchConfigurationTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteReplicationConfigurationTemplateRequest":{
       "type":"structure",
@@ -1687,21 +1706,19 @@
     },
     "DeleteReplicationConfigurationTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteSourceServerRequest":{
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "sourceServerID":{"shape":"SourceServerID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "DeleteSourceServerResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteVcenterClientRequest":{
       "type":"structure",
@@ -1714,23 +1731,22 @@
       "type":"structure",
       "required":["waveID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "waveID":{"shape":"WaveID"}
+        "waveID":{"shape":"WaveID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "DeleteWaveResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeJobLogItemsRequest":{
       "type":"structure",
       "required":["jobID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
         "jobID":{"shape":"JobID"},
         "maxResults":{"shape":"MaxResultsType"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "DescribeJobLogItemsResponse":{
@@ -1743,17 +1759,17 @@
     "DescribeJobsRequest":{
       "type":"structure",
       "members":{
-        "accountID":{"shape":"AccountID"},
         "filters":{"shape":"DescribeJobsRequestFilters"},
         "maxResults":{"shape":"MaxResultsType"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "DescribeJobsRequestFilters":{
       "type":"structure",
       "members":{
-        "fromDate":{"shape":"ISO8601DatetimeString"},
         "jobIDs":{"shape":"DescribeJobsRequestFiltersJobIDs"},
+        "fromDate":{"shape":"ISO8601DatetimeString"},
         "toDate":{"shape":"ISO8601DatetimeString"}
       }
     },
@@ -1788,9 +1804,9 @@
     "DescribeReplicationConfigurationTemplatesRequest":{
       "type":"structure",
       "members":{
+        "replicationConfigurationTemplateIDs":{"shape":"ReplicationConfigurationTemplateIDs"},
         "maxResults":{"shape":"MaxResultsType"},
-        "nextToken":{"shape":"PaginationToken"},
-        "replicationConfigurationTemplateIDs":{"shape":"ReplicationConfigurationTemplateIDs"}
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "DescribeReplicationConfigurationTemplatesResponse":{
@@ -1803,10 +1819,10 @@
     "DescribeSourceServersRequest":{
       "type":"structure",
       "members":{
-        "accountID":{"shape":"AccountID"},
         "filters":{"shape":"DescribeSourceServersRequestFilters"},
         "maxResults":{"shape":"MaxResultsType"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "DescribeSourceServersRequestApplicationIDs":{
@@ -1818,11 +1834,11 @@
     "DescribeSourceServersRequestFilters":{
       "type":"structure",
       "members":{
-        "applicationIDs":{"shape":"DescribeSourceServersRequestApplicationIDs"},
+        "sourceServerIDs":{"shape":"DescribeSourceServersRequestFiltersIDs"},
         "isArchived":{"shape":"Boolean"},
-        "lifeCycleStates":{"shape":"LifeCycleStates"},
         "replicationTypes":{"shape":"ReplicationTypes"},
-        "sourceServerIDs":{"shape":"DescribeSourceServersRequestFiltersIDs"}
+        "lifeCycleStates":{"shape":"LifeCycleStates"},
+        "applicationIDs":{"shape":"DescribeSourceServersRequestApplicationIDs"}
       }
     },
     "DescribeSourceServersRequestFiltersIDs":{
@@ -1863,19 +1879,18 @@
     "DisassociateApplicationsRequest":{
       "type":"structure",
       "required":[
-        "applicationIDs",
-        "waveID"
+        "waveID",
+        "applicationIDs"
       ],
       "members":{
-        "accountID":{"shape":"AccountID"},
+        "waveID":{"shape":"WaveID"},
         "applicationIDs":{"shape":"ApplicationIDs"},
-        "waveID":{"shape":"WaveID"}
+        "accountID":{"shape":"AccountID"}
       }
     },
     "DisassociateApplicationsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateSourceServersRequest":{
       "type":"structure",
@@ -1884,9 +1899,9 @@
         "sourceServerIDs"
       ],
       "members":{
-        "accountID":{"shape":"AccountID"},
         "applicationID":{"shape":"ApplicationID"},
-        "sourceServerIDs":{"shape":"DisassociateSourceServersRequestSourceServerIDs"}
+        "sourceServerIDs":{"shape":"DisassociateSourceServersRequestSourceServerIDs"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "DisassociateSourceServersRequestSourceServerIDs":{
@@ -1897,22 +1912,21 @@
     },
     "DisassociateSourceServersResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisconnectFromServiceRequest":{
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "sourceServerID":{"shape":"SourceServerID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "Disk":{
       "type":"structure",
       "members":{
-        "bytes":{"shape":"PositiveInteger"},
-        "deviceName":{"shape":"BoundedString"}
+        "deviceName":{"shape":"BoundedString"},
+        "bytes":{"shape":"PositiveInteger"}
       }
     },
     "Disks":{
@@ -1923,13 +1937,13 @@
     },
     "DocumentVersion":{
       "type":"string",
-      "pattern":"^(\\$DEFAULT|\\$LATEST|[0-9]+)$"
+      "pattern":"(\\$DEFAULT|\\$LATEST|[0-9]+)"
     },
     "EC2InstanceID":{
       "type":"string",
       "max":255,
       "min":0,
-      "pattern":"^i-[0-9a-fA-F]{8,}$"
+      "pattern":"i-[0-9a-fA-F]{8,}"
     },
     "EC2InstanceType":{
       "type":"string",
@@ -1940,13 +1954,13 @@
       "type":"string",
       "max":20,
       "min":20,
-      "pattern":"^lt-[0-9a-z]{17}$"
+      "pattern":"lt-[0-9a-z]{17}"
     },
     "ErrorDetails":{
       "type":"structure",
       "members":{
-        "code":{"shape":"BoundedString"},
         "message":{"shape":"LargeBoundedString"},
+        "code":{"shape":"BoundedString"},
         "resourceId":{"shape":"LargeBoundedString"},
         "resourceType":{"shape":"LargeBoundedString"}
       }
@@ -1965,7 +1979,7 @@
       "type":"string",
       "max":24,
       "min":24,
-      "pattern":"^export-[0-9a-zA-Z]{17}$"
+      "pattern":"export-[0-9a-zA-Z]{17}"
     },
     "ExportStatus":{
       "type":"string",
@@ -1979,29 +1993,31 @@
     "ExportTask":{
       "type":"structure",
       "members":{
+        "exportID":{"shape":"ExportID"},
+        "arn":{"shape":"ARN"},
+        "s3Bucket":{"shape":"S3BucketName"},
+        "s3Key":{"shape":"S3Key"},
+        "s3BucketOwner":{"shape":"AccountID"},
         "creationDateTime":{"shape":"ISO8601DatetimeString"},
         "endDateTime":{"shape":"ISO8601DatetimeString"},
-        "exportID":{"shape":"ExportID"},
-        "progressPercentage":{"shape":"Float"},
-        "s3Bucket":{"shape":"S3BucketName"},
-        "s3BucketOwner":{"shape":"AccountID"},
-        "s3Key":{"shape":"S3Key"},
         "status":{"shape":"ExportStatus"},
-        "summary":{"shape":"ExportTaskSummary"}
+        "progressPercentage":{"shape":"Float"},
+        "summary":{"shape":"ExportTaskSummary"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "ExportTaskError":{
       "type":"structure",
       "members":{
-        "errorData":{"shape":"ExportErrorData"},
-        "errorDateTime":{"shape":"ISO8601DatetimeString"}
+        "errorDateTime":{"shape":"ISO8601DatetimeString"},
+        "errorData":{"shape":"ExportErrorData"}
       }
     },
     "ExportTaskSummary":{
       "type":"structure",
       "members":{
-        "applicationsCount":{"shape":"PositiveInteger"},
         "serversCount":{"shape":"PositiveInteger"},
+        "applicationsCount":{"shape":"PositiveInteger"},
         "wavesCount":{"shape":"PositiveInteger"}
       }
     },
@@ -2013,8 +2029,8 @@
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "sourceServerID":{"shape":"SourceServerID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "FirstBoot":{
@@ -2034,16 +2050,16 @@
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "sourceServerID":{"shape":"SourceServerID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "GetReplicationConfigurationRequest":{
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "sourceServerID":{"shape":"SourceServerID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "IPsList":{
@@ -2054,7 +2070,7 @@
       "type":"string",
       "max":32,
       "min":19,
-      "pattern":"^[1-9][0-9]*-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?Z$"
+      "pattern":"[1-9][0-9]*-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?Z"
     },
     "ISO8601DurationString":{
       "type":"string",
@@ -2064,23 +2080,23 @@
     "IdentificationHints":{
       "type":"structure",
       "members":{
-        "awsInstanceID":{"shape":"EC2InstanceID"},
         "fqdn":{"shape":"BoundedString"},
         "hostname":{"shape":"BoundedString"},
-        "vmPath":{"shape":"BoundedString"},
-        "vmWareUuid":{"shape":"BoundedString"}
+        "vmWareUuid":{"shape":"BoundedString"},
+        "awsInstanceID":{"shape":"EC2InstanceID"},
+        "vmPath":{"shape":"BoundedString"}
       }
     },
     "ImportErrorData":{
       "type":"structure",
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "applicationID":{"shape":"ApplicationID"},
-        "ec2LaunchTemplateID":{"shape":"BoundedString"},
-        "rawError":{"shape":"LargeBoundedString"},
-        "rowNumber":{"shape":"PositiveInteger"},
         "sourceServerID":{"shape":"SourceServerID"},
-        "waveID":{"shape":"WaveID"}
+        "applicationID":{"shape":"ApplicationID"},
+        "waveID":{"shape":"WaveID"},
+        "ec2LaunchTemplateID":{"shape":"BoundedString"},
+        "rowNumber":{"shape":"PositiveInteger"},
+        "rawError":{"shape":"LargeBoundedString"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "ImportErrorType":{
@@ -2098,7 +2114,7 @@
       "type":"string",
       "max":24,
       "min":24,
-      "pattern":"^import-[0-9a-zA-Z]{17}$"
+      "pattern":"import-[0-9a-zA-Z]{17}"
     },
     "ImportIDsFilter":{
       "type":"list",
@@ -2122,29 +2138,31 @@
     "ImportTask":{
       "type":"structure",
       "members":{
+        "importID":{"shape":"ImportID"},
+        "arn":{"shape":"ARN"},
+        "s3BucketSource":{"shape":"S3BucketSource"},
         "creationDateTime":{"shape":"ISO8601DatetimeString"},
         "endDateTime":{"shape":"ISO8601DatetimeString"},
-        "importID":{"shape":"ImportID"},
-        "progressPercentage":{"shape":"Float"},
-        "s3BucketSource":{"shape":"S3BucketSource"},
         "status":{"shape":"ImportStatus"},
-        "summary":{"shape":"ImportTaskSummary"}
+        "progressPercentage":{"shape":"Float"},
+        "summary":{"shape":"ImportTaskSummary"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "ImportTaskError":{
       "type":"structure",
       "members":{
-        "errorData":{"shape":"ImportErrorData"},
         "errorDateTime":{"shape":"ISO8601DatetimeString"},
-        "errorType":{"shape":"ImportErrorType"}
+        "errorType":{"shape":"ImportErrorType"},
+        "errorData":{"shape":"ImportErrorData"}
       }
     },
     "ImportTaskSummary":{
       "type":"structure",
       "members":{
+        "waves":{"shape":"ImportTaskSummaryWaves"},
         "applications":{"shape":"ImportTaskSummaryApplications"},
-        "servers":{"shape":"ImportTaskSummaryServers"},
-        "waves":{"shape":"ImportTaskSummaryWaves"}
+        "servers":{"shape":"ImportTaskSummaryServers"}
       }
     },
     "ImportTaskSummaryApplications":{
@@ -2170,13 +2188,11 @@
     },
     "InitializeServiceRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "InitializeServiceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "InitiatedBy":{
       "type":"string",
@@ -2202,6 +2218,13 @@
       "exception":true,
       "fault":true
     },
+    "InternetProtocol":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "IPV6"
+      ]
+    },
     "Iops":{
       "type":"long",
       "box":true,
@@ -2212,35 +2235,35 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"^[a-zA-Z0-9_]+(\\.[a-zA-Z0-9_\\[\\]]+)*$"
+      "pattern":"[a-zA-Z0-9_]+(\\.[a-zA-Z0-9_\\[\\]]+)*"
     },
     "Job":{
       "type":"structure",
       "required":["jobID"],
       "members":{
+        "jobID":{"shape":"JobID"},
         "arn":{"shape":"ARN"},
+        "type":{"shape":"JobType"},
+        "initiatedBy":{"shape":"InitiatedBy"},
         "creationDateTime":{"shape":"ISO8601DatetimeString"},
         "endDateTime":{"shape":"ISO8601DatetimeString"},
-        "initiatedBy":{"shape":"InitiatedBy"},
-        "jobID":{"shape":"JobID"},
-        "participatingServers":{"shape":"ParticipatingServers"},
         "status":{"shape":"JobStatus"},
-        "tags":{"shape":"TagsMap"},
-        "type":{"shape":"JobType"}
+        "participatingServers":{"shape":"ParticipatingServers"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "JobID":{
       "type":"string",
       "max":24,
       "min":24,
-      "pattern":"^mgnjob-[0-9a-zA-Z]{17}$"
+      "pattern":"mgnjob-[0-9a-zA-Z]{17}"
     },
     "JobLog":{
       "type":"structure",
       "members":{
+        "logDateTime":{"shape":"ISO8601DatetimeString"},
         "event":{"shape":"JobLogEvent"},
-        "eventData":{"shape":"JobLogEventData"},
-        "logDateTime":{"shape":"ISO8601DatetimeString"}
+        "eventData":{"shape":"JobLogEventData"}
       }
     },
     "JobLogEvent":{
@@ -2267,10 +2290,12 @@
     "JobLogEventData":{
       "type":"structure",
       "members":{
-        "conversionServerID":{"shape":"EC2InstanceID"},
-        "rawError":{"shape":"LargeBoundedString"},
         "sourceServerID":{"shape":"SourceServerID"},
-        "targetInstanceID":{"shape":"EC2InstanceID"}
+        "conversionServerID":{"shape":"EC2InstanceID"},
+        "targetInstanceID":{"shape":"EC2InstanceID"},
+        "rawError":{"shape":"LargeBoundedString"},
+        "attemptCount":{"shape":"StrictlyPositiveInteger"},
+        "maxAttemptsCount":{"shape":"StrictlyPositiveInteger"}
       }
     },
     "JobLogs":{
@@ -2280,11 +2305,11 @@
     "JobPostLaunchActionsLaunchStatus":{
       "type":"structure",
       "members":{
+        "ssmDocument":{"shape":"SsmDocument"},
+        "ssmDocumentType":{"shape":"SsmDocumentType"},
         "executionID":{"shape":"BoundedString"},
         "executionStatus":{"shape":"PostLaunchActionExecutionStatus"},
-        "failureReason":{"shape":"BoundedString"},
-        "ssmDocument":{"shape":"SsmDocument"},
-        "ssmDocumentType":{"shape":"SsmDocumentType"}
+        "failureReason":{"shape":"BoundedString"}
       }
     },
     "JobStatus":{
@@ -2306,6 +2331,12 @@
       "type":"list",
       "member":{"shape":"Job"}
     },
+    "KmsKeyArn":{
+      "type":"string",
+      "max":276,
+      "min":0,
+      "pattern":"((arn:[\\w-]+:kms:([a-z]{2}-(gov-)?[a-z]+-\\d{1})?:(\\d{12})?:((alias|key)/[a-zA-Z0-9:/_-]{1,256}))|())"
+    },
     "LargeBoundedString":{
       "type":"string",
       "max":65536,
@@ -2314,48 +2345,50 @@
     "LaunchConfiguration":{
       "type":"structure",
       "members":{
-        "bootMode":{"shape":"BootMode"},
+        "sourceServerID":{"shape":"SourceServerID"},
+        "name":{"shape":"SmallBoundedString"},
+        "ec2LaunchTemplateID":{"shape":"BoundedString"},
+        "launchDisposition":{"shape":"LaunchDisposition"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"},
         "copyPrivateIp":{"shape":"Boolean"},
         "copyTags":{"shape":"Boolean"},
-        "ec2LaunchTemplateID":{"shape":"BoundedString"},
-        "enableMapAutoTagging":{"shape":"Boolean"},
-        "launchDisposition":{"shape":"LaunchDisposition"},
         "licensing":{"shape":"Licensing"},
-        "mapAutoTaggingMpeID":{"shape":"TagValue"},
-        "name":{"shape":"SmallBoundedString"},
+        "bootMode":{"shape":"BootMode"},
         "postLaunchActions":{"shape":"PostLaunchActions"},
-        "sourceServerID":{"shape":"SourceServerID"},
-        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+        "enableMapAutoTagging":{"shape":"Boolean"},
+        "mapAutoTaggingMpeID":{"shape":"TagValue"}
       }
     },
     "LaunchConfigurationTemplate":{
       "type":"structure",
       "required":["launchConfigurationTemplateID"],
       "members":{
-        "arn":{"shape":"ARN"},
-        "associatePublicIpAddress":{"shape":"Boolean"},
-        "bootMode":{"shape":"BootMode"},
-        "copyPrivateIp":{"shape":"Boolean"},
-        "copyTags":{"shape":"Boolean"},
-        "ec2LaunchTemplateID":{"shape":"EC2LaunchConfigurationTemplateID"},
-        "enableMapAutoTagging":{"shape":"Boolean"},
-        "largeVolumeConf":{"shape":"LaunchTemplateDiskConf"},
         "launchConfigurationTemplateID":{"shape":"LaunchConfigurationTemplateID"},
-        "launchDisposition":{"shape":"LaunchDisposition"},
-        "licensing":{"shape":"Licensing"},
-        "mapAutoTaggingMpeID":{"shape":"TagValue"},
+        "arn":{"shape":"ARN"},
         "postLaunchActions":{"shape":"PostLaunchActions"},
-        "smallVolumeConf":{"shape":"LaunchTemplateDiskConf"},
-        "smallVolumeMaxSize":{"shape":"PositiveInteger"},
+        "enableMapAutoTagging":{"shape":"Boolean"},
+        "mapAutoTaggingMpeID":{"shape":"TagValue"},
         "tags":{"shape":"TagsMap"},
-        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+        "ec2LaunchTemplateID":{"shape":"EC2LaunchConfigurationTemplateID"},
+        "launchDisposition":{"shape":"LaunchDisposition"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"},
+        "copyPrivateIp":{"shape":"Boolean"},
+        "associatePublicIpAddress":{"shape":"Boolean"},
+        "copyTags":{"shape":"Boolean"},
+        "licensing":{"shape":"Licensing"},
+        "bootMode":{"shape":"BootMode"},
+        "smallVolumeMaxSize":{"shape":"PositiveInteger"},
+        "smallVolumeConf":{"shape":"LaunchTemplateDiskConf"},
+        "largeVolumeConf":{"shape":"LaunchTemplateDiskConf"},
+        "enableParametersEncryption":{"shape":"Boolean"},
+        "parametersEncryptionKey":{"shape":"ARN"}
       }
     },
     "LaunchConfigurationTemplateID":{
       "type":"string",
       "max":21,
       "min":21,
-      "pattern":"^lct-[0-9a-zA-Z]{17}$"
+      "pattern":"lct-[0-9a-zA-Z]{17}"
     },
     "LaunchConfigurationTemplateIDs":{
       "type":"list",
@@ -2389,17 +2422,17 @@
     "LaunchTemplateDiskConf":{
       "type":"structure",
       "members":{
+        "volumeType":{"shape":"VolumeType"},
         "iops":{"shape":"Iops"},
-        "throughput":{"shape":"Throughput"},
-        "volumeType":{"shape":"VolumeType"}
+        "throughput":{"shape":"Throughput"}
       }
     },
     "LaunchedInstance":{
       "type":"structure",
       "members":{
         "ec2InstanceID":{"shape":"EC2InstanceID"},
-        "firstBoot":{"shape":"FirstBoot"},
-        "jobID":{"shape":"JobID"}
+        "jobID":{"shape":"JobID"},
+        "firstBoot":{"shape":"FirstBoot"}
       }
     },
     "Licensing":{
@@ -2412,20 +2445,20 @@
       "type":"structure",
       "members":{
         "addedToServiceDateTime":{"shape":"ISO8601DatetimeString"},
-        "elapsedReplicationDuration":{"shape":"ISO8601DurationString"},
         "firstByteDateTime":{"shape":"ISO8601DatetimeString"},
-        "lastCutover":{"shape":"LifeCycleLastCutover"},
+        "elapsedReplicationDuration":{"shape":"ISO8601DurationString"},
         "lastSeenByServiceDateTime":{"shape":"ISO8601DatetimeString"},
         "lastTest":{"shape":"LifeCycleLastTest"},
+        "lastCutover":{"shape":"LifeCycleLastCutover"},
         "state":{"shape":"LifeCycleState"}
       }
     },
     "LifeCycleLastCutover":{
       "type":"structure",
       "members":{
-        "finalized":{"shape":"LifeCycleLastCutoverFinalized"},
         "initiated":{"shape":"LifeCycleLastCutoverInitiated"},
-        "reverted":{"shape":"LifeCycleLastCutoverReverted"}
+        "reverted":{"shape":"LifeCycleLastCutoverReverted"},
+        "finalized":{"shape":"LifeCycleLastCutoverFinalized"}
       }
     },
     "LifeCycleLastCutoverFinalized":{
@@ -2450,9 +2483,9 @@
     "LifeCycleLastTest":{
       "type":"structure",
       "members":{
-        "finalized":{"shape":"LifeCycleLastTestFinalized"},
         "initiated":{"shape":"LifeCycleLastTestInitiated"},
-        "reverted":{"shape":"LifeCycleLastTestReverted"}
+        "reverted":{"shape":"LifeCycleLastTestReverted"},
+        "finalized":{"shape":"LifeCycleLastTestFinalized"}
       }
     },
     "LifeCycleLastTestFinalized":{
@@ -2498,10 +2531,10 @@
     "ListApplicationsRequest":{
       "type":"structure",
       "members":{
-        "accountID":{"shape":"AccountID"},
         "filters":{"shape":"ListApplicationsRequestFilters"},
         "maxResults":{"shape":"MaxResultsType"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "ListApplicationsRequestFilters":{
@@ -2639,11 +2672,11 @@
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
+        "sourceServerID":{"shape":"SourceServerID"},
         "filters":{"shape":"SourceServerActionsRequestFilters"},
         "maxResults":{"shape":"MaxResultsType"},
         "nextToken":{"shape":"PaginationToken"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "accountID":{"shape":"AccountID"}
       }
     },
     "ListSourceServerActionsResponse":{
@@ -2674,8 +2707,8 @@
       "type":"structure",
       "required":["launchConfigurationTemplateID"],
       "members":{
-        "filters":{"shape":"TemplateActionsRequestFilters"},
         "launchConfigurationTemplateID":{"shape":"LaunchConfigurationTemplateID"},
+        "filters":{"shape":"TemplateActionsRequestFilters"},
         "maxResults":{"shape":"MaxResultsType"},
         "nextToken":{"shape":"PaginationToken"}
       }
@@ -2690,17 +2723,17 @@
     "ListWavesRequest":{
       "type":"structure",
       "members":{
-        "accountID":{"shape":"AccountID"},
         "filters":{"shape":"ListWavesRequestFilters"},
         "maxResults":{"shape":"MaxResultsType"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "ListWavesRequestFilters":{
       "type":"structure",
       "members":{
-        "isArchived":{"shape":"Boolean"},
-        "waveIDs":{"shape":"WaveIDsFilter"}
+        "waveIDs":{"shape":"WaveIDsFilter"},
+        "isArchived":{"shape":"Boolean"}
       }
     },
     "ListWavesResponse":{
@@ -2726,8 +2759,8 @@
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "sourceServerID":{"shape":"SourceServerID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "MaxResultsType":{
@@ -2739,9 +2772,9 @@
     "NetworkInterface":{
       "type":"structure",
       "members":{
+        "macAddress":{"shape":"BoundedString"},
         "ips":{"shape":"IPsList"},
-        "isPrimary":{"shape":"Boolean"},
-        "macAddress":{"shape":"BoundedString"}
+        "isPrimary":{"shape":"Boolean"}
       }
     },
     "NetworkInterfaces":{
@@ -2758,7 +2791,7 @@
     },
     "OperatingSystemString":{
       "type":"string",
-      "pattern":"^(linux|windows)$"
+      "pattern":"(linux|windows)"
     },
     "OrderType":{
       "type":"integer",
@@ -2775,10 +2808,10 @@
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
+        "sourceServerID":{"shape":"SourceServerID"},
         "launchStatus":{"shape":"LaunchStatus"},
         "launchedEc2InstanceID":{"shape":"EC2InstanceID"},
-        "postLaunchActionsStatus":{"shape":"PostLaunchActionsStatus"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "postLaunchActionsStatus":{"shape":"PostLaunchActionsStatus"}
       }
     },
     "ParticipatingServers":{
@@ -2789,8 +2822,8 @@
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "sourceServerID":{"shape":"SourceServerID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "PositiveInteger":{
@@ -2808,10 +2841,10 @@
     "PostLaunchActions":{
       "type":"structure",
       "members":{
-        "cloudWatchLogGroupName":{"shape":"CloudWatchLogGroupName"},
         "deployment":{"shape":"PostLaunchActionsDeploymentType"},
         "s3LogBucket":{"shape":"S3LogBucketName"},
         "s3OutputKeyPrefix":{"shape":"BoundedString"},
+        "cloudWatchLogGroupName":{"shape":"CloudWatchLogGroupName"},
         "ssmDocuments":{"shape":"SsmDocuments"}
       }
     },
@@ -2830,114 +2863,113 @@
     "PostLaunchActionsStatus":{
       "type":"structure",
       "members":{
-        "postLaunchActionsLaunchStatusList":{"shape":"PostLaunchActionsLaunchStatusList"},
-        "ssmAgentDiscoveryDatetime":{"shape":"ISO8601DatetimeString"}
+        "ssmAgentDiscoveryDatetime":{"shape":"ISO8601DatetimeString"},
+        "postLaunchActionsLaunchStatusList":{"shape":"PostLaunchActionsLaunchStatusList"}
       }
     },
     "PutSourceServerActionRequest":{
       "type":"structure",
       "required":[
-        "actionID",
+        "sourceServerID",
         "actionName",
         "documentIdentifier",
         "order",
-        "sourceServerID"
+        "actionID"
       ],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "actionID":{"shape":"ActionID"},
-        "actionName":{"shape":"ActionName"},
-        "active":{"shape":"Boolean"},
-        "category":{"shape":"ActionCategory"},
-        "description":{"shape":"ActionDescription"},
-        "documentIdentifier":{"shape":"BoundedString"},
-        "documentVersion":{"shape":"DocumentVersion"},
-        "externalParameters":{"shape":"SsmDocumentExternalParameters"},
-        "mustSucceedForCutover":{"shape":"Boolean"},
-        "order":{"shape":"OrderType"},
-        "parameters":{"shape":"SsmDocumentParameters"},
         "sourceServerID":{"shape":"SourceServerID"},
-        "timeoutSeconds":{"shape":"StrictlyPositiveInteger"}
+        "actionName":{"shape":"ActionName"},
+        "documentIdentifier":{"shape":"BoundedString"},
+        "order":{"shape":"OrderType"},
+        "actionID":{"shape":"ActionID"},
+        "documentVersion":{"shape":"DocumentVersion"},
+        "active":{"shape":"Boolean"},
+        "timeoutSeconds":{"shape":"StrictlyPositiveInteger"},
+        "mustSucceedForCutover":{"shape":"Boolean"},
+        "parameters":{"shape":"SsmDocumentParameters"},
+        "externalParameters":{"shape":"SsmDocumentExternalParameters"},
+        "description":{"shape":"ActionDescription"},
+        "category":{"shape":"ActionCategory"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "PutTemplateActionRequest":{
       "type":"structure",
       "required":[
-        "actionID",
+        "launchConfigurationTemplateID",
         "actionName",
         "documentIdentifier",
-        "launchConfigurationTemplateID",
-        "order"
+        "order",
+        "actionID"
       ],
       "members":{
-        "actionID":{"shape":"ActionID"},
-        "actionName":{"shape":"BoundedString"},
-        "active":{"shape":"Boolean"},
-        "category":{"shape":"ActionCategory"},
-        "description":{"shape":"ActionDescription"},
-        "documentIdentifier":{"shape":"BoundedString"},
-        "documentVersion":{"shape":"DocumentVersion"},
-        "externalParameters":{"shape":"SsmDocumentExternalParameters"},
         "launchConfigurationTemplateID":{"shape":"LaunchConfigurationTemplateID"},
-        "mustSucceedForCutover":{"shape":"Boolean"},
-        "operatingSystem":{"shape":"OperatingSystemString"},
+        "actionName":{"shape":"BoundedString"},
+        "documentIdentifier":{"shape":"BoundedString"},
         "order":{"shape":"OrderType"},
+        "actionID":{"shape":"ActionID"},
+        "documentVersion":{"shape":"DocumentVersion"},
+        "active":{"shape":"Boolean"},
+        "timeoutSeconds":{"shape":"StrictlyPositiveInteger"},
+        "mustSucceedForCutover":{"shape":"Boolean"},
         "parameters":{"shape":"SsmDocumentParameters"},
-        "timeoutSeconds":{"shape":"StrictlyPositiveInteger"}
+        "operatingSystem":{"shape":"OperatingSystemString"},
+        "externalParameters":{"shape":"SsmDocumentExternalParameters"},
+        "description":{"shape":"ActionDescription"},
+        "category":{"shape":"ActionCategory"}
       }
     },
     "RemoveSourceServerActionRequest":{
       "type":"structure",
       "required":[
-        "actionID",
-        "sourceServerID"
+        "sourceServerID",
+        "actionID"
       ],
       "members":{
-        "accountID":{"shape":"AccountID"},
+        "sourceServerID":{"shape":"SourceServerID"},
         "actionID":{"shape":"ActionID"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "accountID":{"shape":"AccountID"}
       }
     },
     "RemoveSourceServerActionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RemoveTemplateActionRequest":{
       "type":"structure",
       "required":[
-        "actionID",
-        "launchConfigurationTemplateID"
+        "launchConfigurationTemplateID",
+        "actionID"
       ],
       "members":{
-        "actionID":{"shape":"ActionID"},
-        "launchConfigurationTemplateID":{"shape":"LaunchConfigurationTemplateID"}
+        "launchConfigurationTemplateID":{"shape":"LaunchConfigurationTemplateID"},
+        "actionID":{"shape":"ActionID"}
       }
     },
     "RemoveTemplateActionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ReplicationConfiguration":{
       "type":"structure",
       "members":{
+        "sourceServerID":{"shape":"SourceServerID"},
+        "name":{"shape":"SmallBoundedString"},
+        "stagingAreaSubnetId":{"shape":"SubnetID"},
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
-        "bandwidthThrottling":{"shape":"BandwidthThrottling"},
-        "createPublicIP":{"shape":"Boolean"},
-        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
+        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
+        "useDedicatedReplicationServer":{"shape":"Boolean"},
         "defaultLargeStagingDiskType":{"shape":"ReplicationConfigurationDefaultLargeStagingDiskType"},
+        "replicatedDisks":{"shape":"ReplicationConfigurationReplicatedDisks"},
         "ebsEncryption":{"shape":"ReplicationConfigurationEbsEncryption"},
         "ebsEncryptionKeyArn":{"shape":"ARN"},
-        "name":{"shape":"SmallBoundedString"},
-        "replicatedDisks":{"shape":"ReplicationConfigurationReplicatedDisks"},
-        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
-        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
-        "sourceServerID":{"shape":"SourceServerID"},
-        "stagingAreaSubnetId":{"shape":"SubnetID"},
+        "bandwidthThrottling":{"shape":"BandwidthThrottling"},
+        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "createPublicIP":{"shape":"Boolean"},
         "stagingAreaTags":{"shape":"TagsMap"},
-        "useDedicatedReplicationServer":{"shape":"Boolean"},
-        "useFipsEndpoint":{"shape":"Boolean"}
+        "useFipsEndpoint":{"shape":"Boolean"},
+        "internetProtocol":{"shape":"InternetProtocol"}
       }
     },
     "ReplicationConfigurationDataPlaneRouting":{
@@ -2966,9 +2998,9 @@
       "type":"structure",
       "members":{
         "deviceName":{"shape":"BoundedString"},
-        "iops":{"shape":"PositiveInteger"},
         "isBootDisk":{"shape":"Boolean"},
         "stagingDiskType":{"shape":"ReplicationConfigurationReplicatedDiskStagingDiskType"},
+        "iops":{"shape":"PositiveInteger"},
         "throughput":{"shape":"PositiveInteger"}
       }
     },
@@ -2995,29 +3027,30 @@
       "type":"structure",
       "required":["replicationConfigurationTemplateID"],
       "members":{
+        "replicationConfigurationTemplateID":{"shape":"ReplicationConfigurationTemplateID"},
         "arn":{"shape":"ARN"},
+        "stagingAreaSubnetId":{"shape":"SubnetID"},
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
-        "bandwidthThrottling":{"shape":"BandwidthThrottling"},
-        "createPublicIP":{"shape":"Boolean"},
-        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
+        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
+        "useDedicatedReplicationServer":{"shape":"Boolean"},
         "defaultLargeStagingDiskType":{"shape":"ReplicationConfigurationDefaultLargeStagingDiskType"},
         "ebsEncryption":{"shape":"ReplicationConfigurationEbsEncryption"},
         "ebsEncryptionKeyArn":{"shape":"ARN"},
-        "replicationConfigurationTemplateID":{"shape":"ReplicationConfigurationTemplateID"},
-        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
-        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
-        "stagingAreaSubnetId":{"shape":"SubnetID"},
+        "bandwidthThrottling":{"shape":"BandwidthThrottling"},
+        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "createPublicIP":{"shape":"Boolean"},
         "stagingAreaTags":{"shape":"TagsMap"},
+        "useFipsEndpoint":{"shape":"Boolean"},
         "tags":{"shape":"TagsMap"},
-        "useDedicatedReplicationServer":{"shape":"Boolean"},
-        "useFipsEndpoint":{"shape":"Boolean"}
+        "internetProtocol":{"shape":"InternetProtocol"}
       }
     },
     "ReplicationConfigurationTemplateID":{
       "type":"string",
       "max":21,
       "min":21,
-      "pattern":"^rct-[0-9a-zA-Z]{17}$"
+      "pattern":"rct-[0-9a-zA-Z]{17}"
     },
     "ReplicationConfigurationTemplateIDs":{
       "type":"list",
@@ -3048,11 +3081,17 @@
       "max":2,
       "min":0
     },
+    "ReplicatorID":{
+      "type":"string",
+      "max":19,
+      "min":19,
+      "pattern":"i-[0-9a-zA-Z]{17}"
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
-        "code":{"shape":"LargeBoundedString"},
         "message":{"shape":"LargeBoundedString"},
+        "code":{"shape":"LargeBoundedString"},
         "resourceId":{"shape":"LargeBoundedString"},
         "resourceType":{"shape":"LargeBoundedString"}
       },
@@ -3066,21 +3105,21 @@
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "sourceServerID":{"shape":"SourceServerID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "RetryDataReplicationRequest":{
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "sourceServerID":{"shape":"SourceServerID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "S3BucketName":{
       "type":"string",
-      "pattern":"^[a-zA-Z0-9.\\-_]{1,255}$"
+      "pattern":"[a-zA-Z0-9.\\-_]{1,255}"
     },
     "S3BucketSource":{
       "type":"structure",
@@ -3090,13 +3129,13 @@
       ],
       "members":{
         "s3Bucket":{"shape":"S3BucketName"},
-        "s3BucketOwner":{"shape":"AccountID"},
-        "s3Key":{"shape":"S3Key"}
+        "s3Key":{"shape":"S3Key"},
+        "s3BucketOwner":{"shape":"AccountID"}
       }
     },
     "S3Key":{
       "type":"string",
-      "pattern":"^[^\\x00]{1,1020}\\.csv$"
+      "pattern":"[^\\x00]{1,1020}\\.csv"
     },
     "S3LogBucketName":{
       "type":"string",
@@ -3107,24 +3146,24 @@
       "type":"string",
       "max":100,
       "min":20,
-      "pattern":"^arn:[\\w-]+:secretsmanager:([a-z]{2}-(gov-)?[a-z]+-\\d{1})?:(\\d{12})?:secret:(.+)$"
+      "pattern":"arn:[\\w-]+:secretsmanager:([a-z]{2}-(gov-)?[a-z]+-\\d{1})?:(\\d{12})?:secret:(.+)"
     },
     "SecurityGroupID":{
       "type":"string",
       "max":255,
       "min":0,
-      "pattern":"^sg-[0-9a-fA-F]{8,}$"
+      "pattern":"sg-[0-9a-fA-F]{8,}"
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
-        "code":{"shape":"LargeBoundedString"},
         "message":{"shape":"LargeBoundedString"},
-        "quotaCode":{"shape":"LargeBoundedString"},
-        "quotaValue":{"shape":"StrictlyPositiveInteger"},
+        "code":{"shape":"LargeBoundedString"},
         "resourceId":{"shape":"LargeBoundedString"},
         "resourceType":{"shape":"LargeBoundedString"},
-        "serviceCode":{"shape":"LargeBoundedString"}
+        "serviceCode":{"shape":"LargeBoundedString"},
+        "quotaCode":{"shape":"LargeBoundedString"},
+        "quotaValue":{"shape":"StrictlyPositiveInteger"}
       },
       "error":{
         "httpStatusCode":402,
@@ -3140,33 +3179,33 @@
     "SourceProperties":{
       "type":"structure",
       "members":{
-        "cpus":{"shape":"Cpus"},
-        "disks":{"shape":"Disks"},
-        "identificationHints":{"shape":"IdentificationHints"},
         "lastUpdatedDateTime":{"shape":"ISO8601DatetimeString"},
+        "recommendedInstanceType":{"shape":"EC2InstanceType"},
+        "identificationHints":{"shape":"IdentificationHints"},
         "networkInterfaces":{"shape":"NetworkInterfaces"},
-        "os":{"shape":"OS"},
+        "disks":{"shape":"Disks"},
+        "cpus":{"shape":"Cpus"},
         "ramBytes":{"shape":"PositiveInteger"},
-        "recommendedInstanceType":{"shape":"EC2InstanceType"}
+        "os":{"shape":"OS"}
       }
     },
     "SourceServer":{
       "type":"structure",
       "members":{
-        "applicationID":{"shape":"ApplicationID"},
-        "arn":{"shape":"ARN"},
-        "connectorAction":{"shape":"SourceServerConnectorAction"},
-        "dataReplicationInfo":{"shape":"DataReplicationInfo"},
-        "fqdnForActionFramework":{"shape":"BoundedString"},
-        "isArchived":{"shape":"Boolean"},
-        "launchedInstance":{"shape":"LaunchedInstance"},
-        "lifeCycle":{"shape":"LifeCycle"},
-        "replicationType":{"shape":"ReplicationType"},
-        "sourceProperties":{"shape":"SourceProperties"},
         "sourceServerID":{"shape":"SourceServerID"},
+        "arn":{"shape":"ARN"},
+        "isArchived":{"shape":"Boolean"},
         "tags":{"shape":"TagsMap"},
-        "userProvidedID":{"shape":"BoundedString"},
-        "vcenterClientID":{"shape":"VcenterClientID"}
+        "launchedInstance":{"shape":"LaunchedInstance"},
+        "dataReplicationInfo":{"shape":"DataReplicationInfo"},
+        "lifeCycle":{"shape":"LifeCycle"},
+        "sourceProperties":{"shape":"SourceProperties"},
+        "replicationType":{"shape":"ReplicationType"},
+        "vcenterClientID":{"shape":"VcenterClientID"},
+        "applicationID":{"shape":"ApplicationID"},
+        "userProvidedID":{"shape":"UserProvidedId"},
+        "fqdnForActionFramework":{"shape":"BoundedString"},
+        "connectorAction":{"shape":"SourceServerConnectorAction"}
       }
     },
     "SourceServerActionDocument":{
@@ -3174,16 +3213,16 @@
       "members":{
         "actionID":{"shape":"ActionID"},
         "actionName":{"shape":"ActionName"},
-        "active":{"shape":"Boolean"},
-        "category":{"shape":"ActionCategory"},
-        "description":{"shape":"ActionDescription"},
         "documentIdentifier":{"shape":"BoundedString"},
-        "documentVersion":{"shape":"DocumentVersion"},
-        "externalParameters":{"shape":"SsmDocumentExternalParameters"},
-        "mustSucceedForCutover":{"shape":"Boolean"},
         "order":{"shape":"OrderType"},
+        "documentVersion":{"shape":"DocumentVersion"},
+        "active":{"shape":"Boolean"},
+        "timeoutSeconds":{"shape":"StrictlyPositiveInteger"},
+        "mustSucceedForCutover":{"shape":"Boolean"},
         "parameters":{"shape":"SsmDocumentParameters"},
-        "timeoutSeconds":{"shape":"StrictlyPositiveInteger"}
+        "externalParameters":{"shape":"SsmDocumentExternalParameters"},
+        "description":{"shape":"ActionDescription"},
+        "category":{"shape":"ActionCategory"}
       }
     },
     "SourceServerActionDocuments":{
@@ -3201,15 +3240,15 @@
     "SourceServerConnectorAction":{
       "type":"structure",
       "members":{
-        "connectorArn":{"shape":"ConnectorArn"},
-        "credentialsSecretArn":{"shape":"SecretArn"}
+        "credentialsSecretArn":{"shape":"SecretArn"},
+        "connectorArn":{"shape":"ConnectorArn"}
       }
     },
     "SourceServerID":{
       "type":"string",
       "max":19,
       "min":19,
-      "pattern":"^s-[0-9a-zA-Z]{17}$"
+      "pattern":"s-[0-9a-zA-Z]{17}"
     },
     "SourceServersList":{
       "type":"list",
@@ -3223,11 +3262,11 @@
       ],
       "members":{
         "actionName":{"shape":"BoundedString"},
-        "externalParameters":{"shape":"SsmDocumentExternalParameters"},
+        "ssmDocumentName":{"shape":"SsmDocumentName"},
+        "timeoutSeconds":{"shape":"StrictlyPositiveInteger"},
         "mustSucceedForCutover":{"shape":"Boolean"},
         "parameters":{"shape":"SsmDocumentParameters"},
-        "ssmDocumentName":{"shape":"SsmDocumentName"},
-        "timeoutSeconds":{"shape":"StrictlyPositiveInteger"}
+        "externalParameters":{"shape":"SsmDocumentExternalParameters"}
       }
     },
     "SsmDocumentExternalParameters":{
@@ -3241,13 +3280,13 @@
       "type":"string",
       "max":172,
       "min":3,
-      "pattern":"^([A-Za-z0-9/:_\\.-])+$"
+      "pattern":"([A-Za-z0-9/:_\\.-])+"
     },
     "SsmDocumentParameterName":{
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"^([A-Za-z0-9])+$"
+      "pattern":"([A-Za-z0-9])+"
     },
     "SsmDocumentParameters":{
       "type":"map",
@@ -3280,28 +3319,31 @@
       "type":"string",
       "max":20,
       "min":19,
-      "pattern":"(^i-[0-9a-zA-Z]{17}$)|(^mi-[0-9a-zA-Z]{17}$)"
+      "pattern":".*(^i-[0-9a-zA-Z]{17}$)|(^mi-[0-9a-zA-Z]{17}$).*"
     },
     "SsmParameterStoreParameter":{
       "type":"structure",
       "required":[
-        "parameterName",
-        "parameterType"
+        "parameterType",
+        "parameterName"
       ],
       "members":{
-        "parameterName":{"shape":"SsmParameterStoreParameterName"},
-        "parameterType":{"shape":"SsmParameterStoreParameterType"}
+        "parameterType":{"shape":"SsmParameterStoreParameterType"},
+        "parameterName":{"shape":"SsmParameterStoreParameterName"}
       }
     },
     "SsmParameterStoreParameterName":{
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"^([A-Za-z0-9_\\.-])+$"
+      "pattern":"([A-Za-z0-9_\\.-])+"
     },
     "SsmParameterStoreParameterType":{
       "type":"string",
-      "enum":["STRING"]
+      "enum":[
+        "STRING",
+        "SECURE_STRING"
+      ]
     },
     "SsmParameterStoreParameters":{
       "type":"list",
@@ -3313,9 +3355,9 @@
       "type":"structure",
       "required":["sourceServerIDs"],
       "members":{
-        "accountID":{"shape":"AccountID"},
         "sourceServerIDs":{"shape":"StartCutoverRequestSourceServerIDs"},
-        "tags":{"shape":"TagsMap"}
+        "tags":{"shape":"TagsMap"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "StartCutoverRequestSourceServerIDs":{
@@ -3338,8 +3380,9 @@
       ],
       "members":{
         "s3Bucket":{"shape":"S3BucketName"},
+        "s3Key":{"shape":"S3Key"},
         "s3BucketOwner":{"shape":"AccountID"},
-        "s3Key":{"shape":"S3Key"}
+        "tags":{"shape":"TagsMap"}
       }
     },
     "StartExportResponse":{
@@ -3356,7 +3399,8 @@
           "shape":"ClientIdempotencyToken",
           "idempotencyToken":true
         },
-        "s3BucketSource":{"shape":"S3BucketSource"}
+        "s3BucketSource":{"shape":"S3BucketSource"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "StartImportResponse":{
@@ -3369,17 +3413,17 @@
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "sourceServerID":{"shape":"SourceServerID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "StartTestRequest":{
       "type":"structure",
       "required":["sourceServerIDs"],
       "members":{
-        "accountID":{"shape":"AccountID"},
         "sourceServerIDs":{"shape":"StartTestRequestSourceServerIDs"},
-        "tags":{"shape":"TagsMap"}
+        "tags":{"shape":"TagsMap"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "StartTestRequestSourceServerIDs":{
@@ -3398,8 +3442,8 @@
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "sourceServerID":{"shape":"SourceServerID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "StrictlyPositiveInteger":{
@@ -3411,7 +3455,7 @@
       "type":"string",
       "max":255,
       "min":0,
-      "pattern":"^subnet-[0-9a-fA-F]{8,}$"
+      "pattern":"subnet-[0-9a-fA-F]{8,}"
     },
     "TagKey":{
       "type":"string",
@@ -3463,17 +3507,17 @@
       "members":{
         "actionID":{"shape":"ActionID"},
         "actionName":{"shape":"BoundedString"},
-        "active":{"shape":"Boolean"},
-        "category":{"shape":"ActionCategory"},
-        "description":{"shape":"ActionDescription"},
         "documentIdentifier":{"shape":"BoundedString"},
-        "documentVersion":{"shape":"DocumentVersion"},
-        "externalParameters":{"shape":"SsmDocumentExternalParameters"},
-        "mustSucceedForCutover":{"shape":"Boolean"},
-        "operatingSystem":{"shape":"OperatingSystemString"},
         "order":{"shape":"OrderType"},
+        "documentVersion":{"shape":"DocumentVersion"},
+        "active":{"shape":"Boolean"},
+        "timeoutSeconds":{"shape":"StrictlyPositiveInteger"},
+        "mustSucceedForCutover":{"shape":"Boolean"},
         "parameters":{"shape":"SsmDocumentParameters"},
-        "timeoutSeconds":{"shape":"StrictlyPositiveInteger"}
+        "operatingSystem":{"shape":"OperatingSystemString"},
+        "externalParameters":{"shape":"SsmDocumentExternalParameters"},
+        "description":{"shape":"ActionDescription"},
+        "category":{"shape":"ActionCategory"}
       }
     },
     "TemplateActionDocuments":{
@@ -3492,9 +3536,9 @@
       "type":"structure",
       "required":["sourceServerIDs"],
       "members":{
-        "accountID":{"shape":"AccountID"},
         "sourceServerIDs":{"shape":"TerminateTargetInstancesRequestSourceServerIDs"},
-        "tags":{"shape":"TagsMap"}
+        "tags":{"shape":"TagsMap"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "TerminateTargetInstancesRequestSourceServerIDs":{
@@ -3514,13 +3558,13 @@
       "required":["message"],
       "members":{
         "message":{"shape":"LargeBoundedString"},
+        "serviceCode":{"shape":"LargeBoundedString"},
         "quotaCode":{"shape":"LargeBoundedString"},
         "retryAfterSeconds":{
           "shape":"LargeBoundedString",
           "location":"header",
           "locationName":"Retry-After"
-        },
-        "serviceCode":{"shape":"LargeBoundedString"}
+        }
       },
       "error":{
         "httpStatusCode":429,
@@ -3538,23 +3582,23 @@
       "type":"structure",
       "required":["applicationID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "applicationID":{"shape":"ApplicationID"}
+        "applicationID":{"shape":"ApplicationID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "UnarchiveWaveRequest":{
       "type":"structure",
       "required":["waveID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "waveID":{"shape":"WaveID"}
+        "waveID":{"shape":"WaveID"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "UninitializedAccountException":{
       "type":"structure",
       "members":{
-        "code":{"shape":"LargeBoundedString"},
-        "message":{"shape":"LargeBoundedString"}
+        "message":{"shape":"LargeBoundedString"},
+        "code":{"shape":"LargeBoundedString"}
       },
       "error":{
         "httpStatusCode":400,
@@ -3585,10 +3629,10 @@
       "type":"structure",
       "required":["applicationID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
         "applicationID":{"shape":"ApplicationID"},
+        "name":{"shape":"ApplicationName"},
         "description":{"shape":"ApplicationDescription"},
-        "name":{"shape":"ApplicationName"}
+        "accountID":{"shape":"AccountID"}
       }
     },
     "UpdateConnectorRequest":{
@@ -3604,94 +3648,98 @@
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "bootMode":{"shape":"BootMode"},
+        "sourceServerID":{"shape":"SourceServerID"},
+        "name":{"shape":"SmallBoundedString"},
+        "launchDisposition":{"shape":"LaunchDisposition"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"},
         "copyPrivateIp":{"shape":"Boolean"},
         "copyTags":{"shape":"Boolean"},
-        "enableMapAutoTagging":{"shape":"Boolean"},
-        "launchDisposition":{"shape":"LaunchDisposition"},
         "licensing":{"shape":"Licensing"},
-        "mapAutoTaggingMpeID":{"shape":"TagValue"},
-        "name":{"shape":"SmallBoundedString"},
+        "bootMode":{"shape":"BootMode"},
         "postLaunchActions":{"shape":"PostLaunchActions"},
-        "sourceServerID":{"shape":"SourceServerID"},
-        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+        "enableMapAutoTagging":{"shape":"Boolean"},
+        "mapAutoTaggingMpeID":{"shape":"TagValue"},
+        "accountID":{"shape":"AccountID"}
       }
     },
     "UpdateLaunchConfigurationTemplateRequest":{
       "type":"structure",
       "required":["launchConfigurationTemplateID"],
       "members":{
-        "associatePublicIpAddress":{"shape":"Boolean"},
-        "bootMode":{"shape":"BootMode"},
-        "copyPrivateIp":{"shape":"Boolean"},
-        "copyTags":{"shape":"Boolean"},
-        "enableMapAutoTagging":{"shape":"Boolean"},
-        "largeVolumeConf":{"shape":"LaunchTemplateDiskConf"},
         "launchConfigurationTemplateID":{"shape":"LaunchConfigurationTemplateID"},
-        "launchDisposition":{"shape":"LaunchDisposition"},
-        "licensing":{"shape":"Licensing"},
-        "mapAutoTaggingMpeID":{"shape":"TagValue"},
         "postLaunchActions":{"shape":"PostLaunchActions"},
-        "smallVolumeConf":{"shape":"LaunchTemplateDiskConf"},
+        "enableMapAutoTagging":{"shape":"Boolean"},
+        "mapAutoTaggingMpeID":{"shape":"TagValue"},
+        "launchDisposition":{"shape":"LaunchDisposition"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"},
+        "copyPrivateIp":{"shape":"Boolean"},
+        "associatePublicIpAddress":{"shape":"Boolean"},
+        "copyTags":{"shape":"Boolean"},
+        "licensing":{"shape":"Licensing"},
+        "bootMode":{"shape":"BootMode"},
         "smallVolumeMaxSize":{"shape":"PositiveInteger"},
-        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+        "smallVolumeConf":{"shape":"LaunchTemplateDiskConf"},
+        "largeVolumeConf":{"shape":"LaunchTemplateDiskConf"},
+        "enableParametersEncryption":{"shape":"Boolean"},
+        "parametersEncryptionKey":{"shape":"ARN"}
       }
     },
     "UpdateReplicationConfigurationRequest":{
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
+        "sourceServerID":{"shape":"SourceServerID"},
+        "name":{"shape":"SmallBoundedString"},
+        "stagingAreaSubnetId":{"shape":"SubnetID"},
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
-        "bandwidthThrottling":{"shape":"BandwidthThrottling"},
-        "createPublicIP":{"shape":"Boolean"},
-        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
+        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
+        "useDedicatedReplicationServer":{"shape":"Boolean"},
         "defaultLargeStagingDiskType":{"shape":"ReplicationConfigurationDefaultLargeStagingDiskType"},
+        "replicatedDisks":{"shape":"ReplicationConfigurationReplicatedDisks"},
         "ebsEncryption":{"shape":"ReplicationConfigurationEbsEncryption"},
         "ebsEncryptionKeyArn":{"shape":"ARN"},
-        "name":{"shape":"SmallBoundedString"},
-        "replicatedDisks":{"shape":"ReplicationConfigurationReplicatedDisks"},
-        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
-        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
-        "sourceServerID":{"shape":"SourceServerID"},
-        "stagingAreaSubnetId":{"shape":"SubnetID"},
+        "bandwidthThrottling":{"shape":"BandwidthThrottling"},
+        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "createPublicIP":{"shape":"Boolean"},
         "stagingAreaTags":{"shape":"TagsMap"},
-        "useDedicatedReplicationServer":{"shape":"Boolean"},
-        "useFipsEndpoint":{"shape":"Boolean"}
+        "useFipsEndpoint":{"shape":"Boolean"},
+        "accountID":{"shape":"AccountID"},
+        "internetProtocol":{"shape":"InternetProtocol"}
       }
     },
     "UpdateReplicationConfigurationTemplateRequest":{
       "type":"structure",
       "required":["replicationConfigurationTemplateID"],
       "members":{
+        "replicationConfigurationTemplateID":{"shape":"ReplicationConfigurationTemplateID"},
         "arn":{"shape":"ARN"},
+        "stagingAreaSubnetId":{"shape":"SubnetID"},
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
-        "bandwidthThrottling":{"shape":"BandwidthThrottling"},
-        "createPublicIP":{"shape":"Boolean"},
-        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
+        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
+        "useDedicatedReplicationServer":{"shape":"Boolean"},
         "defaultLargeStagingDiskType":{"shape":"ReplicationConfigurationDefaultLargeStagingDiskType"},
         "ebsEncryption":{"shape":"ReplicationConfigurationEbsEncryption"},
         "ebsEncryptionKeyArn":{"shape":"ARN"},
-        "replicationConfigurationTemplateID":{"shape":"ReplicationConfigurationTemplateID"},
-        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
-        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
-        "stagingAreaSubnetId":{"shape":"SubnetID"},
+        "bandwidthThrottling":{"shape":"BandwidthThrottling"},
+        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "createPublicIP":{"shape":"Boolean"},
         "stagingAreaTags":{"shape":"TagsMap"},
-        "useDedicatedReplicationServer":{"shape":"Boolean"},
-        "useFipsEndpoint":{"shape":"Boolean"}
+        "useFipsEndpoint":{"shape":"Boolean"},
+        "internetProtocol":{"shape":"InternetProtocol"}
       }
     },
     "UpdateSourceServerReplicationTypeRequest":{
       "type":"structure",
       "required":[
-        "replicationType",
-        "sourceServerID"
+        "sourceServerID",
+        "replicationType"
       ],
       "members":{
-        "accountID":{"shape":"AccountID"},
+        "sourceServerID":{"shape":"SourceServerID"},
         "replicationType":{"shape":"ReplicationType"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "accountID":{"shape":"AccountID"}
       }
     },
     "UpdateSourceServerRequest":{
@@ -3699,27 +3747,33 @@
       "required":["sourceServerID"],
       "members":{
         "accountID":{"shape":"AccountID"},
-        "connectorAction":{"shape":"SourceServerConnectorAction"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "sourceServerID":{"shape":"SourceServerID"},
+        "connectorAction":{"shape":"SourceServerConnectorAction"}
       }
     },
     "UpdateWaveRequest":{
       "type":"structure",
       "required":["waveID"],
       "members":{
-        "accountID":{"shape":"AccountID"},
-        "description":{"shape":"WaveDescription"},
+        "waveID":{"shape":"WaveID"},
         "name":{"shape":"WaveName"},
-        "waveID":{"shape":"WaveID"}
+        "description":{"shape":"WaveDescription"},
+        "accountID":{"shape":"AccountID"}
       }
+    },
+    "UserProvidedId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^\\s\\x00]( *[^\\s\\x00])*"
     },
     "ValidationException":{
       "type":"structure",
       "members":{
-        "code":{"shape":"LargeBoundedString"},
-        "fieldList":{"shape":"ValidationExceptionFieldList"},
         "message":{"shape":"LargeBoundedString"},
-        "reason":{"shape":"ValidationExceptionReason"}
+        "code":{"shape":"LargeBoundedString"},
+        "reason":{"shape":"ValidationExceptionReason"},
+        "fieldList":{"shape":"ValidationExceptionFieldList"}
       },
       "error":{
         "httpStatusCode":400,
@@ -3730,8 +3784,8 @@
     "ValidationExceptionField":{
       "type":"structure",
       "members":{
-        "message":{"shape":"LargeBoundedString"},
-        "name":{"shape":"LargeBoundedString"}
+        "name":{"shape":"LargeBoundedString"},
+        "message":{"shape":"LargeBoundedString"}
       }
     },
     "ValidationExceptionFieldList":{
@@ -3750,21 +3804,21 @@
     "VcenterClient":{
       "type":"structure",
       "members":{
+        "vcenterClientID":{"shape":"VcenterClientID"},
         "arn":{"shape":"ARN"},
-        "datacenterName":{"shape":"BoundedString"},
         "hostname":{"shape":"BoundedString"},
+        "vcenterUUID":{"shape":"BoundedString"},
+        "datacenterName":{"shape":"BoundedString"},
         "lastSeenDatetime":{"shape":"ISO8601DatetimeString"},
         "sourceServerTags":{"shape":"TagsMap"},
-        "tags":{"shape":"TagsMap"},
-        "vcenterClientID":{"shape":"VcenterClientID"},
-        "vcenterUUID":{"shape":"BoundedString"}
+        "tags":{"shape":"TagsMap"}
       }
     },
     "VcenterClientID":{
       "type":"string",
       "max":21,
       "min":21,
-      "pattern":"^vcc-[0-9a-zA-Z]{17}$"
+      "pattern":"vcc-[0-9a-zA-Z]{17}"
     },
     "VcenterClientList":{
       "type":"list",
@@ -3785,24 +3839,24 @@
     "Wave":{
       "type":"structure",
       "members":{
+        "waveID":{"shape":"WaveID"},
         "arn":{"shape":"ARN"},
-        "creationDateTime":{"shape":"ISO8601DatetimeString"},
+        "name":{"shape":"WaveName"},
         "description":{"shape":"WaveDescription"},
         "isArchived":{"shape":"Boolean"},
-        "lastModifiedDateTime":{"shape":"ISO8601DatetimeString"},
-        "name":{"shape":"WaveName"},
-        "tags":{"shape":"TagsMap"},
         "waveAggregatedStatus":{"shape":"WaveAggregatedStatus"},
-        "waveID":{"shape":"WaveID"}
+        "creationDateTime":{"shape":"ISO8601DatetimeString"},
+        "lastModifiedDateTime":{"shape":"ISO8601DatetimeString"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "WaveAggregatedStatus":{
       "type":"structure",
       "members":{
-        "healthStatus":{"shape":"WaveHealthStatus"},
         "lastUpdateDateTime":{"shape":"ISO8601DatetimeString"},
-        "progressStatus":{"shape":"WaveProgressStatus"},
         "replicationStartedDateTime":{"shape":"ISO8601DatetimeString"},
+        "healthStatus":{"shape":"WaveHealthStatus"},
+        "progressStatus":{"shape":"WaveProgressStatus"},
         "totalApplications":{"shape":"PositiveInteger"}
       }
     },
@@ -3810,7 +3864,7 @@
       "type":"string",
       "max":600,
       "min":0,
-      "pattern":"^[^\\x00]*$"
+      "pattern":"[^\\x00]*"
     },
     "WaveHealthStatus":{
       "type":"string",
@@ -3824,7 +3878,7 @@
       "type":"string",
       "max":22,
       "min":22,
-      "pattern":"^wave-[0-9a-zA-Z]{17}$"
+      "pattern":"wave-[0-9a-zA-Z]{17}"
     },
     "WaveIDsFilter":{
       "type":"list",
@@ -3836,7 +3890,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[^\\s\\x00]( *[^\\s\\x00])*$"
+      "pattern":"[^\\s\\x00]( *[^\\s\\x00])*"
     },
     "WaveProgressStatus":{
       "type":"string",

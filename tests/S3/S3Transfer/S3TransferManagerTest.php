@@ -490,8 +490,8 @@ EOF
         $expectedPartCount = 2;
         $expectedPartSize = 6 * 1024 * 1024; // 6 MBs
         $transferListener = $this->getMockBuilder(AbstractTransferListener::class)
-        ->onlyMethods(['bytesTransferred'])
-        ->getMock();
+            ->onlyMethods(['bytesTransferred'])
+            ->getMock();
         $expectedIncrementalPartSize = $expectedPartSize;
         $transferListener->method('bytesTransferred')
             ->willReturnCallback(function ($context) use (
@@ -642,27 +642,27 @@ EOF
             $this->expectException(InvalidArgumentException::class);
             $this->expectExceptionMessage(
                 "Please provide a valid directory path. "
-            . "Provided = " . $directory);
+                . "Provided = " . $directory);
         } else {
             $this->assertTrue(true);
         }
 
-       try {
-           $manager = new S3TransferManager(
-               $this->getS3ClientMock(),
-           );
-           $manager->uploadDirectory(
-               new UploadDirectoryRequest(
-                   $directory,
-                   "Bucket",
-               )
-           )->wait();
-       } finally {
-           // Clean up resources
-           if ($isDirectoryValid && is_dir($directory)) {
-               TestsUtility::cleanUpDir($directory);
-           }
-       }
+        try {
+            $manager = new S3TransferManager(
+                $this->getS3ClientMock(),
+            );
+            $manager->uploadDirectory(
+                new UploadDirectoryRequest(
+                    $directory,
+                    "Bucket",
+                )
+            )->wait();
+        } finally {
+            // Clean up resources
+            if ($isDirectoryValid && is_dir($directory)) {
+                TestsUtility::cleanUpDir($directory);
+            }
+        }
     }
 
     /**
@@ -754,9 +754,9 @@ EOF
         }
         try {
             $client = $this->getMockBuilder(S3Client::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getCommand', 'executeAsync'])
-            ->getMock();
+                ->disableOriginalConstructor()
+                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->getMock();
             $client->method('getCommand')
                 ->willReturnCallback(function ($commandName, $args) {
                     return new Command($commandName, $args);
@@ -1959,7 +1959,7 @@ EOF
                     return new HandlerList();
                 },
                 'executeAsync' => function (CommandInterface $command) {
-                   return Create::promiseFor(new Result([]));
+                    return Create::promiseFor(new Result([]));
                 }
             ]);
             $manager = new S3TransferManager(
@@ -3460,7 +3460,7 @@ EOF
                 if ($operation === 'ListObjectsV2') {
                     $listObjectsV2Template = self::$s3BodyTemplates[$operation];
                     $listObjectsV2ContentsTemplate = self::$s3BodyTemplates[
-                        $operation . "::Contents"
+                    $operation . "::Contents"
                     ];
                     $bodyBuilder = str_replace(
                         "{{Bucket}}",
@@ -3596,13 +3596,13 @@ EOF
                     $headers = $response['headers'] ?? [];
                     $body = call_user_func_array(
                         $bodyBuilder,
-                            [
-                                $response['operation'],
-                                $response['body']
-                                ?? $response['contents']
+                        [
+                            $response['operation'],
+                            $response['body']
+                            ?? $response['contents']
                                 ?? null,
-                                &$headers
-                            ]
+                            &$headers
+                        ]
                     );
 
                     $this->parseCaseHeadersToAmzHeaders($headers);
@@ -3773,10 +3773,10 @@ EOF
                 default:
                     if (preg_match('/Checksum[A-Z]+/', $key)) {
                         $newKey = 'x-amz-checksum-' . str_replace(
-                            'Checksum',
-                            '',
-                            $key
-                        );
+                                'Checksum',
+                                '',
+                                $key
+                            );
                     }
             }
 

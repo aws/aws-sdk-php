@@ -589,8 +589,23 @@
       "type":"structure",
       "members":{
         "MessageId":{"shape":"ChatItemId"},
-        "Receipts":{"shape":"Receipts"}
+        "Receipts":{"shape":"Receipts"},
+        "MessageProcessingStatus":{"shape":"MessageProcessingStatus"}
       }
+    },
+    "MessageProcessingMetadata":{
+      "type":"structure",
+      "members":{
+        "MessageProcessingStatus":{"shape":"MessageProcessingStatus"}
+      }
+    },
+    "MessageProcessingStatus":{
+      "type":"string",
+      "enum":[
+        "PROCESSING",
+        "FAILED",
+        "REJECTED"
+      ]
     },
     "MostRecent":{
       "type":"integer",
@@ -742,7 +757,8 @@
       "type":"structure",
       "members":{
         "Id":{"shape":"ChatItemId"},
-        "AbsoluteTime":{"shape":"Instant"}
+        "AbsoluteTime":{"shape":"Instant"},
+        "MessageMetadata":{"shape":"MessageProcessingMetadata"}
       }
     },
     "ServiceQuotaExceededException":{

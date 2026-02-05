@@ -350,11 +350,13 @@
         "GetImageSetResponse$createdAt": "<p>The timestamp when image set properties were created.</p>",
         "GetImageSetResponse$updatedAt": "<p>The timestamp when image set properties were updated.</p>",
         "GetImageSetResponse$deletedAt": "<p>The timestamp when the image set properties were deleted.</p>",
+        "GetImageSetResponse$lastAccessedAt": "<p>When the image set was last accessed.</p>",
         "ImageSetProperties$createdAt": "<p>The timestamp when the image set properties were created.</p>",
         "ImageSetProperties$updatedAt": "<p>The timestamp when the image set properties were updated.</p>",
         "ImageSetProperties$deletedAt": "<p>The timestamp when the image set properties were deleted.</p>",
         "ImageSetsMetadataSummary$createdAt": "<p>The time an image set is created. Sample creation date is provided in <code>1985-04-12T23:20:50.52Z</code> format.</p>",
         "ImageSetsMetadataSummary$updatedAt": "<p>The time an image set was last updated.</p>",
+        "ImageSetsMetadataSummary$lastAccessedAt": "<p>When the image set was last accessed.</p>",
         "SearchByAttributeValue$createdAt": "<p>The created at time of the image set provided for search.</p>",
         "SearchByAttributeValue$updatedAt": "<p>The timestamp input for search.</p>",
         "StartDICOMImportJobResponse$submittedAt": "<p>The timestamp when the import job was submitted.</p>",
@@ -618,6 +620,13 @@
       "base": null,
       "refs": {}
     },
+    "LosslessStorageFormat": {
+      "base": null,
+      "refs": {
+        "CreateDatastoreRequest$losslessStorageFormat": "<p>The lossless storage format for the datastore.</p>",
+        "DatastoreProperties$losslessStorageFormat": "<p>The datastore's lossless storage format.</p>"
+      }
+    },
     "Message": {
       "base": null,
       "refs": {
@@ -767,6 +776,13 @@
     "StartDICOMImportJobResponse": {
       "base": null,
       "refs": {}
+    },
+    "StorageTier": {
+      "base": "<p>Storage tier for image sets</p>",
+      "refs": {
+        "GetImageSetResponse$storageTier": "<p>The storage tier of the image set.</p>",
+        "ImageSetsMetadataSummary$storageTier": "<p>The image set's storage tier.</p>"
+      }
     },
     "String": {
       "base": null,

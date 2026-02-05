@@ -83,9 +83,9 @@ class XmlParserTest extends TestCase
             ["[]", "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             ["[]", "ParseUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             ["[]", "ParseUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [acos(1.01), "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [acos(1.01), "ParseUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [acos(1.01), "ParseUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [NAN, "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [NAN, "ParseUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [NAN, "ParseUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
         ];
     }
 
@@ -119,9 +119,11 @@ class XmlParserTest extends TestCase
     )
     {
         $service = $this->generateTestService('rest-xml');
+        // Handle NAN explicitly for PHP 8.5 compatibility when calling generateXml
+        $xmlTimestamp = is_float($timestamp) && is_nan($timestamp) ? 'NAN' : $timestamp;
         $client = $this->generateTestClient(
             $service,
-            self::generateXml($timestamp),
+            self::generateXml($xmlTimestamp),
             ['Timestamp' => $timestamp]
         );
         $command = $client->getCommand($commandName);
@@ -133,6 +135,11 @@ class XmlParserTest extends TestCase
 
     private static function generateXml($timestamp)
     {
+        // Handle NAN explicitly to avoid PHP 8.5 deprecation warning
+        if (is_float($timestamp) && is_nan($timestamp)) {
+            $timestamp = 'NAN';
+        }
+        
         return <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <ParseXmlResponse xmlns="http://s3.amazonaws.com/doc/2006-03-01/">

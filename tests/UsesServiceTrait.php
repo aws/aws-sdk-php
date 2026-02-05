@@ -28,7 +28,11 @@ trait UsesServiceTrait
         return new Sdk($args + [
             'region'      => 'us-east-1',
             'version'     => 'latest',
-            'retries'     => 0
+            'retries'     => 0,
+            'credentials' => [
+                'key'    => 'test-key',
+                'secret' => 'test-secret',
+            ],
         ]);
     }
 

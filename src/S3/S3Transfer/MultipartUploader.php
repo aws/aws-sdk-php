@@ -428,7 +428,7 @@ final class MultipartUploader extends AbstractMultipartUploader
 
             yield $this->s3Client->executeAsync($command)
                 ->then(function (ResultInterface $result)
-                    use ($command, $partBody) {
+                use ($command, $partBody) {
                     $partBody->close();
                     // To make sure we don't continue when a failure occurred
                     if ($this->currentSnapshot->getReason() !== null) {
@@ -497,7 +497,7 @@ final class MultipartUploader extends AbstractMultipartUploader
     private function allowResume(): bool
     {
         return ($this->config['resume_enabled'] ?? false)
-                && is_string($this->source);
+            && is_string($this->source);
     }
 
     /**
@@ -536,7 +536,7 @@ final class MultipartUploader extends AbstractMultipartUploader
         $this->resumableUpload->updateCurrentSnapshot(
             $this->currentSnapshot->toArray()
         );
-        
+
         // Save to file
         $this->resumableUpload->toFile();
     }

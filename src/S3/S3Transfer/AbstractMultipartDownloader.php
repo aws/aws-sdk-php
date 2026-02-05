@@ -28,7 +28,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
     public const RANGED_GET_MULTIPART_DOWNLOADER = "ranged";
     private const OBJECT_SIZE_REGEX = "/\/(\d+)$/";
     private const RANGE_TO_REGEX = "/(\d+)\//";
-    
+
     /** @var array */
     protected readonly array $downloadRequestArgs;
 
@@ -377,22 +377,22 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
      */
     private function downloadInitiated(array $commandArgs): void
     {
-       if ($this->currentSnapshot === null) {
-           $this->currentSnapshot = new TransferProgressSnapshot(
-               $commandArgs['Key'],
-               0,
-               $this->objectSizeInBytes
-           );
-       } else {
-           $this->currentSnapshot = new TransferProgressSnapshot(
-               $this->currentSnapshot->getIdentifier(),
-               $this->currentSnapshot->getTransferredBytes(),
-               $this->currentSnapshot->getTotalBytes(),
-               $this->currentSnapshot->getResponse()
-           );
-       }
-       
-       // Prepare context
+        if ($this->currentSnapshot === null) {
+            $this->currentSnapshot = new TransferProgressSnapshot(
+                $commandArgs['Key'],
+                0,
+                $this->objectSizeInBytes
+            );
+        } else {
+            $this->currentSnapshot = new TransferProgressSnapshot(
+                $this->currentSnapshot->getIdentifier(),
+                $this->currentSnapshot->getTransferredBytes(),
+                $this->currentSnapshot->getTotalBytes(),
+                $this->currentSnapshot->getResponse()
+            );
+        }
+
+        // Prepare context
         $context = [
             AbstractTransferListener::REQUEST_ARGS_KEY => $commandArgs,
             AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
@@ -401,7 +401,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
         // Notify download handler
         $this->downloadHandler->transferInitiated($context);
 
-       // Notify listeners
+        // Notify listeners
         $this->listenerNotifier?->transferInitiated($context);
     }
 

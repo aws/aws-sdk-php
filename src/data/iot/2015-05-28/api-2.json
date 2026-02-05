@@ -5311,6 +5311,21 @@
       }
     },
     "AwsJobTimeoutInProgressTimeoutInMinutes":{"type":"long"},
+    "AwsJsonSubstitutionCommandPreprocessorConfig":{
+      "type":"structure",
+      "required":["outputFormat"],
+      "members":{
+        "outputFormat":{"shape":"OutputFormat"}
+      }
+    },
+    "BatchConfig":{
+      "type":"structure",
+      "members":{
+        "maxBatchOpenMs":{"shape":"MaxBatchOpenMs"},
+        "maxBatchSize":{"shape":"MaxBatchSize"},
+        "maxBatchSizeBytes":{"shape":"MaxBatchSizeBytes"}
+      }
+    },
     "BatchMode":{"type":"boolean"},
     "BeforeSubstitutionFlag":{"type":"boolean"},
     "Behavior":{
@@ -5956,8 +5971,10 @@
       "required":["name"],
       "members":{
         "name":{"shape":"CommandParameterName"},
+        "type":{"shape":"CommandParameterType"},
         "value":{"shape":"CommandParameterValue"},
         "defaultValue":{"shape":"CommandParameterValue"},
+        "valueConditions":{"shape":"CommandParameterValueConditionList"},
         "description":{"shape":"CommandParameterDescription"}
       }
     },
@@ -5977,6 +5994,18 @@
       "min":1,
       "pattern":"^[.$a-zA-Z0-9_-]+$"
     },
+    "CommandParameterType":{
+      "type":"string",
+      "enum":[
+        "STRING",
+        "INTEGER",
+        "DOUBLE",
+        "LONG",
+        "UNSIGNEDLONG",
+        "BOOLEAN",
+        "BINARY"
+      ]
+    },
     "CommandParameterValue":{
       "type":"structure",
       "members":{
@@ -5989,6 +6018,64 @@
         "UL":{"shape":"UnsignedLongParameterValue"}
       }
     },
+    "CommandParameterValueComparisonOperand":{
+      "type":"structure",
+      "members":{
+        "number":{"shape":"StringParameterValue"},
+        "numbers":{"shape":"CommandParameterValueStringList"},
+        "string":{"shape":"StringParameterValue"},
+        "strings":{"shape":"CommandParameterValueStringList"},
+        "numberRange":{"shape":"CommandParameterValueNumberRange"}
+      }
+    },
+    "CommandParameterValueComparisonOperator":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "NOT_EQUALS",
+        "LESS_THAN",
+        "LESS_THAN_EQUALS",
+        "GREATER_THAN",
+        "GREATER_THAN_EQUALS",
+        "IN_SET",
+        "NOT_IN_SET",
+        "IN_RANGE",
+        "NOT_IN_RANGE"
+      ]
+    },
+    "CommandParameterValueCondition":{
+      "type":"structure",
+      "required":[
+        "comparisonOperator",
+        "operand"
+      ],
+      "members":{
+        "comparisonOperator":{"shape":"CommandParameterValueComparisonOperator"},
+        "operand":{"shape":"CommandParameterValueComparisonOperand"}
+      }
+    },
+    "CommandParameterValueConditionList":{
+      "type":"list",
+      "member":{"shape":"CommandParameterValueCondition"},
+      "min":1
+    },
+    "CommandParameterValueNumberRange":{
+      "type":"structure",
+      "required":[
+        "min",
+        "max"
+      ],
+      "members":{
+        "min":{"shape":"StringParameterValue"},
+        "max":{"shape":"StringParameterValue"}
+      }
+    },
+    "CommandParameterValueStringList":{
+      "type":"list",
+      "member":{"shape":"StringParameterValue"},
+      "max":10,
+      "min":1
+    },
     "CommandPayload":{
       "type":"structure",
       "members":{
@@ -5997,6 +6084,16 @@
       }
     },
     "CommandPayloadBlob":{"type":"blob"},
+    "CommandPayloadTemplateString":{
+      "type":"string",
+      "max":32768
+    },
+    "CommandPreprocessor":{
+      "type":"structure",
+      "members":{
+        "awsJsonSubstitution":{"shape":"AwsJsonSubstitutionCommandPreprocessorConfig"}
+      }
+    },
     "CommandSummary":{
       "type":"structure",
       "members":{
@@ -6280,6 +6377,8 @@
         "displayName":{"shape":"DisplayName"},
         "description":{"shape":"CommandDescription"},
         "payload":{"shape":"CommandPayload"},
+        "payloadTemplate":{"shape":"CommandPayloadTemplateString"},
+        "preprocessor":{"shape":"CommandPreprocessor"},
         "mandatoryParameters":{"shape":"CommandParameterList"},
         "roleArn":{"shape":"RoleArn"},
         "tags":{"shape":"TagList"}
@@ -8936,6 +9035,7 @@
     "ElasticsearchId":{"type":"string"},
     "ElasticsearchIndex":{"type":"string"},
     "ElasticsearchType":{"type":"string"},
+    "EnableBatching":{"type":"boolean"},
     "EnableCachingForHttp":{"type":"boolean"},
     "EnableIoTLoggingParams":{
       "type":"structure",
@@ -9333,6 +9433,8 @@
         "description":{"shape":"CommandDescription"},
         "mandatoryParameters":{"shape":"CommandParameterList"},
         "payload":{"shape":"CommandPayload"},
+        "payloadTemplate":{"shape":"CommandPayloadTemplateString"},
+        "preprocessor":{"shape":"CommandPreprocessor"},
         "roleArn":{"shape":"RoleArn"},
         "createdAt":{"shape":"DateType"},
         "lastUpdatedAt":{"shape":"DateType"},
@@ -9643,14 +9745,21 @@
     },
     "GetV2LoggingOptionsRequest":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "verbose":{
+          "shape":"VerboseFlag",
+          "location":"querystring",
+          "locationName":"verbose"
+        }
+      }
     },
     "GetV2LoggingOptionsResponse":{
       "type":"structure",
       "members":{
         "roleArn":{"shape":"AwsArn"},
         "defaultLogLevel":{"shape":"LogLevel"},
-        "disableAllLogs":{"shape":"DisableAllLogs"}
+        "disableAllLogs":{"shape":"DisableAllLogs"},
+        "eventConfigurations":{"shape":"LogEventConfigurations"}
       }
     },
     "GroupNameAndArn":{
@@ -9682,7 +9791,9 @@
         "url":{"shape":"Url"},
         "confirmationUrl":{"shape":"Url"},
         "headers":{"shape":"HeaderList"},
-        "auth":{"shape":"HttpAuthorization"}
+        "auth":{"shape":"HttpAuthorization"},
+        "enableBatching":{"shape":"EnableBatching"},
+        "batchConfig":{"shape":"BatchConfig"}
       }
     },
     "HttpActionHeader":{
@@ -12318,6 +12429,30 @@
         "unit":{"shape":"String"}
       }
     },
+    "LogDestination":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"^[.\\-_/#A-Za-z0-9]+$"
+    },
+    "LogEventConfiguration":{
+      "type":"structure",
+      "required":["eventType"],
+      "members":{
+        "eventType":{"shape":"LogEventType"},
+        "logLevel":{"shape":"LogLevel"},
+        "logDestination":{"shape":"LogDestination"}
+      }
+    },
+    "LogEventConfigurations":{
+      "type":"list",
+      "member":{"shape":"LogEventConfiguration"}
+    },
+    "LogEventType":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
     "LogGroupName":{"type":"string"},
     "LogLevel":{
       "type":"string",
@@ -12425,6 +12560,21 @@
       "type":"string",
       "max":1024,
       "pattern":"[A-Za-z0-9+/]+={0,2}"
+    },
+    "MaxBatchOpenMs":{
+      "type":"integer",
+      "max":200,
+      "min":5
+    },
+    "MaxBatchSize":{
+      "type":"integer",
+      "max":10,
+      "min":2
+    },
+    "MaxBatchSizeBytes":{
+      "type":"integer",
+      "max":131072,
+      "min":100
     },
     "MaxBuckets":{
       "type":"integer",
@@ -12822,6 +12972,13 @@
     "OutgoingCertificates":{
       "type":"list",
       "member":{"shape":"OutgoingCertificate"}
+    },
+    "OutputFormat":{
+      "type":"string",
+      "enum":[
+        "JSON",
+        "CBOR"
+      ]
     },
     "OverrideDynamicGroups":{"type":"boolean"},
     "PackageArn":{"type":"string"},
@@ -14004,7 +14161,8 @@
       "members":{
         "roleArn":{"shape":"AwsArn"},
         "defaultLogLevel":{"shape":"LogLevel"},
-        "disableAllLogs":{"shape":"DisableAllLogs"}
+        "disableAllLogs":{"shape":"DisableAllLogs"},
+        "eventConfigurations":{"shape":"LogEventConfigurations"}
       }
     },
     "ShadowName":{
@@ -15861,6 +16019,7 @@
       "pattern":"[\\s\\S]*"
     },
     "Variance":{"type":"double"},
+    "VerboseFlag":{"type":"boolean"},
     "VerificationState":{
       "type":"string",
       "enum":[

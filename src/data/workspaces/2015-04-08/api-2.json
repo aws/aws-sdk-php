@@ -1671,7 +1671,8 @@
         "ValidationError.InsufficientMemory",
         "ValidationError.UnsupportedOperatingSystem",
         "DeploymentError.InternalServerError",
-        "DeploymentError.WorkspaceUnreachable"
+        "DeploymentError.WorkspaceUnreachable",
+        "ValidationError.ApplicationOldVersionExists"
       ]
     },
     "AssociationState":{
@@ -2278,6 +2279,16 @@
       "enum":[
         "PENDING",
         "IN_PROGRESS",
+        "PROCESSING_SOURCE_IMAGE",
+        "IMAGE_TESTING_START",
+        "UPDATING_OPERATING_SYSTEM",
+        "IMAGE_COMPATIBILITY_CHECKING",
+        "IMAGE_TESTING_GENERALIZATION",
+        "CREATING_TEST_INSTANCE",
+        "INSTALLING_COMPONENTS",
+        "GENERALIZING",
+        "VALIDATING",
+        "PUBLISHING",
         "COMPLETED",
         "ERROR"
       ]
@@ -2688,6 +2699,8 @@
         "ImageId":{"shape":"WorkspaceImageId"},
         "InfrastructureConfigurationArn":{"shape":"InfrastructureConfigurationArn"},
         "State":{"shape":"CustomWorkspaceImageImportState"},
+        "StateMessage":{"shape":"WorkflowStateMessage"},
+        "ProgressPercentage":{"shape":"Percentage"},
         "Created":{"shape":"Timestamp"},
         "LastUpdatedTime":{"shape":"Timestamp"},
         "ImageSource":{"shape":"ImageSourceIdentifier"},
@@ -3053,6 +3066,10 @@
     "DnsIpAddresses":{
       "type":"list",
       "member":{"shape":"IpAddress"}
+    },
+    "DnsIpv6Addresses":{
+      "type":"list",
+      "member":{"shape":"Ipv6Address"}
     },
     "DomainName":{
       "type":"string",
@@ -3448,6 +3465,10 @@
       "type":"list",
       "member":{"shape":"IpRuleItem"}
     },
+    "Ipv6Address":{
+      "type":"string",
+      "pattern":"^(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|[0-9a-fA-F]{1,4}(?::[0-9a-fA-F]{1,4}){0,6}::[0-9a-fA-F]{1,4}$"
+    },
     "Limit":{
       "type":"integer",
       "max":25,
@@ -3827,6 +3848,11 @@
     "PendingCreateStandbyWorkspacesRequestList":{
       "type":"list",
       "member":{"shape":"PendingCreateStandbyWorkspacesRequest"}
+    },
+    "Percentage":{
+      "type":"integer",
+      "max":100,
+      "min":0
     },
     "Platform":{
       "type":"string",
@@ -4656,6 +4682,11 @@
       "type":"list",
       "member":{"shape":"WorkSpaceAssociatedResourceType"}
     },
+    "WorkflowStateMessage":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
     "Workspace":{
       "type":"structure",
       "members":{
@@ -4663,6 +4694,7 @@
         "DirectoryId":{"shape":"DirectoryId"},
         "UserName":{"shape":"UserName"},
         "IpAddress":{"shape":"IpAddress"},
+        "Ipv6Address":{"shape":"Ipv6Address"},
         "State":{"shape":"WorkspaceState"},
         "BundleId":{"shape":"BundleId"},
         "SubnetId":{"shape":"SubnetId"},
@@ -4765,6 +4797,7 @@
         "RegistrationCode":{"shape":"RegistrationCode"},
         "SubnetIds":{"shape":"SubnetIds"},
         "DnsIpAddresses":{"shape":"DnsIpAddresses"},
+        "DnsIpv6Addresses":{"shape":"DnsIpv6Addresses"},
         "CustomerUserName":{"shape":"UserName"},
         "IamRoleId":{"shape":"ARN"},
         "DirectoryType":{"shape":"WorkspaceDirectoryType"},
@@ -4995,7 +5028,8 @@
         "RootVolumeEncryptionEnabled":{"shape":"BooleanObject"},
         "WorkspaceProperties":{"shape":"WorkspaceProperties"},
         "Tags":{"shape":"TagList"},
-        "WorkspaceName":{"shape":"WorkspaceName"}
+        "WorkspaceName":{"shape":"WorkspaceName"},
+        "Ipv6Address":{"shape":"Ipv6Address"}
       }
     },
     "WorkspaceRequestList":{

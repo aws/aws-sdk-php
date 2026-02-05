@@ -61,6 +61,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise startCapacityTaskAsync(array $args = [])
  * @method \Aws\Result startConnection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startConnectionAsync(array $args = [])
+ * @method \Aws\Result startOutpostDecommission(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startOutpostDecommissionAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

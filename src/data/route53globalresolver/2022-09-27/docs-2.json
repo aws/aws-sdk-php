@@ -1,0 +1,1530 @@
+{
+  "version": "2.0",
+  "service": "<p> Amazon Route 53 Global Resolver is a global, internet-accessible DNS resolver that enables customers to resolve and forward traffic for both public and private domains while ensuring security and authenticity of queries over the internet. Route 53 Global Resolver supports DNS-over-port 53 (Do53), DNS-over-TLS (DoT), and DNS-over-HTTPS (DoH) protocols through global anycast IP addresses. </p>",
+  "operations": {
+    "AssociateHostedZone": "<p>Associates a Route 53 private hosted zone with a Route 53 Global Resolver resource. This allows the resolver to resolve DNS queries for the private hosted zone from anywhere globally.</p>",
+    "BatchCreateFirewallRule": "<p>Creates multiple DNS firewall rules in a single operation. This is more efficient than creating rules individually when you need to set up multiple rules at once.</p>",
+    "BatchDeleteFirewallRule": "<p>Deletes multiple DNS firewall rules in a single operation. This is more efficient than deleting rules individually.</p>",
+    "BatchUpdateFirewallRule": "<p>Updates multiple DNS firewall rules in a single operation. This is more efficient than updating rules individually.</p>",
+    "CreateAccessSource": "<p>Creates an access source for a DNS view. Access sources define IP addresses or CIDR ranges that are allowed to send DNS queries to the Route 53 Global Resolver, along with the permitted DNS protocols.</p>",
+    "CreateAccessToken": "<p>Creates an access token for a DNS view. Access tokens provide token-based authentication for DNS-over-HTTPS (DoH) and DNS-over-TLS (DoT) connections to the Route 53 Global Resolver.</p>",
+    "CreateDNSView": "<p>Creates a DNS view within a Route 53 Global Resolver. A DNS view models end users, user groups, networks, and devices, and serves as a parent resource that holds configurations controlling access, authorization, DNS firewall rules, and forwarding rules.</p>",
+    "CreateFirewallDomainList": "<p>Creates a firewall domain list. Domain lists are reusable sets of domain specifications that you use in DNS firewall rules to allow, block, or alert on DNS queries to specific domains.</p>",
+    "CreateFirewallRule": "<p>Creates a DNS firewall rule. Firewall rules define actions (ALLOW, BLOCK, or ALERT) to take on DNS queries that match specified domain lists, managed domain lists, or advanced threat protections.</p>",
+    "CreateGlobalResolver": "<p>Creates a new Route 53 Global Resolver instance. A Route 53 Global Resolver is a global, internet-accessible DNS resolver that provides secure DNS resolution for both public and private domains through global anycast IP addresses.</p>",
+    "DeleteAccessSource": "<p>Deletes an access source. This operation cannot be undone.</p>",
+    "DeleteAccessToken": "<p>Deletes an access token. This operation cannot be undone.</p>",
+    "DeleteDNSView": "<p>Deletes a DNS view. This operation cannot be undone.</p>",
+    "DeleteFirewallDomainList": "<p>Deletes a firewall domain list. This operation cannot be undone.</p>",
+    "DeleteFirewallRule": "<p>Deletes a DNS firewall rule. This operation cannot be undone.</p>",
+    "DeleteGlobalResolver": "<p>Deletes a Route 53 Global Resolver instance. This operation cannot be undone. All associated DNS views, access sources, tokens, and firewall rules are also deleted.</p>",
+    "DisableDNSView": "<p>Disables a DNS view, preventing it from serving DNS queries.</p>",
+    "DisassociateHostedZone": "<p>Disassociates a Route 53 private hosted zone from a Route 53 Global Resolver resource.</p>",
+    "EnableDNSView": "<p>Enables a disabled DNS view, allowing it to serve DNS queries again.</p>",
+    "GetAccessSource": "<p>Retrieves information about an access source.</p>",
+    "GetAccessToken": "<p>Retrieves information about an access token.</p>",
+    "GetDNSView": "<p>Retrieves information about a DNS view.</p>",
+    "GetFirewallDomainList": "<p>Retrieves information about a firewall domain list.</p>",
+    "GetFirewallRule": "<p>Retrieves information about a DNS firewall rule.</p>",
+    "GetGlobalResolver": "<p>Retrieves information about a Route 53 Global Resolver instance.</p>",
+    "GetHostedZoneAssociation": "<p>Retrieves information about a hosted zone association.</p>",
+    "GetManagedFirewallDomainList": "<p>Retrieves information about an AWS-managed firewall domain list. Managed domain lists contain domains associated with malicious activity, content categories, or specific threats.</p>",
+    "ImportFirewallDomains": "<p>Imports a list of domains from an Amazon S3 file into a firewall domain list. The file should contain one domain per line.</p>",
+    "ListAccessSources": "<p>Lists all access sources with pagination support.</p>",
+    "ListAccessTokens": "<p>Lists all access tokens for a DNS view with pagination support.</p>",
+    "ListDNSViews": "<p>Lists all DNS views for a Route 53 Global Resolver with pagination support.</p>",
+    "ListFirewallDomainLists": "<p>Lists all firewall domain lists for a Route 53 Global Resolver with pagination support.</p>",
+    "ListFirewallDomains": "<p>Lists all the domains in DNS Firewall domain list you have created.</p>",
+    "ListFirewallRules": "<p>Lists all DNS firewall rules for a DNS view with pagination support.</p>",
+    "ListGlobalResolvers": "<p>Lists all Route 53 Global Resolver instances in your account with pagination support.</p>",
+    "ListHostedZoneAssociations": "<p>Lists all hosted zone associations for a Route 53 Global Resolver resource with pagination support.</p>",
+    "ListManagedFirewallDomainLists": "<p>Returns a paginated list of the AWS Managed DNS Lists and the categories for DNS Firewall. The categories are either <code>THREAT</code> or <code>CONTENT</code>.</p>",
+    "ListTagsForResource": "<p>Lists the tags associated with a Route 53 Global Resolver resource.</p>",
+    "TagResource": "<p>Adds or updates tags for a Route 53 Global Resolver resource. Tags are key-value pairs that help you organize and identify your resources.</p>",
+    "UntagResource": "<p>Removes tags from a Route 53 Global Resolver resource.</p>",
+    "UpdateAccessSource": "<p>Updates the configuration of an access source.</p>",
+    "UpdateAccessToken": "<p>Updates the configuration of an access token.</p>",
+    "UpdateDNSView": "<p>Updates the configuration of a DNS view.</p>",
+    "UpdateFirewallDomains": "<p>Updates a DNS Firewall domain list from an array of specified domains.</p>",
+    "UpdateFirewallRule": "<p>Updates the configuration of a DNS firewall rule.</p>",
+    "UpdateGlobalResolver": "<p>Updates the configuration of a Route 53 Global Resolver instance. You can modify the name, description, and observability region.</p>",
+    "UpdateHostedZoneAssociation": "<p>Updates the configuration of a hosted zone association.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You don't have permission to perform this operation. Check your IAM permissions and try again.</p>",
+      "refs": {}
+    },
+    "AccessSources": {
+      "base": null,
+      "refs": {
+        "ListAccessSourcesOutput$accessSources": "<p>An array containing information about the access sources, such as the ID, CIDR etc.</p>"
+      }
+    },
+    "AccessSourcesItem": {
+      "base": "<p>Summary information about an access source.</p>",
+      "refs": {
+        "AccessSources$member": null
+      }
+    },
+    "AccessTokenItem": {
+      "base": "<p>Summary information about a token.</p>",
+      "refs": {
+        "AccessTokens$member": null
+      }
+    },
+    "AccessTokenValue": {
+      "base": null,
+      "refs": {
+        "CreateAccessTokenOutput$value": "<p>The access token value. This token should be included in DoH and DoT requests for authentication. Keep this value secure as it provides access to your Route 53 Global Resolver.</p>",
+        "GetAccessTokenOutput$value": "<p>The value of the token.</p>"
+      }
+    },
+    "AccessTokens": {
+      "base": null,
+      "refs": {
+        "ListAccessTokensOutput$accessTokens": "<p>List of the tokens.</p>"
+      }
+    },
+    "AssociateHostedZoneInput": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateHostedZoneOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchCreateFirewallRuleInput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchCreateFirewallRuleInputItem": {
+      "base": "<p>Information about a DNS Firewall rule to create in a batch operation.</p>",
+      "refs": {
+        "BatchCreateFirewallRuleInputItems$member": null
+      }
+    },
+    "BatchCreateFirewallRuleInputItems": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleInput$firewallRules": "<p>The <code>BatchCreateFirewallRuleInputItem</code> objects contain the information for each Firewall rule.</p>"
+      }
+    },
+    "BatchCreateFirewallRuleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchCreateFirewallRuleOutputItem": {
+      "base": "<p>Information about the result of creating a DNS Firewall rule in a batch operation.</p>",
+      "refs": {
+        "BatchCreateFirewallRuleOutputItems$member": null
+      }
+    },
+    "BatchCreateFirewallRuleOutputItems": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleOutput$failures": "<p>High level information about the DNS Firewall rules that failed to create.</p>",
+        "BatchCreateFirewallRuleOutput$successes": "<p>High level information about the DNS Firewall rules that were created.</p>"
+      }
+    },
+    "BatchCreateFirewallRuleResult": {
+      "base": "<p>The result of creating a firewall rule in a batch operation.</p>",
+      "refs": {
+        "BatchCreateFirewallRuleOutputItem$firewallRule": "<p>The firewall rule that was created in the batch operation.</p>"
+      }
+    },
+    "BatchDeleteFirewallRuleInput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDeleteFirewallRuleInputItem": {
+      "base": "<p>Information about a DNS Firewall rule to delete in a batch operation.</p>",
+      "refs": {
+        "BatchDeleteFirewallRuleInputItems$member": null
+      }
+    },
+    "BatchDeleteFirewallRuleInputItems": {
+      "base": null,
+      "refs": {
+        "BatchDeleteFirewallRuleInput$firewallRules": "<p>An array of the DNS Firewall IDs to be deleted.</p>"
+      }
+    },
+    "BatchDeleteFirewallRuleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDeleteFirewallRuleOutputItem": {
+      "base": "<p>The result of deleting a firewall rule in a batch operation.</p>",
+      "refs": {
+        "BatchDeleteFirewallRuleOutputItems$member": null
+      }
+    },
+    "BatchDeleteFirewallRuleOutputItems": {
+      "base": null,
+      "refs": {
+        "BatchDeleteFirewallRuleOutput$failures": "<p>High level information about the DNS Firewall rules that failed to delete.</p>",
+        "BatchDeleteFirewallRuleOutput$successes": "<p>High level information about the DNS Firewall rules that were deleted successfully.</p>"
+      }
+    },
+    "BatchDeleteFirewallRuleResult": {
+      "base": "<p>Information about a firewall rule that was deleted in a batch operation.</p>",
+      "refs": {
+        "BatchDeleteFirewallRuleOutputItem$firewallRule": "<p>The firewall rule that was deleted in the batch operation.</p>"
+      }
+    },
+    "BatchUpdateFirewallRuleInput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchUpdateFirewallRuleInputItem": {
+      "base": "<p>Information for updating a firewall rule in a batch operation.</p>",
+      "refs": {
+        "BatchUpdateFirewallRuleInputItems$member": null
+      }
+    },
+    "BatchUpdateFirewallRuleInputItems": {
+      "base": null,
+      "refs": {
+        "BatchUpdateFirewallRuleInput$firewallRules": "<p>The DNS Firewall rule IDs to be updated.</p>"
+      }
+    },
+    "BatchUpdateFirewallRuleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchUpdateFirewallRuleOutputItem": {
+      "base": "<p>The result of updating a firewall rule in a batch operation.</p>",
+      "refs": {
+        "BatchUpdateFirewallRuleOutputItems$member": null
+      }
+    },
+    "BatchUpdateFirewallRuleOutputItems": {
+      "base": null,
+      "refs": {
+        "BatchUpdateFirewallRuleOutput$failures": "<p>High level information about the DNS Firewall rules that failed to update.</p>",
+        "BatchUpdateFirewallRuleOutput$successes": "<p>High level information about the DNS Firewall rules that were successfully updated.</p>"
+      }
+    },
+    "BatchUpdateFirewallRuleResult": {
+      "base": "<p>Information about a firewall rule that was updated in a batch operation.</p>",
+      "refs": {
+        "BatchUpdateFirewallRuleOutputItem$firewallRule": "<p>The firewall rule that was updated in the batch operation.</p>"
+      }
+    },
+    "BlockOverrideDnsQueryType": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleInputItem$blockOverrideDnsType": "<p>The DNS record type for the custom response when the action is BLOCK.</p>",
+        "BatchCreateFirewallRuleResult$blockOverrideDnsType": "<p>The DNS record type configured for the created firewall rule's custom response.</p>",
+        "BatchUpdateFirewallRuleInputItem$blockOverrideDnsType": "<p>The DNS record type for the custom response when the action is BLOCK.</p>",
+        "BatchUpdateFirewallRuleResult$blockOverrideDnsType": "<p>The DNS record type configured for the updated firewall rule's custom response.</p>",
+        "CreateFirewallRuleInput$blockOverrideDnsType": "<p>The DNS record's type. This determines the format of the record value that you provided in <code>BlockOverrideDomain</code>. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p> <p>This setting is required if the <code>BlockResponse</code> setting is <code>OVERRIDE</code>.</p>",
+        "CreateFirewallRuleOutput$blockOverrideDnsType": "<p>The DNS record type for the custom response when blockResponse is OVERRIDE.</p>",
+        "DeleteFirewallRuleOutput$blockOverrideDnsType": "<p>The DNS record type that was configured for the deleted firewall rule's custom response.</p>",
+        "FirewallRulesItem$blockOverrideDnsType": "<p>The DNS record type configured for the firewall rule's custom response.</p>",
+        "GetFirewallRuleOutput$blockOverrideDnsType": "<p>The DNS record's type. This determines the format of the record value that you provided in <code>BlockOverrideDomain</code>. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>",
+        "UpdateFirewallRuleInput$blockOverrideDnsType": "<p>The DNS record's type. This determines the format of the record value that you provided in <code>BlockOverrideDomain</code>. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>",
+        "UpdateFirewallRuleOutput$blockOverrideDnsType": "<p>The DNS record's type. This determines the format of the record value that you provided in <code>BlockOverrideDomain</code>. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>"
+      }
+    },
+    "BlockOverrideTtl": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleInputItem$blockOverrideTtl": "<p>The TTL value for the custom response when the action is BLOCK.</p>",
+        "BatchCreateFirewallRuleResult$blockOverrideTtl": "<p>The TTL value configured for the created firewall rule's custom response.</p>",
+        "BatchUpdateFirewallRuleInputItem$blockOverrideTtl": "<p>The TTL value for the custom response when the action is BLOCK.</p>",
+        "BatchUpdateFirewallRuleResult$blockOverrideTtl": "<p>The TTL value configured for the updated firewall rule's custom response.</p>",
+        "CreateFirewallRuleInput$blockOverrideTtl": "<p>The recommended amount of time, in seconds, for the DNS resolver or web browser to cache the provided override record. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p> <p>This setting is required if the <code>BlockResponse</code> setting is <code>OVERRIDE</code>.</p>",
+        "CreateFirewallRuleOutput$blockOverrideTtl": "<p>The time-to-live (TTL) value for the custom response when blockResponse is OVERRIDE.</p>",
+        "DeleteFirewallRuleOutput$blockOverrideTtl": "<p>The TTL value that was configured for the deleted firewall rule's custom response.</p>",
+        "FirewallRulesItem$blockOverrideTtl": "<p>The TTL value configured for the firewall rule's custom response.</p>",
+        "GetFirewallRuleOutput$blockOverrideTtl": "<p>The recommended amount of time, in seconds, for the DNS resolver or web browser to cache the provided override record. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>",
+        "UpdateFirewallRuleInput$blockOverrideTtl": "<p>The recommended amount of time, in seconds, for the DNS resolver or web browser to cache the provided override record. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>",
+        "UpdateFirewallRuleOutput$blockOverrideTtl": "<p>The recommended amount of time, in seconds, for the DNS resolver or web browser to cache the provided override record. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>"
+      }
+    },
+    "CRResourceStatus": {
+      "base": null,
+      "refs": {
+        "AccessSourcesItem$status": "<p>The current status of the access source.</p>",
+        "BatchCreateFirewallRuleResult$status": "<p>The current status of the created firewall rule.</p>",
+        "BatchDeleteFirewallRuleResult$status": "<p>The final status of the deleted firewall rule.</p>",
+        "BatchUpdateFirewallRuleResult$status": "<p>The current status of the updated firewall rule.</p>",
+        "CreateAccessSourceOutput$status": "<p>The operational status of the access source.</p>",
+        "CreateFirewallDomainListOutput$status": "<p>Creation status of the domain list.</p>",
+        "CreateFirewallRuleOutput$status": "<p>The operational status of the firewall rule.</p>",
+        "CreateGlobalResolverOutput$status": "<p>The current status of the Route 53 Global Resolver. Possible values are CREATING (being provisioned), UPDATING (being modified), OPERATIONAL (ready to serve queries), or DELETING (being removed).</p>",
+        "DeleteAccessSourceOutput$status": "<p>The final status of the deleted access source.</p>",
+        "DeleteFirewallDomainListOutput$status": "<p>The final status of the deleted firewall domain list.</p>",
+        "DeleteFirewallRuleOutput$status": "<p>The final status of the deleted firewall rule.</p>",
+        "DeleteGlobalResolverOutput$status": "<p>The final status of the deleted Route 53 Global Resolver.</p>",
+        "FirewallDomainListsItem$status": "<p>The current status of the firewall domain list.</p>",
+        "FirewallRulesItem$status": "<p>The current status of the firewall rule.</p>",
+        "GetAccessSourceOutput$status": "<p>Information about the status of the rule.</p>",
+        "GetFirewallDomainListOutput$status": "<p>Operational status of the domain list.</p>",
+        "GetFirewallRuleOutput$status": "<p>The operational status of the DNS Firewall rule.</p>",
+        "GetGlobalResolverOutput$status": "<p>The operational status of the Global Resolver.</p>",
+        "GlobalResolversItem$status": "<p>The current status of the global resolver.</p>",
+        "ImportFirewallDomainsOutput$status": "<p>Operational status of the DNS Firewall domain list.</p>",
+        "UpdateAccessSourceOutput$status": "<p>The current status of the updated access source.</p>",
+        "UpdateFirewallDomainsOutput$status": "<p>The operational status of the domain list.</p>",
+        "UpdateFirewallRuleOutput$status": "<p>The operational status of the firewall rule.</p>",
+        "UpdateGlobalResolverOutput$status": "<p>The operational status of the Global Resolver.</p>"
+      }
+    },
+    "Cidr": {
+      "base": null,
+      "refs": {
+        "AccessSourcesItem$cidr": "<p>The CIDR block that defines the IP address range for the access source.</p>",
+        "CreateAccessSourceInput$cidr": "<p>The IP address or CIDR range that is allowed to send DNS queries to the Route 53 Global Resolver.</p>",
+        "CreateAccessSourceOutput$cidr": "<p>The IP address or CIDR range that is allowed to send DNS queries to the Route 53 Global Resolver.</p>",
+        "DeleteAccessSourceOutput$cidr": "<p>The IP address or CIDR range of the deleted access source.</p>",
+        "GetAccessSourceOutput$cidr": "<p>The IP range for the rule's parameters in CIDR notation.</p>",
+        "UpdateAccessSourceInput$cidr": "<p>The CIDR block for the access source.</p>",
+        "UpdateAccessSourceOutput$cidr": "<p>The CIDR block of the updated access source.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleInputItem$clientToken": "<p>A unique string that identifies the request and ensures idempotency.</p>",
+        "BatchCreateFirewallRuleResult$clientToken": "<p>The unique string that identified the request and ensured idempotency.</p>",
+        "BatchDeleteFirewallRuleResult$clientToken": "<p>The unique string that identified the request and ensured idempotency.</p>",
+        "BatchUpdateFirewallRuleResult$clientToken": "<p>The unique string that identified the request and ensured idempotency.</p>",
+        "CreateAccessSourceInput$clientToken": "<p>A unique string that identifies the request and ensures idempotency.</p>",
+        "CreateAccessTokenInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency. This means that making the same request multiple times with the same <code>clientToken</code> has the same result every time.</p>",
+        "CreateAccessTokenOutput$clientToken": "<p>The unique string that identifies the request and ensures idempotency.</p>",
+        "CreateDNSViewInput$clientToken": "<p>A unique string that identifies the request and ensures idempotency.</p>",
+        "CreateDNSViewOutput$clientToken": "<p>The unique string that identifies the request and ensures idempotency.</p>",
+        "CreateFirewallDomainListInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency. This means that making the same request multiple times with the same <code>clientToken</code> has the same result every time.</p>",
+        "CreateFirewallRuleInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency. This means that making the same request multiple times with the same <code>clientToken</code> has the same result every time.</p>",
+        "CreateGlobalResolverInput$clientToken": "<p>A unique string that identifies the request and ensures idempotency. If you make multiple requests with the same client token, only one Route 53 Global Resolver is created.</p>",
+        "CreateGlobalResolverOutput$clientToken": "<p>The unique string that identifies the request and ensures idempotency.</p>",
+        "DNSViewSummary$clientToken": "<p>The unique string that identifies the request and ensures idempotency.</p>",
+        "DeleteDNSViewOutput$clientToken": "<p>The unique string that identifies the request and ensures idempotency.</p>",
+        "DeleteGlobalResolverOutput$clientToken": "<p>The unique string that identifies the request and ensures idempotency.</p>",
+        "DisableDNSViewOutput$clientToken": "<p>The unique string that identifies the request and ensures idempotency.</p>",
+        "EnableDNSViewOutput$clientToken": "<p>The unique string that identifies the request and ensures idempotency.</p>",
+        "GetAccessTokenOutput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency. This means that making the same request multiple times with the same <code>clientToken</code> has the same result every time.</p>",
+        "GetDNSViewOutput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency. This means that making the same request multiple times with the same <code>clientToken</code> has the same result every time.</p>",
+        "GetFirewallDomainListOutput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency. This means that making the same request multiple times with the same <code>clientToken</code> has the same result every time.</p>",
+        "GetGlobalResolverOutput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency. This means that making the same request multiple times with the same <code>clientToken</code> has the same result every time.</p>",
+        "GlobalResolversItem$clientToken": "<p>The unique string that identifies the request and ensures idempotency.</p>",
+        "UpdateDNSViewOutput$clientToken": "<p>The unique string that identifies the request and ensures idempotency.</p>",
+        "UpdateFirewallRuleInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency. This means that making the same request multiple times with the same <code>clientToken</code> has the same result every time.</p>",
+        "UpdateGlobalResolverOutput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency. This means that making the same request multiple times with the same <code>clientToken</code> has the same result every time.</p>"
+      }
+    },
+    "ConfidenceThreshold": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleInputItem$confidenceThreshold": "<p>The confidence threshold for advanced threat detection.</p>",
+        "BatchCreateFirewallRuleResult$confidenceThreshold": "<p>The confidence threshold configured for the created firewall rule's advanced threat detection.</p>",
+        "BatchUpdateFirewallRuleInputItem$confidenceThreshold": "<p>The confidence threshold for advanced threat detection.</p>",
+        "BatchUpdateFirewallRuleResult$confidenceThreshold": "<p>The confidence threshold configured for the updated firewall rule's advanced threat detection.</p>",
+        "CreateFirewallRuleInput$confidenceThreshold": "<p>The confidence threshold for advanced threat detection. Valid values are HIGH, MEDIUM, or LOW, indicating the accuracy level required for threat detection.</p>",
+        "CreateFirewallRuleOutput$confidenceThreshold": "<p>The confidence threshold for advanced threat detection.</p>",
+        "DeleteFirewallRuleOutput$confidenceThreshold": "<p>The confidence threshold that was configured for the deleted firewall rule's advanced threat detection.</p>",
+        "FirewallRulesItem$confidenceThreshold": "<p>The confidence threshold configured for the firewall rule's advanced threat detection.</p>",
+        "GetFirewallRuleOutput$confidenceThreshold": "<p>The confidence threshold for DNS Firewall Advanced. You must provide this value when you create a DNS Firewall Advanced rule.</p>",
+        "UpdateFirewallRuleInput$confidenceThreshold": "<p>The confidence threshold for DNS Firewall Advanced. You must provide this value when you create a DNS Firewall Advanced rule.</p>",
+        "UpdateFirewallRuleOutput$confidenceThreshold": "<p>The confidence threshold for DNS Firewall Advanced. You must provide this value when you create a DNS Firewall Advanced rule.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request conflicts with the current state of the resource. This can occur when trying to modify a resource that is not in a valid state for the requested operation.</p>",
+      "refs": {}
+    },
+    "CreateAccessSourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAccessSourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAccessTokenInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAccessTokenOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDNSViewInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDNSViewOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateFirewallDomainListInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateFirewallDomainListOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateFirewallRuleInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateFirewallRuleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateGlobalResolverInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateGlobalResolverOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DNSViewSummary": {
+      "base": "<p>Summary information about a DNS view.</p>",
+      "refs": {
+        "DNSViews$member": null
+      }
+    },
+    "DNSViews": {
+      "base": null,
+      "refs": {
+        "ListDNSViewsOutput$dnsViews": "<p>An array of information about the DNS views, such as whether DNSSEC is enabled, creation time, etc.</p>"
+      }
+    },
+    "DeleteAccessSourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAccessSourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAccessTokenInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAccessTokenOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDNSViewInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDNSViewOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteFirewallDomainListInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteFirewallDomainListOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteFirewallRuleInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteFirewallRuleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteGlobalResolverInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteGlobalResolverOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DisableDNSViewInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DisableDNSViewOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateHostedZoneInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateHostedZoneOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DnsAdvancedProtection": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleInputItem$dnsAdvancedProtection": "<p>Whether to enable advanced DNS threat protection for the firewall rule.</p>",
+        "BatchCreateFirewallRuleResult$dnsAdvancedProtection": "<p>Whether advanced DNS threat protection is enabled for the created firewall rule.</p>",
+        "BatchUpdateFirewallRuleInputItem$dnsAdvancedProtection": "<p>Whether to enable advanced DNS threat protection for the firewall rule.</p>",
+        "BatchUpdateFirewallRuleResult$dnsAdvancedProtection": "<p>Whether advanced DNS threat protection is enabled for the updated firewall rule.</p>",
+        "CreateFirewallRuleInput$dnsAdvancedProtection": "<p>Whether to enable advanced DNS threat protection for this rule. Advanced protection can detect and block DNS tunneling and Domain Generation Algorithm (DGA) threats.</p>",
+        "CreateFirewallRuleOutput$dnsAdvancedProtection": "<p>Whether advanced DNS threat protection is enabled for this rule.</p>",
+        "DeleteFirewallRuleOutput$dnsAdvancedProtection": "<p>Whether advanced DNS threat protection was enabled for the deleted firewall rule.</p>",
+        "FirewallRulesItem$dnsAdvancedProtection": "<p>Whether advanced DNS threat protection is enabled for the firewall rule.</p>",
+        "GetFirewallRuleOutput$dnsAdvancedProtection": "<p>The type of the DNS Firewall Advanced rule. Valid values are DGA and DNS_TUNNELING.</p>",
+        "UpdateFirewallRuleInput$dnsAdvancedProtection": "<p>The type of the DNS Firewall Advanced rule. Valid values are DGA and DNS_TUNNELING.</p>",
+        "UpdateFirewallRuleOutput$dnsAdvancedProtection": "<p>The type of the DNS Firewall Advanced rule. Valid values are DGA and DNS_TUNNELING.</p>"
+      }
+    },
+    "DnsProtocol": {
+      "base": null,
+      "refs": {
+        "AccessSourcesItem$protocol": "<p>The protocol used by the access source.</p>",
+        "CreateAccessSourceInput$protocol": "<p>The DNS protocol that is permitted for this access source. Valid values are Do53 (DNS over port 53), DoT (DNS over TLS), and DoH (DNS over HTTPS).</p>",
+        "CreateAccessSourceOutput$protocol": "<p>The DNS protocol that is permitted for this access source (Do53, DoT, or DoH).</p>",
+        "DeleteAccessSourceOutput$protocol": "<p>The DNS protocol that was permitted for the deleted access source.</p>",
+        "GetAccessSourceOutput$protocol": "<p>The protocol determines how data is transmitted to a Global Resolver instance.</p>",
+        "UpdateAccessSourceInput$protocol": "<p>The protocol for the access source.</p>",
+        "UpdateAccessSourceOutput$protocol": "<p>The protocol of the updated access source.</p>"
+      }
+    },
+    "DnsQueryType": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleInputItem$qType": "<p>The DNS query type that the firewall rule should match.</p>",
+        "BatchCreateFirewallRuleResult$queryType": "<p>The DNS query type that the created firewall rule matches.</p>",
+        "BatchUpdateFirewallRuleResult$queryType": "<p>The DNS query type that the updated firewall rule matches.</p>",
+        "CreateFirewallRuleInput$qType": "<p>The DNS query type to match for this rule. Examples include A (IPv4 address), AAAA (IPv6 address), MX (mail exchange), or TXT (text record).</p>",
+        "CreateFirewallRuleOutput$queryType": "<p>The DNS query type that this rule matches.</p>",
+        "DeleteFirewallRuleOutput$queryType": "<p>The DNS query type that the deleted firewall rule was configured to match.</p>",
+        "FirewallRulesItem$queryType": "<p>The DNS query type that the firewall rule matches.</p>",
+        "GetFirewallRuleOutput$queryType": "<p>The DNS query type you want the rule to evaluate.</p>",
+        "UpdateFirewallRuleOutput$queryType": "<p>The DNS query type you want the rule to evaluate.</p>"
+      }
+    },
+    "DnsSecValidationType": {
+      "base": null,
+      "refs": {
+        "CreateDNSViewInput$dnssecValidation": "<p>Whether to enable DNSSEC validation for DNS queries in this DNS view. When enabled, the resolver verifies the authenticity and integrity of DNS responses from public name servers for DNSSEC-signed domains.</p>",
+        "CreateDNSViewOutput$dnssecValidation": "<p>Whether DNSSEC validation is enabled for DNS queries in this DNS view.</p>",
+        "DNSViewSummary$dnssecValidation": "<p>Whether DNSSEC validation is enabled for the DNS view.</p>",
+        "DeleteDNSViewOutput$dnssecValidation": "<p>Whether DNSSEC validation was enabled for the deleted DNS view.</p>",
+        "DisableDNSViewOutput$dnssecValidation": "<p>Whether DNSSEC validation is enabled for the disabled DNS view.</p>",
+        "EnableDNSViewOutput$dnssecValidation": "<p>Whether DNSSEC validation is enabled for the enabled DNS view.</p>",
+        "GetDNSViewOutput$dnssecValidation": "<p>Specifies whether DNSSEC is enabled or disabled for the DNS view.</p>",
+        "UpdateDNSViewInput$dnssecValidation": "<p>Whether to enable DNSSEC validation for the DNS view.</p>",
+        "UpdateDNSViewOutput$dnssecValidation": "<p>Whether DNSSEC validation is enabled for the updated DNS view.</p>"
+      }
+    },
+    "Domain": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleInputItem$blockOverrideDomain": "<p>The custom domain name for the BLOCK response.</p>",
+        "BatchCreateFirewallRuleResult$blockOverrideDomain": "<p>The custom domain name configured for the created firewall rule's BLOCK response.</p>",
+        "BatchUpdateFirewallRuleInputItem$blockOverrideDomain": "<p>The custom domain name for the BLOCK response.</p>",
+        "BatchUpdateFirewallRuleResult$blockOverrideDomain": "<p>The custom domain name configured for the updated firewall rule's BLOCK response.</p>",
+        "CreateFirewallRuleInput$blockOverrideDomain": "<p>The custom DNS record to send back in response to the query. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p> <p>This setting is required if the <code>BlockResponse</code> setting is <code>OVERRIDE</code>.</p>",
+        "CreateFirewallRuleOutput$blockOverrideDomain": "<p>The custom domain to return when the action is BLOCK and blockResponse is OVERRIDE.</p>",
+        "DeleteFirewallRuleOutput$blockOverrideDomain": "<p>The custom domain that was configured for the deleted firewall rule's BLOCK response.</p>",
+        "Domains$member": null,
+        "FirewallRulesItem$blockOverrideDomain": "<p>The custom domain name configured for the firewall rule's BLOCK response.</p>",
+        "GetFirewallRuleOutput$blockOverrideDomain": "<p>The custom DNS record to send back in response to the query. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>",
+        "UpdateFirewallRuleInput$blockOverrideDomain": "<p>The custom DNS record to send back in response to the query. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>",
+        "UpdateFirewallRuleOutput$blockOverrideDomain": "<p>The custom DNS record to send back in response to the query. Used for the rule action <code>BLOCK</code> with a <code>BlockResponse</code> setting of <code>OVERRIDE</code>.</p>"
+      }
+    },
+    "Domains": {
+      "base": null,
+      "refs": {
+        "ListFirewallDomainsOutput$domains": "<p>List of domains in the specified domain list.</p>",
+        "UpdateFirewallDomainsInput$domains": "<p>A list of the domains. You can add up to 1000 domains per request.</p>"
+      }
+    },
+    "EdnsClientSubnetType": {
+      "base": null,
+      "refs": {
+        "CreateDNSViewInput$ednsClientSubnet": "<p>Whether to enable EDNS Client Subnet injection for DNS queries in this DNS view. When enabled, client subnet information is forwarded to provide more accurate geographic-based DNS responses.</p>",
+        "CreateDNSViewOutput$ednsClientSubnet": "<p>Whether EDNS Client Subnet injection is enabled for DNS queries in this DNS view.</p>",
+        "DNSViewSummary$ednsClientSubnet": "<p>Whether EDNS Client Subnet injection is enabled for the DNS view.</p>",
+        "DeleteDNSViewOutput$ednsClientSubnet": "<p>Whether EDNS Client Subnet injection was enabled for the deleted DNS view.</p>",
+        "DisableDNSViewOutput$ednsClientSubnet": "<p>Whether EDNS Client Subnet injection is enabled for the disabled DNS view.</p>",
+        "EnableDNSViewOutput$ednsClientSubnet": "<p>Whether EDNS Client Subnet injection is enabled for the enabled DNS view.</p>",
+        "GetDNSViewOutput$ednsClientSubnet": "<p>Specifies whether edns0 client subnet is enabled.</p>",
+        "UpdateDNSViewInput$ednsClientSubnet": "<p>Whether to enable EDNS Client Subnet injection for the DNS view.</p>",
+        "UpdateDNSViewOutput$ednsClientSubnet": "<p>Whether EDNS Client Subnet injection is enabled for the updated DNS view.</p>"
+      }
+    },
+    "EnableDNSViewInput": {
+      "base": null,
+      "refs": {}
+    },
+    "EnableDNSViewOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "Filters": {
+      "base": null,
+      "refs": {
+        "ListAccessSourcesInput$filters": "<p>Values to filter the results.</p>",
+        "ListAccessTokensInput$filters": "<p>Filtering parameters.</p>",
+        "ListFirewallRulesInput$filters": "<p>Values to filter the results.</p>"
+      }
+    },
+    "FirewallBlockResponse": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleInputItem$blockResponse": "<p>The type of block response to return when the action is BLOCK.</p>",
+        "BatchCreateFirewallRuleResult$blockResponse": "<p>The type of block response configured for the created firewall rule.</p>",
+        "BatchUpdateFirewallRuleInputItem$blockResponse": "<p>The type of block response to return when the action is BLOCK.</p>",
+        "BatchUpdateFirewallRuleResult$blockResponse": "<p>The type of block response configured for the updated firewall rule.</p>",
+        "CreateFirewallRuleInput$blockResponse": "<p>The response to return when the action is BLOCK. Valid values are NXDOMAIN (domain does not exist), NODATA (domain exists but no records), or OVERRIDE (return custom response).</p>",
+        "CreateFirewallRuleOutput$blockResponse": "<p>The response to return when the action is BLOCK.</p>",
+        "DeleteFirewallRuleOutput$blockResponse": "<p>The block response type that was configured for the deleted firewall rule.</p>",
+        "FirewallRulesItem$blockResponse": "<p>The type of block response configured for the firewall rule.</p>",
+        "GetFirewallRuleOutput$blockResponse": "<p>The way that you want DNS Firewall to block the request. Used for the rule action setting <code>BLOCK</code>.</p>",
+        "UpdateFirewallRuleInput$blockResponse": "<p>The way that you want DNS Firewall to block the request. Used for the rule action setting <code>BLOCK</code>.</p>",
+        "UpdateFirewallRuleOutput$blockResponse": "<p>The way that you want DNS Firewall to block the request. Used for the rule action setting <code>BLOCK</code>.</p>"
+      }
+    },
+    "FirewallDomainLists": {
+      "base": null,
+      "refs": {
+        "ListFirewallDomainListsOutput$firewallDomainLists": "<p>List of the DNS Firewall domain lists.</p>"
+      }
+    },
+    "FirewallDomainListsItem": {
+      "base": "<p>Summary information about a firewall domain list.</p>",
+      "refs": {
+        "FirewallDomainLists$member": null
+      }
+    },
+    "FirewallRuleAction": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleInputItem$action": "<p>The action to take when a DNS query matches the firewall rule.</p>",
+        "BatchCreateFirewallRuleResult$action": "<p>The action configured for the created firewall rule.</p>",
+        "BatchUpdateFirewallRuleInputItem$action": "<p>The action to take when a DNS query matches the firewall rule.</p>",
+        "BatchUpdateFirewallRuleResult$action": "<p>The action configured for the updated firewall rule.</p>",
+        "CreateFirewallRuleInput$action": "<p>The action that DNS Firewall should take on a DNS query when it matches one of the domains in the rule's domain list:</p> <ul> <li> <p> <code>ALLOW</code> - Permit the request to go through.</p> </li> <li> <p> <code>ALERT</code> - Permit the request and send metrics and logs to CloudWatch.</p> </li> <li> <p> <code>BLOCK</code> - Disallow the request. This option requires additional details in the rule's <code>BlockResponse</code>.</p> </li> </ul>",
+        "CreateFirewallRuleOutput$action": "<p>The action that DNS Firewall takes on DNS queries that match this rule.</p>",
+        "DeleteFirewallRuleOutput$action": "<p>The action that was configured for the deleted firewall rule.</p>",
+        "FirewallRulesItem$action": "<p>The action configured for the firewall rule.</p>",
+        "GetFirewallRuleOutput$action": "<p>The action that DNS Firewall should take on a DNS query when it matches one of the domains in the rule's domain list, or a threat in a DNS Firewall Advanced rule.</p>",
+        "UpdateFirewallRuleInput$action": "<p>The action that DNS Firewall should take on a DNS query when it matches one of the domains in the rule's domain list, or a threat in a DNS Firewall Advanced rule.</p>",
+        "UpdateFirewallRuleOutput$action": "<p>The action that DNS Firewall should take on a DNS query when it matches one of the domains in the rule's domain list, or a threat in a DNS Firewall Advanced rule.</p>"
+      }
+    },
+    "FirewallRulePriority": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleInputItem$priority": "<p>The priority of the firewall rule.</p>",
+        "BatchCreateFirewallRuleResult$priority": "<p>The priority of the created firewall rule.</p>",
+        "BatchUpdateFirewallRuleInputItem$priority": "<p>The priority of the firewall rule.</p>",
+        "BatchUpdateFirewallRuleResult$priority": "<p>The priority of the updated firewall rule.</p>",
+        "CreateFirewallRuleInput$priority": "<p>The priority of this rule. Rules are evaluated in priority order, with lower numbers having higher priority. When a DNS query matches multiple rules, the rule with the highest priority (lowest number) is applied.</p>",
+        "CreateFirewallRuleOutput$priority": "<p>The priority of the firewall rule.</p>",
+        "DeleteFirewallRuleOutput$priority": "<p>The priority that was configured for the deleted firewall rule.</p>",
+        "FirewallRulesItem$priority": "<p>The priority of the firewall rule.</p>",
+        "GetFirewallRuleOutput$priority": "<p>The setting that determines the processing order of the rule in the rule group. DNS Firewall processes the rules in a rule group by order of priority, starting from the lowest setting.</p>",
+        "UpdateFirewallRuleInput$priority": "<p>The setting that determines the processing order of the rule in the rule group. DNS Firewall processes the rules in a rule group by order of priority, starting from the lowest setting.</p>",
+        "UpdateFirewallRuleOutput$priority": "<p>The setting that determines the processing order of the rule in the rule group. DNS Firewall processes the rules in a rule group by order of priority, starting from the lowest setting.</p>"
+      }
+    },
+    "FirewallRules": {
+      "base": null,
+      "refs": {
+        "ListFirewallRulesOutput$firewallRules": "<p>List of the firewall rules and information about them.</p>"
+      }
+    },
+    "FirewallRulesFailOpenType": {
+      "base": null,
+      "refs": {
+        "CreateDNSViewInput$firewallRulesFailOpen": "<p>Determines the behavior when Route 53 Global Resolver cannot apply DNS firewall rules due to service impairment. When enabled, DNS queries are allowed through; when disabled, queries are blocked.</p>",
+        "CreateDNSViewOutput$firewallRulesFailOpen": "<p>The behavior when Route 53 Global Resolver cannot apply DNS firewall rules due to service impairment.</p>",
+        "DNSViewSummary$firewallRulesFailOpen": "<p>Whether firewall rules fail open when they cannot be evaluated.</p>",
+        "DeleteDNSViewOutput$firewallRulesFailOpen": "<p>The firewall rules fail-open behavior that was configured for the deleted DNS view.</p>",
+        "DisableDNSViewOutput$firewallRulesFailOpen": "<p>The firewall rules fail-open behavior configured for the disabled DNS view.</p>",
+        "EnableDNSViewOutput$firewallRulesFailOpen": "<p>The firewall rules fail-open behavior configured for the enabled DNS view.</p>",
+        "GetDNSViewOutput$firewallRulesFailOpen": "<p>Specifies the DNS Firewall failure mode configuration. When enabled, the DNS Firewall allows DNS queries to proceed if it's unable to properly evaluate them. When disabled, the DNS Firewall blocks DNS queries it's unable to evaluate.</p>",
+        "UpdateDNSViewInput$firewallRulesFailOpen": "<p>Whether firewall rules should fail open when they cannot be evaluated.</p>",
+        "UpdateDNSViewOutput$firewallRulesFailOpen": "<p>Whether firewall rules fail open when they cannot be evaluated for the updated DNS view.</p>"
+      }
+    },
+    "FirewallRulesItem": {
+      "base": "<p>Summary information about a firewall rule.</p>",
+      "refs": {
+        "FirewallRules$member": null
+      }
+    },
+    "GetAccessSourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAccessSourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAccessTokenInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAccessTokenOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDNSViewInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDNSViewOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetFirewallDomainListInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetFirewallDomainListOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetFirewallRuleInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetFirewallRuleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetGlobalResolverInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetGlobalResolverOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetHostedZoneAssociationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetHostedZoneAssociationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetManagedFirewallDomainListInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetManagedFirewallDomainListOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GlobalResolvers": {
+      "base": null,
+      "refs": {
+        "ListGlobalResolversOutput$globalResolvers": "<p>Paginated list of Global Resolvers.</p>"
+      }
+    },
+    "GlobalResolversItem": {
+      "base": "<p>Summary information about a global resolver.</p>",
+      "refs": {
+        "GlobalResolvers$member": null
+      }
+    },
+    "HostedZoneAssociationStatus": {
+      "base": null,
+      "refs": {
+        "AssociateHostedZoneOutput$status": "<p>Aggregate status for all the AWS Regions in which the Route 53 Global Resolver exists.</p>",
+        "DisassociateHostedZoneOutput$status": "<p>The final status of the disassociation.</p>",
+        "GetHostedZoneAssociationOutput$status": "<p>The operational status of the private hosted zone association.</p>",
+        "HostedZoneAssociationSummary$status": "<p>The current status of the hosted zone association.</p>",
+        "UpdateHostedZoneAssociationOutput$status": "<p>The operational status of the private hosted zone association.</p>"
+      }
+    },
+    "HostedZoneAssociationSummary": {
+      "base": "<p>Summary information about a hosted zone association.</p>",
+      "refs": {
+        "HostedZoneAssociations$member": null
+      }
+    },
+    "HostedZoneAssociations": {
+      "base": null,
+      "refs": {
+        "ListHostedZoneAssociationsOutput$hostedZoneAssociations": "<p>List of the private hosted zone associations.</p>"
+      }
+    },
+    "HostedZoneId": {
+      "base": null,
+      "refs": {
+        "AssociateHostedZoneInput$hostedZoneId": "<p>The ID of the Route 53 private hosted zone to associate with the Route 53 Global Resolver resource.</p>",
+        "AssociateHostedZoneOutput$hostedZoneId": "<p>ID of the private hosted zone.</p>",
+        "DisassociateHostedZoneInput$hostedZoneId": "<p>The ID of the Route 53 private hosted zone to disassociate.</p>",
+        "DisassociateHostedZoneOutput$hostedZoneId": "<p>The ID of the Route 53 private hosted zone that was disassociated.</p>",
+        "GetHostedZoneAssociationOutput$hostedZoneId": "<p>ID of the hosted zone associated to the DNS view.</p>",
+        "HostedZoneAssociationSummary$hostedZoneId": "<p>The ID of the hosted zone.</p>",
+        "UpdateHostedZoneAssociationOutput$hostedZoneId": "<p>The ID of the private hosted zone.</p>"
+      }
+    },
+    "HostedZoneName": {
+      "base": null,
+      "refs": {
+        "AssociateHostedZoneOutput$hostedZoneName": "<p>Name of the hosted zone (also the domain associated with the hosted zone).</p>",
+        "DisassociateHostedZoneOutput$hostedZoneName": "<p>The name of the Route 53 private hosted zone that was disassociated.</p>",
+        "GetHostedZoneAssociationOutput$hostedZoneName": "<p>Name of the domain associated with the private hosted zone.</p>",
+        "HostedZoneAssociationSummary$hostedZoneName": "<p>The name of the hosted zone.</p>",
+        "UpdateHostedZoneAssociationOutput$hostedZoneName": "<p>The name of the domain associated with the private hosted zone.</p>"
+      }
+    },
+    "IPv4Address": {
+      "base": null,
+      "refs": {
+        "IPv4Addresses$member": null
+      }
+    },
+    "IPv4Addresses": {
+      "base": null,
+      "refs": {
+        "CreateGlobalResolverOutput$ipv4Addresses": "<p>The global anycast IPv4 addresses associated with the Route 53 Global Resolver. DNS clients can send queries to these addresses from anywhere on the internet.</p>",
+        "DeleteGlobalResolverOutput$ipv4Addresses": "<p>The global anycast IPv4 addresses that were associated with the deleted Route 53 Global Resolver.</p>",
+        "GetGlobalResolverOutput$ipv4Addresses": "<p>List of anycast IPv4 addresses associated with the Global Resolver instance.</p>",
+        "GlobalResolversItem$ipv4Addresses": "<p>The IPv4 addresses assigned to the global resolver.</p>",
+        "UpdateGlobalResolverOutput$ipv4Addresses": "<p>List of anycast IPv4 addresses associated with the Global Resolver instance.</p>"
+      }
+    },
+    "ISO8601TimeString": {
+      "base": null,
+      "refs": {
+        "AccessSourcesItem$createdAt": "<p>The date and time when the access source was created.</p>",
+        "AccessSourcesItem$updatedAt": "<p>The date and time when the access source was last updated.</p>",
+        "AccessTokenItem$createdAt": "<p>The date and time when the token was created.</p>",
+        "AccessTokenItem$expiresAt": "<p>The date and time when the token expires.</p>",
+        "AccessTokenItem$updatedAt": "<p>The date and time when the token was last updated.</p>",
+        "AssociateHostedZoneOutput$createdAt": "<p>The date and time the private hosted zone association was created.</p>",
+        "AssociateHostedZoneOutput$updatedAt": "<p>The date and time the private hosted zone association was modified.</p>",
+        "BatchCreateFirewallRuleResult$createdAt": "<p>The date and time when the firewall rule was created.</p>",
+        "BatchCreateFirewallRuleResult$updatedAt": "<p>The date and time when the firewall rule was last updated.</p>",
+        "BatchUpdateFirewallRuleResult$createdAt": "<p>The date and time when the firewall rule was originally created.</p>",
+        "BatchUpdateFirewallRuleResult$updatedAt": "<p>The date and time when the firewall rule was last updated.</p>",
+        "CreateAccessSourceOutput$createdAt": "<p>The date and time when the access source was created.</p>",
+        "CreateAccessSourceOutput$updatedAt": "<p>The date and time when the access source was last updated.</p>",
+        "CreateAccessTokenInput$expiresAt": "<p>The date and time when the token expires. Tokens can have a minimum expiration of 30 days and maximum of 365 days from creation.</p>",
+        "CreateAccessTokenOutput$createdAt": "<p>The date and time when the access token was created.</p>",
+        "CreateAccessTokenOutput$expiresAt": "<p>The date and time when the access token expires.</p>",
+        "CreateDNSViewOutput$createdAt": "<p>The date and time when the DNS view was created.</p>",
+        "CreateDNSViewOutput$updatedAt": "<p>The date and time when the DNS view was last updated.</p>",
+        "CreateFirewallDomainListOutput$createdAt": "<p>The time and date the domain list was created on.</p>",
+        "CreateFirewallDomainListOutput$updatedAt": "<p>The time and date the domain list was updated.</p>",
+        "CreateFirewallRuleOutput$createdAt": "<p>The date and time when the firewall rule was created.</p>",
+        "CreateFirewallRuleOutput$updatedAt": "<p>The date and time when the firewall rule was last updated.</p>",
+        "CreateGlobalResolverOutput$createdAt": "<p>The date and time when the Route 53 Global Resolver was created.</p>",
+        "CreateGlobalResolverOutput$updatedAt": "<p>The date and time when the Route 53 Global Resolver was last updated.</p>",
+        "DNSViewSummary$createdAt": "<p>The date and time when the DNS view was created.</p>",
+        "DNSViewSummary$updatedAt": "<p>The date and time when the DNS view was last updated.</p>",
+        "DeleteAccessSourceOutput$createdAt": "<p>The date and time when the access source was originally created.</p>",
+        "DeleteAccessSourceOutput$updatedAt": "<p>The date and time when the access source was last updated before deletion.</p>",
+        "DeleteAccessTokenOutput$deletedAt": "<p>The date and time when the access token was deleted.</p>",
+        "DeleteDNSViewOutput$createdAt": "<p>The date and time when the DNS view was originally created.</p>",
+        "DeleteDNSViewOutput$updatedAt": "<p>The date and time when the DNS view was last updated before deletion.</p>",
+        "DeleteFirewallRuleOutput$createdAt": "<p>The date and time when the firewall rule was originally created.</p>",
+        "DeleteFirewallRuleOutput$updatedAt": "<p>The date and time when the firewall rule was last updated before deletion.</p>",
+        "DeleteGlobalResolverOutput$createdAt": "<p>The date and time when the Route 53 Global Resolver was originally created.</p>",
+        "DeleteGlobalResolverOutput$updatedAt": "<p>The date and time when the Route 53 Global Resolver was last updated before deletion.</p>",
+        "DisableDNSViewOutput$createdAt": "<p>The date and time when the DNS view was originally created.</p>",
+        "DisableDNSViewOutput$updatedAt": "<p>The date and time when the DNS view was last updated.</p>",
+        "DisassociateHostedZoneOutput$createdAt": "<p>The date and time when the association was originally created.</p>",
+        "DisassociateHostedZoneOutput$updatedAt": "<p>The date and time when the association was last updated before disassociation.</p>",
+        "EnableDNSViewOutput$createdAt": "<p>The date and time when the DNS view was originally created.</p>",
+        "EnableDNSViewOutput$updatedAt": "<p>The date and time when the DNS view was last updated.</p>",
+        "FirewallDomainListsItem$createdAt": "<p>The date and time when the firewall domain list was created.</p>",
+        "FirewallDomainListsItem$updatedAt": "<p>The date and time when the firewall domain list was last updated.</p>",
+        "FirewallRulesItem$createdAt": "<p>The date and time when the firewall rule was created.</p>",
+        "FirewallRulesItem$updatedAt": "<p>The date and time when the firewall rule was last updated.</p>",
+        "GetAccessSourceOutput$createdAt": "<p>The time and date the rule was created.</p>",
+        "GetAccessSourceOutput$updatedAt": "<p>The time and date the access source was updated.</p>",
+        "GetAccessTokenOutput$createdAt": "<p>The time and date the token was created.</p>",
+        "GetAccessTokenOutput$expiresAt": "<p>The token's expiration time and date.</p>",
+        "GetAccessTokenOutput$updatedAt": "<p>The time and date the token was created.</p>",
+        "GetDNSViewOutput$createdAt": "<p>The time and date the DNS view was creates on.</p>",
+        "GetDNSViewOutput$updatedAt": "<p>The time and date the DNS view was updated on.</p>",
+        "GetFirewallDomainListOutput$createdAt": "<p>The time and date the domain list was created.</p>",
+        "GetFirewallDomainListOutput$updatedAt": "<p>The date and time the domain list was updated.</p>",
+        "GetFirewallRuleOutput$createdAt": "<p>The time and date the DNS Firewall rule was created.</p>",
+        "GetFirewallRuleOutput$updatedAt": "<p>The date and time the DNS Firewall rule was updated.</p>",
+        "GetGlobalResolverOutput$createdAt": "<p>The date and time the Global Resolver was created.</p>",
+        "GetGlobalResolverOutput$updatedAt": "<p>The date and time the Global Resolver was updated.</p>",
+        "GetHostedZoneAssociationOutput$createdAt": "<p>The time and date the private hosted zone association was created.</p>",
+        "GetHostedZoneAssociationOutput$updatedAt": "<p>The time and date the private hosted zone association was updated.</p>",
+        "GlobalResolversItem$createdAt": "<p>The date and time when the global resolver was created.</p>",
+        "GlobalResolversItem$updatedAt": "<p>The date and time when the global resolver was last updated.</p>",
+        "HostedZoneAssociationSummary$createdAt": "<p>The date and time when the hosted zone association was created.</p>",
+        "HostedZoneAssociationSummary$updatedAt": "<p>The date and time when the hosted zone association was last updated.</p>",
+        "UpdateAccessSourceOutput$createdAt": "<p>The date and time when the access source was originally created.</p>",
+        "UpdateAccessSourceOutput$updatedAt": "<p>The date and time when the access source was last updated.</p>",
+        "UpdateDNSViewOutput$createdAt": "<p>The date and time when the DNS view was originally created.</p>",
+        "UpdateDNSViewOutput$updatedAt": "<p>The date and time when the DNS view was last updated.</p>",
+        "UpdateFirewallRuleOutput$createdAt": "<p>The time and date the Firewall rule was created.</p>",
+        "UpdateFirewallRuleOutput$updatedAt": "<p>The time and date the rule was updated.</p>",
+        "UpdateGlobalResolverOutput$createdAt": "<p>The time and date the Global Resolverwas created.</p>",
+        "UpdateGlobalResolverOutput$updatedAt": "<p>The time and date the Global Resolver was updated.</p>",
+        "UpdateHostedZoneAssociationOutput$createdAt": "<p>The time and date the private hosted zone association was created.</p>",
+        "UpdateHostedZoneAssociationOutput$updatedAt": "<p>The time and date the private hosted zone association was updated.</p>"
+      }
+    },
+    "ImportFirewallDomainsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ImportFirewallDomainsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleOutputItem$code": "<p>The HTTP response code for the batch operation result.</p>",
+        "BatchDeleteFirewallRuleOutputItem$code": "<p>The response code for the delete operation.</p>",
+        "BatchUpdateFirewallRuleOutputItem$code": "<p>The response code for the update operation.</p>",
+        "CreateFirewallDomainListOutput$domainCount": "<p>Number of domains in the domain list.</p>",
+        "GetFirewallDomainListOutput$domainCount": "<p>Number of domains in the domain list.</p>",
+        "InternalServerException$retryAfterSeconds": "<p>Number of seconds in which the caller can retry the request.</p>",
+        "ListAccessSourcesInput$maxResults": "<p>The maximum number of results to retrieve in a single call.</p>",
+        "ListAccessTokensInput$maxResults": "<p>The maximum number of results to retrieve in a single call.</p>",
+        "ListDNSViewsInput$maxResults": "<p>The maximum number of results to retrieve in a single call.</p>",
+        "ListFirewallDomainListsInput$maxResults": "<p>The maximum number of results to retrieve in a single call.</p>",
+        "ListFirewallDomainsInput$maxResults": "<p>The maximum number of results to retrieve in a single call.</p>",
+        "ListFirewallRulesInput$maxResults": "<p>The maximum number of results to retrieve in a single call.</p>",
+        "ListGlobalResolversInput$maxResults": "<p>The maximum number of Route 53 Global Resolver instances to return in the response. Valid range is 1-100.</p>",
+        "ListHostedZoneAssociationsInput$maxResults": "<p>The maximum number of results to retrieve in a single call.</p>",
+        "ListManagedFirewallDomainListsInput$maxResults": "<p>The maximum number of results to retrieve in a single call.</p>",
+        "ThrottlingException$retryAfterSeconds": "<p>Number of seconds in which the caller can retry the request.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>An internal server error occurred. Try again later.</p>",
+      "refs": {}
+    },
+    "IpAddressType": {
+      "base": null,
+      "refs": {
+        "AccessSourcesItem$ipAddressType": "<p>The IP address type of the access source.</p>",
+        "CreateAccessSourceInput$ipAddressType": "<p>The IP address type for this access source. Valid values are IPv4 and IPv6 (if the Route 53 Global Resolver supports dual-stack).</p>",
+        "CreateAccessSourceOutput$ipAddressType": "<p>The IP address type for this access source (IPv4 or IPv6).</p>",
+        "DeleteAccessSourceOutput$ipAddressType": "<p>The IP address type of the deleted access source (IPv4 or IPv6).</p>",
+        "GetAccessSourceOutput$ipAddressType": "<p>The IP address type.</p>",
+        "UpdateAccessSourceInput$ipAddressType": "<p>The IP address type for the access source.</p>",
+        "UpdateAccessSourceOutput$ipAddressType": "<p>The IP address type of the updated access source.</p>"
+      }
+    },
+    "ListAccessSourcesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAccessSourcesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAccessTokensInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAccessTokensOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDNSViewsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDNSViewsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFirewallDomainListsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFirewallDomainListsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFirewallDomainsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFirewallDomainsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFirewallRulesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFirewallRulesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGlobalResolversInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGlobalResolversOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListHostedZoneAssociationsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListHostedZoneAssociationsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListManagedFirewallDomainListsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListManagedFirewallDomainListsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ManagedFirewallDomainLists": {
+      "base": null,
+      "refs": {
+        "ListManagedFirewallDomainListsOutput$managedFirewallDomainLists": "<p>List of the Managed Domain Lists.</p>"
+      }
+    },
+    "ManagedFirewallDomainListsItem": {
+      "base": "<p>Summary information about a managed firewall domain list.</p>",
+      "refs": {
+        "ManagedFirewallDomainLists$member": null
+      }
+    },
+    "ProfileResourceStatus": {
+      "base": null,
+      "refs": {
+        "CreateDNSViewOutput$status": "<p>The operational status of the DNS view.</p>",
+        "DNSViewSummary$status": "<p>The current status of the DNS view.</p>",
+        "DeleteDNSViewOutput$status": "<p>The final status of the deleted DNS view.</p>",
+        "DisableDNSViewOutput$status": "<p>The current status of the disabled DNS view.</p>",
+        "EnableDNSViewOutput$status": "<p>The current status of the enabled DNS view.</p>",
+        "GetDNSViewOutput$status": "<p>Operational status of the DNS view.</p>",
+        "UpdateDNSViewOutput$status": "<p>The current status of the updated DNS view.</p>"
+      }
+    },
+    "Region": {
+      "base": null,
+      "refs": {
+        "CreateGlobalResolverInput$observabilityRegion": "<p>The AWS region where query resolution logs and metrics will be aggregated and delivered. If not specified, logging is not enabled.</p>",
+        "CreateGlobalResolverOutput$observabilityRegion": "<p>The AWS Region where observability data for the Route 53 Global Resolver is stored.</p>",
+        "DeleteGlobalResolverOutput$observabilityRegion": "<p>The AWS Region where observability data for the deleted Route 53 Global Resolver was stored.</p>",
+        "GetGlobalResolverOutput$observabilityRegion": "<p>The AWS Regions in which the users' Global Resolver query resolution logs will be propagated.</p>",
+        "GlobalResolversItem$observabilityRegion": "<p>The AWS Region where observability data is collected for the global resolver.</p>",
+        "Regions$member": null,
+        "UpdateGlobalResolverInput$observabilityRegion": "<p>The AWS Regions in which the users' Global Resolver query resolution logs will be propagated.</p>",
+        "UpdateGlobalResolverOutput$observabilityRegion": "<p>The AWS Regions in which the users' Global Resolver query resolution logs will be propagated.</p>"
+      }
+    },
+    "Regions": {
+      "base": null,
+      "refs": {
+        "CreateGlobalResolverInput$regions": "<p>List of AWS regions where the Route 53 Global Resolver will operate. The resolver will be distributed across these regions to provide global availability and low-latency DNS resolution.</p>",
+        "CreateGlobalResolverOutput$regions": "<p>The AWS Regions where the Route 53 Global Resolver is deployed and operational.</p>",
+        "DeleteGlobalResolverOutput$regions": "<p>The AWS Regions where the deleted Route 53 Global Resolver was deployed and operational.</p>",
+        "GetGlobalResolverOutput$regions": "<p>The AWS Regions in which the Global Resolver operate.</p>",
+        "GlobalResolversItem$regions": "<p>The AWS Regions where the global resolver is deployed.</p>",
+        "UpdateGlobalResolverOutput$regions": "<p>The AWS Regions in which the Global Resolver will operate.</p>"
+      }
+    },
+    "ResourceArn": {
+      "base": null,
+      "refs": {
+        "AccessSourcesItem$arn": "<p>The Amazon Resource Name (ARN) of the access source.</p>",
+        "AccessTokenItem$arn": "<p>The Amazon Resource Name (ARN) of the token.</p>",
+        "AssociateHostedZoneInput$resourceArn": "<p>An Amazon Resource Name (ARN) of the Route 53 Global Resolver the private hosted zone will be associated to.</p>",
+        "AssociateHostedZoneOutput$resourceArn": "<p>An Amazon Resource Name (ARN) of the Route 53 Global Resolver the private hosted zone is associated to.</p>",
+        "CreateAccessSourceOutput$arn": "<p>The Amazon Resource Name (ARN) of the access source.</p>",
+        "CreateAccessTokenOutput$arn": "<p>The Amazon Resource Name (ARN) of the access token.</p>",
+        "CreateDNSViewOutput$arn": "<p>The Amazon Resource Name (ARN) of the DNS view.</p>",
+        "CreateFirewallDomainListOutput$arn": "<p>An Amazon Resource Name (ARN) for the domain list.</p>",
+        "CreateGlobalResolverOutput$arn": "<p>The Amazon Resource Name (ARN) of the Route 53 Global Resolver.</p>",
+        "DNSViewSummary$arn": "<p>The Amazon Resource Name (ARN) of the DNS view.</p>",
+        "DeleteAccessSourceOutput$arn": "<p>The Amazon Resource Name (ARN) of the deleted access source.</p>",
+        "DeleteDNSViewOutput$arn": "<p>The Amazon Resource Name (ARN) of the deleted DNS view.</p>",
+        "DeleteFirewallDomainListOutput$arn": "<p>The Amazon Resource Name (ARN) of the deleted firewall domain list.</p>",
+        "DeleteGlobalResolverOutput$arn": "<p>The Amazon Resource Name (ARN) of the deleted Route 53 Global Resolver.</p>",
+        "DisableDNSViewOutput$arn": "<p>The Amazon Resource Name (ARN) of the disabled DNS view.</p>",
+        "DisassociateHostedZoneInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the Route 53 Global Resolver resource to disassociate the hosted zone from.</p>",
+        "DisassociateHostedZoneOutput$resourceArn": "<p>The Amazon Resource Name (ARN) of the Route 53 Global Resolver resource that the hosted zone was disassociated from.</p>",
+        "EnableDNSViewOutput$arn": "<p>The Amazon Resource Name (ARN) of the enabled DNS view.</p>",
+        "FirewallDomainListsItem$arn": "<p>The Amazon Resource Name (ARN) of the firewall domain list.</p>",
+        "GetAccessSourceOutput$arn": "<p>The Amazon Resource Name (ARN) of the access source.</p>",
+        "GetAccessTokenOutput$arn": "<p>The Amazon Resource Name (ARN) of the token.</p>",
+        "GetDNSViewOutput$arn": "<p>Amazon Resource Name (ARN) of the DNS view.</p>",
+        "GetFirewallDomainListOutput$arn": "<p>Amazon Resource Name (ARN) of the domain list.</p>",
+        "GetGlobalResolverOutput$arn": "<p>The Amazon Resource Name (ARN) of the Global Resolver.</p>",
+        "GetHostedZoneAssociationOutput$resourceArn": "<p>Amazon Resource Name (ARN) of the DNS view the private hosted zone is associated to.</p>",
+        "GlobalResolversItem$arn": "<p>The Amazon Resource Name (ARN) of the global resolver.</p>",
+        "HostedZoneAssociationSummary$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource associated with the hosted zone.</p>",
+        "ListHostedZoneAssociationsInput$resourceArn": "<p>Amazon Resource Name (ARN) of the DNS view.</p>",
+        "ListTagsForResourceRequest$resourceArn": "<p>Amazon Resource Name (ARN) for the resource.</p>",
+        "TagResourceRequest$resourceArn": "<p>Amazon Resource Name (ARN) of the resource to be tagged.</p>",
+        "UntagResourceRequest$resourceArn": "<p>Amazon Resource Name (ARN) of the resource.</p>",
+        "UpdateAccessSourceOutput$arn": "<p>The Amazon Resource Name (ARN) of the updated access source.</p>",
+        "UpdateDNSViewOutput$arn": "<p>The Amazon Resource Name (ARN) of the updated DNS view.</p>",
+        "UpdateGlobalResolverOutput$arn": "<p>The Amazon Resource Name (ARN) of the Global Resolver.</p>",
+        "UpdateHostedZoneAssociationOutput$resourceArn": "<p>The Amazon Resource Name (ARN) of the private hosted zone association.</p>"
+      }
+    },
+    "ResourceDescription": {
+      "base": null,
+      "refs": {
+        "BatchCreateFirewallRuleInputItem$description": "<p>A description of the firewall rule.</p>",
+        "BatchCreateFirewallRuleResult$description": "<p>The description of the created firewall rule.</p>",
+        "BatchUpdateFirewallRuleInputItem$description": "<p>A description of the firewall rule.</p>",
+        "BatchUpdateFirewallRuleResult$description": "<p>The description of the updated firewall rule.</p>",
+        "CreateDNSViewInput$description": "<p>An optional description for the DNS view.</p>",
+        "CreateDNSViewOutput$description": "<p>The description of the DNS view.</p>",
+        "CreateFirewallDomainListInput$description": "<p>An optional description for the firewall domain list.</p>",
+        "CreateFirewallDomainListOutput$description": "<p>Description for the domain list.</p>",
+        "CreateFirewallRuleInput$description": "<p>An optional description for the firewall rule.</p>",
+        "CreateFirewallRuleOutput$description": "<p>The description of the firewall rule.</p>",
+        "CreateGlobalResolverInput$description": "<p>An optional description for the Route 53 Global Resolver instance. Maximum length of 1024 characters.</p>",
+        "CreateGlobalResolverOutput$description": "<p>The description of the Route 53 Global Resolver.</p>",
+        "DNSViewSummary$description": "<p>A description of the DNS view.</p>",
+        "DeleteDNSViewOutput$description": "<p>The description of the deleted DNS view.</p>",
+        "DeleteFirewallRuleOutput$description": "<p>The description of the deleted firewall rule.</p>",
+        "DeleteGlobalResolverOutput$description": "<p>The description of the deleted Route 53 Global Resolver.</p>",
+        "DisableDNSViewOutput$description": "<p>The description of the disabled DNS view.</p>",
+        "EnableDNSViewOutput$description": "<p>The description of the enabled DNS view.</p>",
+        "FirewallDomainListsItem$description": "<p>A description of the firewall domain list.</p>",
+        "FirewallRulesItem$description": "<p>The description of the firewall rule.</p>",
+        "GetDNSViewOutput$description": "<p>Description of the DNS view.</p>",
+        "GetFirewallDomainListOutput$description": "<p>The description of the domain list.</p>",
+        "GetFirewallRuleOutput$description": "<p>The description of the DNS Firewall rule.</p>",
+        "GetGlobalResolverOutput$description": "<p>The description of the Global Resolver.</p>",
+        "GetManagedFirewallDomainListOutput$description": "<p>Description of the Managed Domain List.</p>",
+        "GlobalResolversItem$description": "<p>A description of the global resolver.</p>",
+        "ManagedFirewallDomainListsItem$description": "<p>A description of the managed firewall domain list.</p>",
+        "UpdateDNSViewInput$description": "<p>A description of the DNS view.</p>",
+        "UpdateDNSViewOutput$description": "<p>The description of the updated DNS view.</p>",
+        "UpdateFirewallRuleInput$description": "<p>The description for the Firewall rule.</p>",
+        "UpdateFirewallRuleOutput$description": "<p>The description of the Firewall rule.</p>",
+        "UpdateGlobalResolverInput$description": "<p>The description of the Global Resolver.</p>",
+        "UpdateGlobalResolverOutput$description": "<p>Description of the Global Resolver.</p>"
+      }
+    },
+    "ResourceId": {
+      "base": null,
+      "refs": {
+        "AccessSourcesItem$id": "<p>The unique identifier of the access source.</p>",
+        "AccessSourcesItem$dnsViewId": "<p>The ID of the DNS view that the access source is associated with.</p>",
+        "AccessTokenItem$id": "<p>The unique identifier of the token.</p>",
+        "AccessTokenItem$dnsViewId": "<p>The ID of the DNS view associated with the token.</p>",
+        "AccessTokenItem$globalResolverId": "<p>The ID of the global resolver associated with the token.</p>",
+        "AssociateHostedZoneOutput$id": "<p>ID of the association.</p>",
+        "BatchCreateFirewallRuleInputItem$firewallDomainListId": "<p>The ID of the firewall domain list to associate with the rule.</p>",
+        "BatchCreateFirewallRuleInputItem$dnsViewId": "<p>The ID of the DNS view to associate the firewall rule with.</p>",
+        "BatchCreateFirewallRuleResult$firewallDomainListId": "<p>The ID of the firewall domain list associated with the created firewall rule.</p>",
+        "BatchCreateFirewallRuleResult$id": "<p>The unique identifier of the created firewall rule.</p>",
+        "BatchCreateFirewallRuleResult$dnsViewId": "<p>The ID of the DNS view associated with the created firewall rule.</p>",
+        "BatchDeleteFirewallRuleInputItem$firewallRuleId": "<p>The ID of the DNS Firewall rule to delete.</p>",
+        "BatchDeleteFirewallRuleResult$id": "<p>The unique identifier of the deleted firewall rule.</p>",
+        "BatchUpdateFirewallRuleInputItem$firewallRuleId": "<p>The unique identifier of the firewall rule to update.</p>",
+        "BatchUpdateFirewallRuleResult$firewallDomainListId": "<p>The ID of the firewall domain list associated with the updated firewall rule.</p>",
+        "BatchUpdateFirewallRuleResult$id": "<p>The unique identifier of the updated firewall rule.</p>",
+        "BatchUpdateFirewallRuleResult$dnsViewId": "<p>The ID of the DNS view associated with the updated firewall rule.</p>",
+        "CreateAccessSourceInput$dnsViewId": "<p>The ID of the DNS view to associate with this access source.</p>",
+        "CreateAccessSourceOutput$id": "<p>The unique identifier for the access source.</p>",
+        "CreateAccessSourceOutput$dnsViewId": "<p>The ID of the DNS view associated with this access source.</p>",
+        "CreateAccessTokenInput$dnsViewId": "<p>The ID of the DNS view to associate with this token.</p>",
+        "CreateAccessTokenOutput$id": "<p>The unique identifier for the access token.</p>",
+        "CreateAccessTokenOutput$dnsViewId": "<p>The ID of the DNS view associated with this access token.</p>",
+        "CreateDNSViewInput$globalResolverId": "<p>The ID of the Route 53 Global Resolver to associate with this DNS view.</p>",
+        "CreateDNSViewOutput$id": "<p>The unique identifier for the DNS view.</p>",
+        "CreateDNSViewOutput$globalResolverId": "<p>The ID of the Route 53 Global Resolver instance the DNS view is created for.</p>",
+        "CreateFirewallDomainListInput$globalResolverId": "<p>The ID of the Route 53 Global Resolver that the domain list will be associated with.</p>",
+        "CreateFirewallDomainListOutput$globalResolverId": "<p>The ID of the Route 53 Global Resolver that the domain list is associated with.</p>",
+        "CreateFirewallDomainListOutput$id": "<p>ID of the domain list.</p>",
+        "CreateFirewallRuleInput$firewallDomainListId": "<p>The ID of the firewall domain list to use in this rule.</p>",
+        "CreateFirewallRuleInput$dnsViewId": "<p>The ID of the DNS view to associate with this firewall rule.</p>",
+        "CreateFirewallRuleOutput$firewallDomainListId": "<p>The ID of the firewall domain list used in this rule.</p>",
+        "CreateFirewallRuleOutput$id": "<p>The unique identifier for the firewall rule.</p>",
+        "CreateFirewallRuleOutput$dnsViewId": "<p>The ID of the DNS view associated with this firewall rule.</p>",
+        "CreateGlobalResolverOutput$id": "<p>The unique identifier for the Route 53 Global Resolver.</p>",
+        "DNSViewSummary$id": "<p>The unique identifier of the DNS view.</p>",
+        "DNSViewSummary$globalResolverId": "<p>The ID of the global resolver that the DNS view is associated with.</p>",
+        "DeleteAccessSourceInput$accessSourceId": "<p>The unique identifier of the access source to delete.</p>",
+        "DeleteAccessSourceOutput$id": "<p>The unique identifier of the deleted access source.</p>",
+        "DeleteAccessSourceOutput$dnsViewId": "<p>The ID of the DNS view that was associated with the deleted access source.</p>",
+        "DeleteAccessTokenInput$accessTokenId": "<p>The unique identifier of the access token to delete.</p>",
+        "DeleteAccessTokenOutput$id": "<p>The unique identifier of the deleted access token.</p>",
+        "DeleteDNSViewInput$dnsViewId": "<p>The unique identifier of the DNS view to delete.</p>",
+        "DeleteDNSViewOutput$id": "<p>The unique identifier of the deleted DNS view.</p>",
+        "DeleteDNSViewOutput$globalResolverId": "<p>The ID of the Route 53 Global Resolver that the deleted DNS view was associated with.</p>",
+        "DeleteFirewallDomainListInput$firewallDomainListId": "<p>The unique identifier of the firewall domain list to delete.</p>",
+        "DeleteFirewallDomainListOutput$id": "<p>The unique identifier of the deleted firewall domain list.</p>",
+        "DeleteFirewallRuleInput$firewallRuleId": "<p>The unique identifier of the firewall rule to delete.</p>",
+        "DeleteFirewallRuleOutput$firewallDomainListId": "<p>The ID of the firewall domain list that was associated with the deleted firewall rule.</p>",
+        "DeleteFirewallRuleOutput$id": "<p>The unique identifier of the deleted firewall rule.</p>",
+        "DeleteFirewallRuleOutput$dnsViewId": "<p>The ID of the DNS view that was associated with the deleted firewall rule.</p>",
+        "DeleteGlobalResolverInput$globalResolverId": "<p>The unique identifier of the Route 53 Global Resolver to delete.</p>",
+        "DeleteGlobalResolverOutput$id": "<p>The unique identifier of the deleted Route 53 Global Resolver.</p>",
+        "DisableDNSViewInput$dnsViewId": "<p>The unique identifier of the DNS view to disable.</p>",
+        "DisableDNSViewOutput$id": "<p>The unique identifier of the disabled DNS view.</p>",
+        "DisableDNSViewOutput$globalResolverId": "<p>The ID of the Route 53 Global Resolver that the disabled DNS view is associated with.</p>",
+        "DisassociateHostedZoneOutput$id": "<p>The unique identifier of the disassociation.</p>",
+        "EnableDNSViewInput$dnsViewId": "<p>The unique identifier of the DNS view to enable.</p>",
+        "EnableDNSViewOutput$id": "<p>The unique identifier of the enabled DNS view.</p>",
+        "EnableDNSViewOutput$globalResolverId": "<p>The ID of the Route 53 Global Resolver that the enabled DNS view is associated with.</p>",
+        "FirewallDomainListsItem$globalResolverId": "<p>The ID of the global resolver that the firewall domain list is associated with.</p>",
+        "FirewallDomainListsItem$id": "<p>The unique identifier of the firewall domain list.</p>",
+        "FirewallRulesItem$firewallDomainListId": "<p>The ID of the firewall domain list associated with the firewall rule.</p>",
+        "FirewallRulesItem$id": "<p>The unique identifier of the firewall rule.</p>",
+        "FirewallRulesItem$dnsViewId": "<p>The ID of the DNS view associated with the firewall rule.</p>",
+        "GetAccessSourceInput$accessSourceId": "<p>The unique identifier of the access source to retrieve.</p>",
+        "GetAccessSourceOutput$id": "<p>ID for the rule.</p>",
+        "GetAccessSourceOutput$dnsViewId": "<p>ID for the DNS view that the rule is associated to.</p>",
+        "GetAccessTokenInput$accessTokenId": "<p>ID of the token.</p>",
+        "GetAccessTokenOutput$id": "<p>ID of the token.</p>",
+        "GetAccessTokenOutput$dnsViewId": "<p>ID of the DNS view the token is associated to.</p>",
+        "GetAccessTokenOutput$globalResolverId": "<p>ID of the Global Resolver.</p>",
+        "GetDNSViewInput$dnsViewId": "<p>The ID of the DNS view to retrieve information about.</p>",
+        "GetDNSViewOutput$id": "<p>ID of the DNS view.</p>",
+        "GetDNSViewOutput$globalResolverId": "<p>ID of the Global Resolver the DNS view is associated to.</p>",
+        "GetFirewallDomainListInput$firewallDomainListId": "<p>ID of the domain list.</p>",
+        "GetFirewallDomainListOutput$globalResolverId": "<p>ID of the Global Resolver that the domain list is associated to.</p>",
+        "GetFirewallDomainListOutput$id": "<p>ID of the domain list.</p>",
+        "GetFirewallRuleInput$firewallRuleId": "<p>ID of the DNS Firewall rule.</p>",
+        "GetFirewallRuleOutput$firewallDomainListId": "<p>The ID of a DNS Firewall domain list.</p>",
+        "GetFirewallRuleOutput$id": "<p>ID of the DNS Firewall rule.</p>",
+        "GetFirewallRuleOutput$dnsViewId": "<p>The DNS view ID the DNS Firewall is associated with.</p>",
+        "GetGlobalResolverInput$globalResolverId": "<p>The ID of the Route 53 Global Resolver to retrieve information about.</p>",
+        "GetGlobalResolverOutput$id": "<p>The ID of the Global Resolver.</p>",
+        "GetHostedZoneAssociationInput$hostedZoneAssociationId": "<p>ID of the private hosted zone association.</p>",
+        "GetHostedZoneAssociationOutput$id": "<p>ID of the private hosted zone association.</p>",
+        "GetManagedFirewallDomainListInput$managedFirewallDomainListId": "<p>ID of the Managed Domain List.</p>",
+        "GetManagedFirewallDomainListOutput$id": "<p>ID of the Managed Domain List.</p>",
+        "GlobalResolversItem$id": "<p>The unique identifier of the global resolver.</p>",
+        "HostedZoneAssociationSummary$id": "<p>The unique identifier of the hosted zone association.</p>",
+        "ImportFirewallDomainsInput$firewallDomainListId": "<p>ID of the DNS Firewall domain list that you want to import the domain list to.</p>",
+        "ImportFirewallDomainsOutput$id": "<p>ID of the DNS Firewall domain list that you imported the domain list to.</p>",
+        "ListAccessTokensInput$dnsViewId": "<p>The ID of the DNS view to list the tokens for.</p>",
+        "ListDNSViewsInput$globalResolverId": "<p>The Global Resolver ID.</p>",
+        "ListFirewallDomainListsInput$globalResolverId": "<p>The ID of the Global Resolver that contains the DNS view the domain lists are associated to.</p>",
+        "ListFirewallDomainsInput$firewallDomainListId": "<p>ID of the DNS Firewall domain list.</p>",
+        "ListFirewallRulesInput$dnsViewId": "<p>ID of the DNS view.</p>",
+        "ManagedFirewallDomainListsItem$id": "<p>The unique identifier of the managed firewall domain list.</p>",
+        "UpdateAccessSourceInput$accessSourceId": "<p>The unique identifier of the access source to update.</p>",
+        "UpdateAccessSourceOutput$id": "<p>The unique identifier of the updated access source.</p>",
+        "UpdateAccessSourceOutput$dnsViewId": "<p>The ID of the DNS view associated with the updated access source.</p>",
+        "UpdateAccessTokenInput$accessTokenId": "<p>The ID of the token.</p>",
+        "UpdateAccessTokenOutput$id": "<p>The ID of the token.</p>",
+        "UpdateDNSViewInput$dnsViewId": "<p>The unique identifier of the DNS view to update.</p>",
+        "UpdateDNSViewOutput$id": "<p>The unique identifier of the updated DNS view.</p>",
+        "UpdateDNSViewOutput$globalResolverId": "<p>The ID of the global resolver associated with the updated DNS view.</p>",
+        "UpdateFirewallDomainsInput$firewallDomainListId": "<p>The ID of the DNS Firewall domain list to which you want to add the domains.</p>",
+        "UpdateFirewallDomainsOutput$id": "<p>The ID of the DNS Firewall domain list.</p>",
+        "UpdateFirewallRuleInput$firewallRuleId": "<p>The ID of the DNS Firewall rule.</p>",
+        "UpdateFirewallRuleOutput$firewallDomainListId": "<p>The ID of the domain list associated with the Firewall rule.</p>",
+        "UpdateFirewallRuleOutput$id": "<p>The ID of the Firewall rule.</p>",
+        "UpdateFirewallRuleOutput$dnsViewId": "<p>The ID of the DNS view the Firewall rule is associated with.</p>",
+        "UpdateGlobalResolverInput$globalResolverId": "<p>The ID of the Global Resolver.</p>",
+        "UpdateGlobalResolverOutput$id": "<p>The ID of the Global Resolver.</p>",
+        "UpdateHostedZoneAssociationInput$hostedZoneAssociationId": "<p>The ID of the private hosted zone association.</p>",
+        "UpdateHostedZoneAssociationOutput$id": "<p>The ID of the private hosted zone association.</p>"
+      }
+    },
+    "ResourceName": {
+      "base": null,
+      "refs": {
+        "AssociateHostedZoneInput$name": "<p>Name for the private hosted zone association.</p>",
+        "AssociateHostedZoneOutput$name": "<p>Name for the private hosted zone association.</p>",
+        "BatchCreateFirewallRuleInputItem$name": "<p>A name for the firewall rule.</p>",
+        "BatchCreateFirewallRuleResult$managedDomainListName": "<p>The name of the managed domain list associated with the created firewall rule.</p>",
+        "BatchCreateFirewallRuleResult$name": "<p>The name of the created firewall rule.</p>",
+        "BatchDeleteFirewallRuleResult$name": "<p>The name of the deleted firewall rule.</p>",
+        "BatchUpdateFirewallRuleInputItem$name": "<p>A name for the firewall rule.</p>",
+        "BatchUpdateFirewallRuleResult$name": "<p>The name of the updated firewall rule.</p>",
+        "CreateDNSViewInput$name": "<p>A descriptive name for the DNS view.</p>",
+        "CreateDNSViewOutput$name": "<p>The descriptive name of the DNS view.</p>",
+        "CreateFirewallDomainListInput$name": "<p>A descriptive name for the firewall domain list.</p>",
+        "CreateFirewallDomainListOutput$name": "<p>Name of the domain list.</p>",
+        "CreateFirewallRuleInput$name": "<p>A descriptive name for the firewall rule.</p>",
+        "CreateFirewallRuleOutput$name": "<p>The name of the firewall rule.</p>",
+        "CreateGlobalResolverInput$name": "<p>A descriptive name for the Route 53 Global Resolver instance. Maximum length of 64 characters.</p>",
+        "CreateGlobalResolverOutput$name": "<p>The name of the Route 53 Global Resolver.</p>",
+        "DNSViewSummary$name": "<p>The name of the DNS view.</p>",
+        "DeleteDNSViewOutput$name": "<p>The name of the deleted DNS view.</p>",
+        "DeleteFirewallDomainListOutput$name": "<p>The name of the deleted firewall domain list.</p>",
+        "DeleteFirewallRuleOutput$name": "<p>The name of the deleted firewall rule.</p>",
+        "DeleteGlobalResolverOutput$name": "<p>The name of the deleted Route 53 Global Resolver.</p>",
+        "DisableDNSViewOutput$name": "<p>The name of the disabled DNS view.</p>",
+        "DisassociateHostedZoneOutput$name": "<p>The name of the association that was removed.</p>",
+        "EnableDNSViewOutput$name": "<p>The name of the enabled DNS view.</p>",
+        "FirewallDomainListsItem$name": "<p>The name of the firewall domain list.</p>",
+        "FirewallRulesItem$name": "<p>The name of the firewall rule.</p>",
+        "GetDNSViewOutput$name": "<p>Name of the DNS view.</p>",
+        "GetFirewallDomainListOutput$name": "<p>Name of the domain list.</p>",
+        "GetFirewallRuleOutput$name": "<p>The name of the DNS Firewall rule.</p>",
+        "GetGlobalResolverOutput$name": "<p>The name of the Global Resolver.</p>",
+        "GetHostedZoneAssociationOutput$name": "<p>Name of the private hosted zone association.</p>",
+        "GetManagedFirewallDomainListOutput$name": "<p>Name of the Managed Domain List.</p>",
+        "GlobalResolversItem$name": "<p>The name of the global resolver.</p>",
+        "HostedZoneAssociationSummary$name": "<p>The name of the hosted zone association.</p>",
+        "ImportFirewallDomainsOutput$name": "<p>Name of the DNS Firewall domain list.</p>",
+        "ManagedFirewallDomainListsItem$name": "<p>The name of the managed firewall domain list.</p>",
+        "UpdateDNSViewInput$name": "<p>The name of the DNS view.</p>",
+        "UpdateDNSViewOutput$name": "<p>The name of the updated DNS view.</p>",
+        "UpdateFirewallDomainsOutput$name": "<p>The name of the domain list.</p>",
+        "UpdateFirewallRuleInput$name": "<p>The name of the DNS Firewall rule.</p>",
+        "UpdateFirewallRuleOutput$name": "<p>The name of the Firewall rule.</p>",
+        "UpdateGlobalResolverInput$name": "<p>The name of the Global Resolver.</p>",
+        "UpdateGlobalResolverOutput$name": "<p>Name of the Global Resolver.</p>",
+        "UpdateHostedZoneAssociationInput$name": "<p>The name you want to update the hosted zone association to.</p>",
+        "UpdateHostedZoneAssociationOutput$name": "<p>The name of the private hosted zone association.</p>"
+      }
+    },
+    "ResourceNameShort": {
+      "base": null,
+      "refs": {
+        "AccessSourcesItem$name": "<p>The name of the access source.</p>",
+        "AccessTokenItem$name": "<p>The name of the token.</p>",
+        "CreateAccessSourceInput$name": "<p>A descriptive name for the access source.</p>",
+        "CreateAccessSourceOutput$name": "<p>The descriptive name of the access source.</p>",
+        "CreateAccessTokenInput$name": "<p>A descriptive name for the access token.</p>",
+        "CreateAccessTokenOutput$name": "<p>The name of the access token.</p>",
+        "DeleteAccessSourceOutput$name": "<p>The name of the deleted access source.</p>",
+        "GetAccessSourceOutput$name": "<p>Name for the access source.</p>",
+        "GetAccessTokenOutput$name": "<p>Name of the token.</p>",
+        "UpdateAccessSourceInput$name": "<p>The name of the access source.</p>",
+        "UpdateAccessSourceOutput$name": "<p>The name of the updated access source.</p>",
+        "UpdateAccessTokenInput$name": "<p>The new name of the token.</p>",
+        "UpdateAccessTokenOutput$name": "<p>The name of the token.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The specified resource was not found. Verify the resource ID and try again.</p>",
+      "refs": {}
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request would exceed one or more service quotas. Check your current usage and quotas, then try again.</p>",
+      "refs": {}
+    },
+    "Sni": {
+      "base": null,
+      "refs": {
+        "CreateGlobalResolverOutput$dnsName": "<p>The hostname that DNS clients should use for TLS certificate validation when connecting to the Route 53 Global Resolver. This value resolves to the global anycast IP addresses for the resolver.</p>",
+        "DeleteGlobalResolverOutput$dnsName": "<p>The hostname that DNS clients used for TLS certificate validation when connecting to the deleted Route 53 Global Resolver.</p>",
+        "GetGlobalResolverOutput$dnsName": "<p>The hostname used by the customers' DNS clients for certification validation.</p>",
+        "GlobalResolversItem$dnsName": "<p>The DNS name of the global resolver.</p>",
+        "UpdateGlobalResolverOutput$dnsName": "<p>The hostname to be used by the customers' DNS clients for certification validation.</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "BatchCreateFirewallRuleOutputItem$message": "<p>A message describing the result of the batch operation, including error details if applicable.</p>",
+        "BatchDeleteFirewallRuleOutputItem$message": "<p>The response message for the delete operation.</p>",
+        "BatchUpdateFirewallRuleOutputItem$message": "<p>The response message for the update operation.</p>",
+        "ConflictException$message": null,
+        "ConflictException$resourceId": "<p>The ID of the conflicting resource.</p>",
+        "ConflictException$resourceType": "<p>The type of the conflicting resource.</p>",
+        "Filters$key": null,
+        "GetFirewallDomainListOutput$statusMessage": "<p>Additional information about the status of the domain list.</p>",
+        "GetManagedFirewallDomainListOutput$managedListType": "<p>Type of the managed category. This is either <code>THREAT</code> or <code>CONTENT</code>.</p>",
+        "ImportFirewallDomainsInput$domainFileUrl": "<p>The fully qualified URL of the file in Amazon S3 that contains the list of domains to import. The file should contain one domain per line.</p>",
+        "ImportFirewallDomainsInput$operation": "<p>This value is <code>REPLACE</code>, and it updates the domain list to match the list of domains in the imported file.</p>",
+        "InternalServerException$message": null,
+        "ListAccessSourcesInput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response.</p>",
+        "ListAccessSourcesOutput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response. Provide this token in the next call to get the results not returned in this call.</p>",
+        "ListAccessTokensInput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response.</p>",
+        "ListAccessTokensOutput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response. Provide this token in the next call to get the results not returned in this call.</p>",
+        "ListDNSViewsInput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response.</p>",
+        "ListDNSViewsOutput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response. Provide this token in the next call to get the results not returned in this call.</p>",
+        "ListFirewallDomainListsInput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response.</p>",
+        "ListFirewallDomainListsOutput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response. Provide this token in the next call to get the results not returned in this call.</p>",
+        "ListFirewallDomainsInput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response.</p>",
+        "ListFirewallDomainsOutput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response. Provide this token in the next call to get the results not returned in this call.</p>",
+        "ListFirewallRulesInput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response.</p>",
+        "ListFirewallRulesOutput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response. Provide this token in the next call to get the results not returned in this call.</p>",
+        "ListGlobalResolversInput$nextToken": "<p>The token for the next page of results. This value is returned in the response if there are more results to retrieve.</p>",
+        "ListGlobalResolversOutput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response. Provide this token in the next call to get the results not returned in this call.</p>",
+        "ListHostedZoneAssociationsInput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response.</p>",
+        "ListHostedZoneAssociationsOutput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response. Provide this token in the next call to get the results not returned in this call.</p>",
+        "ListManagedFirewallDomainListsInput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response.</p>",
+        "ListManagedFirewallDomainListsInput$managedFirewallDomainListType": "<p>The category of the Manage DNS list either <code>THREAT</code> or <code>CONTENT</code>.</p>",
+        "ListManagedFirewallDomainListsOutput$nextToken": "<p>A pagination token used for large sets of results that can't be returned in a single response. Provide this token in the next call to get the results not returned in this call.</p>",
+        "ManagedFirewallDomainListsItem$managedListType": "<p>The type of the managed firewall domain list.</p>",
+        "ResourceNotFoundException$message": null,
+        "ResourceNotFoundException$resourceId": "<p>The unique ID of the resource referenced in the failed request.</p>",
+        "ResourceNotFoundException$resourceType": "<p>The resource type of the resource referenced in the failed request.</p>",
+        "ServiceQuotaExceededException$message": null,
+        "ServiceQuotaExceededException$resourceId": "<p>The unique ID of the resource referenced in the failed request.</p>",
+        "ServiceQuotaExceededException$resourceType": "<p>The resource type of the resource referenced in the failed request.</p>",
+        "ServiceQuotaExceededException$serviceCode": "<p>The code for the AWS service that owns the quota.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>The quota code recognized by the AWS Service Quotas service.</p>",
+        "Strings$member": null,
+        "ThrottlingException$message": null,
+        "ThrottlingException$serviceCode": "<p>The code for the AWS service that owns the quota.</p>",
+        "ThrottlingException$quotaCode": "<p>The quota code recognized by the AWS Service Quotas service.</p>",
+        "UpdateFirewallDomainsInput$operation": "<p>The operation for updating the domain list. The allowed values are ADD, REMOVE, and REPLACE.</p>",
+        "ValidationException$message": null,
+        "ValidationExceptionField$name": "<p>The name of the field that failed validation.</p>",
+        "ValidationExceptionField$message": "<p>The validation error message for the field.</p>"
+      }
+    },
+    "Strings": {
+      "base": null,
+      "refs": {
+        "Filters$value": null
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagKeys$member": null,
+        "Tags$key": null
+      }
+    },
+    "TagKeys": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p>The tag keys associated with the resource.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "Tags$value": null
+      }
+    },
+    "Tags": {
+      "base": null,
+      "refs": {
+        "CreateAccessSourceInput$tags": "<p>Tags to associate with the access source.</p>",
+        "CreateAccessTokenInput$tags": "<p>An array of user-defined keys and optional values. These tags can be used for categorization and organization.</p>",
+        "CreateDNSViewInput$tags": "<p>Tags to associate with the DNS view.</p>",
+        "CreateFirewallDomainListInput$tags": "<p>An array of user-defined keys and optional values. These tags can be used for categorization and organization.</p>",
+        "CreateGlobalResolverInput$tags": "<p>Tags to associate with the Route 53 Global Resolver. Tags are key-value pairs that help you organize and identify your resources.</p>",
+        "ListTagsForResourceResponse$tags": "<p>An array of user-defined keys and optional values. These tags can be used for categorization and organization.</p>",
+        "TagResourceRequest$tags": "<p>An array of user-defined keys and optional values. These tags can be used for categorization and organization.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was throttled due to too many requests. Wait a moment and try again.</p>",
+      "refs": {}
+    },
+    "TokenStatus": {
+      "base": null,
+      "refs": {
+        "AccessTokenItem$status": "<p>The current status of the token.</p>",
+        "CreateAccessTokenOutput$status": "<p>The operational status of the access token.</p>",
+        "DeleteAccessTokenOutput$status": "<p>The final status of the deleted access token.</p>",
+        "GetAccessTokenOutput$status": "<p>The operational status of the token.</p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAccessSourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAccessSourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAccessTokenInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAccessTokenOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDNSViewInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDNSViewOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateFirewallDomainsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateFirewallDomainsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateFirewallRuleInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateFirewallRuleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateGlobalResolverInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateGlobalResolverOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateHostedZoneAssociationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateHostedZoneAssociationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ValidationException": {
+      "base": "<p>The input parameters are invalid. Check the parameter values and try again.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Information about a field that failed validation.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": "<p>The list of fields that aren't valid.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": "<p>Reason the request failed validation.</p>"
+      }
+    }
+  }
+}

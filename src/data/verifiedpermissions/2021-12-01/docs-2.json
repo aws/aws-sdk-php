@@ -79,7 +79,7 @@
       }
     },
     "AttributeValue": {
-      "base": "<p>The value of an attribute.</p> <p>Contains information about the runtime context for a request for which an authorization decision is made. </p> <p>This data type is used as a member of the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_ContextDefinition.html\">ContextDefinition</a> structure which is uses as a request parameter for the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html\">IsAuthorized</a>, <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_BatchIsAuthorized.html\">BatchIsAuthorized</a>, and <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html\">IsAuthorizedWithToken</a> operations.</p>",
+      "base": "<p>The value of an attribute.</p> <p>Contains information about the runtime context for a request for which an authorization decision is made. </p> <p>This data type is used as a member of the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_ContextDefinition.html\">ContextDefinition</a> structure which is used as a request parameter for the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html\">IsAuthorized</a>, <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_BatchIsAuthorized.html\">BatchIsAuthorized</a>, and <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html\">IsAuthorizedWithToken</a> operations.</p>",
       "refs": {
         "ContextMap$value": null,
         "EntityAttributes$value": null,
@@ -228,7 +228,8 @@
     "BooleanAttribute": {
       "base": null,
       "refs": {
-        "AttributeValue$boolean": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#boolean\">Boolean</a> type.</p> <p>Example: <code>{\"boolean\": true}</code> </p>"
+        "AttributeValue$boolean": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-bool\">Boolean</a> type.</p> <p>Example: <code>{\"boolean\": true}</code> </p>",
+        "CedarTagValue$boolean": "<p>A Cedar tag value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-bool\">Boolean</a> type.</p> <p>Example: <code>{\"boolean\": false}</code> </p>"
       }
     },
     "CedarJson": {
@@ -236,6 +237,26 @@
       "refs": {
         "ContextDefinition$cedarJson": "<p>A Cedar JSON string representation of the context needed to successfully evaluate an authorization request.</p> <p>Example: <code>{\"cedarJson\":\"{\\\"&lt;KeyName1&gt;\\\": true, \\\"&lt;KeyName2&gt;\\\": 1234}\" }</code> </p>",
         "EntitiesDefinition$cedarJson": "<p>A Cedar JSON string representation of the entities needed to successfully evaluate an authorization request.</p> <p>Example: <code>{\"cedarJson\": \"[{\\\"uid\\\":{\\\"type\\\":\\\"Photo\\\",\\\"id\\\":\\\"VacationPhoto94.jpg\\\"},\\\"attrs\\\":{\\\"accessLevel\\\":\\\"public\\\"},\\\"parents\\\":[]}]\"}</code> </p>"
+      }
+    },
+    "CedarTagRecordAttribute": {
+      "base": null,
+      "refs": {
+        "CedarTagValue$record": "<p>A Cedar tag value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-record\">Record</a> type.</p> <p>Example: <code>{\"record\": { \"keyName\": {} } }</code> </p>"
+      }
+    },
+    "CedarTagSetAttribute": {
+      "base": null,
+      "refs": {
+        "CedarTagValue$set": "<p>A Cedar tag value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-set\">Set</a> type.</p> <p>Example: <code>{\"set\": [ { \"string\": \"abc\" } ] }</code> </p>"
+      }
+    },
+    "CedarTagValue": {
+      "base": "<p>The value of an entity's Cedar tag.</p> <p>This data type is used as a member of the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_EntityItem.html\">EntityItem</a> structure that forms the body of the <code>Entities</code> request parameter for the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html\">IsAuthorized</a>, <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_BatchIsAuthorized.html\">BatchIsAuthorized</a>, <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html\">IsAuthorizedWithToken</a>, and <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_BatchIsAuthorizedWithToken.html\">BatchIsAuthorizedWithToken</a> operations.</p>",
+      "refs": {
+        "CedarTagRecordAttribute$value": null,
+        "CedarTagSetAttribute$member": null,
+        "EntityCedarTags$value": null
       }
     },
     "CedarVersion": {
@@ -390,13 +411,15 @@
     "DatetimeAttribute": {
       "base": null,
       "refs": {
-        "AttributeValue$datetime": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-datetime\">datetime</a> type.</p> <p>Example: <code>{\"datetime\": \"2024-10-15T11:35:00Z\"}</code> </p>"
+        "AttributeValue$datetime": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-datetime\">datetime</a> type.</p> <p>Example: <code>{\"datetime\": \"2024-10-15T11:35:00Z\"}</code> </p>",
+        "CedarTagValue$datetime": "<p>A Cedar tag value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-datetime\">datetime</a> type.</p> <p>Example: <code>{\"datetime\": \"2025-11-04T11:35:00.000+0100\"}</code> </p>"
       }
     },
     "Decimal": {
       "base": null,
       "refs": {
-        "AttributeValue$decimal": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-decimal\">decimal</a> type.</p> <p>Example: <code>{\"decimal\": \"1.1\"}</code> </p>"
+        "AttributeValue$decimal": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-decimal\">decimal</a> type.</p> <p>Example: <code>{\"decimal\": \"1.1\"}</code> </p>",
+        "CedarTagValue$decimal": "<p>A Cedar tag value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-decimal\">decimal</a> type.</p> <p>Example: <code>{\"decimal\": \"-2.0\"}</code> </p>"
       }
     },
     "Decision": {
@@ -473,7 +496,8 @@
     "Duration": {
       "base": null,
       "refs": {
-        "AttributeValue$duration": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-duration\">duration</a> type.</p> <p>Example: <code>{\"duration\": \"1h30m\"}</code> </p>"
+        "AttributeValue$duration": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-duration\">duration</a> type.</p> <p>Example: <code>{\"duration\": \"1h30m\"}</code> </p>",
+        "CedarTagValue$duration": "<p>A Cedar tag value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-duration\">duration</a> type.</p> <p>Example: <code>{\"duration\": \"-1d12h\"}</code> </p>"
       }
     },
     "EntitiesDefinition": {
@@ -489,6 +513,12 @@
       "base": null,
       "refs": {
         "EntityItem$attributes": "<p>A list of attributes for the entity.</p>"
+      }
+    },
+    "EntityCedarTags": {
+      "base": null,
+      "refs": {
+        "EntityItem$tags": "<p>A list of cedar tags for the entity.</p>"
       }
     },
     "EntityId": {
@@ -509,11 +539,12 @@
     "EntityIdentifier": {
       "base": "<p>Contains the identifier of an entity, including its ID and type.</p> <p>This data type is used as a request parameter for <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html\">IsAuthorized</a> operation, and as a response parameter for the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_CreatePolicy.html\">CreatePolicy</a>, <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_GetPolicy.html\">GetPolicy</a>, and <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_UpdatePolicy.html\">UpdatePolicy</a> operations.</p> <p>Example: <code>{\"entityId\":\"<i>string</i>\",\"entityType\":\"<i>string</i>\"}</code> </p>",
       "refs": {
-        "AttributeValue$entityIdentifier": "<p>An attribute value of type <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_EntityIdentifier.html\">EntityIdentifier</a>.</p> <p>Example: <code>\"entityIdentifier\": { \"entityId\": \"&lt;id&gt;\", \"entityType\": \"&lt;entity type&gt;\"}</code> </p>",
+        "AttributeValue$entityIdentifier": "<p>An attribute value of type <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_EntityIdentifier.html\">EntityIdentifier</a>.</p> <p>Example: <code>{\"entityIdentifier\": { \"entityId\": \"alice\", \"entityType\": \"User\"} }</code> </p>",
         "BatchIsAuthorizedInputItem$principal": "<p>Specifies the principal for which the authorization decision is to be made.</p>",
         "BatchIsAuthorizedInputItem$resource": "<p>Specifies the resource that you want an authorization decision for. For example, <code>PhotoFlash::Photo</code>.</p>",
         "BatchIsAuthorizedWithTokenInputItem$resource": "<p>Specifies the resource that you want an authorization decision for. For example, <code>PhotoFlash::Photo</code>.</p>",
         "BatchIsAuthorizedWithTokenOutput$principal": "<p>The identifier of the principal in the ID or access token.</p>",
+        "CedarTagValue$entityIdentifier": "<p>A Cedar tag value of type <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_EntityIdentifier.html\">EntityIdentifier</a>.</p> <p>Example: <code>{\"entityIdentifier\": { \"entityId\": \"alice\", \"entityType\": \"User\"} }</code> </p>",
         "CreatePolicyOutput$principal": "<p>The principal specified in the new policy's scope. This response element isn't present when <code>principal</code> isn't specified in the policy content.</p>",
         "CreatePolicyOutput$resource": "<p>The resource specified in the new policy's scope. This response element isn't present when the <code>resource</code> isn't specified in the policy content.</p>",
         "EntityItem$identifier": "<p>The identifier of the entity.</p>",
@@ -698,7 +729,8 @@
     "IpAddr": {
       "base": null,
       "refs": {
-        "AttributeValue$ipaddr": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-ipaddr\">ipaddr</a> type.</p> <p>Example: <code>{\"ip\": \"192.168.1.100\"}</code> </p>"
+        "AttributeValue$ipaddr": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-ipaddr\">ipaddr</a> type.</p> <p>Example: <code>{\"ip\": \"192.168.1.100\"}</code> </p>",
+        "CedarTagValue$ipaddr": "<p>A Cedar tag value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-ipaddr\">ipaddr</a> type.</p> <p>Example: <code>{\"ip\": \"10.50.0.0/24\"}</code> </p>"
       }
     },
     "IsAuthorizedInput": {
@@ -777,7 +809,8 @@
     "LongAttribute": {
       "base": null,
       "refs": {
-        "AttributeValue$long": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#long\">Long</a> type.</p> <p>Example: <code>{\"long\": 0}</code> </p>"
+        "AttributeValue$long": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-long\">Long</a> type.</p> <p>Example: <code>{\"long\": 0}</code> </p>",
+        "CedarTagValue$long": "<p>A Cedar tag value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-long\">Long</a> type.</p> <p>Example: <code>{\"long\": 0}</code> </p>"
       }
     },
     "MaxResults": {
@@ -1128,7 +1161,7 @@
     "RecordAttribute": {
       "base": null,
       "refs": {
-        "AttributeValue$record": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#record\">Record</a> type.</p> <p>Example: <code>{\"record\": { \"keyName\": {} } }</code> </p>"
+        "AttributeValue$record": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-record\">Record</a> type.</p> <p>Example: <code>{\"record\": { \"keyName\": {} } }</code> </p>"
       }
     },
     "ResourceArn": {
@@ -1184,7 +1217,7 @@
     "SetAttribute": {
       "base": null,
       "refs": {
-        "AttributeValue$set": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#set\">Set</a> type.</p> <p>Example: <code>{\"set\": [ {} ] }</code> </p>"
+        "AttributeValue$set": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-set\">Set</a> type.</p> <p>Example: <code>{\"set\": [ {} ] }</code> </p>"
       }
     },
     "StaticPolicyDefinition": {
@@ -1221,9 +1254,11 @@
         "BatchGetPolicyErrorItem$policyStoreId": "<p>The identifier of the policy store associated with the failed request.</p>",
         "BatchGetPolicyErrorItem$policyId": "<p>The identifier of the policy associated with the failed request.</p>",
         "BatchGetPolicyErrorItem$message": "<p>A detailed error message.</p>",
+        "CedarTagRecordAttribute$key": null,
         "ConflictException$message": null,
         "ContextMap$key": null,
         "EntityAttributes$key": null,
+        "EntityCedarTags$key": null,
         "EvaluationErrorItem$errorDescription": "<p>The error description.</p>",
         "InternalServerException$message": null,
         "InvalidStateException$message": null,
@@ -1247,7 +1282,8 @@
     "StringAttribute": {
       "base": null,
       "refs": {
-        "AttributeValue$string": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#string\">String</a> type.</p> <p>Example: <code>{\"string\": \"abc\"}</code> </p>"
+        "AttributeValue$string": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-string\">String</a> type.</p> <p>Example: <code>{\"string\": \"abc\"}</code> </p>",
+        "CedarTagValue$string": "<p>A Cedar tag value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-string\">String</a> type.</p> <p>Example: <code>{\"string\": \"abc\"}</code> </p>"
       }
     },
     "TagKey": {

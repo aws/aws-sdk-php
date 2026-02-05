@@ -283,7 +283,6 @@ EOT;
         putenv('HOMEPATH=\\Michael\\Home');
         $ref = new \ReflectionClass(ConfigurationProvider::class);
         $meth = $ref->getMethod('getHomeDir');
-        $meth->setAccessible(true);
         $this->assertSame('C:\\Michael\\Home', $meth->invoke(null));
     }
 

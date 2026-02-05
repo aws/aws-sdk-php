@@ -38,7 +38,7 @@
     "GetFlowAlias": "<p>Retrieves information about a flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-deploy.html\">Deploy a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "GetFlowVersion": "<p>Retrieves information about a version of a flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-deploy.html\">Deploy a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "GetIngestionJob": "<p>Gets information about a data ingestion job. Data sources are ingested into your knowledge base so that Large Language Models (LLMs) can use your data.</p>",
-    "GetKnowledgeBase": "<p>Gets information about a knoweldge base.</p>",
+    "GetKnowledgeBase": "<p>Gets information about a knowledge base.</p>",
     "GetKnowledgeBaseDocuments": "<p>Retrieves specific documents from a data source that is connected to a knowledge base. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-direct-ingestion.html\">Ingest changes directly into a knowledge base</a> in the Amazon Bedrock User Guide.</p>",
     "GetPrompt": "<p>Retrieves information about the working draft (<code>DRAFT</code> version) of a prompt or a version of it, depending on whether you include the <code>promptVersion</code> field or not. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-view.html\">View information about prompts using Prompt management</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-deploy.html#prompt-management-versions-view.html\">View information about a version of your prompt</a> in the Amazon Bedrock User Guide.</p>",
     "IngestKnowledgeBaseDocuments": "<p>Ingests documents directly into the knowledge base that is connected to the data source. The <code>dataSourceType</code> specified in the content for each document must match the type of the data source that you specify in the header. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-direct-ingestion.html\">Ingest changes directly into a knowledge base</a> in the Amazon Bedrock User Guide.</p>",
@@ -86,8 +86,7 @@
     },
     "AccessDeniedException": {
       "base": "<p>The request is denied because of missing access permissions.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActionGroupExecutor": {
       "base": "<p>Contains details about the Lambda function containing the business logic that is carried out upon invoking the action or the custom control method for handling the information elicited from the user.</p>",
@@ -394,22 +393,42 @@
     },
     "AssociateAgentCollaboratorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateAgentCollaboratorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateAgentKnowledgeBaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateAgentKnowledgeBaseResponse": {
       "base": null,
+      "refs": {}
+    },
+    "AudioConfiguration": {
+      "base": "<p>Configuration settings for processing audio content in multimodal knowledge bases.</p>",
       "refs": {
+        "AudioConfigurations$member": "<p>Audio configuration for multi modal ingestion.</p>"
+      }
+    },
+    "AudioConfigurations": {
+      "base": null,
+      "refs": {
+        "BedrockEmbeddingModelConfiguration$audio": "<p>Configuration settings for processing audio content in multimodal knowledge bases.</p>"
+      }
+    },
+    "AudioSegmentationConfiguration": {
+      "base": "<p>Configuration for segmenting audio content during multimodal knowledge base ingestion. Determines how audio files are divided into chunks for processing.</p>",
+      "refs": {
+        "AudioConfiguration$segmentationConfiguration": "<p>Configuration for segmenting audio content during processing.</p>"
+      }
+    },
+    "AudioSegmentationConfigurationFixedLengthDurationInteger": {
+      "base": null,
+      "refs": {
+        "AudioSegmentationConfiguration$fixedLengthDuration": "<p>The duration in seconds for each audio segment. Audio files will be divided into chunks of this length for processing.</p>"
       }
     },
     "AutoToolChoice": {
@@ -611,8 +630,7 @@
     },
     "ConflictException": {
       "base": "<p>There was a conflict performing an operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConfluenceAuthType": {
       "base": null,
@@ -697,103 +715,83 @@
     },
     "CreateAgentActionGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAgentActionGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAgentAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAgentAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAgentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAgentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFlowAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFlowAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFlowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFlowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFlowVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFlowVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateKnowledgeBaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateKnowledgeBaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePromptRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePromptResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePromptVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePromptVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreationMode": {
       "base": null,
@@ -1000,113 +998,91 @@
     },
     "DeleteAgentActionGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAgentActionGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAgentAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAgentAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAgentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAgentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAgentVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAgentVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDataSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDataSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFlowAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFlowAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFlowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFlowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFlowVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFlowVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteKnowledgeBaseDocumentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteKnowledgeBaseDocumentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteKnowledgeBaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteKnowledgeBaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePromptRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePromptResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -1163,23 +1139,19 @@
     },
     "DisassociateAgentCollaboratorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateAgentCollaboratorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateAgentKnowledgeBaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateAgentKnowledgeBaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Document": {
       "base": null,
@@ -1225,7 +1197,7 @@
     "DocumentStatus": {
       "base": null,
       "refs": {
-        "KnowledgeBaseDocumentDetail$status": "<p>The ingestion status of the document. The following statuses are possible:</p> <ul> <li> <p>STARTED – You submitted the ingestion job containing the document.</p> </li> <li> <p>PENDING – The document is waiting to be ingested.</p> </li> <li> <p>IN_PROGRESS – The document is being ingested.</p> </li> <li> <p>INDEXED – The document was successfully indexed.</p> </li> <li> <p>PARTIALLY_INDEXED – The document was partially indexed.</p> </li> <li> <p>METADATA_PARTIALLY_INDEXED – You submitted metadata for an existing document and it was partially indexed.</p> </li> <li> <p>METADATA_UPDATE_FAILED – You submitted a metadata update for an existing document but it failed.</p> </li> <li> <p>FAILED – The document failed to be ingested.</p> </li> <li> <p>NOT_FOUND – The document wasn't found.</p> </li> <li> <p>IGNORED – The document was ignored during ingestion.</p> </li> <li> <p>DELETING – You submitted the delete job containing the document.</p> </li> <li> <p>DELETE_IN_PROGRESS – The document is being deleted.</p> </li> </ul>"
+        "KnowledgeBaseDocumentDetail$status": "<p>The ingestion status of the document. The following statuses are possible:</p> <ul> <li> <p>STARTING – You submitted the ingestion job containing the document.</p> </li> <li> <p>PENDING – The document is waiting to be ingested.</p> </li> <li> <p>IN_PROGRESS – The document is being ingested.</p> </li> <li> <p>INDEXED – The document was successfully indexed.</p> </li> <li> <p>PARTIALLY_INDEXED – The document was partially indexed.</p> </li> <li> <p>METADATA_PARTIALLY_INDEXED – You submitted metadata for an existing document and it was partially indexed.</p> </li> <li> <p>METADATA_UPDATE_FAILED – You submitted a metadata update for an existing document but it failed.</p> </li> <li> <p>FAILED – The document failed to be ingested.</p> </li> <li> <p>NOT_FOUND – The document wasn't found.</p> </li> <li> <p>IGNORED – The document was ignored during ingestion.</p> </li> <li> <p>DELETING – You submitted the delete job containing the document.</p> </li> <li> <p>DELETE_IN_PROGRESS – The document is being deleted.</p> </li> </ul>"
       }
     },
     "DraftVersion": {
@@ -1916,143 +1888,115 @@
     },
     "GetAgentActionGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAgentActionGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAgentAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAgentAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAgentCollaboratorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAgentCollaboratorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAgentKnowledgeBaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAgentKnowledgeBaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAgentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAgentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAgentVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAgentVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFlowAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFlowAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFlowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFlowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFlowVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFlowVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIngestionJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIngestionJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetKnowledgeBaseDocumentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetKnowledgeBaseDocumentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetKnowledgeBaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetKnowledgeBaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPromptRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPromptResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GraphArn": {
       "base": "<p>ARN for Neptune Analytics graph database</p>",
@@ -2269,13 +2213,11 @@
     },
     "IngestKnowledgeBaseDocumentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IngestKnowledgeBaseDocumentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IngestionJob": {
       "base": "<p>Contains details about a data ingestion job. Data sources are ingested into a knowledge base so that Large Language Models (LLMs) can use your data.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_StartIngestionJob.html#API_agent_StartIngestionJob_ResponseSyntax\">StartIngestionJob response</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_GetIngestionJob.html#API_agent_GetIngestionJob_ResponseSyntax\">GetIngestionJob response</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_ListIngestionJobs.html#API_agent_ListIngestionJobs_ResponseSyntax\">ListIngestionJob response</a> </p> </li> </ul>",
@@ -2406,8 +2348,7 @@
     },
     "InternalServerException": {
       "base": "<p>An internal server error occurred. Retry your request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidLoopBoundaryFlowValidationDetails": {
       "base": "<p>Details about a flow that contains connections that violate loop boundary rules.</p>",
@@ -2620,153 +2561,123 @@
     },
     "ListAgentActionGroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAgentActionGroupsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAgentAliasesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAgentAliasesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAgentCollaboratorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAgentCollaboratorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAgentKnowledgeBasesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAgentKnowledgeBasesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAgentVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAgentVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAgentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAgentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataSourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataSourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFlowAliasesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFlowAliasesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFlowVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFlowVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFlowsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFlowsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIngestionJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIngestionJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListKnowledgeBaseDocumentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListKnowledgeBaseDocumentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListKnowledgeBasesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListKnowledgeBasesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPromptsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPromptsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LoopControllerFlowNodeConfiguration": {
       "base": "<p>Contains configurations for the controller node of a DoWhile loop in the flow.</p>",
@@ -3367,23 +3278,19 @@
     },
     "PrepareAgentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PrepareAgentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PrepareFlowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PrepareFlowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PrimitiveLong": {
       "base": null,
@@ -3899,8 +3806,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource Amazon Resource Name (ARN) was not found. Check the Amazon Resource Name (ARN) and try your request again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RetrievalFlowNodeConfiguration": {
       "base": "<p>Contains configurations for a Retrieval node in a flow. This node retrieves data from the Amazon S3 location that you specify and returns it as the output.</p>",
@@ -4079,8 +3985,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The number of requests exceeds the service quota. Resubmit your request later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SessionSummaryConfiguration": {
       "base": "<p>Configuration for SESSION_SUMMARY memory type enabled for the agent.</p>",
@@ -4165,13 +4070,11 @@
     },
     "StartIngestionJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartIngestionJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StepType": {
       "base": null,
@@ -4181,13 +4084,11 @@
     },
     "StopIngestionJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopIngestionJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopSequences": {
       "base": null,
@@ -4302,13 +4203,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -4365,8 +4264,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The number of requests exceeds the limit. Resubmit your request later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Tool": {
       "base": "<p>Contains configurations for a tool that a model can use when generating a response. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Use a tool to complete an Amazon Bedrock model response</a>.</p>",
@@ -4522,113 +4420,91 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAgentActionGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAgentActionGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAgentAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAgentAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAgentCollaboratorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAgentCollaboratorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAgentKnowledgeBaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAgentKnowledgeBaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAgentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAgentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDataSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDataSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFlowAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFlowAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFlowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFlowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateKnowledgeBaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateKnowledgeBaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePromptRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePromptResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Url": {
       "base": null,
@@ -4656,18 +4532,15 @@
     },
     "ValidateFlowDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidateFlowDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>Input validation failed. Check your request parameters and retry the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>Stores information about a field passed inside a request that resulted in an validation error.</p>",
@@ -4755,6 +4628,30 @@
         "PrepareAgentResponse$agentVersion": "<p>The version of the agent.</p>",
         "PromptSummary$version": "<p>The version of the prompt that this summary applies to.</p>",
         "UpdatePromptResponse$version": "<p>The version of the prompt. When you update a prompt, the version updated is the <code>DRAFT</code> version.</p>"
+      }
+    },
+    "VideoConfiguration": {
+      "base": "<p>Configuration settings for processing video content in multimodal knowledge bases.</p>",
+      "refs": {
+        "VideoConfigurations$member": "<p>Video configuration for multi modal ingestion.</p>"
+      }
+    },
+    "VideoConfigurations": {
+      "base": null,
+      "refs": {
+        "BedrockEmbeddingModelConfiguration$video": "<p>Configuration settings for processing video content in multimodal knowledge bases.</p>"
+      }
+    },
+    "VideoSegmentationConfiguration": {
+      "base": "<p>Configuration for segmenting video content during multimodal knowledge base ingestion. Determines how video files are divided into chunks for processing.</p>",
+      "refs": {
+        "VideoConfiguration$segmentationConfiguration": "<p>Configuration for segmenting video content during processing.</p>"
+      }
+    },
+    "VideoSegmentationConfigurationFixedLengthDurationInteger": {
+      "base": null,
+      "refs": {
+        "VideoSegmentationConfiguration$fixedLengthDuration": "<p>The duration in seconds for each video segment. Video files will be divided into chunks of this length for processing.</p>"
       }
     },
     "WebCrawlerConfiguration": {

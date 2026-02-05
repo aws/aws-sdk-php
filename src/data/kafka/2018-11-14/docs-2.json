@@ -20,6 +20,8 @@
     "DescribeConfiguration" : "<p>Returns a description of this MSK configuration.</p>",
     "DescribeConfigurationRevision" : "<p>Returns a description of this revision of the configuration.</p>",
     "DescribeReplicator" : "<p>Returns a description of the Kafka Replicator whose Amazon Resource Name (ARN) is specified in the request.</p>",
+    "DescribeTopic": "<p>Returns topic details of this topic on a MSK cluster.</p>",
+    "DescribeTopicPartitions": "<p>Returns partition details of this topic on a MSK cluster.</p>",
     "DescribeVpcConnection" : "<p>Displays information about the specified Amazon MSK VPC connection.</p>",
     "BatchDisassociateScramSecret" : "<p>Disassociates one or more Scram Secrets from an Amazon MSK cluster.</p>",
     "GetBootstrapBrokers" : "<p>A list of brokers that a client application can use to bootstrap. This list doesn't necessarily include all of the brokers in the cluster. The following Python 3.6 example shows how you can use the Amazon Resource Name (ARN) of a cluster to get its bootstrap brokers. If you don't know the ARN of your cluster, you can use the <code>ListClusters</code> operation to get the ARNs of all the clusters in this account and Region.</p>",
@@ -38,6 +40,7 @@
     "ListScramSecrets" : "<p>Returns a list of the Scram Secrets associated with an Amazon MSK cluster.</p>",
     "ListTagsForResource" : "<p>Returns a list of the tags associated with the specified resource.</p>",
     "ListVpcConnections" : "<p>Displays a list of Amazon MSK VPC connections.</p>",
+    "ListTopics": "<p>List topics in a MSK cluster.</p>",
     "PutClusterPolicy" : "<p>Creates or updates the specified MSK cluster policy. If updating the policy, the currentVersion field is required in the request payload.</p>",
     "RebootBroker" : "<p>Executes a reboot on a broker.</p>",
     "RejectClientVpcConnections" : "<p>Rejects a client VPC connection.</p>",
@@ -51,6 +54,7 @@
     "UpdateClusterConfiguration" : "<p>Updates the cluster with the configuration that is specified in the request body.</p>",
     "UpdateClusterKafkaVersion" : "<p>Updates the Apache Kafka version for the cluster.</p>",
     "UpdateMonitoring" : "<p>Updates the monitoring settings for the cluster. You can use this operation to specify which Apache Kafka metrics you want Amazon MSK to send to Amazon CloudWatch. You can also specify settings for open monitoring with Prometheus.</p>",
+    "UpdateRebalancing" : "<p>Use this resource to update the intelligent rebalancing status of an Amazon MSK Provisioned cluster with Express brokers.</p>",
     "UpdateReplicationInfo" : "<p>Updates replication info of a replicator.</p>",
     "UpdateSecurity" : "<p>You can use this operation to update the encrypting and authentication settings for an existing cluster.</p>",
     "UpdateStorage" : "<p>Updates cluster broker volume size (or) sets cluster storage mode to TIERED.</p>"
@@ -101,6 +105,22 @@
         "Provisioned$BrokerNodeGroupInfo" : "<p>Information about the brokers.</p>",
         "CreateClusterRequest$BrokerNodeGroupInfo" : "<p>Information about the brokers.</p>",
         "ProvisionedRequest$BrokerNodeGroupInfo" : "<p>Information about the brokers.</p>"
+      }
+    },
+    "Rebalancing" : {
+      "base" : "<p>Includes all rebalancing-related information for the cluster.</p>",
+      "refs" : {
+        "ClusterInfo$Rebalancing" : "<p>Contains information about intelligent rebalancing for new MSK Provisioned clusters with Express brokers. By default, intelligent rebalancing status is ACTIVE.</p>",
+        "CreateClusterRequest$Rebalancing" : "<p>Specifies if intelligent rebalancing should be turned on for the new MSK Provisioned cluster with Express brokers. By default, intelligent rebalancing status is ACTIVE for all new clusters.</p>",
+        "MutableClusterInfo$Rebalancing" : "<p>Describes the intelligent rebalancing configuration of an MSK Provisioned cluster with Express brokers.</p>",
+        "Provisioned$Rebalancing" : "<p>Specifies whether or not intelligent rebalancing is turned on for a newly created MSK Provisioned cluster with Express brokers. Intelligent rebalancing performs automatic partition balancing operations when you scale your clusters up or down.  By default, intelligent rebalancing is ACTIVE for all new Express-based clusters.</p>",
+        "ProvisionedRequest$Rebalancing" : "<p>Specifies if intelligent rebalancing is turned on for your MSK Provisioned cluster with Express brokers. For all new Express-based clusters that you create, intelligent rebalancing is turned on by default.</p>"
+      }
+    },
+    "RebalancingStatus" : {
+      "base" : "<p>Describes the status of rebalancing of the cluster.</p>",
+      "refs" : {
+        "Rebalancing$RebalancingStatus" : "<p>Intelligent rebalancing status. The default intelligent rebalancing status is ACTIVE for all new Express-based clusters.</p>"
       }
     },
     "Provisioned" : {
@@ -422,6 +442,34 @@
       "base" : "<p>Response body for DescribeConfigurationRevision.</p>",
       "refs" : { }
     },
+    "DescribeTopicRequest" : {
+      "base" : "<p>Request body for DescribeTopic.</p>",
+      "refs" : { }
+    },
+    "DescribeTopicResponse" : {
+      "base" : "<p>The response containing details for a topic.</p>",
+      "refs" : { }
+    },
+    "DescribeTopicPartitionsRequest" : {
+      "base" : "<p>Request body for DescribeTopicPartitions.</p>",
+      "refs" : { }
+    },
+    "DescribeTopicPartitionsResponse" : {
+      "base" : "<p>The response containing partitions details for a topic.</p>",
+      "refs" : { }
+    },
+    "TopicPartitionInfo" : {
+      "base" : "<p>Contains information about a topic partition.</p>",
+      "refs" : {
+        "__listOfTopicPartitionInfo$member" : null
+      }
+    },
+    "TopicInfo" : {
+      "base" : "<p>Includes identification info about the topic.</p>",
+      "refs" : {
+        "__listOfTopicInfo$member" : null
+      }
+    },
     "DescribeReplicatorResponse" : {
       "base" : "<p>Response body for DescribeReplicator.</p>",
       "refs" : { }
@@ -617,6 +665,14 @@
     },
     "ListClientVpcConnectionsResponse" : {
       "base" : "<p>The response contains an array of client VPC connections and a next token if the response is truncated.</p>",
+      "refs" : { }
+    },
+    "ListTopicsRequest" : {
+      "base" : "<p>Request body for ListTopics.</p>",
+      "refs" : { }
+    },
+    "ListTopicsResponse" : {
+      "base" : "<p>The response contains an array of topics on a MSK Cluster.</p>",
       "refs" : { }
     },
     "ListVpcConnectionsRequest" : {
@@ -942,6 +998,14 @@
     },
     "UpdateMonitoringResponse" : {
       "base" : "<p>Response body for UpdateMonitoring.</p>",
+      "refs" : { }
+    },
+    "UpdateRebalancingRequest" : {
+      "base" : "<p>Request body for UpdateRebalancing.</p>",
+      "refs" : { }
+    },
+    "UpdateRebalancingResponse" : {
+      "base" : "<p>Response body for UpdateRebalancing.</p>",
       "refs" : { }
     },
     "UpdateReplicationInfoRequest" : {
@@ -1445,6 +1509,10 @@
         "UpdateMonitoringRequest$CurrentVersion" : "<p>The version of cluster to update from. A successful operation will then generate a new version.</p>",
         "UpdateMonitoringResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "UpdateMonitoringResponse$ClusterOperationArn" : "<p>The Amazon Resource Name (ARN) of the cluster operation.</p>",
+        "UpdateRebalancingRequest$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
+        "UpdateRebalancingRequest$CurrentVersion" : "<p>The current version of the cluster.</p>",
+        "UpdateRebalancingResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster whose intelligent rebalancing status you've updated.</p>",
+        "UpdateRebalancingResponse$ClusterOperationArn" : "<p>The Amazon Resource Name (ARN) of the cluster operation.</p>",
         "UpdateReplicationInfoRequest$CurrentVersion" : "<p>Current replicator version.</p>",
         "UpdateReplicationInfoRequest$SourceKafkaClusterArn" : "<p>The ARN of the source Kafka cluster.</p>",
         "UpdateReplicationInfoRequest$TargetKafkaClusterArn" : "<p>The ARN of the target Kafka cluster.</p>",

@@ -663,6 +663,19 @@
         {"shape":"BadRequestException"}
       ]
     },
+    "GetEmailAddressInsights":{
+      "name":"GetEmailAddressInsights",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/email-address-insights/"
+      },
+      "input":{"shape":"GetEmailAddressInsightsRequest"},
+      "output":{"shape":"GetEmailAddressInsightsResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
     "GetEmailIdentity":{
       "name":"GetEmailIdentity",
       "http":{
@@ -1315,7 +1328,7 @@
       "name":"PutEmailIdentityDkimSigningAttributes",
       "http":{
         "method":"PUT",
-        "requestUri":"/v1/email/identities/{EmailIdentity}/dkim/signing"
+        "requestUri":"/v2/email/identities/{EmailIdentity}/dkim/signing"
       },
       "input":{"shape":"PutEmailIdentityDkimSigningAttributesRequest"},
       "output":{"shape":"PutEmailIdentityDkimSigningAttributesResponse"},
@@ -1628,7 +1641,7 @@
       "type":"string",
       "max":1011,
       "min":20,
-      "pattern":"arn:(aws|aws-[a-z-]+):ses:[a-z]{2}-[a-z-]+-[0-9]:[0-9]{1,20}:mailmanager-archive/a-[a-z0-9]{24,62}"
+      "pattern":"arn:(aws|aws-[a-z-]+):ses:[a-z]{2,4}-[a-z-]+-[0-9]:[0-9]{1,20}:mailmanager-archive/a-[a-z0-9]{24,62}"
     },
     "ArchivingOptions":{
       "type":"structure",
@@ -2051,6 +2064,7 @@
         "FromEmailAddress":{"shape":"EmailAddress"},
         "TemplateSubject":{"shape":"EmailTemplateSubject"},
         "TemplateContent":{"shape":"TemplateContent"},
+        "Tags":{"shape":"TagList"},
         "SuccessRedirectionURL":{"shape":"SuccessRedirectionURL"},
         "FailureRedirectionURL":{"shape":"FailureRedirectionURL"}
       }
@@ -2147,7 +2161,8 @@
       ],
       "members":{
         "TemplateName":{"shape":"EmailTemplateName"},
-        "TemplateContent":{"shape":"EmailTemplateContent"}
+        "TemplateContent":{"shape":"EmailTemplateContent"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateEmailTemplateResponse":{
@@ -2624,6 +2639,7 @@
         "SigningEnabled":{"shape":"Enabled"},
         "Status":{"shape":"DkimStatus"},
         "Tokens":{"shape":"DnsTokenList"},
+        "SigningHostedZone":{"shape":"HostedZone"},
         "SigningAttributesOrigin":{"shape":"DkimSigningAttributesOrigin"},
         "NextSigningKeyLength":{"shape":"DkimSigningKeyLength"},
         "CurrentSigningKeyLength":{"shape":"DkimSigningKeyLength"},
@@ -2668,7 +2684,9 @@
         "AWS_SES_US_WEST_2",
         "AWS_SES_ME_CENTRAL_1",
         "AWS_SES_AP_SOUTH_2",
-        "AWS_SES_EU_CENTRAL_2"
+        "AWS_SES_EU_CENTRAL_2",
+        "AWS_SES_AP_SOUTHEAST_5",
+        "AWS_SES_CA_WEST_1"
       ]
     },
     "DkimSigningKeyLength":{
@@ -2748,6 +2766,31 @@
       "type":"list",
       "member":{"shape":"InsightsEmailAddress"},
       "max":5
+    },
+    "EmailAddressInsightsConfidenceVerdict":{
+      "type":"string",
+      "enum":[
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
+    "EmailAddressInsightsMailboxEvaluations":{
+      "type":"structure",
+      "members":{
+        "HasValidSyntax":{"shape":"EmailAddressInsightsVerdict"},
+        "HasValidDnsRecords":{"shape":"EmailAddressInsightsVerdict"},
+        "MailboxExists":{"shape":"EmailAddressInsightsVerdict"},
+        "IsRoleAddress":{"shape":"EmailAddressInsightsVerdict"},
+        "IsDisposable":{"shape":"EmailAddressInsightsVerdict"},
+        "IsRandomInput":{"shape":"EmailAddressInsightsVerdict"}
+      }
+    },
+    "EmailAddressInsightsVerdict":{
+      "type":"structure",
+      "members":{
+        "ConfidenceVerdict":{"shape":"EmailAddressInsightsConfidenceVerdict"}
+      }
     },
     "EmailAddressList":{
       "type":"list",
@@ -3141,6 +3184,7 @@
         "FromEmailAddress":{"shape":"EmailAddress"},
         "TemplateSubject":{"shape":"EmailTemplateSubject"},
         "TemplateContent":{"shape":"TemplateContent"},
+        "Tags":{"shape":"TagList"},
         "SuccessRedirectionURL":{"shape":"SuccessRedirectionURL"},
         "FailureRedirectionURL":{"shape":"FailureRedirectionURL"}
       }
@@ -3301,6 +3345,19 @@
         "DailyVolumes":{"shape":"DailyVolumes"}
       }
     },
+    "GetEmailAddressInsightsRequest":{
+      "type":"structure",
+      "required":["EmailAddress"],
+      "members":{
+        "EmailAddress":{"shape":"EmailAddress"}
+      }
+    },
+    "GetEmailAddressInsightsResponse":{
+      "type":"structure",
+      "members":{
+        "MailboxValidation":{"shape":"MailboxValidation"}
+      }
+    },
     "GetEmailIdentityPoliciesRequest":{
       "type":"structure",
       "required":["EmailIdentity"],
@@ -3363,7 +3420,8 @@
       ],
       "members":{
         "TemplateName":{"shape":"EmailTemplateName"},
-        "TemplateContent":{"shape":"EmailTemplateContent"}
+        "TemplateContent":{"shape":"EmailTemplateContent"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "GetExportJobRequest":{
@@ -3527,6 +3585,7 @@
         "OptimizedSharedDelivery":{"shape":"FeatureStatus"}
       }
     },
+    "HostedZone":{"type":"string"},
     "HttpsPolicy":{
       "type":"string",
       "enum":[
@@ -4210,6 +4269,13 @@
         "TRANSACTIONAL"
       ]
     },
+    "MailboxValidation":{
+      "type":"structure",
+      "members":{
+        "IsValid":{"shape":"EmailAddressInsightsVerdict"},
+        "Evaluations":{"shape":"EmailAddressInsightsMailboxEvaluations"}
+      }
+    },
     "Max24HourSend":{"type":"double"},
     "MaxDeliverySeconds":{
       "type":"long",
@@ -4521,7 +4587,8 @@
     "PutAccountSuppressionAttributesRequest":{
       "type":"structure",
       "members":{
-        "SuppressedReasons":{"shape":"SuppressionListReasons"}
+        "SuppressedReasons":{"shape":"SuppressionListReasons"},
+        "ValidationAttributes":{"shape":"SuppressionValidationAttributes"}
       }
     },
     "PutAccountSuppressionAttributesResponse":{
@@ -4614,7 +4681,8 @@
           "location":"uri",
           "locationName":"ConfigurationSetName"
         },
-        "SuppressedReasons":{"shape":"SuppressionListReasons"}
+        "SuppressedReasons":{"shape":"SuppressionListReasons"},
+        "ValidationOptions":{"shape":"SuppressionValidationOptions"}
       }
     },
     "PutConfigurationSetSuppressionOptionsResponse":{
@@ -4775,7 +4843,8 @@
       "type":"structure",
       "members":{
         "DkimStatus":{"shape":"DkimStatus"},
-        "DkimTokens":{"shape":"DnsTokenList"}
+        "DkimTokens":{"shape":"DnsTokenList"},
+        "SigningHostedZone":{"shape":"HostedZone"}
       }
     },
     "PutEmailIdentityFeedbackAttributesRequest":{
@@ -5232,8 +5301,32 @@
     "SuppressionAttributes":{
       "type":"structure",
       "members":{
-        "SuppressedReasons":{"shape":"SuppressionListReasons"}
+        "SuppressedReasons":{"shape":"SuppressionListReasons"},
+        "ValidationAttributes":{"shape":"SuppressionValidationAttributes"}
       }
+    },
+    "SuppressionConditionThreshold":{
+      "type":"structure",
+      "required":["ConditionThresholdEnabled"],
+      "members":{
+        "ConditionThresholdEnabled":{"shape":"FeatureStatus"},
+        "OverallConfidenceThreshold":{"shape":"SuppressionConfidenceThreshold"}
+      }
+    },
+    "SuppressionConfidenceThreshold":{
+      "type":"structure",
+      "required":["ConfidenceVerdictThreshold"],
+      "members":{
+        "ConfidenceVerdictThreshold":{"shape":"SuppressionConfidenceVerdictThreshold"}
+      }
+    },
+    "SuppressionConfidenceVerdictThreshold":{
+      "type":"string",
+      "enum":[
+        "MEDIUM",
+        "HIGH",
+        "MANAGED"
+      ]
     },
     "SuppressionListDestination":{
       "type":"structure",
@@ -5263,7 +5356,22 @@
     "SuppressionOptions":{
       "type":"structure",
       "members":{
-        "SuppressedReasons":{"shape":"SuppressionListReasons"}
+        "SuppressedReasons":{"shape":"SuppressionListReasons"},
+        "ValidationOptions":{"shape":"SuppressionValidationOptions"}
+      }
+    },
+    "SuppressionValidationAttributes":{
+      "type":"structure",
+      "required":["ConditionThreshold"],
+      "members":{
+        "ConditionThreshold":{"shape":"SuppressionConditionThreshold"}
+      }
+    },
+    "SuppressionValidationOptions":{
+      "type":"structure",
+      "required":["ConditionThreshold"],
+      "members":{
+        "ConditionThreshold":{"shape":"SuppressionConditionThreshold"}
       }
     },
     "Tag":{

@@ -9,6 +9,8 @@
     "CreateGrant": "<p>Creates a grant for the specified license. A grant shares the use of license entitlements with a specific Amazon Web Services account, an organization, or an organizational unit (OU). For more information, see <a href=\"https://docs.aws.amazon.com/license-manager/latest/userguide/granted-licenses.html\">Granted licenses in License Manager</a> in the <i>License Manager User Guide</i>.</p>",
     "CreateGrantVersion": "<p>Creates a new version of the specified grant. For more information, see <a href=\"https://docs.aws.amazon.com/license-manager/latest/userguide/granted-licenses.html\">Granted licenses in License Manager</a> in the <i>License Manager User Guide</i>.</p>",
     "CreateLicense": "<p>Creates a license.</p>",
+    "CreateLicenseAssetGroup": "<p>Creates a license asset group.</p>",
+    "CreateLicenseAssetRuleset": "<p>Creates a license asset ruleset.</p>",
     "CreateLicenseConfiguration": "<p>Creates a license configuration.</p> <p>A license configuration is an abstraction of a customer license agreement that can be consumed and enforced by License Manager. Components include specifications for the license type (licensing by instance, socket, CPU, or vCPU), allowed tenancy (shared tenancy, Dedicated Instance, Dedicated Host, or all of these), license affinity to host (how long a license must be associated with a host), and the number of licenses purchased and used.</p>",
     "CreateLicenseConversionTaskForResource": "<p>Creates a new license conversion task.</p>",
     "CreateLicenseManagerReportGenerator": "<p>Creates a report generator.</p>",
@@ -16,6 +18,8 @@
     "CreateToken": "<p>Creates a long-lived token.</p> <p>A refresh token is a JWT token used to get an access token. With an access token, you can call AssumeRoleWithWebIdentity to get role credentials that you can use to call License Manager to manage the specified license.</p>",
     "DeleteGrant": "<p>Deletes the specified grant.</p>",
     "DeleteLicense": "<p>Deletes the specified license.</p>",
+    "DeleteLicenseAssetGroup": "<p>Deletes a license asset group.</p>",
+    "DeleteLicenseAssetRuleset": "<p>Deletes a license asset ruleset.</p>",
     "DeleteLicenseConfiguration": "<p>Deletes the specified license configuration.</p> <p>You cannot delete a license configuration that is in use.</p>",
     "DeleteLicenseManagerReportGenerator": "<p>Deletes the specified report generator.</p> <p>This action deletes the report generator, which stops it from generating future reports. The action cannot be reversed. It has no effect on the previous reports from this generator.</p>",
     "DeleteToken": "<p>Deletes the specified token. Must be called in the license home Region.</p>",
@@ -23,15 +27,21 @@
     "GetAccessToken": "<p>Gets a temporary access token to use with AssumeRoleWithWebIdentity. Access tokens are valid for one hour.</p>",
     "GetGrant": "<p>Gets detailed information about the specified grant.</p>",
     "GetLicense": "<p>Gets detailed information about the specified license.</p>",
+    "GetLicenseAssetGroup": "<p>Gets a license asset group.</p>",
+    "GetLicenseAssetRuleset": "<p>Gets a license asset ruleset.</p>",
     "GetLicenseConfiguration": "<p>Gets detailed information about the specified license configuration.</p>",
     "GetLicenseConversionTask": "<p>Gets information about the specified license type conversion task.</p>",
     "GetLicenseManagerReportGenerator": "<p>Gets information about the specified report generator.</p>",
     "GetLicenseUsage": "<p>Gets detailed information about the usage of the specified license.</p>",
     "GetServiceSettings": "<p>Gets the License Manager settings for the current Region.</p>",
+    "ListAssetsForLicenseAssetGroup": "<p>Lists assets for a license asset group.</p>",
     "ListAssociationsForLicenseConfiguration": "<p>Lists the resource associations for the specified license configuration.</p> <p>Resource associations need not consume licenses from a license configuration. For example, an AMI or a stopped instance might not consume a license (depending on the license rules).</p>",
     "ListDistributedGrants": "<p>Lists the grants distributed for the specified license.</p>",
     "ListFailuresForLicenseConfigurationOperations": "<p>Lists the license configuration operations that failed.</p>",
+    "ListLicenseAssetGroups": "<p>Lists license asset groups.</p>",
+    "ListLicenseAssetRulesets": "<p>Lists license asset rulesets.</p>",
     "ListLicenseConfigurations": "<p>Lists the license configurations for your account.</p>",
+    "ListLicenseConfigurationsForOrganization": "<p>Lists license configurations for an organization.</p>",
     "ListLicenseConversionTasks": "<p>Lists the license type conversion tasks for your account.</p>",
     "ListLicenseManagerReportGenerators": "<p>Lists the report generators for your account.</p>",
     "ListLicenseSpecificationsForResource": "<p>Describes the license configurations for the specified resource.</p>",
@@ -48,6 +58,8 @@
     "RejectGrant": "<p>Rejects the specified grant.</p>",
     "TagResource": "<p>Adds the specified tags to the specified resource. The following resources support tagging in License Manager:</p> <ul> <li> <p>Licenses</p> </li> <li> <p>Grants</p> </li> <li> <p>License configurations</p> </li> <li> <p>Report generators</p> </li> </ul>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
+    "UpdateLicenseAssetGroup": "<p>Updates a license asset group.</p>",
+    "UpdateLicenseAssetRuleset": "<p>Updates a license asset ruleset.</p>",
     "UpdateLicenseConfiguration": "<p>Modifies the attributes of an existing license configuration.</p>",
     "UpdateLicenseManagerReportGenerator": "<p>Updates a report generator.</p> <p>After you make changes to a report generator, it starts generating new reports within 60 minutes of being updated.</p>",
     "UpdateLicenseSpecificationsForResource": "<p>Adds or removes the specified license configurations for the specified Amazon Web Services resource.</p> <p>You can update the license specifications of AMIs, instances, and hosts. You cannot update the license specifications for launch templates and CloudFormation templates, as they send license configurations to the operation that creates the resource.</p>",
@@ -87,6 +99,14 @@
         "ReceivedMetadata$AllowedOperations": "<p>Allowed operations.</p>"
       }
     },
+    "AndRuleStatement": {
+      "base": "<p>AND rule statement.</p>",
+      "refs": {
+        "InstanceRuleStatement$AndRuleStatement": "<p>AND rule statement.</p>",
+        "LicenseConfigurationRuleStatement$AndRuleStatement": "<p>AND rule statement.</p>",
+        "LicenseRuleStatement$AndRuleStatement": "<p>AND rule statement.</p>"
+      }
+    },
     "Arn": {
       "base": null,
       "refs": {
@@ -106,8 +126,12 @@
         "CreateTokenRequest$LicenseArn": "<p>Amazon Resource Name (ARN) of the license. The ARN is mapped to the aud claim of the JWT token.</p>",
         "DeleteGrantRequest$GrantArn": "<p>Amazon Resource Name (ARN) of the grant.</p>",
         "DeleteGrantResponse$GrantArn": "<p>Grant ARN.</p>",
+        "DeleteLicenseAssetGroupRequest$LicenseAssetGroupArn": "<p>Amazon Resource Name (ARN) of the license asset group.</p>",
+        "DeleteLicenseAssetRulesetRequest$LicenseAssetRulesetArn": "<p>Amazon Resource Name (ARN) of the license asset ruleset.</p>",
         "DeleteLicenseRequest$LicenseArn": "<p>Amazon Resource Name (ARN) of the license.</p>",
         "GetGrantRequest$GrantArn": "<p>Amazon Resource Name (ARN) of the grant.</p>",
+        "GetLicenseAssetGroupRequest$LicenseAssetGroupArn": "<p>Amazon Resource Name (ARN) of the license asset group.</p>",
+        "GetLicenseAssetRulesetRequest$LicenseAssetRulesetArn": "<p>Amazon Resource Name (ARN) of the license asset ruleset.</p>",
         "GetLicenseRequest$LicenseArn": "<p>Amazon Resource Name (ARN) of the license.</p>",
         "GetLicenseUsageRequest$LicenseArn": "<p>Amazon Resource Name (ARN) of the license.</p>",
         "Grant$GrantArn": "<p>Amazon Resource Name (ARN) of the grant.</p>",
@@ -116,11 +140,16 @@
         "Grant$GranteePrincipalArn": "<p>The grantee principal ARN.</p>",
         "GrantedLicense$LicenseArn": "<p>Amazon Resource Name (ARN) of the license.</p>",
         "License$LicenseArn": "<p>Amazon Resource Name (ARN) of the license.</p>",
+        "LicenseAssetGroup$LicenseAssetGroupArn": "<p>Amazon Resource Name (ARN) of the license asset group.</p>",
+        "LicenseAssetRuleset$LicenseAssetRulesetArn": "<p>Amazon Resource Name (ARN) of the license asset ruleset.</p>",
+        "LicenseAssetRulesetArnList$member": null,
         "ListLicenseVersionsRequest$LicenseArn": "<p>Amazon Resource Name (ARN) of the license.</p>",
         "ListReceivedGrantsForOrganizationRequest$LicenseArn": "<p>The Amazon Resource Name (ARN) of the received license.</p>",
         "PrincipalArnList$member": null,
         "RejectGrantRequest$GrantArn": "<p>Amazon Resource Name (ARN) of the grant.</p>",
-        "RejectGrantResponse$GrantArn": "<p>Grant ARN.</p>"
+        "RejectGrantResponse$GrantArn": "<p>Grant ARN.</p>",
+        "UpdateLicenseAssetGroupRequest$LicenseAssetGroupArn": "<p>Amazon Resource Name (ARN) of the license asset group.</p>",
+        "UpdateLicenseAssetRulesetRequest$LicenseAssetRulesetArn": "<p>Amazon Resource Name (ARN) of the license asset ruleset.</p>"
       }
     },
     "ArnList": {
@@ -132,7 +161,20 @@
         "ListReceivedGrantsRequest$GrantArns": "<p>Amazon Resource Names (ARNs) of the grants.</p>",
         "ListReceivedLicensesRequest$LicenseArns": "<p>Amazon Resource Names (ARNs) of the licenses.</p>",
         "ReportContext$licenseConfigurationArns": "<p>Amazon Resource Name (ARN) of the license configuration that this generator reports on.</p>",
+        "ReportContext$licenseAssetGroupArns": "<p>Amazon Resource Names (ARNs) of the license asset groups to include in the report.</p>",
         "TokenData$RoleArns": "<p>Amazon Resource Names (ARN) of the roles included in the token.</p>"
+      }
+    },
+    "Asset": {
+      "base": "<p>Asset.</p>",
+      "refs": {
+        "AssetList$member": null
+      }
+    },
+    "AssetList": {
+      "base": null,
+      "refs": {
+        "ListAssetsForLicenseAssetGroupResponse$Assets": "<p>Assets.</p>"
       }
     },
     "AuthorizationException": {
@@ -150,6 +192,7 @@
       "base": null,
       "refs": {
         "ExtendLicenseConsumptionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request. Provides an error response if you do not have the required permissions.</p>",
+        "ListLicenseAssetRulesetsRequest$ShowAWSManagedLicenseAssetRulesets": "<p>Specifies whether to show License Manager managed license asset rulesets.</p>",
         "OrganizationConfiguration$EnableIntegration": "<p>Enables Organizations integration.</p>"
       }
     },
@@ -181,8 +224,12 @@
       "base": null,
       "refs": {
         "BorrowConfiguration$MaxTimeToLiveInMinutes": "<p>Maximum time for the borrow configuration, in minutes.</p>",
+        "ListAssetsForLicenseAssetGroupRequest$MaxResults": "<p>Maximum number of results to return in a single call.</p>",
         "ListAssociationsForLicenseConfigurationRequest$MaxResults": "<p>Maximum number of results to return in a single call.</p>",
         "ListFailuresForLicenseConfigurationOperationsRequest$MaxResults": "<p>Maximum number of results to return in a single call.</p>",
+        "ListLicenseAssetGroupsRequest$MaxResults": "<p>Maximum number of results to return in a single call.</p>",
+        "ListLicenseAssetRulesetsRequest$MaxResults": "<p>Maximum number of results to return in a single call.</p>",
+        "ListLicenseConfigurationsForOrganizationRequest$MaxResults": "<p>Maximum number of results to return in a single call.</p>",
         "ListLicenseConfigurationsRequest$MaxResults": "<p>Maximum number of results to return in a single call.</p>",
         "ListLicenseConversionTasksRequest$MaxResults": "<p>Maximum number of results to return in a single call.</p>",
         "ListLicenseSpecificationsForResourceRequest$MaxResults": "<p>Maximum number of results to return in a single call.</p>",
@@ -196,13 +243,17 @@
       "refs": {
         "ConsumedLicenseSummary$ConsumedLicenses": "<p>Number of licenses consumed by the resource.</p>",
         "CreateLicenseConfigurationRequest$LicenseCount": "<p>Number of licenses managed by the license configuration.</p>",
+        "CreateLicenseConfigurationRequest$LicenseExpiry": "<p>License configuration expiry.</p>",
         "GetLicenseConfigurationResponse$LicenseCount": "<p>Number of available licenses.</p>",
         "GetLicenseConfigurationResponse$ConsumedLicenses": "<p>Number of licenses assigned to resources.</p>",
+        "GetLicenseConfigurationResponse$LicenseExpiry": "<p>License Expiry.</p>",
         "LicenseConfiguration$LicenseCount": "<p>Number of licenses managed by the license configuration.</p>",
         "LicenseConfiguration$ConsumedLicenses": "<p>Number of licenses consumed. </p>",
+        "LicenseConfiguration$LicenseExpiry": "<p>License configuration expiry time in Unix timestamp format.</p>",
         "LicenseConfigurationUsage$ConsumedLicenses": "<p>Number of licenses consumed by the resource.</p>",
         "ManagedResourceSummary$AssociationCount": "<p>Number of resources associated with licenses.</p>",
-        "UpdateLicenseConfigurationRequest$LicenseCount": "<p>New number of licenses managed by the license configuration.</p>"
+        "UpdateLicenseConfigurationRequest$LicenseCount": "<p>New number of licenses managed by the license configuration.</p>",
+        "UpdateLicenseConfigurationRequest$LicenseExpiry": "<p>License configuration expiry time.</p>"
       }
     },
     "CheckInLicenseRequest": {
@@ -297,6 +348,22 @@
       "base": null,
       "refs": {}
     },
+    "CreateLicenseAssetGroupRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateLicenseAssetGroupResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateLicenseAssetRulesetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateLicenseAssetRulesetResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateLicenseConfigurationRequest": {
       "base": null,
       "refs": {}
@@ -345,19 +412,36 @@
       "base": null,
       "refs": {}
     },
+    "CrossAccountDiscoveryServiceStatus": {
+      "base": "<p>Status information for cross-account discovery service.</p>",
+      "refs": {
+        "ServiceStatus$CrossAccountDiscovery": "<p>Status of cross-account discovery service.</p>"
+      }
+    },
+    "CrossRegionDiscoveryStatus": {
+      "base": "<p>Status information for cross-region discovery.</p>",
+      "refs": {
+        "ServiceStatus$CrossRegionDiscovery": "<p>Status of cross-region discovery service.</p>"
+      }
+    },
     "DateTime": {
       "base": null,
       "refs": {
+        "Asset$LatestAssetDiscoveryTime": "<p>Latest asset discovery time.</p>",
         "AutomatedDiscoveryInformation$LastRunTime": "<p>Time that automated discovery last ran.</p>",
         "GetLicenseConversionTaskResponse$StartTime": "<p>Time at which the license type conversion task was started .</p>",
         "GetLicenseConversionTaskResponse$LicenseConversionTime": "<p>Amount of time to complete the license type conversion.</p>",
         "GetLicenseConversionTaskResponse$EndTime": "<p>Time at which the license type conversion task was completed.</p>",
+        "LicenseAssetGroup$LatestUsageAnalysisTime": "<p>Latest usage analysis time.</p>",
+        "LicenseAssetGroup$LatestResourceDiscoveryTime": "<p>Latest resource discovery time.</p>",
         "LicenseConfigurationAssociation$AssociationTime": "<p>Time when the license configuration was associated with the resource.</p>",
         "LicenseConfigurationUsage$AssociationTime": "<p>Time when the license configuration was initially associated with the resource.</p>",
         "LicenseConversionTask$StartTime": "<p>The time the conversion task was started at.</p>",
         "LicenseConversionTask$LicenseConversionTime": "<p>The time the usage operation value of the resource was changed.</p>",
         "LicenseConversionTask$EndTime": "<p>The time the conversion task was completed.</p>",
-        "LicenseOperationFailure$FailureTime": "<p>Failure time.</p>"
+        "LicenseOperationFailure$FailureTime": "<p>Failure time.</p>",
+        "ReportContext$reportStartDate": "<p>Start date for the report data collection period.</p>",
+        "ReportContext$reportEndDate": "<p>End date for the report data collection period.</p>"
       }
     },
     "DatetimeRange": {
@@ -374,6 +458,22 @@
       "refs": {}
     },
     "DeleteGrantResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteLicenseAssetGroupRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteLicenseAssetGroupResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteLicenseAssetRulesetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteLicenseAssetRulesetResponse": {
       "base": null,
       "refs": {}
     },
@@ -531,6 +631,9 @@
     "Filters": {
       "base": null,
       "refs": {
+        "ListLicenseAssetGroupsRequest$Filters": "<p>Filters to scope the results. Following filters are supported</p> <ul> <li> <p> <code>LicenseAssetRulesetArn</code> </p> </li> </ul>",
+        "ListLicenseAssetRulesetsRequest$Filters": "<p>Filters to scope the results. Following filters are supported</p> <ul> <li> <p> <code>Name</code> </p> </li> </ul>",
+        "ListLicenseConfigurationsForOrganizationRequest$Filters": "<p>Filters to scope the results.</p>",
         "ListLicenseConfigurationsRequest$Filters": "<p>Filters to scope the results. The following filters and logical operators are supported:</p> <ul> <li> <p> <code>licenseCountingType</code> - The dimension for which licenses are counted. Possible values are <code>vCPU</code> | <code>Instance</code> | <code>Core</code> | <code>Socket</code>.</p> </li> <li> <p> <code>enforceLicenseCount</code> - A Boolean value that indicates whether hard license enforcement is used.</p> </li> <li> <p> <code>usagelimitExceeded</code> - A Boolean value that indicates whether the available licenses have been exceeded.</p> </li> </ul>",
         "ListLicenseConversionTasksRequest$Filters": "<p> Filters to scope the results. Valid filters are <code>ResourceArns</code> and <code>Status</code>. </p>",
         "ListUsageForLicenseConfigurationRequest$Filters": "<p>Filters to scope the results. The following filters and logical operators are supported:</p> <ul> <li> <p> <code>resourceArn</code> - The ARN of the license configuration resource.</p> </li> <li> <p> <code>resourceType</code> - The resource type (<code>EC2_INSTANCE</code> | <code>EC2_HOST</code> | <code>EC2_AMI</code> | <code>SYSTEMS_MANAGER_MANAGED_INSTANCE</code>).</p> </li> <li> <p> <code>resourceAccount</code> - The ID of the account that owns the resource.</p> </li> </ul>"
@@ -549,6 +652,22 @@
       "refs": {}
     },
     "GetGrantResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetLicenseAssetGroupRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetLicenseAssetGroupResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetLicenseAssetRulesetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetLicenseAssetRulesetResponse": {
       "base": null,
       "refs": {}
     },
@@ -656,6 +775,12 @@
         "TokenData$ExpirationTime": "<p>Token expiration time, in ISO8601-UTC format.</p>"
       }
     },
+    "InstanceRuleStatement": {
+      "base": "<p>Instance rule statement.</p>",
+      "refs": {
+        "RuleStatement$InstanceRuleStatement": "<p>Instance rule statement.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -710,6 +835,108 @@
         "LicenseList$member": null
       }
     },
+    "LicenseAssetGroup": {
+      "base": "<p>License asset group.</p>",
+      "refs": {
+        "GetLicenseAssetGroupResponse$LicenseAssetGroup": "<p>License asset group.</p>",
+        "LicenseAssetGroupList$member": null
+      }
+    },
+    "LicenseAssetGroupConfiguration": {
+      "base": "<p>License asset group configuration.</p>",
+      "refs": {
+        "LicenseAssetGroupConfigurationList$member": null
+      }
+    },
+    "LicenseAssetGroupConfigurationList": {
+      "base": null,
+      "refs": {
+        "CreateLicenseAssetGroupRequest$LicenseAssetGroupConfigurations": "<p>License asset group configurations.</p>",
+        "LicenseAssetGroup$LicenseAssetGroupConfigurations": "<p>License asset group configurations.</p>",
+        "UpdateLicenseAssetGroupRequest$LicenseAssetGroupConfigurations": "<p>License asset group configurations.</p>"
+      }
+    },
+    "LicenseAssetGroupList": {
+      "base": null,
+      "refs": {
+        "ListLicenseAssetGroupsResponse$LicenseAssetGroups": "<p>License asset groups.</p>"
+      }
+    },
+    "LicenseAssetGroupProperty": {
+      "base": "<p>License asset group property.</p>",
+      "refs": {
+        "LicenseAssetGroupPropertyList$member": null
+      }
+    },
+    "LicenseAssetGroupPropertyList": {
+      "base": null,
+      "refs": {
+        "CreateLicenseAssetGroupRequest$Properties": "<p>License asset group properties.</p>",
+        "LicenseAssetGroup$Properties": "<p>License asset group properties.</p>",
+        "UpdateLicenseAssetGroupRequest$Properties": "<p>License asset group properties.</p>"
+      }
+    },
+    "LicenseAssetGroupStatus": {
+      "base": "<p>License asset group status. Allowed values are</p> <ul> <li> <p> <code>ACTIVE</code> </p> </li> <li> <p> <code>DISABLED</code> </p> </li> <li> <p> <code>DELETED</code> </p> </li> </ul>",
+      "refs": {
+        "DeleteLicenseAssetGroupResponse$Status": "<p>License asset group status.</p>",
+        "LicenseAssetGroup$Status": "<p>License asset group status.</p>",
+        "UpdateLicenseAssetGroupRequest$Status": "<p>License asset group status. The possible values are <code>ACTIVE</code> | <code>DISABLED</code>.</p>"
+      }
+    },
+    "LicenseAssetResourceDescription": {
+      "base": null,
+      "refs": {
+        "CreateLicenseAssetGroupRequest$Description": "<p>License asset group description.</p>",
+        "CreateLicenseAssetRulesetRequest$Description": "<p>License asset ruleset description.</p>",
+        "UpdateLicenseAssetGroupRequest$Description": "<p>License asset group description.</p>",
+        "UpdateLicenseAssetRulesetRequest$Description": "<p>License asset ruleset description.</p>"
+      }
+    },
+    "LicenseAssetResourceName": {
+      "base": null,
+      "refs": {
+        "CreateLicenseAssetGroupRequest$Name": "<p>License asset group name.</p>",
+        "CreateLicenseAssetRulesetRequest$Name": "<p>License asset ruleset name.</p>",
+        "UpdateLicenseAssetGroupRequest$Name": "<p>License asset group name.</p>",
+        "UpdateLicenseAssetRulesetRequest$Name": "<p>License asset ruleset name.</p>"
+      }
+    },
+    "LicenseAssetRule": {
+      "base": "<p>License asset rule.</p>",
+      "refs": {
+        "LicenseAssetRuleList$member": null
+      }
+    },
+    "LicenseAssetRuleList": {
+      "base": null,
+      "refs": {
+        "CreateLicenseAssetRulesetRequest$Rules": "<p>License asset rules.</p>",
+        "LicenseAssetRuleset$Rules": "<p>License asset rules.</p>",
+        "UpdateLicenseAssetRulesetRequest$Rules": "<p>License asset rules.</p>"
+      }
+    },
+    "LicenseAssetRuleset": {
+      "base": "<p>License asset ruleset.</p>",
+      "refs": {
+        "GetLicenseAssetRulesetResponse$LicenseAssetRuleset": "<p>License asset ruleset.</p>",
+        "LicenseAssetRulesetList$member": null
+      }
+    },
+    "LicenseAssetRulesetArnList": {
+      "base": null,
+      "refs": {
+        "CreateLicenseAssetGroupRequest$AssociatedLicenseAssetRulesetARNs": "<p>ARNs of associated license asset rulesets.</p>",
+        "LicenseAssetGroup$AssociatedLicenseAssetRulesetARNs": "<p>ARNs of associated license asset rulesets.</p>",
+        "UpdateLicenseAssetGroupRequest$AssociatedLicenseAssetRulesetARNs": "<p>ARNs of associated license asset rulesets.</p>"
+      }
+    },
+    "LicenseAssetRulesetList": {
+      "base": null,
+      "refs": {
+        "ListLicenseAssetRulesetsResponse$LicenseAssetRulesets": "<p>License asset rulesets.</p>"
+      }
+    },
     "LicenseConfiguration": {
       "base": "<p>A license configuration is an abstraction of a customer license agreement that can be consumed and enforced by License Manager. Components include specifications for the license type (licensing by instance, socket, CPU, or vCPU), allowed tenancy (shared tenancy, Dedicated Instance, Dedicated Host, or all of these), host affinity (how long a VM must be associated with a host), and the number of licenses purchased and used.</p>",
       "refs": {
@@ -726,6 +953,12 @@
       "base": null,
       "refs": {
         "ListAssociationsForLicenseConfigurationResponse$LicenseConfigurationAssociations": "<p>Information about the associations for the license configuration.</p>"
+      }
+    },
+    "LicenseConfigurationRuleStatement": {
+      "base": "<p>License configuration rule statement.</p>",
+      "refs": {
+        "RuleStatement$LicenseConfigurationRuleStatement": "<p>License configuration rule statement.</p>"
       }
     },
     "LicenseConfigurationStatus": {
@@ -749,6 +982,7 @@
     "LicenseConfigurations": {
       "base": null,
       "refs": {
+        "ListLicenseConfigurationsForOrganizationResponse$LicenseConfigurations": "<p>License configurations.</p>",
         "ListLicenseConfigurationsResponse$LicenseConfigurations": "<p>Information about the license configurations.</p>"
       }
     },
@@ -824,6 +1058,12 @@
         "ListFailuresForLicenseConfigurationOperationsResponse$LicenseOperationFailureList": "<p>License configuration operations that failed.</p>"
       }
     },
+    "LicenseRuleStatement": {
+      "base": "<p>License rule statement.</p>",
+      "refs": {
+        "RuleStatement$LicenseRuleStatement": "<p>License rule statement.</p>"
+      }
+    },
     "LicenseSpecification": {
       "base": "<p>Details for associating a license configuration with a resource.</p>",
       "refs": {
@@ -858,6 +1098,14 @@
       "base": "<p>You do not have enough licenses available to support a new resource launch.</p>",
       "refs": {}
     },
+    "ListAssetsForLicenseAssetGroupRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAssetsForLicenseAssetGroupResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListAssociationsForLicenseConfigurationRequest": {
       "base": null,
       "refs": {}
@@ -879,6 +1127,30 @@
       "refs": {}
     },
     "ListFailuresForLicenseConfigurationOperationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListLicenseAssetGroupsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListLicenseAssetGroupsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListLicenseAssetRulesetsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListLicenseAssetRulesetsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListLicenseConfigurationsForOrganizationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListLicenseConfigurationsForOrganizationResponse": {
       "base": null,
       "refs": {}
     },
@@ -1019,6 +1291,22 @@
         "LicenseConfiguration$ManagedResourceSummaryList": "<p>Summaries for managed resources.</p>"
       }
     },
+    "MatchingRuleStatement": {
+      "base": "<p>Matching rule statement.</p>",
+      "refs": {
+        "InstanceRuleStatement$MatchingRuleStatement": "<p>Matching rule statement.</p>",
+        "LicenseConfigurationRuleStatement$MatchingRuleStatement": "<p>Matching rule statement.</p>",
+        "LicenseRuleStatement$MatchingRuleStatement": "<p>Matching rule statement.</p>",
+        "MatchingRuleStatementList$member": null
+      }
+    },
+    "MatchingRuleStatementList": {
+      "base": null,
+      "refs": {
+        "AndRuleStatement$MatchingRuleStatements": "<p>Matching rule statements.</p>",
+        "OrRuleStatement$MatchingRuleStatements": "<p>Matching rule statements.</p>"
+      }
+    },
     "MaxSize100": {
       "base": null,
       "refs": {
@@ -1090,6 +1378,14 @@
       "refs": {
         "CreateGrantVersionRequest$Options": "<p>The options specified for the grant.</p>",
         "Grant$Options": "<p>The options specified for the grant.</p>"
+      }
+    },
+    "OrRuleStatement": {
+      "base": "<p>OR rule statement.</p>",
+      "refs": {
+        "InstanceRuleStatement$OrRuleStatement": "<p>OR rule statement.</p>",
+        "LicenseConfigurationRuleStatement$OrRuleStatement": "<p>OR rule statement.</p>",
+        "LicenseRuleStatement$OrRuleStatement": "<p>OR rule statement.</p>"
       }
     },
     "OrganizationConfiguration": {
@@ -1181,6 +1477,18 @@
     "RedirectException": {
       "base": "<p>This is not the correct Region for the resource. Try again.</p>",
       "refs": {}
+    },
+    "RegionStatus": {
+      "base": "<p>Status information for a specific region.</p>",
+      "refs": {
+        "RegionStatusMap$value": null
+      }
+    },
+    "RegionStatusMap": {
+      "base": null,
+      "refs": {
+        "CrossRegionDiscoveryStatus$Message": "<p>Map of region status messages for cross-region discovery.</p>"
+      }
     },
     "RejectGrantRequest": {
       "base": null,
@@ -1283,15 +1591,41 @@
         "ResourceInventory$ResourceType": "<p>Type of resource.</p>"
       }
     },
+    "RuleStatement": {
+      "base": "<p>Rule statement.</p>",
+      "refs": {
+        "LicenseAssetRule$RuleStatement": "<p>Rule statement.</p>"
+      }
+    },
     "S3Location": {
       "base": "<p>Details of the S3 bucket that report generator reports are published to.</p>",
       "refs": {
         "ReportGenerator$S3Location": "<p>Details of the S3 bucket that report generator reports are published to.</p>"
       }
     },
+    "ScriptRuleStatement": {
+      "base": "<p>Rule statement that uses a script to evaluate license asset conditions.</p>",
+      "refs": {
+        "InstanceRuleStatement$ScriptRuleStatement": "<p>Script rule statement.</p>",
+        "ScriptRuleStatementList$member": null
+      }
+    },
+    "ScriptRuleStatementList": {
+      "base": null,
+      "refs": {
+        "AndRuleStatement$ScriptRuleStatements": "<p>Script rule statements.</p>",
+        "OrRuleStatement$ScriptRuleStatements": "<p>Script rule statements.</p>"
+      }
+    },
     "ServerInternalException": {
       "base": "<p>The server experienced an internal error. Try again.</p>",
       "refs": {}
+    },
+    "ServiceStatus": {
+      "base": "<p>Overall service status information for License Manager.</p>",
+      "refs": {
+        "GetServiceSettingsResponse$ServiceStatus": "<p>Service status.</p>"
+      }
     },
     "SignedToken": {
       "base": null,
@@ -1313,6 +1647,7 @@
       "base": null,
       "refs": {
         "AcceptGrantResponse$Version": "<p>Grant version.</p>",
+        "Asset$AssetArn": "<p>Amazon Resource Name (ARN) of the asset.</p>",
         "CheckInLicenseRequest$LicenseConsumptionToken": "<p>License consumption token.</p>",
         "CheckInLicenseRequest$Beneficiary": "<p>License beneficiary.</p>",
         "CheckoutBorrowLicenseRequest$NodeId": "<p>Node ID.</p>",
@@ -1331,6 +1666,11 @@
         "CreateGrantVersionRequest$GrantName": "<p>Grant name.</p>",
         "CreateGrantVersionRequest$SourceVersion": "<p>Current version of the grant.</p>",
         "CreateGrantVersionResponse$Version": "<p>New version of the grant.</p>",
+        "CreateLicenseAssetGroupRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "CreateLicenseAssetGroupResponse$LicenseAssetGroupArn": "<p>Amazon Resource Name (ARN) of the license asset group.</p>",
+        "CreateLicenseAssetGroupResponse$Status": "<p>License asset group status.</p>",
+        "CreateLicenseAssetRulesetRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "CreateLicenseAssetRulesetResponse$LicenseAssetRulesetArn": "<p>Amazon Resource Name (ARN) of the license asset ruleset.</p>",
         "CreateLicenseConfigurationRequest$Name": "<p>Name of the license configuration.</p>",
         "CreateLicenseConfigurationRequest$Description": "<p>Description of the license configuration.</p>",
         "CreateLicenseConfigurationResponse$LicenseConfigurationArn": "<p>Amazon Resource Name (ARN) of the license configuration.</p>",
@@ -1348,6 +1688,7 @@
         "CreateLicenseVersionRequest$SourceVersion": "<p>Current version of the license.</p>",
         "CreateLicenseVersionResponse$Version": "<p>New version of the license.</p>",
         "CreateTokenResponse$TokenId": "<p>Token ID.</p>",
+        "CrossAccountDiscoveryServiceStatus$Message": "<p>Status message for cross-account discovery service.</p>",
         "DeleteGrantRequest$Version": "<p>Current version of the grant.</p>",
         "DeleteGrantResponse$Version": "<p>Grant version.</p>",
         "DeleteLicenseConfigurationRequest$LicenseConfigurationArn": "<p>ID of the license configuration.</p>",
@@ -1379,6 +1720,7 @@
         "GetServiceSettingsResponse$S3BucketArn": "<p>Regional S3 bucket path for storing reports, license trail event data, discovery data, and so on.</p>",
         "GetServiceSettingsResponse$SnsTopicArn": "<p>SNS topic configured to receive notifications from License Manager.</p>",
         "GetServiceSettingsResponse$LicenseManagerResourceShareArn": "<p>Amazon Resource Name (ARN) of the resource share. The License Manager management account provides member accounts with access to this share.</p>",
+        "GetServiceSettingsResponse$CrossRegionDiscoveryHomeRegion": "<p>Cross region discovery home region.</p>",
         "Grant$GrantName": "<p>Grant name.</p>",
         "Grant$HomeRegion": "<p>Home Region of the grant.</p>",
         "Grant$Version": "<p>Grant version.</p>",
@@ -1401,6 +1743,14 @@
         "License$HomeRegion": "<p>Home Region of the license.</p>",
         "License$Beneficiary": "<p>License beneficiary.</p>",
         "License$Version": "<p>License version.</p>",
+        "LicenseAssetGroup$Name": "<p>License asset group name.</p>",
+        "LicenseAssetGroup$Description": "<p>License asset group description.</p>",
+        "LicenseAssetGroup$StatusMessage": "<p>License asset group status message.</p>",
+        "LicenseAssetGroupConfiguration$UsageDimension": "<p>License Asset Group Configuration Usage dimension.</p>",
+        "LicenseAssetGroupProperty$Key": "<p>Property key.</p>",
+        "LicenseAssetGroupProperty$Value": "<p>Property value.</p>",
+        "LicenseAssetRuleset$Name": "<p>License asset ruleset name.</p>",
+        "LicenseAssetRuleset$Description": "<p>License asset ruleset description.</p>",
         "LicenseConfiguration$LicenseConfigurationId": "<p>Unique ID of the license configuration.</p>",
         "LicenseConfiguration$LicenseConfigurationArn": "<p>Amazon Resource Name (ARN) of the license configuration.</p>",
         "LicenseConfiguration$Name": "<p>Name of the license configuration.</p>",
@@ -1422,6 +1772,10 @@
         "LicenseOperationFailure$OperationRequestedBy": "<p>The requester is \"License Manager Automated Discovery\".</p>",
         "LicenseSpecification$LicenseConfigurationArn": "<p>Amazon Resource Name (ARN) of the license configuration.</p>",
         "LicenseSpecification$AmiAssociationScope": "<p>Scope of AMI associations. The possible value is <code>cross-account</code>.</p>",
+        "ListAssetsForLicenseAssetGroupRequest$LicenseAssetGroupArn": "<p>Amazon Resource Name (ARN) of the license asset group.</p>",
+        "ListAssetsForLicenseAssetGroupRequest$AssetType": "<p>Asset type. The possible values are <code>Instance</code> | <code>License</code> | <code>LicenseConfiguration</code>.</p>",
+        "ListAssetsForLicenseAssetGroupRequest$NextToken": "<p>Token for the next set of results.</p>",
+        "ListAssetsForLicenseAssetGroupResponse$NextToken": "<p>Token for the next set of results.</p>",
         "ListAssociationsForLicenseConfigurationRequest$LicenseConfigurationArn": "<p>Amazon Resource Name (ARN) of a license configuration.</p>",
         "ListAssociationsForLicenseConfigurationRequest$NextToken": "<p>Token for the next set of results.</p>",
         "ListAssociationsForLicenseConfigurationResponse$NextToken": "<p>Token for the next set of results.</p>",
@@ -1430,6 +1784,12 @@
         "ListFailuresForLicenseConfigurationOperationsRequest$LicenseConfigurationArn": "<p>Amazon Resource Name of the license configuration.</p>",
         "ListFailuresForLicenseConfigurationOperationsRequest$NextToken": "<p>Token for the next set of results.</p>",
         "ListFailuresForLicenseConfigurationOperationsResponse$NextToken": "<p>Token for the next set of results.</p>",
+        "ListLicenseAssetGroupsRequest$NextToken": "<p>Token for the next set of results.</p>",
+        "ListLicenseAssetGroupsResponse$NextToken": "<p>Token for the next set of results.</p>",
+        "ListLicenseAssetRulesetsRequest$NextToken": "<p>Token for the next set of results.</p>",
+        "ListLicenseAssetRulesetsResponse$NextToken": "<p>Token for the next set of results.</p>",
+        "ListLicenseConfigurationsForOrganizationRequest$NextToken": "<p>Token for the next set of results.</p>",
+        "ListLicenseConfigurationsForOrganizationResponse$NextToken": "<p>Token for the next set of results.</p>",
         "ListLicenseConfigurationsRequest$NextToken": "<p>Token for the next set of results.</p>",
         "ListLicenseConfigurationsResponse$NextToken": "<p>Token for the next set of results.</p>",
         "ListLicenseConversionTasksRequest$NextToken": "<p>Token for the next set of results.</p>",
@@ -1459,12 +1819,16 @@
         "ListUsageForLicenseConfigurationRequest$LicenseConfigurationArn": "<p>Amazon Resource Name (ARN) of the license configuration.</p>",
         "ListUsageForLicenseConfigurationRequest$NextToken": "<p>Token for the next set of results.</p>",
         "ListUsageForLicenseConfigurationResponse$NextToken": "<p>Token for the next set of results.</p>",
+        "MatchingRuleStatement$KeyToMatch": "<p>Key to match.</p> <p>The following keys and are supported when the RuleStatement type is <code>Instance</code>: </p> <ul> <li> <p> <code>Platform</code> - The name of the platform. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. </p> </li> <li> <p> <code>EC2BillingProduct</code> - The billing product code. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. Possible values are: <code>windows-server-enterprise</code> | <code>windows-byol</code> | <code>rhel</code> | <code>rhel-byol</code> | <code>rhel-high-availability</code> | <code>ubuntu-pro</code> | <code>suse-linux</code> | <code>sql-server-standard</code> | <code>sql-server-enterprise</code>. </p> </li> <li> <p> <code>MarketPlaceProductCode</code> - The Marketplace product code. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. </p> </li> <li> <p> <code>AMIId</code> - The ID of the AMI. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. </p> </li> <li> <p> <code>InstanceType</code> - The instance type. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. </p> </li> <li> <p> <code>InstanceId</code> - The ID of the instance. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. </p> </li> <li> <p> <code>HostId</code> - The ID of the host. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. </p> </li> <li> <p> <code>AccountId</code> - The ID of the account. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. </p> </li> </ul> <p>The following keys and are supported when the RuleStatement type is <code>License</code>: </p> <ul> <li> <p> <code>LicenseArn</code> - The ARN of a Managed Entitlement License. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. </p> </li> <li> <p> <code>ProductSKU</code> - The productSKU of the license. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. </p> </li> <li> <p> <code>Issuer</code> - The issuer of the license. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. </p> </li> <li> <p> <code>Beneficiary</code> - The beneficiary of the license. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. </p> </li> <li> <p> <code>LicenseStatus</code> - The status of the license. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. </p> </li> <li> <p> <code>HomeRegion</code> - The home region of the license. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. </p> </li> </ul> <p>The following keys and are supported when the RuleStatement type is <code>License Configuration</code>: </p> <ul> <li> <p> <code>LicenseConfigurationArn</code> - The ARN of a self-managed license configuration. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. </p> </li> <li> <p> <code>AccountId</code> - The account of the license configuration. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. </p> </li> </ul>",
+        "MatchingRuleStatement$Constraint": "<p>Constraint.</p>",
         "MaxSize3StringList$member": null,
         "Metadata$Name": "<p>The key name.</p>",
         "Metadata$Value": "<p>The value.</p>",
         "ProductInformation$ResourceType": "<p>Resource type. The possible values are <code>SSM_MANAGED</code> | <code>RDS</code>.</p>",
         "ProductInformationFilter$ProductInformationFilterName": "<p>Filter name.</p>",
         "ProductInformationFilter$ProductInformationFilterComparator": "<p>Logical operator.</p>",
+        "RegionStatus$Status": "<p>Status value for the region.</p>",
+        "RegionStatusMap$key": null,
         "RejectGrantResponse$Version": "<p>Grant version.</p>",
         "ReportGenerator$ReportGeneratorName": "<p>Name of the report generator.</p>",
         "ReportGenerator$LicenseManagerReportGeneratorArn": "<p>Amazon Resource Name (ARN) of the report generator.</p>",
@@ -1479,8 +1843,15 @@
         "ResourceInventory$Platform": "<p>Platform of the resource.</p>",
         "ResourceInventory$PlatformVersion": "<p>Platform version of the resource in the inventory.</p>",
         "ResourceInventory$ResourceOwningAccountId": "<p>ID of the account that owns the resource.</p>",
+        "ResourceInventory$UsageOperation": "<p>Usage operation value that corresponds to the license type for billing purposes.</p>",
+        "ResourceInventory$AmiId": "<p>Amazon Machine Image (AMI) ID associated with the resource.</p>",
+        "ResourceInventory$HostId": "<p>Dedicated Host ID where the resource is running.</p>",
+        "ResourceInventory$Region": "<p>Region where the resource is located.</p>",
+        "ResourceInventory$InstanceType": "<p>EC2 instance type of the resource.</p>",
         "S3Location$bucket": "<p>Name of the S3 bucket reports are published to.</p>",
         "S3Location$keyPrefix": "<p>Prefix of the S3 bucket reports are published to.</p>",
+        "ScriptRuleStatement$KeyToMatch": "<p>Key name to match against in the script rule evaluation.</p>",
+        "ScriptRuleStatement$Script": "<p>Script code used to evaluate the rule condition.</p>",
         "StringList$member": null,
         "Tag$Key": "<p>The tag key.</p>",
         "Tag$Value": "<p>The tag value.</p>",
@@ -1491,6 +1862,11 @@
         "TokenData$LicenseArn": "<p>Amazon Resource Name (ARN) of the license.</p>",
         "TokenData$Status": "<p>Token status. The possible values are <code>AVAILABLE</code> and <code>DELETED</code>.</p>",
         "UntagResourceRequest$ResourceArn": "<p>Amazon Resource Name (ARN) of the resource.</p>",
+        "UpdateLicenseAssetGroupRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "UpdateLicenseAssetGroupResponse$LicenseAssetGroupArn": "<p>Amazon Resource Name (ARN) of the license asset group.</p>",
+        "UpdateLicenseAssetGroupResponse$Status": "<p>License asset group status.</p>",
+        "UpdateLicenseAssetRulesetRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "UpdateLicenseAssetRulesetResponse$LicenseAssetRulesetArn": "<p>Amazon Resource Name (ARN) of the license asset ruleset.</p>",
         "UpdateLicenseConfigurationRequest$LicenseConfigurationArn": "<p>Amazon Resource Name (ARN) of the license configuration.</p>",
         "UpdateLicenseConfigurationRequest$Name": "<p>New name of the license configuration.</p>",
         "UpdateLicenseConfigurationRequest$Description": "<p>New description of the license configuration.</p>",
@@ -1506,11 +1882,16 @@
       "refs": {
         "CreateLicenseConfigurationRequest$LicenseRules": "<p>License rules. The syntax is #name=value (for example, #allowedTenancy=EC2-DedicatedHost). The available rules vary by dimension, as follows.</p> <ul> <li> <p> <code>Cores</code> dimension: <code>allowedTenancy</code> | <code>licenseAffinityToHost</code> | <code>maximumCores</code> | <code>minimumCores</code> </p> </li> <li> <p> <code>Instances</code> dimension: <code>allowedTenancy</code> | <code>maximumVcpus</code> | <code>minimumVcpus</code> </p> </li> <li> <p> <code>Sockets</code> dimension: <code>allowedTenancy</code> | <code>licenseAffinityToHost</code> | <code>maximumSockets</code> | <code>minimumSockets</code> </p> </li> <li> <p> <code>vCPUs</code> dimension: <code>allowedTenancy</code> | <code>honorVcpuOptimization</code> | <code>maximumVcpus</code> | <code>minimumVcpus</code> </p> </li> </ul> <p>The unit for <code>licenseAffinityToHost</code> is days and the range is 1 to 180. The possible values for <code>allowedTenancy</code> are <code>EC2-Default</code>, <code>EC2-DedicatedHost</code>, and <code>EC2-DedicatedInstance</code>. The possible values for <code>honorVcpuOptimization</code> are <code>True</code> and <code>False</code>.</p>",
         "GetLicenseConfigurationResponse$LicenseRules": "<p>License rules.</p>",
+        "GetServiceSettingsResponse$CrossRegionDiscoverySourceRegions": "<p>Cross region discovery source regions.</p>",
         "LicenseConfiguration$LicenseRules": "<p>License rules.</p>",
+        "ListLicenseConfigurationsForOrganizationRequest$LicenseConfigurationArns": "<p>License configuration ARNs.</p>",
         "ListLicenseConfigurationsRequest$LicenseConfigurationArns": "<p>Amazon Resource Names (ARN) of the license configurations.</p>",
         "ListTokensRequest$TokenIds": "<p>Token IDs.</p>",
+        "MatchingRuleStatement$ValueToMatch": "<p>Value to match.</p>",
         "ProductInformationFilter$ProductInformationFilterValue": "<p>Filter value.</p>",
-        "UpdateLicenseConfigurationRequest$LicenseRules": "<p>New license rule. The only rule that you can add after you create a license configuration is licenseAffinityToHost.</p>"
+        "ResourceInventory$MarketplaceProductCodes": "<p>List of Marketplace product codes associated with the resource.</p>",
+        "UpdateLicenseConfigurationRequest$LicenseRules": "<p>New license rule. The only rule that you can add after you create a license configuration is licenseAffinityToHost.</p>",
+        "UpdateServiceSettingsRequest$EnabledDiscoverySourceRegions": "<p>Cross region discovery enabled source regions.</p>"
       }
     },
     "Tag": {
@@ -1529,6 +1910,8 @@
       "base": null,
       "refs": {
         "CreateGrantRequest$Tags": "<p>Tags to add to the grant. For more information about tagging support in License Manager, see the <a href=\"https://docs.aws.amazon.com/license-manager/latest/APIReference/API_TagResource.html\">TagResource</a> operation.</p>",
+        "CreateLicenseAssetGroupRequest$Tags": "<p>Tags to add to the license asset group.</p>",
+        "CreateLicenseAssetRulesetRequest$Tags": "<p>Tags to add to the license asset ruleset.</p>",
         "CreateLicenseConfigurationRequest$Tags": "<p>Tags to add to the license configuration.</p>",
         "CreateLicenseManagerReportGeneratorRequest$Tags": "<p>Tags to add to the report generator.</p>",
         "CreateLicenseRequest$Tags": "<p>Tags to add to the license. For more information about tagging support in License Manager, see the <a href=\"https://docs.aws.amazon.com/license-manager/latest/APIReference/API_TagResource.html\">TagResource</a> operation.</p>",
@@ -1581,6 +1964,22 @@
       "refs": {}
     },
     "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLicenseAssetGroupRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLicenseAssetGroupResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLicenseAssetRulesetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLicenseAssetRulesetResponse": {
       "base": null,
       "refs": {}
     },

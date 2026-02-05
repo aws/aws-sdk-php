@@ -47,6 +47,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GenerateAs2805KekValidation":{
+      "name":"GenerateAs2805KekValidation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/as2805kekvalidation/generate",
+        "responseCode":200
+      },
+      "input":{"shape":"GenerateAs2805KekValidationInput"},
+      "output":{"shape":"GenerateAs2805KekValidationOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GenerateCardValidationData":{
       "name":"GenerateCardValidationData",
       "http":{
@@ -124,6 +141,23 @@
       },
       "input":{"shape":"ReEncryptDataInput"},
       "output":{"shape":"ReEncryptDataOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "TranslateKeyMaterial":{
+      "name":"TranslateKeyMaterial",
+      "http":{
+        "method":"POST",
+        "requestUri":"/keymaterial/translate",
+        "responseCode":200
+      },
+      "input":{"shape":"TranslateKeyMaterialInput"},
+      "output":{"shape":"TranslateKeyMaterialOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -277,6 +311,32 @@
       "pattern":"[0-9a-fA-F]+",
       "sensitive":true
     },
+    "As2805KekValidationType":{
+      "type":"structure",
+      "members":{
+        "KekValidationRequest":{"shape":"KekValidationRequest"},
+        "KekValidationResponse":{"shape":"KekValidationResponse"}
+      },
+      "union":true
+    },
+    "As2805PekDerivationAttributes":{
+      "type":"structure",
+      "required":[
+        "SystemTraceAuditNumber",
+        "TransactionAmount"
+      ],
+      "members":{
+        "SystemTraceAuditNumber":{"shape":"SystemTraceAuditNumberType"},
+        "TransactionAmount":{"shape":"TransactionAmountType"}
+      }
+    },
+    "As2805RandomKeyMaterial":{
+      "type":"string",
+      "max":48,
+      "min":32,
+      "pattern":"(?:[0-9a-fA-F]{32}|[0-9a-fA-F]{48})",
+      "sensitive":true
+    },
     "AsymmetricEncryptionAttributes":{
       "type":"structure",
       "members":{
@@ -366,8 +426,7 @@
       "type":"string",
       "max":32768,
       "min":1,
-      "pattern":"[^\\[;\\]<>]+",
-      "sensitive":true
+      "pattern":"[^\\[;\\]<>]+"
     },
     "CipherTextType":{
       "type":"string",
@@ -463,6 +522,13 @@
         "Visa":{"shape":"VisaAttributes"},
         "Emv2000":{"shape":"Emv2000Attributes"},
         "Mastercard":{"shape":"MasterCardAttributes"}
+      },
+      "union":true
+    },
+    "DiffieHellmanDerivationData":{
+      "type":"structure",
+      "members":{
+        "SharedInformation":{"shape":"SharedInformation"}
       },
       "union":true
     },
@@ -711,6 +777,34 @@
         "OFB"
       ]
     },
+    "GenerateAs2805KekValidationInput":{
+      "type":"structure",
+      "required":[
+        "KeyIdentifier",
+        "KekValidationType",
+        "RandomKeySendVariantMask"
+      ],
+      "members":{
+        "KeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "KekValidationType":{"shape":"As2805KekValidationType"},
+        "RandomKeySendVariantMask":{"shape":"RandomKeySendVariantMask"}
+      }
+    },
+    "GenerateAs2805KekValidationOutput":{
+      "type":"structure",
+      "required":[
+        "KeyArn",
+        "KeyCheckValue",
+        "RandomKeySend",
+        "RandomKeyReceive"
+      ],
+      "members":{
+        "KeyArn":{"shape":"KeyArn"},
+        "KeyCheckValue":{"shape":"KeyCheckValue"},
+        "RandomKeySend":{"shape":"As2805RandomKeyMaterial"},
+        "RandomKeyReceive":{"shape":"As2805RandomKeyMaterial"}
+      }
+    },
     "GenerateCardValidationDataInput":{
       "type":"structure",
       "required":[
@@ -816,7 +910,6 @@
         "GenerationKeyIdentifier",
         "EncryptionKeyIdentifier",
         "GenerationAttributes",
-        "PrimaryAccountNumber",
         "PinBlockFormat"
       ],
       "members":{
@@ -962,6 +1055,36 @@
         "PinValidationData":{"shape":"PinValidationDataType"}
       }
     },
+    "IncomingDiffieHellmanTr31KeyBlock":{
+      "type":"structure",
+      "required":[
+        "PrivateKeyIdentifier",
+        "CertificateAuthorityPublicKeyIdentifier",
+        "PublicKeyCertificate",
+        "DeriveKeyAlgorithm",
+        "KeyDerivationFunction",
+        "KeyDerivationHashAlgorithm",
+        "DerivationData",
+        "WrappedKeyBlock"
+      ],
+      "members":{
+        "PrivateKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "CertificateAuthorityPublicKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "PublicKeyCertificate":{"shape":"CertificateType"},
+        "DeriveKeyAlgorithm":{"shape":"SymmetricKeyAlgorithm"},
+        "KeyDerivationFunction":{"shape":"KeyDerivationFunction"},
+        "KeyDerivationHashAlgorithm":{"shape":"KeyDerivationHashAlgorithm"},
+        "DerivationData":{"shape":"DiffieHellmanDerivationData"},
+        "WrappedKeyBlock":{"shape":"Tr31WrappedKeyBlock"}
+      }
+    },
+    "IncomingKeyMaterial":{
+      "type":"structure",
+      "members":{
+        "DiffieHellmanTr31KeyBlock":{"shape":"IncomingDiffieHellmanTr31KeyBlock"}
+      },
+      "union":true
+    },
     "InitializationVectorType":{
       "type":"string",
       "max":32,
@@ -1001,6 +1124,20 @@
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "KekValidationRequest":{
+      "type":"structure",
+      "required":["DeriveKeyAlgorithm"],
+      "members":{
+        "DeriveKeyAlgorithm":{"shape":"SymmetricKeyAlgorithm"}
+      }
+    },
+    "KekValidationResponse":{
+      "type":"structure",
+      "required":["RandomKeySend"],
+      "members":{
+        "RandomKeySend":{"shape":"As2805RandomKeyMaterial"}
+      }
     },
     "KeyArn":{
       "type":"string",
@@ -1044,6 +1181,12 @@
         "SHA_512"
       ]
     },
+    "KeyMaterial":{
+      "type":"string",
+      "max":16384,
+      "min":32,
+      "sensitive":true
+    },
     "MacAlgorithm":{
       "type":"string",
       "enum":[
@@ -1054,7 +1197,8 @@
         "HMAC_SHA224",
         "HMAC_SHA256",
         "HMAC_SHA384",
-        "HMAC_SHA512"
+        "HMAC_SHA512",
+        "AS2805_4_1"
       ]
     },
     "MacAlgorithmDukpt":{
@@ -1146,6 +1290,20 @@
       "min":2,
       "pattern":"[0-9]+"
     },
+    "OutgoingKeyMaterial":{
+      "type":"structure",
+      "members":{
+        "Tr31KeyBlock":{"shape":"OutgoingTr31KeyBlock"}
+      },
+      "union":true
+    },
+    "OutgoingTr31KeyBlock":{
+      "type":"structure",
+      "required":["WrappingKeyIdentifier"],
+      "members":{
+        "WrappingKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"}
+      }
+    },
     "PaddingType":{
       "type":"string",
       "enum":[
@@ -1167,6 +1325,7 @@
       "type":"string",
       "enum":[
         "ISO_FORMAT_0",
+        "ISO_FORMAT_1",
         "ISO_FORMAT_3",
         "ISO_FORMAT_4"
       ]
@@ -1268,6 +1427,13 @@
       "min":1,
       "pattern":"[0-9a-fA-F]+",
       "sensitive":true
+    },
+    "RandomKeySendVariantMask":{
+      "type":"string",
+      "enum":[
+        "VARIANT_MASK_82C0",
+        "VARIANT_MASK_82"
+      ]
     },
     "ReEncryptDataInput":{
       "type":"structure",
@@ -1460,6 +1626,12 @@
         "HMAC_SHA224"
       ]
     },
+    "SystemTraceAuditNumberType":{
+      "type":"string",
+      "max":6,
+      "min":6,
+      "pattern":"[0-9]+"
+    },
     "ThrottlingException":{
       "type":"structure",
       "members":{
@@ -1475,7 +1647,7 @@
       "type":"string",
       "max":9984,
       "min":56,
-      "pattern":"[0-9A-Z]+",
+      "pattern":"[0-9a-zA-Z]+",
       "sensitive":true
     },
     "TrackDataType":{
@@ -1485,12 +1657,37 @@
       "pattern":"[0-9a-fA-F]+",
       "sensitive":true
     },
+    "TransactionAmountType":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"[0-9]+"
+    },
     "TransactionDataType":{
       "type":"string",
       "max":1024,
       "min":2,
       "pattern":"[0-9a-fA-F]+",
       "sensitive":true
+    },
+    "TranslateKeyMaterialInput":{
+      "type":"structure",
+      "required":[
+        "IncomingKeyMaterial",
+        "OutgoingKeyMaterial"
+      ],
+      "members":{
+        "IncomingKeyMaterial":{"shape":"IncomingKeyMaterial"},
+        "OutgoingKeyMaterial":{"shape":"OutgoingKeyMaterial"},
+        "KeyCheckValueAlgorithm":{"shape":"KeyCheckValueAlgorithm"}
+      }
+    },
+    "TranslateKeyMaterialOutput":{
+      "type":"structure",
+      "required":["WrappedKey"],
+      "members":{
+        "WrappedKey":{"shape":"WrappedWorkingKey"}
+      }
     },
     "TranslatePinDataInput":{
       "type":"structure",
@@ -1510,7 +1707,8 @@
         "IncomingDukptAttributes":{"shape":"DukptDerivationAttributes"},
         "OutgoingDukptAttributes":{"shape":"DukptDerivationAttributes"},
         "IncomingWrappedKey":{"shape":"WrappedKey"},
-        "OutgoingWrappedKey":{"shape":"WrappedKey"}
+        "OutgoingWrappedKey":{"shape":"WrappedKey"},
+        "IncomingAs2805Attributes":{"shape":"As2805PekDerivationAttributes"}
       }
     },
     "TranslatePinDataOutput":{
@@ -1532,9 +1730,17 @@
         "IsoFormat0":{"shape":"TranslationPinDataIsoFormat034"},
         "IsoFormat1":{"shape":"TranslationPinDataIsoFormat1"},
         "IsoFormat3":{"shape":"TranslationPinDataIsoFormat034"},
-        "IsoFormat4":{"shape":"TranslationPinDataIsoFormat034"}
+        "IsoFormat4":{"shape":"TranslationPinDataIsoFormat034"},
+        "As2805Format0":{"shape":"TranslationPinDataAs2805Format0"}
       },
       "union":true
+    },
+    "TranslationPinDataAs2805Format0":{
+      "type":"structure",
+      "required":["PrimaryAccountNumber"],
+      "members":{
+        "PrimaryAccountNumber":{"shape":"PrimaryAccountNumberType"}
+      }
     },
     "TranslationPinDataIsoFormat034":{
       "type":"structure",
@@ -1545,8 +1751,7 @@
     },
     "TranslationPinDataIsoFormat1":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ValidationDataType":{
       "type":"string",
@@ -1701,7 +1906,6 @@
         "EncryptionKeyIdentifier",
         "VerificationAttributes",
         "EncryptedPinBlock",
-        "PrimaryAccountNumber",
         "PinBlockFormat"
       ],
       "members":{
@@ -1806,6 +2010,27 @@
         "DiffieHellmanSymmetricKey":{"shape":"EcdhDerivationAttributes"}
       },
       "union":true
+    },
+    "WrappedKeyMaterialFormat":{
+      "type":"string",
+      "enum":[
+        "KEY_CRYPTOGRAM",
+        "TR31_KEY_BLOCK",
+        "TR34_KEY_BLOCK"
+      ]
+    },
+    "WrappedWorkingKey":{
+      "type":"structure",
+      "required":[
+        "WrappedKeyMaterial",
+        "KeyCheckValue",
+        "WrappedKeyMaterialFormat"
+      ],
+      "members":{
+        "WrappedKeyMaterial":{"shape":"KeyMaterial"},
+        "KeyCheckValue":{"shape":"KeyCheckValue"},
+        "WrappedKeyMaterialFormat":{"shape":"WrappedKeyMaterialFormat"}
+      }
     }
   }
 }

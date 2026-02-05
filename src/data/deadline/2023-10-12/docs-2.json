@@ -118,7 +118,7 @@
   },
   "shapes": {
     "AcceleratorCapabilities": {
-      "base": "<p>Provides information about the GPU accelerators used for jobs processed by a fleet.</p>",
+      "base": "<p>Provides information about the GPU accelerators used for jobs processed by a fleet.</p> <important> <p>Accelerator capabilities cannot be used with wait-and-save fleets. If you specify accelerator capabilities, you must use either spot or on-demand instance market options.</p> </important> <note> <p>Each accelerator type maps to specific EC2 instance families:</p> <ul> <li> <p> <code>t4</code>: Uses G4dn instance family</p> </li> <li> <p> <code>a10g</code>: Uses G5 instance family</p> </li> <li> <p> <code>l4</code>: Uses G6 and Gr6 instance families</p> </li> <li> <p> <code>l40s</code>: Uses G6e instance family</p> </li> </ul> </note>",
       "refs": {
         "ServiceManagedEc2InstanceCapabilities$acceleratorCapabilities": "<p>Describes the GPU accelerator capabilities required for worker host instances in this fleet.</p>"
       }
@@ -126,20 +126,20 @@
     "AcceleratorCountRange": {
       "base": "<p>Defines the maximum and minimum number of GPU accelerators required for a worker instance..</p>",
       "refs": {
-        "AcceleratorCapabilities$count": "<p>The number of GPU accelerators specified for worker hosts in this fleet. </p>",
+        "AcceleratorCapabilities$count": "<p>The number of GPU accelerators specified for worker hosts in this fleet.</p> <important> <p>You must specify either <code>acceleratorCapabilities.count.max</code> or <code>allowedInstanceTypes</code> when using accelerator capabilities. If you don't specify a maximum count, Amazon Web Services Deadline Cloud uses the instance types you specify in <code>allowedInstanceTypes</code> to determine the maximum number of accelerators.</p> </important>",
         "CustomerManagedWorkerCapabilities$acceleratorCount": "<p>The range of the accelerator.</p>"
       }
     },
     "AcceleratorName": {
       "base": null,
       "refs": {
-        "AcceleratorSelection$name": "<p>The name of the chip used by the GPU accelerator.</p> <p>If you specify <code>l4</code> as the name of the accelerator, you must specify <code>latest</code> or <code>grid:r570</code> as the runtime.</p> <p>The available GPU accelerators are:</p> <ul> <li> <p> <code>t4</code> - NVIDIA T4 Tensor Core GPU</p> </li> <li> <p> <code>a10g</code> - NVIDIA A10G Tensor Core GPU</p> </li> <li> <p> <code>l4</code> - NVIDIA L4 Tensor Core GPU</p> </li> <li> <p> <code>l40s</code> - NVIDIA L40S Tensor Core GPU</p> </li> </ul>"
+        "AcceleratorSelection$name": "<p>The name of the chip used by the GPU accelerator.</p> <p>The available GPU accelerators are:</p> <ul> <li> <p> <code>t4</code> - NVIDIA T4 Tensor Core GPU (16 GiB memory)</p> </li> <li> <p> <code>a10g</code> - NVIDIA A10G Tensor Core GPU (24 GiB memory)</p> </li> <li> <p> <code>l4</code> - NVIDIA L4 Tensor Core GPU (24 GiB memory)</p> </li> <li> <p> <code>l40s</code> - NVIDIA L40S Tensor Core GPU (48 GiB memory)</p> </li> </ul>"
       }
     },
     "AcceleratorRuntime": {
       "base": null,
       "refs": {
-        "AcceleratorSelection$runtime": "<p>Specifies the runtime driver to use for the GPU accelerator. You must use the same runtime for all GPUs. </p> <p>You can choose from the following runtimes:</p> <ul> <li> <p> <code>latest</code> - Use the latest runtime available for the chip. If you specify <code>latest</code> and a new version of the runtime is released, the new version of the runtime is used.</p> </li> <li> <p> <code>grid:r570</code> - <a href=\"https://docs.nvidia.com/vgpu/18.0/index.html\">NVIDIA vGPU software 18</a> </p> </li> <li> <p> <code>grid:r535</code> - <a href=\"https://docs.nvidia.com/vgpu/16.0/index.html\">NVIDIA vGPU software 16</a> </p> </li> </ul> <p>If you don't specify a runtime, Deadline Cloud uses <code>latest</code> as the default. However, if you have multiple accelerators and specify <code>latest</code> for some and leave others blank, Deadline Cloud raises an exception.</p>"
+        "AcceleratorSelection$runtime": "<p>Specifies the runtime driver to use for the GPU accelerator. You must use the same runtime for all GPUs in a fleet. </p> <p>You can choose from the following runtimes:</p> <ul> <li> <p> <code>latest</code> - Use the latest runtime available for the chip. If you specify <code>latest</code> and a new version of the runtime is released, the new version of the runtime is used.</p> </li> <li> <p> <code>grid:r570</code> - <a href=\"https://docs.nvidia.com/vgpu/18.0/index.html\">NVIDIA vGPU software 18</a> </p> </li> <li> <p> <code>grid:r535</code> - <a href=\"https://docs.nvidia.com/vgpu/16.0/index.html\">NVIDIA vGPU software 16</a> </p> </li> </ul> <p>If you don't specify a runtime, Amazon Web Services Deadline Cloud uses <code>latest</code> as the default. However, if you have multiple accelerators and specify <code>latest</code> for some and leave others blank, Amazon Web Services Deadline Cloud raises an exception.</p> <important> <p>Not all runtimes are compatible with all accelerator types:</p> <ul> <li> <p> <code>t4</code> and <code>a10g</code>: Support all runtimes (<code>grid:r570</code>, <code>grid:r535</code>)</p> </li> <li> <p> <code>l4</code> and <code>l40s</code>: Only support <code>grid:r570</code> and newer</p> </li> </ul> <p>All accelerators in a fleet must use the same runtime version. You cannot mix different runtime versions within a single fleet.</p> </important> <note> <p>When you specify <code>latest</code>, it resolves to <code>grid:r570</code> for all currently supported accelerators.</p> </note>"
       }
     },
     "AcceleratorSelection": {
@@ -151,7 +151,7 @@
     "AcceleratorSelections": {
       "base": null,
       "refs": {
-        "AcceleratorCapabilities$selections": "<p>A list of accelerator capabilities requested for this fleet. Only Amazon Elastic Compute Cloud instances that provide these capabilities will be used. For example, if you specify both L4 and T4 chips, Deadline Cloud will use Amazon EC2 instances that have either the L4 or the T4 chip installed.</p>"
+        "AcceleratorCapabilities$selections": "<p>A list of accelerator capabilities requested for this fleet. Only Amazon Elastic Compute Cloud instances that provide these capabilities will be used. For example, if you specify both L4 and T4 chips, Amazon Web Services Deadline Cloud will use Amazon EC2 instances that have either the L4 or the T4 chip installed.</p> <important> <ul> <li> <p>You must specify at least one accelerator selection.</p> </li> <li> <p>You cannot specify the same accelerator name multiple times in the selections list.</p> </li> <li> <p>All accelerators in the selections must use the same runtime version.</p> </li> </ul> </important>"
       }
     },
     "AcceleratorTotalMemoryMiBRange": {
@@ -174,8 +174,7 @@
     },
     "AccessDeniedException": {
       "base": "<p>You don't have permission to perform the action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessKeyId": {
       "base": null,
@@ -270,9 +269,9 @@
       }
     },
     "AssignedSyncInputJobAttachmentsSessionActionDefinition": {
-      "base": "<p>The details for an assigned session action as it relates to a job attachment.</p>",
+      "base": "<p>The assigned session action definition for syncing input job attachments.</p>",
       "refs": {
-        "AssignedSessionActionDefinition$syncInputJobAttachments": "<p>The job attachment to sync with an assigned session action.</p>"
+        "AssignedSessionActionDefinition$syncInputJobAttachments": "<p>The job attachments to sync for the assigned session action.</p>"
       }
     },
     "AssignedTaskRunSessionActionDefinition": {
@@ -283,96 +282,78 @@
     },
     "AssociateMemberToFarmRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateMemberToFarmResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateMemberToFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateMemberToFleetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateMemberToJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateMemberToJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateMemberToQueueRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateMemberToQueueResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssumeFleetRoleForReadRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssumeFleetRoleForReadResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssumeFleetRoleForWorkerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssumeFleetRoleForWorkerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssumeQueueRoleForReadRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssumeQueueRoleForReadResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssumeQueueRoleForUserRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssumeQueueRoleForUserResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssumeQueueRoleForWorkerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssumeQueueRoleForWorkerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Attachments": {
-      "base": "<p>The attachments for jobs.</p>",
+      "base": "<p>The job attachments.</p>",
       "refs": {
         "CreateJobRequest$attachments": "<p>The attachments for the job. Attach files required for the job to run to a render job.</p>",
         "GetJobResponse$attachments": "<p>The attachments for the job.</p>",
@@ -404,7 +385,7 @@
     "AutoScalingMode": {
       "base": null,
       "refs": {
-        "CustomerManagedFleetConfiguration$mode": "<p>The Auto Scaling mode for the customer managed fleet configuration.</p>"
+        "CustomerManagedFleetConfiguration$mode": "<p>The Auto Scaling mode for the customer managed fleet.</p>"
       }
     },
     "AutoScalingStatus": {
@@ -438,13 +419,11 @@
     },
     "BatchGetJobEntityRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetJobEntityResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BoundedString": {
       "base": null,
@@ -569,7 +548,8 @@
       "refs": {
         "DateTimeFilterExpression$operator": "<p>The type of comparison to use to filter the results.</p>",
         "ParameterFilterExpression$operator": "<p>The type of comparison to use to filter results.</p>",
-        "StringFilterExpression$operator": "<p>The type of comparison to use for this search.</p>"
+        "StringFilterExpression$operator": "<p>The type of comparison to use for this search.</p>",
+        "StringListFilterExpression$operator": "<p>The type of comparison to use for this search. ANY_EQUALS and ALL_NOT_EQUALS are supported.</p>"
       }
     },
     "CompletedStatus": {
@@ -580,8 +560,7 @@
     },
     "ConflictException": {
       "base": "<p>Your request has conflicting operations. This can occur if you're trying to perform more than one operation on the same resource at the same time.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConflictExceptionReason": {
       "base": null,
@@ -607,13 +586,11 @@
     },
     "CopyJobTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CopyJobTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CpuArchitectureType": {
       "base": null,
@@ -624,43 +601,35 @@
     },
     "CreateBudgetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBudgetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFarmRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFarmResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFleetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateJobTargetTaskRunStatus": {
       "base": null,
@@ -670,8 +639,7 @@
     },
     "CreateLicenseEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLicenseEndpointRequestSecurityGroupIdsList": {
       "base": null,
@@ -687,88 +655,71 @@
     },
     "CreateLicenseEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLimitRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLimitResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMonitorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMonitorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQueueEnvironmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQueueEnvironmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQueueFleetAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQueueFleetAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQueueLimitAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQueueLimitAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQueueRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQueueResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStorageProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStorageProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatedAt": {
       "base": null,
@@ -853,7 +804,7 @@
       }
     },
     "CustomerManagedFleetConfiguration": {
-      "base": "<p>The details of a customer managed fleet configuration.</p>",
+      "base": "<p>The configuration details for a customer managed fleet.</p>",
       "refs": {
         "FleetConfiguration$customerManaged": "<p>The customer managed fleets within a fleet configuration.</p>"
       }
@@ -867,7 +818,7 @@
     "CustomerManagedWorkerCapabilities": {
       "base": "<p>The worker capabilities for a customer managed workflow.</p>",
       "refs": {
-        "CustomerManagedFleetConfiguration$workerCapabilities": "<p>The worker capabilities for a customer managed fleet configuration.</p>"
+        "CustomerManagedFleetConfiguration$workerCapabilities": "<p>The worker capabilities for the customer managed fleet.</p>"
       }
     },
     "DateTimeFilterExpression": {
@@ -885,135 +836,115 @@
         "UpdateQueueRequest$defaultBudgetAction": "<p>The default action to take for a queue update if a budget isn't configured.</p>"
       }
     },
-    "DeleteBudgetRequest": {
+    "DefaultTaskCount": {
       "base": null,
       "refs": {
+        "StepParameterChunks$defaultTaskCount": "<p>The number of tasks to combine into a single chunk by default.</p>"
       }
+    },
+    "DeleteBudgetRequest": {
+      "base": null,
+      "refs": {}
     },
     "DeleteBudgetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFarmRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFarmResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFleetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLicenseEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLicenseEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLimitRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLimitResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMeteredProductRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMeteredProductResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMonitorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMonitorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQueueEnvironmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQueueEnvironmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQueueFleetAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQueueFleetAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQueueLimitAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQueueLimitAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQueueRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQueueResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteStorageProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteStorageProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DependenciesList": {
       "base": null,
@@ -1066,43 +997,35 @@
     },
     "DisassociateMemberFromFarmRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateMemberFromFarmResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateMemberFromFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateMemberFromFleetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateMemberFromJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateMemberFromJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateMemberFromQueueRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateMemberFromQueueResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DnsName": {
       "base": null,
@@ -1581,33 +1504,27 @@
     },
     "GetBudgetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBudgetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFarmRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFarmResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFleetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobEntityError": {
       "base": "<p>The error for the job entity.</p>",
@@ -1617,23 +1534,19 @@
     },
     "GetJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLicenseEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLicenseEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLicenseEndpointResponseSecurityGroupIdsList": {
       "base": null,
@@ -1649,143 +1562,115 @@
     },
     "GetLimitRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLimitResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMonitorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMonitorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueueEnvironmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueueEnvironmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueueFleetAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueueFleetAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueueLimitAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueueLimitAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueueRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueueResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSessionActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSessionActionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSessionsStatisticsAggregationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSessionsStatisticsAggregationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStepRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStepResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStorageProfileForQueueRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStorageProfileForQueueResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStorageProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStorageProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HostConfiguration": {
       "base": "<p>Provides a script that runs as a worker is starting up that you can use to provide additional configuration for workers in your fleet. </p> <p>To remove a script from a fleet, use the <a href=\"https://docs.aws.amazon.com/deadline-cloud/latest/APIReference/API_UpdateFleet.html\">UpdateFleet</a> operation with the <code>hostConfiguration</code> <code>scriptBody</code> parameter set to an empty string (\"\").</p>",
@@ -1835,32 +1720,32 @@
       "base": null,
       "refs": {
         "CreateFleetRequest$roleArn": "<p>The IAM role ARN for the role that the fleet's workers will use.</p>",
-        "CreateMonitorRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the monitor uses to connect to Deadline Cloud. Every user that signs in to the monitor using IAM Identity Center uses this role to access Deadline Cloud resources.</p>",
+        "CreateMonitorRequest$roleArn": "<p>The Amazon Resource Name of the IAM role that the monitor uses to connect to Deadline Cloud. Every user that signs in to the monitor using IAM Identity Center uses this role to access Deadline Cloud resources.</p>",
         "CreateQueueRequest$roleArn": "<p>The IAM role ARN that workers will use while running jobs for this queue.</p>",
         "GetFleetResponse$roleArn": "<p>The IAM role ARN.</p>",
-        "GetMonitorResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role for the monitor. Users of the monitor use this role to access Deadline Cloud resources.</p>",
+        "GetMonitorResponse$roleArn": "<p>The Amazon Resource Name of the IAM role for the monitor. Users of the monitor use this role to access Deadline Cloud resources.</p>",
         "GetQueueResponse$roleArn": "<p>The IAM role ARN.</p>",
         "JobDetailsEntity$queueRoleArn": "<p>The queue role ARN.</p>",
-        "MonitorSummary$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role for the monitor. Users of the monitor use this role to access Deadline Cloud resources.</p>",
+        "MonitorSummary$roleArn": "<p>The Amazon Resource Name of the IAM role for the monitor. Users of the monitor use this role to access Deadline Cloud resources.</p>",
         "UpdateFleetRequest$roleArn": "<p>The IAM role ARN that the fleet's workers assume while running jobs.</p>",
-        "UpdateMonitorRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the new IAM role to use with the monitor.</p>",
+        "UpdateMonitorRequest$roleArn": "<p>The Amazon Resource Name of the new IAM role to use with the monitor.</p>",
         "UpdateQueueRequest$roleArn": "<p>The IAM role ARN that's used to run jobs from this queue.</p>"
       }
     },
     "IdentityCenterApplicationArn": {
       "base": null,
       "refs": {
-        "CreateMonitorResponse$identityCenterApplicationArn": "<p>The Amazon Resource Name (ARN) that IAM Identity Center assigns to the monitor.</p>",
-        "GetMonitorResponse$identityCenterApplicationArn": "<p>The Amazon Resource Name (ARN) that the IAM Identity Center assigned to the monitor when it was created.</p>",
-        "MonitorSummary$identityCenterApplicationArn": "<p>The Amazon Resource Name (ARN) that the IAM Identity Center assigned to the monitor when it was created.</p>"
+        "CreateMonitorResponse$identityCenterApplicationArn": "<p>The Amazon Resource Name that IAM Identity Center assigns to the monitor.</p>",
+        "GetMonitorResponse$identityCenterApplicationArn": "<p>The Amazon Resource Name that the IAM Identity Center assigned to the monitor when it was created.</p>",
+        "MonitorSummary$identityCenterApplicationArn": "<p>The Amazon Resource Name that the IAM Identity Center assigned to the monitor when it was created.</p>"
       }
     },
     "IdentityCenterInstanceArn": {
       "base": null,
       "refs": {
-        "CreateMonitorRequest$identityCenterInstanceArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center instance that authenticates monitor users.</p>",
-        "GetMonitorResponse$identityCenterInstanceArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center instance responsible for authenticating monitor users.</p>",
-        "MonitorSummary$identityCenterInstanceArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center instance responsible for authenticating monitor users.</p>"
+        "CreateMonitorRequest$identityCenterInstanceArn": "<p>The Amazon Resource Name of the IAM Identity Center instance that authenticates monitor users.</p>",
+        "GetMonitorResponse$identityCenterInstanceArn": "<p>The Amazon Resource Name of the IAM Identity Center instance responsible for authenticating monitor users.</p>",
+        "MonitorSummary$identityCenterInstanceArn": "<p>The Amazon Resource Name of the IAM Identity Center instance responsible for authenticating monitor users.</p>"
       }
     },
     "IdentityCenterPrincipalId": {
@@ -1939,8 +1824,7 @@
     },
     "InternalServerErrorException": {
       "base": "<p>Deadline Cloud can't process your request right now. Try again later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IpAddresses": {
       "base": "<p>The IP addresses for a host.</p>",
@@ -2003,7 +1887,7 @@
     "JobAttachmentsFileSystem": {
       "base": null,
       "refs": {
-        "Attachments$fileSystem": "<p>The file system.</p>"
+        "Attachments$fileSystem": "<p>The file system location for the attachments.</p>"
       }
     },
     "JobDescription": {
@@ -2219,8 +2103,8 @@
       "base": null,
       "refs": {
         "GetJobResponse$targetTaskRunStatus": "<p>The task status with which the job started.</p>",
-        "JobSearchSummary$targetTaskRunStatus": "<p>The task status to start with on the job.</p>",
-        "JobSummary$targetTaskRunStatus": "<p>The task status to start with on the job.</p>",
+        "JobSearchSummary$targetTaskRunStatus": "<p>The task status to update the job's tasks to.</p>",
+        "JobSummary$targetTaskRunStatus": "<p>The task status to update the job's tasks to.</p>",
         "UpdateJobRequest$targetTaskRunStatus": "<p>The task status to update the job's tasks to.</p>"
       }
     },
@@ -2323,203 +2207,163 @@
     },
     "ListAvailableMeteredProductsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAvailableMeteredProductsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBudgetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBudgetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFarmMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFarmMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFarmsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFarmsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFleetMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFleetMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFleetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFleetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobParameterDefinitionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobParameterDefinitionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLicenseEndpointsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLicenseEndpointsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLimitsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLimitsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMeteredProductsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMeteredProductsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMonitorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMonitorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueueEnvironmentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueueEnvironmentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueueFleetAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueueFleetAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueueLimitAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueueLimitAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueueMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueueMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueuesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueuesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSessionActionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSessionActionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSessionsForWorkerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSessionsForWorkerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSessionsForWorkerSummaries": {
       "base": null,
@@ -2529,18 +2373,15 @@
     },
     "ListSessionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSessionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStepConsumersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStepConsumersRequestMaxResultsInteger": {
       "base": null,
@@ -2550,13 +2391,11 @@
     },
     "ListStepConsumersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStepDependenciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStepDependenciesRequestMaxResultsInteger": {
       "base": null,
@@ -2566,68 +2405,55 @@
     },
     "ListStepDependenciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStepsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStepsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStorageProfilesForQueueRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStorageProfilesForQueueResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStorageProfilesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStorageProfilesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTasksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTasksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LogConfiguration": {
       "base": "<p>Log configuration details.</p>",
@@ -2691,7 +2517,7 @@
     "ManifestPropertiesList": {
       "base": null,
       "refs": {
-        "Attachments$manifests": "<p>A list of manifests which describe job attachment configurations.</p>"
+        "Attachments$manifests": "<p>The manifest properties for the attachments.</p>"
       }
     },
     "ManifestPropertiesRootPathString": {
@@ -2877,10 +2703,10 @@
     "NextItemOffset": {
       "base": null,
       "refs": {
-        "SearchJobsResponse$nextItemOffset": "<p>The next incremental starting point after the defined <code>itemOffset</code>.</p>",
-        "SearchStepsResponse$nextItemOffset": "<p>The next incremental starting point after the defined <code>itemOffset</code>.</p>",
-        "SearchTasksResponse$nextItemOffset": "<p>The next incremental starting point after the defined <code>itemOffset</code>.</p>",
-        "SearchWorkersResponse$nextItemOffset": "<p>The next incremental starting point after the defined <code>itemOffset</code>.</p>"
+        "SearchJobsResponse$nextItemOffset": "<p>The next item offset for the search results.</p>",
+        "SearchStepsResponse$nextItemOffset": "<p>The next item offset for the search results.</p>",
+        "SearchTasksResponse$nextItemOffset": "<p>The next item offset for the search results.</p>",
+        "SearchWorkersResponse$nextItemOffset": "<p>The next item offset for the search results.</p>"
       }
     },
     "OutputRelativeDirectoriesList": {
@@ -3015,13 +2841,11 @@
     },
     "PutMeteredProductRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutMeteredProductResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueueBlockedReason": {
       "base": null,
@@ -3196,6 +3020,12 @@
         "QueueSummaries$member": null
       }
     },
+    "RangeConstraint": {
+      "base": null,
+      "refs": {
+        "StepParameterChunks$rangeConstraint": "<p>Specifies whether the chunked ranges must be contiguous or can have gaps between them.</p>"
+      }
+    },
     "RequiredFileSystemLocationNames": {
       "base": null,
       "refs": {
@@ -3242,8 +3072,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The requested resource can't be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResponseBudgetAction": {
       "base": "<p>The details of a budget action.</p>",
@@ -3301,30 +3130,29 @@
       }
     },
     "SearchGroupedFilterExpressions": {
-      "base": "<p>The filter expression, <code>AND</code> or <code>OR</code>, to use when searching among a group of search strings in a resource. <p>You can use two groupings per search each within parenthesis <code>()</code>.</p></p>",
+      "base": "<p>The search terms for a resource.</p>",
       "refs": {
         "SearchFilterExpression$groupFilter": "<p>Filters by group.</p>",
-        "SearchJobsRequest$filterExpressions": "<p>The filter expression, <code>AND</code> or <code>OR</code>, to use when searching among a group of search strings in a resource. <p>You can use two groupings per search each within parenthesis <code>()</code>.</p></p>",
-        "SearchStepsRequest$filterExpressions": "<p>The filter expression, <code>AND</code> or <code>OR</code>, to use when searching among a group of search strings in a resource. <p>You can use two groupings per search each within parenthesis <code>()</code>.</p></p>",
-        "SearchTasksRequest$filterExpressions": "<p>The filter expression, <code>AND</code> or <code>OR</code>, to use when searching among a group of search strings in a resource. <p>You can use two groupings per search each within parenthesis <code>()</code>.</p></p>",
-        "SearchWorkersRequest$filterExpressions": "<p>The filter expression, <code>AND</code> or <code>OR</code>, to use when searching among a group of search strings in a resource. <p>You can use two groupings per search each within parenthesis <code>()</code>.</p></p>"
+        "SearchJobsRequest$filterExpressions": "<p>The search terms for a resource.</p>",
+        "SearchStepsRequest$filterExpressions": "<p>The search terms for a resource.</p>",
+        "SearchTasksRequest$filterExpressions": "<p>The search terms for a resource.</p>",
+        "SearchWorkersRequest$filterExpressions": "<p>The search terms for a resource.</p>"
       }
     },
     "SearchJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchJobsRequestItemOffsetInteger": {
       "base": null,
       "refs": {
-        "SearchJobsRequest$itemOffset": "<p>Defines how far into the scrollable list to start the return of results.</p>"
+        "SearchJobsRequest$itemOffset": "<p>The offset for the search results.</p>"
       }
     },
     "SearchJobsRequestPageSizeInteger": {
       "base": null,
       "refs": {
-        "SearchJobsRequest$pageSize": "<p>Specifies the number of items per page for the resource.</p>"
+        "SearchJobsRequest$pageSize": "<p>Specifies the number of results to return.</p>"
       }
     },
     "SearchJobsRequestQueueIdsList": {
@@ -3335,8 +3163,7 @@
     },
     "SearchJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchSortExpression": {
       "base": "<p>The resources to search.</p>",
@@ -3355,19 +3182,18 @@
     },
     "SearchStepsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchStepsRequestItemOffsetInteger": {
       "base": null,
       "refs": {
-        "SearchStepsRequest$itemOffset": "<p>Defines how far into the scrollable list to start the return of results.</p>"
+        "SearchStepsRequest$itemOffset": "<p>The offset for the search results.</p>"
       }
     },
     "SearchStepsRequestPageSizeInteger": {
       "base": null,
       "refs": {
-        "SearchStepsRequest$pageSize": "<p>Specifies the number of items per page for the resource.</p>"
+        "SearchStepsRequest$pageSize": "<p>Specifies the number of results to return.</p>"
       }
     },
     "SearchStepsRequestQueueIdsList": {
@@ -3378,24 +3204,22 @@
     },
     "SearchStepsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchTasksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchTasksRequestItemOffsetInteger": {
       "base": null,
       "refs": {
-        "SearchTasksRequest$itemOffset": "<p>Defines how far into the scrollable list to start the return of results.</p>"
+        "SearchTasksRequest$itemOffset": "<p>The offset for the search results.</p>"
       }
     },
     "SearchTasksRequestPageSizeInteger": {
       "base": null,
       "refs": {
-        "SearchTasksRequest$pageSize": "<p>Specifies the number of items per page for the resource.</p>"
+        "SearchTasksRequest$pageSize": "<p>Specifies the number of results to return.</p>"
       }
     },
     "SearchTasksRequestQueueIdsList": {
@@ -3406,8 +3230,7 @@
     },
     "SearchTasksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchTerm": {
       "base": null,
@@ -3429,8 +3252,7 @@
     },
     "SearchWorkersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchWorkersRequestFleetIdsList": {
       "base": null,
@@ -3441,19 +3263,18 @@
     "SearchWorkersRequestItemOffsetInteger": {
       "base": null,
       "refs": {
-        "SearchWorkersRequest$itemOffset": "<p>Defines how far into the scrollable list to start the return of results.</p>"
+        "SearchWorkersRequest$itemOffset": "<p>The offset for the search results.</p>"
       }
     },
     "SearchWorkersRequestPageSizeInteger": {
       "base": null,
       "refs": {
-        "SearchWorkersRequest$pageSize": "<p>Specifies the number of items per page for the resource.</p>"
+        "SearchWorkersRequest$pageSize": "<p>Specifies the number of results to return.</p>"
       }
     },
     "SearchWorkersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SecretAccessKey": {
       "base": null,
@@ -3469,7 +3290,7 @@
       }
     },
     "ServiceManagedEc2FleetConfiguration": {
-      "base": "<p>The configuration details for a service managed Amazon EC2 fleet.</p>",
+      "base": "<p>The configuration details for a service managed EC2 fleet.</p>",
       "refs": {
         "FleetConfiguration$serviceManagedEc2": "<p>The service managed Amazon EC2 instances for a fleet configuration.</p>"
       }
@@ -3477,13 +3298,13 @@
     "ServiceManagedEc2InstanceCapabilities": {
       "base": "<p>The Amazon EC2 instance capabilities.</p>",
       "refs": {
-        "ServiceManagedEc2FleetConfiguration$instanceCapabilities": "<p>The Amazon EC2 instance capabilities.</p>"
+        "ServiceManagedEc2FleetConfiguration$instanceCapabilities": "<p>The instance capabilities for the service managed EC2 fleet.</p>"
       }
     },
     "ServiceManagedEc2InstanceMarketOptions": {
       "base": "<p>The details of the Amazon EC2 instance market options for a service managed fleet.</p>",
       "refs": {
-        "ServiceManagedEc2FleetConfiguration$instanceMarketOptions": "<p>The Amazon EC2 market type.</p>"
+        "ServiceManagedEc2FleetConfiguration$instanceMarketOptions": "<p>The instance market options for the service managed EC2 fleet.</p>"
       }
     },
     "ServiceManagedFleetOperatingSystemFamily": {
@@ -3494,8 +3315,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>You exceeded your service quota. Service quotas, also referred to as limits, are the maximum number of service resources or operations for your Amazon Web Services account.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceQuotaExceededExceptionReason": {
       "base": null,
@@ -3521,10 +3341,11 @@
         "AssignedSessionAction$sessionActionId": "<p>The session action ID for the assigned session.</p>",
         "GetSessionActionRequest$sessionActionId": "<p>The session action ID for the session.</p>",
         "GetSessionActionResponse$sessionActionId": "<p>The session action ID.</p>",
-        "GetTaskResponse$latestSessionActionId": "<p>The latest session ID for the task.</p>",
+        "GetTaskResponse$latestSessionActionId": "<p>The latest session action ID for the task.</p>",
         "SessionActionIdList$member": null,
         "SessionActionSummary$sessionActionId": "<p>The session action ID.</p>",
-        "TaskSummary$latestSessionActionId": "<p>The latest session action for the task.</p>",
+        "TaskSearchSummary$latestSessionActionId": "<p>The latest session action ID for the task.</p>",
+        "TaskSummary$latestSessionActionId": "<p>The latest session action ID for the task.</p>",
         "UpdatedSessionActions$key": null
       }
     },
@@ -3650,13 +3471,11 @@
     },
     "StartSessionsStatisticsAggregationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartSessionsStatisticsAggregationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartedAt": {
       "base": null,
@@ -3784,7 +3603,7 @@
     "StepId": {
       "base": null,
       "refs": {
-        "AssignedSyncInputJobAttachmentsSessionActionDefinition$stepId": "<p>The step ID.</p>",
+        "AssignedSyncInputJobAttachmentsSessionActionDefinition$stepId": "<p>The step ID for the assigned sync input job attachments session action.</p>",
         "AssignedTaskRunSessionActionDefinition$stepId": "<p>The step ID.</p>",
         "DependenciesList$member": null,
         "GetStepRequest$stepId": "<p>The step ID.</p>",
@@ -3800,8 +3619,8 @@
         "StepDetailsIdentifiers$stepId": "<p>The step ID.</p>",
         "StepSearchSummary$stepId": "<p>The step ID.</p>",
         "StepSummary$stepId": "<p>The step ID.</p>",
-        "SyncInputJobAttachmentsSessionActionDefinition$stepId": "<p>The step ID for the step in the job attachment.</p>",
-        "SyncInputJobAttachmentsSessionActionDefinitionSummary$stepId": "<p>The step ID of the step in the job attachment.</p>",
+        "SyncInputJobAttachmentsSessionActionDefinition$stepId": "<p>The step ID for the sync input job attachments session action.</p>",
+        "SyncInputJobAttachmentsSessionActionDefinitionSummary$stepId": "<p>The step ID for the sync input job attachments session action summary.</p>",
         "TaskRunSessionActionDefinition$stepId": "<p>The step ID.</p>",
         "TaskRunSessionActionDefinitionSummary$stepId": "<p>The step ID.</p>",
         "TaskSearchSummary$stepId": "<p>The step ID.</p>",
@@ -3829,6 +3648,12 @@
       "base": "<p>The details of a step parameter.</p>",
       "refs": {
         "StepParameterList$member": null
+      }
+    },
+    "StepParameterChunks": {
+      "base": "<p>Defines how a step parameter range should be divided into chunks.</p>",
+      "refs": {
+        "StepParameter$chunks": "<p>The configuration for task chunking.</p>"
       }
     },
     "StepParameterList": {
@@ -3883,8 +3708,8 @@
       "base": null,
       "refs": {
         "GetStepResponse$targetTaskRunStatus": "<p>The task status with which the job started.</p>",
-        "StepSearchSummary$targetTaskRunStatus": "<p>The task status to start with on the job.</p>",
-        "StepSummary$targetTaskRunStatus": "<p>The task status to start with on the job.</p>",
+        "StepSearchSummary$targetTaskRunStatus": "<p>The task status to update the job's tasks to.</p>",
+        "StepSummary$targetTaskRunStatus": "<p>The task status to update the job's tasks to.</p>",
         "UpdateStepRequest$targetTaskRunStatus": "<p>The task status to update the step's tasks to.</p>"
       }
     },
@@ -3894,14 +3719,14 @@
         "AllowedStorageProfileIds$member": null,
         "CreateJobRequest$storageProfileId": "<p>The storage profile ID for the storage profile to connect to the job.</p>",
         "CreateStorageProfileResponse$storageProfileId": "<p>The storage profile ID.</p>",
-        "CustomerManagedFleetConfiguration$storageProfileId": "<p>The storage profile ID.</p>",
+        "CustomerManagedFleetConfiguration$storageProfileId": "<p>The storage profile ID for the customer managed fleet.</p>",
         "DeleteStorageProfileRequest$storageProfileId": "<p>The storage profile ID of the storage profile to delete.</p>",
         "GetJobResponse$storageProfileId": "<p>The storage profile ID associated with the job.</p>",
         "GetStorageProfileForQueueRequest$storageProfileId": "<p>The storage profile ID for the storage profile in the queue.</p>",
         "GetStorageProfileForQueueResponse$storageProfileId": "<p>The storage profile ID.</p>",
         "GetStorageProfileRequest$storageProfileId": "<p>The storage profile ID.</p>",
         "GetStorageProfileResponse$storageProfileId": "<p>The storage profile ID.</p>",
-        "ServiceManagedEc2FleetConfiguration$storageProfileId": "<p>The storage profile ID.</p>",
+        "ServiceManagedEc2FleetConfiguration$storageProfileId": "<p>The storage profile ID for the service managed EC2 fleet.</p>",
         "StorageProfileSummary$storageProfileId": "<p>The storage profile ID.</p>",
         "UpdateStorageProfileRequest$storageProfileId": "<p>The storage profile ID to update.</p>"
       }
@@ -4036,6 +3861,7 @@
         "StepSummary$lifecycleStatusMessage": "<p>A message that describes the lifecycle of the step.</p>",
         "StringFilterExpression$name": "<p>The field name to search.</p>",
         "StringList$member": null,
+        "StringListFilterExpression$name": "<p>The field name to search.</p>",
         "TagResourceRequest$resourceArn": "<p>The ARN of the resource to apply tags to.</p>",
         "Tags$key": null,
         "Tags$value": null,
@@ -4056,7 +3882,8 @@
     "StringFilter": {
       "base": null,
       "refs": {
-        "StringFilterExpression$value": "<p>The string to search for.</p>"
+        "StringFilterExpression$value": "<p>The string to search for.</p>",
+        "StringFilterList$member": null
       }
     },
     "StringFilterExpression": {
@@ -4065,10 +3892,22 @@
         "SearchFilterExpression$stringFilter": "<p>Filters by a string.</p>"
       }
     },
+    "StringFilterList": {
+      "base": null,
+      "refs": {
+        "StringListFilterExpression$values": "<p>The list of string values to search for.</p>"
+      }
+    },
     "StringList": {
       "base": null,
       "refs": {
         "UntagResourceRequest$tagKeys": "<p>They keys of the tag.</p>"
+      }
+    },
+    "StringListFilterExpression": {
+      "base": "<p>Searches for a match within a list of strings.</p>",
+      "refs": {
+        "SearchFilterExpression$stringListFilter": "<p>Filters by a list of string values.</p>"
       }
     },
     "Subdomain": {
@@ -4088,15 +3927,15 @@
       }
     },
     "SyncInputJobAttachmentsSessionActionDefinition": {
-      "base": "<p>The job attachment in a session action to sync.</p>",
+      "base": "<p>The session action definition for syncing input job attachments.</p>",
       "refs": {
-        "SessionActionDefinition$syncInputJobAttachments": "<p>The job attachments to sync with a session action.</p>"
+        "SessionActionDefinition$syncInputJobAttachments": "<p>The session action definition for syncing input job attachments.</p>"
       }
     },
     "SyncInputJobAttachmentsSessionActionDefinitionSummary": {
-      "base": "<p>The details of a synced job attachment.</p>",
+      "base": "<p>The summary of the session action definition for syncing input job attachments.</p>",
       "refs": {
-        "SessionActionDefinitionSummary$syncInputJobAttachments": "<p>The job attachments to sync with the session action definition.</p>"
+        "SessionActionDefinitionSummary$syncInputJobAttachments": "<p>The session action definition summary for syncing input job attachments.</p>"
       }
     },
     "SyntheticTimestamp_date_time": {
@@ -4116,22 +3955,21 @@
     "TagPropagationMode": {
       "base": null,
       "refs": {
-        "CustomerManagedFleetConfiguration$tagPropagationMode": "<p>Specifies whether tags associated with a fleet are attached to workers when the worker is launched. </p> <p>When the <code>tagPropagationMode</code> is set to <code>PROPAGATE_TAGS_TO_WORKERS_AT_LAUNCH</code> any tag associated with a fleet is attached to workers when they launch. If the tags for a fleet change, the tags associated with running workers <b>do not</b> change.</p> <p>If you don't specify <code>tagPropagationMode</code>, the default is <code>NO_PROPAGATION</code>.</p>"
+        "CustomerManagedFleetConfiguration$tagPropagationMode": "<p>The tag propagation mode for the customer managed fleet.</p>"
       }
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Tags": {
       "base": null,
       "refs": {
+        "CreateBudgetRequest$tags": "<p>Each tag consists of a tag key and a tag value. Tag keys and values are both required, but tag values can be empty strings.</p>",
         "CreateFarmRequest$tags": "<p>The tags to add to your farm. Each tag consists of a tag key and a tag value. Tag keys and values are both required, but tag values can be empty strings.</p>",
         "CreateFleetRequest$tags": "<p>Each tag consists of a tag key and a tag value. Tag keys and values are both required, but tag values can be empty strings.</p>",
         "CreateLicenseEndpointRequest$tags": "<p>Each tag consists of a tag key and a tag value. Tag keys and values are both required, but tag values can be empty strings.</p>",
@@ -4140,6 +3978,12 @@
         "CreateWorkerRequest$tags": "<p>Each tag consists of a tag key and a tag value. Tag keys and values are both required, but tag values can be empty strings.</p>",
         "ListTagsForResourceResponse$tags": "<p>Each tag consists of a tag key and a tag value. Tag keys and values are both required, but tag values can be empty strings.</p>",
         "TagResourceRequest$tags": "<p>Each tag consists of a tag key and a tag value. Tag keys and values are both required, but tag values can be empty strings.</p>"
+      }
+    },
+    "TargetRuntimeSeconds": {
+      "base": null,
+      "refs": {
+        "StepParameterChunks$targetRuntimeSeconds": "<p>The number of seconds to aim for when forming chunks.</p>"
       }
     },
     "TaskFailureRetryCount": {
@@ -4310,8 +4154,7 @@
     },
     "ThrottlingException": {
       "base": "<p>Your request exceeded a request rate quota.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -4337,43 +4180,35 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBudgetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBudgetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFarmRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFarmResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFleetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateJobLifecycleStatus": {
       "base": null,
@@ -4383,53 +4218,43 @@
     },
     "UpdateJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLimitRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLimitResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMonitorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMonitorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQueueEnvironmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQueueEnvironmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQueueFleetAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQueueFleetAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQueueFleetAssociationStatus": {
       "base": null,
@@ -4439,13 +4264,11 @@
     },
     "UpdateQueueLimitAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQueueLimitAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQueueLimitAssociationStatus": {
       "base": null,
@@ -4455,63 +4278,51 @@
     },
     "UpdateQueueRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQueueResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStepRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStepResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStorageProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStorageProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkerScheduleInterval": {
       "base": null,
@@ -4521,13 +4332,11 @@
     },
     "UpdateWorkerScheduleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkerScheduleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatedAt": {
       "base": null,
@@ -4688,8 +4497,7 @@
     },
     "ValidationException": {
       "base": "<p>The request isn't valid. This can occur if your request contains malformed JSON or unsupported characters.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>The details of a validation exception.</p>",
@@ -4712,15 +4520,15 @@
     "VpcConfiguration": {
       "base": "<p>The configuration options for a service managed fleet's VPC.</p>",
       "refs": {
-        "ServiceManagedEc2FleetConfiguration$vpcConfiguration": "<p>The VPC configuration details for a service managed Amazon EC2 fleet.</p>"
+        "ServiceManagedEc2FleetConfiguration$vpcConfiguration": "<p>The VPC configuration for the service managed EC2 fleet.</p>"
       }
     },
     "VpcId": {
       "base": null,
       "refs": {
         "CreateLicenseEndpointRequest$vpcId": "<p>The VPC (virtual private cloud) ID to use with the license endpoint.</p>",
-        "GetLicenseEndpointResponse$vpcId": "<p>The VCP(virtual private cloud) ID associated with the license endpoint.</p>",
-        "LicenseEndpointSummary$vpcId": "<p>The VCP(virtual private cloud) ID associated with the license endpoint.</p>"
+        "GetLicenseEndpointResponse$vpcId": "<p>The VPC (virtual private cloud) ID associated with the license endpoint.</p>",
+        "LicenseEndpointSummary$vpcId": "<p>The VPC (virtual private cloud) ID associated with the license endpoint.</p>"
       }
     },
     "VpcResourceConfigurationArn": {

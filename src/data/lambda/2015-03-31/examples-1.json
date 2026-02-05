@@ -100,6 +100,10 @@
             "S3Key": "function.zip"
           },
           "Description": "Process image objects from Amazon S3.",
+          "DurableConfig": {
+            "ExecutionTimeout": 31622400,
+            "RetentionPeriodInDays": 30
+          },
           "Environment": {
             "Variables": {
               "BUCKET": "my-bucket-1xpuxmplzrlbh",
@@ -125,6 +129,10 @@
           "CodeSha256": "YFgDgEKG3ugvF1+pX64gV6tu9qNuIYNUdgJm8nCxsm4=",
           "CodeSize": 5797206,
           "Description": "Process image objects from Amazon S3.",
+          "DurableConfig": {
+            "ExecutionTimeout": 31622400,
+            "RetentionPeriodInDays": 30
+          },
           "Environment": {
             "Variables": {
               "BUCKET": "my-bucket-1xpuxmplzrlbh",
@@ -315,6 +323,10 @@
             "CodeSha256": "YFgDgEKG3ugvF1+pX64gV6tu9qNuIYNUdgJm8nCxsm4=",
             "CodeSize": 5797206,
             "Description": "Process image objects from Amazon S3.",
+            "DurableConfig": {
+              "ExecutionTimeout": 31622400,
+              "RetentionPeriodInDays": 30
+            },
             "Environment": {
               "Variables": {
                 "BUCKET": "my-bucket-1xpuxmplzrlbh",
@@ -370,6 +382,10 @@
           "CodeSha256": "YFgDgEKG3ugvF1+pX64gV6tu9qNuIYNUdgJm8nCxsm4=",
           "CodeSize": 5797206,
           "Description": "Process image objects from Amazon S3.",
+          "DurableConfig": {
+            "ExecutionTimeout": 31622400,
+            "RetentionPeriodInDays": 30
+          },
           "Environment": {
             "Variables": {
               "BUCKET": "my-bucket-1xpuxmplzrlbh",
@@ -526,7 +542,9 @@
     "Invoke": [
       {
         "input": {
+          "DurableExecutionName": "myExecution",
           "FunctionName": "my-function",
+          "InvocationType": "Event",
           "Payload": "{}",
           "Qualifier": "1"
         },
@@ -677,6 +695,10 @@
               "CodeSha256": "sU0cJ2/hOZevwV/lTxCuQqK3gDZP3i8gUoqUUVRmY6E=",
               "CodeSize": 266,
               "Description": "",
+              "DurableConfig": {
+                "ExecutionTimeout": 31622400,
+                "RetentionPeriodInDays": 30
+              },
               "FunctionArn": "arn:aws:lambda:us-west-2:123456789012:function:my-function",
               "FunctionName": "my-function",
               "Handler": "index.handler",
@@ -821,6 +843,10 @@
               "CodeSha256": "YFgDgEKG3ugvF1+pX64gV6tu9qNuIYNUdgJm8nCxsm4=",
               "CodeSize": 5797206,
               "Description": "Process image objects from Amazon S3.",
+              "DurableConfig": {
+                "ExecutionTimeout": 31622400,
+                "RetentionPeriodInDays": 30
+              },
               "Environment": {
                 "Variables": {
                   "BUCKET": "my-bucket-1xpuxmplzrlbh",
@@ -846,6 +872,10 @@
               "CodeSha256": "YFgDgEKG3ugvF1+pX64gV6tu9qNuIYNUdgJm8nCxsm4=",
               "CodeSize": 5797206,
               "Description": "Process image objects from Amazon S3.",
+              "DurableConfig": {
+                "ExecutionTimeout": 31622400,
+                "RetentionPeriodInDays": 30
+              },
               "Environment": {
                 "Variables": {
                   "BUCKET": "my-bucket-1xpuxmplzrlbh",
@@ -1139,6 +1169,10 @@
     "UpdateFunctionConfiguration": [
       {
         "input": {
+          "DurableConfig": {
+            "ExecutionTimeout": 3600,
+            "RetentionPeriodInDays": 45
+          },
           "FunctionName": "my-function",
           "MemorySize": 256
         },
@@ -1146,6 +1180,10 @@
           "CodeSha256": "PFn4S+er27qk+UuZSTKEQfNKG/XNn7QJs90mJgq6oH8=",
           "CodeSize": 308,
           "Description": "",
+          "DurableConfig": {
+            "ExecutionTimeout": 3600,
+            "RetentionPeriodInDays": 45
+          },
           "FunctionArn": "arn:aws:lambda:us-east-2:123456789012:function:my-function",
           "FunctionName": "my-function",
           "Handler": "index.handler",

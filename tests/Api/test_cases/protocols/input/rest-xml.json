@@ -542,6 +542,84 @@
         ]
     },
     {
+        "description": "Test cases for xmlName at member level operation",
+        "metadata": {
+            "apiVersion": "2019-12-16",
+            "auth": [
+                "aws.auth#sigv4"
+            ],
+            "endpointPrefix": "restxml",
+            "protocol": "rest-xml",
+            "protocols": [
+                "rest-xml"
+            ],
+            "serviceFullName": "RestXml",
+            "serviceId": "Rest Xml Protocol",
+            "signatureVersion": "v4",
+            "signingName": "RestXml",
+            "uid": "rest-xml-protocol-2019-12-16"
+        },
+        "shapes": {
+            "MyShapeInputAndOutput": {
+                "type": "structure",
+                "members": {
+                    "nested": {
+                        "shape": "Payload",
+                        "locationName": "CustomPayload"
+                    }
+                },
+                "locationName": "MyShape"
+            },
+            "Payload": {
+                "type": "structure",
+                "members": {
+                    "name": {
+                        "shape": "String"
+                    }
+                }
+            },
+            "String": {
+                "type": "string"
+            }
+        },
+        "cases": [
+            {
+                "id": "XMLNameAtMemberLevel",
+                "given": {
+                    "name": "XMLNameAtMemberLevel",
+                    "http": {
+                        "method": "PUT",
+                        "requestUri": "/XMLNameAtMemberLevel",
+                        "responseCode": 200
+                    },
+                    "input": {
+                        "shape": "MyShapeInputAndOutput",
+                        "locationName": "XMLNameAtMemberLevelRequest"
+                    },
+                    "documentation": "<p>The following example serializes a body that uses an XML name, changing the wrapper name.</p>",
+                    "idempotent": true
+                },
+                "description": "Serializes a payload using a wrapper name based on the xmlName",
+                "params": {
+                    "nested": {
+                        "name": "TestParameterValue"
+                    }
+                },
+                "serialized": {
+                    "method": "PUT",
+                    "uri": "/XMLNameAtMemberLevel",
+                    "body": "<MyShape><CustomPayload><name>TestParameterValue</name></CustomPayload></MyShape>",
+                    "headers": {
+                        "Content-Type": "application/xml"
+                    },
+                    "requireHeaders": [
+                        "Content-Length"
+                    ]
+                }
+            }
+        ]
+    },
+    {
         "description": "Test cases for ConstantAndVariableQueryString operation",
         "metadata": {
             "apiVersion": "2019-12-16",

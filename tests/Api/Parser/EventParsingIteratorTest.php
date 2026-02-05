@@ -122,7 +122,6 @@ class EventParsingIteratorTest extends TestCase
     {
         $reflectedIteratorClass = new \ReflectionClass(get_class($iterator));
         $shapeProperty = $reflectedIteratorClass->getProperty('shape');
-        $shapeProperty->setAccessible(true);
         $shape = $shapeProperty->getValue($iterator);
         foreach ($iterator as $event) {
             $this->parsedEventMatchesExpectedType($shape, $event);

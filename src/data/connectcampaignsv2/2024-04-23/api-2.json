@@ -168,7 +168,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCampaignState":{
       "name":"GetCampaignState",
@@ -217,7 +218,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetInstanceCommunicationLimits":{
       "name":"GetInstanceCommunicationLimits",
@@ -233,7 +235,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetInstanceOnboardingJobStatus":{
       "name":"GetInstanceOnboardingJobStatus",
@@ -249,7 +252,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCampaigns":{
       "name":"ListCampaigns",
@@ -264,7 +268,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListConnectInstanceIntegrations":{
       "name":"ListConnectInstanceIntegrations",
@@ -281,7 +286,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -643,10 +649,17 @@
       },
       "exception":true
     },
+    "AgentAction":{
+      "type":"string",
+      "enum":["DISCARD"]
+    },
+    "AgentActions":{
+      "type":"list",
+      "member":{"shape":"AgentAction"}
+    },
     "AgentlessConfig":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AnswerMachineDetectionConfig":{
       "type":"structure",
@@ -696,8 +709,7 @@
         "id",
         "arn",
         "name",
-        "connectInstanceId",
-        "channelSubtypeConfig"
+        "connectInstanceId"
       ],
       "members":{
         "id":{"shape":"CampaignId"},
@@ -705,6 +717,7 @@
         "name":{"shape":"CampaignName"},
         "connectInstanceId":{"shape":"InstanceId"},
         "channelSubtypeConfig":{"shape":"ChannelSubtypeConfig"},
+        "type":{"shape":"ExternalCampaignType"},
         "source":{"shape":"Source"},
         "connectCampaignFlowArn":{"shape":"Arn"},
         "schedule":{"shape":"Schedule"},
@@ -734,8 +747,8 @@
     "CampaignId":{
       "type":"string",
       "max":256,
-      "min":0,
-      "pattern":"[a-zA-Z0-9\\-:/]*"
+      "min":1,
+      "pattern":"[-:/a-zA-Z0-9]+"
     },
     "CampaignName":{
       "type":"string",
@@ -768,6 +781,7 @@
         "name":{"shape":"CampaignName"},
         "connectInstanceId":{"shape":"InstanceId"},
         "channelSubtypes":{"shape":"ChannelSubtypeList"},
+        "type":{"shape":"ExternalCampaignType"},
         "schedule":{"shape":"Schedule"},
         "connectCampaignFlowArn":{"shape":"Arn"}
       }
@@ -787,7 +801,8 @@
       "enum":[
         "TELEPHONY",
         "SMS",
-        "EMAIL"
+        "EMAIL",
+        "WHATSAPP"
       ]
     },
     "ChannelSubtypeConfig":{
@@ -795,7 +810,8 @@
       "members":{
         "telephony":{"shape":"TelephonyChannelSubtypeConfig"},
         "sms":{"shape":"SmsChannelSubtypeConfig"},
-        "email":{"shape":"EmailChannelSubtypeConfig"}
+        "email":{"shape":"EmailChannelSubtypeConfig"},
+        "whatsApp":{"shape":"WhatsAppChannelSubtypeConfig"}
       }
     },
     "ChannelSubtypeList":{
@@ -807,7 +823,8 @@
       "members":{
         "telephony":{"shape":"TelephonyChannelSubtypeParameters"},
         "sms":{"shape":"SmsChannelSubtypeParameters"},
-        "email":{"shape":"EmailChannelSubtypeParameters"}
+        "email":{"shape":"EmailChannelSubtypeParameters"},
+        "whatsApp":{"shape":"WhatsAppChannelSubtypeParameters"}
       },
       "union":true
     },
@@ -876,7 +893,8 @@
         "localTimeZoneConfig":{"shape":"LocalTimeZoneConfig"},
         "telephony":{"shape":"TimeWindow"},
         "sms":{"shape":"TimeWindow"},
-        "email":{"shape":"TimeWindow"}
+        "email":{"shape":"TimeWindow"},
+        "whatsApp":{"shape":"TimeWindow"}
       }
     },
     "CommunicationTimeConfigType":{
@@ -884,7 +902,8 @@
       "enum":[
         "TELEPHONY",
         "SMS",
-        "EMAIL"
+        "EMAIL",
+        "WHATSAPP"
       ]
     },
     "ConflictException":{
@@ -913,13 +932,13 @@
       "type":"structure",
       "required":[
         "name",
-        "connectInstanceId",
-        "channelSubtypeConfig"
+        "connectInstanceId"
       ],
       "members":{
         "name":{"shape":"CampaignName"},
         "connectInstanceId":{"shape":"InstanceId"},
         "channelSubtypeConfig":{"shape":"ChannelSubtypeConfig"},
+        "type":{"shape":"ExternalCampaignType"},
         "source":{"shape":"Source"},
         "connectCampaignFlowArn":{"shape":"Arn"},
         "schedule":{"shape":"Schedule"},
@@ -1119,8 +1138,8 @@
     "DialRequestId":{
       "type":"string",
       "max":256,
-      "min":0,
-      "pattern":"[a-zA-Z0-9_\\-.]*"
+      "min":1,
+      "pattern":"[-_.a-zA-Z0-9]+"
     },
     "EmailAddress":{
       "type":"string",
@@ -1211,6 +1230,13 @@
         "Campaign-SMS",
         "Campaign-Telephony",
         "Campaign-Orchestration"
+      ]
+    },
+    "ExternalCampaignType":{
+      "type":"string",
+      "enum":[
+        "MANAGED",
+        "JOURNEY"
       ]
     },
     "FailedCampaignStateResponse":{
@@ -1380,8 +1406,8 @@
     "InstanceId":{
       "type":"string",
       "max":256,
-      "min":0,
-      "pattern":"[a-zA-Z0-9_\\-.]*"
+      "min":1,
+      "pattern":"[-_.a-zA-Z0-9]+"
     },
     "InstanceIdFilter":{
       "type":"structure",
@@ -1440,7 +1466,8 @@
       "type":"structure",
       "members":{
         "customerProfiles":{"shape":"CustomerProfilesIntegrationConfig"},
-        "qConnect":{"shape":"QConnectIntegrationConfig"}
+        "qConnect":{"shape":"QConnectIntegrationConfig"},
+        "lambda":{"shape":"LambdaIntegrationConfig"}
       },
       "union":true
     },
@@ -1448,7 +1475,8 @@
       "type":"structure",
       "members":{
         "customerProfiles":{"shape":"CustomerProfilesIntegrationIdentifier"},
-        "qConnect":{"shape":"QConnectIntegrationIdentifier"}
+        "qConnect":{"shape":"QConnectIntegrationIdentifier"},
+        "lambda":{"shape":"LambdaIntegrationIdentifier"}
       },
       "union":true
     },
@@ -1456,7 +1484,8 @@
       "type":"structure",
       "members":{
         "customerProfiles":{"shape":"CustomerProfilesIntegrationSummary"},
-        "qConnect":{"shape":"QConnectIntegrationSummary"}
+        "qConnect":{"shape":"QConnectIntegrationSummary"},
+        "lambda":{"shape":"LambdaIntegrationSummary"}
       },
       "union":true
     },
@@ -1531,6 +1560,33 @@
     "Iso8601Time":{
       "type":"string",
       "pattern":"T\\d{2}:\\d{2}"
+    },
+    "LambdaArn":{
+      "type":"string",
+      "max":140,
+      "min":1,
+      "pattern":"arn:aws[a-zA-Z-]*:lambda:[a-z]{2}(-gov)?-[a-z]+-\\d:\\d{12}:function:([a-zA-Z0-9-_]+)(:([a-zA-Z0-9-_]+))?"
+    },
+    "LambdaIntegrationConfig":{
+      "type":"structure",
+      "required":["functionArn"],
+      "members":{
+        "functionArn":{"shape":"LambdaArn"}
+      }
+    },
+    "LambdaIntegrationIdentifier":{
+      "type":"structure",
+      "required":["functionArn"],
+      "members":{
+        "functionArn":{"shape":"LambdaArn"}
+      }
+    },
+    "LambdaIntegrationSummary":{
+      "type":"structure",
+      "required":["functionArn"],
+      "members":{
+        "functionArn":{"shape":"LambdaArn"}
+      }
     },
     "ListCampaignsRequest":{
       "type":"structure",
@@ -1673,6 +1729,18 @@
       "required":["bandwidthAllocation"],
       "members":{
         "bandwidthAllocation":{"shape":"BandwidthAllocation"}
+      }
+    },
+    "PreviewConfig":{
+      "type":"structure",
+      "required":[
+        "bandwidthAllocation",
+        "timeoutConfig"
+      ],
+      "members":{
+        "bandwidthAllocation":{"shape":"BandwidthAllocation"},
+        "timeoutConfig":{"shape":"TimeoutConfig"},
+        "agentActions":{"shape":"AgentActions"}
       }
     },
     "ProfileId":{
@@ -1875,6 +1943,12 @@
           "locationName":"id"
         }
       }
+    },
+    "RingTimeout":{
+      "type":"integer",
+      "box":true,
+      "max":60,
+      "min":15
     },
     "Schedule":{
       "type":"structure",
@@ -2109,7 +2183,8 @@
         "destinationPhoneNumber":{"shape":"DestinationPhoneNumber"},
         "attributes":{"shape":"Attributes"},
         "connectSourcePhoneNumber":{"shape":"SourcePhoneNumber"},
-        "answerMachineDetectionConfig":{"shape":"AnswerMachineDetectionConfig"}
+        "answerMachineDetectionConfig":{"shape":"AnswerMachineDetectionConfig"},
+        "ringTimeout":{"shape":"RingTimeout"}
       }
     },
     "TelephonyOutboundConfig":{
@@ -2118,7 +2193,8 @@
       "members":{
         "connectContactFlowId":{"shape":"ContactFlowId"},
         "connectSourcePhoneNumber":{"shape":"SourcePhoneNumber"},
-        "answerMachineDetectionConfig":{"shape":"AnswerMachineDetectionConfig"}
+        "answerMachineDetectionConfig":{"shape":"AnswerMachineDetectionConfig"},
+        "ringTimeout":{"shape":"RingTimeout"}
       }
     },
     "TelephonyOutboundMode":{
@@ -2126,7 +2202,8 @@
       "members":{
         "progressive":{"shape":"ProgressiveConfig"},
         "predictive":{"shape":"PredictiveConfig"},
-        "agentless":{"shape":"AgentlessConfig"}
+        "agentless":{"shape":"AgentlessConfig"},
+        "preview":{"shape":"PreviewConfig"}
       },
       "union":true
     },
@@ -2180,6 +2257,19 @@
       "max":50,
       "min":0,
       "pattern":"[a-zA-Z0-9_\\-/]*"
+    },
+    "TimeoutConfig":{
+      "type":"structure",
+      "required":["durationInSeconds"],
+      "members":{
+        "durationInSeconds":{"shape":"TimeoutDuration"}
+      }
+    },
+    "TimeoutDuration":{
+      "type":"integer",
+      "box":true,
+      "max":300,
+      "min":1
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -2321,6 +2411,49 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "WhatsAppChannelSubtypeConfig":{
+      "type":"structure",
+      "required":[
+        "outboundMode",
+        "defaultOutboundConfig"
+      ],
+      "members":{
+        "capacity":{"shape":"Capacity"},
+        "outboundMode":{"shape":"WhatsAppOutboundMode"},
+        "defaultOutboundConfig":{"shape":"WhatsAppOutboundConfig"}
+      }
+    },
+    "WhatsAppChannelSubtypeParameters":{
+      "type":"structure",
+      "required":[
+        "destinationPhoneNumber",
+        "templateParameters"
+      ],
+      "members":{
+        "destinationPhoneNumber":{"shape":"DestinationPhoneNumber"},
+        "connectSourcePhoneNumberArn":{"shape":"Arn"},
+        "templateArn":{"shape":"Arn"},
+        "templateParameters":{"shape":"Attributes"}
+      }
+    },
+    "WhatsAppOutboundConfig":{
+      "type":"structure",
+      "required":[
+        "connectSourcePhoneNumberArn",
+        "wisdomTemplateArn"
+      ],
+      "members":{
+        "connectSourcePhoneNumberArn":{"shape":"Arn"},
+        "wisdomTemplateArn":{"shape":"Arn"}
+      }
+    },
+    "WhatsAppOutboundMode":{
+      "type":"structure",
+      "members":{
+        "agentless":{"shape":"AgentlessConfig"}
+      },
+      "union":true
     },
     "XAmazonErrorType":{"type":"string"}
   }

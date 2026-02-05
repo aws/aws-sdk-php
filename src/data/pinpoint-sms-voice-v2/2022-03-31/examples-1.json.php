@@ -1,3 +1,3 @@
 <?php
 // This file was auto-generated from sdk-root/src/data/pinpoint-sms-voice-v2/2022-03-31/examples-1.json
-return [ 'version' => '1.0', 'examples' => [],];
+return [ 'version' => '1.0', 'examples' => [ 'CarrierLookup' => [ [ 'input' => [ 'PhoneNumber' => '+1 (555) 555-5333', ], 'output' => [ 'Carrier' => 'ExampleCorp Mobile', 'Country' => 'United States', 'DialingCountryCode' => '1', 'E164PhoneNumber' => '+15555555333', 'IsoCountryCode' => 'US', 'MCC' => '310', 'MNC' => '260', 'PhoneNumberType' => 'MOBILE', ], 'description' => 'Call the CarrierLookup operation to get information about a customer provided phone number, including if the number is valid. The service accepts phone numbers with various formatting characters and returns the number in E164 format.', 'id' => 'example-1', 'title' => 'Use CarrierLookup', ], ], ],];

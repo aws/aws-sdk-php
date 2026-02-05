@@ -230,7 +230,6 @@ EOT;
         putenv('HOMEPATH=\\Sean\\Home');
         $ref = new \ReflectionClass(ConfigurationResolver::class);
         $meth = $ref->getMethod('getHomeDir');
-        $meth->setAccessible(true);
         $this->assertSame('C:\\Sean\\Home', $meth->invoke(null));
     }
 

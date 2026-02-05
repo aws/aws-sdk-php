@@ -15,6 +15,7 @@
     "ListPlans": "<p>Lists all Region switch plans in your Amazon Web Services account.</p>",
     "ListPlansInRegion": "<p>Lists all Region switch plans in your Amazon Web Services account that are available in the current Amazon Web Services Region.</p>",
     "ListRoute53HealthChecks": "<p>List the Amazon Route 53 health checks.</p>",
+    "ListRoute53HealthChecksInRegion": "<p>List the Amazon Route 53 health checks in a specific Amazon Web Services Region.</p>",
     "ListTagsForResource": "<p>Lists the tags attached to a Region switch resource.</p>",
     "StartPlanExecution": "<p>Starts the execution of a Region switch plan. You can execute a plan in either PRACTICE or RECOVERY mode.</p> <p>In PRACTICE mode, the execution simulates the steps without making actual changes to your application's traffic routing. In RECOVERY mode, the execution performs actual changes to shift traffic between Regions.</p>",
     "TagResource": "<p>Adds or updates tags for a Region switch resource. You can assign metadata to your resources in the form of tags, which are key-value pairs.</p>",
@@ -56,7 +57,8 @@
       "base": null,
       "refs": {
         "AbbreviatedPlan$owner": "<p>The owner of a Region switch plan.</p>",
-        "Plan$owner": "<p>The owner of a plan.</p>"
+        "Plan$owner": "<p>The owner of a plan.</p>",
+        "S3ReportOutputConfiguration$bucketOwner": "<p>The Amazon Web Services account ID that owns the S3 bucket. Required to ensure the bucket is still owned by the same expected owner at generation time.</p>"
       }
     },
     "AlarmCondition": {
@@ -194,6 +196,54 @@
     "DeletePlanResponse": {
       "base": null,
       "refs": {}
+    },
+    "DocumentDbClusterArn": {
+      "base": null,
+      "refs": {
+        "DocumentDbClusterArns$member": null
+      }
+    },
+    "DocumentDbClusterArns": {
+      "base": null,
+      "refs": {
+        "DocumentDbConfiguration$databaseClusterArns": "<p>The database cluster Amazon Resource Names (ARNs) for a DocumentDB global cluster.</p>"
+      }
+    },
+    "DocumentDbConfiguration": {
+      "base": "<p>Configuration for Amazon DocumentDB global clusters used in a Region switch plan.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$documentDbConfig": null
+      }
+    },
+    "DocumentDbConfigurationTimeoutMinutesInteger": {
+      "base": null,
+      "refs": {
+        "DocumentDbConfiguration$timeoutMinutes": "<p>The timeout value specified for the configuration.</p>"
+      }
+    },
+    "DocumentDbDefaultBehavior": {
+      "base": null,
+      "refs": {
+        "DocumentDbConfiguration$behavior": "<p>The behavior for a global cluster, that is, only allow switchover or also allow failover.</p>"
+      }
+    },
+    "DocumentDbGlobalClusterIdentifier": {
+      "base": null,
+      "refs": {
+        "DocumentDbConfiguration$globalClusterIdentifier": "<p>The global cluster identifier for a DocumentDB global cluster.</p>"
+      }
+    },
+    "DocumentDbUngraceful": {
+      "base": "<p>Configuration for handling failures when performing operations on DocumentDB global clusters.</p>",
+      "refs": {
+        "DocumentDbConfiguration$ungraceful": "<p>The settings for ungraceful execution.</p>"
+      }
+    },
+    "DocumentDbUngracefulBehavior": {
+      "base": null,
+      "refs": {
+        "DocumentDbUngraceful$ungraceful": "<p>The settings for ungraceful execution.</p>"
+      }
     },
     "Duration": {
       "base": null,
@@ -428,10 +478,34 @@
         "ListPlanExecutionsRequest$state": "<p>The state of the plan execution. For example, the plan execution might be In Progress.</p>"
       }
     },
+    "FailedReportErrorCode": {
+      "base": null,
+      "refs": {
+        "FailedReportOutput$errorCode": "<p>The error code for the failed report generation.</p>"
+      }
+    },
+    "FailedReportOutput": {
+      "base": "<p>Information about a report generation that failed.</p>",
+      "refs": {
+        "ReportOutput$failedReportOutput": "<p>The details about a failed report generation.</p>"
+      }
+    },
     "Float": {
       "base": null,
       "refs": {
         "CustomActionLambdaConfiguration$retryIntervalMinutes": "<p>The retry interval specified.</p>"
+      }
+    },
+    "GeneratedReport": {
+      "base": "<p>Information about a generated execution report.</p>",
+      "refs": {
+        "GeneratedReportDetails$member": null
+      }
+    },
+    "GeneratedReportDetails": {
+      "base": null,
+      "refs": {
+        "GetPlanExecutionResponse$generatedReportDetails": "<p>Information about the location of a generated report, or the cause of its failure.</p>"
       }
     },
     "GetPlanEvaluationStatusRequest": {
@@ -515,6 +589,7 @@
         "Asg$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "AssociatedAlarm$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "CreatePlanRequest$executionRole": "<p>An execution role is a way to categorize a Region switch plan.</p>",
+        "DocumentDbConfiguration$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "EksCluster$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "GlobalAuroraConfiguration$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "Lambdas$crossAccountRole": "<p>The cross account role for the configuration.</p>",
@@ -649,6 +724,20 @@
       "base": null,
       "refs": {}
     },
+    "ListRoute53HealthChecksInRegionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRoute53HealthChecksInRegionRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRoute53HealthChecksInRegionRequest$maxResults": "<p>The number of objects that you want to return with this call.</p>"
+      }
+    },
+    "ListRoute53HealthChecksInRegionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListRoute53HealthChecksRequest": {
       "base": null,
       "refs": {}
@@ -694,6 +783,8 @@
         "ListPlansInRegionResponse$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
         "ListPlansRequest$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
         "ListPlansResponse$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
+        "ListRoute53HealthChecksInRegionRequest$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
+        "ListRoute53HealthChecksInRegionResponse$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
         "ListRoute53HealthChecksRequest$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
         "ListRoute53HealthChecksResponse$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>"
       }
@@ -730,6 +821,7 @@
         "GetPlanRequest$arn": "<p>The Amazon Resource Name (ARN) of the plan.</p>",
         "ListPlanExecutionEventsRequest$planArn": "<p>The Amazon Resource Name (ARN) of the plan.</p>",
         "ListPlanExecutionsRequest$planArn": "<p>The ARN for the plan.</p>",
+        "ListRoute53HealthChecksInRegionRequest$arn": "<p>The Amazon Resource Name (ARN) of the Arc Region Switch Plan.</p>",
         "ListRoute53HealthChecksRequest$arn": "<p>The Amazon Resource Name (ARN) of the Amazon Route 53 health check request.</p>",
         "ListTagsForResourceRequest$arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "Plan$arn": "<p>The Amazon Resource Name (ARN) of the plan.</p>",
@@ -825,6 +917,32 @@
         "KubernetesScalingApplication$value": null
       }
     },
+    "ReportConfiguration": {
+      "base": "<p>Configuration for automatic report generation for plan executions. When configured, Region switch automatically generates a report after each plan execution that includes execution events, plan configuration, and CloudWatch alarm states.</p>",
+      "refs": {
+        "CreatePlanRequest$reportConfiguration": null,
+        "Plan$reportConfiguration": "<p>The report configuration for a plan.</p>",
+        "UpdatePlanRequest$reportConfiguration": "<p>The updated report configuration for the plan.</p>"
+      }
+    },
+    "ReportOutput": {
+      "base": "<p>The output location or cause of a failure in report generation.</p>",
+      "refs": {
+        "GeneratedReport$reportOutput": "<p>The output location or cause of a failure in report generation.</p>"
+      }
+    },
+    "ReportOutputConfiguration": {
+      "base": "<p>Configuration for report output destinations used in a Region switch plan.</p>",
+      "refs": {
+        "ReportOutputList$member": null
+      }
+    },
+    "ReportOutputList": {
+      "base": null,
+      "refs": {
+        "ReportConfiguration$reportOutput": "<p>The output configuration for the report.</p>"
+      }
+    },
     "ResourceArn": {
       "base": null,
       "refs": {
@@ -886,12 +1004,20 @@
     "Route53HealthCheckList": {
       "base": null,
       "refs": {
+        "ListRoute53HealthChecksInRegionResponse$healthChecks": "<p>List of the health checks requested.</p>",
         "ListRoute53HealthChecksResponse$healthChecks": "<p>List of the health checks requested.</p>"
+      }
+    },
+    "Route53HealthCheckStatus": {
+      "base": null,
+      "refs": {
+        "Route53HealthCheck$status": "<p>The Amazon Route 53 health check status.</p>"
       }
     },
     "Route53HostedZoneId": {
       "base": null,
       "refs": {
+        "ListRoute53HealthChecksInRegionRequest$hostedZoneId": "<p>The hosted zone ID for the health checks.</p>",
         "ListRoute53HealthChecksRequest$hostedZoneId": "<p>The hosted zone ID for the health checks.</p>",
         "Route53HealthCheck$hostedZoneId": "<p>The Amazon Route 53 health check hosted zone ID.</p>",
         "Route53HealthCheckConfiguration$hostedZoneId": "<p>The Amazon Route 53 health check configuration hosted zone ID.</p>"
@@ -900,6 +1026,7 @@
     "Route53RecordName": {
       "base": null,
       "refs": {
+        "ListRoute53HealthChecksInRegionRequest$recordName": "<p>The record name for the health checks.</p>",
         "ListRoute53HealthChecksRequest$recordName": "<p>The record name for the health checks.</p>",
         "Route53HealthCheck$recordName": "<p>The Amazon Route 53 record name.</p>",
         "Route53HealthCheckConfiguration$recordName": "<p>The Amazon Route 53 health check configuration record name.</p>"
@@ -933,6 +1060,24 @@
       "base": null,
       "refs": {
         "ArcRoutingControlState$state": "<p>The state of an ARC routing control, On or Off.</p>"
+      }
+    },
+    "S3ReportOutput": {
+      "base": "<p>Information about a report delivered to Amazon S3.</p>",
+      "refs": {
+        "ReportOutput$s3ReportOutput": "<p>Information about a report delivered to Amazon S3.</p>"
+      }
+    },
+    "S3ReportOutputConfiguration": {
+      "base": "<p>Configuration for delivering generated reports to an Amazon S3 bucket.</p>",
+      "refs": {
+        "ReportOutputConfiguration$s3Configuration": "<p>Configuration for delivering reports to an Amazon S3 bucket.</p>"
+      }
+    },
+    "S3ReportOutputConfigurationBucketPathString": {
+      "base": null,
+      "refs": {
+        "S3ReportOutputConfiguration$bucketPath": "<p>The S3 bucket name and optional prefix where reports are stored. Format: bucket-name or bucket-name/prefix.</p>"
       }
     },
     "Service": {
@@ -1013,11 +1158,13 @@
         "AssociatedAlarm$resourceIdentifier": "<p>The resource identifier for alarms that you associate with a plan.</p>",
         "AssociatedAlarmMap$key": null,
         "CreatePlanRequest$description": "<p>The description of a Region switch plan.</p>",
+        "DocumentDbConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
         "EksCluster$externalId": "<p>The external ID (secret key) for the configuration.</p>",
         "ExecutionEvent$error": "<p>Errors for an execution event.</p>",
         "ExecutionEvent$description": "<p>The description for an execution event.</p>",
         "ExecutionEvent$eventId": "<p>The event ID for an execution event.</p>",
         "ExecutionEvent$previousEventId": "<p>The event ID of the previous execution event.</p>",
+        "FailedReportOutput$errorMessage": "<p>The error message for the failed report generation.</p>",
         "GetPlanEvaluationStatusResponse$lastEvaluatedVersion": "<p>The version of the last evaluation of the plan.</p>",
         "GetPlanExecutionRequest$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
         "GetPlanExecutionResponse$version": "<p>The version for the plan.</p>",
@@ -1048,6 +1195,7 @@
         "ResourceWarning$warningMessage": "<p>The warning message about what needs to be corrected.</p>",
         "Resources$member": null,
         "Route53HealthCheckConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
+        "S3ReportOutput$s3ObjectKey": "<p>The S3 object key where the generated report is stored.</p>",
         "Service$externalId": "<p>The external ID (secret key) for the service.</p>",
         "StartPlanExecutionRequest$targetRegion": "<p>The Amazon Web Services Region to target with this execution. This is the Region that traffic will be shifted to or from, depending on the action.</p>",
         "StartPlanExecutionRequest$latestVersion": "<p>A boolean value indicating whether to use the latest version of the plan. If set to false, you must specify a specific version.</p>",
@@ -1105,6 +1253,7 @@
         "AbbreviatedExecution$endTime": "<p>The timestamp when the plan execution was ended.</p>",
         "AbbreviatedPlan$updatedAt": "<p>The timestamp when the plan execution was last updated.</p>",
         "ExecutionEvent$timestamp": "<p>The timestamp for an execution event.</p>",
+        "GeneratedReport$reportGenerationTime": "<p>The timestamp when the report was generated.</p>",
         "GetPlanEvaluationStatusResponse$lastEvaluationTime": "<p>The time of the last time that Region switch ran an evaluation of the plan.</p>",
         "GetPlanExecutionResponse$updatedAt": "<p>The timestamp when the plan execution was last updated.</p>",
         "GetPlanExecutionResponse$startTime": "<p>The time (UTC) when the plan execution started.</p>",

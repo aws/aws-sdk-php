@@ -1146,7 +1146,8 @@
     "BatchInferenceJobConfig":{
       "type":"structure",
       "members":{
-        "itemExplorationConfig":{"shape":"HyperParameters"}
+        "itemExplorationConfig":{"shape":"HyperParameters"},
+        "rankingInfluence":{"shape":"RankingInfluence"}
       }
     },
     "BatchInferenceJobInput":{
@@ -1257,7 +1258,8 @@
       "members":{
         "itemExplorationConfig":{"shape":"HyperParameters"},
         "enableMetadataWithRecommendations":{"shape":"Boolean"},
-        "syncWithLatestSolutionVersion":{"shape":"Boolean"}
+        "syncWithLatestSolutionVersion":{"shape":"Boolean"},
+        "rankingInfluence":{"shape":"RankingInfluence"}
       }
     },
     "CampaignSummary":{
@@ -1483,8 +1485,7 @@
       "required":[
         "jobName",
         "datasetArn",
-        "dataSource",
-        "roleArn"
+        "dataSource"
       ],
       "members":{
         "jobName":{"shape":"Name"},
@@ -1634,6 +1635,7 @@
         "performHPO":{"shape":"Boolean"},
         "performAutoML":{"shape":"PerformAutoML"},
         "performAutoTraining":{"shape":"PerformAutoTraining"},
+        "performIncrementalUpdate":{"shape":"PerformIncrementalUpdate"},
         "recipeArn":{"shape":"Arn"},
         "datasetGroupArn":{"shape":"Arn"},
         "eventType":{"shape":"EventType"},
@@ -1852,7 +1854,8 @@
     },
     "DatasetType":{
       "type":"string",
-      "max":256
+      "max":256,
+      "pattern":"^[A-Za-z_]+$"
     },
     "DatasetUpdateSummary":{
       "type":"structure",
@@ -2429,6 +2432,12 @@
         "INCREMENTAL"
       ]
     },
+    "IncludedDatasetColumns":{
+      "type":"map",
+      "key":{"shape":"DatasetType"},
+      "value":{"shape":"ColumnNamesList"},
+      "max":3
+    },
     "IngestionMode":{
       "type":"string",
       "enum":[
@@ -2883,6 +2892,27 @@
       "box":true
     },
     "PerformHPO":{"type":"boolean"},
+    "PerformIncrementalUpdate":{
+      "type":"boolean",
+      "box":true
+    },
+    "RankingInfluence":{
+      "type":"map",
+      "key":{"shape":"RankingInfluenceType"},
+      "value":{"shape":"RankingInfluenceWeight"}
+    },
+    "RankingInfluenceType":{
+      "type":"string",
+      "enum":[
+        "POPULARITY",
+        "FRESHNESS"
+      ]
+    },
+    "RankingInfluenceWeight":{
+      "type":"double",
+      "max":1,
+      "min":0
+    },
     "Recipe":{
       "type":"structure",
       "members":{
@@ -3038,6 +3068,7 @@
         "performHPO":{"shape":"PerformHPO"},
         "performAutoML":{"shape":"PerformAutoML"},
         "performAutoTraining":{"shape":"PerformAutoTraining"},
+        "performIncrementalUpdate":{"shape":"PerformIncrementalUpdate"},
         "recipeArn":{"shape":"Arn"},
         "datasetGroupArn":{"shape":"Arn"},
         "eventType":{"shape":"EventType"},
@@ -3088,6 +3119,7 @@
         "solutionUpdateConfig":{"shape":"SolutionUpdateConfig"},
         "status":{"shape":"Status"},
         "performAutoTraining":{"shape":"PerformAutoTraining"},
+        "performIncrementalUpdate":{"shape":"PerformIncrementalUpdate"},
         "creationDateTime":{"shape":"Date"},
         "lastUpdatedDateTime":{"shape":"Date"},
         "failureReason":{"shape":"FailureReason"}
@@ -3101,6 +3133,7 @@
         "solutionArn":{"shape":"Arn"},
         "performHPO":{"shape":"PerformHPO"},
         "performAutoML":{"shape":"PerformAutoML"},
+        "performIncrementalUpdate":{"shape":"PerformIncrementalUpdate"},
         "recipeArn":{"shape":"Arn"},
         "eventType":{"shape":"EventType"},
         "datasetGroupArn":{"shape":"Arn"},
@@ -3254,7 +3287,8 @@
     "TrainingDataConfig":{
       "type":"structure",
       "members":{
-        "excludedDatasetColumns":{"shape":"ExcludedDatasetColumns"}
+        "excludedDatasetColumns":{"shape":"ExcludedDatasetColumns"},
+        "includedDatasetColumns":{"shape":"IncludedDatasetColumns"}
       }
     },
     "TrainingHours":{
@@ -3377,6 +3411,7 @@
       "members":{
         "solutionArn":{"shape":"Arn"},
         "performAutoTraining":{"shape":"PerformAutoTraining"},
+        "performIncrementalUpdate":{"shape":"PerformIncrementalUpdate"},
         "solutionUpdateConfig":{"shape":"SolutionUpdateConfig"}
       }
     },

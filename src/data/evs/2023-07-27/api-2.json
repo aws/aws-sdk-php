@@ -112,7 +112,22 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "GetVersions":{
+      "name":"GetVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetVersionsRequest"},
+      "output":{"shape":"GetVersionsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
     },
     "ListEnvironmentHosts":{
       "name":"ListEnvironmentHosts",
@@ -125,7 +140,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListEnvironmentVlans":{
       "name":"ListEnvironmentVlans",
@@ -138,7 +154,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListEnvironments":{
       "name":"ListEnvironments",
@@ -150,7 +167,8 @@
       "output":{"shape":"ListEnvironmentsResponse"},
       "errors":[
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -162,7 +180,8 @@
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -304,7 +323,8 @@
           "idempotencyToken":true
         },
         "environmentId":{"shape":"EnvironmentId"},
-        "host":{"shape":"HostInfoForCreate"}
+        "host":{"shape":"HostInfoForCreate"},
+        "esxVersion":{"shape":"EsxVersion"}
       }
     },
     "CreateEnvironmentHostResponse":{
@@ -506,6 +526,15 @@
       "type":"list",
       "member":{"shape":"EnvironmentSummary"}
     },
+    "EsxVersion":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
+    "EsxVersionList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "GetEnvironmentRequest":{
       "type":"structure",
       "required":["environmentId"],
@@ -517,6 +546,21 @@
       "type":"structure",
       "members":{
         "environment":{"shape":"Environment"}
+      }
+    },
+    "GetVersionsRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "GetVersionsResponse":{
+      "type":"structure",
+      "required":[
+        "vcfVersions",
+        "instanceTypeEsxVersions"
+      ],
+      "members":{
+        "vcfVersions":{"shape":"VcfVersionList"},
+        "instanceTypeEsxVersions":{"shape":"InstanceTypeEsxVersionsList"}
       }
     },
     "Host":{
@@ -617,9 +661,38 @@
       "type":"string",
       "enum":["i4i.metal"]
     },
+    "InstanceTypeEsxVersionsInfo":{
+      "type":"structure",
+      "required":[
+        "instanceType",
+        "esxVersions"
+      ],
+      "members":{
+        "instanceType":{"shape":"InstanceType"},
+        "esxVersions":{"shape":"EsxVersionList"}
+      }
+    },
+    "InstanceTypeEsxVersionsList":{
+      "type":"list",
+      "member":{"shape":"InstanceTypeEsxVersionsInfo"}
+    },
+    "InstanceTypeList":{
+      "type":"list",
+      "member":{"shape":"InstanceType"}
+    },
     "Integer":{
       "type":"integer",
       "box":true
+    },
+    "InternalServerException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true,
+      "fault":true,
+      "retryable":{"throttling":false}
     },
     "IpAddress":{
       "type":"string",
@@ -972,7 +1045,29 @@
     },
     "VcfVersion":{
       "type":"string",
-      "enum":["VCF-5.2.1"]
+      "enum":[
+        "VCF-5.2.1",
+        "VCF-5.2.2"
+      ]
+    },
+    "VcfVersionInfo":{
+      "type":"structure",
+      "required":[
+        "vcfVersion",
+        "status",
+        "defaultEsxVersion",
+        "instanceTypes"
+      ],
+      "members":{
+        "vcfVersion":{"shape":"VcfVersion"},
+        "status":{"shape":"String"},
+        "defaultEsxVersion":{"shape":"String"},
+        "instanceTypes":{"shape":"InstanceTypeList"}
+      }
+    },
+    "VcfVersionList":{
+      "type":"list",
+      "member":{"shape":"VcfVersionInfo"}
     },
     "Vlan":{
       "type":"structure",

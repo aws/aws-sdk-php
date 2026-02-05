@@ -17,28 +17,23 @@
   "shapes": {
     "ActiveSessionsExceededException": {
       "base": "<p>The Amazon Redshift Data API operation failed because the maximum number of active sessions exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActiveStatementsExceededException": {
       "base": "<p>The number of active statements exceeds the limit.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchExecuteStatementException": {
       "base": "<p>An SQL statement encountered an environmental error while running.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchExecuteStatementInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchExecuteStatementOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Blob": {
       "base": null,
@@ -61,8 +56,8 @@
     "BoxedBoolean": {
       "base": null,
       "refs": {
-        "Field$booleanValue": "<p>A value of the Boolean data type. </p>",
-        "Field$isNull": "<p>A value that indicates whether the data is NULL. </p>"
+        "Field$isNull": "<p>A value that indicates whether the data is NULL. </p>",
+        "Field$booleanValue": "<p>A value of the Boolean data type. </p>"
       }
     },
     "BoxedDouble": {
@@ -79,13 +74,11 @@
     },
     "CancelStatementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelStatementResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ClientToken": {
       "base": null,
@@ -130,8 +123,7 @@
     },
     "DatabaseConnectionException": {
       "base": "<p>Connection to a database failed.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DatabaseList": {
       "base": null,
@@ -148,38 +140,31 @@
     },
     "DescribeStatementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStatementResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTableRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTableResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecuteStatementException": {
       "base": "<p>The SQL statement encountered an environmental error while running.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecuteStatementInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecuteStatementOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Field": {
       "base": "<p>A data value in a column. </p>",
@@ -201,57 +186,48 @@
     },
     "GetStatementResultRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStatementResultResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStatementResultV2Request": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStatementResultV2Response": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Integer": {
       "base": null,
       "refs": {
-        "ColumnMetadata$length": "<p>The length of the column.</p>",
         "ColumnMetadata$nullable": "<p>A value that indicates whether the column is nullable. </p>",
         "ColumnMetadata$precision": "<p>The precision value of a decimal number column. </p>",
-        "ColumnMetadata$scale": "<p>The scale value of a decimal number column. </p>"
+        "ColumnMetadata$scale": "<p>The scale value of a decimal number column. </p>",
+        "ColumnMetadata$length": "<p>The length of the column.</p>"
       }
     },
     "InternalServerException": {
       "base": "<p>The Amazon Redshift Data API operation failed due to invalid input. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDatabasesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDatabasesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSchemasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSchemasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStatementsLimit": {
       "base": null,
@@ -261,38 +237,34 @@
     },
     "ListStatementsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStatementsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTablesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTablesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
       "refs": {
         "DescribeStatementResponse$Duration": "<p>The amount of time in nanoseconds that the statement ran. </p>",
         "DescribeStatementResponse$RedshiftPid": "<p>The process identifier from Amazon Redshift. </p>",
-        "DescribeStatementResponse$RedshiftQueryId": "<p>The identifier of the query generated by Amazon Redshift. These identifiers are also available in the <code>query</code> column of the <code>STL_QUERY</code> system view. </p>",
         "DescribeStatementResponse$ResultRows": "<p>Either the number of rows returned from the SQL statement or the number of rows affected. If result size is greater than zero, the result rows can be the number of rows affected by SQL statements such as INSERT, UPDATE, DELETE, COPY, and others. A <code>-1</code> indicates the value is null.</p>",
         "DescribeStatementResponse$ResultSize": "<p>The size in bytes of the returned results. A <code>-1</code> indicates the value is null.</p>",
+        "DescribeStatementResponse$RedshiftQueryId": "<p>The identifier of the query generated by Amazon Redshift. These identifiers are also available in the <code>query</code> column of the <code>STL_QUERY</code> system view. </p>",
         "GetStatementResultResponse$TotalNumRows": "<p>The total number of rows in the result set returned from a query. You can use this number to estimate the number of calls to the <code>GetStatementResult</code> operation needed to page through the results. </p>",
         "GetStatementResultV2Response$TotalNumRows": "<p>The total number of rows in the result set returned from a query. You can use this number to estimate the number of calls to the <code>GetStatementResultV2</code> operation needed to page through the results. </p>",
         "SubStatementData$Duration": "<p>The amount of time in nanoseconds that the statement ran.</p>",
-        "SubStatementData$RedshiftQueryId": "<p>The SQL statement identifier. This value is a universally unique identifier (UUID) generated by Amazon Redshift Data API. </p>",
         "SubStatementData$ResultRows": "<p>Either the number of rows returned from the SQL statement or the number of rows affected. If result size is greater than zero, the result rows can be the number of rows affected by SQL statements such as INSERT, UPDATE, DELETE, COPY, and others. A <code>-1</code> indicates the value is null.</p>",
-        "SubStatementData$ResultSize": "<p>The size in bytes of the returned results. A <code>-1</code> indicates the value is null.</p>"
+        "SubStatementData$ResultSize": "<p>The size in bytes of the returned results. A <code>-1</code> indicates the value is null.</p>",
+        "SubStatementData$RedshiftQueryId": "<p>The SQL statement identifier. This value is a universally unique identifier (UUID) generated by Amazon Redshift Data API. </p>"
       }
     },
     "PageSize": {
@@ -324,13 +296,11 @@
     },
     "QueryTimeoutException": {
       "base": "<p>The Amazon Redshift Data API operation failed due to timeout.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The Amazon Redshift Data API operation failed due to a missing resource. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResultFormatString": {
       "base": null,
@@ -373,7 +343,7 @@
     "SqlList": {
       "base": null,
       "refs": {
-        "BatchExecuteStatementInput$Sqls": "<p>One or more SQL statements to run. <pre><code> The SQL statements are run as a single transaction. They run serially in the order of the array. Subsequent SQL statements don't start until the previous statement in the array completes. If any SQL statement fails, then because they are run as one transaction, all work is rolled back.&lt;/p&gt; </code></pre>"
+        "BatchExecuteStatementInput$Sqls": "<p>One or more SQL statements to run. The SQL statements are run as a single transaction. They run serially in the order of the array. Subsequent SQL statements don't start until the previous statement in the array completes. If any SQL statement fails, then because they are run as one transaction, all work is rolled back.</p>"
       }
     },
     "SqlParameter": {
@@ -455,38 +425,38 @@
         "ActiveStatementsExceededException$Message": null,
         "BatchExecuteStatementException$Message": null,
         "BatchExecuteStatementException$StatementId": "<p>Statement identifier of the exception.</p>",
-        "BatchExecuteStatementInput$Database": "<p>The name of the database. This parameter is required when authenticating using either Secrets Manager or temporary credentials. </p>",
         "BatchExecuteStatementInput$DbUser": "<p>The database user name. This parameter is required when connecting to a cluster as a database user and authenticating using temporary credentials. </p>",
-        "BatchExecuteStatementOutput$Database": "<p>The name of the database.</p>",
+        "BatchExecuteStatementInput$Database": "<p>The name of the database. This parameter is required when authenticating using either Secrets Manager or temporary credentials. </p>",
         "BatchExecuteStatementOutput$DbUser": "<p>The database user name.</p>",
-        "ColumnMetadata$columnDefault": "<p>The default value of the column. </p>",
+        "BatchExecuteStatementOutput$Database": "<p>The name of the database.</p>",
         "ColumnMetadata$label": "<p>The label for the column. </p>",
         "ColumnMetadata$name": "<p>The name of the column. </p>",
         "ColumnMetadata$schemaName": "<p>The name of the schema that contains the table that includes the column.</p>",
         "ColumnMetadata$tableName": "<p>The name of the table that includes the column. </p>",
         "ColumnMetadata$typeName": "<p>The database-specific data type of the column. </p>",
+        "ColumnMetadata$columnDefault": "<p>The default value of the column. </p>",
         "DatabaseConnectionException$Message": null,
         "DatabaseList$member": null,
         "DbGroupList$member": null,
-        "DescribeStatementResponse$ClusterIdentifier": "<p>The cluster identifier. </p>",
-        "DescribeStatementResponse$Database": "<p>The name of the database. </p>",
         "DescribeStatementResponse$DbUser": "<p>The database user name. </p>",
+        "DescribeStatementResponse$Database": "<p>The name of the database. </p>",
+        "DescribeStatementResponse$ClusterIdentifier": "<p>The cluster identifier. </p>",
         "DescribeStatementResponse$Error": "<p>The error message from the cluster if the SQL statement encountered an error while running. </p>",
         "DescribeStatementResponse$SessionId": "<p>The session identifier of the query.</p>",
-        "DescribeTableRequest$ConnectedDatabase": "<p>A database name. The connected database is specified when you connect with your authentication credentials. </p>",
-        "DescribeTableRequest$Database": "<p>The name of the database that contains the tables to be described. If <code>ConnectedDatabase</code> is not specified, this is also the database to connect to with your authentication credentials.</p>",
         "DescribeTableRequest$DbUser": "<p>The database user name. This parameter is required when connecting to a cluster as a database user and authenticating using temporary credentials. </p>",
-        "DescribeTableRequest$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
+        "DescribeTableRequest$Database": "<p>The name of the database that contains the tables to be described. If <code>ConnectedDatabase</code> is not specified, this is also the database to connect to with your authentication credentials.</p>",
+        "DescribeTableRequest$ConnectedDatabase": "<p>A database name. The connected database is specified when you connect with your authentication credentials. </p>",
         "DescribeTableRequest$Schema": "<p>The schema that contains the table. If no schema is specified, then matching tables for all schemas are returned. </p>",
         "DescribeTableRequest$Table": "<p>The table name. If no table is specified, then all tables for all matching schemas are returned. If no table and no schema is specified, then all tables for all schemas in the database are returned</p>",
-        "DescribeTableResponse$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
+        "DescribeTableRequest$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
         "DescribeTableResponse$TableName": "<p>The table name. </p>",
+        "DescribeTableResponse$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
         "ExecuteStatementException$Message": "<p>The exception message.</p>",
         "ExecuteStatementException$StatementId": "<p>Statement identifier of the exception.</p>",
-        "ExecuteStatementInput$Database": "<p>The name of the database. This parameter is required when authenticating using either Secrets Manager or temporary credentials. </p>",
         "ExecuteStatementInput$DbUser": "<p>The database user name. This parameter is required when connecting to a cluster as a database user and authenticating using temporary credentials. </p>",
-        "ExecuteStatementOutput$Database": "<p>The name of the database.</p>",
+        "ExecuteStatementInput$Database": "<p>The name of the database. This parameter is required when authenticating using either Secrets Manager or temporary credentials. </p>",
         "ExecuteStatementOutput$DbUser": "<p>The database user name.</p>",
+        "ExecuteStatementOutput$Database": "<p>The name of the database.</p>",
         "Field$stringValue": "<p>A value of the string data type. </p>",
         "GetStatementResultRequest$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
         "GetStatementResultResponse$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
@@ -497,21 +467,21 @@
         "ListDatabasesRequest$DbUser": "<p>The database user name. This parameter is required when connecting to a cluster as a database user and authenticating using temporary credentials. </p>",
         "ListDatabasesRequest$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
         "ListDatabasesResponse$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
-        "ListSchemasRequest$ConnectedDatabase": "<p>A database name. The connected database is specified when you connect with your authentication credentials. </p>",
-        "ListSchemasRequest$Database": "<p>The name of the database that contains the schemas to list. If <code>ConnectedDatabase</code> is not specified, this is also the database to connect to with your authentication credentials.</p>",
         "ListSchemasRequest$DbUser": "<p>The database user name. This parameter is required when connecting to a cluster as a database user and authenticating using temporary credentials. </p>",
-        "ListSchemasRequest$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
+        "ListSchemasRequest$Database": "<p>The name of the database that contains the schemas to list. If <code>ConnectedDatabase</code> is not specified, this is also the database to connect to with your authentication credentials.</p>",
+        "ListSchemasRequest$ConnectedDatabase": "<p>A database name. The connected database is specified when you connect with your authentication credentials. </p>",
         "ListSchemasRequest$SchemaPattern": "<p>A pattern to filter results by schema name. Within a schema pattern, \"%\" means match any substring of 0 or more characters and \"_\" means match any one character. Only schema name entries matching the search pattern are returned. </p>",
+        "ListSchemasRequest$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
         "ListSchemasResponse$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
-        "ListStatementsRequest$Database": "<p>The name of the database when listing statements run against a <code>ClusterIdentifier</code> or <code>WorkgroupName</code>. </p>",
         "ListStatementsRequest$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
+        "ListStatementsRequest$Database": "<p>The name of the database when listing statements run against a <code>ClusterIdentifier</code> or <code>WorkgroupName</code>. </p>",
         "ListStatementsResponse$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
-        "ListTablesRequest$ConnectedDatabase": "<p>A database name. The connected database is specified when you connect with your authentication credentials. </p>",
-        "ListTablesRequest$Database": "<p>The name of the database that contains the tables to list. If <code>ConnectedDatabase</code> is not specified, this is also the database to connect to with your authentication credentials.</p>",
         "ListTablesRequest$DbUser": "<p>The database user name. This parameter is required when connecting to a cluster as a database user and authenticating using temporary credentials. </p>",
-        "ListTablesRequest$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
+        "ListTablesRequest$Database": "<p>The name of the database that contains the tables to list. If <code>ConnectedDatabase</code> is not specified, this is also the database to connect to with your authentication credentials.</p>",
+        "ListTablesRequest$ConnectedDatabase": "<p>A database name. The connected database is specified when you connect with your authentication credentials. </p>",
         "ListTablesRequest$SchemaPattern": "<p>A pattern to filter results by schema name. Within a schema pattern, \"%\" means match any substring of 0 or more characters and \"_\" means match any one character. Only schema name entries matching the search pattern are returned. If <code>SchemaPattern</code> is not specified, then all tables that match <code>TablePattern</code> are returned. If neither <code>SchemaPattern</code> or <code>TablePattern</code> are specified, then all tables are returned. </p>",
         "ListTablesRequest$TablePattern": "<p>A pattern to filter results by table name. Within a table pattern, \"%\" means match any substring of 0 or more characters and \"_\" means match any one character. Only table name entries matching the search pattern are returned. If <code>TablePattern</code> is not specified, then all tables that match <code>SchemaPattern</code>are returned. If neither <code>SchemaPattern</code> or <code>TablePattern</code> are specified, then all tables are returned. </p>",
+        "ListTablesRequest$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
         "ListTablesResponse$NextToken": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned NextToken value in the next NextToken parameter and retrying the command. If the NextToken field is empty, all response records have been retrieved for the request. </p>",
         "QueryRecords$CSVRecords": "<p>The results of the SQL statement in CSV format.</p>",
         "QueryTimeoutException$Message": null,
@@ -520,8 +490,8 @@
         "SchemaList$member": null,
         "SubStatementData$Error": "<p>The error message from the cluster if the SQL statement encountered an error while running.</p>",
         "TableMember$name": "<p>The name of the table. </p>",
-        "TableMember$schema": "<p>The schema containing the table. </p>",
         "TableMember$type": "<p>The type of the table. Possible values include TABLE, VIEW, SYSTEM TABLE, GLOBAL TEMPORARY, LOCAL TEMPORARY, ALIAS, and SYNONYM. </p>",
+        "TableMember$schema": "<p>The schema containing the table. </p>",
         "ValidationException$Message": "<p>The exception message.</p>"
       }
     },
@@ -583,8 +553,7 @@
     },
     "ValidationException": {
       "base": "<p>The Amazon Redshift Data API operation failed due to invalid input. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WorkgroupNameString": {
       "base": null,

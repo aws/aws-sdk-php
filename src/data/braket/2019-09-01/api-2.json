@@ -90,6 +90,41 @@
         {"shape":"ValidationException"}
       ]
     },
+    "CreateSpendingLimit":{
+      "name":"CreateSpendingLimit",
+      "http":{
+        "method":"POST",
+        "requestUri":"/spending-limit",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateSpendingLimitRequest"},
+      "output":{"shape":"CreateSpendingLimitResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"DeviceRetiredException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ValidationException"}
+      ]
+    },
+    "DeleteSpendingLimit":{
+      "name":"DeleteSpendingLimit",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/spending-limit/{spendingLimitArn}/delete",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteSpendingLimitRequest"},
+      "output":{"shape":"DeleteSpendingLimitResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "GetDevice":{
       "name":"GetDevice",
       "http":{
@@ -105,7 +140,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetJob":{
       "name":"GetJob",
@@ -122,7 +158,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetQuantumTask":{
       "name":"GetQuantumTask",
@@ -139,7 +176,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -154,7 +192,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "SearchDevices":{
       "name":"SearchDevices",
@@ -170,7 +209,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "SearchJobs":{
       "name":"SearchJobs",
@@ -202,7 +242,25 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "SearchSpendingLimits":{
+      "name":"SearchSpendingLimits",
+      "http":{
+        "method":"POST",
+        "requestUri":"/spending-limits",
+        "responseCode":200
+      },
+      "input":{"shape":"SearchSpendingLimitsRequest"},
+      "output":{"shape":"SearchSpendingLimitsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -230,6 +288,24 @@
       "output":{"shape":"UntagResourceResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateSpendingLimit":{
+      "name":"UpdateSpendingLimit",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/spending-limit/{spendingLimitArn}/update",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateSpendingLimitRequest"},
+      "output":{"shape":"UpdateSpendingLimitResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"ValidationException"}
       ],
@@ -454,7 +530,8 @@
         },
         "tags":{"shape":"TagsMap"},
         "jobToken":{"shape":"JobToken"},
-        "associations":{"shape":"CreateQuantumTaskRequestAssociationsList"}
+        "associations":{"shape":"CreateQuantumTaskRequestAssociationsList"},
+        "experimentalCapabilities":{"shape":"ExperimentalCapabilities"}
       }
     },
     "CreateQuantumTaskRequestAssociationsList":{
@@ -490,12 +567,57 @@
         "quantumTaskArn":{"shape":"QuantumTaskArn"}
       }
     },
+    "CreateSpendingLimitRequest":{
+      "type":"structure",
+      "required":[
+        "clientToken",
+        "deviceArn",
+        "spendingLimit"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"String64",
+          "idempotencyToken":true
+        },
+        "deviceArn":{"shape":"DeviceArn"},
+        "spendingLimit":{"shape":"CreateSpendingLimitRequestSpendingLimitString"},
+        "timePeriod":{"shape":"TimePeriod"},
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "CreateSpendingLimitRequestSpendingLimitString":{
+      "type":"string",
+      "min":1,
+      "pattern":"\\d+(\\.\\d{1,2})?"
+    },
+    "CreateSpendingLimitResponse":{
+      "type":"structure",
+      "required":["spendingLimitArn"],
+      "members":{
+        "spendingLimitArn":{"shape":"SpendingLimitArn"}
+      }
+    },
     "DataSource":{
       "type":"structure",
       "required":["s3DataSource"],
       "members":{
         "s3DataSource":{"shape":"S3DataSource"}
       }
+    },
+    "DeleteSpendingLimitRequest":{
+      "type":"structure",
+      "required":["spendingLimitArn"],
+      "members":{
+        "spendingLimitArn":{
+          "shape":"SpendingLimitArn",
+          "location":"uri",
+          "locationName":"spendingLimitArn"
+        }
+      }
+    },
+    "DeleteSpendingLimitResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeviceArn":{
       "type":"string",
@@ -581,6 +703,20 @@
       "enum":[
         "QPU",
         "SIMULATOR"
+      ]
+    },
+    "ExperimentalCapabilities":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"ExperimentalCapabilitiesEnablementType"}
+      },
+      "union":true
+    },
+    "ExperimentalCapabilitiesEnablementType":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "NONE"
       ]
     },
     "GetDeviceRequest":{
@@ -722,7 +858,8 @@
         "queueInfo":{"shape":"QuantumTaskQueueInfo"},
         "associations":{"shape":"Associations"},
         "numSuccessfulShots":{"shape":"Long"},
-        "actionMetadata":{"shape":"ActionMetadata"}
+        "actionMetadata":{"shape":"ActionMetadata"},
+        "experimentalCapabilities":{"shape":"ExperimentalCapabilities"}
       }
     },
     "HybridJobAdditionalAttributeName":{
@@ -1294,6 +1431,57 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "SearchSpendingLimitsFilter":{
+      "type":"structure",
+      "required":[
+        "name",
+        "values",
+        "operator"
+      ],
+      "members":{
+        "name":{"shape":"String64"},
+        "values":{"shape":"SearchSpendingLimitsFilterValuesList"},
+        "operator":{"shape":"SearchSpendingLimitsFilterOperator"}
+      }
+    },
+    "SearchSpendingLimitsFilterOperator":{
+      "type":"string",
+      "enum":["EQUAL"]
+    },
+    "SearchSpendingLimitsFilterValuesList":{
+      "type":"list",
+      "member":{"shape":"String256"},
+      "max":10,
+      "min":1
+    },
+    "SearchSpendingLimitsRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"SearchSpendingLimitsRequestMaxResultsInteger"},
+        "filters":{"shape":"SearchSpendingLimitsRequestFiltersList"}
+      }
+    },
+    "SearchSpendingLimitsRequestFiltersList":{
+      "type":"list",
+      "member":{"shape":"SearchSpendingLimitsFilter"},
+      "max":10,
+      "min":0
+    },
+    "SearchSpendingLimitsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "SearchSpendingLimitsResponse":{
+      "type":"structure",
+      "required":["spendingLimits"],
+      "members":{
+        "spendingLimits":{"shape":"SpendingLimitSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
@@ -1304,6 +1492,40 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "SpendingLimitArn":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:aws[a-z\\-]*:braket:[a-z0-9\\-]+:[0-9]{12}:spending-limit/.*"
+    },
+    "SpendingLimitSummary":{
+      "type":"structure",
+      "required":[
+        "spendingLimitArn",
+        "deviceArn",
+        "timePeriod",
+        "spendingLimit",
+        "queuedSpend",
+        "totalSpend",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "spendingLimitArn":{"shape":"SpendingLimitArn"},
+        "deviceArn":{"shape":"DeviceArn"},
+        "timePeriod":{"shape":"TimePeriod"},
+        "spendingLimit":{"shape":"String"},
+        "queuedSpend":{"shape":"String"},
+        "totalSpend":{"shape":"String"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "SpendingLimitSummaryList":{
+      "type":"list",
+      "member":{"shape":"SpendingLimitSummary"}
     },
     "String":{"type":"string"},
     "String1024":{
@@ -1334,6 +1556,10 @@
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
+    },
+    "SyntheticTimestamp_epoch_seconds":{
+      "type":"timestamp",
+      "timestampFormat":"unixTimestamp"
     },
     "TagKeys":{
       "type":"list",
@@ -1374,6 +1600,17 @@
       },
       "exception":true
     },
+    "TimePeriod":{
+      "type":"structure",
+      "required":[
+        "startAt",
+        "endAt"
+      ],
+      "members":{
+        "startAt":{"shape":"SyntheticTimestamp_epoch_seconds"},
+        "endAt":{"shape":"SyntheticTimestamp_epoch_seconds"}
+      }
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -1394,6 +1631,35 @@
       }
     },
     "UntagResourceResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateSpendingLimitRequest":{
+      "type":"structure",
+      "required":[
+        "spendingLimitArn",
+        "clientToken"
+      ],
+      "members":{
+        "spendingLimitArn":{
+          "shape":"SpendingLimitArn",
+          "location":"uri",
+          "locationName":"spendingLimitArn"
+        },
+        "clientToken":{
+          "shape":"String64",
+          "idempotencyToken":true
+        },
+        "spendingLimit":{"shape":"UpdateSpendingLimitRequestSpendingLimitString"},
+        "timePeriod":{"shape":"TimePeriod"}
+      }
+    },
+    "UpdateSpendingLimitRequestSpendingLimitString":{
+      "type":"string",
+      "min":1,
+      "pattern":"\\d+(\\.\\d{1,2})?"
+    },
+    "UpdateSpendingLimitResponse":{
       "type":"structure",
       "members":{}
     },

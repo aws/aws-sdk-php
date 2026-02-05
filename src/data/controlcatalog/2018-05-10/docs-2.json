@@ -12,8 +12,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociatedDomainSummary": {
       "base": "<p>A summary of the domain that a common control or an objective belongs to.</p>",
@@ -86,7 +85,8 @@
         "ControlMapping$ControlArn": "<p>The Amazon Resource Name (ARN) that identifies the control in the mapping.</p>",
         "ControlSummary$Arn": "<p>The Amazon Resource Name (ARN) of the control.</p>",
         "GetControlRequest$ControlArn": "<p>The Amazon Resource Name (ARN) of the control. It has one of the following formats:</p> <p> <i>Global format</i> </p> <p> <code>arn:{PARTITION}:controlcatalog:::control/{CONTROL_CATALOG_OPAQUE_ID}</code> </p> <p> <i>Or Regional format</i> </p> <p> <code>arn:{PARTITION}:controltower:{REGION}::control/{CONTROL_TOWER_OPAQUE_ID}</code> </p> <p>Here is a more general pattern that covers Amazon Web Services Control Tower and Control Catalog ARNs:</p> <p> <code>^arn:(aws(?:[-a-z]*)?):(controlcatalog|controltower):[a-zA-Z0-9-]*::control/[0-9a-zA-Z_\\\\-]+$</code> </p>",
-        "GetControlResponse$Arn": "<p>The Amazon Resource Name (ARN) of the control.</p>"
+        "GetControlResponse$Arn": "<p>The Amazon Resource Name (ARN) of the control.</p>",
+        "RelatedControlMappingDetails$ControlArn": "<p>The unique identifier of a control.</p>"
       }
     },
     "ControlArnFilterList": {
@@ -136,6 +136,12 @@
       "base": null,
       "refs": {
         "GetControlResponse$Parameters": "<p>Returns an array of <code>ControlParameter</code> objects that specify the parameters a control supports. An empty list is returned for controls that don’t support parameters. </p>"
+      }
+    },
+    "ControlRelationType": {
+      "base": null,
+      "refs": {
+        "RelatedControlMappingDetails$RelationType": "<p>Returns an enumerated value that represents the relationship between two or more controls.</p>"
       }
     },
     "ControlScope": {
@@ -221,13 +227,11 @@
     },
     "GetControlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetControlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GovernedResource": {
       "base": null,
@@ -290,69 +294,58 @@
     },
     "InternalServerException": {
       "base": "<p>An internal service error occurred during the processing of your request. Try again later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCommonControlsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCommonControlsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListControlMappingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListControlMappingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListControlsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListControlsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDomainsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDomainsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListObjectivesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListObjectivesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Mapping": {
       "base": "<p>A structure that contains the details of a mapping relationship, which can be either to a framework or to a common control.</p>",
       "refs": {
-        "ControlMapping$Mapping": "<p>The details of the mapping relationship, containing either framework or common control information.</p>"
+        "ControlMapping$Mapping": "<p>The details of the mapping relationship, for example, containing framework, common control, or related control information.</p>"
       }
     },
     "MappingType": {
       "base": null,
       "refs": {
-        "ControlMapping$MappingType": "<p>The type of mapping relationship between the control and other entities. Indicates whether the mapping is to a framework or common control.</p>",
+        "ControlMapping$MappingType": "<p>The type of mapping relationship between the control and other entities.</p>",
         "MappingTypeFilterList$member": null
       }
     },
@@ -457,10 +450,15 @@
         "GetControlResponse$RegionConfiguration": null
       }
     },
+    "RelatedControlMappingDetails": {
+      "base": "<p>A structure that describes a control's relationship status with other controls.</p>",
+      "refs": {
+        "Mapping$RelatedControl": "<p>Returns information about controls that are related to the specified control.</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>The requested resource does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -487,8 +485,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -505,8 +502,7 @@
     },
     "ValidationException": {
       "base": "<p>The request has invalid or missing parameters.</p>",
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }

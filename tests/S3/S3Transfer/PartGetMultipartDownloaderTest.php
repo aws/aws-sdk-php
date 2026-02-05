@@ -61,12 +61,12 @@ class PartGetMultipartDownloaderTest extends TestCase
         $remainingToTransfer = $objectSizeInBytes;
         $mockClient->method('executeAsync')
             -> willReturnCallback(function ($command)
-                use (
-                    $objectSizeInBytes,
-                    $partsCount,
-                    $targetPartSize,
-                    &$remainingToTransfer
-                ) {
+            use (
+                $objectSizeInBytes,
+                $partsCount,
+                $targetPartSize,
+                &$remainingToTransfer
+            ) {
                 $currentPartLength = min(
                     $targetPartSize,
                     $remainingToTransfer

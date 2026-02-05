@@ -42,7 +42,6 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
     {
         $class = new \ReflectionClass(ApiCallMonitoringMiddleware::class);
         $method = $class->getMethod($name);
-        $method->setAccessible(true);
         return $method;
     }
 
@@ -204,7 +203,6 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
         );
         $ref = new \ReflectionClass(ApiCallMonitoringMiddleware::class);
         $method = $ref->getMethod('isEnabled');
-        $method->setAccessible(true);
         $this->assertEquals(false, $method->invoke($middleware));
     }
 }

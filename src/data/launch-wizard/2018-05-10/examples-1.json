@@ -1,5 +1,437 @@
 {
   "version": "1.0",
   "examples": {
+    "CreateDeployment": [
+      {
+        "input": {
+          "name": "TestDeployment1",
+          "deploymentPatternName": "SapHanaSingle",
+          "dryRun": false,
+          "specifications": {
+            "CreateSecurityGroup": "No",
+            "DisableDeploymentRollback": "Yes",
+            "EnableEbsVolumeEncryption": "Yes",
+            "KeyPairName": "keyName",
+            "ProxyServerAddress": "http://xyz.abc.com:8080",
+            "SapSysGroupId": "5003",
+            "SapVirtualIPOptIn": "No",
+            "SaveDeploymentArtifacts": "No",
+            "SnsTopicArn": "arn:aws:sns:us-east-1:111111222222:snsNameUsEast1.fifo",
+            "Timezone": "Pacific/Wake",
+            "VpcId": "vpc-1234566"
+          },
+          "workloadName": "SAP"
+        },
+        "output": {
+          "deploymentId": "4c1b59c1-659c-467f-b6e9-6ef6f9d28e1d"
+        },
+        "id": "example-1",
+        "title": "Deploy a given workload with given settings."
+      },
+      {
+        "input": {
+          "name": "TestDeployment2",
+          "deploymentPatternName": "SapHanaSingle",
+          "dryRun": false,
+          "specifications": {
+            "CreateSecurityGroup": "No",
+            "DisableDeploymentRollback": "Yes",
+            "EnableEbsVolumeEncryption": "Yes",
+            "KeyPairName": "keyName",
+            "ProxyServerAddress": "http://xyz.abc.com:8080",
+            "SapSysGroupId": "5003",
+            "SapVirtualIPOptIn": "No",
+            "SaveDeploymentArtifacts": "No",
+            "SnsTopicArn": "arn:aws:sns:us-east-1:111111222222:snsNameUsEast1.fifo",
+            "Timezone": "Pacific/Wake",
+            "VpcId": "vpc-1234566"
+          },
+          "tags": {
+            "key1": "val1",
+            "key2": "val2"
+          },
+          "workloadName": "SAP"
+        },
+        "output": {
+          "deploymentId": "1111111-1111-1111-1111-111111111111"
+        },
+        "id": "example-2",
+        "title": "Deploy a given workload with given settings and passing tags for Launch Wizard deployment resource."
+      }
+    ],
+    "DeleteDeployment": [
+      {
+        "input": {
+          "deploymentId": "4c1b59c1-659c-467f-b6e9-6ef6f9d28e1d"
+        },
+        "output": {
+          "status": "DELETED",
+          "statusReason": "Finished processing DeleteApp request"
+        },
+        "id": "example-1",
+        "title": "Delete a deployment."
+      }
+    ],
+    "GetDeployment": [
+      {
+        "input": {
+          "deploymentId": "1111111-1111-1111-1111-111111111111"
+        },
+        "output": {
+          "deployment": {
+            "name": "SapHanaSingleForTest",
+            "createdAt": "2023-04-24T13:10:09.857Z",
+            "deploymentArn": "arn:aws:launchwizard:us-east-1:123456789012:deployment/1111111-1111-1111-1111-111111111111",
+            "id": "1111111-1111-1111-1111-111111111111",
+            "specifications": {
+              "DisableDeploymentRollback": "true",
+              "Encryption": "Yes",
+              "KeyName": "testLinuxInstance",
+              "SAPTZ": "America/Vancouver",
+              "VPCID": "vpc-1234567",
+              "applicationName": "SapHanaSingleForTest",
+              "deploymentScenario": "SapHanaSingle",
+              "environmentType": "production",
+              "saveArtifactsS3Uri": "s3://testbucket",
+              "saveDeploymentArtifacts": "Yes"
+            },
+            "status": "FAILED",
+            "tags": {
+              "key1": "val1",
+              "key2": "val2"
+            },
+            "workloadName": "SapHanaSingle"
+          }
+        },
+        "id": "example-1",
+        "title": "Get details about a given deployment."
+      }
+    ],
+    "GetWorkload": [
+      {
+        "input": {
+          "workloadName": "SAP"
+        },
+        "output": {
+          "workload": {
+            "documentationUrl": "https://docs.aws.amazon.com/launchwizard/latest/userguide/launch-wizard-sap.html",
+            "description": "Workload Description",
+            "displayName": "SAP",
+            "iconUrl": "https://aws-lw-workload-assets-test-us-east-1.s3.amazonaws.com/amazon/SAP/icon.png?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEAUaCXVzLWVhc3QtMSJHMEUCIC4l3GCH4o%2Bgq3pJzcD1YJmtrmyNCoEgG2RIayjDWf9kAiEAnMK5nYixaZLuF1s1UVoNd7xIbDrOQ8EAbhcZWexMp9cq7wIIrf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAEGgw1ODI1NTgxMjEyMDYiDHxMN%2BZ8CoPORzvo4yrDAtkVZlBVxLwnFmwHw005vo13LOUUbyajEpp3HNh%2BaBL8K2DLx7Kzi0UPPD6z8pL1eiFLHAQ9zZgVc7pLVQjBKOdcw1GmIADDepqYEb%2B8zLi7zwWP1JT72YbT6ZXSoWpb5NCqcyAvdK47b0Ae586s6VkWzoeJ65jR%2FgbJMhRpFpqVSP2XI6Rf6yA3%2BkQyUCk3RdyF4ljIL8Nf5nIFb%2BOMK2PZ8aJX85l1j7UpJE1rfNb1PitVcQz3KlW5xkiXfcWRKeVhgHRyuCEL3FY0DyPFdqe3NxcA0%2FzPgBq6Y9B41kM6af5u2kQRfQOjWejDpzpG7w40eaIKAYnhBkjIA9550geSLB7O%2FuAPQLI9fI2lVowIBUKsKVOr0%2FFGIzW3WM7%2BbEx%2FZ0mDkP1IhcpZdP7owC77K8O%2BXDgBCabAy48K3ndi%2BQKQMPXjz6YGOp4Bbgv9mVc3sE4KvXZv1skhnOYcOKGdCncIKLne0W%2BgO3URxyDQiyO2FhM3OekXDH83CNCyDVIpkgpWkvgXDSaZiD5mj0T9iqEeJzfh6uQvX1dRN%2BxI1eV0M7HKY2e7F%2BKNjeLhzKgKpSpDqFIUSjLeBlLLyQCNKuUiO3DMiy3rB89aX4b9wyC8au0SfGb72YyNLXjh6M1whcj1VNGePyw%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20230809T202649Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=ASIAYPIZLPT3GGDNTHTI%2F20230809%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=6a37e41e47208b426a5e7d32392d0815388cd0231187652204836943c37ad86a",
+            "status": "ACTIVE",
+            "workloadName": "SAP"
+          }
+        },
+        "id": "example-1",
+        "title": "Get details about a specific workload."
+      }
+    ],
+    "GetWorkloadDeploymentPattern": [
+      {
+        "input": {
+          "deploymentPatternName": "adSelfManagedNewVpc",
+          "workloadName": "MicrosoftActiveDirectory"
+        },
+        "output": {
+          "workloadDeploymentPattern": {
+            "deploymentPatternName": "adSelfManagedNewVpc",
+            "deploymentPatternVersionName": "2024-03-19-14-00-09",
+            "description": "Builds a new AWS environment (VPC and other components), and deploys AD DS into this new VPC.",
+            "displayName": "Self-managed AD - new VPC",
+            "specifications": [
+              {
+                "name": "NumberOfAZs",
+                "required": "Yes",
+                "description": "Number of Availability Zones to use in the VPC."
+              },
+              {
+                "name": "AvailabilityZones",
+                "required": "Yes",
+                "description": "List of Availability Zones (AZs) to use for the subnets in the VPC."
+              },
+              {
+                "name": "VPCCIDR",
+                "required": "Yes",
+                "description": "CIDR block for the VPC."
+              }
+            ],
+            "status": "ACTIVE",
+            "workloadName": "MicrosoftActiveDirectory"
+          }
+        },
+        "id": "example-1",
+        "title": "Get details about a specific Workload deployment pattern"
+      }
+    ],
+    "ListDeploymentEvents": [
+      {
+        "input": {
+          "deploymentId": "4c1b59c1-659c-467f-b6e9-6ef6f9d28e1d"
+        },
+        "output": {
+          "deploymentEvents": [
+            {
+              "name": "Create secure parameter",
+              "description": "Creates a new secure parameter",
+              "status": "COMPLETED",
+              "statusReason": "",
+              "timestamp": "2023-04-24T13:10:39.123Z"
+            },
+            {
+              "name": "Create resource group",
+              "description": "Creates a resource group with all the application resources",
+              "status": "COMPLETED",
+              "statusReason": "",
+              "timestamp": "2023-04-24T13:10:42.238Z"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List all actions taken during a deployment."
+      }
+    ],
+    "ListDeploymentPatternVersions": [
+      {
+        "input": {
+          "deploymentPatternName": "default",
+          "workloadName": "security-automations-for-aws-waf"
+        },
+        "output": {
+          "deploymentPatternVersions": [
+            {
+              "deploymentPatternName": "default",
+              "deploymentPatternVersionName": "4.0.6",
+              "workloadName": "security-automations-for-aws-waf"
+            },
+            {
+              "deploymentPatternName": "default",
+              "deploymentPatternVersionName": "3.2.5",
+              "workloadName": "security-automations-for-aws-waf"
+            },
+            {
+              "deploymentPatternName": "default",
+              "deploymentPatternVersionName": "3.1.0",
+              "workloadName": "security-automations-for-aws-waf"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List all visible versions for the given workload and deployment pattern."
+      },
+      {
+        "input": {
+          "deploymentPatternName": "default",
+          "filters": [
+            {
+              "name": "updateFromVersion",
+              "values": [
+                "4.0.2"
+              ]
+            }
+          ],
+          "workloadName": "security-automations-for-aws-waf"
+        },
+        "output": {
+          "deploymentPatternVersions": [
+            {
+              "deploymentPatternName": "default",
+              "deploymentPatternVersionName": "4.0.6",
+              "workloadName": "security-automations-for-aws-waf"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "List filtered versions for the given workload and deployment pattern."
+      }
+    ],
+    "ListDeployments": [
+      {
+        "input": {
+          "filters": [
+            {
+              "name": "DEPLOYMENT_STATUS",
+              "values": [
+                "IN_PROGRESS"
+              ]
+            }
+          ]
+        },
+        "output": {
+          "deployments": [
+            {
+              "name": "SapHanaSingleForTest",
+              "createdAt": "2023-04-24T13:10:09.857Z",
+              "id": "4c1b59c1-659c-467f-b6e9-6ef6f9d28e1d",
+              "patternName": "SapHanaSingle",
+              "status": "IN_PROGRESS",
+              "workloadName": "SAP"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List deployments in the account with filters."
+      }
+    ],
+    "ListTagsForResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:launchwizard:us-east-1:123456789012:deployment/11111111-1111-1111-1111-111111111111"
+        },
+        "output": {
+          "tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "id": "example-1",
+        "title": "Listing tags on a Launch Wizard deployment resource."
+      }
+    ],
+    "ListWorkloadDeploymentPatterns": [
+      {
+        "input": {
+          "workloadName": "SAP"
+        },
+        "output": {
+          "workloadDeploymentPatterns": [
+            {
+              "deploymentPatternName": "SapHanaHA",
+              "deploymentPatternVersionName": "2023-08-02-01-00-00",
+              "description": "Deployment Option Description",
+              "displayName": "Deployment Option Display Name",
+              "status": "ACTIVE",
+              "workloadName": "SAP"
+            },
+            {
+              "deploymentPatternName": "SapHanaMulti",
+              "deploymentPatternVersionName": "2023-08-02-01-00-00",
+              "description": "Deployment Option Description",
+              "displayName": "Deployment Option Display Name",
+              "status": "ACTIVE",
+              "workloadName": "SAP"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List all available workloads supported by AWS Launch Wizard."
+      }
+    ],
+    "ListWorkloads": [
+      {
+        "input": {},
+        "output": {
+          "workloads": [
+            {
+              "displayName": "SAP",
+              "status": "ACTIVE",
+              "workloadName": "SAP"
+            },
+            {
+              "displayName": "MS SQL Server",
+              "status": "ACTIVE",
+              "workloadName": "SQL"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List all available workloads supported by AWS Launch Wizard."
+      }
+    ],
+    "TagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:launchwizard:us-east-1:123456789012:deployment/11111111-1111-1111-1111-111111111111",
+          "tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Adding tags to a Launch Wizard deployment resource."
+      }
+    ],
+    "UntagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:launchwizard:us-east-1:123456789012:deployment/11111111-1111-1111-1111-111111111111",
+          "tagKeys": [
+            "key1",
+            "key2"
+          ]
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Removing tags on a Launch Wizard deployment resource."
+      }
+    ],
+    "UpdateDeployment": [
+      {
+        "input": {
+          "deploymentId": "4c1b59c1-659c-467f-b6e9-6ef6f9d28e1d",
+          "dryRun": false,
+          "specifications": {
+            "CreateSecurityGroup": "No",
+            "DeploymentArtifactsS3Uri": "aws-bucket-name",
+            "DisableDeploymentRollback": "No",
+            "EnableEbsVolumeEncryption": "No",
+            "KeyPairName": "keyName",
+            "ProxyServerAddress": "http://mno.abc.com:8080",
+            "SapSysGroupId": "5003",
+            "SapVirtualIPOptIn": "No",
+            "SaveDeploymentArtifacts": "Yes",
+            "SnsTopicArn": "arn:aws:sns:us-east-1:111111222222:snsNameUsEast1.fifo",
+            "Timezone": "Pacific/Wake",
+            "VpcId": "vpc-1234567"
+          }
+        },
+        "output": {
+          "deployment": {
+            "name": "TestDeployment1",
+            "createdAt": 1736286728468,
+            "id": "4c1b59c1-659c-467f-b6e9-6ef6f9d28e1d",
+            "patternName": "SapHanaSingle",
+            "status": "UPDATE_IN_PROGRESS",
+            "workloadName": "SAP"
+          }
+        },
+        "id": "example-1",
+        "title": "Edit deployment specifications."
+      },
+      {
+        "input": {
+          "deploymentId": "4c1b59c1-659c-467f-b6e9-6ef6f9d28e1d",
+          "deploymentPatternVersionName": "2.0.0",
+          "dryRun": false,
+          "specifications": {
+            "CreateSecurityGroup": "No",
+            "DeploymentArtifactsS3Uri": "aws-bucket-name",
+            "DisableDeploymentRollback": "No",
+            "EnableEbsVolumeEncryption": "No",
+            "KeyPairName": "keyName",
+            "NewParameter": "Allow",
+            "ProxyServerAddress": "http://mno.abc.com:8080",
+            "SapSysGroupId": "5003",
+            "SapVirtualIPOptIn": "No",
+            "SaveDeploymentArtifacts": "Yes",
+            "SnsTopicArn": "arn:aws:sns:us-east-1:111111222222:snsNameUsEast1.fifo",
+            "Timezone": "Pacific/Wake",
+            "VpcId": "vpc-1234567"
+          }
+        },
+        "output": {
+          "deployment": {
+            "name": "TestDeployment1",
+            "createdAt": 1736286728468,
+            "id": "4c1b59c1-659c-467f-b6e9-6ef6f9d28e1d",
+            "patternName": "SapHanaSingle",
+            "status": "UPDATE_IN_PROGRESS",
+            "workloadName": "SAP"
+          }
+        },
+        "id": "example-2",
+        "title": "Update deployment version."
+      }
+    ]
   }
 }

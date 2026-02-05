@@ -32,6 +32,23 @@
       ],
       "idempotent":true
     },
+    "AssociateIamRoleToResource":{
+      "name":"AssociateIamRoleToResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateIamRoleToResourceInput"},
+      "output":{"shape":"AssociateIamRoleToResourceOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "CreateCloudAutonomousVmCluster":{
       "name":"CreateCloudAutonomousVmCluster",
       "http":{
@@ -210,6 +227,23 @@
       ],
       "idempotent":true
     },
+    "DisassociateIamRoleFromResource":{
+      "name":"DisassociateIamRoleFromResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateIamRoleFromResourceInput"},
+      "output":{"shape":"DisassociateIamRoleFromResourceOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetCloudAutonomousVmCluster":{
       "name":"GetCloudAutonomousVmCluster",
       "http":{
@@ -224,7 +258,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCloudExadataInfrastructure":{
       "name":"GetCloudExadataInfrastructure",
@@ -240,7 +275,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCloudExadataInfrastructureUnallocatedResources":{
       "name":"GetCloudExadataInfrastructureUnallocatedResources",
@@ -256,7 +292,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCloudVmCluster":{
       "name":"GetCloudVmCluster",
@@ -272,7 +309,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDbNode":{
       "name":"GetDbNode",
@@ -288,7 +326,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDbServer":{
       "name":"GetDbServer",
@@ -304,7 +343,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetOciOnboardingStatus":{
       "name":"GetOciOnboardingStatus",
@@ -319,7 +359,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetOdbNetwork":{
       "name":"GetOdbNetwork",
@@ -335,7 +376,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetOdbPeeringConnection":{
       "name":"GetOdbPeeringConnection",
@@ -351,7 +393,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "InitializeService":{
       "name":"InitializeService",
@@ -383,7 +426,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCloudAutonomousVmClusters":{
       "name":"ListCloudAutonomousVmClusters",
@@ -399,7 +443,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCloudExadataInfrastructures":{
       "name":"ListCloudExadataInfrastructures",
@@ -414,7 +459,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCloudVmClusters":{
       "name":"ListCloudVmClusters",
@@ -430,7 +476,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDbNodes":{
       "name":"ListDbNodes",
@@ -446,7 +493,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDbServers":{
       "name":"ListDbServers",
@@ -462,7 +510,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDbSystemShapes":{
       "name":"ListDbSystemShapes",
@@ -477,7 +526,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListGiVersions":{
       "name":"ListGiVersions",
@@ -492,7 +542,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListOdbNetworks":{
       "name":"ListOdbNetworks",
@@ -507,7 +558,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListOdbPeeringConnections":{
       "name":"ListOdbPeeringConnections",
@@ -523,7 +575,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSystemVersions":{
       "name":"ListSystemVersions",
@@ -539,7 +592,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -551,7 +605,8 @@
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "RebootDbNode":{
       "name":"RebootDbNode",
@@ -661,6 +716,23 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "UpdateOdbPeeringConnection":{
+      "name":"UpdateOdbPeeringConnection",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateOdbPeeringConnectionInput"},
+      "output":{"shape":"UpdateOdbPeeringConnectionOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
     }
   },
   "shapes":{
@@ -689,6 +761,29 @@
         "message":{"shape":"String"}
       },
       "exception":true
+    },
+    "AssociateIamRoleToResourceInput":{
+      "type":"structure",
+      "required":[
+        "iamRoleArn",
+        "awsIntegration",
+        "resourceArn"
+      ],
+      "members":{
+        "iamRoleArn":{"shape":"RoleArn"},
+        "awsIntegration":{"shape":"SupportedAwsIntegration"},
+        "resourceArn":{"shape":"AssociateIamRoleToResourceInputResourceArnString"}
+      }
+    },
+    "AssociateIamRoleToResourceInputResourceArnString":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso-[a-z]?|aws-iso):odb:[a-z0-9-]+:\\d{12}:cloud-vm-cluster/[a-z0-9-_]+"
+    },
+    "AssociateIamRoleToResourceOutput":{
+      "type":"structure",
+      "members":{}
     },
     "AutonomousVirtualMachineList":{
       "type":"list",
@@ -723,12 +818,14 @@
         "cloudAutonomousVmClusterId":{"shape":"ResourceId"},
         "cloudAutonomousVmClusterArn":{"shape":"String"},
         "odbNetworkId":{"shape":"ResourceIdOrArn"},
+        "odbNetworkArn":{"shape":"ResourceArn"},
         "ociResourceAnchorName":{"shape":"String"},
         "percentProgress":{"shape":"Float"},
         "displayName":{"shape":"ResourceDisplayName"},
         "status":{"shape":"ResourceStatus"},
         "statusReason":{"shape":"String"},
         "cloudExadataInfrastructureId":{"shape":"ResourceIdOrArn"},
+        "cloudExadataInfrastructureArn":{"shape":"ResourceArn"},
         "autonomousDataStoragePercentage":{"shape":"Float"},
         "autonomousDataStorageSizeInTBs":{"shape":"Double"},
         "availableAutonomousDataStorageSizeInTBs":{"shape":"Double"},
@@ -793,12 +890,14 @@
         "cloudAutonomousVmClusterId":{"shape":"ResourceId"},
         "cloudAutonomousVmClusterArn":{"shape":"String"},
         "odbNetworkId":{"shape":"ResourceIdOrArn"},
+        "odbNetworkArn":{"shape":"ResourceArn"},
         "ociResourceAnchorName":{"shape":"String"},
         "percentProgress":{"shape":"Float"},
         "displayName":{"shape":"ResourceDisplayName"},
         "status":{"shape":"ResourceStatus"},
         "statusReason":{"shape":"String"},
         "cloudExadataInfrastructureId":{"shape":"ResourceIdOrArn"},
+        "cloudExadataInfrastructureArn":{"shape":"ResourceArn"},
         "autonomousDataStoragePercentage":{"shape":"Float"},
         "autonomousDataStorageSizeInTBs":{"shape":"Double"},
         "availableAutonomousDataStorageSizeInTBs":{"shape":"Double"},
@@ -955,6 +1054,7 @@
         "statusReason":{"shape":"String"},
         "cloudVmClusterArn":{"shape":"String"},
         "cloudExadataInfrastructureId":{"shape":"String"},
+        "cloudExadataInfrastructureArn":{"shape":"ResourceArn"},
         "clusterName":{"shape":"String"},
         "cpuCoreCount":{"shape":"Integer"},
         "dataCollectionOptions":{"shape":"DataCollectionOptions"},
@@ -987,8 +1087,10 @@
         "timeZone":{"shape":"String"},
         "vipIds":{"shape":"StringList"},
         "odbNetworkId":{"shape":"ResourceIdOrArn"},
+        "odbNetworkArn":{"shape":"ResourceArn"},
         "percentProgress":{"shape":"Float"},
-        "computeModel":{"shape":"ComputeModel"}
+        "computeModel":{"shape":"ComputeModel"},
+        "iamRoles":{"shape":"IamRoleList"}
       }
     },
     "CloudVmClusterList":{
@@ -1005,6 +1107,7 @@
         "statusReason":{"shape":"String"},
         "cloudVmClusterArn":{"shape":"String"},
         "cloudExadataInfrastructureId":{"shape":"String"},
+        "cloudExadataInfrastructureArn":{"shape":"ResourceArn"},
         "clusterName":{"shape":"String"},
         "cpuCoreCount":{"shape":"Integer"},
         "dataCollectionOptions":{"shape":"DataCollectionOptions"},
@@ -1037,8 +1140,10 @@
         "timeZone":{"shape":"String"},
         "vipIds":{"shape":"StringList"},
         "odbNetworkId":{"shape":"ResourceIdOrArn"},
+        "odbNetworkArn":{"shape":"ResourceArn"},
         "percentProgress":{"shape":"Float"},
-        "computeModel":{"shape":"ComputeModel"}
+        "computeModel":{"shape":"ComputeModel"},
+        "iamRoles":{"shape":"IamRoleList"}
       }
     },
     "ComputeModel":{
@@ -1277,7 +1382,7 @@
     "CreateCloudVmClusterInputCpuCoreCountInteger":{
       "type":"integer",
       "box":true,
-      "max":368,
+      "max":10000,
       "min":0
     },
     "CreateCloudVmClusterInputGiVersionString":{
@@ -1337,7 +1442,12 @@
         },
         "s3Access":{"shape":"Access"},
         "zeroEtlAccess":{"shape":"Access"},
+        "stsAccess":{"shape":"Access"},
+        "kmsAccess":{"shape":"Access"},
         "s3PolicyDocument":{"shape":"PolicyDocument"},
+        "stsPolicyDocument":{"shape":"PolicyDocument"},
+        "kmsPolicyDocument":{"shape":"PolicyDocument"},
+        "crossRegionS3RestoreSourcesToEnable":{"shape":"StringList"},
         "tags":{"shape":"RequestTagMap"}
       }
     },
@@ -1398,6 +1508,7 @@
         "odbNetworkId":{"shape":"ResourceIdOrArn"},
         "peerNetworkId":{"shape":"ResourceIdOrArn"},
         "displayName":{"shape":"ResourceDisplayName"},
+        "peerNetworkCidrsToBeAdded":{"shape":"PeeredCidrList"},
         "clientToken":{
           "shape":"CreateOdbPeeringConnectionInputClientTokenString",
           "idempotencyToken":true
@@ -1420,6 +1531,18 @@
         "statusReason":{"shape":"String"},
         "odbPeeringConnectionId":{"shape":"String"}
       }
+    },
+    "CrossRegionS3RestoreSourcesAccess":{
+      "type":"structure",
+      "members":{
+        "region":{"shape":"String"},
+        "ipv4Addresses":{"shape":"StringList"},
+        "status":{"shape":"ManagedResourceStatus"}
+      }
+    },
+    "CrossRegionS3RestoreSourcesAccessList":{
+      "type":"list",
+      "member":{"shape":"CrossRegionS3RestoreSourcesAccess"}
     },
     "CustomerContact":{
       "type":"structure",
@@ -1729,6 +1852,29 @@
       "type":"structure",
       "members":{}
     },
+    "DisassociateIamRoleFromResourceInput":{
+      "type":"structure",
+      "required":[
+        "iamRoleArn",
+        "awsIntegration",
+        "resourceArn"
+      ],
+      "members":{
+        "iamRoleArn":{"shape":"RoleArn"},
+        "awsIntegration":{"shape":"SupportedAwsIntegration"},
+        "resourceArn":{"shape":"DisassociateIamRoleFromResourceInputResourceArnString"}
+      }
+    },
+    "DisassociateIamRoleFromResourceInputResourceArnString":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso-[a-z]?|aws-iso):odb:[a-z0-9-]+:\\d{12}:cloud-vm-cluster/[a-z0-9-_]+"
+    },
+    "DisassociateIamRoleFromResourceOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "DiskRedundancy":{
       "type":"string",
       "enum":[
@@ -1849,7 +1995,8 @@
       "members":{
         "status":{"shape":"OciOnboardingStatus"},
         "existingTenancyActivationLink":{"shape":"String"},
-        "newTenancyActivationLink":{"shape":"String"}
+        "newTenancyActivationLink":{"shape":"String"},
+        "ociIdentityDomain":{"shape":"OciIdentityDomain"}
       }
     },
     "GetOdbNetworkInput":{
@@ -1892,9 +2039,36 @@
       "type":"list",
       "member":{"shape":"Integer"}
     },
+    "IamRole":{
+      "type":"structure",
+      "members":{
+        "iamRoleArn":{"shape":"RoleArn"},
+        "status":{"shape":"IamRoleStatus"},
+        "statusReason":{"shape":"String"},
+        "awsIntegration":{"shape":"SupportedAwsIntegration"}
+      }
+    },
+    "IamRoleList":{
+      "type":"list",
+      "member":{"shape":"IamRole"}
+    },
+    "IamRoleStatus":{
+      "type":"string",
+      "enum":[
+        "ASSOCIATING",
+        "DISASSOCIATING",
+        "FAILED",
+        "CONNECTED",
+        "DISCONNECTED",
+        "PARTIALLY_CONNECTED",
+        "UNKNOWN"
+      ]
+    },
     "InitializeServiceInput":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "ociIdentityDomain":{"shape":"Boolean"}
+      }
     },
     "InitializeServiceOutput":{
       "type":"structure",
@@ -1924,6 +2098,15 @@
         "FAILED",
         "UPDATING"
       ]
+    },
+    "KmsAccess":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"ManagedResourceStatus"},
+        "ipv4Addresses":{"shape":"StringList"},
+        "domainName":{"shape":"String"},
+        "kmsPolicyDocument":{"shape":"String"}
+      }
     },
     "LicenseModel":{
       "type":"string",
@@ -2326,7 +2509,10 @@
         "serviceNetworkEndpoint":{"shape":"ServiceNetworkEndpoint"},
         "managedS3BackupAccess":{"shape":"ManagedS3BackupAccess"},
         "zeroEtlAccess":{"shape":"ZeroEtlAccess"},
-        "s3Access":{"shape":"S3Access"}
+        "s3Access":{"shape":"S3Access"},
+        "stsAccess":{"shape":"StsAccess"},
+        "kmsAccess":{"shape":"KmsAccess"},
+        "crossRegionS3RestoreSourcesAccess":{"shape":"CrossRegionS3RestoreSourcesAccessList"}
       }
     },
     "Month":{
@@ -2381,6 +2567,17 @@
     "OciDnsForwardingConfigList":{
       "type":"list",
       "member":{"shape":"OciDnsForwardingConfig"}
+    },
+    "OciIdentityDomain":{
+      "type":"structure",
+      "members":{
+        "ociIdentityDomainId":{"shape":"String"},
+        "ociIdentityDomainResourceUrl":{"shape":"String"},
+        "ociIdentityDomainUrl":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "accountSetupCloudFormationUrl":{"shape":"String"}
+      }
     },
     "OciOnboardingStatus":{
       "type":"string",
@@ -2549,6 +2746,7 @@
         "odbNetworkArn":{"shape":"String"},
         "peerNetworkArn":{"shape":"String"},
         "odbPeeringConnectionType":{"shape":"String"},
+        "peerNetworkCidrs":{"shape":"PeeredCidrList"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "percentProgress":{"shape":"Float"}
       }
@@ -2569,6 +2767,7 @@
         "odbNetworkArn":{"shape":"String"},
         "peerNetworkArn":{"shape":"String"},
         "odbPeeringConnectionType":{"shape":"String"},
+        "peerNetworkCidrs":{"shape":"PeeredCidrList"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "percentProgress":{"shape":"Float"}
       }
@@ -2579,6 +2778,16 @@
         "ROLLING",
         "NONROLLING"
       ]
+    },
+    "PeeredCidr":{
+      "type":"string",
+      "max":18,
+      "min":1,
+      "pattern":"(?:(?:\\d|[01]?\\d\\d|2[0-4]\\d|25[0-5])\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d|\\d)\\/(?:[1-2][0-9]|3[0-2]|[1-9])"
+    },
+    "PeeredCidrList":{
+      "type":"list",
+      "member":{"shape":"PeeredCidr"}
     },
     "PolicyDocument":{
       "type":"string",
@@ -2676,6 +2885,12 @@
       "max":200,
       "min":0
     },
+    "RoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso-{0,1}[a-z]{0,1}):iam::[0-9]{12}:role/.+"
+    },
     "S3Access":{
       "type":"structure",
       "members":{
@@ -2771,6 +2986,19 @@
       "member":{"shape":"String"},
       "max":1024,
       "min":1
+    },
+    "StsAccess":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"ManagedResourceStatus"},
+        "ipv4Addresses":{"shape":"StringList"},
+        "domainName":{"shape":"String"},
+        "stsPolicyDocument":{"shape":"String"}
+      }
+    },
+    "SupportedAwsIntegration":{
+      "type":"string",
+      "enum":["KmsTde"]
     },
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",
@@ -2871,7 +3099,13 @@
         "peeredCidrsToBeRemoved":{"shape":"StringList"},
         "s3Access":{"shape":"Access"},
         "zeroEtlAccess":{"shape":"Access"},
-        "s3PolicyDocument":{"shape":"PolicyDocument"}
+        "stsAccess":{"shape":"Access"},
+        "kmsAccess":{"shape":"Access"},
+        "s3PolicyDocument":{"shape":"PolicyDocument"},
+        "stsPolicyDocument":{"shape":"PolicyDocument"},
+        "kmsPolicyDocument":{"shape":"PolicyDocument"},
+        "crossRegionS3RestoreSourcesToEnable":{"shape":"StringList"},
+        "crossRegionS3RestoreSourcesToDisable":{"shape":"StringList"}
       }
     },
     "UpdateOdbNetworkOutput":{
@@ -2882,6 +3116,26 @@
         "status":{"shape":"ResourceStatus"},
         "statusReason":{"shape":"String"},
         "odbNetworkId":{"shape":"String"}
+      }
+    },
+    "UpdateOdbPeeringConnectionInput":{
+      "type":"structure",
+      "required":["odbPeeringConnectionId"],
+      "members":{
+        "odbPeeringConnectionId":{"shape":"ResourceIdOrArn"},
+        "displayName":{"shape":"ResourceDisplayName"},
+        "peerNetworkCidrsToBeAdded":{"shape":"PeeredCidrList"},
+        "peerNetworkCidrsToBeRemoved":{"shape":"PeeredCidrList"}
+      }
+    },
+    "UpdateOdbPeeringConnectionOutput":{
+      "type":"structure",
+      "required":["odbPeeringConnectionId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "odbPeeringConnectionId":{"shape":"String"}
       }
     },
     "ValidationException":{

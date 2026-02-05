@@ -75,7 +75,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDashboardForJobRun":{
       "name":"GetDashboardForJobRun",
@@ -105,7 +106,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListApplications":{
       "name":"ListApplications",
@@ -119,7 +121,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListJobRunAttempts":{
       "name":"ListJobRunAttempts",
@@ -134,7 +137,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListJobRuns":{
       "name":"ListJobRuns",
@@ -148,7 +152,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -163,7 +168,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "StartApplication":{
       "name":"StartApplication",
@@ -295,9 +301,11 @@
         "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationMap"},
         "runtimeConfiguration":{"shape":"ConfigurationList"},
         "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
+        "diskEncryptionConfiguration":{"shape":"DiskEncryptionConfiguration"},
         "interactiveConfiguration":{"shape":"InteractiveConfiguration"},
         "schedulerConfiguration":{"shape":"SchedulerConfiguration"},
-        "identityCenterConfiguration":{"shape":"IdentityCenterConfiguration"}
+        "identityCenterConfiguration":{"shape":"IdentityCenterConfiguration"},
+        "jobLevelCostAllocationConfiguration":{"shape":"JobLevelCostAllocationConfiguration"}
       }
     },
     "ApplicationArn":{
@@ -476,7 +484,8 @@
       "type":"structure",
       "members":{
         "applicationConfiguration":{"shape":"ConfigurationList"},
-        "monitoringConfiguration":{"shape":"MonitoringConfiguration"}
+        "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
+        "diskEncryptionConfiguration":{"shape":"DiskEncryptionConfiguration"}
       }
     },
     "ConfigurationPropertyKey":{
@@ -535,9 +544,11 @@
         "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationInputMap"},
         "runtimeConfiguration":{"shape":"ConfigurationList"},
         "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
+        "diskEncryptionConfiguration":{"shape":"DiskEncryptionConfiguration"},
         "interactiveConfiguration":{"shape":"InteractiveConfiguration"},
         "schedulerConfiguration":{"shape":"SchedulerConfiguration"},
-        "identityCenterConfiguration":{"shape":"IdentityCenterConfigurationInput"}
+        "identityCenterConfiguration":{"shape":"IdentityCenterConfigurationInput"},
+        "jobLevelCostAllocationConfiguration":{"shape":"JobLevelCostAllocationConfiguration"}
       }
     },
     "CreateApplicationResponse":{
@@ -566,7 +577,13 @@
     },
     "DeleteApplicationResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "DiskEncryptionConfiguration":{
+      "type":"structure",
       "members":{
+        "encryptionContext":{"shape":"EncryptionContext"},
+        "encryptionKeyArn":{"shape":"EncryptionKeyArn"}
       }
     },
     "DiskSize":{
@@ -587,6 +604,23 @@
       "type":"long",
       "max":1000000,
       "min":0
+    },
+    "EncryptionContext":{
+      "type":"map",
+      "key":{"shape":"EncryptionContextKey"},
+      "value":{"shape":"EncryptionContextValue"},
+      "max":8,
+      "min":0
+    },
+    "EncryptionContextKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "EncryptionContextValue":{
+      "type":"string",
+      "max":384,
+      "min":1
     },
     "EncryptionKeyArn":{
       "type":"string",
@@ -732,13 +766,15 @@
       "type":"structure",
       "members":{
         "identityCenterInstanceArn":{"shape":"IdentityCenterInstanceArn"},
-        "identityCenterApplicationArn":{"shape":"IdentityCenterApplicationArn"}
+        "identityCenterApplicationArn":{"shape":"IdentityCenterApplicationArn"},
+        "userBackgroundSessionsEnabled":{"shape":"Boolean"}
       }
     },
     "IdentityCenterConfigurationInput":{
       "type":"structure",
       "members":{
-        "identityCenterInstanceArn":{"shape":"IdentityCenterInstanceArn"}
+        "identityCenterInstanceArn":{"shape":"IdentityCenterInstanceArn"},
+        "userBackgroundSessionsEnabled":{"shape":"Boolean"}
       }
     },
     "IdentityCenterInstanceArn":{
@@ -827,6 +863,12 @@
         "hive":{"shape":"Hive"}
       },
       "union":true
+    },
+    "JobLevelCostAllocationConfiguration":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"Boolean"}
+      }
     },
     "JobRun":{
       "type":"structure",
@@ -1383,8 +1425,7 @@
     },
     "StartApplicationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartJobRunRequest":{
       "type":"structure",
@@ -1443,8 +1484,7 @@
     },
     "StopApplicationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "String1024":{
       "type":"string",
@@ -1506,8 +1546,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1544,8 +1583,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateApplicationRequest":{
       "type":"structure",
@@ -1575,8 +1613,10 @@
         "releaseLabel":{"shape":"ReleaseLabel"},
         "runtimeConfiguration":{"shape":"ConfigurationList"},
         "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
+        "diskEncryptionConfiguration":{"shape":"DiskEncryptionConfiguration"},
         "schedulerConfiguration":{"shape":"SchedulerConfiguration"},
-        "identityCenterConfiguration":{"shape":"IdentityCenterConfigurationInput"}
+        "identityCenterConfiguration":{"shape":"IdentityCenterConfigurationInput"},
+        "jobLevelCostAllocationConfiguration":{"shape":"JobLevelCostAllocationConfiguration"}
       }
     },
     "UpdateApplicationResponse":{

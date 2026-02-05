@@ -26,6 +26,7 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
         {"shape":"ConflictException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ThrottlingException"},
@@ -62,8 +63,10 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
         {"shape":"ConflictException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "CreateCredentialLocker":{
@@ -243,6 +246,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ],
@@ -420,6 +424,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
       ],
@@ -441,7 +446,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCloudConnector":{
       "name":"GetCloudConnector",
@@ -458,7 +464,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetConnectorDestination":{
       "name":"GetConnectorDestination",
@@ -475,7 +482,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCredentialLocker":{
       "name":"GetCredentialLocker",
@@ -493,7 +501,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCustomEndpoint":{
       "name":"GetCustomEndpoint",
@@ -512,7 +521,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDefaultEncryptionConfiguration":{
       "name":"GetDefaultEncryptionConfiguration",
@@ -531,7 +541,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDestination":{
       "name":"GetDestination",
@@ -548,7 +559,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDeviceDiscovery":{
       "name":"GetDeviceDiscovery",
@@ -567,7 +579,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetEventLogConfiguration":{
       "name":"GetEventLogConfiguration",
@@ -584,7 +597,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetHubConfiguration":{
       "name":"GetHubConfiguration",
@@ -602,7 +616,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetManagedThing":{
       "name":"GetManagedThing",
@@ -621,7 +636,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetManagedThingCapabilities":{
       "name":"GetManagedThingCapabilities",
@@ -640,7 +656,28 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "GetManagedThingCertificate":{
+      "name":"GetManagedThingCertificate",
+      "http":{
+        "method":"GET",
+        "requestUri":"/managed-things-certificate/{Identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetManagedThingCertificateRequest"},
+      "output":{"shape":"GetManagedThingCertificateResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "GetManagedThingConnectivityData":{
       "name":"GetManagedThingConnectivityData",
@@ -659,7 +696,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetManagedThingMetaData":{
       "name":"GetManagedThingMetaData",
@@ -678,7 +716,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetManagedThingState":{
       "name":"GetManagedThingState",
@@ -697,7 +736,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetNotificationConfiguration":{
       "name":"GetNotificationConfiguration",
@@ -714,7 +754,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetOtaTask":{
       "name":"GetOtaTask",
@@ -731,7 +772,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetOtaTaskConfiguration":{
       "name":"GetOtaTaskConfiguration",
@@ -748,7 +790,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetProvisioningProfile":{
       "name":"GetProvisioningProfile",
@@ -767,7 +810,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetRuntimeLogConfiguration":{
       "name":"GetRuntimeLogConfiguration",
@@ -784,7 +828,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetSchemaVersion":{
       "name":"GetSchemaVersion",
@@ -803,7 +848,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAccountAssociations":{
       "name":"ListAccountAssociations",
@@ -820,7 +866,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCloudConnectors":{
       "name":"ListCloudConnectors",
@@ -836,7 +883,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListConnectorDestinations":{
       "name":"ListConnectorDestinations",
@@ -852,7 +900,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCredentialLockers":{
       "name":"ListCredentialLockers",
@@ -869,7 +918,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDestinations":{
       "name":"ListDestinations",
@@ -885,7 +935,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDeviceDiscoveries":{
       "name":"ListDeviceDiscoveries",
@@ -903,7 +954,8 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDiscoveredDevices":{
       "name":"ListDiscoveredDevices",
@@ -922,7 +974,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListEventLogConfigurations":{
       "name":"ListEventLogConfigurations",
@@ -938,7 +991,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListManagedThingAccountAssociations":{
       "name":"ListManagedThingAccountAssociations",
@@ -954,7 +1008,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListManagedThingSchemas":{
       "name":"ListManagedThingSchemas",
@@ -973,7 +1028,8 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListManagedThings":{
       "name":"ListManagedThings",
@@ -991,7 +1047,8 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListNotificationConfigurations":{
       "name":"ListNotificationConfigurations",
@@ -1007,7 +1064,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListOtaTaskConfigurations":{
       "name":"ListOtaTaskConfigurations",
@@ -1023,7 +1081,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListOtaTaskExecutions":{
       "name":"ListOtaTaskExecutions",
@@ -1040,7 +1099,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListOtaTasks":{
       "name":"ListOtaTasks",
@@ -1057,7 +1117,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListProvisioningProfiles":{
       "name":"ListProvisioningProfiles",
@@ -1075,7 +1136,8 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSchemaVersions":{
       "name":"ListSchemaVersions",
@@ -1093,7 +1155,8 @@
         {"shape":"ConflictException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -1109,7 +1172,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutDefaultEncryptionConfiguration":{
       "name":"PutDefaultEncryptionConfiguration",
@@ -1364,6 +1428,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ],
@@ -1567,7 +1632,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"[/a-zA-Z0-9\\._ ]+"
+      "pattern":"[/a-zA-Z0-9\\._ -]+"
     },
     "ActionReference":{
       "type":"string",
@@ -1704,12 +1769,11 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"[/a-zA-Z0-9\\._ ]+"
+      "pattern":"[/a-zA-Z0-9\\._ -]+"
     },
     "CapabilityProperties":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true,
       "sensitive":true
     },
@@ -1821,6 +1885,12 @@
       "max":64,
       "min":1,
       "pattern":"(0|[1-9][0-9]*)"
+    },
+    "CertificatePem":{
+      "type":"string",
+      "max":65536,
+      "min":1,
+      "pattern":"[\\s\\S]*"
     },
     "ClaimCertificate":{
       "type":"string",
@@ -2238,6 +2308,7 @@
         "CredentialLockerId":{"shape":"CredentialLockerId"},
         "AuthenticationMaterial":{"shape":"AuthMaterialString"},
         "AuthenticationMaterialType":{"shape":"AuthMaterialType"},
+        "WiFiSimpleSetupConfiguration":{"shape":"WiFiSimpleSetupConfiguration"},
         "SerialNumber":{"shape":"SerialNumber"},
         "Brand":{"shape":"Brand"},
         "Model":{"shape":"Model"},
@@ -2644,8 +2715,7 @@
     },
     "DeviceMetadata":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "DeviceSpecificKey":{
@@ -2740,7 +2810,8 @@
         "ZWAVE",
         "ZIGBEE",
         "CLOUD",
-        "CUSTOM"
+        "CUSTOM",
+        "CONTROLLER_CAPABILITY_REDISCOVERY"
       ]
     },
     "DisplayName":{
@@ -2754,6 +2825,14 @@
       "box":true,
       "max":1430,
       "min":1
+    },
+    "EnableAsProvisionee":{
+      "type":"boolean",
+      "box":true
+    },
+    "EnableAsProvisioner":{
+      "type":"boolean",
+      "box":true
     },
     "EncryptionType":{
       "type":"string",
@@ -2811,7 +2890,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"[/a-zA-Z0-9\\._ ]+"
+      "pattern":"[/a-zA-Z0-9\\._ -]+"
     },
     "EventType":{
       "type":"string",
@@ -2823,6 +2902,7 @@
         "DEVICE_LIFE_CYCLE",
         "DEVICE_STATE",
         "DEVICE_OTA",
+        "DEVICE_WSS",
         "CONNECTOR_ASSOCIATION",
         "ACCOUNT_ASSOCIATION",
         "CONNECTOR_ERROR_REPORT"
@@ -2949,8 +3029,7 @@
     },
     "GetCustomEndpointRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetCustomEndpointResponse":{
       "type":"structure",
@@ -2961,8 +3040,7 @@
     },
     "GetDefaultEncryptionConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetDefaultEncryptionConfigurationResponse":{
       "type":"structure",
@@ -3070,8 +3148,7 @@
     },
     "GetHubConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetHubConfigurationResponse":{
       "type":"structure",
@@ -3097,6 +3174,24 @@
         "ManagedThingId":{"shape":"ManagedThingId"},
         "Capabilities":{"shape":"Capabilities"},
         "CapabilityReport":{"shape":"CapabilityReport"}
+      }
+    },
+    "GetManagedThingCertificateRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{
+          "shape":"ManagedThingId",
+          "location":"uri",
+          "locationName":"Identifier"
+        }
+      }
+    },
+    "GetManagedThingCertificateResponse":{
+      "type":"structure",
+      "members":{
+        "ManagedThingId":{"shape":"ManagedThingId"},
+        "CertificatePem":{"shape":"CertificatePem"}
       }
     },
     "GetManagedThingConnectivityDataRequest":{
@@ -3181,7 +3276,8 @@
         "ActivatedAt":{"shape":"SetupAt"},
         "HubNetworkMode":{"shape":"HubNetworkMode"},
         "MetaData":{"shape":"MetaData"},
-        "Tags":{"shape":"TagsMap"}
+        "Tags":{"shape":"TagsMap"},
+        "WiFiSimpleSetupConfiguration":{"shape":"WiFiSimpleSetupConfiguration"}
       }
     },
     "GetManagedThingStateRequest":{
@@ -4097,8 +4193,7 @@
     },
     "MatterAttributes":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true,
       "sensitive":true
     },
@@ -4124,8 +4219,7 @@
     },
     "MatterCapabilityReportAttributeValue":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "MatterCapabilityReportAttributes":{
@@ -4286,8 +4380,7 @@
     },
     "MatterFields":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true,
       "sensitive":true
     },
@@ -4595,7 +4688,15 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"[/a-zA-Z0-9\\._ ]+"
+      "pattern":"[/a-zA-Z0-9\\._ -]+"
+    },
+    "ProtocolType":{
+      "type":"string",
+      "enum":[
+        "ZWAVE",
+        "ZIGBEE",
+        "CUSTOM"
+      ]
     },
     "ProvisioningProfileArn":{
       "type":"string",
@@ -4728,8 +4829,7 @@
     },
     "RegisterCustomEndpointRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RegisterCustomEndpointResponse":{
       "type":"structure",
@@ -4880,8 +4980,7 @@
     },
     "SchemaVersionSchema":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "SchemaVersionType":{
@@ -5076,7 +5175,9 @@
           "deprecated":true,
           "deprecatedMessage":"Tags have been deprecated from this api",
           "deprecatedSince":"06-25-2025"
-        }
+        },
+        "Protocol":{"shape":"ProtocolType"},
+        "EndDeviceIdentifier":{"shape":"ManagedThingId"}
       }
     },
     "StartDeviceDiscoveryResponse":{
@@ -5154,8 +5255,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -5210,6 +5310,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "TimeoutInMinutes":{
+      "type":"integer",
+      "box":true,
+      "max":15,
+      "min":5
     },
     "TokenEndpointAuthenticationScheme":{
       "type":"string",
@@ -5269,8 +5375,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAccountAssociationRequest":{
       "type":"structure",
@@ -5356,6 +5461,7 @@
         "Owner":{"shape":"Owner"},
         "CredentialLockerId":{"shape":"CredentialLockerId"},
         "SerialNumber":{"shape":"SerialNumber"},
+        "WiFiSimpleSetupConfiguration":{"shape":"WiFiSimpleSetupConfiguration"},
         "Brand":{"shape":"Brand"},
         "Model":{"shape":"Model"},
         "Name":{"shape":"Name"},
@@ -5417,9 +5523,16 @@
     },
     "ValidationSchema":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
+    },
+    "WiFiSimpleSetupConfiguration":{
+      "type":"structure",
+      "members":{
+        "EnableAsProvisioner":{"shape":"EnableAsProvisioner"},
+        "EnableAsProvisionee":{"shape":"EnableAsProvisionee"},
+        "TimeoutInMinutes":{"shape":"TimeoutInMinutes"}
+      }
     }
   }
 }

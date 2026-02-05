@@ -5,7 +5,7 @@ use Aws\Crypto\MetadataEnvelope;
 
 trait UsesMetadataEnvelopeTrait
 {
-    public function getIndividualMetadataFields()
+    public function getIndividualMetadataFields(): array
     {
         return [
             [
@@ -39,28 +39,180 @@ trait UsesMetadataEnvelopeTrait
         ];
     }
 
-    public function getCondensedFields()
+    public function getIndividualV3MetadataFields(): array
+    {
+        return [
+            [
+                MetadataEnvelope::ENCRYPTED_DATA_KEY_V3,
+               1 
+            ],
+            [
+                MetadataEnvelope::MAT_DESC_V3,
+                2
+            ],
+            [
+                MetadataEnvelope::ENCRYPTED_DATA_KEY_ALGORITHM_V3,
+                3
+            ],
+            [
+                MetadataEnvelope::CONTENT_CIPHER_V3,
+                4
+            ],
+            [
+                MetadataEnvelope::ENCRYPTION_CONTEXT_V3,
+                5
+            ],
+            [
+                MetadataEnvelope::KEY_COMMITMENT_V3,
+                6
+            ],
+            [
+                MetadataEnvelope::MESSAGE_ID_V3,
+                7
+            ]
+        ];
+
+    }
+
+    public function getIndividualV3MetadataOnlyFields(): array
+    {
+        return [
+            [
+                MetadataEnvelope::CONTENT_CIPHER_V3,
+                1 
+            ],
+            [
+                MetadataEnvelope::KEY_COMMITMENT_V3,
+                2
+            ],
+            [
+                MetadataEnvelope::MESSAGE_ID_V3,
+                3
+            ]
+        ];
+
+    }
+
+    public function getIndividualV3InstructionFileOnlyFields(): array
+    {
+        return [
+            [
+                MetadataEnvelope::ENCRYPTED_DATA_KEY_V3,
+                4 
+            ],
+            [
+                MetadataEnvelope::MAT_DESC_V3,
+                5
+            ],
+            [
+                MetadataEnvelope::ENCRYPTED_DATA_KEY_ALGORITHM_V3,
+                6
+            ],
+            [
+                MetadataEnvelope::ENCRYPTION_CONTEXT_V3,
+                7
+            ],
+        ];
+
+    }
+
+    public function getIndividualV3DuplicateKeysInstructionFileOnlyFields(): array
+    {
+        return [
+            [
+                MetadataEnvelope::ENCRYPTED_DATA_KEY_V3,
+                4 
+            ],
+            [
+                MetadataEnvelope::MAT_DESC_V3,
+                5
+            ],
+            [
+                MetadataEnvelope::ENCRYPTED_DATA_KEY_ALGORITHM_V3,
+                6
+            ],
+            [
+                MetadataEnvelope::ENCRYPTION_CONTEXT_V3,
+                7
+            ],
+            [
+                MetadataEnvelope::ENCRYPTION_CONTEXT_V3,
+                8
+            ],
+        ];
+    }
+
+    public function getCondensedFields(): array
     {
         $individualMetadataFields = $this->getIndividualMetadataFields();
         $fields = [];
         foreach ($individualMetadataFields as $fieldInfo) {
             $fields[$fieldInfo[0]] = $fieldInfo[1];
         }
+
         return $fields;
     }
 
-    public function getFieldsAsMetaHeaders($fields)
+    public function getCondensedV3Fields(): array
+    {
+        $individualMetadataFields = $this->getIndividualV3MetadataFields();
+        $fields = [];
+        foreach ($individualMetadataFields as $fieldInfo) {
+            $fields[$fieldInfo[0]] = $fieldInfo[1];
+        }
+
+        return $fields;
+    }
+
+    public function getMetadataOnlyCondensedV3Fields(): array
+    {
+        $individualMetadataFields = $this->getIndividualV3MetadataOnlyFields();
+        $fields = [];
+        foreach ($individualMetadataFields as $fieldInfo) {
+            $fields[$fieldInfo[0]] = $fieldInfo[1];
+        }
+
+        return $fields;
+
+    }
+
+    public function getInstructionFileOnlyCondensedV3Fields(): array
+    {
+
+        $individualMetadataFields = $this->getIndividualV3InstructionFileOnlyFields();
+        $fields = [];
+        foreach ($individualMetadataFields as $fieldInfo) {
+            $fields[$fieldInfo[0]] = $fieldInfo[1];
+        }
+
+        return $fields;
+    }
+
+    public function getV3DuplicateKeysForInstructionFile(): array
+    {
+        $individualMetadataFields = $this->getIndividualV3DuplicateKeysInstructionFileOnlyFields();
+        $fields = [];
+        foreach ($individualMetadataFields as $fieldInfo) {
+            $fields[$fieldInfo[0]] = $fieldInfo[1];
+        }
+
+        return $fields;
+    }
+
+    public function getFieldsAsMetaHeaders($fields): array
     {
         $metadataFields = [];
         foreach ($fields as $header => $fieldInfo) {
             $metadataFields['x-amz-meta-' . $header] = $fieldInfo;
         }
+
         return $metadataFields;
     }
 
-    public function getMetadataFields()
+    public function getMetadataFields(): array
     {
         $fields = $this->getCondensedFields();
+
         return [
             [
                 $fields
@@ -68,9 +220,18 @@ trait UsesMetadataEnvelopeTrait
         ];
     }
 
-    public function getMetadataResult()
+    public function getV3MetadataFields(): array
+    {
+        $fields = $this->getCondensedV3Fields();
+        return [
+            [$fields]
+        ];
+    }
+
+    public function getMetadataResult(): array
     {
         $fields = $this->getCondensedFields();
+
         return [
             [
                 [
@@ -83,16 +244,59 @@ trait UsesMetadataEnvelopeTrait
         ];
     }
 
-    public function getMetadataEnvelope($fields)
+    public function getV3MetadataResult(): array
+    {
+        $fields = $this->getCondensedV3Fields();
+
+        return [
+            [
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'Metadata' => $fields
+                ],
+                $fields
+            ]
+        ];
+    }
+
+    public function getV3FieldsForInstructionFile(): array
+    {
+        $metadataOnlyFields = $this->getMetadataOnlyCondensedV3Fields();
+        $instructionFileOnlyFields = $this->getInstructionFileOnlyCondensedV3Fields();
+
+        return [
+            [
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'Metadata' => $metadataOnlyFields
+                ],
+                $instructionFileOnlyFields
+            ]
+        ]; 
+    }
+
+    public function getMetadataEnvelope($fields): MetadataEnvelope
     {
         $envelope = new MetadataEnvelope();
         foreach ($fields as $field => $value) {
             $envelope[$field] = $value;
         }
+
         return $envelope;
     }
 
-    public function getIndividualInvalidMetadataFields()
+    public function getV3InstructionFileFields($fields): MetadataEnvelope
+    {
+       $envelope = $this->getMetadataEnvelope($fields);
+        unset($envelope[MetadataEnvelope::CONTENT_CIPHER_V3]);
+        unset($envelope[MetadataEnvelope::KEY_COMMITMENT_V3]);
+        unset($envelope[MetadataEnvelope::MESSAGE_ID_V3]);
+        return $envelope;
+    }
+
+    public function getIndividualInvalidMetadataFields(): array
     {
         return [
             [

@@ -440,6 +440,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "StartOutpostDecommission":{
+      "name":"StartOutpostDecommission",
+      "http":{
+        "method":"POST",
+        "requestUri":"/outposts/{OutpostId}/decommission"
+      },
+      "input":{"shape":"StartOutpostDecommissionInput"},
+      "output":{"shape":"StartOutpostDecommissionOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -735,6 +751,22 @@
       "type":"list",
       "member":{"shape":"BlockingInstance"}
     },
+    "BlockingResourceType":{
+      "type":"string",
+      "enum":[
+        "EC2_INSTANCE",
+        "OUTPOST_RAM_SHARE",
+        "LGW_ROUTING_DOMAIN",
+        "LGW_ROUTE_TABLE",
+        "LGW_VIRTUAL_INTERFACE_GROUP",
+        "OUTPOST_ORDER_CANCELLABLE",
+        "OUTPOST_ORDER_INTERVENTION_REQUIRED"
+      ]
+    },
+    "BlockingResourceTypeList":{
+      "type":"list",
+      "member":{"shape":"BlockingResourceType"}
+    },
     "CIDR":{
       "type":"string",
       "max":18,
@@ -967,7 +999,6 @@
       "type":"structure",
       "required":[
         "OutpostIdentifier",
-        "LineItems",
         "PaymentOption"
       ],
       "members":{
@@ -1023,6 +1054,14 @@
       "members":{
         "Site":{"shape":"Site"}
       }
+    },
+    "DecommissionRequestStatus":{
+      "type":"string",
+      "enum":[
+        "SKIPPED",
+        "BLOCKED",
+        "REQUESTED"
+      ]
     },
     "DeleteOutpostInput":{
       "type":"structure",
@@ -2251,6 +2290,25 @@
         "UnderlayIpAddress":{"shape":"UnderlayIpAddress"}
       }
     },
+    "StartOutpostDecommissionInput":{
+      "type":"structure",
+      "required":["OutpostIdentifier"],
+      "members":{
+        "OutpostIdentifier":{
+          "shape":"OutpostIdentifier",
+          "location":"uri",
+          "locationName":"OutpostId"
+        },
+        "ValidateOnly":{"shape":"ValidateOnly"}
+      }
+    },
+    "StartOutpostDecommissionOutput":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"DecommissionRequestStatus"},
+        "BlockingResourceTypes":{"shape":"BlockingResourceTypeList"}
+      }
+    },
     "StateOrRegion":{
       "type":"string",
       "max":50,
@@ -2538,6 +2596,7 @@
       "type":"integer",
       "box":true
     },
+    "ValidateOnly":{"type":"boolean"},
     "ValidationException":{
       "type":"structure",
       "members":{

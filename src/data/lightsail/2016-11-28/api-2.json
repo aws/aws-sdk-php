@@ -3365,7 +3365,8 @@
         "readonlyAccessAccounts":{"shape":"PartnerIdList"},
         "resourcesReceivingAccess":{"shape":"AccessReceiverList"},
         "state":{"shape":"BucketState"},
-        "accessLogConfig":{"shape":"BucketAccessLogConfig"}
+        "accessLogConfig":{"shape":"BucketAccessLogConfig"},
+        "cors":{"shape":"BucketCorsConfig"}
       }
     },
     "BucketAccessLogConfig":{
@@ -3397,6 +3398,56 @@
     "BucketBundleList":{
       "type":"list",
       "member":{"shape":"BucketBundle"}
+    },
+    "BucketCorsAllowedHeaders":{
+      "type":"list",
+      "member":{"shape":"string"}
+    },
+    "BucketCorsAllowedMethod":{
+      "type":"string",
+      "pattern":"^(DELETE|GET|HEAD|POST|PUT)$"
+    },
+    "BucketCorsAllowedMethods":{
+      "type":"list",
+      "member":{"shape":"BucketCorsAllowedMethod"}
+    },
+    "BucketCorsAllowedOrigins":{
+      "type":"list",
+      "member":{"shape":"string"}
+    },
+    "BucketCorsConfig":{
+      "type":"structure",
+      "members":{
+        "rules":{"shape":"BucketCorsRules"}
+      }
+    },
+    "BucketCorsExposeHeaders":{
+      "type":"list",
+      "member":{"shape":"string"}
+    },
+    "BucketCorsRule":{
+      "type":"structure",
+      "required":[
+        "allowedMethods",
+        "allowedOrigins"
+      ],
+      "members":{
+        "id":{"shape":"BucketCorsRuleId"},
+        "allowedMethods":{"shape":"BucketCorsAllowedMethods"},
+        "allowedOrigins":{"shape":"BucketCorsAllowedOrigins"},
+        "allowedHeaders":{"shape":"BucketCorsAllowedHeaders"},
+        "exposeHeaders":{"shape":"BucketCorsExposeHeaders"},
+        "maxAgeSeconds":{"shape":"integer"}
+      }
+    },
+    "BucketCorsRuleId":{
+      "type":"string",
+      "max":255
+    },
+    "BucketCorsRules":{
+      "type":"list",
+      "member":{"shape":"BucketCorsRule"},
+      "max":20
     },
     "BucketList":{
       "type":"list",
@@ -5249,7 +5300,8 @@
       "members":{
         "bucketName":{"shape":"BucketName"},
         "pageToken":{"shape":"string"},
-        "includeConnectedResources":{"shape":"boolean"}
+        "includeConnectedResources":{"shape":"boolean"},
+        "includeCors":{"shape":"boolean"}
       }
     },
     "GetBucketsResult":{
@@ -8147,7 +8199,8 @@
         "accessRules":{"shape":"AccessRules"},
         "versioning":{"shape":"NonEmptyString"},
         "readonlyAccessAccounts":{"shape":"PartnerIdList"},
-        "accessLogConfig":{"shape":"BucketAccessLogConfig"}
+        "accessLogConfig":{"shape":"BucketAccessLogConfig"},
+        "cors":{"shape":"BucketCorsConfig"}
       }
     },
     "UpdateBucketResult":{

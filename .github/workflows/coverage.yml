@@ -1,0 +1,49 @@
+name: Code Coverage
+
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    name: Code Coverage
+    env:
+      AWS_ACCESS_KEY_ID: foo
+      AWS_SECRET_ACCESS_KEY: bar
+      AWS_CSM_ENABLED: false
+      AWS_SUPPRESS_PHP_DEPRECATION_WARNING: true
+    steps:
+      - name: Setup PHP with Xdebug
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: xdebug
+          php-version: '8.3'
+          ini-values: xdebug.overload_var_dump=0, memory_limit=4G, phar.readonly=false
+
+      - name: Checkout codebase
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-source
+
+      - name: Run test suite with coverage
+        run: vendor/bin/phpunit --testsuite=unit --coverage-clover=clover.xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          file: ./clover.xml
+          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}

@@ -55,7 +55,7 @@
     "StartCutover": "<p>Launches a Cutover Instance for specific Source Servers. This command starts a LAUNCH job whose initiatedBy property is StartCutover and changes the SourceServer.lifeCycle.state property to CUTTING_OVER.</p>",
     "StartExport": "<p>Start export.</p>",
     "StartImport": "<p>Start import.</p>",
-    "StartReplication": "<p>Starts replication for SNAPSHOT_SHIPPING agents.</p>",
+    "StartReplication": "<p>Start replication for source server irrespective of its replication type.</p>",
     "StartTest": "<p>Launches a Test Instance for specific Source Servers. This command starts a LAUNCH job whose initiatedBy property is StartTest and changes the SourceServer.lifeCycle.state property to TESTING.</p>",
     "StopReplication": "<p>Stop Replication.</p>",
     "TagResource": "<p>Adds or overwrites only the specified tags for the specified Application Migration Service resource or resources. When you specify an existing tag key, the value is overwritten with the new value. Each resource can have a maximum of 50 tags. Each tag consists of a key and optional value.</p>",
@@ -70,7 +70,7 @@
     "UpdateReplicationConfiguration": "<p>Allows you to update multiple ReplicationConfigurations by Source Server ID.</p>",
     "UpdateReplicationConfigurationTemplate": "<p>Updates multiple ReplicationConfigurationTemplates by ID.</p>",
     "UpdateSourceServer": "<p>Update Source Server.</p>",
-    "UpdateSourceServerReplicationType": "<p>Allows you to change between the AGENT_BASED replication type and the SNAPSHOT_SHIPPING replication type.</p>",
+    "UpdateSourceServerReplicationType": "<p>Allows you to change between the AGENT_BASED replication type and the SNAPSHOT_SHIPPING replication type. </p> <p>SNAPSHOT_SHIPPING should be used for agentless replication.</p>",
     "UpdateWave": "<p>Update wave.</p>"
   },
   "shapes": {
@@ -80,8 +80,11 @@
         "Application$arn": "<p>Application ARN.</p>",
         "Connector$arn": "<p>Connector arn.</p>",
         "CreateReplicationConfigurationTemplateRequest$ebsEncryptionKeyArn": "<p>Request to configure an EBS encryption key during Replication Settings template creation.</p>",
+        "ExportTask$arn": "<p>ExportTask arn.</p>",
+        "ImportTask$arn": "<p>ImportTask arn.</p>",
         "Job$arn": "<p>the ARN of the specific Job.</p>",
         "LaunchConfigurationTemplate$arn": "<p>ARN of the Launch Configuration Template.</p>",
+        "LaunchConfigurationTemplate$parametersEncryptionKey": "<p>Parameters encryption key.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>List tags for resource request by ARN.</p>",
         "ReplicationConfiguration$ebsEncryptionKeyArn": "<p>Replication Configuration EBS encryption key ARN.</p>",
         "ReplicationConfigurationTemplate$arn": "<p>Replication Configuration template ARN.</p>",
@@ -89,6 +92,7 @@
         "SourceServer$arn": "<p>Source server ARN.</p>",
         "TagResourceRequest$resourceArn": "<p>Tag resource by ARN.</p>",
         "UntagResourceRequest$resourceArn": "<p>Untag resource by ARN.</p>",
+        "UpdateLaunchConfigurationTemplateRequest$parametersEncryptionKey": "<p>Parameters encryption key.</p>",
         "UpdateReplicationConfigurationRequest$ebsEncryptionKeyArn": "<p>Update replication configuration EBS encryption key ARN request.</p>",
         "UpdateReplicationConfigurationTemplateRequest$arn": "<p>Update replication configuration template ARN request.</p>",
         "UpdateReplicationConfigurationTemplateRequest$ebsEncryptionKeyArn": "<p>Update replication configuration template EBS encryption key ARN request.</p>",
@@ -98,8 +102,7 @@
     },
     "AccessDeniedException": {
       "base": "<p>Operating denied due to a file permission or access check error.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountID": {
       "base": null,
@@ -275,28 +278,23 @@
     },
     "ArchiveApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ArchiveWaveRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateApplicationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateApplicationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateSourceServersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateSourceServersRequestSourceServerIDs": {
       "base": null,
@@ -306,8 +304,7 @@
     },
     "AssociateSourceServersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BandwidthThrottling": {
       "base": null,
@@ -323,24 +320,26 @@
       "base": null,
       "refs": {
         "Application$isArchived": "<p>Application archival status.</p>",
-        "ConnectorSsmCommandConfig$cloudWatchOutputEnabled": "<p>Connector SSM command config CloudWatch output enabled.</p>",
         "ConnectorSsmCommandConfig$s3OutputEnabled": "<p>Connector SSM command config S3 output enabled.</p>",
-        "CreateLaunchConfigurationTemplateRequest$associatePublicIpAddress": "<p>Associate public Ip address.</p>",
-        "CreateLaunchConfigurationTemplateRequest$copyPrivateIp": "<p>Copy private Ip.</p>",
-        "CreateLaunchConfigurationTemplateRequest$copyTags": "<p>Copy tags.</p>",
+        "ConnectorSsmCommandConfig$cloudWatchOutputEnabled": "<p>Connector SSM command config CloudWatch output enabled.</p>",
         "CreateLaunchConfigurationTemplateRequest$enableMapAutoTagging": "<p>Enable map auto tagging.</p>",
+        "CreateLaunchConfigurationTemplateRequest$copyPrivateIp": "<p>Copy private Ip.</p>",
+        "CreateLaunchConfigurationTemplateRequest$associatePublicIpAddress": "<p>Associate public Ip address.</p>",
+        "CreateLaunchConfigurationTemplateRequest$copyTags": "<p>Copy tags.</p>",
+        "CreateLaunchConfigurationTemplateRequest$enableParametersEncryption": "<p>Enable parameters encryption.</p>",
         "CreateReplicationConfigurationTemplateRequest$associateDefaultSecurityGroup": "<p>Request to associate the default Application Migration Service Security group with the Replication Settings template.</p>",
-        "CreateReplicationConfigurationTemplateRequest$createPublicIP": "<p>Request to create Public IP during Replication Settings template creation.</p>",
         "CreateReplicationConfigurationTemplateRequest$useDedicatedReplicationServer": "<p>Request to use Dedicated Replication Servers during Replication Settings template creation.</p>",
+        "CreateReplicationConfigurationTemplateRequest$createPublicIP": "<p>Request to create Public IP during Replication Settings template creation.</p>",
         "CreateReplicationConfigurationTemplateRequest$useFipsEndpoint": "<p>Request to use Fips Endpoint during Replication Settings template creation.</p>",
         "DescribeSourceServersRequestFilters$isArchived": "<p>Request to filter Source Servers list by archived.</p>",
         "LaunchConfiguration$copyPrivateIp": "<p>Copy Private IP during Launch Configuration.</p>",
         "LaunchConfiguration$copyTags": "<p>Copy Tags during Launch Configuration.</p>",
         "LaunchConfiguration$enableMapAutoTagging": "<p>Enable map auto tagging.</p>",
-        "LaunchConfigurationTemplate$associatePublicIpAddress": "<p>Associate public Ip address.</p>",
-        "LaunchConfigurationTemplate$copyPrivateIp": "<p>Copy private Ip.</p>",
-        "LaunchConfigurationTemplate$copyTags": "<p>Copy tags.</p>",
         "LaunchConfigurationTemplate$enableMapAutoTagging": "<p>Enable map auto tagging.</p>",
+        "LaunchConfigurationTemplate$copyPrivateIp": "<p>Copy private Ip.</p>",
+        "LaunchConfigurationTemplate$associatePublicIpAddress": "<p>Associate public Ip address.</p>",
+        "LaunchConfigurationTemplate$copyTags": "<p>Copy tags.</p>",
+        "LaunchConfigurationTemplate$enableParametersEncryption": "<p>Enable parameters encryption.</p>",
         "Licensing$osByol": "<p>Configure BYOL OS licensing.</p>",
         "ListApplicationsRequestFilters$isArchived": "<p>Filter applications list by archival status.</p>",
         "ListWavesRequestFilters$isArchived": "<p>Filter waves list by archival status.</p>",
@@ -350,13 +349,13 @@
         "PutTemplateActionRequest$active": "<p>Template post migration custom action active status.</p>",
         "PutTemplateActionRequest$mustSucceedForCutover": "<p>Template post migration custom action must succeed for cutover.</p>",
         "ReplicationConfiguration$associateDefaultSecurityGroup": "<p>Replication Configuration associate default Application Migration Service Security Group.</p>",
-        "ReplicationConfiguration$createPublicIP": "<p>Replication Configuration create Public IP.</p>",
         "ReplicationConfiguration$useDedicatedReplicationServer": "<p>Replication Configuration use Dedicated Replication Server.</p>",
+        "ReplicationConfiguration$createPublicIP": "<p>Replication Configuration create Public IP.</p>",
         "ReplicationConfiguration$useFipsEndpoint": "<p>Replication Configuration use Fips Endpoint.</p>",
         "ReplicationConfigurationReplicatedDisk$isBootDisk": "<p>Replication Configuration replicated disk boot disk.</p>",
         "ReplicationConfigurationTemplate$associateDefaultSecurityGroup": "<p>Replication Configuration template associate default Application Migration Service Security group.</p>",
-        "ReplicationConfigurationTemplate$createPublicIP": "<p>Replication Configuration template create Public IP.</p>",
         "ReplicationConfigurationTemplate$useDedicatedReplicationServer": "<p>Replication Configuration template use Dedicated Replication Server.</p>",
+        "ReplicationConfigurationTemplate$createPublicIP": "<p>Replication Configuration template create Public IP.</p>",
         "ReplicationConfigurationTemplate$useFipsEndpoint": "<p>Replication Configuration template use Fips Endpoint.</p>",
         "SourceServer$isArchived": "<p>Source server archived status.</p>",
         "SourceServerActionDocument$active": "<p>Source server post migration custom action active status.</p>",
@@ -367,17 +366,18 @@
         "UpdateLaunchConfigurationRequest$copyPrivateIp": "<p>Update Launch configuration copy Private IP request.</p>",
         "UpdateLaunchConfigurationRequest$copyTags": "<p>Update Launch configuration copy Tags request.</p>",
         "UpdateLaunchConfigurationRequest$enableMapAutoTagging": "<p>Enable map auto tagging.</p>",
-        "UpdateLaunchConfigurationTemplateRequest$associatePublicIpAddress": "<p>Associate public Ip address.</p>",
-        "UpdateLaunchConfigurationTemplateRequest$copyPrivateIp": "<p>Copy private Ip.</p>",
-        "UpdateLaunchConfigurationTemplateRequest$copyTags": "<p>Copy tags.</p>",
         "UpdateLaunchConfigurationTemplateRequest$enableMapAutoTagging": "<p>Enable map auto tagging.</p>",
+        "UpdateLaunchConfigurationTemplateRequest$copyPrivateIp": "<p>Copy private Ip.</p>",
+        "UpdateLaunchConfigurationTemplateRequest$associatePublicIpAddress": "<p>Associate public Ip address.</p>",
+        "UpdateLaunchConfigurationTemplateRequest$copyTags": "<p>Copy tags.</p>",
+        "UpdateLaunchConfigurationTemplateRequest$enableParametersEncryption": "<p>Enable parameters encryption.</p>",
         "UpdateReplicationConfigurationRequest$associateDefaultSecurityGroup": "<p>Update replication configuration associate default Application Migration Service Security group request.</p>",
-        "UpdateReplicationConfigurationRequest$createPublicIP": "<p>Update replication configuration create Public IP request.</p>",
         "UpdateReplicationConfigurationRequest$useDedicatedReplicationServer": "<p>Update replication configuration use dedicated Replication Server request.</p>",
+        "UpdateReplicationConfigurationRequest$createPublicIP": "<p>Update replication configuration create Public IP request.</p>",
         "UpdateReplicationConfigurationRequest$useFipsEndpoint": "<p>Update replication configuration use Fips Endpoint.</p>",
         "UpdateReplicationConfigurationTemplateRequest$associateDefaultSecurityGroup": "<p>Update replication configuration template associate default Application Migration Service Security group request.</p>",
-        "UpdateReplicationConfigurationTemplateRequest$createPublicIP": "<p>Update replication configuration template create Public IP request.</p>",
         "UpdateReplicationConfigurationTemplateRequest$useDedicatedReplicationServer": "<p>Update replication configuration template use dedicated Replication Server request.</p>",
+        "UpdateReplicationConfigurationTemplateRequest$createPublicIP": "<p>Update replication configuration template create Public IP request.</p>",
         "UpdateReplicationConfigurationTemplateRequest$useFipsEndpoint": "<p>Update replication configuration template use Fips Endpoint request.</p>",
         "Wave$isArchived": "<p>Wave archival status.</p>"
       }
@@ -402,8 +402,8 @@
         "IPsList$member": null,
         "IdentificationHints$fqdn": "<p>FQDN address identification hint.</p>",
         "IdentificationHints$hostname": "<p>Hostname identification hint.</p>",
-        "IdentificationHints$vmPath": "<p>vCenter VM path identification hint.</p>",
         "IdentificationHints$vmWareUuid": "<p>vmWare UUID identification hint.</p>",
+        "IdentificationHints$vmPath": "<p>vCenter VM path identification hint.</p>",
         "ImportErrorData$ec2LaunchTemplateID": "<p>Import error data ec2 LaunchTemplate ID.</p>",
         "JobPostLaunchActionsLaunchStatus$executionID": "<p>AWS Systems Manager Document's execution ID of the of the Job Post Launch Actions.</p>",
         "JobPostLaunchActionsLaunchStatus$failureReason": "<p>AWS Systems Manager Document's failure reason.</p>",
@@ -416,14 +416,13 @@
         "PutTemplateActionRequest$documentIdentifier": "<p>Template post migration custom action document identifier.</p>",
         "ReplicationConfigurationReplicatedDisk$deviceName": "<p>Replication Configuration replicated disk device name.</p>",
         "SourceServer$fqdnForActionFramework": "<p>Source server fqdn for action framework.</p>",
-        "SourceServer$userProvidedID": "<p>Source server user provided ID.</p>",
         "SourceServerActionDocument$documentIdentifier": "<p>Source server post migration custom action document identifier.</p>",
         "SsmDocument$actionName": "<p>User-friendly name for the AWS Systems Manager Document.</p>",
         "TemplateActionDocument$actionName": "<p>Template post migration custom action name.</p>",
         "TemplateActionDocument$documentIdentifier": "<p>Template post migration custom action document identifier.</p>",
-        "VcenterClient$datacenterName": "<p>Datacenter name of vCenter client.</p>",
         "VcenterClient$hostname": "<p>Hostname of vCenter client .</p>",
-        "VcenterClient$vcenterUUID": "<p>Vcenter UUID of vCenter client.</p>"
+        "VcenterClient$vcenterUUID": "<p>Vcenter UUID of vCenter client.</p>",
+        "VcenterClient$datacenterName": "<p>Datacenter name of vCenter client.</p>"
       }
     },
     "CPU": {
@@ -434,8 +433,7 @@
     },
     "ChangeServerLifeCycleStateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ChangeServerLifeCycleStateSourceServerLifecycle": {
       "base": "<p>The request to change the source server migration lifecycle state.</p>",
@@ -464,8 +462,7 @@
     },
     "ConflictException": {
       "base": "<p>The request could not be completed due to a conflict with the current state of the target resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConflictExceptionErrors": {
       "base": null,
@@ -530,28 +527,23 @@
     },
     "CreateApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLaunchConfigurationTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateReplicationConfigurationTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWaveRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DataReplicationError": {
       "base": "<p>Error in data replication.</p>",
@@ -621,88 +613,71 @@
     },
     "DeleteApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLaunchConfigurationTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLaunchConfigurationTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteReplicationConfigurationTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteReplicationConfigurationTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSourceServerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSourceServerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteVcenterClientRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWaveRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWaveResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobLogItemsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobLogItemsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobsRequestFilters": {
       "base": "<p>Request to describe Job log filters.</p>",
@@ -718,33 +693,27 @@
     },
     "DescribeJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLaunchConfigurationTemplatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLaunchConfigurationTemplatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeReplicationConfigurationTemplatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeReplicationConfigurationTemplatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSourceServersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSourceServersRequestApplicationIDs": {
       "base": null,
@@ -766,33 +735,27 @@
     },
     "DescribeSourceServersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeVcenterClientsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeVcenterClientsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateApplicationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateApplicationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateSourceServersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateSourceServersRequestSourceServerIDs": {
       "base": null,
@@ -802,13 +765,11 @@
     },
     "DisassociateSourceServersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisconnectFromServiceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Disk": {
       "base": "<p>The disk identifier.</p>",
@@ -917,8 +878,7 @@
     },
     "FinalizeCutoverRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "FirstBoot": {
       "base": null,
@@ -935,13 +895,11 @@
     },
     "GetLaunchConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReplicationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IPsList": {
       "base": null,
@@ -957,8 +915,8 @@
         "ApplicationAggregatedStatus$lastUpdateDateTime": "<p>Application aggregated status last update dateTime.</p>",
         "DataReplicationInfo$etaDateTime": "<p>Request to query the time when data replication will be complete.</p>",
         "DataReplicationInfo$lastSnapshotDateTime": "<p>Request to query data replication last snapshot time.</p>",
-        "DataReplicationInitiation$nextAttemptDateTime": "<p>Request to query next data initiation date and time.</p>",
         "DataReplicationInitiation$startDateTime": "<p>Request to query data initiation start date and time.</p>",
+        "DataReplicationInitiation$nextAttemptDateTime": "<p>Request to query next data initiation date and time.</p>",
         "DescribeJobsRequestFilters$fromDate": "<p>Request to describe Job log filters by date.</p>",
         "DescribeJobsRequestFilters$toDate": "<p>Request to describe job log items by last date.</p>",
         "ExportTask$creationDateTime": "<p>Export task creation datetime.</p>",
@@ -1084,13 +1042,11 @@
     },
     "InitializeServiceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InitializeServiceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InitiatedBy": {
       "base": null,
@@ -1100,7 +1056,16 @@
     },
     "InternalServerException": {
       "base": "<p>The server encountered an unexpected condition that prevented it from fulfilling the request.</p>",
+      "refs": {}
+    },
+    "InternetProtocol": {
+      "base": null,
       "refs": {
+        "CreateReplicationConfigurationTemplateRequest$internetProtocol": "<p>Request to configure the internet protocol to IPv4 or IPv6.</p>",
+        "ReplicationConfiguration$internetProtocol": "<p>Replication Configuration internet protocol.</p>",
+        "ReplicationConfigurationTemplate$internetProtocol": "<p>Replication Configuration template internet protocol.</p>",
+        "UpdateReplicationConfigurationRequest$internetProtocol": "<p>Update replication configuration internet protocol.</p>",
+        "UpdateReplicationConfigurationTemplateRequest$internetProtocol": "<p>Update replication configuration template internet protocol request.</p>"
       }
     },
     "Iops": {
@@ -1184,13 +1149,19 @@
         "DescribeJobsResponse$items": "<p>Request to describe Job log items.</p>"
       }
     },
+    "KmsKeyArn": {
+      "base": null,
+      "refs": {
+        "CreateLaunchConfigurationTemplateRequest$parametersEncryptionKey": "<p>Parameters encryption key.</p>"
+      }
+    },
     "LargeBoundedString": {
       "base": null,
       "refs": {
-        "AccessDeniedException$code": null,
         "AccessDeniedException$message": null,
-        "ConflictException$code": null,
+        "AccessDeniedException$code": null,
         "ConflictException$message": null,
+        "ConflictException$code": null,
         "ConflictException$resourceId": "<p>A conflict occurred when prompting for the Resource ID.</p>",
         "ConflictException$resourceType": "<p>A conflict occurred when prompting for resource type.</p>",
         "DataReplicationError$rawError": "<p>Error in data replication.</p>",
@@ -1201,32 +1172,31 @@
         "ImportErrorData$rawError": "<p>Import error data raw error.</p>",
         "InternalServerException$message": null,
         "JobLogEventData$rawError": "<p>Job error.</p>",
-        "ResourceNotFoundException$code": null,
         "ResourceNotFoundException$message": null,
+        "ResourceNotFoundException$code": null,
         "ResourceNotFoundException$resourceId": "<p>Resource ID not found error.</p>",
         "ResourceNotFoundException$resourceType": "<p>Resource type not found error.</p>",
-        "ServiceQuotaExceededException$code": null,
         "ServiceQuotaExceededException$message": null,
-        "ServiceQuotaExceededException$quotaCode": "<p>Exceeded the service quota code.</p>",
+        "ServiceQuotaExceededException$code": null,
         "ServiceQuotaExceededException$resourceId": "<p>Exceeded the service quota resource ID.</p>",
         "ServiceQuotaExceededException$resourceType": "<p>Exceeded the service quota resource type.</p>",
         "ServiceQuotaExceededException$serviceCode": "<p>Exceeded the service quota service code.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>Exceeded the service quota code.</p>",
         "ThrottlingException$message": null,
+        "ThrottlingException$serviceCode": "<p>Reached throttling quota exception service code.</p>",
         "ThrottlingException$quotaCode": "<p>Reached throttling quota exception.</p>",
         "ThrottlingException$retryAfterSeconds": "<p>Reached throttling quota exception will retry after x seconds.</p>",
-        "ThrottlingException$serviceCode": "<p>Reached throttling quota exception service code.</p>",
-        "UninitializedAccountException$code": null,
         "UninitializedAccountException$message": null,
-        "ValidationException$code": null,
+        "UninitializedAccountException$code": null,
         "ValidationException$message": null,
-        "ValidationExceptionField$message": "<p>Validate exception field message.</p>",
-        "ValidationExceptionField$name": "<p>Validate exception field name.</p>"
+        "ValidationException$code": null,
+        "ValidationExceptionField$name": "<p>Validate exception field name.</p>",
+        "ValidationExceptionField$message": "<p>Validate exception field message.</p>"
       }
     },
     "LaunchConfiguration": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LaunchConfigurationTemplate": {
       "base": null,
@@ -1277,12 +1247,12 @@
     "LaunchTemplateDiskConf": {
       "base": "<p>Launch template disk configuration.</p>",
       "refs": {
-        "CreateLaunchConfigurationTemplateRequest$largeVolumeConf": "<p>Large volume config.</p>",
         "CreateLaunchConfigurationTemplateRequest$smallVolumeConf": "<p>Small volume config.</p>",
-        "LaunchConfigurationTemplate$largeVolumeConf": "<p>Large volume config.</p>",
+        "CreateLaunchConfigurationTemplateRequest$largeVolumeConf": "<p>Large volume config.</p>",
         "LaunchConfigurationTemplate$smallVolumeConf": "<p>Small volume config.</p>",
-        "UpdateLaunchConfigurationTemplateRequest$largeVolumeConf": "<p>Large volume config.</p>",
-        "UpdateLaunchConfigurationTemplateRequest$smallVolumeConf": "<p>Small volume config.</p>"
+        "LaunchConfigurationTemplate$largeVolumeConf": "<p>Large volume config.</p>",
+        "UpdateLaunchConfigurationTemplateRequest$smallVolumeConf": "<p>Small volume config.</p>",
+        "UpdateLaunchConfigurationTemplateRequest$largeVolumeConf": "<p>Large volume config.</p>"
       }
     },
     "LaunchedInstance": {
@@ -1370,8 +1340,7 @@
     },
     "ListApplicationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationsRequestFilters": {
       "base": "<p>Applications list filters.</p>",
@@ -1381,13 +1350,11 @@
     },
     "ListApplicationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConnectorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConnectorsRequestFilters": {
       "base": "<p>List Connectors Request Filters.</p>",
@@ -1397,23 +1364,19 @@
     },
     "ListConnectorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExportErrorsRequest": {
       "base": "<p>List export errors request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExportErrorsResponse": {
       "base": "<p>List export errors response.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExportsRequest": {
       "base": "<p>List export request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExportsRequestFilters": {
       "base": "<p>List exports request filters.</p>",
@@ -1429,23 +1392,19 @@
     },
     "ListExportsResponse": {
       "base": "<p>List export response.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImportErrorsRequest": {
       "base": "<p>List import errors request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImportErrorsResponse": {
       "base": "<p>List imports errors response.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImportsRequest": {
       "base": "<p>List imports request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImportsRequestFilters": {
       "base": "<p>List imports request filters.</p>",
@@ -1455,53 +1414,43 @@
     },
     "ListImportsResponse": {
       "base": "<p>List import response.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedAccountsRequest": {
       "base": "<p>List managed accounts request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedAccountsResponse": {
       "base": "<p>List managed accounts response.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSourceServerActionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSourceServerActionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTemplateActionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTemplateActionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWavesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWavesRequestFilters": {
       "base": "<p>Waves list filters.</p>",
@@ -1511,8 +1460,7 @@
     },
     "ListWavesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ManagedAccount": {
       "base": "<p>Managed account.</p>",
@@ -1528,8 +1476,7 @@
     },
     "MarkAsArchivedRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResultsType": {
       "base": null,
@@ -1637,8 +1584,7 @@
     },
     "PauseReplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PositiveInteger": {
       "base": null,
@@ -1646,13 +1592,13 @@
         "ApplicationAggregatedStatus$totalSourceServers": "<p>Application aggregated status total source servers amount.</p>",
         "CPU$cores": "<p>The number of CPU cores on the source server.</p>",
         "CreateLaunchConfigurationTemplateRequest$smallVolumeMaxSize": "<p>Small volume maximum size.</p>",
-        "DataReplicationInfoReplicatedDisk$backloggedStorageBytes": "<p>Request to query data replication backlog size in bytes.</p>",
+        "DataReplicationInfoReplicatedDisk$totalStorageBytes": "<p>Request to query total amount of data replicated in bytes.</p>",
         "DataReplicationInfoReplicatedDisk$replicatedStorageBytes": "<p>Request to query amount of data replicated in bytes.</p>",
         "DataReplicationInfoReplicatedDisk$rescannedStorageBytes": "<p>Request to query amount of data rescanned in bytes.</p>",
-        "DataReplicationInfoReplicatedDisk$totalStorageBytes": "<p>Request to query total amount of data replicated in bytes.</p>",
+        "DataReplicationInfoReplicatedDisk$backloggedStorageBytes": "<p>Request to query data replication backlog size in bytes.</p>",
         "Disk$bytes": "<p>The amount of storage on the disk in bytes.</p>",
-        "ExportTaskSummary$applicationsCount": "<p>Export task summary applications count.</p>",
         "ExportTaskSummary$serversCount": "<p>Export task summary servers count.</p>",
+        "ExportTaskSummary$applicationsCount": "<p>Export task summary applications count.</p>",
         "ExportTaskSummary$wavesCount": "<p>Export task summary waves count.</p>",
         "ImportErrorData$rowNumber": "<p>Import error data row number.</p>",
         "ImportTaskSummaryApplications$createdCount": "<p>Import task summary applications created count.</p>",
@@ -1706,38 +1652,31 @@
     },
     "PutSourceServerActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutTemplateActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveSourceServerActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveSourceServerActionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveTemplateActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveTemplateActionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ReplicationConfiguration": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ReplicationConfigurationDataPlaneRouting": {
       "base": null,
@@ -1839,20 +1778,23 @@
         "DescribeSourceServersRequestFilters$replicationTypes": "<p>Request to filter Source Servers list by replication type.</p>"
       }
     },
+    "ReplicatorID": {
+      "base": null,
+      "refs": {
+        "DataReplicationInfo$replicatorId": "<p>Replication server instance ID.</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>Resource not found exception.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResumeReplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RetryDataReplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "S3BucketName": {
       "base": null,
@@ -1898,8 +1840,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The request could not be completed because its exceeded the service quota.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SmallBoundedString": {
       "base": null,
@@ -2080,8 +2021,7 @@
     },
     "StartCutoverRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartCutoverRequestSourceServerIDs": {
       "base": null,
@@ -2091,38 +2031,31 @@
     },
     "StartCutoverResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartExportRequest": {
       "base": "<p>Start export request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StartExportResponse": {
       "base": "<p>Start export response.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StartImportRequest": {
       "base": "<p>Start import request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StartImportResponse": {
       "base": "<p>Start import response.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StartReplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTestRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTestRequestSourceServerIDs": {
       "base": null,
@@ -2132,17 +2065,17 @@
     },
     "StartTestResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopReplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StrictlyPositiveInteger": {
       "base": null,
       "refs": {
+        "JobLogEventData$attemptCount": "<p>Retries for this operation.</p>",
+        "JobLogEventData$maxAttemptsCount": "<p>The maximum number of retries that will be attempted if this operation failed.</p>",
         "PutSourceServerActionRequest$timeoutSeconds": "<p>Source server post migration custom action timeout in seconds.</p>",
         "PutTemplateActionRequest$timeoutSeconds": "<p>Template post migration custom action timeout in seconds.</p>",
         "ServiceQuotaExceededException$quotaValue": "<p>Exceeded the service quota value.</p>",
@@ -2176,8 +2109,7 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -2201,6 +2133,8 @@
         "CreateReplicationConfigurationTemplateRequest$stagingAreaTags": "<p>Request to configure Staging Area tags during Replication Settings template creation.</p>",
         "CreateReplicationConfigurationTemplateRequest$tags": "<p>Request to configure tags during Replication Settings template creation.</p>",
         "CreateWaveRequest$tags": "<p>Wave tags.</p>",
+        "ExportTask$tags": "<p>Export task tags.</p>",
+        "ImportTask$tags": "<p>Import task tags.</p>",
         "Job$tags": "<p>Tags associated with specific Job.</p>",
         "LaunchConfigurationTemplate$tags": "<p>Tags of the Launch Configuration Template.</p>",
         "ListTagsForResourceResponse$tags": "<p>List tags for resource response.</p>",
@@ -2209,6 +2143,8 @@
         "ReplicationConfigurationTemplate$tags": "<p>Replication Configuration template Tags.</p>",
         "SourceServer$tags": "<p>Source server Tags.</p>",
         "StartCutoverRequest$tags": "<p>Start Cutover by Tags.</p>",
+        "StartExportRequest$tags": "<p>Start import request tags.</p>",
+        "StartImportRequest$tags": "<p>Start import request tags.</p>",
         "StartTestRequest$tags": "<p>Start Test by Tags.</p>",
         "TagResourceRequest$tags": "<p>Tag resource by Tags.</p>",
         "TerminateTargetInstancesRequest$tags": "<p>Terminate Target instance by Tags.</p>",
@@ -2249,8 +2185,7 @@
     },
     "TerminateTargetInstancesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TerminateTargetInstancesRequestSourceServerIDs": {
       "base": null,
@@ -2260,13 +2195,11 @@
     },
     "TerminateTargetInstancesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ThrottlingException": {
       "base": "<p>Reached throttling quota exception.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Throughput": {
       "base": null,
@@ -2276,73 +2209,65 @@
     },
     "UnarchiveApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UnarchiveWaveRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UninitializedAccountException": {
       "base": "<p>Uninitialized account exception.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLaunchConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLaunchConfigurationTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateReplicationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateReplicationConfigurationTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSourceServerReplicationTypeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSourceServerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWaveRequest": {
       "base": null,
+      "refs": {}
+    },
+    "UserProvidedId": {
+      "base": null,
       "refs": {
+        "SourceServer$userProvidedID": "<p>Source server user provided ID.</p>"
       }
     },
     "ValidationException": {
       "base": "<p>Validate exception.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>Validate exception field.</p>",

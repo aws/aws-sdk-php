@@ -28,11 +28,11 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"},
         {"shape":"ConflictException"},
         {"shape":"NotFoundException"},
         {"shape":"ServiceQuotaExceededException"}
-      ],
-      "idempotent":true
+      ]
     },
     "CreateVectorBucket":{
       "name":"CreateVectorBucket",
@@ -49,10 +49,10 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"},
         {"shape":"ConflictException"},
         {"shape":"ServiceQuotaExceededException"}
-      ],
-      "idempotent":true
+      ]
     },
     "DeleteIndex":{
       "name":"DeleteIndex",
@@ -69,9 +69,9 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ServiceQuotaExceededException"}
-      ],
-      "idempotent":true
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
+      ]
     },
     "DeleteVectorBucket":{
       "name":"DeleteVectorBucket",
@@ -88,10 +88,10 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"},
         {"shape":"ConflictException"},
-        {"shape":"ServiceQuotaExceededException"}
-      ],
-      "idempotent":true
+        {"shape":"NotFoundException"}
+      ]
     },
     "DeleteVectorBucketPolicy":{
       "name":"DeleteVectorBucketPolicy",
@@ -108,8 +108,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
       ],
       "idempotent":true
     },
@@ -131,8 +131,8 @@
         {"shape":"KmsInvalidStateException"},
         {"shape":"AccessDeniedException"},
         {"shape":"KmsNotFoundException"},
+        {"shape":"RequestTimeoutException"},
         {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"},
         {"shape":"KmsDisabledException"}
       ],
       "idempotent":true
@@ -152,9 +152,10 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"}
-      ]
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
+      ],
+      "readonly":true
     },
     "GetVectorBucket":{
       "name":"GetVectorBucket",
@@ -171,9 +172,10 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"}
-      ]
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
+      ],
+      "readonly":true
     },
     "GetVectorBucketPolicy":{
       "name":"GetVectorBucketPolicy",
@@ -190,9 +192,10 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"}
-      ]
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
+      ],
+      "readonly":true
     },
     "GetVectors":{
       "name":"GetVectors",
@@ -212,10 +215,11 @@
         {"shape":"KmsInvalidStateException"},
         {"shape":"AccessDeniedException"},
         {"shape":"KmsNotFoundException"},
+        {"shape":"RequestTimeoutException"},
         {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"},
         {"shape":"KmsDisabledException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListIndexes":{
       "name":"ListIndexes",
@@ -232,9 +236,30 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"}
-      ]
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/tags/{resourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTagsForResourceInput"},
+      "output":{"shape":"ListTagsForResourceOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
+      ],
+      "readonly":true
     },
     "ListVectorBuckets":{
       "name":"ListVectorBuckets",
@@ -251,8 +276,9 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ServiceQuotaExceededException"}
-      ]
+        {"shape":"RequestTimeoutException"}
+      ],
+      "readonly":true
     },
     "ListVectors":{
       "name":"ListVectors",
@@ -269,9 +295,10 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"}
-      ]
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
+      ],
+      "readonly":true
     },
     "PutVectorBucketPolicy":{
       "name":"PutVectorBucketPolicy",
@@ -288,8 +315,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
       ],
       "idempotent":true
     },
@@ -311,6 +338,7 @@
         {"shape":"KmsInvalidStateException"},
         {"shape":"AccessDeniedException"},
         {"shape":"KmsNotFoundException"},
+        {"shape":"RequestTimeoutException"},
         {"shape":"NotFoundException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"KmsDisabledException"}
@@ -335,10 +363,53 @@
         {"shape":"KmsInvalidStateException"},
         {"shape":"AccessDeniedException"},
         {"shape":"KmsNotFoundException"},
+        {"shape":"RequestTimeoutException"},
         {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"},
         {"shape":"KmsDisabledException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/tags/{resourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"TagResourceInput"},
+      "output":{"shape":"TagResourceOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/tags/{resourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"UntagResourceInput"},
+      "output":{"shape":"UntagResourceOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
     }
   },
   "shapes":{
@@ -385,24 +456,33 @@
         "dataType":{"shape":"DataType"},
         "dimension":{"shape":"Dimension"},
         "distanceMetric":{"shape":"DistanceMetric"},
-        "metadataConfiguration":{"shape":"MetadataConfiguration"}
+        "metadataConfiguration":{"shape":"MetadataConfiguration"},
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreateIndexOutput":{
       "type":"structure",
-      "members":{}
+      "required":["indexArn"],
+      "members":{
+        "indexArn":{"shape":"IndexArn"}
+      }
     },
     "CreateVectorBucketInput":{
       "type":"structure",
       "required":["vectorBucketName"],
       "members":{
         "vectorBucketName":{"shape":"VectorBucketName"},
-        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreateVectorBucketOutput":{
       "type":"structure",
-      "members":{}
+      "required":["vectorBucketArn"],
+      "members":{
+        "vectorBucketArn":{"shape":"VectorBucketArn"}
+      }
     },
     "DataType":{
       "type":"string",
@@ -595,10 +675,14 @@
         "dataType":{"shape":"DataType"},
         "dimension":{"shape":"Dimension"},
         "distanceMetric":{"shape":"DistanceMetric"},
-        "metadataConfiguration":{"shape":"MetadataConfiguration"}
+        "metadataConfiguration":{"shape":"MetadataConfiguration"},
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
-    "IndexArn":{"type":"string"},
+    "IndexArn":{
+      "type":"string",
+      "pattern":"arn:aws[-a-z0-9]*:s3vectors:[a-z0-9-]+:[0-9]{12}:bucket/[a-z0-9][a-z0-9-.]{1,61}[a-z0-9]/index/[a-z0-9][a-z0-9-.]{1,61}[a-z0-9]"
+    },
     "IndexName":{
       "type":"string",
       "max":63,
@@ -729,6 +813,24 @@
         "key":{"shape":"VectorKey"},
         "data":{"shape":"VectorData"},
         "metadata":{"shape":"VectorMetadata"}
+      }
+    },
+    "ListTagsForResourceInput":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{
+          "shape":"ResourceARN",
+          "location":"uri",
+          "locationName":"resourceArn"
+        }
+      }
+    },
+    "ListTagsForResourceOutput":{
+      "type":"structure",
+      "required":["tags"],
+      "members":{
+        "tags":{"shape":"TagsMap"}
       }
     },
     "ListVectorBucketsInput":{
@@ -895,10 +997,9 @@
       "type":"structure",
       "required":["key"],
       "members":{
+        "distance":{"shape":"Float"},
         "key":{"shape":"VectorKey"},
-        "data":{"shape":"VectorData"},
-        "metadata":{"shape":"VectorMetadata"},
-        "distance":{"shape":"Float"}
+        "metadata":{"shape":"VectorMetadata"}
       }
     },
     "QueryVectorsInput":{
@@ -920,14 +1021,36 @@
     },
     "QueryVectorsOutput":{
       "type":"structure",
-      "required":["vectors"],
+      "required":[
+        "vectors",
+        "distanceMetric"
+      ],
       "members":{
-        "vectors":{"shape":"QueryVectorsOutputList"}
+        "vectors":{"shape":"QueryVectorsOutputList"},
+        "distanceMetric":{"shape":"DistanceMetric"}
       }
     },
     "QueryVectorsOutputList":{
       "type":"list",
       "member":{"shape":"QueryOutputVector"}
+    },
+    "RequestTimeoutException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "error":{
+        "httpStatusCode":408,
+        "senderFault":true
+      },
+      "exception":true,
+      "retryable":{"throttling":false}
+    },
+    "ResourceARN":{
+      "type":"string",
+      "max":1011,
+      "min":0
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -960,6 +1083,46 @@
       ]
     },
     "String":{"type":"string"},
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"}
+    },
+    "TagResourceInput":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tags"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"ResourceARN",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "TagResourceOutput":{
+      "type":"structure",
+      "members":{}
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
+    },
+    "TagsMap":{
+      "type":"map",
+      "key":{"shape":"TagKey"},
+      "value":{"shape":"TagValue"}
+    },
     "Timestamp":{"type":"timestamp"},
     "TooManyRequestsException":{
       "type":"structure",
@@ -978,6 +1141,29 @@
       "type":"integer",
       "box":true,
       "min":1
+    },
+    "UntagResourceInput":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tagKeys"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"ResourceARN",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "tagKeys":{
+          "shape":"TagKeyList",
+          "location":"querystring",
+          "locationName":"tagKeys"
+        }
+      }
+    },
+    "UntagResourceOutput":{
+      "type":"structure",
+      "members":{}
     },
     "ValidationException":{
       "type":"structure",
@@ -1017,7 +1203,10 @@
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
-    "VectorBucketArn":{"type":"string"},
+    "VectorBucketArn":{
+      "type":"string",
+      "pattern":"arn:aws[-a-z0-9]*:s3vectors:[a-z0-9-]+:[0-9]{12}:bucket/[a-z0-9][a-z0-9-.]{1,61}[a-z0-9]"
+    },
     "VectorBucketName":{
       "type":"string",
       "max":63,

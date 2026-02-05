@@ -238,23 +238,6 @@
         {"shape":"AccessDeniedException"}
       ]
     },
-    "ConnectorRegistrationsV2":{
-      "name":"ConnectorRegistrationsV2",
-      "http":{
-        "method":"POST",
-        "requestUri":"/connectorsv2/registrations"
-      },
-      "input":{"shape":"ConnectorRegistrationsV2Request"},
-      "output":{"shape":"ConnectorRegistrationsV2Response"},
-      "errors":[
-        {"shape":"AccessDeniedException"},
-        {"shape":"InternalServerException"},
-        {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
-    },
     "CreateActionTarget":{
       "name":"CreateActionTarget",
       "http":{
@@ -285,7 +268,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "CreateAutomationRule":{
@@ -317,7 +301,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "CreateConfigurationPolicy":{
@@ -351,7 +336,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "CreateFindingAggregator":{
@@ -1061,6 +1047,21 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "GetFindingsTrendsV2":{
+      "name":"GetFindingsTrendsV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/findingsTrendsv2"
+      },
+      "input":{"shape":"GetFindingsTrendsV2Request"},
+      "output":{"shape":"GetFindingsTrendsV2Response"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "GetFindingsV2":{
       "name":"GetFindingsV2",
       "http":{
@@ -1173,6 +1174,21 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetResourcesTrendsV2":{
+      "name":"GetResourcesTrendsV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/resourcesTrendsv2"
+      },
+      "input":{"shape":"GetResourcesTrendsV2Request"},
+      "output":{"shape":"GetResourcesTrendsV2Response"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
       ]
     },
     "GetResourcesV2":{
@@ -1439,6 +1455,23 @@
       "errors":[
         {"shape":"InternalException"},
         {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "RegisterConnectorV2":{
+      "name":"RegisterConnectorV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/connectorsv2/register"
+      },
+      "input":{"shape":"RegisterConnectorV2Request"},
+      "output":{"shape":"RegisterConnectorV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"}
       ]
     },
@@ -8106,6 +8139,8 @@
         "BooleanFilters":{"shape":"OcsfBooleanFilterList"},
         "NumberFilters":{"shape":"OcsfNumberFilterList"},
         "MapFilters":{"shape":"OcsfMapFilterList"},
+        "IpFilters":{"shape":"OcsfIpFilterList"},
+        "NestedCompositeFilters":{"shape":"CompositeFilterList"},
         "Operator":{"shape":"AllowedOperators"}
       }
     },
@@ -8209,25 +8244,6 @@
         "JIRA_CLOUD",
         "SERVICENOW"
       ]
-    },
-    "ConnectorRegistrationsV2Request":{
-      "type":"structure",
-      "required":[
-        "AuthCode",
-        "AuthState"
-      ],
-      "members":{
-        "AuthCode":{"shape":"NonEmptyString"},
-        "AuthState":{"shape":"NonEmptyString"}
-      }
-    },
-    "ConnectorRegistrationsV2Response":{
-      "type":"structure",
-      "required":["ConnectorId"],
-      "members":{
-        "ConnectorArn":{"shape":"NonEmptyString"},
-        "ConnectorId":{"shape":"NonEmptyString"}
-      }
     },
     "ConnectorStatus":{
       "type":"string",
@@ -8435,11 +8451,15 @@
     },
     "CreateConnectorV2Response":{
       "type":"structure",
-      "required":["ConnectorId"],
+      "required":[
+        "ConnectorArn",
+        "ConnectorId"
+      ],
       "members":{
         "ConnectorArn":{"shape":"NonEmptyString"},
         "ConnectorId":{"shape":"NonEmptyString"},
-        "AuthUrl":{"shape":"NonEmptyString"}
+        "AuthUrl":{"shape":"NonEmptyString"},
+        "ConnectorStatus":{"shape":"ConnectorStatus"}
       }
     },
     "CreateFindingAggregatorRequest":{
@@ -8504,7 +8524,8 @@
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "Mode":{"shape":"TicketCreationMode"}
       }
     },
     "CreateTicketV2Response":{
@@ -9169,6 +9190,51 @@
         "Original":{"shape":"NonEmptyString"}
       }
     },
+    "FindingsTrendsCompositeFilter":{
+      "type":"structure",
+      "members":{
+        "StringFilters":{"shape":"FindingsTrendsStringFilterList"},
+        "NestedCompositeFilters":{"shape":"FindingsTrendsCompositeFilterList"},
+        "Operator":{"shape":"AllowedOperators"}
+      }
+    },
+    "FindingsTrendsCompositeFilterList":{
+      "type":"list",
+      "member":{"shape":"FindingsTrendsCompositeFilter"}
+    },
+    "FindingsTrendsFilters":{
+      "type":"structure",
+      "members":{
+        "CompositeFilters":{"shape":"FindingsTrendsCompositeFilterList"},
+        "CompositeOperator":{"shape":"AllowedOperators"}
+      }
+    },
+    "FindingsTrendsStringField":{
+      "type":"string",
+      "enum":[
+        "account_id",
+        "region",
+        "finding_types",
+        "finding_status",
+        "finding_cve_ids",
+        "finding_compliance_status",
+        "finding_control_id",
+        "finding_class_name",
+        "finding_provider",
+        "finding_activity_name"
+      ]
+    },
+    "FindingsTrendsStringFilter":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"FindingsTrendsStringField"},
+        "Filter":{"shape":"StringFilter"}
+      }
+    },
+    "FindingsTrendsStringFilterList":{
+      "type":"list",
+      "member":{"shape":"FindingsTrendsStringFilter"}
+    },
     "FirewallPolicyDetails":{
       "type":"structure",
       "members":{
@@ -9442,6 +9508,32 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "GetFindingsTrendsV2Request":{
+      "type":"structure",
+      "required":[
+        "StartTime",
+        "EndTime"
+      ],
+      "members":{
+        "Filters":{"shape":"FindingsTrendsFilters"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "GetFindingsTrendsV2Response":{
+      "type":"structure",
+      "required":[
+        "Granularity",
+        "TrendsMetrics"
+      ],
+      "members":{
+        "Granularity":{"shape":"GranularityField"},
+        "TrendsMetrics":{"shape":"TrendsMetrics"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "GetFindingsV2Request":{
       "type":"structure",
       "members":{
@@ -9542,6 +9634,32 @@
         "GroupByResults":{"shape":"GroupByResults"}
       }
     },
+    "GetResourcesTrendsV2Request":{
+      "type":"structure",
+      "required":[
+        "StartTime",
+        "EndTime"
+      ],
+      "members":{
+        "Filters":{"shape":"ResourcesTrendsFilters"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "GetResourcesTrendsV2Response":{
+      "type":"structure",
+      "required":[
+        "Granularity",
+        "TrendsMetrics"
+      ],
+      "members":{
+        "Granularity":{"shape":"GranularityField"},
+        "TrendsMetrics":{"shape":"ResourcesTrendsMetrics"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "GetResourcesV2Request":{
       "type":"structure",
       "members":{
@@ -9577,6 +9695,14 @@
         "SecurityControlDefinition":{"shape":"SecurityControlDefinition"}
       }
     },
+    "GranularityField":{
+      "type":"string",
+      "enum":[
+        "Daily",
+        "Weekly",
+        "Monthly"
+      ]
+    },
     "GroupByField":{
       "type":"string",
       "enum":[
@@ -9588,6 +9714,7 @@
         "compliance.status",
         "compliance.control",
         "finding_info.title",
+        "finding_info.related_events.traits.category",
         "finding_info.types",
         "metadata.product.name",
         "metadata.product.uid",
@@ -9596,7 +9723,12 @@
         "severity",
         "status",
         "vulnerabilities.fix_coverage",
-        "class_name"
+        "class_name",
+        "vulnerabilities.affected_packages.name",
+        "finding_info.analytic.name",
+        "compliance.standards",
+        "cloud.account.name",
+        "vendor_attributes.severity"
       ]
     },
     "GroupByResult":{
@@ -9888,7 +10020,6 @@
     },
     "JiraCloudUpdateConfiguration":{
       "type":"structure",
-      "required":["ProjectKey"],
       "members":{
         "ProjectKey":{"shape":"NonEmptyString"}
       }
@@ -10535,7 +10666,10 @@
         "finding_info.created_time_dt",
         "finding_info.first_seen_time_dt",
         "finding_info.last_seen_time_dt",
-        "finding_info.modified_time_dt"
+        "finding_info.modified_time_dt",
+        "resources.image.created_time_dt",
+        "resources.image.last_used_time_dt",
+        "resources.modified_time_dt"
       ]
     },
     "OcsfDateFilter":{
@@ -10584,9 +10718,32 @@
       "type":"list",
       "member":{"shape":"OcsfFinding"}
     },
+    "OcsfIpField":{
+      "type":"string",
+      "enum":[
+        "evidences.dst_endpoint.ip",
+        "evidences.src_endpoint.ip"
+      ]
+    },
+    "OcsfIpFilter":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"OcsfIpField"},
+        "Filter":{"shape":"IpFilter"}
+      }
+    },
+    "OcsfIpFilterList":{
+      "type":"list",
+      "member":{"shape":"OcsfIpFilter"}
+    },
     "OcsfMapField":{
       "type":"string",
-      "enum":["resources.tags"]
+      "enum":[
+        "resources.tags",
+        "compliance.control_parameters",
+        "databucket.tags",
+        "finding_info.tags"
+      ]
     },
     "OcsfMapFilter":{
       "type":"structure",
@@ -10607,7 +10764,15 @@
         "confidence_score",
         "severity_id",
         "status_id",
-        "finding_info.related_events_count"
+        "finding_info.related_events_count",
+        "evidences.api.response.code",
+        "evidences.dst_endpoint.autonomous_system.number",
+        "evidences.dst_endpoint.port",
+        "evidences.src_endpoint.autonomous_system.number",
+        "evidences.src_endpoint.port",
+        "resources.image.in_use_count",
+        "vulnerabilities.cve.cvss.base_score",
+        "vendor_attributes.severity_id"
       ]
     },
     "OcsfNumberFilter":{
@@ -10639,6 +10804,7 @@
         "finding_info.title",
         "finding_info.types",
         "finding_info.uid",
+        "finding_info.related_events.traits.category",
         "finding_info.related_events.uid",
         "finding_info.related_events.product.uid",
         "finding_info.related_events.title",
@@ -10655,7 +10821,45 @@
         "status",
         "comment",
         "vulnerabilities.fix_coverage",
-        "class_name"
+        "class_name",
+        "databucket.encryption_details.algorithm",
+        "databucket.encryption_details.key_uid",
+        "databucket.file.data_classifications.classifier_details.type",
+        "evidences.actor.user.account.uid",
+        "evidences.api.operation",
+        "evidences.api.response.error_message",
+        "evidences.api.service.name",
+        "evidences.connection_info.direction",
+        "evidences.connection_info.protocol_name",
+        "evidences.dst_endpoint.autonomous_system.name",
+        "evidences.dst_endpoint.location.city",
+        "evidences.dst_endpoint.location.country",
+        "evidences.src_endpoint.autonomous_system.name",
+        "evidences.src_endpoint.hostname",
+        "evidences.src_endpoint.location.city",
+        "evidences.src_endpoint.location.country",
+        "finding_info.analytic.name",
+        "malware.name",
+        "malware_scan_info.uid",
+        "malware.severity",
+        "resources.cloud_function.layers.uid_alt",
+        "resources.cloud_function.runtime",
+        "resources.cloud_function.user.uid",
+        "resources.device.encryption_details.key_uid",
+        "resources.device.image.uid",
+        "resources.image.architecture",
+        "resources.image.registry_uid",
+        "resources.image.repository_name",
+        "resources.image.uid",
+        "resources.subnet_info.uid",
+        "resources.vpc_uid",
+        "vulnerabilities.affected_code.file.path",
+        "vulnerabilities.affected_packages.name",
+        "vulnerabilities.cve.epss.score",
+        "vulnerabilities.cve.uid",
+        "vulnerabilities.related_vulnerabilities",
+        "cloud.account.name",
+        "vendor_attributes.severity"
       ]
     },
     "OcsfStringFilter":{
@@ -10909,7 +11113,8 @@
     "ProviderUpdateConfiguration":{
       "type":"structure",
       "members":{
-        "JiraCloud":{"shape":"JiraCloudUpdateConfiguration"}
+        "JiraCloud":{"shape":"JiraCloudUpdateConfiguration"},
+        "ServiceNow":{"shape":"ServiceNowUpdateConfiguration"}
       },
       "union":true
     },
@@ -10961,6 +11166,25 @@
         "AVAILABLE",
         "UNAVAILABLE"
       ]
+    },
+    "RegisterConnectorV2Request":{
+      "type":"structure",
+      "required":[
+        "AuthCode",
+        "AuthState"
+      ],
+      "members":{
+        "AuthCode":{"shape":"NonEmptyString"},
+        "AuthState":{"shape":"NonEmptyString"}
+      }
+    },
+    "RegisterConnectorV2Response":{
+      "type":"structure",
+      "required":["ConnectorId"],
+      "members":{
+        "ConnectorArn":{"shape":"NonEmptyString"},
+        "ConnectorId":{"shape":"NonEmptyString"}
+      }
     },
     "RelatedFinding":{
       "type":"structure",
@@ -11163,12 +11387,12 @@
     "ResourceGroupByField":{
       "type":"string",
       "enum":[
-        "account_id",
-        "region",
-        "resource_category",
-        "resource_type",
-        "resource_name",
-        "findings_summary.finding_type"
+        "AccountId",
+        "Region",
+        "ResourceCategory",
+        "ResourceType",
+        "ResourceName",
+        "FindingsSummary.FindingType"
       ]
     },
     "ResourceGroupByRule":{
@@ -11215,7 +11439,7 @@
         "ResourceConfig"
       ],
       "members":{
-        "ResourceArn":{"shape":"NonEmptyString"},
+        "ResourceGuid":{"shape":"NonEmptyString"},
         "ResourceId":{"shape":"NonEmptyString"},
         "AccountId":{"shape":"NonEmptyString"},
         "Region":{"shape":"NonEmptyString"},
@@ -11268,6 +11492,7 @@
         "DateFilters":{"shape":"ResourcesDateFilterList"},
         "NumberFilters":{"shape":"ResourcesNumberFilterList"},
         "MapFilters":{"shape":"ResourcesMapFilterList"},
+        "NestedCompositeFilters":{"shape":"ResourcesCompositeFilterList"},
         "Operator":{"shape":"AllowedOperators"}
       }
     },
@@ -11275,11 +11500,18 @@
       "type":"list",
       "member":{"shape":"ResourcesCompositeFilter"}
     },
+    "ResourcesCount":{
+      "type":"structure",
+      "required":["AllResources"],
+      "members":{
+        "AllResources":{"shape":"TrendsValueCount"}
+      }
+    },
     "ResourcesDateField":{
       "type":"string",
       "enum":[
-        "resource_detail_capture_time_dt",
-        "resource_creation_time_dt"
+        "ResourceDetailCaptureTime",
+        "ResourceCreationTime"
       ]
     },
     "ResourcesDateFilter":{
@@ -11302,7 +11534,7 @@
     },
     "ResourcesMapField":{
       "type":"string",
-      "enum":["tags"]
+      "enum":["ResourceTags"]
     },
     "ResourcesMapFilter":{
       "type":"structure",
@@ -11318,15 +11550,15 @@
     "ResourcesNumberField":{
       "type":"string",
       "enum":[
-        "findings_summary.total_findings",
-        "findings_summary.severities.other",
-        "findings_summary.severities.fatal",
-        "findings_summary.severities.critical",
-        "findings_summary.severities.high",
-        "findings_summary.severities.medium",
-        "findings_summary.severities.low",
-        "findings_summary.severities.informational",
-        "findings_summary.severities.unknown"
+        "FindingsSummary.TotalFindings",
+        "FindingsSummary.Severities.Other",
+        "FindingsSummary.Severities.Fatal",
+        "FindingsSummary.Severities.Critical",
+        "FindingsSummary.Severities.High",
+        "FindingsSummary.Severities.Medium",
+        "FindingsSummary.Severities.Low",
+        "FindingsSummary.Severities.Informational",
+        "FindingsSummary.Severities.Unknown"
       ]
     },
     "ResourcesNumberFilter":{
@@ -11343,15 +11575,15 @@
     "ResourcesStringField":{
       "type":"string",
       "enum":[
-        "resource_arn",
-        "resource_id",
-        "account_id",
-        "region",
-        "resource_category",
-        "resource_type",
-        "resource_name",
-        "findings_summary.finding_type",
-        "findings_summary.product_name"
+        "ResourceGuid",
+        "ResourceId",
+        "AccountId",
+        "Region",
+        "ResourceCategory",
+        "ResourceType",
+        "ResourceName",
+        "FindingsSummary.FindingType",
+        "FindingsSummary.ProductName"
       ]
     },
     "ResourcesStringFilter":{
@@ -11364,6 +11596,67 @@
     "ResourcesStringFilterList":{
       "type":"list",
       "member":{"shape":"ResourcesStringFilter"}
+    },
+    "ResourcesTrendsCompositeFilter":{
+      "type":"structure",
+      "members":{
+        "StringFilters":{"shape":"ResourcesTrendsStringFilterList"},
+        "NestedCompositeFilters":{"shape":"ResourcesTrendsCompositeFilterList"},
+        "Operator":{"shape":"AllowedOperators"}
+      }
+    },
+    "ResourcesTrendsCompositeFilterList":{
+      "type":"list",
+      "member":{"shape":"ResourcesTrendsCompositeFilter"}
+    },
+    "ResourcesTrendsFilters":{
+      "type":"structure",
+      "members":{
+        "CompositeFilters":{"shape":"ResourcesTrendsCompositeFilterList"},
+        "CompositeOperator":{"shape":"AllowedOperators"}
+      }
+    },
+    "ResourcesTrendsMetrics":{
+      "type":"list",
+      "member":{"shape":"ResourcesTrendsMetricsResult"}
+    },
+    "ResourcesTrendsMetricsResult":{
+      "type":"structure",
+      "required":[
+        "Timestamp",
+        "TrendsValues"
+      ],
+      "members":{
+        "Timestamp":{"shape":"Timestamp"},
+        "TrendsValues":{"shape":"ResourcesTrendsValues"}
+      }
+    },
+    "ResourcesTrendsStringField":{
+      "type":"string",
+      "enum":[
+        "account_id",
+        "region",
+        "resource_type",
+        "resource_category"
+      ]
+    },
+    "ResourcesTrendsStringFilter":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"ResourcesTrendsStringField"},
+        "Filter":{"shape":"StringFilter"}
+      }
+    },
+    "ResourcesTrendsStringFilterList":{
+      "type":"list",
+      "member":{"shape":"ResourcesTrendsStringFilter"}
+    },
+    "ResourcesTrendsValues":{
+      "type":"structure",
+      "required":["ResourcesCount"],
+      "members":{
+        "ResourcesCount":{"shape":"ResourcesCount"}
+      }
     },
     "Result":{
       "type":"structure",
@@ -11740,11 +12033,6 @@
       "type":"list",
       "member":{"shape":"SensitiveDataResult"}
     },
-    "SensitiveNonEmptyString":{
-      "type":"string",
-      "pattern":".*\\S.*",
-      "sensitive":true
-    },
     "Sequence":{
       "type":"structure",
       "members":{
@@ -11757,10 +12045,13 @@
     },
     "ServiceNowDetail":{
       "type":"structure",
-      "required":["AuthStatus"],
+      "required":[
+        "SecretArn",
+        "AuthStatus"
+      ],
       "members":{
         "InstanceName":{"shape":"NonEmptyString"},
-        "ClientId":{"shape":"NonEmptyString"},
+        "SecretArn":{"shape":"NonEmptyString"},
         "AuthStatus":{"shape":"ConnectorAuthStatus"}
       }
     },
@@ -11768,14 +12059,27 @@
       "type":"structure",
       "required":[
         "InstanceName",
-        "ClientId",
-        "ClientSecret"
+        "SecretArn"
       ],
       "members":{
         "InstanceName":{"shape":"NonEmptyString"},
-        "ClientId":{"shape":"NonEmptyString"},
-        "ClientSecret":{"shape":"SensitiveNonEmptyString"}
+        "SecretArn":{"shape":"NonEmptyString"}
       }
+    },
+    "ServiceNowUpdateConfiguration":{
+      "type":"structure",
+      "members":{
+        "SecretArn":{"shape":"NonEmptyString"}
+      }
+    },
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"NonEmptyString"},
+        "Code":{"shape":"NonEmptyString"}
+      },
+      "error":{"httpStatusCode":402},
+      "exception":true
     },
     "Severity":{
       "type":"structure",
@@ -11804,6 +12108,29 @@
         "HIGH",
         "CRITICAL"
       ]
+    },
+    "SeverityTrendsCount":{
+      "type":"structure",
+      "required":[
+        "Unknown",
+        "Informational",
+        "Low",
+        "Medium",
+        "High",
+        "Critical",
+        "Fatal",
+        "Other"
+      ],
+      "members":{
+        "Unknown":{"shape":"TrendsValueCount"},
+        "Informational":{"shape":"TrendsValueCount"},
+        "Low":{"shape":"TrendsValueCount"},
+        "Medium":{"shape":"TrendsValueCount"},
+        "High":{"shape":"TrendsValueCount"},
+        "Critical":{"shape":"TrendsValueCount"},
+        "Fatal":{"shape":"TrendsValueCount"},
+        "Other":{"shape":"TrendsValueCount"}
+      }
     },
     "SeverityUpdate":{
       "type":"structure",
@@ -12318,9 +12645,39 @@
       "error":{"httpStatusCode":429},
       "exception":true
     },
+    "TicketCreationMode":{
+      "type":"string",
+      "enum":["DRYRUN"]
+    },
     "Timestamp":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
+    },
+    "TrendsMetrics":{
+      "type":"list",
+      "member":{"shape":"TrendsMetricsResult"}
+    },
+    "TrendsMetricsResult":{
+      "type":"structure",
+      "required":[
+        "Timestamp",
+        "TrendsValues"
+      ],
+      "members":{
+        "Timestamp":{"shape":"Timestamp"},
+        "TrendsValues":{"shape":"TrendsValues"}
+      }
+    },
+    "TrendsValueCount":{
+      "type":"long",
+      "min":0
+    },
+    "TrendsValues":{
+      "type":"structure",
+      "required":["SeverityTrends"],
+      "members":{
+        "SeverityTrends":{"shape":"SeverityTrendsCount"}
+      }
     },
     "TypeList":{
       "type":"list",
@@ -12550,7 +12907,6 @@
           "location":"uri",
           "locationName":"ConnectorId"
         },
-        "ClientSecret":{"shape":"SensitiveNonEmptyString"},
         "Description":{"shape":"NonEmptyString"},
         "Provider":{"shape":"ProviderUpdateConfiguration"}
       }

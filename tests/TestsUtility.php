@@ -3,7 +3,7 @@ namespace Aws\Test;
 
 use function Aws\dir_iterator;
 
-class TestsUtility
+final class TestsUtility
 {
     /**
      * Helper method to clean up temporary dirs.
@@ -19,7 +19,9 @@ class TestsUtility
         }
 
         if (is_link($dirPath)) {
-            unlink($dirPath);
+            // Handle how window treats symlinks to directories
+            PHP_OS_FAMILY === 'Windows' ? rmdir($dirPath) : unlink($dirPath);
+            return;
         }
 
         $files = dir_iterator($dirPath);
@@ -28,10 +30,18 @@ class TestsUtility
                 continue;
             }
 
-            $filePath  = $dirPath . '/' . $file;
-            if (is_file($filePath) || !is_dir($filePath)) {
-                unlink($filePath);
-            } elseif (is_dir($filePath)) {
+            if (!str_ends_with($dirPath, DIRECTORY_SEPARATOR)) {
+                $dirPath .= DIRECTORY_SEPARATOR;
+            }
+
+            $filePath = $dirPath . $file;
+            if (!is_dir($filePath)) {
+                $value = @unlink($filePath);
+                if (!$value) {
+                    // Try rmdir
+                    @rmdir($filePath);
+                }
+            } else {
                 self::cleanUpDir($filePath);
             }
         }

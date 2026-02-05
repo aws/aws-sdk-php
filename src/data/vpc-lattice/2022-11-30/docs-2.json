@@ -16,6 +16,7 @@
     "CreateTargetGroup": "<p>Creates a target group. A target group is a collection of targets, or compute resources, that run your application or service. A target group can only be used by a single service.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/target-groups.html\">Target groups</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
     "DeleteAccessLogSubscription": "<p>Deletes the specified access log subscription.</p>",
     "DeleteAuthPolicy": "<p>Deletes the specified auth policy. If an auth is set to <code>AWS_IAM</code> and the auth policy is deleted, all requests are denied. If you are trying to remove the auth policy completely, you must set the auth type to <code>NONE</code>. If auth is enabled on the resource, but no auth policy is set, all requests are denied.</p>",
+    "DeleteDomainVerification": "<p> Deletes the specified domain verification. </p>",
     "DeleteListener": "<p>Deletes the specified listener.</p>",
     "DeleteResourceConfiguration": "<p>Deletes the specified resource configuration.</p>",
     "DeleteResourceEndpointAssociation": "<p>Disassociates the resource configuration from the resource VPC endpoint.</p>",
@@ -31,6 +32,7 @@
     "DeregisterTargets": "<p>Deregisters the specified targets from the specified target group.</p>",
     "GetAccessLogSubscription": "<p>Retrieves information about the specified access log subscription.</p>",
     "GetAuthPolicy": "<p>Retrieves information about the auth policy for the specified service or service network.</p>",
+    "GetDomainVerification": "<p> Retrieves information about a domain verification.ß </p>",
     "GetListener": "<p>Retrieves information about the specified listener for the specified service.</p>",
     "GetResourceConfiguration": "<p>Retrieves information about the specified resource configuration.</p>",
     "GetResourceGateway": "<p>Retrieves information about the specified resource gateway.</p>",
@@ -43,6 +45,7 @@
     "GetServiceNetworkVpcAssociation": "<p>Retrieves information about the specified association between a service network and a VPC.</p>",
     "GetTargetGroup": "<p>Retrieves information about the specified target group.</p>",
     "ListAccessLogSubscriptions": "<p>Lists the access log subscriptions for the specified service network or service.</p>",
+    "ListDomainVerifications": "<p> Lists the domain verifications. </p>",
     "ListListeners": "<p>Lists the listeners for the specified service.</p>",
     "ListResourceConfigurations": "<p>Lists the resource configurations owned by or shared with this account.</p>",
     "ListResourceEndpointAssociations": "<p>Lists the associations for the specified VPC endpoint.</p>",
@@ -60,6 +63,7 @@
     "PutAuthPolicy": "<p>Creates or updates the auth policy. The policy string in JSON must not contain newlines or blank lines.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/auth-policies.html\">Auth policies</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
     "PutResourcePolicy": "<p>Attaches a resource-based permission policy to a service or service network. The policy must contain the same actions and condition statements as the Amazon Web Services Resource Access Manager permission for sharing services and service networks.</p>",
     "RegisterTargets": "<p>Registers the targets with the target group. If it's a Lambda target, you can only have one target in a target group.</p>",
+    "StartDomainVerification": "<p> Starts the domain verification process for a custom domain name. </p>",
     "TagResource": "<p>Adds the specified tags to the specified resource.</p>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
     "UpdateAccessLogSubscription": "<p>Updates the specified access log subscription.</p>",
@@ -199,10 +203,16 @@
       "refs": {
         "CreateResourceConfigurationRequest$allowAssociationToShareableServiceNetwork": "<p>(SINGLE, GROUP, ARN) Specifies whether the resource configuration can be associated with a sharable service network. The default is false.</p>",
         "CreateResourceConfigurationResponse$allowAssociationToShareableServiceNetwork": "<p>Specifies whether the resource configuration can be associated with a sharable service network.</p>",
+        "CreateServiceNetworkResourceAssociationRequest$privateDnsEnabled": "<p> Indicates if private DNS is enabled for the service network resource association. </p>",
+        "CreateServiceNetworkResourceAssociationResponse$privateDnsEnabled": "<p> Indicates if private DNS is is enabled for the service network resource association. </p>",
+        "CreateServiceNetworkVpcAssociationRequest$privateDnsEnabled": "<p> Indicates if private DNS is enabled for the VPC association. </p>",
+        "CreateServiceNetworkVpcAssociationResponse$privateDnsEnabled": "<p> Indicates if private DNS is enabled for the VPC association. </p>",
         "GetResourceConfigurationResponse$allowAssociationToShareableServiceNetwork": "<p>Specifies whether the resource configuration is associated with a sharable service network.</p>",
         "GetResourceConfigurationResponse$amazonManaged": "<p>Indicates whether the resource configuration was created and is managed by Amazon.</p>",
         "GetRuleResponse$isDefault": "<p>Indicates whether this is the default rule.</p>",
+        "GetServiceNetworkResourceAssociationResponse$privateDnsEnabled": "<p> Indicates if private DNS is enabled in the service network resource association. </p>",
         "GetServiceNetworkResourceAssociationResponse$isManagedAssociation": "<p>Indicates whether the association is managed by Amazon.</p>",
+        "GetServiceNetworkVpcAssociationResponse$privateDnsEnabled": "<p> Indicates if private DNS is enabled in the VPC association. </p>",
         "HeaderMatch$caseSensitive": "<p>Indicates whether the match is case sensitive.</p>",
         "HealthCheckConfig$enabled": "<p>Indicates whether health checking is enabled.</p>",
         "ListServiceNetworkResourceAssociationsRequest$includeChildren": "<p>Include service network resource associations of the child resource configuration with the grouped resource configuration.</p> <p>The type is boolean and the default value is false.</p>",
@@ -211,6 +221,8 @@
         "RuleSummary$isDefault": "<p>Indicates whether this is the default listener rule.</p>",
         "RuleUpdateSuccess$isDefault": "<p>Indicates whether this is the default rule.</p>",
         "ServiceNetworkResourceAssociationSummary$isManagedAssociation": "<p>Specifies whether the association is managed by Amazon.</p>",
+        "ServiceNetworkResourceAssociationSummary$privateDnsEnabled": "<p> Indicates if private DNS is enabled for the service network resource association. </p>",
+        "ServiceNetworkVpcAssociationSummary$privateDnsEnabled": "<p> Indicates if private DNS is enabled for the service network VPC association. </p>",
         "SharingConfig$enabled": "<p>Specifies if the service network is enabled for sharing.</p>",
         "UpdateResourceConfigurationRequest$allowAssociationToShareableServiceNetwork": "<p>Indicates whether to add the resource configuration to service networks that are shared with other accounts.</p>",
         "UpdateResourceConfigurationResponse$allowAssociationToShareableServiceNetwork": "<p>Indicates whether to add the resource configuration to service networks that are shared with other accounts.</p>",
@@ -240,7 +252,8 @@
         "CreateServiceNetworkServiceAssociationRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails.</p>",
         "CreateServiceNetworkVpcAssociationRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails.</p>",
         "CreateServiceRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails.</p>",
-        "CreateTargetGroupRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails.</p>"
+        "CreateTargetGroupRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails.</p>",
+        "StartDomainVerificationRequest$clientToken": "<p> A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails. </p>"
       }
     },
     "ConflictException": {
@@ -360,6 +373,14 @@
       "refs": {}
     },
     "DeleteAuthPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDomainVerificationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDomainVerificationResponse": {
       "base": null,
       "refs": {}
     },
@@ -488,6 +509,15 @@
         "ServiceSummary$dnsEntry": "<p>The DNS information.</p>"
       }
     },
+    "DnsOptions": {
+      "base": "<p> The DNS configuration options. </p>",
+      "refs": {
+        "CreateServiceNetworkVpcAssociationRequest$dnsOptions": "<p> DNS options for the service network VPC association. </p>",
+        "CreateServiceNetworkVpcAssociationResponse$dnsOptions": null,
+        "GetServiceNetworkVpcAssociationResponse$dnsOptions": "<p> DNS options for the service network VPC association. </p>",
+        "ServiceNetworkVpcAssociationSummary$dnsOptions": "<p> The DNS options for the service network VPC association. </p>"
+      }
+    },
     "DnsResource": {
       "base": "<p>The DNS name of the resource.</p>",
       "refs": {
@@ -497,8 +527,61 @@
     "DomainName": {
       "base": null,
       "refs": {
+        "CreateResourceConfigurationRequest$customDomainName": "<p> A custom domain name for your resource configuration. Additionally, provide a DomainVerificationID to prove your ownership of a domain. </p>",
+        "CreateResourceConfigurationRequest$groupDomain": "<p> (GROUP) The group domain for a group resource configuration. Any domains that you create for the child resource are subdomains of the group domain. Child resources inherit the verification status of the domain. </p>",
+        "CreateResourceConfigurationResponse$customDomainName": "<p> The custom domain name for your resource configuration. </p>",
+        "CreateResourceConfigurationResponse$groupDomain": "<p> (GROUP) The group domain for a group resource configuration. Any domains that you create for the child resource are subdomains of the group domain. Child resources inherit the verification status of the domain. </p>",
         "DnsResource$domainName": "<p>The domain name of the resource.</p>",
-        "GetResourceConfigurationResponse$customDomainName": "<p>The custom domain name of the resource configuration.</p>"
+        "DomainVerificationSummary$domainName": "<p> The domain name being verified. </p>",
+        "GetDomainVerificationResponse$domainName": "<p> The domain name being verified. </p>",
+        "GetResourceConfigurationResponse$customDomainName": "<p>The custom domain name of the resource configuration.</p>",
+        "GetResourceConfigurationResponse$groupDomain": "<p> (GROUP) The group domain for a group resource configuration. Any domains that you create for the child resource are subdomains of the group domain. Child resources inherit the verification status of the domain. </p>",
+        "ResourceConfigurationSummary$customDomainName": "<p> The custom domain name. </p>",
+        "ResourceConfigurationSummary$groupDomain": "<p> (GROUP) The group domain for a group resource configuration. Any domains that you create for the child resource are subdomains of the group domain. Child resources inherit the verification status of the domain. </p>",
+        "StartDomainVerificationRequest$domainName": "<p> The domain name to verify ownership for. </p>",
+        "StartDomainVerificationResponse$domainName": "<p> The domain name being verified. </p>"
+      }
+    },
+    "DomainVerificationArn": {
+      "base": null,
+      "refs": {
+        "CreateResourceConfigurationResponse$domainVerificationArn": "<p> The verification ID ARN </p>",
+        "DomainVerificationSummary$arn": "<p> The Amazon Resource Name (ARN) of the domain verification. </p>",
+        "GetDomainVerificationResponse$arn": "<p> The Amazon Resource Name (ARN) of the domain verification. </p>",
+        "GetResourceConfigurationResponse$domainVerificationArn": "<p> The ARN of the domain verification. </p>",
+        "StartDomainVerificationResponse$arn": "<p> The Amazon Resource Name (ARN) of the domain verification. </p>"
+      }
+    },
+    "DomainVerificationId": {
+      "base": null,
+      "refs": {
+        "CreateResourceConfigurationResponse$domainVerificationId": "<p> The domain name verification ID. </p>",
+        "DomainVerificationSummary$id": "<p> The ID of the domain verification. </p>",
+        "GetDomainVerificationResponse$id": "<p> The ID of the domain verification. </p>",
+        "GetResourceConfigurationResponse$domainVerificationId": "<p> The domain verification ID. </p>",
+        "ResourceConfigurationSummary$domainVerificationId": "<p> The domain verification ID. </p>",
+        "StartDomainVerificationResponse$id": "<p> The ID of the domain verification. </p>"
+      }
+    },
+    "DomainVerificationIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateResourceConfigurationRequest$domainVerificationIdentifier": "<p> The domain verification ID of your verified custom domain name. If you don't provide an ID, you must configure the DNS settings yourself. </p>",
+        "DeleteDomainVerificationRequest$domainVerificationIdentifier": "<p> The ID of the domain verification to delete. </p>",
+        "GetDomainVerificationRequest$domainVerificationIdentifier": "<p> The ID or ARN of the domain verification to retrieve. </p>",
+        "ListResourceConfigurationsRequest$domainVerificationIdentifier": "<p> The domain verification ID. </p>"
+      }
+    },
+    "DomainVerificationList": {
+      "base": null,
+      "refs": {
+        "ListDomainVerificationsResponse$items": "<p> Information about the domain verifications. </p>"
+      }
+    },
+    "DomainVerificationSummary": {
+      "base": "<p> Summary information about a domain verification. </p>",
+      "refs": {
+        "DomainVerificationList$member": null
       }
     },
     "FailureCode": {
@@ -540,6 +623,14 @@
       "refs": {}
     },
     "GetAuthPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDomainVerificationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDomainVerificationResponse": {
       "base": null,
       "refs": {}
     },
@@ -795,6 +886,14 @@
       "base": null,
       "refs": {}
     },
+    "ListDomainVerificationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDomainVerificationsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListListenersRequest": {
       "base": null,
       "refs": {}
@@ -997,6 +1096,7 @@
       "base": null,
       "refs": {
         "ListAccessLogSubscriptionsRequest$maxResults": "<p>The maximum number of results to return.</p>",
+        "ListDomainVerificationsRequest$maxResults": "<p> The maximum number of results to return. </p>",
         "ListListenersRequest$maxResults": "<p>The maximum number of results to return.</p>",
         "ListResourceConfigurationsRequest$maxResults": "<p>The maximum page size.</p>",
         "ListResourceEndpointAssociationsRequest$maxResults": "<p>The maximum page size.</p>",
@@ -1017,6 +1117,8 @@
       "refs": {
         "ListAccessLogSubscriptionsRequest$nextToken": "<p>A pagination token for the next page of results.</p>",
         "ListAccessLogSubscriptionsResponse$nextToken": "<p>A pagination token for the next page of results.</p>",
+        "ListDomainVerificationsRequest$nextToken": "<p> A pagination token for the next page of results. </p>",
+        "ListDomainVerificationsResponse$nextToken": "<p> A pagination token for the next page of results. </p>",
         "ListListenersRequest$nextToken": "<p>A pagination token for the next page of results.</p>",
         "ListListenersResponse$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
         "ListResourceConfigurationsRequest$nextToken": "<p>A pagination token for the next page of results.</p>",
@@ -1105,6 +1207,24 @@
         "GetResourceConfigurationResponse$portRanges": "<p>The TCP port ranges that a consumer can use to access a resource configuration. You can separate port ranges with a comma. Example: 1-65535 or 1,2,22-30</p>",
         "UpdateResourceConfigurationRequest$portRanges": "<p>The TCP port ranges that a consumer can use to access a resource configuration. You can separate port ranges with a comma. Example: 1-65535 or 1,2,22-30</p>",
         "UpdateResourceConfigurationResponse$portRanges": "<p>The TCP port ranges that a consumer can use to access a resource configuration. You can separate port ranges with a comma. Example: 1-65535 or 1,2,22-30</p>"
+      }
+    },
+    "PrivateDnsPreference": {
+      "base": null,
+      "refs": {
+        "DnsOptions$privateDnsPreference": "<p> The preference for which private domains have a private hosted zone created for and associated with the specified VPC. Only supported when private DNS is enabled and when the VPC endpoint type is ServiceNetwork or Resource. </p> <ul> <li> <p> <code>ALL_DOMAINS</code> - VPC Lattice provisions private hosted zones for all custom domain names.</p> </li> <li> <p> <code>VERIFIED_DOMAINS_ONLY</code> - VPC Lattice provisions a private hosted zone only if custom domain name has been verified by the provider.</p> </li> <li> <p> <code>VERIFIED_DOMAINS_AND_SPECIFIED_DOMAINS</code> - VPC Lattice provisions private hosted zones for all verified custom domain names and other domain names that the resource consumer specifies. The resource consumer specifies the domain names in the privateDnsSpecifiedDomains parameter.</p> </li> <li> <p> <code>SPECIFIED_DOMAINS_ONLY</code> - VPC Lattice provisions a private hosted zone for domain names specified by the resource consumer. The resource consumer specifies the domain names in the privateDnsSpecifiedDomains parameter.</p> </li> </ul>"
+      }
+    },
+    "PrivateDnsSpecifiedDomain": {
+      "base": null,
+      "refs": {
+        "PrivateDnsSpecifiedDomainsList$member": null
+      }
+    },
+    "PrivateDnsSpecifiedDomainsList": {
+      "base": null,
+      "refs": {
+        "DnsOptions$privateDnsSpecifiedDomains": "<p> Indicates which of the private domains to create private hosted zones for and associate with the specified VPC. Only supported when private DNS is enabled and the private DNS preference is <code>VERIFIED_DOMAINS_AND_SPECIFIED_DOMAINS</code> or <code>SPECIFIED_DOMAINS_ONLY</code>. </p>"
       }
     },
     "ProtocolType": {
@@ -1911,6 +2031,14 @@
         "GetServiceNetworkResponse$sharingConfig": "<p>Specifies if the service network is enabled for sharing.</p>"
       }
     },
+    "StartDomainVerificationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartDomainVerificationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "String": {
       "base": null,
       "refs": {
@@ -1953,6 +2081,8 @@
         "ThrottlingException$message": null,
         "ThrottlingException$serviceCode": "<p>The service code.</p>",
         "ThrottlingException$quotaCode": "<p>The ID of the service quota that was exceeded.</p>",
+        "TxtMethodConfig$value": "<p> The value that must be added to the TXT record for domain verification. </p>",
+        "TxtMethodConfig$name": "<p> The name of the TXT record that must be created for domain verification. </p>",
         "ValidationException$message": null,
         "ValidationExceptionField$name": "<p>The name of the validation exception.</p>",
         "ValidationExceptionField$message": "<p>Additional information about why the validation failed.</p>"
@@ -2001,7 +2131,10 @@
         "CreateServiceNetworkVpcAssociationRequest$tags": "<p>The tags for the association.</p>",
         "CreateServiceRequest$tags": "<p>The tags for the service.</p>",
         "CreateTargetGroupRequest$tags": "<p>The tags for the target group.</p>",
+        "DomainVerificationSummary$tags": "<p> The tags associated with the domain verification. </p>",
+        "GetDomainVerificationResponse$tags": "<p> The tags associated with the domain verification. </p>",
         "ListTagsForResourceResponse$tags": "<p>Information about the tags.</p>",
+        "StartDomainVerificationRequest$tags": "<p> The tags for the domain verification. </p>",
         "TagResourceRequest$tags": "<p>The tags for the resource.</p>"
       }
     },
@@ -2186,10 +2319,14 @@
         "AccessLogSubscriptionSummary$createdAt": "<p>The date and time that the access log subscription was created, in ISO-8601 format.</p>",
         "AccessLogSubscriptionSummary$lastUpdatedAt": "<p>The date and time that the access log subscription was last updated, in ISO-8601 format.</p>",
         "CreateResourceConfigurationResponse$createdAt": "<p>The date and time that the resource configuration was created, in ISO-8601 format.</p>",
+        "DomainVerificationSummary$createdAt": "<p> The date and time that the domain verification was created, in ISO-8601 format. </p>",
+        "DomainVerificationSummary$lastVerifiedTime": "<p> The date and time that the domain was last successfully verified, in ISO-8601 format. </p>",
         "GetAccessLogSubscriptionResponse$createdAt": "<p>The date and time that the access log subscription was created, in ISO-8601 format.</p>",
         "GetAccessLogSubscriptionResponse$lastUpdatedAt": "<p>The date and time that the access log subscription was last updated, in ISO-8601 format.</p>",
         "GetAuthPolicyResponse$createdAt": "<p>The date and time that the auth policy was created, in ISO-8601 format.</p>",
         "GetAuthPolicyResponse$lastUpdatedAt": "<p>The date and time that the auth policy was last updated, in ISO-8601 format.</p>",
+        "GetDomainVerificationResponse$createdAt": "<p> The date and time that the domain verification was created, in ISO-8601 format. </p>",
+        "GetDomainVerificationResponse$lastVerifiedTime": "<p> The date and time that the domain was last successfully verified, in ISO-8601 format. </p>",
         "GetListenerResponse$createdAt": "<p>The date and time that the listener was created, in ISO-8601 format.</p>",
         "GetListenerResponse$lastUpdatedAt": "<p>The date and time that the listener was last updated, in ISO-8601 format.</p>",
         "GetResourceConfigurationResponse$createdAt": "<p>The date and time that the resource configuration was created, in ISO-8601 format.</p>",
@@ -2229,6 +2366,14 @@
         "ServiceSummary$lastUpdatedAt": "<p>The date and time that the service was last updated, in ISO-8601 format.</p>",
         "TargetGroupSummary$createdAt": "<p>The date and time that the target group was created, in ISO-8601 format.</p>",
         "TargetGroupSummary$lastUpdatedAt": "<p>The date and time that the target group was last updated, in ISO-8601 format.</p>"
+      }
+    },
+    "TxtMethodConfig": {
+      "base": "<p> Configuration for TXT record-based domain verification method. </p>",
+      "refs": {
+        "DomainVerificationSummary$txtMethodConfig": "<p> The TXT record configuration used for domain verification. </p>",
+        "GetDomainVerificationResponse$txtMethodConfig": "<p> The TXT record configuration used for domain verification. </p>",
+        "StartDomainVerificationResponse$txtMethodConfig": "<p> The TXT record configuration used for domain verification. </p>"
       }
     },
     "UnhealthyThresholdCount": {
@@ -2349,6 +2494,16 @@
       "base": null,
       "refs": {
         "ValidationException$reason": "<p>The reason.</p>"
+      }
+    },
+    "VerificationStatus": {
+      "base": null,
+      "refs": {
+        "DomainVerificationSummary$status": "<p> The current status of the domain verification process. </p>",
+        "GetDomainVerificationResponse$status": "<p> The current status of the domain verification process. </p>",
+        "GetResourceConfigurationResponse$domainVerificationStatus": "<p> The domain verification status. </p>",
+        "GetServiceNetworkResourceAssociationResponse$domainVerificationStatus": "<p> The domain verification status in the service network resource association. </p>",
+        "StartDomainVerificationResponse$status": "<p> The current status of the domain verification process. </p>"
       }
     },
     "VpcEndpointId": {

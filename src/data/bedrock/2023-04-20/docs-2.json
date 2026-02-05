@@ -26,6 +26,7 @@
     "DeleteAutomatedReasoningPolicyTestCase": "<p>Deletes an Automated Reasoning policy test. This operation is idempotent; if you delete a test more than once, each call succeeds.</p>",
     "DeleteCustomModel": "<p>Deletes a custom model that you created earlier. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "DeleteCustomModelDeployment": "<p>Deletes a custom model deployment. This operation stops the deployment and removes it from your account. After deletion, the deployment ARN can no longer be used for inference requests.</p> <p>The following actions are related to the <code>DeleteCustomModelDeployment</code> operation:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateCustomModelDeployment.html\">CreateCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModelDeployment.html\">GetCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListCustomModelDeployments.html\">ListCustomModelDeployments</a> </p> </li> </ul>",
+    "DeleteEnforcedGuardrailConfiguration": "<p>Deletes the account-level enforced guardrail configuration.</p>",
     "DeleteFoundationModelAgreement": "<p>Delete the model access agreement for the specified model.</p>",
     "DeleteGuardrail": "<p>Deletes a guardrail.</p> <ul> <li> <p>To delete a guardrail, only specify the ARN of the guardrail in the <code>guardrailIdentifier</code> field. If you delete a guardrail, all of its versions will be deleted.</p> </li> <li> <p>To delete a version of a guardrail, specify the ARN of the guardrail in the <code>guardrailIdentifier</code> field and the version in the <code>guardrailVersion</code> field.</p> </li> </ul>",
     "DeleteImportedModel": "<p>Deletes a custom model that you imported earlier. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">Import a customized model</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>. </p>",
@@ -66,6 +67,7 @@
     "ListAutomatedReasoningPolicyTestResults": "<p>Lists test results for an Automated Reasoning policy, showing how the policy performed against various test scenarios and validation checks.</p>",
     "ListCustomModelDeployments": "<p>Lists custom model deployments in your account. You can filter the results by creation time, name, status, and associated model. Use this operation to manage and monitor your custom model deployments.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>The following actions are related to the <code>ListCustomModelDeployments</code> operation:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateCustomModelDeployment.html\">CreateCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModelDeployment.html\">GetCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_DeleteCustomModelDeployment.html\">DeleteCustomModelDeployment</a> </p> </li> </ul>",
     "ListCustomModels": "<p>Returns a list of the custom models that you have created with the <code>CreateModelCustomizationJob</code> operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "ListEnforcedGuardrailsConfiguration": "<p>Lists the account-level enforced guardrail configurations.</p>",
     "ListEvaluationJobs": "<p>Lists all existing evaluation jobs.</p>",
     "ListFoundationModelAgreementOffers": "<p>Get the offers associated with the specified model.</p>",
     "ListFoundationModels": "<p>Lists Amazon Bedrock foundation models that you can use. You can filter the results with the request parameters. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/foundation-models.html\">Foundation models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
@@ -80,6 +82,7 @@
     "ListPromptRouters": "<p>Retrieves a list of prompt routers.</p>",
     "ListProvisionedModelThroughputs": "<p>Lists the Provisioned Throughputs in the account. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListTagsForResource": "<p>List the tags associated with the specified resource.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "PutEnforcedGuardrailConfiguration": "<p>Sets the account-level enforced guardrail configuration.</p>",
     "PutModelInvocationLoggingConfiguration": "<p>Set the configuration values for model invocation logging.</p>",
     "PutUseCaseForModelAccess": "<p>Put usecase for model access.</p>",
     "RegisterMarketplaceModelEndpoint": "<p>Registers an existing Amazon SageMaker endpoint with Amazon Bedrock Marketplace, allowing it to be used with Amazon Bedrock APIs.</p>",
@@ -93,6 +96,7 @@
     "UpdateAutomatedReasoningPolicy": "<p>Updates an existing Automated Reasoning policy with new rules, variables, or configuration. This creates a new version of the policy while preserving the previous version.</p>",
     "UpdateAutomatedReasoningPolicyAnnotations": "<p>Updates the annotations for an Automated Reasoning policy build workflow. This allows you to modify extracted rules, variables, and types before finalizing the policy.</p>",
     "UpdateAutomatedReasoningPolicyTestCase": "<p>Updates an existing Automated Reasoning policy test. You can modify the content, query, expected result, and confidence threshold.</p>",
+    "UpdateCustomModelDeployment": "<p> Updates a custom model deployment with a new custom model. This allows you to deploy updated models without creating new deployment endpoints. </p>",
     "UpdateGuardrail": "<p>Updates a guardrail with the values you specify.</p> <ul> <li> <p>Specify a <code>name</code> and optional <code>description</code>.</p> </li> <li> <p>Specify messages for when the guardrail successfully blocks a prompt or a model response in the <code>blockedInputMessaging</code> and <code>blockedOutputsMessaging</code> fields.</p> </li> <li> <p>Specify topics for the guardrail to deny in the <code>topicPolicyConfig</code> object. Each <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailTopicConfig.html\">GuardrailTopicConfig</a> object in the <code>topicsConfig</code> list pertains to one topic.</p> <ul> <li> <p>Give a <code>name</code> and <code>description</code> so that the guardrail can properly identify the topic.</p> </li> <li> <p>Specify <code>DENY</code> in the <code>type</code> field.</p> </li> <li> <p>(Optional) Provide up to five prompts that you would categorize as belonging to the topic in the <code>examples</code> list.</p> </li> </ul> </li> <li> <p>Specify filter strengths for the harmful categories defined in Amazon Bedrock in the <code>contentPolicyConfig</code> object. Each <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailContentFilterConfig.html\">GuardrailContentFilterConfig</a> object in the <code>filtersConfig</code> list pertains to a harmful category. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-content-filters\">Content filters</a>. For more information about the fields in a content filter, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailContentFilterConfig.html\">GuardrailContentFilterConfig</a>.</p> <ul> <li> <p>Specify the category in the <code>type</code> field.</p> </li> <li> <p>Specify the strength of the filter for prompts in the <code>inputStrength</code> field and for model responses in the <code>strength</code> field of the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailContentFilterConfig.html\">GuardrailContentFilterConfig</a>.</p> </li> </ul> </li> <li> <p>(Optional) For security, include the ARN of a KMS key in the <code>kmsKeyId</code> field.</p> </li> </ul>",
     "UpdateMarketplaceModelEndpoint": "<p>Updates the configuration of an existing endpoint for a model from Amazon Bedrock Marketplace.</p>",
     "UpdateProvisionedModelThroughput": "<p>Updates the name or associated model for a Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>"
@@ -106,7 +110,33 @@
     },
     "AccessDeniedException": {
       "base": "<p>The request is denied because of missing access permissions.</p>",
+      "refs": {}
+    },
+    "AccountEnforcedGuardrailConfigurationId": {
+      "base": null,
       "refs": {
+        "AccountEnforcedGuardrailOutputConfiguration$configId": "<p>Unique ID for the account enforced configuration.</p>",
+        "DeleteEnforcedGuardrailConfigurationRequest$configId": "<p>Unique ID for the account enforced configuration.</p>",
+        "PutEnforcedGuardrailConfigurationRequest$configId": "<p>Unique ID for the account enforced configuration.</p>",
+        "PutEnforcedGuardrailConfigurationResponse$configId": "<p>Unique ID for the account enforced configuration.</p>"
+      }
+    },
+    "AccountEnforcedGuardrailInferenceInputConfiguration": {
+      "base": "<p>Account-level enforced guardrail input configuration.</p>",
+      "refs": {
+        "PutEnforcedGuardrailConfigurationRequest$guardrailInferenceConfig": "<p>Account-level enforced guardrail input configuration.</p>"
+      }
+    },
+    "AccountEnforcedGuardrailOutputConfiguration": {
+      "base": "<p>Account enforced guardrail output configuration.</p>",
+      "refs": {
+        "AccountEnforcedGuardrailsOutputConfiguration$member": null
+      }
+    },
+    "AccountEnforcedGuardrailsOutputConfiguration": {
+      "base": null,
+      "refs": {
+        "ListEnforcedGuardrailsConfigurationResponse$guardrailsConfig": "<p>Array of AccountEnforcedGuardrailOutputConfiguration objects.</p>"
       }
     },
     "AccountId": {
@@ -283,6 +313,7 @@
     "AutomatedReasoningCheckResult": {
       "base": null,
       "refs": {
+        "AutomatedReasoningPolicyGeneratedTestCase$expectedAggregatedFindingsResult": "<p>The expected results of the generated test case. Possible values include:</p> <ul> <li> <p> <code>VALID</code> - The claims are true. The claims are implied by the premises and the Automated Reasoning policy. Given the Automated Reasoning policy and premises, it is not possible for these claims to be false. In other words, there are no alternative answers that are true that contradict the claims.</p> </li> <li> <p> <code>INVALID</code> - The claims are false. The claims are not implied by the premises and Automated Reasoning policy. Furthermore, there exists different claims that are consistent with the premises and Automated Reasoning policy.</p> </li> <li> <p> <code>SATISFIABLE</code> - The claims can be true or false. It depends on what assumptions are made for the claim to be implied from the premises and Automated Reasoning policy rules. In this situation, different assumptions can make input claims false and alternative claims true.</p> </li> <li> <p> <code>IMPOSSIBLE</code> - Automated Reasoning can’t make a statement about the claims. This can happen if the premises are logically incorrect, or if there is a conflict within the Automated Reasoning policy itself.</p> </li> </ul>",
         "AutomatedReasoningPolicyScenario$expectedResult": "<p>The expected outcome when this scenario is evaluated against the policy (e.g., PASS, FAIL, VIOLATION).</p>",
         "AutomatedReasoningPolicyTestCase$expectedAggregatedFindingsResult": "<p>The expected result of the Automated Reasoning check for this test.</p>",
         "AutomatedReasoningPolicyTestResult$aggregatedTestFindingsResult": "<p>A summary of all test findings, aggregated to provide an overall assessment of policy quality and correctness.</p>",
@@ -604,7 +635,7 @@
       }
     },
     "AutomatedReasoningPolicyBuildResultAssets": {
-      "base": "<p>Contains the various assets generated during a policy build workflow, including logs, quality reports, and the final policy definition.</p>",
+      "base": "<p>Contains the various assets generated during a policy build workflow, including logs, quality reports, test cases, and the final policy definition.</p>",
       "refs": {
         "GetAutomatedReasoningPolicyBuildWorkflowResultAssetsResponse$buildWorkflowAssets": "<p>The requested build workflow asset. This is a union type that returns only one of the available asset types (logs, reports, or generated artifacts) based on the specific asset type requested in the API call.</p>"
       }
@@ -996,6 +1027,24 @@
         "AutomatedReasoningPolicyDefinition$version": "<p>The version of the policy definition format.</p>"
       }
     },
+    "AutomatedReasoningPolicyGeneratedTestCase": {
+      "base": "<p>Represents a generated test case, consisting of query content, guard content, and expected results.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyGeneratedTestCaseList$member": null
+      }
+    },
+    "AutomatedReasoningPolicyGeneratedTestCaseList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyGeneratedTestCases$generatedTestCases": "<p>Represents a collection of generated test cases.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyGeneratedTestCases": {
+      "base": "<p>Contains a comprehensive test suite generated by the build workflow, providing validation capabilities for automated reasoning policies.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildResultAssets$generatedTestCases": "<p>A comprehensive test suite generated by the build workflow, providing validation capabilities for automated reasoning policies.</p>"
+      }
+    },
     "AutomatedReasoningPolicyHash": {
       "base": null,
       "refs": {
@@ -1050,6 +1099,7 @@
     "AutomatedReasoningPolicyScenario": {
       "base": "<p>Represents a test scenario used to validate an Automated Reasoning policy, including the test conditions and expected outcomes.</p>",
       "refs": {
+        "AutomatedReasoningPolicyScenarioList$member": null,
         "GetAutomatedReasoningPolicyNextScenarioResponse$scenario": "<p>The next test scenario to validate, including the test expression and expected results.</p>"
       }
     },
@@ -1064,6 +1114,18 @@
       "refs": {
         "AutomatedReasoningPolicyScenario$expression": "<p>The logical expression or condition that defines this test scenario.</p>",
         "AutomatedReasoningPolicyUpdateFromScenarioFeedbackAnnotation$scenarioExpression": "<p>The logical expression that defines the test scenario that generated this feedback.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyScenarioList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyScenarios$policyScenarios": "<p>Represents a collection of generated policy scenarios.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyScenarios": {
+      "base": "<p>Contains a comprehensive entity encompassing all the scenarios generated by the build workflow, which can be used to validate an Automated Reasoning policy.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildResultAssets$policyScenarios": "<p>An entity encompassing all the policy scenarios generated by the build workflow, which can be used to validate an Automated Reasoning policy. </p>"
       }
     },
     "AutomatedReasoningPolicySummaries": {
@@ -1114,6 +1176,7 @@
     "AutomatedReasoningPolicyTestGuardContent": {
       "base": null,
       "refs": {
+        "AutomatedReasoningPolicyGeneratedTestCase$guardContent": "<p>The output content that's validated by the Automated Reasoning policy. This represents the foundation model response that will be checked for accuracy.</p>",
         "AutomatedReasoningPolicyTestCase$guardContent": "<p>The output content to be validated by the policy, typically representing a foundation model response.</p>",
         "CreateAutomatedReasoningPolicyTestCaseRequest$guardContent": "<p>The output content that's validated by the Automated Reasoning policy. This represents the foundation model response that will be checked for accuracy.</p>",
         "UpdateAutomatedReasoningPolicyTestCaseRequest$guardContent": "<p>The updated content to be validated by the Automated Reasoning policy.</p>"
@@ -1128,6 +1191,7 @@
     "AutomatedReasoningPolicyTestQueryContent": {
       "base": null,
       "refs": {
+        "AutomatedReasoningPolicyGeneratedTestCase$queryContent": "<p>The input query or prompt that generated the content. This provides context for the validation.</p>",
         "AutomatedReasoningPolicyTestCase$queryContent": "<p>The input query or prompt that generated the content. This provides context for the validation.</p>",
         "CreateAutomatedReasoningPolicyTestCaseRequest$queryContent": "<p>The input query or prompt that generated the content. This provides context for the validation.</p>",
         "UpdateAutomatedReasoningPolicyTestCaseRequest$queryContent": "<p>The updated input query or prompt that generated the content.</p>"
@@ -1265,13 +1329,11 @@
     },
     "BatchDeleteEvaluationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDeleteEvaluationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BedrockEvaluatorModel": {
       "base": "<p>The evaluator model used in knowledge base evaluation job or in model evaluation job that use a model as judge. This model computes all evaluation related metrics.</p>",
@@ -1316,6 +1378,7 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "DeleteAutomatedReasoningPolicyRequest$force": "<p>Specifies whether to force delete the automated reasoning policy even if it has active resources. When <code>false</code>, Amazon Bedrock validates if all artifacts have been deleted (e.g. policy version, test case, test result) for a policy before deletion. When <code>true</code>, Amazon Bedrock will delete the policy and all its artifacts without validation. Default is <code>false</code>. </p>",
         "FoundationModelDetails$responseStreamingSupported": "<p>Indicates whether the model supports streaming.</p>",
         "FoundationModelSummary$responseStreamingSupported": "<p>Indicates whether the model supports streaming.</p>",
         "GuardrailContentFilter$inputEnabled": "<p>Indicates whether guardrail evaluation is enabled on the input. When disabled, you aren't charged for the evaluation. The evaluation doesn't appear in the response.</p>",
@@ -1348,7 +1411,8 @@
         "LoggingConfig$textDataDeliveryEnabled": "<p>Set to include text data in the log delivery.</p>",
         "LoggingConfig$imageDataDeliveryEnabled": "<p>Set to include image data in the log delivery.</p>",
         "LoggingConfig$embeddingDataDeliveryEnabled": "<p>Set to include embeddings data in the log delivery.</p>",
-        "LoggingConfig$videoDataDeliveryEnabled": "<p>Set to include video data in the log delivery.</p>"
+        "LoggingConfig$videoDataDeliveryEnabled": "<p>Set to include video data in the log delivery.</p>",
+        "LoggingConfig$audioDataDeliveryEnabled": "<p>Set to include audio data in the log delivery.</p>"
       }
     },
     "BrandedName": {
@@ -1380,13 +1444,11 @@
     },
     "CancelAutomatedReasoningPolicyBuildWorkflowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelAutomatedReasoningPolicyBuildWorkflowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CloudWatchConfig": {
       "base": "<p>CloudWatch logging configuration.</p>",
@@ -1402,10 +1464,15 @@
         "ProvisionedModelSummary$commitmentDuration": "<p>The duration for which the Provisioned Throughput was committed.</p>"
       }
     },
+    "ConfigurationOwner": {
+      "base": null,
+      "refs": {
+        "AccountEnforcedGuardrailOutputConfiguration$owner": "<p>Configuration owner type.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>Error occurred because of a conflict while performing an operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ContentType": {
       "base": null,
@@ -1415,173 +1482,139 @@
     },
     "CreateAutomatedReasoningPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAutomatedReasoningPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAutomatedReasoningPolicyTestCaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAutomatedReasoningPolicyTestCaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAutomatedReasoningPolicyVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAutomatedReasoningPolicyVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCustomModelDeploymentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCustomModelDeploymentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCustomModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCustomModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEvaluationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEvaluationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFoundationModelAgreementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFoundationModelAgreementResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGuardrailRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGuardrailResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGuardrailVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGuardrailVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInferenceProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInferenceProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMarketplaceModelEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMarketplaceModelEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateModelCopyJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateModelCopyJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateModelCustomizationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateModelCustomizationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateModelImportJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateModelImportJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateModelInvocationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateModelInvocationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePromptRouterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePromptRouterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProvisionedModelThroughputRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProvisionedModelThroughputResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomMetricBedrockEvaluatorModel": {
       "base": "<p>Defines the model you want to evaluate custom metrics in an Amazon Bedrock evaluation job.</p>",
@@ -1623,7 +1656,8 @@
         "GetModelCustomizationJobResponse$outputModelArn": "<p>The Amazon Resource Name (ARN) of the output model.</p>",
         "ListCustomModelDeploymentsRequest$modelArnEquals": "<p>Filters deployments by the Amazon Resource Name (ARN) of the associated custom model.</p>",
         "ModelCopyJobSummary$targetModelArn": "<p>The Amazon Resource Name (ARN) of the copied model.</p>",
-        "ModelCustomizationJobSummary$customModelArn": "<p>Amazon Resource Name (ARN) of the custom model.</p>"
+        "ModelCustomizationJobSummary$customModelArn": "<p>Amazon Resource Name (ARN) of the custom model.</p>",
+        "UpdateCustomModelDeploymentRequest$modelArn": "<p> ARN of the new custom model to deploy. This replaces the currently deployed model. </p>"
       }
     },
     "CustomModelDeploymentArn": {
@@ -1631,7 +1665,8 @@
       "refs": {
         "CreateCustomModelDeploymentResponse$customModelDeploymentArn": "<p>The Amazon Resource Name (ARN) of the custom model deployment. Use this ARN as the <code>modelId</code> parameter when invoking the model with the <code>InvokeModel</code> or <code>Converse</code> operations.</p>",
         "CustomModelDeploymentSummary$customModelDeploymentArn": "<p>The Amazon Resource Name (ARN) of the custom model deployment.</p>",
-        "GetCustomModelDeploymentResponse$customModelDeploymentArn": "<p>The Amazon Resource Name (ARN) of the custom model deployment.</p>"
+        "GetCustomModelDeploymentResponse$customModelDeploymentArn": "<p>The Amazon Resource Name (ARN) of the custom model deployment.</p>",
+        "UpdateCustomModelDeploymentResponse$customModelDeploymentArn": "<p> ARN of the custom model deployment being updated. </p>"
       }
     },
     "CustomModelDeploymentDescription": {
@@ -1645,7 +1680,8 @@
       "base": null,
       "refs": {
         "DeleteCustomModelDeploymentRequest$customModelDeploymentIdentifier": "<p>The Amazon Resource Name (ARN) or name of the custom model deployment to delete.</p>",
-        "GetCustomModelDeploymentRequest$customModelDeploymentIdentifier": "<p>The Amazon Resource Name (ARN) or name of the custom model deployment to retrieve information about.</p>"
+        "GetCustomModelDeploymentRequest$customModelDeploymentIdentifier": "<p>The Amazon Resource Name (ARN) or name of the custom model deployment to retrieve information about.</p>",
+        "UpdateCustomModelDeploymentRequest$customModelDeploymentIdentifier": "<p> Identifier of the custom model deployment to update with the new custom model. </p>"
       }
     },
     "CustomModelDeploymentStatus": {
@@ -1666,6 +1702,18 @@
       "base": null,
       "refs": {
         "ListCustomModelDeploymentsResponse$modelDeploymentSummaries": "<p>A list of custom model deployment summaries.</p>"
+      }
+    },
+    "CustomModelDeploymentUpdateDetails": {
+      "base": "<p> Details about an update to a custom model deployment, including the new custom model resource ARN and current update status. </p>",
+      "refs": {
+        "GetCustomModelDeploymentResponse$updateDetails": "<p> Details about any pending or completed updates to the custom model deployment, including the new model ARN and update status. </p>"
+      }
+    },
+    "CustomModelDeploymentUpdateStatus": {
+      "base": null,
+      "refs": {
+        "CustomModelDeploymentUpdateDetails$updateStatus": "<p> Current status of the deployment update. </p>"
       }
     },
     "CustomModelName": {
@@ -1736,143 +1784,123 @@
     },
     "DeleteAutomatedReasoningPolicyBuildWorkflowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAutomatedReasoningPolicyBuildWorkflowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAutomatedReasoningPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAutomatedReasoningPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAutomatedReasoningPolicyTestCaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAutomatedReasoningPolicyTestCaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCustomModelDeploymentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCustomModelDeploymentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCustomModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCustomModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DeleteEnforcedGuardrailConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteEnforcedGuardrailConfigurationResponse": {
+      "base": null,
+      "refs": {}
     },
     "DeleteFoundationModelAgreementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFoundationModelAgreementResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteGuardrailRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteGuardrailResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImportedModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImportedModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInferenceProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInferenceProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMarketplaceModelEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMarketplaceModelEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteModelInvocationLoggingConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteModelInvocationLoggingConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePromptRouterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePromptRouterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProvisionedModelThroughputRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProvisionedModelThroughputResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterMarketplaceModelEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterMarketplaceModelEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DimensionalPriceRate": {
       "base": "<p>Dimensional price rate.</p>",
@@ -1904,6 +1932,12 @@
       "base": null,
       "refs": {
         "GetFoundationModelAvailabilityResponse$entitlementAvailability": "<p>Entitlement availability. </p>"
+      }
+    },
+    "EpochCount": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$epochCount": "<p> Number of training epochs to run during reinforcement fine-tuning. Higher values may improve performance but increase training time. </p>"
       }
     },
     "ErrorMessage": {
@@ -2221,13 +2255,11 @@
     },
     "ExportAutomatedReasoningPolicyVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExportAutomatedReasoningPolicyVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExternalSource": {
       "base": "<p>The unique external source of the content contained in the wrapper object.</p>",
@@ -2369,113 +2401,91 @@
     },
     "GetAutomatedReasoningPolicyAnnotationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutomatedReasoningPolicyAnnotationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutomatedReasoningPolicyBuildWorkflowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutomatedReasoningPolicyBuildWorkflowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutomatedReasoningPolicyBuildWorkflowResultAssetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutomatedReasoningPolicyBuildWorkflowResultAssetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutomatedReasoningPolicyNextScenarioRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutomatedReasoningPolicyNextScenarioResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutomatedReasoningPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutomatedReasoningPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutomatedReasoningPolicyTestCaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutomatedReasoningPolicyTestCaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutomatedReasoningPolicyTestResultRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutomatedReasoningPolicyTestResultResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCustomModelDeploymentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCustomModelDeploymentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCustomModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCustomModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEvaluationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEvaluationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFoundationModelAvailabilityRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFoundationModelAvailabilityResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFoundationModelIdentifier": {
       "base": null,
@@ -2485,137 +2495,118 @@
     },
     "GetFoundationModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFoundationModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetGuardrailRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetGuardrailResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImportedModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImportedModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInferenceProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInferenceProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMarketplaceModelEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMarketplaceModelEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetModelCopyJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetModelCopyJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetModelCustomizationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetModelCustomizationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetModelImportJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetModelImportJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetModelInvocationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetModelInvocationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetModelInvocationLoggingConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetModelInvocationLoggingConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPromptRouterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPromptRouterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProvisionedModelThroughputRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProvisionedModelThroughputResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetUseCaseForModelAccessRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetUseCaseForModelAccessResponse": {
       "base": null,
+      "refs": {}
+    },
+    "GraderConfig": {
+      "base": "<p> Configuration for the grader used in reinforcement fine-tuning to evaluate model responses and provide reward signals. </p>",
       "refs": {
+        "RFTConfig$graderConfig": "<p> Configuration for the grader that evaluates model responses and provides reward signals during RFT training. </p>"
       }
     },
     "GuardrailArn": {
       "base": null,
       "refs": {
+        "AccountEnforcedGuardrailOutputConfiguration$guardrailArn": "<p>ARN representation for the guardrail.</p>",
         "CreateGuardrailResponse$guardrailArn": "<p>The ARN of the guardrail.</p>",
         "GetGuardrailResponse$guardrailArn": "<p>The ARN of the guardrail.</p>",
         "GuardrailSummary$arn": "<p>The ARN of the guardrail.</p>",
@@ -2885,6 +2876,7 @@
     "GuardrailId": {
       "base": null,
       "refs": {
+        "AccountEnforcedGuardrailOutputConfiguration$guardrailId": "<p>Unique ID for the guardrail.</p>",
         "CreateGuardrailResponse$guardrailId": "<p>The unique identifier of the guardrail that was created.</p>",
         "CreateGuardrailVersionResponse$guardrailId": "<p>The unique identifier of the guardrail.</p>",
         "GetGuardrailResponse$guardrailId": "<p>The unique identifier of the guardrail.</p>",
@@ -2895,6 +2887,7 @@
     "GuardrailIdentifier": {
       "base": null,
       "refs": {
+        "AccountEnforcedGuardrailInferenceInputConfiguration$guardrailIdentifier": "<p>Identifier for the guardrail, could be the ID or the ARN.</p>",
         "CreateGuardrailVersionRequest$guardrailIdentifier": "<p>The unique identifier of the guardrail. This can be an ID or the ARN.</p>",
         "DeleteGuardrailRequest$guardrailIdentifier": "<p>The unique identifier of the guardrail. This can be an ID or the ARN.</p>",
         "GetGuardrailRequest$guardrailIdentifier": "<p>The unique identifier of the guardrail for which to get details. This can be an ID or the ARN.</p>",
@@ -2960,6 +2953,8 @@
     "GuardrailNumericalVersion": {
       "base": null,
       "refs": {
+        "AccountEnforcedGuardrailInferenceInputConfiguration$guardrailVersion": "<p>Numerical guardrail version.</p>",
+        "AccountEnforcedGuardrailOutputConfiguration$guardrailVersion": "<p>Numerical guardrail version.</p>",
         "CreateGuardrailVersionResponse$version": "<p>The number of the version of the guardrail.</p>",
         "DeleteGuardrailRequest$guardrailVersion": "<p>The version of the guardrail.</p>"
       }
@@ -3496,6 +3491,13 @@
         "FoundationModelSummary$inferenceTypesSupported": "<p>The inference types that the model supports.</p>"
       }
     },
+    "InputTags": {
+      "base": null,
+      "refs": {
+        "AccountEnforcedGuardrailInferenceInputConfiguration$inputTags": "<p>Whether to honor or ignore input tags at runtime.</p>",
+        "AccountEnforcedGuardrailOutputConfiguration$inputTags": "<p>Whether to honor or ignore input tags at runtime.</p>"
+      }
+    },
     "InstanceCount": {
       "base": null,
       "refs": {
@@ -3527,8 +3529,7 @@
     },
     "InternalServerException": {
       "base": "<p>An internal server error occurred. Retry your request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvocationLogSource": {
       "base": "<p>A storage location for invocation logs.</p>",
@@ -3582,6 +3583,7 @@
       "base": null,
       "refs": {
         "CreateCustomModelRequest$modelKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer managed KMS key to encrypt the custom model. If you don't provide a KMS key, Amazon Bedrock uses an Amazon Web Services-managed KMS key to encrypt the model. </p> <p>If you provide a customer managed KMS key, your Amazon Bedrock service role must have permissions to use it. For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/encryption-import-model.html\">Encryption of imported models</a>. </p>",
+        "GetAutomatedReasoningPolicyResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the automated reasoning policy and its associated artifacts. If a KMS key is not provided during the initial CreateAutomatedReasoningPolicyRequest, the kmsKeyArn won't be included in the GetAutomatedReasoningPolicyResponse. </p>",
         "GetCustomModelResponse$modelKmsKeyArn": "<p>The custom model is encrypted at rest using this key.</p>",
         "GetGuardrailResponse$kmsKeyArn": "<p>The ARN of the KMS key that encrypts the guardrail.</p>",
         "GetImportedModelResponse$modelKmsKeyArn": "<p>The imported model is encrypted at rest using this key.</p>",
@@ -3594,6 +3596,7 @@
     "KmsKeyId": {
       "base": null,
       "refs": {
+        "CreateAutomatedReasoningPolicyRequest$kmsKeyId": "<p>The identifier of the KMS key to use for encrypting the automated reasoning policy and its associated artifacts. If you don't specify a KMS key, Amazon Bedrock uses an KMS managed key for encryption. For enhanced security and control, you can specify a customer managed KMS key.</p>",
         "CreateEvaluationJobRequest$customerEncryptionKeyId": "<p>Specify your customer managed encryption key Amazon Resource Name (ARN) that will be used to encrypt your evaluation job.</p>",
         "CreateGuardrailRequest$kmsKeyId": "<p>The ARN of the KMS key that you use to encrypt the guardrail.</p>",
         "CreateModelCopyJobRequest$modelKmsKeyId": "<p>The ARN of the KMS key that you use to encrypt the model copy.</p>",
@@ -3644,6 +3647,18 @@
         "KnowledgeBaseVectorSearchConfiguration$numberOfResults": "<p>The number of text chunks to retrieve; the number of results to return.</p>"
       }
     },
+    "LambdaArn": {
+      "base": null,
+      "refs": {
+        "LambdaGraderConfig$lambdaArn": "<p> ARN of the AWS Lambda function that will evaluate model responses and return reward scores for RFT training. </p>"
+      }
+    },
+    "LambdaGraderConfig": {
+      "base": "<p> Configuration for using an AWS Lambda function to grade model responses during reinforcement fine-tuning training. </p>",
+      "refs": {
+        "GraderConfig$lambdaGrader": "<p> Configuration for using an AWS Lambda function as the grader for evaluating model responses and provide reward signals in reinforcement fine-tuning. </p>"
+      }
+    },
     "LegalTerm": {
       "base": "<p>The legal term of the agreement.</p>",
       "refs": {
@@ -3652,203 +3667,171 @@
     },
     "ListAutomatedReasoningPoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAutomatedReasoningPoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAutomatedReasoningPolicyBuildWorkflowsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAutomatedReasoningPolicyBuildWorkflowsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAutomatedReasoningPolicyTestCasesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAutomatedReasoningPolicyTestCasesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAutomatedReasoningPolicyTestResultsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAutomatedReasoningPolicyTestResultsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomModelDeploymentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomModelDeploymentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomModelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomModelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ListEnforcedGuardrailsConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListEnforcedGuardrailsConfigurationResponse": {
+      "base": null,
+      "refs": {}
     },
     "ListEvaluationJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEvaluationJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFoundationModelAgreementOffersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFoundationModelAgreementOffersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFoundationModelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFoundationModelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGuardrailsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGuardrailsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImportedModelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImportedModelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInferenceProfilesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInferenceProfilesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMarketplaceModelEndpointsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMarketplaceModelEndpointsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListModelCopyJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListModelCopyJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListModelCustomizationJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListModelCustomizationJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListModelImportJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListModelImportJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListModelInvocationJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListModelInvocationJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPromptRoutersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPromptRoutersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProvisionedModelThroughputsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProvisionedModelThroughputsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LogGroupName": {
       "base": null,
@@ -3974,6 +3957,7 @@
         "CreateCustomModelResponse$modelArn": "<p>The Amazon Resource Name (ARN) of the new custom model.</p>",
         "CreateModelCopyJobRequest$sourceModelArn": "<p>The Amazon Resource Name (ARN) of the model to be copied.</p>",
         "CustomModelDeploymentSummary$modelArn": "<p>The Amazon Resource Name (ARN) of the custom model associated with this deployment.</p>",
+        "CustomModelDeploymentUpdateDetails$modelArn": "<p> ARN of the new custom model being deployed as part of the update. </p>",
         "CustomModelSummary$baseModelArn": "<p>The base model Amazon Resource Name (ARN).</p>",
         "GetCustomModelResponse$modelArn": "<p>Amazon Resource Name (ARN) associated with this model.</p>",
         "GetCustomModelResponse$baseModelArn": "<p>Amazon Resource Name (ARN) of the base model.</p>",
@@ -4208,9 +4192,9 @@
     "ModelInvocationJobStatus": {
       "base": null,
       "refs": {
-        "GetModelInvocationJobResponse$status": "<p>The status of the batch inference job.</p> <p>The following statuses are possible:</p> <ul> <li> <p>Submitted – This job has been submitted to a queue for validation.</p> </li> <li> <p>Validating – This job is being validated for the requirements described in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html\">Format and upload your batch inference data</a>. The criteria include the following:</p> <ul> <li> <p>Your IAM service role has access to the Amazon S3 buckets containing your files.</p> </li> <li> <p>Your files are .jsonl files and each individual record is a JSON object in the correct format. Note that validation doesn't check if the <code>modelInput</code> value matches the request body for the model.</p> </li> <li> <p>Your files fulfill the requirements for file size and number of records. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html\">Quotas for Amazon Bedrock</a>.</p> </li> </ul> </li> <li> <p>Scheduled – This job has been validated and is now in a queue. The job will automatically start when it reaches its turn.</p> </li> <li> <p>Expired – This job timed out because it was scheduled but didn't begin before the set timeout duration. Submit a new job request.</p> </li> <li> <p>InProgress – This job has begun. You can start viewing the results in the output S3 location.</p> </li> <li> <p>Completed – This job has successfully completed. View the output files in the output S3 location.</p> </li> <li> <p>PartiallyCompleted – This job has partially completed. Not all of your records could be processed in time. View the output files in the output S3 location.</p> </li> <li> <p>Failed – This job has failed. Check the failure message for any further details. For further assistance, reach out to the <a href=\"https://console.aws.amazon.com/support/home/\">Amazon Web ServicesSupport Center</a>.</p> </li> <li> <p>Stopped – This job was stopped by a user.</p> </li> <li> <p>Stopping – This job is being stopped by a user.</p> </li> </ul>",
-        "ListModelInvocationJobsRequest$statusEquals": "<p>Specify a status to filter for batch inference jobs whose statuses match the string you specify.</p> <p>The following statuses are possible:</p> <ul> <li> <p>Submitted – This job has been submitted to a queue for validation.</p> </li> <li> <p>Validating – This job is being validated for the requirements described in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html\">Format and upload your batch inference data</a>. The criteria include the following:</p> <ul> <li> <p>Your IAM service role has access to the Amazon S3 buckets containing your files.</p> </li> <li> <p>Your files are .jsonl files and each individual record is a JSON object in the correct format. Note that validation doesn't check if the <code>modelInput</code> value matches the request body for the model.</p> </li> <li> <p>Your files fulfill the requirements for file size and number of records. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html\">Quotas for Amazon Bedrock</a>.</p> </li> </ul> </li> <li> <p>Scheduled – This job has been validated and is now in a queue. The job will automatically start when it reaches its turn.</p> </li> <li> <p>Expired – This job timed out because it was scheduled but didn't begin before the set timeout duration. Submit a new job request.</p> </li> <li> <p>InProgress – This job has begun. You can start viewing the results in the output S3 location.</p> </li> <li> <p>Completed – This job has successfully completed. View the output files in the output S3 location.</p> </li> <li> <p>PartiallyCompleted – This job has partially completed. Not all of your records could be processed in time. View the output files in the output S3 location.</p> </li> <li> <p>Failed – This job has failed. Check the failure message for any further details. For further assistance, reach out to the <a href=\"https://console.aws.amazon.com/support/home/\">Amazon Web ServicesSupport Center</a>.</p> </li> <li> <p>Stopped – This job was stopped by a user.</p> </li> <li> <p>Stopping – This job is being stopped by a user.</p> </li> </ul>",
-        "ModelInvocationJobSummary$status": "<p>The status of the batch inference job.</p> <p>The following statuses are possible:</p> <ul> <li> <p>Submitted – This job has been submitted to a queue for validation.</p> </li> <li> <p>Validating – This job is being validated for the requirements described in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html\">Format and upload your batch inference data</a>. The criteria include the following:</p> <ul> <li> <p>Your IAM service role has access to the Amazon S3 buckets containing your files.</p> </li> <li> <p>Your files are .jsonl files and each individual record is a JSON object in the correct format. Note that validation doesn't check if the <code>modelInput</code> value matches the request body for the model.</p> </li> <li> <p>Your files fulfill the requirements for file size and number of records. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html\">Quotas for Amazon Bedrock</a>.</p> </li> </ul> </li> <li> <p>Scheduled – This job has been validated and is now in a queue. The job will automatically start when it reaches its turn.</p> </li> <li> <p>Expired – This job timed out because it was scheduled but didn't begin before the set timeout duration. Submit a new job request.</p> </li> <li> <p>InProgress – This job has begun. You can start viewing the results in the output S3 location.</p> </li> <li> <p>Completed – This job has successfully completed. View the output files in the output S3 location.</p> </li> <li> <p>PartiallyCompleted – This job has partially completed. Not all of your records could be processed in time. View the output files in the output S3 location.</p> </li> <li> <p>Failed – This job has failed. Check the failure message for any further details. For further assistance, reach out to the <a href=\"https://console.aws.amazon.com/support/home/\">Amazon Web ServicesSupport Center</a>.</p> </li> <li> <p>Stopped – This job was stopped by a user.</p> </li> <li> <p>Stopping – This job is being stopped by a user.</p> </li> </ul>"
+        "GetModelInvocationJobResponse$status": "<p>The status of the batch inference job.</p> <p>The following statuses are possible:</p> <ul> <li> <p>Submitted – This job has been submitted to a queue for validation.</p> </li> <li> <p>Validating – This job is being validated for the requirements described in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html\">Format and upload your batch inference data</a>. The criteria include the following:</p> <ul> <li> <p>Your IAM service role has access to the Amazon S3 buckets containing your files.</p> </li> <li> <p>Your files are .jsonl files and each individual record is a JSON object in the correct format. Note that validation doesn't check if the <code>modelInput</code> value matches the request body for the model.</p> </li> <li> <p>Your files fulfill the requirements for file size and number of records. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html\">Quotas for Amazon Bedrock</a>.</p> </li> </ul> </li> <li> <p>Scheduled – This job has been validated and is now in a queue. The job will automatically start when it reaches its turn.</p> </li> <li> <p>Expired – This job timed out because it was scheduled but didn't begin before the set timeout duration. Submit a new job request.</p> </li> <li> <p>InProgress – This job has begun. You can start viewing the results in the output S3 location.</p> </li> <li> <p>Completed – This job has successfully completed. View the output files in the output S3 location.</p> </li> <li> <p>PartiallyCompleted – This job has partially completed. Not all of your records could be processed in time. View the output files in the output S3 location.</p> </li> <li> <p>Failed – This job has failed. Check the failure message for any further details. For further assistance, reach out to the <a href=\"https://console.aws.amazon.com/support/home/\">Amazon Web Services Support Center</a>.</p> </li> <li> <p>Stopped – This job was stopped by a user.</p> </li> <li> <p>Stopping – This job is being stopped by a user.</p> </li> </ul>",
+        "ListModelInvocationJobsRequest$statusEquals": "<p>Specify a status to filter for batch inference jobs whose statuses match the string you specify.</p> <p>The following statuses are possible:</p> <ul> <li> <p>Submitted – This job has been submitted to a queue for validation.</p> </li> <li> <p>Validating – This job is being validated for the requirements described in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html\">Format and upload your batch inference data</a>. The criteria include the following:</p> <ul> <li> <p>Your IAM service role has access to the Amazon S3 buckets containing your files.</p> </li> <li> <p>Your files are .jsonl files and each individual record is a JSON object in the correct format. Note that validation doesn't check if the <code>modelInput</code> value matches the request body for the model.</p> </li> <li> <p>Your files fulfill the requirements for file size and number of records. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html\">Quotas for Amazon Bedrock</a>.</p> </li> </ul> </li> <li> <p>Scheduled – This job has been validated and is now in a queue. The job will automatically start when it reaches its turn.</p> </li> <li> <p>Expired – This job timed out because it was scheduled but didn't begin before the set timeout duration. Submit a new job request.</p> </li> <li> <p>InProgress – This job has begun. You can start viewing the results in the output S3 location.</p> </li> <li> <p>Completed – This job has successfully completed. View the output files in the output S3 location.</p> </li> <li> <p>PartiallyCompleted – This job has partially completed. Not all of your records could be processed in time. View the output files in the output S3 location.</p> </li> <li> <p>Failed – This job has failed. Check the failure message for any further details. For further assistance, reach out to the <a href=\"https://console.aws.amazon.com/support/home/\">Amazon Web Services Support Center</a>.</p> </li> <li> <p>Stopped – This job was stopped by a user.</p> </li> <li> <p>Stopping – This job is being stopped by a user.</p> </li> </ul>",
+        "ModelInvocationJobSummary$status": "<p>The status of the batch inference job.</p> <p>The following statuses are possible:</p> <ul> <li> <p>Submitted – This job has been submitted to a queue for validation.</p> </li> <li> <p>Validating – This job is being validated for the requirements described in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html\">Format and upload your batch inference data</a>. The criteria include the following:</p> <ul> <li> <p>Your IAM service role has access to the Amazon S3 buckets containing your files.</p> </li> <li> <p>Your files are .jsonl files and each individual record is a JSON object in the correct format. Note that validation doesn't check if the <code>modelInput</code> value matches the request body for the model.</p> </li> <li> <p>Your files fulfill the requirements for file size and number of records. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html\">Quotas for Amazon Bedrock</a>.</p> </li> </ul> </li> <li> <p>Scheduled – This job has been validated and is now in a queue. The job will automatically start when it reaches its turn.</p> </li> <li> <p>Expired – This job timed out because it was scheduled but didn't begin before the set timeout duration. Submit a new job request.</p> </li> <li> <p>InProgress – This job has begun. You can start viewing the results in the output S3 location.</p> </li> <li> <p>Completed – This job has successfully completed. View the output files in the output S3 location.</p> </li> <li> <p>PartiallyCompleted – This job has partially completed. Not all of your records could be processed in time. View the output files in the output S3 location.</p> </li> <li> <p>Failed – This job has failed. Check the failure message for any further details. For further assistance, reach out to the <a href=\"https://console.aws.amazon.com/support/home/\">Amazon Web Services Support Center</a>.</p> </li> <li> <p>Stopped – This job was stopped by a user.</p> </li> <li> <p>Stopping – This job is being stopped by a user.</p> </li> </ul>"
       }
     },
     "ModelInvocationJobSummaries": {
@@ -4348,6 +4332,8 @@
         "ListCustomModelDeploymentsResponse$nextToken": "<p>The token for the next set of results. This value is null when there are no more results to return.</p>",
         "ListCustomModelsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "ListCustomModelsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListEnforcedGuardrailsConfigurationRequest$nextToken": "<p>Opaque continuation token of previous paginated response.</p>",
+        "ListEnforcedGuardrailsConfigurationResponse$nextToken": "<p>Opaque continuation token of previous paginated response.</p>",
         "ListEvaluationJobsRequest$nextToken": "<p>Continuation token from the previous response, for Amazon Bedrock to list the next set of results.</p>",
         "ListEvaluationJobsResponse$nextToken": "<p>Continuation token from the previous response, for Amazon Bedrock to list the next set of results.</p>",
         "ListGuardrailsRequest$nextToken": "<p>If there are more results than were returned in the response, the response returns a <code>nextToken</code> that you can send in another <code>ListGuardrails</code> request to see the next batch of results.</p>",
@@ -4535,25 +4521,29 @@
         "ProvisionedModelSummaries$member": null
       }
     },
+    "PutEnforcedGuardrailConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutEnforcedGuardrailConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "PutModelInvocationLoggingConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutModelInvocationLoggingConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutUseCaseForModelAccessRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutUseCaseForModelAccessResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryTransformationConfiguration": {
       "base": "<p>The configuration details for transforming the prompt.</p>",
@@ -4583,6 +4573,54 @@
       "base": null,
       "refs": {
         "RAGStopSequences$member": null
+      }
+    },
+    "RFTBatchSize": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$batchSize": "<p> Number of training samples processed in each batch during reinforcement fine-tuning (RFT) training. Larger batches may improve training stability. </p>"
+      }
+    },
+    "RFTConfig": {
+      "base": "<p> Configuration settings for reinforcement fine-tuning (RFT), including grader configuration and training hyperparameters. </p>",
+      "refs": {
+        "CustomizationConfig$rftConfig": "<p> Configuration settings for reinforcement fine-tuning (RFT) model customization, including grader configuration and hyperparameters. </p>"
+      }
+    },
+    "RFTEvalInterval": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$evalInterval": "<p> Interval between evaluation runs during RFT training, measured in training steps. More frequent evaluation provides better monitoring. </p>"
+      }
+    },
+    "RFTHyperParameters": {
+      "base": "<p> Hyperparameters for controlling the reinforcement fine-tuning training process, including learning settings and evaluation intervals. </p>",
+      "refs": {
+        "RFTConfig$hyperParameters": "<p> Hyperparameters that control the reinforcement fine-tuning training process, including learning rate, batch size, and epoch count. </p>"
+      }
+    },
+    "RFTInferenceMaxTokens": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$inferenceMaxTokens": "<p> Maximum number of tokens the model can generate in response to each prompt during RFT training. </p>"
+      }
+    },
+    "RFTLearningRate": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$learningRate": "<p> Learning rate for the reinforcement fine-tuning. Controls how quickly the model adapts to reward signals. </p>"
+      }
+    },
+    "RFTMaxPromptLength": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$maxPromptLength": "<p> Maximum length of input prompts during RFT training, measured in tokens. Longer prompts allow more context but increase memory usage and training-time. </p>"
+      }
+    },
+    "RFTTrainingSamplePerPrompt": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$trainingSamplePerPrompt": "<p> Number of response samples generated per prompt during RFT training. More samples provide better reward signal estimation. </p>"
       }
     },
     "RagConfigs": {
@@ -4627,6 +4665,12 @@
         "RatingScaleItemValue$stringValue": "<p>A string representing the value for a rating in a custom metric rating scale.</p>"
       }
     },
+    "ReasoningEffort": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$reasoningEffort": "<p> Level of reasoning effort applied during RFT training. Higher values may improve response quality but increase training time. </p>"
+      }
+    },
     "RegionAvailability": {
       "base": null,
       "refs": {
@@ -4635,13 +4679,11 @@
     },
     "RegisterMarketplaceModelEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterMarketplaceModelEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RequestMetadataBaseFilters": {
       "base": "<p>A mapping of a metadata key to a value that it should or should not equal.</p>",
@@ -4697,13 +4739,11 @@
     },
     "ResourceInUseException": {
       "base": "<p>Thrown when attempting to delete or modify a resource that is currently being used by other resources or operations. For example, trying to delete an Automated Reasoning policy that is referenced by an active guardrail.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource Amazon Resource Name (ARN) was not found. Check the Amazon Resource Name (ARN) and try your request again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RetrievalFilter": {
       "base": "<p>Specifies the filters to use on the metadata attributes/fields in the knowledge base data sources before returning results.</p>",
@@ -4839,13 +4879,11 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The number of requests exceeds the service quota. Resubmit your request later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceUnavailableException": {
       "base": "<p>Returned if the service cannot complete the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SortByProvisionedModels": {
       "base": null,
@@ -4887,23 +4925,19 @@
     },
     "StartAutomatedReasoningPolicyBuildWorkflowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAutomatedReasoningPolicyBuildWorkflowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAutomatedReasoningPolicyTestWorkflowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAutomatedReasoningPolicyTestWorkflowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Status": {
       "base": null,
@@ -4921,37 +4955,33 @@
     },
     "StopEvaluationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopEvaluationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopModelCustomizationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopModelCustomizationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopModelInvocationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopModelInvocationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
       "refs": {
+        "AccountEnforcedGuardrailOutputConfiguration$createdBy": "<p>The ARN of the role used to update the configuration.</p>",
+        "AccountEnforcedGuardrailOutputConfiguration$updatedBy": "<p>The ARN of the role used to update the configuration.</p>",
         "AgreementAvailability$errorMessage": "<p>Error message.</p>",
         "AutomatedReasoningPolicyBuildStepMessage$message": "<p>The content of the message, describing what occurred during the build step.</p>",
         "BatchDeleteEvaluationJobError$code": "<p>A HTTP status code of the evaluation job being deleted.</p>",
@@ -4968,6 +4998,7 @@
         "MarketplaceModelEndpointSummary$statusMessage": "<p>Additional information about the overall status, if available.</p>",
         "ModelCustomizationHyperParameters$key": null,
         "ModelCustomizationHyperParameters$value": null,
+        "PutEnforcedGuardrailConfigurationResponse$updatedBy": "<p>The ARN of the role used to update the configuration.</p>",
         "SupportTerm$refundPolicyDescription": "<p>Describes the refund policy.</p>",
         "ValidityTerm$agreementDuration": "<p>Describes the agreement duration.</p>"
       }
@@ -5036,13 +5067,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -5097,12 +5126,13 @@
     },
     "ThrottlingException": {
       "base": "<p>The number of requests exceeds the limit. Resubmit your request later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
       "refs": {
+        "AccountEnforcedGuardrailOutputConfiguration$createdAt": "<p>Timestamp.</p>",
+        "AccountEnforcedGuardrailOutputConfiguration$updatedAt": "<p>Timestamp.</p>",
         "AutomatedReasoningPolicyBuildWorkflowSummary$createdAt": "<p>The timestamp when the build workflow was created.</p>",
         "AutomatedReasoningPolicyBuildWorkflowSummary$updatedAt": "<p>The timestamp when the build workflow was last updated.</p>",
         "AutomatedReasoningPolicySummary$createdAt": "<p>The timestamp when the policy was created.</p>",
@@ -5196,6 +5226,7 @@
         "ProvisionedModelSummary$commitmentExpirationTime": "<p>The timestamp for when the commitment term of the Provisioned Throughput expires.</p>",
         "ProvisionedModelSummary$creationTime": "<p>The time that the Provisioned Throughput was created. </p>",
         "ProvisionedModelSummary$lastModifiedTime": "<p>The time that the Provisioned Throughput was last modified. </p>",
+        "PutEnforcedGuardrailConfigurationResponse$updatedAt": "<p>Timestamp.</p>",
         "TrainingDetails$creationTime": "<p>The start time of the training sub-task of the job.</p>",
         "TrainingDetails$lastModifiedTime": "<p>The latest update to the training sub-task of the job.</p>",
         "UpdateAutomatedReasoningPolicyAnnotationsResponse$updatedAt": "<p>The timestamp when the annotations were updated.</p>",
@@ -5208,8 +5239,7 @@
     },
     "TooManyTagsException": {
       "base": "<p>The request contains more tags than can be associated with a resource (50 tags per resource). The maximum number of tags includes both existing tags and those included in your current request. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TopP": {
       "base": null,
@@ -5240,73 +5270,67 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAutomatedReasoningPolicyAnnotationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAutomatedReasoningPolicyAnnotationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAutomatedReasoningPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAutomatedReasoningPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAutomatedReasoningPolicyTestCaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAutomatedReasoningPolicyTestCaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "UpdateCustomModelDeploymentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCustomModelDeploymentResponse": {
+      "base": null,
+      "refs": {}
     },
     "UpdateGuardrailRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGuardrailResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMarketplaceModelEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMarketplaceModelEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProvisionedModelThroughputRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProvisionedModelThroughputResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UsePromptResponse": {
       "base": null,
@@ -5330,8 +5354,7 @@
     },
     "ValidationException": {
       "base": "<p>Input validation failed. Check your request parameters and retry the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationMetrics": {
       "base": null,

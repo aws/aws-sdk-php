@@ -14,6 +14,7 @@ use Aws\Middleware;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\ResultInterface;
+use Aws\Signature\DpopSignature;
 use Aws\Signature\SignatureV4;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
@@ -108,9 +109,27 @@ class MiddlewareTest extends TestCase
         $this->assertTrue($req->hasHeader('Authorization'));
     }
 
-    public function TestOverridesAuthScheme()
+    public function testSignerRejectsDpopWithoutValidKey()
     {
-
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage(
+            'A valid DPoP key must be present for DPoP signatures'
+        );
+        $list = new HandlerList();
+        $mock = function ($command, $request) use (&$req) {
+            $req = $request;
+            return Promise\Create::promiseFor(
+                new Result(['@metadata' => ['statusCode' => 200]])
+            );
+        };
+        $list->setHandler($mock);
+        // Equivalent to `'credentials' => false`
+        $creds = CredentialProvider::fromCredentials(new Credentials('', ''));
+        $signature = new DpopSignature('signin');
+        $list->appendSign(Middleware::signer($creds, Aws\constantly($signature)));
+        $handler = $list->resolve();
+        $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
+        Promise\Utils::queue()->run();
     }
 
     public function testBuildsRequests()
@@ -331,7 +350,7 @@ class MiddlewareTest extends TestCase
     {
         $list = new HandlerList();
         $list->setHandler(function () {
-            usleep(1000); // wait for a millisecond
+            usleep(1000);
             return Promise\Create::promiseFor(new Result);
         });
         $list->prependInit(Middleware::timer());
@@ -339,8 +358,10 @@ class MiddlewareTest extends TestCase
         $request = new Request('GET', 'http://exmaple.com');
         $result = $handler(new Command('Foo'), $request)->wait();
         $this->assertArrayHasKey('total_time', $result['@metadata']['transferStats']);
+        // Windows with JIT may report timing differently
+        $minTime = PHP_OS_FAMILY === 'Windows' ? 0.0001 : 0.001;
         $this->assertGreaterThanOrEqual(
-            0.001,
+            $minTime,
             $result['@metadata']['transferStats']['total_time']
         );
     }
@@ -362,7 +383,9 @@ class MiddlewareTest extends TestCase
             },
             function (AwsException $e) {
                 $this->assertNotNull($e->getTransferInfo('total_time'));
-                $this->assertGreaterThanOrEqual(0.001, $e->getTransferInfo('total_time'));
+                // Windows with JIT may report timing differently for rejected promises
+                $minTime = PHP_OS_FAMILY === 'Windows' ? 0.0001 : 0.001;
+                $this->assertGreaterThanOrEqual($minTime, $e->getTransferInfo('total_time'));
 
                 return true;
             }
