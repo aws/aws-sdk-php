@@ -21896,6 +21896,10 @@
         "TimecodeInsertion": {
           "shape": "Av1TimecodeInsertionBehavior",
           "locationName": "timecodeInsertion"
+        },
+        "BitDepth": {
+          "shape": "Av1BitDepth",
+          "locationName": "bitDepth"
         }
       },
       "required": [
@@ -25504,6 +25508,13 @@
     },
     "__integerMin1Max65535": {
       "type": "integer"
+    },
+    "Av1BitDepth": {
+      "type": "string",
+      "enum": [
+        "DEPTH_10",
+        "DEPTH_8"
+      ]
     }
   }
 }

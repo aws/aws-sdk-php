@@ -6,6 +6,7 @@
     "CreateAgentRuntimeEndpoint": "<p>Creates an AgentCore Runtime endpoint.</p>",
     "CreateApiKeyCredentialProvider": "<p>Creates a new API key credential provider.</p>",
     "CreateBrowser": "<p>Creates a custom browser.</p>",
+    "CreateBrowserProfile": "<p>Creates a browser profile in Amazon Bedrock AgentCore. A browser profile stores persistent browser data such as cookies, local storage, session storage, and browsing history that can be saved from browser sessions and reused in subsequent sessions.</p>",
     "CreateCodeInterpreter": "<p>Creates a custom code interpreter.</p>",
     "CreateEvaluator": "<p> Creates a custom evaluator for agent quality assessment. Custom evaluators use LLM-as-a-Judge configurations with user-defined prompts, rating scales, and model settings to evaluate agent performance at tool call, trace, or session levels. </p>",
     "CreateGateway": "<p>Creates a gateway for Amazon Bedrock Agent. A gateway serves as an integration point between your agent and external services.</p> <p>If you specify <code>CUSTOM_JWT</code> as the <code>authorizerType</code>, you must provide an <code>authorizerConfiguration</code>.</p>",
@@ -20,6 +21,7 @@
     "DeleteAgentRuntimeEndpoint": "<p>Deletes an AAgentCore Runtime endpoint.</p>",
     "DeleteApiKeyCredentialProvider": "<p>Deletes an API key credential provider.</p>",
     "DeleteBrowser": "<p>Deletes a custom browser.</p>",
+    "DeleteBrowserProfile": "<p>Deletes a browser profile.</p>",
     "DeleteCodeInterpreter": "<p>Deletes a custom code interpreter.</p>",
     "DeleteEvaluator": "<p> Deletes a custom evaluator. Builtin evaluators cannot be deleted. The evaluator must not be referenced by any active online evaluation configurations. </p>",
     "DeleteGateway": "<p>Deletes a gateway.</p>",
@@ -35,6 +37,7 @@
     "GetAgentRuntimeEndpoint": "<p>Gets information about an Amazon Secure AgentEndpoint.</p>",
     "GetApiKeyCredentialProvider": "<p>Retrieves information about an API key credential provider.</p>",
     "GetBrowser": "<p>Gets information about a custom browser.</p>",
+    "GetBrowserProfile": "<p>Gets information about a browser profile.</p>",
     "GetCodeInterpreter": "<p>Gets information about a custom code interpreter.</p>",
     "GetEvaluator": "<p> Retrieves detailed information about an evaluator, including its configuration, status, and metadata. Works with both built-in and custom evaluators. </p>",
     "GetGateway": "<p>Retrieves information about a specific Gateway.</p>",
@@ -52,6 +55,7 @@
     "ListAgentRuntimeVersions": "<p>Lists all versions of a specific Amazon Secure Agent.</p>",
     "ListAgentRuntimes": "<p>Lists all Amazon Secure Agents in your account.</p>",
     "ListApiKeyCredentialProviders": "<p>Lists all API key credential providers in your account.</p>",
+    "ListBrowserProfiles": "<p>Lists all browser profiles in your account.</p>",
     "ListBrowsers": "<p>Lists all custom browsers in your account.</p>",
     "ListCodeInterpreters": "<p>Lists all custom code interpreters in your account.</p>",
     "ListEvaluators": "<p> Lists all available evaluators, including both builtin evaluators provided by the service and custom evaluators created by the user. </p>",
@@ -64,14 +68,14 @@
     "ListPolicyEngines": "<p>Retrieves a list of policy engines within the AgentCore Policy system. This operation supports pagination to help administrators discover and manage policy engines across their account. Each policy engine serves as a container for related policies.</p>",
     "ListPolicyGenerationAssets": "<p>Retrieves a list of generated policy assets from a policy generation request within the AgentCore Policy system. This operation returns the actual Cedar policies and related artifacts produced by the AI-powered policy generation process, allowing users to review and select from multiple generated policy options.</p>",
     "ListPolicyGenerations": "<p>Retrieves a list of policy generation requests within the AgentCore Policy system. This operation supports pagination and filtering to help track and manage AI-powered policy generation operations.</p>",
-    "ListTagsForResource": "<p>Lists the tags associated with the specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Code Interpreter tool, and Gateway.</p> </note>",
+    "ListTagsForResource": "<p>Lists the tags associated with the specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Browser Profile, Code Interpreter tool, and Gateway.</p> </note>",
     "ListWorkloadIdentities": "<p>Lists all workload identities in your account.</p>",
     "PutResourcePolicy": "<p>Creates or updates a resource-based policy for a resource with the specified resourceArn.</p> <note> <p>This feature is currently available only for AgentCore Runtime and Gateway.</p> </note>",
     "SetTokenVaultCMK": "<p>Sets the customer master key (CMK) for a token vault.</p>",
     "StartPolicyGeneration": "<p>Initiates the AI-powered generation of Cedar policies from natural language descriptions within the AgentCore Policy system. This feature enables both technical and non-technical users to create policies by describing their authorization requirements in plain English, which is then automatically translated into formal Cedar policy statements. The generation process analyzes the natural language input along with the Gateway's tool context to produce validated policy options. Generated policy assets are automatically deleted after 7 days, so you should review and create policies from the generated assets within this timeframe. Once created, policies are permanent and not subject to this expiration. Generated policies should be reviewed and tested in log-only mode before deploying to production. Use this when you want to describe policy intent naturally rather than learning Cedar syntax, though generated policies may require refinement for complex scenarios.</p>",
     "SynchronizeGatewayTargets": "<p>The gateway targets.</p>",
-    "TagResource": "<p>Associates the specified tags to a resource with the specified resourceArn. If existing tags on a resource are not specified in the request parameters, they are not changed. When a resource is deleted, the tags associated with that resource are also deleted.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Code Interpreter tool, and Gateway.</p> </note>",
-    "UntagResource": "<p>Removes the specified tags from the specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Code Interpreter tool, and Gateway.</p> </note>",
+    "TagResource": "<p>Associates the specified tags to a resource with the specified resourceArn. If existing tags on a resource are not specified in the request parameters, they are not changed. When a resource is deleted, the tags associated with that resource are also deleted.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Browser Profile, Code Interpreter tool, and Gateway.</p> </note>",
+    "UntagResource": "<p>Removes the specified tags from the specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Browser Profile, Code Interpreter tool, and Gateway.</p> </note>",
     "UpdateAgentRuntime": "<p>Updates an existing Amazon Secure Agent.</p>",
     "UpdateAgentRuntimeEndpoint": "<p>Updates an existing Amazon Bedrock AgentCore Runtime endpoint.</p>",
     "UpdateApiKeyCredentialProvider": "<p>Updates an existing API key credential provider.</p>",
@@ -112,7 +116,7 @@
       }
     },
     "AgentRuntime": {
-      "base": "<p>Contains information about an agent runtime. An agent runtime is the execution environment for a Amazon Bedrock Agent.</p>",
+      "base": "<p>Contains information about an agent runtime. An agent runtime is the execution environment for a Amazon Bedrock AgentCore Agent.</p>",
       "refs": {
         "AgentRuntimes$member": null
       }
@@ -504,10 +508,12 @@
     "BrowserId": {
       "base": null,
       "refs": {
+        "BrowserProfileSummary$lastSavedBrowserId": "<p>The identifier of the browser from which data was last saved to this profile.</p>",
         "BrowserSummary$browserId": "<p>The unique identifier of the browser.</p>",
         "CreateBrowserResponse$browserId": "<p>The unique identifier of the created browser.</p>",
         "DeleteBrowserRequest$browserId": "<p>The unique identifier of the browser to delete.</p>",
         "DeleteBrowserResponse$browserId": "<p>The unique identifier of the deleted browser.</p>",
+        "GetBrowserProfileResponse$lastSavedBrowserId": "<p>The identifier of the browser from which data was last saved to this profile.</p>",
         "GetBrowserRequest$browserId": "<p>The unique identifier of the browser to retrieve.</p>",
         "GetBrowserResponse$browserId": "<p>The unique identifier of the browser.</p>"
       }
@@ -523,6 +529,62 @@
       "base": null,
       "refs": {
         "BrowserNetworkConfiguration$networkMode": "<p>The network mode for the browser. This field specifies how the browser connects to the network.</p>"
+      }
+    },
+    "BrowserProfileArn": {
+      "base": null,
+      "refs": {
+        "BrowserProfileSummary$profileArn": "<p>The Amazon Resource Name (ARN) of the browser profile.</p>",
+        "CreateBrowserProfileResponse$profileArn": "<p>The Amazon Resource Name (ARN) of the created browser profile.</p>",
+        "DeleteBrowserProfileResponse$profileArn": "<p>The Amazon Resource Name (ARN) of the deleted browser profile.</p>",
+        "GetBrowserProfileResponse$profileArn": "<p>The Amazon Resource Name (ARN) of the browser profile.</p>"
+      }
+    },
+    "BrowserProfileId": {
+      "base": null,
+      "refs": {
+        "BrowserProfileSummary$profileId": "<p>The unique identifier of the browser profile.</p>",
+        "CreateBrowserProfileResponse$profileId": "<p>The unique identifier of the created browser profile.</p>",
+        "DeleteBrowserProfileRequest$profileId": "<p>The unique identifier of the browser profile to delete.</p>",
+        "DeleteBrowserProfileResponse$profileId": "<p>The unique identifier of the deleted browser profile.</p>",
+        "GetBrowserProfileRequest$profileId": "<p>The unique identifier of the browser profile to retrieve.</p>",
+        "GetBrowserProfileResponse$profileId": "<p>The unique identifier of the browser profile.</p>"
+      }
+    },
+    "BrowserProfileName": {
+      "base": null,
+      "refs": {
+        "BrowserProfileSummary$name": "<p>The name of the browser profile.</p>",
+        "CreateBrowserProfileRequest$name": "<p>The name of the browser profile. The name must be unique within your account and can contain alphanumeric characters and underscores.</p>",
+        "GetBrowserProfileResponse$name": "<p>The name of the browser profile.</p>"
+      }
+    },
+    "BrowserProfileStatus": {
+      "base": "<p>The status of a browser profile.</p>",
+      "refs": {
+        "BrowserProfileSummary$status": "<p>The current status of the browser profile. Possible values include READY, SAVING, DELETING, and DELETED.</p>",
+        "CreateBrowserProfileResponse$status": "<p>The current status of the browser profile.</p>",
+        "DeleteBrowserProfileResponse$status": "<p>The current status of the browser profile deletion.</p>",
+        "GetBrowserProfileResponse$status": "<p>The current status of the browser profile.</p>"
+      }
+    },
+    "BrowserProfileSummaries": {
+      "base": null,
+      "refs": {
+        "ListBrowserProfilesResponse$profileSummaries": "<p>The list of browser profile summaries.</p>"
+      }
+    },
+    "BrowserProfileSummary": {
+      "base": "<p>Contains summary information about a browser profile. A browser profile stores persistent browser data that can be reused across browser sessions.</p>",
+      "refs": {
+        "BrowserProfileSummaries$member": null
+      }
+    },
+    "BrowserSessionId": {
+      "base": null,
+      "refs": {
+        "BrowserProfileSummary$lastSavedBrowserSessionId": "<p>The identifier of the browser session from which data was last saved to this profile.</p>",
+        "GetBrowserProfileResponse$lastSavedBrowserSessionId": "<p>The identifier of the browser session from which data was last saved to this profile.</p>"
       }
     },
     "BrowserSigningConfigInput": {
@@ -553,7 +615,7 @@
       }
     },
     "BrowserSummary": {
-      "base": "<p>Contains summary information about a browser. A browser enables Amazon Bedrock Agent to interact with web content.</p>",
+      "base": "<p>Contains summary information about a browser. A browser enables Amazon Bedrock AgentCore Agent to interact with web content.</p>",
       "refs": {
         "BrowserSummaries$member": null
       }
@@ -636,8 +698,9 @@
       "refs": {
         "CreateAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
-        "CreateBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but does not return an error.</p>",
-        "CreateCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but does not return an error.</p>",
+        "CreateBrowserProfileRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request but does not return an error.</p>",
+        "CreateBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request but does not return an error.</p>",
+        "CreateCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request but does not return an error.</p>",
         "CreateEvaluatorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayTargetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -646,6 +709,7 @@
         "CreatePolicyRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure the idempotency of the request. The AWS SDK automatically generates this token, so you don't need to provide it in most cases. If you retry a request with the same client token, the service returns the same response without creating a duplicate policy.</p>",
         "DeleteAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, the service ignores the request but does not return an error.</p>",
+        "DeleteBrowserProfileRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "StartPolicyGenerationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure the idempotency of the request. The AWS SDK automatically generates this token, so you don't need to provide it in most cases. If you retry a request with the same client token, the service returns the same response without starting a duplicate generation.</p>",
@@ -745,7 +809,7 @@
       }
     },
     "CodeInterpreterSummary": {
-      "base": "<p>Contains summary information about a code interpreter. A code interpreter enables Amazon Bedrock Agent to execute code.</p>",
+      "base": "<p>Contains summary information about a code interpreter. A code interpreter enables Amazon Bedrock AgentCore Agent to execute code.</p>",
       "refs": {
         "CodeInterpreterSummaries$member": null
       }
@@ -797,6 +861,14 @@
       "refs": {}
     },
     "CreateApiKeyCredentialProviderResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateBrowserProfileRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateBrowserProfileResponse": {
       "base": null,
       "refs": {}
     },
@@ -1073,12 +1145,16 @@
         "AgentRuntime$lastUpdatedAt": "<p>The timestamp when the agent runtime was last updated.</p>",
         "AgentRuntimeEndpoint$createdAt": "<p>The timestamp when the agent runtime endpoint was created.</p>",
         "AgentRuntimeEndpoint$lastUpdatedAt": "<p>The timestamp when the agent runtime endpoint was last updated.</p>",
+        "BrowserProfileSummary$createdAt": "<p>The timestamp when the browser profile was created.</p>",
+        "BrowserProfileSummary$lastUpdatedAt": "<p>The timestamp when the browser profile was last updated.</p>",
+        "BrowserProfileSummary$lastSavedAt": "<p>The timestamp when browser session data was last saved to this profile.</p>",
         "BrowserSummary$createdAt": "<p>The timestamp when the browser was created.</p>",
         "BrowserSummary$lastUpdatedAt": "<p>The timestamp when the browser was last updated.</p>",
         "CodeInterpreterSummary$createdAt": "<p>The timestamp when the code interpreter was created.</p>",
         "CodeInterpreterSummary$lastUpdatedAt": "<p>The timestamp when the code interpreter was last updated.</p>",
         "CreateAgentRuntimeEndpointResponse$createdAt": "<p>The timestamp when the AgentCore Runtime endpoint was created.</p>",
         "CreateAgentRuntimeResponse$createdAt": "<p>The timestamp when the AgentCore Runtime was created.</p>",
+        "CreateBrowserProfileResponse$createdAt": "<p>The timestamp when the browser profile was created.</p>",
         "CreateBrowserResponse$createdAt": "<p>The timestamp when the browser was created.</p>",
         "CreateCodeInterpreterResponse$createdAt": "<p>The timestamp when the code interpreter was created.</p>",
         "CreateGatewayResponse$createdAt": "<p>The timestamp when the gateway was created.</p>",
@@ -1090,6 +1166,8 @@
         "CreatePolicyEngineResponse$updatedAt": "<p>The timestamp when the policy engine was last updated. For newly created policy engines, this matches the <code>createdAt</code> timestamp.</p>",
         "CreatePolicyResponse$createdAt": "<p>The timestamp when the policy was created. This is automatically set by the service and used for auditing and lifecycle management.</p>",
         "CreatePolicyResponse$updatedAt": "<p>The timestamp when the policy was last updated. For newly created policies, this matches the createdAt timestamp.</p>",
+        "DeleteBrowserProfileResponse$lastUpdatedAt": "<p>The timestamp when the browser profile was last updated.</p>",
+        "DeleteBrowserProfileResponse$lastSavedAt": "<p>The timestamp when browser session data was last saved to this profile before deletion.</p>",
         "DeleteBrowserResponse$lastUpdatedAt": "<p>The timestamp when the browser was last updated.</p>",
         "DeleteCodeInterpreterResponse$lastUpdatedAt": "<p>The timestamp when the code interpreter was last updated.</p>",
         "DeletePolicyEngineResponse$createdAt": "<p>The timestamp when the deleted policy engine was originally created.</p>",
@@ -1105,6 +1183,9 @@
         "GetAgentRuntimeEndpointResponse$lastUpdatedAt": "<p>The timestamp when the AgentCore Runtime endpoint was last updated.</p>",
         "GetAgentRuntimeResponse$createdAt": "<p>The timestamp when the AgentCore Runtime was created.</p>",
         "GetAgentRuntimeResponse$lastUpdatedAt": "<p>The timestamp when the AgentCore Runtime was last updated.</p>",
+        "GetBrowserProfileResponse$createdAt": "<p>The timestamp when the browser profile was created.</p>",
+        "GetBrowserProfileResponse$lastUpdatedAt": "<p>The timestamp when the browser profile was last updated.</p>",
+        "GetBrowserProfileResponse$lastSavedAt": "<p>The timestamp when browser session data was last saved to this profile.</p>",
         "GetBrowserResponse$createdAt": "<p>The timestamp when the browser was created.</p>",
         "GetBrowserResponse$lastUpdatedAt": "<p>The timestamp when the browser was last updated.</p>",
         "GetCodeInterpreterResponse$createdAt": "<p>The timestamp when the code interpreter was created.</p>",
@@ -1170,6 +1251,14 @@
       "refs": {}
     },
     "DeleteApiKeyCredentialProviderResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteBrowserProfileRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteBrowserProfileResponse": {
       "base": null,
       "refs": {}
     },
@@ -1291,9 +1380,11 @@
       "base": null,
       "refs": {
         "AgentRuntime$description": "<p>The description of the agent runtime.</p>",
+        "BrowserProfileSummary$description": "<p>The description of the browser profile.</p>",
         "BrowserSummary$description": "<p>The description of the browser.</p>",
         "CodeInterpreterSummary$description": "<p>The description of the code interpreter.</p>",
         "CreateAgentRuntimeRequest$description": "<p>The description of the AgentCore Runtime.</p>",
+        "CreateBrowserProfileRequest$description": "<p>A description of the browser profile. Use this field to describe the purpose or contents of the profile.</p>",
         "CreateBrowserRequest$description": "<p>The description of the browser.</p>",
         "CreateCodeInterpreterRequest$description": "<p>The description of the code interpreter.</p>",
         "CreateMemoryInput$description": "<p>The description of the memory.</p>",
@@ -1306,6 +1397,7 @@
         "DeletePolicyResponse$description": "<p>The human-readable description of the deleted policy.</p>",
         "EpisodicMemoryStrategyInput$description": "<p>The description of the episodic memory strategy.</p>",
         "GetAgentRuntimeResponse$description": "<p>The description of the AgentCore Runtime.</p>",
+        "GetBrowserProfileResponse$description": "<p>The description of the browser profile.</p>",
         "GetBrowserResponse$description": "<p>The description of the browser.</p>",
         "GetCodeInterpreterResponse$description": "<p>The description of the code interpreter.</p>",
         "GetPolicyEngineResponse$description": "<p>The human-readable description of the policy engine's purpose and scope. This helps administrators understand the policy engine's role in governance.</p>",
@@ -1851,6 +1943,14 @@
       "base": null,
       "refs": {}
     },
+    "GetBrowserProfileRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBrowserProfileResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetBrowserRequest": {
       "base": null,
       "refs": {}
@@ -2218,6 +2318,14 @@
       "base": null,
       "refs": {}
     },
+    "ListBrowserProfilesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBrowserProfilesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListBrowsersRequest": {
       "base": null,
       "refs": {}
@@ -2399,6 +2507,7 @@
         "ListAgentRuntimeVersionsRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListAgentRuntimesRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListApiKeyCredentialProvidersRequest$maxResults": "<p>Maximum number of results to return.</p>",
+        "ListBrowserProfilesRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListBrowsersRequest$maxResults": "<p>The maximum number of results to return in a single call. The default value is 10. The maximum value is 50.</p>",
         "ListCodeInterpretersRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListPoliciesRequest$maxResults": "<p>The maximum number of policies to return in a single response. If not specified, the default is 10 policies per page, with a maximum of 100 per page.</p>",
@@ -2728,6 +2837,8 @@
         "ListAgentRuntimeVersionsResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListAgentRuntimesRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListAgentRuntimesResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListBrowserProfilesRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListBrowserProfilesResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListBrowsersRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListBrowsersResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListCodeInterpretersRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
@@ -3792,6 +3903,7 @@
         "CreateAgentRuntimeEndpointRequest$tags": "<p>A map of tag keys and values to assign to the agent runtime endpoint. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateAgentRuntimeRequest$tags": "<p>A map of tag keys and values to assign to the agent runtime. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateApiKeyCredentialProviderRequest$tags": "<p>A map of tag keys and values to assign to the API key credential provider. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
+        "CreateBrowserProfileRequest$tags": "<p>A map of tag keys and values to assign to the browser profile. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateBrowserRequest$tags": "<p>A map of tag keys and values to assign to the browser. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateCodeInterpreterRequest$tags": "<p>A map of tag keys and values to assign to the code interpreter. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateEvaluatorRequest$tags": "<p>A map of tag keys and values to assign to an AgentCore Evaluator. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",

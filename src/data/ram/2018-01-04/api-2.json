@@ -139,7 +139,8 @@
         {"shape":"TagPolicyViolationException"},
         {"shape":"TagLimitExceededException"},
         {"shape":"ServerInternalException"},
-        {"shape":"ServiceUnavailableException"}
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "DeletePermission":{
@@ -196,7 +197,8 @@
         {"shape":"InvalidClientTokenException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ServerInternalException"},
-        {"shape":"ServiceUnavailableException"}
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "DisassociateResourceShare":{
@@ -217,7 +219,8 @@
         {"shape":"OperationNotPermittedException"},
         {"shape":"ServerInternalException"},
         {"shape":"ServiceUnavailableException"},
-        {"shape":"UnknownResourceException"}
+        {"shape":"UnknownResourceException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "DisassociateResourceSharePermission":{
@@ -494,6 +497,23 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "ListSourceAssociations":{
+      "name":"ListSourceAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/listsourceassociations"
+      },
+      "input":{"shape":"ListSourceAssociationsRequest"},
+      "output":{"shape":"ListSourceAssociationsResponse"},
+      "errors":[
+        {"shape":"UnknownResourceException"},
+        {"shape":"MalformedArnException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ServerInternalException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "PromotePermissionCreatedFromPolicy":{
       "name":"PromotePermissionCreatedFromPolicy",
       "http":{
@@ -504,6 +524,7 @@
       "output":{"shape":"PromotePermissionCreatedFromPolicyResponse"},
       "errors":[
         {"shape":"MalformedArnException"},
+        {"shape":"InvalidPolicyException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"InvalidParameterException"},
         {"shape":"MissingRequiredParameterException"},
@@ -718,6 +739,22 @@
     "AssociatedPermissionList":{
       "type":"list",
       "member":{"shape":"AssociatedPermission"}
+    },
+    "AssociatedSource":{
+      "type":"structure",
+      "members":{
+        "resourceShareArn":{"shape":"String"},
+        "sourceId":{"shape":"String"},
+        "sourceType":{"shape":"String"},
+        "status":{"shape":"String"},
+        "lastUpdatedTime":{"shape":"DateTime"},
+        "creationTime":{"shape":"DateTime"},
+        "statusMessage":{"shape":"String"}
+      }
+    },
+    "AssociatedSourceList":{
+      "type":"list",
+      "member":{"shape":"AssociatedSource"}
     },
     "Boolean":{"type":"boolean"},
     "CreatePermissionRequest":{
@@ -1228,6 +1265,24 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListSourceAssociationsRequest":{
+      "type":"structure",
+      "members":{
+        "resourceShareArns":{"shape":"ResourceShareArnList"},
+        "sourceId":{"shape":"String"},
+        "sourceType":{"shape":"String"},
+        "associationStatus":{"shape":"ResourceShareAssociationStatus"},
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListSourceAssociationsResponse":{
+      "type":"structure",
+      "members":{
+        "sourceAssociations":{"shape":"AssociatedSourceList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "MalformedArnException":{
       "type":"structure",
       "required":["message"],
@@ -1559,14 +1614,18 @@
         "ASSOCIATED",
         "FAILED",
         "DISASSOCIATING",
-        "DISASSOCIATED"
+        "DISASSOCIATED",
+        "SUSPENDED",
+        "SUSPENDING",
+        "RESTORING"
       ]
     },
     "ResourceShareAssociationType":{
       "type":"string",
       "enum":[
         "PRINCIPAL",
-        "RESOURCE"
+        "RESOURCE",
+        "SOURCE"
       ]
     },
     "ResourceShareFeatureSet":{

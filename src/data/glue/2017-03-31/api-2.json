@@ -985,6 +985,23 @@
         {"shape":"OperationTimeoutException"}
       ]
     },
+    "DeleteConnectionType":{
+      "name":"DeleteConnectionType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteConnectionTypeRequest"},
+      "output":{"shape":"DeleteConnectionTypeResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "DeleteCrawler":{
       "name":"DeleteCrawler",
       "http":{
@@ -3224,6 +3241,23 @@
         {"shape":"EntityNotFoundException"}
       ]
     },
+    "RegisterConnectionType":{
+      "name":"RegisterConnectionType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RegisterConnectionTypeRequest"},
+      "output":{"shape":"RegisterConnectionTypeResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "RegisterSchemaVersion":{
       "name":"RegisterSchemaVersion",
       "http":{
@@ -4610,6 +4644,13 @@
         "Password":{"shape":"Password"}
       }
     },
+    "BasicAuthenticationProperties":{
+      "type":"structure",
+      "members":{
+        "Username":{"shape":"ConnectorProperty"},
+        "Password":{"shape":"ConnectorProperty"}
+      }
+    },
     "BasicCatalogTarget":{
       "type":"structure",
       "required":[
@@ -5552,6 +5593,18 @@
       "type":"list",
       "member":{"shape":"NameString"}
     },
+    "ClientCredentialsProperties":{
+      "type":"structure",
+      "members":{
+        "TokenUrl":{"shape":"ConnectorProperty"},
+        "RequestMethod":{"shape":"HTTPMethod"},
+        "ContentType":{"shape":"ContentType"},
+        "ClientId":{"shape":"ConnectorProperty"},
+        "ClientSecret":{"shape":"ConnectorProperty"},
+        "Scope":{"shape":"ConnectorProperty"},
+        "TokenUrlParameters":{"shape":"ConnectorPropertyList"}
+      }
+    },
     "CloudWatchEncryption":{
       "type":"structure",
       "members":{
@@ -6207,6 +6260,13 @@
       "max":100,
       "min":0
     },
+    "ConnectionPropertiesConfiguration":{
+      "type":"structure",
+      "members":{
+        "Url":{"shape":"ConnectorProperty"},
+        "AdditionalRequestParameters":{"shape":"ConnectorPropertyList"}
+      }
+    },
     "ConnectionPropertyKey":{
       "type":"string",
       "enum":[
@@ -6417,6 +6477,32 @@
         "Connections":{"shape":"ConnectionStringList"}
       }
     },
+    "ConnectorAuthenticationConfiguration":{
+      "type":"structure",
+      "required":["AuthenticationTypes"],
+      "members":{
+        "AuthenticationTypes":{"shape":"AuthenticationTypes"},
+        "OAuth2Properties":{"shape":"ConnectorOAuth2Properties"},
+        "BasicAuthenticationProperties":{"shape":"BasicAuthenticationProperties"},
+        "CustomAuthenticationProperties":{"shape":"CustomAuthenticationProperties"}
+      }
+    },
+    "ConnectorAuthorizationCodeProperties":{
+      "type":"structure",
+      "members":{
+        "AuthorizationCodeUrl":{"shape":"ConnectorProperty"},
+        "AuthorizationCode":{"shape":"ConnectorProperty"},
+        "RedirectUri":{"shape":"ConnectorProperty"},
+        "TokenUrl":{"shape":"ConnectorProperty"},
+        "RequestMethod":{"shape":"HTTPMethod"},
+        "ContentType":{"shape":"ContentType"},
+        "ClientId":{"shape":"ConnectorProperty"},
+        "ClientSecret":{"shape":"ConnectorProperty"},
+        "Scope":{"shape":"ConnectorProperty"},
+        "Prompt":{"shape":"ConnectorProperty"},
+        "TokenUrlParameters":{"shape":"ConnectorPropertyList"}
+      }
+    },
     "ConnectorDataSource":{
       "type":"structure",
       "required":[
@@ -6445,10 +6531,62 @@
         "Inputs":{"shape":"OneInput"}
       }
     },
+    "ConnectorOAuth2GrantType":{
+      "type":"string",
+      "enum":[
+        "CLIENT_CREDENTIALS",
+        "JWT_BEARER",
+        "AUTHORIZATION_CODE"
+      ]
+    },
+    "ConnectorOAuth2Properties":{
+      "type":"structure",
+      "required":["OAuth2GrantType"],
+      "members":{
+        "OAuth2GrantType":{"shape":"ConnectorOAuth2GrantType"},
+        "ClientCredentialsProperties":{"shape":"ClientCredentialsProperties"},
+        "JWTBearerProperties":{"shape":"JWTBearerProperties"},
+        "AuthorizationCodeProperties":{"shape":"ConnectorAuthorizationCodeProperties"}
+      }
+    },
     "ConnectorOptions":{
       "type":"map",
       "key":{"shape":"GenericString"},
       "value":{"shape":"GenericString"}
+    },
+    "ConnectorProperty":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Required",
+        "PropertyType"
+      ],
+      "members":{
+        "Name":{"shape":"PropertyName"},
+        "KeyOverride":{"shape":"ConnectorPropertyKey"},
+        "Required":{"shape":"Bool"},
+        "DefaultValue":{"shape":"String"},
+        "AllowedValues":{"shape":"ListOfString"},
+        "PropertyLocation":{"shape":"PropertyLocation"},
+        "PropertyType":{"shape":"PropertyType"}
+      }
+    },
+    "ConnectorPropertyKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "ConnectorPropertyList":{
+      "type":"list",
+      "member":{"shape":"ConnectorProperty"}
+    },
+    "ContentType":{
+      "type":"string",
+      "enum":[
+        "APPLICATION_JSON",
+        "URL_ENCODED"
+      ]
     },
     "ContextKey":{
       "type":"string",
@@ -7441,6 +7579,21 @@
         "None"
       ]
     },
+    "CursorConfiguration":{
+      "type":"structure",
+      "required":["NextPage"],
+      "members":{
+        "NextPage":{"shape":"ExtractedParameter"},
+        "LimitParameter":{"shape":"ExtractedParameter"}
+      }
+    },
+    "CustomAuthenticationProperties":{
+      "type":"structure",
+      "required":["AuthenticationParameters"],
+      "members":{
+        "AuthenticationParameters":{"shape":"ConnectorPropertyList"}
+      }
+    },
     "CustomCode":{
       "type":"structure",
       "required":[
@@ -8053,6 +8206,12 @@
         "Scale":{"shape":"Integer"}
       }
     },
+    "DefaultValue":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":".*[^<>&'\"].*"
+    },
     "DeleteBehavior":{
       "type":"string",
       "enum":[
@@ -8164,6 +8323,17 @@
       }
     },
     "DeleteConnectionResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteConnectionTypeRequest":{
+      "type":"structure",
+      "required":["ConnectionType"],
+      "members":{
+        "ConnectionType":{"shape":"NameString"}
+      }
+    },
+    "DeleteConnectionTypeResponse":{
       "type":"structure",
       "members":{}
     },
@@ -8583,7 +8753,8 @@
         "PhysicalConnectionRequirements":{"shape":"PropertiesMap"},
         "AthenaConnectionProperties":{"shape":"PropertiesMap"},
         "PythonConnectionProperties":{"shape":"PropertiesMap"},
-        "SparkConnectionProperties":{"shape":"PropertiesMap"}
+        "SparkConnectionProperties":{"shape":"PropertiesMap"},
+        "RestConfiguration":{"shape":"RestConfiguration"}
       }
     },
     "DescribeEntityRequest":{
@@ -8960,6 +9131,24 @@
         "CustomProperties":{"shape":"CustomProperties"}
       }
     },
+    "EntityConfiguration":{
+      "type":"structure",
+      "members":{
+        "SourceConfiguration":{"shape":"SourceConfiguration"},
+        "Schema":{"shape":"FieldDefinitionMap"}
+      }
+    },
+    "EntityConfigurationMap":{
+      "type":"map",
+      "key":{"shape":"EntityConfigurationMapKeyString"},
+      "value":{"shape":"EntityConfiguration"}
+    },
+    "EntityConfigurationMapKeyString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_ -]+"
+    },
     "EntityDescription":{"type":"string"},
     "EntityFieldName":{"type":"string"},
     "EntityLabel":{"type":"string"},
@@ -9103,6 +9292,15 @@
       "type":"string",
       "pattern":"[\\s\\S]*"
     },
+    "ExtractedParameter":{
+      "type":"structure",
+      "members":{
+        "Key":{"shape":"ConnectorPropertyKey"},
+        "DefaultValue":{"shape":"DefaultValue"},
+        "PropertyLocation":{"shape":"PropertyLocation"},
+        "Value":{"shape":"ResponseExtractionMapping"}
+      }
+    },
     "FederatedCatalog":{
       "type":"structure",
       "members":{
@@ -9213,8 +9411,30 @@
         "BYTE",
         "SHORT",
         "DOUBLE",
-        "STRUCT"
+        "STRUCT",
+        "BINARY",
+        "UNION"
       ]
+    },
+    "FieldDefinition":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "FieldDataType"
+      ],
+      "members":{
+        "Name":{"shape":"String"},
+        "FieldDataType":{"shape":"FieldDataType"}
+      }
+    },
+    "FieldDefinitionMap":{
+      "type":"map",
+      "key":{"shape":"FieldDefinitionMapKeyString"},
+      "value":{"shape":"FieldDefinition"}
+    },
+    "FieldDefinitionMapKeyString":{
+      "type":"string",
+      "min":1
     },
     "FieldDescription":{"type":"string"},
     "FieldFilterOperator":{
@@ -11060,6 +11280,13 @@
       "type":"list",
       "member":{"shape":"GroupFilters"}
     },
+    "HTTPMethod":{
+      "type":"string",
+      "enum":[
+        "GET",
+        "POST"
+      ]
+    },
     "HashString":{
       "type":"string",
       "max":255,
@@ -11635,6 +11862,10 @@
       "member":{"shape":"Tag"}
     },
     "IntegrationTimestamp":{"type":"timestamp"},
+    "IntegrationType":{
+      "type":"string",
+      "enum":["REST"]
+    },
     "IntegrationsList":{
       "type":"list",
       "member":{"shape":"Integration"}
@@ -11796,6 +12027,16 @@
       "type":"map",
       "key":{"shape":"JDBCDataType"},
       "value":{"shape":"GlueRecordType"}
+    },
+    "JWTBearerProperties":{
+      "type":"structure",
+      "members":{
+        "TokenUrl":{"shape":"ConnectorProperty"},
+        "RequestMethod":{"shape":"HTTPMethod"},
+        "ContentType":{"shape":"ContentType"},
+        "JwtToken":{"shape":"ConnectorProperty"},
+        "TokenUrlParameters":{"shape":"ConnectorPropertyList"}
+      }
     },
     "JdbcMetadataEntry":{
       "type":"string",
@@ -12059,6 +12300,12 @@
       }
     },
     "JsonPath":{"type":"string"},
+    "JsonPathString":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"\\$(\\.[a-zA-Z0-9_.@\\[\\]\\(\\)-]+)*"
+    },
     "JsonValue":{"type":"string"},
     "JwtToken":{
       "type":"string",
@@ -13274,6 +13521,17 @@
         "OAuth2Credentials":{"shape":"OAuth2Credentials"}
       }
     },
+    "OffsetConfiguration":{
+      "type":"structure",
+      "required":[
+        "OffsetParameter",
+        "LimitParameter"
+      ],
+      "members":{
+        "OffsetParameter":{"shape":"ExtractedParameter"},
+        "LimitParameter":{"shape":"ExtractedParameter"}
+      }
+    },
     "OneInput":{
       "type":"list",
       "member":{"shape":"NodeId"},
@@ -13498,6 +13756,13 @@
       "max":1000,
       "min":1
     },
+    "PaginationConfiguration":{
+      "type":"structure",
+      "members":{
+        "CursorConfiguration":{"shape":"CursorConfiguration"},
+        "OffsetConfiguration":{"shape":"OffsetConfiguration"}
+      }
+    },
     "PaginationToken":{"type":"string"},
     "ParamType":{
       "type":"string",
@@ -13653,6 +13918,12 @@
     "PathList":{
       "type":"list",
       "member":{"shape":"Path"}
+    },
+    "PathString":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"/[a-zA-Z0-9._~:/?#\\[\\]@!$&'()*+,;={}-]*"
     },
     "Permission":{
       "type":"string",
@@ -13846,7 +14117,9 @@
         "DefaultValue":{"shape":"String"},
         "PropertyTypes":{"shape":"PropertyTypes"},
         "AllowedValues":{"shape":"AllowedValues"},
-        "DataOperationScopes":{"shape":"DataOperations"}
+        "DataOperationScopes":{"shape":"DataOperations"},
+        "KeyOverride":{"shape":"String"},
+        "PropertyLocation":{"shape":"PropertyLocation"}
       }
     },
     "PropertyDescriptionString":{
@@ -13858,6 +14131,15 @@
       "type":"string",
       "max":128,
       "min":1
+    },
+    "PropertyLocation":{
+      "type":"string",
+      "enum":[
+        "HEADER",
+        "BODY",
+        "QUERY_PARAM",
+        "PATH"
+      ]
     },
     "PropertyMap":{
       "type":"map",
@@ -14168,6 +14450,31 @@
       "pattern":"^[\\x20-\\x7E]*$",
       "sensitive":true
     },
+    "RegisterConnectionTypeRequest":{
+      "type":"structure",
+      "required":[
+        "ConnectionType",
+        "IntegrationType",
+        "ConnectionProperties",
+        "ConnectorAuthenticationConfiguration",
+        "RestConfiguration"
+      ],
+      "members":{
+        "ConnectionType":{"shape":"NameString"},
+        "IntegrationType":{"shape":"IntegrationType"},
+        "Description":{"shape":"Description"},
+        "ConnectionProperties":{"shape":"ConnectionPropertiesConfiguration"},
+        "ConnectorAuthenticationConfiguration":{"shape":"ConnectorAuthenticationConfiguration"},
+        "RestConfiguration":{"shape":"RestConfiguration"},
+        "Tags":{"shape":"TagsMap"}
+      }
+    },
+    "RegisterConnectionTypeResponse":{
+      "type":"structure",
+      "members":{
+        "ConnectionTypeArn":{"shape":"GlueResourceArn"}
+      }
+    },
     "RegisterSchemaVersionInput":{
       "type":"structure",
       "required":[
@@ -14349,6 +14656,29 @@
       "member":{"shape":"ResourceUri"},
       "max":1000,
       "min":0
+    },
+    "ResponseConfiguration":{
+      "type":"structure",
+      "required":["ResultPath"],
+      "members":{
+        "ResultPath":{"shape":"JsonPathString"},
+        "ErrorPath":{"shape":"JsonPathString"}
+      }
+    },
+    "ResponseExtractionMapping":{
+      "type":"structure",
+      "members":{
+        "ContentPath":{"shape":"JsonPathString"},
+        "HeaderKey":{"shape":"ConnectorPropertyKey"}
+      }
+    },
+    "RestConfiguration":{
+      "type":"structure",
+      "members":{
+        "GlobalSourceConfiguration":{"shape":"SourceConfiguration"},
+        "ValidationEndpointConfiguration":{"shape":"SourceConfiguration"},
+        "EntityConfigurations":{"shape":"EntityConfigurationMap"}
+      }
     },
     "ResumeWorkflowRunRequest":{
       "type":"structure",
@@ -15330,6 +15660,16 @@
         "DESCENDING",
         "ASCENDING"
       ]
+    },
+    "SourceConfiguration":{
+      "type":"structure",
+      "members":{
+        "RequestMethod":{"shape":"HTTPMethod"},
+        "RequestPath":{"shape":"PathString"},
+        "RequestParameters":{"shape":"ConnectorPropertyList"},
+        "ResponseConfiguration":{"shape":"ResponseConfiguration"},
+        "PaginationConfiguration":{"shape":"PaginationConfiguration"}
+      }
     },
     "SourceControlAuthStrategy":{
       "type":"string",

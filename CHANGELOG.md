@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Transfer` - Adds support for the customer to send custom HTTP headers and configure an AS2 Connector to receive Asynchronous MDNs from their trading partner
+* `Aws\RAM` - Added ListSourceAssociations API. Allows RAM resource share owners to list source associations that determine which sources can access resources through service principal associations. Supports filtering by resource share ARN, source ID, source type, or status, with pagination.
+* `Aws\BedrockAgentCoreControl` - Support Browser profile persistence (cookies and local storage) across sessions for AgentCore Browser.
+* `Aws\Athena` - Reduces the minimum TargetDpus to create or update capacity reservations from 24 to 4.
+* `Aws\BedrockAgentCore` - Support Browser profile persistence (cookies and local storage) across sessions for AgentCore Browser.
+* `Aws\WorkSpaces` - Added support for 12 new graphics-optimized compute types - Graphics.g6 (xlarge, 2xlarge, 4xlarge, 8xlarge, 16xlarge), Graphics.gr6 (4xlarge, 8xlarge), Graphics.g6f (large, xlarge, 2xlarge, 4xlarge), and Graphics.gr6f (4xlarge).
+* `Aws\Glue` - This release adds the capability to easily create custom AWS Glue connections to data sources with REST APIs.
+* `Aws\NeptuneGraph` - Minor neptune-graph documentation changes
+* `Aws\MediaLive` - Outputs using the AV1 codec in CMAF Ingest output groups in MediaLive now have the ability to specify a target bit depth of 8 or 10.
+* `Aws\ARCRegionSwitch` - Updates documentation for ARC Region switch and provides stronger validation for Amazon Aurora Global Database execution block parameters.
+
 ## 3.369.27 - 2026-02-04
 
 * `Aws\Redshift` - We have increased the maximum duration for a deferred maintenance window from 45 days to 60 days for Amazon Redshift provisioned clusters. This enhancement provides customers with greater flexibility in scheduling patching and maintenance activities while also maintaining security compliance.

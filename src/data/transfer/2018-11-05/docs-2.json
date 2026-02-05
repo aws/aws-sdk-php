@@ -141,6 +141,18 @@
         "UntagResourceRequest$Arn": "<p>The value of the resource that will have the tag removed. An Amazon Resource Name (ARN) is an identifier for a specific Amazon Web Services resource, such as a server, user, or role.</p>"
       }
     },
+    "As2AsyncMdnConnectorConfig": {
+      "base": "<p>Contains the configuration details for asynchronous Message Disposition Notification (MDN) responses in AS2 connectors. This configuration specifies where asynchronous MDN responses should be sent and which servers should handle them.</p>",
+      "refs": {
+        "As2ConnectorConfig$AsyncMdnConfig": "<p>Configuration settings for asynchronous Message Disposition Notification (MDN) responses. This allows you to configure where asynchronous MDN responses should be sent and which servers should handle them.</p>"
+      }
+    },
+    "As2AsyncMdnServerIds": {
+      "base": null,
+      "refs": {
+        "As2AsyncMdnConnectorConfig$ServerIds": "<p>A list of server identifiers that can handle asynchronous MDN responses. You can specify between 1 and 10 server IDs.</p>"
+      }
+    },
     "As2ConnectorConfig": {
       "base": "<p>Contains the details for an AS2 connector object. The connector object is used for AS2 outbound processes, to connect the Transfer Family customer with the trading partner.</p>",
       "refs": {
@@ -422,6 +434,30 @@
         "CreateAgreementRequest$CustomDirectories": "<p>A <code>CustomDirectoriesType</code> structure. This structure specifies custom directories for storing various AS2 message files. You can specify directories for the following types of files.</p> <ul> <li> <p>Failed files</p> </li> <li> <p>MDN files</p> </li> <li> <p>Payload files</p> </li> <li> <p>Status files</p> </li> <li> <p>Temporary files</p> </li> </ul>",
         "DescribedAgreement$CustomDirectories": "<p>A <code>CustomDirectoriesType</code> structure. This structure specifies custom directories for storing various AS2 message files. You can specify directories for the following types of files.</p> <ul> <li> <p>Failed files</p> </li> <li> <p>MDN files</p> </li> <li> <p>Payload files</p> </li> <li> <p>Status files</p> </li> <li> <p>Temporary files</p> </li> </ul>",
         "UpdateAgreementRequest$CustomDirectories": "<p>A <code>CustomDirectoriesType</code> structure. This structure specifies custom directories for storing various AS2 message files. You can specify directories for the following types of files.</p> <ul> <li> <p>Failed files</p> </li> <li> <p>MDN files</p> </li> <li> <p>Payload files</p> </li> <li> <p>Status files</p> </li> <li> <p>Temporary files</p> </li> </ul>"
+      }
+    },
+    "CustomHttpHeader": {
+      "base": "<p>Represents a custom HTTP header that can be included in AS2 messages. Each header consists of a key-value pair.</p>",
+      "refs": {
+        "CustomHttpHeaders$member": null
+      }
+    },
+    "CustomHttpHeaderKeyType": {
+      "base": null,
+      "refs": {
+        "CustomHttpHeader$Key": "<p>The name of the custom HTTP header.</p>"
+      }
+    },
+    "CustomHttpHeaderValueType": {
+      "base": null,
+      "refs": {
+        "CustomHttpHeader$Value": "<p>The value of the custom HTTP header.</p>"
+      }
+    },
+    "CustomHttpHeaders": {
+      "base": null,
+      "refs": {
+        "StartFileTransferRequest$CustomHttpHeaders": "<p>An array of key-value pairs that represent custom HTTP headers to include in AS2 messages. These headers are added to the AS2 message when sending files to your trading partner.</p>"
       }
     },
     "CustomStepDetails": {
@@ -1886,6 +1922,7 @@
     "ServerId": {
       "base": null,
       "refs": {
+        "As2AsyncMdnServerIds$member": null,
         "CreateAccessRequest$ServerId": "<p>A system-assigned unique identifier for a server instance. This is the specific server that you added your user to.</p>",
         "CreateAccessResponse$ServerId": "<p>The identifier of the server that the user is attached to.</p>",
         "CreateAgreementRequest$ServerId": "<p>A system-assigned unique identifier for a server instance. This is the specific server that the agreement uses.</p>",
@@ -2390,6 +2427,7 @@
     "Url": {
       "base": null,
       "refs": {
+        "As2AsyncMdnConnectorConfig$Url": "<p>The URL endpoint where asynchronous MDN responses should be sent.</p>",
         "CreateConnectorRequest$Url": "<p>The URL of the partner's AS2 or SFTP endpoint.</p> <p>When creating AS2 connectors or service-managed SFTP connectors (connectors without egress configuration), you must provide a URL to specify the remote server endpoint. For VPC Lattice type connectors, the URL must be null.</p>",
         "DescribedConnector$Url": "<p>The URL of the partner's AS2 or SFTP endpoint.</p> <p>When creating AS2 connectors or service-managed SFTP connectors (connectors without egress configuration), you must provide a URL to specify the remote server endpoint. For VPC Lattice type connectors, the URL must be null.</p>",
         "IdentityProviderDetails$Url": "<p>Provides the location of the service endpoint used to authenticate users.</p>",

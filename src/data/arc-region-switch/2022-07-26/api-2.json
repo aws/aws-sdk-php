@@ -510,7 +510,10 @@
       "key":{"shape":"String"},
       "value":{"shape":"AssociatedAlarm"}
     },
-    "AuroraClusterArn":{"type":"string"},
+    "AuroraClusterArn":{
+      "type":"string",
+      "pattern":"arn:aws[a-zA-Z-]*:rds:[a-z0-9-]+:\\d{12}:cluster:[A-Za-z][0-9A-Za-z-:._]*"
+    },
     "AuroraClusterArns":{
       "type":"list",
       "member":{"shape":"AuroraClusterArn"}
@@ -1100,7 +1103,12 @@
       "type":"string",
       "enum":["failover"]
     },
-    "GlobalClusterIdentifier":{"type":"string"},
+    "GlobalClusterIdentifier":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z][0-9A-Za-z-:._]*"
+    },
     "IamRoleArn":{
       "type":"string",
       "pattern":"arn:aws[a-zA-Z0-9-]*:iam::[0-9]{12}:role/.+"

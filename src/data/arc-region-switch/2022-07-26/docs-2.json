@@ -64,7 +64,7 @@
     "AlarmCondition": {
       "base": null,
       "refs": {
-        "TriggerCondition$condition": "<p>The condition that must be met. Valid values include ALARM and OK.</p>"
+        "TriggerCondition$condition": "<p>The condition that must be met. Valid values include <code>green</code> and <code>red</code>.</p>"
       }
     },
     "AlarmType": {
@@ -387,10 +387,10 @@
     "ExecutionAction": {
       "base": null,
       "refs": {
-        "AbbreviatedExecution$executionAction": "<p>The plan execution action. Valid values are <code>Activate</code>, to activate an Amazon Web Services Region, or <code>Deactivate</code>, to deactivate a Region.</p>",
-        "GetPlanExecutionResponse$executionAction": "<p>The plan execution action. Valid values are <code>Activate</code>, to activate an Amazon Web Services Region, or <code>Deactivate</code>, to deactivate a Region.</p>",
+        "AbbreviatedExecution$executionAction": "<p>The plan execution action. Valid values are <code>activate</code>, to activate an Amazon Web Services Region, or <code>deactivate</code>, to deactivate a Region.</p>",
+        "GetPlanExecutionResponse$executionAction": "<p>The plan execution action. Valid values are <code>activate</code>, to activate an Amazon Web Services Region, or <code>deactivate</code>, to deactivate a Region.</p>",
         "MinimalWorkflow$action": "<p>The action for a minimal workflow, which can be Activate or Deactivate.</p>",
-        "StartPlanExecutionRequest$action": "<p>The action to perform. Valid values are ACTIVATE (to shift traffic to the target Region) or DEACTIVATE (to shift traffic away from the target Region).</p>"
+        "StartPlanExecutionRequest$action": "<p>The action to perform. Valid values are <code>activate</code> (to shift traffic to the target Region) or <code>deactivate</code> (to shift traffic away from the target Region).</p>"
       }
     },
     "ExecutionApprovalConfiguration": {
@@ -464,9 +464,9 @@
     "ExecutionMode": {
       "base": null,
       "refs": {
-        "AbbreviatedExecution$mode": "<p>The plan execution mode. Valid values are <code>Practice</code>, for testing without making actual changes, or <code>Recovery</code>, for actual traffic shifting and application recovery.</p>",
-        "GetPlanExecutionResponse$mode": "<p>The plan execution mode. Valid values are <code>Practice</code>, for testing without making actual changes, or <code>Recovery</code>, for actual traffic shifting and application recovery.</p>",
-        "StartPlanExecutionRequest$mode": "<p>The plan execution mode. Valid values are <code>Practice</code>, for testing without making actual changes, or <code>Recovery</code>, for actual traffic shifting and application recovery.</p>",
+        "AbbreviatedExecution$mode": "<p>The plan execution mode. Valid values are <code>graceful</code>, for graceful executions, or <code>ungraceful</code>, for ungraceful executions.</p>",
+        "GetPlanExecutionResponse$mode": "<p>The plan execution mode. Valid values are <code>graceful</code>, for graceful executions, or <code>ungraceful</code>, for ungraceful executions.</p>",
+        "StartPlanExecutionRequest$mode": "<p>The plan execution mode. Valid values are <code>graceful</code>, for starting the execution in graceful mode, or <code>ungraceful</code>, for starting the execution in ungraceful mode.</p>",
         "StepState$stepMode": "<p>The mode for a step execution. The mode can be Graceful or Ungraceful.</p>"
       }
     },
@@ -1357,8 +1357,8 @@
     "WorkflowTargetAction": {
       "base": null,
       "refs": {
-        "Trigger$action": "<p>The action to perform when the trigger fires. Valid values include ACTIVATE and DEACTIVATE.</p>",
-        "Workflow$workflowTargetAction": "<p>The action that the workflow performs. Valid values include ACTIVATE and DEACTIVATE.</p>"
+        "Trigger$action": "<p>The action to perform when the trigger fires. Valid values include <code>activate</code> and <code>deactivate</code>.</p>",
+        "Workflow$workflowTargetAction": "<p>The action that the workflow performs. Valid values include <code>activate</code> and <code>deactivate</code>.</p>"
       }
     }
   }
