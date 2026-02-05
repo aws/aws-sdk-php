@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.28 - 2026-02-05
 
 * `Aws\Transfer` - Adds support for the customer to send custom HTTP headers and configure an AS2 Connector to receive Asynchronous MDNs from their trading partner
 * `Aws\RAM` - Added ListSourceAssociations API. Allows RAM resource share owners to list source associations that determine which sources can access resources through service principal associations. Supports filtering by resource share ARN, source ID, source type, or status, with pagination.
