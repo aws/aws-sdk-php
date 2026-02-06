@@ -4,16 +4,17 @@ namespace Aws\Test\Multipart;
 use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\Exception\MultipartUploadException;
+use Aws\Multipart\AbstractUploader;
 use Aws\Multipart\UploadState;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Multipart\AbstractUploader
- */
+#[CoversClass(AbstractUploader::class)]
 class AbstractUploaderTest extends TestCase
 {
     use UsesServiceTrait;
@@ -187,13 +188,7 @@ class AbstractUploaderTest extends TestCase
         $this->assertInstanceOf('InvalidArgumentException', $exception);
     }
 
-    /**
-     * @param bool        $seekable
-     * @param UploadState $state
-     * @param array       $expectedBodies
-     *
-     * @dataProvider getPartGeneratorTestCases
-     */
+    #[DataProvider('getPartGeneratorTestCases')]
     public function testCommandGeneratorYieldsExpectedUploadCommands(
         $seekable,
         UploadState $state,
@@ -222,7 +217,7 @@ class AbstractUploaderTest extends TestCase
         $this->assertEquals($expectedBodies, $actualBodies);
     }
 
-    public function getPartGeneratorTestCases()
+    public static function getPartGeneratorTestCases(): array
     {
         $expected = [
             1 => 'AA',

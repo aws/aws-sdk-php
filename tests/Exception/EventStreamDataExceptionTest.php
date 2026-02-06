@@ -4,10 +4,9 @@ namespace Aws\Test\Exception;
 
 use Aws\Exception\EventStreamDataException;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Exception\EventStreamDataException
- */
+#[CoversClass(EventStreamDataException::class)]
 class EventStreamDataExceptionTest extends TestCase
 {
     public function testAccessors()

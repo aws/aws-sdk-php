@@ -29,11 +29,10 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Aws\Exception\UnresolvedEndpointException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\S3\S3Client
- * @covers Aws\S3\S3ClientTrait
- */
+#[CoversClass(S3Client::class)]
 class S3ClientTest extends TestCase
 {
     use UsesServiceTrait;
@@ -53,7 +52,7 @@ class S3ClientTest extends TestCase
         );
     }
 
-    public function bucketNameProvider()
+    public static function bucketNameProvider()
     {
         return [
             ['.bucket', false],
@@ -81,8 +80,9 @@ class S3ClientTest extends TestCase
     }
 
     /**
-     * @dataProvider bucketNameProvider
-     */
+
+ */
+    #[DataProvider('bucketNameProvider')]
     public function testValidatesDnsBucketNames($bucket, $valid)
     {
         $this->assertEquals($valid, S3Client::isBucketDnsCompatible($bucket));
@@ -261,42 +261,42 @@ class S3ClientTest extends TestCase
         stream_wrapper_unregister('s3');
     }
 
-    public function doesExistProvider()
+    public static function doesExistProvider(): array
     {
         $redirectException = new PermanentRedirectException(
             '',
             new Command('mockCommand'),
             ['response' => new Response(301)]
         );
-        $deleteMarkerMock = $this->getS3ErrorMock('Foo', 404, true);
+        $deleteMarkerMock = self::getS3ErrorMock('Foo', 404, true);
 
         return [
             ['foo', null, true, []],
             ['foo', 'bar', true, []],
-            ['foo', null, true, $this->getS3ErrorMock('AccessDenied', 403)],
-            ['foo', 'bar', true, $this->getS3ErrorMock('AccessDenied', 403)],
-            ['foo', null, false, $this->getS3ErrorMock('Foo', 401)],
-            ['foo', 'bar', false, $this->getS3ErrorMock('Foo', 401)],
-            ['foo', null, -1, $this->getS3ErrorMock('Foo', 500)],
-            ['foo', 'bar', -1, $this->getS3ErrorMock('Foo', 500)],
+            ['foo', null, true, self::getS3ErrorMock('AccessDenied', 403)],
+            ['foo', 'bar', true, self::getS3ErrorMock('AccessDenied', 403)],
+            ['foo', null, false, self::getS3ErrorMock('Foo', 401)],
+            ['foo', 'bar', false, self::getS3ErrorMock('Foo', 401)],
+            ['foo', null, -1, self::getS3ErrorMock('Foo', 500)],
+            ['foo', 'bar', -1, self::getS3ErrorMock('Foo', 500)],
             ['foo', null, true, [], true],
             ['foo', 'bar', true, [] , true],
-            ['foo', null, false, $this->getS3ErrorMock('Foo', 404), true],
-            ['foo', 'bar', false, $this->getS3ErrorMock('Foo', 404), true],
-            ['foo', null, -1, $this->getS3ErrorMock('Forbidden', 403), true],
-            ['foo', 'bar', -1, $this->getS3ErrorMock('Forbidden', 403), true],
-            ['foo', null, true, $this->getS3ErrorMock('Forbidden', 403), true, true],
+            ['foo', null, false, self::getS3ErrorMock('Foo', 404), true],
+            ['foo', 'bar', false, self::getS3ErrorMock('Foo', 404), true],
+            ['foo', null, -1, self::getS3ErrorMock('Forbidden', 403), true],
+            ['foo', 'bar', -1, self::getS3ErrorMock('Forbidden', 403), true],
+            ['foo', null, true, self::getS3ErrorMock('Forbidden', 403), true, true],
             ['foo', 'bar', true, $deleteMarkerMock, true, false, true],
             ['foo', 'bar', false, $deleteMarkerMock, true, false, false],
             ['foo', null, true, $redirectException, true],
         ];
     }
 
-    private function getS3ErrorMock(
+    private static function getS3ErrorMock(
         $errCode,
         $statusCode,
         $deleteMarker = false
-    )
+    ): S3Exception
     {
         $response = new Response($statusCode);
         $deleteMarker && $response = $response->withHeader(
@@ -308,12 +308,14 @@ class S3ClientTest extends TestCase
             'code' => $errCode,
             'response' => $response,
         ];
+        
         return new S3Exception('', new Command('mockCommand'), $context);
     }
 
     /**
-     * @dataProvider doesExistProvider
-     */
+
+ */
+    #[DataProvider('doesExistProvider')]
     public function testsIfExists(
         $bucket,
         $key,
@@ -508,8 +510,9 @@ class S3ClientTest extends TestCase
     }
 
     /**
-     * @dataProvider getTestCasesForLocationConstraints
-     */
+
+ */
+    #[DataProvider('getTestCasesForLocationConstraints')]
     public function testAddsLocationConstraintAutomatically($region, $target, $command, $contains)
     {
         $client = $this->getTestClient('S3', ['region' => $region]);
@@ -541,7 +544,7 @@ class S3ClientTest extends TestCase
         }
     }
 
-    public function getTestCasesForLocationConstraints()
+    public static function getTestCasesForLocationConstraints()
     {
         return [
             ['us-west-2', 'us-west-2', 'CreateBucket', true],
@@ -555,8 +558,9 @@ class S3ClientTest extends TestCase
     /**
      * @param string $bucket
      *
-     * @dataProvider directoryBucketLocationConstraintProvider
-     */
+
+ */
+    #[DataProvider('directoryBucketLocationConstraintProvider')]
     public function testDoesNotAddLocationConstraintForDirectoryBuckets(
         string $bucket
     ): void
@@ -568,7 +572,7 @@ class S3ClientTest extends TestCase
         $this->assertStringNotContainsString('LocationConstraint', $body);
     }
 
-    public function directoryBucketLocationConstraintProvider(): array
+    public static function directoryBucketLocationConstraintProvider(): array
     {
         return [
             ['bucket-base-name--usw2-az1--x-s3'],
@@ -620,10 +624,11 @@ class S3ClientTest extends TestCase
     }
 
     /**
-     * @dataProvider clientRetrySettingsProvider
      *
      * @param array $retrySettings
-     */
+
+ */
+    #[DataProvider('clientRetrySettingsProvider')]
     public function testRetriesConnectionErrors($retrySettings)
     {
         $retries = $retrySettings['max_attempts'] - 1;
@@ -653,7 +658,7 @@ class S3ClientTest extends TestCase
         $this->assertSame(0, $retries);
     }
 
-    public function clientRetrySettingsProvider()
+    public static function clientRetrySettingsProvider(): array
     {
         return [
             [
@@ -678,12 +683,13 @@ class S3ClientTest extends TestCase
     }
 
     /**
-     * @dataProvider s3OperationsProvider
      *
      * @param string   $operation
      * @param array    $payload
      * @param array    $retryOptions
-     */
+
+ */
+    #[DataProvider('s3OperationsProvider')]
     public function testRetries200Errors(
         string $operation,
         array $payload,
@@ -718,9 +724,12 @@ class S3ClientTest extends TestCase
      *
      * @return \Generator
      */
-    public function s3OperationsProvider(): \Generator
+    public static function s3OperationsProvider(): \Generator
     {
-        $operations = $this->loadOperations();
+        $jsonContent = file_get_contents(
+            self::OPERATIONS_WITH_PARAMS_LOCATION
+        );
+        $operations = json_decode($jsonContent, true);
         $retryModes = [
             'legacy',
             'standard',
@@ -739,18 +748,6 @@ class S3ClientTest extends TestCase
                 ];
             }
         }
-    }
-
-    /**
-     * Load a list of s3 operations along with the required params populated.
-     *
-     * @return array
-     */
-    private function loadOperations(): array
-    {
-        $jsonContent = file_get_contents(self::OPERATIONS_WITH_PARAMS_LOCATION);
-
-        return json_decode($jsonContent, true);
     }
 
     private function getErrorXml()
@@ -791,10 +788,11 @@ EOXML;
     }
 
     /**
-     * @dataProvider clientRetrySettingsProvider
      *
      * @param array $retrySettings
-     */
+
+ */
+    #[DataProvider('clientRetrySettingsProvider')]
     public function testClientSocketTimeoutErrorsAreNotRetriedIndefinitely($retrySettings)
     {
         $this->expectExceptionMessageMatches("/Your socket connection to the server/");
@@ -835,16 +833,19 @@ EOXML;
     }
 
     /**
-     * @dataProvider clientRetrySettingsProvider
      *
      * @param array $retrySettings
-     */
-    public function testNetworkingErrorsAreRetriedOnIdempotentCommands($retrySettings)
+ */
+    #[DataProvider('clientRetrySettingsProvider')]
+    public function testNetworkingErrorsAreRetriedOnIdempotentCommands(
+        array $retrySettings
+    )
     {
         $networkingError = $this->getMockBuilder(RequestException::class)
             ->disableOriginalConstructor()
-            ->setMethods([])
+            ->onlyMethods(['getHandlerContext'])
             ->getMock();
+        $networkingError->method('getHandlerContext')->willReturn([]);
 
         $retries = $retrySettings['max_attempts'] - 1;
         $client = new S3Client([
@@ -873,18 +874,20 @@ EOXML;
     }
 
     /**
-     * @dataProvider clientRetrySettingsProvider
      *
      * @param array $retrySettings
-     */
+
+ */
+    #[DataProvider('clientRetrySettingsProvider')]
     public function testNetworkingErrorsAreNotRetriedOnNonIdempotentCommands($retrySettings)
     {
         $this->expectExceptionMessageMatches("/CompleteMultipartUpload/");
         $this->expectException(\Aws\S3\Exception\S3Exception::class);
         $networkingError = $this->getMockBuilder(RequestException::class)
             ->disableOriginalConstructor()
-            ->setMethods([])
+            ->onlyMethods(['getHandlerContext'])
             ->getMock();
+        $networkingError->method('getHandlerContext')->willReturn([]);
 
         $retries = $retrySettings['max_attempts'];
         $client = new S3Client([
@@ -914,16 +917,18 @@ EOXML;
     }
 
     /**
-     * @dataProvider clientRetrySettingsProvider
      *
      * @param array $retrySettings
-     */
+
+ */
+    #[DataProvider('clientRetrySettingsProvider')]
     public function testErrorsWithUnparseableBodiesCanBeRetried($retrySettings)
     {
         $networkingError = $this->getMockBuilder(RequestException::class)
             ->disableOriginalConstructor()
-            ->setMethods([])
+            ->onlyMethods(['getHandlerContext'])
             ->getMock();
+        $networkingError->method('getHandlerContext')->willReturn([]);
 
         $retries = $retrySettings['max_attempts'];
         $client = new S3Client([
@@ -952,9 +957,10 @@ EOXML;
     }
 
     /**
-     * @dataProvider  clientRetrySettingsProvider
      * @param $retrySettings
-     */
+
+ */
+    #[DataProvider('clientRetrySettingsProvider')]
     public function testRetriesFailOn400Errors($retrySettings) {
         $retryCount = 0;
         $client = new S3Client([
@@ -1558,10 +1564,11 @@ EOXML;
     /**
      * Tests that S3 client configuration options lead to correct endpoints
      *
-     * @dataProvider optionsToEndpointsCases
      * @param $options
      * @param $host
-     */
+
+ */
+    #[DataProvider('optionsToEndpointsCases')]
     public function testResolvesOptionsToProperEndpoints($options, $host)
     {
         $client = new S3Client($options);
@@ -1573,7 +1580,7 @@ EOXML;
         $client->listBuckets();
     }
 
-    public function optionsToEndpointsCases()
+    public static function optionsToEndpointsCases()
     {
         $handler = function ($cmd, $req) {
             return Promise\Create::promiseFor(new Result([]));
@@ -1691,7 +1698,7 @@ EOXML;
         $this->assertSame(3, $counter);
     }
 
-    public function multiRegionSuccessProvider()
+    public static function multiRegionSuccessProvider()
     {
 
         return [
@@ -1705,8 +1712,9 @@ EOXML;
     }
 
     /**
-     * @dataProvider multiRegionSuccessProvider
-     */
+
+ */
+    #[DataProvider('multiRegionSuccessProvider')]
     public function testMrapParsing(
         $bucketFieldInput,
         $clientRegion,
@@ -1753,7 +1761,7 @@ EOXML;
         $client->execute($command);
     }
 
-    public function mrapExceptionTestProvider() {
+    public static function mrapExceptionTestProvider() {
         return [
             [
                 "arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", null, null, true,
@@ -1779,8 +1787,9 @@ EOXML;
     }
 
     /**
-     * @dataProvider mrapExceptionTestProvider
-     */
+
+ */
+    #[DataProvider('mrapExceptionTestProvider')]
     public function testMrapExceptions(
         $bucketFieldInput,
         $clientRegion,
@@ -1817,14 +1826,15 @@ EOXML;
     }
 
     /**
-     * @dataProvider AccessPointFailureProvider
      * @param $bucketFieldInput
      * @param $clientRegion
      * @param $additionalFlags
      * @param $useArnRegion
      * @param $disableMraps
      * @param $expectedException
-     */
+
+ */
+    #[DataProvider('AccessPointFailureProvider')]
     public function testAccessPointFailures (
         $bucketFieldInput,
         $clientRegion,
@@ -1859,7 +1869,7 @@ EOXML;
             self::assertStringContainsString($expectedException, $e->getMessage());
         }
     }
-    public function AccessPointFailureProvider()
+    public static function AccessPointFailureProvider()
     {
         return [
             [
@@ -1948,7 +1958,7 @@ EOXML;
         }
     }
 
-    public function jsonCaseProvider()
+    public static function jsonCaseProvider()
     {
         return json_decode(
             file_get_contents(__DIR__ . '/test_cases/uri_addressing.json'),
@@ -1957,10 +1967,11 @@ EOXML;
     }
 
     /**
-     * @dataProvider jsonCaseProvider
      *
      * @param array $testCase
-     */
+
+ */
+    #[DataProvider('jsonCaseProvider')]
     public function testPassesCompliance(
         $bucket,
         $configuredAddressingStyle,
@@ -1993,7 +2004,6 @@ EOXML;
     }
 
     /**
-     * @dataProvider objectLambdasSuccessProvider
      *
      * @param $bucketFieldInput
      * @param $clientRegion
@@ -2001,7 +2011,9 @@ EOXML;
      * @param $useArnRegion
      * @param $endpointUrl
      * @param $expectedEndpoint
-     */
+
+ */
+    #[DataProvider('objectLambdasSuccessProvider')]
     public function testObjectLambdaArnSuccess(
         $bucketFieldInput,
         $clientRegion,
@@ -2045,7 +2057,7 @@ EOXML;
         $client->execute($command);
     }
 
-    public function objectLambdasSuccessProvider()
+    public static function objectLambdasSuccessProvider()
     {
         return [
             ["arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "us-east-1", "none", false, null, "mybanner-123456789012.s3-object-lambda.us-east-1.amazonaws.com"],
@@ -2067,7 +2079,6 @@ EOXML;
     }
 
     /**
-     * @dataProvider objectLambdasFailureProvider
      *
      * @param $bucketFieldInput
      * @param $clientRegion
@@ -2075,7 +2086,9 @@ EOXML;
      * @param $useArnRegion
      * @param $endpointUrl
      * @param $expectedException
-     */
+
+ */
+    #[DataProvider('objectLambdasFailureProvider')]
     public function testObjectLambdaArnFailures(
         $bucketFieldInput,
         $clientRegion,
@@ -2124,7 +2137,7 @@ EOXML;
         }
     }
 
-    public function objectLambdasFailureProvider()
+    public static function objectLambdasFailureProvider()
     {
         return [
             [
@@ -2196,13 +2209,14 @@ EOXML;
 
 
     /**
-     * @dataProvider writeGetObjectResponseProvider
      *
      * @param $clientRegion
      * @param $route
      * @param $endpointUrl
      * @param $expectedEndpoint
-     */
+
+ */
+    #[DataProvider('writeGetObjectResponseProvider')]
     public function testWriteGetObjectResponse(
         $clientRegion,
         $route,
@@ -2236,7 +2250,7 @@ EOXML;
         $client->execute($command);
     }
 
-    public function writeGetObjectResponseProvider()
+    public static function writeGetObjectResponseProvider()
     {
         return [
             ["us-west-2", "route", null, 'route.s3-object-lambda.us-west-2.amazonaws.com'],
@@ -2286,7 +2300,7 @@ EOXML;
         $s3->execute($command);
     }
 
-    public function addMD5Provider() {
+    public static function addMD5Provider() {
         return [
            [
                ['Bucket' => 'foo', 'Key' => 'foo', 'Body' => 'test'],
@@ -2306,22 +2320,31 @@ EOXML;
     }
 
     /**
-     * @dataProvider addMD5Provider
-     */
+
+ */
+    #[DataProvider('addMD5Provider')]
     public function testAddContentMd5EmitsDeprecationNotice($options, $operation)
     {
-        $this->expectDeprecation();
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        });
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('S3 no longer supports MD5 checksums.');
-        $s3 = $this->getTestClient('s3');
-        $this->addMockResults($s3, [[]]);
-        $options['AddContentMD5'] = true;
-        $command = $s3->getCommand($operation, $options);
-        $s3->execute($command);
+        try {
+            $s3 = $this->getTestClient('s3');
+            $this->addMockResults($s3, [[]]);
+            $options['AddContentMD5'] = true;
+            $command = $s3->getCommand($operation, $options);
+            $s3->execute($command);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     /**
-     * @dataProvider dotSegmentProvider
-     */
+
+ */
+    #[DataProvider('dotSegmentProvider')]
     public function testHandlesDotSegmentsInKey($key, $expectedUri)
     {
         $s3 = $this->getTestClient('s3');
@@ -2335,7 +2358,7 @@ EOXML;
         $s3->execute($command);
     }
 
-    public function dotSegmentProvider()
+    public static function dotSegmentProvider()
     {
         return [
             ['../foo' , 'https://foo.s3.amazonaws.com/../foo'],
@@ -2347,8 +2370,9 @@ EOXML;
     }
 
     /**
-     * @dataProvider dotSegmentPathStyleProvider
-     */
+
+ */
+    #[DataProvider('dotSegmentPathStyleProvider')]
     public function testHandlesDotSegmentsInKeyWithPathStyle($key, $expectedUri)
     {
         $s3 = $this->getTestClient('s3', ['use_path_style_endpoint' => true]);
@@ -2362,7 +2386,7 @@ EOXML;
         $s3->execute($command);
     }
 
-    public function dotSegmentPathStyleProvider()
+    public static function dotSegmentPathStyleProvider()
     {
         return [
             ['../foo' , 'https://s3.amazonaws.com/bucket/../foo'],
@@ -2374,8 +2398,9 @@ EOXML;
     }
 
     /**
-     * @dataProvider builtinRegionProvider
-     */
+
+ */
+    #[DataProvider('builtinRegionProvider')]
     public function testCorrectlyResolvesGlobalEndpointWithoutRegionInConstructor(
         $region, $expected
     ){
@@ -2415,24 +2440,31 @@ EOXML;
 
     public function testEmitsWarningWhenExpiresUnparseable()
     {
-        $this->expectWarning();
-        $this->expectWarningMessage(
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        });
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage(
             "Failed to parse the `expires` header as a timestamp due to "
             . " an invalid timestamp format.\nPlease refer to `ExpiresString` "
             . "for the unparsed string format of this header.\n"
         );
 
-        $client = new S3Client([
-            'region' => 'us-east-1',
-            'http_handler' => function (RequestInterface $request) {
-                return Promise\Create::promiseFor(new Response(
-                    200,
-                    ['expires' => 'this-is-not-a-timestamp']
-                ));
-            },
-        ]);
+        try {
+            $client = new S3Client([
+                'region' => 'us-east-1',
+                'http_handler' => function (RequestInterface $request) {
+                    return Promise\Create::promiseFor(new Response(
+                        200,
+                        ['expires' => 'this-is-not-a-timestamp']
+                    ));
+                },
+            ]);
 
-        $client->headObject(['Bucket' => 'foo', 'Key' => 'bar']);
+            $client->headObject(['Bucket' => 'foo', 'Key' => 'bar']);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testExpiresRemainsTimestamp() {
@@ -2477,7 +2509,7 @@ EOXML;
         );
     }
 
-    public function builtinRegionProvider()
+    public static function builtinRegionProvider()
     {
         return [
             ['us-east-1' , true],
@@ -2489,11 +2521,12 @@ EOXML;
      * This test makes sure that not parsable xml errors are retried.
      * This handling is specified in the s3 parser implementation.
      *
-     * @dataProvider clientRetrySettingsProvider
      * @param array $retrySettings
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('clientRetrySettingsProvider')]
     public function testS3RetriesOnNotParsableBody(array $retrySettings)
     {
         $retries = $retrySettings['max_attempts'];
@@ -2519,15 +2552,16 @@ EOXML;
      *
      * @return void
      *
-     * @dataProvider directoryBucketProvider
-     */
+
+ */
+    #[DataProvider('directoryBucketProvider')]
     public function testIsDirectoryBucket(string $bucketName, bool $expected): void
     {
         $client = $this->getTestClient('s3');
         $this->assertEquals($expected, $client::isDirectoryBucket($bucketName));
     }
 
-    public function directoryBucketProvider(): array
+    public static function directoryBucketProvider(): array
     {
         return [
             ['bucket-base-name--usw2-az1--x-s3', true],
@@ -2563,8 +2597,9 @@ EOXML;
     }
 
     /**
-     * @dataProvider getContentSha256UseCases
-     */
+
+ */
+    #[DataProvider('getContentSha256UseCases')]
     public function testAddsContentSHA256AsAppropriate($operation, $args, $hashAdded, $hashValue)
     {
         $s3 = $this->getTestClient('s3');
@@ -2579,7 +2614,7 @@ EOXML;
         $s3->execute($command);
     }
 
-    public function getContentSha256UseCases()
+    public static function getContentSha256UseCases()
     {
         $hash = 'SHA256HASH';
 
@@ -2609,8 +2644,9 @@ EOXML;
     }
 
     /**
-     * @dataProvider getFlexibleChecksumUseCases
-     */
+
+ */
+    #[DataProvider('getFlexibleChecksumUseCases')]
     public function testAddsFlexibleChecksumAsAppropriate($operation, $clientArgs, $operationArgs, $headerAdded, $headerValue)
     {
         if (isset($operationArgs['ChecksumAlgorithm'])
@@ -2634,7 +2670,7 @@ EOXML;
         $s3->execute($command);
     }
 
-    public function getFlexibleChecksumUseCases()
+    public static function getFlexibleChecksumUseCases()
     {
         return [
             // httpChecksum not modeled
@@ -2742,8 +2778,9 @@ EOXML;
      * @param array $clientConfig
      * @return void
      *
-     * @dataProvider responseChecksumValidationProvider
-     */
+
+ */
+    #[DataProvider('responseChecksumValidationProvider')]
     public function testResponseChecksumValidation(
         array $clientConfig,
         ?string $checksumAlgorithm,
@@ -2774,7 +2811,7 @@ EOXML;
         $this->assertEquals($checksumAlgorithm, $result['ChecksumValidated']);
     }
 
-    public function responseChecksumValidationProvider(): array
+    public static function responseChecksumValidationProvider(): array
     {
         return [
             [
@@ -2814,9 +2851,10 @@ EOXML;
     }
 
     /**
-     * @dataProvider checksumConfigProvider
      * @return void
-     */
+
+ */
+    #[DataProvider('checksumConfigProvider')]
     public function testChecksumConfigThrowsForInvalidInput(
         string $option,
         string $invalidOption
@@ -2832,7 +2870,7 @@ EOXML;
         );
     }
 
-    public function checksumConfigProvider()
+    public static function checksumConfigProvider()
     {
         return [
             ['request_checksum_calculation', 'foo'],
@@ -2906,8 +2944,9 @@ EOXML;
      * The purpose of this test is to ensure ApplyChecksumMiddleware is
      * not invoked twice, ensuring checksum calculation is not repeated.
      *
-     * @dataProvider retriesWithoutRecalculatingChecksumProvider
-     */
+
+ */
+    #[DataProvider('retriesWithoutRecalculatingChecksumProvider')]
     public function testRetriesWithoutRecalculatingChecksum(
         string $commandName,
         array $commandArgs,
@@ -2973,7 +3012,7 @@ EOXML;
         );
     }
 
-    public function retriesWithoutRecalculatingChecksumProvider(): array
+    public static function retriesWithoutRecalculatingChecksumProvider(): array
     {
         return [
             'PutObject legacy' => [

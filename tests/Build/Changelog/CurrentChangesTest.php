@@ -2,6 +2,7 @@
 
 namespace Aws\Test\Build\Changelog;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 
 class CurrentChangesTest extends TestCase
@@ -12,7 +13,7 @@ class CurrentChangesTest extends TestCase
         return end($portions);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testVerifyDotChangesFolder()
     {
         $files = glob(__DIR__ . '/../../../.changes/*');
@@ -29,12 +30,14 @@ class CurrentChangesTest extends TestCase
                 $this->fail('Files in `.changes` must be valid JSON.');
             }
         }
+        $this->assertTrue(true);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testVerifyNextreleaseContents()
     {
         if (!is_dir(__DIR__ . '/../../../.changes/nextrelease/')) {
+            $this->assertTrue(true);
             return;
         }
 
@@ -70,5 +73,7 @@ class CurrentChangesTest extends TestCase
                         . $name . '` changelog document.');
             }
         }
+
+        $this->assertTrue(true);
     }
 }

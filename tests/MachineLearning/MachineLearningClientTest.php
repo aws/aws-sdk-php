@@ -6,10 +6,9 @@ use Aws\MachineLearning\MachineLearningClient;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\MachineLearning\MachineLearningClient
- */
+#[CoversClass(MachineLearningClient::class)]
 class MachineLearningClientTest extends TestCase
 {
     use UsesServiceTrait;

@@ -6,10 +6,9 @@ use Aws\Identity\S3\S3ExpressIdentityProvider;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Identity\S3\S3ExpressIdentityProvider
- */
+#[CoversClass(S3ExpressIdentityProvider::class)]
 class S3ExpressIdentityProviderTest extends TestCase
 {
     use UsesServiceTrait;
@@ -28,13 +27,13 @@ class S3ExpressIdentityProviderTest extends TestCase
             ]
         ]);
     }
-    
+
     public function testProvidesIdentity()
     {
         $expiration = time() + 5000;
         $client = $this->getTestClient('S3', []);
         $this->addMockResults($client, [
-        $this->getCredentialResultFromTimestamp($expiration)
+            $this->getCredentialResultFromTimestamp($expiration)
         ]);
         $cmd = $client->getCommand('getObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $provider = new S3ExpressIdentityProvider(
@@ -77,7 +76,6 @@ class S3ExpressIdentityProviderTest extends TestCase
         $this->addMockResults($client, [
             $this->getCredentialResultFromTimestamp($before),
             $this->getCredentialResultFromTimestamp($after),
-
         ]);
         $cmd = $client->getCommand('getObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $provider = new S3ExpressIdentityProvider(
