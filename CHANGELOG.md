@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.29 - 2026-02-06
 
 * `Aws\IoTManagedIntegrations` - Adding support for Custom(General) Authorization in managed integrations for AWS IoT Device Management cloud connectors.
 * `Aws\PartnerCentralSelling` - Releasing AWS Opportunity Snapshots for SDK release.
