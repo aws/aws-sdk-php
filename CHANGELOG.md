@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoTManagedIntegrations` - Adding support for Custom(General) Authorization in managed integrations for AWS IoT Device Management cloud connectors.
+* `Aws\PartnerCentralSelling` - Releasing AWS Opportunity Snapshots for SDK release.
+* `Aws\SageMaker` - Adding g7e instance support in Sagemaker Training
+* `Aws\Deadline` - Adds support for tagging jobs during job creation
+* `Aws\BedrockDataAutomationRuntime` - Add OutputConfiguration to InvokeDataAutomation input and output to support S3 output
+
 ## 3.369.28 - 2026-02-05
 
 * `Aws\Transfer` - Adds support for the customer to send custom HTTP headers and configure an AS2 Connector to receive Asynchronous MDNs from their trading partner

@@ -165,9 +165,9 @@
       }
     },
     "AmountMap": {
-      "base": "<p>Maps spend amounts to AWS programs and strategic initiatives</p>",
+      "base": "<p>Maps spend amounts to AWS programs and modernization pathways.</p>",
       "refs": {
-        "AwsProductInsights$TotalAmountByCategory": "<p>Spend amounts mapped to AWS programs and modernization pathways</p>"
+        "AwsProductInsights$TotalAmountByCategory": "<p>Spend amounts mapped to AWS programs and modernization pathways.</p>"
       }
     },
     "ApnPrograms": {
@@ -232,6 +232,7 @@
     "AwsAccountIdOrAliasList": {
       "base": null,
       "refs": {
+        "GetResourceSnapshotResponse$TargetMemberAccounts": "<p>Target member accounts associated with the resource snapshot.</p>",
         "ListEngagementInvitationsRequest$SenderAwsAccountId": "<p> List of sender AWS account IDs to filter the invitations. </p>"
       }
     },
@@ -294,18 +295,21 @@
     "AwsOpportunityCustomer": {
       "base": "<p>Represents the customer associated with the AWS opportunity. This field captures key details about the customer that are necessary for managing the opportunity.</p>",
       "refs": {
+        "AwsOpportunitySummaryFullView$Customer": null,
         "GetAwsOpportunitySummaryResponse$Customer": "<p>Provides details about the customer associated with the AWS Opportunity, including account information, industry, and other customer data. These details help partners understand the business context of the opportunity.</p>"
       }
     },
     "AwsOpportunityInsights": {
       "base": "<p>Contains insights provided by AWS for the opportunity, offering recommendations and analysis that can help the partner optimize their engagement and strategy.</p>",
       "refs": {
+        "AwsOpportunitySummaryFullView$Insights": null,
         "GetAwsOpportunitySummaryResponse$Insights": "<p>Provides insights into the AWS Opportunity, including engagement score and recommended actions that AWS suggests for the partner.</p>"
       }
     },
     "AwsOpportunityLifeCycle": {
       "base": "<p>Tracks the lifecycle of the AWS opportunity, including stages such as qualification, validation, and closure. This field helps partners understand the current status and progression of the opportunity.</p>",
       "refs": {
+        "AwsOpportunitySummaryFullView$LifeCycle": null,
         "GetAwsOpportunitySummaryResponse$LifeCycle": "<p>Contains lifecycle information for the AWS Opportunity, including review status, stage, and target close date. This field is crucial for partners to monitor the progression of the opportunity.</p>"
       }
     },
@@ -324,12 +328,14 @@
     "AwsOpportunityProject": {
       "base": "<p>Captures details about the project associated with the opportunity, including objectives, scope, and customer requirements.</p>",
       "refs": {
+        "AwsOpportunitySummaryFullView$Project": null,
         "GetAwsOpportunitySummaryResponse$Project": "<p>Provides details about the project associated with the AWS Opportunity, including the customer’s business problem, expected outcomes, and project scope. This information is crucial for understanding the broader context of the opportunity.</p>"
       }
     },
     "AwsOpportunityRelatedEntities": {
       "base": "<p>Represents other entities related to the AWS opportunity, such as AWS products, partner solutions, and marketplace offers. These associations help build a complete picture of the solution being sold.</p>",
       "refs": {
+        "AwsOpportunitySummaryFullView$RelatedEntityIds": null,
         "GetAwsOpportunitySummaryResponse$RelatedEntityIds": "<p>Lists related entity identifiers, such as AWS products or partner solutions, associated with the AWS Opportunity. These identifiers provide additional context and help partners understand which AWS services are involved.</p>"
       }
     },
@@ -339,21 +345,28 @@
         "AwsOpportunityLifeCycle$Stage": "<p>Represents the current stage of the opportunity in its lifecycle, such as <code>Qualification</code>, <code>Validation</code>, or <code>Closed Won</code>. This helps in understanding the opportunity's progress.</p>"
       }
     },
+    "AwsOpportunitySummaryFullView": {
+      "base": "<p>Provides a comprehensive view of AwsOpportunitySummaryFullView template.</p>",
+      "refs": {
+        "ResourceSnapshotPayload$AwsOpportunitySummaryFullView": "<p>Provides a comprehensive view of AwsOpportunitySummaryFullView template.</p>"
+      }
+    },
     "AwsOpportunityTeamMembersList": {
       "base": null,
       "refs": {
+        "AwsOpportunitySummaryFullView$OpportunityTeam": "<p>AWS team members involved in the opportunity.</p>",
         "GetAwsOpportunitySummaryResponse$OpportunityTeam": "<p>Details the AWS opportunity team, including members involved. This information helps partners know who from AWS is engaged and what their role is.</p>"
       }
     },
     "AwsPartition": {
       "base": null,
       "refs": {
-        "AwsOpportunityProject$AwsPartition": "<p>AWS partition where the opportunity will be deployed. Possible values: 'aws-eusc' for AWS European Sovereign Cloud, <code>null</code> for all other partitions</p>",
-        "Project$AwsPartition": "<p>AWS partition where the opportunity will be deployed. Possible values: 'aws-eusc' for AWS European Sovereign Cloud, <code>null</code> for all other partitions</p>"
+        "AwsOpportunityProject$AwsPartition": "<p>AWS partition where the opportunity will be deployed. Possible values: <code>aws-eusc</code> for AWS European Sovereign Cloud, <code>null</code> for all other partitions.</p>",
+        "Project$AwsPartition": "<p>AWS partition where the opportunity will be deployed. Possible values: <code>aws-eusc</code> for AWS European Sovereign Cloud, <code>null</code> for all other partitions.</p>"
       }
     },
     "AwsProductDetails": {
-      "base": "<p>AWS services with program eligibility indicators (MAP, modernization pathways), cost estimates, and optimization recommendations.</p>",
+      "base": "<p>List of AWS services with program eligibility indicators (MAP, modernization pathways), cost estimates, and optimization recommendations.</p>",
       "refs": {
         "AwsProductsList$member": null
       }
@@ -361,7 +374,7 @@
     "AwsProductDetailsCategoriesList": {
       "base": null,
       "refs": {
-        "AwsProductDetails$Categories": "<p>List of program and pathway categories this product is eligible for</p>"
+        "AwsProductDetails$Categories": "<p>List of program and pathway categories this product is eligible for.</p>"
       }
     },
     "AwsProductIdentifier": {
@@ -380,38 +393,38 @@
     "AwsProductInsights": {
       "base": "<p>Comprehensive spend analysis for a single source (AWS or Partner) including total amounts, optimization savings, program category breakdowns, and detailed product-level insights.</p>",
       "refs": {
-        "AwsProductsSpendInsightsBySource$Partner": "<p>Partner-sourced insights derived from Pricing Calculator URLs including detailed service costs and optimizations</p>",
-        "AwsProductsSpendInsightsBySource$AWS": "<p>AI-generated insights including recommended products from AWS</p>"
+        "AwsProductsSpendInsightsBySource$Partner": "<p>Partner-sourced insights derived from Pricing Calculator URLs.</p>",
+        "AwsProductsSpendInsightsBySource$AWS": "<p>AI-generated insights including recommended products from AWS.</p>"
       }
     },
     "AwsProductInsightsCurrencyCodeEnum": {
       "base": null,
       "refs": {
-        "AwsProductInsights$CurrencyCode": "<p>ISO 4217 currency code (e.g., &quot;USD&quot;) ensuring consistent representation across calculations</p>"
+        "AwsProductInsights$CurrencyCode": "<p>ISO 4217 currency code.</p>"
       }
     },
     "AwsProductOptimization": {
-      "base": "<p>Details for a specific optimization recommendation</p>",
+      "base": "<p>Specific optimization strategies partners can implement to reduce costs.</p>",
       "refs": {
         "AwsProductOptimizationsList$member": null
       }
     },
     "AwsProductOptimizationsList": {
-      "base": "<p>List of optimization recommendations</p>",
+      "base": "<p>List of optimization recommendations.</p>",
       "refs": {
-        "AwsProductDetails$Optimizations": "<p>List of specific optimization recommendations for this product</p>"
+        "AwsProductDetails$Optimizations": "<p>List of specific optimization recommendations for this product.</p>"
       }
     },
     "AwsProductsList": {
-      "base": "<p>AwsProductDetailsList of AWS services with program eligibility indicators (MAP, modernization pathways), cost estimates, and optimization recommendations.</p>",
+      "base": "<p>List of AWS services with program eligibility indicators.</p>",
       "refs": {
-        "AwsProductInsights$AwsProducts": "<p>Product-level details including costs and optimization recommendations</p>"
+        "AwsProductInsights$AwsProducts": "<p>Product-level details including costs and optimization recommendations.</p>"
       }
     },
     "AwsProductsSpendInsightsBySource": {
-      "base": "<p>Source-separated spend insights that provide independent analysis for AWS predictions and partner estimates</p>",
+      "base": "<p>Source-separated spend insights that provide independent analysis for AWS recommendations and partner estimates.</p>",
       "refs": {
-        "AwsOpportunityInsights$AwsProductsSpendInsightsBySource": null
+        "AwsOpportunityInsights$AwsProductsSpendInsightsBySource": "<p>Source-separated spend insights that provide independent analysis for AWS recommendations and partner estimates.</p>"
       }
     },
     "AwsSubmission": {
@@ -649,6 +662,12 @@
       "base": null,
       "refs": {}
     },
+    "CreatedDateFilter": {
+      "base": "<p>Filter for opportunities based on creation date range.</p>",
+      "refs": {
+        "ListOpportunitiesRequest$CreatedDate": "<p>Filter opportunities by creation date criteria.</p>"
+      }
+    },
     "CurrencyCode": {
       "base": null,
       "refs": {
@@ -708,6 +727,8 @@
         "CreateEngagementContextResponse$EngagementLastModifiedAt": "<p>The timestamp indicating when the engagement was last modified as a result of adding the context, in ISO 8601 format (UTC). Example: \"2023-05-01T20:37:46Z\".</p>",
         "CreateEngagementResponse$ModifiedAt": "<p>The timestamp indicating when the engagement was last modified, in ISO 8601 format (UTC). For newly created engagements, this value matches the creation timestamp. Example: \"2023-05-01T20:37:46Z\".</p>",
         "CreateOpportunityResponse$LastModifiedDate": "<p> <code>DateTime</code> when the opportunity was last modified. When the <code>Opportunity</code> is created, its value is <code>CreatedDate</code>.</p>",
+        "CreatedDateFilter$AfterCreatedDate": "<p>Filter opportunities created after this date.</p>",
+        "CreatedDateFilter$BeforeCreatedDate": "<p>Filter opportunities created before this date.</p>",
         "EngagementInvitationSummary$InvitationDate": "<p>Indicates the date when the Engagement Invitation was sent to the partner. This provides context for when the opportunity was shared and helps in tracking the timeline for engagement.</p>",
         "EngagementInvitationSummary$ExpirationDate": "<p>Indicates the date and time when the Engagement Invitation will expire. After this date, the invitation can no longer be accepted, and the opportunity will be unavailable to the partner.</p>",
         "EngagementSummary$CreatedAt": "<p>The date and time when the Engagement was created.</p>",
@@ -1236,6 +1257,7 @@
     "InvolvementTypeChangeReason": {
       "base": null,
       "refs": {
+        "AwsOpportunitySummaryFullView$InvolvementTypeChangeReason": "<p>Reason for changes in AWS involvement type for the opportunity.</p>",
         "GetAwsOpportunitySummaryResponse$InvolvementTypeChangeReason": "<p>Provides a reason for any changes in the involvement type of AWS in the opportunity. This field is used to track why the level of AWS engagement has changed from <code>For Visibility Only</code> to <code>Co-sell</code> offering transparency into the partnership dynamics.</p>"
       }
     },
@@ -1657,13 +1679,13 @@
       "base": null,
       "refs": {
         "AmountMap$value": null,
-        "AwsProductDetails$Amount": "<p>Baseline service cost before optimizations (may be null for AWS-sourced predictions)</p>",
-        "AwsProductDetails$OptimizedAmount": "<p>Service cost after applying optimizations (may be null for AWS-sourced predictions)</p>",
-        "AwsProductDetails$PotentialSavingsAmount": "<p>Service-specific cost reduction through optimizations (may be null for AWS-sourced predictions)</p>",
-        "AwsProductInsights$TotalAmount": "<p>Total estimated spend for this source before optimizations</p>",
-        "AwsProductInsights$TotalOptimizedAmount": "<p>Total estimated spend after applying recommended optimizations</p>",
-        "AwsProductInsights$TotalPotentialSavingsAmount": "<p>Quantified savings achievable through implementing optimizations</p>",
-        "AwsProductOptimization$SavingsAmount": "<p>Quantified cost savings achievable by implementing this optimization</p>"
+        "AwsProductDetails$Amount": "<p>Baseline service cost before optimizations.</p>",
+        "AwsProductDetails$OptimizedAmount": "<p>Service cost after applying optimizations.</p>",
+        "AwsProductDetails$PotentialSavingsAmount": "<p>Service-specific cost reduction through optimizations.</p>",
+        "AwsProductInsights$TotalAmount": "<p>Total estimated spend for this source before optimizations.</p>",
+        "AwsProductInsights$TotalOptimizedAmount": "<p>Total estimated spend after applying recommended optimizations.</p>",
+        "AwsProductInsights$TotalPotentialSavingsAmount": "<p>Quantified savings achievable through implementing optimizations.</p>",
+        "AwsProductOptimization$SavingsAmount": "<p>Quantified cost savings achievable by implementing this optimization.</p>"
       }
     },
     "MonetaryValue": {
@@ -1725,6 +1747,7 @@
       "refs": {
         "AssignOpportunityRequest$Identifier": "<p>Requires the <code>Opportunity</code>'s unique identifier when you want to assign it to another user. Provide the correct identifier so the intended opportunity is reassigned.</p>",
         "AssociateOpportunityRequest$OpportunityIdentifier": "<p>Requires the <code>Opportunity</code>'s unique identifier when you want to associate it with a related entity. Provide the correct identifier so the intended opportunity is updated with the association.</p>",
+        "AwsOpportunitySummaryFullView$RelatedOpportunityId": "<p>Identifier of the related partner opportunity.</p>",
         "CreateOpportunityResponse$Id": "<p>Read-only, system-generated <code>Opportunity</code> unique identifier. Amazon Web Services creates this identifier, and it's used for all subsequent opportunity actions, such as updates, associations, and submissions. It helps to ensure that each opportunity is accurately tracked and managed.</p>",
         "DisassociateOpportunityRequest$OpportunityIdentifier": "<p>The opportunity's unique identifier for when you want to disassociate it from related entities. This identifier helps to ensure that the correct opportunity is updated.</p> <p>Validation: Ensure that the provided identifier corresponds to an existing opportunity in the Amazon Web Services system because incorrect identifiers result in an error and no changes are made.</p>",
         "GetAwsOpportunitySummaryRequest$RelatedOpportunityIdentifier": "<p>The unique identifier for the related partner opportunity. Use this field to correlate an AWS opportunity with its corresponding partner opportunity.</p>",
@@ -1764,6 +1787,7 @@
     "OpportunityOrigin": {
       "base": null,
       "refs": {
+        "AwsOpportunitySummaryFullView$Origin": "<p>Source origin of the AWS opportunity.</p>",
         "CreateOpportunityRequest$Origin": "<p>Specifies the origin of the opportunity, indicating if it was sourced from Amazon Web Services or the partner. For all opportunities created with <code>Catalog: AWS</code>, this field must only be <code>Partner Referral</code>. However, when using <code>Catalog: Sandbox</code>, you can set this field to <code>AWS Referral</code> to simulate Amazon Web Services referral creation. This allows Amazon Web Services-originated flows testing in the sandbox catalog.</p>",
         "GetAwsOpportunitySummaryResponse$Origin": "<p>Specifies whether the AWS Opportunity originated from AWS or the partner. This helps distinguish between opportunities that were sourced by AWS and those referred by the partner.</p>"
       }
@@ -1841,7 +1865,7 @@
     "PaymentFrequency": {
       "base": null,
       "refs": {
-        "AwsProductInsights$Frequency": "<p>Time period for spend amounts: &quot;Monthly&quot; or &quot;Annually&quot;</p>",
+        "AwsProductInsights$Frequency": "<p>Time period for spend amounts.</p>",
         "ExpectedCustomerSpend$Frequency": "<p>Indicates how frequently the customer is expected to spend the projected amount. Only the value <code>Monthly</code> is allowed for the <code>Frequency</code> field, representing recurring monthly spend.</p>"
       }
     },
@@ -2182,6 +2206,7 @@
     "SalesInvolvementType": {
       "base": null,
       "refs": {
+        "AwsOpportunitySummaryFullView$InvolvementType": "<p>Type of AWS involvement in the opportunity.</p>",
         "AwsSubmission$InvolvementType": "<p>Specifies the type of AWS involvement in the opportunity, such as coselling, deal support, or technical consultation. This helps categorize the nature of AWS participation.</p>",
         "GetAwsOpportunitySummaryResponse$InvolvementType": "<p>Specifies the type of involvement AWS has in the opportunity, such as direct cosell or advisory support. This field helps partners understand the role AWS plays in advancing the opportunity.</p>",
         "SubmitOpportunityRequest$InvolvementType": "<p>Specifies the level of AWS sellers' involvement on the opportunity. Valid values:</p> <ul> <li> <p> <code>Co-sell</code>: Indicates the user wants to co-sell with AWS. Share the opportunity with AWS to receive deal assistance and support.</p> </li> <li> <p> <code>For Visibility Only</code>: Indicates that the user does not need support from AWS Sales Rep. Share this opportunity with AWS for visibility only, you will not receive deal assistance and support.</p> </li> </ul>"
@@ -2340,10 +2365,10 @@
         "AmountMap$key": null,
         "ApnPrograms$member": null,
         "AwsOpportunityInsights$NextBestActions": "<p>Provides recommendations from AWS on the next best actions to take in order to move the opportunity forward and increase the likelihood of success.</p>",
-        "AwsProductDetails$ProductCode": "<p>AWS Partner Central product identifier used for opportunity association</p>",
-        "AwsProductDetails$ServiceCode": "<p>Pricing Calculator service code (links to original calculator URL)</p>",
+        "AwsProductDetails$ProductCode": "<p>AWS Partner Central product identifier used for opportunity association.</p>",
+        "AwsProductDetails$ServiceCode": "<p>Pricing Calculator service code.</p>",
         "AwsProductDetailsCategoriesList$member": null,
-        "AwsProductOptimization$Description": "<p>Human-readable explanation of the optimization strategy</p>",
+        "AwsProductOptimization$Description": "<p>Human-readable explanation of the optimization strategy.</p>",
         "ConflictException$Message": null,
         "CreateOpportunityResponse$PartnerOpportunityIdentifier": "<p>Specifies the opportunity's unique identifier in the partner's CRM system. This value is essential to track and reconcile because it's included in the outbound payload sent back to the partner.</p>",
         "EngagementInvitationSummary$Arn": "<p>The Amazon Resource Name (ARN) of the Engagement Invitation. The ARN is a unique identifier that allows partners to reference the invitation in their system and manage its lifecycle.</p>",
@@ -2596,6 +2621,7 @@
     "Visibility": {
       "base": null,
       "refs": {
+        "AwsOpportunitySummaryFullView$Visibility": "<p>Visibility level for the AWS opportunity.</p>",
         "AwsSubmission$Visibility": "<p>Determines who can view AWS involvement in the opportunity. Typically, this field is set to <code>Full</code> for most cases, but it may be restricted based on special program requirements or confidentiality needs.</p>",
         "GetAwsOpportunitySummaryResponse$Visibility": "<p>Defines the visibility level for the AWS Opportunity. Use <code>Full</code> visibility for most cases, while <code>Limited</code> visibility is reserved for special programs or sensitive opportunities.</p>",
         "SubmitOpportunityRequest$Visibility": "<p>Determines whether to restrict visibility of the opportunity from AWS sales. Default value is Full. Valid values:</p> <ul> <li> <p> <code>Full</code>: The opportunity is fully visible to AWS sales.</p> </li> <li> <p> <code>Limited</code>: The opportunity has restricted visibility to AWS sales.</p> </li> </ul>"

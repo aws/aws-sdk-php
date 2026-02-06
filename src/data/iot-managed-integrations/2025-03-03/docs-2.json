@@ -64,7 +64,7 @@
     "ListOtaTasks": "<p>List all of the over-the-air (OTA) tasks.</p>",
     "ListProvisioningProfiles": "<p>List the provisioning profiles within the Amazon Web Services account.</p>",
     "ListSchemaVersions": "<p>Lists schema versions with the provided information.</p>",
-    "ListTagsForResource": "<p>List tags for the specified resource.</p>",
+    "ListTagsForResource": "<p>Lists the tags for a specified resource.</p>",
     "PutDefaultEncryptionConfiguration": "<p>Sets the default encryption configuration for the Amazon Web Services account. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/key-management.html\">Key management</a> in the AWS IoT SiteWise User Guide.</p>",
     "PutHubConfiguration": "<p>Update a hub configuration.</p>",
     "PutRuntimeLogConfiguration": "<p>Set the runtime log configuration for a specific managed thing.</p>",
@@ -75,8 +75,8 @@
     "SendManagedThingCommand": "<p>Send the command to the device represented by the managed thing. </p>",
     "StartAccountAssociationRefresh": "<p>Initiates a refresh of an existing account association to update its authorization and connection status.</p>",
     "StartDeviceDiscovery": "<p> This API is used to start device discovery for hub-connected and third-party-connected devices. The authentication material (install code) is delivered as a message to the controller instructing it to start the discovery.</p>",
-    "TagResource": "<p>Add tags for the specified resource.</p>",
-    "UntagResource": "<p>Remove tags for the specified resource.</p>",
+    "TagResource": "<p>Adds tags to a specified resource.</p>",
+    "UntagResource": "<p>Removes tags from a specified resource.</p>",
     "UpdateAccountAssociation": "<p>Updates the properties of an existing account association.</p>",
     "UpdateCloudConnector": "<p>Update an existing cloud connector.</p>",
     "UpdateConnectorDestination": "<p>Updates the properties of an existing connector destination.</p>",
@@ -239,10 +239,23 @@
         "UpdateConnectorDestinationRequest$AuthConfig": "<p>The updated authentication configuration details for the connector destination.</p>"
       }
     },
+    "AuthMaterial": {
+      "base": "<p>The authorization material containing the Secrets Manager arn and version.</p>",
+      "refs": {
+        "AuthMaterials$member": null
+      }
+    },
+    "AuthMaterialName": {
+      "base": null,
+      "refs": {
+        "AuthMaterial$AuthMaterialName": "<p>The name of the authorization material.</p>",
+        "GeneralAuthorizationName$AuthMaterialName": "<p>The name of the authorization material.</p>"
+      }
+    },
     "AuthMaterialString": {
       "base": null,
       "refs": {
-        "CreateManagedThingRequest$AuthenticationMaterial": "<p>The authentication material defining the device connectivity setup requests. The authentication materials used are the device bar code.</p>",
+        "CreateManagedThingRequest$AuthenticationMaterial": "<p>The authentication material defining the device connectivity setup requests. The authorization materials used are the device bar code.</p>",
         "DiscoveredDeviceSummary$AuthenticationMaterial": "<p>The authentication material required for connecting to the discovered device, such as credentials or tokens.</p>"
       }
     },
@@ -250,6 +263,14 @@
       "base": null,
       "refs": {
         "CreateManagedThingRequest$AuthenticationMaterialType": "<p>The type of authentication material used for device connectivity setup requests.</p>"
+      }
+    },
+    "AuthMaterials": {
+      "base": null,
+      "refs": {
+        "AuthConfig$GeneralAuthorization": "<p>The authorization materials for General Authorization.</p>",
+        "GeneralAuthorizationUpdate$AuthMaterialsToAdd": "<p>The authorization materials to add.</p>",
+        "GeneralAuthorizationUpdate$AuthMaterialsToUpdate": "<p>The authorization materials to update.</p>"
       }
     },
     "AuthType": {
@@ -432,6 +453,7 @@
     "ClaimCertificate": {
       "base": null,
       "refs": {
+        "CreateProvisioningProfileRequest$ClaimCertificate": "<p>The claim certificate.</p>",
         "CreateProvisioningProfileResponse$ClaimCertificate": "<p>The id of the claim certificate.</p>",
         "GetProvisioningProfileResponse$ClaimCertificate": "<p>The id of the claim certificate.</p>"
       }
@@ -638,12 +660,19 @@
     "ConnectorDeviceId": {
       "base": null,
       "refs": {
+        "ConnectorDeviceIdList$member": null,
         "Device$ConnectorDeviceId": "<p>The device id as defined by the connector.</p> <note> <p>This parameter is used for cloud-to-cloud devices only.</p> </note>",
         "DiscoveredDeviceSummary$ConnectorDeviceId": "<p>The third-party device identifier as defined by the connector. This identifier must not contain personal identifiable information (PII).</p>",
         "GetManagedThingResponse$ConnectorDeviceId": "<p>The third-party device id as defined by the connector. This device id must not contain personal identifiable information (PII).</p> <note> <p>This parameter is used for cloud-to-cloud devices only.</p> </note>",
         "ListManagedThingsRequest$ConnectorDeviceIdFilter": "<p>Filter managed things by the connector device ID they are associated with. When specified, only managed things with this connector device ID will be returned.</p>",
         "ManagedThingSummary$ConnectorDeviceId": "<p>The third-party device id as defined by the connector. This device id must not contain personal identifiable information (PII).</p> <note> <p>This parameter is used for cloud-to-cloud devices only.</p> </note>",
         "SendConnectorEventRequest$ConnectorDeviceId": "<p>The third-party device id as defined by the connector. This device id must not contain personal identifiable information (PII).</p> <note> <p>This parameter is used for cloud-to-cloud devices only.</p> </note>"
+      }
+    },
+    "ConnectorDeviceIdList": {
+      "base": null,
+      "refs": {
+        "StartDeviceDiscoveryRequest$ConnectorDeviceIdList": "<p>Used as a filter for PLA discoveries.</p>"
       }
     },
     "ConnectorDeviceName": {
@@ -1311,6 +1340,19 @@
         "CapabilitySchemaItem$ExtrinsicId": "<p>The external identifier for the capability, used when referencing the capability outside of the AWS ecosystem.</p>"
       }
     },
+    "GeneralAuthorizationName": {
+      "base": "<p>The General Authorization reference by authorization material name.</p>",
+      "refs": {
+        "CreateAccountAssociationRequest$GeneralAuthorization": "<p>The General Authorization reference by authorization material name.</p>",
+        "GetAccountAssociationResponse$GeneralAuthorization": "<p>The General Authorization reference by authorization material name.</p>"
+      }
+    },
+    "GeneralAuthorizationUpdate": {
+      "base": "<p>The General Authorization update information containing authorization materials to add or update.</p>",
+      "refs": {
+        "AuthConfigUpdate$GeneralAuthorizationUpdate": "<p>The General Authorization update information containing authorization materials to add or update in Kinesis Data Streams.</p>"
+      }
+    },
     "GetAccountAssociationRequest": {
       "base": null,
       "refs": {}
@@ -1554,9 +1596,9 @@
     "IoTManagedIntegrationsResourceARN": {
       "base": null,
       "refs": {
-        "ListTagsForResourceRequest$ResourceArn": "<p>The ARN of the resource for which to list tags.</p>",
-        "TagResourceRequest$ResourceArn": "<p>The ARN of the resource to which to add tags.</p>",
-        "UntagResourceRequest$ResourceArn": "<p>The ARN of the resource to which to add tags.</p>"
+        "ListTagsForResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to list tags.</p>",
+        "TagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource to which to add tags.</p>",
+        "UntagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource from which to remove tags.</p>"
       }
     },
     "KmsKeyArn": {
@@ -1800,6 +1842,12 @@
       "base": null,
       "refs": {
         "ListManagedThingAccountAssociationsResponse$Items": "<p>The list of managed thing associations that match the specified criteria, including the managed thing ID and account association ID for each association.</p>"
+      }
+    },
+    "ManagedThingAssociationStatus": {
+      "base": null,
+      "refs": {
+        "ManagedThingAssociation$ManagedThingAssociationStatus": "<p>The status of the registration between the managed thing and the account association. Indicates whether the device is pre-associated or fully associated with the account association.</p>"
       }
     },
     "ManagedThingId": {
@@ -2174,12 +2222,12 @@
         "RolloutRateIncreaseCriteria$numberOfSucceededThings": "<p>The threshold for number of succeeded things that will initiate the increase in rate of rollout.</p>"
       }
     },
-    "OAuthAuthorizationUrl": {
+    "OAuthAuthorizationUrlOutput": {
       "base": null,
       "refs": {
-        "CreateAccountAssociationResponse$OAuthAuthorizationUrl": "<p>Third-party IoT platform OAuth authorization server URL backed with all the required parameters to perform end-user authentication.</p>",
-        "GetAccountAssociationResponse$OAuthAuthorizationUrl": "<p>Third party IoT platform OAuth authorization server URL backed with all the required parameters to perform end-user authentication.</p>",
-        "StartAccountAssociationRefreshResponse$OAuthAuthorizationUrl": "<p>Third-party IoT platform OAuth authorization server URL with all required parameters to perform end-user authentication during the refresh process.</p>"
+        "CreateAccountAssociationResponse$OAuthAuthorizationUrl": "<p>Third-party IoT platform OAuth authorization server URL backed with all the required parameters to perform end-user authentication. This field will be empty when using General Authorization flows that do not require OAuth.</p>",
+        "GetAccountAssociationResponse$OAuthAuthorizationUrl": "<p>Third party IoT platform OAuth authorization server URL backed with all the required parameters to perform end-user authentication. This field will be empty when using General Authorization flows that do not require OAuth.</p>",
+        "StartAccountAssociationRefreshResponse$OAuthAuthorizationUrl": "<p>Third-party IoT platform OAuth authorization server URL with all required parameters to perform end-user authentication during the refresh process. This field will be empty when using General Authorization flows that do not require OAuth.</p>"
       }
     },
     "OAuthCompleteRedirectUrl": {
@@ -2697,6 +2745,7 @@
     "SecretsManager": {
       "base": "<p>Configuration for AWS Secrets Manager, used to securely store and manage sensitive information for connector destinations.</p>",
       "refs": {
+        "AuthMaterial$SecretsManager": null,
         "CreateConnectorDestinationRequest$SecretsManager": "<p>The AWS Secrets Manager configuration used to securely store and manage sensitive information for the connector destination.</p>",
         "GetConnectorDestinationResponse$SecretsManager": "<p>The AWS Secrets Manager configuration used to securely store and manage sensitive information for the connector destination.</p>",
         "UpdateConnectorDestinationRequest$SecretsManager": "<p>The updated AWS Secrets Manager configuration for the connector destination.</p>"
@@ -2886,7 +2935,7 @@
         "GetProvisioningProfileResponse$Tags": "<p>A set of key/value pairs that are used to manage the provisioning profile.</p>",
         "ListTagsForResourceResponse$tags": "<p>A set of key/value pairs that are used to manage the resource.</p>",
         "StartDeviceDiscoveryRequest$Tags": "<p>A set of key/value pairs that are used to manage the device discovery request.</p>",
-        "TagResourceRequest$Tags": "<p>A set of key/value pairs that are used to manage the resource</p>"
+        "TagResourceRequest$Tags": "<p>A set of key/value pairs that are used to manage the resource.</p>"
       }
     },
     "Target": {

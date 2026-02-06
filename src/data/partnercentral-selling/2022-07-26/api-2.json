@@ -1120,6 +1120,22 @@
         "Closed Incomplete"
       ]
     },
+    "AwsOpportunitySummaryFullView":{
+      "type":"structure",
+      "members":{
+        "RelatedOpportunityId":{"shape":"OpportunityIdentifier"},
+        "Origin":{"shape":"OpportunityOrigin"},
+        "InvolvementType":{"shape":"SalesInvolvementType"},
+        "Visibility":{"shape":"Visibility"},
+        "LifeCycle":{"shape":"AwsOpportunityLifeCycle"},
+        "OpportunityTeam":{"shape":"AwsOpportunityTeamMembersList"},
+        "Insights":{"shape":"AwsOpportunityInsights"},
+        "InvolvementTypeChangeReason":{"shape":"InvolvementTypeChangeReason"},
+        "RelatedEntityIds":{"shape":"AwsOpportunityRelatedEntities"},
+        "Customer":{"shape":"AwsOpportunityCustomer"},
+        "Project":{"shape":"AwsOpportunityProject"}
+      }
+    },
     "AwsOpportunityTeamMembersList":{
       "type":"list",
       "member":{"shape":"AwsTeamMember"}
@@ -1959,6 +1975,13 @@
       "members":{
         "Arn":{"shape":"ResourceArn"},
         "Revision":{"shape":"ResourceSnapshotRevision"}
+      }
+    },
+    "CreatedDateFilter":{
+      "type":"structure",
+      "members":{
+        "AfterCreatedDate":{"shape":"DateTime"},
+        "BeforeCreatedDate":{"shape":"DateTime"}
       }
     },
     "CurrencyCode":{
@@ -2886,7 +2909,8 @@
         "ResourceId":{"shape":"ResourceIdentifier"},
         "ResourceSnapshotTemplateName":{"shape":"ResourceTemplateName"},
         "Revision":{"shape":"ResourceSnapshotRevision"},
-        "Payload":{"shape":"ResourceSnapshotPayload"}
+        "Payload":{"shape":"ResourceSnapshotPayload"},
+        "TargetMemberAccounts":{"shape":"AwsAccountIdOrAliasList"}
       }
     },
     "GetSellingSystemSettingsRequest":{
@@ -3393,7 +3417,8 @@
         "Identifier":{"shape":"ListOpportunitiesRequestIdentifierList"},
         "LifeCycleStage":{"shape":"ListOpportunitiesRequestLifeCycleStageList"},
         "LifeCycleReviewStatus":{"shape":"ListOpportunitiesRequestLifeCycleReviewStatusList"},
-        "CustomerCompanyName":{"shape":"ListOpportunitiesRequestCustomerCompanyNameList"}
+        "CustomerCompanyName":{"shape":"ListOpportunitiesRequestCustomerCompanyNameList"},
+        "CreatedDate":{"shape":"CreatedDateFilter"}
       }
     },
     "ListOpportunitiesRequestCustomerCompanyNameList":{
@@ -3751,7 +3776,8 @@
       "enum":[
         "LastModifiedDate",
         "Identifier",
-        "CustomerCompanyName"
+        "CustomerCompanyName",
+        "CreatedDate"
       ]
     },
     "OpportunitySummaries":{
@@ -4100,7 +4126,8 @@
     "ResourceSnapshotPayload":{
       "type":"structure",
       "members":{
-        "OpportunitySummary":{"shape":"OpportunitySummaryView"}
+        "OpportunitySummary":{"shape":"OpportunitySummaryView"},
+        "AwsOpportunitySummaryFullView":{"shape":"AwsOpportunitySummaryFullView"}
       },
       "union":true
     },
