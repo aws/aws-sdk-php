@@ -124,6 +124,8 @@
     "CreateRouteServerEndpoint": "<p>Creates a new endpoint for a route server in a specified subnet.</p> <p>A route server endpoint is an Amazon Web Services-managed component inside a subnet that facilitates <a href=\"https://en.wikipedia.org/wiki/Border_Gateway_Protocol\">BGP (Border Gateway Protocol)</a> connections between your route server and your BGP peers.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/dynamic-routing-route-server.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "CreateRouteServerPeer": "<p>Creates a new BGP peer for a specified route server endpoint.</p> <p>A route server peer is a session between a route server endpoint and the device deployed in Amazon Web Services (such as a firewall appliance or other network security function running on an EC2 instance). The device must meet these requirements:</p> <ul> <li> <p>Have an elastic network interface in the VPC</p> </li> <li> <p>Support BGP (Border Gateway Protocol)</p> </li> <li> <p>Can initiate BGP sessions</p> </li> </ul> <p>For more information see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/dynamic-routing-route-server.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "CreateRouteTable": "<p>Creates a route table for the specified VPC. After you create a route table, you can add routes and associate the table with a subnet.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html\">Route tables</a> in the <i>Amazon VPC User Guide</i>.</p>",
+    "CreateSecondaryNetwork": "<p>Creates an Amazon secondary network.</p> <p>The allowed size for a secondary network CIDR block is between /28 netmask (16 IP addresses) and /12 netmask (1,048,576 IP addresses).</p>",
+    "CreateSecondarySubnet": "<p>Creates a secondary subnet in a secondary network.</p> <p>A secondary subnet CIDR block must not overlap with the CIDR block of an existing secondary subnet in the secondary network. After you create a secondary subnet, you can't change its CIDR block.</p> <p>The allowed size for a secondary subnet CIDR block is between /28 netmask (16 IP addresses) and /12 netmask (1,048,576 IP addresses). Amazon reserves the first four IP addresses and the last IP address in each secondary subnet for internal use.</p>",
     "CreateSecurityGroup": "<p>Creates a security group.</p> <p>A security group acts as a virtual firewall for your instance to control inbound and outbound traffic. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html\">Amazon EC2 security groups</a> in the <i>Amazon EC2 User Guide</i> and <a href=\"https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html\">Security groups for your VPC</a> in the <i>Amazon VPC User Guide</i>.</p> <p>When you create a security group, you specify a friendly name of your choice. You can't have two security groups for the same VPC with the same name.</p> <p>You have a default security group for use in your VPC. If you don't specify a security group when you launch an instance, the instance is launched into the appropriate default security group. A default security group includes a default rule that grants instances unrestricted network access to each other.</p> <p>You can add or remove rules from your security groups using <a>AuthorizeSecurityGroupIngress</a>, <a>AuthorizeSecurityGroupEgress</a>, <a>RevokeSecurityGroupIngress</a>, and <a>RevokeSecurityGroupEgress</a>.</p> <p>For more information about VPC security group limits, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html\">Amazon VPC Limits</a>.</p>",
     "CreateSnapshot": "<p>Creates a snapshot of an EBS volume and stores it in Amazon S3. You can use snapshots for backups, to make copies of EBS volumes, and to save data before shutting down an instance.</p> <p>The location of the source EBS volume determines where you can create the snapshot.</p> <ul> <li> <p>If the source volume is in a Region, you must create the snapshot in the same Region as the volume.</p> </li> <li> <p>If the source volume is in a Local Zone, you can create the snapshot in the same Local Zone or in its parent Amazon Web Services Region.</p> </li> <li> <p>If the source volume is on an Outpost, you can create the snapshot on the same Outpost or in its parent Amazon Web Services Region.</p> </li> </ul> <p>When a snapshot is created, any Amazon Web Services Marketplace product codes that are associated with the source volume are propagated to the snapshot.</p> <p>You can take a snapshot of an attached volume that is in use. However, snapshots only capture data that has been written to your Amazon EBS volume at the time the snapshot command is issued; this might exclude any data that has been cached by any applications or the operating system. If you can pause any file systems on the volume long enough to take a snapshot, your snapshot should be complete. However, if you cannot pause all file writes to the volume, you should unmount the volume from within the instance, issue the snapshot command, and then remount the volume to ensure a consistent and complete snapshot. You may remount and use your volume while the snapshot status is <code>pending</code>.</p> <p>When you create a snapshot for an EBS volume that serves as a root device, we recommend that you stop the instance before taking the snapshot.</p> <p>Snapshots that are taken from encrypted volumes are automatically encrypted. Volumes that are created from encrypted snapshots are also automatically encrypted. Your encrypted volumes and any associated snapshots always remain protected. For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html\">Amazon EBS encryption</a> in the <i>Amazon EBS User Guide</i>.</p>",
     "CreateSnapshots": "<p>Creates crash-consistent snapshots of multiple EBS volumes attached to an Amazon EC2 instance. Volumes are chosen by specifying an instance. Each volume attached to the specified instance will produce one snapshot that is crash-consistent across the instance. You can include all of the volumes currently attached to the instance, or you can exclude the root volume or specific data (non-root) volumes from the multi-volume snapshot set.</p> <p>The location of the source instance determines where you can create the snapshots.</p> <ul> <li> <p>If the source instance is in a Region, you must create the snapshots in the same Region as the instance.</p> </li> <li> <p>If the source instance is in a Local Zone, you can create the snapshots in the same Local Zone or in its parent Amazon Web Services Region.</p> </li> <li> <p>If the source instance is on an Outpost, you can create the snapshots on the same Outpost or in its parent Amazon Web Services Region.</p> </li> </ul>",
@@ -216,6 +218,8 @@
     "DeleteRouteServerEndpoint": "<p>Deletes the specified route server endpoint.</p> <p>A route server endpoint is an Amazon Web Services-managed component inside a subnet that facilitates <a href=\"https://en.wikipedia.org/wiki/Border_Gateway_Protocol\">BGP (Border Gateway Protocol)</a> connections between your route server and your BGP peers.</p>",
     "DeleteRouteServerPeer": "<p>Deletes the specified BGP peer from a route server.</p> <p>A route server peer is a session between a route server endpoint and the device deployed in Amazon Web Services (such as a firewall appliance or other network security function running on an EC2 instance). The device must meet these requirements:</p> <ul> <li> <p>Have an elastic network interface in the VPC</p> </li> <li> <p>Support BGP (Border Gateway Protocol)</p> </li> <li> <p>Can initiate BGP sessions</p> </li> </ul>",
     "DeleteRouteTable": "<p>Deletes the specified route table. You must disassociate the route table from any subnets before you can delete it. You can't delete the main route table.</p>",
+    "DeleteSecondaryNetwork": "<p>Deletes a secondary network. You must delete all secondary subnets in the secondary network before you can delete the secondary network.</p>",
+    "DeleteSecondarySubnet": "<p>Deletes a secondary subnet. A secondary subnet must not contain any secondary interfaces prior to deletion.</p>",
     "DeleteSecurityGroup": "<p>Deletes a security group.</p> <p>If you attempt to delete a security group that is associated with an instance or network interface, is referenced by another security group in the same VPC, or has a VPC association, the operation fails with <code>DependencyViolation</code>.</p>",
     "DeleteSnapshot": "<p>Deletes the specified snapshot.</p> <p>When you make periodic snapshots of a volume, the snapshots are incremental, and only the blocks on the device that have changed since your last snapshot are saved in the new snapshot. When you delete a snapshot, only the data not needed for any other snapshot is removed. So regardless of which prior snapshots have been deleted, all active snapshots will have access to all the information needed to restore the volume.</p> <p>You cannot delete a snapshot of the root device of an EBS volume used by a registered AMI. You must first deregister the AMI before you can delete the snapshot.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-deleting-snapshot.html\">Delete an Amazon EBS snapshot</a> in the <i>Amazon EBS User Guide</i>.</p>",
     "DeleteSpotDatafeedSubscription": "<p>Deletes the data feed for Spot Instances.</p>",
@@ -384,6 +388,9 @@
     "DescribeRouteTables": "<p>Describes your route tables. The default is to describe all your route tables. Alternatively, you can specify specific route table IDs or filter the results to include only the route tables that match specific criteria.</p> <p>Each subnet in your VPC must be associated with a route table. If a subnet is not explicitly associated with any route table, it is implicitly associated with the main route table. This command does not return the subnet ID for implicit associations.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html\">Route tables</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "DescribeScheduledInstanceAvailability": "<p>Finds available schedules that meet the specified criteria.</p> <p>You can search for an available schedule no more than 3 months in advance. You must meet the minimum required duration of 1,200 hours per year. For example, the minimum daily schedule is 4 hours, the minimum weekly schedule is 24 hours, and the minimum monthly schedule is 100 hours.</p> <p>After you find a schedule that meets your needs, call <a>PurchaseScheduledInstances</a> to purchase Scheduled Instances with that schedule.</p>",
     "DescribeScheduledInstances": "<p>Describes the specified Scheduled Instances or all your Scheduled Instances.</p>",
+    "DescribeSecondaryInterfaces": "<p>Describes one or more of your secondary interfaces.</p>",
+    "DescribeSecondaryNetworks": "<p>Describes one or more secondary networks.</p>",
+    "DescribeSecondarySubnets": "<p>Describes one or more of your secondary subnets.</p>",
     "DescribeSecurityGroupReferences": "<p>Describes the VPCs on the other side of a VPC peering or Transit Gateway connection that are referencing the security groups you've specified in this request.</p>",
     "DescribeSecurityGroupRules": "<p>Describes one or more of your security group rules.</p>",
     "DescribeSecurityGroupVpcAssociations": "<p>Describes security group VPC associations made with <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AssociateSecurityGroupVpc.html\">AssociateSecurityGroupVpc</a>.</p>",
@@ -1877,8 +1884,10 @@
       "refs": {
         "EbsInstanceBlockDevice$Status": "<p>The attachment state.</p>",
         "InstanceNetworkInterfaceAttachment$Status": "<p>The attachment state.</p>",
+        "InstanceSecondaryInterfaceAttachment$Status": "<p>The attachment state.</p>",
         "InternetGatewayAttachment$State": "<p>The current state of the attachment. For an internet gateway, the state is <code>available</code> when attached to a VPC; otherwise, this value is not returned.</p>",
         "NetworkInterfaceAttachment$Status": "<p>The attachment state.</p>",
+        "SecondaryInterfaceAttachment$Status": "<p>The attachment state.</p>",
         "VpcAttachment$State": "<p>The current state of the attachment.</p>"
       }
     },
@@ -2077,6 +2086,7 @@
         "CapacityReservationInfo$AvailabilityZoneId": "<p>The ID of the Availability Zone.</p>",
         "CreateCapacityReservationRequest$AvailabilityZoneId": "<p>The ID of the Availability Zone in which to create the Capacity Reservation.</p>",
         "CreateDefaultSubnetRequest$AvailabilityZoneId": "<p>The ID of the Availability Zone.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> must be specified, but not both.</p>",
+        "CreateSecondarySubnetRequest$AvailabilityZoneId": "<p>The ID of the Availability Zone for the secondary subnet. This option is preferred over <code>AvailabilityZone</code> as it provides a consistent identifier across Amazon Web Services accounts. You cannot specify both <code>AvailabilityZone</code> and <code>AvailabilityZoneId</code> in the same request.</p>",
         "CreateVolumeRequest$AvailabilityZoneId": "<p>The ID of the Availability Zone in which to create the volume. For example, <code>use1-az1</code>.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> must be specified, but not both.</p>",
         "DescribeReservedInstancesOfferingsRequest$AvailabilityZoneId": "<p>The ID of the Availability Zone.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> can be specified, but not both.</p>",
         "DescribeSpotPriceHistoryRequest$AvailabilityZoneId": "<p>Filters the results by the specified ID of the Availability Zone.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> can be specified, but not both</p>",
@@ -2090,7 +2100,9 @@
         "LaunchTemplatePlacementRequest$AvailabilityZoneId": "<p>The ID of the Availability Zone for the instance.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> can be specified, but not both</p>",
         "NatGatewayAddress$AvailabilityZoneId": "<p>The ID of the Availability Zone where this Elastic IP address (EIP) is being used to handle outbound NAT traffic. Use this instead of AvailabilityZone for consistent identification of AZs across Amazon Web Services Regions.</p>",
         "Placement$AvailabilityZoneId": "<p>The ID of the Availability Zone of the instance.</p> <p>On input, you can specify <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code>, but not both. If you specify neither one, Amazon EC2 automatically selects an Availability Zone for you.</p> <p>This parameter is not supported for <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFleet\">CreateFleet</a>.</p>",
-        "ReservedInstancesOffering$AvailabilityZoneId": "<p>The ID of the Availability Zone.</p>"
+        "ReservedInstancesOffering$AvailabilityZoneId": "<p>The ID of the Availability Zone.</p>",
+        "SecondaryInterface$AvailabilityZoneId": "<p>The ID of the Availability Zone of the secondary interface.</p>",
+        "SecondarySubnet$AvailabilityZoneId": "<p>The ID of the Availability Zone of the secondary subnet.</p>"
       }
     },
     "AvailabilityZoneIdStringList": {
@@ -2128,10 +2140,13 @@
         "CapacityReservationInfo$AvailabilityZone": "<p>The Availability Zone for the Capacity Reservation.</p>",
         "CreateCapacityReservationRequest$AvailabilityZone": "<p>The Availability Zone in which to create the Capacity Reservation.</p>",
         "CreateDefaultSubnetRequest$AvailabilityZone": "<p>The Availability Zone in which to create the default subnet.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> must be specified, but not both.</p>",
+        "CreateSecondarySubnetRequest$AvailabilityZone": "<p>The Availability Zone for the secondary subnet. You cannot specify both <code>AvailabilityZone</code> and <code>AvailabilityZoneId</code> in the same request.</p>",
         "CreateVolumeRequest$AvailabilityZone": "<p>The ID of the Availability Zone in which to create the volume. For example, <code>us-east-1a</code>.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> must be specified, but not both.</p>",
         "FleetLaunchTemplateOverrides$AvailabilityZone": "<p>The Availability Zone in which to launch the instances. For example, <code>us-east-2a</code>.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> must be specified in the request, but not both.</p>",
         "FleetLaunchTemplateOverridesRequest$AvailabilityZone": "<p>The Availability Zone in which to launch the instances. For example, <code>us-east-2a</code>.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> must be specified in the request, but not both.</p>",
-        "NatGatewayAddress$AvailabilityZone": "<p>The Availability Zone where this Elastic IP address (EIP) is being used to handle outbound NAT traffic.</p>"
+        "NatGatewayAddress$AvailabilityZone": "<p>The Availability Zone where this Elastic IP address (EIP) is being used to handle outbound NAT traffic.</p>",
+        "SecondaryInterface$AvailabilityZone": "<p>The Availability Zone of the secondary interface.</p>",
+        "SecondarySubnet$AvailabilityZone": "<p>The Availability Zone of the secondary subnet.</p>"
       }
     },
     "AvailabilityZoneOptInStatus": {
@@ -2500,6 +2515,8 @@
         "CreateRouteServerRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateRouteServerRequest$SnsNotificationsEnabled": "<p>Indicates whether SNS notifications should be enabled for route server events. Enabling SNS notifications persists BGP status changes to an SNS topic provisioned by Amazon Web Services.</p>",
         "CreateRouteTableRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateSecondaryNetworkRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateSecondarySubnetRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateSecurityGroupRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateSnapshotRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateSnapshotsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2612,6 +2629,8 @@
         "DeleteRouteServerPeerRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteRouteServerRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteRouteTableRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteSecondaryNetworkRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteSecondarySubnetRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteSecurityGroupRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteSecurityGroupResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, returns an error.</p>",
         "DeleteSnapshotRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2784,6 +2803,9 @@
         "DescribeRouteTablesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeScheduledInstanceAvailabilityRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeScheduledInstancesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeSecondaryInterfacesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeSecondaryNetworksRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeSecondarySubnetsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeSecurityGroupReferencesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeSecurityGroupRulesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeSecurityGroupVpcAssociationsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3085,6 +3107,9 @@
         "InstanceRequirements$RequireEncryptionInTransit": "<p>Specifies whether instance types must support encrypting in-transit traffic between instances. For more information, including the supported instance types, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html#encryption-transit\">Encryption in transit</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>Default: <code>false</code> </p>",
         "InstanceRequirementsRequest$RequireHibernateSupport": "<p>Indicates whether instance types must support hibernation for On-Demand Instances.</p> <p>This parameter is not supported for <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetSpotPlacementScores.html\">GetSpotPlacementScores</a>.</p> <p>Default: <code>false</code> </p>",
         "InstanceRequirementsRequest$RequireEncryptionInTransit": "<p>Specifies whether instance types must support encrypting in-transit traffic between instances. For more information, including the supported instance types, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html#encryption-transit\">Encryption in transit</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>Default: <code>false</code> </p>",
+        "InstanceSecondaryInterface$SourceDestCheck": "<p>Indicates whether source/destination checking is enabled.</p>",
+        "InstanceSecondaryInterfaceAttachment$DeleteOnTermination": "<p>Indicates whether the secondary interface is deleted when the instance is terminated.</p> <p>The only supported value for this field is <code>true</code>.</p>",
+        "InstanceSecondaryInterfaceSpecificationRequest$DeleteOnTermination": "<p>Indicates whether the secondary interface is deleted when the instance is terminated.</p> <p>The only supported value for this field is <code>true</code>.</p>",
         "InstanceSpecification$ExcludeBootVolume": "<p>Excludes the root volume from being snapshotted.</p>",
         "InstanceTagNotificationAttribute$IncludeAllTagsOfInstance": "<p>Indicates wheter all tag keys in the current Region are registered to appear in scheduled event notifications. <code>true</code> indicates that all tag keys in the current Region are registered.</p>",
         "Ipam$EnablePrivateGua": "<p>Enable this option to use your own GUA ranges as private IPv6 addresses. This option is disabled by default.</p>",
@@ -3113,6 +3138,8 @@
         "LaunchTemplateInstanceNetworkInterfaceSpecificationRequest$AssociatePublicIpAddress": "<p>Associates a public IPv4 address with eth0 for a new network interface.</p> <p>Amazon Web Services charges for all public IPv4 addresses, including public IPv4 addresses associated with running instances and Elastic IP addresses. For more information, see the <i>Public IPv4 Address</i> tab on the <a href=\"http://aws.amazon.com/vpc/pricing/\">Amazon VPC pricing page</a>.</p>",
         "LaunchTemplateInstanceNetworkInterfaceSpecificationRequest$DeleteOnTermination": "<p>Indicates whether the network interface is deleted when the instance is terminated.</p>",
         "LaunchTemplateInstanceNetworkInterfaceSpecificationRequest$PrimaryIpv6": "<p>The primary IPv6 address of the network interface. When you enable an IPv6 GUA address to be a primary IPv6, the first IPv6 GUA will be made the primary IPv6 address until the instance is terminated or the network interface is detached. For more information about primary IPv6 addresses, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html\">RunInstances</a>.</p>",
+        "LaunchTemplateInstanceSecondaryInterfaceSpecification$DeleteOnTermination": "<p>Indicates whether the secondary interface is deleted when the instance is terminated.</p> <p>The only supported value for this field is <code>true</code>.</p>",
+        "LaunchTemplateInstanceSecondaryInterfaceSpecificationRequest$DeleteOnTermination": "<p>Indicates whether the secondary interface is deleted when the instance is terminated.</p> <p>The only supported value for this field is <code>true</code>.</p>",
         "LaunchTemplatePrivateDnsNameOptions$EnableResourceNameDnsARecord": "<p>Indicates whether to respond to DNS queries for instance hostnames with DNS A records.</p>",
         "LaunchTemplatePrivateDnsNameOptions$EnableResourceNameDnsAAAARecord": "<p>Indicates whether to respond to DNS queries for instance hostnames with DNS AAAA records.</p>",
         "LaunchTemplatePrivateDnsNameOptionsRequest$EnableResourceNameDnsARecord": "<p>Indicates whether to respond to DNS queries for instance hostnames with DNS A records.</p>",
@@ -3380,6 +3407,8 @@
         "SearchTransitGatewayMulticastGroupsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "SearchTransitGatewayRoutesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "SearchTransitGatewayRoutesResult$AdditionalRoutesAvailable": "<p>Indicates whether there are additional routes available.</p>",
+        "SecondaryInterface$SourceDestCheck": "<p>Indicates whether source/destination checking is enabled.</p>",
+        "SecondaryInterfaceAttachment$DeleteOnTermination": "<p>Indicates whether the secondary interface is deleted when the instance is terminated.</p> <p>The only supported value for this field is <code>true</code>.</p>",
         "SecurityGroupRule$IsEgress": "<p>Indicates whether the security group rule is an outbound rule.</p>",
         "SendDiagnosticInterruptRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ServiceConfiguration$AcceptanceRequired": "<p>Indicates whether requests from other Amazon Web Services accounts to create an endpoint to the service must first be accepted.</p>",
@@ -5596,6 +5625,26 @@
       "refs": {
       }
     },
+    "CreateSecondaryNetworkRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateSecondaryNetworkResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateSecondarySubnetRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateSecondarySubnetResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateSecurityGroupRequest": {
       "base": null,
       "refs": {
@@ -6382,7 +6431,7 @@
     "DefaultInstanceMetadataTagsState": {
       "base": null,
       "refs": {
-        "ModifyInstanceMetadataDefaultsRequest$InstanceMetadataTags": "<p>Enables or disables access to an instance's tags from the instance metadata. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#work-with-tags-in-IMDS\">Work with instance tags using the instance metadata</a> in the <i>Amazon EC2 User Guide</i>.</p>"
+        "ModifyInstanceMetadataDefaultsRequest$InstanceMetadataTags": "<p>Enables or disables access to an instance's tags from the instance metadata. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/work-with-tags-in-IMDS.html\">View tags for your EC2 instances using instance metadata</a> in the <i>Amazon EC2 User Guide</i>.</p>"
       }
     },
     "DefaultNetworkCardIndex": {
@@ -6959,6 +7008,26 @@
       }
     },
     "DeleteRouteTableRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteSecondaryNetworkRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteSecondaryNetworkResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteSecondarySubnetRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteSecondarySubnetResult": {
       "base": null,
       "refs": {
       }
@@ -8995,6 +9064,54 @@
     },
     "DescribeScheduledInstancesResult": {
       "base": "<p>Contains the output of DescribeScheduledInstances.</p>",
+      "refs": {
+      }
+    },
+    "DescribeSecondaryInterfacesMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeSecondaryInterfacesRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>"
+      }
+    },
+    "DescribeSecondaryInterfacesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeSecondaryInterfacesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeSecondaryNetworksMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeSecondaryNetworksRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>"
+      }
+    },
+    "DescribeSecondaryNetworksRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeSecondaryNetworksResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeSecondarySubnetsMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeSecondarySubnetsRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>"
+      }
+    },
+    "DescribeSecondarySubnetsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeSecondarySubnetsResult": {
+      "base": null,
       "refs": {
       }
     },
@@ -11606,6 +11723,9 @@
         "DescribeRouteTablesRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>association.gateway-id</code> - The ID of the gateway involved in the association.</p> </li> <li> <p> <code>association.route-table-association-id</code> - The ID of an association ID for the route table.</p> </li> <li> <p> <code>association.route-table-id</code> - The ID of the route table involved in the association.</p> </li> <li> <p> <code>association.subnet-id</code> - The ID of the subnet involved in the association.</p> </li> <li> <p> <code>association.main</code> - Indicates whether the route table is the main route table for the VPC (<code>true</code> | <code>false</code>). Route tables that do not have an association ID are not returned in the response.</p> </li> <li> <p> <code>owner-id</code> - The ID of the Amazon Web Services account that owns the route table.</p> </li> <li> <p> <code>route-table-id</code> - The ID of the route table.</p> </li> <li> <p> <code>route.destination-cidr-block</code> - The IPv4 CIDR range specified in a route in the table.</p> </li> <li> <p> <code>route.destination-ipv6-cidr-block</code> - The IPv6 CIDR range specified in a route in the route table.</p> </li> <li> <p> <code>route.destination-prefix-list-id</code> - The ID (prefix) of the Amazon Web Services service specified in a route in the table.</p> </li> <li> <p> <code>route.egress-only-internet-gateway-id</code> - The ID of an egress-only Internet gateway specified in a route in the route table.</p> </li> <li> <p> <code>route.gateway-id</code> - The ID of a gateway specified in a route in the table.</p> </li> <li> <p> <code>route.instance-id</code> - The ID of an instance specified in a route in the table.</p> </li> <li> <p> <code>route.nat-gateway-id</code> - The ID of a NAT gateway.</p> </li> <li> <p> <code>route.transit-gateway-id</code> - The ID of a transit gateway.</p> </li> <li> <p> <code>route.origin</code> - Describes how the route was created. <code>CreateRouteTable</code> indicates that the route was automatically created when the route table was created; <code>CreateRoute</code> indicates that the route was manually added to the route table; <code>EnableVgwRoutePropagation</code> indicates that the route was propagated by route propagation.</p> </li> <li> <p> <code>route.state</code> - The state of a route in the route table (<code>active</code> | <code>blackhole</code>). The blackhole state indicates that the route's target isn't available (for example, the specified gateway isn't attached to the VPC, the specified NAT instance has been terminated, and so on).</p> </li> <li> <p> <code>route.vpc-peering-connection-id</code> - The ID of a VPC peering connection specified in a route in the table.</p> </li> <li> <p> <code>tag</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC for the route table.</p> </li> </ul>",
         "DescribeScheduledInstanceAvailabilityRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>availability-zone</code> - The Availability Zone (for example, <code>us-west-2a</code>).</p> </li> <li> <p> <code>instance-type</code> - The instance type (for example, <code>c4.large</code>).</p> </li> <li> <p> <code>platform</code> - The platform (<code>Linux/UNIX</code> or <code>Windows</code>).</p> </li> </ul>",
         "DescribeScheduledInstancesRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>availability-zone</code> - The Availability Zone (for example, <code>us-west-2a</code>).</p> </li> <li> <p> <code>instance-type</code> - The instance type (for example, <code>c4.large</code>).</p> </li> <li> <p> <code>platform</code> - The platform (<code>Linux/UNIX</code> or <code>Windows</code>).</p> </li> </ul>",
+        "DescribeSecondaryInterfacesRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>attachment.attachment-id</code> - The ID of the secondary interface attachment.</p> </li> <li> <p> <code>attachment.instance-id</code> - The ID of the instance to which the secondary interface is attached.</p> </li> <li> <p> <code>attachment.instance-owner-id</code> - The ID of the Amazon Web Services account that owns the instance to which the secondary interface is attached.</p> </li> <li> <p> <code>attachment.status</code> - The attachment status (<code>attaching</code> | <code>attached</code> | <code>detaching</code> | <code>detached</code>).</p> </li> <li> <p> <code>private-ipv4-addresses.private-ip-address</code> - The private IPv4 address associated with the secondary interface.</p> </li> <li> <p> <code>owner-id</code> - The ID of the Amazon Web Services account that owns the secondary interface.</p> </li> <li> <p> <code>secondary-interface-arn</code> - The ARN of the secondary interface.</p> </li> <li> <p> <code>secondary-interface-id</code> - The ID of the secondary interface.</p> </li> <li> <p> <code>secondary-interface-type</code> - The type of secondary interface (<code>secondary</code>).</p> </li> <li> <p> <code>secondary-network-id</code> - The ID of the secondary network.</p> </li> <li> <p> <code>secondary-network-type</code> - The type of the secondary network (<code>rdma</code>).</p> </li> <li> <p> <code>secondary-subnet-id</code> - The ID of the secondary subnet.</p> </li> <li> <p> <code>status</code> - The status of the secondary interface (<code>available</code> | <code>in-use</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
+        "DescribeSecondaryNetworksRequest$Filters": "<p>The filters. The following are the possible values:</p> <ul> <li> <p> <code>ipv4-cidr-block-association.association-id</code> - The association ID for an IPv4 CIDR block associated with the secondary network.</p> </li> <li> <p> <code>ipv4-cidr-block-association.cidr-block</code> - An IPv4 CIDR block associated with the secondary network.</p> </li> <li> <p> <code>ipv4-cidr-block-association.state</code> - The state of an IPv4 CIDR block associated with the secondary network.</p> </li> <li> <p> <code>owner-id</code> - The ID of the Amazon Web Services account that owns the secondary network.</p> </li> <li> <p> <code>secondary-network-id</code> - The ID of the secondary network.</p> </li> <li> <p> <code>secondary-network-arn</code> - The ARN of the secondary network.</p> </li> <li> <p> <code>state</code> - The state of the secondary network (<code>create-in-progress</code> | <code>create-complete</code> | <code>create-failed</code> | <code>delete-in-progress</code> | <code>delete-complete</code> | <code>delete-failed</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>type</code> - The type of the secondary network (<code>rdma</code>).</p> </li> </ul>",
+        "DescribeSecondarySubnetsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>ipv4-cidr-block-association.association-id</code> - The association ID for an IPv4 CIDR block associated with the secondary subnet.</p> </li> <li> <p> <code>ipv4-cidr-block-association.cidr-block</code> - An IPv4 CIDR block associated with the secondary subnet.</p> </li> <li> <p> <code>ipv4-cidr-block-association.state</code> - The state of an IPv4 CIDR block associated with the secondary subnet.</p> </li> <li> <p> <code>owner-id</code> - The ID of the Amazon Web Services account that owns the secondary subnet.</p> </li> <li> <p> <code>secondary-network-id</code> - The ID of the secondary network.</p> </li> <li> <p> <code>secondary-network-type</code> - The type of the secondary network (<code>rdma</code>).</p> </li> <li> <p> <code>secondary-subnet-id</code> - The ID of the secondary subnet.</p> </li> <li> <p> <code>secondary-subnet-arn</code> - The ARN of the secondary subnet.</p> </li> <li> <p> <code>state</code> - The state of the secondary subnet (<code>create-in-progress</code> | <code>create-complete</code> | <code>create-failed</code> | <code>delete-in-progress</code> | <code>delete-complete</code> | <code>delete-failed</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
         "DescribeSecurityGroupRulesRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>group-id</code> - The ID of the security group.</p> </li> <li> <p> <code>security-group-rule-id</code> - The ID of the security group rule.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> </ul>",
         "DescribeSecurityGroupVpcAssociationsRequest$Filters": "<p>Security group VPC association filters.</p> <ul> <li> <p> <code>group-id</code>: The security group ID.</p> </li> <li> <p> <code>group-owner-id</code>: The group owner ID.</p> </li> <li> <p> <code>state</code>: The state of the association.</p> </li> <li> <p> <code>vpc-id</code>: The ID of the associated VPC.</p> </li> <li> <p> <code>vpc-owner-id</code>: The account ID of the VPC owner.</p> </li> </ul>",
         "DescribeSecurityGroupsRequest$Filters": "<p>The filters. If using multiple filters for rules, the results include security groups for which any combination of rules - not necessarily a single rule - match all filters.</p> <ul> <li> <p> <code>description</code> - The description of the security group.</p> </li> <li> <p> <code>egress.ip-permission.cidr</code> - An IPv4 CIDR block for an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.from-port</code> - For an outbound rule, the start of port range for the TCP and UDP protocols, or an ICMP type number.</p> </li> <li> <p> <code>egress.ip-permission.group-id</code> - The ID of a security group that has been referenced in an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.group-name</code> - The name of a security group that is referenced in an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.ipv6-cidr</code> - An IPv6 CIDR block for an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.prefix-list-id</code> - The ID of a prefix list to which a security group rule allows outbound access.</p> </li> <li> <p> <code>egress.ip-permission.protocol</code> - The IP protocol for an outbound security group rule (<code>tcp</code> | <code>udp</code> | <code>icmp</code>, a protocol number, or -1 for all protocols).</p> </li> <li> <p> <code>egress.ip-permission.to-port</code> - For an outbound rule, the end of port range for the TCP and UDP protocols, or an ICMP code.</p> </li> <li> <p> <code>egress.ip-permission.user-id</code> - The ID of an Amazon Web Services account that has been referenced in an outbound security group rule.</p> </li> <li> <p> <code>group-id</code> - The ID of the security group. </p> </li> <li> <p> <code>group-name</code> - The name of the security group.</p> </li> <li> <p> <code>ip-permission.cidr</code> - An IPv4 CIDR block for an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.from-port</code> - For an inbound rule, the start of port range for the TCP and UDP protocols, or an ICMP type number.</p> </li> <li> <p> <code>ip-permission.group-id</code> - The ID of a security group that has been referenced in an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.group-name</code> - The name of a security group that is referenced in an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.ipv6-cidr</code> - An IPv6 CIDR block for an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.prefix-list-id</code> - The ID of a prefix list from which a security group rule allows inbound access.</p> </li> <li> <p> <code>ip-permission.protocol</code> - The IP protocol for an inbound security group rule (<code>tcp</code> | <code>udp</code> | <code>icmp</code>, a protocol number, or -1 for all protocols).</p> </li> <li> <p> <code>ip-permission.to-port</code> - For an inbound rule, the end of port range for the TCP and UDP protocols, or an ICMP code.</p> </li> <li> <p> <code>ip-permission.user-id</code> - The ID of an Amazon Web Services account that has been referenced in an inbound security group rule.</p> </li> <li> <p> <code>owner-id</code> - The Amazon Web Services account ID of the owner of the security group.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC specified when the security group was created.</p> </li> </ul>",
@@ -14450,10 +14570,10 @@
     "InstanceMetadataTagsState": {
       "base": null,
       "refs": {
-        "InstanceMetadataDefaultsResponse$InstanceMetadataTags": "<p>Indicates whether access to instance tags from the instance metadata is enabled or disabled. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#work-with-tags-in-IMDS\">Work with instance tags using the instance metadata</a> in the <i>Amazon EC2 User Guide</i>.</p>",
-        "InstanceMetadataOptionsRequest$InstanceMetadataTags": "<p>Set to <code>enabled</code> to allow access to instance tags from the instance metadata. Set to <code>disabled</code> to turn off access to instance tags from the instance metadata. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#work-with-tags-in-IMDS\">Work with instance tags using the instance metadata</a>.</p> <p>Default: <code>disabled</code> </p>",
-        "InstanceMetadataOptionsResponse$InstanceMetadataTags": "<p>Indicates whether access to instance tags from the instance metadata is enabled or disabled. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#work-with-tags-in-IMDS\">Work with instance tags using the instance metadata</a>.</p>",
-        "ModifyInstanceMetadataOptionsRequest$InstanceMetadataTags": "<p>Set to <code>enabled</code> to allow access to instance tags from the instance metadata. Set to <code>disabled</code> to turn off access to instance tags from the instance metadata. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#work-with-tags-in-IMDS\">Work with instance tags using the instance metadata</a>.</p>"
+        "InstanceMetadataDefaultsResponse$InstanceMetadataTags": "<p>Indicates whether access to instance tags from the instance metadata is enabled or disabled. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/work-with-tags-in-IMDS.html\">View tags for your EC2 instances using instance metadata</a> in the <i>Amazon EC2 User Guide</i>.</p>",
+        "InstanceMetadataOptionsRequest$InstanceMetadataTags": "<p>Set to <code>enabled</code> to allow access to instance tags from the instance metadata. Set to <code>disabled</code> to turn off access to instance tags from the instance metadata. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/work-with-tags-in-IMDS.html\">View tags for your EC2 instances using instance metadata</a>.</p> <p>Default: <code>disabled</code> </p>",
+        "InstanceMetadataOptionsResponse$InstanceMetadataTags": "<p>Indicates whether access to instance tags from the instance metadata is enabled or disabled. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/work-with-tags-in-IMDS.html\">View tags for your EC2 instances using instance metadata</a>.</p>",
+        "ModifyInstanceMetadataOptionsRequest$InstanceMetadataTags": "<p>Set to <code>enabled</code> to allow access to instance tags from the instance metadata. Set to <code>disabled</code> to turn off access to instance tags from the instance metadata. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/work-with-tags-in-IMDS.html\">View tags for your EC2 instances using instance metadata</a>.</p>"
       }
     },
     "InstanceMonitoring": {
@@ -14563,6 +14683,60 @@
       "base": "<p>The architecture type, virtualization type, and other attributes for the instance types. When you specify instance attributes, Amazon EC2 will identify instance types with those attributes.</p> <p>If you specify <code>InstanceRequirementsWithMetadataRequest</code>, you can't specify <code>InstanceTypes</code>.</p>",
       "refs": {
         "GetSpotPlacementScoresRequest$InstanceRequirementsWithMetadata": "<p>The attributes for the instance types. When you specify instance attributes, Amazon EC2 will identify instance types with those attributes.</p> <p>If you specify <code>InstanceRequirementsWithMetadata</code>, you can't specify <code>InstanceTypes</code>.</p>"
+      }
+    },
+    "InstanceSecondaryInterface": {
+      "base": "<p>Describes a secondary interface attached to an instance.</p>",
+      "refs": {
+        "InstanceSecondaryInterfaceList$member": null
+      }
+    },
+    "InstanceSecondaryInterfaceAttachment": {
+      "base": "<p>Describes the attachment of a secondary interface to an instance.</p>",
+      "refs": {
+        "InstanceSecondaryInterface$Attachment": "<p>The attachment information for the secondary interface.</p>"
+      }
+    },
+    "InstanceSecondaryInterfaceList": {
+      "base": null,
+      "refs": {
+        "Instance$SecondaryInterfaces": "<p>The secondary interfaces for the instance.</p>"
+      }
+    },
+    "InstanceSecondaryInterfacePrivateIpAddress": {
+      "base": "<p>Describes a private IPv4 address for a secondary interface.</p>",
+      "refs": {
+        "InstanceSecondaryInterfacePrivateIpAddressList$member": null
+      }
+    },
+    "InstanceSecondaryInterfacePrivateIpAddressList": {
+      "base": null,
+      "refs": {
+        "InstanceSecondaryInterface$PrivateIpAddresses": "<p>The private IPv4 addresses associated with the secondary interface.</p>"
+      }
+    },
+    "InstanceSecondaryInterfacePrivateIpAddressListRequest": {
+      "base": null,
+      "refs": {
+        "InstanceSecondaryInterfaceSpecificationRequest$PrivateIpAddresses": "<p>The private IPv4 addresses to assign to the secondary interface.</p>"
+      }
+    },
+    "InstanceSecondaryInterfacePrivateIpAddressRequest": {
+      "base": "<p>Describes a private IPv4 address for a secondary interface request.</p>",
+      "refs": {
+        "InstanceSecondaryInterfacePrivateIpAddressListRequest$member": null
+      }
+    },
+    "InstanceSecondaryInterfaceSpecificationListRequest": {
+      "base": null,
+      "refs": {
+        "RunInstancesRequest$SecondaryInterfaces": "<p>The secondary interfaces to associate with the instance.</p>"
+      }
+    },
+    "InstanceSecondaryInterfaceSpecificationRequest": {
+      "base": "<p>Describes a secondary interface specification for launching an instance.</p>",
+      "refs": {
+        "InstanceSecondaryInterfaceSpecificationListRequest$member": null
       }
     },
     "InstanceSet": {
@@ -15001,6 +15175,11 @@
         "InstanceRequirementsRequest$SpotMaxPricePercentageOverLowestPrice": "<p>[Price protection] The price protection threshold for Spot Instances, as a percentage higher than an identified Spot price. The identified Spot price is the Spot price of the lowest priced current generation C, M, or R instance type with your specified attributes. If no current generation C, M, or R instance type matches your attributes, then the identified Spot price is from the lowest priced current generation instance types, and failing that, from the lowest priced previous generation instance types that match your attributes. When Amazon EC2 selects instance types with your attributes, it will exclude instance types whose Spot price exceeds your specified threshold.</p> <p>The parameter accepts an integer, which Amazon EC2 interprets as a percentage.</p> <p>If you set <code>TargetCapacityUnitType</code> to <code>vcpu</code> or <code>memory-mib</code>, the price protection threshold is applied based on the per-vCPU or per-memory price instead of the per-instance price.</p> <p>This parameter is not supported for <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetSpotPlacementScores.html\">GetSpotPlacementScores</a> and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetInstanceTypesFromInstanceRequirements.html\">GetInstanceTypesFromInstanceRequirements</a>.</p> <note> <p>Only one of <code>SpotMaxPricePercentageOverLowestPrice</code> or <code>MaxSpotPriceAsPercentageOfOptimalOnDemandPrice</code> can be specified. If you don't specify either, Amazon EC2 will automatically apply optimal price protection to consistently select from a wide range of instance types. To indicate no price protection threshold for Spot Instances, meaning you want to consider all instance types that match your attributes, include one of these parameters and specify a high value, such as <code>999999</code>.</p> </note> <p>Default: <code>100</code> </p>",
         "InstanceRequirementsRequest$OnDemandMaxPricePercentageOverLowestPrice": "<p>[Price protection] The price protection threshold for On-Demand Instances, as a percentage higher than an identified On-Demand price. The identified On-Demand price is the price of the lowest priced current generation C, M, or R instance type with your specified attributes. When Amazon EC2 selects instance types with your attributes, it will exclude instance types whose price exceeds your specified threshold.</p> <p>The parameter accepts an integer, which Amazon EC2 interprets as a percentage.</p> <p>To indicate no price protection threshold, specify a high value, such as <code>999999</code>.</p> <p>This parameter is not supported for <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetSpotPlacementScores.html\">GetSpotPlacementScores</a> and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetInstanceTypesFromInstanceRequirements.html\">GetInstanceTypesFromInstanceRequirements</a>.</p> <note> <p>If you set <code>TargetCapacityUnitType</code> to <code>vcpu</code> or <code>memory-mib</code>, the price protection threshold is applied based on the per-vCPU or per-memory price instead of the per-instance price.</p> </note> <p>Default: <code>20</code> </p>",
         "InstanceRequirementsRequest$MaxSpotPriceAsPercentageOfOptimalOnDemandPrice": "<p>[Price protection] The price protection threshold for Spot Instances, as a percentage of an identified On-Demand price. The identified On-Demand price is the price of the lowest priced current generation C, M, or R instance type with your specified attributes. If no current generation C, M, or R instance type matches your attributes, then the identified price is from the lowest priced current generation instance types, and failing that, from the lowest priced previous generation instance types that match your attributes. When Amazon EC2 selects instance types with your attributes, it will exclude instance types whose price exceeds your specified threshold.</p> <p>The parameter accepts an integer, which Amazon EC2 interprets as a percentage.</p> <p>If you set <code>TargetCapacityUnitType</code> to <code>vcpu</code> or <code>memory-mib</code>, the price protection threshold is based on the per vCPU or per memory price instead of the per instance price.</p> <note> <p>Only one of <code>SpotMaxPricePercentageOverLowestPrice</code> or <code>MaxSpotPriceAsPercentageOfOptimalOnDemandPrice</code> can be specified. If you don't specify either, Amazon EC2 will automatically apply optimal price protection to consistently select from a wide range of instance types. To indicate no price protection threshold for Spot Instances, meaning you want to consider all instance types that match your attributes, include one of these parameters and specify a high value, such as <code>999999</code>.</p> </note>",
+        "InstanceSecondaryInterfaceAttachment$DeviceIndex": "<p>The device index of the secondary interface.</p>",
+        "InstanceSecondaryInterfaceAttachment$NetworkCardIndex": "<p>The index of the network card.</p>",
+        "InstanceSecondaryInterfaceSpecificationRequest$DeviceIndex": "<p>The device index for the secondary interface attachment.</p>",
+        "InstanceSecondaryInterfaceSpecificationRequest$PrivateIpAddressCount": "<p>The number of private IPv4 addresses to assign to the secondary interface.</p>",
+        "InstanceSecondaryInterfaceSpecificationRequest$NetworkCardIndex": "<p>The index of the network card. The network card must support secondary interfaces.</p>",
         "InstanceState$Code": "<p>The state of the instance as a 16-bit unsigned integer. </p> <p>The high byte is all of the bits between 2^8 and (2^16)-1, which equals decimal values between 256 and 65,535. These numerical values are used for internal purposes and should be ignored.</p> <p>The low byte is all of the bits between 2^0 and (2^8)-1, which equals decimal values between 0 and 255. </p> <p>The valid values for instance-state-code will all be in the range of the low byte and they are:</p> <ul> <li> <p> <code>0</code> : <code>pending</code> </p> </li> <li> <p> <code>16</code> : <code>running</code> </p> </li> <li> <p> <code>32</code> : <code>shutting-down</code> </p> </li> <li> <p> <code>48</code> : <code>terminated</code> </p> </li> <li> <p> <code>64</code> : <code>stopping</code> </p> </li> <li> <p> <code>80</code> : <code>stopped</code> </p> </li> </ul> <p>You can ignore the high byte value by zeroing out all of the bits above 2^8 or 256 in decimal.</p>",
         "InstanceUsage$UsedInstanceCount": "<p>The number of instances the Amazon Web Services account currently has in the Capacity Reservation.</p>",
         "InterruptibleCapacityAllocation$InstanceCount": "<p> The current number of instances allocated to the interruptible reservation. </p>",
@@ -15043,6 +15222,12 @@
         "LaunchTemplateInstanceNetworkInterfaceSpecificationRequest$Ipv4PrefixCount": "<p>The number of IPv4 prefixes to be automatically assigned to the network interface. You cannot use this option if you use the <code>Ipv4Prefix</code> option.</p>",
         "LaunchTemplateInstanceNetworkInterfaceSpecificationRequest$Ipv6PrefixCount": "<p>The number of IPv6 prefixes to be automatically assigned to the network interface. You cannot use this option if you use the <code>Ipv6Prefix</code> option.</p>",
         "LaunchTemplateInstanceNetworkInterfaceSpecificationRequest$EnaQueueCount": "<p>The number of ENA queues to be created with the instance.</p>",
+        "LaunchTemplateInstanceSecondaryInterfaceSpecification$DeviceIndex": "<p>The device index for the secondary interface attachment.</p>",
+        "LaunchTemplateInstanceSecondaryInterfaceSpecification$PrivateIpAddressCount": "<p>The number of private IPv4 addresses to assign to the secondary interface.</p> <p>If you specify <code>privateIpAddressCount</code> you cannot specify <code>privateIpAddresses</code> </p>",
+        "LaunchTemplateInstanceSecondaryInterfaceSpecification$NetworkCardIndex": "<p>The index of the network card.</p>",
+        "LaunchTemplateInstanceSecondaryInterfaceSpecificationRequest$DeviceIndex": "<p>The device index for the secondary interface attachment.</p>",
+        "LaunchTemplateInstanceSecondaryInterfaceSpecificationRequest$PrivateIpAddressCount": "<p>The number of private IPv4 addresses to assign to the secondary interface.</p>",
+        "LaunchTemplateInstanceSecondaryInterfaceSpecificationRequest$NetworkCardIndex": "<p>The index of the network card.</p>",
         "LaunchTemplatePlacement$PartitionNumber": "<p>The number of the partition the instance should launch in. Valid only if the placement group strategy is set to <code>partition</code>.</p>",
         "LaunchTemplatePlacementRequest$PartitionNumber": "<p>The number of the partition the instance should launch in. Valid only if the placement group strategy is set to <code>partition</code>.</p>",
         "LaunchTemplateSpotMarketOptions$BlockDurationMinutes": "<p>The required duration for the Spot Instances (also known as Spot blocks), in minutes. This value must be a multiple of 60 (60, 120, 180, 240, 300, or 360).</p>",
@@ -15156,6 +15341,8 @@
         "ScheduledInstancesNetworkInterface$DeviceIndex": "<p>The index of the device for the network interface attachment.</p>",
         "ScheduledInstancesNetworkInterface$Ipv6AddressCount": "<p>The number of IPv6 addresses to assign to the network interface. The IPv6 addresses are automatically selected from the subnet range.</p>",
         "ScheduledInstancesNetworkInterface$SecondaryPrivateIpAddressCount": "<p>The number of secondary private IPv4 addresses.</p>",
+        "SecondaryInterfaceAttachment$DeviceIndex": "<p>The device index of the secondary interface.</p>",
+        "SecondaryInterfaceAttachment$NetworkCardIndex": "<p>The index of the network card.</p>",
         "SecurityGroupRule$FromPort": "<p>If the protocol is TCP or UDP, this is the start of the port range. If the protocol is ICMP or ICMPv6, this is the ICMP type or -1 (all ICMP types).</p>",
         "SecurityGroupRule$ToPort": "<p>If the protocol is TCP or UDP, this is the end of the port range. If the protocol is ICMP or ICMPv6, this is the ICMP code or -1 (all ICMP codes). If the start port is -1 (all ICMP types), then the end port must be -1 (all ICMP codes).</p>",
         "SecurityGroupRuleRequest$FromPort": "<p>If the protocol is TCP or UDP, this is the start of the port range. If the protocol is ICMP or ICMPv6, this is the ICMP type or -1 (all ICMP types).</p>",
@@ -16346,6 +16533,12 @@
         "ModifyIpamRequest$Tier": "<p>IPAM is offered in a Free Tier and an Advanced Tier. For more information about the features available in each tier and the costs associated with the tiers, see <a href=\"http://aws.amazon.com/vpc/pricing/\">Amazon VPC pricing &gt; IPAM tab</a>.</p>"
       }
     },
+    "Ipv4AddressesPerSecondaryInterface": {
+      "base": null,
+      "refs": {
+        "NetworkInfo$Ipv4AddressesPerSecondaryInterface": "<p>The maximum number of IPv4 addresses per secondary interface.</p>"
+      }
+    },
     "Ipv4PoolCoipId": {
       "base": null,
       "refs": {
@@ -16987,6 +17180,30 @@
       "base": null,
       "refs": {
         "RequestLaunchTemplateData$NetworkInterfaces": "<p>The network interfaces for the instance.</p>"
+      }
+    },
+    "LaunchTemplateInstanceSecondaryInterfaceSpecification": {
+      "base": "<p>Describes a secondary interface specification in a launch template.</p>",
+      "refs": {
+        "LaunchTemplateInstanceSecondaryInterfaceSpecificationList$member": null
+      }
+    },
+    "LaunchTemplateInstanceSecondaryInterfaceSpecificationList": {
+      "base": null,
+      "refs": {
+        "ResponseLaunchTemplateData$SecondaryInterfaces": "<p>The secondary interfaces associated with the launch template.</p>"
+      }
+    },
+    "LaunchTemplateInstanceSecondaryInterfaceSpecificationRequest": {
+      "base": "<p>Describes a secondary interface specification for a launch template request.</p>",
+      "refs": {
+        "LaunchTemplateInstanceSecondaryInterfaceSpecificationRequestList$member": null
+      }
+    },
+    "LaunchTemplateInstanceSecondaryInterfaceSpecificationRequestList": {
+      "base": null,
+      "refs": {
+        "RequestLaunchTemplateData$SecondaryInterfaces": "<p>The secondary interfaces to associate with instances launched from the template.</p>"
       }
     },
     "LaunchTemplateLicenseConfiguration": {
@@ -17910,6 +18127,12 @@
         "NetworkInfo$MaximumNetworkCards": "<p>The maximum number of physical network cards that can be allocated to the instance.</p>"
       }
     },
+    "MaximumSecondaryNetworkInterfaces": {
+      "base": null,
+      "refs": {
+        "NetworkInfo$MaximumSecondaryNetworkInterfaces": "<p>The maximum number of secondary interfaces for the instance type.</p>"
+      }
+    },
     "MaximumThroughputInMBps": {
       "base": null,
       "refs": {
@@ -18166,6 +18389,7 @@
         "ImageUsageReportEntry$ReportCreationTime": "<p>The date and time the report creation was initiated.</p>",
         "Instance$UsageOperationUpdateTime": "<p>The time that the usage operation was last updated.</p>",
         "InstanceImageMetadata$LaunchTime": "<p>The time the instance was launched.</p>",
+        "InstanceSecondaryInterfaceAttachment$AttachTime": "<p>The timestamp when the attachment was created.</p>",
         "IpamAddressHistoryRecord$SampledStartTime": "<p>Sampled start time of the resource-to-CIDR association within the IPAM scope. Changes are picked up in periodic snapshots, so the start time may have occurred before this specific time.</p>",
         "IpamAddressHistoryRecord$SampledEndTime": "<p>Sampled end time of the resource-to-CIDR association within the IPAM scope. Changes are picked up in periodic snapshots, so the end time may have occurred before this specific time.</p>",
         "IpamDiscoveredAccount$LastAttemptedDiscoveryTime": "<p>The last attempted resource discovery time.</p>",
@@ -18200,6 +18424,7 @@
         "RegisteredInstance$LastUpdatedTime": "<p>The date and time when the instance's SQL Server High Availability status was last updated, in the ISO 8601 format in the UTC time zone (<code>YYYY-MM-DDThh:mm:ss.sssZ</code>).</p>",
         "RestoreSnapshotFromRecycleBinResult$StartTime": "<p>The time stamp when the snapshot was initiated.</p>",
         "RestoreSnapshotTierResult$RestoreStartTime": "<p>The date and time when the snapshot restore process started.</p>",
+        "SecondaryInterfaceAttachment$AttachTime": "<p>The timestamp when the attachment was created.</p>",
         "Snapshot$RestoreExpiryTime": "<p>Only for archived snapshots that are temporarily restored. Indicates the date and time when a temporarily restored snapshot will be automatically re-archived.</p>",
         "Snapshot$CompletionTime": "<p>The time stamp when the snapshot was completed.</p>",
         "SnapshotInfo$StartTime": "<p>Time this snapshot was started. This is the same for all snapshots initiated by the same request.</p>",
@@ -20456,7 +20681,6 @@
     "PlacementGroupName": {
       "base": null,
       "refs": {
-        "DeletePlacementGroupRequest$GroupName": "<p>The name of the placement group.</p>",
         "DescribeInstanceTopologyGroupNameSet$member": null,
         "LaunchTemplatePlacementRequest$GroupName": "<p>The name of the placement group for the instance.</p>",
         "ModifyInstancePlacementRequest$GroupName": "<p>The name of the placement group in which to place the instance. For spread placement groups, the instance must have a tenancy of <code>default</code>. For cluster and partition placement groups, the instance must have a tenancy of <code>default</code> or <code>dedicated</code>.</p> <p>To remove an instance from a placement group, specify an empty string (\"\").</p>",
@@ -20465,6 +20689,12 @@
         "PlacementResponse$GroupName": "<p>The name of the placement group that the instance is in.</p>",
         "ScheduledInstancesPlacement$GroupName": "<p>The name of the placement group.</p>",
         "SpotPlacement$GroupName": "<p>The name of the placement group.</p>"
+      }
+    },
+    "PlacementGroupNameWithResolver": {
+      "base": null,
+      "refs": {
+        "DeletePlacementGroupRequest$GroupName": "<p>The name of the placement group.</p>"
       }
     },
     "PlacementGroupState": {
@@ -22855,6 +23085,231 @@
       "refs": {
       }
     },
+    "SecondaryInterface": {
+      "base": "<p>Describes a secondary interface.</p>",
+      "refs": {
+        "SecondaryInterfaceList$member": null
+      }
+    },
+    "SecondaryInterfaceAttachment": {
+      "base": "<p>Describes the attachment of a secondary interface to an instance.</p>",
+      "refs": {
+        "SecondaryInterface$Attachment": "<p>The attachment information for the secondary interface.</p>"
+      }
+    },
+    "SecondaryInterfaceId": {
+      "base": null,
+      "refs": {
+        "InstanceSecondaryInterface$SecondaryInterfaceId": "<p>The ID of the secondary interface.</p>",
+        "SecondaryInterface$SecondaryInterfaceId": "<p>The ID of the secondary interface.</p>",
+        "SecondaryInterfaceIdList$member": null
+      }
+    },
+    "SecondaryInterfaceIdList": {
+      "base": null,
+      "refs": {
+        "DescribeSecondaryInterfacesRequest$SecondaryInterfaceIds": "<p>The IDs of the secondary interfaces.</p>"
+      }
+    },
+    "SecondaryInterfaceIpv4Address": {
+      "base": "<p>Describes a private IPv4 address for a secondary interface.</p>",
+      "refs": {
+        "SecondaryInterfaceIpv4AddressList$member": null
+      }
+    },
+    "SecondaryInterfaceIpv4AddressList": {
+      "base": null,
+      "refs": {
+        "SecondaryInterface$PrivateIpv4Addresses": "<p>The private IPv4 addresses associated with the secondary interface.</p>"
+      }
+    },
+    "SecondaryInterfaceList": {
+      "base": null,
+      "refs": {
+        "DescribeSecondaryInterfacesResult$SecondaryInterfaces": "<p>Information about the secondary interfaces.</p>"
+      }
+    },
+    "SecondaryInterfacePrivateIpAddressSpecification": {
+      "base": "<p>Describes a private IPv4 address specification for a secondary interface.</p>",
+      "refs": {
+        "SecondaryInterfacePrivateIpAddressSpecificationList$member": null
+      }
+    },
+    "SecondaryInterfacePrivateIpAddressSpecificationList": {
+      "base": null,
+      "refs": {
+        "LaunchTemplateInstanceSecondaryInterfaceSpecification$PrivateIpAddresses": "<p>The private IPv4 addresses to assign to the secondary interface.</p> <p>If you specify <code>privateIpAddresses</code> you cannot specify <code>privateIpAddressCount</code> </p>"
+      }
+    },
+    "SecondaryInterfacePrivateIpAddressSpecificationListRequest": {
+      "base": null,
+      "refs": {
+        "LaunchTemplateInstanceSecondaryInterfaceSpecificationRequest$PrivateIpAddresses": "<p>The private IPv4 addresses to assign to the secondary interface.</p>"
+      }
+    },
+    "SecondaryInterfacePrivateIpAddressSpecificationRequest": {
+      "base": "<p>Describes a private IPv4 address specification for a secondary interface request.</p>",
+      "refs": {
+        "SecondaryInterfacePrivateIpAddressSpecificationListRequest$member": null
+      }
+    },
+    "SecondaryInterfaceStatus": {
+      "base": null,
+      "refs": {
+        "InstanceSecondaryInterface$Status": "<p>The status of the secondary interface.</p>",
+        "SecondaryInterface$Status": "<p>The status of the secondary interface.</p>"
+      }
+    },
+    "SecondaryInterfaceType": {
+      "base": null,
+      "refs": {
+        "InstanceSecondaryInterface$InterfaceType": "<p>The type of secondary interface.</p>",
+        "InstanceSecondaryInterfaceSpecificationRequest$InterfaceType": "<p>The type of secondary interface.</p>",
+        "LaunchTemplateInstanceSecondaryInterfaceSpecification$InterfaceType": "<p>The type of secondary interface.</p>",
+        "LaunchTemplateInstanceSecondaryInterfaceSpecificationRequest$InterfaceType": "<p>The type of secondary interface.</p>",
+        "SecondaryInterface$SecondaryInterfaceType": "<p>The type of secondary interface.</p>"
+      }
+    },
+    "SecondaryNetwork": {
+      "base": "<p>Describes a secondary network.</p>",
+      "refs": {
+        "CreateSecondaryNetworkResult$SecondaryNetwork": "<p>Information about the secondary network.</p>",
+        "DeleteSecondaryNetworkResult$SecondaryNetwork": "<p>Information about the secondary network.</p>",
+        "SecondaryNetworkList$member": null
+      }
+    },
+    "SecondaryNetworkCidrAssociationId": {
+      "base": null,
+      "refs": {
+        "SecondaryNetworkIpv4CidrBlockAssociation$AssociationId": "<p>The association ID for the IPv4 CIDR block.</p>"
+      }
+    },
+    "SecondaryNetworkCidrBlockAssociationState": {
+      "base": null,
+      "refs": {
+        "SecondaryNetworkIpv4CidrBlockAssociation$State": "<p>The state of the CIDR block association.</p>"
+      }
+    },
+    "SecondaryNetworkId": {
+      "base": null,
+      "refs": {
+        "CreateSecondarySubnetRequest$SecondaryNetworkId": "<p>The ID of the secondary network in which to create the secondary subnet.</p>",
+        "DeleteSecondaryNetworkRequest$SecondaryNetworkId": "<p>The ID of the secondary network.</p>",
+        "InstanceSecondaryInterface$SecondaryNetworkId": "<p>The ID of the secondary network.</p>",
+        "SecondaryInterface$SecondaryNetworkId": "<p>The ID of the secondary network.</p>",
+        "SecondaryNetwork$SecondaryNetworkId": "<p>The ID of the secondary network.</p>",
+        "SecondaryNetworkIdList$member": null,
+        "SecondarySubnet$SecondaryNetworkId": "<p>The ID of the secondary network.</p>"
+      }
+    },
+    "SecondaryNetworkIdList": {
+      "base": null,
+      "refs": {
+        "DescribeSecondaryNetworksRequest$SecondaryNetworkIds": "<p>The IDs of the secondary networks.</p>"
+      }
+    },
+    "SecondaryNetworkIpv4CidrBlockAssociation": {
+      "base": "<p>Describes an IPv4 CIDR block associated with a secondary network.</p>",
+      "refs": {
+        "SecondaryNetworkIpv4CidrBlockAssociationList$member": null
+      }
+    },
+    "SecondaryNetworkIpv4CidrBlockAssociationList": {
+      "base": null,
+      "refs": {
+        "SecondaryNetwork$Ipv4CidrBlockAssociations": "<p>Information about the IPv4 CIDR blocks associated with the secondary network.</p>"
+      }
+    },
+    "SecondaryNetworkList": {
+      "base": null,
+      "refs": {
+        "DescribeSecondaryNetworksResult$SecondaryNetworks": "<p>Information about the secondary networks.</p>"
+      }
+    },
+    "SecondaryNetworkState": {
+      "base": null,
+      "refs": {
+        "SecondaryNetwork$State": "<p>The state of the secondary network.</p>"
+      }
+    },
+    "SecondaryNetworkSupportedFlag": {
+      "base": null,
+      "refs": {
+        "NetworkInfo$SecondaryNetworkSupported": "<p>Indicates whether secondary interface attachments from secondary network are supported.</p>"
+      }
+    },
+    "SecondaryNetworkType": {
+      "base": null,
+      "refs": {
+        "CreateSecondaryNetworkRequest$NetworkType": "<p>The type of secondary network.</p>",
+        "SecondaryInterface$SecondaryNetworkType": "<p>The type of the secondary network.</p>",
+        "SecondaryNetwork$Type": "<p>The type of the secondary network.</p>",
+        "SecondarySubnet$SecondaryNetworkType": "<p>The type of the secondary network.</p>"
+      }
+    },
+    "SecondarySubnet": {
+      "base": "<p>Describes a secondary subnet.</p>",
+      "refs": {
+        "CreateSecondarySubnetResult$SecondarySubnet": "<p>Information about the secondary subnet.</p>",
+        "DeleteSecondarySubnetResult$SecondarySubnet": "<p>Information about the secondary subnet being deleted.</p>",
+        "SecondarySubnetList$member": null
+      }
+    },
+    "SecondarySubnetCidrAssociationId": {
+      "base": null,
+      "refs": {
+        "SecondarySubnetIpv4CidrBlockAssociation$AssociationId": "<p>The association ID for the IPv4 CIDR block.</p>"
+      }
+    },
+    "SecondarySubnetCidrBlockAssociationState": {
+      "base": null,
+      "refs": {
+        "SecondarySubnetIpv4CidrBlockAssociation$State": "<p>The state of the CIDR block association.</p>"
+      }
+    },
+    "SecondarySubnetId": {
+      "base": null,
+      "refs": {
+        "DeleteSecondarySubnetRequest$SecondarySubnetId": "<p>The ID of the secondary subnet to delete.</p>",
+        "InstanceSecondaryInterface$SecondarySubnetId": "<p>The ID of the secondary subnet.</p>",
+        "InstanceSecondaryInterfaceSpecificationRequest$SecondarySubnetId": "<p>The ID of the secondary subnet.</p>",
+        "LaunchTemplateInstanceSecondaryInterfaceSpecification$SecondarySubnetId": "<p>The ID of the secondary subnet.</p>",
+        "LaunchTemplateInstanceSecondaryInterfaceSpecificationRequest$SecondarySubnetId": "<p>The ID of the secondary subnet.</p>",
+        "SecondaryInterface$SecondarySubnetId": "<p>The ID of the secondary subnet.</p>",
+        "SecondarySubnet$SecondarySubnetId": "<p>The ID of the secondary subnet.</p>",
+        "SecondarySubnetIdList$member": null
+      }
+    },
+    "SecondarySubnetIdList": {
+      "base": null,
+      "refs": {
+        "DescribeSecondarySubnetsRequest$SecondarySubnetIds": "<p>The IDs of the secondary subnets.</p>"
+      }
+    },
+    "SecondarySubnetIpv4CidrBlockAssociation": {
+      "base": "<p>Describes an IPv4 CIDR block associated with a secondary subnet.</p>",
+      "refs": {
+        "SecondarySubnetIpv4CidrBlockAssociationList$member": null
+      }
+    },
+    "SecondarySubnetIpv4CidrBlockAssociationList": {
+      "base": null,
+      "refs": {
+        "SecondarySubnet$Ipv4CidrBlockAssociations": "<p>Information about the IPv4 CIDR blocks associated with the secondary subnet.</p>"
+      }
+    },
+    "SecondarySubnetList": {
+      "base": null,
+      "refs": {
+        "DescribeSecondarySubnetsResult$SecondarySubnets": "<p>Information about the secondary subnets.</p>"
+      }
+    },
+    "SecondarySubnetState": {
+      "base": null,
+      "refs": {
+        "SecondarySubnet$State": "<p>The state of the secondary subnet.</p>"
+      }
+    },
     "SecretArn": {
       "base": null,
       "refs": {
@@ -24247,6 +24702,12 @@
         "CreateRouteServerRequest$ClientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateRouteTableRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateRouteTableResult$ClientToken": "<p>Unique, case-sensitive identifier to ensure the idempotency of the request. Only returned if a client token was provided in the request.</p>",
+        "CreateSecondaryNetworkRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensure Idempotency</a>.</p>",
+        "CreateSecondaryNetworkRequest$Ipv4CidrBlock": "<p>The IPv4 CIDR block for the secondary network. The CIDR block size must be between /12 and /28.</p>",
+        "CreateSecondaryNetworkResult$ClientToken": "<p>Unique, case-sensitive identifier to ensure the idempotency of the request. Only returned if a client token was provided in the request.</p>",
+        "CreateSecondarySubnetRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensure Idempotency</a>.</p>",
+        "CreateSecondarySubnetRequest$Ipv4CidrBlock": "<p>The IPv4 CIDR block for the secondary subnet. The CIDR block size must be between /12 and /28.</p>",
+        "CreateSecondarySubnetResult$ClientToken": "<p>Unique, case-sensitive identifier to ensure the idempotency of the request. Only returned if a client token was provided in the request.</p>",
         "CreateSecurityGroupRequest$Description": "<p>A description for the security group.</p> <p>Constraints: Up to 255 characters in length</p> <p>Valid characters: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&amp;;{}!$*</p>",
         "CreateSecurityGroupRequest$GroupName": "<p>The name of the security group. Names are case-insensitive and must be unique within the VPC.</p> <p>Constraints: Up to 255 characters in length. Can't start with <code>sg-</code>.</p> <p>Valid characters: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&amp;;{}!$*</p>",
         "CreateSecurityGroupResult$GroupId": "<p>The ID of the security group.</p>",
@@ -24381,6 +24842,10 @@
         "DeleteQueuedReservedInstancesError$Message": "<p>The error message.</p>",
         "DeleteRouteRequest$DestinationCidrBlock": "<p>The IPv4 CIDR range for the route. The value you specify must match the CIDR for the route exactly.</p>",
         "DeleteRouteRequest$DestinationIpv6CidrBlock": "<p>The IPv6 CIDR range for the route. The value you specify must match the CIDR for the route exactly.</p>",
+        "DeleteSecondaryNetworkRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensure Idempotency</a>.</p>",
+        "DeleteSecondaryNetworkResult$ClientToken": "<p>Unique, case-sensitive identifier to ensure the idempotency of the request. Only returned if a client token was provided in the request.</p>",
+        "DeleteSecondarySubnetRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensure Idempotency</a>.</p>",
+        "DeleteSecondarySubnetResult$ClientToken": "<p>Unique, case-sensitive identifier to ensure the idempotency of the request. Only returned if a client token was provided in the request.</p>",
         "DeleteTrafficMirrorFilterResult$TrafficMirrorFilterId": "<p>The ID of the Traffic Mirror filter.</p>",
         "DeleteTrafficMirrorFilterRuleResult$TrafficMirrorFilterRuleId": "<p>The ID of the deleted Traffic Mirror rule.</p>",
         "DeleteTrafficMirrorSessionResult$TrafficMirrorSessionId": "<p>The ID of the deleted Traffic Mirror session.</p>",
@@ -24557,6 +25022,12 @@
         "DescribeScheduledInstanceAvailabilityResult$NextToken": "<p>The token required to retrieve the next set of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeScheduledInstancesRequest$NextToken": "<p>The token for the next set of results.</p>",
         "DescribeScheduledInstancesResult$NextToken": "<p>The token required to retrieve the next set of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "DescribeSecondaryInterfacesRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeSecondaryInterfacesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "DescribeSecondaryNetworksRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeSecondaryNetworksResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "DescribeSecondarySubnetsRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeSecondarySubnetsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeSecurityGroupRulesRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
         "DescribeSecurityGroupRulesResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "DescribeSecurityGroupVpcAssociationsRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
@@ -25105,6 +25576,11 @@
         "InstanceNetworkInterfaceSpecification$InterfaceType": "<p>The type of network interface.</p> <p>If you specify <code>efa-only</code>, do not assign any IP addresses to the network interface. EFA-only network interfaces do not support IP addresses.</p> <p>Valid values: <code>interface</code> | <code>efa</code> | <code>efa-only</code> </p>",
         "InstancePrivateIpAddress$PrivateDnsName": "<p>The private IPv4 DNS name.</p>",
         "InstancePrivateIpAddress$PrivateIpAddress": "<p>The private IPv4 address of the network interface.</p>",
+        "InstanceSecondaryInterface$MacAddress": "<p>The MAC address of the secondary interface.</p>",
+        "InstanceSecondaryInterface$OwnerId": "<p>The Amazon Web Services account ID of the owner of the secondary interface.</p>",
+        "InstanceSecondaryInterfaceAttachment$AttachmentId": "<p>The ID of the attachment.</p>",
+        "InstanceSecondaryInterfacePrivateIpAddress$PrivateIpAddress": "<p>The private IPv4 address.</p>",
+        "InstanceSecondaryInterfacePrivateIpAddressRequest$PrivateIpAddress": "<p>The private IPv4 address.</p>",
         "InstanceStateChange$InstanceId": "<p>The ID of the instance.</p>",
         "InstanceStatus$AvailabilityZone": "<p>The Availability Zone of the instance.</p>",
         "InstanceStatus$OutpostArn": "<p>The Amazon Resource Name (ARN) of the Outpost.</p>",
@@ -25818,6 +26294,25 @@
         "SearchTransitGatewayMulticastGroupsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "SearchTransitGatewayRoutesRequest$NextToken": "<p>The token for the next page of results.</p>",
         "SearchTransitGatewayRoutesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "SecondaryInterface$MacAddress": "<p>The MAC address of the secondary interface.</p>",
+        "SecondaryInterface$OwnerId": "<p>The ID of the Amazon Web Services account that owns the secondary interface.</p>",
+        "SecondaryInterface$SecondaryInterfaceArn": "<p>The Amazon Resource Name (ARN) of the secondary interface.</p>",
+        "SecondaryInterfaceAttachment$AttachmentId": "<p>The ID of the attachment.</p>",
+        "SecondaryInterfaceAttachment$InstanceId": "<p>The ID of the instance to which the secondary interface is attached.</p>",
+        "SecondaryInterfaceAttachment$InstanceOwnerId": "<p>The Amazon Web Services account ID of the owner of the instance.</p>",
+        "SecondaryInterfaceIpv4Address$PrivateIpAddress": "<p>The private IPv4 address.</p>",
+        "SecondaryInterfacePrivateIpAddressSpecification$PrivateIpAddress": "<p>The private IPv4 address.</p>",
+        "SecondaryInterfacePrivateIpAddressSpecificationRequest$PrivateIpAddress": "<p>The private IPv4 address.</p>",
+        "SecondaryNetwork$SecondaryNetworkArn": "<p>The Amazon Resource Name (ARN) of the secondary network.</p>",
+        "SecondaryNetwork$OwnerId": "<p>The ID of the Amazon Web Services account that owns the secondary network.</p>",
+        "SecondaryNetwork$StateReason": "<p>The reason for the current state of the secondary network.</p>",
+        "SecondaryNetworkIpv4CidrBlockAssociation$CidrBlock": "<p>The IPv4 CIDR block.</p>",
+        "SecondaryNetworkIpv4CidrBlockAssociation$StateReason": "<p>The reason for the current state of the CIDR block association.</p>",
+        "SecondarySubnet$SecondarySubnetArn": "<p>The Amazon Resource Name (ARN) of the secondary subnet.</p>",
+        "SecondarySubnet$OwnerId": "<p>The ID of the Amazon Web Services account that owns the secondary subnet.</p>",
+        "SecondarySubnet$StateReason": "<p>The reason for the current state of the secondary subnet.</p>",
+        "SecondarySubnetIpv4CidrBlockAssociation$CidrBlock": "<p>The IPv4 CIDR block.</p>",
+        "SecondarySubnetIpv4CidrBlockAssociation$StateReason": "<p>The reason for the current state of the CIDR block association.</p>",
         "SecurityGroup$GroupId": "<p>The ID of the security group.</p>",
         "SecurityGroup$VpcId": "<p>The ID of the VPC for the security group.</p>",
         "SecurityGroup$SecurityGroupArn": "<p>The ARN of the security group.</p>",
@@ -26697,6 +27192,9 @@
         "RouteServerEndpoint$Tags": "<p>Any tags assigned to the route server endpoint.</p>",
         "RouteServerPeer$Tags": "<p>Any tags assigned to the route server peer.</p>",
         "RouteTable$Tags": "<p>Any tags assigned to the route table.</p>",
+        "SecondaryInterface$Tags": "<p>The tags assigned to the secondary interface.</p>",
+        "SecondaryNetwork$Tags": "<p>The tags assigned to the secondary network.</p>",
+        "SecondarySubnet$Tags": "<p>The tags assigned to the secondary subnet.</p>",
         "SecurityGroup$Tags": "<p>Any tags assigned to the security group.</p>",
         "SecurityGroupForVpc$Tags": "<p>The security group tags.</p>",
         "SecurityGroupRule$Tags": "<p>The tags applied to the security group rule.</p>",
@@ -26815,6 +27313,8 @@
         "CreateRouteServerPeerRequest$TagSpecifications": "<p>The tags to apply to the route server peer during creation.</p>",
         "CreateRouteServerRequest$TagSpecifications": "<p>The tags to apply to the route server during creation.</p>",
         "CreateRouteTableRequest$TagSpecifications": "<p>The tags to assign to the route table.</p>",
+        "CreateSecondaryNetworkRequest$TagSpecifications": "<p>The tags to assign to the secondary network.</p>",
+        "CreateSecondarySubnetRequest$TagSpecifications": "<p>The tags to assign to the secondary subnet.</p>",
         "CreateSecurityGroupRequest$TagSpecifications": "<p>The tags to assign to the security group.</p>",
         "CreateSnapshotRequest$TagSpecifications": "<p>The tags to apply to the snapshot during creation.</p>",
         "CreateSnapshotsRequest$TagSpecifications": "<p>Tags to apply to every snapshot specified by the instance.</p>",

@@ -1107,6 +1107,24 @@
       "input":{"shape":"CreateRouteTableRequest"},
       "output":{"shape":"CreateRouteTableResult"}
     },
+    "CreateSecondaryNetwork":{
+      "name":"CreateSecondaryNetwork",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateSecondaryNetworkRequest"},
+      "output":{"shape":"CreateSecondaryNetworkResult"}
+    },
+    "CreateSecondarySubnet":{
+      "name":"CreateSecondarySubnet",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateSecondarySubnetRequest"},
+      "output":{"shape":"CreateSecondarySubnetResult"}
+    },
     "CreateSecurityGroup":{
       "name":"CreateSecurityGroup",
       "http":{
@@ -1923,6 +1941,24 @@
         "requestUri":"/"
       },
       "input":{"shape":"DeleteRouteTableRequest"}
+    },
+    "DeleteSecondaryNetwork":{
+      "name":"DeleteSecondaryNetwork",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteSecondaryNetworkRequest"},
+      "output":{"shape":"DeleteSecondaryNetworkResult"}
+    },
+    "DeleteSecondarySubnet":{
+      "name":"DeleteSecondarySubnet",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteSecondarySubnetRequest"},
+      "output":{"shape":"DeleteSecondarySubnetResult"}
     },
     "DeleteSecurityGroup":{
       "name":"DeleteSecurityGroup",
@@ -3426,6 +3462,33 @@
       },
       "input":{"shape":"DescribeScheduledInstancesRequest"},
       "output":{"shape":"DescribeScheduledInstancesResult"}
+    },
+    "DescribeSecondaryInterfaces":{
+      "name":"DescribeSecondaryInterfaces",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSecondaryInterfacesRequest"},
+      "output":{"shape":"DescribeSecondaryInterfacesResult"}
+    },
+    "DescribeSecondaryNetworks":{
+      "name":"DescribeSecondaryNetworks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSecondaryNetworksRequest"},
+      "output":{"shape":"DescribeSecondaryNetworksResult"}
+    },
+    "DescribeSecondarySubnets":{
+      "name":"DescribeSecondarySubnets",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSecondarySubnetsRequest"},
+      "output":{"shape":"DescribeSecondarySubnetsResult"}
     },
     "DescribeSecurityGroupReferences":{
       "name":"DescribeSecurityGroupReferences",
@@ -14612,6 +14675,74 @@
         }
       }
     },
+    "CreateSecondaryNetworkRequest":{
+      "type":"structure",
+      "required":[
+        "Ipv4CidrBlock",
+        "NetworkType"
+      ],
+      "members":{
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"},
+        "Ipv4CidrBlock":{"shape":"String"},
+        "NetworkType":{"shape":"SecondaryNetworkType"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        }
+      }
+    },
+    "CreateSecondaryNetworkResult":{
+      "type":"structure",
+      "members":{
+        "SecondaryNetwork":{
+          "shape":"SecondaryNetwork",
+          "locationName":"secondaryNetwork"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "CreateSecondarySubnetRequest":{
+      "type":"structure",
+      "required":[
+        "Ipv4CidrBlock",
+        "SecondaryNetworkId"
+      ],
+      "members":{
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "AvailabilityZone":{"shape":"AvailabilityZoneName"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
+        "DryRun":{"shape":"Boolean"},
+        "Ipv4CidrBlock":{"shape":"String"},
+        "SecondaryNetworkId":{"shape":"SecondaryNetworkId"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        }
+      }
+    },
+    "CreateSecondarySubnetResult":{
+      "type":"structure",
+      "members":{
+        "SecondarySubnet":{
+          "shape":"SecondarySubnet",
+          "locationName":"secondarySubnet"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "locationName":"clientToken"
+        }
+      }
+    },
     "CreateSecurityGroupRequest":{
       "type":"structure",
       "required":[
@@ -17114,7 +17245,7 @@
           "locationName":"dryRun"
         },
         "GroupName":{
-          "shape":"PlacementGroupName",
+          "shape":"PlacementGroupNameWithResolver",
           "locationName":"groupName"
         }
       }
@@ -17276,6 +17407,56 @@
         "RouteTableId":{
           "shape":"RouteTableId",
           "locationName":"routeTableId"
+        }
+      }
+    },
+    "DeleteSecondaryNetworkRequest":{
+      "type":"structure",
+      "required":["SecondaryNetworkId"],
+      "members":{
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"},
+        "SecondaryNetworkId":{"shape":"SecondaryNetworkId"}
+      }
+    },
+    "DeleteSecondaryNetworkResult":{
+      "type":"structure",
+      "members":{
+        "SecondaryNetwork":{
+          "shape":"SecondaryNetwork",
+          "locationName":"secondaryNetwork"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "DeleteSecondarySubnetRequest":{
+      "type":"structure",
+      "required":["SecondarySubnetId"],
+      "members":{
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"},
+        "SecondarySubnetId":{"shape":"SecondarySubnetId"}
+      }
+    },
+    "DeleteSecondarySubnetResult":{
+      "type":"structure",
+      "members":{
+        "SecondarySubnet":{
+          "shape":"SecondarySubnet",
+          "locationName":"secondarySubnet"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "locationName":"clientToken"
         }
       }
     },
@@ -22093,6 +22274,108 @@
         "ScheduledInstanceSet":{
           "shape":"ScheduledInstanceSet",
           "locationName":"scheduledInstanceSet"
+        }
+      }
+    },
+    "DescribeSecondaryInterfacesMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":5
+    },
+    "DescribeSecondaryInterfacesRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"DescribeSecondaryInterfacesMaxResults"},
+        "NextToken":{"shape":"String"},
+        "SecondaryInterfaceIds":{
+          "shape":"SecondaryInterfaceIdList",
+          "locationName":"SecondaryInterfaceId"
+        }
+      }
+    },
+    "DescribeSecondaryInterfacesResult":{
+      "type":"structure",
+      "members":{
+        "SecondaryInterfaces":{
+          "shape":"SecondaryInterfaceList",
+          "locationName":"secondaryInterfaceSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeSecondaryNetworksMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":5
+    },
+    "DescribeSecondaryNetworksRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"DescribeSecondaryNetworksMaxResults"},
+        "NextToken":{"shape":"String"},
+        "SecondaryNetworkIds":{
+          "shape":"SecondaryNetworkIdList",
+          "locationName":"SecondaryNetworkId"
+        }
+      }
+    },
+    "DescribeSecondaryNetworksResult":{
+      "type":"structure",
+      "members":{
+        "SecondaryNetworks":{
+          "shape":"SecondaryNetworkList",
+          "locationName":"secondaryNetworkSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeSecondarySubnetsMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":5
+    },
+    "DescribeSecondarySubnetsRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"DescribeSecondarySubnetsMaxResults"},
+        "NextToken":{"shape":"String"},
+        "SecondarySubnetIds":{
+          "shape":"SecondarySubnetIdList",
+          "locationName":"SecondarySubnetId"
+        }
+      }
+    },
+    "DescribeSecondarySubnetsResult":{
+      "type":"structure",
+      "members":{
+        "SecondarySubnets":{
+          "shape":"SecondarySubnetList",
+          "locationName":"secondarySubnetSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
         }
       }
     },
@@ -32535,6 +32818,10 @@
           "shape":"OperatorResponse",
           "locationName":"operator"
         },
+        "SecondaryInterfaces":{
+          "shape":"InstanceSecondaryInterfaceList",
+          "locationName":"secondaryInterfaceSet"
+        },
         "InstanceId":{
           "shape":"String",
           "locationName":"instanceId"
@@ -33925,6 +34212,139 @@
           "locationName":"VirtualizationType"
         },
         "InstanceRequirements":{"shape":"InstanceRequirementsRequest"}
+      }
+    },
+    "InstanceSecondaryInterface":{
+      "type":"structure",
+      "members":{
+        "Attachment":{
+          "shape":"InstanceSecondaryInterfaceAttachment",
+          "locationName":"attachment"
+        },
+        "MacAddress":{
+          "shape":"String",
+          "locationName":"macAddress"
+        },
+        "SecondaryInterfaceId":{
+          "shape":"SecondaryInterfaceId",
+          "locationName":"secondaryInterfaceId"
+        },
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "PrivateIpAddresses":{
+          "shape":"InstanceSecondaryInterfacePrivateIpAddressList",
+          "locationName":"privateIpAddressSet"
+        },
+        "SourceDestCheck":{
+          "shape":"Boolean",
+          "locationName":"sourceDestCheck"
+        },
+        "Status":{
+          "shape":"SecondaryInterfaceStatus",
+          "locationName":"status"
+        },
+        "SecondarySubnetId":{
+          "shape":"SecondarySubnetId",
+          "locationName":"secondarySubnetId"
+        },
+        "SecondaryNetworkId":{
+          "shape":"SecondaryNetworkId",
+          "locationName":"secondaryNetworkId"
+        },
+        "InterfaceType":{
+          "shape":"SecondaryInterfaceType",
+          "locationName":"interfaceType"
+        }
+      }
+    },
+    "InstanceSecondaryInterfaceAttachment":{
+      "type":"structure",
+      "members":{
+        "AttachTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"attachTime"
+        },
+        "AttachmentId":{
+          "shape":"String",
+          "locationName":"attachmentId"
+        },
+        "DeleteOnTermination":{
+          "shape":"Boolean",
+          "locationName":"deleteOnTermination"
+        },
+        "DeviceIndex":{
+          "shape":"Integer",
+          "locationName":"deviceIndex"
+        },
+        "Status":{
+          "shape":"AttachmentStatus",
+          "locationName":"status"
+        },
+        "NetworkCardIndex":{
+          "shape":"Integer",
+          "locationName":"networkCardIndex"
+        }
+      }
+    },
+    "InstanceSecondaryInterfaceList":{
+      "type":"list",
+      "member":{
+        "shape":"InstanceSecondaryInterface",
+        "locationName":"item"
+      }
+    },
+    "InstanceSecondaryInterfacePrivateIpAddress":{
+      "type":"structure",
+      "members":{
+        "PrivateIpAddress":{
+          "shape":"String",
+          "locationName":"privateIpAddress"
+        }
+      }
+    },
+    "InstanceSecondaryInterfacePrivateIpAddressList":{
+      "type":"list",
+      "member":{
+        "shape":"InstanceSecondaryInterfacePrivateIpAddress",
+        "locationName":"item"
+      }
+    },
+    "InstanceSecondaryInterfacePrivateIpAddressListRequest":{
+      "type":"list",
+      "member":{
+        "shape":"InstanceSecondaryInterfacePrivateIpAddressRequest",
+        "locationName":"item"
+      }
+    },
+    "InstanceSecondaryInterfacePrivateIpAddressRequest":{
+      "type":"structure",
+      "required":["PrivateIpAddress"],
+      "members":{
+        "PrivateIpAddress":{"shape":"String"}
+      }
+    },
+    "InstanceSecondaryInterfaceSpecificationListRequest":{
+      "type":"list",
+      "member":{
+        "shape":"InstanceSecondaryInterfaceSpecificationRequest",
+        "locationName":"item"
+      }
+    },
+    "InstanceSecondaryInterfaceSpecificationRequest":{
+      "type":"structure",
+      "members":{
+        "DeleteOnTermination":{"shape":"Boolean"},
+        "DeviceIndex":{"shape":"Integer"},
+        "PrivateIpAddresses":{
+          "shape":"InstanceSecondaryInterfacePrivateIpAddressListRequest",
+          "locationName":"PrivateIpAddress"
+        },
+        "PrivateIpAddressCount":{"shape":"Integer"},
+        "SecondarySubnetId":{"shape":"SecondarySubnetId"},
+        "InterfaceType":{"shape":"SecondaryInterfaceType"},
+        "NetworkCardIndex":{"shape":"Integer"}
       }
     },
     "InstanceSet":{
@@ -37647,6 +38067,7 @@
         "advanced"
       ]
     },
+    "Ipv4AddressesPerSecondaryInterface":{"type":"integer"},
     "Ipv4PoolCoipId":{"type":"string"},
     "Ipv4PoolEc2Id":{"type":"string"},
     "Ipv4PrefixList":{
@@ -38689,6 +39110,68 @@
       "member":{
         "shape":"LaunchTemplateInstanceNetworkInterfaceSpecificationRequest",
         "locationName":"InstanceNetworkInterfaceSpecification"
+      }
+    },
+    "LaunchTemplateInstanceSecondaryInterfaceSpecification":{
+      "type":"structure",
+      "members":{
+        "DeleteOnTermination":{
+          "shape":"Boolean",
+          "locationName":"deleteOnTermination"
+        },
+        "DeviceIndex":{
+          "shape":"Integer",
+          "locationName":"deviceIndex"
+        },
+        "PrivateIpAddresses":{
+          "shape":"SecondaryInterfacePrivateIpAddressSpecificationList",
+          "locationName":"privateIpAddressesSet"
+        },
+        "PrivateIpAddressCount":{
+          "shape":"Integer",
+          "locationName":"privateIpAddressCount"
+        },
+        "SecondarySubnetId":{
+          "shape":"SecondarySubnetId",
+          "locationName":"secondarySubnetId"
+        },
+        "InterfaceType":{
+          "shape":"SecondaryInterfaceType",
+          "locationName":"interfaceType"
+        },
+        "NetworkCardIndex":{
+          "shape":"Integer",
+          "locationName":"networkCardIndex"
+        }
+      }
+    },
+    "LaunchTemplateInstanceSecondaryInterfaceSpecificationList":{
+      "type":"list",
+      "member":{
+        "shape":"LaunchTemplateInstanceSecondaryInterfaceSpecification",
+        "locationName":"item"
+      }
+    },
+    "LaunchTemplateInstanceSecondaryInterfaceSpecificationRequest":{
+      "type":"structure",
+      "members":{
+        "DeleteOnTermination":{"shape":"Boolean"},
+        "DeviceIndex":{"shape":"Integer"},
+        "PrivateIpAddresses":{
+          "shape":"SecondaryInterfacePrivateIpAddressSpecificationListRequest",
+          "locationName":"PrivateIpAddress"
+        },
+        "PrivateIpAddressCount":{"shape":"Integer"},
+        "SecondarySubnetId":{"shape":"SecondarySubnetId"},
+        "InterfaceType":{"shape":"SecondaryInterfaceType"},
+        "NetworkCardIndex":{"shape":"Integer"}
+      }
+    },
+    "LaunchTemplateInstanceSecondaryInterfaceSpecificationRequestList":{
+      "type":"list",
+      "member":{
+        "shape":"LaunchTemplateInstanceSecondaryInterfaceSpecificationRequest",
+        "locationName":"InstanceSecondaryInterfaceSpecification"
       }
     },
     "LaunchTemplateLicenseConfiguration":{
@@ -40090,6 +40573,7 @@
     "MaximumEnaQueueCountPerInterface":{"type":"integer"},
     "MaximumIops":{"type":"integer"},
     "MaximumNetworkCards":{"type":"integer"},
+    "MaximumSecondaryNetworkInterfaces":{"type":"integer"},
     "MaximumThroughputInMBps":{"type":"double"},
     "MediaAcceleratorInfo":{
       "type":"structure",
@@ -43164,6 +43648,18 @@
         "FlexibleEnaQueuesSupport":{
           "shape":"FlexibleEnaQueuesSupport",
           "locationName":"flexibleEnaQueuesSupport"
+        },
+        "SecondaryNetworkSupported":{
+          "shape":"SecondaryNetworkSupportedFlag",
+          "locationName":"secondaryNetworkSupported"
+        },
+        "MaximumSecondaryNetworkInterfaces":{
+          "shape":"MaximumSecondaryNetworkInterfaces",
+          "locationName":"maximumSecondaryNetworkInterfaces"
+        },
+        "Ipv4AddressesPerSecondaryInterface":{
+          "shape":"Ipv4AddressesPerSecondaryInterface",
+          "locationName":"ipv4AddressesPerSecondaryInterface"
         }
       }
     },
@@ -44584,7 +45080,6 @@
     },
     "Period":{
       "type":"integer",
-      "max":86400,
       "min":3600
     },
     "PeriodType":{
@@ -44898,6 +45393,7 @@
       }
     },
     "PlacementGroupName":{"type":"string"},
+    "PlacementGroupNameWithResolver":{"type":"string"},
     "PlacementGroupState":{
       "type":"string",
       "enum":[
@@ -46982,7 +47478,11 @@
         "MaintenanceOptions":{"shape":"LaunchTemplateInstanceMaintenanceOptionsRequest"},
         "DisableApiStop":{"shape":"Boolean"},
         "Operator":{"shape":"OperatorRequest"},
-        "NetworkPerformanceOptions":{"shape":"LaunchTemplateNetworkPerformanceOptionsRequest"}
+        "NetworkPerformanceOptions":{"shape":"LaunchTemplateNetworkPerformanceOptionsRequest"},
+        "SecondaryInterfaces":{
+          "shape":"LaunchTemplateInstanceSecondaryInterfaceSpecificationRequestList",
+          "locationName":"SecondaryInterface"
+        }
       }
     },
     "RequestSpotFleetRequest":{
@@ -47934,6 +48434,9 @@
         "ipam-prefix-list-resolver",
         "ipam-policy",
         "ipam-prefix-list-resolver-target",
+        "secondary-interface",
+        "secondary-network",
+        "secondary-subnet",
         "capacity-manager-data-export",
         "vpn-concentrator"
       ]
@@ -48132,6 +48635,10 @@
         "NetworkPerformanceOptions":{
           "shape":"LaunchTemplateNetworkPerformanceOptions",
           "locationName":"networkPerformanceOptions"
+        },
+        "SecondaryInterfaces":{
+          "shape":"LaunchTemplateInstanceSecondaryInterfaceSpecificationList",
+          "locationName":"secondaryInterfaceSet"
         }
       }
     },
@@ -49318,6 +49825,10 @@
         "EnablePrimaryIpv6":{"shape":"Boolean"},
         "NetworkPerformanceOptions":{"shape":"InstanceNetworkPerformanceOptionsRequest"},
         "Operator":{"shape":"OperatorRequest"},
+        "SecondaryInterfaces":{
+          "shape":"InstanceSecondaryInterfaceSpecificationListRequest",
+          "locationName":"SecondaryInterface"
+        },
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -49849,6 +50360,402 @@
           "locationName":"nextToken"
         }
       }
+    },
+    "SecondaryInterface":{
+      "type":"structure",
+      "members":{
+        "AvailabilityZone":{
+          "shape":"AvailabilityZoneName",
+          "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"AvailabilityZoneId",
+          "locationName":"availabilityZoneId"
+        },
+        "Attachment":{
+          "shape":"SecondaryInterfaceAttachment",
+          "locationName":"attachment"
+        },
+        "MacAddress":{
+          "shape":"String",
+          "locationName":"macAddress"
+        },
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "PrivateIpv4Addresses":{
+          "shape":"SecondaryInterfaceIpv4AddressList",
+          "locationName":"privateIpv4AddressSet"
+        },
+        "SecondaryInterfaceId":{
+          "shape":"SecondaryInterfaceId",
+          "locationName":"secondaryInterfaceId"
+        },
+        "SecondaryInterfaceArn":{
+          "shape":"String",
+          "locationName":"secondaryInterfaceArn"
+        },
+        "SecondaryInterfaceType":{
+          "shape":"SecondaryInterfaceType",
+          "locationName":"secondaryInterfaceType"
+        },
+        "SecondarySubnetId":{
+          "shape":"SecondarySubnetId",
+          "locationName":"secondarySubnetId"
+        },
+        "SecondaryNetworkId":{
+          "shape":"SecondaryNetworkId",
+          "locationName":"secondaryNetworkId"
+        },
+        "SecondaryNetworkType":{
+          "shape":"SecondaryNetworkType",
+          "locationName":"secondaryNetworkType"
+        },
+        "SourceDestCheck":{
+          "shape":"Boolean",
+          "locationName":"sourceDestCheck"
+        },
+        "Status":{
+          "shape":"SecondaryInterfaceStatus",
+          "locationName":"status"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "SecondaryInterfaceAttachment":{
+      "type":"structure",
+      "members":{
+        "AttachmentId":{
+          "shape":"String",
+          "locationName":"attachmentId"
+        },
+        "AttachTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"attachTime"
+        },
+        "DeleteOnTermination":{
+          "shape":"Boolean",
+          "locationName":"deleteOnTermination"
+        },
+        "DeviceIndex":{
+          "shape":"Integer",
+          "locationName":"deviceIndex"
+        },
+        "InstanceId":{
+          "shape":"String",
+          "locationName":"instanceId"
+        },
+        "InstanceOwnerId":{
+          "shape":"String",
+          "locationName":"instanceOwnerId"
+        },
+        "NetworkCardIndex":{
+          "shape":"Integer",
+          "locationName":"networkCardIndex"
+        },
+        "Status":{
+          "shape":"AttachmentStatus",
+          "locationName":"status"
+        }
+      }
+    },
+    "SecondaryInterfaceId":{"type":"string"},
+    "SecondaryInterfaceIdList":{
+      "type":"list",
+      "member":{
+        "shape":"SecondaryInterfaceId",
+        "locationName":"item"
+      }
+    },
+    "SecondaryInterfaceIpv4Address":{
+      "type":"structure",
+      "members":{
+        "PrivateIpAddress":{
+          "shape":"String",
+          "locationName":"privateIpAddress"
+        }
+      }
+    },
+    "SecondaryInterfaceIpv4AddressList":{
+      "type":"list",
+      "member":{
+        "shape":"SecondaryInterfaceIpv4Address",
+        "locationName":"item"
+      }
+    },
+    "SecondaryInterfaceList":{
+      "type":"list",
+      "member":{
+        "shape":"SecondaryInterface",
+        "locationName":"item"
+      }
+    },
+    "SecondaryInterfacePrivateIpAddressSpecification":{
+      "type":"structure",
+      "members":{
+        "PrivateIpAddress":{
+          "shape":"String",
+          "locationName":"privateIpAddress"
+        }
+      }
+    },
+    "SecondaryInterfacePrivateIpAddressSpecificationList":{
+      "type":"list",
+      "member":{
+        "shape":"SecondaryInterfacePrivateIpAddressSpecification",
+        "locationName":"item"
+      }
+    },
+    "SecondaryInterfacePrivateIpAddressSpecificationListRequest":{
+      "type":"list",
+      "member":{
+        "shape":"SecondaryInterfacePrivateIpAddressSpecificationRequest",
+        "locationName":"SecondaryInterfacePrivateIpAddressSpecification"
+      }
+    },
+    "SecondaryInterfacePrivateIpAddressSpecificationRequest":{
+      "type":"structure",
+      "members":{
+        "PrivateIpAddress":{"shape":"String"}
+      }
+    },
+    "SecondaryInterfaceStatus":{
+      "type":"string",
+      "enum":[
+        "available",
+        "in-use"
+      ]
+    },
+    "SecondaryInterfaceType":{
+      "type":"string",
+      "enum":["secondary"]
+    },
+    "SecondaryNetwork":{
+      "type":"structure",
+      "members":{
+        "SecondaryNetworkId":{
+          "shape":"SecondaryNetworkId",
+          "locationName":"secondaryNetworkId"
+        },
+        "SecondaryNetworkArn":{
+          "shape":"String",
+          "locationName":"secondaryNetworkArn"
+        },
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "Type":{
+          "shape":"SecondaryNetworkType",
+          "locationName":"type"
+        },
+        "State":{
+          "shape":"SecondaryNetworkState",
+          "locationName":"state"
+        },
+        "StateReason":{
+          "shape":"String",
+          "locationName":"stateReason"
+        },
+        "Ipv4CidrBlockAssociations":{
+          "shape":"SecondaryNetworkIpv4CidrBlockAssociationList",
+          "locationName":"ipv4CidrBlockAssociationSet"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "SecondaryNetworkCidrAssociationId":{"type":"string"},
+    "SecondaryNetworkCidrBlockAssociationState":{
+      "type":"string",
+      "enum":[
+        "associating",
+        "associated",
+        "association-failed",
+        "disassociating",
+        "disassociated",
+        "disassociation-failed"
+      ]
+    },
+    "SecondaryNetworkId":{"type":"string"},
+    "SecondaryNetworkIdList":{
+      "type":"list",
+      "member":{
+        "shape":"SecondaryNetworkId",
+        "locationName":"item"
+      }
+    },
+    "SecondaryNetworkIpv4CidrBlockAssociation":{
+      "type":"structure",
+      "members":{
+        "AssociationId":{
+          "shape":"SecondaryNetworkCidrAssociationId",
+          "locationName":"associationId"
+        },
+        "CidrBlock":{
+          "shape":"String",
+          "locationName":"cidrBlock"
+        },
+        "State":{
+          "shape":"SecondaryNetworkCidrBlockAssociationState",
+          "locationName":"state"
+        },
+        "StateReason":{
+          "shape":"String",
+          "locationName":"stateReason"
+        }
+      }
+    },
+    "SecondaryNetworkIpv4CidrBlockAssociationList":{
+      "type":"list",
+      "member":{
+        "shape":"SecondaryNetworkIpv4CidrBlockAssociation",
+        "locationName":"item"
+      }
+    },
+    "SecondaryNetworkList":{
+      "type":"list",
+      "member":{
+        "shape":"SecondaryNetwork",
+        "locationName":"item"
+      }
+    },
+    "SecondaryNetworkState":{
+      "type":"string",
+      "enum":[
+        "create-in-progress",
+        "create-complete",
+        "create-failed",
+        "delete-in-progress",
+        "delete-complete",
+        "delete-failed"
+      ]
+    },
+    "SecondaryNetworkSupportedFlag":{"type":"boolean"},
+    "SecondaryNetworkType":{
+      "type":"string",
+      "enum":["rdma"]
+    },
+    "SecondarySubnet":{
+      "type":"structure",
+      "members":{
+        "SecondarySubnetId":{
+          "shape":"SecondarySubnetId",
+          "locationName":"secondarySubnetId"
+        },
+        "SecondarySubnetArn":{
+          "shape":"String",
+          "locationName":"secondarySubnetArn"
+        },
+        "SecondaryNetworkId":{
+          "shape":"SecondaryNetworkId",
+          "locationName":"secondaryNetworkId"
+        },
+        "SecondaryNetworkType":{
+          "shape":"SecondaryNetworkType",
+          "locationName":"secondaryNetworkType"
+        },
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "AvailabilityZoneId":{
+          "shape":"AvailabilityZoneId",
+          "locationName":"availabilityZoneId"
+        },
+        "AvailabilityZone":{
+          "shape":"AvailabilityZoneName",
+          "locationName":"availabilityZone"
+        },
+        "Ipv4CidrBlockAssociations":{
+          "shape":"SecondarySubnetIpv4CidrBlockAssociationList",
+          "locationName":"ipv4CidrBlockAssociationSet"
+        },
+        "State":{
+          "shape":"SecondarySubnetState",
+          "locationName":"state"
+        },
+        "StateReason":{
+          "shape":"String",
+          "locationName":"stateReason"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "SecondarySubnetCidrAssociationId":{"type":"string"},
+    "SecondarySubnetCidrBlockAssociationState":{
+      "type":"string",
+      "enum":[
+        "associating",
+        "associated",
+        "association-failed",
+        "disassociating",
+        "disassociated",
+        "disassociation-failed"
+      ]
+    },
+    "SecondarySubnetId":{"type":"string"},
+    "SecondarySubnetIdList":{
+      "type":"list",
+      "member":{
+        "shape":"SecondarySubnetId",
+        "locationName":"item"
+      }
+    },
+    "SecondarySubnetIpv4CidrBlockAssociation":{
+      "type":"structure",
+      "members":{
+        "AssociationId":{
+          "shape":"SecondarySubnetCidrAssociationId",
+          "locationName":"associationId"
+        },
+        "CidrBlock":{
+          "shape":"String",
+          "locationName":"cidrBlock"
+        },
+        "State":{
+          "shape":"SecondarySubnetCidrBlockAssociationState",
+          "locationName":"state"
+        },
+        "StateReason":{
+          "shape":"String",
+          "locationName":"stateReason"
+        }
+      }
+    },
+    "SecondarySubnetIpv4CidrBlockAssociationList":{
+      "type":"list",
+      "member":{
+        "shape":"SecondarySubnetIpv4CidrBlockAssociation",
+        "locationName":"item"
+      }
+    },
+    "SecondarySubnetList":{
+      "type":"list",
+      "member":{
+        "shape":"SecondarySubnet",
+        "locationName":"item"
+      }
+    },
+    "SecondarySubnetState":{
+      "type":"string",
+      "enum":[
+        "create-in-progress",
+        "create-complete",
+        "create-failed",
+        "delete-in-progress",
+        "delete-complete",
+        "delete-failed"
+      ]
     },
     "SecretArn":{
       "type":"string",
