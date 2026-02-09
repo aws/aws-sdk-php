@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.30 - 2026-02-09
 
 * `Aws\Transfer` - This release adds a documentation update for MdnResponse of type "ASYNC"
 * `Aws\EC2` - Amazon Secondary Networks is a networking feature that provides high-performance, low-latency connectivity for specialized workloads.
