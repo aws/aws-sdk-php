@@ -10,9 +10,12 @@ use Aws\S3\S3Transfer\Progress\SingleProgressTracker;
 use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Closure;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class MultiProgressTrackerTest extends TestCase
+#[CoversClass(MultiProgressTracker::class)]
+final class MultiProgressTrackerTest extends TestCase
 {
     /**
      * @return void
@@ -28,8 +31,6 @@ class MultiProgressTrackerTest extends TestCase
     }
 
     /**
-     * @dataProvider customInitializationProvider
-     *
      * @param array $progressTrackers
      * @param mixed $output
      * @param int $transferCount
@@ -38,6 +39,7 @@ class MultiProgressTrackerTest extends TestCase
      *
      * @return void
      */
+    #[DataProvider('customInitializationProvider')]
     public function testCustomInitialization(
         array $progressTrackers,
         mixed $output,
@@ -65,9 +67,8 @@ class MultiProgressTrackerTest extends TestCase
      * @param array $expectedOutputs
      *
      * @return void
-     * @dataProvider multiProgressTrackerProvider
-     *
      */
+    #[DataProvider('multiProgressTrackerProvider')]
     public function testMultiProgressTracker(
         Closure $progressBarFactory,
         callable $eventInvoker,
@@ -107,7 +108,7 @@ class MultiProgressTrackerTest extends TestCase
     /**
      * @return array
      */
-    public function customInitializationProvider(): array
+    public static function customInitializationProvider(): array
     {
         return [
             'custom_initialization_1' => [
@@ -147,7 +148,7 @@ class MultiProgressTrackerTest extends TestCase
     /**
      * @return array
      */
-    public function multiProgressTrackerProvider(): array
+    public static function multiProgressTrackerProvider(): array
     {
         return [
             'multi_progress_tracker_1_single_tracking_object' => [

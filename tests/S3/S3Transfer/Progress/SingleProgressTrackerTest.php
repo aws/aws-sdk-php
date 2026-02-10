@@ -9,9 +9,12 @@ use Aws\S3\S3Transfer\Progress\ProgressBarInterface;
 use Aws\S3\S3Transfer\Progress\SingleProgressTracker;
 use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class SingleProgressTrackerTest extends TestCase
+#[CoversClass(SingleProgressTracker::class)]
+final class SingleProgressTrackerTest extends TestCase
 {
     /**
      * @return void
@@ -31,10 +34,9 @@ class SingleProgressTrackerTest extends TestCase
      * @param bool $clear
      * @param TransferProgressSnapshot $snapshot
      *
-     * @dataProvider customInitializationProvider
-     *
      * @return void
      */
+    #[DataProvider('customInitializationProvider')]
     public function testCustomInitialization(
         ProgressBarInterface $progressBar,
         mixed $output,
@@ -57,7 +59,7 @@ class SingleProgressTrackerTest extends TestCase
     /**
      * @return array[]
      */
-    public function customInitializationProvider(): array
+    public static function customInitializationProvider(): array
     {
         return [
             'initialization_1' => [
@@ -88,10 +90,9 @@ class SingleProgressTrackerTest extends TestCase
      * @param callable $eventInvoker
      * @param array $expectedOutputs
      *
-     * @dataProvider singleProgressTrackingProvider
-     *
      * @return void
      */
+    #[DataProvider('singleProgressTrackingProvider')]
     public function testSingleProgressTracking(
         ProgressBarInterface $progressBar,
         callable $eventInvoker,
@@ -131,7 +132,7 @@ class SingleProgressTrackerTest extends TestCase
     /**
      * @return array[]
      */
-    public function singleProgressTrackingProvider(): array
+    public static function singleProgressTrackingProvider(): array
     {
         return [
             'progress_rendering_1_transfer_initiated' => [

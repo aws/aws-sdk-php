@@ -16,12 +16,13 @@ use Aws\S3\S3Transfer\Utils\AbstractDownloadHandler;
 use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Tests MultipartDownloader abstract class implementation.
- */
-class AbstractMultipartDownloaderTest extends TestCase
+#[CoversClass(AbstractMultipartDownloader::class)]
+#[CoversClass(PartGetMultipartDownloader::class)]
+#[CoversClass(RangeGetMultipartDownloader::class)]
+final class AbstractMultipartDownloaderTest extends TestCase
 {
     /**
      * Tests chooseDownloaderClass factory method.
@@ -118,7 +119,7 @@ class AbstractMultipartDownloaderTest extends TestCase
             $requestArgs,
             [],
             new StreamDownloadHandler(),
-            0,
+            [],
             0,
             0,
             '',
@@ -171,7 +172,7 @@ class AbstractMultipartDownloaderTest extends TestCase
             $requestArgs,
             [],
             new StreamDownloadHandler(),
-            0,
+            [],
             0,
             0,
             null,
@@ -222,7 +223,7 @@ class AbstractMultipartDownloaderTest extends TestCase
             $requestArgs,
             [],
             new StreamDownloadHandler(),
-            0,
+            [],
             0,
             0,
             null,

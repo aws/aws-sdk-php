@@ -4,9 +4,11 @@ namespace Aws\Test\S3\S3Transfer\Progress;
 
 use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-class TransferListenerNotifierTest extends TestCase
+#[CoversClass(TransferListenerNotifier::class)]
+final class TransferListenerNotifierTest extends TestCase
 {
     /**
      * @return void
