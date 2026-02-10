@@ -2,7 +2,6 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
-use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use InvalidArgumentException;
 
@@ -21,25 +20,19 @@ abstract class AbstractTransferRequest
     /** @var array */
     protected array $config;
 
-    /** @var S3ClientInterface|null */
-    private ?S3ClientInterface $s3Client;
-
     /**
      * @param array $listeners
      * @param AbstractTransferListener|null $progressTracker
      * @param array $config
-     * @param S3ClientInterface|null $s3Client
      */
     public function __construct(
-        array $listeners,
+        array                     $listeners,
         ?AbstractTransferListener $progressTracker,
-        array $config,
-        ?S3ClientInterface $s3Client = null,
+        array                     $config
     ) {
         $this->listeners = $listeners;
         $this->progressTracker = $progressTracker;
         $this->config = $config;
-        $this->s3Client = $s3Client;
     }
 
     /**
@@ -68,14 +61,6 @@ abstract class AbstractTransferRequest
     public function getConfig(): array
     {
         return $this->config;
-    }
-
-    /**
-     * @return S3ClientInterface|null
-     */
-    public function getS3Client(): ?S3ClientInterface
-    {
-        return $this->s3Client;
     }
 
     /**

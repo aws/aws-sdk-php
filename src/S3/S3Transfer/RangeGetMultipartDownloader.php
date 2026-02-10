@@ -10,18 +10,10 @@ final class RangeGetMultipartDownloader extends AbstractMultipartDownloader
 {
     /**
      * @inheritDoc
-     *
-     * @return CommandInterface
      */
-    protected function nextCommand(): CommandInterface
+    protected function getFetchCommandArgs(): array
     {
-        if ($this->currentPartNo === 0) {
-            $this->currentPartNo = 1;
-        } else {
-            $this->currentPartNo++;
-        }
-
-        $nextRequestArgs = $this->downloadRequestArgs;
+        $nextCommandArgs = $this->downloadRequestArgs;
         $partSize = $this->config['target_part_size_bytes'];
         $from = ($this->currentPartNo - 1) * $partSize;
         $to = ($this->currentPartNo * $partSize) - 1;
@@ -30,20 +22,9 @@ final class RangeGetMultipartDownloader extends AbstractMultipartDownloader
             $to = min($this->objectSizeInBytes, $to);
         }
 
-        $nextRequestArgs['Range'] = "bytes=$from-$to";
+        $nextCommandArgs['Range'] = "bytes=$from-$to";
 
-        if ($this->config['response_checksum_validation'] === 'when_supported') {
-            $nextRequestArgs['ChecksumMode'] = 'ENABLED';
-        }
-
-        if (!empty($this->eTag)) {
-            $nextRequestArgs['IfMatch'] = $this->eTag;
-        }
-
-        return $this->s3Client->getCommand(
-            self::GET_OBJECT_COMMAND,
-            $nextRequestArgs
-        );
+        return $nextCommandArgs;
     }
 
     /**
@@ -57,7 +38,7 @@ final class RangeGetMultipartDownloader extends AbstractMultipartDownloader
     {
         // Assign object size just if needed.
         if ($this->objectSizeInBytes === 0) {
-            $this->objectSizeInBytes = $this->computeObjectSizeFromContentRange(
+            $this->objectSizeInBytes = self::computeObjectSizeFromContentRange(
                 $result['ContentRange'] ?? ""
             );
         }
