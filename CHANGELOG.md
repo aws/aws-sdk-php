@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.31 - 2026-02-10
 
 * `Aws\Kafka` - Amazon MSK adds three new APIs, CreateTopic, UpdateTopic, and DeleteTopic for managing Kafka topics in your MSK clusters.
 * `Aws\Connect` - Amazon Connect now supports per-channel auto-accept and After Contact Work (ACW) timeouts. Configure agents with auto-accept and ACW timeout settings for chat, tasks, emails, and callbacks. Use the new UpdateUserConfig API to manage these settings.
