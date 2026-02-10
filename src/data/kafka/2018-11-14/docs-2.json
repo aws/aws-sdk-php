@@ -7,6 +7,7 @@
     "CreateClusterV2" : "<p>Creates a new Amazon MSK cluster of either the provisioned or the serverless type.</p>",
     "CreateReplicator" : "<p>Creates a new Kafka Replicator.</p>",
     "CreateConfiguration" : "<p>Creates a new MSK configuration.</p>",
+    "CreateTopic": "<p>Creates a topic in the specified MSK cluster.</p>",
     "CreateVpcConnection" : "<p>Creates a new Amazon MSK VPC connection.</p>",
     "DeleteCluster" : "<p>Deletes the MSK cluster specified by the Amazon Resource Name (ARN) in the request.</p>",
     "DeleteClusterPolicy" : "<p>Deletes the MSK cluster policy specified by the Amazon Resource Name (ARN) in your request.</p>",
@@ -20,6 +21,7 @@
     "DescribeConfiguration" : "<p>Returns a description of this MSK configuration.</p>",
     "DescribeConfigurationRevision" : "<p>Returns a description of this revision of the configuration.</p>",
     "DescribeReplicator" : "<p>Returns a description of the Kafka Replicator whose Amazon Resource Name (ARN) is specified in the request.</p>",
+    "DeleteTopic": "<p>Deletes a topic in the specified MSK cluster.</p>",
     "DescribeTopic": "<p>Returns topic details of this topic on a MSK cluster.</p>",
     "DescribeTopicPartitions": "<p>Returns partition details of this topic on a MSK cluster.</p>",
     "DescribeVpcConnection" : "<p>Displays information about the specified Amazon MSK VPC connection.</p>",
@@ -57,7 +59,8 @@
     "UpdateRebalancing" : "<p>Use this resource to update the intelligent rebalancing status of an Amazon MSK Provisioned cluster with Express brokers.</p>",
     "UpdateReplicationInfo" : "<p>Updates replication info of a replicator.</p>",
     "UpdateSecurity" : "<p>You can use this operation to update the encrypting and authentication settings for an existing cluster.</p>",
-    "UpdateStorage" : "<p>Updates cluster broker volume size (or) sets cluster storage mode to TIERED.</p>"
+    "UpdateStorage" : "<p>Updates cluster broker volume size (or) sets cluster storage mode to TIERED.</p>",
+    "UpdateTopic" : "<p>Updates the topic configuration or partition count in the specified MSK cluster.</p>"
   },
   "shapes" : {
     "AmazonMskCluster" : {
@@ -369,6 +372,14 @@
       "base" : "<p>Request body for CreateVpcConnection.</p>",
       "refs" : { }
     },
+    "CreateTopicRequest" : {
+      "base" : "<p>Request body for CreateTopic.</p>",
+      "refs" : { }
+    },
+    "CreateTopicResponse" : {
+      "base" : "<p>Response body for CreateTopic.</p>",
+      "refs" : { }
+    },
     "CreateVpcConnectionResponse" : {
       "base" : "<p>Response body for CreateVpcConnection</p>",
       "refs" : { }
@@ -412,6 +423,14 @@
     },
     "DeleteVpcConnectionRequest" : {
       "base" : "<p>Request body for DeleteVpcConnection.</p>",
+      "refs" : { }
+    },
+    "DeleteTopicRequest" : {
+      "base" : "<p>Request body for DeleteTopic.</p>",
+      "refs" : { }
+    },
+    "DeleteTopicResponse" : {
+      "base" : "<p>Response body for DeleteTopic.</p>",
       "refs" : { }
     },
     "DeleteVpcConnectionResponse" : {
@@ -926,6 +945,42 @@
       "base" : "<p>Returns information about an error.</p>",
       "refs" : { }
     },
+    "TopicExistsException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "ClusterConnectivityException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "KafkaTimeoutException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "UnknownTopicOrPartitionException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "ControllerMovedException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "NotControllerException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "ReassignmentInProgressException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "GroupSubscribedToTopicException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "KafkaRequestException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
     "Unauthenticated" : {
       "base" : "<p>Contains information about unauthenticated traffic to the cluster.</p>",
       "refs" : {
@@ -1030,6 +1085,14 @@
     },
     "UpdateStorageResponse" : {
       "base" : "<p>Response body for UpdateStorageResponse Api.</p>",
+      "refs" : { }
+    },
+    "UpdateTopicRequest" : {
+      "base" : "<p>Request body for UpdateTopic.</p>",
+      "refs" : { }
+    },
+    "UpdateTopicResponse" : {
+      "base" : "<p>Response body for UpdateTopic.</p>",
       "refs" : { }
     },
     "UserIdentity" : {

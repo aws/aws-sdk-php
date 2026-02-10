@@ -5675,6 +5675,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "UpdateUserConfig":{
+      "name":"UpdateUserConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/users/{InstanceId}/{UserId}/config"
+      },
+      "input":{"shape":"UpdateUserConfigRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ConditionalOperationFailedException"}
+      ]
+    },
     "UpdateUserHierarchy":{
       "name":"UpdateUserHierarchy",
       "http":{
@@ -6002,6 +6018,28 @@
         "CcList":{"shape":"EmailRecipientsList"}
       }
     },
+    "AfterContactWorkConfig":{
+      "type":"structure",
+      "members":{
+        "AfterContactWorkTimeLimit":{"shape":"AfterContactWorkTimeLimit"}
+      }
+    },
+    "AfterContactWorkConfigPerChannel":{
+      "type":"structure",
+      "required":[
+        "Channel",
+        "AfterContactWorkConfig"
+      ],
+      "members":{
+        "Channel":{"shape":"Channel"},
+        "AfterContactWorkConfig":{"shape":"AfterContactWorkConfig"},
+        "AgentFirstCallbackAfterContactWorkConfig":{"shape":"AfterContactWorkConfig"}
+      }
+    },
+    "AfterContactWorkConfigs":{
+      "type":"list",
+      "member":{"shape":"AfterContactWorkConfigPerChannel"}
+    },
     "AfterContactWorkTimeLimit":{
       "type":"integer",
       "min":0
@@ -6042,6 +6080,7 @@
         "Preview":{"shape":"Preview"}
       }
     },
+    "AgentFirstCallbackAutoAccept":{"type":"boolean"},
     "AgentFirstName":{
       "type":"string",
       "max":255,
@@ -7101,6 +7140,22 @@
       "sensitive":true
     },
     "AutoAccept":{"type":"boolean"},
+    "AutoAcceptConfig":{
+      "type":"structure",
+      "required":[
+        "Channel",
+        "AutoAccept"
+      ],
+      "members":{
+        "Channel":{"shape":"Channel"},
+        "AutoAccept":{"shape":"AutoAccept"},
+        "AgentFirstCallbackAutoAccept":{"shape":"AgentFirstCallbackAutoAccept"}
+      }
+    },
+    "AutoAcceptConfigs":{
+      "type":"list",
+      "member":{"shape":"AutoAcceptConfig"}
+    },
     "AutoEvaluationConfiguration":{
       "type":"structure",
       "required":["Enabled"],
@@ -9455,7 +9510,6 @@
       "type":"structure",
       "required":[
         "Username",
-        "PhoneConfig",
         "SecurityProfileIds",
         "RoutingProfileId",
         "InstanceId"
@@ -9474,6 +9528,11 @@
           "location":"uri",
           "locationName":"InstanceId"
         },
+        "AutoAcceptConfigs":{"shape":"AutoAcceptConfigs"},
+        "AfterContactWorkConfigs":{"shape":"AfterContactWorkConfigs"},
+        "PhoneNumberConfigs":{"shape":"PhoneNumberConfigs"},
+        "PersistentConnectionConfigs":{"shape":"PersistentConnectionConfigs"},
+        "VoiceEnhancementConfigs":{"shape":"VoiceEnhancementConfigs"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -18586,9 +18645,43 @@
       }
     },
     "PersistentConnection":{"type":"boolean"},
+    "PersistentConnectionConfig":{
+      "type":"structure",
+      "required":[
+        "Channel",
+        "PersistentConnection"
+      ],
+      "members":{
+        "Channel":{"shape":"Channel"},
+        "PersistentConnection":{
+          "shape":"PersistentConnection",
+          "box":true
+        }
+      }
+    },
+    "PersistentConnectionConfigs":{
+      "type":"list",
+      "member":{"shape":"PersistentConnectionConfig"}
+    },
     "PhoneNumber":{
       "type":"string",
       "pattern":"\\\\+[1-9]\\\\d{1,14}$"
+    },
+    "PhoneNumberConfig":{
+      "type":"structure",
+      "required":[
+        "Channel",
+        "PhoneType"
+      ],
+      "members":{
+        "Channel":{"shape":"Channel"},
+        "PhoneType":{"shape":"PhoneType"},
+        "PhoneNumber":{"shape":"SensitivePhoneNumber"}
+      }
+    },
+    "PhoneNumberConfigs":{
+      "type":"list",
+      "member":{"shape":"PhoneNumberConfig"}
     },
     "PhoneNumberCountryCode":{
       "type":"string",
@@ -21618,6 +21711,11 @@
       "type":"structure",
       "members":{}
     },
+    "SensitivePhoneNumber":{
+      "type":"string",
+      "pattern":"\\+[1-9]\\d{1,14}$",
+      "sensitive":true
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
@@ -24410,6 +24508,30 @@
       "type":"structure",
       "members":{}
     },
+    "UpdateUserConfigRequest":{
+      "type":"structure",
+      "required":[
+        "UserId",
+        "InstanceId"
+      ],
+      "members":{
+        "AutoAcceptConfigs":{"shape":"AutoAcceptConfigs"},
+        "AfterContactWorkConfigs":{"shape":"AfterContactWorkConfigs"},
+        "PhoneNumberConfigs":{"shape":"PhoneNumberConfigs"},
+        "PersistentConnectionConfigs":{"shape":"PersistentConnectionConfigs"},
+        "VoiceEnhancementConfigs":{"shape":"VoiceEnhancementConfigs"},
+        "UserId":{
+          "shape":"UserId",
+          "location":"uri",
+          "locationName":"UserId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        }
+      }
+    },
     "UpdateUserHierarchyGroupNameRequest":{
       "type":"structure",
       "required":[
@@ -24801,6 +24923,11 @@
         "RoutingProfileId":{"shape":"RoutingProfileId"},
         "HierarchyGroupId":{"shape":"HierarchyGroupId"},
         "Tags":{"shape":"TagMap"},
+        "AutoAcceptConfigs":{"shape":"AutoAcceptConfigs"},
+        "AfterContactWorkConfigs":{"shape":"AfterContactWorkConfigs"},
+        "PhoneNumberConfigs":{"shape":"PhoneNumberConfigs"},
+        "PersistentConnectionConfigs":{"shape":"PersistentConnectionConfigs"},
+        "VoiceEnhancementConfigs":{"shape":"VoiceEnhancementConfigs"},
         "LastModifiedTime":{"shape":"Timestamp"},
         "LastModifiedRegion":{"shape":"RegionName"}
       }
@@ -24899,12 +25026,11 @@
     },
     "UserPhoneConfig":{
       "type":"structure",
-      "required":["PhoneType"],
       "members":{
         "PhoneType":{"shape":"PhoneType"},
         "AutoAccept":{"shape":"AutoAccept"},
         "AfterContactWorkTimeLimit":{"shape":"AfterContactWorkTimeLimit"},
-        "DeskPhoneNumber":{"shape":"PhoneNumber"},
+        "DeskPhoneNumber":{"shape":"SensitivePhoneNumber"},
         "PersistentConnection":{
           "shape":"PersistentConnection",
           "box":true
@@ -24994,7 +25120,12 @@
         "RoutingProfileId":{"shape":"RoutingProfileId"},
         "SecurityProfileIds":{"shape":"SecurityProfileIds"},
         "Tags":{"shape":"TagMap"},
-        "Username":{"shape":"AgentUsername"}
+        "Username":{"shape":"AgentUsername"},
+        "AutoAcceptConfigs":{"shape":"AutoAcceptConfigs"},
+        "AfterContactWorkConfigs":{"shape":"AfterContactWorkConfigs"},
+        "PhoneNumberConfigs":{"shape":"PhoneNumberConfigs"},
+        "PersistentConnectionConfigs":{"shape":"PersistentConnectionConfigs"},
+        "VoiceEnhancementConfigs":{"shape":"VoiceEnhancementConfigs"}
       }
     },
     "UserSearchSummaryList":{
@@ -25361,6 +25492,29 @@
         "DestinationPhoneNumber":{"shape":"PhoneNumber"},
         "FlowId":{"shape":"ContactFlowId"}
       }
+    },
+    "VoiceEnhancementConfig":{
+      "type":"structure",
+      "required":[
+        "Channel",
+        "VoiceEnhancementMode"
+      ],
+      "members":{
+        "Channel":{"shape":"Channel"},
+        "VoiceEnhancementMode":{"shape":"VoiceEnhancementMode"}
+      }
+    },
+    "VoiceEnhancementConfigs":{
+      "type":"list",
+      "member":{"shape":"VoiceEnhancementConfig"}
+    },
+    "VoiceEnhancementMode":{
+      "type":"string",
+      "enum":[
+        "VOICE_ISOLATION",
+        "NOISE_SUPPRESSION",
+        "NONE"
+      ]
     },
     "VoiceRecordingConfiguration":{
       "type":"structure",

@@ -114,6 +114,12 @@
         "StreamUpdate$automationStreamUpdate": "<p>The update to an automation stream.</p>"
       }
     },
+    "BasicAuth": {
+      "base": "<p>Configuration for HTTP Basic Authentication using credentials stored in Amazon Web Services Secrets Manager. The secret must contain a JSON object with <code>username</code> and <code>password</code> string fields. Username allows alphanumeric characters and <code>@._+=-</code> symbols (pattern: <code>^[a-zA-Z0-9@._+=\\-]+$</code>). Password allows alphanumeric characters and <code>@._+=-!#$%&amp;*</code> symbols (pattern: <code>^[a-zA-Z0-9@._+=\\-!#$%&amp;*]+$</code>). Both fields have a maximum length of 256 characters.</p>",
+      "refs": {
+        "ProxyCredentials$basicAuth": "<p>HTTP Basic Authentication credentials (username and password) stored in Amazon Web Services Secrets Manager.</p>"
+      }
+    },
     "BatchCreateMemoryRecordsInput": {
       "base": null,
       "refs": {}
@@ -460,6 +466,19 @@
         "PayloadType$blob": "<p>The binary content of the payload.</p>"
       }
     },
+    "DomainPattern": {
+      "base": null,
+      "refs": {
+        "DomainPatterns$member": null
+      }
+    },
+    "DomainPatterns": {
+      "base": null,
+      "refs": {
+        "ExternalProxy$domainPatterns": "<p>Optional array of domain patterns that should route through this specific proxy. Supports <code>.example.com</code> for subdomain matching (matches any subdomain of example.com) or <code>example.com</code> for exact domain matching. If omitted, this proxy acts as a catch-all for domains not matched by other proxies. Maximum 100 patterns per proxy, each up to 253 characters.</p>",
+        "ProxyBypass$domainPatterns": "<p>Array of domain patterns that should bypass the proxy. Supports <code>.amazonaws.com</code> for subdomain matching or <code>amazonaws.com</code> for exact domain matching. Requests to these domains connect directly without using any proxy. Maximum 253 characters per pattern.</p>"
+      }
+    },
     "Double": {
       "base": null,
       "refs": {
@@ -575,6 +594,18 @@
       "base": null,
       "refs": {
         "FilterInput$eventMetadata": "<p>Event metadata filter criteria to apply when retrieving events.</p>"
+      }
+    },
+    "ExternalProxy": {
+      "base": "<p>Configuration for a customer-managed external proxy server. Includes server location, optional domain-based routing patterns, and authentication credentials.</p>",
+      "refs": {
+        "Proxy$externalProxy": "<p>Configuration for an external customer-managed proxy server.</p>"
+      }
+    },
+    "ExternalProxyPortInteger": {
+      "base": null,
+      "refs": {
+        "ExternalProxy$port": "<p>The port number of the proxy server. Valid range: 1-65535.</p>"
       }
     },
     "ExtractionJob": {
@@ -699,6 +730,12 @@
     "GetWorkloadAccessTokenResponse": {
       "base": null,
       "refs": {}
+    },
+    "HostName": {
+      "base": null,
+      "refs": {
+        "ExternalProxy$server": "<p>The hostname of the proxy server. Must be a valid DNS hostname (maximum 253 characters).</p>"
+      }
     },
     "HttpResponseCode": {
       "base": null,
@@ -1203,6 +1240,37 @@
         "ToolArguments$language": "<p>The programming language of the code to execute. This tells the code interpreter which language runtime to use for execution. Common values include 'python', 'javascript', and 'r'.</p>"
       }
     },
+    "Proxy": {
+      "base": "<p>Union type representing different proxy configurations. Currently supports external customer-managed proxies.</p>",
+      "refs": {
+        "ProxyConfigurationProxiesList$member": null
+      }
+    },
+    "ProxyBypass": {
+      "base": "<p>Configuration for domains that should bypass all proxies and connect directly to the internet. These bypass rules take precedence over all proxy routing rules.</p>",
+      "refs": {
+        "ProxyConfiguration$bypass": "<p>Optional configuration for domains that should bypass all proxies and connect directly to their destination, like the internet. Takes precedence over all proxy routing rules.</p>"
+      }
+    },
+    "ProxyConfiguration": {
+      "base": "<p>Configuration for routing browser traffic through customer-managed proxy servers. Supports 1-5 proxy servers for domain-based routing and proxy bypass rules.</p>",
+      "refs": {
+        "GetBrowserSessionResponse$proxyConfiguration": "<p>The active proxy configuration for this browser session. This field is only present if proxy configuration was provided when the session was started using <code>StartBrowserSession</code>. The configuration includes proxy servers, domain bypass rules and the proxy authentication credentials.</p>",
+        "StartBrowserSessionRequest$proxyConfiguration": "<p>Optional proxy configuration for routing browser traffic through customer-specified proxy servers. When provided, enables HTTP Basic authentication via Amazon Web Services Secrets Manager and domain-based routing rules. Requires <code>secretsmanager:GetSecretValue</code> IAM permission for the specified secret ARNs.</p>"
+      }
+    },
+    "ProxyConfigurationProxiesList": {
+      "base": null,
+      "refs": {
+        "ProxyConfiguration$proxies": "<p>An array of 1-5 proxy server configurations for domain-based routing. Each proxy can specify which domains it handles via <code>domainPatterns</code>, enabling flexible routing of different traffic through different proxies based on destination domain.</p>"
+      }
+    },
+    "ProxyCredentials": {
+      "base": "<p>Union type representing different proxy authentication methods. Currently supports HTTP Basic Authentication (username and password).</p>",
+      "refs": {
+        "ExternalProxy$credentials": "<p>Optional authentication credentials for the proxy server. If omitted, the proxy is accessed without authentication (useful for IP-allowlisted proxies).</p>"
+      }
+    },
     "RequestIdentifier": {
       "base": null,
       "refs": {
@@ -1355,6 +1423,12 @@
       "base": null,
       "refs": {
         "SearchCriteria$topK": "<p>The maximum number of top-scoring memory records to return. This value is used for semantic search ranking.</p>"
+      }
+    },
+    "SecretArn": {
+      "base": null,
+      "refs": {
+        "BasicAuth$secretArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret containing proxy credentials. The secret must be a JSON object with <code>username</code> and <code>password</code> string fields that meet validation requirements. The caller must have <code>secretsmanager:GetSecretValue</code> permission for this ARN. Example secret format: <code>{\"username\": \"proxy_user\", \"password\": \"secure_password\"}</code> </p>"
       }
     },
     "ServiceException": {

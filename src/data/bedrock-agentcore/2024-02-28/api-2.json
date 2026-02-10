@@ -780,6 +780,13 @@
         "streamStatus":{"shape":"AutomationStreamStatus"}
       }
     },
+    "BasicAuth":{
+      "type":"structure",
+      "required":["secretArn"],
+      "members":{
+        "secretArn":{"shape":"SecretArn"}
+      }
+    },
     "BatchCreateMemoryRecordsInput":{
       "type":"structure",
       "required":[
@@ -1253,6 +1260,18 @@
       "document":true,
       "sensitive":true
     },
+    "DomainPattern":{
+      "type":"string",
+      "max":253,
+      "min":1,
+      "pattern":"(\\.)?[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?(\\.[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)*"
+    },
+    "DomainPatterns":{
+      "type":"list",
+      "member":{"shape":"DomainPattern"},
+      "max":100,
+      "min":1
+    },
     "Double":{
       "type":"double",
       "box":true
@@ -1406,6 +1425,25 @@
       "max":5,
       "min":1
     },
+    "ExternalProxy":{
+      "type":"structure",
+      "required":[
+        "server",
+        "port"
+      ],
+      "members":{
+        "server":{"shape":"HostName"},
+        "port":{"shape":"ExternalProxyPortInteger"},
+        "domainPatterns":{"shape":"DomainPatterns"},
+        "credentials":{"shape":"ProxyCredentials"}
+      }
+    },
+    "ExternalProxyPortInteger":{
+      "type":"integer",
+      "box":true,
+      "max":65535,
+      "min":1
+    },
     "ExtractionJob":{
       "type":"structure",
       "required":["jobId"],
@@ -1536,6 +1574,7 @@
         "sessionTimeoutSeconds":{"shape":"BrowserSessionTimeout"},
         "status":{"shape":"BrowserSessionStatus"},
         "streams":{"shape":"BrowserSessionStream"},
+        "proxyConfiguration":{"shape":"ProxyConfiguration"},
         "sessionReplayArtifact":{"shape":"String"},
         "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
@@ -1735,6 +1774,12 @@
       "members":{
         "workloadAccessToken":{"shape":"WorkloadIdentityTokenType"}
       }
+    },
+    "HostName":{
+      "type":"string",
+      "max":253,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?(\\.[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)*"
     },
     "HttpResponseCode":{
       "type":"integer",
@@ -2478,6 +2523,40 @@
         "typescript"
       ]
     },
+    "Proxy":{
+      "type":"structure",
+      "members":{
+        "externalProxy":{"shape":"ExternalProxy"}
+      },
+      "union":true
+    },
+    "ProxyBypass":{
+      "type":"structure",
+      "members":{
+        "domainPatterns":{"shape":"DomainPatterns"}
+      }
+    },
+    "ProxyConfiguration":{
+      "type":"structure",
+      "required":["proxies"],
+      "members":{
+        "proxies":{"shape":"ProxyConfigurationProxiesList"},
+        "bypass":{"shape":"ProxyBypass"}
+      }
+    },
+    "ProxyConfigurationProxiesList":{
+      "type":"list",
+      "member":{"shape":"Proxy"},
+      "max":5,
+      "min":1
+    },
+    "ProxyCredentials":{
+      "type":"structure",
+      "members":{
+        "basicAuth":{"shape":"BasicAuth"}
+      },
+      "union":true
+    },
     "RequestIdentifier":{
       "type":"string",
       "max":80,
@@ -2719,6 +2798,10 @@
       "max":100,
       "min":1
     },
+    "SecretArn":{
+      "type":"string",
+      "pattern":"arn:aws:secretsmanager:[a-z0-9-]+:[0-9]{12}:secret:[a-zA-Z0-9/_+=.@-]+"
+    },
     "ServiceException":{
       "type":"structure",
       "required":["message"],
@@ -2831,6 +2914,7 @@
         "viewPort":{"shape":"ViewPort"},
         "extensions":{"shape":"BrowserExtensions"},
         "profileConfiguration":{"shape":"BrowserProfileConfiguration"},
+        "proxyConfiguration":{"shape":"ProxyConfiguration"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true

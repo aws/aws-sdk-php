@@ -62,7 +62,7 @@
     "CreateTestCase": "<p>Creates a test case with its content and metadata for the specified Amazon Connect instance.</p>",
     "CreateTrafficDistributionGroup": "<p>Creates a traffic distribution group given an Amazon Connect instance that has been replicated.</p> <note> <p>The <code>SignInConfig</code> distribution is available only on a default <code>TrafficDistributionGroup</code> (see the <code>IsDefault</code> parameter in the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_TrafficDistributionGroup.html\">TrafficDistributionGroup</a> data type). If you call <code>UpdateTrafficDistribution</code> with a modified <code>SignInConfig</code> and a non-default <code>TrafficDistributionGroup</code>, an <code>InvalidRequestException</code> is returned.</p> </note> <p>For more information about creating traffic distribution groups, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-traffic-distribution-groups.html\">Set up traffic distribution groups</a> in the <i>Amazon Connect Administrator Guide</i>. </p>",
     "CreateUseCase": "<p>Creates a use case for an integration association.</p>",
-    "CreateUser": "<p>Creates a user account for the specified Amazon Connect instance.</p> <important> <p>Certain <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_UserIdentityInfo.html\">UserIdentityInfo</a> parameters are required in some situations. For example, <code>Email</code>, <code>FirstName</code> and <code>LastName</code> are required if you are using Amazon Connect or SAML for identity management.</p> </important> <p>For information about how to create users using the Amazon Connect admin website, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/user-management.html\">Add Users</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
+    "CreateUser": "<p>Creates a user account for the specified Amazon Connect instance.</p> <important> <p>Certain <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_UserIdentityInfo.html\">UserIdentityInfo</a> parameters are required in some situations. For example, <code>Email</code>, <code>FirstName</code> and <code>LastName</code> are required if you are using Amazon Connect or SAML for identity management.</p> </important> <note> <p>Fields in <code>PhoneConfig</code> cannot be set simultaneously with their corresponding channel-specific configuration parameters. Specifically:</p> <ul> <li> <p> <code>PhoneConfig.AutoAccept</code> conflicts with <code>AutoAcceptConfigs</code> </p> </li> <li> <p> <code>PhoneConfig.AfterContactWorkTimeLimit</code> conflicts with <code>AfterContactWorkConfigs</code> </p> </li> <li> <p> <code>PhoneConfig.PhoneType</code> and <code>PhoneConfig.PhoneNumber</code> conflict with <code>PhoneNumberConfigs</code> </p> </li> <li> <p> <code>PhoneConfig.PersistentConnection</code> conflicts with <code>PersistentConnectionConfigs</code> </p> </li> </ul> <p>We recommend using channel-specific parameters such as <code>AutoAcceptConfigs</code>, <code>AfterContactWorkConfigs</code>, <code>PhoneNumberConfigs</code>, <code>PersistentConnectionConfigs</code>, and <code>VoiceEnhancementConfigs</code> for per-channel configuration.</p> </note> <p>For information about how to create users using the Amazon Connect admin website, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/user-management.html\">Add Users</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
     "CreateUserHierarchyGroup": "<p>Creates a new user hierarchy group.</p>",
     "CreateView": "<p>Creates a new view with the possible status of <code>SAVED</code> or <code>PUBLISHED</code>.</p> <p>The views will have a unique name for each connect instance.</p> <p>It performs basic content validation if the status is <code>SAVED</code> or full content validation if the status is set to <code>PUBLISHED</code>. An error is returned if validation fails. It associates either the <code>$SAVED</code> qualifier or both of the <code>$SAVED</code> and <code>$LATEST</code> qualifiers with the provided view content based on the status. The view is idempotent if ClientToken is provided.</p>",
     "CreateViewVersion": "<p>Publishes a new version of the view identifier.</p> <p>Versions are immutable and monotonically increasing.</p> <p>It returns the highest version if there is no change in content compared to that version. An error is displayed if the supplied ViewContentSha256 is different from the ViewContentSha256 of the <code>$LATEST</code> alias.</p>",
@@ -343,11 +343,12 @@
     "UpdateTaskTemplate": "<p>Updates details about a specific task template in the specified Amazon Connect instance. This operation does not support partial updates. Instead it does a full update of template content.</p>",
     "UpdateTestCase": "<p>Updates any of the metadata for a test case, such as the name, description, and status or content of an existing test case. This API doesn't allow customers to update the tags of the test case resource for the specified Amazon Connect instance.</p>",
     "UpdateTrafficDistribution": "<p>Updates the traffic distribution for a given traffic distribution group. </p> <important> <p>When you shift telephony traffic, also shift agents and/or agent sign-ins to ensure they can handle the calls in the other Region. If you don't shift the agents, voice calls will go to the shifted Region but there won't be any agents available to receive the calls.</p> </important> <note> <p>The <code>SignInConfig</code> distribution is available only on a default <code>TrafficDistributionGroup</code> (see the <code>IsDefault</code> parameter in the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_TrafficDistributionGroup.html\">TrafficDistributionGroup</a> data type). If you call <code>UpdateTrafficDistribution</code> with a modified <code>SignInConfig</code> and a non-default <code>TrafficDistributionGroup</code>, an <code>InvalidRequestException</code> is returned.</p> </note> <p>For more information about updating a traffic distribution group, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/update-telephony-traffic-distribution.html\">Update telephony traffic distribution across Amazon Web Services Regions </a> in the <i>Amazon Connect Administrator Guide</i>. </p>",
+    "UpdateUserConfig": "<p>Updates the configuration settings for the specified user, including per-channel auto-accept and after contact work (ACW) timeout settings.</p> <note> <p>This operation replaces the UpdateUserPhoneConfig API. While UpdateUserPhoneConfig applies the same ACW timeout to all channels, UpdateUserConfig allows you to set different auto-accept and ACW timeout values for each channel type.</p> </note>",
     "UpdateUserHierarchy": "<p>Assigns the specified hierarchy group to the specified user.</p>",
     "UpdateUserHierarchyGroupName": "<p>Updates the name of the user hierarchy group. </p>",
     "UpdateUserHierarchyStructure": "<p>Updates the user hierarchy structure: add, remove, and rename user hierarchy levels.</p>",
     "UpdateUserIdentityInfo": "<p>Updates the identity information for the specified user.</p> <important> <p>We strongly recommend limiting who has the ability to invoke <code>UpdateUserIdentityInfo</code>. Someone with that ability can change the login credentials of other users by changing their email address. This poses a security risk to your organization. They can change the email address of a user to the attacker's email address, and then reset the password through email. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-profile-best-practices.html\">Best Practices for Security Profiles</a> in the <i>Amazon Connect Administrator Guide</i>.</p> </important>",
-    "UpdateUserPhoneConfig": "<p>Updates the phone configuration settings for the specified user.</p>",
+    "UpdateUserPhoneConfig": "<p>Updates the phone configuration settings for the specified user.</p> <note> <p>We recommend using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdateUserConfig.html\">UpdateUserConfig</a> API, which supports additional functionality that is not available in the UpdateUserPhoneConfig API, such as voice enhancement settings and per-channel configuration for auto-accept and After Contact Work (ACW) timeouts. In comparison, the UpdateUserPhoneConfig API will always set the same ACW timeouts to all channels the user handles.</p> </note>",
     "UpdateUserProficiencies": "<p>Updates the properties associated with the proficiencies of a user.</p>",
     "UpdateUserRoutingProfile": "<p>Assigns the specified routing profile to the specified user.</p>",
     "UpdateUserSecurityProfiles": "<p>Assigns the specified security profiles to the specified user.</p>",
@@ -635,9 +636,32 @@
         "Contact$AdditionalEmailRecipients": "<p>List of additional email addresses for an email contact.</p>"
       }
     },
+    "AfterContactWorkConfig": {
+      "base": "<p>Configuration settings for after contact work (ACW) timeout.</p>",
+      "refs": {
+        "AfterContactWorkConfigPerChannel$AfterContactWorkConfig": "<p>The ACW timeout settings for this channel.</p>",
+        "AfterContactWorkConfigPerChannel$AgentFirstCallbackAfterContactWorkConfig": "<p>The ACW timeout settings for agent-first callbacks. This setting only applies to the VOICE channel.</p>"
+      }
+    },
+    "AfterContactWorkConfigPerChannel": {
+      "base": "<p>Configuration settings for after contact work (ACW) timeout for a specific channel.</p>",
+      "refs": {
+        "AfterContactWorkConfigs$member": null
+      }
+    },
+    "AfterContactWorkConfigs": {
+      "base": "<p>A list of after contact work (ACW) timeout configuration settings for each channel.</p>",
+      "refs": {
+        "CreateUserRequest$AfterContactWorkConfigs": "<p>The list of after contact work (ACW) timeout configuration settings for each channel.</p>",
+        "UpdateUserConfigRequest$AfterContactWorkConfigs": "<p>The list of after contact work (ACW) timeout configuration settings for each channel. ACW timeout specifies how many seconds agents have for after contact work, such as entering notes about the contact. The minimum setting is 1 second, and the maximum is 2,000,000 seconds (24 days). Enter 0 for an indefinite amount of time, meaning agents must manually choose to end ACW.</p>",
+        "User$AfterContactWorkConfigs": "<p>The list of after contact work (ACW) timeout configuration settings for each channel.</p>",
+        "UserSearchSummary$AfterContactWorkConfigs": "<p>The list of after contact work (ACW) timeout configuration settings for each channel.</p>"
+      }
+    },
     "AfterContactWorkTimeLimit": {
       "base": null,
       "refs": {
+        "AfterContactWorkConfig$AfterContactWorkTimeLimit": "<p>The ACW timeout duration in seconds. Minimum: 1 second. Maximum: 2,000,000 seconds (24 days). Enter 0 for indefinite ACW time.</p>",
         "UserPhoneConfig$AfterContactWorkTimeLimit": "<p>The After Call Work (ACW) timeout setting, in seconds. This parameter has a minimum value of 0 and a maximum value of 2,000,000 seconds (24 days). Enter 0 if you don't want to allocate a specific amount of ACW time. It essentially means an indefinite amount of time. When the conversation ends, ACW starts; the agent must choose Close contact to end ACW. </p> <note> <p>When returned by a <code>SearchUsers</code> call, <code>AfterContactWorkTimeLimit</code> is returned in milliseconds. </p> </note>"
       }
     },
@@ -672,6 +696,12 @@
       "base": "<p>Information about agent-first outbound strategy configuration.</p>",
       "refs": {
         "OutboundStrategyConfig$AgentFirst": "<p>The config of agent first outbound strategy.</p>"
+      }
+    },
+    "AgentFirstCallbackAutoAccept": {
+      "base": null,
+      "refs": {
+        "AutoAcceptConfig$AgentFirstCallbackAutoAccept": "<p>Indicates whether auto-accept is enabled for agent-first callbacks. This setting only applies to the VOICE channel.</p>"
       }
     },
     "AgentFirstName": {
@@ -1466,7 +1496,23 @@
     "AutoAccept": {
       "base": null,
       "refs": {
+        "AutoAcceptConfig$AutoAccept": "<p>Indicates whether auto-accept is enabled for this channel. When enabled, available agents are automatically connected to contacts from this channel.</p>",
         "UserPhoneConfig$AutoAccept": "<p>The Auto accept setting.</p>"
+      }
+    },
+    "AutoAcceptConfig": {
+      "base": "<p>Configuration settings for auto-accept for a specific channel.</p>",
+      "refs": {
+        "AutoAcceptConfigs$member": null
+      }
+    },
+    "AutoAcceptConfigs": {
+      "base": "<p>A list of auto-accept configuration settings for each channel.</p>",
+      "refs": {
+        "CreateUserRequest$AutoAcceptConfigs": "<p>The list of auto-accept configuration settings for each channel.</p>",
+        "UpdateUserConfigRequest$AutoAcceptConfigs": "<p>The list of auto-accept configuration settings for each channel. When auto-accept is enabled for a channel, available agents are automatically connected to contacts from that channel without needing to manually accept. Auto-accept connects agents to contacts in less than one second.</p>",
+        "User$AutoAcceptConfigs": "<p>The list of auto-accept configuration settings for each channel.</p>",
+        "UserSearchSummary$AutoAcceptConfigs": "<p>The list of auto-accept configuration settings for each channel.</p>"
       }
     },
     "AutoEvaluationConfiguration": {
@@ -1800,8 +1846,10 @@
     "Channel": {
       "base": null,
       "refs": {
+        "AfterContactWorkConfigPerChannel$Channel": "<p>The channel for this ACW timeout configuration. Valid values: VOICE, CHAT, TASK, EMAIL.</p>",
         "AgentContactReference$Channel": "<p>The channel of the contact.</p>",
         "AssociatedContactSummary$Channel": "<p>How the contact reached your contact center.</p>",
+        "AutoAcceptConfig$Channel": "<p>The channel for this auto-accept configuration. Valid values: VOICE, CHAT, TASK, EMAIL.</p>",
         "ChannelList$member": null,
         "ChannelToCountMap$key": null,
         "Channels$member": null,
@@ -1810,9 +1858,12 @@
         "CreateContactRequest$Channel": "<p>The channel for the contact.</p> <important> <p>The CHAT channel is not supported. The following information is incorrect. We're working to correct it.</p> </important>",
         "Dimensions$Channel": "<p>The channel used for grouping and filters.</p>",
         "MediaConcurrency$Channel": "<p>The channels that agents can handle in the Contact Control Panel (CCP).</p>",
+        "PersistentConnectionConfig$Channel": "<p>Configuration settings for persistent connection. <b>Only <code>VOICE</code> is supported for this data type.</b> </p>",
+        "PhoneNumberConfig$Channel": "<p>The channel for this phone number configuration. <b>Only <code>VOICE</code> is supported for this data type.</b> </p>",
         "RoutingProfileManualAssignmentQueueConfigSummary$Channel": "<p>The channels this queue supports. Valid Values: CHAT | TASK | EMAIL </p> <important> <p>VOICE is not supported. The information shown below is incorrect. We're working to correct it. </p> </important>",
         "RoutingProfileQueueConfigSummary$Channel": "<p>The channels this queue supports.</p>",
-        "RoutingProfileQueueReference$Channel": "<p>The channels agents can handle in the Contact Control Panel (CCP) for this routing profile.</p>"
+        "RoutingProfileQueueReference$Channel": "<p>The channels agents can handle in the Contact Control Panel (CCP) for this routing profile.</p>",
+        "VoiceEnhancementConfig$Channel": "<p>The channel for this voice enhancement configuration. <b>Only <code>VOICE</code> is supported for this data type.</b> </p>"
       }
     },
     "ChannelList": {
@@ -6896,6 +6947,7 @@
         "UpdateSecurityProfileRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateTaskTemplateRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateTaskTemplateResponse$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "UpdateUserConfigRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateUserHierarchyGroupNameRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateUserHierarchyRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateUserHierarchyStructureRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -8950,7 +9002,23 @@
     "PersistentConnection": {
       "base": null,
       "refs": {
+        "PersistentConnectionConfig$PersistentConnection": "<p>Indicates whether persistent connection is enabled. When enabled, the agent's connection is maintained after a call ends, enabling subsequent calls to connect faster.</p>",
         "UserPhoneConfig$PersistentConnection": "<p>The persistent connection setting for the user.</p>"
+      }
+    },
+    "PersistentConnectionConfig": {
+      "base": "<p>Configuration settings for persistent connection for a specific channel.</p>",
+      "refs": {
+        "PersistentConnectionConfigs$member": null
+      }
+    },
+    "PersistentConnectionConfigs": {
+      "base": "<p>The list of persistent connection configuration settings for each channel.</p>",
+      "refs": {
+        "CreateUserRequest$PersistentConnectionConfigs": "<p>The list of persistent connection configuration settings for each channel.</p>",
+        "UpdateUserConfigRequest$PersistentConnectionConfigs": "<p>The list of persistent connection configuration settings for each channel.</p>",
+        "User$PersistentConnectionConfigs": "<p>The list of persistent connection configuration settings for each channel.</p>",
+        "UserSearchSummary$PersistentConnectionConfigs": "<p>The list of persistent connection configuration settings for each channel.</p>"
       }
     },
     "PhoneNumber": {
@@ -8965,9 +9033,23 @@
         "StartOutboundVoiceContactRequest$DestinationPhoneNumber": "<p>The phone number of the customer, in E.164 format.</p>",
         "StartOutboundVoiceContactRequest$SourcePhoneNumber": "<p>The phone number associated with the Amazon Connect instance, in E.164 format. If you do not specify a source phone number, you must specify a queue.</p>",
         "UserIdentityInfo$Mobile": "<p>The user's mobile number.</p>",
-        "UserPhoneConfig$DeskPhoneNumber": "<p>The phone number for the user's desk phone.</p>",
         "VoiceCallEntryPointParameters$SourcePhoneNumber": "<p>The source phone number for the test.</p>",
         "VoiceCallEntryPointParameters$DestinationPhoneNumber": "<p>The destination phone number for the test.</p>"
+      }
+    },
+    "PhoneNumberConfig": {
+      "base": "<p>Configuration settings for phone type and phone number.</p>",
+      "refs": {
+        "PhoneNumberConfigs$member": null
+      }
+    },
+    "PhoneNumberConfigs": {
+      "base": "<p>The list of phone number configuration settings for each channel.</p>",
+      "refs": {
+        "CreateUserRequest$PhoneNumberConfigs": "<p>The list of phone number configuration settings for each channel.</p>",
+        "UpdateUserConfigRequest$PhoneNumberConfigs": "<p>The list of phone number configuration settings for each channel.</p>",
+        "User$PhoneNumberConfigs": "<p>The list of phone number configuration settings for each channel.</p>",
+        "UserSearchSummary$PhoneNumberConfigs": "<p>The list of phone number configuration settings for each channel.</p>"
       }
     },
     "PhoneNumberCountryCode": {
@@ -9080,6 +9162,7 @@
     "PhoneType": {
       "base": null,
       "refs": {
+        "PhoneNumberConfig$PhoneType": "<p>The phone type. Valid values: SOFT_PHONE, DESK_PHONE.</p>",
         "UserPhoneConfig$PhoneType": "<p>The phone type.</p>"
       }
     },
@@ -11422,6 +11505,13 @@
       "base": null,
       "refs": {}
     },
+    "SensitivePhoneNumber": {
+      "base": null,
+      "refs": {
+        "PhoneNumberConfig$PhoneNumber": "<p>The phone number for the user's desk phone.</p>",
+        "UserPhoneConfig$DeskPhoneNumber": "<p>The phone number for the user's desk phone.</p>"
+      }
+    },
     "ServiceQuotaExceededException": {
       "base": "<p>The service quota has been exceeded.</p>",
       "refs": {}
@@ -13144,6 +13234,10 @@
       "base": null,
       "refs": {}
     },
+    "UpdateUserConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateUserHierarchyGroupNameRequest": {
       "base": null,
       "refs": {}
@@ -13360,6 +13454,7 @@
         "ListUserProficienciesRequest$UserId": "<p>The identifier of the user account.</p>",
         "PutUserStatusRequest$UserId": "<p>The identifier of the user.</p>",
         "TrafficDistributionGroupUserSummary$UserId": "<p>The identifier for the user. This can be the ID or the ARN of the user.</p>",
+        "UpdateUserConfigRequest$UserId": "<p>The identifier of the user account.</p>",
         "UpdateUserHierarchyRequest$UserId": "<p>The identifier of the user account.</p>",
         "UpdateUserIdentityInfoRequest$UserId": "<p>The identifier of the user account.</p>",
         "UpdateUserPhoneConfigRequest$UserId": "<p>The identifier of the user account.</p>",
@@ -13408,7 +13503,7 @@
     "UserPhoneConfig": {
       "base": "<p>Contains information about the phone configuration settings for a user.</p>",
       "refs": {
-        "CreateUserRequest$PhoneConfig": "<p>The phone settings for the user.</p>",
+        "CreateUserRequest$PhoneConfig": "<p>The phone settings for the user. This parameter is optional. If not provided, the user can be configured using channel-specific parameters such as <code>AutoAcceptConfigs</code>, <code>AfterContactWorkConfigs</code>, <code>PhoneNumberConfigs</code>, <code>PersistentConnectionConfigs</code>, and <code>VoiceEnhancementConfigs</code>.</p>",
         "UpdateUserPhoneConfigRequest$PhoneConfig": "<p>Information about phone configuration settings for the user.</p>",
         "User$PhoneConfig": "<p>Information about the phone configuration for the user.</p>",
         "UserSearchSummary$PhoneConfig": null
@@ -13889,6 +13984,27 @@
       "base": "<p>Parameters for initiating a voice call test.</p>",
       "refs": {
         "TestCaseEntryPoint$VoiceCallEntryPointParameters": "<p>Parameters for voice call entry point.</p>"
+      }
+    },
+    "VoiceEnhancementConfig": {
+      "base": "<p>Configuration settings for voice enhancement.</p>",
+      "refs": {
+        "VoiceEnhancementConfigs$member": null
+      }
+    },
+    "VoiceEnhancementConfigs": {
+      "base": "<p>The list of voice enhancement configuration settings for each channel.</p>",
+      "refs": {
+        "CreateUserRequest$VoiceEnhancementConfigs": "<p>The list of voice enhancement configuration settings for each channel.</p>",
+        "UpdateUserConfigRequest$VoiceEnhancementConfigs": "<p>The list of voice enhancement configuration settings for each channel.</p>",
+        "User$VoiceEnhancementConfigs": "<p>The list of voice enhancement configuration settings for each channel.</p>",
+        "UserSearchSummary$VoiceEnhancementConfigs": "<p>The list of voice enhancement configuration settings for each channel.</p>"
+      }
+    },
+    "VoiceEnhancementMode": {
+      "base": null,
+      "refs": {
+        "VoiceEnhancementConfig$VoiceEnhancementMode": "<p>The voice enhancement mode.</p>"
       }
     },
     "VoiceRecordingConfiguration": {

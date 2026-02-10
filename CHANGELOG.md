@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Kafka` - Amazon MSK adds three new APIs, CreateTopic, UpdateTopic, and DeleteTopic for managing Kafka topics in your MSK clusters.
+* `Aws\Connect` - Amazon Connect now supports per-channel auto-accept and After Contact Work (ACW) timeouts. Configure agents with auto-accept and ACW timeout settings for chat, tasks, emails, and callbacks. Use the new UpdateUserConfig API to manage these settings.
+* `Aws\EKS` - Introducing an optional policy field, an IAM policy applied to pod identity associations in addition to IAM role policies. When specified, pod permissions are the intersection of IAM role policies and the policy field, ensuring the principle of least privilege.
+* `Aws\BedrockAgentCore` - Added AgentCore browser proxy configuration support, allowing routing of browser traffic through HTTP and HTTPS proxy servers with authentication and bypass rules.
+* `Aws\RDS` - This release adds backup configuration for RDS and Aurora restores, letting customers set backup retention period and preferred backup window during restore. It also enables viewing backup settings when describing snapshots or automated backups for instances and clusters.
+
 ## 3.369.30 - 2026-02-09
 
 * `Aws\Transfer` - This release adds a documentation update for MdnResponse of type "ASYNC"

@@ -15,6 +15,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createConfigurationAsync(array $args = [])
  * @method \Aws\Result createReplicator(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createReplicatorAsync(array $args = [])
+ * @method \Aws\Result createTopic(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createTopicAsync(array $args = [])
  * @method \Aws\Result createVpcConnection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createVpcConnectionAsync(array $args = [])
  * @method \Aws\Result deleteCluster(array $args = [])
@@ -23,6 +25,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteConfigurationAsync(array $args = [])
  * @method \Aws\Result deleteReplicator(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteReplicatorAsync(array $args = [])
+ * @method \Aws\Result deleteTopic(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteTopicAsync(array $args = [])
  * @method \Aws\Result deleteVpcConnection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteVpcConnectionAsync(array $args = [])
  * @method \Aws\Result describeCluster(array $args = [])
@@ -117,5 +121,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateSecurityAsync(array $args = [])
  * @method \Aws\Result updateStorage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStorageAsync(array $args = [])
+ * @method \Aws\Result updateTopic(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateTopicAsync(array $args = [])
  */
 class KafkaClient extends AwsClient {}

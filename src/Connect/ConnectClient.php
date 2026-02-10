@@ -687,6 +687,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateTestCaseAsync(array $args = [])
  * @method \Aws\Result updateTrafficDistribution(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTrafficDistributionAsync(array $args = [])
+ * @method \Aws\Result updateUserConfig(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateUserConfigAsync(array $args = [])
  * @method \Aws\Result updateUserHierarchy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateUserHierarchyAsync(array $args = [])
  * @method \Aws\Result updateUserHierarchyGroupName(array $args = [])
