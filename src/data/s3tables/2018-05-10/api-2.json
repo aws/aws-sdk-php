@@ -1798,7 +1798,51 @@
       "required":["schema"],
       "members":{
         "schema":{"shape":"IcebergSchema"},
+        "partitionSpec":{"shape":"IcebergPartitionSpec"},
+        "writeOrder":{"shape":"IcebergSortOrder"},
         "properties":{"shape":"TableProperties"}
+      }
+    },
+    "IcebergNullOrder":{
+      "type":"string",
+      "enum":[
+        "nulls-first",
+        "nulls-last"
+      ]
+    },
+    "IcebergPartitionField":{
+      "type":"structure",
+      "required":[
+        "sourceId",
+        "transform",
+        "name"
+      ],
+      "members":{
+        "sourceId":{
+          "shape":"Integer",
+          "locationName":"source-id"
+        },
+        "transform":{"shape":"String"},
+        "name":{"shape":"String"},
+        "fieldId":{
+          "shape":"Integer",
+          "locationName":"field-id"
+        }
+      }
+    },
+    "IcebergPartitionFieldList":{
+      "type":"list",
+      "member":{"shape":"IcebergPartitionField"}
+    },
+    "IcebergPartitionSpec":{
+      "type":"structure",
+      "required":["fields"],
+      "members":{
+        "fields":{"shape":"IcebergPartitionFieldList"},
+        "specId":{
+          "shape":"Integer",
+          "locationName":"spec-id"
+        }
       }
     },
     "IcebergSchema":{
@@ -1815,12 +1859,62 @@
         "maxSnapshotAgeHours":{"shape":"PositiveInteger"}
       }
     },
+    "IcebergSortDirection":{
+      "type":"string",
+      "enum":[
+        "asc",
+        "desc"
+      ]
+    },
+    "IcebergSortField":{
+      "type":"structure",
+      "required":[
+        "sourceId",
+        "transform",
+        "direction",
+        "nullOrder"
+      ],
+      "members":{
+        "sourceId":{
+          "shape":"Integer",
+          "locationName":"source-id"
+        },
+        "transform":{"shape":"String"},
+        "direction":{"shape":"IcebergSortDirection"},
+        "nullOrder":{
+          "shape":"IcebergNullOrder",
+          "locationName":"null-order"
+        }
+      }
+    },
+    "IcebergSortFieldList":{
+      "type":"list",
+      "member":{"shape":"IcebergSortField"}
+    },
+    "IcebergSortOrder":{
+      "type":"structure",
+      "required":[
+        "orderId",
+        "fields"
+      ],
+      "members":{
+        "orderId":{
+          "shape":"Integer",
+          "locationName":"order-id"
+        },
+        "fields":{"shape":"IcebergSortFieldList"}
+      }
+    },
     "IcebergUnreferencedFileRemovalSettings":{
       "type":"structure",
       "members":{
         "unreferencedDays":{"shape":"PositiveInteger"},
         "nonCurrentDays":{"shape":"PositiveInteger"}
       }
+    },
+    "Integer":{
+      "type":"integer",
+      "box":true
     },
     "InternalServerErrorException":{
       "type":"structure",
@@ -2413,6 +2507,7 @@
         "type"
       ],
       "members":{
+        "id":{"shape":"Integer"},
         "name":{"shape":"String"},
         "type":{"shape":"String"},
         "required":{"shape":"Boolean"}

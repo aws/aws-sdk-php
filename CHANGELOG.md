@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - R8i instances powered by custom Intel Xeon 6 processors available only on AWS with sustained all-core 3.9 GHz turbo frequency
+* `Aws\S3Tables` - S3 Tables now supports setting partition specifications and sort orders on tables. Partition specs allow users to define how data is organized using transform functions. Sort order configurations enable users to specify sort directions and null ordering preferences for optimized data layout.
+* `Aws\EKS` - This release adds support for Windows Server 2025 in Amazon EKS Managed Node Groups.
+* `Aws\Batch` - Add support for listing jobs by share identifier and getting snapshots of active capacity utilization by job queue and share.
+* `Aws\KafkaConnect` - Support configurable upper limits on task count during autoscaling operations via maxAutoscalingTaskCount parameter.
+
 ## 3.369.31 - 2026-02-10
 
 * `Aws\Kafka` - Amazon MSK adds three new APIs, CreateTopic, UpdateTopic, and DeleteTopic for managing Kafka topics in your MSK clusters.
