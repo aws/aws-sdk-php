@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.33 - 2026-02-12
 
 * `Aws\EC2` - Launching nested virtualization. This feature allows you to run nested VMs inside virtual (non-bare metal) EC2 instances.
 
