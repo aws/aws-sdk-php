@@ -12561,6 +12561,10 @@
         "AmdSevSnp":{
           "shape":"AmdSevSnpSpecification",
           "locationName":"amdSevSnp"
+        },
+        "NestedVirtualization":{
+          "shape":"NestedVirtualizationSpecification",
+          "locationName":"nestedVirtualization"
         }
       }
     },
@@ -12569,7 +12573,8 @@
       "members":{
         "CoreCount":{"shape":"Integer"},
         "ThreadsPerCore":{"shape":"Integer"},
-        "AmdSevSnp":{"shape":"AmdSevSnpSpecification"}
+        "AmdSevSnp":{"shape":"AmdSevSnpSpecification"},
+        "NestedVirtualization":{"shape":"NestedVirtualizationSpecification"}
       }
     },
     "CpuPerformanceFactor":{
@@ -38667,6 +38672,10 @@
         "AmdSevSnp":{
           "shape":"AmdSevSnpSpecification",
           "locationName":"amdSevSnp"
+        },
+        "NestedVirtualization":{
+          "shape":"NestedVirtualizationSpecification",
+          "locationName":"nestedVirtualization"
         }
       }
     },
@@ -38675,7 +38684,8 @@
       "members":{
         "CoreCount":{"shape":"Integer"},
         "ThreadsPerCore":{"shape":"Integer"},
-        "AmdSevSnp":{"shape":"AmdSevSnpSpecification"}
+        "AmdSevSnp":{"shape":"AmdSevSnpSpecification"},
+        "NestedVirtualization":{"shape":"NestedVirtualizationSpecification"}
       }
     },
     "LaunchTemplateEbsBlockDevice":{
@@ -41289,15 +41299,12 @@
     },
     "ModifyInstanceCpuOptionsRequest":{
       "type":"structure",
-      "required":[
-        "InstanceId",
-        "CoreCount",
-        "ThreadsPerCore"
-      ],
+      "required":["InstanceId"],
       "members":{
         "InstanceId":{"shape":"InstanceId"},
         "CoreCount":{"shape":"Integer"},
         "ThreadsPerCore":{"shape":"Integer"},
+        "NestedVirtualization":{"shape":"NestedVirtualizationSpecification"},
         "DryRun":{"shape":"Boolean"}
       }
     },
@@ -41315,6 +41322,10 @@
         "ThreadsPerCore":{
           "shape":"Integer",
           "locationName":"threadsPerCore"
+        },
+        "NestedVirtualization":{
+          "shape":"NestedVirtualizationSpecification",
+          "locationName":"nestedVirtualization"
         }
       }
     },
@@ -43411,6 +43422,13 @@
           "locationName":"scope"
         }
       }
+    },
+    "NestedVirtualizationSpecification":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled"
+      ]
     },
     "NetmaskLength":{"type":"integer"},
     "NetworkAcl":{
@@ -53259,7 +53277,10 @@
     },
     "SupportedAdditionalProcessorFeature":{
       "type":"string",
-      "enum":["amd-sev-snp"]
+      "enum":[
+        "amd-sev-snp",
+        "nested-virtualization"
+      ]
     },
     "SupportedAdditionalProcessorFeatureList":{
       "type":"list",

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Launching nested virtualization. This feature allows you to run nested VMs inside virtual (non-bare metal) EC2 instances.
+
 ## 3.369.32 - 2026-02-11
 
 * `Aws\EC2` - R8i instances powered by custom Intel Xeon 6 processors available only on AWS with sustained all-core 3.9 GHz turbo frequency
