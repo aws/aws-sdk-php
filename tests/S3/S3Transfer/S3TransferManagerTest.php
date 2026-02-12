@@ -37,14 +37,14 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use InvalidArgumentException;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 
-#[CoversClass(S3TransferManager::class)]
+/**
+ * @covers \Aws\S3\S3Transfer\S3TransferManager
+ */
 final class S3TransferManagerTest extends TestCase
 {
     private const DOWNLOAD_BASE_CASES = __DIR__ . '/test-cases/download-single-object.json';
@@ -202,9 +202,10 @@ EOF
      * @param array $bucketKeyArgs
      * @param string $missingProperty
      *
+     * @dataProvider uploadBucketAndKeyProvider
+     *
      * @return void
      */
-    #[DataProvider('uploadBucketAndKeyProvider')]
     public function testUploadFailsWhenBucketAndKeyAreNotProvided(
         array  $bucketKeyArgs,
         string $missingProperty
@@ -378,9 +379,10 @@ EOF
      * @param int $expectedPartSize
      * @param bool $isMultipartUpload
      *
+     * @dataProvider uploadUsesCustomMupThresholdProvider
+     *
      * @return void
      */
-    #[DataProvider('uploadUsesCustomMupThresholdProvider')]
     public function testUploadUsesCustomMupThreshold(
         int $mupThreshold,
         int $expectedPartCount,
@@ -546,9 +548,10 @@ EOF
     /**
      * @param string $checksumAlgorithm
      *
+     * @dataProvider uploadUsesCustomChecksumAlgorithmProvider
+     *
      * @return void
      */
-    #[DataProvider('uploadUsesCustomChecksumAlgorithmProvider')]
     public function testUploadUsesCustomChecksumAlgorithm(
         string $checksumAlgorithm,
     ): void
@@ -629,9 +632,10 @@ EOF
      * @param string $directory
      * @param bool $isDirectoryValid
      *
+     * @dataProvider uploadDirectoryValidatesProvidedDirectoryProvider
+     *
      * @return void
      */
-    #[DataProvider('uploadDirectoryValidatesProvidedDirectoryProvider')]
     public function testUploadDirectoryValidatesProvidedDirectory(
         string $directory,
         bool $isDirectoryValid
@@ -1517,9 +1521,10 @@ EOF
      * @param array $sourceAsArray
      * @param string $expectedExceptionMessage
      *
+     * @dataProvider downloadFailsWhenSourceAsArrayMissesBucketOrKeyPropertyProvider
+     *
      * @return void
      */
-    #[DataProvider('downloadFailsWhenSourceAsArrayMissesBucketOrKeyPropertyProvider')]
     public function testDownloadFailsWhenSourceAsArrayMissesBucketOrKeyProperty(
         array $sourceAsArray,
         string $expectedExceptionMessage,
@@ -1639,9 +1644,10 @@ EOF
      * @param array $downloadArgs
      * @param bool $expectedChecksumMode
      *
+     * @dataProvider downloadAppliesChecksumProvider
+     *
      * @return void
      */
-    #[DataProvider('downloadAppliesChecksumProvider')]
     public function testDownloadAppliesChecksumMode(
         array $transferManagerConfig,
         array $downloadConfig,
@@ -1764,9 +1770,10 @@ EOF
      * @param string $multipartDownloadType
      * @param string $expectedParameter
      *
+     * @dataProvider downloadChoosesMultipartDownloadTypeProvider
+     *
      * @return void
      */
-    #[DataProvider('downloadChoosesMultipartDownloadTypeProvider')]
     public function testDownloadChoosesMultipartDownloadType(
         string $multipartDownloadType,
         string $expectedParameter
@@ -1826,9 +1833,10 @@ EOF
      * @param int $objectSize
      * @param array $expectedRangeSizes
      *
+     * @dataProvider rangeGetMultipartDownloadMinimumPartSizeProvider
+     *
      * @return void
      */
-    #[DataProvider('rangeGetMultipartDownloadMinimumPartSizeProvider')]
     public function testRangeGetMultipartDownloadMinimumPartSize(
         int $minimumPartSize,
         int $objectSize,

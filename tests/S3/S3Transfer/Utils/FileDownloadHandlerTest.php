@@ -8,7 +8,6 @@ use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\Utils\FileDownloadHandler;
 use Aws\Test\TestsUtility;
 use GuzzleHttp\Psr7\Utils;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class FileDownloadHandlerTest extends TestCase
@@ -168,9 +167,10 @@ final class FileDownloadHandlerTest extends TestCase
     /**
      * @param string $checksumAlgorithm
      *
+     * @dataProvider validatePartChecksumWhenWritingToDiskProvider
+     *
      * @return void
      */
-    #[DataProvider('validatePartChecksumWhenWritingToDiskProvider')]
     public function testValidatesPartChecksumWhenWritingToDisk(
         string $checksumAlgorithm,
     ): void

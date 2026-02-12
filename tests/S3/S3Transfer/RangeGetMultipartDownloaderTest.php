@@ -5,7 +5,6 @@ namespace Aws\Test\S3\S3Transfer;
 use Aws\Command;
 use Aws\Result;
 use Aws\S3\S3Client;
-use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadResult;
 use Aws\S3\S3Transfer\RangeGetMultipartDownloader;
 use Aws\S3\S3Transfer\Utils\FileDownloadHandler;
@@ -15,11 +14,11 @@ use Generator;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Utils;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(RangeGetMultipartDownloader::class)]
+/**
+ * @covers \Aws\S3\S3Transfer\RangeGetMultipartDownloader
+ */
 final class RangeGetMultipartDownloaderTest extends TestCase
 {
     /** @var string */
@@ -45,9 +44,10 @@ final class RangeGetMultipartDownloaderTest extends TestCase
      * @param int $objectSizeInBytes
      * @param int $targetPartSize
      *
+     * @dataProvider rangeGetMultipartDownloaderProvider
+     *
      * @return void
      */
-    #[DataProvider('rangeGetMultipartDownloaderProvider')]
     public function testRangeGetMultipartDownloader(
         string $objectKey,
         int $objectSizeInBytes,
@@ -230,9 +230,10 @@ final class RangeGetMultipartDownloaderTest extends TestCase
      * @param int $targetPartSize
      * @param string $eTag
      *
+     * @dataProvider ifMatchIsPresentInEachRangeRequestAfterFirstProvider
+     *
      * @return void
      */
-    #[DataProvider('ifMatchIsPresentInEachRangeRequestAfterFirstProvider')]
     public function testIfMatchIsPresentInEachRangeRequestAfterFirst(
         int $objectSizeInBytes,
         int $targetPartSize,

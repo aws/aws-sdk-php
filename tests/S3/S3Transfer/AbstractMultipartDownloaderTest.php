@@ -16,12 +16,13 @@ use Aws\S3\S3Transfer\Utils\AbstractDownloadHandler;
 use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Utils;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(AbstractMultipartDownloader::class)]
-#[CoversClass(PartGetMultipartDownloader::class)]
-#[CoversClass(RangeGetMultipartDownloader::class)]
+/**
+ * @covers \Aws\S3\S3Transfer\AbstractMultipartDownloader
+ * @covers \Aws\S3\S3Transfer\PartGetMultipartDownloader
+ * @covers \Aws\S3\S3Transfer\RangeGetMultipartDownloader
+ */
 final class AbstractMultipartDownloaderTest extends TestCase
 {
     /**

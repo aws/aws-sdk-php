@@ -3,14 +3,14 @@
 namespace Aws\Test\S3\S3Transfer\Models;
 
 use Aws\S3\S3Transfer\Exception\S3TransferException;
-use Aws\S3\S3Transfer\Models\AbstractResumableTransfer;
 use Aws\S3\S3Transfer\Models\ResumableUpload;
 use Aws\Test\TestsUtility;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(AbstractResumableTransfer::class)]
-#[CoversClass(ResumableUpload::class)]
+/**
+ * @covers \Aws\S3\S3Transfer\Models\AbstractResumableTransfer
+ * @covers \Aws\S3\S3Transfer\Models\ResumableUpload
+ */
 final class ResumableTransferTest extends TestCase
 {
     private string $tempDir;

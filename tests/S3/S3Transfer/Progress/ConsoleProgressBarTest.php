@@ -7,11 +7,11 @@ use Aws\S3\S3Transfer\Progress\ConsoleProgressBar;
 use Aws\S3\S3Transfer\Progress\PlainProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\AbstractProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\TransferProgressBarFormat;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(ConsoleProgressBar::class)]
+/**
+ * @covers \Aws\S3\S3Transfer\Progress\ConsoleProgressBar
+ */
 final class ConsoleProgressBarTest extends TestCase
 {
     /**
@@ -91,13 +91,14 @@ final class ConsoleProgressBarTest extends TestCase
      * @param string $progressBarChar
      * @param int $progressBarWidth
      * @param int $percentCompleted
-     * @param AbstractProgressBarFormatTest $progressBarFormat
+     * @param AbstractProgressBarFormat $progressBarFormat
      * @param array $progressBarFormatArgs
      * @param string $expectedOutput
      *
+     * @dataProvider progressBarRenderingProvider
+     *
      * @return void
      */
-    #[DataProvider('progressBarRenderingProvider')]
     public function testProgressBarRendering(
         string                    $progressBarChar,
         int                       $progressBarWidth,

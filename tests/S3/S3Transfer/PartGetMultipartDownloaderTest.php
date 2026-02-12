@@ -14,11 +14,11 @@ use Generator;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Utils;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(PartGetMultipartDownloader::class)]
+/**
+ * @covers \Aws\S3\S3Transfer\PartGetMultipartDownloader
+ */
 final class PartGetMultipartDownloaderTest extends TestCase
 {
 
@@ -45,9 +45,10 @@ final class PartGetMultipartDownloaderTest extends TestCase
      * @param int $objectSizeInBytes
      * @param int $targetPartSize
      *
+     * @dataProvider partGetMultipartDownloaderProvider
+     *
      * @return void
      */
-    #[DataProvider('partGetMultipartDownloaderProvider')]
     public function testPartGetMultipartDownloader(
         string $objectKey,
         int $objectSizeInBytes,
@@ -187,9 +188,10 @@ final class PartGetMultipartDownloaderTest extends TestCase
      * @param int $targetPartSize
      * @param string $eTag
      *
+     * @dataProvider ifMatchIsPresentInEachPartRequestAfterFirstProvider
+     *
      * @return void
      */
-    #[DataProvider('ifMatchIsPresentInEachPartRequestAfterFirstProvider')]
     public function testIfMatchIsPresentInEachRangeRequestAfterFirst(
         int $objectSizeInBytes,
         int $targetPartSize,
