@@ -1983,9 +1983,10 @@ EOF
      * @param array $config
      * @param string $expectedS3Prefix
      *
+     * @dataProvider downloadDirectoryAppliesS3PrefixProvider
+     *
      * @return void
      */
-    #[DataProvider('downloadDirectoryAppliesS3PrefixProvider')]
     public function testDownloadDirectoryAppliesS3Prefix(
         array $config,
         string $expectedS3Prefix
@@ -2286,9 +2287,10 @@ EOF
      * @param array $objectList
      * @param array $expectedObjectList
      *
+     * @dataProvider downloadDirectoryAppliesFilter
+     *
      * @return void
      */
-    #[DataProvider('downloadDirectoryAppliesFilter')]
     public function testDownloadDirectoryAppliesFilter(
         Closure $filter,
         array $objectList,
@@ -2594,9 +2596,10 @@ EOF
      * @param array $listObjectsContent
      * @param array $expectedFileKeys
      *
+     * @dataProvider downloadDirectoryCreateFilesProvider
+     *
      * @return void
      */
-    #[DataProvider('downloadDirectoryCreateFilesProvider')]
     public function testDownloadDirectoryCreateFiles(
         array $listObjectsContent,
         array $expectedFileKeys,
@@ -2713,9 +2716,10 @@ EOF
      * @param array $objects
      * @param array $expectedOutput
      *
+     * @dataProvider resolvesOutsideTargetDirectoryProvider
+     *
      * @return void
      */
-    #[DataProvider('resolvesOutsideTargetDirectoryProvider')]
     public function testResolvesOutsideTargetDirectory(
         ?string $prefix,
         array $objects,
@@ -2906,9 +2910,10 @@ EOF
      * @param array $expectations
      * @param array $outcomes
      *
+     * @dataProvider modeledDownloadCasesProvider
+     *
      * @return void
      */
-    #[DataProvider('modeledDownloadCasesProvider')]
     public function testModeledCasesForDownload(
         string $testId,
         array $config,
@@ -3078,9 +3083,10 @@ EOF
      * @param array $expectations
      * @param array $outcomes
      *
+     * @dataProvider modeledUploadCasesProvider
+     *
      * @return void
      */
-    #[DataProvider('modeledUploadCasesProvider')]
     public function testModeledCasesForUpload(
         string $testId,
         array $config,
@@ -3224,9 +3230,10 @@ EOF
      * @param array $expectations
      * @param array $outcomes
      *
+     * @dataProvider modeledUploadDirectoryCasesProvider
+     *
      * @return void
      */
-    #[DataProvider('modeledUploadDirectoryCasesProvider')]
     public function testModeledCasesForUploadDirectory(
         string $testId,
         array $config,
@@ -3386,9 +3393,10 @@ EOF
      * @param array $expectedFiles
      * @param array $outcomes
      *
+     * @dataProvider modeledDownloadDirectoryCasesProvider
+     *
      * @return void
      */
-    #[DataProvider('modeledDownloadDirectoryCasesProvider')]
     public function testModeledCasesForDownloadDirectory(
         string $testId,
         array $config,
