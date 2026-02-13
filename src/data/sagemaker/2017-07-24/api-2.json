@@ -7241,6 +7241,12 @@
         "Disable"
       ]
     },
+    "ClusterDnsName":{
+      "type":"string",
+      "max":275,
+      "min":16,
+      "pattern":"((fs|fc)i?-[0-9a-f]{8,}\\..{4,253})"
+    },
     "ClusterEbsVolumeConfig":{
       "type":"structure",
       "members":{
@@ -7319,6 +7325,32 @@
         "Description":{"shape":"String"}
       }
     },
+    "ClusterFsxLustreConfig":{
+      "type":"structure",
+      "required":[
+        "DnsName",
+        "MountName"
+      ],
+      "members":{
+        "DnsName":{"shape":"ClusterDnsName"},
+        "MountName":{"shape":"ClusterMountName"},
+        "MountPath":{"shape":"ClusterFsxMountPath"}
+      }
+    },
+    "ClusterFsxMountPath":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"/[a-zA-Z0-9._/-]+"
+    },
+    "ClusterFsxOpenZfsConfig":{
+      "type":"structure",
+      "required":["DnsName"],
+      "members":{
+        "DnsName":{"shape":"ClusterDnsName"},
+        "MountPath":{"shape":"ClusterFsxMountPath"}
+      }
+    },
     "ClusterInstanceCount":{
       "type":"integer",
       "box":true,
@@ -7350,7 +7382,8 @@
         "CapacityRequirements":{"shape":"ClusterCapacityRequirements"},
         "TargetStateCount":{"shape":"ClusterInstanceCount"},
         "SoftwareUpdateStatus":{"shape":"SoftwareUpdateStatus"},
-        "ActiveSoftwareUpdateConfig":{"shape":"DeploymentConfiguration"}
+        "ActiveSoftwareUpdateConfig":{"shape":"DeploymentConfiguration"},
+        "SlurmConfig":{"shape":"ClusterSlurmConfigDetails"}
       }
     },
     "ClusterInstanceGroupDetailsList":{
@@ -7387,6 +7420,7 @@
         "ScheduledUpdateConfig":{"shape":"ScheduledUpdateConfig"},
         "ImageId":{"shape":"ImageId"},
         "KubernetesConfig":{"shape":"ClusterKubernetesConfig"},
+        "SlurmConfig":{"shape":"ClusterSlurmConfig"},
         "CapacityRequirements":{"shape":"ClusterCapacityRequirements"}
       }
     },
@@ -7438,14 +7472,16 @@
     "ClusterInstanceStorageConfig":{
       "type":"structure",
       "members":{
-        "EbsVolumeConfig":{"shape":"ClusterEbsVolumeConfig"}
+        "EbsVolumeConfig":{"shape":"ClusterEbsVolumeConfig"},
+        "FsxLustreConfig":{"shape":"ClusterFsxLustreConfig"},
+        "FsxOpenZfsConfig":{"shape":"ClusterFsxOpenZfsConfig"}
       },
       "union":true
     },
     "ClusterInstanceStorageConfigs":{
       "type":"list",
       "member":{"shape":"ClusterInstanceStorageConfig"},
-      "max":2,
+      "max":4,
       "min":0
     },
     "ClusterInstanceType":{
@@ -7676,6 +7712,12 @@
         "SlrAccessEntry":{"shape":"String"}
       }
     },
+    "ClusterMountName":{
+      "type":"string",
+      "max":8,
+      "min":1,
+      "pattern":"([A-Za-z0-9_-]{1,8})"
+    },
     "ClusterName":{
       "type":"string",
       "max":63,
@@ -7785,7 +7827,8 @@
     "ClusterOrchestrator":{
       "type":"structure",
       "members":{
-        "Eks":{"shape":"ClusterOrchestratorEksConfig"}
+        "Eks":{"shape":"ClusterOrchestratorEksConfig"},
+        "Slurm":{"shape":"ClusterOrchestratorSlurmConfig"}
       }
     },
     "ClusterOrchestratorEksConfig":{
@@ -7794,6 +7837,24 @@
       "members":{
         "ClusterArn":{"shape":"EksClusterArn"}
       }
+    },
+    "ClusterOrchestratorSlurmConfig":{
+      "type":"structure",
+      "members":{
+        "SlurmConfigStrategy":{"shape":"ClusterSlurmConfigStrategy"}
+      }
+    },
+    "ClusterPartitionName":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9])*"
+    },
+    "ClusterPartitionNames":{
+      "type":"list",
+      "member":{"shape":"ClusterPartitionName"},
+      "max":1,
+      "min":0
     },
     "ClusterPrivateDnsHostname":{
       "type":"string",
@@ -7900,6 +7961,38 @@
     "ClusterSchedulerPriorityClassName":{
       "type":"string",
       "pattern":"[a-z0-9]([-a-z0-9]*[a-z0-9]){0,39}?"
+    },
+    "ClusterSlurmConfig":{
+      "type":"structure",
+      "required":["NodeType"],
+      "members":{
+        "NodeType":{"shape":"ClusterSlurmNodeType"},
+        "PartitionNames":{"shape":"ClusterPartitionNames"}
+      }
+    },
+    "ClusterSlurmConfigDetails":{
+      "type":"structure",
+      "required":["NodeType"],
+      "members":{
+        "NodeType":{"shape":"ClusterSlurmNodeType"},
+        "PartitionNames":{"shape":"ClusterPartitionNames"}
+      }
+    },
+    "ClusterSlurmConfigStrategy":{
+      "type":"string",
+      "enum":[
+        "Overwrite",
+        "Managed",
+        "Merge"
+      ]
+    },
+    "ClusterSlurmNodeType":{
+      "type":"string",
+      "enum":[
+        "Controller",
+        "Login",
+        "Compute"
+      ]
     },
     "ClusterSortBy":{
       "type":"string",
@@ -23370,7 +23463,13 @@
         "ml.r7i.16xlarge",
         "ml.r7i.24xlarge",
         "ml.r7i.48xlarge",
-        "ml.p5.4xlarge"
+        "ml.p5.4xlarge",
+        "ml.g7e.2xlarge",
+        "ml.g7e.4xlarge",
+        "ml.g7e.8xlarge",
+        "ml.g7e.12xlarge",
+        "ml.g7e.24xlarge",
+        "ml.g7e.48xlarge"
       ]
     },
     "ProcessingJob":{
@@ -28770,7 +28869,8 @@
         "InstanceGroupsToDelete":{"shape":"ClusterInstanceGroupsToDelete"},
         "NodeProvisioningMode":{"shape":"ClusterNodeProvisioningMode"},
         "ClusterRole":{"shape":"RoleArn"},
-        "AutoScaling":{"shape":"ClusterAutoScalingConfig"}
+        "AutoScaling":{"shape":"ClusterAutoScalingConfig"},
+        "Orchestrator":{"shape":"ClusterOrchestrator"}
       }
     },
     "UpdateClusterResponse":{

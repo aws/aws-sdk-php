@@ -48,6 +48,7 @@
     "CreateHoursOfOperationOverride": "<p>Creates an hours of operation override in an Amazon Connect hours of operation resource.</p>",
     "CreateInstance": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Initiates an Amazon Connect instance with all the supported channels enabled. It does not attach any storage, such as Amazon Simple Storage Service (Amazon S3) or Amazon Kinesis. It also does not allow for any configurations on features, such as Contact Lens for Amazon Connect. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-instances.html\">Create an Amazon Connect instance</a> in the <i>Amazon Connect Administrator Guide</i>.</p> <p>Amazon Connect enforces a limit on the total number of instances that you can create or delete in 30 days. If you exceed this limit, you will get an error message indicating there has been an excessive number of attempts at creating or deleting instances. You must wait 30 days before you can restart creating and deleting instances in your account.</p>",
     "CreateIntegrationAssociation": "<p>Creates an Amazon Web Services resource association with an Amazon Connect instance.</p>",
+    "CreateNotification": "<p>Creates a new notification to be delivered to specified recipients. Notifications can include localized content with embedded links, and an optional expiration time. Recipients can be specified as individual user ARNs or instance ARNs to target all users in an instance.</p>",
     "CreateParticipant": "<p>Adds a new participant into an on-going chat contact or webRTC call. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-customize-flow.html\">Customize chat flow experiences by integrating custom participants</a> or <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-multiuser-inapp.html\">Enable multi-user web, in-app, and video calling</a>.</p>",
     "CreatePersistentContactAssociation": "<p>Enables rehydration of chats for the lifespan of a contact. For more information about chat rehydration, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-persistence.html\">Enable persistent chat</a> in the <i>Amazon Connect Administrator Guide</i>. </p>",
     "CreatePredefinedAttribute": "<p>Creates a new predefined attribute for the specified Amazon Connect instance. A <i>predefined attribute</i> is made up of a name and a value.</p> <p>For the predefined attributes per instance quota, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#connect-quotas\">Amazon Connect quotas</a>.</p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>Create an attribute for routing proficiency (for example, agent certification) that has predefined values (for example, a list of possible certifications). For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p> </li> <li> <p>Create an attribute for business unit name that has a list of predefined business unit names used in your organization. This is a use case where information for a contact varies between transfers or conferences. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-contact-segment-attributes.html\">Use contact segment attributes</a>.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
@@ -85,6 +86,7 @@
     "DeleteHoursOfOperationOverride": "<p>Deletes an hours of operation override in an Amazon Connect hours of operation resource.</p>",
     "DeleteInstance": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Deletes the Amazon Connect instance. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/delete-connect-instance.html\">Delete your Amazon Connect instance</a> in the <i>Amazon Connect Administrator Guide</i>.</p> <p>Amazon Connect enforces a limit on the total number of instances that you can create or delete in 30 days. If you exceed this limit, you will get an error message indicating there has been an excessive number of attempts at creating or deleting instances. You must wait 30 days before you can restart creating and deleting instances in your account.</p>",
     "DeleteIntegrationAssociation": "<p>Deletes an Amazon Web Services resource association from an Amazon Connect instance. The association must not have any use cases associated with it.</p>",
+    "DeleteNotification": "<p>Deletes a notification. Once deleted, the notification is no longer visible to all users and cannot be managed through the Admin Website or APIs.</p>",
     "DeletePredefinedAttribute": "<p>Deletes a predefined attribute from the specified Amazon Connect instance.</p>",
     "DeletePrompt": "<p>Deletes a prompt.</p>",
     "DeletePushNotificationRegistration": "<p>Deletes registration for a device token and a chat contact.</p>",
@@ -121,6 +123,7 @@
     "DescribeInstance": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Returns the current state of the specified instance identifier. It tracks the instance while it is being created and returns an error status, if applicable. </p> <p>If an instance is not created successfully, the instance status reason field returns details relevant to the reason. The instance in a failed state is returned only for 24 hours after the CreateInstance API was invoked.</p>",
     "DescribeInstanceAttribute": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Describes the specified instance attribute.</p>",
     "DescribeInstanceStorageConfig": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Retrieves the current storage configurations for the specified resource type, association ID, and instance ID.</p>",
+    "DescribeNotification": "<p>Retrieves detailed information about a specific notification, including its content, priority, recipients, and metadata.</p>",
     "DescribePhoneNumber": "<p>Gets details and status of a phone number that’s claimed to your Amazon Connect instance or traffic distribution group.</p> <important> <p>If the number is claimed to a traffic distribution group, and you are calling in the Amazon Web Services Region where the traffic distribution group was created, you can use either a phone number ARN or UUID value for the <code>PhoneNumberId</code> URI request parameter. However, if the number is claimed to a traffic distribution group and you are calling this API in the alternate Amazon Web Services Region associated with the traffic distribution group, you must provide a full phone number ARN. If a UUID is provided in this scenario, you receive a <code>ResourceNotFoundException</code>.</p> </important>",
     "DescribePredefinedAttribute": "<p>Describes a predefined attribute for the specified Amazon Connect instance. A <i>predefined attribute</i> is made up of a name and a value. You can use predefined attributes for:</p> <ul> <li> <p>Routing proficiency (for example, agent certification) that has predefined values (for example, a list of possible certifications). For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p> </li> <li> <p>Contact information that varies between transfers or conferences, such as the name of the business unit handling the contact. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-contact-segment-attributes.html\">Use contact segment attributes</a>.</p> </li> </ul> <p>For the predefined attributes per instance quota, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#connect-quotas\">Amazon Connect quotas</a>.</p> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "DescribePrompt": "<p>Describes the prompt.</p>",
@@ -204,6 +207,7 @@
     "ListIntegrationAssociations": "<p>Provides summary information about the Amazon Web Services resource associations for the specified Amazon Connect instance.</p>",
     "ListLambdaFunctions": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Returns a paginated list of all Lambda functions that display in the dropdown options in the relevant flow blocks.</p>",
     "ListLexBots": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Returns a paginated list of all the Amazon Lex V1 bots currently associated with the instance. To return both Amazon Lex V1 and V2 bots, use the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListBots.html\">ListBots</a> API. </p>",
+    "ListNotifications": "<p>Retrieves a paginated list of all notifications in the Amazon Connect instance.</p>",
     "ListPhoneNumbers": "<p>Provides information about the phone numbers for the specified Amazon Connect instance. </p> <p>For more information about phone numbers, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/contact-center-phone-number.html\">Set Up Phone Numbers for Your Contact Center</a> in the <i>Amazon Connect Administrator Guide</i>.</p> <important> <ul> <li> <p>We recommend using <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html\">ListPhoneNumbersV2</a> to return phone number types. ListPhoneNumbers doesn't support number types <code>UIFN</code>, <code>SHARED</code>, <code>THIRD_PARTY_TF</code>, and <code>THIRD_PARTY_DID</code>. While it returns numbers of those types, it incorrectly lists them as <code>TOLL_FREE</code> or <code>DID</code>. </p> </li> <li> <p>The phone number <code>Arn</code> value that is returned from each of the items in the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbers.html#connect-ListPhoneNumbers-response-PhoneNumberSummaryList\">PhoneNumberSummaryList</a> cannot be used to tag phone number resources. It will fail with a <code>ResourceNotFoundException</code>. Instead, use the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html\">ListPhoneNumbersV2</a> API. It returns the new phone number ARN that can be used to tag phone number resources.</p> </li> </ul> </important>",
     "ListPhoneNumbersV2": "<p>Lists phone numbers claimed to your Amazon Connect instance or traffic distribution group. If the provided <code>TargetArn</code> is a traffic distribution group, you can call this API in both Amazon Web Services Regions associated with traffic distribution group.</p> <p>For more information about phone numbers, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/contact-center-phone-number.html\">Set Up Phone Numbers for Your Contact Center</a> in the <i>Amazon Connect Administrator Guide</i>.</p> <note> <ul> <li> <p>When given an instance ARN, <code>ListPhoneNumbersV2</code> returns only the phone numbers claimed to the instance.</p> </li> <li> <p>When given a traffic distribution group ARN <code>ListPhoneNumbersV2</code> returns only the phone numbers claimed to the traffic distribution group.</p> </li> </ul> </note>",
     "ListPredefinedAttributes": "<p>Lists predefined attributes for the specified Amazon Connect instance. A <i>predefined attribute</i> is made up of a name and a value. You can use predefined attributes for:</p> <ul> <li> <p>Routing proficiency (for example, agent certification) that has predefined values (for example, a list of possible certifications). For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p> </li> <li> <p>Contact information that varies between transfers or conferences, such as the name of the business unit handling the contact. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-contact-segment-attributes.html\">Use contact segment attributes</a>.</p> </li> </ul> <p>For the predefined attributes per instance quota, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#connect-quotas\">Amazon Connect quotas</a>.</p> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
@@ -230,6 +234,7 @@
     "ListTrafficDistributionGroups": "<p>Lists traffic distribution groups.</p>",
     "ListUseCases": "<p>Lists the use cases for the integration association. </p>",
     "ListUserHierarchyGroups": "<p>Provides summary information about the hierarchy groups for the specified Amazon Connect instance.</p> <p>For more information about agent hierarchies, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/agent-hierarchy.html\">Set Up Agent Hierarchies</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
+    "ListUserNotifications": "<p>Retrieves a paginated list of notifications for a specific user, including the notification status for that user.</p>",
     "ListUserProficiencies": "<p>Lists proficiencies associated with a user.</p>",
     "ListUsers": "<p>Provides summary information about the users for the specified Amazon Connect instance.</p>",
     "ListViewVersions": "<p>Returns all the available versions for the specified Amazon Connect instance and view identifier.</p> <p>Results will be sorted from highest to lowest.</p>",
@@ -255,6 +260,7 @@
     "SearchEvaluationForms": "<p>Searches evaluation forms in an Amazon Connect instance, with optional filtering.</p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>List all evaluation forms in an instance.</p> </li> <li> <p>Find all evaluation forms that meet specific criteria, such as Title, Description, Status, and more.</p> </li> <li> <p>Find all evaluation forms that are tagged with a specific set of tags.</p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>A Search operation, unlike a List operation, takes time to index changes to resource (create, update or delete). If you don't see updated information for recently changed contact evaluations, try calling the API again in a few seconds.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "SearchHoursOfOperationOverrides": "<p>Searches the hours of operation overrides.</p>",
     "SearchHoursOfOperations": "<p>Searches the hours of operation in an Amazon Connect instance, with optional filtering.</p>",
+    "SearchNotifications": "<p>Searches for notifications based on specified criteria and filters. Returns a paginated list of notifications matching the search parameters, ordered by descending creation time. Supports filtering by content and tags.</p>",
     "SearchPredefinedAttributes": "<p>Searches predefined attributes that meet certain criteria. A <i>predefined attribute</i> is made up of a name and a value. You can use predefined attributes for:</p> <ul> <li> <p>Routing proficiency (for example, agent certification) that has predefined values (for example, a list of possible certifications). For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p> </li> <li> <p>Contact information that varies between transfers or conferences, such as the name of the business unit handling the contact. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-contact-segment-attributes.html\">Use contact segment attributes</a>.</p> </li> </ul> <p>For the predefined attributes per instance quota, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#connect-quotas\">Amazon Connect quotas</a>.</p> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "SearchPrompts": "<p>Searches prompts in an Amazon Connect instance, with optional filtering.</p>",
     "SearchQueues": "<p>Searches queues in an Amazon Connect instance, with optional filtering.</p>",
@@ -319,6 +325,7 @@
     "UpdateHoursOfOperationOverride": "<p>Update the hours of operation override.</p>",
     "UpdateInstanceAttribute": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Updates the value for the specified attribute type.</p>",
     "UpdateInstanceStorageConfig": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Updates an existing configuration for a resource type. This API is idempotent.</p>",
+    "UpdateNotificationContent": "<p>Updates the localized content of an existing notification. This operation applies to all users for whom the notification was sent.</p>",
     "UpdateParticipantAuthentication": "<p>Instructs Amazon Connect to resume the authentication process. The subsequent actions depend on the request body contents:</p> <ul> <li> <p> <b>If a code is provided</b>: Connect retrieves the identity information from Amazon Cognito and imports it into Connect Customer Profiles.</p> </li> <li> <p> <b>If an error is provided</b>: The error branch of the Authenticate Customer block is executed.</p> </li> </ul> <note> <p>The API returns a success response to acknowledge the request. However, the interaction and exchange of identity information occur asynchronously after the response is returned.</p> </note>",
     "UpdateParticipantRoleConfig": "<p>Updates timeouts for when human chat participants are to be considered idle, and when agents are automatically disconnected from a chat due to idleness. You can set four timers:</p> <ul> <li> <p>Customer idle timeout</p> </li> <li> <p>Customer auto-disconnect timeout</p> </li> <li> <p>Agent idle timeout</p> </li> <li> <p>Agent auto-disconnect timeout</p> </li> </ul> <p>For more information about how chat timeouts work, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-chat-timeouts.html\">Set up chat timeouts for human participants</a>. </p>",
     "UpdatePhoneNumber": "<p>Updates your claimed phone number from its current Amazon Connect instance or traffic distribution group to another Amazon Connect instance or traffic distribution group in the same Amazon Web Services Region.</p> <important> <p>After using this API, you must verify that the phone number is attached to the correct flow in the target instance or traffic distribution group. You need to do this because the API switches only the phone number to a new instance or traffic distribution group. It doesn't migrate the flow configuration of the phone number, too.</p> <p>You can call <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribePhoneNumber.html\">DescribePhoneNumber</a> API to verify the status of a previous <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdatePhoneNumber.html\">UpdatePhoneNumber</a> operation.</p> </important>",
@@ -348,6 +355,7 @@
     "UpdateUserHierarchyGroupName": "<p>Updates the name of the user hierarchy group. </p>",
     "UpdateUserHierarchyStructure": "<p>Updates the user hierarchy structure: add, remove, and rename user hierarchy levels.</p>",
     "UpdateUserIdentityInfo": "<p>Updates the identity information for the specified user.</p> <important> <p>We strongly recommend limiting who has the ability to invoke <code>UpdateUserIdentityInfo</code>. Someone with that ability can change the login credentials of other users by changing their email address. This poses a security risk to your organization. They can change the email address of a user to the attacker's email address, and then reset the password through email. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-profile-best-practices.html\">Best Practices for Security Profiles</a> in the <i>Amazon Connect Administrator Guide</i>.</p> </important>",
+    "UpdateUserNotificationStatus": "<p>Updates the status of a notification for a specific user, such as marking it as read or hidden. Users can only update notification status for notifications that have been sent to them. READ status deprioritizes the notification and greys it out, while HIDDEN status removes it from the notification widget.</p>",
     "UpdateUserPhoneConfig": "<p>Updates the phone configuration settings for the specified user.</p> <note> <p>We recommend using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdateUserConfig.html\">UpdateUserConfig</a> API, which supports additional functionality that is not available in the UpdateUserPhoneConfig API, such as voice enhancement settings and per-channel configuration for auto-accept and After Contact Work (ACW) timeouts. In comparison, the UpdateUserPhoneConfig API will always set the same ACW timeouts to all channels the user handles.</p> </note>",
     "UpdateUserProficiencies": "<p>Updates the properties associated with the proficiencies of a user.</p>",
     "UpdateUserRoutingProfile": "<p>Assigns the specified routing profile to the specified user.</p>",
@@ -410,6 +418,7 @@
         "CreateInstanceResponse$Arn": "<p>The Amazon Resource Name (ARN) of the instance.</p>",
         "CreateIntegrationAssociationRequest$IntegrationArn": "<p>The Amazon Resource Name (ARN) of the integration.</p> <note> <p>When integrating with Amazon Web Services End User Messaging, the Amazon Connect and Amazon Web Services End User Messaging instances must be in the same account.</p> </note>",
         "CreateIntegrationAssociationResponse$IntegrationAssociationArn": "<p>The Amazon Resource Name (ARN) for the association.</p>",
+        "CreateNotificationResponse$NotificationArn": "<p>The Amazon Resource Name (ARN) of the created notification.</p>",
         "CreatePromptResponse$PromptARN": "<p>The Amazon Resource Name (ARN) of the prompt.</p>",
         "CreatePushNotificationRegistrationRequest$PinpointAppArn": "<p>The Amazon Resource Name (ARN) of the Pinpoint application.</p>",
         "CreateQueueResponse$QueueArn": "<p>The Amazon Resource Name (ARN) of the queue.</p>",
@@ -502,6 +511,8 @@
         "ListPhoneNumbersV2Request$TargetArn": "<p>The Amazon Resource Name (ARN) for Amazon Connect instances or traffic distribution groups that phone number inbound traffic is routed through. If both <code>TargetArn</code> and <code>InstanceId</code> input are not provided, this API lists numbers claimed to all the Amazon Connect instances belonging to your account in the same Amazon Web Services Region as the request.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource. All Amazon Connect resources (instances, queues, flows, routing profiles, etc) have an ARN. To locate the ARN for an instance, for example, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">Find your Amazon Connect instance ID/ARN</a>. </p>",
         "MonitorContactResponse$ContactArn": "<p>The ARN of the contact.</p>",
+        "Notification$Arn": "<p>The Amazon Resource Name (ARN) of the notification.</p>",
+        "NotificationSearchSummary$Arn": "<p>The Amazon Resource Name (ARN) of the notification.</p>",
         "PhoneNumberSummary$Arn": "<p>The Amazon Resource Name (ARN) of the phone number.</p>",
         "Prompt$PromptARN": "<p>The Amazon Resource Name (ARN) of the prompt.</p>",
         "PromptSummary$Arn": "<p>The Amazon Resource Name (ARN) of the prompt.</p>",
@@ -510,6 +521,7 @@
         "QueueSummary$Arn": "<p>The Amazon Resource Name (ARN) of the queue.</p>",
         "QuickConnect$QuickConnectARN": "<p>The Amazon Resource Name (ARN) of the quick connect.</p>",
         "QuickConnectSummary$Arn": "<p>The Amazon Resource Name (ARN) of the quick connect.</p>",
+        "RecipientList$member": null,
         "ReplicateInstanceResponse$Arn": "<p>The Amazon Resource Name (ARN) of the replicated instance.</p>",
         "ResourceInUseException$ResourceId": "<p>The identifier for the resource.</p>",
         "RoutingProfile$RoutingProfileArn": "<p>The Amazon Resource Name (ARN) of the routing profile.</p>",
@@ -730,7 +742,8 @@
     "AgentId": {
       "base": null,
       "refs": {
-        "AgentIds$member": null
+        "AgentIds$member": null,
+        "UserNotificationSummary$RecipientId": "<p>The identifier of the recipient user.</p>"
       }
     },
     "AgentIds": {
@@ -1091,6 +1104,7 @@
         "SearchEvaluationFormsResponse$ApproximateTotalCount": "<p>The total number of evaluation forms that matched your search query.</p>",
         "SearchHoursOfOperationOverridesResponse$ApproximateTotalCount": "<p>The total number of hours of operations which matched your search query.</p>",
         "SearchHoursOfOperationsResponse$ApproximateTotalCount": "<p>The total number of hours of operations which matched your search query.</p>",
+        "SearchNotificationsResponse$ApproximateTotalCount": "<p>The approximate total number of notifications matching the search criteria.</p>",
         "SearchPredefinedAttributesResponse$ApproximateTotalCount": "<p>The approximate number of predefined attributes which matched your search query.</p>",
         "SearchPromptsResponse$ApproximateTotalCount": "<p>The total number of quick connects which matched your search query.</p>",
         "SearchQueuesResponse$ApproximateTotalCount": "<p>The total number of queues which matched your search query.</p>",
@@ -1994,6 +2008,7 @@
         "CreateEmailAddressRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateEvaluationFormRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateInstanceRequest$ClientToken": "<p>The idempotency token.</p>",
+        "CreateNotificationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateParticipantRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreatePersistentContactAssociationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreatePushNotificationRegistrationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
@@ -2121,6 +2136,12 @@
       "base": null,
       "refs": {
         "ListCondition$Conditions": "<p>A list of Condition objects which would be applied together with an AND condition.</p>"
+      }
+    },
+    "ConfigurableNotificationPriority": {
+      "base": "<p>The priority level that can be set when creating a customer notification. Valid values are HIGH and LOW. URGENT priority is reserved for system-generated notifications.</p>",
+      "refs": {
+        "CreateNotificationRequest$Priority": "<p>The priority level of the notification. Valid values are HIGH and LOW. High priority notifications are displayed above low priority notifications.</p>"
       }
     },
     "ConflictException": {
@@ -2811,6 +2832,7 @@
         "DataTableSearchFilter$AttributeFilter": null,
         "EvaluationFormSearchFilter$AttributeFilter": null,
         "EvaluationSearchFilter$AttributeFilter": null,
+        "NotificationSearchFilter$AttributeFilter": "<p>Attribute-based filters to apply to the search results.</p>",
         "UserHierarchyGroupSearchFilter$AttributeFilter": "<p>An object that can be used to specify Tag conditions inside the SearchFilter. This accepts an OR or AND (List of List) input where:</p> <ul> <li> <p>The top level list specifies conditions that need to be applied with <code>OR</code> operator.</p> </li> <li> <p>The inner list specifies conditions that need to be applied with <code>AND</code> operator.</p> </li> </ul>",
         "ViewSearchFilter$AttributeFilter": null,
         "WorkspaceAssociationSearchFilter$AttributeFilter": null,
@@ -2978,6 +3000,14 @@
       "refs": {}
     },
     "CreateIntegrationAssociationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateNotificationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateNotificationResponse": {
       "base": null,
       "refs": {}
     },
@@ -3736,6 +3766,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteNotificationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteNotificationResponse": {
+      "base": "<p>The response from deleting a notification.</p>",
+      "refs": {}
+    },
     "DeletePredefinedAttributeRequest": {
       "base": null,
       "refs": {}
@@ -3981,6 +4019,14 @@
       "refs": {}
     },
     "DescribeInstanceStorageConfigResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeNotificationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeNotificationResponse": {
       "base": null,
       "refs": {}
     },
@@ -6677,6 +6723,7 @@
         "CreateHoursOfOperationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateInstanceResponse$Id": "<p>The identifier for the instance.</p>",
         "CreateIntegrationAssociationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "CreateNotificationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateParticipantRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance. </p>",
         "CreatePersistentContactAssociationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreatePredefinedAttributeRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -6710,6 +6757,7 @@
         "DeleteHoursOfOperationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteInstanceRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteIntegrationAssociationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "DeleteNotificationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeletePredefinedAttributeRequest$InstanceId": "<p> The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeletePromptRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeletePushNotificationRegistrationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -6741,6 +6789,7 @@
         "DescribeInstanceAttributeRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeInstanceRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeInstanceStorageConfigRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "DescribeNotificationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribePredefinedAttributeRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribePromptRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeQueueRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -6819,6 +6868,7 @@
         "ListIntegrationAssociationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListLambdaFunctionsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListLexBotsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "ListNotificationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListPhoneNumbersRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListPhoneNumbersSummary$InstanceId": "<p>The identifier of the Amazon Connect instance that phone numbers are claimed to. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListPhoneNumbersV2Request$InstanceId": "<p>The identifier of the Amazon Connect instance that phone numbers are claimed to. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance. If both <code>TargetArn</code> and <code>InstanceId</code> are not provided, this API lists numbers claimed to all the Amazon Connect instances belonging to your account in the same Amazon Web Services Region as the request.</p>",
@@ -6843,12 +6893,14 @@
         "ListTestCasesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
         "ListUseCasesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListUserHierarchyGroupsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "ListUserNotificationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListUserProficienciesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListUsersRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListWorkspaceMediaRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListWorkspacePagesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListWorkspacesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "MonitorContactRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>",
+        "NotificationSearchSummary$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
         "PauseContactRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the <code>instanceId</code> in the ARN of the instance.</p>",
         "PutUserStatusRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ReplicateInstanceResponse$Id": "<p>The identifier of the replicated instance. You can find the <code>instanceId</code> in the ARN of the instance. The replicated instance has the same identifier as the instance it was replicated from.</p>",
@@ -6866,6 +6918,7 @@
         "SearchEvaluationFormsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchHoursOfOperationOverridesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
         "SearchHoursOfOperationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "SearchNotificationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchPredefinedAttributesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchPromptsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchQueuesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -6925,6 +6978,7 @@
         "UpdateHoursOfOperationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateInstanceAttributeRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateInstanceStorageConfigRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "UpdateNotificationContentRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateParticipantAuthenticationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateParticipantRoleConfigRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdatePhoneNumberRequest$InstanceId": "<p>The identifier of the Amazon Connect instance that phone numbers are claimed to. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance. You must enter <code>InstanceId</code> or <code>TargetArn</code>. </p>",
@@ -6952,6 +7006,7 @@
         "UpdateUserHierarchyRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateUserHierarchyStructureRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateUserIdentityInfoRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "UpdateUserNotificationStatusRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateUserPhoneConfigRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateUserProficienciesRequest$InstanceId": "<p> The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateUserRoutingProfileRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -6959,7 +7014,8 @@
         "UpdateWorkspaceMetadataRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateWorkspacePageRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateWorkspaceThemeRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
-        "UpdateWorkspaceVisibilityRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>"
+        "UpdateWorkspaceVisibilityRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "UserNotificationSummary$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>"
       }
     },
     "InstanceIdOrArn": {
@@ -7560,6 +7616,14 @@
       "base": null,
       "refs": {}
     },
+    "ListNotificationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNotificationsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListPhoneNumbersRequest": {
       "base": null,
       "refs": {}
@@ -7780,6 +7844,14 @@
       "base": null,
       "refs": {}
     },
+    "ListUserNotificationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListUserNotificationsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListUserProficienciesRequest": {
       "base": null,
       "refs": {}
@@ -7836,6 +7908,18 @@
       "base": null,
       "refs": {}
     },
+    "LocaleCode": {
+      "base": "<p>The locale code for localized content. Supported values include en_US, de_DE, es_ES, fr_FR, id_ID, it_IT, ja_JP, ko_KR, pt_BR, zh_CN, and zh_TW.</p>",
+      "refs": {
+        "NotificationContent$key": null
+      }
+    },
+    "LocalizedString": {
+      "base": "<p>A localized string value. Maximum length is 500 characters.</p>",
+      "refs": {
+        "NotificationContent$value": null
+      }
+    },
     "Long": {
       "base": null,
       "refs": {
@@ -7875,6 +7959,7 @@
         "ListEvaluationFormsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListHoursOfOperationOverridesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListIntegrationAssociationsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListNotificationsRequest$MaxResults": "<p>The maximum number of results to return per page. Valid range is 1-100.</p>",
         "ListPredefinedAttributesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListQueueQuickConnectsRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
         "ListRealtimeContactAnalysisSegmentsV2Request$MaxResults": "<p>The maximum number of results to return per page.</p>",
@@ -7896,6 +7981,7 @@
         "SearchEvaluationFormsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchHoursOfOperationOverridesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchHoursOfOperationsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
+        "SearchNotificationsRequest$MaxResults": "<p>The maximum number of results to return per page. Valid range is 1-100.</p>",
         "SearchPredefinedAttributesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchPromptsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchQuickConnectsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
@@ -7937,6 +8023,7 @@
         "ListSecurityProfilesRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
         "ListTestCasesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListUserHierarchyGroupsRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
+        "ListUserNotificationsRequest$MaxResults": "<p>The maximum number of results to return per page. Valid range is 1-1000.</p>",
         "ListUsersRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
         "SearchDataTablesRequest$MaxResults": "<p>The maximum number of data tables to return in one page of results.</p>"
       }
@@ -8397,6 +8484,8 @@
         "ListLambdaFunctionsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListLexBotsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListLexBotsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "ListNotificationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response to retrieve the next page of results.</p>",
+        "ListNotificationsResponse$NextToken": "<p>The token for the next set of results. If present, there are more results available.</p>",
         "ListPhoneNumbersRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListPhoneNumbersResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListPredefinedAttributesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -8442,6 +8531,8 @@
         "ListUseCasesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListUserHierarchyGroupsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListUserHierarchyGroupsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "ListUserNotificationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response to retrieve the next page of results.</p>",
+        "ListUserNotificationsResponse$NextToken": "<p>The token for the next set of results. If present, there are more results available.</p>",
         "ListUserProficienciesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListUserProficienciesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListUsersRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -8457,6 +8548,8 @@
         "SearchEmailAddressesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "SearchEvaluationFormsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "SearchEvaluationFormsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "SearchNotificationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response to retrieve the next page of results.</p>",
+        "SearchNotificationsResponse$NextToken": "<p>The token for the next set of results. If present, there are more results available.</p>",
         "SearchWorkspaceAssociationsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "SearchWorkspacesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>"
       }
@@ -8505,6 +8598,23 @@
         "SearchWorkspacesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>"
       }
     },
+    "Notification": {
+      "base": "<p>Contains information about a notification, including its content, priority, recipients, and metadata.</p>",
+      "refs": {
+        "DescribeNotificationResponse$Notification": "<p>The complete notification information including content, priority, recipients, and metadata.</p>",
+        "NotificationSummaryList$member": null
+      }
+    },
+    "NotificationContent": {
+      "base": "<p>A map of localized notification content where keys are locale codes and values are the notification text in that locale. Each localized string can be 0-500 characters.</p>",
+      "refs": {
+        "CreateNotificationRequest$Content": "<p>The localized content of the notification. A map where keys are locale codes and values are the notification text in that locale. Content supports markdown formatting and embedded links. Maximum 250 characters per locale.</p>",
+        "Notification$Content": "<p>The localized content of the notification. A map where keys are locale codes and values are the notification text in that locale.</p>",
+        "NotificationSearchSummary$Content": "<p>The localized content of the notification.</p>",
+        "UpdateNotificationContentRequest$Content": "<p>The updated localized content of the notification. A map of locale codes and values. Maximum 500 characters per locale.</p>",
+        "UserNotificationSummary$Content": "<p>The localized content of the notification.</p>"
+      }
+    },
     "NotificationContentType": {
       "base": null,
       "refs": {
@@ -8517,11 +8627,84 @@
         "SendNotificationActionDefinition$DeliveryMethod": "<p>Notification delivery method.</p>"
       }
     },
+    "NotificationId": {
+      "base": "<p>The unique identifier for a notification.</p>",
+      "refs": {
+        "CreateNotificationRequest$PredefinedNotificationId": null,
+        "CreateNotificationResponse$NotificationId": "<p>The unique identifier assigned to the created notification.</p>",
+        "DeleteNotificationRequest$NotificationId": "<p>The unique identifier for the notification to delete.</p>",
+        "DescribeNotificationRequest$NotificationId": "<p>The unique identifier for the notification.</p>",
+        "Notification$Id": "<p>The unique identifier for the notification.</p>",
+        "NotificationSearchSummary$Id": "<p>The unique identifier for the notification.</p>",
+        "UpdateNotificationContentRequest$NotificationId": "<p>The unique identifier for the notification to update.</p>",
+        "UpdateUserNotificationStatusRequest$NotificationId": "<p>The unique identifier for the notification.</p>",
+        "UserNotificationSummary$NotificationId": "<p>The unique identifier for the notification.</p>"
+      }
+    },
+    "NotificationPriority": {
+      "base": "<p>The priority level of a notification. Valid values are URGENT (reserved for system-generated notifications during availability or security events), HIGH, and LOW. High priority notifications are displayed above low priority notifications in the notification widget.</p>",
+      "refs": {
+        "Notification$Priority": "<p>The priority level of the notification. Valid values are URGENT, HIGH, and LOW.</p>",
+        "NotificationSearchSummary$Priority": "<p>The priority level of the notification.</p>",
+        "UserNotificationSummary$Priority": "<p>The priority level of the notification.</p>"
+      }
+    },
     "NotificationRecipientType": {
       "base": "<p>The type of notification recipient.</p>",
       "refs": {
         "SendNotificationActionDefinition$Recipient": "<p>Notification recipient.</p>",
         "SendNotificationActionDefinition$Exclusion": "<p>Recipients to exclude from notification.</p>"
+      }
+    },
+    "NotificationSearchConditionList": {
+      "base": null,
+      "refs": {
+        "NotificationSearchCriteria$OrConditions": "<p>A list of conditions to be met, where at least one condition must be satisfied.</p>",
+        "NotificationSearchCriteria$AndConditions": "<p>A list of conditions that must all be satisfied.</p>"
+      }
+    },
+    "NotificationSearchCriteria": {
+      "base": "<p>The search criteria to be used to return notifications.</p>",
+      "refs": {
+        "NotificationSearchConditionList$member": null,
+        "SearchNotificationsRequest$SearchCriteria": "<p>The search criteria to apply when searching for notifications. Supports filtering by notification ID and message content using comparison types such as STARTS_WITH, CONTAINS, and EXACT.</p>"
+      }
+    },
+    "NotificationSearchFilter": {
+      "base": "<p>Filters to apply when searching for notifications.</p>",
+      "refs": {
+        "SearchNotificationsRequest$SearchFilter": "<p>Filters to apply to the search results, such as tag-based filters.</p>"
+      }
+    },
+    "NotificationSearchSummary": {
+      "base": "<p>Summary information about a notification returned from a search operation.</p>",
+      "refs": {
+        "NotificationSearchSummaryList$member": null
+      }
+    },
+    "NotificationSearchSummaryList": {
+      "base": "<p>A list of notification search summaries.</p>",
+      "refs": {
+        "SearchNotificationsResponse$Notifications": "<p>A list of notifications matching the search criteria.</p>"
+      }
+    },
+    "NotificationSource": {
+      "base": "<p>The source that created the notification. Possible values include CUSTOMER (user-created), RULES (rule-generated), and SYSTEM (system-generated).</p>",
+      "refs": {
+        "UserNotificationSummary$Source": "<p>The source that created the notification. Valid values are CUSTOMER, RULES, and SYSTEM.</p>"
+      }
+    },
+    "NotificationStatus": {
+      "base": "<p>The status of a notification for a specific user. Valid values are READ, UNREAD, and HIDDEN (removes the notification from the widget).</p>",
+      "refs": {
+        "UpdateUserNotificationStatusRequest$Status": "<p>The new status for the notification. Valid values are READ, UNREAD, and HIDDEN.</p>",
+        "UserNotificationSummary$NotificationStatus": "<p>The status of the notification for this user. Valid values are READ, UNREAD, and HIDDEN.</p>"
+      }
+    },
+    "NotificationSummaryList": {
+      "base": "<p>A list of notification summaries.</p>",
+      "refs": {
+        "ListNotificationsResponse$NotificationSummaryList": "<p>A list of notification summaries.</p>"
       }
     },
     "NullableBoolean": {
@@ -10151,6 +10334,14 @@
         "ListRealtimeContactAnalysisSegmentsV2Response$Segments": "<p>An analyzed transcript or category.</p>"
       }
     },
+    "RecipientList": {
+      "base": "<p>A list of recipient Amazon Resource Names (ARNs). Maximum of 200 recipients.</p>",
+      "refs": {
+        "CreateNotificationRequest$Recipients": "<p>A list of Amazon Resource Names (ARNs) identifying the recipients of the notification. Can include user ARNs or instance ARNs to target all users in an instance. Maximum of 200 recipients.</p>",
+        "Notification$Recipients": "<p>A list of Amazon Resource Names (ARNs) identifying the recipients of the notification. Maximum of 200 recipients.</p>",
+        "NotificationSearchSummary$Recipients": "<p>A list of recipient Amazon Resource Names (ARNs).</p>"
+      }
+    },
     "RecordIds": {
       "base": null,
       "refs": {
@@ -10352,6 +10543,8 @@
         "ListSecurityProfileFlowModulesResponse$LastModifiedRegion": "<p> The Region that flow module was last modified in. </p>",
         "ListSecurityProfilePermissionsResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListUserProficienciesResponse$LastModifiedRegion": "<p>The region in which a user's proficiencies were last modified.</p>",
+        "Notification$LastModifiedRegion": "<p>The AWS Region where the notification was last modified.</p>",
+        "NotificationSearchSummary$LastModifiedRegion": "<p>The AWS Region where the notification was last modified.</p>",
         "PredefinedAttribute$LastModifiedRegion": "<p>Last modified region.</p>",
         "PredefinedAttributeSummary$LastModifiedRegion": "<p>Last modified region.</p>",
         "Prompt$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
@@ -10368,6 +10561,7 @@
         "TestCase$LastModifiedRegion": "<p>The region in which the test case was last modified.</p>",
         "TestCaseSummary$LastModifiedRegion": "<p>The region in which the test case was last modified.</p>",
         "UpdateTestCaseRequest$LastModifiedRegion": "<p>The region in which the resource was last modified</p>",
+        "UpdateUserNotificationStatusRequest$LastModifiedRegion": "<p>The AWS Region where the notification status was last modified. Used for cross-region replication.</p>",
         "User$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "UserSummary$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "Workspace$LastModifiedRegion": "<p>The Amazon Web Services Region where the workspace was last modified.</p>",
@@ -11048,6 +11242,14 @@
       "refs": {}
     },
     "SearchHoursOfOperationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchNotificationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchNotificationsResponse": {
       "base": null,
       "refs": {}
     },
@@ -11918,6 +12120,7 @@
         "EvaluationSearchCriteria$StringCondition": null,
         "HoursOfOperationOverrideSearchCriteria$StringCondition": null,
         "HoursOfOperationSearchCriteria$StringCondition": "<p>A leaf node condition which can be used to specify a string condition.</p> <note> <p>The currently supported values for <code>FieldName</code> are <code>name</code>, <code>description</code>, <code>timezone</code>, and <code>resourceID</code>.</p> </note>",
+        "NotificationSearchCriteria$StringCondition": null,
         "PredefinedAttributeSearchCriteria$StringCondition": null,
         "PromptSearchCriteria$StringCondition": "<p>A leaf node condition which can be used to specify a string condition.</p> <note> <p>The currently supported values for <code>FieldName</code> are <code>name</code>, <code>description</code>, and <code>resourceID</code>.</p> </note>",
         "QueueSearchCriteria$StringCondition": "<p>A leaf node condition which can be used to specify a string condition.</p> <note> <p>The currently supported values for <code>FieldName</code> are <code>name</code>, <code>description</code>, and <code>resourceID</code>.</p> </note>",
@@ -12085,6 +12288,7 @@
         "CreateHoursOfOperationRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateInstanceRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, <code>{ \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }</code>.</p>",
         "CreateIntegrationAssociationRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
+        "CreateNotificationRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, <code>{ \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }</code>.</p>",
         "CreatePromptRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateQueueRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateQuickConnectRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
@@ -12111,6 +12315,8 @@
         "ImportPhoneNumberRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "Instance$Tags": "<p>The tags of an instance.</p>",
         "ListTagsForResourceResponse$tags": "<p>Information about the tags.</p>",
+        "Notification$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, <code>{ \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }</code>.</p>",
+        "NotificationSearchSummary$Tags": "<p>The tags associated with the notification.</p>",
         "Prompt$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "Queue$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "QuickConnect$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
@@ -12672,6 +12878,7 @@
         "ContactFlowModuleAliasInfo$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ContactFlowModuleAliasSummary$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "CreateContactFlowVersionRequest$LastModifiedTime": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
+        "CreateNotificationRequest$ExpiresAt": "<p>The timestamp when the notification should expire and no longer be displayed to users. If not specified, defaults to one week from creation.</p>",
         "CreateTestCaseRequest$LastModifiedTime": "<p>The time at which the resource was last modified.</p>",
         "DataTable$CreatedTime": "<p>The timestamp when the data table was created.</p>",
         "DataTable$LastModifiedTime": "<p>The timestamp when the data table or any of its properties were last modified.</p>",
@@ -12726,6 +12933,12 @@
         "ListUserProficienciesResponse$LastModifiedTime": "<p>The last time that the user's proficiencies are were modified.</p>",
         "MetricInterval$StartTime": "<p>The timestamp, in UNIX Epoch time format. Start time is based on the interval period selected. </p>",
         "MetricInterval$EndTime": "<p>The timestamp, in UNIX Epoch time format. End time is based on the interval period selected. For example, If <code>IntervalPeriod</code> is selected <code>THIRTY_MIN</code>, <code>StartTime</code> and <code>EndTime</code> in the API request differs by 1 day, then 48 results are returned in the response. Each result is aggregated by the 30 minutes period, with each <code>StartTime</code> and <code>EndTime</code> differing by 30 minutes. </p>",
+        "Notification$LastModifiedTime": "<p>The timestamp when the notification was last modified.</p>",
+        "Notification$CreatedAt": "<p>The timestamp when the notification was created.</p>",
+        "Notification$ExpiresAt": "<p>The timestamp when the notification expires and is no longer displayed to users.</p>",
+        "NotificationSearchSummary$CreatedAt": "<p>The timestamp when the notification was created.</p>",
+        "NotificationSearchSummary$ExpiresAt": "<p>The timestamp when the notification expires.</p>",
+        "NotificationSearchSummary$LastModifiedTime": "<p>The timestamp when the notification was last modified.</p>",
         "PredefinedAttribute$LastModifiedTime": "<p>Last modified time.</p>",
         "PredefinedAttributeSummary$LastModifiedTime": "<p>Last modified time.</p>",
         "Prompt$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
@@ -12752,7 +12965,10 @@
         "TestCaseSummary$LastModifiedTime": "<p>The time at which the test case was last modified.</p>",
         "UpdateContactScheduleRequest$ScheduledTime": "<p>The timestamp, in Unix Epoch seconds format, at which to start running the inbound flow. The scheduled time cannot be in the past. It must be within up to 6 days in future. </p>",
         "UpdateTestCaseRequest$LastModifiedTime": "<p>The time at which the resource was last modified.</p>",
+        "UpdateUserNotificationStatusRequest$LastModifiedTime": "<p>The timestamp when the notification status was last modified. Used for cross-region replication and optimistic locking.</p>",
         "User$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
+        "UserNotificationSummary$CreatedAt": "<p>The timestamp when the notification was created.</p>",
+        "UserNotificationSummary$ExpiresAt": "<p>The timestamp when the notification expires.</p>",
         "UserSummary$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "View$CreatedTime": "<p>The timestamp of when the view was created.</p>",
         "View$LastModifiedTime": "<p>Latest timestamp of the <code>UpdateViewContent</code> or <code>CreateViewVersion</code> operations.</p>",
@@ -13098,6 +13314,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateNotificationContentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateNotificationContentResponse": {
+      "base": "<p>The response from updating notification content.</p>",
+      "refs": {}
+    },
     "UpdateParticipantAuthenticationRequest": {
       "base": null,
       "refs": {}
@@ -13252,6 +13476,14 @@
     },
     "UpdateUserIdentityInfoRequest": {
       "base": null,
+      "refs": {}
+    },
+    "UpdateUserNotificationStatusRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateUserNotificationStatusResponse": {
+      "base": "<p>The response from updating a user's notification status.</p>",
       "refs": {}
     },
     "UpdateUserPhoneConfigRequest": {
@@ -13451,12 +13683,14 @@
         "DisassociateTrafficDistributionGroupUserRequest$UserId": "<p>The identifier for the user. This can be the ID or the ARN of the user.</p>",
         "DisassociateUserProficienciesRequest$UserId": "<p>The identifier of the user account.</p>",
         "DismissUserContactRequest$UserId": "<p>The identifier of the user account.</p>",
+        "ListUserNotificationsRequest$UserId": "<p>The identifier of the user.</p>",
         "ListUserProficienciesRequest$UserId": "<p>The identifier of the user account.</p>",
         "PutUserStatusRequest$UserId": "<p>The identifier of the user.</p>",
         "TrafficDistributionGroupUserSummary$UserId": "<p>The identifier for the user. This can be the ID or the ARN of the user.</p>",
         "UpdateUserConfigRequest$UserId": "<p>The identifier of the user account.</p>",
         "UpdateUserHierarchyRequest$UserId": "<p>The identifier of the user account.</p>",
         "UpdateUserIdentityInfoRequest$UserId": "<p>The identifier of the user account.</p>",
+        "UpdateUserNotificationStatusRequest$UserId": "<p>The identifier of the user whose notification status is being updated.</p>",
         "UpdateUserPhoneConfigRequest$UserId": "<p>The identifier of the user account.</p>",
         "UpdateUserProficienciesRequest$UserId": "<p>The identifier of the user account.</p>",
         "UpdateUserRoutingProfileRequest$UserId": "<p>The identifier of the user account.</p>",
@@ -13499,6 +13733,18 @@
     "UserNotFoundException": {
       "base": "<p>No user with the specified credentials was found in the Amazon Connect instance.</p>",
       "refs": {}
+    },
+    "UserNotificationSummary": {
+      "base": "<p>Summary information about a notification for a specific user, including the user's read status.</p>",
+      "refs": {
+        "UserNotificationSummaryList$member": null
+      }
+    },
+    "UserNotificationSummaryList": {
+      "base": "<p>A list of user notification summaries.</p>",
+      "refs": {
+        "ListUserNotificationsResponse$UserNotifications": "<p>A list of notifications sent to the specified user.</p>"
+      }
     },
     "UserPhoneConfig": {
       "base": "<p>Contains information about the phone configuration settings for a user.</p>",

@@ -923,7 +923,7 @@
     },
     "ContributorId":{
       "type":"string",
-      "max":1024,
+      "max":16,
       "min":1
     },
     "Counts":{
@@ -1367,7 +1367,11 @@
     },
     "EvaluationState":{
       "type":"string",
-      "enum":["PARTIAL_DATA"]
+      "enum":[
+        "PARTIAL_DATA",
+        "EVALUATION_FAILURE",
+        "EVALUATION_ERROR"
+      ]
     },
     "ExceptionType":{"type":"string"},
     "ExtendedStatistic":{"type":"string"},

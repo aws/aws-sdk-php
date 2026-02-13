@@ -2735,6 +2735,13 @@
         "ClusterTieredStorageConfig$Mode": "<p>Specifies whether managed tier checkpointing is enabled or disabled for the HyperPod cluster. When set to <code>Enable</code>, the system installs a memory management daemon that provides disaggregated memory as a service for checkpoint storage. When set to <code>Disable</code>, the feature is turned off and the memory management daemon is removed from the cluster.</p>"
       }
     },
+    "ClusterDnsName": {
+      "base": null,
+      "refs": {
+        "ClusterFsxLustreConfig$DnsName": "<p>The DNS name of the Amazon FSx for Lustre file system.</p>",
+        "ClusterFsxOpenZfsConfig$DnsName": "<p>The DNS name of the Amazon FSx for OpenZFS file system.</p>"
+      }
+    },
     "ClusterEbsVolumeConfig": {
       "base": "<p>Defines the configuration for attaching an additional Amazon Elastic Block Store (EBS) volume to each instance of the SageMaker HyperPod cluster instance group. To learn more, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-release-notes.html#sagemaker-hyperpod-release-notes-20240620\">SageMaker HyperPod release notes: June 20, 2024</a>.</p>",
       "refs": {
@@ -2777,6 +2784,25 @@
       "base": "<p>A summary of an event in a HyperPod cluster.</p>",
       "refs": {
         "ClusterEventSummaries$member": null
+      }
+    },
+    "ClusterFsxLustreConfig": {
+      "base": "<p>Defines the configuration for attaching an Amazon FSx for Lustre file system to instances in a SageMaker HyperPod cluster instance group.</p>",
+      "refs": {
+        "ClusterInstanceStorageConfig$FsxLustreConfig": "<p>Defines the configuration for attaching an Amazon FSx for Lustre file system to the instances in the SageMaker HyperPod cluster instance group.</p>"
+      }
+    },
+    "ClusterFsxMountPath": {
+      "base": null,
+      "refs": {
+        "ClusterFsxLustreConfig$MountPath": "<p>The local path where the Amazon FSx for Lustre file system is mounted on instances.</p>",
+        "ClusterFsxOpenZfsConfig$MountPath": "<p>The local path where the Amazon FSx for OpenZFS file system is mounted on instances.</p>"
+      }
+    },
+    "ClusterFsxOpenZfsConfig": {
+      "base": "<p>Defines the configuration for attaching an Amazon FSx for OpenZFS file system to instances in a SageMaker HyperPod cluster instance group.</p>",
+      "refs": {
+        "ClusterInstanceStorageConfig$FsxOpenZfsConfig": "<p>Defines the configuration for attaching an Amazon FSx for OpenZFS file system to the instances in the SageMaker HyperPod cluster instance group.</p>"
       }
     },
     "ClusterInstanceCount": {
@@ -2989,6 +3015,12 @@
         "EventMetadata$Cluster": "<p>Metadata specific to cluster-level events.</p>"
       }
     },
+    "ClusterMountName": {
+      "base": null,
+      "refs": {
+        "ClusterFsxLustreConfig$MountName": "<p>The mount name of the Amazon FSx for Lustre file system.</p>"
+      }
+    },
     "ClusterName": {
       "base": null,
       "refs": {
@@ -3116,14 +3148,34 @@
     "ClusterOrchestrator": {
       "base": "<p>The type of orchestrator used for the SageMaker HyperPod cluster.</p>",
       "refs": {
-        "CreateClusterRequest$Orchestrator": "<p>The type of orchestrator to use for the SageMaker HyperPod cluster. Currently, the only supported value is <code>\"eks\"</code>, which is to use an Amazon Elastic Kubernetes Service cluster as the orchestrator.</p>",
-        "DescribeClusterResponse$Orchestrator": "<p>The type of orchestrator used for the SageMaker HyperPod cluster. </p>"
+        "CreateClusterRequest$Orchestrator": "<p>The type of orchestrator to use for the SageMaker HyperPod cluster. Currently, supported values are <code>\"Eks\"</code> and <code>\"Slurm\"</code>, which is to use an Amazon Elastic Kubernetes Service or Slurm cluster as the orchestrator.</p> <note> <p>If you specify the <code>Orchestrator</code> field, you must provide exactly one orchestrator configuration: either <code>Eks</code> or <code>Slurm</code>. Specifying both or providing an empty configuration returns a validation error.</p> </note>",
+        "DescribeClusterResponse$Orchestrator": "<p>The type of orchestrator used for the SageMaker HyperPod cluster. </p>",
+        "UpdateClusterRequest$Orchestrator": null
       }
     },
     "ClusterOrchestratorEksConfig": {
       "base": "<p>The configuration settings for the Amazon EKS cluster used as the orchestrator for the SageMaker HyperPod cluster.</p>",
       "refs": {
         "ClusterOrchestrator$Eks": "<p>The Amazon EKS cluster used as the orchestrator for the SageMaker HyperPod cluster.</p>"
+      }
+    },
+    "ClusterOrchestratorSlurmConfig": {
+      "base": "<p>The configuration settings for the Slurm orchestrator used with the SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "ClusterOrchestrator$Slurm": "<p>The Slurm orchestrator configuration for the SageMaker HyperPod cluster.</p>"
+      }
+    },
+    "ClusterPartitionName": {
+      "base": null,
+      "refs": {
+        "ClusterPartitionNames$member": null
+      }
+    },
+    "ClusterPartitionNames": {
+      "base": null,
+      "refs": {
+        "ClusterSlurmConfig$PartitionNames": "<p>The list of Slurm partition names that the instance group belongs to.</p>",
+        "ClusterSlurmConfigDetails$PartitionNames": "<p>The list of Slurm partition names that the instance group belongs to.</p>"
       }
     },
     "ClusterPrivateDnsHostname": {
@@ -3206,6 +3258,31 @@
       "base": null,
       "refs": {
         "PriorityClass$Name": "<p>Name of the priority class.</p>"
+      }
+    },
+    "ClusterSlurmConfig": {
+      "base": "<p>The Slurm configuration for an instance group in a SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "ClusterInstanceGroupSpecification$SlurmConfig": "<p>Specifies the Slurm configuration for the instance group.</p>"
+      }
+    },
+    "ClusterSlurmConfigDetails": {
+      "base": "<p>The Slurm configuration details for an instance group in a SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "ClusterInstanceGroupDetails$SlurmConfig": "<p>The Slurm configuration for the instance group.</p>"
+      }
+    },
+    "ClusterSlurmConfigStrategy": {
+      "base": null,
+      "refs": {
+        "ClusterOrchestratorSlurmConfig$SlurmConfigStrategy": "<p>The strategy for managing partitions for the Slurm configuration. Valid values are <code>Managed</code>, <code>Overwrite</code>, and <code>Merge</code>.</p>"
+      }
+    },
+    "ClusterSlurmNodeType": {
+      "base": null,
+      "refs": {
+        "ClusterSlurmConfig$NodeType": "<p>The type of Slurm node for the instance group. Valid values are <code>Controller</code>, <code>Worker</code>, and <code>Login</code>.</p>",
+        "ClusterSlurmConfigDetails$NodeType": "<p>The type of Slurm node for the instance group. Valid values are <code>Controller</code>, <code>Worker</code>, and <code>Login</code>.</p>"
       }
     },
     "ClusterSortBy": {

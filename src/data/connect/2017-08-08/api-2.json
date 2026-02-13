@@ -820,6 +820,24 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "CreateNotification":{
+      "name":"CreateNotification",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/notifications/{InstanceId}"
+      },
+      "input":{"shape":"CreateNotificationRequest"},
+      "output":{"shape":"CreateNotificationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"DuplicateResourceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"}
+      ]
+    },
     "CreateParticipant":{
       "name":"CreateParticipant",
       "http":{
@@ -1465,6 +1483,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "DeleteNotification":{
+      "name":"DeleteNotification",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/notifications/{InstanceId}/{NotificationId}"
+      },
+      "input":{"shape":"DeleteNotificationRequest"},
+      "output":{"shape":"DeleteNotificationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"}
+      ]
+    },
     "DeletePredefinedAttribute":{
       "name":"DeletePredefinedAttribute",
       "http":{
@@ -2046,6 +2081,23 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "DescribeNotification":{
+      "name":"DescribeNotification",
+      "http":{
+        "method":"GET",
+        "requestUri":"/notifications/{InstanceId}/{NotificationId}"
+      },
+      "input":{"shape":"DescribeNotificationRequest"},
+      "output":{"shape":"DescribeNotificationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"}
       ]
     },
     "DescribePhoneNumber":{
@@ -3379,6 +3431,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListNotifications":{
+      "name":"ListNotifications",
+      "http":{
+        "method":"GET",
+        "requestUri":"/notifications/{InstanceId}"
+      },
+      "input":{"shape":"ListNotificationsRequest"},
+      "output":{"shape":"ListNotificationsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"}
+      ]
+    },
     "ListPhoneNumbers":{
       "name":"ListPhoneNumbers",
       "http":{
@@ -3797,6 +3866,23 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "ListUserNotifications":{
+      "name":"ListUserNotifications",
+      "http":{
+        "method":"GET",
+        "requestUri":"/users/{InstanceId}/{UserId}/notifications"
+      },
+      "input":{"shape":"ListUserNotificationsRequest"},
+      "output":{"shape":"ListUserNotificationsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"}
+      ]
+    },
     "ListUserProficiencies":{
       "name":"ListUserProficiencies",
       "http":{
@@ -4211,6 +4297,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "SearchNotifications":{
+      "name":"SearchNotifications",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-notifications"
+      },
+      "input":{"shape":"SearchNotificationsRequest"},
+      "output":{"shape":"SearchNotificationsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"}
       ]
     },
     "SearchPredefinedAttributes":{
@@ -5291,6 +5394,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "UpdateNotificationContent":{
+      "name":"UpdateNotificationContent",
+      "http":{
+        "method":"POST",
+        "requestUri":"/notifications/{InstanceId}/{NotificationId}"
+      },
+      "input":{"shape":"UpdateNotificationContentRequest"},
+      "output":{"shape":"UpdateNotificationContentResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"}
+      ]
+    },
     "UpdateParticipantAuthentication":{
       "name":"UpdateParticipantAuthentication",
       "http":{
@@ -5751,6 +5871,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "UpdateUserNotificationStatus":{
+      "name":"UpdateUserNotificationStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/users/{InstanceId}/{UserId}/notifications/{NotificationId}"
+      },
+      "input":{"shape":"UpdateUserNotificationStatusRequest"},
+      "output":{"shape":"UpdateUserNotificationStatusResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"}
       ]
     },
     "UpdateUserPhoneConfig":{
@@ -7899,6 +8036,13 @@
       "type":"list",
       "member":{"shape":"Condition"}
     },
+    "ConfigurableNotificationPriority":{
+      "type":"string",
+      "enum":[
+        "HIGH",
+        "LOW"
+      ]
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -9048,6 +9192,42 @@
       "members":{
         "IntegrationAssociationId":{"shape":"IntegrationAssociationId"},
         "IntegrationAssociationArn":{"shape":"ARN"}
+      }
+    },
+    "CreateNotificationRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "Recipients",
+        "Content"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ExpiresAt":{"shape":"Timestamp"},
+        "Recipients":{"shape":"RecipientList"},
+        "Priority":{"shape":"ConfigurableNotificationPriority"},
+        "Content":{"shape":"NotificationContent"},
+        "Tags":{"shape":"TagMap"},
+        "PredefinedNotificationId":{"shape":"NotificationId"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateNotificationResponse":{
+      "type":"structure",
+      "required":[
+        "NotificationId",
+        "NotificationArn"
+      ],
+      "members":{
+        "NotificationId":{"shape":"NotificationId"},
+        "NotificationArn":{"shape":"ARN"}
       }
     },
     "CreateParticipantRequest":{
@@ -10582,6 +10762,29 @@
         }
       }
     },
+    "DeleteNotificationRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "NotificationId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "NotificationId":{
+          "shape":"NotificationId",
+          "location":"uri",
+          "locationName":"NotificationId"
+        }
+      }
+    },
+    "DeleteNotificationResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DeletePredefinedAttributeRequest":{
       "type":"structure",
       "required":[
@@ -11471,6 +11674,32 @@
       "type":"structure",
       "members":{
         "StorageConfig":{"shape":"InstanceStorageConfig"}
+      }
+    },
+    "DescribeNotificationRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "NotificationId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "NotificationId":{
+          "shape":"NotificationId",
+          "location":"uri",
+          "locationName":"NotificationId"
+        }
+      }
+    },
+    "DescribeNotificationResponse":{
+      "type":"structure",
+      "required":["Notification"],
+      "members":{
+        "Notification":{"shape":"Notification"}
       }
     },
     "DescribePhoneNumberRequest":{
@@ -16608,6 +16837,36 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListNotificationsRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListNotificationsResponse":{
+      "type":"structure",
+      "required":["NotificationSummaryList"],
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "NotificationSummaryList":{"shape":"NotificationSummaryList"}
+      }
+    },
     "ListPhoneNumbersRequest":{
       "type":"structure",
       "required":["InstanceId"],
@@ -17518,6 +17777,43 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListUserNotificationsRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "UserId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult1000",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "UserId":{
+          "shape":"UserId",
+          "location":"uri",
+          "locationName":"UserId"
+        }
+      }
+    },
+    "ListUserNotificationsResponse":{
+      "type":"structure",
+      "members":{
+        "UserNotifications":{"shape":"UserNotificationSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListUserProficienciesRequest":{
       "type":"structure",
       "required":[
@@ -17748,6 +18044,27 @@
         "NextToken":{"shape":"NextToken"},
         "WorkspaceSummaryList":{"shape":"WorkspaceSummaryList"}
       }
+    },
+    "LocaleCode":{
+      "type":"string",
+      "enum":[
+        "en_US",
+        "de_DE",
+        "es_ES",
+        "fr_FR",
+        "id_ID",
+        "it_IT",
+        "ja_JP",
+        "ko_KR",
+        "pt_BR",
+        "zh_CN",
+        "zh_TW"
+      ]
+    },
+    "LocalizedString":{
+      "type":"string",
+      "max":500,
+      "min":0
     },
     "Long":{"type":"long"},
     "MatchCriteria":{
@@ -18130,6 +18447,31 @@
       "max":2500,
       "min":1
     },
+    "Notification":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Arn",
+        "LastModifiedTime"
+      ],
+      "members":{
+        "Content":{"shape":"NotificationContent"},
+        "Id":{"shape":"NotificationId"},
+        "Arn":{"shape":"ARN"},
+        "Priority":{"shape":"NotificationPriority"},
+        "Recipients":{"shape":"RecipientList"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "ExpiresAt":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "NotificationContent":{
+      "type":"map",
+      "key":{"shape":"LocaleCode"},
+      "value":{"shape":"LocalizedString"}
+    },
     "NotificationContentType":{
       "type":"string",
       "enum":["PLAIN_TEXT"]
@@ -18138,12 +18480,83 @@
       "type":"string",
       "enum":["EMAIL"]
     },
+    "NotificationId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "NotificationPriority":{
+      "type":"string",
+      "enum":[
+        "URGENT",
+        "HIGH",
+        "LOW"
+      ]
+    },
     "NotificationRecipientType":{
       "type":"structure",
       "members":{
         "UserTags":{"shape":"UserTagMap"},
         "UserIds":{"shape":"UserIdList"}
       }
+    },
+    "NotificationSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"NotificationSearchCriteria"}
+    },
+    "NotificationSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"NotificationSearchConditionList"},
+        "AndConditions":{"shape":"NotificationSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"}
+      }
+    },
+    "NotificationSearchFilter":{
+      "type":"structure",
+      "members":{
+        "AttributeFilter":{"shape":"ControlPlaneAttributeFilter"}
+      }
+    },
+    "NotificationSearchSummary":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"NotificationId"},
+        "Arn":{"shape":"ARN"},
+        "InstanceId":{"shape":"InstanceId"},
+        "Content":{"shape":"NotificationContent"},
+        "Priority":{"shape":"NotificationPriority"},
+        "Recipients":{"shape":"RecipientList"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "ExpiresAt":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "NotificationSearchSummaryList":{
+      "type":"list",
+      "member":{"shape":"NotificationSearchSummary"}
+    },
+    "NotificationSource":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER",
+        "RULES",
+        "SYSTEM"
+      ]
+    },
+    "NotificationStatus":{
+      "type":"string",
+      "enum":[
+        "READ",
+        "UNREAD",
+        "HIDDEN"
+      ]
+    },
+    "NotificationSummaryList":{
+      "type":"list",
+      "member":{"shape":"Notification"}
     },
     "NullableBoolean":{"type":"boolean"},
     "NullableDouble":{"type":"double"},
@@ -19970,6 +20383,11 @@
       "type":"list",
       "member":{"shape":"RealtimeContactAnalysisSegment"}
     },
+    "RecipientList":{
+      "type":"list",
+      "member":{"shape":"ARN"},
+      "max":200
+    },
     "RecordIds":{
       "type":"list",
       "member":{"shape":"DataTableId"}
@@ -21047,6 +21465,28 @@
       "members":{
         "HoursOfOperations":{"shape":"HoursOfOperationList"},
         "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
+    "SearchNotificationsRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"NotificationSearchFilter"},
+        "SearchCriteria":{"shape":"NotificationSearchCriteria"}
+      }
+    },
+    "SearchNotificationsResponse":{
+      "type":"structure",
+      "members":{
+        "Notifications":{"shape":"NotificationSearchSummaryList"},
+        "NextToken":{"shape":"NextToken"},
         "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
       }
     },
@@ -23930,6 +24370,31 @@
         }
       }
     },
+    "UpdateNotificationContentRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "NotificationId",
+        "Content"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "NotificationId":{
+          "shape":"NotificationId",
+          "location":"uri",
+          "locationName":"NotificationId"
+        },
+        "Content":{"shape":"NotificationContent"}
+      }
+    },
+    "UpdateNotificationContentResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "UpdateParticipantAuthenticationRequest":{
       "type":"structure",
       "required":[
@@ -24609,6 +25074,47 @@
         }
       }
     },
+    "UpdateUserNotificationStatusRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "NotificationId",
+        "UserId",
+        "Status"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "NotificationId":{
+          "shape":"NotificationId",
+          "location":"uri",
+          "locationName":"NotificationId"
+        },
+        "UserId":{
+          "shape":"UserId",
+          "location":"uri",
+          "locationName":"UserId"
+        },
+        "Status":{"shape":"NotificationStatus"},
+        "LastModifiedTime":{
+          "shape":"Timestamp",
+          "location":"header",
+          "locationName":"x-amz-last-modified-time"
+        },
+        "LastModifiedRegion":{
+          "shape":"RegionName",
+          "location":"header",
+          "locationName":"x-amz-last-modified-region"
+        }
+      }
+    },
+    "UpdateUserNotificationStatusResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "UpdateUserPhoneConfigRequest":{
       "type":"structure",
       "required":[
@@ -25023,6 +25529,24 @@
       },
       "error":{"httpStatusCode":404},
       "exception":true
+    },
+    "UserNotificationSummary":{
+      "type":"structure",
+      "members":{
+        "NotificationId":{"shape":"NotificationId"},
+        "NotificationStatus":{"shape":"NotificationStatus"},
+        "InstanceId":{"shape":"InstanceId"},
+        "RecipientId":{"shape":"AgentId"},
+        "Content":{"shape":"NotificationContent"},
+        "Priority":{"shape":"NotificationPriority"},
+        "Source":{"shape":"NotificationSource"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "ExpiresAt":{"shape":"Timestamp"}
+      }
+    },
+    "UserNotificationSummaryList":{
+      "type":"list",
+      "member":{"shape":"UserNotificationSummary"}
     },
     "UserPhoneConfig":{
       "type":"structure",

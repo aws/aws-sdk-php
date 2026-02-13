@@ -2075,6 +2075,18 @@
         "CreateNatGatewayRequest$AvailabilityZoneAddresses": "<p>For regional NAT gateways only: Specifies which Availability Zones you want the NAT gateway to support and the Elastic IP addresses (EIPs) to use in each AZ. The regional NAT gateway uses these EIPs to handle outbound NAT traffic from their respective AZs. If not specified, the NAT gateway will automatically expand to new AZs and associate EIPs upon detection of an elastic network interface. If you specify this parameter, auto-expansion is disabled and you must manually manage AZ coverage.</p> <p>A regional NAT gateway is a single NAT Gateway that works across multiple availability zones (AZs) in your VPC, providing redundancy, scalability and availability across all the AZs in a Region.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateways-regional.html\">Regional NAT gateways for automatic multi-AZ expansion</a> in the <i>Amazon VPC User Guide</i>.</p>"
       }
     },
+    "AvailabilityZoneGeography": {
+      "base": "<p>Describes the geography information for an Availability Zone or Local Zone.</p>",
+      "refs": {
+        "AvailabilityZoneGeographyList$member": null
+      }
+    },
+    "AvailabilityZoneGeographyList": {
+      "base": null,
+      "refs": {
+        "AvailabilityZone$Geography": "<p>The geography information for the Availability Zone or Local Zone. The geography is returned as a list.</p>"
+      }
+    },
     "AvailabilityZoneId": {
       "base": null,
       "refs": {
@@ -2166,6 +2178,18 @@
       "refs": {
         "DisableFastSnapshotRestoresRequest$AvailabilityZones": "<p>One or more Availability Zones. For example, <code>us-east-2a</code>.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> must be specified in the request, but not both.</p>",
         "EnableFastSnapshotRestoresRequest$AvailabilityZones": "<p>One or more Availability Zones. For example, <code>us-east-2a</code>.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> must be specified in the request, but not both.</p>"
+      }
+    },
+    "AvailabilityZoneSubGeography": {
+      "base": "<p>Describes the sub-geography information for an Availability Zone or Local Zone.</p>",
+      "refs": {
+        "AvailabilityZoneSubGeographyList$member": null
+      }
+    },
+    "AvailabilityZoneSubGeographyList": {
+      "base": null,
+      "refs": {
+        "AvailabilityZone$SubGeography": "<p>The sub-geography information for the Availability Zone or Local Zone. The sub-geography is returned as a list.</p>"
       }
     },
     "AvailableCapacity": {
@@ -21425,6 +21449,18 @@
         "RegionList$member": null
       }
     },
+    "RegionGeography": {
+      "base": "<p>Describes the geography information for a Region.</p>",
+      "refs": {
+        "RegionGeographyList$member": null
+      }
+    },
+    "RegionGeographyList": {
+      "base": null,
+      "refs": {
+        "Region$Geography": "<p>The geography information for the Region. The geography is returned as a list.</p>"
+      }
+    },
     "RegionList": {
       "base": null,
       "refs": {
@@ -24421,9 +24457,11 @@
         "AvailabilityZone$ParentZoneName": "<p>The name of the zone that handles some of the Local Zone or Wavelength Zone control plane operations, such as API calls.</p>",
         "AvailabilityZone$ParentZoneId": "<p>The ID of the zone that handles some of the Local Zone or Wavelength Zone control plane operations, such as API calls.</p>",
         "AvailabilityZone$GroupLongName": "<p>The long name of the Availability Zone group, Local Zone group, or Wavelength Zone group.</p>",
+        "AvailabilityZoneGeography$Name": "<p>The name of the geography, for example, <code>United States of America</code>.</p>",
         "AvailabilityZoneIdStringList$member": null,
         "AvailabilityZoneMessage$Message": "<p>The message about the Availability Zone, Local Zone, or Wavelength Zone.</p>",
         "AvailabilityZoneStringList$member": null,
+        "AvailabilityZoneSubGeography$Name": "<p>The name of the sub-geography, for example, <code>Oregon.</code> </p>",
         "BillingProductList$member": null,
         "BlockDeviceMapping$NoDevice": "<p>To omit the device from the block device mapping, specify an empty string. When this property is specified, the device is removed from the block device mapping regardless of the assigned value.</p>",
         "BlockDeviceMapping$DeviceName": "<p>The device name. For available device names, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/device_naming.html\">Device names for volumes</a>.</p>",
@@ -26127,6 +26165,7 @@
         "Region$OptInStatus": "<p>The Region opt-in status. The possible values are <code>opt-in-not-required</code>, <code>opted-in</code>, and <code>not-opted-in</code>.</p>",
         "Region$RegionName": "<p>The name of the Region.</p>",
         "Region$Endpoint": "<p>The Region service endpoint.</p>",
+        "RegionGeography$Name": "<p>The name of the geography, for example, <code>United States of America</code>.</p>",
         "RegionNameStringList$member": null,
         "RegionNames$member": null,
         "RegionalSummary$RegionName": "<p>The Amazon Web Services Region.</p>",

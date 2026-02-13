@@ -9404,6 +9404,14 @@
           "shape":"String",
           "locationName":"groupLongName"
         },
+        "Geography":{
+          "shape":"AvailabilityZoneGeographyList",
+          "locationName":"geographySet"
+        },
+        "SubGeography":{
+          "shape":"AvailabilityZoneSubGeographyList",
+          "locationName":"subGeographySet"
+        },
         "State":{
           "shape":"AvailabilityZoneState",
           "locationName":"zoneState"
@@ -9426,6 +9434,22 @@
       "member":{
         "shape":"AvailabilityZoneAddress",
         "locationName":"AvailabilityZoneAddress"
+      }
+    },
+    "AvailabilityZoneGeography":{
+      "type":"structure",
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        }
+      }
+    },
+    "AvailabilityZoneGeographyList":{
+      "type":"list",
+      "member":{
+        "shape":"AvailabilityZoneGeography",
+        "locationName":"item"
       }
     },
     "AvailabilityZoneId":{"type":"string"},
@@ -9483,6 +9507,22 @@
       "member":{
         "shape":"String",
         "locationName":"AvailabilityZone"
+      }
+    },
+    "AvailabilityZoneSubGeography":{
+      "type":"structure",
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        }
+      }
+    },
+    "AvailabilityZoneSubGeographyList":{
+      "type":"list",
+      "member":{
+        "shape":"AvailabilityZoneSubGeography",
+        "locationName":"item"
       }
     },
     "AvailableCapacity":{
@@ -46552,6 +46592,10 @@
           "shape":"String",
           "locationName":"optInStatus"
         },
+        "Geography":{
+          "shape":"RegionGeographyList",
+          "locationName":"geographySet"
+        },
         "RegionName":{
           "shape":"String",
           "locationName":"regionName"
@@ -46560,6 +46604,22 @@
           "shape":"String",
           "locationName":"regionEndpoint"
         }
+      }
+    },
+    "RegionGeography":{
+      "type":"structure",
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        }
+      }
+    },
+    "RegionGeographyList":{
+      "type":"list",
+      "member":{
+        "shape":"RegionGeography",
+        "locationName":"item"
       }
     },
     "RegionList":{
