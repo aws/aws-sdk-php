@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.34 - 2026-02-13
 
 * `Aws\Connect` - API release for headerr notifications in the admin website. APIs allow customers to publish brief messages (including URLs) to a specified audience, and a new header icon will indicate when unread messages are available.
 * `Aws\CloudWatch` - Adding new evaluation states that provides information about the alarm evaluation process. Evaluation error Indicates configuration errors in alarm setup that require review and correction. Evaluation failure Indicates temporary CloudWatch issues.
