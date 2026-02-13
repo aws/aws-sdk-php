@@ -13,11 +13,9 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware
- * @covers Aws\ClientSideMonitoring\AbstractMonitoringMiddleware
- */
+#[CoversClass(ApiCallAttemptMonitoringMiddleware::class)]
 class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
 {
     use MonitoringMiddlewareTestingTrait;
@@ -59,8 +57,13 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
         $prepareSocket->invokeArgs($middleware, array(true));
     }
 
-    public function getMonitoringDataTests()
+    public static function getMonitoringDataTests(): array
     {
+        $configuration = new Configuration(true, '127.0.0.1', 31000, 'AwsPhpSdkTestApp');
+        $credentialProvider = CredentialProvider::fromCredentials(
+            new Credentials('testkey', 'testsecret', 'testtoken')
+        );
+
         $command = new Command('RunScheduledInstances', [
             'LaunchSpecification' => [
                 'ImageId' => 'test-image',
@@ -70,8 +73,8 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
         ]);
         $testBase = [
             ApiCallAttemptMonitoringMiddleware::wrap(
-                $this->getCredentialProvider(),
-                $this->getConfiguration(),
+                $credentialProvider,
+                $configuration,
                 'us-east-1',
                 'ec2'
             ),

@@ -7,10 +7,9 @@ use Aws\EndpointV2\EndpointProviderV2;
 use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\EndpointV2\EndpointV2SerializerTrait
- */
+#[CoversClass(EndpointV2SerializerTrait::class)]
 class EndpointV2SerializerTraitTest extends TestCase
 {
     use UsesServiceTrait;

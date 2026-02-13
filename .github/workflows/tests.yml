@@ -71,7 +71,7 @@ jobs:
               composer update ${{ matrix.composer-options }} --no-interaction --prefer-dist --with-all-dependencies
               composer update psr/http-message guzzlehttp/psr7 guzzlehttp/guzzle --with-all-dependencies --no-interaction
               if [[ "${{ matrix.php-versions }}" == "8.4" ]]; then
-                composer update phpunit/phpunit:^9.6.18 --with-all-dependencies --no-interaction
+                composer update phpunit/phpunit:^10.0 --with-all-dependencies --no-interaction
               fi
             else
               composer update ${{ matrix.composer-options }} --no-interaction --prefer-dist --with-all-dependencies

@@ -6,10 +6,9 @@ use Aws\DynamoDb\LockingSessionConnection;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\DynamoDb\LockingSessionConnection
- */
+#[CoversClass(LockingSessionConnection::class)]
 class LockingSessionConnectionTest extends TestCase
 {
     use UsesServiceTrait;

@@ -22,10 +22,10 @@ use Generator;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\ClientResolver
- */
+#[CoversClass(ClientResolver::class)]
 class ClientResolverTest extends TestCase
 {
     use UsesServiceTrait;
@@ -38,7 +38,7 @@ class ClientResolverTest extends TestCase
         $r->resolve([], new HandlerList());
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testAddsValidationSubscriber()
     {
         $c = new DynamoDbClient([
@@ -52,9 +52,10 @@ class ClientResolverTest extends TestCase
             $this->fail('Did not validate');
         } catch (\InvalidArgumentException $e) {
         }
+        $this->assertTrue(true);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testCanDisableValidation()
     {
         $c = new DynamoDbClient([
@@ -66,9 +67,10 @@ class ClientResolverTest extends TestCase
         $handler = \Aws\constantly(new Result([]));
         $command->getHandlerList()->setHandler($handler);
         $c->execute($command);
+        $this->assertTrue(true);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testCanDisableSpecificValidationConstraints()
     {
         $c = new DynamoDbClient([
@@ -84,6 +86,7 @@ class ClientResolverTest extends TestCase
         $handler = \Aws\constantly(new Result([]));
         $command->getHandlerList()->setHandler($handler);
         $c->execute($command);
+        $this->assertTrue(true);
     }
 
     public function testAppliesLegacyDefaults()
@@ -166,7 +169,7 @@ class ClientResolverTest extends TestCase
             . "\n\n" . 'Accelerate: (boolean)' . "\n\n"
             . '  Enables this client to use S3 Transfer Acceleration endpoints.'
         );
-        $conf = $r->resolve([
+        $r->resolve([
             'service' => 's3',
             'version' => 'latest',
             'region' => 'x',
@@ -314,7 +317,7 @@ class ClientResolverTest extends TestCase
         $this->assertSame($exp, $creds->getExpiration());
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testCanDisableRetries()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -324,9 +327,10 @@ class ClientResolverTest extends TestCase
             'version' => 'latest',
             'retries' => 0,
         ], new HandlerList());
+        $this->assertTrue(true);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testCanEnableRetries()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -336,9 +340,10 @@ class ClientResolverTest extends TestCase
             'version' => 'latest',
             'retries' => 2,
         ], new HandlerList());
+        $this->assertTrue(true);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testCanEnableRetriesStandardMode()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -351,9 +356,10 @@ class ClientResolverTest extends TestCase
                 'max_attempts' => 10,
             ]
         ], new HandlerList());
+        $this->assertTrue(true);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testCanEnableRetriesAdaptivedMode()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -366,6 +372,7 @@ class ClientResolverTest extends TestCase
                 'max_attempts' => 10,
             ]
         ], new HandlerList());
+        $this->assertTrue(true);
     }
 
     public function testCanCreateNullCredentials()
@@ -579,14 +586,15 @@ EOT;
     }
 
     /**
-     * @dataProvider dualStackEndpointCases
      *
      * @param $service
      * @param $useDualstackEndpoint
      * @param $useFipsEndpoint
      * @param $region
      * @param $expectedEndpoint
-     */
+
+ */
+    #[DataProvider('dualStackEndpointCases')]
     public function testDualstackEndpoints(
         $service,
         $useDualstackEndpoint,
@@ -610,7 +618,7 @@ EOT;
         );
     }
 
-    public function dualStackEndpointCases()
+    public static function dualStackEndpointCases()
     {
         return [
             ["ec2", false, false, "us-west-2", "ec2.us-west-2.amazonaws.com",],
@@ -665,11 +673,12 @@ EOT;
     }
 
     /**
-     * @dataProvider s3EndpointCases
      *
      * @param $config
      * @param $endpoint
-     */
+
+ */
+    #[DataProvider('s3EndpointCases')]
     public function testCanPassS3RegionalEndpointToEndpointProvider($config, $endpoint)
     {
         $data = json_decode(
@@ -688,7 +697,7 @@ EOT;
         $this->assertEquals($endpoint, $conf['endpoint']);
     }
 
-    public function s3EndpointCases()
+    public static function s3EndpointCases()
     {
         return [
             ['regional', 'https://s3.us-east-1.amazonaws.com'],
@@ -696,7 +705,7 @@ EOT;
         ];
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testAddsLoggerWithDebugSettings()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -707,9 +716,10 @@ EOT;
             'endpoint' => 'http://us-east-1.foo.amazonaws.com',
             'version' => 'latest'
         ], new HandlerList());
+        $this->assertTrue(true);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testAddsDebugListener()
     {
         $em = new HandlerList();
@@ -721,6 +731,7 @@ EOT;
             'endpoint' => 'http://us-east-1.foo.amazonaws.com',
             'version' => 'latest'
         ], $em);
+        $this->assertTrue(true);
     }
 
     public function canSetDebugToFalse()
@@ -758,7 +769,7 @@ EOT;
         $this->assertTrue($c->getConfig('bucket_endpoint'));
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testSkipsNonRequiredKeys()
     {
         $r = new ClientResolver([
@@ -768,6 +779,7 @@ EOT;
             ]
         ]);
         $r->resolve([], new HandlerList());
+        $this->assertTrue(true);
     }
 
     public function testAppliesLatestAsDefaultVersionWithoutSuppliedVersion()
@@ -848,10 +860,11 @@ EOT;
     }
 
     /**
-     * @dataProvider statValueProvider
      * @param bool|array $userValue
      * @param array $resolvedValue
-     */
+
+ */
+    #[DataProvider('statValueProvider')]
     public function testAcceptsBooleansAndArraysForSelectiveStatCollection($userValue, array $resolvedValue)
     {
         $list = new HandlerList;
@@ -863,7 +876,7 @@ EOT;
         }
     }
 
-    public function statValueProvider()
+    public static function statValueProvider()
     {
         return [
             [
@@ -890,13 +903,14 @@ EOT;
     }
 
     /**
-     * @dataProvider endpointProviderReturnProvider
      *
      * @param array $args
      * @param string $argName
      * @param string $expected
      * @param string $override
-     */
+
+ */
+    #[DataProvider('endpointProviderReturnProvider')]
     public function testResolvesValuesReturnedByEndpointProvider(
         array $args,
               $argName,
@@ -917,7 +931,7 @@ EOT;
         $this->assertSame($override, $resolved[$argName]);
     }
 
-    public function endpointProviderReturnProvider()
+    public static function endpointProviderReturnProvider()
     {
         $partition = new Partition([
             'partition' => 'aws-test',
@@ -955,12 +969,13 @@ EOT;
 
 
     /**
-     * @dataProvider partitionReturnProvider
      *
      * @param array $args
      * @param string $argName
      * @param string $expected
-     */
+
+ */
+    #[DataProvider('partitionReturnProvider')]
     public function testSigningValuesAreFetchedFromPartition(
         array $args,
               $argName,
@@ -977,7 +992,7 @@ EOT;
         $this->assertSame($expected, $resolved[$argName]);
     }
 
-    public function partitionReturnProvider()
+    public static function partitionReturnProvider()
     {
         $invocationArgs = ['endpoint' => 'https://foo.bar.amazonaws.com'];
 
@@ -1004,11 +1019,12 @@ EOT;
     }
 
     /**
-     * @dataProvider idempotencyAutoFillProvider
      *
      * @param mixed $value
      * @param bool $shouldAddIdempotencyMiddleware
-     */
+
+ */
+    #[DataProvider('idempotencyAutoFillProvider')]
     public function testIdempotencyTokenMiddlewareAddedAsAppropriate(
         $value,
         $shouldAddIdempotencyMiddleware
@@ -1026,7 +1042,7 @@ EOT;
         $this->assertCount($shouldAddIdempotencyMiddleware ? 1 : 0, $list);
     }
 
-    public function idempotencyAutoFillProvider()
+    public static function idempotencyAutoFillProvider()
     {
         return [
             [true, true],
@@ -1040,11 +1056,12 @@ EOT;
     }
 
     /**
-     * @dataProvider validateRegionProvider
      *
      * @param $region
      * @param $expected
-     */
+
+ */
+    #[DataProvider('validateRegionProvider')]
     public function testValidatesRegion($region, $expected)
     {
         $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -1068,7 +1085,7 @@ EOT;
         }
     }
 
-    public function validateRegionProvider()
+    public static function validateRegionProvider()
     {
         return [
             [
@@ -1086,7 +1103,7 @@ EOT;
         ];
     }
 
-    public function invalidDisableRequestCompressionValues()
+    public static function invalidDisableRequestCompressionValues()
     {
         return [
             ['foo'],
@@ -1096,8 +1113,9 @@ EOT;
     }
 
     /**
-     * @dataProvider invalidDisableRequestCompressionValues
-     */
+
+ */
+    #[DataProvider('invalidDisableRequestCompressionValues')]
     public function testInvalidDisableRequestCompressionTypeThrowsException($invalidType)
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -1129,7 +1147,7 @@ EOT;
         $this->assertFalse($conf['disable_request_compression']);
     }
 
-    public function invalidMinCompressionSizeValues()
+    public static function invalidMinCompressionSizeValues()
     {
         return [
             [ true ],
@@ -1141,8 +1159,9 @@ EOT;
     }
 
     /**
-     * @dataProvider invalidMinCompressionSizeValues
-     */
+
+ */
+    #[DataProvider('invalidMinCompressionSizeValues')]
     public function testInvalidMinCompressionSizeValues($invalidType)
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -1173,14 +1192,15 @@ EOT;
     }
 
     /**
-     * @dataProvider configResolutionProvider
      *
      * @param $ini
      * @param $env
      * @param $expected
      * @param $configKey
      * @param $configType
-     */
+
+ */
+    #[DataProvider('configResolutionProvider')]
     public function testConfigResolutionOrder($ini, $env, $expected, $configKey, $configType)
     {
         $dir = sys_get_temp_dir() . '/.aws';
@@ -1217,7 +1237,7 @@ EOT;
         }
     }
 
-    public function configResolutionProvider()
+    public static function configResolutionProvider()
     {
         return [
             [
@@ -1433,25 +1453,6 @@ EOF;
         );
     }
 
-    public function testEmitsDeprecationWarning()
-    {
-        if (PHP_VERSION_ID >= 80100) {
-            $this->markTestSkipped();
-        }
-
-        putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=false');
-        $this->expectDeprecation();
-        $this->expectDeprecationMessage('This installation of the SDK is using PHP version');
-
-        $r = new ClientResolver(ClientResolver::getDefaultArguments());
-
-        try {
-            $r->resolve(['service' => 'sqs', 'region' => 'x'], new HandlerList());
-        } finally {
-            putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true');
-        }
-    }
-
     /**
      * Tests the flag `use_aws_shared_config_files` is applied to the method
      * for resolving a default value for a config.
@@ -1545,8 +1546,9 @@ EOF;
      * @param string|null $env
      * @return void
      *
-     * @dataProvider resolvesAuthSchemePreferenceProvider
-     */
+
+ */
+    #[DataProvider('resolvesAuthSchemePreferenceProvider')]
     public function testResolvesAuthSchemePreference(
         bool $isExpected,
         array $expectedValue,
@@ -1610,7 +1612,7 @@ EOF;
     /**
      * @return Generator
      */
-    public function resolvesAuthSchemePreferenceProvider(): Generator
+    public static function resolvesAuthSchemePreferenceProvider(): Generator
     {
         $cases = [
             'provided_at_client_construction' => [

@@ -8,10 +8,10 @@ use Aws\Result;
 use Aws\DynamoDb\WriteRequestBatch;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\DynamoDb\WriteRequestBatch
- */
+#[CoversClass(WriteRequestBatch::class)]
 class WriteRequestBatchTest extends TestCase
 {
     use UsesServiceTrait;
@@ -23,16 +23,14 @@ class WriteRequestBatchTest extends TestCase
         $this->assertSame(50, $this->getPropertyValue($batch, 'config')['threshold']);
     }
 
-    /**
-     * @dataProvider getInvalidArgUseCases
-     */
+    #[DataProvider('getInvalidArgUseCases')]
     public function testInstantiationFailsOnInvalidArgs($config)
     {
         $this->expectException(\InvalidArgumentException::class);
         new WriteRequestBatch($this->getTestClient('DynamoDb'), $config);
     }
 
-    public function getInvalidArgUseCases()
+    public static function getInvalidArgUseCases(): array
     {
         return [
             [['batch_size' => 1]],

@@ -7,17 +7,15 @@ use Aws\DynamoDb\NumberValue;
 use Aws\DynamoDb\SetValue;
 use GuzzleHttp\Psr7;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\DynamoDb\Marshaler
- */
+#[CoversClass(Marshaler::class)]
 class MarshalerTest extends TestCase
 {
     const ERROR = 'ERROR';
 
-    /**
-     * @dataProvider getMarshalValueUseCases
-     */
+    #[DataProvider('getMarshalValueUseCases')]
     public function testMarshalValueUseCases($value, $expectedResult, $options = [])
     {
         $m = new Marshaler($options);
@@ -29,7 +27,7 @@ class MarshalerTest extends TestCase
         $this->assertSame($expectedResult, $actualResult);
     }
 
-    public function getMarshalValueUseCases()
+    public static function getMarshalValueUseCases(): array
     {
         $m = new Marshaler;
 
@@ -239,7 +237,6 @@ JSON;
         (new Marshaler)->marshalJson('foo');
     }
 
-
     public function testUnmarshalingHandlesAllDynamoDbTypes()
     {
         $item = [
@@ -344,9 +341,6 @@ JSON;
         $this->assertSame('99999999999999999999.99999999999999999999', (string) $result['bar']);
     }
 
-    /**
-     * @covers Aws\DynamoDb\NumberValue
-     */
     public function testNumberValueCanBeFormattedAndSerialized()
     {
         $number = new NumberValue('99999999999999999999');
@@ -354,9 +348,6 @@ JSON;
         $this->assertSame('"99999999999999999999"', json_encode($number));
     }
 
-    /**
-     * @covers Aws\DynamoDb\BinaryValue
-     */
     public function testBinaryValueCanBeFormattedAndSerialized()
     {
         $resource = fopen('php://temp', 'w+');
@@ -368,9 +359,6 @@ JSON;
         $this->assertSame('"foo"', json_encode($binary));
     }
 
-    /**
-     * @covers Aws\DynamoDb\SetValue
-     */
     public function testSetValueCanBeFormattedAndSerialized()
     {
         $set = new SetValue(['foo', 'bar', 'baz']);

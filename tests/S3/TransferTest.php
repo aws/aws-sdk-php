@@ -13,10 +13,10 @@ use PHPUnit\Framework\Constraint\Callback;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use SplFileInfo;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\S3\Transfer
- */
+#[CoversClass(Transfer::class)]
 class TransferTest extends TestCase
 {
     use UsesServiceTrait;
@@ -378,9 +378,7 @@ class TransferTest extends TestCase
         $this->deleteDirectory($dir);
     }
 
-    /**
-     * @dataProvider providedPathsOutsideTarget
-     */
+    #[DataProvider('providedPathsOutsideTarget')]
     public function testCannotDownloadObjectsOutsideTarget($key)
     {
         $this->expectException(\Aws\Exception\AwsException::class);
@@ -409,7 +407,8 @@ class TransferTest extends TestCase
         $this->deleteDirectory($dir);
     }
 
-    public function providedPathsOutsideTarget() {
+    public static function providedPathsOutsideTarget(): array
+    {
         return [
             ['bar/../a/b'],
             //ensures if path resolves to target directory
@@ -517,9 +516,11 @@ class TransferTest extends TestCase
     {
         $s3 = $this->getTestClient('s3');
         $this->addMockResults($s3, []);
-
-        $this->expectDeprecation();
-        $this->expectDeprecationMessage('S3 no longer supports MD5 checksums.');
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_DEPRECATED);
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('S3 no longer supports MD5 checksums.');
         $s3->getHandlerList()->appendSign(Middleware::tap(
             function (CommandInterface $cmd, RequestInterface $req) {
                 $this->assertTrue(isset($command['x-amz-checksum-crc32']));
@@ -548,13 +549,7 @@ class TransferTest extends TestCase
         $this->deleteDirectory($dir);
     }
 
-    /**
-     * @param $checksumAlgorithm
-     * @param $value
-     * @return void
-     *
-     * @dataProvider flexibleChecksumsProvider
-     */
+    #[DataProvider('flexibleChecksumsProvider')]
     public function testAddsFlexibleChecksums($checksumAlgorithm)
     {
         if ($checksumAlgorithm === 'crc32c'
@@ -612,7 +607,8 @@ class TransferTest extends TestCase
         $this->deleteDirectory($dir);
     }
 
-    public function flexibleChecksumsProvider() {
+    public static function flexibleChecksumsProvider(): array
+    {
         return [
             ['sha256'],
             ['sha1'],

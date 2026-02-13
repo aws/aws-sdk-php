@@ -11,10 +11,9 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\TransferStats;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Handler\Guzzle\GuzzleHandler
- */
+#[CoversClass(GuzzleHandler::class)]
 class HandlerTest extends TestCase
 {
     public function testHandlerWorksWithSuccessfulRequest()

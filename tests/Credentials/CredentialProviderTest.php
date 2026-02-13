@@ -21,10 +21,10 @@ use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Credentials\CredentialProvider
- */
+#[CoversClass(CredentialProvider::class)]
 class CredentialProviderTest extends TestCase
 {
     use UsesServiceTrait;
@@ -281,8 +281,9 @@ EOT;
     }
 
     /**
-     * @dataProvider iniFileProvider
-     */
+
+ */
+    #[DataProvider('iniFileProvider')]
     public function testCreatesFromIniFile(
         string $iniFile,
         Credentials $expectedCreds
@@ -295,7 +296,7 @@ EOT;
         $this->assertEquals($expectedCreds->toArray(), $creds->toArray());
     }
 
-    public function iniFileProvider(): array
+    public static function iniFileProvider(): array
     {
         $credentials = new Credentials(
             'foo',
@@ -768,10 +769,13 @@ EOT;
 
     public function testCreatesFromRoleArnWithSourceProfileEmitsNoticeOnFallbackRegion(): void
     {
-        $this->expectNotice();
-        $this->expectNoticeMessage(
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage(
             'NOTICE: STS client created without explicit `region` configuration'
         );
+        set_error_handler(function ($errno, $errstr) {
+            throw new \RuntimeException($errstr, $errno);
+        });
 
         $awsDir = $this->createAwsHome();
         $ini = <<<EOT
@@ -783,17 +787,23 @@ role_arn = arn:aws:iam::foo:role/role_name
 source_profile = default
 role_session_name = foobar
 EOT;
-        file_put_contents($awsDir . '/credentials', $ini);
-        call_user_func(CredentialProvider::ini('assume', null))->wait();
+        try {
+            file_put_contents($awsDir . '/credentials', $ini);
+            call_user_func(CredentialProvider::ini('assume', null))->wait();
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testCreatesFromRoleArnWithCredentialSourceEmitsNoticeOnFallbackRegion(): void
     {
-        $this->expectNotice();
-        $this->expectNoticeMessage(
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage(
             'NOTICE: STS client created without explicit `region` configuration'
         );
-
+        set_error_handler(function ($errno, $errstr) {
+            throw new \RuntimeException($errstr, $errno);
+        });
         $awsDir = $this->createAwsHome();
         $ini = <<<EOT
 [assume-with-credential-source]
@@ -801,14 +811,18 @@ role_arn=arn:aws:iam::foo:role/role_name
 credential_source=Environment
 role_session_name=test_session
 EOT;
-        file_put_contents($awsDir . '/credentials', $ini);
+        try {
+            file_put_contents($awsDir . '/credentials', $ini);
 
-        // Set up environment credentials for credential_source=Environment
-        putenv(CredentialProvider::ENV_KEY . '=foo');
-        putenv(CredentialProvider::ENV_SECRET . '=bar');
+            // Set up environment credentials for credential_source=Environment
+            putenv(CredentialProvider::ENV_KEY . '=foo');
+            putenv(CredentialProvider::ENV_SECRET . '=bar');
 
 
-        call_user_func(CredentialProvider::ini('assume-with-credential-source', null))->wait();
+            call_user_func(CredentialProvider::ini('assume-with-credential-source', null))->wait();
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testCreatesFromRoleArnCatchesCircular(): void
@@ -1929,8 +1943,9 @@ EOT;
     }
 
     /**
-     * @dataProvider shouldUseEcsProvider
-     */
+
+ */
+    #[DataProvider('shouldUseEcsProvider')]
     public function testShouldUseEcs(
         string $relative,
         string $serverRelative,
@@ -1956,7 +1971,7 @@ EOT;
         $this->assertEquals($expected, $result);
     }
 
-    public function shouldUseEcsProvider(): array
+    public static function shouldUseEcsProvider(): array
     {
         return [
             ['=foo', '', '', '', true],
@@ -2722,8 +2737,9 @@ djiIaHK3dBvvdE7MGj5HsepzLm3Kj91bqA==
     }
 
     /**
-     * @dataProvider loginInvalidCacheProvider
-     */
+
+ */
+    #[DataProvider('loginInvalidCacheProvider')]
     public function testLoginWithInvalidCache(
         string $cacheContent,
         string $expectedMessage,
@@ -2754,7 +2770,7 @@ EOT;
         $provider()->wait();
     }
 
-    public function loginInvalidCacheProvider(): array
+    public static function loginInvalidCacheProvider(): array
     {
         $validDpopKey = '-----BEGIN EC PRIVATE KEY-----
 MHcCAQEEIFDZHUzOG1Pzq+6F0mjMlOSp1syN9LRPBuHMoCFXTcXhoAoGCCqGSM49
