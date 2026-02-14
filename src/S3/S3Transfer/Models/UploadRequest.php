@@ -2,7 +2,6 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
-use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
@@ -15,6 +14,8 @@ final class UploadRequest extends AbstractTransferRequest
         'track_progress' => 'bool',
         'concurrency' => 'int',
         'request_checksum_calculation' => 'string',
+        'resume_enabled' => 'bool',
+        'resume_file_path' => 'string',
     ];
 
     /** @var StreamInterface|string  */
@@ -41,19 +42,23 @@ final class UploadRequest extends AbstractTransferRequest
      *   a default progress tracker implementation when $progressTracker is null.
      * - concurrency: (int, optional) To override default value for concurrency.
      * - request_checksum_calculation: (string, optional, defaulted to `when_supported`)
+     * - resume_enabled: (bool): To enable resuming a multipart download when a
+     *     failure occurs.
+     * - resume_file_path (string, optional): To override the default resume file
+     *     location to be generated. If specified the file name must end in `.resume`
+     *      otherwise it will be added automatically.
      * @param AbstractTransferListener[]|null $listeners
      * @param AbstractTransferListener|null $progressTracker
-     * @param S3ClientInterface|null $s3Client
+     *
      */
     public function __construct(
         StreamInterface|string $source,
         array $uploadRequestArgs,
         array $config = [],
         array $listeners = [],
-        ?AbstractTransferListener $progressTracker  = null,
-        ?S3ClientInterface $s3Client = null
+        ?AbstractTransferListener $progressTracker  = null
     ) {
-        parent::__construct($listeners, $progressTracker, $config, $s3Client);
+        parent::__construct($listeners, $progressTracker, $config);
         $this->source = $source;
         $this->uploadRequestArgs = $uploadRequestArgs;
     }
@@ -87,8 +92,7 @@ final class UploadRequest extends AbstractTransferRequest
     {
         if (is_string($this->getSource()) && !is_readable($this->getSource())) {
             throw new InvalidArgumentException(
-                "Invalid source `". $this->getSource() . "` provided. ".
-                "\nPlease provide a valid readable file path or a valid stream as source."
+                "Please provide a valid readable file path or a valid stream as source."
             );
         }
     }
