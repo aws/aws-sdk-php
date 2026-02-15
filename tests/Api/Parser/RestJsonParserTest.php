@@ -6,7 +6,9 @@ use Aws\Api\Parser\RestJsonParser;
 use Aws\Api\Service;
 use Aws\CommandInterface;
 use Aws\Test\Api\Parser\ParserTestServiceTrait;
+use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Utils;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -179,5 +181,50 @@ class RestJsonParserTest extends TestCase
 
         // Empty string should still be skipped
         $this->assertArrayNotHasKey('Empty', $result);
+    }
+
+    public function testParsesEmptyResponseOnNonSeekableStream(): void
+    {
+        $shape = [
+            'type' => 'structure',
+            'members' => [
+                'TestMember' => [
+                    'type' => 'string',
+                ]
+            ]
+        ];
+
+        $api = new Service([
+            'metadata' => [
+                'protocol' => 'rest-json'
+            ],
+            'operations' => [
+                'TestOperation' => [
+                    'http' => ['method' => 'GET'],
+                    'output' => $shape
+                ]
+            ],
+            'shapes' => []
+        ], function () {});
+
+        $parser = new RestJsonParser($api);
+        $response = new Response(
+            200,
+            [],
+            new NoSeekStream(
+                Utils::streamFor()
+            )
+        );
+        $command = $this->getMockBuilder(
+            CommandInterface::class
+        )->getMock();
+        $command->method('getName')->willReturn('TestOperation');
+
+        $parser($command, $response);
+
+        // Not error occurred. Test successfully.
+        // Previously, on non-seekable streams it would have failed.
+        // Because, it would have tried to parse an empty string.
+        $this->assertTrue(true);
     }
 }

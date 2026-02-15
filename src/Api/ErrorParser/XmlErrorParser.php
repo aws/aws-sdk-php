@@ -100,12 +100,24 @@ class XmlErrorParser extends AbstractErrorParser
         ResponseInterface $response,
         StructureShape $member
     ) {
-        $xmlBody = $this->parseXml($response->getBody(), $response);
+        $body = $response->getBody();
+        if ($body->isSeekable()) {
+            $body->rewind();
+        }
+
+        $rawBody = $body->getContents();
+        if (empty($rawBody)) {
+            return $rawBody;
+        }
+
+        $xmlBody = $this->parseXml($rawBody, $response);
         $prefix = $this->registerNamespacePrefix($xmlBody);
         $errorBody = $xmlBody->xpath("//{$prefix}Error");
 
         if (is_array($errorBody) && !empty($errorBody[0])) {
             return $this->parser->parse($member, $errorBody[0]);
         }
+
+        return $rawBody;
     }
 }
