@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.35 - 2026-02-16
 
 * `Aws\` - Removes the `Cloudwatch Evidently` service, which has been deprecated.
 * `Aws\Kafka` - Amazon MSK now supports dual-stack connectivity (IPv4 and IPv6) for existing MSK clusters. You can enable dual-stack on existing clusters by specifying the NetworkType parameter in updateConnectivity API.
