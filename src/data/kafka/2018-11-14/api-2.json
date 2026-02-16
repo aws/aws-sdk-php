@@ -2498,6 +2498,14 @@
     "ClusterOperationV2Serverless": {
       "type": "structure",
       "members": {
+        "SourceClusterInfo": {
+          "shape": "ServerlessConnectivityInfo",
+          "locationName": "sourceClusterInfo"
+        },
+        "TargetClusterInfo": {
+          "shape": "ServerlessConnectivityInfo",
+          "locationName": "targetClusterInfo"
+        },
         "VpcConnectionInfo": {
           "shape": "VpcConnectionInfoServerless",
           "locationName": "vpcConnectionInfo"
@@ -2739,6 +2747,10 @@
         "VpcConnectivity": {
           "shape": "VpcConnectivity",
           "locationName": "vpcConnectivity"
+        },
+        "NetworkType": {
+          "shape": "NetworkType",
+          "locationName": "networkType"
         }
       }
     },
@@ -3860,6 +3872,22 @@
         "BootstrapBrokerStringVpcConnectivitySaslIam": {
           "shape": "__string",
           "locationName": "bootstrapBrokerStringVpcConnectivitySaslIam"
+        },
+        "BootstrapBrokerStringIpv6": {
+          "shape": "__string",
+          "locationName": "bootstrapBrokerStringIpv6"
+        },
+        "BootstrapBrokerStringTlsIpv6": {
+          "shape": "__string",
+          "locationName": "bootstrapBrokerStringTlsIpv6"
+        },
+        "BootstrapBrokerStringSaslScramIpv6": {
+          "shape": "__string",
+          "locationName": "bootstrapBrokerStringSaslScramIpv6"
+        },
+        "BootstrapBrokerStringSaslIamIpv6": {
+          "shape": "__string",
+          "locationName": "bootstrapBrokerStringSaslIamIpv6"
         }
       }
     },
@@ -4549,6 +4577,16 @@
       },
       "documentation": "\n            <p>Details for client authentication using SASL.</p>\n         "
     },
+    "ServerlessConnectivityInfo": {
+      "type": "structure",
+      "members": {
+        "NetworkType": {
+          "shape": "NetworkType",
+          "locationName": "networkType",
+          "documentation": "\n            <p>The network type of the cluster, which is IPv4 or DUAL. The DUAL network type uses both IPv4 and IPv6 addresses for your cluster and its resources.</p><p>By default, a cluster uses the IPv4 network type.</p>\n         "
+        }
+      }
+    },
     "Serverless": {
       "type": "structure",
       "documentation": "\n            <p>Serverless cluster.</p>\n         ",
@@ -4562,6 +4600,11 @@
           "shape": "ServerlessClientAuthentication",
           "locationName": "clientAuthentication",
           "documentation": "\n            <p>Includes all client authentication information.</p>\n         "
+        },
+        "ConnectivityInfo": {
+          "shape": "ServerlessConnectivityInfo",
+          "locationName": "connectivityInfo",
+          "documentation": "\n            <p>Describes the cluster's connectivity information, such as its network type, which is IPv4 or DUAL.</p>\n         "
         }
       },
       "required": [
@@ -5057,6 +5100,14 @@
           "locationName": "zookeeperNodeInfo"
         }
       }
+    },
+    "NetworkType": {
+      "type": "string",
+      "documentation": "\n            <p>The network type of the cluster, which is IPv4 or DUAL. The DUAL network type uses both IPv4 and IPv6 addresses for your cluster and its resources.</p><p>By default, a cluster uses the IPv4 network type.</p>\n         ",
+      "enum": [
+        "IPV4",
+        "DUAL"
+      ]
     },
     "NodeType": {
       "type": "string",

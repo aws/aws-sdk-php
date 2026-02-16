@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Removes the `Cloudwatch Evidently` service, which has been deprecated.
+* `Aws\Kafka` - Amazon MSK now supports dual-stack connectivity (IPv4 and IPv6) for existing MSK clusters. You can enable dual-stack on existing clusters by specifying the NetworkType parameter in updateConnectivity API.
+* `Aws\EC2` - Documentation updates for EC2 Secondary Networks
+* `Aws\ECR` - Adds support for enabling blob mounting, and removes support for Clair based image scanning
+* `Aws\ARCRegionSwitch` - Clarify documentation on ARC Region Switch start-plan-execution operation
+* `Aws\KMS` - Added support for Decrypt and ReEncrypt API's to use dry run feature without ciphertext for authorization validation
+* `Aws\QConnect` - Update MessageType enum to include missing types.
+
 ## 3.369.34 - 2026-02-13
 
 * `Aws\Connect` - API release for headerr notifications in the admin website. APIs allow customers to publish brief messages (including URLs) to a specified audience, and a new header icon will indicate when unread messages are available.

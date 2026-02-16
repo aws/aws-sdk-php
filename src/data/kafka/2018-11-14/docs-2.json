@@ -157,6 +157,14 @@
         "ServerlessRequest$ClientAuthentication" : "<p>Information about the serverless cluster client authentication.</p>"
       }
     },
+    "ServerlessConnectivityInfo": {
+      "base": "<p>Describes the cluster's connectivity information, such as its network type, which is IPv4 or DUAL.</p>",
+      "refs": {
+        "Serverless$ConnectivityInfo": "<p>Describes the cluster's connectivity information, such as its network type, which is IPv4 or DUAL.</p>",
+        "ClusterOperationV2Serverless$SourceClusterInfo": "<p>Source cluster connectivity information for the cluster.</p>",
+        "ClusterOperationV2Serverless$TargetClusterInfo": "<p>Target cluster connectivity information for the cluster.</p>"
+      }
+    },
     "ServerlessSasl" : {
       "base" : "<p>Describes the serverless cluster SASL information.</p>",
       "refs" : {
@@ -744,6 +752,12 @@
       "base" : "<p>The node information object.</p>",
       "refs" : {
         "__listOfNodeInfo$member" : null
+      }
+    },
+    "NetworkType" : {
+      "base" : "<p>The network type of the cluster, which is IPv4 or DUAL. The DUAL network type uses both IPv4 and IPv6 addresses for your cluster and its resources.</p><p>By default, a cluster uses the IPv4 network type.</p>",
+      "refs" : {
+        "ConnectivityInfo$NetworkType" : "<p>The network type of the cluster, which is IPv4 or DUAL. The DUAL network type uses both IPv4 and IPv6 addresses for your cluster and its resources.</p><p>By default, a cluster uses the IPv4 network type.</p>"
       }
     },
     "NodeType" : {
@@ -1507,6 +1521,10 @@
         "GetBootstrapBrokersResponse$BootstrapBrokerStringVpcConnectivitySaslIam" : "<p>A string containing one or more dns name (or IP) and SASL IAM port pairs for VPC connectivity.</p>",
         "GetBootstrapBrokersResponse$BootstrapBrokerStringVpcConnectivitySaslScram" : "<p>A string containing one or more dns name (or IP) and SASL SCRAM port pairs for VPC connectivity.</p>",
         "GetBootstrapBrokersResponse$BootstrapBrokerStringVpcConnectivityTls" : "<p>A string containing one or more dns name (or IP) and Tls port pairs for VPC connectivity.</p>",
+        "GetBootstrapBrokersResponse$BootstrapBrokerStringIpv6" : "<p>A string that contains one or more DNS names (or IP) and port pairs for IPv6 connectivity.</p>",
+        "GetBootstrapBrokersResponse$BootstrapBrokerStringTlsIpv6" : "<p>A string that contains one or more DNS names (or IP) and TLS port pairs for IPv6 connectivity.</p>",
+        "GetBootstrapBrokersResponse$BootstrapBrokerStringSaslScramIpv6" : "<p>A string that contains one or more DNS names (or IP) and SASL SCRAM port pairs for IPv6 connectivity.</p>",
+        "GetBootstrapBrokersResponse$BootstrapBrokerStringSaslIamIpv6" : "<p>A string that contains one or more DNS names (or IP) and SASL IAM port pairs for IPv6 connectivity.</p>",
         "GetClusterPolicyResponse$CurrentVersion" : "<p>Cluster policy version.</p>",
         "GetClusterPolicyResponse$Policy" : "<p>Cluster policy attached to the MSK cluster.</p>",
         "KafkaVersion$Version" : "<p>The Apache Kafka version.</p>",
