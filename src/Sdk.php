@@ -160,8 +160,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionCloudWatch(array $args = [])
  * @method \Aws\CloudWatchEvents\CloudWatchEventsClient createCloudWatchEvents(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloudWatchEvents(array $args = [])
- * @method \Aws\CloudWatchEvidently\CloudWatchEvidentlyClient createCloudWatchEvidently(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionCloudWatchEvidently(array $args = [])
  * @method \Aws\CloudWatchLogs\CloudWatchLogsClient createCloudWatchLogs(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloudWatchLogs(array $args = [])
  * @method \Aws\CloudWatchRUM\CloudWatchRUMClient createCloudWatchRUM(array $args = [])
