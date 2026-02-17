@@ -45,12 +45,8 @@ abstract class AbstractRestParser extends AbstractParser
         } else {
             $body = $response->getBody();
             if (!$body->isSeekable()) {
-                $response = new Response(
-                    $response->getStatusCode(),
-                    $response->getHeaders(),
-                    new CachingStream($body),
-                    $response->getProtocolVersion(),
-                    $response->getReasonPhrase()
+                $response = $response->withBody(
+                    new CachingStream($body)
                 );
             }
 
@@ -104,12 +100,8 @@ abstract class AbstractRestParser extends AbstractParser
         }
 
         if (!$body->isSeekable()) {
-            $response = new Response(
-                $response->getStatusCode(),
-                $response->getHeaders(),
-                new CachingStream($response->getBody()),
-                $response->getProtocolVersion(),
-                $response->getReasonPhrase()
+            $response = $response->withBody(
+                new CachingStream($response->getBody())
             );
         }
 

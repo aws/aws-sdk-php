@@ -28,12 +28,8 @@ class JsonRpcErrorParser extends AbstractErrorParser
         ?CommandInterface $command = null
     ) {
         if (!$response->getBody()->isSeekable()) {
-            $response = new Response(
-                $response->getStatusCode(),
-                $response->getHeaders(),
-                new CachingStream($response->getBody()),
-                $response->getProtocolVersion(),
-                $response->getReasonPhrase()
+            $response = $response->withBody(
+                new CachingStream($response->getBody())
             );
         }
         $data = $this->genericHandler($response);
