@@ -1018,7 +1018,7 @@ EOT
         $client->listBuckets();
     }
 
-    public function testSupportNamedArgs()
+    public function testSupportsNamedArgs()
     {
         $client = new S3Client([
             'region' => 'us-east-2',
