@@ -316,13 +316,13 @@
     "BrandingConfigurationCreateInput": {
       "base": "<p>The input configuration for creating branding settings.</p>",
       "refs": {
-        "CreateUserSettingsRequest$brandingConfigurationInput": "<p>The branding configuration input that customizes the appearance of the web portal for end users. This includes a custom logo, favicon, wallpaper, localized strings, color theme, and an optional terms of service.</p>"
+        "CreateUserSettingsRequest$brandingConfigurationInput": "<p>The branding configuration input that customizes the appearance of the web portal for end users. This includes a custom logo, favicon, localized strings, color theme, and optionally a wallpaper and terms of service.</p>"
       }
     },
     "BrandingConfigurationUpdateInput": {
       "base": "<p>The input configuration for updating branding settings. All fields are optional when updating existing branding.</p>",
       "refs": {
-        "UpdateUserSettingsRequest$brandingConfigurationInput": "<p>The branding configuration that customizes the appearance of the web portal for end users. When updating user settings without an existing branding configuration, all fields (logo, favicon, wallpaper, localized strings, and color theme) are required except for terms of service. When updating user settings with an existing branding configuration, all fields are optional.</p>"
+        "UpdateUserSettingsRequest$brandingConfigurationInput": "<p>The branding configuration that customizes the appearance of the web portal for end users. When updating user settings without an existing branding configuration, all fields (logo, favicon, localized strings, and color theme) are required except for wallpaper and terms of service. When updating user settings with an existing branding configuration, all fields are optional.</p>"
       }
     },
     "BrowserPolicy": {
@@ -2110,7 +2110,7 @@
     "WallpaperImageInput": {
       "base": "<p>The input for a wallpaper image. Provide the image as either a binary image file or an S3 URI. Maximum 5 MB in JPEG or PNG format.</p>",
       "refs": {
-        "BrandingConfigurationCreateInput$wallpaper": "<p>The wallpaper image for the portal. Provide either a binary image file or an S3 URI pointing to the image file. Maximum 5 MB in JPEG or PNG format.</p>",
+        "BrandingConfigurationCreateInput$wallpaper": "<p>The wallpaper image for the portal. Provide either a binary image file or an S3 URI pointing to the image file. Maximum 5 MB in JPEG or PNG format. If not provided, a default wallpaper will be used as the background image.</p>",
         "BrandingConfigurationUpdateInput$wallpaper": "<p>The wallpaper image for the portal. Provide either a binary image file or an S3 URI pointing to the image file. Maximum 5 MB in JPEG or PNG format.</p>"
       }
     },
