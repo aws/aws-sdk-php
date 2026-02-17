@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.36 - 2026-02-17
 
 * `Aws\IoTAnalytics` - Removes the `IoTAnalytics` service, which has been deprecated.
 * `Aws\WorkSpacesWeb` - Adds support for branding customization without requiring a custom wallpaper.
