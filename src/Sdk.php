@@ -376,8 +376,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionInternetMonitor(array $args = [])
  * @method \Aws\Invoicing\InvoicingClient createInvoicing(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionInvoicing(array $args = [])
- * @method \Aws\IoTAnalytics\IoTAnalyticsClient createIoTAnalytics(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionIoTAnalytics(array $args = [])
  * @method \Aws\IoTDeviceAdvisor\IoTDeviceAdvisorClient createIoTDeviceAdvisor(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIoTDeviceAdvisor(array $args = [])
  * @method \Aws\IoTEvents\IoTEventsClient createIoTEvents(array $args = [])
