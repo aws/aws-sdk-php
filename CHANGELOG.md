@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.37 - 2026-02-18
 
 * `Aws\` - Add support to named arguments in the AwsClientTrait __call method.
 * `Aws\CleanRooms` - This release adds support for federated catalogs in Athena-sourced configured tables.
