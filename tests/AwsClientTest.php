@@ -1017,4 +1017,19 @@ EOT
         ]);
         $client->listBuckets();
     }
+
+    public function testSupportsNamedArgs()
+    {
+        $client = new S3Client([
+            'region' => 'us-east-2',
+            'handler' => function (CommandInterface $command, RequestInterface $request) {
+                $this->assertEquals('foo', $command['Bucket']);
+
+                return new Result();
+            }
+        ]);
+        $client->listObjects(args: [
+            'Bucket' => 'foo',
+        ]);
+    }
 }
