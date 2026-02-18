@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Add support to named arguments in the AwsClientTrait __call method.
+* `Aws\CleanRooms` - This release adds support for federated catalogs in Athena-sourced configured tables.
+* `Aws\Connect` - Correcting in-app notifications API documentation.
+
 ## 3.369.36 - 2026-02-17
 
 * `Aws\IoTAnalytics` - Removes the `IoTAnalytics` service, which has been deprecated.
