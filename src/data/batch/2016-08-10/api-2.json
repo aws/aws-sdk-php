@@ -545,6 +545,7 @@
       "type":"structure",
       "members":{
         "statusSummary":{"shape":"ArrayJobStatusSummary"},
+        "statusSummaryLastUpdatedAt":{"shape":"Long"},
         "size":{"shape":"Integer"},
         "index":{"shape":"Integer"}
       }
@@ -553,7 +554,9 @@
       "type":"structure",
       "members":{
         "size":{"shape":"Integer"},
-        "index":{"shape":"Integer"}
+        "index":{"shape":"Integer"},
+        "statusSummary":{"shape":"ArrayJobStatusSummary"},
+        "statusSummaryLastUpdatedAt":{"shape":"Long"}
       }
     },
     "AssignPublicIp":{
@@ -1245,6 +1248,7 @@
       ],
       "members":{
         "attempts":{"shape":"ServiceJobAttemptDetails"},
+        "capacityUsage":{"shape":"ServiceJobCapacityUsageDetailList"},
         "createdAt":{"shape":"Long"},
         "isTerminated":{"shape":"Boolean"},
         "jobArn":{"shape":"String"},
@@ -1253,6 +1257,7 @@
         "jobQueue":{"shape":"String"},
         "latestAttempt":{"shape":"LatestServiceJobAttempt"},
         "retryStrategy":{"shape":"ServiceJobRetryStrategy"},
+        "scheduledAt":{"shape":"Long"},
         "schedulingPriority":{"shape":"Integer"},
         "serviceRequestPayload":{"shape":"String"},
         "serviceJobType":{"shape":"ServiceJobType"},
@@ -1290,6 +1295,7 @@
       "type":"list",
       "member":{"shape":"Device"}
     },
+    "Double":{"type":"double"},
     "EFSAuthorizationConfig":{
       "type":"structure",
       "members":{
@@ -1681,12 +1687,41 @@
       "type":"list",
       "member":{"shape":"EvaluateOnExit"}
     },
+    "FairshareCapacityUsage":{
+      "type":"structure",
+      "members":{
+        "capacityUnit":{"shape":"String"},
+        "quantity":{"shape":"Double"}
+      }
+    },
+    "FairshareCapacityUsageList":{
+      "type":"list",
+      "member":{"shape":"FairshareCapacityUsage"}
+    },
+    "FairshareCapacityUtilization":{
+      "type":"structure",
+      "members":{
+        "shareIdentifier":{"shape":"String"},
+        "capacityUsage":{"shape":"FairshareCapacityUsageList"}
+      }
+    },
+    "FairshareCapacityUtilizationList":{
+      "type":"list",
+      "member":{"shape":"FairshareCapacityUtilization"}
+    },
     "FairsharePolicy":{
       "type":"structure",
       "members":{
         "shareDecaySeconds":{"shape":"Integer"},
         "computeReservation":{"shape":"Integer"},
         "shareDistribution":{"shape":"ShareAttributesList"}
+      }
+    },
+    "FairshareUtilizationDetail":{
+      "type":"structure",
+      "members":{
+        "activeShareCount":{"shape":"Long"},
+        "topCapacityUtilization":{"shape":"FairshareCapacityUtilizationList"}
       }
     },
     "FargatePlatformConfiguration":{
@@ -1744,7 +1779,8 @@
     "GetJobQueueSnapshotResponse":{
       "type":"structure",
       "members":{
-        "frontOfQueue":{"shape":"FrontOfQueueDetail"}
+        "frontOfQueue":{"shape":"FrontOfQueueDetail"},
+        "queueUtilization":{"shape":"QueueSnapshotUtilizationDetail"}
       }
     },
     "Host":{
@@ -1792,6 +1828,17 @@
         "VALID",
         "INVALID"
       ]
+    },
+    "JobCapacityUsageSummary":{
+      "type":"structure",
+      "members":{
+        "capacityUnit":{"shape":"String"},
+        "quantity":{"shape":"Double"}
+      }
+    },
+    "JobCapacityUsageSummaryList":{
+      "type":"list",
+      "member":{"shape":"JobCapacityUsageSummary"}
     },
     "JobDefinition":{
       "type":"structure",
@@ -1985,7 +2032,10 @@
         "jobArn":{"shape":"String"},
         "jobId":{"shape":"String"},
         "jobName":{"shape":"String"},
+        "capacityUsage":{"shape":"JobCapacityUsageSummaryList"},
         "createdAt":{"shape":"Long"},
+        "scheduledAt":{"shape":"Long"},
+        "shareIdentifier":{"shape":"String"},
         "status":{"shape":"JobStatus"},
         "statusReason":{"shape":"String"},
         "startedAt":{"shape":"Long"},
@@ -2395,6 +2445,25 @@
       "max":256,
       "min":1
     },
+    "QueueSnapshotCapacityUsage":{
+      "type":"structure",
+      "members":{
+        "capacityUnit":{"shape":"String"},
+        "quantity":{"shape":"Double"}
+      }
+    },
+    "QueueSnapshotCapacityUsageList":{
+      "type":"list",
+      "member":{"shape":"QueueSnapshotCapacityUsage"}
+    },
+    "QueueSnapshotUtilizationDetail":{
+      "type":"structure",
+      "members":{
+        "totalCapacityUsage":{"shape":"QueueSnapshotCapacityUsageList"},
+        "fairshareUtilization":{"shape":"FairshareUtilizationDetail"},
+        "lastUpdatedAt":{"shape":"Long"}
+      }
+    },
     "RegisterJobDefinitionRequest":{
       "type":"structure",
       "required":[
@@ -2606,6 +2675,28 @@
       "type":"list",
       "member":{"shape":"ServiceJobAttemptDetail"}
     },
+    "ServiceJobCapacityUsageDetail":{
+      "type":"structure",
+      "members":{
+        "capacityUnit":{"shape":"String"},
+        "quantity":{"shape":"Double"}
+      }
+    },
+    "ServiceJobCapacityUsageDetailList":{
+      "type":"list",
+      "member":{"shape":"ServiceJobCapacityUsageDetail"}
+    },
+    "ServiceJobCapacityUsageSummary":{
+      "type":"structure",
+      "members":{
+        "capacityUnit":{"shape":"String"},
+        "quantity":{"shape":"Double"}
+      }
+    },
+    "ServiceJobCapacityUsageSummaryList":{
+      "type":"list",
+      "member":{"shape":"ServiceJobCapacityUsageSummary"}
+    },
     "ServiceJobEvaluateOnExit":{
       "type":"structure",
       "members":{
@@ -2654,10 +2745,12 @@
       ],
       "members":{
         "latestAttempt":{"shape":"LatestServiceJobAttempt"},
+        "capacityUsage":{"shape":"ServiceJobCapacityUsageSummaryList"},
         "createdAt":{"shape":"Long"},
         "jobArn":{"shape":"String"},
         "jobId":{"shape":"String"},
         "jobName":{"shape":"String"},
+        "scheduledAt":{"shape":"Long"},
         "serviceJobType":{"shape":"ServiceJobType"},
         "shareIdentifier":{"shape":"String"},
         "status":{"shape":"ServiceJobStatus"},

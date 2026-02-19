@@ -120,7 +120,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetIdentitySource":{
       "name":"GetIdentitySource",
@@ -137,7 +138,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPolicyVersion":{
       "name":"GetPolicyVersion",
@@ -154,7 +156,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetResourcePolicy":{
       "name":"GetResourcePolicy",
@@ -171,7 +174,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetSession":{
       "name":"GetSession",
@@ -188,7 +192,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListApprovalTeams":{
       "name":"ListApprovalTeams",
@@ -204,7 +209,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListIdentitySources":{
       "name":"ListIdentitySources",
@@ -220,7 +226,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPolicies":{
       "name":"ListPolicies",
@@ -236,7 +243,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPolicyVersions":{
       "name":"ListPolicyVersions",
@@ -253,7 +261,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListResourcePolicies":{
       "name":"ListResourcePolicies",
@@ -270,7 +279,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSessions":{
       "name":"ListSessions",
@@ -287,7 +297,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -304,7 +315,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "StartActiveApprovalTeamDeletion":{
       "name":"StartActiveApprovalTeamDeletion",
@@ -411,6 +423,16 @@
       "max":500,
       "min":0
     },
+    "AdditionalSecurityRequirement":{
+      "type":"string",
+      "enum":["APPROVER_VERIFICATION_REQUIRED"]
+    },
+    "AdditionalSecurityRequirements":{
+      "type":"list",
+      "member":{"shape":"AdditionalSecurityRequirement"},
+      "max":100,
+      "min":0
+    },
     "ApprovalStrategy":{
       "type":"structure",
       "members":{
@@ -497,8 +519,7 @@
     },
     "CancelSessionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ConflictException":{
       "type":"structure",
@@ -595,8 +616,7 @@
     },
     "DeleteInactiveApprovalTeamVersionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Description":{
       "type":"string",
@@ -667,7 +687,8 @@
         "ResponseTime":{"shape":"IsoTimestamp"},
         "PrimaryIdentityId":{"shape":"IdentityId"},
         "PrimaryIdentitySourceArn":{"shape":"String"},
-        "PrimaryIdentityStatus":{"shape":"IdentityStatus"}
+        "PrimaryIdentityStatus":{"shape":"IdentityStatus"},
+        "MfaMethods":{"shape":"MfaMethods"}
       }
     },
     "GetApprovalTeamResponseApprovers":{
@@ -782,7 +803,8 @@
         "RequesterRegion":{"shape":"Region"},
         "RequesterComment":{"shape":"RequesterComment"},
         "ActionCompletionStrategy":{"shape":"ActionCompletionStrategy"},
-        "ApproverResponses":{"shape":"GetSessionResponseApproverResponses"}
+        "ApproverResponses":{"shape":"GetSessionResponseApproverResponses"},
+        "AdditionalSecurityRequirements":{"shape":"AdditionalSecurityRequirements"}
       }
     },
     "GetSessionResponseApproverResponse":{
@@ -1135,7 +1157,8 @@
         "Status":{"shape":"SessionStatus"},
         "StatusCode":{"shape":"SessionStatusCode"},
         "StatusMessage":{"shape":"Message"},
-        "ActionCompletionStrategy":{"shape":"ActionCompletionStrategy"}
+        "ActionCompletionStrategy":{"shape":"ActionCompletionStrategy"},
+        "AdditionalSecurityRequirements":{"shape":"AdditionalSecurityRequirements"}
       }
     },
     "ListSessionsResponseSessions":{
@@ -1171,6 +1194,34 @@
       "type":"string",
       "max":500,
       "min":0
+    },
+    "MfaMethod":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "SyncStatus"
+      ],
+      "members":{
+        "Type":{"shape":"MfaType"},
+        "SyncStatus":{"shape":"MfaSyncStatus"}
+      }
+    },
+    "MfaMethods":{
+      "type":"list",
+      "member":{"shape":"MfaMethod"},
+      "max":5,
+      "min":0
+    },
+    "MfaSyncStatus":{
+      "type":"string",
+      "enum":[
+        "IN_SYNC",
+        "OUT_OF_SYNC"
+      ]
+    },
+    "MfaType":{
+      "type":"string",
+      "enum":["EMAIL_OTP"]
     },
     "MofNApprovalStrategy":{
       "type":"structure",
@@ -1499,8 +1550,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1567,8 +1617,17 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
+    },
+    "UpdateAction":{
+      "type":"string",
+      "enum":["SYNCHRONIZE_MFA_DEVICES"]
+    },
+    "UpdateActions":{
+      "type":"list",
+      "member":{"shape":"UpdateAction"},
+      "max":100,
+      "min":0
     },
     "UpdateApprovalTeamRequest":{
       "type":"structure",
@@ -1581,7 +1640,8 @@
           "shape":"ApprovalTeamArn",
           "location":"uri",
           "locationName":"Arn"
-        }
+        },
+        "UpdateActions":{"shape":"UpdateActions"}
       }
     },
     "UpdateApprovalTeamResponse":{

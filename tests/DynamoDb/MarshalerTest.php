@@ -277,7 +277,8 @@ JSON;
     "L":["A",1,true]
 }
 JSON;
-        $json = str_replace([" ", "\n"], '', $json); // remove whitespace
+        //Carriage return + line feed accounts for Windows
+        $json = str_replace([" ", "\n", "\r"], '', $json); // remove whitespace
 
         $m = new Marshaler;
         $this->assertSame($json, $m->unmarshalJson($item));

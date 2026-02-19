@@ -1745,6 +1745,7 @@
         "AdvancedCostOptimizationMetrics":{"shape":"AdvancedCostOptimizationMetrics"},
         "AdvancedDataProtectionMetrics":{"shape":"AdvancedDataProtectionMetrics"},
         "DetailedStatusCodesMetrics":{"shape":"DetailedStatusCodesMetrics"},
+        "AdvancedPerformanceMetrics":{"shape":"AdvancedPerformanceMetrics"},
         "StorageLensGroupLevel":{"shape":"StorageLensGroupLevel"}
       }
     },
@@ -1761,6 +1762,12 @@
       }
     },
     "AdvancedDataProtectionMetrics":{
+      "type":"structure",
+      "members":{
+        "IsEnabled":{"shape":"IsEnabled"}
+      }
+    },
+    "AdvancedPerformanceMetrics":{
       "type":"structure",
       "members":{
         "IsEnabled":{"shape":"IsEnabled"}
@@ -1889,7 +1896,8 @@
         "PrefixLevel":{"shape":"PrefixLevel"},
         "AdvancedCostOptimizationMetrics":{"shape":"AdvancedCostOptimizationMetrics"},
         "AdvancedDataProtectionMetrics":{"shape":"AdvancedDataProtectionMetrics"},
-        "DetailedStatusCodesMetrics":{"shape":"DetailedStatusCodesMetrics"}
+        "DetailedStatusCodesMetrics":{"shape":"DetailedStatusCodesMetrics"},
+        "AdvancedPerformanceMetrics":{"shape":"AdvancedPerformanceMetrics"}
       }
     },
     "BucketLocationConstraint":{
@@ -4131,6 +4139,10 @@
         "S3ComputeObjectChecksum":{
           "shape":"S3ComputeObjectChecksumOperation",
           "box":true
+        },
+        "S3UpdateObjectEncryption":{
+          "shape":"S3UpdateObjectEncryptionOperation",
+          "box":true
         }
       }
     },
@@ -5055,8 +5067,8 @@
     "NoSuchPublicAccessBlockConfigurationMessage":{"type":"string"},
     "NonEmptyKmsKeyArnString":{
       "type":"string",
-      "max":2000,
-      "min":1,
+      "max":2048,
+      "min":20,
       "pattern":"arn:aws[a-zA-Z0-9-]*:kms:[a-z0-9-]+:[0-9]{12}:key/[a-zA-Z0-9-]+"
     },
     "NonEmptyMaxLength1024String":{
@@ -5121,6 +5133,15 @@
     },
     "ObjectAgeValue":{"type":"integer"},
     "ObjectCreationTime":{"type":"timestamp"},
+    "ObjectEncryption":{
+      "type":"structure",
+      "members":{
+        "SSEKMS":{
+          "shape":"S3UpdateObjectEncryptionSSEKMS",
+          "locationName":"SSE-KMS"
+        }
+      }
+    },
     "ObjectEncryptionFilter":{
       "type":"structure",
       "members":{
@@ -5299,7 +5320,8 @@
         "S3PutObjectLegalHold",
         "S3PutObjectRetention",
         "S3ReplicateObject",
-        "S3ComputeObjectChecksum"
+        "S3ComputeObjectChecksum",
+        "S3UpdateObjectEncryption"
       ]
     },
     "Organization":{
@@ -6415,6 +6437,24 @@
       "type":"list",
       "member":{"shape":"S3Tag"}
     },
+    "S3UpdateObjectEncryptionOperation":{
+      "type":"structure",
+      "members":{
+        "ObjectEncryption":{"shape":"ObjectEncryption"}
+      }
+    },
+    "S3UpdateObjectEncryptionSSEKMS":{
+      "type":"structure",
+      "required":["KMSKeyArn"],
+      "members":{
+        "KMSKeyArn":{"shape":"NonEmptyKmsKeyArnString"},
+        "BucketKeyEnabled":{
+          "shape":"Boolean",
+          "box":true
+        }
+      },
+      "locationName":"SSE-KMS"
+    },
     "S3UserMetadata":{
       "type":"map",
       "key":{"shape":"NonEmptyMaxLength1024String"},
@@ -6570,9 +6610,11 @@
         "Include":{"shape":"Include"},
         "Exclude":{"shape":"Exclude"},
         "DataExport":{"shape":"StorageLensDataExport"},
+        "ExpandedPrefixesDataExport":{"shape":"StorageLensExpandedPrefixesDataExport"},
         "IsEnabled":{"shape":"IsEnabled"},
         "AwsOrg":{"shape":"StorageLensAwsOrg"},
-        "StorageLensArn":{"shape":"StorageLensArn"}
+        "StorageLensArn":{"shape":"StorageLensArn"},
+        "PrefixDelimiter":{"shape":"StorageLensPrefixLevelDelimiter"}
       }
     },
     "StorageLensConfigurationList":{
@@ -6587,7 +6629,8 @@
       "type":"structure",
       "members":{
         "S3BucketDestination":{"shape":"S3BucketDestination"},
-        "CloudWatchMetrics":{"shape":"CloudWatchMetrics"}
+        "CloudWatchMetrics":{"shape":"CloudWatchMetrics"},
+        "StorageLensTableDestination":{"shape":"StorageLensTableDestination"}
       }
     },
     "StorageLensDataExportEncryption":{
@@ -6601,6 +6644,13 @@
           "shape":"SSEKMS",
           "locationName":"SSE-KMS"
         }
+      }
+    },
+    "StorageLensExpandedPrefixesDataExport":{
+      "type":"structure",
+      "members":{
+        "S3BucketDestination":{"shape":"S3BucketDestination"},
+        "StorageLensTableDestination":{"shape":"StorageLensTableDestination"}
       }
     },
     "StorageLensGroup":{
@@ -6702,6 +6752,14 @@
       "type":"integer",
       "max":10,
       "min":1
+    },
+    "StorageLensTableDestination":{
+      "type":"structure",
+      "required":["IsEnabled"],
+      "members":{
+        "IsEnabled":{"shape":"IsEnabled"},
+        "Encryption":{"shape":"StorageLensDataExportEncryption"}
+      }
     },
     "StorageLensTag":{
       "type":"structure",

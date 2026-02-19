@@ -426,7 +426,7 @@
     },
     "ApplicationNamespace":{
       "type":"string",
-      "max":32,
+      "max":211,
       "min":1,
       "pattern":"^[a-zA-Z0-9\\/\\._\\-]+$"
     },
@@ -445,7 +445,13 @@
         "Namespace":{"shape":"ApplicationNamespace"},
         "CreatedTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
-        "IsService":{"shape":"Boolean"}
+        "IsService":{
+          "shape":"Boolean",
+          "deprecated":true,
+          "deprecatedMessage":"IsService has been deprecated in favor of ApplicationType",
+          "deprecatedSince":"2025-12-01"
+        },
+        "ApplicationType":{"shape":"ApplicationType"}
       }
     },
     "ApplicationTrustedSource":{
@@ -453,6 +459,14 @@
       "max":128,
       "min":1,
       "pattern":"^\\w+\\:\\/\\/.*$"
+    },
+    "ApplicationType":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "SERVICE",
+        "MCP_SERVER"
+      ]
     },
     "ApplicationsList":{
       "type":"list",
@@ -525,10 +539,16 @@
         },
         "Tags":{"shape":"TagMap"},
         "Permissions":{"shape":"PermissionList"},
-        "IsService":{"shape":"Boolean"},
+        "IsService":{
+          "shape":"Boolean",
+          "deprecated":true,
+          "deprecatedMessage":"IsService has been deprecated in favor of ApplicationType",
+          "deprecatedSince":"2025-12-01"
+        },
         "InitializationTimeout":{"shape":"InitializationTimeout"},
         "ApplicationConfig":{"shape":"ApplicationConfig"},
-        "IframeConfig":{"shape":"IframeConfig"}
+        "IframeConfig":{"shape":"IframeConfig"},
+        "ApplicationType":{"shape":"ApplicationType"}
       }
     },
     "CreateApplicationResponse":{
@@ -885,10 +905,16 @@
         "LastModifiedTime":{"shape":"Timestamp"},
         "Tags":{"shape":"TagMap"},
         "Permissions":{"shape":"PermissionList"},
-        "IsService":{"shape":"Boolean"},
+        "IsService":{
+          "shape":"Boolean",
+          "deprecated":true,
+          "deprecatedMessage":"IsService has been deprecated in favor of ApplicationType",
+          "deprecatedSince":"2025-12-01"
+        },
         "InitializationTimeout":{"shape":"InitializationTimeout"},
         "ApplicationConfig":{"shape":"ApplicationConfig"},
-        "IframeConfig":{"shape":"IframeConfig"}
+        "IframeConfig":{"shape":"IframeConfig"},
+        "ApplicationType":{"shape":"ApplicationType"}
       }
     },
     "GetDataIntegrationRequest":{
@@ -1039,6 +1065,11 @@
           "shape":"MaxResults",
           "location":"querystring",
           "locationName":"maxResults"
+        },
+        "ApplicationType":{
+          "shape":"ApplicationType",
+          "location":"querystring",
+          "locationName":"applicationType"
         }
       }
     },
@@ -1413,11 +1444,15 @@
         "Permissions":{"shape":"PermissionList"},
         "IsService":{
           "shape":"Boolean",
-          "box":true
+          "box":true,
+          "deprecated":true,
+          "deprecatedMessage":"IsService has been deprecated in favor of ApplicationType",
+          "deprecatedSince":"2025-12-01"
         },
         "InitializationTimeout":{"shape":"InitializationTimeout"},
         "ApplicationConfig":{"shape":"ApplicationConfig"},
-        "IframeConfig":{"shape":"IframeConfig"}
+        "IframeConfig":{"shape":"IframeConfig"},
+        "ApplicationType":{"shape":"ApplicationType"}
       }
     },
     "UpdateApplicationResponse":{

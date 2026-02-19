@@ -4692,6 +4692,21 @@
       "min":0
     },
     "ImageUrlType":{"type":"string"},
+    "InboundFederationLambdaType":{
+      "type":"structure",
+      "required":[
+        "LambdaVersion",
+        "LambdaArn"
+      ],
+      "members":{
+        "LambdaVersion":{"shape":"InboundFederationLambdaVersionType"},
+        "LambdaArn":{"shape":"ArnType"}
+      }
+    },
+    "InboundFederationLambdaVersionType":{
+      "type":"string",
+      "enum":["V1_0"]
+    },
     "InitiateAuthRequest":{
       "type":"structure",
       "required":[
@@ -4801,7 +4816,8 @@
         "PreTokenGenerationConfig":{"shape":"PreTokenGenerationVersionConfigType"},
         "CustomSMSSender":{"shape":"CustomSMSLambdaVersionConfigType"},
         "CustomEmailSender":{"shape":"CustomEmailLambdaVersionConfigType"},
-        "KMSKeyID":{"shape":"ArnType"}
+        "KMSKeyID":{"shape":"ArnType"},
+        "InboundFederation":{"shape":"InboundFederationLambdaType"}
       }
     },
     "LanguageIdType":{

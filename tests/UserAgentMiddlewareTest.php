@@ -9,29 +9,38 @@ use Aws\CommandInterface;
 use Aws\Credentials\AssumeRoleWithWebIdentityCredentialProvider;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
+use Aws\Crypto\AesDecryptingStream;
+use Aws\Crypto\AesGcmDecryptingStream;
 use Aws\Crypto\MaterialsProvider;
-use Aws\Crypto\MaterialsProviderV2;
+use Aws\Crypto\KmsMaterialsProviderV2;
+use Aws\Crypto\KmsMaterialsProvider;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\EndpointV2\EndpointProviderV2;
+use Aws\Kms\KmsClient;
 use Aws\MetricsBuilder;
 use Aws\Result;
 use Aws\S3\Crypto\S3EncryptionClient;
 use Aws\S3\Crypto\S3EncryptionClientV2;
+use Aws\S3\Crypto\InstructionFileMetadataStrategy;
 use Aws\S3\S3Client;
+use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
+use Aws\S3\S3Transfer\Models\DownloadRequest;
+use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
+use Aws\S3\S3Transfer\S3TransferManager;
 use Aws\S3\Transfer;
 use Aws\Sdk;
 use Aws\SSO\SSOClient;
 use Aws\Sts\StsClient;
 use Aws\Token\SsoTokenProvider;
 use Aws\UserAgentMiddleware;
+use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
-use function Aws\dir_iterator;
 
 /**
  * @covers \Aws\UserAgentMiddleware
@@ -40,6 +49,8 @@ use function Aws\dir_iterator;
 class UserAgentMiddlewareTest extends TestCase
 {
     use MetricsBuilderTestTrait;
+    use S3\Crypto\S3EncryptionClientTestingTrait;
+    use UsesServiceTrait;
 
     /** @var string */
     private $tempDir;
@@ -94,23 +105,8 @@ class UserAgentMiddlewareTest extends TestCase
                 putenv("$key=$envValue");
             }
         }
-
-        if (is_dir($this->tempDir)) {
-            $it = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($this->tempDir, \FilesystemIterator::SKIP_DOTS),
-                \RecursiveIteratorIterator::CHILD_FIRST
-            );
-
-            foreach ($it as $file) {
-                if ($file->isDir() && !is_link($file->getPathname())) {
-                    @rmdir($file->getPathname());
-                } else {
-                    @unlink($file->getPathname());
-                }
-            }
-
-            @rmdir($this->tempDir);
-        }
+      
+        TestsUtility::cleanUpDir($this->tempDir);
     }
 
     /**
@@ -171,148 +167,87 @@ class UserAgentMiddlewareTest extends TestCase
      */
     public function userAgentCasesDataProvider(): \Generator
     {
-        $userAgentCases = [
-            'sdkVersion' => [[], 'aws-sdk-php/' . Sdk::VERSION],
-            'userAgentVersion' => [
-                [], 'ua/' . UserAgentMiddleware::AGENT_VERSION
-            ],
-            'hhvmVersion' => function (): array {
-                if (defined('HHVM_VERSION')) {
-                    return [[], 'HHVM/' . HHVM_VERSION];
-                }
+        yield 'sdkVersion' => [[], 'aws-sdk-php/' . Sdk::VERSION];
 
-                return [[], ""];
-            },
-            'osName' => function (): array {
-                $disabledFunctions = explode(
-                    ',',
-                    ini_get('disable_functions')
-                );
-                if (function_exists('php_uname')
-                    && !in_array(
-                        'php_uname',
-                        $disabledFunctions,
-                        true
-                    )
-                ) {
-                    $osName = "OS/" . php_uname('s') . '#' . php_uname('r');
-                    if (!empty($osName)) {
-                        return [[], $osName];
-                    }
-                }
+        yield 'userAgentVersion' => [[], 'ua/' . UserAgentMiddleware::AGENT_VERSION];
 
-                return [[], ""];
-            },
-            'langVersion' => [[], 'lang/php#' . phpversion()],
-            'execEnv' => function (): array {
-                $expectedEnv = "LambdaFooEnvironment";
-                putenv("AWS_EXECUTION_ENV={$expectedEnv}");
+        yield 'hhvmVersion' => [[], defined('HHVM_VERSION') ? 'HHVM/' . HHVM_VERSION : ""];
 
-                return [[], $expectedEnv];
-            },
-            'appId' => function (): array {
-                $expectedAppId = "FooAppId";
-                $args = [
-                    'app_id' => $expectedAppId
-                ];
+        yield 'osName' => [[], $this->getOsNameForUserAgent()];
 
-                return [$args, "app/{$expectedAppId}"];
-            },
-            'metricsWithEndpoint' => function (): array {
-                $expectedEndpoint = "https://foo-endpoint.com";
-                $args = [
-                    'endpoint' => $expectedEndpoint,
-                    'endpoint_override' => true,
-                ];
+        yield 'langVersion' => [[], 'lang/php#' . phpversion()];
 
-                return [$args, 'm/' . MetricsBuilder::ENDPOINT_OVERRIDE];
-            },
-            'metricsWithRetryConfigArrayStandardMode' => function (): array {
-                $args = [
-                    'retries' => [
-                        'mode' => 'standard'
-                    ]
-                ];
+        yield 'execEnv' => [[], $this->getExecEnvForUserAgent()];
 
-                return [$args, 'm/' . MetricsBuilder::RETRY_MODE_STANDARD];
-            },
-            'metricsWithRetryConfigArrayAdaptiveMode' => function (): array {
-                $args = [
-                    'retries' => [
-                        'mode' => 'adaptive'
-                    ]
-                ];
+        yield 'appId' => [['app_id' => 'FooAppId'], 'app/FooAppId'];
 
-                return [$args, 'm/' . MetricsBuilder::RETRY_MODE_ADAPTIVE];
-            },
-            'metricsWithRetryConfigArrayLegacyMode' => function (): array {
-                $args = [
-                    'retries' => [
-                        'mode' => 'legacy'
-                    ]
-                ];
-
-                return [$args, 'm/' . MetricsBuilder::RETRY_MODE_LEGACY];
-            },
-            'metricsWithRetryConfigStandardMode' => function (): array {
-                $args = [
-                    'retries' => new \Aws\Retry\Configuration(
-                        'standard',
-                        10
-                    )
-                ];
-
-                return [$args, 'm/' . MetricsBuilder::RETRY_MODE_STANDARD];
-            },
-            'metricsWithRetryConfigAdaptiveMode' => function (): array {
-                $args = [
-                    'retries' => new \Aws\Retry\Configuration(
-                    'adaptive',
-                    10
-                    )
-                ];
-
-                return [$args, 'm/' . MetricsBuilder::RETRY_MODE_ADAPTIVE];
-            },
-            'metricsWithRetryConfigLegacyMode' => function (): array {
-                $args = [
-                    'retries' => new \Aws\Retry\Configuration(
-                        'legacy',
-                        10
-                    )
-                ];
-
-                return [$args, 'm/' . MetricsBuilder::RETRY_MODE_LEGACY];
-            },
-            'cfgWithEndpointDiscoveryConfigArray' => function (): array {
-                $args = [
-                    'endpoint_discovery' => [
-                        'enabled' => true,
-                        'cache_limit' => 1000
-                    ]
-                ];
-
-                return [$args, 'cfg/endpoint-discovery'];
-            },
-            'cfgWithEndpointDiscoveryConfig' => function (): array {
-                $args = [
-                    'endpoint_discovery' => new \Aws\EndpointDiscovery\Configuration (
-                        true,
-                        1000
-                    ),
-                ];
-
-                return [$args, 'cfg/endpoint-discovery'];
-            }
+        yield 'metricsWithEndpoint' => [
+            ['endpoint' => 'https://foo-endpoint.com', 'endpoint_override' => true],
+            'm/' . MetricsBuilder::ENDPOINT_OVERRIDE
         ];
 
-        foreach ($userAgentCases as $key => $case) {
-            if (is_callable($case)) {
-                yield $key => $case();
-            } else {
-                yield  $key => $case;
-            }
+        yield 'metricsWithRetryConfigArrayStandardMode' => [
+            ['retries' => ['mode' => 'standard']],
+            'm/' . MetricsBuilder::RETRY_MODE_STANDARD
+        ];
+
+        yield 'metricsWithRetryConfigArrayAdaptiveMode' => [
+            ['retries' => ['mode' => 'adaptive']],
+            'm/' . MetricsBuilder::RETRY_MODE_ADAPTIVE
+        ];
+
+        yield 'metricsWithRetryConfigArrayLegacyMode' => [
+            ['retries' => ['mode' => 'legacy']],
+            'm/' . MetricsBuilder::RETRY_MODE_LEGACY
+        ];
+
+        yield 'metricsWithRetryConfigStandardMode' => [
+            ['retries' => new \Aws\Retry\Configuration('standard', 10)],
+            'm/' . MetricsBuilder::RETRY_MODE_STANDARD
+        ];
+
+        yield 'metricsWithRetryConfigAdaptiveMode' => [
+            ['retries' => new \Aws\Retry\Configuration('adaptive', 10)],
+            'm/' . MetricsBuilder::RETRY_MODE_ADAPTIVE
+        ];
+
+        yield 'metricsWithRetryConfigLegacyMode' => [
+            ['retries' => new \Aws\Retry\Configuration('legacy', 10)],
+            'm/' . MetricsBuilder::RETRY_MODE_LEGACY
+        ];
+
+        yield 'cfgWithEndpointDiscoveryConfigArray' => [
+            ['endpoint_discovery' => ['enabled' => true, 'cache_limit' => 1000]],
+            'cfg/endpoint-discovery'
+        ];
+
+        yield 'cfgWithEndpointDiscoveryConfig' => [
+            ['endpoint_discovery' => new \Aws\EndpointDiscovery\Configuration(true, 1000)],
+            'cfg/endpoint-discovery'
+        ];
+    }
+
+    private function getOsNameForUserAgent(): string
+    {
+        $disabledFunctions = explode(',', ini_get('disable_functions'));
+        if (function_exists('php_uname')
+            && !in_array('php_uname', $disabledFunctions, true)
+        ) {
+            // Match what the middleware does - replace spaces with underscores
+            $os = str_replace(' ', '_', php_uname('s'));
+            $release = php_uname('r');
+            $osName = "OS/{$os}#{$release}";
+
+            return !empty($osName) ? $osName : "";
         }
+        return "";
+    }
+
+    private function getExecEnvForUserAgent(): string
+    {
+        $expectedEnv = "LambdaFooEnvironment";
+        putenv("AWS_EXECUTION_ENV={$expectedEnv}");
+        return $expectedEnv;
     }
 
     /**
@@ -470,51 +405,24 @@ class UserAgentMiddlewareTest extends TestCase
      */
     public function testUserAgentCaptureS3CryptoV1Metric()
     {
-        $s3Client = new S3Client([
-            'region' => 'us-east-2',
-            'handler' => function (
-                CommandInterface $_,
-                RequestInterface $request
-            ) {
+        $kms = $this->getTestKmsClient();
+        $list = $kms->getHandlerList();
+        $list->setHandler(function ($cmd, $req) {
+            // Verify decryption command has correct parameters
+            $this->assertSame('cek', $cmd['CiphertextBlob']);
+            $this->assertEquals(
+                [
+                    'kms_cmk_id' => '11111111-2222-3333-4444-555555555555'
+                ],
+                $cmd['EncryptionContext']
+            );
+            return Create::promiseFor(
+                new Result(['Plaintext' => random_bytes(32)])
+            );
+        });
+        $provider = new KmsMaterialsProvider($kms, 'foo');
 
-                $metrics = $this->getMetricsAsArray($request);
-
-                $this->assertTrue(
-                    in_array(MetricsBuilder::S3_CRYPTO_V1N, $metrics)
-                );
-
-                return new Result([
-                    'Body' => 'This is a test body'
-                ]);
-            }
-        ]);
-        $encryptionClient = $this->getMockBuilder(S3EncryptionClient::class)
-            ->setConstructorArgs([$s3Client])
-            ->setMethods(['decrypt'])
-            ->getMock();
-        $encryptionClient->expects($this->once())
-            ->method('decrypt')
-            ->withAnyParameters()
-            ->willReturn(base64_encode('Test body'));
-        $materialProvider = $this->createMock(MaterialsProvider::class);
-        $materialProvider->expects($this->once())
-            ->method('fromDecryptionEnvelope')
-            ->withAnyParameters()
-            ->willReturn($materialProvider);
-        $encryptionClient->getObject([
-            'Bucket' => 'foo',
-            'Key' => 'foo',
-            '@MaterialsProvider' => $materialProvider
-        ]);
-    }
-
-    /**
-     * Tests user agent captures the s3 crypto v2 metric.
-     *
-     * @return void
-     */
-    public function testUserAgentCaptureS3CryptoV2Metric()
-    {
+        $responded = false;
         $s3Client = new S3Client([
             'region' => 'us-east-2',
             'handler' => function (
@@ -531,23 +439,111 @@ class UserAgentMiddlewareTest extends TestCase
                 return new Result([
                     'Body' => 'This is a test body'
                 ]);
-            }
+            },
+            'http_handler' => function () use ($provider, &$responded) {
+                if ($responded) {
+                    return new FulfilledPromise(new Response(
+                        200,
+                        [],
+                        json_encode(
+                            $this->getValidV1GcmMetadataFields($provider)
+                        )
+                    ));
+                }
+
+                $responded = true;
+                return new FulfilledPromise(new Response(
+                    200,
+                    [],
+                    'test'
+                ));
+            },
         ]);
-        $encryptionClient = $this->getMockBuilder(S3EncryptionClientV2::class)
-            ->setConstructorArgs([$s3Client])
-            ->setMethods(['decrypt'])
-            ->getMock();
-        $encryptionClient->expects($this->once())
-            ->method('decrypt')
-            ->withAnyParameters()
-            ->willReturn(base64_encode('Test body'));
-        $materialProvider = $this->createMock(MaterialsProviderV2::class);
-        $encryptionClient->getObject([
+        $encryptionClient = @new S3EncryptionClient(
+            $s3Client,
+            InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
+        );
+        $result = $encryptionClient->getObject([
             'Bucket' => 'foo',
             'Key' => 'foo',
-            '@MaterialsProvider' => $materialProvider,
-            '@SecurityProfile' => 'V2'
+            '@MaterialsProvider' => $provider,
         ]);
+        $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
+    }
+
+    /**
+     * Tests user agent captures the s3 crypto v2 metric.
+     *
+     * @return void
+     */
+    public function testUserAgentCaptureS3CryptoV2Metric()
+    {
+        $kms = $this->getTestKmsClient();
+        $list = $kms->getHandlerList();
+        $list->setHandler(function ($cmd, $req) {
+            // Verify decryption command has correct parameters
+            $this->assertSame('cek', $cmd['CiphertextBlob']);
+            $this->assertEquals(
+                [
+                    'aws:x-amz-cek-alg' => 'AES/GCM/NoPadding'
+                ],
+                $cmd['EncryptionContext']
+            );
+            return Create::promiseFor(
+                new Result(['Plaintext' => random_bytes(32)])
+            );
+        });
+        $provider = new KmsMaterialsProviderV2($kms, 'foo');
+
+        $responded = false;
+        $s3Client = new S3Client([
+            'region' => 'us-east-2',
+            'handler' => function (
+                CommandInterface $_,
+                RequestInterface $request
+            ) {
+
+                $metrics = $this->getMetricsAsArray($request);
+
+                $this->assertTrue(
+                    in_array(MetricsBuilder::S3_CRYPTO_V2, $metrics)
+                );
+
+                return new Result([
+                    'Body' => 'This is a test body'
+                ]);
+            },
+            'http_handler' => function () use ($provider, &$responded) {
+                if ($responded) {
+                    return new FulfilledPromise(new Response(
+                        200,
+                        [],
+                        json_encode(
+                            $this->getValidV2GcmMetadataFields($provider)
+                        )
+                    ));
+                }
+
+                $responded = true;
+                return new FulfilledPromise(new Response(
+                    200,
+                    [],
+                    'test'
+                ));
+            },
+        ]);
+        $encryptionClient = @new S3EncryptionClientV2(
+            $s3Client,
+            InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
+        );
+        $result = $encryptionClient->getObject([
+            'Bucket' => 'foo',
+            'Key' => 'foo',
+            '@MaterialsProvider' => $provider,
+            '@SecurityProfile' => 'V2',
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT'
+        ]);
+        $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
     }
 
     /**
@@ -790,6 +786,22 @@ class UserAgentMiddlewareTest extends TestCase
             ),
             'region' => 'us-east-2',
         ] + $args);
+    }
+    
+    /**
+     * Returns a test kms client,
+     *
+     * @return KmsClient 
+     */
+    protected function getTestKmsClient(): mixed
+    {
+        static $client = null;
+
+        if (!$client) {
+            $client = $this->getTestClient('Kms');
+        }
+
+        return $client;
     }
 
     /**
@@ -1179,35 +1191,6 @@ EOF;
         $s3Client->listBuckets();
     }
 
-    /**
-     * Helper method to clean up temporary dirs.
-     *
-     * @param $dirPath
-     *
-     * @return void
-     */
-    private function cleanUpDir($dirPath): void
-    {
-        if (!is_dir($dirPath)) {
-            return;
-        }
-
-        $files = dir_iterator($dirPath);
-        foreach ($files as $file) {
-            if (in_array($file, ['.', '..'])) {
-                continue;
-            }
-
-            $filePath  = $dirPath . '/' . $file;
-            if (is_file($filePath) || !is_dir($filePath)) {
-                unlink($filePath);
-            } elseif (is_dir($filePath)) {
-                $this->cleanUpDir($filePath);
-            }
-        }
-
-        rmdir($dirPath);
-    }
 
     /**
      * Test user agent captures metric for credentials resolved from
@@ -1383,10 +1366,19 @@ EOF;
     {
         $profile = 'metric-test-profile';
         $configPath = $this->awsDir . '/my-config';
-        $profileContent = <<<EOF
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $profileContent = <<<EOF
 [$profile]
-credential_process= echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process= echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOF;
+        } else {
+            $profileContent = <<<EOF
+[$profile]
+credential_process= echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOF;
+        }
+
         file_put_contents($configPath, $profileContent);
         $s3Client = new S3Client([
             'region' => 'us-east-2',
@@ -1653,5 +1645,173 @@ EOF;
                 'ChecksumAlgorithm' => 'crc32'
             ]);
         }
+    }
+
+    /**
+     * Tests user agent captures the s3 transfer metric.
+     *
+     * @return void
+     */
+    public function testUserAgentCaptureS3TransferMetricInS3TransferManagerV2()
+    {
+        $s3Client = new S3Client([
+            'region' => 'us-east-2',
+            'http_handler' => function (
+                RequestInterface $request
+            ) {
+                $metrics = $this->getMetricsAsArray($request);
+
+                $this->assertTrue(
+                    in_array(MetricsBuilder::S3_TRANSFER, $metrics)
+                );
+
+                return new Response();
+            }
+        ]);
+        $s3TransferManager = new S3TransferManager(
+            $s3Client
+        );
+        $s3TransferManager->download(
+            new DownloadRequest(
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'foo',
+                ]
+            )
+        )->wait();
+    }
+
+    /**
+     * Tests user agent captures the upload directory metric.
+     *
+     * @return void
+     */
+    public function testUserAgentCaptureS3UploadDirectoryTransfer()
+    {
+        $directory = $this->tempDir . "/upload-directory-test";
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777, true);
+        }
+        $files = [
+            $directory . "/dir-file-1.txt",
+            $directory . "/dir-file-2.txt",
+        ];
+        foreach ($files as $file) {
+            file_put_contents($file, "test");
+        }
+
+        $called = false;
+        $s3Client = new S3Client([
+            'region' => 'us-east-2',
+            'http_handler' => function (
+                RequestInterface $request
+            ) use (&$called) {
+                $called = true;
+                $metrics = $this->getMetricsAsArray($request);
+
+                $this->assertTrue(
+                    in_array(MetricsBuilder::S3_TRANSFER, $metrics)
+                );
+
+                $this->assertTrue(
+                    in_array(
+                        MetricsBuilder::S3_TRANSFER_UPLOAD_DIRECTORY,
+                        $metrics
+                    )
+                );
+
+                return new Response();
+            }
+        ]);
+        $manager = new S3TransferManager(
+            $s3Client,
+        );
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
+                []
+            )
+        )->wait();
+        $this->assertTrue($called);
+    }
+
+    /**
+     * Test user agent captures the download directory metric
+     * @return void
+     */
+    public function testUserAgentCaptureS3DownloadDirectoryTransfer()
+    {
+        $destinationDirectory = $this->tempDir . "/download-directory-test";
+        if (!is_dir($destinationDirectory)) {
+            mkdir($destinationDirectory, 0777, true);
+        }
+        $called = false;
+        $objects = [
+
+        ];
+        $s3Client = new S3Client([
+            'region' => 'us-east-2',
+            'http_handler' => function (
+                RequestInterface $request
+            ) use (&$called) {
+                // ListObjectsV2 response
+                $uri = $request->getUri();
+                if ($uri->getQuery() === "list-type=2") {
+                    $objectsResponse = <<<EOF
+<ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <Name>Bucket</Name>
+    <Prefix></Prefix>
+    <KeyCount>1</KeyCount>
+    <MaxKeys>1000</MaxKeys>
+    <IsTruncated>false</IsTruncated>
+    <Contents>
+        <Key>TestKey</Key>
+        <Size>100</Size>
+        <LastModified>2025-05-20T14:45:08.000Z</LastModified>
+        <ETag>FixedETag</ETag>
+        <ChecksumAlgorithm>CRC64NVME</ChecksumAlgorithm>
+        <ChecksumType>FULL_OBJECT</ChecksumType>
+        <StorageClass>STANDARD</StorageClass>
+    </Contents>
+</ListBucketResult>
+EOF;
+
+                    return new Response(
+                        200,
+                        [],
+                        Utils::streamFor($objectsResponse)
+                    );
+                }
+
+                // Validate metric
+                $called = true;
+                $metrics = $this->getMetricsAsArray($request);
+
+                $this->assertTrue(
+                    in_array(MetricsBuilder::S3_TRANSFER, $metrics)
+                );
+
+                $this->assertTrue(
+                    in_array(
+                        MetricsBuilder::S3_TRANSFER_DOWNLOAD_DIRECTORY,
+                        $metrics
+                    )
+                );
+
+                return new Response();
+            }
+        ]);
+        $manager = new S3TransferManager(
+            $s3Client,
+        );
+        $manager->downloadDirectory(
+            new DownloadDirectoryRequest(
+                "Bucket",
+                $destinationDirectory,
+            )
+        )->wait();
+        $this->assertTrue($called);
     }
 }

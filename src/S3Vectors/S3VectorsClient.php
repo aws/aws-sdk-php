@@ -27,6 +27,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getVectorsAsync(array $args = [])
  * @method \Aws\Result listIndexes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listIndexesAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result listVectorBuckets(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listVectorBucketsAsync(array $args = [])
  * @method \Aws\Result listVectors(array $args = [])
@@ -37,5 +39,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putVectorsAsync(array $args = [])
  * @method \Aws\Result queryVectors(array $args = [])
  * @method \GuzzleHttp\Promise\Promise queryVectorsAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
 class S3VectorsClient extends AwsClient {}

@@ -1,5 +1,10 @@
 {
   "pagination": {
+    "EvaluateDataTableValues": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken"
+    },
     "GetCurrentMetricData": {
       "input_token": "NextToken",
       "limit_key": "MaxResults",
@@ -44,10 +49,32 @@
       "output_token": "NextToken",
       "result_key": "LexBots"
     },
+    "ListChildHoursOfOperations": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "non_aggregate_keys": [
+        "LastModifiedRegion",
+        "LastModifiedTime"
+      ],
+      "output_token": "NextToken",
+      "result_key": "ChildHoursOfOperationsSummaryList"
+    },
     "ListContactEvaluations": {
       "input_token": "NextToken",
       "output_token": "NextToken",
       "result_key": "EvaluationSummaryList"
+    },
+    "ListContactFlowModuleAliases": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "ContactFlowModuleAliasSummaryList"
+    },
+    "ListContactFlowModuleVersions": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "ContactFlowModuleVersionSummaryList"
     },
     "ListContactFlowModules": {
       "input_token": "NextToken",
@@ -72,11 +99,41 @@
       "output_token": "NextToken",
       "result_key": "ReferenceSummaryList"
     },
+    "ListDataTableAttributes": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "Attributes"
+    },
+    "ListDataTablePrimaryValues": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "PrimaryValuesList"
+    },
+    "ListDataTableValues": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "Values"
+    },
+    "ListDataTables": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "DataTableSummaryList"
+    },
     "ListDefaultVocabularies": {
       "input_token": "NextToken",
       "limit_key": "MaxResults",
       "output_token": "NextToken",
       "result_key": "DefaultVocabularyList"
+    },
+    "ListEntitySecurityProfiles": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "SecurityProfiles"
     },
     "ListEvaluationFormVersions": {
       "input_token": "NextToken",
@@ -247,6 +304,16 @@
       "output_token": "NextToken",
       "result_key": "Applications"
     },
+    "ListSecurityProfileFlowModules": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "non_aggregate_keys": [
+        "LastModifiedRegion",
+        "LastModifiedTime"
+      ],
+      "output_token": "NextToken",
+      "result_key": "AllowedFlowModules"
+    },
     "ListSecurityProfilePermissions": {
       "input_token": "NextToken",
       "limit_key": "MaxResults",
@@ -268,6 +335,12 @@
       "limit_key": "MaxResults",
       "output_token": "NextToken",
       "result_key": "TaskTemplates"
+    },
+    "ListTestCases": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "TestCaseSummaryList"
     },
     "ListTrafficDistributionGroupUsers": {
       "input_token": "NextToken",
@@ -321,6 +394,21 @@
       "output_token": "NextToken",
       "result_key": "ViewsSummaryList"
     },
+    "ListWorkspaceMedia": {
+      "result_key": "Media"
+    },
+    "ListWorkspacePages": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "WorkspacePageList"
+    },
+    "ListWorkspaces": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "WorkspaceSummaryList"
+    },
     "SearchAgentStatuses": {
       "input_token": "NextToken",
       "limit_key": "MaxResults",
@@ -362,6 +450,15 @@
       ],
       "output_token": "NextToken",
       "result_key": "Contacts"
+    },
+    "SearchDataTables": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "non_aggregate_keys": [
+        "ApproximateTotalCount"
+      ],
+      "output_token": "NextToken",
+      "result_key": "DataTables"
     },
     "SearchHoursOfOperationOverrides": {
       "input_token": "NextToken",
@@ -441,6 +538,15 @@
       "output_token": "NextToken",
       "result_key": "SecurityProfiles"
     },
+    "SearchTestCases": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "non_aggregate_keys": [
+        "ApproximateTotalCount"
+      ],
+      "output_token": "NextToken",
+      "result_key": "TestCases"
+    },
     "SearchUserHierarchyGroups": {
       "input_token": "NextToken",
       "limit_key": "MaxResults",
@@ -459,11 +565,38 @@
       "output_token": "NextToken",
       "result_key": "Users"
     },
+    "SearchViews": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "non_aggregate_keys": [
+        "ApproximateTotalCount"
+      ],
+      "output_token": "NextToken",
+      "result_key": "Views"
+    },
     "SearchVocabularies": {
       "input_token": "NextToken",
       "limit_key": "MaxResults",
       "output_token": "NextToken",
       "result_key": "VocabularySummaryList"
+    },
+    "SearchWorkspaceAssociations": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "non_aggregate_keys": [
+        "ApproximateTotalCount"
+      ],
+      "output_token": "NextToken",
+      "result_key": "WorkspaceAssociations"
+    },
+    "SearchWorkspaces": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "non_aggregate_keys": [
+        "ApproximateTotalCount"
+      ],
+      "output_token": "NextToken",
+      "result_key": "Workspaces"
     }
   }
 }

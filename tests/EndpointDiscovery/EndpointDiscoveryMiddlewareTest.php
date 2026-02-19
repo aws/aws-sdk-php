@@ -29,8 +29,48 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 
+    private static $originalDiscoveryCooldown;
+    private static $originalCache;
+
+    public function set_up()
+    {
+        parent::set_up();
+        // Backup the original static property values
+        $cooldownReflection = new \ReflectionProperty(
+            EndpointDiscoveryMiddleware::class,
+            'discoveryCooldown'
+        );
+        self::$originalDiscoveryCooldown = $cooldownReflection->getValue(null);
+        
+        // Backup and clear the cache
+        $cacheReflection = new \ReflectionProperty(
+            EndpointDiscoveryMiddleware::class,
+            'cache'
+        );
+        self::$originalCache = $cacheReflection->getValue(null);
+        // Clear the cache for test isolation
+        $cacheReflection->setValue(null, null);
+    }
+
+    public function tear_down()
+    {
+        parent::tear_down();
+        // Restore the original static property values
+        $cooldownReflection = new \ReflectionProperty(
+            EndpointDiscoveryMiddleware::class,
+            'discoveryCooldown'
+        );
+        $cooldownReflection->setValue(null, self::$originalDiscoveryCooldown);
+        
+        // Restore the cache
+        $cacheReflection = new \ReflectionProperty(
+            EndpointDiscoveryMiddleware::class,
+            'cache'
+        );
+        $cacheReflection->setValue(null, self::$originalCache);
+    }
+
     /**
-     * @backupStaticAttributes enabled
      * @dataProvider getRequestTestCases
      * @param array $commandArgs
      * @param array $clientArgs
@@ -257,7 +297,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
-     * @backupStaticAttributes enabled
      * @dataProvider getDiscoveryRequestTestCases
      * @param CommandInterface $mainCmd
      * @param CommandInterface $expectedCmd
@@ -327,9 +366,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @backupStaticAttributes enabled
-     */
     public function testThrowsExceptionOnUnparsableEndpoint()
     {
         $client = $this->generateTestClient($this->generateTestService());
@@ -363,9 +399,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         }
     }
 
-    /**
-     * @backupStaticAttributes enabled
-     */
     public function testCachesDiscoveredEndpoints()
     {
         $client = $this->generateTestClient($this->generateTestService());
@@ -397,9 +430,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $this->assertSame(5, $operationCounter);
     }
 
-    /**
-     * @backupStaticAttributes enabled
-     */
     public function testCachesOnlyUpToCacheLimit()
     {
         $client = $this->generateTestClient(
@@ -456,9 +486,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $this->assertSame(6, $operationCounter);
     }
 
-    /**
-     * @backupStaticAttributes enabled
-     */
     public function testUsesRegionalEndpointOnDescribeFailure()
     {
         $client = $this->generateTestClient(
@@ -489,9 +516,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $client->execute($command);
     }
 
-    /**
-     * @backupStaticAttributes enabled
-     */
     public function testThrowsExceptionOnDescribeFailure()
     {
         $client = $this->generateTestClient($this->generateTestService());
@@ -527,7 +551,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
-     * @backupStaticAttributes enabled
      * @dataProvider getInvalidEndpointExceptions
      * @param $exception
      */
@@ -563,7 +586,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
-     * @backupStaticAttributes enabled
      * @dataProvider getInvalidEndpointExceptions
      * @param $exception
      */
@@ -607,7 +629,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
-     * @backupStaticAttributes enabled
      * @dataProvider getInvalidEndpointExceptions
      * @param $exception
      */
@@ -649,7 +670,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
-     * @backupStaticAttributes enabled
      * @dataProvider getInvalidEndpointExceptions
      * @param $exception
      */
@@ -661,7 +681,8 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
             EndpointDiscoveryMiddleware::class,
             'discoveryCooldown'
         );
-        $reflection->setAccessible(true);
+        
+        // Set to 0 for testing
         $reflection->setValue(null, 0);
         $callOrder = [];
         $handler = function (
@@ -721,9 +742,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @backupStaticAttributes enabled
-     */
     public function testThrowsExceptionWhenMarkedAsEndpointOperation()
     {
         $client = $this->generateTestClient($this->generateTestService());
@@ -752,9 +770,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         }
     }
 
-    /**
-     * @backupStaticAttributes enabled
-     */
     public function testThrowsExceptionForRequiredOpWhenDisabled()
     {
         $this->expectExceptionMessage("This operation requires the use of endpoint discovery, but this has been disabled");
@@ -771,9 +786,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $handler($command, new Request('POST', 'https://foo.com'));
     }
 
-    /**
-     * @backupStaticAttributes enabled
-     */
     public function testThrowsExceptionOnBadDiscoveryData()
     {
         $client = $this->generateTestClient($this->generateTestService());
@@ -805,9 +817,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         }
     }
 
-    /**
-     * @backupStaticAttributes enabled
-     */
     public function testThrowsExceptionForBadModel()
     {
         $client = $this->generateTestClient($this->generateFaultyService());
@@ -919,6 +928,10 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                     },
                     'region'       => 'us-east-1',
                     'version'      => 'latest',
+                    'credentials'  => [
+                        'key'    => 'test-key',
+                        'secret' => 'test-secret',
+                    ],
                 ],
                 $args
             )

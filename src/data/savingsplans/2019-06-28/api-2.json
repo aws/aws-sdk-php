@@ -55,7 +55,8 @@
       "output":{"shape":"DescribeSavingsPlanRatesResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "DescribeSavingsPlans":{
@@ -187,7 +188,8 @@
       "type":"string",
       "enum":[
         "CNY",
-        "USD"
+        "USD",
+        "EUR"
       ]
     },
     "CurrencyList":{
@@ -565,7 +567,16 @@
         "EC2",
         "Fargate",
         "Lambda",
-        "SageMaker"
+        "SageMaker",
+        "RDS",
+        "DSQL",
+        "DynamoDB",
+        "ElastiCache",
+        "DocDB",
+        "Neptune",
+        "Timestream",
+        "Keyspaces",
+        "DMS"
       ]
     },
     "SavingsPlanProductTypeList":{
@@ -662,7 +673,16 @@
         "AmazonECS",
         "AmazonEKS",
         "AWSLambda",
-        "AmazonSageMaker"
+        "AmazonSageMaker",
+        "AmazonRDS",
+        "AuroraDSQL",
+        "AmazonDynamoDB",
+        "AmazonElastiCache",
+        "AmazonDocDB",
+        "AmazonNeptune",
+        "AmazonTimestream",
+        "AmazonMCS",
+        "AWSDatabaseMigrationSvc"
       ]
     },
     "SavingsPlanRateServiceCodeList":{
@@ -674,7 +694,19 @@
       "enum":[
         "Hrs",
         "Lambda-GB-Second",
-        "Request"
+        "Request",
+        "ACU-Hr",
+        "ReadRequestUnits",
+        "WriteRequestUnits",
+        "ReadCapacityUnit-Hrs",
+        "WriteCapacityUnit-Hrs",
+        "ReplicatedWriteRequestUnits",
+        "ReplicatedWriteCapacityUnit-Hrs",
+        "GB-Hours",
+        "DPU",
+        "ElastiCacheProcessingUnit",
+        "DCU-Hr",
+        "NCU-hr"
       ]
     },
     "SavingsPlanRateUsageType":{
@@ -717,7 +749,8 @@
       "enum":[
         "Compute",
         "EC2Instance",
-        "SageMaker"
+        "SageMaker",
+        "Database"
       ]
     },
     "SavingsPlanTypeList":{
@@ -748,7 +781,8 @@
         "savings-plan-type",
         "payment-option",
         "start",
-        "end"
+        "end",
+        "instance-family"
       ]
     },
     "ServiceQuotaExceededException":{

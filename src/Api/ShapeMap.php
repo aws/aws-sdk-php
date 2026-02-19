@@ -51,7 +51,14 @@ class ShapeMap implements \ArrayAccess
             return $this->simple[$shape];
         }
 
-        $definition = $shapeRef + $this->definitions[$shape];
+        $shapeDefinition = $this->definitions[$shape];
+        $definition = $shapeRef + $shapeDefinition;
+        // Property to know whether the locationName was set at member level
+        // or the structure level.
+        if (isset($shapeDefinition['locationName'])) {
+            $definition['locationNameAtStructureLevel'] = true;
+        }
+
         $definition['name'] = $definition['shape'];
         if (isset($definition['shape'])) {
             unset($definition['shape']);

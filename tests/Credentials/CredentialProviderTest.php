@@ -8,11 +8,11 @@ use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialSources;
 use Aws\Credentials\EcsCredentialProvider;
 use Aws\Credentials\InstanceProfileProvider;
+use Aws\Exception\CredentialsException;
 use Aws\History;
 use Aws\LruArrayCache;
 use Aws\Result;
 use Aws\SSO\SSOClient;
-use Aws\Sts\Exception\StsException;
 use Aws\Sts\StsClient;
 use Aws\Token\SsoTokenProvider;
 use Aws\Test\UsesServiceTrait;
@@ -58,6 +58,7 @@ EOT;
         CredentialProvider::ENV_ARN,
         CredentialProvider::ENV_TOKEN_FILE,
         CredentialProvider::ENV_ROLE_SESSION_NAME,
+        CredentialProvider::ENV_REGION,
         'AWS_CONTAINER_CREDENTIALS_RELATIVE_URI',
         'AWS_CONTAINER_CREDENTIALS_FULL_URI',
         'AWS_CONTAINER_AUTHORIZATION_TOKEN',
@@ -66,6 +67,7 @@ EOT;
         'AWS_ROLE_ARN',
         'AWS_ROLE_SESSION_NAME',
         'AWS_SHARED_CREDENTIALS_FILE',
+        'AWS_CONFIG_FILE',
         'AWS_ACCESS_KEY_ID',
         'AWS_SECRET_ACCESS_KEY',
     ];
@@ -82,6 +84,7 @@ EOT;
         CredentialProvider::ENV_ARN,
         CredentialProvider::ENV_TOKEN_FILE,
         CredentialProvider::ENV_ROLE_SESSION_NAME,
+        CredentialProvider::ENV_REGION,
         'AWS_CONTAINER_CREDENTIALS_RELATIVE_URI',
         'AWS_CONTAINER_CREDENTIALS_FULL_URI',
         'AWS_CONTAINER_AUTHORIZATION_TOKEN',
@@ -90,6 +93,7 @@ EOT;
         'AWS_ROLE_ARN',
         'AWS_ROLE_SESSION_NAME',
         'AWS_SHARED_CREDENTIALS_FILE',
+        'AWS_CONFIG_FILE',
         'AWS_ACCESS_KEY_ID',
         'AWS_SECRET_ACCESS_KEY',
     ];
@@ -447,10 +451,18 @@ EOT;
     public function testCreatesFromProcessCredentialProvider(): void
     {
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [foo]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOT;
+        } else {
+            $ini = <<<EOT
+[foo]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/credentials', $ini);
 
         $creds = call_user_func(CredentialProvider::process('foo'))->wait();
@@ -462,10 +474,18 @@ EOT;
     {
         $testAccountId = 'foo';
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [foo]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1, "AccountId": "$testAccountId"}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1,"AccountId":"$testAccountId"}
 EOT;
+        } else {
+            $ini = <<<EOT
+[foo]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1,"AccountId":"$testAccountId"}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/credentials', $ini);
 
         $creds = call_user_func(CredentialProvider::process('foo'))->wait();
@@ -477,10 +497,18 @@ EOT;
     public function testCreatesFromProcessCredentialWithFilename(): void
     {
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [baz]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOT;
+        } else {
+            $ini = <<<EOT
+[baz]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/mycreds', $ini);
 
         $creds = call_user_func(CredentialProvider::process('baz', $awsDir . '/mycreds'))->wait();
@@ -491,10 +519,18 @@ EOT;
     public function testCreatesFromProcessCredentialWithFilenameParameterOverSharedFilename(): void
     {
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [baz]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOT;
+        } else {
+            $ini = <<<EOT
+[baz]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/mycreds', $ini);
         putenv("AWS_SHARED_CREDENTIALS_FILE={$awsDir}/badfilename");
 
@@ -508,10 +544,18 @@ EOT;
     public function testCreatesFromProcessCredentialWithSharedFilename(): void
     {
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [baz]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOT;
+        } else {
+            $ini = <<<EOT
+[baz]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/mycreds', $ini);
         putenv("AWS_SHARED_CREDENTIALS_FILE={$awsDir}/mycreds");
 
@@ -562,10 +606,19 @@ EOT;
         $awsDir = $this->createAwsHome();
         $expiration = new DateTimeResult("+1 hour");
         $expires = $expiration->getTimestamp();
-        $ini = <<<EOT
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [foo]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "SessionToken": "baz", "Expiration":"$expiration", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Expiration":"$expiration","Version":1}
 EOT;
+        } else {
+            $ini = <<<EOT
+[foo]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Expiration":"$expiration","Version":1}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/credentials', $ini);
 
         $creds = call_user_func(CredentialProvider::process('foo'))->wait();
@@ -597,10 +650,18 @@ EOT;
         $this->expectException(\Aws\Exception\CredentialsException::class);
 
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [default]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":2}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":2}
 EOT;
+        } else {
+            $ini = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":2}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/credentials', $ini);
 
         call_user_func(CredentialProvider::process())->wait();
@@ -612,10 +673,18 @@ EOT;
         $this->expectException(\Aws\Exception\CredentialsException::class);
 
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [default]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "SessionToken":"baz","Version":1, "Expiration":"1970-01-01T00:00:00.000Z"}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Version":1,"Expiration":"1970-01-01T00:00:00.000Z"}
 EOT;
+        } else {
+            $ini = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Version":1,"Expiration":"1970-01-01T00:00:00.000Z"}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/credentials', $ini);
 
         call_user_func(CredentialProvider::process())->wait();
@@ -627,10 +696,18 @@ EOT;
         $this->expectException(\Aws\Exception\CredentialsException::class);
 
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [default]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "SessionToken":"baz","Version":1, "Expiration":"invalid_date_format"}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Version":1,"Expiration":"invalid_date_format"}
 EOT;
+        } else {
+            $ini = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Version":1,"Expiration":"invalid_date_format"}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/credentials', $ini);
 
         call_user_func(CredentialProvider::process())->wait();
@@ -1558,7 +1635,6 @@ EOT;
         putenv('HOMEPATH=\\Michael\\Home');
         $ref = new \ReflectionClass(CredentialProvider::class);
         $meth = $ref->getMethod('getHomeDir');
-        $meth->setAccessible(true);
         $this->assertSame('C:\\Michael\\Home', $meth->invoke(null));
     }
 
@@ -1685,6 +1761,8 @@ EOT;
 
     public function testCachesCacheableInDefaultChain(): void
     {
+        $this->createAwsHome();
+        
         $cacheable = [
             'web_identity',
             'sso',
@@ -1716,6 +1794,8 @@ EOT;
 
     public function testCachesAsPartOfDefaultChain(): void
     {
+        $this->createAwsHome();
+        
         $instanceCredential = new Credentials(
             'instance_foo',
             'instance_bar',
@@ -1732,9 +1812,6 @@ EOT;
         $cache = new LruArrayCache;
         $cache->set('aws_cached_instance_credentials', $instanceCredential);
         $cache->set('aws_cached_ecs_credentials', $ecsCredential);
-
-        // Start with a deliberately bad HOME so shared files aren't found
-        putenv('HOME=/does/not/exist');
 
         $credentials = call_user_func(CredentialProvider::defaultProvider([
             'credentials' => $cache,
@@ -1804,14 +1881,20 @@ EOT;
     {
         $awsDir = $this->createTempDir('aws_') . '/.aws';
         mkdir($awsDir, 0777, true);
-
-        $credentialsIni = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $credentialsIni = <<<EOT
 [default]
-credential_process = echo '{"AccessKeyId":"credentialsFoo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"credentialsFoo","SecretAccessKey":"bar","Version":1}
 EOT;
+        } else {
+            $credentialsIni = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"credentialsFoo","SecretAccessKey":"bar","Version":1}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/credentials', $credentialsIni);
         putenv('HOME=' . dirname($awsDir));
-
         $provider = CredentialProvider::defaultProvider();
         $creds = $provider()->wait();
 
@@ -1822,11 +1905,19 @@ EOT;
     {
         $awsDir = $this->createTempDir('aws_') . '/.aws';
         mkdir($awsDir, 0777, true);
-
-        $configIni = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $configIni = <<<EOT
 [profile default]
-credential_process = echo '{"AccessKeyId":"configFoo","SecretAccessKey":"baz", "Version":1}'
+credential_process = echo {"AccessKeyId":"configFoo","SecretAccessKey":"baz","Version":1}
+
 EOT;
+        } else {
+            $configIni = <<<EOT
+[profile default]
+credential_process = echo '{"AccessKeyId":"configFoo","SecretAccessKey":"baz","Version":1}'
+
+EOT;
+        }
 
         file_put_contents($awsDir . '/config', $configIni);
         putenv('HOME=' . dirname($awsDir));
@@ -2197,10 +2288,19 @@ EOF
         putenv('HOME=' . $home);
 
         $profile = 'test-profile';
-        $configData = <<<EOF
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $configData = <<<EOF
 [$profile]
-credential_process= echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOF;
+        } else {
+            $configData = <<<EOF
+[$profile]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOF;
+        }
+
         $configPath = $awsDir . '/config';
         file_put_contents($configPath, $configData);
 
@@ -2335,5 +2435,526 @@ EOF;
             CredentialSources::PROFILE_SSO_LEGACY,
             $credentials->getSource()
         );
+    }
+
+    public function testLoginResolvesRegionFromConfig(): void
+    {
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage('Failed to load cached credentials');
+        
+        $awsDir = $this->createAwsHome();
+
+        $ini = <<<EOT
+[profile testProfile]
+login_session = arn:aws:iam::123456789012:user/TestUser
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+        
+        $provider = CredentialProvider::login(
+            'testProfile',
+            ['region' => 'us-west-2']
+        );
+        
+        $this->assertIsCallable($provider);
+
+        $provider()->wait();
+    }
+
+    public function testLoginResolvesRegionFromEnv(): void
+    {
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage('Failed to load cached credentials');
+        
+        $awsDir = $this->createAwsHome();
+
+        $ini = <<<EOT
+[profile testProfile]
+login_session = arn:aws:iam::123456789012:user/TestUser
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+        
+        putenv(CredentialProvider::ENV_REGION . '=eu-west-1');
+        
+        $provider = CredentialProvider::login('testProfile');
+        $this->assertIsCallable($provider);
+
+        $provider()->wait();
+    }
+
+    public function testLogintResolvesRegionFromProfile(): void
+    {
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage('Failed to load cached credentials');
+
+        $awsDir = $this->createAwsHome();
+        $ini = <<<EOT
+[profile testProfile]
+region = ap-south-1
+login_session = arn:aws:iam::123456789012:user/TestUser
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+
+        $provider = CredentialProvider::login('testProfile');
+        $this->assertIsCallable($provider);
+
+        $provider()->wait();
+    }
+
+    public function testLoginFailsWithMissingRegion(): void
+    {
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage('Unable to determine region');
+        
+        $awsDir = $this->createAwsHome();
+        
+        // Create a profile without region
+        $ini = <<<EOT
+[profile testProfile]
+login_session = arn:aws:iam::123456789012:user/TestUser
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+        
+        $provider = CredentialProvider::login('testProfile');
+
+        $provider()->wait();
+    }
+
+    public function testLoginUsesDefaultProfileWhenNotSpecified(): void
+    {
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage('default');
+        
+        $awsDir = $this->createAwsHome();
+
+        file_put_contents($awsDir . '/config', '');
+        
+        // Test with no profile argument - should use 'default'
+        $provider = CredentialProvider::login(
+            null,
+            ['region' => 'us-east-1']
+        );
+        
+        $this->assertIsCallable($provider);
+
+        $provider()->wait();
+    }
+
+    public function testLoginUsesProfileFromEnvWhenNotSpecified(): void
+    {
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage('envProfile');
+        
+        $awsDir = $this->createAwsHome();
+
+        file_put_contents($awsDir . '/config', '');
+        
+        putenv(CredentialProvider::ENV_PROFILE . '=envProfile');
+        
+        $provider = CredentialProvider::login(
+            null,
+            ['region' => 'us-east-1']
+        );
+        
+        $this->assertIsCallable($provider);
+
+        $provider()->wait();
+    }
+
+    public function testLoginHandlesClientCreationFailure(): void
+    {
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage('Unable to determine region');
+        
+        $awsDir = $this->createAwsHome();
+
+        $ini = <<<EOT
+[profile testProfile]
+login_session = arn:aws:iam::123456789012:user/TestUser
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+        
+        // Empty region should trigger "No region configured" error
+        $provider = CredentialProvider::login(
+            'testProfile',
+            ['region' => '']
+        );
+
+        $provider()->wait();
+    }
+
+    public function testLoginHandlesInvalidProfileName(): void
+    {
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage('nonExistentProfile');
+        
+        $awsDir = $this->createAwsHome();
+        
+        // Create empty config file
+        file_put_contents($awsDir . '/config', '');
+        
+        $provider = CredentialProvider::login(
+            'nonExistentProfile',
+            ['region' => 'us-east-1']
+        );
+
+        $provider()->wait();
+    }
+
+    public function testLoginSuccessfullyRetrievesCredentialsFromCache(): void
+    {
+        $awsDir = $this->createAwsHome();
+        
+        // Create config with login_session
+        $ini = <<<EOT
+[default]
+region = us-east-1
+login_session = arn:aws:iam::123456789012:user/TestUser
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+        
+        // Create cache directory and token file
+        $cacheDir = $awsDir . '/login/cache';
+        mkdir($cacheDir, 0777, true);
+        
+        $sessionHash = hash('sha256', trim('arn:aws:iam::123456789012:user/TestUser'));
+        $tokenFile = $cacheDir . '/' . $sessionHash . '.json';
+        
+        $expiration = (new DateTimeResult('+1 hour'))->format('Y-m-d\TH:i:s\Z');
+        $tokenData = json_encode([
+            'accessToken' => [
+                'accessKeyId' => 'testKey',
+                'secretAccessKey' => 'testSecret',
+                'sessionToken' => 'testToken',
+                'accountId' => '123456789012',
+                'expiresAt' => $expiration
+            ],
+            'tokenType' => 'aws_sigv4',
+            'refreshToken' => 'testRefresh',
+            'idToken' => 'testId',
+            'clientId' => 'arn:aws:signin:::devtools/same-device',
+            'dpopKey' => '-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIFDZHUzOG1Pzq+6F0mjMlOSp1syN9LRPBuHMoCFXTcXhoAoGCCqGSM49
+AwEHoUQDQgAE9qhj+KtcdHj1kVgwxWWWw++tqoh7H7UHs7oXh8jBbgF47rrYGC+t
+djiIaHK3dBvvdE7MGj5HsepzLm3Kj91bqA==
+-----END EC PRIVATE KEY-----'
+        ]);
+        
+        file_put_contents($tokenFile, $tokenData);
+        
+        $provider = CredentialProvider::login('default', ['region' => 'us-west-2']);
+        $credentials = $provider()->wait();
+        
+        $this->assertEquals(CredentialSources::PROFILE_LOGIN, $credentials->getSource());
+        $this->assertEquals('testKey', $credentials->getAccessKeyId());
+        $this->assertEquals('testSecret', $credentials->getSecretKey());
+        $this->assertEquals('testToken', $credentials->getSecurityToken());
+        $this->assertEquals('123456789012', $credentials->getAccountId());
+    }
+
+    public function testLoginAddedToDefaultChain(): void
+    {
+        $awsDir = $this->createAwsHome();
+        
+        // Create config with login_session
+        $ini = <<<EOT
+[default]
+region = us-east-1
+login_session = arn:aws:iam::123456789012:user/TestUser
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+        
+        // Create cache directory and token file
+        $cacheDir = $awsDir . '/login/cache';
+        mkdir($cacheDir, 0777, true);
+        
+        $sessionHash = hash('sha256', trim('arn:aws:iam::123456789012:user/TestUser'));
+        $tokenFile = $cacheDir . '/' . $sessionHash . '.json';
+        
+        $expiration = (new DateTimeResult('+1 hour'))->format('Y-m-d\TH:i:s\Z');
+        $tokenData = json_encode([
+            'accessToken' => [
+                'accessKeyId' => 'loginKey',
+                'secretAccessKey' => 'loginSecret',
+                'sessionToken' => 'loginToken',
+                'accountId' => '123456789012',
+                'expiresAt' => $expiration
+            ],
+            'tokenType' => 'aws_sigv4',
+            'refreshToken' => 'testRefresh',
+            'idToken' => 'testId',
+            'clientId' => 'arn:aws:signin:::devtools/same-device',
+            'dpopKey' => '-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIFDZHUzOG1Pzq+6F0mjMlOSp1syN9LRPBuHMoCFXTcXhoAoGCCqGSM49
+AwEHoUQDQgAE9qhj+KtcdHj1kVgwxWWWw++tqoh7H7UHs7oXh8jBbgF47rrYGC+t
+djiIaHK3dBvvdE7MGj5HsepzLm3Kj91bqA==
+-----END EC PRIVATE KEY-----'
+        ]);
+        
+        file_put_contents($tokenFile, $tokenData);
+        
+        $creds = call_user_func(CredentialProvider::defaultProvider())->wait();
+
+        $this->assertSame('loginKey', $creds->getAccessKeyId());
+        $this->assertSame('loginSecret', $creds->getSecretKey());
+        $this->assertSame('loginToken', $creds->getSecurityToken());
+    }
+
+    public function testLoginUsedFromCacheInDefaultChain(): void
+    {
+        $this->createAwsHome();
+        
+        $cache = new LruArrayCache();
+        $cachedCreds = new Credentials(
+            'cachedLoginKey',
+            'cachedLoginSecret',
+            'cachedLoginToken',
+            PHP_INT_MAX
+        );
+        $cache->set('aws_cached_login_credentials', $cachedCreds);
+        
+        $credentials = call_user_func(CredentialProvider::defaultProvider([
+            'credentials' => $cache,
+        ]))->wait();
+        
+        $this->assertSame('cachedLoginKey', $credentials->getAccessKeyId());
+        $this->assertSame('cachedLoginSecret', $credentials->getSecretKey());
+        $this->assertSame('cachedLoginToken', $credentials->getSecurityToken());
+    }
+
+    /**
+     * @dataProvider loginInvalidCacheProvider
+     */
+    public function testLoginWithInvalidCache(
+        string $cacheContent,
+        string $expectedMessage,
+        string $testDescription
+    ): void {
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage($expectedMessage);
+        
+        $awsDir = $this->createAwsHome();
+        
+        $ini = <<<EOT
+[default]
+region = us-east-1
+login_session = arn:aws:iam::123456789012:user/TestUser
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+        
+        // Create cache directory and token file
+        $cacheDir = $awsDir . '/login/cache';
+        mkdir($cacheDir, 0777, true);
+        
+        $sessionHash = hash('sha256', trim('arn:aws:iam::123456789012:user/TestUser'));
+        $tokenFile = $cacheDir . '/' . $sessionHash . '.json';
+        
+        file_put_contents($tokenFile, $cacheContent);
+        
+        $provider = CredentialProvider::login('default');
+        $provider()->wait();
+    }
+
+    public function loginInvalidCacheProvider(): array
+    {
+        $validDpopKey = '-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIFDZHUzOG1Pzq+6F0mjMlOSp1syN9LRPBuHMoCFXTcXhoAoGCCqGSM49
+AwEHoUQDQgAE9qhj+KtcdHj1kVgwxWWWw++tqoh7H7UHs7oXh8jBbgF47rrYGC+t
+djiIaHK3dBvvdE7MGj5HsepzLm3Kj91bqA==
+-----END EC PRIVATE KEY-----';
+
+        return [
+            'invalid JSON' => [
+                'not valid json {',
+                'Invalid JSON',
+                'Cache file contains invalid JSON'
+            ],
+            'missing refreshToken' => [
+                json_encode([
+                    'accessToken' => [
+                        'accessKeyId' => 'testKey',
+                        'secretAccessKey' => 'testSecret',
+                        'sessionToken' => 'testToken',
+                        'accountId' => '123456789012',
+                        'expiresAt' => '2500-01-01T00:00:00Z'
+                    ],
+                    'tokenType' => 'aws_sigv4',
+                    // Missing refreshToken
+                    'idToken' => 'testId',
+                    'clientId' => 'arn:aws:signin:::devtools/same-device',
+                    'dpopKey' => $validDpopKey
+                ]),
+                'Missing required keys',
+                'Cache file missing required refreshToken key'
+            ],
+            'missing accessKeyId' => [
+                json_encode([
+                    'accessToken' => [
+                        // Missing accessKeyId
+                        'secretAccessKey' => 'testSecret',
+                        'sessionToken' => 'testToken',
+                        'accountId' => '123456789012',
+                        'expiresAt' => '2500-01-01T00:00:00Z'
+                    ],
+                    'tokenType' => 'aws_sigv4',
+                    'refreshToken' => 'testRefresh',
+                    'idToken' => 'testId',
+                    'clientId' => 'arn:aws:signin:::devtools/same-device',
+                    'dpopKey' => $validDpopKey
+                ]),
+                'Missing required keys',
+                'Cache file missing required accessKeyId in accessToken'
+            ],
+            'invalid DPoP key' => [
+                json_encode([
+                    'accessToken' => [
+                        'accessKeyId' => 'testKey',
+                        'secretAccessKey' => 'testSecret',
+                        'sessionToken' => 'testToken',
+                        'accountId' => '123456789012',
+                        'expiresAt' => '2500-01-01T00:00:00Z'
+                    ],
+                    'tokenType' => 'aws_sigv4',
+                    'refreshToken' => 'testRefresh',
+                    'idToken' => 'testId',
+                    'clientId' => 'arn:aws:signin:::devtools/same-device',
+                    'dpopKey' => 'invalid key data'
+                ]),
+                'Failed to load DPoP private key',
+                'Cache file contains invalid DPoP private key'
+            ],
+        ];
+    }
+
+    public function testLoginWithProfilePrefix(): void
+    {
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage('Failed to load cached credentials');
+        
+        $awsDir = $this->createAwsHome();
+        
+        // Use "profile myprofile" prefix format
+        $ini = <<<EOT
+[profile myprofile]
+region = us-east-1
+login_session = arn:aws:iam::123456789012:user/TestUser
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+        
+        $provider = CredentialProvider::login('myprofile');
+        $this->assertIsCallable($provider);
+        
+        $provider()->wait();
+    }
+
+    public function testLoginMemoizes(): void
+    {
+        $awsDir = $this->createAwsHome();
+        
+        $ini = <<<EOT
+[default]
+region = us-east-1
+login_session = arn:aws:iam::123456789012:user/TestUser
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+        
+        // Create cache directory and token file
+        $cacheDir = $awsDir . '/login/cache';
+        mkdir($cacheDir, 0777, true);
+        
+        $sessionHash = hash('sha256', trim('arn:aws:iam::123456789012:user/TestUser'));
+        $tokenFile = $cacheDir . '/' . $sessionHash . '.json';
+        
+        $expiration = (new DateTimeResult('+1 hour'))->format('Y-m-d\TH:i:s\Z');
+        $tokenData = json_encode([
+            'accessToken' => [
+                'accessKeyId' => 'testKey',
+                'secretAccessKey' => 'testSecret',
+                'sessionToken' => 'testToken',
+                'accountId' => '123456789012',
+                'expiresAt' => $expiration
+            ],
+            'tokenType' => 'aws_sigv4',
+            'refreshToken' => 'testRefresh',
+            'idToken' => 'testId',
+            'clientId' => 'arn:aws:signin:::devtools/same-device',
+            'dpopKey' => '-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIFDZHUzOG1Pzq+6F0mjMlOSp1syN9LRPBuHMoCFXTcXhoAoGCCqGSM49
+AwEHoUQDQgAE9qhj+KtcdHj1kVgwxWWWw++tqoh7H7UHs7oXh8jBbgF47rrYGC+t
+djiIaHK3dBvvdE7MGj5HsepzLm3Kj91bqA==
+-----END EC PRIVATE KEY-----'
+        ]);
+        
+        file_put_contents($tokenFile, $tokenData);
+        
+        $called = 0;
+        $baseProvider = function () use (&$called) {
+            $called++;
+            return call_user_func(CredentialProvider::login('default',));
+        };
+        
+        $memoized = CredentialProvider::memoize($baseProvider);
+        
+        $creds1 = $memoized()->wait();
+        $creds2 = $memoized()->wait();
+        
+        $this->assertSame(1, $called);
+        $this->assertSame($creds1->getAccessKeyId(), $creds2->getAccessKeyId());
+        $this->assertSame($creds1->getSecretKey(), $creds2->getSecretKey());
+    }
+
+    public function testLoginMemoizeCleansUpOnError(): void
+    {
+        $awsDir = $this->createAwsHome();
+        
+        $ini = <<<EOT
+[default]
+region = us-east-1
+login_session = arn:aws:iam::123456789012:user/TestUser
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+        // No cache file, so it will fail
+        
+        $called = 0;
+        $baseProvider = function () use (&$called) {
+            $called++;
+            return call_user_func(CredentialProvider::login('default'));
+        };
+        
+        $memoized = CredentialProvider::memoize($baseProvider);
+        
+        $memoized()->wait(false);
+        $memoized()->wait(false);
+        
+        $this->assertSame(2, $called);
+    }
+
+    public function testLoginWithMissingConfigFile(): void
+    {
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage('Unable to load configuration file');
+        
+        $awsDir = $this->createAwsHome();
+        // Don't create  config file
+        
+        $provider = CredentialProvider::login('default', ['region' => 'us-west-2']);
+        $provider()->wait();
+    }
+
+    public function testLoginWithEmptyLoginSession(): void
+    {
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage('login_session');
+        
+        $awsDir = $this->createAwsHome();
+        
+        $ini = <<<EOT
+[default]
+region = us-east-1
+login_session = 
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+        
+        $provider = CredentialProvider::login('default');
+        $provider()->wait();
     }
 }

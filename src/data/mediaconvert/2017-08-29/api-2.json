@@ -1300,7 +1300,8 @@
         "CODING_MODE_1_0",
         "CODING_MODE_1_1",
         "CODING_MODE_2_0",
-        "CODING_MODE_5_1"
+        "CODING_MODE_5_1",
+        "CODING_MODE_AUTO"
       ]
     },
     "AacLoudnessMeasurementMode": {
@@ -1412,7 +1413,8 @@
         "CODING_MODE_1_0",
         "CODING_MODE_1_1",
         "CODING_MODE_2_0",
-        "CODING_MODE_3_2_LFE"
+        "CODING_MODE_3_2_LFE",
+        "CODING_MODE_AUTO"
       ]
     },
     "Ac3DynamicRangeCompressionLine": {
@@ -1583,7 +1585,7 @@
           "locationName": "bitDepth"
         },
         "Channels": {
-          "shape": "__integerMin1Max64",
+          "shape": "__integerMin0Max64",
           "locationName": "channels"
         },
         "SampleRate": {
@@ -2837,7 +2839,8 @@
         "TELETEXT",
         "NULL_SOURCE",
         "IMSC",
-        "WEBVTT"
+        "WEBVTT",
+        "TT_3GPP"
       ]
     },
     "CaptionSourceUpconvertSTLToTeletext": {
@@ -4357,6 +4360,10 @@
     "DolbyVision": {
       "type": "structure",
       "members": {
+        "Compatibility": {
+          "shape": "DolbyVisionCompatibility",
+          "locationName": "compatibility"
+        },
         "L6Metadata": {
           "shape": "DolbyVisionLevel6Metadata",
           "locationName": "l6Metadata"
@@ -4374,6 +4381,13 @@
           "locationName": "profile"
         }
       }
+    },
+    "DolbyVisionCompatibility": {
+      "type": "string",
+      "enum": [
+        "DUPLICATE_STREAM",
+        "SUPPLEMENTAL_CODECS"
+      ]
     },
     "DolbyVisionLevel6Metadata": {
       "type": "structure",
@@ -4913,7 +4927,8 @@
       "enum": [
         "CODING_MODE_1_0",
         "CODING_MODE_2_0",
-        "CODING_MODE_3_2"
+        "CODING_MODE_3_2",
+        "CODING_MODE_AUTO"
       ]
     },
     "Eac3DcFilter": {
@@ -5316,7 +5331,7 @@
           "locationName": "bitDepth"
         },
         "Channels": {
-          "shape": "__integerMin1Max8",
+          "shape": "__integerMin0Max8",
           "locationName": "channels"
         },
         "SampleRate": {
@@ -5366,7 +5381,8 @@
         "quicktime",
         "matroska",
         "webm",
-        "mxf"
+        "mxf",
+        "wave"
       ]
     },
     "FrameCaptureSettings": {
@@ -6138,6 +6154,20 @@
         "FOLLOW_BOTTOM_FIELD"
       ]
     },
+    "H265MvOverPictureBoundaries": {
+      "type": "string",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "H265MvTemporalPredictor": {
+      "type": "string",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "H265ParControl": {
       "type": "string",
       "enum": [
@@ -6300,6 +6330,14 @@
           "shape": "__integerMin0Max30",
           "locationName": "minIInterval"
         },
+        "MvOverPictureBoundaries": {
+          "shape": "H265MvOverPictureBoundaries",
+          "locationName": "mvOverPictureBoundaries"
+        },
+        "MvTemporalPredictor": {
+          "shape": "H265MvTemporalPredictor",
+          "locationName": "mvTemporalPredictor"
+        },
         "NumberBFramesBetweenReferenceFrames": {
           "shape": "__integerMin0Max7",
           "locationName": "numberBFramesBetweenReferenceFrames"
@@ -6372,9 +6410,25 @@
           "shape": "H265TemporalIds",
           "locationName": "temporalIds"
         },
+        "TileHeight": {
+          "shape": "__integerMin64Max2160",
+          "locationName": "tileHeight"
+        },
+        "TilePadding": {
+          "shape": "H265TilePadding",
+          "locationName": "tilePadding"
+        },
+        "TileWidth": {
+          "shape": "__integerMin256Max3840",
+          "locationName": "tileWidth"
+        },
         "Tiles": {
           "shape": "H265Tiles",
           "locationName": "tiles"
+        },
+        "TreeBlockSize": {
+          "shape": "H265TreeBlockSize",
+          "locationName": "treeBlockSize"
         },
         "UnregisteredSeiTimecode": {
           "shape": "H265UnregisteredSeiTimecode",
@@ -6422,11 +6476,25 @@
         "ENABLED"
       ]
     },
+    "H265TilePadding": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "PADDED"
+      ]
+    },
     "H265Tiles": {
       "type": "string",
       "enum": [
         "DISABLED",
         "ENABLED"
+      ]
+    },
+    "H265TreeBlockSize": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "TREE_SIZE_32X32"
       ]
     },
     "H265UnregisteredSeiTimecode": {
@@ -7414,6 +7482,10 @@
         "Height": {
           "shape": "__integerMin32Max8192",
           "locationName": "height"
+        },
+        "ImageInput": {
+          "shape": "__stringMin14PatternS3BmpBMPPngPNGTgaTGAHttpsBmpBMPPngPNGTgaTGA",
+          "locationName": "imageInput"
         },
         "SampleRate": {
           "shape": "__integerMin32000Max48000",
@@ -9016,7 +9088,7 @@
           "locationName": "bitrate"
         },
         "Channels": {
-          "shape": "__integerMin1Max2",
+          "shape": "__integerMin0Max2",
           "locationName": "channels"
         },
         "SampleRate": {
@@ -9040,7 +9112,7 @@
           "locationName": "bitrate"
         },
         "Channels": {
-          "shape": "__integerMin1Max2",
+          "shape": "__integerMin0Max2",
           "locationName": "channels"
         },
         "RateControlMode": {
@@ -9653,11 +9725,22 @@
           "shape": "MxfProfile",
           "locationName": "profile"
         },
+        "UncompressedAudioWrapping": {
+          "shape": "MxfUncompressedAudioWrapping",
+          "locationName": "uncompressedAudioWrapping"
+        },
         "XavcProfileSettings": {
           "shape": "MxfXavcProfileSettings",
           "locationName": "xavcProfileSettings"
         }
       }
+    },
+    "MxfUncompressedAudioWrapping": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "AES3"
+      ]
     },
     "MxfXavcDurationMode": {
       "type": "string",
@@ -9906,7 +9989,7 @@
           "locationName": "bitrate"
         },
         "Channels": {
-          "shape": "__integerMin1Max2",
+          "shape": "__integerMin0Max2",
           "locationName": "channels"
         },
         "SampleRate": {
@@ -11896,6 +11979,10 @@
     "VideoOverlayInput": {
       "type": "structure",
       "members": {
+        "AudioSelectors": {
+          "shape": "__mapOfAudioSelector",
+          "locationName": "audioSelectors"
+        },
         "FileInput": {
           "shape": "__stringPatternS3Https",
           "locationName": "fileInput"
@@ -12147,7 +12234,7 @@
       "type": "structure",
       "members": {
         "Channels": {
-          "shape": "__integerMin1Max2",
+          "shape": "__integerMin0Max2",
           "locationName": "channels"
         },
         "SampleRate": {
@@ -12389,7 +12476,7 @@
           "locationName": "bitDepth"
         },
         "Channels": {
-          "shape": "__integerMin1Max64",
+          "shape": "__integerMin0Max64",
           "locationName": "channels"
         },
         "Format": {
@@ -12881,6 +12968,11 @@
       "min": 0,
       "max": 16
     },
+    "__integerMin0Max2": {
+      "type": "integer",
+      "min": 0,
+      "max": 2
+    },
     "__integerMin0Max2147483647": {
       "type": "integer",
       "min": 0,
@@ -12945,6 +13037,11 @@
       "type": "integer",
       "min": 0,
       "max": 50000
+    },
+    "__integerMin0Max64": {
+      "type": "integer",
+      "min": 0,
+      "max": 64
     },
     "__integerMin0Max65534": {
       "type": "integer",
@@ -13076,11 +13173,6 @@
       "min": 1,
       "max": 17895697
     },
-    "__integerMin1Max2": {
-      "type": "integer",
-      "min": 1,
-      "max": 2
-    },
     "__integerMin1Max20": {
       "type": "integer",
       "min": 1,
@@ -13141,11 +13233,6 @@
       "min": 1,
       "max": 64
     },
-    "__integerMin1Max8": {
-      "type": "integer",
-      "min": 1,
-      "max": 8
-    },
     "__integerMin1Max86400000": {
       "type": "integer",
       "min": 1,
@@ -13170,6 +13257,11 @@
       "type": "integer",
       "min": 24,
       "max": 60000
+    },
+    "__integerMin256Max3840": {
+      "type": "integer",
+      "min": 256,
+      "max": 3840
     },
     "__integerMin25Max10000": {
       "type": "integer",
@@ -13250,6 +13342,11 @@
       "type": "integer",
       "min": 64000,
       "max": 640000
+    },
+    "__integerMin64Max2160": {
+      "type": "integer",
+      "min": 64,
+      "max": 2160
     },
     "__integerMin6Max16": {
       "type": "integer",

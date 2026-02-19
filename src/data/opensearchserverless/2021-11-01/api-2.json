@@ -26,7 +26,22 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "BatchGetCollectionGroup":{
+      "name":"BatchGetCollectionGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchGetCollectionGroupRequest"},
+      "output":{"shape":"BatchGetCollectionGroupResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
     },
     "BatchGetEffectiveLifecyclePolicy":{
       "name":"BatchGetEffectiveLifecyclePolicy",
@@ -39,7 +54,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "BatchGetLifecyclePolicy":{
       "name":"BatchGetLifecyclePolicy",
@@ -52,7 +68,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "BatchGetVpcEndpoint":{
       "name":"BatchGetVpcEndpoint",
@@ -65,7 +82,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "CreateAccessPolicy":{
       "name":"CreateAccessPolicy",
@@ -94,6 +112,22 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"OcuLimitExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
+    "CreateCollectionGroup":{
+      "name":"CreateCollectionGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateCollectionGroupRequest"},
+      "output":{"shape":"CreateCollectionGroupResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"}
@@ -212,6 +246,22 @@
       ],
       "idempotent":true
     },
+    "DeleteCollectionGroup":{
+      "name":"DeleteCollectionGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteCollectionGroupRequest"},
+      "output":{"shape":"DeleteCollectionGroupResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "DeleteIndex":{
       "name":"DeleteIndex",
       "http":{
@@ -303,7 +353,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAccountSettings":{
       "name":"GetAccountSettings",
@@ -316,7 +367,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetIndex":{
       "name":"GetIndex",
@@ -330,7 +382,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPoliciesStats":{
       "name":"GetPoliciesStats",
@@ -342,7 +395,8 @@
       "output":{"shape":"GetPoliciesStatsResponse"},
       "errors":[
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetSecurityConfig":{
       "name":"GetSecurityConfig",
@@ -356,7 +410,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetSecurityPolicy":{
       "name":"GetSecurityPolicy",
@@ -370,7 +425,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAccessPolicies":{
       "name":"ListAccessPolicies",
@@ -383,7 +439,22 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "ListCollectionGroups":{
+      "name":"ListCollectionGroups",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListCollectionGroupsRequest"},
+      "output":{"shape":"ListCollectionGroupsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
     },
     "ListCollections":{
       "name":"ListCollections",
@@ -396,7 +467,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListLifecyclePolicies":{
       "name":"ListLifecyclePolicies",
@@ -409,7 +481,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSecurityConfigs":{
       "name":"ListSecurityConfigs",
@@ -422,7 +495,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSecurityPolicies":{
       "name":"ListSecurityPolicies",
@@ -435,7 +509,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -462,7 +537,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -521,7 +597,8 @@
       "output":{"shape":"UpdateAccountSettingsResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "UpdateCollection":{
@@ -536,6 +613,22 @@
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateCollectionGroup":{
+      "name":"UpdateCollectionGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateCollectionGroupRequest"},
+      "output":{"shape":"UpdateCollectionGroupResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
     },
@@ -669,6 +762,20 @@
       "max":1011,
       "min":1
     },
+    "BatchGetCollectionGroupRequest":{
+      "type":"structure",
+      "members":{
+        "ids":{"shape":"CollectionGroupIds"},
+        "names":{"shape":"CollectionGroupNames"}
+      }
+    },
+    "BatchGetCollectionGroupResponse":{
+      "type":"structure",
+      "members":{
+        "collectionGroupDetails":{"shape":"CollectionGroupDetails"},
+        "collectionGroupErrorDetails":{"shape":"CollectionGroupErrorDetails"}
+      }
+    },
     "BatchGetCollectionRequest":{
       "type":"structure",
       "members":{
@@ -752,13 +859,15 @@
         "arn":{"shape":"String"},
         "kmsKeyArn":{"shape":"String"},
         "standbyReplicas":{"shape":"StandbyReplicas"},
+        "vectorOptions":{"shape":"VectorOptions"},
         "createdDate":{"shape":"Long"},
         "lastModifiedDate":{"shape":"Long"},
         "collectionEndpoint":{"shape":"String"},
         "dashboardEndpoint":{"shape":"String"},
         "fipsEndpoints":{"shape":"FipsEndpoints"},
         "failureCode":{"shape":"String"},
-        "failureMessage":{"shape":"String"}
+        "failureMessage":{"shape":"String"},
+        "collectionGroupName":{"shape":"CollectionGroupName"}
       }
     },
     "CollectionDetails":{
@@ -782,7 +891,97 @@
       "type":"structure",
       "members":{
         "name":{"shape":"CollectionName"},
-        "status":{"shape":"CollectionStatus"}
+        "status":{"shape":"CollectionStatus"},
+        "collectionGroupName":{"shape":"CollectionGroupName"}
+      }
+    },
+    "CollectionGroupCapacityLimits":{
+      "type":"structure",
+      "members":{
+        "maxIndexingCapacityInOCU":{"shape":"CollectionGroupIndexingCapacityValue"},
+        "maxSearchCapacityInOCU":{"shape":"CollectionGroupSearchCapacityValue"},
+        "minIndexingCapacityInOCU":{"shape":"CollectionGroupIndexingCapacityValue"},
+        "minSearchCapacityInOCU":{"shape":"CollectionGroupSearchCapacityValue"}
+      }
+    },
+    "CollectionGroupDetail":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"CollectionGroupId"},
+        "arn":{"shape":"String"},
+        "name":{"shape":"CollectionGroupName"},
+        "standbyReplicas":{"shape":"StandbyReplicas"},
+        "description":{"shape":"String"},
+        "tags":{"shape":"Tags"},
+        "createdDate":{"shape":"Long"},
+        "capacityLimits":{"shape":"CollectionGroupCapacityLimits"},
+        "numberOfCollections":{"shape":"Integer"}
+      }
+    },
+    "CollectionGroupDetails":{
+      "type":"list",
+      "member":{"shape":"CollectionGroupDetail"}
+    },
+    "CollectionGroupErrorDetail":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"CollectionGroupId"},
+        "name":{"shape":"CollectionGroupName"},
+        "errorMessage":{"shape":"String"},
+        "errorCode":{"shape":"String"}
+      }
+    },
+    "CollectionGroupErrorDetails":{
+      "type":"list",
+      "member":{"shape":"CollectionGroupErrorDetail"}
+    },
+    "CollectionGroupId":{
+      "type":"string",
+      "max":40,
+      "min":3,
+      "pattern":"[a-z0-9]{3,40}"
+    },
+    "CollectionGroupIds":{
+      "type":"list",
+      "member":{"shape":"CollectionGroupId"},
+      "max":100,
+      "min":1
+    },
+    "CollectionGroupIndexingCapacityValue":{
+      "type":"float",
+      "box":true,
+      "min":1
+    },
+    "CollectionGroupName":{
+      "type":"string",
+      "max":32,
+      "min":3,
+      "pattern":"[a-z][a-z0-9-]+"
+    },
+    "CollectionGroupNames":{
+      "type":"list",
+      "member":{"shape":"CollectionGroupName"},
+      "max":100,
+      "min":1
+    },
+    "CollectionGroupSearchCapacityValue":{
+      "type":"float",
+      "box":true,
+      "min":1
+    },
+    "CollectionGroupSummaries":{
+      "type":"list",
+      "member":{"shape":"CollectionGroupSummary"}
+    },
+    "CollectionGroupSummary":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"CollectionGroupId"},
+        "arn":{"shape":"String"},
+        "name":{"shape":"CollectionGroupName"},
+        "numberOfCollections":{"shape":"Integer"},
+        "createdDate":{"shape":"Long"},
+        "capacityLimits":{"shape":"CollectionGroupCapacityLimits"}
       }
     },
     "CollectionId":{
@@ -828,7 +1027,9 @@
         "id":{"shape":"CollectionId"},
         "name":{"shape":"CollectionName"},
         "status":{"shape":"CollectionStatus"},
-        "arn":{"shape":"String"}
+        "arn":{"shape":"String"},
+        "kmsKeyArn":{"shape":"String"},
+        "collectionGroupName":{"shape":"CollectionGroupName"}
       }
     },
     "CollectionType":{
@@ -892,8 +1093,52 @@
         "arn":{"shape":"String"},
         "kmsKeyArn":{"shape":"String"},
         "standbyReplicas":{"shape":"StandbyReplicas"},
+        "vectorOptions":{"shape":"VectorOptions"},
         "createdDate":{"shape":"Long"},
-        "lastModifiedDate":{"shape":"Long"}
+        "lastModifiedDate":{"shape":"Long"},
+        "collectionGroupName":{"shape":"CollectionGroupName"}
+      }
+    },
+    "CreateCollectionGroupDetail":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"CollectionGroupId"},
+        "arn":{"shape":"String"},
+        "name":{"shape":"CollectionGroupName"},
+        "standbyReplicas":{"shape":"StandbyReplicas"},
+        "description":{"shape":"String"},
+        "tags":{"shape":"Tags"},
+        "createdDate":{"shape":"Long"},
+        "capacityLimits":{"shape":"CollectionGroupCapacityLimits"}
+      }
+    },
+    "CreateCollectionGroupRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "standbyReplicas"
+      ],
+      "members":{
+        "name":{"shape":"CollectionGroupName"},
+        "standbyReplicas":{"shape":"StandbyReplicas"},
+        "description":{"shape":"CreateCollectionGroupRequestDescriptionString"},
+        "tags":{"shape":"Tags"},
+        "capacityLimits":{"shape":"CollectionGroupCapacityLimits"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateCollectionGroupRequestDescriptionString":{
+      "type":"string",
+      "max":1000,
+      "min":0
+    },
+    "CreateCollectionGroupResponse":{
+      "type":"structure",
+      "members":{
+        "createCollectionGroupDetail":{"shape":"CreateCollectionGroupDetail"}
       }
     },
     "CreateCollectionRequest":{
@@ -905,6 +1150,9 @@
         "description":{"shape":"CreateCollectionRequestDescriptionString"},
         "tags":{"shape":"Tags"},
         "standbyReplicas":{"shape":"StandbyReplicas"},
+        "vectorOptions":{"shape":"VectorOptions"},
+        "collectionGroupName":{"shape":"CollectionGroupName"},
+        "encryptionConfig":{"shape":"EncryptionConfig"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -1079,6 +1327,21 @@
         "status":{"shape":"CollectionStatus"}
       }
     },
+    "DeleteCollectionGroupRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{"shape":"CollectionGroupId"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "DeleteCollectionGroupResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteCollectionRequest":{
       "type":"structure",
       "required":["id"],
@@ -1221,6 +1484,19 @@
     "EffectiveLifecyclePolicyErrorDetails":{
       "type":"list",
       "member":{"shape":"EffectiveLifecyclePolicyErrorDetail"}
+    },
+    "EncryptionConfig":{
+      "type":"structure",
+      "members":{
+        "aWSOwnedKey":{"shape":"Boolean"},
+        "kmsKeyArn":{"shape":"EncryptionConfigKmsKeyArnString"}
+      }
+    },
+    "EncryptionConfigKmsKeyArnString":{
+      "type":"string",
+      "max":100,
+      "min":10,
+      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):kms:[a-z0-9-]+:[0-9]{12}:key/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
     },
     "FipsEndpoints":{
       "type":"structure",
@@ -1373,6 +1649,10 @@
       "box":true,
       "min":2
     },
+    "Integer":{
+      "type":"integer",
+      "box":true
+    },
     "InternalServerException":{
       "type":"structure",
       "members":{
@@ -1496,6 +1776,26 @@
       "type":"structure",
       "members":{
         "accessPolicySummaries":{"shape":"AccessPolicySummaries"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListCollectionGroupsRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"ListCollectionGroupsRequestMaxResultsInteger"}
+      }
+    },
+    "ListCollectionGroupsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListCollectionGroupsResponse":{
+      "type":"structure",
+      "members":{
+        "collectionGroupSummaries":{"shape":"CollectionGroupSummaries"},
         "nextToken":{"shape":"String"}
       }
     },
@@ -1808,6 +2108,14 @@
         "network"
       ]
     },
+    "ServerlessVectorAccelerationStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED",
+        "ALLOWED"
+      ]
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
@@ -1953,6 +2261,42 @@
         "arn":{"shape":"String"},
         "createdDate":{"shape":"Long"},
         "lastModifiedDate":{"shape":"Long"}
+      }
+    },
+    "UpdateCollectionGroupDetail":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"CollectionGroupId"},
+        "arn":{"shape":"String"},
+        "name":{"shape":"CollectionGroupName"},
+        "description":{"shape":"String"},
+        "capacityLimits":{"shape":"CollectionGroupCapacityLimits"},
+        "createdDate":{"shape":"Long"},
+        "lastModifiedDate":{"shape":"Long"}
+      }
+    },
+    "UpdateCollectionGroupRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{"shape":"CollectionGroupId"},
+        "description":{"shape":"UpdateCollectionGroupRequestDescriptionString"},
+        "capacityLimits":{"shape":"CollectionGroupCapacityLimits"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateCollectionGroupRequestDescriptionString":{
+      "type":"string",
+      "max":1000,
+      "min":0
+    },
+    "UpdateCollectionGroupResponse":{
+      "type":"structure",
+      "members":{
+        "updateCollectionGroupDetail":{"shape":"UpdateCollectionGroupDetail"}
       }
     },
     "UpdateCollectionRequest":{
@@ -2114,6 +2458,13 @@
         "message":{"shape":"String"}
       },
       "exception":true
+    },
+    "VectorOptions":{
+      "type":"structure",
+      "required":["ServerlessVectorAcceleration"],
+      "members":{
+        "ServerlessVectorAcceleration":{"shape":"ServerlessVectorAccelerationStatus"}
+      }
     },
     "VpcEndpointDetail":{
       "type":"structure",

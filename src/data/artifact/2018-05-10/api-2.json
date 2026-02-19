@@ -30,7 +30,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetReport":{
       "name":"GetReport",
@@ -49,7 +50,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetReportMetadata":{
       "name":"GetReportMetadata",
@@ -67,7 +69,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTermForReport":{
       "name":"GetTermForReport",
@@ -86,7 +89,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCustomerAgreements":{
       "name":"ListCustomerAgreements",
@@ -102,7 +106,27 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "ListReportVersions":{
+      "name":"ListReportVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/report/listVersions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListReportVersionsRequest"},
+      "output":{"shape":"ListReportVersionsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "readonly":true
     },
     "ListReports":{
       "name":"ListReports",
@@ -120,7 +144,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutAccountSettings":{
       "name":"PutAccountSettings",
@@ -237,8 +262,7 @@
     },
     "GetAccountSettingsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetAccountSettingsResponse":{
       "type":"structure",
@@ -371,6 +395,35 @@
       "required":["customerAgreements"],
       "members":{
         "customerAgreements":{"shape":"CustomerAgreementList"},
+        "nextToken":{"shape":"NextTokenAttribute"}
+      }
+    },
+    "ListReportVersionsRequest":{
+      "type":"structure",
+      "required":["reportId"],
+      "members":{
+        "reportId":{
+          "shape":"ReportId",
+          "location":"querystring",
+          "locationName":"reportId"
+        },
+        "maxResults":{
+          "shape":"MaxResultsAttribute",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextTokenAttribute",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListReportVersionsResponse":{
+      "type":"structure",
+      "required":["reports"],
+      "members":{
+        "reports":{"shape":"ReportsList"},
         "nextToken":{"shape":"NextTokenAttribute"}
       }
     },

@@ -232,6 +232,42 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "RebootDbCluster":{
+      "name":"RebootDbCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RebootDbClusterInput"},
+      "output":{"shape":"RebootDbClusterOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "RebootDbInstance":{
+      "name":"RebootDbInstance",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RebootDbInstanceInput"},
+      "output":{"shape":"RebootDbInstanceOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -338,7 +374,11 @@
         "AVAILABLE",
         "FAILED",
         "DELETED",
-        "MAINTENANCE"
+        "MAINTENANCE",
+        "UPDATING_INSTANCE_TYPE",
+        "REBOOTING",
+        "REBOOT_FAILED",
+        "PARTIALLY_AVAILABLE"
       ]
     },
     "ConflictException":{
@@ -1545,6 +1585,66 @@
       "max":65535,
       "min":1024
     },
+    "RebootDbClusterInput":{
+      "type":"structure",
+      "required":["dbClusterId"],
+      "members":{
+        "dbClusterId":{"shape":"DbClusterId"},
+        "instanceIds":{"shape":"RebootDbClusterInputInstanceIdsList"}
+      }
+    },
+    "RebootDbClusterInputInstanceIdsList":{
+      "type":"list",
+      "member":{"shape":"DbInstanceId"},
+      "max":3,
+      "min":0
+    },
+    "RebootDbClusterOutput":{
+      "type":"structure",
+      "members":{
+        "dbClusterStatus":{"shape":"ClusterStatus"}
+      }
+    },
+    "RebootDbInstanceInput":{
+      "type":"structure",
+      "required":["identifier"],
+      "members":{
+        "identifier":{"shape":"DbInstanceIdentifier"}
+      }
+    },
+    "RebootDbInstanceOutput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "name",
+        "arn",
+        "vpcSubnetIds"
+      ],
+      "members":{
+        "id":{"shape":"DbInstanceId"},
+        "name":{"shape":"DbInstanceName"},
+        "arn":{"shape":"Arn"},
+        "status":{"shape":"Status"},
+        "endpoint":{"shape":"String"},
+        "port":{"shape":"Port"},
+        "networkType":{"shape":"NetworkType"},
+        "dbInstanceType":{"shape":"DbInstanceType"},
+        "dbStorageType":{"shape":"DbStorageType"},
+        "allocatedStorage":{"shape":"AllocatedStorage"},
+        "deploymentType":{"shape":"DeploymentType"},
+        "vpcSubnetIds":{"shape":"VpcSubnetIdList"},
+        "publiclyAccessible":{"shape":"Boolean"},
+        "vpcSecurityGroupIds":{"shape":"VpcSecurityGroupIdList"},
+        "dbParameterGroupIdentifier":{"shape":"DbParameterGroupIdentifier"},
+        "availabilityZone":{"shape":"String"},
+        "secondaryAvailabilityZone":{"shape":"String"},
+        "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
+        "influxAuthParametersSecretArn":{"shape":"String"},
+        "dbClusterId":{"shape":"DbClusterId"},
+        "instanceMode":{"shape":"InstanceMode"},
+        "instanceModes":{"shape":"InstanceModeList"}
+      }
+    },
     "RequestTagMap":{
       "type":"map",
       "key":{"shape":"TagKey"},
@@ -1610,7 +1710,9 @@
         "FAILED",
         "UPDATING_DEPLOYMENT_TYPE",
         "UPDATING_INSTANCE_TYPE",
-        "MAINTENANCE"
+        "MAINTENANCE",
+        "REBOOTING",
+        "REBOOT_FAILED"
       ]
     },
     "String":{"type":"string"},
@@ -1781,7 +1883,7 @@
     "VpcSubnetIdList":{
       "type":"list",
       "member":{"shape":"VpcSubnetId"},
-      "max":3,
+      "max":6,
       "min":1
     }
   }

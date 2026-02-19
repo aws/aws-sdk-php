@@ -7,6 +7,7 @@
     "GetReportMetadata": "<p>Get the metadata for a single report.</p>",
     "GetTermForReport": "<p>Get the Term content associated with a single report.</p>",
     "ListCustomerAgreements": "<p>List active customer-agreements applicable to calling identity.</p>",
+    "ListReportVersions": "<p>List available report versions for a given report.</p>",
     "ListReports": "<p>List available reports.</p>",
     "PutAccountSettings": "<p>Put the account settings for Artifact.</p>"
   },
@@ -20,8 +21,7 @@
     },
     "AccessDeniedException": {
       "base": "<p>User does not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountSettings": {
       "base": "<p>Account settings for the customer.</p>",
@@ -45,8 +45,7 @@
     },
     "ConflictException": {
       "base": "<p>Request to create/modify content would result in a conflict.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomerAgreementIdAttribute": {
       "base": null,
@@ -74,33 +73,27 @@
     },
     "GetAccountSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAccountSettingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReportMetadataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReportMetadataResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReportResponseDocumentPresignedUrlString": {
       "base": null,
@@ -110,13 +103,11 @@
     },
     "GetTermForReportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTermForReportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTermForReportResponseDocumentPresignedUrlString": {
       "base": null,
@@ -133,28 +124,31 @@
     },
     "InternalServerException": {
       "base": "<p>An unknown server exception has occurred.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomerAgreementsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomerAgreementsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ListReportVersionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListReportVersionsResponse": {
+      "base": null,
+      "refs": {}
     },
     "ListReportsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReportsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LongStringAttribute": {
       "base": null,
@@ -176,6 +170,7 @@
       "base": null,
       "refs": {
         "ListCustomerAgreementsRequest$maxResults": "<p>Maximum number of resources to return in the paginated response.</p>",
+        "ListReportVersionsRequest$maxResults": "<p>Maximum number of resources to return in the paginated response.</p>",
         "ListReportsRequest$maxResults": "<p>Maximum number of resources to return in the paginated response.</p>"
       }
     },
@@ -184,6 +179,8 @@
       "refs": {
         "ListCustomerAgreementsRequest$nextToken": "<p>Pagination token to request the next page of resources.</p>",
         "ListCustomerAgreementsResponse$nextToken": "<p>Pagination token to request the next page of resources.</p>",
+        "ListReportVersionsRequest$nextToken": "<p>Pagination token to request the next page of resources.</p>",
+        "ListReportVersionsResponse$nextToken": "<p>Pagination token to request the next page of resources.</p>",
         "ListReportsRequest$nextToken": "<p>Pagination token to request the next page of resources.</p>",
         "ListReportsResponse$nextToken": "<p>Pagination token to request the next page of resources.</p>"
       }
@@ -204,13 +201,11 @@
     },
     "PutAccountSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutAccountSettingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ReportDetail": {
       "base": "<p>Full detail for report resource metadata.</p>",
@@ -224,6 +219,7 @@
         "GetReportMetadataRequest$reportId": "<p>Unique resource ID for the report resource.</p>",
         "GetReportRequest$reportId": "<p>Unique resource ID for the report resource.</p>",
         "GetTermForReportRequest$reportId": "<p>Unique resource ID for the report resource.</p>",
+        "ListReportVersionsRequest$reportId": "<p>Unique resource ID for the report resource.</p>",
         "ReportDetail$id": "<p>Unique resource ID for the report resource.</p>",
         "ReportSummary$id": "<p>Unique resource ID for the report resource.</p>"
       }
@@ -237,13 +233,13 @@
     "ReportsList": {
       "base": null,
       "refs": {
+        "ListReportVersionsResponse$reports": "<p>List of report resources.</p>",
         "ListReportsResponse$reports": "<p>List of report resources.</p>"
       }
     },
     "ResourceNotFoundException": {
       "base": "<p>Request references a resource which does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SequenceNumberAttribute": {
       "base": null,
@@ -253,8 +249,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>Request would cause a service quota to be exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ShortStringAttribute": {
       "base": null,
@@ -307,8 +302,7 @@
     },
     "ThrottlingException": {
       "base": "<p>Request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TimestampAttribute": {
       "base": null,
@@ -333,8 +327,7 @@
     },
     "ValidationException": {
       "base": "<p>Request fails to satisfy the constraints specified by an AWS service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>Validation exception message and name.</p>",

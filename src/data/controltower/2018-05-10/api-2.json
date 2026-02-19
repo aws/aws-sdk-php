@@ -688,15 +688,12 @@
     },
     "CreateLandingZoneInput":{
       "type":"structure",
-      "required":[
-        "version",
-        "manifest"
-      ],
+      "required":["version"],
       "members":{
         "version":{"shape":"LandingZoneVersion"},
-        "manifest":{"shape":"Manifest"},
         "remediationTypes":{"shape":"RemediationTypes"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "manifest":{"shape":"Manifest"}
       }
     },
     "CreateLandingZoneOutput":{
@@ -1208,12 +1205,12 @@
       ],
       "members":{
         "version":{"shape":"LandingZoneVersion"},
-        "manifest":{"shape":"Manifest"},
         "remediationTypes":{"shape":"RemediationTypes"},
         "arn":{"shape":"Arn"},
         "status":{"shape":"LandingZoneStatus"},
         "latestAvailableVersion":{"shape":"LandingZoneVersion"},
-        "driftStatus":{"shape":"LandingZoneDriftStatusSummary"}
+        "driftStatus":{"shape":"LandingZoneDriftStatusSummary"},
+        "manifest":{"shape":"Manifest"}
       }
     },
     "LandingZoneDriftStatus":{
@@ -1734,14 +1731,13 @@
       "type":"structure",
       "required":[
         "version",
-        "manifest",
         "landingZoneIdentifier"
       ],
       "members":{
         "version":{"shape":"LandingZoneVersion"},
-        "manifest":{"shape":"Manifest"},
         "remediationTypes":{"shape":"RemediationTypes"},
-        "landingZoneIdentifier":{"shape":"String"}
+        "landingZoneIdentifier":{"shape":"String"},
+        "manifest":{"shape":"Manifest"}
       }
     },
     "UpdateLandingZoneOutput":{

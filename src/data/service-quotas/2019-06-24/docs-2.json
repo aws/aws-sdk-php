@@ -9,6 +9,7 @@
     "GetAWSDefaultServiceQuota": "<p>Retrieves the default value for the specified quota. The default value does not reflect any quota increases.</p>",
     "GetAssociationForServiceQuotaTemplate": "<p>Retrieves the status of the association for the quota request template.</p>",
     "GetAutoManagementConfiguration": "<p>Retrieves information about your <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/automatic-management.html\">Service Quotas Automatic Management</a> configuration. Automatic Management monitors your Service Quotas utilization and notifies you before you run out of your allocated quotas.</p>",
+    "GetQuotaUtilizationReport": "<p>Retrieves the quota utilization report for your Amazon Web Services account. This operation returns paginated results showing your quota usage across all Amazon Web Services services, sorted by utilization percentage in descending order (highest utilization first).</p> <p>You must first initiate a report using the <code>StartQuotaUtilizationReport</code> operation. The report generation process is asynchronous and may take several seconds to complete. Poll this operation periodically to check the status and retrieve results when the report is ready.</p> <p>Each report contains up to 1,000 quota records per page. Use the <code>NextToken</code> parameter to retrieve additional pages of results. Reports are automatically deleted after 15 minutes.</p>",
     "GetRequestedServiceQuotaChange": "<p>Retrieves information about the specified quota increase request.</p>",
     "GetServiceQuota": "<p>Retrieves the applied quota value for the specified account-level or resource-level quota. For some quotas, only the default values are available. If the applied quota value is not available for a quota, the quota is not retrieved.</p>",
     "GetServiceQuotaIncreaseRequestFromTemplate": "<p>Retrieves information about the specified quota increase request in your quota request template.</p>",
@@ -22,6 +23,7 @@
     "PutServiceQuotaIncreaseRequestIntoTemplate": "<p>Adds a quota increase request to your quota request template.</p>",
     "RequestServiceQuotaIncrease": "<p>Submits a quota increase request for the specified quota at the account or resource level.</p>",
     "StartAutoManagement": "<p>Starts <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/automatic-management.html\">Service Quotas Automatic Management</a> for an Amazon Web Services account, including notification preferences and excluded quotas configurations. Automatic Management monitors your Service Quotas utilization and notifies you before you run out of your allocated quotas.</p>",
+    "StartQuotaUtilizationReport": "<p>Initiates the generation of a quota utilization report for your Amazon Web Services account. This asynchronous operation analyzes your quota usage across all Amazon Web Services services and returns a unique report identifier that you can use to retrieve the results.</p> <p>The report generation process may take several seconds to complete, depending on the number of quotas in your account. Use the <code>GetQuotaUtilizationReport</code> operation to check the status and retrieve the results when the report is ready.</p>",
     "StopAutoManagement": "<p>Stops <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/automatic-management.html\">Service Quotas Automatic Management</a> for an Amazon Web Services account and removes all associated configurations. Automatic Management monitors your Service Quotas utilization and notifies you before you run out of your allocated quotas.</p>",
     "TagResource": "<p>Adds tags to the specified applied quota. You can include one or more tags to add to the quota.</p>",
     "UntagResource": "<p>Removes tags from the specified applied quota. You can specify one or more tags to remove.</p>",
@@ -55,6 +57,12 @@
         "ListServiceQuotasRequest$QuotaAppliedAtLevel": "<p>Filters the response to return applied quota values for the <code>ACCOUNT</code>, <code>RESOURCE</code>, or <code>ALL</code> levels. <code>ACCOUNT</code> is the default.</p>",
         "RequestedServiceQuotaChange$QuotaRequestedAtLevel": "<p>Filters the response to return quota requests for the <code>ACCOUNT</code>, <code>RESOURCE</code>, or <code>ALL</code> levels. <code>ACCOUNT</code> is the default.</p>",
         "ServiceQuota$QuotaAppliedAtLevel": "<p>Filters the response to return applied quota values for the <code>ACCOUNT</code>, <code>RESOURCE</code>, or <code>ALL</code> levels. <code>ACCOUNT</code> is the default.</p>"
+      }
+    },
+    "AppliedValue": {
+      "base": null,
+      "refs": {
+        "QuotaUtilizationInfo$AppliedValue": "<p>The applied value of the quota, which may be higher than the default value if a quota increase has been requested and approved.</p>"
       }
     },
     "AssociateServiceQuotaTemplateRequest": {
@@ -92,8 +100,15 @@
     "DateTime": {
       "base": null,
       "refs": {
+        "GetQuotaUtilizationReportResponse$GeneratedAt": "<p>The timestamp when the report was generated, in ISO 8601 format.</p>",
         "RequestedServiceQuotaChange$Created": "<p>The date and time when the quota increase request was received and the case ID was created.</p>",
         "RequestedServiceQuotaChange$LastUpdated": "<p>The date and time of the most recent change.</p>"
+      }
+    },
+    "DefaultValue": {
+      "base": null,
+      "refs": {
+        "QuotaUtilizationInfo$DefaultValue": "<p>The default value of the quota.</p>"
       }
     },
     "DeleteServiceQuotaIncreaseRequestFromTemplateRequest": {
@@ -209,6 +224,14 @@
       "refs": {}
     },
     "GetAutoManagementConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetQuotaUtilizationReportRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetQuotaUtilizationReportResponse": {
       "base": null,
       "refs": {}
     },
@@ -335,6 +358,12 @@
         "ListServicesRequest$MaxResults": "<p>Specifies the maximum number of results that you want included on each page of the response. If you do not include this parameter, it defaults to a value appropriate to the operation. If additional items exist beyond those included in the current response, the <code>NextToken</code> response element is present and has a value (is not null). Include that value as the <code>NextToken</code> request parameter in the next call to the operation to get the next part of the results.</p> <note> <p>An API operation can return fewer results than the maximum even when there are more results available. You should check <code>NextToken</code> after every operation to ensure that you receive all of the results.</p> </note>"
       }
     },
+    "MaxResultsUtilization": {
+      "base": null,
+      "refs": {
+        "GetQuotaUtilizationReportRequest$MaxResults": "<p>The maximum number of results to return per page. The default value is 1,000 and the maximum allowed value is 1,000.</p>"
+      }
+    },
     "MetricDimensionName": {
       "base": null,
       "refs": {
@@ -362,6 +391,8 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "GetQuotaUtilizationReportRequest$NextToken": "<p>A token that indicates the next page of results to retrieve. This token is returned in the response when there are more results available. Omit this parameter for the first request.</p>",
+        "GetQuotaUtilizationReportResponse$NextToken": "<p>A token that indicates more results are available. Include this token in the next request to retrieve the next page of results. If this field is not present, you have retrieved all available results.</p>",
         "ListAWSDefaultServiceQuotasRequest$NextToken": "<p>Specifies a value for receiving additional results after you receive a <code>NextToken</code> response in a previous request. A <code>NextToken</code> response indicates that more output is available. Set this parameter to the value of the previous call's <code>NextToken</code> response to indicate where the output should continue from.</p>",
         "ListAWSDefaultServiceQuotasResponse$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>.</p>",
         "ListRequestedServiceQuotaChangeHistoryByQuotaRequest$NextToken": "<p>Specifies a value for receiving additional results after you receive a <code>NextToken</code> response in a previous request. A <code>NextToken</code> response indicates that more output is available. Set this parameter to the value of the previous call's <code>NextToken</code> response to indicate where the output should continue from.</p>",
@@ -438,6 +469,7 @@
     "QuotaAdjustable": {
       "base": null,
       "refs": {
+        "QuotaUtilizationInfo$Adjustable": "<p>Indicates whether the quota value can be increased.</p>",
         "ServiceQuota$Adjustable": "<p>Indicates whether the quota value can be increased.</p>"
       }
     },
@@ -459,6 +491,7 @@
         "ListServiceQuotasRequest$QuotaCode": "<p>Specifies the quota identifier. To find the quota code for a specific quota, use the <a>ListServiceQuotas</a> operation, and look for the <code>QuotaCode</code> response in the output for the quota you want.</p>",
         "PutServiceQuotaIncreaseRequestIntoTemplateRequest$QuotaCode": "<p>Specifies the quota identifier. To find the quota code for a specific quota, use the <a>ListServiceQuotas</a> operation, and look for the <code>QuotaCode</code> response in the output for the quota you want.</p>",
         "QuotaInfo$QuotaCode": "<p>The Service Quotas code for the Amazon Web Services service monitored with Automatic Management.</p>",
+        "QuotaUtilizationInfo$QuotaCode": "<p>The quota identifier.</p>",
         "RequestServiceQuotaIncreaseRequest$QuotaCode": "<p>Specifies the quota identifier. To find the quota code for a specific quota, use the <a>ListServiceQuotas</a> operation, and look for the <code>QuotaCode</code> response in the output for the quota you want.</p>",
         "RequestedServiceQuotaChange$QuotaCode": "<p>Specifies the quota identifier. To find the quota code for a specific quota, use the <a>ListServiceQuotas</a> operation, and look for the <code>QuotaCode</code> response in the output for the quota you want.</p>",
         "ServiceQuota$QuotaCode": "<p>Specifies the quota identifier. To find the quota code for a specific quota, use the <a>ListServiceQuotas</a> operation, and look for the <code>QuotaCode</code> response in the output for the quota you want.</p>",
@@ -523,13 +556,15 @@
     "QuotaMetricNamespace": {
       "base": null,
       "refs": {
-        "MetricInfo$MetricNamespace": "<p>The namespace of the metric.</p>"
+        "MetricInfo$MetricNamespace": "<p>The namespace of the metric.</p>",
+        "QuotaUtilizationInfo$Namespace": "<p>The namespace of the metric used to track quota usage.</p>"
       }
     },
     "QuotaName": {
       "base": null,
       "refs": {
         "QuotaInfo$QuotaName": "<p>The Service Quotas name for the Amazon Web Services service monitored with Automatic Management.</p>",
+        "QuotaUtilizationInfo$QuotaName": "<p>The quota name.</p>",
         "RequestedServiceQuotaChange$QuotaName": "<p>Specifies the quota name.</p>",
         "ServiceQuota$QuotaName": "<p>Specifies the quota name.</p>",
         "ServiceQuotaIncreaseRequestInTemplate$QuotaName": "<p>Specifies the quota name.</p>"
@@ -549,6 +584,18 @@
         "ServiceQuotaIncreaseRequestInTemplate$Unit": "<p>The unit of measurement.</p>"
       }
     },
+    "QuotaUtilizationInfo": {
+      "base": "<p>Information about a quota's utilization, including the quota code, service information, current usage, and applied limits.</p>",
+      "refs": {
+        "QuotaUtilizationInfoList$member": null
+      }
+    },
+    "QuotaUtilizationInfoList": {
+      "base": null,
+      "refs": {
+        "GetQuotaUtilizationReportResponse$Quotas": "<p>A list of quota utilization records, sorted by utilization percentage in descending order. Each record includes the quota code, service code, service name, quota name, namespace, utilization percentage, default value, applied value, and whether the quota is adjustable. Up to 1,000 records are returned per page.</p>"
+      }
+    },
     "QuotaValue": {
       "base": null,
       "refs": {
@@ -557,6 +604,39 @@
         "RequestedServiceQuotaChange$DesiredValue": "<p>The new, increased value for the quota.</p>",
         "ServiceQuota$Value": "<p>The quota value.</p>",
         "ServiceQuotaIncreaseRequestInTemplate$DesiredValue": "<p>The new, increased value of the quota.</p>"
+      }
+    },
+    "ReportErrorCode": {
+      "base": null,
+      "refs": {
+        "GetQuotaUtilizationReportResponse$ErrorCode": "<p>An error code indicating the reason for failure when the report status is <code>FAILED</code>. This field is only present when the status is <code>FAILED</code>.</p>"
+      }
+    },
+    "ReportErrorMessage": {
+      "base": null,
+      "refs": {
+        "GetQuotaUtilizationReportResponse$ErrorMessage": "<p>A detailed error message describing the failure when the report status is <code>FAILED</code>. This field is only present when the status is <code>FAILED</code>.</p>"
+      }
+    },
+    "ReportId": {
+      "base": null,
+      "refs": {
+        "GetQuotaUtilizationReportRequest$ReportId": "<p>The unique identifier for the quota utilization report. This identifier is returned by the <code>StartQuotaUtilizationReport</code> operation.</p>",
+        "GetQuotaUtilizationReportResponse$ReportId": "<p>The unique identifier for the quota utilization report.</p>",
+        "StartQuotaUtilizationReportResponse$ReportId": "<p>A unique identifier for the quota utilization report. Use this identifier with the <code>GetQuotaUtilizationReport</code> operation to retrieve the report results.</p>"
+      }
+    },
+    "ReportMessage": {
+      "base": null,
+      "refs": {
+        "StartQuotaUtilizationReportResponse$Message": "<p>An optional message providing additional information about the report generation status. This field may contain details about the report initiation or indicate if an existing recent report is being reused.</p>"
+      }
+    },
+    "ReportStatus": {
+      "base": null,
+      "refs": {
+        "GetQuotaUtilizationReportResponse$Status": "<p>The current status of the report generation. Possible values are:</p> <ul> <li> <p> <code>PENDING</code> - The report generation is in progress. Retry this operation after a few seconds.</p> </li> <li> <p> <code>IN_PROGRESS</code> - The report is being processed. Continue polling until the status changes to <code>COMPLETED</code>.</p> </li> <li> <p> <code>COMPLETED</code> - The report is ready and quota utilization data is available in the response.</p> </li> <li> <p> <code>FAILED</code> - The report generation failed. Check the <code>ErrorCode</code> and <code>ErrorMessage</code> fields for details.</p> </li> </ul>",
+        "StartQuotaUtilizationReportResponse$Status": "<p>The current status of the report generation. The status will be <code>PENDING</code> when the report is first initiated.</p>"
       }
     },
     "RequestId": {
@@ -581,6 +661,12 @@
         "ListRequestedServiceQuotaChangeHistoryByQuotaRequest$Status": "<p>Specifies that you want to filter the results to only the requests with the matching status.</p>",
         "ListRequestedServiceQuotaChangeHistoryRequest$Status": "<p>Specifies that you want to filter the results to only the requests with the matching status.</p>",
         "RequestedServiceQuotaChange$Status": "<p>The state of the quota increase request.</p> <ul> <li> <p> <code>PENDING</code>: The quota increase request is under review by Amazon Web Services. </p> </li> <li> <p> <code>CASE_OPENED</code>: Service Quotas opened a support case to process the quota increase request. Follow-up on the support case for more information.</p> </li> <li> <p> <code>APPROVED</code>: The quota increase request is approved. </p> </li> <li> <p> <code>DENIED</code>: The quota increase request can't be approved by Service Quotas. Contact Amazon Web Services Support for more details.</p> </li> <li> <p> <code>NOT APPROVED</code>: The quota increase request can't be approved by Service Quotas. Contact Amazon Web Services Support for more details.</p> </li> <li> <p> <code>CASE_CLOSED</code>: The support case associated with this quota increase request was closed. Check the support case correspondence for the outcome of your quota request.</p> </li> <li> <p> <code>INVALID_REQUEST</code>: Service Quotas couldn't process your resource-level quota increase request because the Amazon Resource Name (ARN) specified as part of the <code>ContextId</code> is invalid.</p> </li> </ul>"
+      }
+    },
+    "RequestType": {
+      "base": null,
+      "refs": {
+        "RequestedServiceQuotaChange$RequestType": "<p>The type of quota increase request. Possible values include:</p> <ul> <li> <p> <code>AutomaticManagement</code> - The request was automatically created by Service Quotas Automatic Management when quota utilization approached the limit.</p> </li> </ul> <p>If this field is not present, the request was manually created by a user.</p>"
       }
     },
     "RequestedServiceQuotaChange": {
@@ -621,6 +707,7 @@
         "ListServiceQuotaIncreaseRequestsInTemplateRequest$ServiceCode": "<p>Specifies the service identifier. To find the service code value for an Amazon Web Services service, use the <a>ListServices</a> operation.</p>",
         "ListServiceQuotasRequest$ServiceCode": "<p>Specifies the service identifier. To find the service code value for an Amazon Web Services service, use the <a>ListServices</a> operation.</p>",
         "PutServiceQuotaIncreaseRequestIntoTemplateRequest$ServiceCode": "<p>Specifies the service identifier. To find the service code value for an Amazon Web Services service, use the <a>ListServices</a> operation.</p>",
+        "QuotaUtilizationInfo$ServiceCode": "<p>The service identifier.</p>",
         "RequestServiceQuotaIncreaseRequest$ServiceCode": "<p>Specifies the service identifier. To find the service code value for an Amazon Web Services service, use the <a>ListServices</a> operation.</p>",
         "RequestedServiceQuotaChange$ServiceCode": "<p>Specifies the service identifier. To find the service code value for an Amazon Web Services service, use the <a>ListServices</a> operation.</p>",
         "ServiceInfo$ServiceCode": "<p>Specifies the service identifier. To find the service code value for an Amazon Web Services service, use the <a>ListServices</a> operation.</p>",
@@ -647,6 +734,7 @@
     "ServiceName": {
       "base": null,
       "refs": {
+        "QuotaUtilizationInfo$ServiceName": "<p>The service name.</p>",
         "RequestedServiceQuotaChange$ServiceName": "<p>Specifies the service name.</p>",
         "ServiceInfo$ServiceName": "<p>Specifies the service name.</p>",
         "ServiceQuota$ServiceName": "<p>Specifies the service name.</p>",
@@ -697,6 +785,14 @@
       "refs": {}
     },
     "StartAutoManagementResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartQuotaUtilizationReportRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartQuotaUtilizationReportResponse": {
       "base": null,
       "refs": {}
     },
@@ -764,6 +860,12 @@
       "base": "<p>You've exceeded the number of tags allowed for a resource. For more information, see <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/sq-tagging.html#sq-tagging-restrictions\">Tag restrictions</a> in the <i>Service Quotas User Guide</i>.</p>",
       "refs": {}
     },
+    "TotalCount": {
+      "base": null,
+      "refs": {
+        "GetQuotaUtilizationReportResponse$TotalCount": "<p>The total number of quotas included in the report across all pages.</p>"
+      }
+    },
     "UntagResourceRequest": {
       "base": null,
       "refs": {}
@@ -779,6 +881,12 @@
     "UpdateAutoManagementResponse": {
       "base": null,
       "refs": {}
+    },
+    "UtilizationPct": {
+      "base": null,
+      "refs": {
+        "QuotaUtilizationInfo$Utilization": "<p>The utilization percentage of the quota, calculated as (current usage / applied value) × 100. Values range from 0.0 to 100.0 or higher if usage exceeds the quota limit.</p>"
+      }
     }
   }
 }

@@ -7,6 +7,7 @@
     "CreateClusterV2" : "<p>Creates a new Amazon MSK cluster of either the provisioned or the serverless type.</p>",
     "CreateReplicator" : "<p>Creates a new Kafka Replicator.</p>",
     "CreateConfiguration" : "<p>Creates a new MSK configuration.</p>",
+    "CreateTopic": "<p>Creates a topic in the specified MSK cluster.</p>",
     "CreateVpcConnection" : "<p>Creates a new Amazon MSK VPC connection.</p>",
     "DeleteCluster" : "<p>Deletes the MSK cluster specified by the Amazon Resource Name (ARN) in the request.</p>",
     "DeleteClusterPolicy" : "<p>Deletes the MSK cluster policy specified by the Amazon Resource Name (ARN) in your request.</p>",
@@ -20,6 +21,9 @@
     "DescribeConfiguration" : "<p>Returns a description of this MSK configuration.</p>",
     "DescribeConfigurationRevision" : "<p>Returns a description of this revision of the configuration.</p>",
     "DescribeReplicator" : "<p>Returns a description of the Kafka Replicator whose Amazon Resource Name (ARN) is specified in the request.</p>",
+    "DeleteTopic": "<p>Deletes a topic in the specified MSK cluster.</p>",
+    "DescribeTopic": "<p>Returns topic details of this topic on a MSK cluster.</p>",
+    "DescribeTopicPartitions": "<p>Returns partition details of this topic on a MSK cluster.</p>",
     "DescribeVpcConnection" : "<p>Displays information about the specified Amazon MSK VPC connection.</p>",
     "BatchDisassociateScramSecret" : "<p>Disassociates one or more Scram Secrets from an Amazon MSK cluster.</p>",
     "GetBootstrapBrokers" : "<p>A list of brokers that a client application can use to bootstrap. This list doesn't necessarily include all of the brokers in the cluster. The following Python 3.6 example shows how you can use the Amazon Resource Name (ARN) of a cluster to get its bootstrap brokers. If you don't know the ARN of your cluster, you can use the <code>ListClusters</code> operation to get the ARNs of all the clusters in this account and Region.</p>",
@@ -38,6 +42,7 @@
     "ListScramSecrets" : "<p>Returns a list of the Scram Secrets associated with an Amazon MSK cluster.</p>",
     "ListTagsForResource" : "<p>Returns a list of the tags associated with the specified resource.</p>",
     "ListVpcConnections" : "<p>Displays a list of Amazon MSK VPC connections.</p>",
+    "ListTopics": "<p>List topics in a MSK cluster.</p>",
     "PutClusterPolicy" : "<p>Creates or updates the specified MSK cluster policy. If updating the policy, the currentVersion field is required in the request payload.</p>",
     "RebootBroker" : "<p>Executes a reboot on a broker.</p>",
     "RejectClientVpcConnections" : "<p>Rejects a client VPC connection.</p>",
@@ -54,7 +59,8 @@
     "UpdateRebalancing" : "<p>Use this resource to update the intelligent rebalancing status of an Amazon MSK Provisioned cluster with Express brokers.</p>",
     "UpdateReplicationInfo" : "<p>Updates replication info of a replicator.</p>",
     "UpdateSecurity" : "<p>You can use this operation to update the encrypting and authentication settings for an existing cluster.</p>",
-    "UpdateStorage" : "<p>Updates cluster broker volume size (or) sets cluster storage mode to TIERED.</p>"
+    "UpdateStorage" : "<p>Updates cluster broker volume size (or) sets cluster storage mode to TIERED.</p>",
+    "UpdateTopic" : "<p>Updates the topic configuration or partition count in the specified MSK cluster.</p>"
   },
   "shapes" : {
     "AmazonMskCluster" : {
@@ -149,6 +155,14 @@
       "refs" : {
         "Serverless$ClientAuthentication" : "<p>Information about the serverless cluster client authentication.</p>",
         "ServerlessRequest$ClientAuthentication" : "<p>Information about the serverless cluster client authentication.</p>"
+      }
+    },
+    "ServerlessConnectivityInfo": {
+      "base": "<p>Describes the cluster's connectivity information, such as its network type, which is IPv4 or DUAL.</p>",
+      "refs": {
+        "Serverless$ConnectivityInfo": "<p>Describes the cluster's connectivity information, such as its network type, which is IPv4 or DUAL.</p>",
+        "ClusterOperationV2Serverless$SourceClusterInfo": "<p>Source cluster connectivity information for the cluster.</p>",
+        "ClusterOperationV2Serverless$TargetClusterInfo": "<p>Target cluster connectivity information for the cluster.</p>"
       }
     },
     "ServerlessSasl" : {
@@ -366,6 +380,14 @@
       "base" : "<p>Request body for CreateVpcConnection.</p>",
       "refs" : { }
     },
+    "CreateTopicRequest" : {
+      "base" : "<p>Request body for CreateTopic.</p>",
+      "refs" : { }
+    },
+    "CreateTopicResponse" : {
+      "base" : "<p>Response body for CreateTopic.</p>",
+      "refs" : { }
+    },
     "CreateVpcConnectionResponse" : {
       "base" : "<p>Response body for CreateVpcConnection</p>",
       "refs" : { }
@@ -411,6 +433,14 @@
       "base" : "<p>Request body for DeleteVpcConnection.</p>",
       "refs" : { }
     },
+    "DeleteTopicRequest" : {
+      "base" : "<p>Request body for DeleteTopic.</p>",
+      "refs" : { }
+    },
+    "DeleteTopicResponse" : {
+      "base" : "<p>Response body for DeleteTopic.</p>",
+      "refs" : { }
+    },
     "DeleteVpcConnectionResponse" : {
       "base" : "<p>Response body for DeleteVpcConnection.</p>",
       "refs" : { }
@@ -438,6 +468,34 @@
     "DescribeConfigurationRevisionResponse" : {
       "base" : "<p>Response body for DescribeConfigurationRevision.</p>",
       "refs" : { }
+    },
+    "DescribeTopicRequest" : {
+      "base" : "<p>Request body for DescribeTopic.</p>",
+      "refs" : { }
+    },
+    "DescribeTopicResponse" : {
+      "base" : "<p>The response containing details for a topic.</p>",
+      "refs" : { }
+    },
+    "DescribeTopicPartitionsRequest" : {
+      "base" : "<p>Request body for DescribeTopicPartitions.</p>",
+      "refs" : { }
+    },
+    "DescribeTopicPartitionsResponse" : {
+      "base" : "<p>The response containing partitions details for a topic.</p>",
+      "refs" : { }
+    },
+    "TopicPartitionInfo" : {
+      "base" : "<p>Contains information about a topic partition.</p>",
+      "refs" : {
+        "__listOfTopicPartitionInfo$member" : null
+      }
+    },
+    "TopicInfo" : {
+      "base" : "<p>Includes identification info about the topic.</p>",
+      "refs" : {
+        "__listOfTopicInfo$member" : null
+      }
     },
     "DescribeReplicatorResponse" : {
       "base" : "<p>Response body for DescribeReplicator.</p>",
@@ -636,6 +694,14 @@
       "base" : "<p>The response contains an array of client VPC connections and a next token if the response is truncated.</p>",
       "refs" : { }
     },
+    "ListTopicsRequest" : {
+      "base" : "<p>Request body for ListTopics.</p>",
+      "refs" : { }
+    },
+    "ListTopicsResponse" : {
+      "base" : "<p>The response contains an array of topics on a MSK Cluster.</p>",
+      "refs" : { }
+    },
     "ListVpcConnectionsRequest" : {
       "base" : "<p>Request body for ListVpcConnections.</p>",
       "refs" : { }
@@ -686,6 +752,12 @@
       "base" : "<p>The node information object.</p>",
       "refs" : {
         "__listOfNodeInfo$member" : null
+      }
+    },
+    "NetworkType" : {
+      "base" : "<p>The network type of the cluster, which is IPv4 or DUAL. The DUAL network type uses both IPv4 and IPv6 addresses for your cluster and its resources.</p><p>By default, a cluster uses the IPv4 network type.</p>",
+      "refs" : {
+        "ConnectivityInfo$NetworkType" : "<p>The network type of the cluster, which is IPv4 or DUAL. The DUAL network type uses both IPv4 and IPv6 addresses for your cluster and its resources.</p><p>By default, a cluster uses the IPv4 network type.</p>"
       }
     },
     "NodeType" : {
@@ -887,6 +959,42 @@
       "base" : "<p>Returns information about an error.</p>",
       "refs" : { }
     },
+    "TopicExistsException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "ClusterConnectivityException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "KafkaTimeoutException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "UnknownTopicOrPartitionException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "ControllerMovedException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "NotControllerException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "ReassignmentInProgressException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "GroupSubscribedToTopicException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
+    "KafkaRequestException": {
+      "base": "<p>Returns information about an error.</p>",
+      "refs": { }
+    },
     "Unauthenticated" : {
       "base" : "<p>Contains information about unauthenticated traffic to the cluster.</p>",
       "refs" : {
@@ -991,6 +1099,14 @@
     },
     "UpdateStorageResponse" : {
       "base" : "<p>Response body for UpdateStorageResponse Api.</p>",
+      "refs" : { }
+    },
+    "UpdateTopicRequest" : {
+      "base" : "<p>Request body for UpdateTopic.</p>",
+      "refs" : { }
+    },
+    "UpdateTopicResponse" : {
+      "base" : "<p>Response body for UpdateTopic.</p>",
       "refs" : { }
     },
     "UserIdentity" : {
@@ -1405,6 +1521,10 @@
         "GetBootstrapBrokersResponse$BootstrapBrokerStringVpcConnectivitySaslIam" : "<p>A string containing one or more dns name (or IP) and SASL IAM port pairs for VPC connectivity.</p>",
         "GetBootstrapBrokersResponse$BootstrapBrokerStringVpcConnectivitySaslScram" : "<p>A string containing one or more dns name (or IP) and SASL SCRAM port pairs for VPC connectivity.</p>",
         "GetBootstrapBrokersResponse$BootstrapBrokerStringVpcConnectivityTls" : "<p>A string containing one or more dns name (or IP) and Tls port pairs for VPC connectivity.</p>",
+        "GetBootstrapBrokersResponse$BootstrapBrokerStringIpv6" : "<p>A string that contains one or more DNS names (or IP) and port pairs for IPv6 connectivity.</p>",
+        "GetBootstrapBrokersResponse$BootstrapBrokerStringTlsIpv6" : "<p>A string that contains one or more DNS names (or IP) and TLS port pairs for IPv6 connectivity.</p>",
+        "GetBootstrapBrokersResponse$BootstrapBrokerStringSaslScramIpv6" : "<p>A string that contains one or more DNS names (or IP) and SASL SCRAM port pairs for IPv6 connectivity.</p>",
+        "GetBootstrapBrokersResponse$BootstrapBrokerStringSaslIamIpv6" : "<p>A string that contains one or more DNS names (or IP) and SASL IAM port pairs for IPv6 connectivity.</p>",
         "GetClusterPolicyResponse$CurrentVersion" : "<p>Cluster policy version.</p>",
         "GetClusterPolicyResponse$Policy" : "<p>Cluster policy attached to the MSK cluster.</p>",
         "KafkaVersion$Version" : "<p>The Apache Kafka version.</p>",

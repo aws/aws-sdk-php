@@ -2,13 +2,20 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2010-08-01",
+    "awsQueryCompatible":{},
     "endpointPrefix":"monitoring",
-    "protocol":"query",
-    "protocols":["query"],
+    "jsonVersion":"1.0",
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json",
+      "query"
+    ],
     "serviceAbbreviation":"CloudWatch",
     "serviceFullName":"Amazon CloudWatch",
     "serviceId":"CloudWatch",
     "signatureVersion":"v4",
+    "targetPrefix":"GraniteServiceVersion20100801",
     "uid":"monitoring-2010-08-01",
     "xmlNamespace":"http://monitoring.amazonaws.com/doc/2010-08-01/",
     "auth":["aws.auth#sigv4"]
@@ -905,6 +912,7 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "ContributorAttributes":{
@@ -915,7 +923,7 @@
     },
     "ContributorId":{
       "type":"string",
-      "max":1024,
+      "max":16,
       "min":1
     },
     "Counts":{
@@ -1359,7 +1367,11 @@
     },
     "EvaluationState":{
       "type":"string",
-      "enum":["PARTIAL_DATA"]
+      "enum":[
+        "PARTIAL_DATA",
+        "EVALUATION_FAILURE",
+        "EVALUATION_ERROR"
+      ]
     },
     "ExceptionType":{"type":"string"},
     "ExtendedStatistic":{"type":"string"},

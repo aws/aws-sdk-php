@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>This is the <i>Recycle Bin API Reference</i>. This documentation provides descriptions and syntax for each of the actions and data types in Recycle Bin.</p> <p>Recycle Bin is a resource recovery feature that enables you to restore accidentally deleted snapshots and EBS-backed AMIs. When using Recycle Bin, if your resources are deleted, they are retained in the Recycle Bin for a time period that you specify.</p> <p>You can restore a resource from the Recycle Bin at any time before its retention period expires. After you restore a resource from the Recycle Bin, the resource is removed from the Recycle Bin, and you can then use it in the same way you use any other resource of that type in your account. If the retention period expires and the resource is not restored, the resource is permanently deleted from the Recycle Bin and is no longer available for recovery. For more information about Recycle Bin, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/recycle-bin.html\"> Recycle Bin</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
+  "service": "<p>This is the <i>Recycle Bin API Reference</i>. This documentation provides descriptions and syntax for each of the actions and data types in Recycle Bin.</p> <p>Recycle Bin is a resource recovery feature that enables you to restore accidentally deleted EBS volumes, EBS snapshots, and EBS-backed AMIs. When using Recycle Bin, if your resources are deleted, they are retained in the Recycle Bin for a time period that you specify.</p> <p>You can restore a resource from the Recycle Bin at any time before its retention period expires. After you restore a resource from the Recycle Bin, the resource is removed from the Recycle Bin, and you can then use it in the same way you use any other resource of that type in your account. If the retention period expires and the resource is not restored, the resource is permanently deleted from the Recycle Bin and is no longer available for recovery. For more information about Recycle Bin, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/recycle-bin.html\"> Recycle Bin</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
   "operations": {
     "CreateRule": "<p>Creates a Recycle Bin retention rule. You can create two types of retention rules:</p> <ul> <li> <p> <b>Tag-level retention rules</b> - These retention rules use resource tags to identify the resources to protect. For each retention rule, you specify one or more tag key and value pairs. Resources (of the specified type) that have at least one of these tag key and value pairs are automatically retained in the Recycle Bin upon deletion. Use this type of retention rule to protect specific resources in your account based on their tags.</p> </li> <li> <p> <b>Region-level retention rules</b> - These retention rules, by default, apply to all of the resources (of the specified type) in the Region, even if the resources are not tagged. However, you can specify exclusion tags to exclude resources that have specific tags. Use this type of retention rule to protect all resources of a specific type in a Region.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/recycle-bin.html\"> Create Recycle Bin retention rules</a> in the <i>Amazon EBS User Guide</i>.</p>",
     "DeleteRule": "<p>Deletes a Recycle Bin retention rule. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/recycle-bin-working-with-rules.html#recycle-bin-delete-rule\"> Delete Recycle Bin retention rules</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
@@ -193,10 +193,10 @@
     "ResourceType": {
       "base": null,
       "refs": {
-        "CreateRuleRequest$ResourceType": "<p>The resource type to be retained by the retention rule. Currently, only Amazon EBS snapshots and EBS-backed AMIs are supported. To retain snapshots, specify <code>EBS_SNAPSHOT</code>. To retain EBS-backed AMIs, specify <code>EC2_IMAGE</code>.</p>",
+        "CreateRuleRequest$ResourceType": "<p>The resource type to be retained by the retention rule. Currently, only EBS volumes, EBS snapshots, and EBS-backed AMIs are supported.</p> <ul> <li> <p>To retain EBS volumes, specify <code>EBS_VOLUME</code>.</p> </li> <li> <p>To retain EBS snapshots, specify <code>EBS_SNAPSHOT</code> </p> </li> <li> <p>To retain EBS-backed AMIs, specify <code>EC2_IMAGE</code>.</p> </li> </ul>",
         "CreateRuleResponse$ResourceType": "<p>The resource type retained by the retention rule.</p>",
         "GetRuleResponse$ResourceType": "<p>The resource type retained by the retention rule.</p>",
-        "ListRulesRequest$ResourceType": "<p>The resource type retained by the retention rule. Only retention rules that retain the specified resource type are listed. Currently, only Amazon EBS snapshots and EBS-backed AMIs are supported. To list retention rules that retain snapshots, specify <code>EBS_SNAPSHOT</code>. To list retention rules that retain EBS-backed AMIs, specify <code>EC2_IMAGE</code>.</p>",
+        "ListRulesRequest$ResourceType": "<p>The resource type retained by the retention rule. Only retention rules that retain the specified resource type are listed. Currently, only EBS volumes, EBS snapshots, and EBS-backed AMIs are supported.</p> <ul> <li> <p>To list retention rules that retain EBS volumes, specify <code>EBS_VOLUME</code>.</p> </li> <li> <p>To list retention rules that retain EBS snapshots, specify <code>EBS_SNAPSHOT</code>.</p> </li> <li> <p>To list retention rules that retain EBS-backed AMIs, specify <code>EC2_IMAGE</code>.</p> </li> </ul>",
         "LockRuleResponse$ResourceType": "<p>The resource type retained by the retention rule.</p>",
         "UnlockRuleResponse$ResourceType": "<p>The resource type retained by the retention rule.</p>",
         "UpdateRuleRequest$ResourceType": "<note> <p>This parameter is currently not supported. You can't update a retention rule's resource type after creation.</p> </note>",
@@ -225,7 +225,7 @@
     "RetentionPeriodValue": {
       "base": null,
       "refs": {
-        "RetentionPeriod$RetentionPeriodValue": "<p>The period value for which the retention rule is to retain resources. The period is measured using the unit specified for <b>RetentionPeriodUnit</b>.</p>"
+        "RetentionPeriod$RetentionPeriodValue": "<p>The period value for which the retention rule is to retain resources, measured in days. The supported retention periods are:</p> <ul> <li> <p>EBS volumes: 1 - 7 days</p> </li> <li> <p>EBS snapshots and EBS-backed AMIs: 1 - 365 days</p> </li> </ul>"
       }
     },
     "RuleArn": {
@@ -349,7 +349,7 @@
     "UnlockDelayUnit": {
       "base": null,
       "refs": {
-        "UnlockDelay$UnlockDelayUnit": "<p>The unit of time in which to measure the unlock delay. Currently, the unlock delay can be measure only in days.</p>"
+        "UnlockDelay$UnlockDelayUnit": "<p>The unit of time in which to measure the unlock delay. Currently, the unlock delay can be measured only in days.</p>"
       }
     },
     "UnlockDelayValue": {

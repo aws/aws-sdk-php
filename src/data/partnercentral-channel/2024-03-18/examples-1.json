@@ -1,0 +1,591 @@
+{
+  "version": "1.0",
+  "examples": {
+    "AcceptChannelHandshake": [
+      {
+        "input": {
+          "catalog": "AWS",
+          "identifier": "ch-4fj3bd2o3vb91"
+        },
+        "output": {
+          "channelHandshakeDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/channel-handshake/ch-4fj3bd2o3vb91",
+            "id": "ch-4fj3bd2o3vb91",
+            "status": "ACCEPTED"
+          }
+        },
+        "id": "example-1",
+        "title": "Example for AcceptChannelHandshake"
+      }
+    ],
+    "CancelChannelHandshake": [
+      {
+        "input": {
+          "catalog": "AWS",
+          "identifier": "ch-4fj3bd2o3vb91"
+        },
+        "output": {
+          "channelHandshakeDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/channel-handshake/ch-4fj3bd2o3vb91",
+            "id": "ch-4fj3bd2o3vb91",
+            "status": "CANCELED"
+          }
+        },
+        "id": "example-1",
+        "title": "Example for CancelChannelHandshake"
+      }
+    ],
+    "CreateChannelHandshake": [
+      {
+        "input": {
+          "associatedResourceIdentifier": "rs-abc123def456g",
+          "catalog": "AWS",
+          "clientToken": "clientToken",
+          "handshakeType": "START_SERVICE_PERIOD",
+          "payload": {
+            "startServicePeriodPayload": {
+              "minimumNoticeDays": "14",
+              "note": "Optional Note",
+              "programManagementAccountIdentifier": "pma-abcdef123456g",
+              "servicePeriodType": "MINIMUM_NOTICE_PERIOD"
+            }
+          }
+        },
+        "output": {
+          "channelHandshakeDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/channel-handshake/ch-4fj3bd2o3vb91",
+            "id": "ch-4fj3bd2o3vb91"
+          }
+        },
+        "id": "example-1",
+        "title": "Example for CreateChannelHandshake - START_SERVICE_PERIOD with Minimum Notice Period"
+      },
+      {
+        "input": {
+          "associatedResourceIdentifier": "rs-abc123def456g",
+          "catalog": "AWS",
+          "clientToken": "clientToken",
+          "handshakeType": "START_SERVICE_PERIOD",
+          "payload": {
+            "startServicePeriodPayload": {
+              "endDate": "2026-07-01T00:00:00Z",
+              "note": "Optional Note",
+              "programManagementAccountIdentifier": "pma-abcdef123456g",
+              "servicePeriodType": "FIXED_COMMITMENT_PERIOD"
+            }
+          }
+        },
+        "output": {
+          "channelHandshakeDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/channel-handshake/ch-4fj3bd2o3vb91",
+            "id": "ch-4fj3bd2o3vb91"
+          }
+        },
+        "id": "example-2",
+        "title": "Example for CreateChannelHandshake - START_SERVICE_PERIOD with Fixed Commitment Period"
+      },
+      {
+        "input": {
+          "associatedResourceIdentifier": "rs-abc123def456g",
+          "catalog": "AWS",
+          "clientToken": "clientToken",
+          "handshakeType": "REVOKE_SERVICE_PERIOD",
+          "payload": {
+            "revokeServicePeriodPayload": {
+              "note": "Optional Note",
+              "programManagementAccountIdentifier": "pma-abcdef123456g"
+            }
+          }
+        },
+        "output": {
+          "channelHandshakeDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/channel-handshake/ch-4fj3bd2o3vb91",
+            "id": "ch-4fj3bd2o3vb91"
+          }
+        },
+        "id": "example-3",
+        "title": "Example for CreateChannelHandshake - REVOKE_SERVICE_PERIOD"
+      },
+      {
+        "input": {
+          "associatedResourceIdentifier": "pma-123abc456def7",
+          "catalog": "AWS",
+          "clientToken": "clientToken",
+          "handshakeType": "PROGRAM_MANAGEMENT_ACCOUNT"
+        },
+        "output": {
+          "channelHandshakeDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/channel-handshake/ch-4fj3bd2o3vb91",
+            "id": "ch-4fj3bd2o3vb91"
+          }
+        },
+        "id": "example-4",
+        "title": "Example for CreateChannelHandshake - PROGRAM_MANAGEMENT_ACCOUNT"
+      }
+    ],
+    "CreateProgramManagementAccount": [
+      {
+        "input": {
+          "accountId": "111122223333",
+          "catalog": "AWS",
+          "clientToken": "clientToken",
+          "displayName": "TestDisplayName",
+          "program": "SOLUTION_PROVIDER"
+        },
+        "output": {
+          "programManagementAccountDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/program-management-account/pma-u8ic702rtzng8",
+            "id": "pma-u8ic702rtzng8"
+          }
+        },
+        "id": "example-1",
+        "title": "Example for CreateProgramManagementAccount"
+      }
+    ],
+    "CreateRelationship": [
+      {
+        "input": {
+          "associatedAccountId": "987654321012",
+          "associationType": "DOWNSTREAM_SELLER",
+          "catalog": "AWS",
+          "clientToken": "clientToken",
+          "displayName": "TestDisplayName",
+          "programManagementAccountIdentifier": "pma-u8ic702rtzng8",
+          "resaleAccountModel": "END_CUSTOMER",
+          "sector": "COMMERCIAL"
+        },
+        "output": {
+          "relationshipDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/program-management-account/pma-u8ic702rtzng8/relationship/rs-l9o4fj3b5zb91",
+            "id": "rs-l9o4fj3b5zb91"
+          }
+        },
+        "id": "example-1",
+        "title": "Example for CreateRelationship"
+      }
+    ],
+    "DeleteProgramManagementAccount": [
+      {
+        "input": {
+          "catalog": "AWS",
+          "clientToken": "clientToken",
+          "identifier": "pma-u8ic702rtzng8"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Example for DeleteProgramManagementAccount"
+      }
+    ],
+    "DeleteRelationship": [
+      {
+        "input": {
+          "catalog": "AWS",
+          "clientToken": "clientToken",
+          "identifier": "rs-l9o4fj3b5zb91",
+          "programManagementAccountIdentifier": "pma-u8ic702rtzng8"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Example for DeleteRelationship"
+      }
+    ],
+    "GetRelationship": [
+      {
+        "input": {
+          "catalog": "AWS",
+          "identifier": "rs-l9o4fj3b5zb91",
+          "programManagementAccountIdentifier": "pma-u8ic702rtzng8"
+        },
+        "output": {
+          "relationshipDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/program-management-account/pma-u8ic702rtzng8/relationship/rs-l9o4fj3b5zb91",
+            "associatedAccountId": "987654321012",
+            "associationType": "DOWNSTREAM_SELLER",
+            "createdAt": "2024-04-29T16:18:16Z",
+            "displayName": "TestDisplayName",
+            "id": "rs-l9o4fj3b5zb91",
+            "programManagementAccountId": "pma-u8ic702rtzng8",
+            "resaleAccountModel": "END_CUSTOMER",
+            "revision": "3",
+            "sector": "COMMERCIAL",
+            "updatedAt": "2024-05-02T16:18:16Z"
+          }
+        },
+        "id": "example-1",
+        "title": "Example for GetRelationship"
+      }
+    ],
+    "ListChannelHandshakes": [
+      {
+        "input": {
+          "associatedResourceIdentifiers": [
+            "rs-123abc456def7"
+          ],
+          "catalog": "AWS",
+          "handshakeType": "START_SERVICE_PERIOD",
+          "handshakeTypeFilters": {
+            "startServicePeriodTypeFilters": {
+              "servicePeriodTypes": [
+                "FIXED_COMMITMENT_PERIOD"
+              ]
+            }
+          },
+          "handshakeTypeSort": {
+            "startServicePeriodTypeSort": {
+              "sortBy": "UpdatedAt",
+              "sortOrder": "Descending"
+            }
+          },
+          "participantType": "SENDER",
+          "statuses": [
+            "ACCEPTED"
+          ]
+        },
+        "output": {
+          "items": [
+            {
+              "arn": "arn:aws:partnercentral:us-east-1:111122223333:catalog/AWS/channel-handshake/ch-4fj3bd2o3vb91",
+              "associatedResourceId": "rs-u8ic702rtfew1",
+              "catalog": "AWS",
+              "createdAt": "2025-04-29T16:18:16.000Z",
+              "detail": {
+                "startServicePeriodHandshakeDetail": {
+                  "minimumNoticeDays": "14",
+                  "note": "Optional_Note",
+                  "servicePeriodType": "MINIMUM_NOTICE_PERIOD"
+                }
+              },
+              "handshakeType": "START_SERVICE_PERIOD",
+              "id": "ch-4fj3bd2o3vb91",
+              "ownerAccountId": "111122223333",
+              "receiverAccountId": "333322221111",
+              "senderAccountId": "111122224444",
+              "status": "PENDING",
+              "updatedAt": "2025-05-02T16:18:16.000Z"
+            },
+            {
+              "arn": "arn:aws:partnercentral:us-east-1:111122223333:catalog/AWS/channel-handshake/ch-4fj3bd2o3vb92",
+              "associatedResourceId": "rs-u8ic702rtfew1",
+              "catalog": "AWS",
+              "createdAt": "2025-02-28T16:18:16.000Z",
+              "detail": {
+                "startServicePeriodHandshakeDetail": {
+                  "endDate": "2027-03-31T00:00:00.000Z",
+                  "note": "Optional_Note",
+                  "servicePeriodType": "FIXED_COMMITMENT_PERIOD",
+                  "startDate": "2025-02-02T00:00:00.000Z"
+                }
+              },
+              "handshakeType": "START_SERVICE_PERIOD",
+              "id": "ch-4fj3bd2o3vb92",
+              "ownerAccountId": "111122223333",
+              "receiverAccountId": "333322221111",
+              "senderAccountId": "111122224444",
+              "status": "PENDING",
+              "updatedAt": "2025-03-02T16:18:16.000Z"
+            }
+          ],
+          "nextToken": "nextToken"
+        },
+        "id": "example-1",
+        "title": "Example for ListChannelHandshakes - START_SERVICE_PERIOD"
+      },
+      {
+        "input": {
+          "associatedResourceIdentifiers": [
+            "rs-123abc456def7"
+          ],
+          "catalog": "AWS",
+          "handshakeType": "REVOKE_SERVICE_PERIOD",
+          "handshakeTypeFilters": {
+            "revokeServicePeriodTypeFilters": {
+              "servicePeriodTypes": [
+                "MINIMUM_NOTICE_PERIOD"
+              ]
+            }
+          },
+          "handshakeTypeSort": {
+            "revokeServicePeriodTypeSort": {
+              "sortBy": "UpdatedAt",
+              "sortOrder": "Descending"
+            }
+          },
+          "participantType": "SENDER",
+          "statuses": [
+            "ACCEPTED"
+          ]
+        },
+        "output": {
+          "items": [
+            {
+              "arn": "arn:aws:partnercentral:us-east-1:111122223333:catalog/AWS/channel-handshake/ch-4fj3bd2o3vb91",
+              "associatedResourceId": "rs-u8ic702rtfew1",
+              "catalog": "AWS",
+              "createdAt": "2025-04-29T16:18:16.000Z",
+              "detail": {
+                "revokeServicePeriodHandshakeDetail": {
+                  "minimumNoticeDays": "14",
+                  "note": "Optional_Note",
+                  "servicePeriodType": "MINIMUM_NOTICE_PERIOD"
+                }
+              },
+              "handshakeType": "REVOKE_SERVICE_PERIOD",
+              "id": "ch-4fj3bd2o3vb91",
+              "ownerAccountId": "111122223333",
+              "receiverAccountId": "333322221111",
+              "senderAccountId": "111122224444",
+              "status": "PENDING",
+              "updatedAt": "2025-05-02T16:18:16.000Z"
+            }
+          ],
+          "nextToken": "nextToken"
+        },
+        "id": "example-2",
+        "title": "Example for ListChannelHandshakes - REVOKE_SERVICE_PERIOD"
+      },
+      {
+        "input": {
+          "associatedResourceIdentifiers": [
+            "pma-123abc456def7"
+          ],
+          "catalog": "AWS",
+          "handshakeType": "PROGRAM_MANAGEMENT_ACCOUNT",
+          "handshakeTypeFilters": {
+            "programManagementAccountTypeFilters": {
+              "programs": [
+                "SOLUTION_PROVIDER"
+              ]
+            }
+          },
+          "handshakeTypeSort": {
+            "programManagementAccountTypeSort": {
+              "sortBy": "UpdatedAt",
+              "sortOrder": "Descending"
+            }
+          },
+          "maxResults": 20,
+          "nextToken": "nextToken",
+          "participantType": "SENDER",
+          "statuses": [
+            "ACCEPTED"
+          ]
+        },
+        "output": {
+          "items": [
+            {
+              "arn": "arn:aws:partnercentral:us-east-1:111122223333:catalog/AWS/channel-handshake/ch-4fj3bd2o3vb91",
+              "associatedResourceId": "pma-u8ic702rtfew1",
+              "catalog": "AWS",
+              "createdAt": "2025-02-28T16:18:16.000Z",
+              "detail": {
+                "programManagementAccountHandshakeDetail": {
+                  "program": "SOLUTION_PROVIDER"
+                }
+              },
+              "handshakeType": "PROGRAM_MANAGEMENT_ACCOUNT",
+              "id": "ch-4fj3bd2o3vb91",
+              "ownerAccountId": "111122223333",
+              "receiverAccountId": "333322221111",
+              "senderAccountId": "111122223333",
+              "status": "PENDING",
+              "updatedAt": "2025-03-02T16:18:16.000Z"
+            }
+          ],
+          "nextToken": "nextToken"
+        },
+        "id": "example-3",
+        "title": "Example for ListChannelHandshakes - PROGRAM_MANAGEMENT_ACCOUNT"
+      }
+    ],
+    "ListProgramManagementAccounts": [
+      {
+        "input": {
+          "accountIds": [
+            "111122223333"
+          ],
+          "catalog": "AWS",
+          "displayNames": [
+            "TestDisplayName"
+          ],
+          "maxResults": 20,
+          "programs": [
+            "SOLUTION_PROVIDER"
+          ],
+          "sort": {
+            "sortBy": "UpdatedAt",
+            "sortOrder": "Descending"
+          },
+          "statuses": [
+            "PENDING"
+          ]
+        },
+        "output": {
+          "items": [
+            {
+              "accountId": "111122223333",
+              "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/program-management-account/pma-u8ic702rtzng8",
+              "catalog": "AWS",
+              "createdAt": "2024-04-29T08:52:46.397Z",
+              "displayName": "TestDisplayName",
+              "id": "pma-u8ic702rtzng8",
+              "program": "SOLUTION_PROVIDER",
+              "revision": "4",
+              "status": "PENDING",
+              "updatedAt": "2024-05-02T16:18:16.432Z"
+            }
+          ],
+          "nextToken": "nextToken"
+        },
+        "id": "example-1",
+        "title": "Example for ListProgramManagementAccounts"
+      }
+    ],
+    "ListRelationships": [
+      {
+        "input": {
+          "associatedAccountIds": [
+            "123456789012"
+          ],
+          "associationTypes": [
+            "DOWNSTREAM_SELLER"
+          ],
+          "catalog": "AWS",
+          "displayNames": [
+            "TestDisplayName"
+          ],
+          "maxResults": 100,
+          "nextToken": "nextToken",
+          "programManagementAccountIdentifiers": [
+            "pma-u8ic702rtzng8"
+          ],
+          "sort": {
+            "sortBy": "UpdatedAt",
+            "sortOrder": "Descending"
+          }
+        },
+        "output": {
+          "items": [
+            {
+              "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/program-management-account/pma-u8ic702rtzng8/relationship/rs-l9o4fj3b5zb91",
+              "associatedAccountId": "987654321012",
+              "associationType": "DOWNSTREAM_SELLER",
+              "createdAt": "2024-04-29T16:18:16Z",
+              "displayName": "TestDisplayName",
+              "id": "rs-l9o4fj3b5zb91",
+              "programManagementAccountId": "pma-u8ic702rtzng8",
+              "revision": "3",
+              "updatedAt": "2024-05-02T16:18:16Z"
+            }
+          ],
+          "nextToken": "nextToken"
+        },
+        "id": "example-1",
+        "title": "Example for ListRelationships"
+      }
+    ],
+    "ListTagsForResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/program-management-account/pma-u8ic702rtzng8"
+        },
+        "output": {
+          "tags": [
+            {
+              "key": "ExampleKey",
+              "value": "ExampleValue"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Example for ListTagsForResource"
+      }
+    ],
+    "RejectChannelHandshake": [
+      {
+        "input": {
+          "catalog": "AWS",
+          "identifier": "ch-4fj3bd2o3vb91"
+        },
+        "output": {
+          "channelHandshakeDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/channel-handshake/ch-4fj3bd2o3vb91",
+            "id": "ch-4fj3bd2o3vb91",
+            "status": "REJECTED"
+          }
+        },
+        "id": "example-1",
+        "title": "Example for RejectChannelHandshake"
+      }
+    ],
+    "TagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/program-management-account/pma-u8ic702rtzng8/relationship/rs-l9o4fj3b5zb91",
+          "tags": [
+            {
+              "key": "ExampleKey",
+              "value": "ExampleValue"
+            }
+          ]
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Example for TagResource"
+      }
+    ],
+    "UntagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/channel-handshake/ch-4fj3bd2o3vb91",
+          "tagKeys": [
+            "ExampleKey"
+          ]
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Example for UntagResource"
+      }
+    ],
+    "UpdateProgramManagementAccount": [
+      {
+        "input": {
+          "catalog": "AWS",
+          "displayName": "TestDisplayName",
+          "identifier": "pma-u8ic702rtzng8",
+          "revision": "3"
+        },
+        "output": {
+          "programManagementAccountDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/program-management-account/pma-u8ic702rtzng8",
+            "displayName": "TestDisplayName",
+            "id": "pma-u8ic702rtzng8",
+            "revision": "4"
+          }
+        },
+        "id": "example-1",
+        "title": "Example for UpdateProgramManagementAccount"
+      }
+    ],
+    "UpdateRelationship": [
+      {
+        "input": {
+          "catalog": "AWS",
+          "displayName": "TestDisplayName",
+          "identifier": "rs-l9o4fj3b5zb91",
+          "programManagementAccountIdentifier": "pma-u8ic702rtzng8",
+          "revision": "3"
+        },
+        "output": {
+          "relationshipDetail": {
+            "arn": "arn:aws:partnercentral:us-east-1:123456789012:catalog/AWS/program-management-account/pma-u8ic702rtzng8/relationship/rs-l9o4fj3b5zb91",
+            "displayName": "TestDisplayName",
+            "id": "rs-l9o4fj3b5zb91",
+            "revision": "4"
+          }
+        },
+        "id": "example-1",
+        "title": "Example for UpdateRelationship"
+      }
+    ]
+  }
+}

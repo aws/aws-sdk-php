@@ -496,6 +496,31 @@
         "description": "The following example creates a new policy store with strict validation turned on.",
         "id": "example-1",
         "title": "To create policy store"
+      },
+      {
+        "input": {
+          "clientToken": "a1b2c3d4-e5f6-a1b2-c3d4-TOKEN1111111",
+          "encryptionSettings": {
+            "kmsEncryptionSettings": {
+              "key": "arn:aws:kms:us-east-1:123456789012:key/abcdefgh-ijkl-mnop-qrst-uvwxyz123456",
+              "encryptionContext": {
+                "policy_store_owner": "Tim"
+              }
+            }
+          },
+          "validationSettings": {
+            "mode": "STRICT"
+          }
+        },
+        "output": {
+          "arn": "arn:aws:verifiedpermissions::123456789012:policy-store/C7v5xMplfFH3i3e4Jrzb1a",
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "description": "The following example creates a new policy store with encryption settings based on a provided KMS key.",
+        "id": "example-2",
+        "title": "To create an encrypted policy store"
       }
     ],
     "CreatePolicyTemplate": [
@@ -626,6 +651,9 @@
         "output": {
           "arn": "arn:aws:verifiedpermissions::123456789012:policy-store/C7v5xMplfFH3i3e4Jrzb1a",
           "createdDate": "2024-08-12T18:20:50.99Z",
+          "encryptionState": {
+            "default": {}
+          },
           "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
           "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
           "validationSettings": {
@@ -635,6 +663,31 @@
         "description": "The following example retrieves details about the specified policy store.",
         "id": "example-1",
         "title": "GetPolicyStore"
+      },
+      {
+        "input": {
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "arn": "arn:aws:verifiedpermissions::123456789012:policy-store/C7v5xMplfFH3i3e4Jrzb1a",
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "encryptionState": {
+            "kmsEncryptionState": {
+              "key": "arn:aws:kms:us-east-1:123456789012:key/abcdefgh-ijkl-mnop-qrst-uvwxyz123456",
+              "encryptionContext": {
+                "policy_store_owner": "Tim"
+              }
+            }
+          },
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "validationSettings": {
+            "mode": "STRICT"
+          }
+        },
+        "description": "The following example retrieves details about the specified encrypted policy store.",
+        "id": "example-2",
+        "title": "GetPolicyStore that is encrypted"
       }
     ],
     "GetPolicyTemplate": [

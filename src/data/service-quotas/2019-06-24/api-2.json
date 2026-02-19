@@ -142,6 +142,22 @@
         {"shape":"ServiceException"}
       ]
     },
+    "GetQuotaUtilizationReport":{
+      "name":"GetQuotaUtilizationReport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetQuotaUtilizationReportRequest"},
+      "output":{"shape":"GetQuotaUtilizationReportResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NoSuchResourceException"},
+        {"shape":"IllegalArgumentException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceException"}
+      ]
+    },
     "GetRequestedServiceQuotaChange":{
       "name":"GetRequestedServiceQuotaChange",
       "http":{
@@ -370,6 +386,23 @@
         {"shape":"ServiceException"}
       ]
     },
+    "StartQuotaUtilizationReport":{
+      "name":"StartQuotaUtilizationReport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartQuotaUtilizationReportRequest"},
+      "output":{"shape":"StartQuotaUtilizationReportResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NoSuchResourceException"},
+        {"shape":"IllegalArgumentException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceException"},
+        {"shape":"InvalidPaginationTokenException"}
+      ]
+    },
     "StopAutoManagement":{
       "name":"StopAutoManagement",
       "http":{
@@ -466,6 +499,11 @@
         "ALL"
       ]
     },
+    "AppliedValue":{
+      "type":"double",
+      "max":10000000000,
+      "min":0
+    },
     "AssociateServiceQuotaTemplateRequest":{
       "type":"structure",
       "members":{}
@@ -493,6 +531,11 @@
     },
     "CustomerServiceEngagementId":{"type":"string"},
     "DateTime":{"type":"timestamp"},
+    "DefaultValue":{
+      "type":"double",
+      "max":10000000000,
+      "min":0
+    },
     "DeleteServiceQuotaIncreaseRequestFromTemplateRequest":{
       "type":"structure",
       "required":[
@@ -608,6 +651,28 @@
         "NotificationArn":{"shape":"AmazonResourceName"},
         "OptInStatus":{"shape":"OptInStatus"},
         "ExclusionList":{"shape":"ExclusionQuotaList"}
+      }
+    },
+    "GetQuotaUtilizationReportRequest":{
+      "type":"structure",
+      "required":["ReportId"],
+      "members":{
+        "ReportId":{"shape":"ReportId"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResultsUtilization"}
+      }
+    },
+    "GetQuotaUtilizationReportResponse":{
+      "type":"structure",
+      "members":{
+        "ReportId":{"shape":"ReportId"},
+        "Status":{"shape":"ReportStatus"},
+        "GeneratedAt":{"shape":"DateTime"},
+        "TotalCount":{"shape":"TotalCount"},
+        "Quotas":{"shape":"QuotaUtilizationInfoList"},
+        "NextToken":{"shape":"NextToken"},
+        "ErrorCode":{"shape":"ReportErrorCode"},
+        "ErrorMessage":{"shape":"ReportErrorMessage"}
       }
     },
     "GetRequestedServiceQuotaChangeRequest":{
@@ -812,6 +877,11 @@
       "max":100,
       "min":1
     },
+    "MaxResultsUtilization":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
     "MetricDimensionName":{"type":"string"},
     "MetricDimensionValue":{"type":"string"},
     "MetricDimensionsMapDefinition":{
@@ -972,10 +1042,62 @@
       }
     },
     "QuotaUnit":{"type":"string"},
+    "QuotaUtilizationInfo":{
+      "type":"structure",
+      "members":{
+        "QuotaCode":{"shape":"QuotaCode"},
+        "ServiceCode":{"shape":"ServiceCode"},
+        "QuotaName":{"shape":"QuotaName"},
+        "Namespace":{"shape":"QuotaMetricNamespace"},
+        "Utilization":{"shape":"UtilizationPct"},
+        "DefaultValue":{"shape":"DefaultValue"},
+        "AppliedValue":{"shape":"AppliedValue"},
+        "ServiceName":{"shape":"ServiceName"},
+        "Adjustable":{"shape":"QuotaAdjustable"}
+      }
+    },
+    "QuotaUtilizationInfoList":{
+      "type":"list",
+      "member":{"shape":"QuotaUtilizationInfo"},
+      "max":1000
+    },
     "QuotaValue":{
       "type":"double",
       "max":10000000000,
       "min":0
+    },
+    "ReportErrorCode":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z][a-zA-Z0-9]*"
+    },
+    "ReportErrorMessage":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"^.*$"
+    },
+    "ReportId":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[0-9a-zA-Z][a-zA-Z0-9-]{1,128}"
+    },
+    "ReportMessage":{
+      "type":"string",
+      "max":350,
+      "min":0,
+      "pattern":"^.{0,350}$"
+    },
+    "ReportStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED"
+      ]
     },
     "RequestId":{
       "type":"string",
@@ -1016,10 +1138,15 @@
         "INVALID_REQUEST"
       ]
     },
+    "RequestType":{
+      "type":"string",
+      "enum":["AutomaticManagement"]
+    },
     "RequestedServiceQuotaChange":{
       "type":"structure",
       "members":{
         "Id":{"shape":"RequestId"},
+        "RequestType":{"shape":"RequestType"},
         "CaseId":{"shape":"CustomerServiceEngagementId"},
         "ServiceCode":{"shape":"ServiceCode"},
         "ServiceName":{"shape":"ServiceName"},
@@ -1147,6 +1274,18 @@
       "type":"structure",
       "members":{}
     },
+    "StartQuotaUtilizationReportRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "StartQuotaUtilizationReportResponse":{
+      "type":"structure",
+      "members":{
+        "ReportId":{"shape":"ReportId"},
+        "Status":{"shape":"ReportStatus"},
+        "Message":{"shape":"ReportMessage"}
+      }
+    },
     "Statistic":{
       "type":"string",
       "max":256,
@@ -1228,6 +1367,11 @@
       },
       "exception":true
     },
+    "TotalCount":{
+      "type":"integer",
+      "max":2147483647,
+      "min":0
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -1254,6 +1398,7 @@
     "UpdateAutoManagementResponse":{
       "type":"structure",
       "members":{}
-    }
+    },
+    "UtilizationPct":{"type":"double"}
   }
 }

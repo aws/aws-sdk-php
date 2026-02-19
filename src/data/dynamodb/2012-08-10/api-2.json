@@ -1585,11 +1585,7 @@
     },
     "CreateTableInput":{
       "type":"structure",
-      "required":[
-        "AttributeDefinitions",
-        "TableName",
-        "KeySchema"
-      ],
+      "required":["TableName"],
       "members":{
         "AttributeDefinitions":{"shape":"AttributeDefinitions"},
         "TableName":{
@@ -1608,7 +1604,9 @@
         "DeletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
         "WarmThroughput":{"shape":"WarmThroughput"},
         "ResourcePolicy":{"shape":"ResourcePolicy"},
-        "OnDemandThroughput":{"shape":"OnDemandThroughput"}
+        "OnDemandThroughput":{"shape":"OnDemandThroughput"},
+        "GlobalTableSourceArn":{"shape":"TableArn"},
+        "GlobalTableSettingsReplicationMode":{"shape":"GlobalTableSettingsReplicationMode"}
       }
     },
     "CreateTableOutput":{
@@ -2430,6 +2428,14 @@
       },
       "exception":true
     },
+    "GlobalTableSettingsReplicationMode":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED",
+        "ENABLED_WITH_OVERRIDES"
+      ]
+    },
     "GlobalTableStatus":{
       "type":"string",
       "enum":[
@@ -2729,7 +2735,6 @@
     "KeySchema":{
       "type":"list",
       "member":{"shape":"KeySchemaElement"},
-      "max":2,
       "min":1
     },
     "KeySchemaAttributeName":{
@@ -3372,7 +3377,8 @@
         "WarmThroughput":{"shape":"TableWarmThroughputDescription"},
         "GlobalSecondaryIndexes":{"shape":"ReplicaGlobalSecondaryIndexDescriptionList"},
         "ReplicaInaccessibleDateTime":{"shape":"Date"},
-        "ReplicaTableClassSummary":{"shape":"TableClassSummary"}
+        "ReplicaTableClassSummary":{"shape":"TableClassSummary"},
+        "GlobalTableSettingsReplicationMode":{"shape":"GlobalTableSettingsReplicationMode"}
       }
     },
     "ReplicaDescriptionList":{
@@ -3956,6 +3962,7 @@
         "GlobalTableVersion":{"shape":"String"},
         "Replicas":{"shape":"ReplicaDescriptionList"},
         "GlobalTableWitnesses":{"shape":"GlobalTableWitnessDescriptionList"},
+        "GlobalTableSettingsReplicationMode":{"shape":"GlobalTableSettingsReplicationMode"},
         "RestoreSummary":{"shape":"RestoreSummary"},
         "SSEDescription":{"shape":"SSEDescription"},
         "ArchivalSummary":{"shape":"ArchivalSummary"},

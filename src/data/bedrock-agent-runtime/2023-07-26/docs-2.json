@@ -294,6 +294,18 @@
         "PayloadPart$attribution": "<p>Contains citations for a part of an agent response.</p>"
       }
     },
+    "AudioSegment": {
+      "base": "<p>Contains information about an audio segment retrieved from a knowledge base, including its location and transcription.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_ResponseSyntax\">Retrieve response</a> – in the <code>audio</code> field</p> </li> </ul>",
+      "refs": {
+        "RetrievalResultContent$audio": "<p>Audio segment information when the retrieval result contains audio content.</p>"
+      }
+    },
+    "AudioSegmentS3UriString": {
+      "base": null,
+      "refs": {
+        "AudioSegment$s3Uri": "<p>The S3 URI where this specific audio segment is stored in the multimodal storage destination.</p>"
+      }
+    },
     "BadGatewayException": {
       "base": "<p>There was an issue with a dependency due to a server issue. Retry your request.</p>",
       "refs": {
@@ -377,11 +389,11 @@
       "base": null,
       "refs": {
         "CodeInterpreterInvocationOutput$executionTimeout": "<p>Indicates if the execution of the code timed out.</p>",
-        "InvokeAgentRequest$endSession": "<p>Specifies whether to end the session with the agent or not.</p>",
         "InvokeAgentRequest$enableTrace": "<p>Specifies whether to turn on the trace or not to track the agent's reasoning process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p>",
+        "InvokeAgentRequest$endSession": "<p>Specifies whether to end the session with the agent or not.</p>",
         "InvokeFlowRequest$enableTrace": "<p>Specifies whether to return the trace for the flow or not. Traces track inputs and outputs for nodes in the flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
-        "InvokeInlineAgentRequest$endSession": "<p> Specifies whether to end the session with the inline agent or not. </p>",
         "InvokeInlineAgentRequest$enableTrace": "<p> Specifies whether to turn on the trace or not to track the agent's reasoning process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/trace-events.html\">Using trace</a>. </p>",
+        "InvokeInlineAgentRequest$endSession": "<p> Specifies whether to end the session with the inline agent or not. </p>",
         "ParameterDetail$required": "<p> Whether the parameter is required for the agent to complete the function for action group invocation. </p>",
         "PreProcessingParsedResponse$isValid": "<p>Whether the user input is valid or not. If <code>false</code>, the agent doesn't proceed to orchestration.</p>",
         "PromptCreationConfigurations$excludePreviousThinkingSteps": "<p>If <code>true</code>, the service removes any content between <code>&lt;thinking&gt;</code> tags from previous conversations in an agent session. The service will only remove content from already processed turns. This helps you remove content which might not be useful for current and subsequent invocations. This can reduce the input token count and potentially save costs. The default value is <code>false</code>.</p>",
@@ -567,10 +579,10 @@
     "CreationMode": {
       "base": null,
       "refs": {
-        "ModelInvocationInput$promptCreationMode": "<p>Specifies whether the default prompt template was <code>OVERRIDDEN</code>. If it was, the <code>basePromptTemplate</code> that was set in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html\">PromptOverrideConfiguration</a> object when the agent was created or updated is used instead.</p>",
         "ModelInvocationInput$parserMode": "<p>Specifies whether to override the default parser Lambda function when parsing the raw foundation model output in the part of the agent sequence defined by the <code>promptType</code>.</p>",
-        "PromptConfiguration$promptCreationMode": "<p>Specifies whether to override the default prompt template for this <code>promptType</code>. Set this value to <code>OVERRIDDEN</code> to use the prompt that you provide in the <code>basePromptTemplate</code>. If you leave it as <code>DEFAULT</code>, the agent uses a default prompt template.</p>",
-        "PromptConfiguration$parserMode": "<p>Specifies whether to override the default parser Lambda function when parsing the raw foundation model output in the part of the agent sequence defined by the <code>promptType</code>. If you set the field as <code>OVERRIDDEN</code>, the <code>overrideLambda</code> field in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html\">PromptOverrideConfiguration</a> must be specified with the ARN of a Lambda function.</p>"
+        "ModelInvocationInput$promptCreationMode": "<p>Specifies whether the default prompt template was <code>OVERRIDDEN</code>. If it was, the <code>basePromptTemplate</code> that was set in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html\">PromptOverrideConfiguration</a> object when the agent was created or updated is used instead.</p>",
+        "PromptConfiguration$parserMode": "<p>Specifies whether to override the default parser Lambda function when parsing the raw foundation model output in the part of the agent sequence defined by the <code>promptType</code>. If you set the field as <code>OVERRIDDEN</code>, the <code>overrideLambda</code> field in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html\">PromptOverrideConfiguration</a> must be specified with the ARN of a Lambda function.</p>",
+        "PromptConfiguration$promptCreationMode": "<p>Specifies whether to override the default prompt template for this <code>promptType</code>. Set this value to <code>OVERRIDDEN</code> to use the prompt that you provide in the <code>basePromptTemplate</code>. If you leave it as <code>DEFAULT</code>, the agent uses a default prompt template.</p>"
       }
     },
     "CustomControlMethod": {
@@ -613,15 +625,15 @@
         "FlowTraceNodeActionEvent$timestamp": "<p>The date and time that the operation was called.</p>",
         "FlowTraceNodeInputEvent$timestamp": "<p>The date and time that the trace was returned.</p>",
         "FlowTraceNodeOutputEvent$timestamp": "<p>The date and time that the trace was returned.</p>",
-        "GetFlowExecutionResponse$startedAt": "<p>The timestamp when the flow execution started.</p>",
         "GetFlowExecutionResponse$endedAt": "<p>The timestamp when the flow execution ended. This field is only populated when the execution has completed, failed, timed out, or been aborted.</p>",
+        "GetFlowExecutionResponse$startedAt": "<p>The timestamp when the flow execution started.</p>",
         "GetSessionResponse$createdAt": "<p>The timestamp for when the session was created.</p>",
         "GetSessionResponse$lastUpdatedAt": "<p>The timestamp for when the session was last modified.</p>",
         "InvocationStep$invocationStepTime": "<p>The timestamp for when the invocation step was created.</p>",
         "InvocationStepSummary$invocationStepTime": "<p>The timestamp for when the invocation step was created.</p>",
         "InvocationSummary$createdAt": "<p>The timestamp for when the invocation was created.</p>",
-        "MemorySessionSummary$sessionStartTime": "<p>The start time for this session.</p>",
         "MemorySessionSummary$sessionExpiryTime": "<p>The time when the memory duration for the session is set to end.</p>",
+        "MemorySessionSummary$sessionStartTime": "<p>The start time for this session.</p>",
         "NodeActionEvent$timestamp": "<p>The date and time that the operation was called.</p>",
         "NodeDependencyEvent$timestamp": "<p>The date and time that the dependency trace was generated.</p>",
         "NodeFailureEvent$timestamp": "<p>The timestamp when the node failure occurred.</p>",
@@ -755,8 +767,8 @@
     "FieldsForReranking": {
       "base": null,
       "refs": {
-        "RerankingMetadataSelectiveModeConfiguration$fieldsToInclude": "<p>An array of objects, each of which specifies a metadata field to include in consideration when reranking. The remaining metadata fields are ignored.</p>",
-        "RerankingMetadataSelectiveModeConfiguration$fieldsToExclude": "<p>An array of objects, each of which specifies a metadata field to exclude from consideration when reranking.</p>"
+        "RerankingMetadataSelectiveModeConfiguration$fieldsToExclude": "<p>An array of objects, each of which specifies a metadata field to exclude from consideration when reranking.</p>",
+        "RerankingMetadataSelectiveModeConfiguration$fieldsToInclude": "<p>An array of objects, each of which specifies a metadata field to include in consideration when reranking. The remaining metadata fields are ignored.</p>"
       }
     },
     "FileBody": {
@@ -800,15 +812,15 @@
       "base": "<p>Specifies the name that the metadata attribute must match and the value to which to compare the value of the metadata attribute. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html\">Query configurations</a>.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax\">RetrieveAndGenerate request</a> </p> </li> </ul>",
       "refs": {
         "RetrievalFilter$equals": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value matches the <code>value</code> in this object.</p> <p>The following example would return data sources with an <code>animal</code> attribute whose value is <code>cat</code>:</p> <p> <code>\"equals\": { \"key\": \"animal\", \"value\": \"cat\" }</code> </p>",
-        "RetrievalFilter$notEquals": "<p>Knowledge base data sources are returned when:</p> <ul> <li> <p>It contains a metadata attribute whose name matches the <code>key</code> and whose value doesn't match the <code>value</code> in this object.</p> </li> <li> <p>The key is not present in the document.</p> </li> </ul> <p>The following example would return data sources that don't contain an <code>animal</code> attribute whose value is <code>cat</code>.</p> <p> <code>\"notEquals\": { \"key\": \"animal\", \"value\": \"cat\" }</code> </p>",
         "RetrievalFilter$greaterThan": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is greater than the <code>value</code> in this object.</p> <p>The following example would return data sources with an <code>year</code> attribute whose value is greater than <code>1989</code>:</p> <p> <code>\"greaterThan\": { \"key\": \"year\", \"value\": 1989 }</code> </p>",
         "RetrievalFilter$greaterThanOrEquals": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is greater than or equal to the <code>value</code> in this object.</p> <p>The following example would return data sources with an <code>year</code> attribute whose value is greater than or equal to <code>1989</code>:</p> <p> <code>\"greaterThanOrEquals\": { \"key\": \"year\", \"value\": 1989 }</code> </p>",
+        "RetrievalFilter$in": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is in the list specified in the <code>value</code> in this object.</p> <p>The following example would return data sources with an <code>animal</code> attribute that is either <code>cat</code> or <code>dog</code>:</p> <p> <code>\"in\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }</code> </p>",
         "RetrievalFilter$lessThan": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is less than the <code>value</code> in this object.</p> <p>The following example would return data sources with an <code>year</code> attribute whose value is less than to <code>1989</code>.</p> <p> <code>\"lessThan\": { \"key\": \"year\", \"value\": 1989 }</code> </p>",
         "RetrievalFilter$lessThanOrEquals": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is less than or equal to the <code>value</code> in this object.</p> <p>The following example would return data sources with an <code>year</code> attribute whose value is less than or equal to <code>1989</code>.</p> <p> <code>\"lessThanOrEquals\": { \"key\": \"year\", \"value\": 1989 }</code> </p>",
-        "RetrievalFilter$in": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is in the list specified in the <code>value</code> in this object.</p> <p>The following example would return data sources with an <code>animal</code> attribute that is either <code>cat</code> or <code>dog</code>:</p> <p> <code>\"in\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }</code> </p>",
+        "RetrievalFilter$listContains": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is a list that contains the <code>value</code> as one of its members.</p> <p>The following example would return data sources with an <code>animals</code> attribute that is a list containing a <code>cat</code> member (for example <code>[\"dog\", \"cat\"]</code>).</p> <p> <code>\"listContains\": { \"key\": \"animals\", \"value\": \"cat\" }</code> </p>",
+        "RetrievalFilter$notEquals": "<p>Knowledge base data sources are returned when:</p> <ul> <li> <p>It contains a metadata attribute whose name matches the <code>key</code> and whose value doesn't match the <code>value</code> in this object.</p> </li> <li> <p>The key is not present in the document.</p> </li> </ul> <p>The following example would return data sources that don't contain an <code>animal</code> attribute whose value is <code>cat</code>.</p> <p> <code>\"notEquals\": { \"key\": \"animal\", \"value\": \"cat\" }</code> </p>",
         "RetrievalFilter$notIn": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value isn't in the list specified in the <code>value</code> in this object.</p> <p>The following example would return data sources whose <code>animal</code> attribute is neither <code>cat</code> nor <code>dog</code>.</p> <p> <code>\"notIn\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }</code> </p>",
         "RetrievalFilter$startsWith": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value starts with the <code>value</code> in this object. This filter is currently only supported for Amazon OpenSearch Serverless vector stores.</p> <p>The following example would return data sources with an <code>animal</code> attribute starts with <code>ca</code> (for example, <code>cat</code> or <code>camel</code>).</p> <p> <code>\"startsWith\": { \"key\": \"animal\", \"value\": \"ca\" }</code> </p>",
-        "RetrievalFilter$listContains": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is a list that contains the <code>value</code> as one of its members.</p> <p>The following example would return data sources with an <code>animals</code> attribute that is a list containing a <code>cat</code> member (for example <code>[\"dog\", \"cat\"]</code>).</p> <p> <code>\"listContains\": { \"key\": \"animals\", \"value\": \"cat\" }</code> </p>",
         "RetrievalFilter$stringContains": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is one of the following:</p> <ul> <li> <p>A string that contains the <code>value</code> as a substring. The following example would return data sources with an <code>animal</code> attribute that contains the substring <code>at</code> (for example <code>cat</code>).</p> <p> <code>\"stringContains\": { \"key\": \"animal\", \"value\": \"at\" }</code> </p> </li> <li> <p>A list with a member that contains the <code>value</code> as a substring. The following example would return data sources with an <code>animals</code> attribute that is a list containing a member that contains the substring <code>at</code> (for example <code>[\"dog\", \"cat\"]</code>).</p> <p> <code>\"stringContains\": { \"key\": \"animals\", \"value\": \"at\" }</code> </p> </li> </ul>"
       }
     },
@@ -1739,6 +1751,24 @@
         "SessionState$files": "<p>Contains information about the files used by code interpreter.</p>"
       }
     },
+    "InputImage": {
+      "base": "<p>Contains the image data for multimodal knowledge base queries, including format and content.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_RequestSyntax\">Retrieve request</a> – in the <code>image</code> field</p> </li> </ul>",
+      "refs": {
+        "KnowledgeBaseQuery$image": "<p>An image to include in the knowledge base query for multimodal retrieval.</p>"
+      }
+    },
+    "InputImageFormat": {
+      "base": null,
+      "refs": {
+        "InputImage$format": "<p>The format of the input image. Supported formats include png, gif, jpeg, and webp.</p>"
+      }
+    },
+    "InputImageInlineContentBlob": {
+      "base": null,
+      "refs": {
+        "InputImage$inlineContent": "<p>The base64-encoded image data for inline image content. Maximum size is 5MB.</p>"
+      }
+    },
     "InputPrompt": {
       "base": "<p>Contains information about the prompt to optimize.</p>",
       "refs": {
@@ -1967,6 +1997,12 @@
         "KnowledgeBaseQuery$text": "<p>The text of the query made to the knowledge base.</p>"
       }
     },
+    "KnowledgeBaseQueryType": {
+      "base": null,
+      "refs": {
+        "KnowledgeBaseQuery$type": "<p>The type of query being performed.</p>"
+      }
+    },
     "KnowledgeBaseRetrievalConfiguration": {
       "base": "<p>Contains configurations for knowledge base query. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html\">Query configurations</a>.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_RequestSyntax\">Retrieve request</a> – in the <code>retrievalConfiguration</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax\">RetrieveAndGenerate request</a> – in the <code>retrievalConfiguration</code> field</p> </li> </ul>",
       "refs": {
@@ -2078,8 +2114,8 @@
     "Long": {
       "base": null,
       "refs": {
-        "Metadata$totalTimeMs": "<p> The total execution time for the specific invocation being processed (model, knowledge base, guardrail, agent collaborator, or code interpreter). It represents how long the individual invocation took.</p>",
-        "Metadata$operationTotalTimeMs": "<p>The total time it took for the agent to complete execution. This field is only set for the final response.</p>"
+        "Metadata$operationTotalTimeMs": "<p>The total time it took for the agent to complete execution. This field is only set for the final response.</p>",
+        "Metadata$totalTimeMs": "<p> The total execution time for the specific invocation being processed (model, knowledge base, guardrail, agent collaborator, or code interpreter). It represents how long the individual invocation took.</p>"
       }
     },
     "MaxResults": {
@@ -2890,7 +2926,7 @@
     "RerankResultIndexInteger": {
       "base": null,
       "refs": {
-        "RerankResult$index": "<p>The ranking of the document. The lower a number, the higher the document is ranked.</p>"
+        "RerankResult$index": "<p>The original index of the document from the input sources array.</p>"
       }
     },
     "RerankResultsList": {
@@ -3139,7 +3175,7 @@
     "RetrieveAndGenerateInputTextString": {
       "base": null,
       "refs": {
-        "RetrieveAndGenerateInput$text": "<p>The query made to the knowledge base.</p>"
+        "RetrieveAndGenerateInput$text": "<p>The query made to the knowledge base, in characters.</p>"
       }
     },
     "RetrieveAndGenerateOutput": {
@@ -3486,17 +3522,18 @@
         "AnalyzePromptEvent$message": "<p>A message describing the analysis of the prompt.</p>",
         "ApiContentMap$key": null,
         "ApiInvocationInput$actionGroup": "<p>The action group that the API operation belongs to.</p>",
-        "ApiInvocationInput$httpMethod": "<p>The HTTP method of the API operation.</p>",
         "ApiInvocationInput$agentId": "<p>The agent's ID.</p>",
+        "ApiInvocationInput$httpMethod": "<p>The HTTP method of the API operation.</p>",
         "ApiParameter$name": "<p>The name of the parameter.</p>",
         "ApiParameter$type": "<p>The data type for the parameter.</p>",
         "ApiParameter$value": "<p>The value of the parameter.</p>",
         "ApiResult$actionGroup": "<p>The action group that the API operation belongs to.</p>",
-        "ApiResult$httpMethod": "<p>The HTTP method for the API operation.</p>",
         "ApiResult$agentId": "<p>The agent's ID.</p>",
+        "ApiResult$httpMethod": "<p>The HTTP method for the API operation.</p>",
+        "AudioSegment$transcription": "<p>The text transcription of the audio segment content.</p>",
         "CodeInterpreterInvocationInput$code": "<p>The code for the code interpreter to use.</p>",
-        "CodeInterpreterInvocationOutput$executionOutput": "<p>Contains the successful output returned from code execution</p>",
         "CodeInterpreterInvocationOutput$executionError": "<p>Contains the error returned from code execution.</p>",
+        "CodeInterpreterInvocationOutput$executionOutput": "<p>Contains the successful output returned from code execution</p>",
         "ContentBlock$text": "<p>The block's text.</p>",
         "ContentBody$body": "<p>The body of the API response.</p>",
         "ContentMap$key": null,
@@ -3505,35 +3542,35 @@
         "FlowExecutionError$message": "<p>A descriptive message that provides details about the error.</p>",
         "FlowFailureEvent$errorMessage": "<p>A descriptive message that provides details about the failure.</p>",
         "FlowTraceCondition$conditionName": "<p>The name of the condition.</p>",
+        "FlowTraceNodeActionEvent$operationName": "<p>The name of the operation that the node called.</p>",
         "FlowTraceNodeActionEvent$requestId": "<p>The ID of the request that the node made to the operation.</p>",
         "FlowTraceNodeActionEvent$serviceName": "<p>The name of the service that the node called.</p>",
-        "FlowTraceNodeActionEvent$operationName": "<p>The name of the operation that the node called.</p>",
         "FunctionInvocationInput$actionGroup": "<p>The action group that the function belongs to.</p>",
-        "FunctionInvocationInput$function": "<p>The name of the function.</p>",
         "FunctionInvocationInput$agentId": "<p>The agent's ID.</p>",
+        "FunctionInvocationInput$function": "<p>The name of the function.</p>",
         "FunctionParameter$name": "<p>The name of the parameter.</p>",
         "FunctionParameter$type": "<p>The data type of the parameter.</p>",
         "FunctionParameter$value": "<p>The value of the parameter.</p>",
         "FunctionResult$actionGroup": "<p>The action group that the function belongs to.</p>",
-        "FunctionResult$function": "<p>The name of the function that was called.</p>",
         "FunctionResult$agentId": "<p>The agent's ID.</p>",
+        "FunctionResult$function": "<p>The name of the function that was called.</p>",
         "GeneratedQuery$sql": "<p>An SQL query that corresponds to the natural language query.</p>",
         "GetExecutionFlowSnapshotResponse$definition": "<p>The flow definition used for the flow execution, including the nodes, connections, and configuration at the time when the execution started.</p> <p>The definition returns as a string that follows the structure of a <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_FlowDefinition.html\">FlowDefinition</a> object.</p>",
         "GuardrailCustomWord$match": "<p>The match details for the custom word filter in the Guardrail.</p>",
         "GuardrailManagedWord$match": "<p>The match details for the managed word filter in the Guardrail.</p>",
         "GuardrailPiiEntityFilter$match": "<p>The match to settings in the Guardrail filter to identify and remove PII.</p>",
+        "GuardrailRegexFilter$match": "<p>The match details for the regex filter used in the Guardrail.</p>",
         "GuardrailRegexFilter$name": "<p>The name details for the regex filter used in the Guardrail.</p>",
         "GuardrailRegexFilter$regex": "<p>The regex details for the regex filter used in the Guardrail.</p>",
-        "GuardrailRegexFilter$match": "<p>The match details for the regex filter used in the Guardrail.</p>",
         "GuardrailTopic$name": "<p>The name details on a specific topic in the Guardrail.</p>",
         "InlineAgentReturnControlPayload$invocationId": "<p>The identifier of the action group invocation. </p>",
         "InlineSessionState$invocationId": "<p> The identifier of the invocation of an action. This value must match the <code>invocationId</code> returned in the <code>InvokeInlineAgent</code> response for the action whose results are provided in the <code>returnControlInvocationResults</code> field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html\">Return control to the agent developer</a>. </p>",
         "InputFile$name": "<p>The name of the source file.</p>",
         "InternalServerException$reason": "<p>The reason for the exception. If the reason is <code>BEDROCK_MODEL_INVOCATION_SERVICE_UNAVAILABLE</code>, the model invocation service is unavailable. Retry your request.</p>",
         "Metadata$clientRequestId": "<p>A unique identifier associated with the downstream invocation. This ID can be used for tracing, debugging, and identifying specific invocations in customer logs or systems.</p>",
+        "NodeActionEvent$operationName": "<p>The name of the operation that the node called.</p>",
         "NodeActionEvent$requestId": "<p>The ID of the request that the node made to the operation.</p>",
         "NodeActionEvent$serviceName": "<p>The name of the service that the node called.</p>",
-        "NodeActionEvent$operationName": "<p>The name of the operation that the node called.</p>",
         "NodeFailureEvent$errorMessage": "<p>A descriptive message that provides details about the node failure.</p>",
         "OutputFile$name": "<p>The name of the file containing response from code interpreter.</p>",
         "Parameter$name": "<p>The name of the parameter.</p>",
@@ -3542,13 +3579,13 @@
         "PromptSessionAttributesMap$key": null,
         "PromptSessionAttributesMap$value": null,
         "RawResponse$content": "<p>The foundation model's raw output content.</p>",
-        "ReasoningTextBlock$text": "<p>Text describing the reasoning that the model used to return the content in the content block.</p>",
         "ReasoningTextBlock$signature": "<p>A hash of all the messages in the conversation to ensure that the content in the reasoning text block isn't tampered with. You must submit the signature in subsequent <code>Converse</code> requests, in addition to the previous messages. If the previous messages are tampered with, the response throws an error.</p>",
+        "ReasoningTextBlock$text": "<p>Text describing the reasoning that the model used to return the content in the content block.</p>",
         "RepromptResponse$text": "<p>The text reprompting the input.</p>",
         "ResponseBody$key": null,
         "RetrievalResultConfluenceLocation$url": "<p>The Confluence host URL for the data source location.</p>",
-        "RetrievalResultContent$text": "<p>The cited text from the data source.</p>",
         "RetrievalResultContent$byteContent": "<p>A data URI with base64-encoded content from the data source. The URI is in the following format: returned in the following format: <code>data:image/jpeg;base64,${base64-encoded string}</code>.</p>",
+        "RetrievalResultContent$text": "<p>The cited text from the data source.</p>",
         "RetrievalResultContentColumn$columnName": "<p>The name of the column.</p>",
         "RetrievalResultContentColumn$columnValue": "<p>The value in the column.</p>",
         "RetrievalResultCustomDocumentLocation$id": "<p>The ID of the document.</p>",
@@ -3567,7 +3604,8 @@
         "SessionAttributesMap$value": null,
         "SessionState$invocationId": "<p>The identifier of the invocation of an action. This value must match the <code>invocationId</code> returned in the <code>InvokeAgent</code> response for the action whose results are provided in the <code>returnControlInvocationResults</code> field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html\">Return control to the agent developer</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html\">Control session context</a>.</p>",
         "StopSequences$member": null,
-        "TextResponsePart$text": "<p>The part of the generated text that contains a citation.</p>"
+        "TextResponsePart$text": "<p>The part of the generated text that contains a citation.</p>",
+        "VideoSegment$summary": "<p>A text summary describing the content of the video segment.</p>"
       }
     },
     "SummaryText": {
@@ -3580,8 +3618,8 @@
       "base": null,
       "refs": {
         "InlineAgentTracePart$eventTime": "<p>The time that trace occurred. </p>",
-        "Metadata$startTime": "<p>In the final response, <code>startTime</code> is the start time of the agent invocation operation.</p>",
         "Metadata$endTime": "<p>In the final response, <code>endTime</code> is the end time of the agent invocation operation.</p>",
+        "Metadata$startTime": "<p>In the final response, <code>startTime</code> is the start time of the agent invocation operation.</p>",
         "TracePart$eventTime": "<p> The time of the trace. </p>"
       }
     },
@@ -3651,7 +3689,7 @@
     "TextPromptTemplate": {
       "base": null,
       "refs": {
-        "PromptTemplate$textPromptTemplate": "<p>The template for the prompt that's sent to the model for response generation. You can include prompt placeholders, which become replaced before the prompt is sent to the model to provide instructions and context to the model. In addition, you can include XML tags to delineate meaningful sections of the prompt template.</p> <p>For more information, see the following resources:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html#kb-test-config-sysprompt\">Knowledge base prompt templates</a> </p> </li> <li> <p> <a href=\"https://docs.anthropic.com/claude/docs/use-xml-tags\">Use XML tags with Anthropic Claude models</a> </p> </li> </ul>"
+        "PromptTemplate$textPromptTemplate": "<p>The template for the prompt that's sent to the model for response generation. You can include prompt placeholders, which become replaced before the prompt is sent to the model to provide instructions and context to the model. In addition, you can include XML tags to delineate meaningful sections of the prompt template.</p> <p>For more information, see the following resources:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html#kb-test-config-sysprompt\">Knowledge base prompt templates</a> </p> </li> <li> <p> <a href=\"https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/use-xml-tags\">Use XML tags with Anthropic Claude models</a> </p> </li> </ul>"
       }
     },
     "TextPromptTextString": {
@@ -3787,20 +3825,20 @@
       "base": null,
       "refs": {
         "CreateInvocationRequest$invocationId": "<p>A unique identifier for the invocation in UUID format.</p>",
-        "CreateInvocationResponse$sessionId": "<p>The unique identifier for the session associated with the invocation.</p>",
         "CreateInvocationResponse$invocationId": "<p>The unique identifier for the invocation.</p>",
+        "CreateInvocationResponse$sessionId": "<p>The unique identifier for the session associated with the invocation.</p>",
         "CreateSessionResponse$sessionId": "<p>The unique identifier for the session.</p>",
         "EndSessionResponse$sessionId": "<p>The unique identifier of the session you ended.</p>",
         "GetInvocationStepRequest$invocationStepId": "<p>The unique identifier (in UUID format) for the specific invocation step to retrieve.</p>",
         "GetSessionResponse$sessionId": "<p>The unique identifier for the session in UUID format.</p>",
-        "InvocationStep$sessionId": "<p>The unique identifier of the session containing the invocation step.</p>",
         "InvocationStep$invocationId": "<p>The unique identifier (in UUID format) for the invocation that includes the invocation step.</p>",
         "InvocationStep$invocationStepId": "<p>The unique identifier (in UUID format) for the invocation step.</p>",
-        "InvocationStepSummary$sessionId": "<p>The unique identifier for the session associated with the invocation step.</p>",
+        "InvocationStep$sessionId": "<p>The unique identifier of the session containing the invocation step.</p>",
         "InvocationStepSummary$invocationId": "<p>A unique identifier for the invocation in UUID format.</p>",
         "InvocationStepSummary$invocationStepId": "<p>The unique identifier (in UUID format) for the invocation step.</p>",
-        "InvocationSummary$sessionId": "<p>The unique identifier for the session associated with the invocation.</p>",
+        "InvocationStepSummary$sessionId": "<p>The unique identifier for the session associated with the invocation step.</p>",
         "InvocationSummary$invocationId": "<p>A unique identifier for the invocation in UUID format.</p>",
+        "InvocationSummary$sessionId": "<p>The unique identifier for the session associated with the invocation.</p>",
         "PutInvocationStepRequest$invocationStepId": "<p>The unique identifier of the invocation step in UUID format.</p>",
         "PutInvocationStepResponse$invocationStepId": "<p>The unique identifier of the invocation step in UUID format.</p>",
         "SessionSummary$sessionId": "<p>The unique identifier for the session.</p>",
@@ -3859,6 +3897,18 @@
         "FlowExecutionSummary$flowVersion": "<p>The version of the flow used for the execution.</p>",
         "GetExecutionFlowSnapshotResponse$flowVersion": "<p>The version of the flow used for the flow execution.</p>",
         "GetFlowExecutionResponse$flowVersion": "<p>The version of the flow used for the execution.</p>"
+      }
+    },
+    "VideoSegment": {
+      "base": "<p>Contains information about a video segment retrieved from a knowledge base, including its location and summary.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_ResponseSyntax\">Retrieve response</a> – in the <code>video</code> field</p> </li> </ul>",
+      "refs": {
+        "RetrievalResultContent$video": "<p>Video segment information when the retrieval result contains video content.</p>"
+      }
+    },
+    "VideoSegmentS3UriString": {
+      "base": null,
+      "refs": {
+        "VideoSegment$s3Uri": "<p>The S3 URI where this specific video segment is stored in the multimodal storage destination.</p>"
       }
     }
   }

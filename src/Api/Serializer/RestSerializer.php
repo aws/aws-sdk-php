@@ -146,7 +146,7 @@ abstract class RestSerializer
             // This path skips setting the content-type header usually done in
             // RestJsonSerializer and RestXmlSerializer.certain S3 and glacier
             // operations determine content type in Middleware::ContentType()
-            if (!isset(self::$excludeContentType[$this->api->getServiceName()])) {
+            if (!isset(self::$excludeContentType[$this->api->getServiceName() ?? ''])) {
                 switch ($type) {
                     case 'string':
                         $opts['headers']['Content-Type'] = 'text/plain';

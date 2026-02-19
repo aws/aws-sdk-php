@@ -78,6 +78,7 @@
     "UntagResource": "<p>Removes a tag or list of tags from a resource.</p>",
     "UpdateAnalysisTemplate": "<p>Updates the analysis template metadata.</p>",
     "UpdateCollaboration": "<p>Updates collaboration metadata and can only be called by the collaboration owner.</p>",
+    "UpdateCollaborationChangeRequest": "<p>Updates an existing collaboration change request. This operation allows approval actions for pending change requests in collaborations (APPROVE, DENY, CANCEL, COMMIT).</p> <p>For change requests without automatic approval, a member in the collaboration can manually APPROVE or DENY a change request. The collaboration owner can manually CANCEL or COMMIT a change request.</p>",
     "UpdateConfiguredAudienceModelAssociation": "<p>Provides the details necessary to update a configured audience model association.</p>",
     "UpdateConfiguredTable": "<p>Updates a configured table.</p>",
     "UpdateConfiguredTableAnalysisRule": "<p>Updates a configured table analysis rule.</p>",
@@ -149,6 +150,7 @@
       "refs": {
         "AllowedResultReceivers$member": null,
         "AnalysisRuleCustomAllowedAnalysisProvidersList$member": null,
+        "ApprovalStatuses$key": null,
         "Collaboration$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "CollaborationAnalysisTemplate$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "CollaborationAnalysisTemplateSummary$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
@@ -595,6 +597,31 @@
         "UpdateCollaborationInput$analyticsEngine": "<p>The analytics engine.</p> <note> <p>After July 16, 2025, the <code>CLEAN_ROOMS_SQL</code> parameter will no longer be available. </p> </note>"
       }
     },
+    "ApprovalStatus": {
+      "base": null,
+      "refs": {
+        "ApprovalStatusDetails$status": "<p>The approval status of a member's vote on the change request. Valid values are PENDING (if they haven't voted), APPROVED, or DENIED.</p>"
+      }
+    },
+    "ApprovalStatusDetails": {
+      "base": "<p>Contains detailed information about the approval state of a given member in the collaboration for a given collaboration change request.</p>",
+      "refs": {
+        "ApprovalStatuses$value": null
+      }
+    },
+    "ApprovalStatuses": {
+      "base": null,
+      "refs": {
+        "CollaborationChangeRequest$approvals": "<p>A list of approval details from collaboration members, including approval status and multi-party approval workflow information.</p>",
+        "CollaborationChangeRequestSummary$approvals": "<p>Summary of approval statuses from all collaboration members for this change request.</p>"
+      }
+    },
+    "AthenaCatalogName": {
+      "base": null,
+      "refs": {
+        "AthenaTableReference$catalogName": "<p> The catalog name.</p>"
+      }
+    },
     "AthenaDatabaseName": {
       "base": null,
       "refs": {
@@ -635,6 +662,7 @@
       "base": null,
       "refs": {
         "Collaboration$autoApprovedChangeTypes": "<p>The types of change requests that are automatically approved for this collaboration.</p>",
+        "CollaborationChangeSpecification$autoApprovedChangeTypes": "<p>Defines requested updates to properties of the collaboration. Currently, this only supports modifying which change types are auto-approved for the collaboration.</p>",
         "CreateCollaborationInput$autoApprovedChangeRequestTypes": "<p>The types of change requests that are automatically approved for this collaboration.</p>"
       }
     },
@@ -720,10 +748,15 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "AnalysisTemplateSummary$isSyntheticData": "<p>Indicates if this analysis template summary generated synthetic data.</p>",
+        "Collaboration$isMetricsEnabled": "<p>An indicator as to whether metrics are enabled for the collaboration.</p> <p>When <code>true</code>, collaboration members can opt in to Amazon CloudWatch metrics for their membership queries.</p>",
+        "CollaborationAnalysisTemplateSummary$isSyntheticData": "<p>Indicates if this collaboration analysis template uses synthetic data generation.</p>",
         "CollaborationChangeRequest$isAutoApproved": "<p>Whether the change request was automatically approved based on the collaboration's auto-approval settings.</p>",
         "CollaborationChangeRequestSummary$isAutoApproved": "<p>Whether the change request was automatically approved.</p>",
         "ConfiguredAudienceModelAssociation$manageResourcePolicies": "<p>When <code>TRUE</code>, indicates that the resource policy for the configured audience model resource being associated is configured for Clean Rooms to manage permissions related to the given collaboration. When <code>FALSE</code>, indicates that the configured audience model resource owner will manage permissions related to the given collaboration.</p>",
+        "CreateCollaborationInput$isMetricsEnabled": "<p>An indicator as to whether metrics have been enabled or disabled for the collaboration.</p> <p>When <code>true</code>, collaboration members can opt in to Amazon CloudWatch metrics for their membership queries. The default value is <code>false</code>.</p>",
         "CreateConfiguredAudienceModelAssociationInput$manageResourcePolicies": "<p>When <code>TRUE</code>, indicates that the resource policy for the configured audience model resource being associated is configured for Clean Rooms to manage permissions related to the given collaboration. When <code>FALSE</code>, indicates that the configured audience model resource owner will manage permissions related to the given collaboration.</p> <p>Setting this to <code>TRUE</code> requires you to have permissions to create, update, and delete the resource policy for the <code>cleanrooms-ml</code> resource when you call the <a>DeleteConfiguredAudienceModelAssociation</a> resource. In addition, if you are the collaboration creator and specify <code>TRUE</code>, you must have the same permissions when you call the <a>DeleteMember</a> and <a>DeleteCollaboration</a> APIs.</p>",
+        "CreateMembershipInput$isMetricsEnabled": "<p>An indicator as to whether Amazon CloudWatch metrics have been enabled or disabled for the membership.</p> <p>Amazon CloudWatch metrics are only available when the collaboration has metrics enabled. This option can be set by collaboration members who have the ability to run queries (analysis runners) or by members who are configured as payers.</p> <p>When <code>true</code>, metrics about query execution are collected in Amazon CloudWatch. The default value is <code>false</code>.</p>",
         "DataEncryptionMetadata$allowCleartext": "<p>Indicates whether encrypted tables can contain cleartext data (<code>TRUE</code>) or are to cryptographically process every column (<code>FALSE</code>).</p>",
         "DataEncryptionMetadata$allowDuplicates": "<p>Indicates whether Fingerprint columns can contain duplicate entries (<code>TRUE</code>) or are to contain only non-repeated values (<code>FALSE</code>).</p>",
         "DataEncryptionMetadata$allowJoinsOnColumnsWithDifferentNames": "<p>Indicates whether Fingerprint columns can be joined on any other Fingerprint column with a different name (<code>TRUE</code>) or can only be joined on Fingerprint columns of the same name (<code>FALSE</code>).</p>",
@@ -732,14 +765,18 @@
         "IdMappingTableInputReferenceConfig$manageResourcePolicies": "<p>When <code>TRUE</code>, Clean Rooms manages permissions for the ID mapping table resource. </p> <p>When <code>FALSE</code>, the resource owner manages permissions for the ID mapping table resource.</p>",
         "IdNamespaceAssociationInputReferenceConfig$manageResourcePolicies": "<p>When <code>TRUE</code>, Clean Rooms manages permissions for the ID namespace association resource.</p> <p>When <code>FALSE</code>, the resource owner manages permissions for the ID namespace association resource.</p>",
         "JobComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query and job compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query and job compute costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for query and job compute costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can run queries and jobs.</p>",
+        "Membership$isMetricsEnabled": "<p>An indicator as to whether Amazon CloudWatch metrics are enabled for the membership.</p> <p>When <code>true</code>, metrics about query execution are collected in Amazon CloudWatch.</p>",
         "MembershipJobComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for job compute costs (<code>TRUE</code>) or has not accepted to pay for query and job compute costs (<code>FALSE</code>).</p> <p>There is only one member who pays for queries and jobs. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for query and job compute costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for query and job compute costs. </p> </li> </ul>",
         "MembershipModelInferencePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for model inference costs (<code>TRUE</code>) or has not accepted to pay for model inference costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for model inference costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for model inference costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for model inference costs. </p> </li> </ul>",
         "MembershipModelTrainingPaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for model training costs (<code>TRUE</code>) or has not accepted to pay for model training costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for model training costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for model training costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for model training costs. </p> </li> </ul>",
         "MembershipQueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for query compute costs (<code>TRUE</code>) or has not accepted to pay for query compute costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for query compute costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for query compute costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for query compute costs. </p> </li> </ul>",
+        "MembershipSyntheticDataGenerationPaymentConfig$isResponsible": "<p>Indicates if this membership is responsible for paying for synthetic data generation.</p>",
         "ModelInferencePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for model inference costs (<code>TRUE</code>) or has not configured the collaboration member to pay for model inference costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for model inference costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for model inference costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
         "ModelTrainingPaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for model training costs (<code>TRUE</code>) or has not configured the collaboration member to pay for model training costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for model training costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for model training costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
         "ProtectedQueryS3OutputConfiguration$singleFileOutput": "<p>Indicates whether files should be output as a single file (<code>TRUE</code>) or output as multiple files (<code>FALSE</code>). This parameter is only supported for analyses with the Spark analytics engine.</p>",
-        "QueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query compute costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for query compute costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for query compute costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>"
+        "QueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query compute costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for query compute costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for query compute costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
+        "SyntheticDataColumnProperties$isPredictiveValue": "<p>Indicates if this column contains predictive values that should be treated as target variables in machine learning models. This affects how the synthetic data generation preserves statistical relationships.</p>",
+        "SyntheticDataGenerationPaymentConfig$isResponsible": "<p>Indicates who is responsible for paying for synthetic data generation.</p>"
       }
     },
     "Budget": {
@@ -796,6 +833,12 @@
       "refs": {
         "CollaborationChangeRequest$changes": "<p>The list of changes specified in this change request.</p>",
         "CollaborationChangeRequestSummary$changes": "<p>Summary of the changes in this change request.</p>"
+      }
+    },
+    "ChangeRequestAction": {
+      "base": null,
+      "refs": {
+        "UpdateCollaborationChangeRequestInput$action": "<p>The action to perform on the change request. Valid values include APPROVE (approve the change), DENY (reject the change), CANCEL (cancel the request), and COMMIT (commit after the request is approved).</p> <p>For change requests without automatic approval, a member in the collaboration can manually APPROVE or DENY a change request. The collaboration owner can manually CANCEL or COMMIT a change request.</p>"
       }
     },
     "ChangeRequestStatus": {
@@ -908,13 +951,15 @@
       "base": "<p>Represents a request to modify a collaboration. Change requests enable structured modifications to collaborations after they have been created.</p>",
       "refs": {
         "CreateCollaborationChangeRequestOutput$collaborationChangeRequest": null,
-        "GetCollaborationChangeRequestOutput$collaborationChangeRequest": "<p>The collaboration change request that was requested.</p>"
+        "GetCollaborationChangeRequestOutput$collaborationChangeRequest": "<p>The collaboration change request that was requested.</p>",
+        "UpdateCollaborationChangeRequestOutput$collaborationChangeRequest": null
       }
     },
     "CollaborationChangeRequestIdentifier": {
       "base": null,
       "refs": {
-        "GetCollaborationChangeRequestInput$changeRequestIdentifier": "<p>A unique identifier for the change request to retrieve.</p>"
+        "GetCollaborationChangeRequestInput$changeRequestIdentifier": "<p>A unique identifier for the change request to retrieve.</p>",
+        "UpdateCollaborationChangeRequestInput$changeRequestIdentifier": "<p>The unique identifier of the specific change request to be updated within the collaboration.</p>"
       }
     },
     "CollaborationChangeRequestSummary": {
@@ -927,6 +972,12 @@
       "base": null,
       "refs": {
         "ListCollaborationChangeRequestsOutput$collaborationChangeRequestSummaries": "<p>The list of collaboration change request summaries.</p>"
+      }
+    },
+    "CollaborationChangeSpecification": {
+      "base": "<p>Defines the specific changes being requested for a collaboration, including configuration modifications and approval requirements.</p>",
+      "refs": {
+        "ChangeSpecification$collaboration": "<p>The collaboration configuration changes being requested. Currently, this only supports modifying which change types are auto-approved for the collaboration.</p>"
       }
     },
     "CollaborationConfiguredAudienceModelAssociation": {
@@ -1001,6 +1052,7 @@
         "ListMembersInput$collaborationIdentifier": "<p>The identifier of the collaboration in which the members are listed.</p>",
         "ListSchemasInput$collaborationIdentifier": "<p>A unique identifier for the collaboration that the schema belongs to. Currently accepts a collaboration ID.</p>",
         "MembershipSummary$collaborationId": "<p>The unique ID for the membership's collaboration.</p>",
+        "UpdateCollaborationChangeRequestInput$collaborationIdentifier": "<p>The unique identifier of the collaboration that contains the change request to be updated.</p>",
         "UpdateCollaborationInput$collaborationIdentifier": "<p>The identifier for the collaboration.</p>"
       }
     },
@@ -1077,11 +1129,23 @@
         "ColumnList$member": null
       }
     },
+    "ColumnClassificationDetails": {
+      "base": "<p>Contains classification information for data columns, including mappings that specify how columns should be handled during synthetic data generation and privacy analysis.</p>",
+      "refs": {
+        "MLSyntheticDataParameters$columnClassification": "<p>Classification details for data columns that specify how each column should be treated during synthetic data generation.</p>"
+      }
+    },
     "ColumnList": {
       "base": null,
       "refs": {
         "Schema$columns": "<p>The columns for the relation that this schema represents.</p>",
         "Schema$partitionKeys": "<p>The partition keys for the dataset underlying this schema.</p>"
+      }
+    },
+    "ColumnMappingList": {
+      "base": null,
+      "refs": {
+        "ColumnClassificationDetails$columnMapping": "<p>A mapping that defines the classification of data columns for synthetic data generation and specifies how each column should be handled during the privacy-preserving data synthesis process.</p>"
       }
     },
     "ColumnName": {
@@ -2220,6 +2284,24 @@
         "PaymentConfiguration$jobCompute": "<p> The compute configuration for the job.</p>"
       }
     },
+    "JobParameterMap": {
+      "base": null,
+      "refs": {
+        "ProtectedJobParameters$parameters": "<p>Runtime configuration values passed to the PySpark analysis script. Parameter names and types must match those defined in the analysis template.</p>"
+      }
+    },
+    "JobParameterName": {
+      "base": null,
+      "refs": {
+        "JobParameterMap$key": null
+      }
+    },
+    "JobParameterValue": {
+      "base": null,
+      "refs": {
+        "JobParameterMap$value": null
+      }
+    },
     "JobType": {
       "base": null,
       "refs": {
@@ -2453,6 +2535,24 @@
       "base": "<p>An object representing the collaboration member's machine learning payment responsibilities set by the collaboration creator.</p>",
       "refs": {
         "PaymentConfiguration$machineLearning": "<p>An object representing the collaboration member's machine learning payment responsibilities set by the collaboration creator.</p>"
+      }
+    },
+    "MLSyntheticDataParameters": {
+      "base": "<p>Parameters that control the generation of synthetic data for machine learning, including privacy settings and column classification details.</p>",
+      "refs": {
+        "SyntheticDataParameters$mlSyntheticDataParameters": "<p>The machine learning-specific parameters for synthetic data generation.</p>"
+      }
+    },
+    "MLSyntheticDataParametersEpsilonDouble": {
+      "base": null,
+      "refs": {
+        "MLSyntheticDataParameters$epsilon": "<p>The epsilon value for differential privacy when generating synthetic data. Lower values provide stronger privacy guarantees but may reduce data utility.</p>"
+      }
+    },
+    "MaxMembershipInferenceAttackScore": {
+      "base": null,
+      "refs": {
+        "MLSyntheticDataParameters$maxMembershipInferenceAttackScore": "<p>The maximum acceptable score for membership inference attack vulnerability. Synthetic data generation fails if the score for the resulting data exceeds this threshold.</p>"
       }
     },
     "MaxResults": {
@@ -2733,6 +2833,12 @@
         "ListMembershipsOutput$membershipSummaries": "<p>The list of memberships returned from the ListMemberships operation.</p>"
       }
     },
+    "MembershipSyntheticDataGenerationPaymentConfig": {
+      "base": "<p>Configuration for payment for synthetic data generation in a membership.</p>",
+      "refs": {
+        "MembershipMLPaymentConfig$syntheticDataGeneration": "<p>The payment configuration for synthetic data generation for this machine learning membership.</p>"
+      }
+    },
     "ModelInferencePaymentConfig": {
       "base": "<p>An object representing the collaboration member's model inference payment responsibilities set by the collaboration creator.</p>",
       "refs": {
@@ -2799,7 +2905,7 @@
     "ParameterName": {
       "base": null,
       "refs": {
-        "AnalysisParameter$name": "<p>The name of the parameter. The name must use only alphanumeric, underscore (_), or hyphen (-) characters but cannot start or end with a hyphen.</p>",
+        "AnalysisParameter$name": "<p>The name of the parameter. The name must use only alphanumeric or underscore (_) characters.</p>",
         "ParameterMap$key": null
       }
     },
@@ -3433,7 +3539,7 @@
       }
     },
     "ResultFormat": {
-      "base": null,
+      "base": "<p>File format of the returned data.</p>",
       "refs": {
         "ProtectedQueryS3OutputConfiguration$resultFormat": "<p>Intended file format of the result.</p>"
       }
@@ -3740,6 +3846,38 @@
         "AllowedResultRegions$member": null
       }
     },
+    "SyntheticDataColumnName": {
+      "base": null,
+      "refs": {
+        "SyntheticDataColumnProperties$columnName": "<p>The name of the data column as it appears in the dataset.</p>"
+      }
+    },
+    "SyntheticDataColumnProperties": {
+      "base": "<p>Properties that define how a specific data column should be handled during synthetic data generation, including its name, type, and role in predictive modeling.</p>",
+      "refs": {
+        "ColumnMappingList$member": null
+      }
+    },
+    "SyntheticDataColumnType": {
+      "base": null,
+      "refs": {
+        "SyntheticDataColumnProperties$columnType": "<p>The data type of the column, which determines how the synthetic data generation algorithm processes and synthesizes values for this column.</p>"
+      }
+    },
+    "SyntheticDataGenerationPaymentConfig": {
+      "base": "<p>Payment configuration for synthetic data generation.</p>",
+      "refs": {
+        "MLPaymentConfig$syntheticDataGeneration": "<p>The payment configuration for machine learning synthetic data generation.</p>"
+      }
+    },
+    "SyntheticDataParameters": {
+      "base": "<p>The parameters that control how synthetic data is generated, including privacy settings, column classifications, and other configuration options that affect the data synthesis process.</p>",
+      "refs": {
+        "AnalysisTemplate$syntheticDataParameters": "<p>The parameters used to generate synthetic data for this analysis template.</p>",
+        "CollaborationAnalysisTemplate$syntheticDataParameters": "<p>The synthetic data generation parameters configured for this collaboration analysis template.</p>",
+        "CreateAnalysisTemplateInput$syntheticDataParameters": "<p>The parameters for generating synthetic data when running the analysis template.</p>"
+      }
+    },
     "TableAlias": {
       "base": null,
       "refs": {
@@ -4009,6 +4147,14 @@
       "refs": {}
     },
     "UpdateAnalysisTemplateOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCollaborationChangeRequestInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCollaborationChangeRequestOutput": {
       "base": null,
       "refs": {}
     },

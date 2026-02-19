@@ -84,7 +84,7 @@ class S3EncryptionClientV2Test extends TestCase
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -111,7 +111,7 @@ class S3EncryptionClientV2Test extends TestCase
 
         $s3 = $this->getS3Client();
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -154,7 +154,7 @@ class S3EncryptionClientV2Test extends TestCase
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -184,7 +184,7 @@ class S3EncryptionClientV2Test extends TestCase
         $keyId = '11111111-2222-3333-4444-555555555555';
         $provider = new KmsMaterialsProviderV2($kms, $keyId);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -216,7 +216,7 @@ class S3EncryptionClientV2Test extends TestCase
             ])
         ]);
 
-        $client = new S3EncryptionClientV2(
+        $client = @new S3EncryptionClientV2(
             $s3,
             InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
         );
@@ -251,7 +251,7 @@ class S3EncryptionClientV2Test extends TestCase
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -294,7 +294,7 @@ class S3EncryptionClientV2Test extends TestCase
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -348,7 +348,7 @@ class S3EncryptionClientV2Test extends TestCase
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -397,7 +397,7 @@ EOXML;
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -442,7 +442,7 @@ EOXML;
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -492,7 +492,7 @@ EOXML;
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -532,11 +532,12 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
         $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
@@ -566,11 +567,12 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
     }
@@ -599,11 +601,12 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
     }
@@ -632,11 +635,12 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
     }
@@ -675,7 +679,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
 
         // Suppressing known warning for 'V2_AND_LEGACY' security profile warning
         // Necessary to test decrypting with legacy metadata
@@ -684,6 +688,7 @@ EOXML;
             'Key' => 'bar',
             '@MaterialsProvider' => $providerV2,
             '@SecurityProfile' => 'V2_AND_LEGACY',
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@KmsAllowDecryptWithAnyCmk' => true,
         ]);
         $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
@@ -722,12 +727,13 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
             '@KmsAllowDecryptWithAnyCmk' => true,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
         $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
@@ -766,11 +772,12 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
         $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
@@ -811,7 +818,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2(
+        $client = @new S3EncryptionClientV2(
             $s3,
             InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
         );
@@ -819,6 +826,7 @@ EOXML;
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
         $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
@@ -859,12 +867,13 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
             '@SecurityProfile' => 'V2',
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@InstructionFileSuffix' =>
                 InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
         ]);
@@ -894,12 +903,13 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $result = @$client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
             '@SecurityProfile' => 'V2_AND_LEGACY',
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             'SaveAs' => $file
         ]);
         $this->assertStringEqualsFile($file, (string)$result['Body']);
@@ -941,11 +951,12 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $providerV2,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2_AND_LEGACY',
         ]);
     }
@@ -986,12 +997,13 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $providerV2,
             '@SecurityProfile' => 'V2',
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@KmsAllowDecryptWithAnyCmk' => true,
         ]);
     }
@@ -1005,10 +1017,11 @@ EOXML;
             'version' => 'latest',
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@MaterialsProvider' => new KmsMaterialsProviderV2(
                 $this->getKmsClient()
             ),
@@ -1024,10 +1037,11 @@ EOXML;
             'version' => 'latest',
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@MaterialsProvider' => new KmsMaterialsProviderV2(
                 $this->getKmsClient()
             ),
@@ -1063,11 +1077,12 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
     }

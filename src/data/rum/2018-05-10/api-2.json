@@ -2,16 +2,15 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2018-05-10",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"rum",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"CloudWatch RUM",
     "serviceId":"RUM",
     "signatureVersion":"v4",
     "signingName":"rum",
-    "uid":"rum-2018-05-10",
-    "auth":["aws.auth#sigv4"]
+    "uid":"rum-2018-05-10"
   },
   "operations":{
     "BatchCreateRumMetricDefinitions":{
@@ -67,7 +66,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "CreateAppMonitor":{
       "name":"CreateAppMonitor",
@@ -163,7 +163,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAppMonitorData":{
       "name":"GetAppMonitorData",
@@ -180,7 +181,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetResourcePolicy":{
       "name":"GetResourcePolicy",
@@ -199,7 +201,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAppMonitors":{
       "name":"ListAppMonitors",
@@ -215,7 +218,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListRumMetricsDestinations":{
       "name":"ListRumMetricsDestinations",
@@ -231,7 +235,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -246,7 +251,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutResourcePolicy":{
       "name":"PutResourcePolicy",
@@ -263,8 +269,8 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
-        {"shape":"ValidationException"},
         {"shape":"MalformedPolicyDocumentException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ],
@@ -399,39 +405,40 @@
     "AppMonitor":{
       "type":"structure",
       "members":{
-        "AppMonitorConfiguration":{"shape":"AppMonitorConfiguration"},
-        "Created":{"shape":"ISOTimestampString"},
-        "CustomEvents":{"shape":"CustomEvents"},
-        "DataStorage":{"shape":"DataStorage"},
-        "DeobfuscationConfiguration":{"shape":"DeobfuscationConfiguration"},
+        "Name":{"shape":"AppMonitorName"},
         "Domain":{"shape":"AppMonitorDomain"},
         "DomainList":{"shape":"AppMonitorDomainList"},
         "Id":{"shape":"AppMonitorId"},
+        "Created":{"shape":"ISOTimestampString"},
         "LastModified":{"shape":"ISOTimestampString"},
-        "Name":{"shape":"AppMonitorName"},
+        "Tags":{"shape":"TagMap"},
         "State":{"shape":"StateEnum"},
-        "Tags":{"shape":"TagMap"}
+        "AppMonitorConfiguration":{"shape":"AppMonitorConfiguration"},
+        "DataStorage":{"shape":"DataStorage"},
+        "CustomEvents":{"shape":"CustomEvents"},
+        "DeobfuscationConfiguration":{"shape":"DeobfuscationConfiguration"},
+        "Platform":{"shape":"AppMonitorPlatform"}
       }
     },
     "AppMonitorConfiguration":{
       "type":"structure",
       "members":{
-        "AllowCookies":{"shape":"Boolean"},
-        "EnableXRay":{"shape":"Boolean"},
-        "ExcludedPages":{"shape":"Pages"},
-        "FavoritePages":{"shape":"FavoritePages"},
-        "GuestRoleArn":{"shape":"Arn"},
         "IdentityPoolId":{"shape":"IdentityPoolId"},
+        "ExcludedPages":{"shape":"Pages"},
         "IncludedPages":{"shape":"Pages"},
+        "FavoritePages":{"shape":"FavoritePages"},
         "SessionSampleRate":{"shape":"SessionSampleRate"},
-        "Telemetries":{"shape":"Telemetries"}
+        "GuestRoleArn":{"shape":"Arn"},
+        "AllowCookies":{"shape":"Boolean"},
+        "Telemetries":{"shape":"Telemetries"},
+        "EnableXRay":{"shape":"Boolean"}
       }
     },
     "AppMonitorDetails":{
       "type":"structure",
       "members":{
-        "id":{"shape":"String"},
         "name":{"shape":"String"},
+        "id":{"shape":"String"},
         "version":{"shape":"String"}
       }
     },
@@ -439,7 +446,7 @@
       "type":"string",
       "max":253,
       "min":1,
-      "pattern":"^(localhost)$|^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$|(?=^[a-zA-Z0-9\\.\\*-]{4,253}$)(?!.*\\.-)(?!.*-\\.)(?!.*\\.\\.)(?!.*[^\\.]{64,})^(\\*\\.)?(?![-\\.\\*])[^\\*]{1,}\\.(\\*|(?!.*--)(?=.*[a-zA-Z])[^\\*]{1,}[^\\*-])$"
+      "pattern":"(localhost)$|^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$|(?=^[a-zA-Z0-9\\.\\*-]{4,253}$)(?!.*\\.-)(?!.*-\\.)(?!.*\\.\\.)(?!.*[^\\.]{64,})^(\\*\\.)?(?![-\\.\\*])[^\\*]{1,}\\.(\\*|(?!.*--)(?=.*[a-zA-Z])[^\\*]{1,}[^\\*-])"
     },
     "AppMonitorDomainList":{
       "type":"list",
@@ -451,22 +458,31 @@
       "type":"string",
       "max":36,
       "min":36,
-      "pattern":"^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "pattern":"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
     },
     "AppMonitorName":{
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^(?!\\.)[\\.\\-_#A-Za-z0-9]+$"
+      "pattern":"(?!\\.)[\\.\\-_#A-Za-z0-9]+"
+    },
+    "AppMonitorPlatform":{
+      "type":"string",
+      "enum":[
+        "Web",
+        "Android",
+        "iOS"
+      ]
     },
     "AppMonitorSummary":{
       "type":"structure",
       "members":{
-        "Created":{"shape":"ISOTimestampString"},
-        "Id":{"shape":"AppMonitorId"},
-        "LastModified":{"shape":"ISOTimestampString"},
         "Name":{"shape":"AppMonitorName"},
-        "State":{"shape":"StateEnum"}
+        "Id":{"shape":"AppMonitorId"},
+        "Created":{"shape":"ISOTimestampString"},
+        "LastModified":{"shape":"ISOTimestampString"},
+        "State":{"shape":"StateEnum"},
+        "Platform":{"shape":"AppMonitorPlatform"}
       }
     },
     "AppMonitorSummaryList":{
@@ -475,19 +491,19 @@
     },
     "Arn":{
       "type":"string",
-      "pattern":"arn:[^:]*:[^:]*:[^:]*:[^:]*:.*"
+      "pattern":".*arn:[^:]*:[^:]*:[^:]*:[^:]*:.*"
     },
     "BatchCreateRumMetricDefinitionsError":{
       "type":"structure",
       "required":[
+        "MetricDefinition",
         "ErrorCode",
-        "ErrorMessage",
-        "MetricDefinition"
+        "ErrorMessage"
       ],
       "members":{
+        "MetricDefinition":{"shape":"MetricDefinitionRequest"},
         "ErrorCode":{"shape":"String"},
-        "ErrorMessage":{"shape":"String"},
-        "MetricDefinition":{"shape":"MetricDefinitionRequest"}
+        "ErrorMessage":{"shape":"String"}
       }
     },
     "BatchCreateRumMetricDefinitionsErrors":{
@@ -523,14 +539,14 @@
     "BatchDeleteRumMetricDefinitionsError":{
       "type":"structure",
       "required":[
+        "MetricDefinitionId",
         "ErrorCode",
-        "ErrorMessage",
-        "MetricDefinitionId"
+        "ErrorMessage"
       ],
       "members":{
+        "MetricDefinitionId":{"shape":"MetricDefinitionId"},
         "ErrorCode":{"shape":"String"},
-        "ErrorMessage":{"shape":"String"},
-        "MetricDefinitionId":{"shape":"MetricDefinitionId"}
+        "ErrorMessage":{"shape":"String"}
       }
     },
     "BatchDeleteRumMetricDefinitionsErrors":{
@@ -641,14 +657,15 @@
       "type":"structure",
       "required":["Name"],
       "members":{
-        "AppMonitorConfiguration":{"shape":"AppMonitorConfiguration"},
-        "CustomEvents":{"shape":"CustomEvents"},
-        "CwLogEnabled":{"shape":"Boolean"},
-        "DeobfuscationConfiguration":{"shape":"DeobfuscationConfiguration"},
+        "Name":{"shape":"AppMonitorName"},
         "Domain":{"shape":"AppMonitorDomain"},
         "DomainList":{"shape":"AppMonitorDomainList"},
-        "Name":{"shape":"AppMonitorName"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "AppMonitorConfiguration":{"shape":"AppMonitorConfiguration"},
+        "CwLogEnabled":{"shape":"Boolean"},
+        "CustomEvents":{"shape":"CustomEvents"},
+        "DeobfuscationConfiguration":{"shape":"DeobfuscationConfiguration"},
+        "Platform":{"shape":"AppMonitorPlatform"}
       }
     },
     "CreateAppMonitorResponse":{
@@ -696,8 +713,7 @@
     },
     "DeleteAppMonitorResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteResourcePolicyRequest":{
       "type":"structure",
@@ -747,8 +763,7 @@
     },
     "DeleteRumMetricsDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeobfuscationConfiguration":{
       "type":"structure",
@@ -760,7 +775,7 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"^s3://[a-z0-9][-.a-z0-9]{1,61}(?:/[-!_*'().a-z0-9A-Z]+(?:/[-!_*'().a-z0-9A-Z]+)*)?/?$"
+      "pattern":"s3://[a-z0-9][-.a-z0-9]{1,62}(?:/[-!_*'().a-z0-9A-Z]+(?:/[-!_*'().a-z0-9A-Z]+)*)?/?"
     },
     "DeobfuscationStatus":{
       "type":"string",
@@ -773,7 +788,7 @@
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"arn:[^:]*:[^:]*:[^:]*:[^:]*:.*"
+      "pattern":".*arn:[^:]*:[^:]*:[^:]*:[^:]*:.*"
     },
     "DimensionKey":{
       "type":"string",
@@ -791,7 +806,7 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^(?!:).*[^\\s].*"
+      "pattern":"(?!:).*[^\\s].*"
     },
     "EventData":{"type":"string"},
     "EventDataList":{
@@ -816,15 +831,15 @@
         "TimeRange"
       ],
       "members":{
-        "Filters":{"shape":"QueryFilters"},
-        "MaxResults":{"shape":"MaxQueryResults"},
         "Name":{
           "shape":"AppMonitorName",
           "location":"uri",
           "locationName":"Name"
         },
-        "NextToken":{"shape":"Token"},
-        "TimeRange":{"shape":"TimeRange"}
+        "TimeRange":{"shape":"TimeRange"},
+        "Filters":{"shape":"QueryFilters"},
+        "MaxResults":{"shape":"MaxQueryResults"},
+        "NextToken":{"shape":"Token"}
       }
     },
     "GetAppMonitorDataResponse":{
@@ -876,13 +891,13 @@
     },
     "IamRoleArn":{
       "type":"string",
-      "pattern":"arn:[^:]*:[^:]*:[^:]*:[^:]*:.*"
+      "pattern":".*arn:[^:]*:[^:]*:[^:]*:[^:]*:.*"
     },
     "IdentityPoolId":{
       "type":"string",
       "max":55,
       "min":1,
-      "pattern":"[\\w-]+:[0-9a-f-]+"
+      "pattern":".*[\\w-]+:[0-9a-f-]+.*"
     },
     "Integer":{
       "type":"integer",
@@ -920,8 +935,8 @@
       "type":"structure",
       "required":["Status"],
       "members":{
-        "S3Uri":{"shape":"DeobfuscationS3Uri"},
-        "Status":{"shape":"DeobfuscationStatus"}
+        "Status":{"shape":"DeobfuscationStatus"},
+        "S3Uri":{"shape":"DeobfuscationS3Uri"}
       }
     },
     "JsonValue":{"type":"string"},
@@ -943,8 +958,8 @@
     "ListAppMonitorsResponse":{
       "type":"structure",
       "members":{
-        "AppMonitorSummaries":{"shape":"AppMonitorSummaryList"},
-        "NextToken":{"shape":"String"}
+        "NextToken":{"shape":"String"},
+        "AppMonitorSummaries":{"shape":"AppMonitorSummaryList"}
       }
     },
     "ListRumMetricsDestinationsRequest":{
@@ -1027,13 +1042,13 @@
         "Name"
       ],
       "members":{
-        "DimensionKeys":{"shape":"DimensionKeysMap"},
-        "EventPattern":{"shape":"EventPattern"},
         "MetricDefinitionId":{"shape":"MetricDefinitionId"},
         "Name":{"shape":"MetricName"},
-        "Namespace":{"shape":"Namespace"},
+        "ValueKey":{"shape":"ValueKey"},
         "UnitLabel":{"shape":"UnitLabel"},
-        "ValueKey":{"shape":"ValueKey"}
+        "DimensionKeys":{"shape":"DimensionKeysMap"},
+        "EventPattern":{"shape":"EventPattern"},
+        "Namespace":{"shape":"Namespace"}
       }
     },
     "MetricDefinitionId":{
@@ -1049,12 +1064,12 @@
       "type":"structure",
       "required":["Name"],
       "members":{
+        "Name":{"shape":"MetricName"},
+        "ValueKey":{"shape":"ValueKey"},
+        "UnitLabel":{"shape":"UnitLabel"},
         "DimensionKeys":{"shape":"DimensionKeysMap"},
         "EventPattern":{"shape":"EventPattern"},
-        "Name":{"shape":"MetricName"},
-        "Namespace":{"shape":"Namespace"},
-        "UnitLabel":{"shape":"UnitLabel"},
-        "ValueKey":{"shape":"ValueKey"}
+        "Namespace":{"shape":"Namespace"}
       }
     },
     "MetricDefinitions":{
@@ -1093,7 +1108,7 @@
       "type":"string",
       "max":237,
       "min":1,
-      "pattern":"[a-zA-Z0-9-._/#:]+$"
+      "pattern":".*[a-zA-Z0-9-._/#:]+"
     },
     "Pages":{
       "type":"list",
@@ -1156,41 +1171,40 @@
     "PutRumEventsRequest":{
       "type":"structure",
       "required":[
-        "AppMonitorDetails",
-        "BatchId",
         "Id",
-        "RumEvents",
-        "UserDetails"
+        "BatchId",
+        "AppMonitorDetails",
+        "UserDetails",
+        "RumEvents"
       ],
       "members":{
-        "Alias":{"shape":"Alias"},
-        "AppMonitorDetails":{"shape":"AppMonitorDetails"},
-        "BatchId":{"shape":"PutRumEventsRequestBatchIdString"},
         "Id":{
           "shape":"PutRumEventsRequestIdString",
           "location":"uri",
           "locationName":"Id"
         },
+        "BatchId":{"shape":"PutRumEventsRequestBatchIdString"},
+        "AppMonitorDetails":{"shape":"AppMonitorDetails"},
+        "UserDetails":{"shape":"UserDetails"},
         "RumEvents":{"shape":"RumEventList"},
-        "UserDetails":{"shape":"UserDetails"}
+        "Alias":{"shape":"Alias"}
       }
     },
     "PutRumEventsRequestBatchIdString":{
       "type":"string",
       "max":36,
       "min":36,
-      "pattern":"^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "pattern":"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
     },
     "PutRumEventsRequestIdString":{
       "type":"string",
       "max":36,
       "min":36,
-      "pattern":"^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "pattern":"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
     },
     "PutRumEventsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutRumMetricsDestinationRequest":{
       "type":"structure",
@@ -1211,8 +1225,7 @@
     },
     "PutRumMetricsDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "QueryFilter":{
       "type":"structure",
@@ -1252,30 +1265,30 @@
     "RumEvent":{
       "type":"structure",
       "required":[
-        "details",
         "id",
         "timestamp",
-        "type"
+        "type",
+        "details"
       ],
       "members":{
-        "details":{
-          "shape":"JsonValue",
-          "jsonvalue":true
-        },
         "id":{"shape":"RumEventIdString"},
+        "timestamp":{"shape":"Timestamp"},
+        "type":{"shape":"String"},
         "metadata":{
           "shape":"JsonValue",
           "jsonvalue":true
         },
-        "timestamp":{"shape":"Timestamp"},
-        "type":{"shape":"String"}
+        "details":{
+          "shape":"JsonValue",
+          "jsonvalue":true
+        }
       }
     },
     "RumEventIdString":{
       "type":"string",
       "max":36,
       "min":36,
-      "pattern":"^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "pattern":"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
     },
     "RumEventList":{
       "type":"list",
@@ -1311,7 +1324,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(?!aws:)[a-zA-Z+-=._:/]+$"
+      "pattern":"(?!aws:)[a-zA-Z+-=._:/]+"
     },
     "TagKeyList":{
       "type":"list",
@@ -1341,8 +1354,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1366,13 +1378,13 @@
       "required":["message"],
       "members":{
         "message":{"shape":"String"},
+        "serviceCode":{"shape":"String"},
         "quotaCode":{"shape":"String"},
         "retryAfterSeconds":{
           "shape":"Integer",
           "location":"header",
           "locationName":"Retry-After"
-        },
-        "serviceCode":{"shape":"String"}
+        }
       },
       "error":{
         "httpStatusCode":429,
@@ -1417,30 +1429,28 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAppMonitorRequest":{
       "type":"structure",
       "required":["Name"],
       "members":{
-        "AppMonitorConfiguration":{"shape":"AppMonitorConfiguration"},
-        "CustomEvents":{"shape":"CustomEvents"},
-        "CwLogEnabled":{"shape":"Boolean"},
-        "DeobfuscationConfiguration":{"shape":"DeobfuscationConfiguration"},
-        "Domain":{"shape":"AppMonitorDomain"},
-        "DomainList":{"shape":"AppMonitorDomainList"},
         "Name":{
           "shape":"AppMonitorName",
           "location":"uri",
           "locationName":"Name"
-        }
+        },
+        "Domain":{"shape":"AppMonitorDomain"},
+        "DomainList":{"shape":"AppMonitorDomainList"},
+        "AppMonitorConfiguration":{"shape":"AppMonitorConfiguration"},
+        "CwLogEnabled":{"shape":"Boolean"},
+        "CustomEvents":{"shape":"CustomEvents"},
+        "DeobfuscationConfiguration":{"shape":"DeobfuscationConfiguration"}
       }
     },
     "UpdateAppMonitorResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateRumMetricDefinitionRequest":{
       "type":"structure",
@@ -1464,33 +1474,32 @@
     },
     "UpdateRumMetricDefinitionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Url":{
       "type":"string",
       "max":1260,
       "min":1,
-      "pattern":"https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&*//=]*)"
+      "pattern":".*https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&*//=]*).*"
     },
     "UserDetails":{
       "type":"structure",
       "members":{
-        "sessionId":{"shape":"UserDetailsSessionIdString"},
-        "userId":{"shape":"UserDetailsUserIdString"}
+        "userId":{"shape":"UserDetailsUserIdString"},
+        "sessionId":{"shape":"UserDetailsSessionIdString"}
       }
     },
     "UserDetailsSessionIdString":{
       "type":"string",
       "max":36,
       "min":36,
-      "pattern":"^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "pattern":"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
     },
     "UserDetailsUserIdString":{
       "type":"string",
       "max":36,
       "min":36,
-      "pattern":"^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+      "pattern":"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
     },
     "ValidationException":{
       "type":"structure",

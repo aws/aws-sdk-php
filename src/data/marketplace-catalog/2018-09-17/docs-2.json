@@ -447,6 +447,11 @@
         "OfferLastModifiedDateFilterDateRange$BeforeValue": "<p>Allows filtering on the <code>LastModifiedDate</code> of an offer before a date.</p>",
         "OfferReleaseDateFilterDateRange$AfterValue": "<p>Allows filtering on the <code>ReleaseDate</code> of offers after a date.</p>",
         "OfferReleaseDateFilterDateRange$BeforeValue": "<p>Allows filtering on the <code>ReleaseDate</code> of offers before a date.</p>",
+        "OfferSetLastModifiedDateFilterDateRange$AfterValue": "<p>Allows filtering on the <code>LastModifiedDate</code> of an offer set after a date.</p>",
+        "OfferSetLastModifiedDateFilterDateRange$BeforeValue": "<p>Allows filtering on the <code>LastModifiedDate</code> of an offer set before a date.</p>",
+        "OfferSetReleaseDateFilterDateRange$AfterValue": "<p>Allows filtering on the <code>ReleaseDate</code> of offer set after a date.</p>",
+        "OfferSetReleaseDateFilterDateRange$BeforeValue": "<p>Allows filtering on the <code>ReleaseDate</code> of offer set before a date.</p>",
+        "OfferSetSummary$ReleaseDate": "<p>The release date of the offer set.</p>",
         "OfferSummary$ReleaseDate": "<p>The release date of the offer.</p>",
         "OfferSummary$AvailabilityEndDate": "<p>The availability end date of the offer.</p>",
         "ResaleAuthorizationAvailabilityEndDateFilterDateRange$AfterValue": "<p>Allows filtering on <code>AvailabilityEndDate</code> of a ResaleAuthorization after a date.</p>",
@@ -551,7 +556,7 @@
         "Entity$Type": "<p>The type of entity.</p>",
         "EntityDetail$EntityType": "<p>The entity type of the entity, in the format of <code>EntityType@Version</code>.</p>",
         "EntitySummary$EntityType": "<p>The type of the entity.</p>",
-        "ListEntitiesRequest$EntityType": "<p>The type of entities to retrieve. Valid values are: <code>AmiProduct</code>, <code>ContainerProduct</code>, <code>DataProduct</code>, <code>SaaSProduct</code>, <code>ProcurementPolicy</code>, <code>Experience</code>, <code>Audience</code>, <code>BrandingSettings</code>, <code>Offer</code>, <code>Seller</code>, <code>ResaleAuthorization</code>.</p>"
+        "ListEntitiesRequest$EntityType": "<p>The type of entities to retrieve. Valid values are: <code>AmiProduct</code>, <code>ContainerProduct</code>, <code>DataProduct</code>, <code>SaaSProduct</code>, <code>ProcurementPolicy</code>, <code>Experience</code>, <code>Audience</code>, <code>BrandingSettings</code>, <code>Offer</code>, <code>OfferSet</code>, <code>Seller</code>, <code>ResaleAuthorization</code>, <code>Solution</code>.</p>"
       }
     },
     "EntityTypeFilters": {
@@ -959,6 +964,173 @@
       "refs": {
         "OfferResaleAuthorizationIdFilterValueList$member": null,
         "OfferSummary$ResaleAuthorizationId": "<p>The ResaleAuthorizationId of the offer.</p>"
+      }
+    },
+    "OfferSetAssociatedOfferIdsFilter": {
+      "base": "<p>Allows filtering on the <code>AssociatedOfferIds</code> of an offer set.</p>",
+      "refs": {
+        "OfferSetFilters$AssociatedOfferIds": "<p>Allows filtering on the <code>AssociatedOfferIds</code> of an offer set.</p>"
+      }
+    },
+    "OfferSetAssociatedOfferIdsFilterValueList": {
+      "base": null,
+      "refs": {
+        "OfferSetAssociatedOfferIdsFilter$ValueList": "<p>Allows filtering on the <code>AssociatedOfferIds</code> of an offer set with list input.</p>"
+      }
+    },
+    "OfferSetAssociatedOfferIdsList": {
+      "base": null,
+      "refs": {
+        "OfferSetSummary$AssociatedOfferIds": "<p>The list of offer IDs associated with the offer set.</p>"
+      }
+    },
+    "OfferSetAssociatedOfferIdsString": {
+      "base": null,
+      "refs": {
+        "OfferSetAssociatedOfferIdsFilterValueList$member": null,
+        "OfferSetAssociatedOfferIdsList$member": null
+      }
+    },
+    "OfferSetEntityIdFilter": {
+      "base": "<p>Allows filtering on the entity id of an offer set.</p>",
+      "refs": {
+        "OfferSetFilters$EntityId": "<p>Allows filtering on <code>EntityId</code> of an offer set.</p>"
+      }
+    },
+    "OfferSetEntityIdFilterValueList": {
+      "base": null,
+      "refs": {
+        "OfferSetEntityIdFilter$ValueList": "<p>Allows filtering on entity id of an offer set with list input.</p>"
+      }
+    },
+    "OfferSetEntityIdString": {
+      "base": null,
+      "refs": {
+        "OfferSetEntityIdFilterValueList$member": null
+      }
+    },
+    "OfferSetFilters": {
+      "base": "<p>Object containing all the filter fields for offer sets entity. Client can add a maximum of 8 filters in a single <code>ListEntities</code> request.</p>",
+      "refs": {
+        "EntityTypeFilters$OfferSetFilters": "<p>A filter for offer sets.</p>"
+      }
+    },
+    "OfferSetIdFilter": {
+      "base": "<p>Allows filtering on the <code>OfferSetId</code> of an offer.</p>",
+      "refs": {
+        "OfferFilters$OfferSetId": "<p>Allows filtering on the <code>OfferSetId</code> of an offer.</p>"
+      }
+    },
+    "OfferSetIdFilterValueList": {
+      "base": null,
+      "refs": {
+        "OfferSetIdFilter$ValueList": "<p>Allows filtering on the <code>OfferSetId</code> of an offer.</p>"
+      }
+    },
+    "OfferSetIdString": {
+      "base": null,
+      "refs": {
+        "OfferSetIdFilterValueList$member": null,
+        "OfferSummary$OfferSetId": "<p>The offer set ID of the offer.</p>"
+      }
+    },
+    "OfferSetLastModifiedDateFilter": {
+      "base": "<p>Allows filtering on the <code>LastModifiedDate</code> of an offer set.</p>",
+      "refs": {
+        "OfferSetFilters$LastModifiedDate": "<p>Allows filtering on the <code>LastModifiedDate</code> of an offer set.</p>"
+      }
+    },
+    "OfferSetLastModifiedDateFilterDateRange": {
+      "base": "<p>Allows filtering on the <code>LastModifiedDate</code> of an offer set with date range as input.</p>",
+      "refs": {
+        "OfferSetLastModifiedDateFilter$DateRange": "<p>Allows filtering on the <code>LastModifiedDate</code> of an offer set with date range as input.</p>"
+      }
+    },
+    "OfferSetNameFilter": {
+      "base": "<p>Allows filtering on the <code>Name</code> of an offer set.</p>",
+      "refs": {
+        "OfferSetFilters$Name": "<p>Allows filtering on the <code>Name</code> of an offer set.</p>"
+      }
+    },
+    "OfferSetNameFilterValueList": {
+      "base": null,
+      "refs": {
+        "OfferSetNameFilter$ValueList": "<p>Allows filtering on the <code>Name</code> of an offer set with list input.</p>"
+      }
+    },
+    "OfferSetNameString": {
+      "base": null,
+      "refs": {
+        "OfferSetNameFilterValueList$member": null,
+        "OfferSetSummary$Name": "<p>The name of the offer set.</p>"
+      }
+    },
+    "OfferSetReleaseDateFilter": {
+      "base": "<p>Allows filtering on the <code>ReleaseDate</code> of an offer set.</p>",
+      "refs": {
+        "OfferSetFilters$ReleaseDate": "<p>Allows filtering on the <code>ReleaseDate</code> of an offer set.</p>"
+      }
+    },
+    "OfferSetReleaseDateFilterDateRange": {
+      "base": "<p>Allows filtering on the <code>ReleaseDate</code> of an offer set with date range as input.</p>",
+      "refs": {
+        "OfferSetReleaseDateFilter$DateRange": "<p>Allows filtering on the <code>ReleaseDate</code> of an offer set with date range as input.</p>"
+      }
+    },
+    "OfferSetSolutionIdFilter": {
+      "base": "<p>Allows filtering on the <code>SolutionId</code> of an offer set.</p>",
+      "refs": {
+        "OfferSetFilters$SolutionId": "<p>Allows filtering on the <code>SolutionId</code> of an offer set.</p>"
+      }
+    },
+    "OfferSetSolutionIdFilterValueList": {
+      "base": null,
+      "refs": {
+        "OfferSetSolutionIdFilter$ValueList": "<p>Allows filtering on the <code>SolutionId</code> of an offer set with list input.</p>"
+      }
+    },
+    "OfferSetSolutionIdString": {
+      "base": null,
+      "refs": {
+        "OfferSetSolutionIdFilterValueList$member": null,
+        "OfferSetSummary$SolutionId": "<p>The solution ID associated with the offer set.</p>"
+      }
+    },
+    "OfferSetSort": {
+      "base": "<p>Allows to sort offer sets.</p>",
+      "refs": {
+        "EntityTypeSort$OfferSetSort": "<p>A sort for offer sets.</p>"
+      }
+    },
+    "OfferSetSortBy": {
+      "base": null,
+      "refs": {
+        "OfferSetSort$SortBy": "<p>Allows to sort offer sets.</p>"
+      }
+    },
+    "OfferSetStateFilter": {
+      "base": "<p>Allows filtering on the <code>State</code> of an offer set.</p>",
+      "refs": {
+        "OfferSetFilters$State": "<p>Allows filtering on the <code>State</code> of an offer set.</p>"
+      }
+    },
+    "OfferSetStateFilterValueList": {
+      "base": null,
+      "refs": {
+        "OfferSetStateFilter$ValueList": "<p>Allows filtering on the <code>State</code> of an offer set with list input.</p>"
+      }
+    },
+    "OfferSetStateString": {
+      "base": null,
+      "refs": {
+        "OfferSetStateFilterValueList$member": null,
+        "OfferSetSummary$State": "<p>The state of the offer set.</p>"
+      }
+    },
+    "OfferSetSummary": {
+      "base": "<p>Summarized information about an offer set.</p>",
+      "refs": {
+        "EntitySummary$OfferSetSummary": "<p>An object that contains summary information about the offer set.</p>"
       }
     },
     "OfferSort": {
@@ -1514,6 +1686,7 @@
         "ContainerProductSort$SortOrder": "<p>The sorting order. Can be <code>ASCENDING</code> or <code>DESCENDING</code>. The default value is <code>DESCENDING</code>.</p>",
         "DataProductSort$SortOrder": "<p>The sorting order. Can be <code>ASCENDING</code> or <code>DESCENDING</code>. The default value is <code>DESCENDING</code>.</p>",
         "MachineLearningProductSort$SortOrder": "<p>The sort order. Valid values are <code>ASC</code> (ascending) and <code>DESC</code> (descending).</p>",
+        "OfferSetSort$SortOrder": "<p>Allows to sort offer sets.</p>",
         "OfferSort$SortOrder": "<p>Allows to sort offers.</p>",
         "ResaleAuthorizationSort$SortOrder": "<p>Allows to sort ResaleAuthorization.</p>",
         "SaaSProductSort$SortOrder": "<p>The sorting order. Can be <code>ASCENDING</code> or <code>DESCENDING</code>. The default value is <code>DESCENDING</code>.</p>",

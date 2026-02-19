@@ -22,6 +22,7 @@ final class MetricsBuilder
     const S3_TRANSFER = "G";
     const S3_CRYPTO_V1N = "H";
     const S3_CRYPTO_V2 = "I";
+    const S3_CRYPTO_V3 = "AE";
     const S3_EXPRESS_BUCKET = "J";
     const GZIP_REQUEST_COMPRESSION = "L";
     const ENDPOINT_OVERRIDE = "N";
@@ -53,6 +54,9 @@ final class MetricsBuilder
     const CREDENTIALS_PROFILE_PROCESS = "v";
     const CREDENTIALS_PROFILE_SSO = "r";
     const CREDENTIALS_PROFILE_SSO_LEGACY = "t";
+    const S3_TRANSFER_UPLOAD_DIRECTORY = "9";
+    const S3_TRANSFER_DOWNLOAD_DIRECTORY = "+";
+    const CREDENTIALS_PROFILE_LOGIN = "AC";
 
     /** @var int */
     private static $MAX_METRICS_SIZE = 1024; // 1KB or 1024 B
@@ -249,6 +253,8 @@ final class MetricsBuilder
                 self::CREDENTIALS_PROFILE_SSO,
             CredentialSources::PROFILE_SSO_LEGACY =>
                 self::CREDENTIALS_PROFILE_SSO_LEGACY,
+            CredentialSources::PROFILE_LOGIN =>
+                self::CREDENTIALS_PROFILE_LOGIN
         ];
         if (isset($credentialsMetricMapping[$source])) {
             $this->append($credentialsMetricMapping[$source]);

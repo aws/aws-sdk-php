@@ -301,9 +301,11 @@
         "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationMap"},
         "runtimeConfiguration":{"shape":"ConfigurationList"},
         "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
+        "diskEncryptionConfiguration":{"shape":"DiskEncryptionConfiguration"},
         "interactiveConfiguration":{"shape":"InteractiveConfiguration"},
         "schedulerConfiguration":{"shape":"SchedulerConfiguration"},
-        "identityCenterConfiguration":{"shape":"IdentityCenterConfiguration"}
+        "identityCenterConfiguration":{"shape":"IdentityCenterConfiguration"},
+        "jobLevelCostAllocationConfiguration":{"shape":"JobLevelCostAllocationConfiguration"}
       }
     },
     "ApplicationArn":{
@@ -482,7 +484,8 @@
       "type":"structure",
       "members":{
         "applicationConfiguration":{"shape":"ConfigurationList"},
-        "monitoringConfiguration":{"shape":"MonitoringConfiguration"}
+        "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
+        "diskEncryptionConfiguration":{"shape":"DiskEncryptionConfiguration"}
       }
     },
     "ConfigurationPropertyKey":{
@@ -541,9 +544,11 @@
         "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationInputMap"},
         "runtimeConfiguration":{"shape":"ConfigurationList"},
         "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
+        "diskEncryptionConfiguration":{"shape":"DiskEncryptionConfiguration"},
         "interactiveConfiguration":{"shape":"InteractiveConfiguration"},
         "schedulerConfiguration":{"shape":"SchedulerConfiguration"},
-        "identityCenterConfiguration":{"shape":"IdentityCenterConfigurationInput"}
+        "identityCenterConfiguration":{"shape":"IdentityCenterConfigurationInput"},
+        "jobLevelCostAllocationConfiguration":{"shape":"JobLevelCostAllocationConfiguration"}
       }
     },
     "CreateApplicationResponse":{
@@ -574,6 +579,13 @@
       "type":"structure",
       "members":{}
     },
+    "DiskEncryptionConfiguration":{
+      "type":"structure",
+      "members":{
+        "encryptionContext":{"shape":"EncryptionContext"},
+        "encryptionKeyArn":{"shape":"EncryptionKeyArn"}
+      }
+    },
     "DiskSize":{
       "type":"string",
       "max":15,
@@ -592,6 +604,23 @@
       "type":"long",
       "max":1000000,
       "min":0
+    },
+    "EncryptionContext":{
+      "type":"map",
+      "key":{"shape":"EncryptionContextKey"},
+      "value":{"shape":"EncryptionContextValue"},
+      "max":8,
+      "min":0
+    },
+    "EncryptionContextKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "EncryptionContextValue":{
+      "type":"string",
+      "max":384,
+      "min":1
     },
     "EncryptionKeyArn":{
       "type":"string",
@@ -834,6 +863,12 @@
         "hive":{"shape":"Hive"}
       },
       "union":true
+    },
+    "JobLevelCostAllocationConfiguration":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"Boolean"}
+      }
     },
     "JobRun":{
       "type":"structure",
@@ -1578,8 +1613,10 @@
         "releaseLabel":{"shape":"ReleaseLabel"},
         "runtimeConfiguration":{"shape":"ConfigurationList"},
         "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
+        "diskEncryptionConfiguration":{"shape":"DiskEncryptionConfiguration"},
         "schedulerConfiguration":{"shape":"SchedulerConfiguration"},
-        "identityCenterConfiguration":{"shape":"IdentityCenterConfigurationInput"}
+        "identityCenterConfiguration":{"shape":"IdentityCenterConfigurationInput"},
+        "jobLevelCostAllocationConfiguration":{"shape":"JobLevelCostAllocationConfiguration"}
       }
     },
     "UpdateApplicationResponse":{

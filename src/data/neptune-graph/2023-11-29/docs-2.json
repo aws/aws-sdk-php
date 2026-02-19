@@ -8,9 +8,9 @@
     "CreateGraph": "<p>Creates a new Neptune Analytics graph.</p>",
     "CreateGraphSnapshot": "<p>Creates a snapshot of the specific graph.</p>",
     "CreateGraphUsingImportTask": "<p>Creates a new Neptune Analytics graph and imports data into it, either from Amazon Simple Storage Service (S3) or from a Neptune database or a Neptune database snapshot.</p> <p>The data can be loaded from files in S3 that in either the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
-    "CreatePrivateGraphEndpoint": "<p>Create a private graph endpoint to allow private access from to the graph from within a VPC. You can attach security groups to the private graph endpoint.</p> <note> <p>VPC endpoint charges apply.</p> </note>",
+    "CreatePrivateGraphEndpoint": "<p>Create a private graph endpoint to allow private access to the graph from within a VPC. You can attach security groups to the private graph endpoint.</p> <note> <p>VPC endpoint charges apply.</p> </note>",
     "DeleteGraph": "<p>Deletes the specified graph. Graphs cannot be deleted if delete-protection is enabled.</p>",
-    "DeleteGraphSnapshot": "<p>Deletes the specifed graph snapshot.</p>",
+    "DeleteGraphSnapshot": "<p>Deletes the specified graph snapshot.</p>",
     "DeletePrivateGraphEndpoint": "<p>Deletes a private graph endpoint.</p>",
     "ExecuteQuery": "<p>Execute an openCypher query.</p> <p> When invoking this operation in a Neptune Analytics cluster, the IAM user or role making the request must have a policy attached that allows one of the following IAM actions in that cluster, depending on the query: </p> <ul> <li> <p>neptune-graph:ReadDataViaQuery</p> </li> <li> <p>neptune-graph:WriteDataViaQuery</p> </li> <li> <p>neptune-graph:DeleteDataViaQuery</p> </li> </ul>",
     "GetExportTask": "<p>Retrieves a specified export task.</p>",
@@ -245,7 +245,7 @@
       }
     },
     "ExportFilterElement": {
-      "base": "<p>Specifies whihc properties of that label should be included in the export.</p>",
+      "base": "<p>Specifies which properties of that label should be included in the export.</p>",
       "refs": {
         "ExportFilterPerLabelMap$value": null
       }
@@ -350,13 +350,13 @@
     "Format": {
       "base": null,
       "refs": {
-        "CancelImportTaskOutput$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or <code>OPENCYPHER</code>, which identies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
+        "CancelImportTaskOutput$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or <code>OPENCYPHER</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
         "CreateGraphUsingImportTaskInput$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a>, <code>OPEN_CYPHER</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>, or <code>ntriples</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune-analytics/latest/userguide/using-rdf-data.html\">RDF n-triples</a> format.</p>",
         "CreateGraphUsingImportTaskOutput$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a>, <code>OPENCYPHER</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>, or <code>ntriples</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune-analytics/latest/userguide/using-rdf-data.html\">RDF n-triples</a> format.</p>",
-        "GetImportTaskOutput$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or <code>OPENCYPHER</code>, which identies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
+        "GetImportTaskOutput$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or <code>OPENCYPHER</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
         "ImportTaskSummary$format": "<p>Specifies the format of S3 data to be imported. Valid values are <code>CSV</code>, which identifies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-gremlin.html\">Gremlin CSV format</a> or <code>OPENCYPHER</code>, which identies the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html\">openCypher load format</a>.</p>",
-        "StartImportTaskInput$format": "<p>Specifies the format of Amazon S3 data to be imported. Valid values are CSV, which identifies the Gremlin CSV format or OPENCYPHER, which identies the openCypher load format.</p>",
-        "StartImportTaskOutput$format": "<p>Specifies the format of Amazon S3 data to be imported. Valid values are CSV, which identifies the Gremlin CSV format or OPENCYPHER, which identies the openCypher load format.</p>"
+        "StartImportTaskInput$format": "<p>Specifies the format of Amazon S3 data to be imported. Valid values are CSV, which identifies the Gremlin CSV format or OPENCYPHER, which identifies the openCypher load format.</p>",
+        "StartImportTaskOutput$format": "<p>Specifies the format of Amazon S3 data to be imported. Valid values are CSV, which identifies the Gremlin CSV format or OPENCYPHER, which identifies the openCypher load format.</p>"
       }
     },
     "GetExportTaskInput": {
@@ -954,7 +954,7 @@
     "SecurityGroupIds": {
       "base": null,
       "refs": {
-        "CreatePrivateGraphEndpointInput$vpcSecurityGroupIds": "<p>Security groups to be attached to the private graph endpoint..</p>"
+        "CreatePrivateGraphEndpointInput$vpcSecurityGroupIds": "<p>Security groups to be attached to the private graph endpoint.</p>"
       }
     },
     "ServiceQuotaExceededException": {
@@ -1290,7 +1290,7 @@
     "VpcEndpointId": {
       "base": null,
       "refs": {
-        "CreatePrivateGraphEndpointOutput$vpcEndpointId": "<p>Endpoint ID of the prviate grpah endpoint.</p>",
+        "CreatePrivateGraphEndpointOutput$vpcEndpointId": "<p>Endpoint ID of the private graph endpoint.</p>",
         "DeletePrivateGraphEndpointOutput$vpcEndpointId": "<p>The ID of the VPC endpoint that was deleted.</p>",
         "GetPrivateGraphEndpointOutput$vpcEndpointId": "<p>The ID of the private endpoint.</p>",
         "PrivateGraphEndpointSummary$vpcEndpointId": "<p>The ID of the VPC endpoint.</p>"

@@ -264,6 +264,7 @@
         "DocDbSettings$UseUpdateLookUp": "<p>If <code>true</code>, DMS retrieves the entire document from the DocumentDB source during migration. This may cause a migration failure if the server response exceeds bandwidth limits. To fetch only updates and deletes during migration, set this parameter to <code>false</code>.</p>",
         "DocDbSettings$ReplicateShardCollections": "<p>If <code>true</code>, DMS replicates data to shard collections. DMS only uses this setting if the target endpoint is a DocumentDB elastic cluster.</p> <p>When this setting is <code>true</code>, note the following:</p> <ul> <li> <p>You must set <code>TargetTablePrepMode</code> to <code>nothing</code>.</p> </li> <li> <p>DMS automatically sets <code>useUpdateLookup</code> to <code>false</code>.</p> </li> </ul>",
         "ElasticsearchSettings$UseNewMappingType": "<p>Set this option to <code>true</code> for DMS to migrate documentation using the documentation type <code>_doc</code>. OpenSearch and an Elasticsearch cluster only support the _doc documentation type in versions 7. x and later. The default value is <code>false</code>.</p>",
+        "Endpoint$IsReadOnly": "<p>Indicates whether the endpoint is read-only. When set to <code>true</code>, this endpoint is managed by DMS as part of a zero-ETL integration and cannot be modified or deleted directly. You can only modify or delete read-only endpoints through their associated zero-ETL integration.</p>",
         "EndpointSetting$Sensitive": "<p>A value that marks this endpoint setting as sensitive.</p>",
         "GcpMySQLSettings$CleanSourceMetadataOnMismatch": "<p>Cleans and recreates table metadata information on the replication instance when a mismatch occurs. For example, in a situation where running an alter DDL on the table could result in different information about the table cached in the replication instance. </p>",
         "IBMDb2Settings$SetDataCaptureChanges": "<p>Enables ongoing replication (CDC) as a BOOLEAN value. The default is true.</p>",
@@ -338,7 +339,10 @@
         "RedshiftSettings$TrimBlanks": "<p>A value that specifies to remove the trailing white space characters from a VARCHAR string. This parameter applies only to columns with a VARCHAR data type. Choose <code>true</code> to remove unneeded white space. The default is <code>false</code>.</p>",
         "RedshiftSettings$TruncateColumns": "<p>A value that specifies to truncate data in columns to the appropriate number of characters, so that the data fits in the column. This parameter applies only to columns with a VARCHAR or CHAR data type, and rows with a size of 4 MB or less. Choose <code>true</code> to truncate data. The default is <code>false</code>.</p>",
         "RedshiftSettings$MapBooleanAsBoolean": "<p>When true, lets Redshift migrate the boolean type as boolean. By default, Redshift migrates booleans as <code>varchar(1)</code>. You must set this setting on both the source and target endpoints for it to take effect.</p>",
+        "Replication$IsReadOnly": "<p>Indicates whether the serverless replication is read-only. When set to <code>true</code>, this replication is managed by DMS as part of a zero-ETL integration and cannot be modified or deleted directly. You can only modify or delete read-only replications through their associated zero-ETL integration.</p>",
+        "ReplicationConfig$IsReadOnly": "<p>Indicates whether the replication configuration is read-only. When set to <code>true</code>, this replication configuration is managed by DMS as part of a zero-ETL integration and cannot be modified or deleted directly. You can only modify or delete read-only replication configurations through their associated zero-ETL integration.</p>",
         "ReplicationPendingModifiedValues$MultiAZ": "<p> Specifies whether the replication instance is a Multi-AZ deployment. You can't set the <code>AvailabilityZone</code> parameter if the Multi-AZ parameter is set to <code>true</code>. </p>",
+        "ReplicationSubnetGroup$IsReadOnly": "<p>Indicates whether the replication subnet group is read-only. When set to <code>true</code>, this subnet group is managed by DMS as part of a zero-ETL integration and cannot be modified or deleted directly. You can only modify or delete read-only subnet groups through their associated zero-ETL integration.</p>",
         "S3Settings$EnableStatistics": "<p>A value that enables statistics for Parquet pages and row groups. Choose <code>true</code> to enable statistics, <code>false</code> to disable. Statistics include <code>NULL</code>, <code>DISTINCT</code>, <code>MAX</code>, and <code>MIN</code> values. This parameter defaults to <code>true</code>. This value is used for .parquet file format only.</p>",
         "S3Settings$IncludeOpForFullLoad": "<p>A value that enables a full load to write INSERT operations to the comma-separated value (.csv) or .parquet output files only to indicate how the rows were added to the source database.</p> <note> <p>DMS supports the <code>IncludeOpForFullLoad</code> parameter in versions 3.1.4 and later.</p> <p>DMS supports the use of the .parquet files with the <code>IncludeOpForFullLoad</code> parameter in versions 3.4.7 and later.</p> </note> <p>For full load, records can only be inserted. By default (the <code>false</code> setting), no information is recorded in these output files for a full load to indicate that the rows were inserted at the source database. If <code>IncludeOpForFullLoad</code> is set to <code>true</code> or <code>y</code>, the INSERT is recorded as an I annotation in the first field of the .csv file. This allows the format of your target records from a full load to be consistent with the target records from a CDC load.</p> <note> <p>This setting works together with the <code>CdcInsertsOnly</code> and the <code>CdcInsertsAndUpdates</code> parameters for output to .csv files only. For more information about how these settings work together, see <a href=\"https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html#CHAP_Target.S3.Configuring.InsertOps\">Indicating Source DB Operations in Migrated S3 Data</a> in the <i>Database Migration Service User Guide.</i>.</p> </note>",
         "S3Settings$CdcInsertsOnly": "<p>A value that enables a change data capture (CDC) load to write only INSERT operations to .csv or columnar storage (.parquet) output files. By default (the <code>false</code> setting), the first field in a .csv or .parquet record contains the letter I (INSERT), U (UPDATE), or D (DELETE). These values indicate whether the row was inserted, updated, or deleted at the source database for a CDC load to the target.</p> <p>If <code>CdcInsertsOnly</code> is set to <code>true</code> or <code>y</code>, only INSERTs from the source database are migrated to the .csv or .parquet file. For .csv format only, how these INSERTs are recorded depends on the value of <code>IncludeOpForFullLoad</code>. If <code>IncludeOpForFullLoad</code> is set to <code>true</code>, the first field of every CDC record is set to I to indicate the INSERT operation at the source. If <code>IncludeOpForFullLoad</code> is set to <code>false</code>, every CDC record is written without a first field to indicate the INSERT operation at the source. For more information about how these settings work together, see <a href=\"https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html#CHAP_Target.S3.Configuring.InsertOps\">Indicating Source DB Operations in Migrated S3 Data</a> in the <i>Database Migration Service User Guide.</i>.</p> <note> <p>DMS supports the interaction described preceding between the <code>CdcInsertsOnly</code> and <code>IncludeOpForFullLoad</code> parameters in versions 3.1.4 and later. </p> <p> <code>CdcInsertsOnly</code> and <code>CdcInsertsAndUpdates</code> can't both be set to <code>true</code> for the same endpoint. Set either <code>CdcInsertsOnly</code> or <code>CdcInsertsAndUpdates</code> to <code>true</code> for the same endpoint, but not both.</p> </note>",
@@ -353,6 +357,7 @@
         "S3Settings$AddTrailingPaddingCharacter": "<p>Use the S3 target endpoint setting <code>AddTrailingPaddingCharacter</code> to add padding on string data. The default value is <code>false</code>.</p>",
         "S3Settings$GlueCatalogGeneration": "<p>When true, allows Glue to catalog your S3 bucket. Creating an Glue catalog lets you use Athena to query your data.</p>",
         "StartMetadataModelExportToTargetMessage$OverwriteExtensionPack": "<p>Whether to overwrite the migration project extension pack. An extension pack is an add-on module that emulates functions present in a source database that are required when converting objects to the target database.</p>",
+        "SybaseAseDataProviderSettings$EncryptPassword": "<p>Specifies whether to encrypt the password when connecting to the Sybase ASE database. When set to true, the connection password is encrypted during transmission. Default is true.</p>",
         "TableStatistics$FullLoadReloaded": "<p>A value that indicates if the table was reloaded (<code>true</code>) or loaded as part of a new full load operation (<code>false</code>).</p>",
         "TimestreamSettings$CdcInsertsAndUpdates": "<p>Set this attribute to <code>true</code> to specify that DMS only applies inserts and updates, and not deletes. Amazon Timestream does not allow deleting records, so if this value is <code>false</code>, DMS nulls out the corresponding record in the Timestream database rather than deleting it.</p>",
         "TimestreamSettings$EnableMagneticStoreWrites": "<p>Set this attribute to <code>true</code> to enable memory store writes. When this value is <code>false</code>, DMS does not write records that are older in days than the value specified in <code>MagneticDuration</code>, because Amazon Timestream does not allow memory writes by default. For more information, see <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/storage.html\">Storage</a> in the <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/\">Amazon Timestream Developer Guide</a>.</p>",
@@ -1218,7 +1223,8 @@
         "MongoDbDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the MongoDB data provider. The default value is <code>none</code>.</p>",
         "MySqlDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the MySQL data provider. The default value is <code>none</code>.</p>",
         "OracleDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the Oracle data provider. The default value is <code>none</code>.</p>",
-        "PostgreSqlDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the PostgreSQL data provider. The default value is <code>none</code>.</p>"
+        "PostgreSqlDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the PostgreSQL data provider. The default value is <code>none</code>.</p>",
+        "SybaseAseDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the SAP ASE data provider. The default value is <code>none</code>.</p>"
       }
     },
     "DmsTransferSettings": {
@@ -1246,6 +1252,7 @@
     "DoubleOptional": {
       "base": null,
       "refs": {
+        "Progress$ProgressPercent": "<p>The percent complete for the current step of the schema conversion operation.</p>",
         "RdsConfiguration$InstanceVcpu": "<p>Describes the number of virtual CPUs (vCPU) on the recommended Amazon RDS DB instance that meets your requirements.</p>",
         "RdsConfiguration$InstanceMemory": "<p>Describes the memory on the recommended Amazon RDS DB instance that meets your requirements.</p>",
         "RdsRequirements$InstanceVcpu": "<p>The required number of virtual CPUs (vCPU) on the Amazon RDS DB instance.</p>",
@@ -1779,6 +1786,7 @@
         "S3Settings$CdcMinFileSize": "<p>Minimum file size, defined in kilobytes, to reach for a file output to Amazon S3.</p> <p>When <code>CdcMinFileSize</code> and <code>CdcMaxBatchInterval</code> are both specified, the file write is triggered by whichever parameter condition is met first within an DMS CloudFormation template.</p> <p>The default value is 32 MB.</p>",
         "S3Settings$IgnoreHeaderRows": "<p>When this value is set to 1, DMS ignores the first row header in a .csv file. A value of 1 turns on the feature; a value of 0 turns off the feature.</p> <p>The default is 0.</p>",
         "S3Settings$MaxFileSize": "<p>A value that specifies the maximum size (in KB) of any .csv file to be created while migrating to an S3 target during full load.</p> <p>The default value is 1,048,576 KB (1 GB). Valid values include 1 to 1,048,576.</p>",
+        "SybaseAseDataProviderSettings$Port": "<p>The port value for the SAP ASE data provider.</p>",
         "SybaseSettings$Port": "<p>Endpoint TCP port. The default is 5000.</p>",
         "TimestreamSettings$MemoryDuration": "<p>Set this attribute to specify the length of time to store all of the tables in memory that are migrated into Amazon Timestream from the source database. Time is measured in units of hours. When Timestream data comes in, it first resides in memory for the specified duration, which allows quick access to it.</p>",
         "TimestreamSettings$MagneticDuration": "<p>Set this attribute to specify the default magnetic duration applied to the Amazon Timestream tables in days. This is the number of days that records remain in magnetic store before being discarded. For more information, see <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/storage.html\">Storage</a> in the <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/\">Amazon Timestream Developer Guide</a>.</p>"
@@ -1897,6 +1905,12 @@
         "ModifyEndpointMessage$KinesisSettings": "<p>Settings in JSON format for the target endpoint for Amazon Kinesis Data Streams. For more information about the available settings, see <a href=\"https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.Kinesis.html#CHAP_Target.Kinesis.ObjectMapping\">Using object mapping to migrate data to a Kinesis data stream</a> in the <i>Database Migration Service User Guide.</i> </p>"
       }
     },
+    "LakehouseSettings": {
+      "base": "<p>Provides information that defines a Lakehouse endpoint. This endpoint type is used for zero-ETL integrations with Lakehouse data warehouses.</p>",
+      "refs": {
+        "Endpoint$LakehouseSettings": "<p>Settings in JSON format for the target Lakehouse endpoint. This parameter applies to endpoints that are automatically created by DMS for a Lakehouse data warehouse as part of a zero-ETL integration.</p>"
+      }
+    },
     "Limitation": {
       "base": "<p>Provides information about the limitations of target Amazon Web Services engines.</p> <p>Your source database might include features that the target Amazon Web Services engine doesn't support. Fleet Advisor lists these features as limitations. You should consider these limitations during database migration. For each limitation, Fleet Advisor recommends an action that you can take to address or avoid this limitation.</p>",
       "refs": {
@@ -1923,6 +1937,7 @@
         "AccountQuota$Used": "<p>The amount currently used toward the quota maximum.</p>",
         "AccountQuota$Max": "<p>The maximum allowed value for the quota.</p>",
         "DataMigrationStatistics$ElapsedTimeMillis": "<p>The elapsed duration of the data migration run.</p>",
+        "Progress$TotalObjects": "<p>The number of objects in this schema conversion operation.</p>",
         "ReplicationInstanceTaskLog$ReplicationInstanceTaskLogSize": "<p>The size, in bytes, of the replication task log.</p>",
         "ReplicationStats$ElapsedTimeMillis": "<p>The elapsed time of the replication, in milliseconds.</p>",
         "ReplicationTaskStats$ElapsedTimeMillis": "<p>The elapsed time of the task, in milliseconds.</p>",
@@ -2319,6 +2334,18 @@
       "base": null,
       "refs": {
         "Replication$PremigrationAssessmentStatuses": "<p>The status output of premigration assessment in describe-replications.</p>"
+      }
+    },
+    "ProcessedObject": {
+      "base": "<p>The database object that the schema conversion operation currently uses.</p>",
+      "refs": {
+        "Progress$ProcessedObject": "<p>The name of the database object that the schema conversion operation currently uses.</p>"
+      }
+    },
+    "Progress": {
+      "base": "<p>Provides information about the progress of the schema conversion operation.</p>",
+      "refs": {
+        "SchemaConversionRequest$Progress": null
       }
     },
     "ProvisionData": {
@@ -3041,6 +3068,7 @@
         "Certificate$CertificateArn": "<p>The Amazon Resource Name (ARN) for the certificate.</p>",
         "Certificate$CertificateOwner": "<p>The owner of the certificate.</p>",
         "Certificate$SigningAlgorithm": "<p>The signing algorithm for the certificate.</p>",
+        "Certificate$KmsKeyId": "<p>An KMS key identifier that is used to encrypt the certificate.</p> <p>If you don't specify a value for the <code>KmsKeyId</code> parameter, then DMS uses your default encryption key.</p> <p>KMS creates the default encryption key for your Amazon Web Services account. Your Amazon Web Services account has a different default encryption key for each Amazon Web Services Region.</p>",
         "CollectorResponse$CollectorReferencedId": "<p>The reference ID of the Fleet Advisor collector.</p>",
         "CollectorResponse$CollectorName": "<p>The name of the Fleet Advisor collector .</p>",
         "CollectorResponse$CollectorVersion": "<p>The version of your Fleet Advisor collector, in semantic versioning format, for example <code>1.0.2</code> </p>",
@@ -3069,7 +3097,7 @@
         "CreateDataMigrationMessage$ServiceAccessRoleArn": "<p>The Amazon Resource Name (ARN) for the service access role that you want to use to create the data migration.</p>",
         "CreateDataProviderMessage$DataProviderName": "<p>A user-friendly name for the data provider.</p>",
         "CreateDataProviderMessage$Description": "<p>A user-friendly description of the data provider.</p>",
-        "CreateDataProviderMessage$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, <code>db2</code>, <code>db2-zos</code> and <code>docdb</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
+        "CreateDataProviderMessage$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, <code>db2</code>, <code>db2-zos</code>, <code>docdb</code>, and <code>sybase</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
         "CreateEndpointMessage$EndpointIdentifier": "<p>The database endpoint identifier. Identifiers must begin with a letter and must contain only ASCII letters, digits, and hyphens. They can't end with a hyphen, or contain two consecutive hyphens.</p>",
         "CreateEndpointMessage$EngineName": "<p>The type of engine for the endpoint. Valid values, depending on the <code>EndpointType</code> value, include <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"mariadb\"</code>, <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"opensearch\"</code>, <code>\"redshift\"</code>, <code>\"s3\"</code>, <code>\"db2\"</code>, <code>\"db2-zos\"</code>, <code>\"azuredb\"</code>, <code>\"sybase\"</code>, <code>\"dynamodb\"</code>, <code>\"mongodb\"</code>, <code>\"kinesis\"</code>, <code>\"kafka\"</code>, <code>\"elasticsearch\"</code>, <code>\"docdb\"</code>, <code>\"sqlserver\"</code>, <code>\"neptune\"</code>, <code>\"babelfish\"</code>, <code>redshift-serverless</code>, <code>aurora-serverless</code>, <code>aurora-postgresql-serverless</code>, <code>gcp-mysql</code>, <code>azure-sql-managed-instance</code>, <code>redis</code>, <code>dms-transfer</code>.</p>",
         "CreateEndpointMessage$Username": "<p>The user name to be used to log in to the endpoint database.</p>",
@@ -3142,7 +3170,7 @@
         "DataProvider$DataProviderName": "<p>The name of the data provider.</p>",
         "DataProvider$DataProviderArn": "<p>The Amazon Resource Name (ARN) string that uniquely identifies the data provider.</p>",
         "DataProvider$Description": "<p>A description of the data provider. Descriptions can have up to 31 characters. A description can contain only ASCII letters, digits, and hyphens ('-'). Also, it can't end with a hyphen or contain two consecutive hyphens, and can only begin with a letter.</p>",
-        "DataProvider$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, <code>db2</code>, <code>db2-zos</code> and <code>docdb</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
+        "DataProvider$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, <code>db2</code>, <code>db2-zos</code>, <code>docdb</code>, and <code>sybase</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
         "DataProviderDescriptor$SecretsManagerSecretId": "<p>The identifier of the Amazon Web Services Secrets Manager Secret used to store access credentials for the data provider.</p>",
         "DataProviderDescriptor$SecretsManagerAccessRoleArn": "<p>The ARN of the role used to access Amazon Web Services Secrets Manager.</p>",
         "DataProviderDescriptor$DataProviderName": "<p>The user-friendly name of the data provider.</p>",
@@ -3373,6 +3401,7 @@
         "IbmDb2zOsDataProviderSettings$S3Path": "<p>The path for the Amazon S3 bucket that the application uses for accessing the user-defined schema.</p>",
         "IbmDb2zOsDataProviderSettings$S3AccessRoleArn": "<p>The ARN for the role the application uses to access its Amazon S3 bucket.</p>",
         "ImportCertificateMessage$CertificateIdentifier": "<p>A customer-assigned name for the certificate. Identifiers must begin with a letter and must contain only ASCII letters, digits, and hyphens. They can't end with a hyphen or contain two consecutive hyphens.</p>",
+        "ImportCertificateMessage$KmsKeyId": "<p>An KMS key identifier that is used to encrypt the certificate.</p> <p>If you don't specify a value for the <code>KmsKeyId</code> parameter, then DMS uses your default encryption key.</p> <p>KMS creates the default encryption key for your Amazon Web Services account. Your Amazon Web Services account has a different default encryption key for each Amazon Web Services Region.</p>",
         "IncludeTestList$member": null,
         "IndividualAssessmentNameList$member": null,
         "InstanceProfile$InstanceProfileArn": "<p>The Amazon Resource Name (ARN) string that uniquely identifies the instance profile.</p>",
@@ -3394,6 +3423,7 @@
         "KeyList$member": null,
         "KinesisSettings$StreamArn": "<p>The Amazon Resource Name (ARN) for the Amazon Kinesis Data Streams endpoint.</p>",
         "KinesisSettings$ServiceAccessRoleArn": "<p>The Amazon Resource Name (ARN) for the IAM role that DMS uses to write to the Kinesis data stream. The role must allow the <code>iam:PassRole</code> action.</p>",
+        "LakehouseSettings$Arn": "<p>The Amazon Resource Name (ARN) of the Lakehouse resource that serves as the target for this endpoint.</p>",
         "Limitation$DatabaseId": "<p>The identifier of the source database.</p>",
         "Limitation$EngineName": "<p>The name of the target engine that Fleet Advisor should use in the target engine recommendation. Valid values include <code>\"rds-aurora-mysql\"</code>, <code>\"rds-aurora-postgresql\"</code>, <code>\"rds-mysql\"</code>, <code>\"rds-oracle\"</code>, <code>\"rds-sql-server\"</code>, and <code>\"rds-postgresql\"</code>.</p>",
         "Limitation$Name": "<p>The name of the limitation. Describes unsupported database features, migration action items, and other limitations.</p>",
@@ -3432,7 +3462,7 @@
         "ModifyDataProviderMessage$DataProviderIdentifier": "<p>The identifier of the data provider. Identifiers must begin with a letter and must contain only ASCII letters, digits, and hyphens. They can't end with a hyphen, or contain two consecutive hyphens.</p>",
         "ModifyDataProviderMessage$DataProviderName": "<p>The name of the data provider.</p>",
         "ModifyDataProviderMessage$Description": "<p>A user-friendly description of the data provider.</p>",
-        "ModifyDataProviderMessage$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, <code>db2</code>, <code>db2-zos</code> and <code>docdb</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
+        "ModifyDataProviderMessage$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, <code>db2</code>, <code>db2-zos</code>, <code>docdb</code>, and <code>sybase</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
         "ModifyEndpointMessage$EndpointArn": "<p>The Amazon Resource Name (ARN) string that uniquely identifies the endpoint.</p>",
         "ModifyEndpointMessage$EndpointIdentifier": "<p>The database endpoint identifier. Identifiers must begin with a letter and must contain only ASCII letters, digits, and hyphens. They can't end with a hyphen or contain two consecutive hyphens.</p>",
         "ModifyEndpointMessage$EngineName": "<p>The database engine name. Valid values, depending on the EndpointType, include <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"mariadb\"</code>, <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"redshift\"</code>, <code>\"s3\"</code>, <code>\"db2\"</code>, <code>\"db2-zos\"</code>, <code>\"azuredb\"</code>, <code>\"sybase\"</code>, <code>\"dynamodb\"</code>, <code>\"mongodb\"</code>, <code>\"kinesis\"</code>, <code>\"kafka\"</code>, <code>\"elasticsearch\"</code>, <code>\"documentdb\"</code>, <code>\"sqlserver\"</code>, <code>\"neptune\"</code>, and <code>\"babelfish\"</code>.</p>",
@@ -3560,6 +3590,10 @@
         "PremigrationAssessmentStatus$ResultLocationFolder": "<p>The folder within an Amazon S3 bucket where you want Database Migration Service to store the results of this assessment run.</p>",
         "PremigrationAssessmentStatus$ResultEncryptionMode": "<p>The supported values are <code>SSE_KMS</code> and <code>SSE_S3</code>. If these values are not provided, then the files are not encrypted at rest. For more information, see <a href=\"https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html#CHAP_Target.S3.KMSKeys\">Creating Amazon Web Services KMS keys to encrypt Amazon S3 target objects</a>.</p>",
         "PremigrationAssessmentStatus$ResultKmsKeyArn": "<p>The ARN of a custom KMS encryption key that you specify when you set <code>ResultEncryptionMode</code> to <code>SSE_KMS</code>.</p>",
+        "ProcessedObject$Name": "<p>The name of the database object.</p>",
+        "ProcessedObject$Type": "<p>The type of the database object. For example, a table, view, procedure, and so on.</p>",
+        "ProcessedObject$EndpointType": "<p>The type of the data provider. This parameter can store one of the following values: <code>\"SOURCE\"</code> or <code>\"TARGET\"</code>.</p>",
+        "Progress$ProgressStep": "<p>The step of the schema conversion operation. This parameter can store one of the following values:</p> <ul> <li> <p> <code>IN_PROGRESS</code> – The operation is running.</p> </li> <li> <p> <code>LOADING_METADATA</code> – Loads metadata from the source database.</p> </li> <li> <p> <code>COUNTING_OBJECTS</code> – Determines the number of objects involved in the operation.</p> </li> <li> <p> <code>ANALYZING</code> – Analyzes the source database objects.</p> </li> <li> <p> <code>CONVERTING</code> – Converts the source database objects to a format compatible with the target database.</p> </li> <li> <p> <code>APPLYING</code> – Applies the converted code to the target database.</p> </li> <li> <p> <code>FINISHED</code> – The operation completed successfully.</p> </li> </ul>",
         "ProvisionData$ProvisionState": "<p>The current provisioning state </p>",
         "ProvisionData$ReasonForNewProvisioningData": "<p>A message describing the reason that DMS provisioned new resources for the serverless replication.</p>",
         "PublicIpAddressList$member": null,
@@ -3764,6 +3798,9 @@
         "SupportedEndpointType$EngineName": "<p>The database engine name. Valid values, depending on the EndpointType, include <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"mariadb\"</code>, <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"redshift\"</code>, <code>\"s3\"</code>, <code>\"db2\"</code>, <code>\"db2-zos\"</code>, <code>\"azuredb\"</code>, <code>\"sybase\"</code>, <code>\"dynamodb\"</code>, <code>\"mongodb\"</code>, <code>\"kinesis\"</code>, <code>\"kafka\"</code>, <code>\"elasticsearch\"</code>, <code>\"documentdb\"</code>, <code>\"sqlserver\"</code>, <code>\"neptune\"</code>, and <code>\"babelfish\"</code>.</p>",
         "SupportedEndpointType$ReplicationInstanceEngineMinimumVersion": "<p>The earliest DMS engine version that supports this endpoint engine. Note that endpoint engines released with DMS versions earlier than 3.1.1 do not return a value for this parameter.</p>",
         "SupportedEndpointType$EngineDisplayName": "<p>The expanded name for the engine name. For example, if the <code>EngineName</code> parameter is \"aurora\", this value would be \"Amazon Aurora MySQL\".</p>",
+        "SybaseAseDataProviderSettings$ServerName": "<p>The name of the SAP ASE server.</p>",
+        "SybaseAseDataProviderSettings$DatabaseName": "<p>The database name on the SAP ASE data provider.</p>",
+        "SybaseAseDataProviderSettings$CertificateArn": "<p>The Amazon Resource Name (ARN) of the certificate used for SSL connection.</p>",
         "SybaseSettings$DatabaseName": "<p>Database name for the endpoint.</p>",
         "SybaseSettings$ServerName": "<p>Fully qualified domain name of the endpoint.</p>",
         "SybaseSettings$Username": "<p>Endpoint connection user name.</p>",
@@ -3835,6 +3872,12 @@
       "base": null,
       "refs": {
         "DescribeEndpointTypesResponse$SupportedEndpointTypes": "<p>The types of endpoints that are supported.</p>"
+      }
+    },
+    "SybaseAseDataProviderSettings": {
+      "base": "<p>Provides information that defines an SAP ASE data provider.</p>",
+      "refs": {
+        "DataProviderSettings$SybaseAseSettings": null
       }
     },
     "SybaseSettings": {

@@ -1017,6 +1017,17 @@
         "Dimensions":{"shape":"MetricDimensionList"}
       }
     },
+    "CloudWatchLogConfiguration":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "LogGroupName":{"shape":"XmlString"},
+        "LogStreamNamePrefix":{"shape":"XmlString"},
+        "EncryptionKeyArn":{"shape":"XmlString"},
+        "LogTypes":{"shape":"LogTypesMap"}
+      }
+    },
     "Cluster":{
       "type":"structure",
       "members":{
@@ -1054,7 +1065,8 @@
         "OSReleaseLabel":{"shape":"String"},
         "EbsRootVolumeIops":{"shape":"Integer"},
         "EbsRootVolumeThroughput":{"shape":"Integer"},
-        "ExtendedSupport":{"shape":"BooleanObject"}
+        "ExtendedSupport":{"shape":"BooleanObject"},
+        "MonitoringConfiguration":{"shape":"MonitoringConfiguration"}
       }
     },
     "ClusterId":{"type":"string"},
@@ -2463,6 +2475,11 @@
         "Marker":{"shape":"String"}
       }
     },
+    "LogTypesMap":{
+      "type":"map",
+      "key":{"shape":"XmlString"},
+      "value":{"shape":"XmlStringList"}
+    },
     "Long":{"type":"long"},
     "ManagedScalingPolicy":{
       "type":"structure",
@@ -2528,6 +2545,12 @@
       "members":{
         "ClusterId":{"shape":"ClusterId"},
         "InstanceGroups":{"shape":"InstanceGroupModifyConfigList"}
+      }
+    },
+    "MonitoringConfiguration":{
+      "type":"structure",
+      "members":{
+        "CloudWatchLogConfiguration":{"shape":"CloudWatchLogConfiguration"}
       }
     },
     "NewSupportedProductsList":{
@@ -2942,7 +2965,8 @@
         "OSReleaseLabel":{"shape":"XmlStringMaxLen256"},
         "EbsRootVolumeIops":{"shape":"Integer"},
         "EbsRootVolumeThroughput":{"shape":"Integer"},
-        "ExtendedSupport":{"shape":"BooleanObject"}
+        "ExtendedSupport":{"shape":"BooleanObject"},
+        "MonitoringConfiguration":{"shape":"MonitoringConfiguration"}
       }
     },
     "RunJobFlowOutput":{
@@ -2950,6 +2974,13 @@
       "members":{
         "JobFlowId":{"shape":"XmlStringMaxLen256"},
         "ClusterArn":{"shape":"ArnType"}
+      }
+    },
+    "S3MonitoringConfiguration":{
+      "type":"structure",
+      "members":{
+        "LogUri":{"shape":"XmlString"},
+        "EncryptionKeyArn":{"shape":"XmlString"}
       }
     },
     "ScaleDownBehavior":{
@@ -3213,7 +3244,9 @@
         "Config":{"shape":"HadoopStepConfig"},
         "ActionOnFailure":{"shape":"ActionOnFailure"},
         "Status":{"shape":"StepStatus"},
-        "ExecutionRoleArn":{"shape":"OptionalArnType"}
+        "ExecutionRoleArn":{"shape":"OptionalArnType"},
+        "LogUri":{"shape":"String"},
+        "EncryptionKeyArn":{"shape":"String"}
       }
     },
     "StepCancellationOption":{
@@ -3232,7 +3265,8 @@
       "members":{
         "Name":{"shape":"XmlStringMaxLen256"},
         "ActionOnFailure":{"shape":"ActionOnFailure"},
-        "HadoopJarStep":{"shape":"HadoopJarStepConfig"}
+        "HadoopJarStep":{"shape":"HadoopJarStepConfig"},
+        "StepMonitoringConfiguration":{"shape":"StepMonitoringConfiguration"}
       }
     },
     "StepConfigList":{
@@ -3285,6 +3319,12 @@
       "type":"list",
       "member":{"shape":"XmlStringMaxLen256"}
     },
+    "StepMonitoringConfiguration":{
+      "type":"structure",
+      "members":{
+        "S3MonitoringConfiguration":{"shape":"S3MonitoringConfiguration"}
+      }
+    },
     "StepState":{
       "type":"string",
       "enum":[
@@ -3328,7 +3368,9 @@
         "Name":{"shape":"String"},
         "Config":{"shape":"HadoopStepConfig"},
         "ActionOnFailure":{"shape":"ActionOnFailure"},
-        "Status":{"shape":"StepStatus"}
+        "Status":{"shape":"StepStatus"},
+        "LogUri":{"shape":"String"},
+        "EncryptionKeyArn":{"shape":"String"}
       }
     },
     "StepSummaryList":{

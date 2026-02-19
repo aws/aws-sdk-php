@@ -616,6 +616,25 @@ class ValidatorTest extends TestCase
                 "Found 1 error while validating the input provided for the Foo operation:\n"
                 . "[unionVal] is a union type and must have exactly one non null value"
             ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentMember' => [
+                            'type' => 'structure',
+                            'members' => [],
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                [
+                    'documentMember' => [
+                        'type' => 'object',
+                        'properties' => (object) []
+                    ]
+                ],
+                true
+            ]
         ];
     }
 

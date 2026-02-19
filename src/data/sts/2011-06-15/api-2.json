@@ -146,7 +146,8 @@
       },
       "errors":[
         {"shape":"ExpiredTradeInTokenException"},
-        {"shape":"RegionDisabledException"}
+        {"shape":"RegionDisabledException"},
+        {"shape":"PackedPolicyTooLargeException"}
       ]
     },
     "GetFederationToken":{
@@ -179,6 +180,23 @@
       },
       "errors":[
         {"shape":"RegionDisabledException"}
+      ]
+    },
+    "GetWebIdentityToken":{
+      "name":"GetWebIdentityToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetWebIdentityTokenRequest"},
+      "output":{
+        "shape":"GetWebIdentityTokenResponse",
+        "resultWrapper":"GetWebIdentityTokenResult"
+      },
+      "errors":[
+        {"shape":"SessionDurationEscalationException"},
+        {"shape":"OutboundWebIdentityFederationDisabledException"},
+        {"shape":"JWTPayloadSizeExceededException"}
       ]
     }
   },
@@ -439,6 +457,26 @@
         "Credentials":{"shape":"Credentials"}
       }
     },
+    "GetWebIdentityTokenRequest":{
+      "type":"structure",
+      "required":[
+        "Audience",
+        "SigningAlgorithm"
+      ],
+      "members":{
+        "Audience":{"shape":"webIdentityTokenAudienceListType"},
+        "DurationSeconds":{"shape":"webIdentityTokenDurationSecondsType"},
+        "SigningAlgorithm":{"shape":"jwtAlgorithmType"},
+        "Tags":{"shape":"tagListType"}
+      }
+    },
+    "GetWebIdentityTokenResponse":{
+      "type":"structure",
+      "members":{
+        "WebIdentityToken":{"shape":"webIdentityTokenType"},
+        "Expiration":{"shape":"dateType"}
+      }
+    },
     "IDPCommunicationErrorException":{
       "type":"structure",
       "members":{
@@ -488,6 +526,18 @@
       "exception":true
     },
     "Issuer":{"type":"string"},
+    "JWTPayloadSizeExceededException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"jwtPayloadSizeExceededException"}
+      },
+      "error":{
+        "code":"JWTPayloadSizeExceededException",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "MalformedPolicyDocumentException":{
       "type":"structure",
       "members":{
@@ -501,6 +551,18 @@
       "exception":true
     },
     "NameQualifier":{"type":"string"},
+    "OutboundWebIdentityFederationDisabledException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"outboundWebIdentityFederationDisabledException"}
+      },
+      "error":{
+        "code":"OutboundWebIdentityFederationDisabledException",
+        "httpStatusCode":403,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "PackedPolicyTooLargeException":{
       "type":"structure",
       "members":{
@@ -554,6 +616,18 @@
       "max":100000,
       "min":4,
       "sensitive":true
+    },
+    "SessionDurationEscalationException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"sessionDurationEscalationException"}
+      },
+      "error":{
+        "code":"SessionDurationEscalationException",
+        "httpStatusCode":403,
+        "senderFault":true
+      },
+      "exception":true
     },
     "Subject":{"type":"string"},
     "SubjectType":{"type":"string"},
@@ -637,11 +711,18 @@
     "idpRejectedClaimMessage":{"type":"string"},
     "invalidAuthorizationMessage":{"type":"string"},
     "invalidIdentityTokenMessage":{"type":"string"},
+    "jwtAlgorithmType":{
+      "type":"string",
+      "max":5,
+      "min":5
+    },
+    "jwtPayloadSizeExceededException":{"type":"string"},
     "malformedPolicyDocumentMessage":{"type":"string"},
     "nonNegativeIntegerType":{
       "type":"integer",
       "min":0
     },
+    "outboundWebIdentityFederationDisabledException":{"type":"string"},
     "packedPolicyTooLargeMessage":{"type":"string"},
     "policyDescriptorListType":{
       "type":"list",
@@ -665,6 +746,7 @@
       "min":9,
       "pattern":"[\\w+=/:,.@-]*"
     },
+    "sessionDurationEscalationException":{"type":"string"},
     "sessionPolicyDocumentType":{
       "type":"string",
       "max":2048,
@@ -731,6 +813,26 @@
       "type":"string",
       "max":255,
       "min":6
+    },
+    "webIdentityTokenAudienceListType":{
+      "type":"list",
+      "member":{"shape":"webIdentityTokenAudienceStringType"},
+      "max":10,
+      "min":1
+    },
+    "webIdentityTokenAudienceStringType":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
+    "webIdentityTokenDurationSecondsType":{
+      "type":"integer",
+      "max":3600,
+      "min":60
+    },
+    "webIdentityTokenType":{
+      "type":"string",
+      "sensitive":true
     }
   }
 }

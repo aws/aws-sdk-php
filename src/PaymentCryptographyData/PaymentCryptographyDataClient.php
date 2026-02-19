@@ -9,6 +9,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise decryptDataAsync(array $args = [])
  * @method \Aws\Result encryptData(array $args = [])
  * @method \GuzzleHttp\Promise\Promise encryptDataAsync(array $args = [])
+ * @method \Aws\Result generateAs2805KekValidation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise generateAs2805KekValidationAsync(array $args = [])
  * @method \Aws\Result generateCardValidationData(array $args = [])
  * @method \GuzzleHttp\Promise\Promise generateCardValidationDataAsync(array $args = [])
  * @method \Aws\Result generateMac(array $args = [])

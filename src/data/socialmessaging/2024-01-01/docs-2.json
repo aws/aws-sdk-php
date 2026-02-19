@@ -3,14 +3,14 @@
   "service": "<p> <i>Amazon Web Services End User Messaging Social</i>, also referred to as Social messaging, is a messaging service that enables application developers to incorporate WhatsApp into their existing workflows. The <i>Amazon Web Services End User Messaging Social API</i> provides information about the <i>Amazon Web Services End User Messaging Social API</i> resources, including supported HTTP methods, parameters, and schemas.</p> <p>The <i>Amazon Web Services End User Messaging Social API</i> provides programmatic access to options that are unique to the WhatsApp Business Platform.</p> <p>If you're new to the <i>Amazon Web Services End User Messaging Social API</i>, it's also helpful to review <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/what-is-service.html\">What is Amazon Web Services End User Messaging Social</a> in the <i>Amazon Web Services End User Messaging Social User Guide</i>. The <i>Amazon Web Services End User Messaging Social User Guide</i> provides tutorials, code samples, and procedures that demonstrate how to use <i>Amazon Web Services End User Messaging Social API</i> features programmatically and how to integrate functionality into applications. The guide also provides key information, such as integration with other Amazon Web Services services, and the quotas that apply to use of the service.</p> <p> <b>Regional availability</b> </p> <p>The <i>Amazon Web Services End User Messaging Social API</i> is available across several Amazon Web Services Regions and it provides a dedicated endpoint for each of these Regions. For a list of all the Regions and endpoints where the API is currently available, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#pinpoint_region\">Amazon Web Services Service Endpoints</a> and <a href=\"https://docs.aws.amazon.com/general/latest/gr/end-user-messaging.html\">Amazon Web Services End User Messaging endpoints and quotas</a> in the Amazon Web Services General Reference. To learn more about Amazon Web Services Regions, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande-manage.html\">Managing Amazon Web Services Regions</a> in the Amazon Web Services General Reference.</p> <p>In each Region, Amazon Web Services maintains multiple Availability Zones. These Availability Zones are physically isolated from each other, but are united by private, low-latency, high-throughput, and highly redundant network connections. These Availability Zones enable us to provide very high levels of availability and redundancy, while also minimizing latency. To learn more about the number of Availability Zones that are available in each Region, see <a href=\"https://aws.amazon.com/about-aws/global-infrastructure/\">Amazon Web Services Global Infrastructure.</a> </p>",
   "operations": {
     "AssociateWhatsAppBusinessAccount": "<p>This is only used through the Amazon Web Services console during sign-up to associate your WhatsApp Business Account to your Amazon Web Services account.</p>",
-    "CreateWhatsAppMessageTemplate": "<p>Creates a new WhatsApp message template from a custom definition.</p>",
+    "CreateWhatsAppMessageTemplate": "<p>Creates a new WhatsApp message template from a custom definition.</p> <note> <p>Amazon Web Services End User Messaging Social does not store any WhatsApp message template content.</p> </note>",
     "CreateWhatsAppMessageTemplateFromLibrary": "<p>Creates a new WhatsApp message template using a template from Meta's template library.</p>",
     "CreateWhatsAppMessageTemplateMedia": "<p>Uploads media for use in a WhatsApp message template.</p>",
     "DeleteWhatsAppMessageMedia": "<p>Delete a media object from the WhatsApp service. If the object is still in an Amazon S3 bucket you should delete it from there too.</p>",
     "DeleteWhatsAppMessageTemplate": "<p>Deletes a WhatsApp message template.</p>",
     "DisassociateWhatsAppBusinessAccount": "<p>Disassociate a WhatsApp Business Account (WABA) from your Amazon Web Services account.</p>",
     "GetLinkedWhatsAppBusinessAccount": "<p>Get the details of your linked WhatsApp Business Account.</p>",
-    "GetLinkedWhatsAppBusinessAccountPhoneNumber": "<p>Use your WhatsApp phone number id to get the WABA account id and phone number details.</p>",
+    "GetLinkedWhatsAppBusinessAccountPhoneNumber": "<p>Retrieve the WABA account id and phone number details of a WhatsApp business account phone number.</p>",
     "GetWhatsAppMessageMedia": "<p>Get a media file from the WhatsApp service. On successful completion the media file is retrieved from Meta and stored in the specified Amazon S3 bucket. Use either <code>destinationS3File</code> or <code>destinationS3PresignedUrl</code> for the destination. If both are used then an <code>InvalidParameterException</code> is returned.</p>",
     "GetWhatsAppMessageTemplate": "<p>Retrieves a specific WhatsApp message template.</p>",
     "ListLinkedWhatsAppBusinessAccounts": "<p>List all WhatsApp Business Accounts linked to your Amazon Web Services account.</p>",
@@ -27,13 +27,11 @@
   "shapes": {
     "AccessDeniedByMetaException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AddContactNumber": {
       "base": null,
@@ -76,13 +74,11 @@
     },
     "AssociateWhatsAppBusinessAccountInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateWhatsAppBusinessAccountOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
@@ -106,33 +102,27 @@
     },
     "CreateWhatsAppMessageTemplateFromLibraryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWhatsAppMessageTemplateFromLibraryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWhatsAppMessageTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWhatsAppMessageTemplateMediaInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWhatsAppMessageTemplateMediaOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWhatsAppMessageTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAllLanguages": {
       "base": null,
@@ -142,38 +132,31 @@
     },
     "DeleteWhatsAppMessageMediaInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWhatsAppMessageMediaOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWhatsAppMessageTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWhatsAppMessageTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DependencyException": {
       "base": "<p>Thrown when performing an action because a dependency would be broken.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateWhatsAppBusinessAccountInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateWhatsAppBusinessAccountOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ErrorMessage": {
       "base": null,
@@ -215,43 +198,35 @@
     },
     "GetLinkedWhatsAppBusinessAccountInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLinkedWhatsAppBusinessAccountOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLinkedWhatsAppBusinessAccountPhoneNumberInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLinkedWhatsAppBusinessAccountPhoneNumberOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWhatsAppMessageMediaInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWhatsAppMessageMediaOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWhatsAppMessageTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWhatsAppMessageTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Headers": {
       "base": null,
@@ -270,13 +245,11 @@
     },
     "InternalServiceException": {
       "base": "<p>The request processing has failed because of an unknown error, exception, or failure.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidParametersException": {
       "base": "<p>One or more parameters provided to the action are not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IsoCountryCode": {
       "base": null,
@@ -306,8 +279,7 @@
     },
     "LimitExceededException": {
       "base": "<p>The request was denied because it would exceed one or more service quotas or limits.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LinkedAccountWithIncompleteSetup": {
       "base": null,
@@ -376,48 +348,40 @@
     },
     "ListLinkedWhatsAppBusinessAccountsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLinkedWhatsAppBusinessAccountsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWhatsAppMessageTemplatesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWhatsAppMessageTemplatesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWhatsAppTemplateLibraryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWhatsAppTemplateLibraryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
       "refs": {
-        "GetWhatsAppMessageMediaOutput$fileSize": "<p>The file size of the media, in KB.</p>"
+        "GetWhatsAppMessageMediaOutput$fileSize": "<p>The size of the media file, in KB.</p>"
       }
     },
     "MaxResults": {
@@ -470,6 +434,12 @@
         "ListWhatsAppTemplateLibraryOutput$metaLibraryTemplates": "<p>A list of templates from Meta's library.</p>"
       }
     },
+    "MetaParameterFormat": {
+      "base": null,
+      "refs": {
+        "UpdateWhatsAppMessageTemplateInput$parameterFormat": "<p>The format specification for parameters in the template, this can be either 'named' or 'positional'.</p>"
+      }
+    },
     "MetaTemplate": {
       "base": null,
       "refs": {
@@ -480,6 +450,12 @@
       "base": null,
       "refs": {
         "MetaLibraryTemplateDefinition$templateBody": "<p>The body text of the template.</p>"
+      }
+    },
+    "MetaTemplateBodyExampleParams": {
+      "base": null,
+      "refs": {
+        "MetaLibraryTemplateDefinition$templateBodyExampleParams": "<p>Example parameter values for the template body, used to demonstrate how dynamic content appears in the template.</p>"
       }
     },
     "MetaTemplateCategory": {
@@ -497,6 +473,12 @@
       "base": null,
       "refs": {
         "UpdateWhatsAppMessageTemplateInput$templateComponents": "<p>The updated components of the template as a JSON blob (maximum 3000 characters).</p>"
+      }
+    },
+    "MetaTemplateCtaLinkTrackingOptedOut": {
+      "base": null,
+      "refs": {
+        "UpdateWhatsAppMessageTemplateInput$ctaUrlLinkTrackingOptedOut": "<p>When true, disables click tracking for call-to-action URL buttons in the template.</p>"
       }
     },
     "MetaTemplateDefinition": {
@@ -624,23 +606,19 @@
     },
     "PostWhatsAppMessageMediaInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PostWhatsAppMessageMediaOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutWhatsAppBusinessAccountEventDestinationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutWhatsAppBusinessAccountEventDestinationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegistrationStatus": {
       "base": null,
@@ -652,8 +630,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The resource was not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RoleArn": {
       "base": null,
@@ -678,7 +655,7 @@
     "S3FileKeyString": {
       "base": null,
       "refs": {
-        "S3File$key": "<p>The object key of the media file.</p>"
+        "S3File$key": "<p>The S3 key prefix that defines the storage location of your media files. The prefix works like a folder path in S3, and is combined with the WhatsApp mediaId to create the final file path.</p> <p>For example, if a media file's WhatsApp mediaId is <code>123.ogg</code>, and the key is <code>audio/example.ogg</code>, the final file path is <code>audio/example.ogg123.ogg</code>.</p> <p>For the same mediaId, a key of <code>audio/</code> results in the file path <code>audio/123.ogg</code>.</p>"
       }
     },
     "S3PresignedUrl": {
@@ -696,13 +673,11 @@
     },
     "SendWhatsAppMessageInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendWhatsAppMessageOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -713,6 +688,7 @@
         "GetWhatsAppMessageMediaOutput$mimeType": "<p>The MIME type of the media.</p>",
         "Headers$key": null,
         "Headers$value": null,
+        "MetaTemplateBodyExampleParams$member": null,
         "SendWhatsAppMessageInput$metaApiVersion": "<p>The API version for the request formatted as <code>v{VersionNumber}</code>. For a list of supported API versions and Amazon Web Services Regions, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/end-user-messaging.html\"> <i>Amazon Web Services End User Messaging Social API</i> Service Endpoints</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "SendWhatsAppMessageOutput$messageId": "<p>The unique identifier of the message.</p>",
         "StringList$member": null
@@ -772,13 +748,11 @@
     },
     "TagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValueString": {
       "base": null,
@@ -800,8 +774,7 @@
     },
     "ThrottledRequestException": {
       "base": "<p>The request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TwoFactorPin": {
       "base": null,
@@ -811,28 +784,23 @@
     },
     "UntagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWhatsAppMessageTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWhatsAppMessageTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>The request contains an invalid parameter value. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WabaPhoneNumberSetupFinalization": {
       "base": "<p>The registration details for a linked phone number.</p>",
@@ -915,7 +883,7 @@
     "WhatsAppPhoneNumber": {
       "base": null,
       "refs": {
-        "WabaPhoneNumberSetupFinalization$id": "<p>The unique identifier of the originating phone number associated with the media. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccountPhoneNumber.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
+        "WabaPhoneNumberSetupFinalization$id": "<p>The unique identifier of the originating phone number associated with the media. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use the <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> API action to find a phone number's id.</p>",
         "WhatsAppPhoneNumberDetail$metaPhoneNumberId": "<p>The phone number ID from Meta.</p>",
         "WhatsAppPhoneNumberSummary$metaPhoneNumberId": "<p>The phone number ID from Meta.</p>"
       }
@@ -936,11 +904,11 @@
     "WhatsAppPhoneNumberId": {
       "base": null,
       "refs": {
-        "DeleteWhatsAppMessageMediaInput$originationPhoneNumberId": "<p>The unique identifier of the originating phone number associated with the media. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccountPhoneNumber.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
-        "GetLinkedWhatsAppBusinessAccountPhoneNumberInput$id": "<p>The unique identifier of the phone number. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccountPhoneNumber.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
-        "GetWhatsAppMessageMediaInput$originationPhoneNumberId": "<p>The unique identifier of the originating phone number for the WhatsApp message media. The phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccountPhoneNumber.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
-        "PostWhatsAppMessageMediaInput$originationPhoneNumberId": "<p>The ID of the phone number to associate with the WhatsApp media file. The phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccountPhoneNumber.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
-        "SendWhatsAppMessageInput$originationPhoneNumberId": "<p>The ID of the phone number used to send the WhatsApp message. If you are sending a media file only the <code>originationPhoneNumberId</code> used to upload the file can be used. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccountPhoneNumber.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
+        "DeleteWhatsAppMessageMediaInput$originationPhoneNumberId": "<p>The unique identifier of the originating phone number associated with the media. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
+        "GetLinkedWhatsAppBusinessAccountPhoneNumberInput$id": "<p>The unique identifier of the phone number. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
+        "GetWhatsAppMessageMediaInput$originationPhoneNumberId": "<p>The unique identifier of the originating phone number for the WhatsApp message media. The phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
+        "PostWhatsAppMessageMediaInput$originationPhoneNumberId": "<p>The ID of the phone number to associate with the WhatsApp media file. The phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
+        "SendWhatsAppMessageInput$originationPhoneNumberId": "<p>The ID of the phone number used to send the WhatsApp message. If you are sending a media file only the <code>originationPhoneNumberId</code> used to upload the file can be used. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccount.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
         "WhatsAppPhoneNumberDetail$phoneNumberId": "<p>The phone number ID. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. </p>",
         "WhatsAppPhoneNumberSummary$phoneNumberId": "<p>The phone number ID. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. </p>"
       }

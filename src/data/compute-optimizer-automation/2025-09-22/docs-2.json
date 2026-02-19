@@ -1,0 +1,1139 @@
+{
+  "version": "2.0",
+  "service": "<p> Automation is a feature within Amazon Web Services Compute Optimizer that enables you to apply optimization recommendations to your Amazon Web Services resources, reducing costs and improving performance. You can apply recommended actions directly or create automation rules that implement recommendations on a recurring schedule when they match your specified criteria. With automation rules, set criteria such as Amazon Web Services Region and Resource Tags to target specific geographies and workloads. Configure rules to run daily, weekly, or monthly, and Compute Optimizer continuously evaluates new recommendations against your criteria. Track automation events over time, examine detailed step history, estimate savings achieved, and reverse actions directly from Compute Optimizer when needed. </p>",
+  "operations": {
+    "AssociateAccounts": "<p>Associates one or more member accounts with your organization's management account, enabling centralized implementation of optimization actions across those accounts. Once associated, the management account (or a delegated administrator) can apply recommended actions to the member account. When you associate a member account, its organization rule mode is automatically set to \"Any allowed,\" which permits the management account to create Automation rules that automatically apply actions to that account. If the member account has not previously enabled the Automation feature, the association process automatically enables it.</p> <note> <p>Only the management account or a delegated administrator can perform this action.</p> </note>",
+    "CreateAutomationRule": "<p> Creates a new automation rule to apply recommended actions to resources based on specified criteria. </p>",
+    "DeleteAutomationRule": "<p> Deletes an existing automation rule. </p>",
+    "DisassociateAccounts": "<p> Disassociates member accounts from your organization's management account, removing centralized automation capabilities. Once disassociated, organization rules no longer apply to the member account, and the management account (or delegated administrator) cannot create Automation rules for that account. </p> <note> <p>Only the management account or a delegated administrator can perform this action.</p> </note>",
+    "GetAutomationEvent": "<p> Retrieves details about a specific automation event. </p>",
+    "GetAutomationRule": "<p> Retrieves details about a specific automation rule. </p>",
+    "GetEnrollmentConfiguration": "<p> Retrieves the current enrollment configuration for Compute Optimizer Automation. </p>",
+    "ListAccounts": "<p> Lists the accounts in your organization that are enrolled in Compute Optimizer and whether they have enabled Automation. </p> <note> <p>Only the management account or a delegated administrator can perform this action.</p> </note>",
+    "ListAutomationEventSteps": "<p>Lists the steps for a specific automation event. You can only list steps for events created within the past year. </p>",
+    "ListAutomationEventSummaries": "<p>Provides a summary of automation events based on specified filters. Only events created within the past year will be included in the summary. </p>",
+    "ListAutomationEvents": "<p>Lists automation events based on specified filters. You can retrieve events that were created within the past year. </p>",
+    "ListAutomationRulePreview": "<p>Returns a preview of the recommended actions that match your Automation rule's configuration and criteria. </p>",
+    "ListAutomationRulePreviewSummaries": "<p>Returns a summary of the recommended actions that match your rule preview configuration and criteria. </p>",
+    "ListAutomationRules": "<p> Lists the automation rules that match specified filters. </p>",
+    "ListRecommendedActionSummaries": "<p> Provides a summary of recommended actions based on specified filters. </p> <note> <p>Management accounts and delegated administrators can retrieve recommended actions that include associated member accounts. You can associate a member account using <code>AssociateAccounts</code>.</p> </note>",
+    "ListRecommendedActions": "<p> Lists the recommended actions based that match specified filters. </p> <note> <p>Management accounts and delegated administrators can retrieve recommended actions that include associated member accounts. You can associate a member account using <code>AssociateAccounts</code>.</p> </note>",
+    "ListTagsForResource": "<p> Lists the tags for a specified resource. </p>",
+    "RollbackAutomationEvent": "<p> Initiates a rollback for a completed automation event. </p> <note> <p>Management accounts and delegated administrators can only initiate a rollback for events belonging to associated member accounts. You can associate a member account using <code>AssociateAccounts</code>.</p> </note>",
+    "StartAutomationEvent": "<p> Initiates a one-time, on-demand automation for the specified recommended action. </p> <note> <p>Management accounts and delegated administrators can only initiate recommended actions for associated member accounts. You can associate a member account using <code>AssociateAccounts</code>.</p> </note>",
+    "TagResource": "<p> Adds tags to the specified resource. </p>",
+    "UntagResource": "<p> Removes tags from the specified resource. </p>",
+    "UpdateAutomationRule": "<p> Updates an existing automation rule. </p>",
+    "UpdateEnrollmentConfiguration": "<p>Updates your account’s Compute Optimizer Automation enrollment configuration. </p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p> You do not have sufficient permissions to perform this action. </p>",
+      "refs": {}
+    },
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "AccountIdList$member": null,
+        "AccountInfo$accountId": "<p> The ID of the Amazon Web Services account. </p>",
+        "AutomationEvent$accountId": "<p> The Amazon Web Services account ID associated with the automation event. </p>",
+        "AutomationRule$accountId": "<p>The 12-digit Amazon Web Services account ID that owns this automation rule.</p>",
+        "GetAutomationEventResponse$accountId": "<p>The Amazon Web Services account ID associated with the automation event.</p>",
+        "GetAutomationRuleResponse$accountId": "<p>The 12-digit Amazon Web Services account ID that owns this automation rule.</p>",
+        "OrganizationConfigurationAccountIds$member": null,
+        "PreviewResult$accountId": "<p>The Amazon Web Services account ID associated with the resource.</p>",
+        "RecommendedAction$accountId": "<p>The Amazon Web Services account ID that owns the resource.</p>"
+      }
+    },
+    "AccountIdList": {
+      "base": null,
+      "refs": {
+        "AssociateAccountsRequest$accountIds": "<p> The IDs of the member accounts to associate. You can specify up to 50 account IDs. </p>",
+        "AssociateAccountsResponse$accountIds": "<p> The IDs of the member accounts that were successfully associated. </p>",
+        "DisassociateAccountsRequest$accountIds": "<p> The IDs of the member accounts to disassociate. </p>",
+        "DisassociateAccountsResponse$accountIds": "<p> The IDs of the member accounts that were successfully disassociated. </p>"
+      }
+    },
+    "AccountInfo": {
+      "base": "<p> Contains information about an Amazon Web Services account's enrollment and association status with Compute Optimizer Automation. </p>",
+      "refs": {
+        "AccountInfoList$member": null
+      }
+    },
+    "AccountInfoList": {
+      "base": null,
+      "refs": {
+        "ListAccountsResponse$accounts": "<p> The list of accounts in your organization enrolled in Compute Optimizer </p>"
+      }
+    },
+    "AssociateAccountsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateAccountsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "AutomationEvent": {
+      "base": "<p> Contains information about an automation event. </p>",
+      "refs": {
+        "AutomationEvents$member": null
+      }
+    },
+    "AutomationEventFilter": {
+      "base": "<p> A filter to apply when listing automation events. </p>",
+      "refs": {
+        "AutomationEventFilterList$member": null
+      }
+    },
+    "AutomationEventFilterList": {
+      "base": null,
+      "refs": {
+        "ListAutomationEventSummariesRequest$filters": "<p> The filters to apply to the list of automation event summaries. </p>",
+        "ListAutomationEventsRequest$filters": "<p> The filters to apply to the list of automation events. </p>"
+      }
+    },
+    "AutomationEventFilterName": {
+      "base": null,
+      "refs": {
+        "AutomationEventFilter$name": "<p> The name of the filter to apply. </p>"
+      }
+    },
+    "AutomationEventStep": {
+      "base": "<p> Contains information about a step in an automation event. </p>",
+      "refs": {
+        "AutomationEventSteps$member": null
+      }
+    },
+    "AutomationEventSteps": {
+      "base": null,
+      "refs": {
+        "ListAutomationEventStepsResponse$automationEventSteps": "<p> The list of steps for the specified automation event. </p>"
+      }
+    },
+    "AutomationEventSummary": {
+      "base": "<p> A summary of automation events grouped by specified dimensions. </p>",
+      "refs": {
+        "AutomationEventSummaryList$member": null
+      }
+    },
+    "AutomationEventSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAutomationEventSummariesResponse$automationEventSummaries": "<p> The list of automation event summaries that match the specified criteria. </p>"
+      }
+    },
+    "AutomationEvents": {
+      "base": null,
+      "refs": {
+        "ListAutomationEventsResponse$automationEvents": "<p> The list of automation events that match the specified criteria. </p>"
+      }
+    },
+    "AutomationRule": {
+      "base": "<p>Represents a complete automation rule configuration including criteria, schedule, and execution settings.</p>",
+      "refs": {
+        "AutomationRules$member": null
+      }
+    },
+    "AutomationRuleFilterName": {
+      "base": null,
+      "refs": {
+        "Filter$name": "<p>The name of the filter field to apply.</p>"
+      }
+    },
+    "AutomationRules": {
+      "base": null,
+      "refs": {
+        "ListAutomationRulesResponse$automationRules": "<p> The list of automation rules that match the specified criteria. </p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "PreviewResult$restartNeeded": "<p>Indicates whether implementing the recommended action requires a resource restart.</p>",
+        "RecommendedAction$restartNeeded": "<p>Indicates whether implementing the recommended action requires a resource restart.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "AssociateAccountsRequest$clientToken": "<p> A unique identifier to ensure idempotency of the request. Valid for 24 hours after creation. </p>",
+        "CreateAutomationRuleRequest$clientToken": "<p> A unique identifier to ensure idempotency of the request. </p>",
+        "DeleteAutomationRuleRequest$clientToken": "<p> A unique identifier to ensure idempotency of the request. </p>",
+        "DisassociateAccountsRequest$clientToken": "<p> A unique identifier to ensure idempotency of the request. </p>",
+        "RollbackAutomationEventRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Must be 1-64 characters long and contain only alphanumeric characters, underscores, and hyphens.</p>",
+        "StartAutomationEventRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Must be 1-64 characters long and contain only alphanumeric characters, underscores, and hyphens.</p>",
+        "TagResourceRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Must be 1-64 characters long and contain only alphanumeric characters, underscores, and hyphens.</p>",
+        "UntagResourceRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Must be 1-64 characters long and contain only alphanumeric characters, underscores, and hyphens.</p>",
+        "UpdateAutomationRuleRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Must be 1-64 characters long and contain only alphanumeric characters, underscores, and hyphens.</p>",
+        "UpdateEnrollmentConfigurationRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Must be 1-64 characters long and contain only alphanumeric characters, underscores, and hyphens.</p>"
+      }
+    },
+    "ComparisonOperator": {
+      "base": null,
+      "refs": {
+        "DoubleCriteriaCondition$comparison": "<p>The comparison operator to use, such as equals, greater than, less than, etc.</p>",
+        "IntegerCriteriaCondition$comparison": "<p>The comparison operator to use, such as equals, greater than, less than, etc.</p>",
+        "ResourceTagsCriteriaCondition$comparison": "<p>The comparison operator used to evaluate the tag criteria, such as equals, not equals, or contains.</p>",
+        "StringCriteriaCondition$comparison": "<p>The comparison operator used to evaluate the string criteria, such as equals, not equals, or contains.</p>"
+      }
+    },
+    "CreateAutomationRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAutomationRuleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Criteria": {
+      "base": "<p> A set of conditions that specify which recommended action qualify for implementation. When a rule is active and a recommended action matches these criteria, Compute Optimizer implements the action at the scheduled run time. You can specify up to 20 conditions per filter criteria and 20 values per condition. </p>",
+      "refs": {
+        "CreateAutomationRuleRequest$criteria": "<p>A set of conditions that specify which recommended action qualify for implementation. When a rule is active and a recommended action matches these criteria, Compute Optimizer implements the action at the scheduled run time. </p>",
+        "CreateAutomationRuleResponse$criteria": null,
+        "GetAutomationRuleResponse$criteria": null,
+        "ListAutomationRulePreviewRequest$criteria": "<p>A set of conditions that specify which recommended action qualify for implementation. When a rule is active and a recommended action matches these criteria, Compute Optimizer implements the action at the scheduled run time. </p>",
+        "ListAutomationRulePreviewSummariesRequest$criteria": null,
+        "UpdateAutomationRuleRequest$criteria": null,
+        "UpdateAutomationRuleResponse$criteria": null
+      }
+    },
+    "DeleteAutomationRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAutomationRuleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateAccountsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateAccountsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Double": {
+      "base": null,
+      "refs": {
+        "DoubleList$member": null,
+        "EstimatedMonthlySavings$beforeDiscountSavings": "<p> The estimated monthly savings before applying any discounts. </p>",
+        "EstimatedMonthlySavings$afterDiscountSavings": "<p> The estimated monthly savings after applying any discounts. </p>"
+      }
+    },
+    "DoubleCriteriaCondition": {
+      "base": "<p>Defines a condition for filtering based on double/floating-point numeric values with comparison operators.</p>",
+      "refs": {
+        "DoubleCriteriaConditionList$member": null
+      }
+    },
+    "DoubleCriteriaConditionList": {
+      "base": null,
+      "refs": {
+        "Criteria$estimatedMonthlySavings": "<p>Filter criteria for estimated monthly cost savings from the recommended action.</p>"
+      }
+    },
+    "DoubleList": {
+      "base": null,
+      "refs": {
+        "DoubleCriteriaCondition$values": "<p>The list of double values to compare against using the specified comparison operator.</p>"
+      }
+    },
+    "EbsVolume": {
+      "base": "<p>Represents an Amazon EBS volume with its configuration and snapshot usage information.</p>",
+      "refs": {
+        "ResourceDetails$ebsVolume": "<p>Detailed configuration information specific to EBS volumes, including volume type, size, IOPS, and throughput settings.</p>"
+      }
+    },
+    "EbsVolumeConfiguration": {
+      "base": "<p>Configuration details for an Amazon EBS volume.</p>",
+      "refs": {
+        "EbsVolume$configuration": "<p>The configuration details of the EBS volume, including type, size, IOPS, and throughput.</p>"
+      }
+    },
+    "EnrollmentStatus": {
+      "base": null,
+      "refs": {
+        "AccountInfo$status": "<p> The enrollment status of the account: Active, Inactive, Pending, or Failed. </p>",
+        "GetEnrollmentConfigurationResponse$status": "<p> The current enrollment status. </p>",
+        "UpdateEnrollmentConfigurationRequest$status": "<p>The desired enrollment status. </p> <ul> <li> <p>Active - Enables the Automation feature for your account.</p> </li> <li> <p>Inactive - Disables the Automation feature for your account and stops all of your automation rules. If you opt in again later, all rules will be inactive, and you must enable the rules you want to run. You must wait at least 24 hours after opting out to opt in again.</p> </li> </ul> <note> <p>The <code>Pending</code> and <code>Failed</code> options cannot be used to update the enrollment status of an account. They are returned in the response of a request to update the enrollment status of an account.</p> <p>If you are a member account, your account must be disassociated from your organization’s management account before you can disable Automation. Contact your administrator to make this change.</p> </note>",
+        "UpdateEnrollmentConfigurationResponse$status": "<p> The updated enrollment status. </p>"
+      }
+    },
+    "EstimatedMonthlySavings": {
+      "base": "<p> Contains information about estimated monthly cost savings. </p>",
+      "refs": {
+        "AutomationEvent$estimatedMonthlySavings": "<p> The estimated monthly cost savings associated with this automation event. </p>",
+        "AutomationEventStep$estimatedMonthlySavings": null,
+        "GetAutomationEventResponse$estimatedMonthlySavings": null,
+        "PreviewResult$estimatedMonthlySavings": null,
+        "RecommendedAction$estimatedMonthlySavings": null,
+        "RecommendedActionTotal$estimatedMonthlySavings": null,
+        "RulePreviewTotal$estimatedMonthlySavings": null,
+        "SummaryTotals$estimatedMonthlySavings": null
+      }
+    },
+    "EventId": {
+      "base": null,
+      "refs": {
+        "AutomationEvent$eventId": "<p> The unique identifier for the automation event. </p>",
+        "AutomationEventStep$eventId": "<p> The ID of the automation event this step belongs to. </p>",
+        "GetAutomationEventRequest$eventId": "<p> The ID of the automation event to retrieve. </p>",
+        "GetAutomationEventResponse$eventId": "<p>The ID of the automation event to retrieve.</p>",
+        "ListAutomationEventStepsRequest$eventId": "<p> The ID of the automation event. </p>",
+        "RollbackAutomationEventRequest$eventId": "<p> The ID of the automation event to roll back. </p>",
+        "RollbackAutomationEventResponse$eventId": "<p> The ID of the automation event being rolled back. </p>",
+        "StartAutomationEventResponse$eventId": "<p>The ID of the automation event.</p>"
+      }
+    },
+    "EventStatus": {
+      "base": null,
+      "refs": {
+        "AutomationEvent$eventStatus": "<p> The current status of the automation event. </p>",
+        "GetAutomationEventResponse$eventStatus": "<p>The current status of the automation event.</p>",
+        "RollbackAutomationEventResponse$eventStatus": "<p> The current status of the rollback operation. </p>",
+        "StartAutomationEventResponse$eventStatus": "<p>The current status of the automation event.</p>"
+      }
+    },
+    "EventType": {
+      "base": "<p>Event type enumeration</p>",
+      "refs": {
+        "AutomationEvent$eventType": "<p> The type of automation event. </p>",
+        "GetAutomationEventResponse$eventType": "<p>The type of automation event.</p>"
+      }
+    },
+    "Filter": {
+      "base": "<p>A filter used to narrow down results based on specific criteria.</p>",
+      "refs": {
+        "FilterList$member": null
+      }
+    },
+    "FilterList": {
+      "base": null,
+      "refs": {
+        "ListAutomationRulesRequest$filters": "<p> The filters to apply to the list of automation rules. </p>"
+      }
+    },
+    "FilterValue": {
+      "base": null,
+      "refs": {
+        "FilterValues$member": null
+      }
+    },
+    "FilterValues": {
+      "base": null,
+      "refs": {
+        "AutomationEventFilter$values": "<p> The values to use for the specified filter. </p>",
+        "Filter$values": "<p>The list of values to filter by for the specified filter field.</p>",
+        "RecommendedActionFilter$values": "<p>List of filter values to match against the specified filter name. Used to narrow down recommended actions based on specific criteria.</p>"
+      }
+    },
+    "ForbiddenException": {
+      "base": "<p> You are not authorized to perform this action. </p>",
+      "refs": {}
+    },
+    "GetAutomationEventRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAutomationEventResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAutomationRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAutomationRuleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetEnrollmentConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetEnrollmentConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "IdempotencyTokenInUseException": {
+      "base": "<p> The specified client token is already in use. </p>",
+      "refs": {}
+    },
+    "IdempotentParameterMismatchException": {
+      "base": "<p>Exception thrown when the same client token is used with different parameters, indicating a mismatch in idempotent request parameters.</p>",
+      "refs": {}
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "EbsVolumeConfiguration$sizeInGib": "<p>The size of the EBS volume in gibibytes (GiB).</p>",
+        "EbsVolumeConfiguration$iops": "<p>The number of I/O operations per second (IOPS) provisioned for the volume.</p>",
+        "EbsVolumeConfiguration$throughput": "<p>The throughput in MiB/s provisioned for the volume (applicable to gp3, io1, and io2bx volumes).</p>",
+        "IntegerList$member": null,
+        "PreviewResult$lookBackPeriodInDays": "<p>The number of days of historical data used to analyze the resource.</p>",
+        "RecommendedAction$lookBackPeriodInDays": "<p>The number of days of historical data used to generate the recommendation.</p>",
+        "RecommendedActionTotal$recommendedActionCount": "<p>The total number of recommended actions in this group.</p>",
+        "RulePreviewTotal$recommendedActionCount": "<p>The total number of recommended actions matching the rule preview configuration.</p>",
+        "SummaryTotals$automationEventCount": "<p>The total number of automation events in this summary group.</p>"
+      }
+    },
+    "IntegerCriteriaCondition": {
+      "base": "<p>Defines a condition for filtering based on integer values with comparison operators.</p>",
+      "refs": {
+        "IntegerCriteriaConditionList$member": null
+      }
+    },
+    "IntegerCriteriaConditionList": {
+      "base": null,
+      "refs": {
+        "Criteria$ebsVolumeSizeInGib": "<p>Filter criteria for EBS volume sizes in gibibytes (GiB).</p>",
+        "Criteria$lookBackPeriodInDays": "<p>Filter criteria for the lookback period in days used to analyze resource utilization.</p>"
+      }
+    },
+    "IntegerList": {
+      "base": null,
+      "refs": {
+        "IntegerCriteriaCondition$values": "<p>The list of integer values to compare against using the specified comparison operator.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p> An internal error occurred while processing the request. </p>",
+      "refs": {}
+    },
+    "InvalidParameterValueException": {
+      "base": "<p> One or more parameter values are not valid. </p>",
+      "refs": {}
+    },
+    "ListAccountsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAccountsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAccountsRequest$maxResults": "<p> The maximum number of results to return in a single call. </p>"
+      }
+    },
+    "ListAccountsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutomationEventStepsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutomationEventStepsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAutomationEventStepsRequest$maxResults": "<p>The maximum number of automation event steps to return in a single response. Valid range is 1-1000.</p>"
+      }
+    },
+    "ListAutomationEventStepsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutomationEventSummariesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutomationEventSummariesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAutomationEventSummariesRequest$maxResults": "<p>The maximum number of automation event summaries to return in a single response. Valid range is 1-1000.</p>"
+      }
+    },
+    "ListAutomationEventSummariesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutomationEventsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutomationEventsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAutomationEventsRequest$maxResults": "<p> The maximum number of results to return in a single call. </p>"
+      }
+    },
+    "ListAutomationEventsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutomationRulePreviewRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutomationRulePreviewRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAutomationRulePreviewRequest$maxResults": "<p>The maximum number of automation rule preview results to return in a single response. Valid range is 1-1000.</p>"
+      }
+    },
+    "ListAutomationRulePreviewResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutomationRulePreviewSummariesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutomationRulePreviewSummariesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAutomationRulePreviewSummariesRequest$maxResults": "<p>The maximum number of automation rule preview summaries to return in a single response. Valid range is 1-1000.</p>"
+      }
+    },
+    "ListAutomationRulePreviewSummariesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutomationRulesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutomationRulesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAutomationRulesRequest$maxResults": "<p>The maximum number of automation rules to return in a single response. Valid range is 1-1000.</p>"
+      }
+    },
+    "ListAutomationRulesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommendedActionSummariesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommendedActionSummariesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRecommendedActionSummariesRequest$maxResults": "<p>The maximum number of recommended action summaries to return in a single response. Valid range is 1-1000.</p>"
+      }
+    },
+    "ListRecommendedActionSummariesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommendedActionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommendedActionsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRecommendedActionsRequest$maxResults": "<p>The maximum number of recommended actions to return in a single response. Valid range is 1-1000.</p>"
+      }
+    },
+    "ListRecommendedActionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Long": {
+      "base": null,
+      "refs": {
+        "AutomationRule$ruleRevision": "<p>The revision number of the automation rule.</p>",
+        "CreateAutomationRuleResponse$ruleRevision": "<p>The revision number of the automation rule. This is incremented each time the rule is updated.</p>",
+        "DeleteAutomationRuleRequest$ruleRevision": "<p> The revision number of the rule to delete. </p>",
+        "GetAutomationRuleResponse$ruleRevision": "<p>The revision number of the automation rule.</p>",
+        "TagResourceRequest$ruleRevision": "<p>The revision number of the automation rule to tag. This ensures you're tagging the correct version of the rule.</p>",
+        "UntagResourceRequest$ruleRevision": "<p>The revision number of the automation rule to untag. This ensures you're untagging the correct version of the rule.</p>",
+        "UpdateAutomationRuleRequest$ruleRevision": "<p> The revision number of the rule to update. </p>",
+        "UpdateAutomationRuleResponse$ruleRevision": "<p> The new revision number of the updated rule. </p>"
+      }
+    },
+    "NextToken": {
+      "base": null,
+      "refs": {
+        "ListAccountsRequest$nextToken": "<p> The token for the next page of results. </p>",
+        "ListAccountsResponse$nextToken": "<p> The token to use to retrieve the next page of results. </p>",
+        "ListAutomationEventStepsRequest$nextToken": "<p>A token used for pagination to retrieve the next set of results when the response is truncated.</p>",
+        "ListAutomationEventStepsResponse$nextToken": "<p>A token used for pagination. If present, indicates there are more results available and can be used in subsequent requests.</p>",
+        "ListAutomationEventSummariesRequest$nextToken": "<p>A token used for pagination to retrieve the next set of results when the response is truncated.</p>",
+        "ListAutomationEventSummariesResponse$nextToken": "<p>A token used for pagination. If present, indicates there are more results available and can be used in subsequent requests.</p>",
+        "ListAutomationEventsRequest$nextToken": "<p> The token for the next page of results. </p>",
+        "ListAutomationEventsResponse$nextToken": "<p> The token to use to retrieve the next page of results. </p>",
+        "ListAutomationRulePreviewRequest$nextToken": "<p>A token used for pagination to retrieve the next set of results when the response is truncated.</p>",
+        "ListAutomationRulePreviewResponse$nextToken": "<p>A token used for pagination. If present, indicates there are more results available and can be used in subsequent requests.</p>",
+        "ListAutomationRulePreviewSummariesRequest$nextToken": "<p>A token used for pagination to retrieve the next set of results when the response is truncated.</p>",
+        "ListAutomationRulePreviewSummariesResponse$nextToken": "<p>A token used for pagination. If present, indicates there are more results available and can be used in subsequent requests.</p>",
+        "ListAutomationRulesRequest$nextToken": "<p>A token used for pagination to retrieve the next set of results when the response is truncated.</p>",
+        "ListAutomationRulesResponse$nextToken": "<p>A token used for pagination. If present, indicates there are more results available and can be used in subsequent requests.</p>",
+        "ListRecommendedActionSummariesRequest$nextToken": "<p>A token used for pagination to retrieve the next set of results when the response is truncated.</p>",
+        "ListRecommendedActionSummariesResponse$nextToken": "<p>A token used for pagination. If present, indicates there are more results available and can be used in subsequent requests.</p>",
+        "ListRecommendedActionsRequest$nextToken": "<p>A token used for pagination to retrieve the next set of results when the response is truncated.</p>",
+        "ListRecommendedActionsResponse$nextToken": "<p>A token used for pagination. If present, indicates there are more results available and can be used in subsequent requests.</p>"
+      }
+    },
+    "NotManagementAccountException": {
+      "base": "<p> The operation can only be performed by a management account. </p>",
+      "refs": {}
+    },
+    "OptInRequiredException": {
+      "base": "<p> The account must be opted in to Compute Optimizer Automation before performing this action. </p>",
+      "refs": {}
+    },
+    "OrganizationConfiguration": {
+      "base": "<p>Configuration settings for organization-wide automation rules.</p>",
+      "refs": {
+        "AutomationRule$organizationConfiguration": "<p>Configuration settings for organization-wide rules.</p>",
+        "CreateAutomationRuleRequest$organizationConfiguration": "<p> Configuration for organization-level rules. Required for OrganizationRule type. </p>",
+        "CreateAutomationRuleResponse$organizationConfiguration": "<p>Configuration settings for organization-wide rules, including rule application order and target account IDs.</p>",
+        "GetAutomationRuleResponse$organizationConfiguration": null,
+        "UpdateAutomationRuleRequest$organizationConfiguration": "<p>Updated configuration settings for organization-wide rules, including rule application order and target account IDs.</p>",
+        "UpdateAutomationRuleResponse$organizationConfiguration": "<p>The updated organization configuration settings.</p>"
+      }
+    },
+    "OrganizationConfigurationAccountIds": {
+      "base": null,
+      "refs": {
+        "OrganizationConfiguration$accountIds": "<p>List of specific Amazon Web Services account IDs where the organization rule should be applied.</p>",
+        "OrganizationScope$accountIds": "<p>List of Amazon Web Services account IDs to include in the organization scope.</p>"
+      }
+    },
+    "OrganizationRuleMode": {
+      "base": null,
+      "refs": {
+        "AccountInfo$organizationRuleMode": "<p>Specifies whether the management account can create Automation rules that implement optimization actions for this account. </p>",
+        "GetEnrollmentConfigurationResponse$organizationRuleMode": "<p>Specifies whether the management account can create Automation rules that implement optimization actions for this account. </p>"
+      }
+    },
+    "OrganizationScope": {
+      "base": "<p> Defines the scope for organization-level rules when previewing matching actions.</p>",
+      "refs": {
+        "ListAutomationRulePreviewRequest$organizationScope": "<p> The organizational scope for the rule preview. </p>",
+        "ListAutomationRulePreviewSummariesRequest$organizationScope": "<p>The organizational scope for the rule preview.</p>"
+      }
+    },
+    "PreviewResult": {
+      "base": "<p>Contains the results of previewing an automation rule against available recommendations.</p>",
+      "refs": {
+        "PreviewResults$member": null
+      }
+    },
+    "PreviewResultSummaries": {
+      "base": null,
+      "refs": {
+        "ListAutomationRulePreviewSummariesResponse$previewResultSummaries": "<p>The list of automation rule preview summaries that match the specified criteria.</p>"
+      }
+    },
+    "PreviewResultSummary": {
+      "base": "<p>Contains a summary of preview results for an automation rule.</p>",
+      "refs": {
+        "PreviewResultSummaries$member": null
+      }
+    },
+    "PreviewResults": {
+      "base": null,
+      "refs": {
+        "ListAutomationRulePreviewResponse$previewResults": "<p> The list of actions that would be taken based on the specified criteria. </p>"
+      }
+    },
+    "RecommendedAction": {
+      "base": "<p>Contains information about a recommended action that can be applied to optimize an Amazon Web Services resource.</p>",
+      "refs": {
+        "RecommendedActions$member": null
+      }
+    },
+    "RecommendedActionFilter": {
+      "base": "<p>A filter used to narrow down recommended action results based on specific criteria.</p>",
+      "refs": {
+        "RecommendedActionFilterList$member": null
+      }
+    },
+    "RecommendedActionFilterList": {
+      "base": null,
+      "refs": {
+        "ListRecommendedActionSummariesRequest$filters": "<p>A list of filters to apply when retrieving recommended action summaries. Filters can be based on resource type, action type, account ID, and other criteria.</p>",
+        "ListRecommendedActionsRequest$filters": "<p> The filters to apply to the list of recommended actions. </p>"
+      }
+    },
+    "RecommendedActionFilterName": {
+      "base": null,
+      "refs": {
+        "RecommendedActionFilter$name": "<p>The name of the filter field to apply.</p>"
+      }
+    },
+    "RecommendedActionId": {
+      "base": null,
+      "refs": {
+        "AutomationEvent$recommendedActionId": "<p> The ID of the recommended action associated with this automation event. </p>",
+        "GetAutomationEventResponse$recommendedActionId": "<p>The ID of the recommended action associated with this automation event.</p>",
+        "PreviewResult$recommendedActionId": "<p>The ID of the recommended action being previewed.</p>",
+        "RecommendedAction$recommendedActionId": "<p>The unique identifier of the recommended action.</p>",
+        "StartAutomationEventRequest$recommendedActionId": "<p> The ID of the recommended action to automate. </p>",
+        "StartAutomationEventResponse$recommendedActionId": "<p>The ID of the recommended action being automated.</p>"
+      }
+    },
+    "RecommendedActionSummaries": {
+      "base": null,
+      "refs": {
+        "ListRecommendedActionSummariesResponse$recommendedActionSummaries": "<p> The summary of recommended actions that match the specified criteria. </p>"
+      }
+    },
+    "RecommendedActionSummary": {
+      "base": "<p>Summary information about recommended actions, grouped by specific criteria with totals and counts.</p>",
+      "refs": {
+        "RecommendedActionSummaries$member": null
+      }
+    },
+    "RecommendedActionTotal": {
+      "base": "<p>Aggregate totals for a group of recommended actions, including count and estimated monthly savings.</p>",
+      "refs": {
+        "RecommendedActionSummary$total": "<p>Aggregate totals for the recommended actions in this group, including count and estimated savings.</p>"
+      }
+    },
+    "RecommendedActionType": {
+      "base": "<p>Recommended action type enumeration</p>",
+      "refs": {
+        "PreviewResult$recommendedActionType": "<p>The type of recommended action being previewed.</p>",
+        "RecommendedAction$recommendedActionType": "<p>The type of action being recommended.</p>",
+        "RecommendedActionTypeList$member": null
+      }
+    },
+    "RecommendedActionTypeList": {
+      "base": null,
+      "refs": {
+        "AutomationRule$recommendedActionTypes": "<p>List of recommended action types that this rule can execute.</p>",
+        "CreateAutomationRuleRequest$recommendedActionTypes": "<p> The types of recommended actions this rule will automate. </p>",
+        "CreateAutomationRuleResponse$recommendedActionTypes": "<p>List of recommended action types that this rule can execute, such as SnapshotAndDeleteUnattachedEbsVolume or UpgradeEbsVolumeType.</p>",
+        "GetAutomationRuleResponse$recommendedActionTypes": "<p>List of recommended action types that this rule can execute.</p>",
+        "ListAutomationRulePreviewRequest$recommendedActionTypes": "<p> The types of recommended actions to include in the preview. </p>",
+        "ListAutomationRulePreviewSummariesRequest$recommendedActionTypes": "<p>The types of recommended actions to include in the preview.</p>",
+        "UpdateAutomationRuleRequest$recommendedActionTypes": "<p>Updated list of recommended action types that this rule can execute, such as SnapshotAndDeleteUnattachedEbsVolume or UpgradeEbsVolumeType.</p>",
+        "UpdateAutomationRuleResponse$recommendedActionTypes": "<p>The updated list of recommended action types.</p>"
+      }
+    },
+    "RecommendedActions": {
+      "base": null,
+      "refs": {
+        "ListRecommendedActionsResponse$recommendedActions": "<p> The list of recommended actions that match the specified criteria. </p>"
+      }
+    },
+    "ResourceArn": {
+      "base": null,
+      "refs": {
+        "AutomationEvent$resourceArn": "<p> The Amazon Resource Name (ARN) of the resource affected by the automation event. </p>",
+        "GetAutomationEventResponse$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource affected by the automation event.</p>",
+        "PreviewResult$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource affected by the recommended action.</p>",
+        "RecommendedAction$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource that the recommendation applies to.</p>"
+      }
+    },
+    "ResourceDetails": {
+      "base": "<p>Detailed configuration information for a specific Amazon Web Services resource, with type-specific details.</p>",
+      "refs": {
+        "PreviewResult$currentResourceDetails": null,
+        "PreviewResult$recommendedResourceDetails": null,
+        "RecommendedAction$currentResourceDetails": null,
+        "RecommendedAction$recommendedResourceDetails": null
+      }
+    },
+    "ResourceId": {
+      "base": null,
+      "refs": {
+        "AutomationEvent$resourceId": "<p> The ID of the resource affected by the automation event. </p>",
+        "AutomationEventStep$resourceId": "<p>The unique identifier of the resource being acted upon in this step.</p>",
+        "GetAutomationEventResponse$resourceId": "<p>The ID of the resource affected by the automation event.</p>",
+        "PreviewResult$resourceId": "<p>The ID of the resource affected by the recommended action.</p>",
+        "RecommendedAction$resourceId": "<p>The ID of the resource that the recommendation applies to.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p> The specified resource was not found. </p>",
+      "refs": {}
+    },
+    "ResourceTagsCriteriaCondition": {
+      "base": "<p>Criteria condition for filtering resources based on their tags, including comparison operators and values.</p>",
+      "refs": {
+        "ResourceTagsCriteriaConditionList$member": null
+      }
+    },
+    "ResourceTagsCriteriaConditionList": {
+      "base": null,
+      "refs": {
+        "Criteria$resourceTag": "<p>Filter criteria for resource tags, allowing filtering by tag key and value combinations.</p>"
+      }
+    },
+    "ResourceType": {
+      "base": null,
+      "refs": {
+        "AutomationEvent$resourceType": "<p> The type of resource affected by the automation event. </p>",
+        "GetAutomationEventResponse$resourceType": "<p>The type of resource affected by the automation event.</p>",
+        "PreviewResult$resourceType": "<p>The type of resource being evaluated.</p>",
+        "RecommendedAction$resourceType": "<p>The type of resource being evaluated.</p>"
+      }
+    },
+    "RollbackAutomationEventRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RollbackAutomationEventResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "RuleApplyOrder": {
+      "base": null,
+      "refs": {
+        "OrganizationConfiguration$ruleApplyOrder": "<p>Specifies when organization rules should be applied relative to account rules.</p>"
+      }
+    },
+    "RuleArn": {
+      "base": null,
+      "refs": {
+        "AutomationRule$ruleArn": "<p>The Amazon Resource Name (ARN) of the automation rule.</p>",
+        "CreateAutomationRuleResponse$ruleArn": "<p> The Amazon Resource Name (ARN) of the created rule. </p>",
+        "DeleteAutomationRuleRequest$ruleArn": "<p> The ARN of the rule to delete. </p>",
+        "GetAutomationRuleRequest$ruleArn": "<p> The ARN of the rule to retrieve. </p>",
+        "GetAutomationRuleResponse$ruleArn": "<p>The Amazon Resource Name (ARN) of the automation rule.</p>",
+        "ListTagsForResourceRequest$resourceArn": "<p> The ARN of the resource to list tags for. </p>",
+        "TagResourceRequest$resourceArn": "<p> The ARN of the resource to tag. </p>",
+        "UntagResourceRequest$resourceArn": "<p> The ARN of the resource to untag. </p>",
+        "UpdateAutomationRuleRequest$ruleArn": "<p> The ARN of the rule to update. </p>",
+        "UpdateAutomationRuleResponse$ruleArn": "<p> The ARN of the updated rule. </p>"
+      }
+    },
+    "RuleDescription": {
+      "base": null,
+      "refs": {
+        "CreateAutomationRuleRequest$description": "<p> A description of the automation rule. </p>",
+        "UpdateAutomationRuleRequest$description": "<p>The updated description of the automation rule. Can be up to 1024 characters long and contain alphanumeric characters, underscores, hyphens, spaces, and certain special characters.</p>"
+      }
+    },
+    "RuleId": {
+      "base": null,
+      "refs": {
+        "AutomationEvent$ruleId": "<p> The ID of the automation rule that triggered this event. </p>",
+        "AutomationRule$ruleId": "<p>The unique identifier of the automation rule.</p>",
+        "CreateAutomationRuleResponse$ruleId": "<p> The unique identifier of the created rule. </p>",
+        "GetAutomationEventResponse$ruleId": "<p>The ID of the automation rule that triggered this event.</p>",
+        "GetAutomationRuleResponse$ruleId": "<p>The unique identifier of the automation rule.</p>"
+      }
+    },
+    "RuleName": {
+      "base": null,
+      "refs": {
+        "AutomationRule$name": "<p>The name of the automation rule.</p>",
+        "CreateAutomationRuleRequest$name": "<p> The name of the automation rule. </p>",
+        "CreateAutomationRuleResponse$name": "<p>The name of the automation rule. Must be 1-128 characters long and contain only alphanumeric characters, underscores, and hyphens.</p>",
+        "GetAutomationRuleResponse$name": "<p>The name of the automation rule.</p>",
+        "UpdateAutomationRuleRequest$name": "<p>The updated name of the automation rule. Must be 1-128 characters long and contain only alphanumeric characters, underscores, and hyphens.</p>",
+        "UpdateAutomationRuleResponse$name": "<p>The updated name of the automation rule.</p>"
+      }
+    },
+    "RulePreviewTotal": {
+      "base": "<p>Aggregate totals for automation rule preview results, including count and estimated savings.</p>",
+      "refs": {
+        "PreviewResultSummary$total": null
+      }
+    },
+    "RuleStatus": {
+      "base": null,
+      "refs": {
+        "AutomationRule$status": "<p>The current status of the automation rule (Active or Inactive).</p>",
+        "CreateAutomationRuleRequest$status": "<p>The status of the rule </p>",
+        "CreateAutomationRuleResponse$status": "<p>The current status of the automation rule. Can be Active or Inactive.</p>",
+        "GetAutomationRuleResponse$status": "<p>The current status of the automation rule (Active or Inactive).</p>",
+        "UpdateAutomationRuleRequest$status": "<p>The updated status of the automation rule. Can be Active or Inactive.</p>",
+        "UpdateAutomationRuleResponse$status": "<p>The updated status of the automation rule.</p>"
+      }
+    },
+    "RuleType": {
+      "base": null,
+      "refs": {
+        "AutomationRule$ruleType": "<p>The type of automation rule (OrganizationRule or AccountRule).</p>",
+        "CreateAutomationRuleRequest$ruleType": "<p> The type of rule. </p> <note> <p>Only the management account or a delegated administrator can set the ruleType to be OrganizationRule.</p> </note>",
+        "CreateAutomationRuleResponse$ruleType": "<p>The type of automation rule. Can be either OrganizationRule for organization-wide rules or AccountRule for account-specific rules.</p>",
+        "GetAutomationRuleResponse$ruleType": "<p>The type of automation rule.</p>",
+        "ListAutomationRulePreviewRequest$ruleType": "<p> The type of rule. </p> <note> <p>Only the management account or a delegated administrator can set the ruleType to be OrganizationRule.</p> </note>",
+        "ListAutomationRulePreviewSummariesRequest$ruleType": "<p>The type of rule.</p>",
+        "UpdateAutomationRuleRequest$ruleType": "<p>The updated type of automation rule. Can be either OrganizationRule for organization-wide rules or AccountRule for account-specific rules.</p>",
+        "UpdateAutomationRuleResponse$ruleType": "<p>The updated type of automation rule.</p>"
+      }
+    },
+    "SavingsEstimationMode": {
+      "base": null,
+      "refs": {
+        "EstimatedMonthlySavings$savingsEstimationMode": "<p>The mode used to calculate savings, either BeforeDiscount or AfterDiscount.</p>"
+      }
+    },
+    "Schedule": {
+      "base": "<p>Configuration for scheduling when automation rules should execute, including timing and execution windows.</p>",
+      "refs": {
+        "AutomationRule$schedule": "<p>The schedule configuration for when the automation rule should execute.</p>",
+        "CreateAutomationRuleRequest$schedule": "<p> The schedule for when the rule should run. </p>",
+        "CreateAutomationRuleResponse$schedule": "<p>The schedule configuration for when the automation rule should execute, including cron expression, timezone, and execution window.</p>",
+        "GetAutomationRuleResponse$schedule": null,
+        "UpdateAutomationRuleRequest$schedule": "<p>The updated schedule configuration for when the automation rule should execute, including cron expression, timezone, and execution window.</p>",
+        "UpdateAutomationRuleResponse$schedule": "<p>The updated schedule configuration.</p>"
+      }
+    },
+    "ScheduleExecutionWindowInMinutesInteger": {
+      "base": null,
+      "refs": {
+        "Schedule$executionWindowInMinutes": "<p>The time window in minutes during which the automation rule can start implementing recommended actions.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p> The request would exceed service quotas. </p>",
+      "refs": {}
+    },
+    "ServiceUnavailableException": {
+      "base": "<p> The service is temporarily unavailable. </p>",
+      "refs": {}
+    },
+    "StartAutomationEventRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartAutomationEventResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StepId": {
+      "base": null,
+      "refs": {
+        "AutomationEventStep$stepId": "<p> The unique identifier for this step. </p>"
+      }
+    },
+    "StepStatus": {
+      "base": null,
+      "refs": {
+        "AutomationEventStep$stepStatus": "<p> The current status of the step. </p>"
+      }
+    },
+    "StepType": {
+      "base": null,
+      "refs": {
+        "AutomationEventStep$stepType": "<p> The type of step. </p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "AccountInfo$statusReason": "<p>The reason for the current Automation enrollment status. </p>",
+        "AutomationEvent$eventDescription": "<p> A description of the automation event. </p>",
+        "AutomationEvent$eventStatusReason": "<p> The reason for the current event status. </p>",
+        "AutomationEvent$region": "<p> The Amazon Web Services Region where the automation event occurred. </p>",
+        "AutomationEventSummary$key": "<p>The key identifier for this summary grouping.</p>",
+        "AutomationRule$description": "<p>A description of the automation rule.</p>",
+        "AutomationRule$priority": "<p>A string representation of a decimal number between 0 and 1 (having up to 30 digits after the decimal point) that determines the priority of the rule. When multiple rules match the same recommended action, Compute Optimizer assigns the action to the rule with the lowest priority value (highest priority), even if that rule is scheduled to run later than other matching rules.</p>",
+        "CreateAutomationRuleRequest$priority": "<p>A string representation of a decimal number between 0 and 1 (having up to 30 digits after the decimal point) that determines the priority of the rule. When multiple rules match the same recommended action, Compute Optimizer assigns the action to the rule with the lowest priority value (highest priority), even if that rule is scheduled to run later than other matching rules. </p>",
+        "CreateAutomationRuleResponse$description": "<p>A description of the automation rule. Can be up to 1024 characters long and contain alphanumeric characters, underscores, hyphens, spaces, and certain special characters.</p>",
+        "CreateAutomationRuleResponse$priority": "<p>The priority level of the automation rule, used to determine execution order when multiple rules apply to the same resource.</p>",
+        "EbsVolumeConfiguration$type": "<p>The EBS volume type, such as gp2, gp3, io1, io2, st1, or sc1.</p>",
+        "EstimatedMonthlySavings$currency": "<p> The currency of the estimated savings. </p>",
+        "ForbiddenException$message": null,
+        "GetAutomationEventResponse$eventDescription": "<p>A description of the automation event.</p>",
+        "GetAutomationEventResponse$eventStatusReason": "<p>The reason for the current event status.</p>",
+        "GetAutomationEventResponse$region": "<p>The Amazon Web Services Region where the automation event occurred.</p>",
+        "GetAutomationRuleResponse$description": "<p>A description of the automation rule.</p>",
+        "GetAutomationRuleResponse$priority": "<p>A string representation of a decimal number between 0 and 1 (having up to 30 digits after the decimal point) that determines the priority of the rule.</p>",
+        "GetEnrollmentConfigurationResponse$statusReason": "<p> The reason for the current enrollment status. </p>",
+        "IdempotencyTokenInUseException$message": null,
+        "IdempotentParameterMismatchException$message": null,
+        "InternalServerException$message": null,
+        "InvalidParameterValueException$message": null,
+        "ListAutomationEventSummariesRequest$startDateInclusive": "<p>The start date for filtering automation event summaries, inclusive. Events created on or after this date will be included.</p>",
+        "ListAutomationEventSummariesRequest$endDateExclusive": "<p>The end date for filtering automation event summaries, exclusive. Events created before this date will be included.</p>",
+        "NotManagementAccountException$message": null,
+        "OptInRequiredException$message": null,
+        "PreviewResult$region": "<p>The Amazon Web Services Region where the resource is located.</p>",
+        "PreviewResult$currentResourceSummary": "<p>A summary of the resource's current configuration.</p>",
+        "PreviewResult$recommendedResourceSummary": "<p>A summary of the resource's recommended configuration.</p>",
+        "PreviewResultSummary$key": "<p>The key identifier for this preview result summary.</p>",
+        "RecommendedAction$region": "<p>The Amazon Web Services Region where the resource is located.</p>",
+        "RecommendedAction$currentResourceSummary": "<p>A summary of the resource's current configuration.</p>",
+        "RecommendedAction$recommendedResourceSummary": "<p>A summary of the resource's recommended configuration.</p>",
+        "RecommendedActionSummary$key": "<p>The grouping key used to categorize the recommended actions in this summary.</p>",
+        "ResourceNotFoundException$message": null,
+        "Schedule$scheduleExpression": "<p>The expression that defines when the schedule runs. <code>cron</code> expression is supported. A <code>cron</code> expression consists of six fields separated by white spaces: (<code>minutes</code> <code>hours</code> <code>day_of_month</code> <code>month</code> <code>day_of_week</code> <code>year</code>)</p> <note> <p>You can schedule rules to run at most once per day. Your cron expression must use specific values (not wildcards) for the minutes and hours fields. For example: (<code>30 12 * * *</code>) runs daily at 12:30 PM UTC.</p> </note>",
+        "Schedule$scheduleExpressionTimezone": "<p>The timezone to use when interpreting the schedule expression.</p>",
+        "ServiceQuotaExceededException$message": null,
+        "ServiceUnavailableException$message": null,
+        "StringList$member": null,
+        "SummaryDimension$value": "<p>The specific value for this dimension key used in the summary grouping.</p>",
+        "TagKeyList$member": null,
+        "ThrottlingException$message": null,
+        "UpdateAutomationRuleRequest$priority": "<p>The updated priority level of the automation rule, used to determine execution order when multiple rules apply to the same resource.</p>",
+        "UpdateAutomationRuleResponse$description": "<p>The updated description of the automation rule.</p>",
+        "UpdateAutomationRuleResponse$priority": "<p>The updated priority level of the automation rule.</p>",
+        "UpdateEnrollmentConfigurationResponse$statusReason": "<p> The reason for the updated enrollment status. </p>"
+      }
+    },
+    "StringCriteriaCondition": {
+      "base": "<p>Criteria condition for filtering based on string values, including comparison operators and target values.</p>",
+      "refs": {
+        "StringCriteriaConditionList$member": null
+      }
+    },
+    "StringCriteriaConditionList": {
+      "base": null,
+      "refs": {
+        "Criteria$region": "<p>Filter criteria for Amazon Web Services regions where resources must be located.</p>",
+        "Criteria$resourceArn": "<p>Filter criteria for specific resource ARNs to include or exclude.</p>",
+        "Criteria$ebsVolumeType": "<p>Filter criteria for EBS volume types, such as gp2, gp3, io1, io2, st1, or sc1.</p>",
+        "Criteria$restartNeeded": "<p>Filter criteria indicating whether the recommended action requires a resource restart.</p>"
+      }
+    },
+    "StringCriteriaValue": {
+      "base": null,
+      "refs": {
+        "ResourceTagsCriteriaCondition$key": "<p>The tag key to use for comparison when filtering resources.</p>",
+        "StringCriteriaValues$member": null
+      }
+    },
+    "StringCriteriaValues": {
+      "base": null,
+      "refs": {
+        "ResourceTagsCriteriaCondition$values": "<p>List of tag values to compare against when filtering resources.</p>",
+        "StringCriteriaCondition$values": "<p>List of string values to compare against when applying the criteria condition.</p>"
+      }
+    },
+    "StringList": {
+      "base": null,
+      "refs": {
+        "AssociateAccountsResponse$errors": "<p> Any errors that occurred during the association process. </p>",
+        "DisassociateAccountsResponse$errors": "<p> Any errors that occurred during the disassociation process. </p>"
+      }
+    },
+    "SummaryDimension": {
+      "base": "<p>A key-value pair used to categorize and group summary data for analysis and reporting.</p>",
+      "refs": {
+        "SummaryDimensions$member": null
+      }
+    },
+    "SummaryDimensionKey": {
+      "base": null,
+      "refs": {
+        "SummaryDimension$key": "<p>The dimension key used for categorizing summary data.</p>"
+      }
+    },
+    "SummaryDimensions": {
+      "base": null,
+      "refs": {
+        "AutomationEventSummary$dimensions": "<p>The dimensions used to group this summary, such as event status.</p>"
+      }
+    },
+    "SummaryTotals": {
+      "base": "<p>Aggregate totals for automation events, including counts and estimated savings.</p>",
+      "refs": {
+        "AutomationEventSummary$total": "<p>The aggregated totals for this summary, including event count and estimated savings.</p>"
+      }
+    },
+    "Tag": {
+      "base": "<p>A key-value pair used to categorize and organize Amazon Web Services resources and automation rules.</p>",
+      "refs": {
+        "TagList$member": null
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "Tag$key": "<p>The tag key, which can be up to 128 characters long.</p>"
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p> The keys of the tags to remove from the resource. </p>"
+      }
+    },
+    "TagList": {
+      "base": null,
+      "refs": {
+        "CreateAutomationRuleRequest$tags": "<p> The tags to associate with the rule. </p>",
+        "CreateAutomationRuleResponse$tags": "<p>A list of key-value pairs used to categorize and organize the automation rule. Maximum of 200 tags allowed.</p>",
+        "GetAutomationRuleResponse$tags": "<p>The tags associated with the automation rule.</p>",
+        "ListTagsForResourceResponse$tags": "<p> The list of tags associated with the specified resource. </p>",
+        "PreviewResult$resourceTags": "<p>The tags associated with the resource.</p>",
+        "RecommendedAction$resourceTags": "<p>The tags associated with the resource.</p>",
+        "TagResourceRequest$tags": "<p> The tags to add to the resource. </p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "Tag$value": "<p>The tag value, which can be up to 256 characters long.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p> The request was denied due to request throttling. </p>",
+      "refs": {}
+    },
+    "TimePeriod": {
+      "base": "<p>Defines a time range with inclusive start time and exclusive end time for filtering and analysis.</p>",
+      "refs": {
+        "AutomationEventSummary$timePeriod": "<p>The time period covered by this summary, with inclusive start time and exclusive end time.</p>"
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "AccountInfo$lastUpdatedTimestamp": "<p>The timestamp when the account's Automation enrollment status was last updated. </p>",
+        "AutomationEvent$createdTimestamp": "<p>The timestamp when the automation event was created.</p>",
+        "AutomationEvent$completedTimestamp": "<p> The timestamp when the automation event completed. </p>",
+        "AutomationEventStep$startTimestamp": "<p>The timestamp when this automation event step started execution.</p>",
+        "AutomationEventStep$completedTimestamp": "<p>The timestamp when this automation event step completed execution.</p>",
+        "AutomationRule$createdTimestamp": "<p>The timestamp when the automation rule was created.</p>",
+        "AutomationRule$lastUpdatedTimestamp": "<p>The timestamp when the automation rule was last updated.</p>",
+        "CreateAutomationRuleResponse$createdTimestamp": "<p>The timestamp when the automation rule was created.</p>",
+        "GetAutomationEventResponse$createdTimestamp": "<p>The timestamp when the automation event was created.</p>",
+        "GetAutomationEventResponse$completedTimestamp": "<p>The timestamp when the automation event completed.</p>",
+        "GetAutomationRuleResponse$createdTimestamp": "<p>The timestamp when the automation rule was created.</p>",
+        "GetAutomationRuleResponse$lastUpdatedTimestamp": "<p>The timestamp when the automation rule was last updated.</p>",
+        "GetEnrollmentConfigurationResponse$lastUpdatedTimestamp": "<p> The timestamp of the last update to the enrollment configuration. </p>",
+        "ListAutomationEventsRequest$startTimeInclusive": "<p> The start of the time range to query for events. </p>",
+        "ListAutomationEventsRequest$endTimeExclusive": "<p> The end of the time range to query for events. </p>",
+        "TimePeriod$startTimeInclusive": "<p>The start time of the period, inclusive. Events at or after this time are included.</p>",
+        "TimePeriod$endTimeExclusive": "<p>The end time of the period, exclusive. Events before this time are included.</p>",
+        "UpdateAutomationRuleResponse$createdTimestamp": "<p>The timestamp when the automation rule was originally created.</p>",
+        "UpdateAutomationRuleResponse$lastUpdatedTimestamp": "<p>The timestamp when the automation rule was last updated.</p>",
+        "UpdateEnrollmentConfigurationResponse$lastUpdatedTimestamp": "<p> The timestamp when the enrollment configuration was last updated. </p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAutomationRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAutomationRuleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateEnrollmentConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateEnrollmentConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    }
+  }
+}

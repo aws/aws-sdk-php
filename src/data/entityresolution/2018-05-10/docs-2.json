@@ -151,6 +151,24 @@
       "base": null,
       "refs": {}
     },
+    "CustomerProfilesDomainArn": {
+      "base": null,
+      "refs": {
+        "CustomerProfilesIntegrationConfig$domainArn": "<p>The Amazon Resource Name (ARN) of the Customer Profiles domain where the matched output will be sent.</p>"
+      }
+    },
+    "CustomerProfilesIntegrationConfig": {
+      "base": "<p>Specifies the configuration for integrating with Customer Profiles. This configuration enables Entity Resolution to send matched output directly to Customer Profiles instead of Amazon S3, creating a unified customer view by automatically updating customer profiles based on match clusters.</p>",
+      "refs": {
+        "OutputSource$customerProfilesIntegrationConfig": "<p>Specifies the Customer Profiles integration configuration for sending matched output directly to Customer Profiles. When configured, Entity Resolution automatically creates and updates customer profiles based on match clusters, eliminating the need for manual Amazon S3 integration setup.</p>"
+      }
+    },
+    "CustomerProfilesObjectTypeArn": {
+      "base": null,
+      "refs": {
+        "CustomerProfilesIntegrationConfig$objectTypeArn": "<p>The Amazon Resource Name (ARN) of the Customer Profiles object type that defines the structure for the matched customer data.</p>"
+      }
+    },
     "DeleteIdMappingWorkflowInput": {
       "base": null,
       "refs": {}
@@ -1026,6 +1044,12 @@
         "ListSchemaMappingsOutput$nextToken": "<p>The pagination token from the previous API call.</p>"
       }
     },
+    "OptionalS3Path": {
+      "base": null,
+      "refs": {
+        "OutputSource$outputS3Path": "<p>The S3 path to which Entity Resolution will write the output table.</p>"
+      }
+    },
     "OutputAttribute": {
       "base": "<p>A list of <code>OutputAttribute</code> objects, each of which have the fields <code>Name</code> and <code>Hashed</code>. Each of these objects selects a column to be included in the output table, and whether the values of the column should be hashed.</p>",
       "refs": {
@@ -1328,8 +1352,7 @@
         "IdMappingJobOutputSource$outputS3Path": "<p>The S3 path to which Entity Resolution will write the output table.</p>",
         "IdMappingWorkflowOutputSource$outputS3Path": "<p>The S3 path to which Entity Resolution will write the output table.</p>",
         "IntermediateSourceConfiguration$intermediateS3Path": "<p>The Amazon S3 location (bucket and prefix). For example: <code>s3://provider_bucket/DOC-EXAMPLE-BUCKET</code> </p>",
-        "JobOutputSource$outputS3Path": "<p>The S3 path to which Entity Resolution will write the output table.</p>",
-        "OutputSource$outputS3Path": "<p>The S3 path to which Entity Resolution will write the output table.</p>"
+        "JobOutputSource$outputS3Path": "<p>The S3 path to which Entity Resolution will write the output table.</p>"
       }
     },
     "SchemaAttributeType": {

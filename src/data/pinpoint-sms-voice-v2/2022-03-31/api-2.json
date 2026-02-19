@@ -4271,7 +4271,8 @@
         "SelectChoices":{"shape":"SelectChoiceList"},
         "TextValue":{"shape":"TextValue"},
         "RegistrationAttachmentId":{"shape":"RegistrationAttachmentIdOrArn"},
-        "DeniedReason":{"shape":"String"}
+        "DeniedReason":{"shape":"String"},
+        "Feedback":{"shape":"String"}
       }
     },
     "RegistrationFieldValueInformationList":{
@@ -4374,6 +4375,7 @@
       "enum":[
         "CREATED",
         "SUBMITTED",
+        "AWS_REVIEWING",
         "REVIEWING",
         "REQUIRES_AUTHENTICATION",
         "PROVISIONING",
@@ -4478,7 +4480,8 @@
         "VersionNumber":{"shape":"RegistrationVersionNumber"},
         "RegistrationVersionStatus":{"shape":"RegistrationVersionStatus"},
         "RegistrationVersionStatusHistory":{"shape":"RegistrationVersionStatusHistory"},
-        "DeniedReasons":{"shape":"RegistrationDeniedReasonInformationList"}
+        "DeniedReasons":{"shape":"RegistrationDeniedReasonInformationList"},
+        "Feedback":{"shape":"String"}
       }
     },
     "RegistrationVersionInformationList":{
@@ -4502,6 +4505,7 @@
       "enum":[
         "DRAFT",
         "SUBMITTED",
+        "AWS_REVIEWING",
         "REVIEWING",
         "REQUIRES_AUTHENTICATION",
         "APPROVED",
@@ -4517,6 +4521,7 @@
       "members":{
         "DraftTimestamp":{"shape":"Timestamp"},
         "SubmittedTimestamp":{"shape":"Timestamp"},
+        "AwsReviewingTimestamp":{"shape":"Timestamp"},
         "ReviewingTimestamp":{"shape":"Timestamp"},
         "RequiresAuthenticationTimestamp":{"shape":"Timestamp"},
         "ApprovedTimestamp":{"shape":"Timestamp"},
@@ -5161,7 +5166,8 @@
       "type":"structure",
       "required":["RegistrationId"],
       "members":{
-        "RegistrationId":{"shape":"RegistrationIdOrArn"}
+        "RegistrationId":{"shape":"RegistrationIdOrArn"},
+        "AwsReview":{"shape":"PrimitiveBoolean"}
       }
     },
     "SubmitRegistrationVersionResult":{
@@ -5171,14 +5177,16 @@
         "RegistrationId",
         "VersionNumber",
         "RegistrationVersionStatus",
-        "RegistrationVersionStatusHistory"
+        "RegistrationVersionStatusHistory",
+        "AwsReview"
       ],
       "members":{
         "RegistrationArn":{"shape":"String"},
         "RegistrationId":{"shape":"String"},
         "VersionNumber":{"shape":"RegistrationVersionNumber"},
         "RegistrationVersionStatus":{"shape":"RegistrationVersionStatus"},
-        "RegistrationVersionStatusHistory":{"shape":"RegistrationVersionStatusHistory"}
+        "RegistrationVersionStatusHistory":{"shape":"RegistrationVersionStatusHistory"},
+        "AwsReview":{"shape":"PrimitiveBoolean"}
       }
     },
     "SupportedAssociation":{

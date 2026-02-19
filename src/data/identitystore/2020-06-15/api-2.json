@@ -372,7 +372,7 @@
         "Country":{"shape":"SensitiveStringType"},
         "Formatted":{"shape":"SensitiveStringType"},
         "Type":{"shape":"SensitiveStringType"},
-        "Primary":{"shape":"SensitiveBooleanType"}
+        "Primary":{"shape":"BooleanType"}
       }
     },
     "Addresses":{
@@ -414,6 +414,7 @@
       "members":{},
       "document":true
     },
+    "BooleanType":{"type":"boolean"},
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -494,7 +495,9 @@
         "Timezone":{"shape":"SensitiveStringType"},
         "Photos":{"shape":"Photos"},
         "Website":{"shape":"SensitiveStringType"},
-        "Birthdate":{"shape":"SensitiveStringType"}
+        "Birthdate":{"shape":"SensitiveStringType"},
+        "Roles":{"shape":"Roles"},
+        "Extensions":{"shape":"Extensions"}
       }
     },
     "CreateUserResponse":{
@@ -621,7 +624,8 @@
       ],
       "members":{
         "IdentityStoreId":{"shape":"IdentityStoreId"},
-        "UserId":{"shape":"ResourceId"}
+        "UserId":{"shape":"ResourceId"},
+        "Extensions":{"shape":"ExtensionNames"}
       }
     },
     "DescribeUserResponse":{
@@ -651,10 +655,12 @@
         "Photos":{"shape":"Photos"},
         "Website":{"shape":"SensitiveStringType"},
         "Birthdate":{"shape":"SensitiveStringType"},
+        "Roles":{"shape":"Roles"},
         "CreatedAt":{"shape":"DateType"},
         "CreatedBy":{"shape":"StringType"},
         "UpdatedAt":{"shape":"DateType"},
-        "UpdatedBy":{"shape":"StringType"}
+        "UpdatedBy":{"shape":"StringType"},
+        "Extensions":{"shape":"Extensions"}
       }
     },
     "Email":{
@@ -662,7 +668,7 @@
       "members":{
         "Value":{"shape":"SensitiveStringType"},
         "Type":{"shape":"SensitiveStringType"},
-        "Primary":{"shape":"SensitiveBooleanType"}
+        "Primary":{"shape":"BooleanType"}
       }
     },
     "Emails":{
@@ -672,6 +678,25 @@
       "min":1
     },
     "ExceptionMessage":{"type":"string"},
+    "ExtensionName":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"aws:identitystore:[a-z]{1,20}"
+    },
+    "ExtensionNames":{
+      "type":"list",
+      "member":{"shape":"ExtensionName"},
+      "max":10,
+      "min":1
+    },
+    "Extensions":{
+      "type":"map",
+      "key":{"shape":"ExtensionName"},
+      "value":{"shape":"AttributeValue"},
+      "max":10,
+      "min":1
+    },
     "ExternalId":{
       "type":"structure",
       "required":[
@@ -838,7 +863,7 @@
       "members":{
         "GroupId":{"shape":"ResourceId"},
         "MemberId":{"shape":"MemberId"},
-        "MembershipExists":{"shape":"SensitiveBooleanType"}
+        "MembershipExists":{"shape":"BooleanType"}
       }
     },
     "GroupMembershipExistenceResults":{
@@ -968,6 +993,7 @@
       "required":["IdentityStoreId"],
       "members":{
         "IdentityStoreId":{"shape":"IdentityStoreId"},
+        "Extensions":{"shape":"ExtensionNames"},
         "MaxResults":{
           "shape":"MaxResults",
           "box":true
@@ -1023,7 +1049,7 @@
       "members":{
         "Value":{"shape":"SensitiveStringType"},
         "Type":{"shape":"SensitiveStringType"},
-        "Primary":{"shape":"SensitiveBooleanType"}
+        "Primary":{"shape":"BooleanType"}
       }
     },
     "PhoneNumbers":{
@@ -1039,7 +1065,7 @@
         "Value":{"shape":"SensitiveStringType"},
         "Type":{"shape":"SensitiveStringType"},
         "Display":{"shape":"SensitiveStringType"},
-        "Primary":{"shape":"SensitiveBooleanType"}
+        "Primary":{"shape":"BooleanType"}
       }
     },
     "Photos":{
@@ -1081,13 +1107,24 @@
         "GROUP",
         "USER",
         "IDENTITY_STORE",
-        "GROUP_MEMBERSHIP"
+        "GROUP_MEMBERSHIP",
+        "RESOURCE_POLICY"
       ]
     },
     "RetryAfterSeconds":{"type":"integer"},
-    "SensitiveBooleanType":{
-      "type":"boolean",
-      "sensitive":true
+    "Role":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"SensitiveStringType"},
+        "Type":{"shape":"SensitiveStringType"},
+        "Primary":{"shape":"BooleanType"}
+      }
+    },
+    "Roles":{
+      "type":"list",
+      "member":{"shape":"Role"},
+      "max":1,
+      "min":1
     },
     "SensitiveStringType":{
       "type":"string",
@@ -1192,10 +1229,12 @@
         "Photos":{"shape":"Photos"},
         "Website":{"shape":"SensitiveStringType"},
         "Birthdate":{"shape":"SensitiveStringType"},
+        "Roles":{"shape":"Roles"},
         "CreatedAt":{"shape":"DateType"},
         "CreatedBy":{"shape":"StringType"},
         "UpdatedAt":{"shape":"DateType"},
-        "UpdatedBy":{"shape":"StringType"}
+        "UpdatedBy":{"shape":"StringType"},
+        "Extensions":{"shape":"Extensions"}
       }
     },
     "UserName":{

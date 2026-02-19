@@ -2,8 +2,8 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2018-05-10",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"launchwizard",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"AWS Launch Wizard",
@@ -59,7 +59,23 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "GetDeploymentPatternVersion":{
+      "name":"GetDeploymentPatternVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/getDeploymentPatternVersion",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDeploymentPatternVersionInput"},
+      "output":{"shape":"GetDeploymentPatternVersionOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
     },
     "GetWorkload":{
       "name":"GetWorkload",
@@ -74,7 +90,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetWorkloadDeploymentPattern":{
       "name":"GetWorkloadDeploymentPattern",
@@ -89,7 +106,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDeploymentEvents":{
       "name":"ListDeploymentEvents",
@@ -104,7 +122,24 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "ListDeploymentPatternVersions":{
+      "name":"ListDeploymentPatternVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/listDeploymentPatternVersions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDeploymentPatternVersionsInput"},
+      "output":{"shape":"ListDeploymentPatternVersionsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
     },
     "ListDeployments":{
       "name":"ListDeployments",
@@ -118,7 +153,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -133,7 +169,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListWorkloadDeploymentPatterns":{
       "name":"ListWorkloadDeploymentPatterns",
@@ -148,7 +185,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListWorkloads":{
       "name":"ListWorkloads",
@@ -162,7 +200,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -194,6 +233,23 @@
         {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
+    },
+    "UpdateDeployment":{
+      "name":"UpdateDeployment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/updateDeployment",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateDeploymentInput"},
+      "output":{"shape":"UpdateDeploymentOutput"},
+      "errors":[
+        {"shape":"ResourceLimitException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
     }
   },
   "shapes":{
@@ -208,18 +264,18 @@
     "CreateDeploymentInput":{
       "type":"structure",
       "required":[
+        "workloadName",
         "deploymentPatternName",
         "name",
-        "specifications",
-        "workloadName"
+        "specifications"
       ],
       "members":{
+        "workloadName":{"shape":"WorkloadName"},
         "deploymentPatternName":{"shape":"DeploymentPatternName"},
-        "dryRun":{"shape":"Boolean"},
         "name":{"shape":"DeploymentName"},
         "specifications":{"shape":"DeploymentSpecifications"},
-        "tags":{"shape":"Tags"},
-        "workloadName":{"shape":"WorkloadName"}
+        "dryRun":{"shape":"Boolean"},
+        "tags":{"shape":"Tags"}
       }
     },
     "CreateDeploymentOutput":{
@@ -245,36 +301,38 @@
     "DeploymentConditionalField":{
       "type":"structure",
       "members":{
-        "comparator":{"shape":"String"},
         "name":{"shape":"String"},
-        "value":{"shape":"String"}
+        "value":{"shape":"String"},
+        "comparator":{"shape":"String"}
       }
     },
     "DeploymentData":{
       "type":"structure",
       "members":{
-        "createdAt":{"shape":"Timestamp"},
-        "deletedAt":{"shape":"Timestamp"},
-        "deploymentArn":{"shape":"String"},
-        "id":{"shape":"DeploymentId"},
         "name":{"shape":"String"},
+        "id":{"shape":"DeploymentId"},
+        "workloadName":{"shape":"WorkloadName"},
         "patternName":{"shape":"DeploymentPatternName"},
-        "resourceGroup":{"shape":"String"},
-        "specifications":{"shape":"DeploymentSpecifications"},
         "status":{"shape":"DeploymentStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "modifiedAt":{"shape":"Timestamp"},
+        "specifications":{"shape":"DeploymentSpecifications"},
+        "resourceGroup":{"shape":"String"},
+        "deletedAt":{"shape":"Timestamp"},
         "tags":{"shape":"Tags"},
-        "workloadName":{"shape":"WorkloadName"}
+        "deploymentArn":{"shape":"String"}
       }
     },
     "DeploymentDataSummary":{
       "type":"structure",
       "members":{
-        "createdAt":{"shape":"Timestamp"},
-        "id":{"shape":"DeploymentId"},
         "name":{"shape":"String"},
+        "id":{"shape":"DeploymentId"},
+        "workloadName":{"shape":"WorkloadName"},
         "patternName":{"shape":"DeploymentPatternName"},
         "status":{"shape":"DeploymentStatus"},
-        "workloadName":{"shape":"WorkloadName"}
+        "createdAt":{"shape":"Timestamp"},
+        "modifiedAt":{"shape":"Timestamp"}
       }
     },
     "DeploymentDataSummaryList":{
@@ -284,8 +342,8 @@
     "DeploymentEventDataSummary":{
       "type":"structure",
       "members":{
-        "description":{"shape":"String"},
         "name":{"shape":"String"},
+        "description":{"shape":"String"},
         "status":{"shape":"EventStatus"},
         "statusReason":{"shape":"String"},
         "timestamp":{"shape":"Timestamp"}
@@ -321,25 +379,71 @@
     "DeploymentFilterValuesMemberString":{
       "type":"string",
       "max":100,
-      "min":1
+      "min":1,
+      "pattern":".*(^(([A-Za-z])+([0-9A-Za-z\\-\\_])+)$).*"
     },
     "DeploymentId":{
       "type":"string",
       "max":128,
       "min":2,
-      "pattern":"^[a-zA-Z0-9-]+$"
+      "pattern":"[a-zA-Z0-9-]+"
     },
     "DeploymentName":{
       "type":"string",
       "max":50,
       "min":1,
-      "pattern":"^[A-Za-z0-9_\\.-]+$"
+      "pattern":"[A-Za-z0-9_\\.-]+"
     },
     "DeploymentPatternName":{
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[A-Za-z0-9][a-zA-Z0-9-]*$"
+      "pattern":"[A-Za-z0-9][a-zA-Z0-9-]*"
+    },
+    "DeploymentPatternVersionDataSummary":{
+      "type":"structure",
+      "members":{
+        "deploymentPatternVersionName":{"shape":"String"},
+        "description":{"shape":"String"},
+        "documentationUrl":{"shape":"String"},
+        "workloadName":{"shape":"String"},
+        "deploymentPatternName":{"shape":"String"}
+      }
+    },
+    "DeploymentPatternVersionDataSummaryList":{
+      "type":"list",
+      "member":{"shape":"DeploymentPatternVersionDataSummary"}
+    },
+    "DeploymentPatternVersionFilter":{
+      "type":"structure",
+      "required":[
+        "name",
+        "values"
+      ],
+      "members":{
+        "name":{"shape":"DeploymentPatternVersionFilterKey"},
+        "values":{"shape":"DeploymentPatternVersionFilterValues"}
+      }
+    },
+    "DeploymentPatternVersionFilterKey":{
+      "type":"string",
+      "enum":["updateFromVersion"]
+    },
+    "DeploymentPatternVersionFilterValues":{
+      "type":"list",
+      "member":{"shape":"DeploymentPatternVersionFilterValuesMemberString"}
+    },
+    "DeploymentPatternVersionFilterValuesMemberString":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)"
+    },
+    "DeploymentPatternVersionName":{
+      "type":"string",
+      "max":30,
+      "min":5,
+      "pattern":"(([A-Za-z0-9][a-zA-Z0-9-]*)|(\\d+\\.\\d+\\.\\d+))"
     },
     "DeploymentSpecifications":{
       "type":"map",
@@ -358,11 +462,11 @@
     "DeploymentSpecificationsField":{
       "type":"structure",
       "members":{
-        "allowedValues":{"shape":"AllowedValues"},
-        "conditionals":{"shape":"SpecificationsConditionalData"},
-        "description":{"shape":"String"},
         "name":{"shape":"String"},
-        "required":{"shape":"String"}
+        "description":{"shape":"String"},
+        "allowedValues":{"shape":"AllowedValues"},
+        "required":{"shape":"String"},
+        "conditionals":{"shape":"SpecificationsConditionalData"}
       }
     },
     "DeploymentStatus":{
@@ -376,7 +480,12 @@
         "DELETED",
         "FAILED",
         "IN_PROGRESS",
-        "VALIDATING"
+        "VALIDATING",
+        "UPDATE_IN_PROGRESS",
+        "UPDATE_COMPLETED",
+        "UPDATE_FAILED",
+        "UPDATE_ROLLBACK_COMPLETED",
+        "UPDATE_ROLLBACK_FAILED"
       ]
     },
     "EventStatus":{
@@ -392,6 +501,10 @@
         "TIMED_OUT"
       ]
     },
+    "FilterList":{
+      "type":"list",
+      "member":{"shape":"DeploymentPatternVersionFilter"}
+    },
     "GetDeploymentInput":{
       "type":"structure",
       "required":["deploymentId"],
@@ -405,15 +518,34 @@
         "deployment":{"shape":"DeploymentData"}
       }
     },
+    "GetDeploymentPatternVersionInput":{
+      "type":"structure",
+      "required":[
+        "workloadName",
+        "deploymentPatternName",
+        "deploymentPatternVersionName"
+      ],
+      "members":{
+        "workloadName":{"shape":"WorkloadName"},
+        "deploymentPatternName":{"shape":"DeploymentPatternName"},
+        "deploymentPatternVersionName":{"shape":"DeploymentPatternVersionName"}
+      }
+    },
+    "GetDeploymentPatternVersionOutput":{
+      "type":"structure",
+      "members":{
+        "deploymentPatternVersion":{"shape":"DeploymentPatternVersionDataSummary"}
+      }
+    },
     "GetWorkloadDeploymentPatternInput":{
       "type":"structure",
       "required":[
-        "deploymentPatternName",
-        "workloadName"
+        "workloadName",
+        "deploymentPatternName"
       ],
       "members":{
-        "deploymentPatternName":{"shape":"DeploymentPatternName"},
-        "workloadName":{"shape":"WorkloadName"}
+        "workloadName":{"shape":"WorkloadName"},
+        "deploymentPatternName":{"shape":"DeploymentPatternName"}
       }
     },
     "GetWorkloadDeploymentPatternOutput":{
@@ -448,7 +580,7 @@
       "type":"string",
       "max":256,
       "min":3,
-      "pattern":"^[a-zA-Z0-9-:]+$"
+      "pattern":"[a-zA-Z0-9-:]+"
     },
     "ListDeploymentEventsInput":{
       "type":"structure",
@@ -463,6 +595,27 @@
       "type":"structure",
       "members":{
         "deploymentEvents":{"shape":"DeploymentEventDataSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDeploymentPatternVersionsInput":{
+      "type":"structure",
+      "required":[
+        "workloadName",
+        "deploymentPatternName"
+      ],
+      "members":{
+        "workloadName":{"shape":"WorkloadName"},
+        "deploymentPatternName":{"shape":"DeploymentPatternName"},
+        "maxResults":{"shape":"MaxWorkloadResults"},
+        "nextToken":{"shape":"NextToken"},
+        "filters":{"shape":"FilterList"}
+      }
+    },
+    "ListDeploymentPatternVersionsOutput":{
+      "type":"structure",
+      "members":{
+        "deploymentPatternVersions":{"shape":"DeploymentPatternVersionDataSummaryList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -502,16 +655,16 @@
       "type":"structure",
       "required":["workloadName"],
       "members":{
+        "workloadName":{"shape":"WorkloadName"},
         "maxResults":{"shape":"MaxWorkloadDeploymentPatternResults"},
-        "nextToken":{"shape":"NextToken"},
-        "workloadName":{"shape":"WorkloadName"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListWorkloadDeploymentPatternsOutput":{
       "type":"structure",
       "members":{
-        "nextToken":{"shape":"NextToken"},
-        "workloadDeploymentPatterns":{"shape":"WorkloadDeploymentPatternDataSummaryList"}
+        "workloadDeploymentPatterns":{"shape":"WorkloadDeploymentPatternDataSummaryList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListWorkloadsInput":{
@@ -524,8 +677,8 @@
     "ListWorkloadsOutput":{
       "type":"structure",
       "members":{
-        "nextToken":{"shape":"NextToken"},
-        "workloads":{"shape":"WorkloadDataSummaryList"}
+        "workloads":{"shape":"WorkloadDataSummaryList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "MaxDeploymentEventResults":{
@@ -554,7 +707,7 @@
     },
     "NextToken":{
       "type":"string",
-      "max":1024,
+      "max":2048,
       "min":1
     },
     "ResourceLimitException":{
@@ -590,7 +743,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(?!aws:)[a-zA-Z+-=._:/]+$"
+      "pattern":"(?!aws:)[a-zA-Z+-=._:/]+"
     },
     "TagKeyList":{
       "type":"list",
@@ -615,13 +768,13 @@
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
       "max":256,
-      "min":0
+      "min":0,
+      "pattern":"[a-zA-Z+-=._:/]*"
     },
     "Tags":{
       "type":"map",
@@ -652,7 +805,27 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
+      "members":{}
+    },
+    "UpdateDeploymentInput":{
+      "type":"structure",
+      "required":[
+        "deploymentId",
+        "specifications"
+      ],
       "members":{
+        "deploymentId":{"shape":"DeploymentId"},
+        "specifications":{"shape":"DeploymentSpecifications"},
+        "workloadVersionName":{"shape":"WorkloadVersionName"},
+        "deploymentPatternVersionName":{"shape":"DeploymentPatternVersionName"},
+        "dryRun":{"shape":"Boolean"},
+        "force":{"shape":"Boolean"}
+      }
+    },
+    "UpdateDeploymentOutput":{
+      "type":"structure",
+      "members":{
+        "deployment":{"shape":"DeploymentDataSummary"}
       }
     },
     "ValidationException":{
@@ -674,20 +847,21 @@
     "WorkloadData":{
       "type":"structure",
       "members":{
-        "description":{"shape":"String"},
+        "workloadName":{"shape":"WorkloadName"},
         "displayName":{"shape":"String"},
+        "status":{"shape":"WorkloadStatus"},
+        "description":{"shape":"String"},
         "documentationUrl":{"shape":"String"},
         "iconUrl":{"shape":"String"},
-        "status":{"shape":"WorkloadStatus"},
-        "statusMessage":{"shape":"String"},
-        "workloadName":{"shape":"WorkloadName"}
+        "statusMessage":{"shape":"String"}
       }
     },
     "WorkloadDataSummary":{
       "type":"structure",
       "members":{
+        "workloadName":{"shape":"WorkloadName"},
         "displayName":{"shape":"String"},
-        "workloadName":{"shape":"WorkloadName"}
+        "status":{"shape":"WorkloadStatus"}
       }
     },
     "WorkloadDataSummaryList":{
@@ -697,26 +871,28 @@
     "WorkloadDeploymentPatternData":{
       "type":"structure",
       "members":{
+        "workloadName":{"shape":"WorkloadName"},
         "deploymentPatternName":{"shape":"DeploymentPatternName"},
-        "description":{"shape":"String"},
+        "workloadVersionName":{"shape":"WorkloadVersionName"},
+        "deploymentPatternVersionName":{"shape":"DeploymentPatternVersionName"},
         "displayName":{"shape":"String"},
-        "specifications":{"shape":"DeploymentSpecificationsData"},
+        "description":{"shape":"String"},
         "status":{"shape":"WorkloadDeploymentPatternStatus"},
         "statusMessage":{"shape":"String"},
-        "workloadName":{"shape":"WorkloadName"},
-        "workloadVersionName":{"shape":"WorkloadVersionName"}
+        "specifications":{"shape":"DeploymentSpecificationsData"}
       }
     },
     "WorkloadDeploymentPatternDataSummary":{
       "type":"structure",
       "members":{
-        "deploymentPatternName":{"shape":"DeploymentPatternName"},
-        "description":{"shape":"String"},
-        "displayName":{"shape":"String"},
-        "status":{"shape":"WorkloadDeploymentPatternStatus"},
-        "statusMessage":{"shape":"String"},
         "workloadName":{"shape":"WorkloadName"},
-        "workloadVersionName":{"shape":"WorkloadVersionName"}
+        "deploymentPatternName":{"shape":"DeploymentPatternName"},
+        "workloadVersionName":{"shape":"WorkloadVersionName"},
+        "deploymentPatternVersionName":{"shape":"DeploymentPatternVersionName"},
+        "displayName":{"shape":"String"},
+        "description":{"shape":"String"},
+        "status":{"shape":"WorkloadDeploymentPatternStatus"},
+        "statusMessage":{"shape":"String"}
       }
     },
     "WorkloadDeploymentPatternDataSummaryList":{
@@ -736,7 +912,7 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[A-Za-z][a-zA-Z0-9-_]*$"
+      "pattern":"[A-Za-z][a-zA-Z0-9-_]*"
     },
     "WorkloadStatus":{
       "type":"string",
@@ -751,7 +927,7 @@
       "type":"string",
       "max":30,
       "min":5,
-      "pattern":"^[A-Za-z0-9][a-zA-Z0-9-]*$"
+      "pattern":"(([A-Za-z0-9][a-zA-Z0-9-]*)|(\\d+\\.\\d+\\.\\d+))"
     }
   }
 }

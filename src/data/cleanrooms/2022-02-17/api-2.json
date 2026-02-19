@@ -1380,6 +1380,24 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "UpdateCollaborationChangeRequest":{
+      "name":"UpdateCollaborationChangeRequest",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/collaborations/{collaborationIdentifier}/changeRequests/{changeRequestIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateCollaborationChangeRequestInput"},
+      "output":{"shape":"UpdateCollaborationChangeRequestOutput"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "UpdateConfiguredAudienceModelAssociation":{
       "name":"UpdateConfiguredAudienceModelAssociation",
       "http":{
@@ -1994,14 +2012,15 @@
         "sourceMetadata":{"shape":"AnalysisSourceMetadata"},
         "analysisParameters":{"shape":"AnalysisParameterList"},
         "validations":{"shape":"AnalysisTemplateValidationStatusDetailList"},
-        "errorMessageConfiguration":{"shape":"ErrorMessageConfiguration"}
+        "errorMessageConfiguration":{"shape":"ErrorMessageConfiguration"},
+        "syntheticDataParameters":{"shape":"SyntheticDataParameters"}
       }
     },
     "AnalysisTemplateArn":{
       "type":"string",
       "max":200,
       "min":0,
-      "pattern":"arn:aws:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:membership/[\\d\\w-]+/analysistemplate/[\\d\\w-]+"
+      "pattern":"arn:aws[-a-z]*:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:membership/[\\d\\w-]+/analysistemplate/[\\d\\w-]+"
     },
     "AnalysisTemplateArnList":{
       "type":"list",
@@ -2077,7 +2096,8 @@
         "membershipId":{"shape":"UUID"},
         "collaborationArn":{"shape":"CollaborationArn"},
         "collaborationId":{"shape":"UUID"},
-        "description":{"shape":"ResourceDescription"}
+        "description":{"shape":"ResourceDescription"},
+        "isSyntheticData":{"shape":"Boolean"}
       }
     },
     "AnalysisTemplateSummaryList":{
@@ -2086,7 +2106,7 @@
     },
     "AnalysisTemplateText":{
       "type":"string",
-      "max":90000,
+      "max":500000,
       "min":0,
       "sensitive":true
     },
@@ -2143,6 +2163,34 @@
         "CLEAN_ROOMS_SQL"
       ]
     },
+    "ApprovalStatus":{
+      "type":"string",
+      "enum":[
+        "APPROVED",
+        "DENIED",
+        "PENDING"
+      ]
+    },
+    "ApprovalStatusDetails":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"ApprovalStatus"}
+      }
+    },
+    "ApprovalStatuses":{
+      "type":"map",
+      "key":{"shape":"AccountId"},
+      "value":{"shape":"ApprovalStatusDetails"},
+      "max":50,
+      "min":1
+    },
+    "AthenaCatalogName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
     "AthenaDatabaseName":{
       "type":"string",
       "max":128,
@@ -2173,7 +2221,8 @@
         "workGroup":{"shape":"AthenaWorkGroup"},
         "outputLocation":{"shape":"AthenaOutputLocation"},
         "databaseName":{"shape":"AthenaDatabaseName"},
-        "tableName":{"shape":"AthenaTableName"}
+        "tableName":{"shape":"AthenaTableName"},
+        "catalogName":{"shape":"AthenaCatalogName"}
       }
     },
     "AthenaWorkGroup":{
@@ -2184,7 +2233,11 @@
     },
     "AutoApprovedChangeType":{
       "type":"string",
-      "enum":["ADD_MEMBER"]
+      "enum":[
+        "ADD_MEMBER",
+        "GRANT_RECEIVE_RESULTS_ABILITY",
+        "REVOKE_RECEIVE_RESULTS_ABILITY"
+      ]
     },
     "AutoApprovedChangeTypeList":{
       "type":"list",
@@ -2418,6 +2471,15 @@
       "max":10,
       "min":1
     },
+    "ChangeRequestAction":{
+      "type":"string",
+      "enum":[
+        "APPROVE",
+        "DENY",
+        "CANCEL",
+        "COMMIT"
+      ]
+    },
     "ChangeRequestStatus":{
       "type":"string",
       "enum":[
@@ -2431,17 +2493,26 @@
     "ChangeSpecification":{
       "type":"structure",
       "members":{
-        "member":{"shape":"MemberChangeSpecification"}
+        "member":{"shape":"MemberChangeSpecification"},
+        "collaboration":{"shape":"CollaborationChangeSpecification"}
       },
       "union":true
     },
     "ChangeSpecificationType":{
       "type":"string",
-      "enum":["MEMBER"]
+      "enum":[
+        "MEMBER",
+        "COLLABORATION"
+      ]
     },
     "ChangeType":{
       "type":"string",
-      "enum":["ADD_MEMBER"]
+      "enum":[
+        "ADD_MEMBER",
+        "GRANT_RECEIVE_RESULTS_ABILITY",
+        "REVOKE_RECEIVE_RESULTS_ABILITY",
+        "EDIT_AUTO_APPROVED_CHANGE_TYPES"
+      ]
     },
     "ChangeTypeList":{
       "type":"list",
@@ -2484,7 +2555,8 @@
         "jobLogStatus":{"shape":"CollaborationJobLogStatus"},
         "analyticsEngine":{"shape":"AnalyticsEngine"},
         "autoApprovedChangeTypes":{"shape":"AutoApprovedChangeTypeList"},
-        "allowedResultRegions":{"shape":"AllowedResultRegions"}
+        "allowedResultRegions":{"shape":"AllowedResultRegions"},
+        "isMetricsEnabled":{"shape":"Boolean"}
       }
     },
     "CollaborationAnalysisTemplate":{
@@ -2517,7 +2589,8 @@
         "sourceMetadata":{"shape":"AnalysisSourceMetadata"},
         "analysisParameters":{"shape":"AnalysisParameterList"},
         "validations":{"shape":"AnalysisTemplateValidationStatusDetailList"},
-        "errorMessageConfiguration":{"shape":"ErrorMessageConfiguration"}
+        "errorMessageConfiguration":{"shape":"ErrorMessageConfiguration"},
+        "syntheticDataParameters":{"shape":"SyntheticDataParameters"}
       }
     },
     "CollaborationAnalysisTemplateList":{
@@ -2547,7 +2620,8 @@
         "collaborationArn":{"shape":"CollaborationArn"},
         "collaborationId":{"shape":"UUID"},
         "creatorAccountId":{"shape":"AccountId"},
-        "description":{"shape":"ResourceDescription"}
+        "description":{"shape":"ResourceDescription"},
+        "isSyntheticData":{"shape":"Boolean"}
       }
     },
     "CollaborationAnalysisTemplateSummaryList":{
@@ -2578,7 +2652,8 @@
         "updateTime":{"shape":"Timestamp"},
         "status":{"shape":"ChangeRequestStatus"},
         "isAutoApproved":{"shape":"Boolean"},
-        "changes":{"shape":"ChangeList"}
+        "changes":{"shape":"ChangeList"},
+        "approvals":{"shape":"ApprovalStatuses"}
       }
     },
     "CollaborationChangeRequestIdentifier":{
@@ -2605,12 +2680,19 @@
         "updateTime":{"shape":"Timestamp"},
         "status":{"shape":"ChangeRequestStatus"},
         "isAutoApproved":{"shape":"Boolean"},
-        "changes":{"shape":"ChangeList"}
+        "changes":{"shape":"ChangeList"},
+        "approvals":{"shape":"ApprovalStatuses"}
       }
     },
     "CollaborationChangeRequestSummaryList":{
       "type":"list",
       "member":{"shape":"CollaborationChangeRequestSummary"}
+    },
+    "CollaborationChangeSpecification":{
+      "type":"structure",
+      "members":{
+        "autoApprovedChangeTypes":{"shape":"AutoApprovedChangeTypeList"}
+      }
     },
     "CollaborationConfiguredAudienceModelAssociation":{
       "type":"structure",
@@ -2885,9 +2967,22 @@
         "type":{"shape":"ColumnTypeString"}
       }
     },
+    "ColumnClassificationDetails":{
+      "type":"structure",
+      "required":["columnMapping"],
+      "members":{
+        "columnMapping":{"shape":"ColumnMappingList"}
+      }
+    },
     "ColumnList":{
       "type":"list",
       "member":{"shape":"Column"}
+    },
+    "ColumnMappingList":{
+      "type":"list",
+      "member":{"shape":"SyntheticDataColumnProperties"},
+      "max":1000,
+      "min":5
     },
     "ColumnName":{
       "type":"string",
@@ -3419,7 +3514,8 @@
         "tags":{"shape":"TagMap"},
         "analysisParameters":{"shape":"AnalysisParameterList"},
         "schema":{"shape":"AnalysisSchema"},
-        "errorMessageConfiguration":{"shape":"ErrorMessageConfiguration"}
+        "errorMessageConfiguration":{"shape":"ErrorMessageConfiguration"},
+        "syntheticDataParameters":{"shape":"SyntheticDataParameters"}
       }
     },
     "CreateAnalysisTemplateOutput":{
@@ -3475,7 +3571,8 @@
         "creatorPaymentConfiguration":{"shape":"PaymentConfiguration"},
         "analyticsEngine":{"shape":"AnalyticsEngine"},
         "autoApprovedChangeRequestTypes":{"shape":"AutoApprovedChangeTypeList"},
-        "allowedResultRegions":{"shape":"AllowedResultRegions"}
+        "allowedResultRegions":{"shape":"AllowedResultRegions"},
+        "isMetricsEnabled":{"shape":"Boolean"}
       }
     },
     "CreateCollaborationOutput":{
@@ -3687,7 +3784,8 @@
         "tags":{"shape":"TagMap"},
         "defaultResultConfiguration":{"shape":"MembershipProtectedQueryResultConfiguration"},
         "defaultJobResultConfiguration":{"shape":"MembershipProtectedJobResultConfiguration"},
-        "paymentConfiguration":{"shape":"MembershipPaymentConfiguration"}
+        "paymentConfiguration":{"shape":"MembershipPaymentConfiguration"},
+        "isMetricsEnabled":{"shape":"Boolean"}
       }
     },
     "CreateMembershipOutput":{
@@ -5038,6 +5136,23 @@
         "isResponsible":{"shape":"Boolean"}
       }
     },
+    "JobParameterMap":{
+      "type":"map",
+      "key":{"shape":"JobParameterName"},
+      "value":{"shape":"JobParameterValue"},
+      "sensitive":true
+    },
+    "JobParameterName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[0-9a-zA-Z_]+"
+    },
+    "JobParameterValue":{
+      "type":"string",
+      "max":1000,
+      "min":0
+    },
     "JobType":{
       "type":"string",
       "enum":[
@@ -5726,8 +5841,34 @@
       "type":"structure",
       "members":{
         "modelTraining":{"shape":"ModelTrainingPaymentConfig"},
-        "modelInference":{"shape":"ModelInferencePaymentConfig"}
+        "modelInference":{"shape":"ModelInferencePaymentConfig"},
+        "syntheticDataGeneration":{"shape":"SyntheticDataGenerationPaymentConfig"}
       }
+    },
+    "MLSyntheticDataParameters":{
+      "type":"structure",
+      "required":[
+        "epsilon",
+        "maxMembershipInferenceAttackScore",
+        "columnClassification"
+      ],
+      "members":{
+        "epsilon":{"shape":"MLSyntheticDataParametersEpsilonDouble"},
+        "maxMembershipInferenceAttackScore":{"shape":"MaxMembershipInferenceAttackScore"},
+        "columnClassification":{"shape":"ColumnClassificationDetails"}
+      }
+    },
+    "MLSyntheticDataParametersEpsilonDouble":{
+      "type":"double",
+      "box":true,
+      "max":10,
+      "min":0.0001
+    },
+    "MaxMembershipInferenceAttackScore":{
+      "type":"double",
+      "box":true,
+      "max":1,
+      "min":0.5
     },
     "MaxResults":{
       "type":"integer",
@@ -5762,7 +5903,6 @@
     "MemberList":{
       "type":"list",
       "member":{"shape":"MemberSpecification"},
-      "max":9,
       "min":0
     },
     "MemberSpecification":{
@@ -5851,7 +5991,8 @@
         "jobLogStatus":{"shape":"MembershipJobLogStatus"},
         "defaultResultConfiguration":{"shape":"MembershipProtectedQueryResultConfiguration"},
         "defaultJobResultConfiguration":{"shape":"MembershipProtectedJobResultConfiguration"},
-        "paymentConfiguration":{"shape":"MembershipPaymentConfiguration"}
+        "paymentConfiguration":{"shape":"MembershipPaymentConfiguration"},
+        "isMetricsEnabled":{"shape":"Boolean"}
       }
     },
     "MembershipArn":{
@@ -5884,7 +6025,8 @@
       "type":"structure",
       "members":{
         "modelTraining":{"shape":"MembershipModelTrainingPaymentConfig"},
-        "modelInference":{"shape":"MembershipModelInferencePaymentConfig"}
+        "modelInference":{"shape":"MembershipModelInferencePaymentConfig"},
+        "syntheticDataGeneration":{"shape":"MembershipSyntheticDataGenerationPaymentConfig"}
       }
     },
     "MembershipModelInferencePaymentConfig":{
@@ -6001,6 +6143,13 @@
       "type":"list",
       "member":{"shape":"MembershipSummary"}
     },
+    "MembershipSyntheticDataGenerationPaymentConfig":{
+      "type":"structure",
+      "required":["isResponsible"],
+      "members":{
+        "isResponsible":{"shape":"Boolean"}
+      }
+    },
     "ModelInferencePaymentConfig":{
       "type":"structure",
       "required":["isResponsible"],
@@ -6066,7 +6215,7 @@
     },
     "ParameterValue":{
       "type":"string",
-      "max":250,
+      "max":1000,
       "min":0
     },
     "PaymentConfiguration":{
@@ -6397,8 +6546,10 @@
     },
     "ProtectedJobParameters":{
       "type":"structure",
+      "required":["analysisTemplateArn"],
       "members":{
-        "analysisTemplateArn":{"shape":"AnalysisTemplateArn"}
+        "analysisTemplateArn":{"shape":"AnalysisTemplateArn"},
+        "parameters":{"shape":"JobParameterMap"}
       }
     },
     "ProtectedJobReceiverAccountIds":{
@@ -7300,6 +7451,46 @@
         "mx-central-1"
       ]
     },
+    "SyntheticDataColumnName":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"[a-z0-9_](([a-z0-9_]+-)*([a-z0-9_]+))?"
+    },
+    "SyntheticDataColumnProperties":{
+      "type":"structure",
+      "required":[
+        "columnName",
+        "columnType",
+        "isPredictiveValue"
+      ],
+      "members":{
+        "columnName":{"shape":"SyntheticDataColumnName"},
+        "columnType":{"shape":"SyntheticDataColumnType"},
+        "isPredictiveValue":{"shape":"Boolean"}
+      }
+    },
+    "SyntheticDataColumnType":{
+      "type":"string",
+      "enum":[
+        "CATEGORICAL",
+        "NUMERICAL"
+      ]
+    },
+    "SyntheticDataGenerationPaymentConfig":{
+      "type":"structure",
+      "required":["isResponsible"],
+      "members":{
+        "isResponsible":{"shape":"Boolean"}
+      }
+    },
+    "SyntheticDataParameters":{
+      "type":"structure",
+      "members":{
+        "mlSyntheticDataParameters":{"shape":"MLSyntheticDataParameters"}
+      },
+      "union":true
+    },
     "TableAlias":{
       "type":"string",
       "max":128,
@@ -7441,6 +7632,34 @@
       "required":["analysisTemplate"],
       "members":{
         "analysisTemplate":{"shape":"AnalysisTemplate"}
+      }
+    },
+    "UpdateCollaborationChangeRequestInput":{
+      "type":"structure",
+      "required":[
+        "collaborationIdentifier",
+        "changeRequestIdentifier",
+        "action"
+      ],
+      "members":{
+        "collaborationIdentifier":{
+          "shape":"CollaborationIdentifier",
+          "location":"uri",
+          "locationName":"collaborationIdentifier"
+        },
+        "changeRequestIdentifier":{
+          "shape":"CollaborationChangeRequestIdentifier",
+          "location":"uri",
+          "locationName":"changeRequestIdentifier"
+        },
+        "action":{"shape":"ChangeRequestAction"}
+      }
+    },
+    "UpdateCollaborationChangeRequestOutput":{
+      "type":"structure",
+      "required":["collaborationChangeRequest"],
+      "members":{
+        "collaborationChangeRequest":{"shape":"CollaborationChangeRequest"}
       }
     },
     "UpdateCollaborationInput":{
@@ -7817,7 +8036,10 @@
       "type":"structure",
       "members":{
         "type":{"shape":"WorkerComputeType"},
-        "number":{"shape":"WorkerComputeConfigurationNumberInteger"},
+        "number":{
+          "shape":"WorkerComputeConfigurationNumberInteger",
+          "box":true
+        },
         "properties":{"shape":"WorkerComputeConfigurationProperties"}
       }
     },

@@ -153,6 +153,7 @@
         "IdentityCenterConfigurationInput$userBackgroundSessionsEnabled": "<p>Enables user background sessions for this application so Livy sessions can continue running after users log out of their interactive notebook or their Identity Center sessions expire.</p>",
         "InteractiveConfiguration$studioEnabled": "<p>Enables you to connect an application to Amazon EMR Studio to run interactive workloads in a notebook.</p>",
         "InteractiveConfiguration$livyEndpointEnabled": "<p>Enables an Apache Livy endpoint that you can connect to and run interactive jobs.</p>",
+        "JobLevelCostAllocationConfiguration$enabled": "<p>Enables job level cost allocation for the application.</p>",
         "ManagedPersistenceMonitoringConfiguration$enabled": "<p>Enables managed logging and defaults to true. If set to false, managed logging will be turned off.</p>"
       }
     },
@@ -264,6 +265,15 @@
       "base": null,
       "refs": {}
     },
+    "DiskEncryptionConfiguration": {
+      "base": "<p>The configuration object that allows encrypting local disks.</p>",
+      "refs": {
+        "Application$diskEncryptionConfiguration": "<p>The configuration object that allows encrypting local disks.</p>",
+        "ConfigurationOverrides$diskEncryptionConfiguration": "<p>The override configuration to encrypt local disks.</p>",
+        "CreateApplicationRequest$diskEncryptionConfiguration": "<p>The configuration object that allows encrypting local disks.</p>",
+        "UpdateApplicationRequest$diskEncryptionConfiguration": "<p>The configuration object that allows encrypting local disks.</p>"
+      }
+    },
     "DiskSize": {
       "base": null,
       "refs": {
@@ -295,10 +305,29 @@
         "StartJobRunRequest$executionTimeoutMinutes": "<p>The maximum duration for the job run to run. If the job run runs beyond this duration, it will be automatically cancelled.</p>"
       }
     },
+    "EncryptionContext": {
+      "base": null,
+      "refs": {
+        "DiskEncryptionConfiguration$encryptionContext": "<p>Specifies the optional encryption context that will be used when encrypting the data. An encryption context is a collection of non-secret key-value pairs that represent additional authenticated data. </p>"
+      }
+    },
+    "EncryptionContextKey": {
+      "base": null,
+      "refs": {
+        "EncryptionContext$key": null
+      }
+    },
+    "EncryptionContextValue": {
+      "base": null,
+      "refs": {
+        "EncryptionContext$value": null
+      }
+    },
     "EncryptionKeyArn": {
       "base": null,
       "refs": {
         "CloudWatchLoggingConfiguration$encryptionKeyArn": "<p>The Key Management Service (KMS) key ARN to encrypt the logs that you store in CloudWatch Logs.</p>",
+        "DiskEncryptionConfiguration$encryptionKeyArn": "<p>The KMS key ARN to encrypt local disks.</p>",
         "ManagedPersistenceMonitoringConfiguration$encryptionKeyArn": "<p>The KMS key ARN to encrypt the logs stored in managed log persistence.</p>",
         "S3MonitoringConfiguration$encryptionKeyArn": "<p>The KMS key ARN to encrypt the logs published to the given Amazon S3 destination.</p>"
       }
@@ -482,6 +511,14 @@
       "refs": {
         "JobRun$jobDriver": "<p>The job driver for the job run.</p>",
         "StartJobRunRequest$jobDriver": "<p>The job driver for the job run.</p>"
+      }
+    },
+    "JobLevelCostAllocationConfiguration": {
+      "base": "<p>The configuration object that enables job level cost allocation.</p>",
+      "refs": {
+        "Application$jobLevelCostAllocationConfiguration": "<p>The configuration object that enables job level cost allocation.</p>",
+        "CreateApplicationRequest$jobLevelCostAllocationConfiguration": "<p>The configuration object that enables job level cost allocation.</p>",
+        "UpdateApplicationRequest$jobLevelCostAllocationConfiguration": "<p>The configuration object that enables job level cost allocation.</p>"
       }
     },
     "JobRun": {

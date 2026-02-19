@@ -102,7 +102,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetServiceLevelObjective":{
       "name":"GetServiceLevelObjective",
@@ -117,7 +118,8 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAuditFindings":{
       "name":"ListAuditFindings",
@@ -131,7 +133,23 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "ListEntityEvents":{
+      "name":"ListEntityEvents",
+      "http":{
+        "method":"POST",
+        "requestUri":"/events",
+        "responseCode":200
+      },
+      "input":{"shape":"ListEntityEventsInput"},
+      "output":{"shape":"ListEntityEventsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "ListGroupingAttributeDefinitions":{
       "name":"ListGroupingAttributeDefinitions",
@@ -146,7 +164,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListServiceDependencies":{
       "name":"ListServiceDependencies",
@@ -160,7 +179,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListServiceDependents":{
       "name":"ListServiceDependents",
@@ -174,7 +194,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListServiceLevelObjectiveExclusionWindows":{
       "name":"ListServiceLevelObjectiveExclusionWindows",
@@ -189,7 +210,8 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListServiceLevelObjectives":{
       "name":"ListServiceLevelObjectives",
@@ -203,7 +225,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListServiceOperations":{
       "name":"ListServiceOperations",
@@ -217,7 +240,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListServiceStates":{
       "name":"ListServiceStates",
@@ -245,7 +269,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -259,7 +284,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutGroupingConfiguration":{
       "name":"PutGroupingConfiguration",
@@ -464,6 +490,7 @@
       "members":{
         "Auditor":{"shape":"String"},
         "Description":{"shape":"AuditorResultDescriptionString"},
+        "Data":{"shape":"DataMap"},
         "Severity":{"shape":"Severity"}
       }
     },
@@ -628,7 +655,16 @@
     },
     "ChangeEventType":{
       "type":"string",
-      "enum":["DEPLOYMENT"]
+      "enum":[
+        "DEPLOYMENT",
+        "CONFIGURATION"
+      ]
+    },
+    "ChangeEvents":{
+      "type":"list",
+      "member":{"shape":"ChangeEvent"},
+      "max":250,
+      "min":0
     },
     "ConflictException":{
       "type":"structure",
@@ -669,6 +705,11 @@
         "Slo":{"shape":"ServiceLevelObjective"}
       }
     },
+    "DataMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
     "DeleteGroupingConfigurationOutput":{
       "type":"structure",
       "members":{}
@@ -705,6 +746,13 @@
         "Nodes":{"shape":"Nodes"},
         "Edges":{"shape":"Edges"}
       }
+    },
+    "DetailLevel":{
+      "type":"string",
+      "enum":[
+        "BRIEF",
+        "DETAILED"
+      ]
     },
     "Dimension":{
       "type":"structure",
@@ -965,6 +1013,7 @@
         },
         "Auditors":{"shape":"Auditors"},
         "AuditTargets":{"shape":"AuditTargets"},
+        "DetailLevel":{"shape":"DetailLevel"},
         "NextToken":{"shape":"NextToken"},
         "MaxResults":{"shape":"ListAuditFindingMaxResults"}
       }
@@ -973,7 +1022,52 @@
       "type":"structure",
       "required":["AuditFindings"],
       "members":{
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
         "AuditFindings":{"shape":"AuditFindings"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListEntityEventsInput":{
+      "type":"structure",
+      "required":[
+        "Entity",
+        "StartTime",
+        "EndTime"
+      ],
+      "members":{
+        "Entity":{"shape":"Attributes"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "MaxResults":{
+          "shape":"ListEntityEventsMaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListEntityEventsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":250,
+      "min":1
+    },
+    "ListEntityEventsOutput":{
+      "type":"structure",
+      "required":[
+        "StartTime",
+        "EndTime",
+        "ChangeEvents"
+      ],
+      "members":{
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "ChangeEvents":{"shape":"ChangeEvents"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -984,6 +1078,16 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"NextToken"
+        },
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"querystring",
+          "locationName":"AwsAccountId"
+        },
+        "IncludeLinkedAccounts":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"IncludeLinkedAccounts"
         }
       }
     },
@@ -1790,7 +1894,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:aws:application-signals:[^:]*:[^:]*:slo/[0-9A-Za-z][-._0-9A-Za-z ]{0,126}[0-9A-Za-z]"
+      "pattern":"arn:(aws|aws-us-gov):application-signals:[^:]*:[^:]*:slo/[0-9A-Za-z][-._0-9A-Za-z ]{0,126}[0-9A-Za-z]"
     },
     "ServiceLevelObjectiveBudgetReport":{
       "type":"structure",
@@ -1866,7 +1970,7 @@
     },
     "ServiceLevelObjectiveId":{
       "type":"string",
-      "pattern":"[0-9A-Za-z][-._0-9A-Za-z ]{0,126}[0-9A-Za-z]$|^arn:aws:application-signals:[^:]*:[^:]*:slo/[0-9A-Za-z][-._0-9A-Za-z ]{0,126}[0-9A-Za-z]"
+      "pattern":"[0-9A-Za-z][-._0-9A-Za-z ]{0,126}[0-9A-Za-z]$|^arn:(aws|aws-us-gov):application-signals:[^:]*:[^:]*:slo/[0-9A-Za-z][-._0-9A-Za-z ]{0,126}[0-9A-Za-z]"
     },
     "ServiceLevelObjectiveIds":{
       "type":"list",

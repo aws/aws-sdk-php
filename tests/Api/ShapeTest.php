@@ -32,7 +32,6 @@ class ShapeTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $s = new Shape([], new ShapeMap([]));
         $m = new \ReflectionMethod($s, 'shapeAt');
-        $m->setAccessible(true);
         $m->invoke($s, 'not_there');
     }
 
@@ -40,7 +39,6 @@ class ShapeTest extends TestCase
     {
         $s = new Shape(['foo' => ['type' => 'string']], new ShapeMap([]));
         $m = new \ReflectionMethod($s, 'shapeAt');
-        $m->setAccessible(true);
         $this->assertInstanceOf(Shape::class, $m->invoke($s, 'foo'));
     }
 
@@ -51,7 +49,6 @@ class ShapeTest extends TestCase
             new ShapeMap(['bar' => ['type' => 'string']])
         );
         $m = new \ReflectionMethod($s, 'shapeAt');
-        $m->setAccessible(true);
         $result = $m->invoke($s, 'foo');
         $this->assertInstanceOf(Shape::class, $result);
         $this->assertSame('string', $result->getType());
@@ -76,7 +73,6 @@ class ShapeTest extends TestCase
             new ShapeMap([])
         );
         $m = new \ReflectionMethod($s, 'shapeAt');
-        $m->setAccessible(true);
         $m->invoke($s, 'foo');
     }
 

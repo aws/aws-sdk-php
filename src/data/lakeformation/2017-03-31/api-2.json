@@ -536,6 +536,24 @@
         {"shape":"ResourceNotReadyException"}
       ]
     },
+    "GetTemporaryDataLocationCredentials":{
+      "name":"GetTemporaryDataLocationCredentials",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetTemporaryDataLocationCredentials"
+      },
+      "input":{"shape":"GetTemporaryDataLocationCredentialsRequest"},
+      "output":{"shape":"GetTemporaryDataLocationCredentialsResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"GlueEncryptionException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "GetTemporaryGluePartitionCredentials":{
       "name":"GetTemporaryGluePartitionCredentials",
       "http":{
@@ -998,6 +1016,10 @@
       "exception":true
     },
     "AccessKeyIdString":{"type":"string"},
+    "AccountIdString":{
+      "type":"string",
+      "pattern":"^\\d{12}$"
+    },
     "AddLFTagsToResourceRequest":{
       "type":"structure",
       "required":[
@@ -1236,6 +1258,13 @@
         "Expression":{"shape":"ExpressionString"}
       }
     },
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"MessageString"}
+      },
+      "exception":true
+    },
     "ContextKey":{
       "type":"string",
       "max":128,
@@ -1296,7 +1325,8 @@
         "CatalogId":{"shape":"CatalogIdString"},
         "InstanceArn":{"shape":"IdentityCenterInstanceArn"},
         "ExternalFiltering":{"shape":"ExternalFilteringConfiguration"},
-        "ShareRecipients":{"shape":"DataLakePrincipalList"}
+        "ShareRecipients":{"shape":"DataLakePrincipalList"},
+        "ServiceIntegrations":{"shape":"ServiceIntegrationList"}
       }
     },
     "CreateLakeFormationIdentityCenterConfigurationResponse":{
@@ -1326,6 +1356,13 @@
       "box":true,
       "max":43200,
       "min":900
+    },
+    "CredentialsScope":{
+      "type":"string",
+      "enum":[
+        "READ",
+        "READWRITE"
+      ]
     },
     "DataCellsFilter":{
       "type":"structure",
@@ -1546,6 +1583,7 @@
         "ApplicationArn":{"shape":"ApplicationArn"},
         "ExternalFiltering":{"shape":"ExternalFilteringConfiguration"},
         "ShareRecipients":{"shape":"DataLakePrincipalList"},
+        "ServiceIntegrations":{"shape":"ServiceIntegrationList"},
         "ResourceShare":{"shape":"RAMResourceShareArn"}
       }
     },
@@ -1858,6 +1896,23 @@
       "members":{
         "Objects":{"shape":"PartitionedTableObjectsList"},
         "NextToken":{"shape":"TokenString"}
+      }
+    },
+    "GetTemporaryDataLocationCredentialsRequest":{
+      "type":"structure",
+      "members":{
+        "DurationSeconds":{"shape":"CredentialTimeoutDurationSecondInteger"},
+        "AuditContext":{"shape":"AuditContext"},
+        "DataLocations":{"shape":"PathStringList"},
+        "CredentialsScope":{"shape":"CredentialsScope"}
+      }
+    },
+    "GetTemporaryDataLocationCredentialsResponse":{
+      "type":"structure",
+      "members":{
+        "Credentials":{"shape":"TemporaryCredentials"},
+        "AccessibleDataLocations":{"shape":"PathStringList"},
+        "CredentialsScope":{"shape":"CredentialsScope"}
       }
     },
     "GetTemporaryGluePartitionCredentialsRequest":{
@@ -2511,6 +2566,24 @@
       ]
     },
     "RAMResourceShareArn":{"type":"string"},
+    "RedshiftConnect":{
+      "type":"structure",
+      "required":["Authorization"],
+      "members":{
+        "Authorization":{"shape":"ServiceAuthorization"}
+      }
+    },
+    "RedshiftScopeUnion":{
+      "type":"structure",
+      "members":{
+        "RedshiftConnect":{"shape":"RedshiftConnect"}
+      },
+      "union":true
+    },
+    "RedshiftServiceIntegrations":{
+      "type":"list",
+      "member":{"shape":"RedshiftScopeUnion"}
+    },
     "RegisterResourceRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -2520,7 +2593,8 @@
         "RoleArn":{"shape":"IAMRoleArn"},
         "WithFederation":{"shape":"NullableBoolean"},
         "HybridAccessEnabled":{"shape":"NullableBoolean"},
-        "WithPrivilegedAccess":{"shape":"Boolean"}
+        "WithPrivilegedAccess":{"shape":"Boolean"},
+        "ExpectedResourceOwnerAccount":{"shape":"AccountIdString"}
       }
     },
     "RegisterResourceResponse":{
@@ -2568,7 +2642,9 @@
         "LastModified":{"shape":"LastModifiedTimestamp"},
         "WithFederation":{"shape":"NullableBoolean"},
         "HybridAccessEnabled":{"shape":"NullableBoolean"},
-        "WithPrivilegedAccess":{"shape":"NullableBoolean"}
+        "WithPrivilegedAccess":{"shape":"NullableBoolean"},
+        "VerificationStatus":{"shape":"VerificationStatus"},
+        "ExpectedResourceOwnerAccount":{"shape":"AccountIdString"}
       }
     },
     "ResourceInfoList":{
@@ -2691,6 +2767,24 @@
       }
     },
     "SecretAccessKeyString":{"type":"string"},
+    "ServiceAuthorization":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "ServiceIntegrationList":{
+      "type":"list",
+      "member":{"shape":"ServiceIntegrationUnion"}
+    },
+    "ServiceIntegrationUnion":{
+      "type":"structure",
+      "members":{
+        "Redshift":{"shape":"RedshiftServiceIntegrations"}
+      },
+      "union":true
+    },
     "SessionTokenString":{"type":"string"},
     "StartQueryPlanningRequest":{
       "type":"structure",
@@ -2839,6 +2933,15 @@
         "LFTagOnDatabase":{"shape":"LFTagsList"},
         "LFTagsOnTable":{"shape":"LFTagsList"},
         "LFTagsOnColumns":{"shape":"ColumnLFTagsList"}
+      }
+    },
+    "TemporaryCredentials":{
+      "type":"structure",
+      "members":{
+        "AccessKeyId":{"shape":"AccessKeyIdString"},
+        "SecretAccessKey":{"shape":"SecretAccessKeyString"},
+        "SessionToken":{"shape":"SessionTokenString"},
+        "Expiration":{"shape":"ExpirationTimestamp"}
       }
     },
     "ThrottledException":{
@@ -2991,6 +3094,7 @@
       "members":{
         "CatalogId":{"shape":"CatalogIdString"},
         "ShareRecipients":{"shape":"DataLakePrincipalList"},
+        "ServiceIntegrations":{"shape":"ServiceIntegrationList"},
         "ApplicationStatus":{"shape":"ApplicationStatus"},
         "ExternalFiltering":{"shape":"ExternalFilteringConfiguration"}
       }
@@ -3009,7 +3113,8 @@
         "RoleArn":{"shape":"IAMRoleArn"},
         "ResourceArn":{"shape":"ResourceArnString"},
         "WithFederation":{"shape":"NullableBoolean"},
-        "HybridAccessEnabled":{"shape":"NullableBoolean"}
+        "HybridAccessEnabled":{"shape":"NullableBoolean"},
+        "ExpectedResourceOwnerAccount":{"shape":"AccountIdString"}
       }
     },
     "UpdateResourceResponse":{
@@ -3060,6 +3165,14 @@
       "type":"list",
       "member":{"shape":"ValueString"},
       "min":1
+    },
+    "VerificationStatus":{
+      "type":"string",
+      "enum":[
+        "VERIFIED",
+        "VERIFICATION_FAILED",
+        "NOT_VERIFIED"
+      ]
     },
     "VersionString":{
       "type":"string",

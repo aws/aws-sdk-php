@@ -1,0 +1,927 @@
+{
+  "version": "2.0",
+  "service": "<p>AWS Partner Central Channel service for managing partner relationships, handshakes, and program management accounts.</p>",
+  "operations": {
+    "AcceptChannelHandshake": "<p>Accepts a pending channel handshake request from another AWS account.</p>",
+    "CancelChannelHandshake": "<p>Cancels a pending channel handshake request.</p>",
+    "CreateChannelHandshake": "<p>Creates a new channel handshake request to establish a partnership with another AWS account.</p>",
+    "CreateProgramManagementAccount": "<p>Creates a new program management account for managing partner relationships.</p>",
+    "CreateRelationship": "<p>Creates a new partner relationship between accounts.</p>",
+    "DeleteProgramManagementAccount": "<p>Deletes a program management account.</p>",
+    "DeleteRelationship": "<p>Deletes a partner relationship.</p>",
+    "GetRelationship": "<p>Retrieves details of a specific partner relationship.</p>",
+    "ListChannelHandshakes": "<p>Lists channel handshakes based on specified criteria.</p>",
+    "ListProgramManagementAccounts": "<p>Lists program management accounts based on specified criteria.</p>",
+    "ListRelationships": "<p>Lists partner relationships based on specified criteria.</p>",
+    "ListTagsForResource": "<p>Lists tags associated with a specific resource.</p>",
+    "RejectChannelHandshake": "<p>Rejects a pending channel handshake request.</p>",
+    "TagResource": "<p>Adds or updates tags for a specified resource.</p>",
+    "UntagResource": "<p>Removes tags from a specified resource.</p>",
+    "UpdateProgramManagementAccount": "<p>Updates the properties of a program management account.</p>",
+    "UpdateRelationship": "<p>Updates the properties of a partner relationship.</p>"
+  },
+  "shapes": {
+    "AcceptChannelHandshakeDetail": {
+      "base": "<p>Contains details about an accepted channel handshake.</p>",
+      "refs": {
+        "AcceptChannelHandshakeResponse$channelHandshakeDetail": "<p>Details of the accepted channel handshake.</p>"
+      }
+    },
+    "AcceptChannelHandshakeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AcceptChannelHandshakeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "AccessDeniedException": {
+      "base": "<p>The request was denied due to insufficient permissions.</p>",
+      "refs": {}
+    },
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "AccountIdList$member": null,
+        "ChannelHandshakeSummary$ownerAccountId": "<p>The AWS account ID of the handshake owner.</p>",
+        "ChannelHandshakeSummary$senderAccountId": "<p>The AWS account ID of the handshake sender.</p>",
+        "ChannelHandshakeSummary$receiverAccountId": "<p>The AWS account ID of the handshake receiver.</p>",
+        "CreateProgramManagementAccountRequest$accountId": "<p>The AWS account ID to associate with the program management account.</p>",
+        "CreateRelationshipRequest$associatedAccountId": "<p>The AWS account ID to associate in this relationship.</p>",
+        "ProgramManagementAccountSummary$accountId": "<p>The AWS account ID associated with the program management account.</p>",
+        "RelationshipDetail$associatedAccountId": "<p>The AWS account ID associated in this relationship.</p>",
+        "RelationshipSummary$associatedAccountId": "<p>The AWS account ID associated in this relationship.</p>",
+        "ResoldEnterprise$chargeAccountId": "<p>The AWS account ID to charge for the support plan.</p>"
+      }
+    },
+    "AccountIdList": {
+      "base": null,
+      "refs": {
+        "ListProgramManagementAccountsRequest$accountIds": "<p>Filter by AWS account IDs.</p>",
+        "ListRelationshipsRequest$associatedAccountIds": "<p>Filter by associated AWS account IDs.</p>"
+      }
+    },
+    "Arn": {
+      "base": null,
+      "refs": {
+        "AcceptChannelHandshakeDetail$arn": "<p>The Amazon Resource Name (ARN) of the accepted handshake.</p>",
+        "CancelChannelHandshakeDetail$arn": "<p>The Amazon Resource Name (ARN) of the canceled handshake.</p>",
+        "ChannelHandshakeSummary$arn": "<p>The Amazon Resource Name (ARN) of the handshake.</p>",
+        "CreateChannelHandshakeDetail$arn": "<p>The Amazon Resource Name (ARN) of the created handshake.</p>",
+        "CreateProgramManagementAccountDetail$arn": "<p>The Amazon Resource Name (ARN) of the created program management account.</p>",
+        "CreateRelationshipDetail$arn": "<p>The Amazon Resource Name (ARN) of the created relationship.</p>",
+        "ProgramManagementAccountSummary$arn": "<p>The Amazon Resource Name (ARN) of the program management account.</p>",
+        "RejectChannelHandshakeDetail$arn": "<p>The Amazon Resource Name (ARN) of the rejected handshake.</p>",
+        "RelationshipDetail$arn": "<p>The Amazon Resource Name (ARN) of the relationship.</p>",
+        "RelationshipSummary$arn": "<p>The Amazon Resource Name (ARN) of the relationship.</p>",
+        "UpdateProgramManagementAccountDetail$arn": "<p>The Amazon Resource Name (ARN) of the updated program management account.</p>",
+        "UpdateRelationshipDetail$arn": "<p>The Amazon Resource Name (ARN) of the updated relationship.</p>"
+      }
+    },
+    "AssociatedResourceId": {
+      "base": null,
+      "refs": {
+        "ChannelHandshakeSummary$associatedResourceId": "<p>The identifier of the resource associated with the handshake.</p>"
+      }
+    },
+    "AssociatedResourceIdentifier": {
+      "base": null,
+      "refs": {
+        "AssociatedResourceIdentifierList$member": null,
+        "CreateChannelHandshakeRequest$associatedResourceIdentifier": "<p>The identifier of the resource associated with this handshake.</p>"
+      }
+    },
+    "AssociatedResourceIdentifierList": {
+      "base": null,
+      "refs": {
+        "ListChannelHandshakesRequest$associatedResourceIdentifiers": "<p>Filter by associated resource identifiers.</p>"
+      }
+    },
+    "AssociationType": {
+      "base": null,
+      "refs": {
+        "AssociationTypeList$member": null,
+        "CreateRelationshipRequest$associationType": "<p>The type of association for the relationship (e.g., reseller, distributor).</p>",
+        "RelationshipDetail$associationType": "<p>The type of association for the relationship.</p>",
+        "RelationshipSummary$associationType": "<p>The type of association for the relationship.</p>"
+      }
+    },
+    "AssociationTypeList": {
+      "base": null,
+      "refs": {
+        "ListRelationshipsRequest$associationTypes": "<p>Filter by association types.</p>"
+      }
+    },
+    "CancelChannelHandshakeDetail": {
+      "base": "<p>Contains details about a canceled channel handshake.</p>",
+      "refs": {
+        "CancelChannelHandshakeResponse$channelHandshakeDetail": "<p>Details of the canceled channel handshake.</p>"
+      }
+    },
+    "CancelChannelHandshakeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelChannelHandshakeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Catalog": {
+      "base": null,
+      "refs": {
+        "AcceptChannelHandshakeRequest$catalog": "<p>The catalog identifier for the handshake request.</p>",
+        "CancelChannelHandshakeRequest$catalog": "<p>The catalog identifier for the handshake request.</p>",
+        "ChannelHandshakeSummary$catalog": "<p>The catalog identifier associated with the handshake.</p>",
+        "CreateChannelHandshakeRequest$catalog": "<p>The catalog identifier for the handshake request.</p>",
+        "CreateProgramManagementAccountRequest$catalog": "<p>The catalog identifier for the program management account.</p>",
+        "CreateRelationshipRequest$catalog": "<p>The catalog identifier for the relationship.</p>",
+        "DeleteProgramManagementAccountRequest$catalog": "<p>The catalog identifier for the program management account.</p>",
+        "DeleteRelationshipRequest$catalog": "<p>The catalog identifier for the relationship.</p>",
+        "GetRelationshipRequest$catalog": "<p>The catalog identifier for the relationship.</p>",
+        "ListChannelHandshakesRequest$catalog": "<p>The catalog identifier to filter handshakes.</p>",
+        "ListProgramManagementAccountsRequest$catalog": "<p>The catalog identifier to filter accounts.</p>",
+        "ListRelationshipsRequest$catalog": "<p>The catalog identifier to filter relationships.</p>",
+        "ProgramManagementAccountSummary$catalog": "<p>The catalog identifier associated with the account.</p>",
+        "RejectChannelHandshakeRequest$catalog": "<p>The catalog identifier for the handshake request.</p>",
+        "RelationshipDetail$catalog": "<p>The catalog identifier associated with the relationship.</p>",
+        "RelationshipSummary$catalog": "<p>The catalog identifier associated with the relationship.</p>",
+        "UpdateProgramManagementAccountRequest$catalog": "<p>The catalog identifier for the program management account.</p>",
+        "UpdateRelationshipRequest$catalog": "<p>The catalog identifier for the relationship.</p>"
+      }
+    },
+    "ChannelHandshakeId": {
+      "base": null,
+      "refs": {
+        "AcceptChannelHandshakeDetail$id": "<p>The unique identifier of the accepted handshake.</p>",
+        "CancelChannelHandshakeDetail$id": "<p>The unique identifier of the canceled handshake.</p>",
+        "ChannelHandshakeSummary$id": "<p>The unique identifier of the handshake.</p>",
+        "CreateChannelHandshakeDetail$id": "<p>The unique identifier of the created handshake.</p>",
+        "RejectChannelHandshakeDetail$id": "<p>The unique identifier of the rejected handshake.</p>"
+      }
+    },
+    "ChannelHandshakeIdentifier": {
+      "base": null,
+      "refs": {
+        "AcceptChannelHandshakeRequest$identifier": "<p>The unique identifier of the channel handshake to accept.</p>",
+        "CancelChannelHandshakeRequest$identifier": "<p>The unique identifier of the channel handshake to cancel.</p>",
+        "RejectChannelHandshakeRequest$identifier": "<p>The unique identifier of the channel handshake to reject.</p>"
+      }
+    },
+    "ChannelHandshakePayload": {
+      "base": "<p>Contains the payload data for different types of channel handshakes.</p>",
+      "refs": {
+        "CreateChannelHandshakeRequest$payload": "<p>The payload containing specific details for the handshake type.</p>"
+      }
+    },
+    "ChannelHandshakeSummaries": {
+      "base": null,
+      "refs": {
+        "ListChannelHandshakesResponse$items": "<p>List of channel handshakes matching the criteria.</p>"
+      }
+    },
+    "ChannelHandshakeSummary": {
+      "base": "<p>Summary information about a channel handshake.</p>",
+      "refs": {
+        "ChannelHandshakeSummaries$member": null
+      }
+    },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "CreateChannelHandshakeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "CreateProgramManagementAccountRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "CreateRelationshipRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "DeleteProgramManagementAccountRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "DeleteRelationshipRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request could not be completed due to a conflict with the current state of the resource.</p>",
+      "refs": {}
+    },
+    "Coverage": {
+      "base": null,
+      "refs": {
+        "PartnerLedSupport$coverage": "<p>The coverage level for partner-led support.</p>",
+        "ResoldBusiness$coverage": "<p>The coverage level for resold business support.</p>",
+        "ResoldEnterprise$coverage": "<p>The coverage level for resold enterprise support.</p>"
+      }
+    },
+    "CreateChannelHandshakeDetail": {
+      "base": "<p>Contains details about a newly created channel handshake.</p>",
+      "refs": {
+        "CreateChannelHandshakeResponse$channelHandshakeDetail": "<p>Details of the created channel handshake.</p>"
+      }
+    },
+    "CreateChannelHandshakeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateChannelHandshakeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateProgramManagementAccountDetail": {
+      "base": "<p>Contains details about a newly created program management account.</p>",
+      "refs": {
+        "CreateProgramManagementAccountResponse$programManagementAccountDetail": "<p>Details of the created program management account.</p>"
+      }
+    },
+    "CreateProgramManagementAccountRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateProgramManagementAccountResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRelationshipDetail": {
+      "base": "<p>Contains details about a newly created relationship.</p>",
+      "refs": {
+        "CreateRelationshipResponse$relationshipDetail": "<p>Details of the created relationship.</p>"
+      }
+    },
+    "CreateRelationshipRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRelationshipResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DateTime": {
+      "base": null,
+      "refs": {
+        "ChannelHandshakeSummary$createdAt": "<p>The timestamp when the handshake was created.</p>",
+        "ChannelHandshakeSummary$updatedAt": "<p>The timestamp when the handshake was last updated.</p>",
+        "ProgramManagementAccountSummary$createdAt": "<p>The timestamp when the account was created.</p>",
+        "ProgramManagementAccountSummary$updatedAt": "<p>The timestamp when the account was last updated.</p>",
+        "ProgramManagementAccountSummary$startDate": "<p>The start date of the program management account.</p>",
+        "RelationshipDetail$createdAt": "<p>The timestamp when the relationship was created.</p>",
+        "RelationshipDetail$updatedAt": "<p>The timestamp when the relationship was last updated.</p>",
+        "RelationshipDetail$startDate": "<p>The start date of the relationship.</p>",
+        "RelationshipSummary$createdAt": "<p>The timestamp when the relationship was created.</p>",
+        "RelationshipSummary$updatedAt": "<p>The timestamp when the relationship was last updated.</p>",
+        "RelationshipSummary$startDate": "<p>The start date of the relationship.</p>",
+        "RevokeServicePeriodHandshakeDetail$startDate": "<p>The start date of the service period being revoked.</p>",
+        "RevokeServicePeriodHandshakeDetail$endDate": "<p>The end date of the service period being revoked.</p>",
+        "StartServicePeriodHandshakeDetail$startDate": "<p>The start date of the service period.</p>",
+        "StartServicePeriodHandshakeDetail$endDate": "<p>The end date of the service period.</p>",
+        "StartServicePeriodPayload$endDate": "<p>The end date of the service period.</p>"
+      }
+    },
+    "DeleteProgramManagementAccountRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteProgramManagementAccountResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRelationshipRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRelationshipResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRelationshipRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRelationshipResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "HandshakeDetail": {
+      "base": "<p>Contains detailed information about different types of handshakes.</p>",
+      "refs": {
+        "ChannelHandshakeSummary$detail": "<p>Detailed information about the handshake.</p>"
+      }
+    },
+    "HandshakeStatus": {
+      "base": null,
+      "refs": {
+        "AcceptChannelHandshakeDetail$status": "<p>The current status of the accepted handshake.</p>",
+        "CancelChannelHandshakeDetail$status": "<p>The current status of the canceled handshake.</p>",
+        "ChannelHandshakeSummary$status": "<p>The current status of the handshake.</p>",
+        "HandshakeStatusList$member": null,
+        "RejectChannelHandshakeDetail$status": "<p>The current status of the rejected handshake.</p>"
+      }
+    },
+    "HandshakeStatusList": {
+      "base": null,
+      "refs": {
+        "ListChannelHandshakesRequest$statuses": "<p>Filter results by handshake status.</p>"
+      }
+    },
+    "HandshakeType": {
+      "base": null,
+      "refs": {
+        "ChannelHandshakeSummary$handshakeType": "<p>The type of the handshake.</p>",
+        "CreateChannelHandshakeRequest$handshakeType": "<p>The type of handshake to create (e.g., start service period, revoke service period).</p>",
+        "ListChannelHandshakesRequest$handshakeType": "<p>Filter results by handshake type.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>An internal server error occurred while processing the request.</p>",
+      "refs": {}
+    },
+    "ListChannelHandshakesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListChannelHandshakesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListChannelHandshakesRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>"
+      }
+    },
+    "ListChannelHandshakesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListChannelHandshakesTypeFilters": {
+      "base": "<p>Type-specific filters for listing channel handshakes.</p>",
+      "refs": {
+        "ListChannelHandshakesRequest$handshakeTypeFilters": "<p>Type-specific filters for handshakes.</p>"
+      }
+    },
+    "ListChannelHandshakesTypeSort": {
+      "base": "<p>Type-specific sorting options for listing channel handshakes.</p>",
+      "refs": {
+        "ListChannelHandshakesRequest$handshakeTypeSort": "<p>Type-specific sorting options for handshakes.</p>"
+      }
+    },
+    "ListProgramManagementAccountsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProgramManagementAccountsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListProgramManagementAccountsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>"
+      }
+    },
+    "ListProgramManagementAccountsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProgramManagementAccountsSortBase": {
+      "base": "<p>Base sorting configuration for program management accounts.</p>",
+      "refs": {
+        "ListProgramManagementAccountsRequest$sort": "<p>Sorting options for the results.</p>"
+      }
+    },
+    "ListProgramManagementAccountsSortName": {
+      "base": null,
+      "refs": {
+        "ListProgramManagementAccountsSortBase$sortBy": "<p>The field to sort by.</p>"
+      }
+    },
+    "ListRelationshipsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRelationshipsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRelationshipsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>"
+      }
+    },
+    "ListRelationshipsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRelationshipsSortBase": {
+      "base": "<p>Base sorting configuration for relationships.</p>",
+      "refs": {
+        "ListRelationshipsRequest$sort": "<p>Sorting options for the results.</p>"
+      }
+    },
+    "ListRelationshipsSortName": {
+      "base": null,
+      "refs": {
+        "ListRelationshipsSortBase$sortBy": "<p>The field to sort by.</p>"
+      }
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "MinimumNoticeDays": {
+      "base": null,
+      "refs": {
+        "RevokeServicePeriodHandshakeDetail$minimumNoticeDays": "<p>The minimum number of days notice required for revocation.</p>",
+        "StartServicePeriodHandshakeDetail$minimumNoticeDays": "<p>The minimum number of days notice required for changes.</p>",
+        "StartServicePeriodPayload$minimumNoticeDays": "<p>The minimum number of days notice required for changes.</p>"
+      }
+    },
+    "NextToken": {
+      "base": null,
+      "refs": {
+        "ListChannelHandshakesRequest$nextToken": "<p>Token for retrieving the next page of results.</p>",
+        "ListChannelHandshakesResponse$nextToken": "<p>Token for retrieving the next page of results, if available.</p>",
+        "ListProgramManagementAccountsRequest$nextToken": "<p>Token for retrieving the next page of results.</p>",
+        "ListProgramManagementAccountsResponse$nextToken": "<p>Token for retrieving the next page of results, if available.</p>",
+        "ListRelationshipsRequest$nextToken": "<p>Token for retrieving the next page of results.</p>",
+        "ListRelationshipsResponse$nextToken": "<p>Token for retrieving the next page of results, if available.</p>"
+      }
+    },
+    "Note": {
+      "base": null,
+      "refs": {
+        "RevokeServicePeriodHandshakeDetail$note": "<p>A note explaining the reason for revoking the service period.</p>",
+        "RevokeServicePeriodPayload$note": "<p>A note explaining the reason for revoking the service period.</p>",
+        "StartServicePeriodHandshakeDetail$note": "<p>A note providing additional information about the service period.</p>",
+        "StartServicePeriodPayload$note": "<p>A note providing additional information about the service period.</p>"
+      }
+    },
+    "ParticipantType": {
+      "base": null,
+      "refs": {
+        "ListChannelHandshakesRequest$participantType": "<p>Filter by participant type (sender or receiver).</p>"
+      }
+    },
+    "PartnerLedSupport": {
+      "base": "<p>Configuration for partner-led support plans.</p>",
+      "refs": {
+        "SupportPlan$partnerLedSupport": "<p>Configuration for partner-led support plans.</p>"
+      }
+    },
+    "PartnerProfileDisplayName": {
+      "base": null,
+      "refs": {
+        "ChannelHandshakeSummary$senderDisplayName": "<p>The display name of the handshake sender.</p>"
+      }
+    },
+    "Program": {
+      "base": null,
+      "refs": {
+        "CreateProgramManagementAccountRequest$program": "<p>The program type for the management account.</p>",
+        "ProgramList$member": null,
+        "ProgramManagementAccountHandshakeDetail$program": "<p>The program associated with the handshake.</p>",
+        "ProgramManagementAccountSummary$program": "<p>The program type for the management account.</p>"
+      }
+    },
+    "ProgramList": {
+      "base": null,
+      "refs": {
+        "ListProgramManagementAccountsRequest$programs": "<p>Filter by program types.</p>",
+        "ProgramManagementAccountTypeFilters$programs": "<p>Filter by program types.</p>"
+      }
+    },
+    "ProgramManagementAccountDisplayName": {
+      "base": null,
+      "refs": {
+        "CreateProgramManagementAccountRequest$displayName": "<p>A human-readable name for the program management account.</p>",
+        "ProgramManagementAccountDisplayNameList$member": null,
+        "ProgramManagementAccountSummary$displayName": "<p>The display name of the program management account.</p>",
+        "UpdateProgramManagementAccountDetail$displayName": "<p>The updated display name of the program management account.</p>",
+        "UpdateProgramManagementAccountRequest$displayName": "<p>The new display name for the program management account.</p>"
+      }
+    },
+    "ProgramManagementAccountDisplayNameList": {
+      "base": null,
+      "refs": {
+        "ListProgramManagementAccountsRequest$displayNames": "<p>Filter by display names.</p>"
+      }
+    },
+    "ProgramManagementAccountHandshakeDetail": {
+      "base": "<p>Details specific to program management account handshakes.</p>",
+      "refs": {
+        "HandshakeDetail$programManagementAccountHandshakeDetail": "<p>Details for a program management account handshake.</p>"
+      }
+    },
+    "ProgramManagementAccountId": {
+      "base": null,
+      "refs": {
+        "CreateProgramManagementAccountDetail$id": "<p>The unique identifier of the created program management account.</p>",
+        "ProgramManagementAccountSummary$id": "<p>The unique identifier of the program management account.</p>",
+        "RelationshipDetail$programManagementAccountId": "<p>The identifier of the program management account.</p>",
+        "RelationshipSummary$programManagementAccountId": "<p>The identifier of the program management account.</p>",
+        "UpdateProgramManagementAccountDetail$id": "<p>The unique identifier of the updated program management account.</p>"
+      }
+    },
+    "ProgramManagementAccountIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateRelationshipRequest$programManagementAccountIdentifier": "<p>The identifier of the program management account for this relationship.</p>",
+        "DeleteProgramManagementAccountRequest$identifier": "<p>The unique identifier of the program management account to delete.</p>",
+        "DeleteRelationshipRequest$programManagementAccountIdentifier": "<p>The identifier of the program management account associated with the relationship.</p>",
+        "GetRelationshipRequest$programManagementAccountIdentifier": "<p>The identifier of the program management account associated with the relationship.</p>",
+        "ProgramManagementAccountIdentifierList$member": null,
+        "RevokeServicePeriodPayload$programManagementAccountIdentifier": "<p>The identifier of the program management account.</p>",
+        "StartServicePeriodPayload$programManagementAccountIdentifier": "<p>The identifier of the program management account.</p>",
+        "UpdateProgramManagementAccountRequest$identifier": "<p>The unique identifier of the program management account to update.</p>",
+        "UpdateRelationshipRequest$programManagementAccountIdentifier": "<p>The identifier of the program management account associated with the relationship.</p>"
+      }
+    },
+    "ProgramManagementAccountIdentifierList": {
+      "base": null,
+      "refs": {
+        "ListRelationshipsRequest$programManagementAccountIdentifiers": "<p>Filter by program management account identifiers.</p>"
+      }
+    },
+    "ProgramManagementAccountStatus": {
+      "base": null,
+      "refs": {
+        "ProgramManagementAccountStatusList$member": null,
+        "ProgramManagementAccountSummary$status": "<p>The current status of the program management account.</p>"
+      }
+    },
+    "ProgramManagementAccountStatusList": {
+      "base": null,
+      "refs": {
+        "ListProgramManagementAccountsRequest$statuses": "<p>Filter by program management account statuses.</p>"
+      }
+    },
+    "ProgramManagementAccountSummaries": {
+      "base": null,
+      "refs": {
+        "ListProgramManagementAccountsResponse$items": "<p>List of program management accounts matching the criteria.</p>"
+      }
+    },
+    "ProgramManagementAccountSummary": {
+      "base": "<p>Summary information about a program management account.</p>",
+      "refs": {
+        "ProgramManagementAccountSummaries$member": null
+      }
+    },
+    "ProgramManagementAccountTypeFilters": {
+      "base": "<p>Type-specific filters for program management accounts.</p>",
+      "refs": {
+        "ListChannelHandshakesTypeFilters$programManagementAccountTypeFilters": "<p>Filters specific to program management account handshakes.</p>"
+      }
+    },
+    "ProgramManagementAccountTypeSort": {
+      "base": "<p>Type-specific sorting options for program management accounts.</p>",
+      "refs": {
+        "ListChannelHandshakesTypeSort$programManagementAccountTypeSort": "<p>Sorting options specific to program management account handshakes.</p>"
+      }
+    },
+    "ProgramManagementAccountTypeSortName": {
+      "base": null,
+      "refs": {
+        "ProgramManagementAccountTypeSort$sortBy": "<p>The field to sort by.</p>"
+      }
+    },
+    "Provider": {
+      "base": null,
+      "refs": {
+        "PartnerLedSupport$provider": "<p>The provider of the partner-led support.</p>"
+      }
+    },
+    "RejectChannelHandshakeDetail": {
+      "base": "<p>Contains details about a rejected channel handshake.</p>",
+      "refs": {
+        "RejectChannelHandshakeResponse$channelHandshakeDetail": "<p>Details of the rejected channel handshake.</p>"
+      }
+    },
+    "RejectChannelHandshakeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RejectChannelHandshakeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "RelationshipDetail": {
+      "base": "<p>Detailed information about a partner relationship.</p>",
+      "refs": {
+        "GetRelationshipResponse$relationshipDetail": "<p>Details of the requested relationship.</p>"
+      }
+    },
+    "RelationshipDisplayName": {
+      "base": null,
+      "refs": {
+        "CreateRelationshipRequest$displayName": "<p>A human-readable name for the relationship.</p>",
+        "RelationshipDetail$displayName": "<p>The display name of the relationship.</p>",
+        "RelationshipDisplayNameList$member": null,
+        "RelationshipSummary$displayName": "<p>The display name of the relationship.</p>",
+        "UpdateRelationshipDetail$displayName": "<p>The updated display name of the relationship.</p>",
+        "UpdateRelationshipRequest$displayName": "<p>The new display name for the relationship.</p>"
+      }
+    },
+    "RelationshipDisplayNameList": {
+      "base": null,
+      "refs": {
+        "ListRelationshipsRequest$displayNames": "<p>Filter by display names.</p>"
+      }
+    },
+    "RelationshipId": {
+      "base": null,
+      "refs": {
+        "CreateRelationshipDetail$id": "<p>The unique identifier of the created relationship.</p>",
+        "RelationshipDetail$id": "<p>The unique identifier of the relationship.</p>",
+        "RelationshipSummary$id": "<p>The unique identifier of the relationship.</p>",
+        "UpdateRelationshipDetail$id": "<p>The unique identifier of the updated relationship.</p>"
+      }
+    },
+    "RelationshipIdentifier": {
+      "base": null,
+      "refs": {
+        "DeleteRelationshipRequest$identifier": "<p>The unique identifier of the relationship to delete.</p>",
+        "GetRelationshipRequest$identifier": "<p>The unique identifier of the relationship to retrieve.</p>",
+        "UpdateRelationshipRequest$identifier": "<p>The unique identifier of the relationship to update.</p>"
+      }
+    },
+    "RelationshipSummaries": {
+      "base": null,
+      "refs": {
+        "ListRelationshipsResponse$items": "<p>List of relationships matching the criteria.</p>"
+      }
+    },
+    "RelationshipSummary": {
+      "base": "<p>Summary information about a partner relationship.</p>",
+      "refs": {
+        "RelationshipSummaries$member": null
+      }
+    },
+    "ResaleAccountModel": {
+      "base": null,
+      "refs": {
+        "CreateRelationshipRequest$resaleAccountModel": "<p>The resale account model for the relationship.</p>",
+        "RelationshipDetail$resaleAccountModel": "<p>The resale account model for the relationship.</p>"
+      }
+    },
+    "ResoldBusiness": {
+      "base": "<p>Configuration for resold business support plans.</p>",
+      "refs": {
+        "SupportPlan$resoldBusiness": "<p>Configuration for resold business support plans.</p>"
+      }
+    },
+    "ResoldEnterprise": {
+      "base": "<p>Configuration for resold enterprise support plans.</p>",
+      "refs": {
+        "SupportPlan$resoldEnterprise": "<p>Configuration for resold enterprise support plans.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The specified resource was not found.</p>",
+      "refs": {}
+    },
+    "Revision": {
+      "base": null,
+      "refs": {
+        "ProgramManagementAccountSummary$revision": "<p>The current revision number of the program management account.</p>",
+        "RelationshipDetail$revision": "<p>The current revision number of the relationship.</p>",
+        "RelationshipSummary$revision": "<p>The current revision number of the relationship.</p>",
+        "UpdateProgramManagementAccountDetail$revision": "<p>The new revision number of the program management account.</p>",
+        "UpdateProgramManagementAccountRequest$revision": "<p>The current revision number of the program management account.</p>",
+        "UpdateRelationshipDetail$revision": "<p>The new revision number of the relationship.</p>",
+        "UpdateRelationshipRequest$revision": "<p>The current revision number of the relationship.</p>"
+      }
+    },
+    "RevokeServicePeriodHandshakeDetail": {
+      "base": "<p>Details specific to revoke service period handshakes.</p>",
+      "refs": {
+        "HandshakeDetail$revokeServicePeriodHandshakeDetail": "<p>Details for a revoke service period handshake.</p>"
+      }
+    },
+    "RevokeServicePeriodPayload": {
+      "base": "<p>Payload for revoke service period handshake requests.</p>",
+      "refs": {
+        "ChannelHandshakePayload$revokeServicePeriodPayload": "<p>Payload for revoking a service period handshake.</p>"
+      }
+    },
+    "RevokeServicePeriodTypeFilters": {
+      "base": "<p>Filters specific to revoke service period handshakes.</p>",
+      "refs": {
+        "ListChannelHandshakesTypeFilters$revokeServicePeriodTypeFilters": "<p>Filters specific to revoke service period handshakes.</p>"
+      }
+    },
+    "RevokeServicePeriodTypeSort": {
+      "base": "<p>Sorting options specific to revoke service period handshakes.</p>",
+      "refs": {
+        "ListChannelHandshakesTypeSort$revokeServicePeriodTypeSort": "<p>Sorting options specific to revoke service period handshakes.</p>"
+      }
+    },
+    "RevokeServicePeriodTypeSortName": {
+      "base": null,
+      "refs": {
+        "RevokeServicePeriodTypeSort$sortBy": "<p>The field to sort by.</p>"
+      }
+    },
+    "Sector": {
+      "base": null,
+      "refs": {
+        "CreateRelationshipRequest$sector": "<p>The business sector for the relationship.</p>",
+        "RelationshipDetail$sector": "<p>The business sector for the relationship.</p>",
+        "RelationshipSummary$sector": "<p>The business sector for the relationship.</p>"
+      }
+    },
+    "ServicePeriodType": {
+      "base": null,
+      "refs": {
+        "RevokeServicePeriodHandshakeDetail$servicePeriodType": "<p>The type of service period being revoked.</p>",
+        "ServicePeriodTypeList$member": null,
+        "StartServicePeriodHandshakeDetail$servicePeriodType": "<p>The type of service period being started.</p>",
+        "StartServicePeriodPayload$servicePeriodType": "<p>The type of service period being started.</p>"
+      }
+    },
+    "ServicePeriodTypeList": {
+      "base": null,
+      "refs": {
+        "RevokeServicePeriodTypeFilters$servicePeriodTypes": "<p>Filter by service period types.</p>",
+        "StartServicePeriodTypeFilters$servicePeriodTypes": "<p>Filter by service period types.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request would exceed a service quota limit.</p>",
+      "refs": {}
+    },
+    "SortOrder": {
+      "base": null,
+      "refs": {
+        "ListProgramManagementAccountsSortBase$sortOrder": "<p>The sort order (ascending or descending).</p>",
+        "ListRelationshipsSortBase$sortOrder": "<p>The sort order (ascending or descending).</p>",
+        "ProgramManagementAccountTypeSort$sortOrder": "<p>The sort order (ascending or descending).</p>",
+        "RevokeServicePeriodTypeSort$sortOrder": "<p>The sort order (ascending or descending).</p>",
+        "StartServicePeriodTypeSort$sortOrder": "<p>The sort order (ascending or descending).</p>"
+      }
+    },
+    "StartServicePeriodHandshakeDetail": {
+      "base": "<p>Details specific to start service period handshakes.</p>",
+      "refs": {
+        "HandshakeDetail$startServicePeriodHandshakeDetail": "<p>Details for a start service period handshake.</p>"
+      }
+    },
+    "StartServicePeriodPayload": {
+      "base": "<p>Payload for start service period handshake requests.</p>",
+      "refs": {
+        "ChannelHandshakePayload$startServicePeriodPayload": "<p>Payload for starting a service period handshake.</p>"
+      }
+    },
+    "StartServicePeriodTypeFilters": {
+      "base": "<p>Filters specific to start service period handshakes.</p>",
+      "refs": {
+        "ListChannelHandshakesTypeFilters$startServicePeriodTypeFilters": "<p>Filters specific to start service period handshakes.</p>"
+      }
+    },
+    "StartServicePeriodTypeSort": {
+      "base": "<p>Sorting options specific to start service period handshakes.</p>",
+      "refs": {
+        "ListChannelHandshakesTypeSort$startServicePeriodTypeSort": "<p>Sorting options specific to start service period handshakes.</p>"
+      }
+    },
+    "StartServicePeriodTypeSortName": {
+      "base": null,
+      "refs": {
+        "StartServicePeriodTypeSort$sortBy": "<p>The field to sort by.</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": "<p>A message describing the access denial.</p>",
+        "AccessDeniedException$reason": "<p>The reason for the access denial.</p>",
+        "ConflictException$message": "<p>A message describing the conflict.</p>",
+        "ConflictException$resourceId": "<p>The identifier of the resource that caused the conflict.</p>",
+        "ConflictException$resourceType": "<p>The type of the resource that caused the conflict.</p>",
+        "InternalServerException$message": "<p>A message describing the internal server error.</p>",
+        "PartnerLedSupport$tamLocation": "<p>The location of the Technical Account Manager (TAM).</p>",
+        "ResoldEnterprise$tamLocation": "<p>The location of the Technical Account Manager (TAM).</p>",
+        "ResourceNotFoundException$message": "<p>A message describing the resource not found error.</p>",
+        "ResourceNotFoundException$resourceId": "<p>The identifier of the resource that was not found.</p>",
+        "ResourceNotFoundException$resourceType": "<p>The type of the resource that was not found.</p>",
+        "ServiceQuotaExceededException$message": "<p>A message describing the service quota exceeded error.</p>",
+        "ServiceQuotaExceededException$resourceId": "<p>The identifier of the resource that would exceed the quota.</p>",
+        "ServiceQuotaExceededException$resourceType": "<p>The type of the resource that would exceed the quota.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>The code identifying the specific quota that would be exceeded.</p>",
+        "ThrottlingException$message": "<p>A message describing the throttling error.</p>",
+        "ThrottlingException$serviceCode": "<p>The service code associated with the throttling error.</p>",
+        "ThrottlingException$quotaCode": "<p>The quota code associated with the throttling error.</p>",
+        "ValidationException$message": "<p>A message describing the validation error.</p>",
+        "ValidationExceptionField$name": "<p>The name of the field that failed validation.</p>",
+        "ValidationExceptionField$code": "<p>The validation error code for the field.</p>",
+        "ValidationExceptionField$message": "<p>A descriptive message about the validation error.</p>"
+      }
+    },
+    "SupportPlan": {
+      "base": "<p>Configuration for different types of support plans.</p>",
+      "refs": {
+        "CreateRelationshipRequest$requestedSupportPlan": "<p>The support plan requested for this relationship.</p>",
+        "UpdateRelationshipRequest$requestedSupportPlan": "<p>The updated support plan for the relationship.</p>"
+      }
+    },
+    "Tag": {
+      "base": "<p>A key-value pair that can be associated with a resource.</p>",
+      "refs": {
+        "TagList$member": null
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "Tag$key": "<p>The key of the tag.</p>",
+        "TagKeyList$member": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p>The keys of the tags to remove from the resource.</p>"
+      }
+    },
+    "TagList": {
+      "base": null,
+      "refs": {
+        "CreateChannelHandshakeRequest$tags": "<p>Key-value pairs to associate with the channel handshake.</p>",
+        "CreateProgramManagementAccountRequest$tags": "<p>Key-value pairs to associate with the program management account.</p>",
+        "CreateRelationshipRequest$tags": "<p>Key-value pairs to associate with the relationship.</p>",
+        "ListTagsForResourceResponse$tags": "<p>Key-value pairs associated with the resource.</p>",
+        "TagResourceRequest$tags": "<p>Key-value pairs to associate with the resource.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "Tag$value": "<p>The value of the tag.</p>"
+      }
+    },
+    "TaggableArn": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to list tags for.</p>",
+        "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to tag.</p>",
+        "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to remove tags from.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was throttled due to too many requests being sent in a short period.</p>",
+      "refs": {}
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProgramManagementAccountDetail": {
+      "base": "<p>Contains details about an updated program management account.</p>",
+      "refs": {
+        "UpdateProgramManagementAccountResponse$programManagementAccountDetail": "<p>Details of the updated program management account.</p>"
+      }
+    },
+    "UpdateProgramManagementAccountRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProgramManagementAccountResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRelationshipDetail": {
+      "base": "<p>Contains details about an updated relationship.</p>",
+      "refs": {
+        "UpdateRelationshipResponse$relationshipDetail": "<p>Details of the updated relationship.</p>"
+      }
+    },
+    "UpdateRelationshipRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRelationshipResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ValidationException": {
+      "base": "<p>The request failed validation due to invalid input parameters.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Information about a field that failed validation.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": "<p>A list of fields that failed validation.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": "<p>The reason for the validation failure.</p>"
+      }
+    }
+  }
+}

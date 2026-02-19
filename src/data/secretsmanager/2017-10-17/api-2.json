@@ -459,7 +459,8 @@
         "SecretString":{"shape":"SecretStringType"},
         "Tags":{"shape":"TagListType"},
         "AddReplicaRegions":{"shape":"AddReplicaRegionListType"},
-        "ForceOverwriteReplicaSecret":{"shape":"BooleanType"}
+        "ForceOverwriteReplicaSecret":{"shape":"BooleanType"},
+        "Type":{"shape":"MedeaTypeType"}
       }
     },
     "CreateSecretResponse":{
@@ -533,6 +534,7 @@
       "members":{
         "ARN":{"shape":"SecretARNType"},
         "Name":{"shape":"SecretNameType"},
+        "Type":{"shape":"MedeaTypeType"},
         "Description":{"shape":"DescriptionType"},
         "KmsKeyId":{"shape":"KmsKeyIdType"},
         "RotationEnabled":{
@@ -541,6 +543,8 @@
         },
         "RotationLambdaARN":{"shape":"RotationLambdaARNType"},
         "RotationRules":{"shape":"RotationRulesType"},
+        "ExternalSecretRotationMetadata":{"shape":"ExternalSecretRotationMetadataType"},
+        "ExternalSecretRotationRoleArn":{"shape":"RoleARNType"},
         "LastRotatedDate":{
           "shape":"LastRotatedDateType",
           "box":true
@@ -577,7 +581,7 @@
       "type":"string",
       "max":3,
       "min":2,
-      "pattern":"[0-9h]+"
+      "pattern":"[0-9]+h"
     },
     "EncryptionFailure":{
       "type":"structure",
@@ -597,6 +601,27 @@
     "ExcludeNumbersType":{"type":"boolean"},
     "ExcludePunctuationType":{"type":"boolean"},
     "ExcludeUppercaseType":{"type":"boolean"},
+    "ExternalSecretRotationMetadataItem":{
+      "type":"structure",
+      "members":{
+        "Key":{"shape":"ExternalSecretRotationMetadataItemKeyType"},
+        "Value":{"shape":"ExternalSecretRotationMetadataItemValueType"}
+      }
+    },
+    "ExternalSecretRotationMetadataItemKeyType":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ExternalSecretRotationMetadataItemValueType":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ExternalSecretRotationMetadataType":{
+      "type":"list",
+      "member":{"shape":"ExternalSecretRotationMetadataItem"}
+    },
     "Filter":{
       "type":"structure",
       "members":{
@@ -798,7 +823,8 @@
         },
         "NextToken":{"shape":"NextTokenType"},
         "Filters":{"shape":"FiltersListType"},
-        "SortOrder":{"shape":"SortOrderType"}
+        "SortOrder":{"shape":"SortOrderType"},
+        "SortBy":{"shape":"SortByType"}
       }
     },
     "ListSecretsResponse":{
@@ -825,6 +851,11 @@
       "type":"integer",
       "max":100,
       "min":1
+    },
+    "MedeaTypeType":{
+      "type":"string",
+      "max":256,
+      "min":0
     },
     "NameType":{
       "type":"string",
@@ -1017,6 +1048,11 @@
         "Name":{"shape":"SecretNameType"}
       }
     },
+    "RoleARNType":{
+      "type":"string",
+      "max":2048,
+      "min":20
+    },
     "RotateSecretRequest":{
       "type":"structure",
       "required":["SecretId"],
@@ -1028,6 +1064,8 @@
         },
         "RotationLambdaARN":{"shape":"RotationLambdaARNType"},
         "RotationRules":{"shape":"RotationRulesType"},
+        "ExternalSecretRotationMetadata":{"shape":"ExternalSecretRotationMetadataType"},
+        "ExternalSecretRotationRoleArn":{"shape":"RoleARNType"},
         "RotateImmediately":{
           "shape":"BooleanType",
           "box":true
@@ -1102,6 +1140,7 @@
       "members":{
         "ARN":{"shape":"SecretARNType"},
         "Name":{"shape":"SecretNameType"},
+        "Type":{"shape":"MedeaTypeType"},
         "Description":{"shape":"DescriptionType"},
         "KmsKeyId":{"shape":"KmsKeyIdType"},
         "RotationEnabled":{
@@ -1110,6 +1149,8 @@
         },
         "RotationLambdaARN":{"shape":"RotationLambdaARNType"},
         "RotationRules":{"shape":"RotationRulesType"},
+        "ExternalSecretRotationMetadata":{"shape":"ExternalSecretRotationMetadataType"},
+        "ExternalSecretRotationRoleArn":{"shape":"RoleARNType"},
         "LastRotatedDate":{
           "shape":"LastRotatedDateType",
           "box":true
@@ -1209,6 +1250,15 @@
       "key":{"shape":"SecretVersionIdType"},
       "value":{"shape":"SecretVersionStagesType"}
     },
+    "SortByType":{
+      "type":"string",
+      "enum":[
+        "created-date",
+        "last-accessed-date",
+        "last-changed-date",
+        "name"
+      ]
+    },
     "SortOrderType":{
       "type":"string",
       "enum":[
@@ -1302,7 +1352,8 @@
         "Description":{"shape":"DescriptionType"},
         "KmsKeyId":{"shape":"KmsKeyIdType"},
         "SecretBinary":{"shape":"SecretBinaryType"},
-        "SecretString":{"shape":"SecretStringType"}
+        "SecretString":{"shape":"SecretStringType"},
+        "Type":{"shape":"MedeaTypeType"}
       }
     },
     "UpdateSecretResponse":{

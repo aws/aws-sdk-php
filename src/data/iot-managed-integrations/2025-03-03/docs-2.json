@@ -64,10 +64,10 @@
     "ListOtaTasks": "<p>List all of the over-the-air (OTA) tasks.</p>",
     "ListProvisioningProfiles": "<p>List the provisioning profiles within the Amazon Web Services account.</p>",
     "ListSchemaVersions": "<p>Lists schema versions with the provided information.</p>",
-    "ListTagsForResource": "<p>List tags for the specified resource.</p>",
+    "ListTagsForResource": "<p>Lists the tags for a specified resource.</p>",
     "PutDefaultEncryptionConfiguration": "<p>Sets the default encryption configuration for the Amazon Web Services account. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/key-management.html\">Key management</a> in the AWS IoT SiteWise User Guide.</p>",
     "PutHubConfiguration": "<p>Update a hub configuration.</p>",
-    "PutRuntimeLogConfiguration": "<p>Set the runtime log configuration for a specific managed thing or for all managed things as a group.</p>",
+    "PutRuntimeLogConfiguration": "<p>Set the runtime log configuration for a specific managed thing.</p>",
     "RegisterAccountAssociation": "<p>Registers an account association with a managed thing, establishing a connection between a device and a third-party account.</p>",
     "RegisterCustomEndpoint": "<p>Customers can request IoT managed integrations to manage the server trust for them or bring their own external server trusts for the custom domain. Returns an IoT managed integrations endpoint.</p>",
     "ResetRuntimeLogConfiguration": "<p>Reset a runtime log configuration for a specific managed thing.</p>",
@@ -75,8 +75,8 @@
     "SendManagedThingCommand": "<p>Send the command to the device represented by the managed thing. </p>",
     "StartAccountAssociationRefresh": "<p>Initiates a refresh of an existing account association to update its authorization and connection status.</p>",
     "StartDeviceDiscovery": "<p> This API is used to start device discovery for hub-connected and third-party-connected devices. The authentication material (install code) is delivered as a message to the controller instructing it to start the discovery.</p>",
-    "TagResource": "<p>Add tags for the specified resource.</p>",
-    "UntagResource": "<p>Remove tags for the specified resource.</p>",
+    "TagResource": "<p>Adds tags to a specified resource.</p>",
+    "UntagResource": "<p>Removes tags from a specified resource.</p>",
     "UpdateAccountAssociation": "<p>Updates the properties of an existing account association.</p>",
     "UpdateCloudConnector": "<p>Update an existing cloud connector.</p>",
     "UpdateConnectorDestination": "<p>Updates the properties of an existing connector destination.</p>",
@@ -113,8 +113,7 @@
     },
     "AccessDeniedException": {
       "base": "<p>User is not authorized.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountAssociationArn": {
       "base": null,
@@ -240,10 +239,23 @@
         "UpdateConnectorDestinationRequest$AuthConfig": "<p>The updated authentication configuration details for the connector destination.</p>"
       }
     },
+    "AuthMaterial": {
+      "base": "<p>The authorization material containing the Secrets Manager arn and version.</p>",
+      "refs": {
+        "AuthMaterials$member": null
+      }
+    },
+    "AuthMaterialName": {
+      "base": null,
+      "refs": {
+        "AuthMaterial$AuthMaterialName": "<p>The name of the authorization material.</p>",
+        "GeneralAuthorizationName$AuthMaterialName": "<p>The name of the authorization material.</p>"
+      }
+    },
     "AuthMaterialString": {
       "base": null,
       "refs": {
-        "CreateManagedThingRequest$AuthenticationMaterial": "<p>The authentication material defining the device connectivity setup requests. The authentication materials used are the device bar code.</p>",
+        "CreateManagedThingRequest$AuthenticationMaterial": "<p>The authentication material defining the device connectivity setup requests. The authorization materials used are the device bar code.</p>",
         "DiscoveredDeviceSummary$AuthenticationMaterial": "<p>The authentication material required for connecting to the discovered device, such as credentials or tokens.</p>"
       }
     },
@@ -251,6 +263,14 @@
       "base": null,
       "refs": {
         "CreateManagedThingRequest$AuthenticationMaterialType": "<p>The type of authentication material used for device connectivity setup requests.</p>"
+      }
+    },
+    "AuthMaterials": {
+      "base": null,
+      "refs": {
+        "AuthConfig$GeneralAuthorization": "<p>The authorization materials for General Authorization.</p>",
+        "GeneralAuthorizationUpdate$AuthMaterialsToAdd": "<p>The authorization materials to add.</p>",
+        "GeneralAuthorizationUpdate$AuthMaterialsToUpdate": "<p>The authorization materials to update.</p>"
       }
     },
     "AuthType": {
@@ -433,6 +453,7 @@
     "ClaimCertificate": {
       "base": null,
       "refs": {
+        "CreateProvisioningProfileRequest$ClaimCertificate": "<p>The claim certificate.</p>",
         "CreateProvisioningProfileResponse$ClaimCertificate": "<p>The id of the claim certificate.</p>",
         "GetProvisioningProfileResponse$ClaimCertificate": "<p>The id of the claim certificate.</p>"
       }
@@ -566,8 +587,7 @@
     },
     "ConflictException": {
       "base": "<p>There is a conflict with the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConnectivityStatus": {
       "base": null,
@@ -640,12 +660,19 @@
     "ConnectorDeviceId": {
       "base": null,
       "refs": {
+        "ConnectorDeviceIdList$member": null,
         "Device$ConnectorDeviceId": "<p>The device id as defined by the connector.</p> <note> <p>This parameter is used for cloud-to-cloud devices only.</p> </note>",
         "DiscoveredDeviceSummary$ConnectorDeviceId": "<p>The third-party device identifier as defined by the connector. This identifier must not contain personal identifiable information (PII).</p>",
         "GetManagedThingResponse$ConnectorDeviceId": "<p>The third-party device id as defined by the connector. This device id must not contain personal identifiable information (PII).</p> <note> <p>This parameter is used for cloud-to-cloud devices only.</p> </note>",
         "ListManagedThingsRequest$ConnectorDeviceIdFilter": "<p>Filter managed things by the connector device ID they are associated with. When specified, only managed things with this connector device ID will be returned.</p>",
         "ManagedThingSummary$ConnectorDeviceId": "<p>The third-party device id as defined by the connector. This device id must not contain personal identifiable information (PII).</p> <note> <p>This parameter is used for cloud-to-cloud devices only.</p> </note>",
         "SendConnectorEventRequest$ConnectorDeviceId": "<p>The third-party device id as defined by the connector. This device id must not contain personal identifiable information (PII).</p> <note> <p>This parameter is used for cloud-to-cloud devices only.</p> </note>"
+      }
+    },
+    "ConnectorDeviceIdList": {
+      "base": null,
+      "refs": {
+        "StartDeviceDiscoveryRequest$ConnectorDeviceIdList": "<p>Used as a filter for PLA discoveries.</p>"
       }
     },
     "ConnectorDeviceName": {
@@ -708,113 +735,91 @@
     },
     "CreateAccountAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAccountAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCloudConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCloudConnectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectorDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectorDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCredentialLockerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCredentialLockerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEventLogConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEventLogConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateManagedThingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateManagedThingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNotificationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNotificationConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateOtaTaskConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateOtaTaskConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateOtaTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateOtaTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProvisioningProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProvisioningProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatedAt": {
       "base": null,
@@ -900,33 +905,27 @@
     },
     "DeleteAccountAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCloudConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConnectorDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCredentialLockerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEventLogConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLocalStoreAfterUpload": {
       "base": null,
@@ -936,28 +935,23 @@
     },
     "DeleteManagedThingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteNotificationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteOtaTaskConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteOtaTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProvisioningProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeliveryDestinationArn": {
       "base": null,
@@ -988,8 +982,7 @@
     },
     "DeregisterAccountAssociationRequest": {
       "base": "<p>Request for deregister a managed thing from account association</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DestinationCreatedAt": {
       "base": null,
@@ -1202,6 +1195,18 @@
         "ScheduleMaintenanceWindow$DurationInMinutes": "<p>Displays the duration of the next maintenance window.</p>"
       }
     },
+    "EnableAsProvisionee": {
+      "base": null,
+      "refs": {
+        "WiFiSimpleSetupConfiguration$EnableAsProvisionee": "<p>Indicates whether the device can act as a provisionee in Wi-Fi Simple Setup, allowing it to be configured by other devices.</p>"
+      }
+    },
+    "EnableAsProvisioner": {
+      "base": null,
+      "refs": {
+        "WiFiSimpleSetupConfiguration$EnableAsProvisioner": "<p>Indicates whether the device can act as a provisioner in Wi-Fi Simple Setup, allowing it to configure other devices.</p>"
+      }
+    },
     "EncryptionType": {
       "base": null,
       "refs": {
@@ -1335,225 +1340,194 @@
         "CapabilitySchemaItem$ExtrinsicId": "<p>The external identifier for the capability, used when referencing the capability outside of the AWS ecosystem.</p>"
       }
     },
+    "GeneralAuthorizationName": {
+      "base": "<p>The General Authorization reference by authorization material name.</p>",
+      "refs": {
+        "CreateAccountAssociationRequest$GeneralAuthorization": "<p>The General Authorization reference by authorization material name.</p>",
+        "GetAccountAssociationResponse$GeneralAuthorization": "<p>The General Authorization reference by authorization material name.</p>"
+      }
+    },
+    "GeneralAuthorizationUpdate": {
+      "base": "<p>The General Authorization update information containing authorization materials to add or update.</p>",
+      "refs": {
+        "AuthConfigUpdate$GeneralAuthorizationUpdate": "<p>The General Authorization update information containing authorization materials to add or update in Kinesis Data Streams.</p>"
+      }
+    },
     "GetAccountAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAccountAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCloudConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCloudConnectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectorDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectorDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCredentialLockerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCredentialLockerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCustomEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCustomEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDefaultEncryptionConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDefaultEncryptionConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeviceDiscoveryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeviceDiscoveryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEventLogConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEventLogConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetHubConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetHubConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedThingCapabilitiesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedThingCapabilitiesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedThingCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedThingCertificateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedThingConnectivityDataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedThingConnectivityDataResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedThingMetaDataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedThingMetaDataResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedThingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedThingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedThingStateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedThingStateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNotificationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNotificationConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOtaTaskConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOtaTaskConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOtaTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOtaTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProvisioningProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProvisioningProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRuntimeLogConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRuntimeLogConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSchemaVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSchemaVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HubConfigurationUpdatedAt": {
       "base": null,
@@ -1603,13 +1577,11 @@
     },
     "InternalFailureException": {
       "base": "<p>An unexpected error has occurred.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalServerException": {
       "base": "<p>Internal error from the service that indicates an unexpected error or that the service is unavailable.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InternationalArticleNumber": {
       "base": null,
@@ -1619,15 +1591,14 @@
     },
     "InvalidRequestException": {
       "base": "<p>The request is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IoTManagedIntegrationsResourceARN": {
       "base": null,
       "refs": {
-        "ListTagsForResourceRequest$ResourceArn": "<p>The ARN of the resource for which to list tags.</p>",
-        "TagResourceRequest$ResourceArn": "<p>The ARN of the resource to which to add tags.</p>",
-        "UntagResourceRequest$ResourceArn": "<p>The ARN of the resource to which to add tags.</p>"
+        "ListTagsForResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to list tags.</p>",
+        "TagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource to which to add tags.</p>",
+        "UntagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource from which to remove tags.</p>"
       }
     },
     "KmsKeyArn": {
@@ -1661,188 +1632,151 @@
     },
     "LimitExceededException": {
       "base": "<p>The request exceeds a service limit or quota. Adjust your request parameters and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccountAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccountAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCloudConnectorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCloudConnectorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConnectorDestinationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConnectorDestinationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCredentialLockersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCredentialLockersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDestinationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDestinationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDeviceDiscoveriesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDeviceDiscoveriesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDiscoveredDevicesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDiscoveredDevicesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventLogConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventLogConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedThingAccountAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedThingAccountAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedThingSchemasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedThingSchemasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedThingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedThingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNotificationConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNotificationConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOtaTaskConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOtaTaskConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOtaTaskExecutionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOtaTaskExecutionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOtaTasksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOtaTasksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProvisioningProfilesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProvisioningProfilesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSchemaVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSchemaVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LocalStoreFileRotationMaxBytes": {
       "base": null,
@@ -1910,6 +1844,12 @@
         "ListManagedThingAccountAssociationsResponse$Items": "<p>The list of managed thing associations that match the specified criteria, including the managed thing ID and account association ID for each association.</p>"
       }
     },
+    "ManagedThingAssociationStatus": {
+      "base": null,
+      "refs": {
+        "ManagedThingAssociation$ManagedThingAssociationStatus": "<p>The status of the registration between the managed thing and the account association. Indicates whether the device is pre-associated or fully associated with the account association.</p>"
+      }
+    },
     "ManagedThingId": {
       "base": null,
       "refs": {
@@ -1942,6 +1882,7 @@
         "ResetRuntimeLogConfigurationRequest$ManagedThingId": "<p>The id of a managed thing.</p>",
         "SendManagedThingCommandRequest$ManagedThingId": "<p>The id of the device.</p>",
         "StartDeviceDiscoveryRequest$ControllerIdentifier": "<p>The id of the end-user's IoT hub.</p>",
+        "StartDeviceDiscoveryRequest$EndDeviceIdentifier": "<p>The unique id of the end device for capability rediscovery.</p> <note> <p>This parameter is only available when the discovery type is CONTROLLER_CAPABILITY_REDISCOVERY.</p> </note>",
         "UpdateManagedThingRequest$Identifier": "<p>The id of the managed thing.</p>"
       }
     },
@@ -2281,12 +2222,12 @@
         "RolloutRateIncreaseCriteria$numberOfSucceededThings": "<p>The threshold for number of succeeded things that will initiate the increase in rate of rollout.</p>"
       }
     },
-    "OAuthAuthorizationUrl": {
+    "OAuthAuthorizationUrlOutput": {
       "base": null,
       "refs": {
-        "CreateAccountAssociationResponse$OAuthAuthorizationUrl": "<p>Third-party IoT platform OAuth authorization server URL backed with all the required parameters to perform end-user authentication.</p>",
-        "GetAccountAssociationResponse$OAuthAuthorizationUrl": "<p>Third party IoT platform OAuth authorization server URL backed with all the required parameters to perform end-user authentication.</p>",
-        "StartAccountAssociationRefreshResponse$OAuthAuthorizationUrl": "<p>Third-party IoT platform OAuth authorization server URL with all required parameters to perform end-user authentication during the refresh process.</p>"
+        "CreateAccountAssociationResponse$OAuthAuthorizationUrl": "<p>Third-party IoT platform OAuth authorization server URL backed with all the required parameters to perform end-user authentication. This field will be empty when using General Authorization flows that do not require OAuth.</p>",
+        "GetAccountAssociationResponse$OAuthAuthorizationUrl": "<p>Third party IoT platform OAuth authorization server URL backed with all the required parameters to perform end-user authentication. This field will be empty when using General Authorization flows that do not require OAuth.</p>",
+        "StartAccountAssociationRefreshResponse$OAuthAuthorizationUrl": "<p>Third-party IoT platform OAuth authorization server URL with all required parameters to perform end-user authentication during the refresh process. This field will be empty when using General Authorization flows that do not require OAuth.</p>"
       }
     },
     "OAuthCompleteRedirectUrl": {
@@ -2521,6 +2462,12 @@
         "CapabilityReportProperties$member": null
       }
     },
+    "ProtocolType": {
+      "base": null,
+      "refs": {
+        "StartDeviceDiscoveryRequest$Protocol": "<p>The protocol type for capability rediscovery (ZWAVE, ZIGBEE, or CUSTOM).</p> <note> <p>This parameter is only available when the discovery type is CONTROLLER_CAPABILITY_REDISCOVERY.</p> </note>"
+      }
+    },
     "ProvisioningProfileArn": {
       "base": null,
       "refs": {
@@ -2563,9 +2510,9 @@
     "ProvisioningStatus": {
       "base": null,
       "refs": {
-        "GetManagedThingResponse$ProvisioningStatus": "<p>The provisioning status of the device in the provisioning workflow for onboarding to IoT managed integrations.</p>",
-        "ListManagedThingsRequest$ProvisioningStatusFilter": "<p>Filter on the status of the device.</p>",
-        "ManagedThingSummary$ProvisioningStatus": "<p>The provisioning status of the device in the provisioning workflow for onboarding to IoT managed integrations.</p>"
+        "GetManagedThingResponse$ProvisioningStatus": "<p>The provisioning status of the device in the provisioning workflow for onboarding to IoT managed integrations. For more information, see <a href=\"https://docs.aws.amazon.com/iot-mi/latest/devguide/device-provisioning.html\">Device Provisioning</a>.</p>",
+        "ListManagedThingsRequest$ProvisioningStatusFilter": "<p>Filter on the status of the device. For more information, see <a href=\"https://docs.aws.amazon.com/iot-mi/latest/devguide/device-provisioning.html\">Device Provisioning</a>.</p>",
+        "ManagedThingSummary$ProvisioningStatus": "<p>The provisioning status of the device in the provisioning workflow for onboarding to IoT managed integrations. For more information, see <a href=\"https://docs.aws.amazon.com/iot-mi/latest/devguide/device-provisioning.html\">Device Provisioning</a>.</p>"
       }
     },
     "ProvisioningType": {
@@ -2586,28 +2533,23 @@
     },
     "PutDefaultEncryptionConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDefaultEncryptionConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutHubConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutHubConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRuntimeLogConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueuedAt": {
       "base": null,
@@ -2617,33 +2559,27 @@
     },
     "RegisterAccountAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterAccountAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterCustomEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterCustomEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResetRuntimeLogConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RetryAttempt": {
       "base": null,
@@ -2809,6 +2745,7 @@
     "SecretsManager": {
       "base": "<p>Configuration for AWS Secrets Manager, used to securely store and manage sensitive information for connector destinations.</p>",
       "refs": {
+        "AuthMaterial$SecretsManager": null,
         "CreateConnectorDestinationRequest$SecretsManager": "<p>The AWS Secrets Manager configuration used to securely store and manage sensitive information for the connector destination.</p>",
         "GetConnectorDestinationResponse$SecretsManager": "<p>The AWS Secrets Manager configuration used to securely store and manage sensitive information for the connector destination.</p>",
         "UpdateConnectorDestinationRequest$SecretsManager": "<p>The updated AWS Secrets Manager configuration for the connector destination.</p>"
@@ -2828,23 +2765,19 @@
     },
     "SendConnectorEventRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendConnectorEventResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendManagedThingCommandRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendManagedThingCommandResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SerialNumber": {
       "base": null,
@@ -2858,13 +2791,11 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The service quota has been exceeded for this request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceUnavailableException": {
       "base": "<p>The service is temporarily unavailable.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SetupAt": {
       "base": null,
@@ -2897,23 +2828,19 @@
     },
     "StartAccountAssociationRefreshRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAccountAssociationRefreshResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartDeviceDiscoveryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartDeviceDiscoveryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTime": {
       "base": null,
@@ -2976,13 +2903,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -3010,7 +2935,7 @@
         "GetProvisioningProfileResponse$Tags": "<p>A set of key/value pairs that are used to manage the provisioning profile.</p>",
         "ListTagsForResourceResponse$tags": "<p>A set of key/value pairs that are used to manage the resource.</p>",
         "StartDeviceDiscoveryRequest$Tags": "<p>A set of key/value pairs that are used to manage the device discovery request.</p>",
-        "TagResourceRequest$Tags": "<p>A set of key/value pairs that are used to manage the resource</p>"
+        "TagResourceRequest$Tags": "<p>A set of key/value pairs that are used to manage the resource.</p>"
       }
     },
     "Target": {
@@ -3041,7 +2966,12 @@
     },
     "ThrottlingException": {
       "base": "<p>The rate exceeds the limit.</p>",
+      "refs": {}
+    },
+    "TimeoutInMinutes": {
+      "base": null,
       "refs": {
+        "WiFiSimpleSetupConfiguration$TimeoutInMinutes": "<p>The timeout duration in minutes for Wi-Fi Simple Setup. Valid range is 5 to 15 minutes.</p>"
       }
     },
     "TokenEndpointAuthenticationScheme": {
@@ -3065,8 +2995,7 @@
     },
     "UnauthorizedException": {
       "base": "<p>You are not authorized to perform this operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UniversalProductCode": {
       "base": null,
@@ -3076,53 +3005,43 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccountAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCloudConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConnectorDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEventLogConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateManagedThingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNotificationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOtaTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatedAt": {
       "base": null,
@@ -3144,14 +3063,21 @@
     },
     "ValidationException": {
       "base": "<p>A validation error occurred when performing the API request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationSchema": {
       "base": null,
       "refs": {
         "CapabilitySchemaItem$Schema": "<p>The actual schema definition that describes the capability's properties, actions, and events.</p>",
         "ManagedThingSchemaListItem$Schema": "<p>The validation schema for one schema item associated with a managed thing.</p>"
+      }
+    },
+    "WiFiSimpleSetupConfiguration": {
+      "base": "<p>The Wi-Fi Simple Setup configuration for the managed thing, which defines provisioning capabilities and timeout settings.</p>",
+      "refs": {
+        "CreateManagedThingRequest$WiFiSimpleSetupConfiguration": "<p>The Wi-Fi Simple Setup configuration for the managed thing, which defines provisioning capabilities and timeout settings.</p>",
+        "GetManagedThingResponse$WiFiSimpleSetupConfiguration": "<p>The Wi-Fi Simple Setup configuration for the managed thing, which defines provisioning capabilities and timeout settings.</p>",
+        "UpdateManagedThingRequest$WiFiSimpleSetupConfiguration": "<p>The Wi-Fi Simple Setup configuration for the managed thing, which defines provisioning capabilities and timeout settings.</p>"
       }
     }
   }

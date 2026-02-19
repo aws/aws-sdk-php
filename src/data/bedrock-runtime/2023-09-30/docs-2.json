@@ -31,6 +31,12 @@
         "ToolChoice$any": "<p>The model must request at least one tool (no text is generated).</p>"
       }
     },
+    "AppliedGuardrailDetails": {
+      "base": "<p>Details about the specific guardrail that was applied during this assessment, including its identifier, version, ARN, origin, and ownership information.</p>",
+      "refs": {
+        "GuardrailAssessment$appliedGuardrailDetails": null
+      }
+    },
     "ApplyGuardrailRequest": {
       "base": null,
       "refs": {}
@@ -101,6 +107,30 @@
         "AsyncInvokeSummaries$member": null
       }
     },
+    "AudioBlock": {
+      "base": "<p>An audio content block that contains audio data in various supported formats.</p>",
+      "refs": {
+        "ContentBlock$audio": "<p>An audio content block containing audio data in the conversation.</p>"
+      }
+    },
+    "AudioFormat": {
+      "base": null,
+      "refs": {
+        "AudioBlock$format": "<p>The format of the audio data, such as MP3, WAV, FLAC, or other supported audio formats.</p>"
+      }
+    },
+    "AudioSource": {
+      "base": "<p>The source of audio data, which can be provided either as raw bytes or a reference to an S3 location.</p>",
+      "refs": {
+        "AudioBlock$source": "<p>The source of the audio data, which can be provided as raw bytes or an S3 location.</p>"
+      }
+    },
+    "AudioSourceBytesBlob": {
+      "base": null,
+      "refs": {
+        "AudioSource$bytes": "<p>Audio data encoded in base64.</p>"
+      }
+    },
     "AutoToolChoice": {
       "base": "<p>The Model automatically decides if a tool should be called or whether to generate text instead. For example, <code>{\"auto\" : {}}</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Call a tool with the Converse API</a> in the Amazon Bedrock User Guide</p>",
       "refs": {
@@ -151,7 +181,26 @@
         "GuardrailManagedWord$detected": "<p>Indicates whether managed word content that breaches the guardrail configuration is detected.</p>",
         "GuardrailPiiEntityFilter$detected": "<p>Indicates whether personally identifiable information (PII) that breaches the guardrail configuration is detected.</p>",
         "GuardrailRegexFilter$detected": "<p>Indicates whether custom regex entities that breach the guardrail configuration are detected.</p>",
-        "GuardrailTopic$detected": "<p>Indicates whether topic content that breaches the guardrail configuration is detected.</p>"
+        "GuardrailTopic$detected": "<p>Indicates whether topic content that breaches the guardrail configuration is detected.</p>",
+        "ToolSpecification$strict": "<p>Flag to enable structured output enforcement on a tool usage response.</p>"
+      }
+    },
+    "CacheDetail": {
+      "base": "<p>Cache creation metrics for a specific TTL duration</p>",
+      "refs": {
+        "CacheDetailsList$member": null
+      }
+    },
+    "CacheDetailInputTokensInteger": {
+      "base": null,
+      "refs": {
+        "CacheDetail$inputTokens": "<p>Number of tokens written to cache with this TTL (cache creation tokens)</p>"
+      }
+    },
+    "CacheDetailsList": {
+      "base": "<p>List of cache details by TTL</p>",
+      "refs": {
+        "TokenUsage$cacheDetails": "<p>Detailed breakdown of cache writes by TTL. Empty if no cache creation occurred. Sorted by TTL duration (1h before 5m).</p>"
       }
     },
     "CachePointBlock": {
@@ -166,6 +215,13 @@
       "base": null,
       "refs": {
         "CachePointBlock$type": "<p>Specifies the type of cache point within the CachePointBlock.</p>"
+      }
+    },
+    "CacheTTL": {
+      "base": "<p>Time-to-live duration for ephemeral cache entries</p>",
+      "refs": {
+        "CacheDetail$ttl": "<p>TTL duration for these cached tokens</p>",
+        "CachePointBlock$ttl": "<p>Optional TTL duration for cache entries. When specified, enables extended TTL caching with the specified duration. When omitted, uses <code>type</code> value for caching behavior.</p>"
       }
     },
     "Citation": {
@@ -226,7 +282,8 @@
     "CitationsConfig": {
       "base": "<p>Configuration settings for enabling and controlling document citations in Converse API responses. When enabled, the model can include citation information that links generated content back to specific source documents.</p>",
       "refs": {
-        "DocumentBlock$citations": "<p>Configuration settings that control how citations should be generated for this specific document.</p>"
+        "DocumentBlock$citations": "<p>Configuration settings that control how citations should be generated for this specific document.</p>",
+        "SearchResultBlock$citations": "<p>Configuration setting for citations</p>"
       }
     },
     "CitationsContentBlock": {
@@ -409,8 +466,10 @@
         "ConverseRequest$additionalModelRequestFields": "<p>Additional inference parameters that the model supports, beyond the base set of inference parameters that <code>Converse</code> and <code>ConverseStream</code> support in the <code>inferenceConfig</code> field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Model parameters</a>.</p>",
         "ConverseResponse$additionalModelResponseFields": "<p>Additional fields in the response that are unique to the model. </p>",
         "ConverseStreamRequest$additionalModelRequestFields": "<p>Additional inference parameters that the model supports, beyond the base set of inference parameters that <code>Converse</code> and <code>ConverseStream</code> support in the <code>inferenceConfig</code> field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Model parameters</a>.</p>",
+        "ConverseTokensRequest$additionalModelRequestFields": "<p>The additionalModelRequestFields of Converse input request to count tokens for. Use this field when you want to pass additional parameters that the model supports.</p>",
         "MessageStopEvent$additionalModelResponseFields": "<p>The additional model response fields.</p>",
         "ToolInputSchema$json": "<p>The JSON schema for the tool. For more information, see <a href=\"https://json-schema.org/understanding-json-schema/reference\">JSON Schema Reference</a>.</p>",
+        "ToolResultBlockDelta$json": "<p>The JSON schema for the tool result content block. see <a href=\"https://json-schema.org/understanding-json-schema/reference\">JSON Schema Reference</a>.</p>",
         "ToolResultContentBlock$json": "<p>A tool result that is JSON format data. </p>",
         "ToolUseBlock$input": "<p>The input to pass to the tool. </p>"
       }
@@ -530,6 +589,14 @@
         "DocumentSource$bytes": "<p>The raw bytes for the document. If you use an Amazon Web Services SDK, you don't need to encode the bytes in base64.</p>"
       }
     },
+    "ErrorBlock": {
+      "base": "<p>A block containing error information when content processing fails.</p>",
+      "refs": {
+        "AudioBlock$error": "<p>Error information if the audio block could not be processed or contains invalid data.</p>",
+        "ImageBlock$error": "<p>Error information if the image block could not be processed or contains invalid data.</p>",
+        "ImageBlockDelta$error": "<p>Error information if this image delta could not be processed.</p>"
+      }
+    },
     "FoundationModelVersionIdentifier": {
       "base": "<p>ARN or ID of a Bedrock model</p>",
       "refs": {
@@ -548,6 +615,12 @@
       "base": null,
       "refs": {
         "ApplyGuardrailResponse$action": "<p>The action taken in the response from the guardrail.</p>"
+      }
+    },
+    "GuardrailArn": {
+      "base": null,
+      "refs": {
+        "AppliedGuardrailDetails$guardrailArn": "<p>The ARN of the guardrail that was applied.</p>"
       }
     },
     "GuardrailAssessment": {
@@ -980,6 +1053,12 @@
         "GuardrailWordPolicyAssessment$customWords": "<p>Custom words in the assessment.</p>"
       }
     },
+    "GuardrailId": {
+      "base": null,
+      "refs": {
+        "AppliedGuardrailDetails$guardrailId": "<p>The unique ID of the guardrail that was applied.</p>"
+      }
+    },
     "GuardrailIdentifier": {
       "base": null,
       "refs": {
@@ -1044,6 +1123,18 @@
         "GuardrailManagedWord$type": "<p>The type for the managed word.</p>"
       }
     },
+    "GuardrailOrigin": {
+      "base": null,
+      "refs": {
+        "GuardrailOriginList$member": null
+      }
+    },
+    "GuardrailOriginList": {
+      "base": null,
+      "refs": {
+        "AppliedGuardrailDetails$guardrailOrigin": "<p>The origin of how the guardrail was applied. This can be either requested at the API level or enforced at the account or organization level as a default guardrail.</p>"
+      }
+    },
     "GuardrailOutputContent": {
       "base": "<p>The output content produced by the guardrail.</p>",
       "refs": {
@@ -1067,6 +1158,12 @@
       "refs": {
         "GuardrailOutputContent$text": "<p>The specific text for the output content produced by the guardrail.</p>",
         "ModelOutputs$member": null
+      }
+    },
+    "GuardrailOwnership": {
+      "base": null,
+      "refs": {
+        "AppliedGuardrailDetails$guardrailOwnership": "<p>The ownership type of the guardrail, indicating whether it is owned by the requesting account or is a cross-account guardrail shared from another AWS account.</p>"
       }
     },
     "GuardrailPiiEntityFilter": {
@@ -1214,6 +1311,7 @@
     "GuardrailVersion": {
       "base": null,
       "refs": {
+        "AppliedGuardrailDetails$guardrailVersion": "<p>The version of the guardrail that was applied.</p>",
         "ApplyGuardrailRequest$guardrailVersion": "<p>The guardrail version used in the request to apply the guardrail.</p>",
         "GuardrailConfiguration$guardrailVersion": "<p>The version of the guardrail.</p>",
         "GuardrailStreamConfiguration$guardrailVersion": "<p>The version of the guardrail.</p>",
@@ -1247,16 +1345,30 @@
         "ToolResultContentBlock$image": "<p>A tool result that is an image. </p> <note> <p>This field is only supported by Amazon Nova and Anthropic Claude 3 and 4 models.</p> </note>"
       }
     },
+    "ImageBlockDelta": {
+      "base": "<p>A streaming delta event that contains incremental image data during streaming responses.</p>",
+      "refs": {
+        "ContentBlockDelta$image": "<p>A streaming delta event containing incremental image data.</p>"
+      }
+    },
+    "ImageBlockStart": {
+      "base": "<p>The initial event in a streaming image block that indicates the start of image content.</p>",
+      "refs": {
+        "ContentBlockStart$image": "<p>The initial event indicating the start of a streaming image block.</p>"
+      }
+    },
     "ImageFormat": {
       "base": null,
       "refs": {
-        "ImageBlock$format": "<p>The format of the image.</p>"
+        "ImageBlock$format": "<p>The format of the image.</p>",
+        "ImageBlockStart$format": "<p>The format of the image data that will be streamed in subsequent delta events.</p>"
       }
     },
     "ImageSource": {
       "base": "<p>The source for an image.</p>",
       "refs": {
-        "ImageBlock$source": "<p>The source for the image.</p>"
+        "ImageBlock$source": "<p>The source for the image.</p>",
+        "ImageBlockDelta$source": "<p>The incremental image source data for this delta event.</p>"
       }
     },
     "ImageSourceBytesBlob": {
@@ -1385,6 +1497,12 @@
       "base": null,
       "refs": {
         "PromptRouterTrace$invokedModelId": "<p>The ID of the invoked model.</p>"
+      }
+    },
+    "JsonSchemaDefinition": {
+      "base": "<p> JSON schema structured output format options. </p>",
+      "refs": {
+        "OutputFormatStructure$jsonSchema": "<p> A JSON schema structure that the model's output must adhere to. </p>"
       }
     },
     "KmsKeyId": {
@@ -1522,6 +1640,31 @@
         "ContentBlockStopEvent$contentBlockIndex": "<p>The index for a content block.</p>"
       }
     },
+    "OutputConfig": {
+      "base": "<p>Output configuration for a model response in a call to <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> or <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a>.</p>",
+      "refs": {
+        "ConverseRequest$outputConfig": "<p>Output configuration for a model response.</p>",
+        "ConverseStreamRequest$outputConfig": "<p>Output configuration for a model response.</p>"
+      }
+    },
+    "OutputFormat": {
+      "base": "<p> Structured output parameters to control the model's response. </p>",
+      "refs": {
+        "OutputConfig$textFormat": "<p>Structured output parameters to control the model's text response. </p>"
+      }
+    },
+    "OutputFormatStructure": {
+      "base": "<p> The structure that the model's output must adhere to. </p>",
+      "refs": {
+        "OutputFormat$structure": "<p> The structure that the model's output must adhere to. </p>"
+      }
+    },
+    "OutputFormatType": {
+      "base": "<p> The type of structured output format. Available options are: json_schema. </p>",
+      "refs": {
+        "OutputFormat$type": "<p> The type of structured output format. </p>"
+      }
+    },
     "PaginationToken": {
       "base": null,
       "refs": {
@@ -1632,6 +1775,7 @@
     "S3Location": {
       "base": "<p>A storage location in an Amazon S3 bucket.</p>",
       "refs": {
+        "AudioSource$s3Location": "<p>A reference to audio data stored in an Amazon S3 bucket. To see which models support S3 uploads, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html\">Supported models and features for Converse</a>.</p>",
         "DocumentSource$s3Location": "<p>The location of a document object in an Amazon S3 bucket. To see which models support S3 uploads, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html\">Supported models and features for Converse</a>.</p>",
         "ImageSource$s3Location": "<p>The location of an image object in an Amazon S3 bucket. To see which models support S3 uploads, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html\">Supported models and features for Converse</a>.</p>",
         "VideoSource$s3Location": "<p>The location of a video object in an Amazon S3 bucket. To see which models support S3 uploads, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html\">Supported models and features for Converse</a>.</p>"
@@ -1644,9 +1788,71 @@
         "S3Location$uri": "<p>An object URI starting with <code>s3://</code>.</p>"
       }
     },
+    "SearchResultBlock": {
+      "base": "<p>A search result block that enables natural citations with proper source attribution for retrieved content.</p> <note> <p>This field is only supported by Anthropic Claude Opus 4.1, Opus 4, Sonnet 4.5, Sonnet 4, Sonnet 3.7, and 3.5 Haiku models.</p> </note>",
+      "refs": {
+        "ContentBlock$searchResult": "<p>Search result to include in the message.</p>",
+        "ToolResultContentBlock$searchResult": "<p>A tool result that is a search result.</p>"
+      }
+    },
+    "SearchResultContentBlock": {
+      "base": "<p>A block within a search result that contains the content.</p>",
+      "refs": {
+        "SearchResultContentBlocks$member": null
+      }
+    },
+    "SearchResultContentBlocks": {
+      "base": null,
+      "refs": {
+        "SearchResultBlock$content": "<p>An array of search result content block.</p>"
+      }
+    },
+    "SearchResultLocation": {
+      "base": "<p>Specifies a search result location within the content array, providing positioning information for cited content using search result index and block positions.</p>",
+      "refs": {
+        "CitationLocation$searchResultLocation": "<p>The search result location where the cited content is found, including the search result index and block positions within the content array.</p>"
+      }
+    },
+    "SearchResultLocationEndInteger": {
+      "base": null,
+      "refs": {
+        "SearchResultLocation$end": "<p>The ending position in the content array where the cited content ends.</p>"
+      }
+    },
+    "SearchResultLocationSearchResultIndexInteger": {
+      "base": null,
+      "refs": {
+        "SearchResultLocation$searchResultIndex": "<p>The index of the search result content block where the cited content is found.</p>"
+      }
+    },
+    "SearchResultLocationStartInteger": {
+      "base": null,
+      "refs": {
+        "SearchResultLocation$start": "<p>The starting position in the content array where the cited content begins.</p>"
+      }
+    },
     "ServiceQuotaExceededException": {
       "base": "<p>Your request exceeds the service quota for your account. You can view your quotas at <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/gs-request-quota.html\">Viewing service quotas</a>. You can resubmit your request later.</p>",
       "refs": {}
+    },
+    "ServiceTier": {
+      "base": "<p>Specifies the processing tier configuration used for serving the request.</p>",
+      "refs": {
+        "ConverseRequest$serviceTier": "<p>Specifies the processing tier configuration used for serving the request.</p>",
+        "ConverseResponse$serviceTier": "<p>Specifies the processing tier configuration used for serving the request.</p>",
+        "ConverseStreamMetadataEvent$serviceTier": "<p>Specifies the processing tier configuration used for serving the request.</p>",
+        "ConverseStreamRequest$serviceTier": "<p>Specifies the processing tier configuration used for serving the request.</p>"
+      }
+    },
+    "ServiceTierType": {
+      "base": null,
+      "refs": {
+        "InvokeModelRequest$serviceTier": "<p>Specifies the processing tier type used for serving the request.</p>",
+        "InvokeModelResponse$serviceTier": "<p>Specifies the processing tier type used for serving the request.</p>",
+        "InvokeModelWithResponseStreamRequest$serviceTier": "<p>Specifies the processing tier type used for serving the request.</p>",
+        "InvokeModelWithResponseStreamResponse$serviceTier": "<p>Specifies the processing tier type used for serving the request.</p>",
+        "ServiceTier$type": "<p>Specifies the processing tier type used for serving the request.</p>"
+      }
     },
     "ServiceUnavailableException": {
       "base": "<p>The service isn't currently available. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-service-unavailable\">ServiceUnavailable</a> in the Amazon Bedrock User Guide</p>",
@@ -1701,15 +1907,18 @@
       "refs": {
         "ApplyGuardrailResponse$actionReason": "<p>The reason for the action taken when harmful content is detected.</p>",
         "Citation$title": "<p>The title or identifier of the source document being cited.</p>",
+        "Citation$source": "<p>The source from the original search result that provided the cited content.</p>",
         "CitationGeneratedContent$text": "<p>The text content that was generated by the model and is supported by the associated citation.</p>",
         "CitationSourceContent$text": "<p>The text content from the source document that is being cited.</p>",
         "CitationSourceContentDelta$text": "<p>An incremental update to the text content from the source document that is being cited.</p>",
         "CitationsDelta$title": "<p>The title or identifier of the source document being cited.</p>",
+        "CitationsDelta$source": "<p>The source from the original search result that provided the cited content.</p>",
         "ContentBlock$text": "<p>Text to include in the message.</p>",
         "ContentBlockDelta$text": "<p>The content text.</p>",
         "DocumentBlock$context": "<p>Contextual information about how the document should be processed or interpreted by the model when generating citations.</p>",
         "DocumentContentBlock$text": "<p>The text content of the document.</p>",
         "DocumentSource$text": "<p>The text content of the document source.</p>",
+        "ErrorBlock$message": "<p>A human-readable error message describing what went wrong during content processing.</p>",
         "GuardrailAssessmentListMap$key": null,
         "GuardrailAssessmentMap$key": null,
         "GuardrailConverseTextBlock$text": "<p>The text that you want to guard.</p>",
@@ -1722,12 +1931,18 @@
         "GuardrailTextBlock$text": "<p>The input text details to be evaluated by the guardrail.</p>",
         "GuardrailTopic$name": "<p>The name for the guardrail.</p>",
         "GuardrailTraceAssessment$actionReason": "<p>Provides the reason for the action taken when harmful content is detected.</p>",
+        "JsonSchemaDefinition$schema": "<p> The JSON schema to constrain the model's output. For more information, see <a href=\"https://json-schema.org/understanding-json-schema/reference\">JSON Schema Reference</a>. </p>",
+        "JsonSchemaDefinition$name": "<p> The name of the JSON schema. </p>",
+        "JsonSchemaDefinition$description": "<p> A description of the JSON schema. </p>",
         "PromptVariableMap$key": null,
         "PromptVariableValues$text": "<p>The text value that the variable maps to.</p>",
         "ReasoningContentBlockDelta$text": "<p>The reasoning that the model used to return the output.</p>",
         "ReasoningContentBlockDelta$signature": "<p>A token that verifies that the reasoning text was generated by the model. If you pass a reasoning block back to the API in a multi-turn conversation, include the text and its signature unmodified.</p>",
         "ReasoningTextBlock$text": "<p>The reasoning that the model used to return the output.</p>",
         "ReasoningTextBlock$signature": "<p>A token that verifies that the reasoning text was generated by the model. If you pass a reasoning block back to the API in a multi-turn conversation, include the text and its signature unmodified.</p>",
+        "SearchResultBlock$source": "<p>The source URL or identifier for the content.</p>",
+        "SearchResultBlock$title": "<p>A descriptive title for the search result.</p>",
+        "SearchResultContentBlock$text": "<p>The actual text content</p>",
         "ToolResultBlock$type": "<p>The type for the tool result content block.</p>",
         "ToolResultBlockDelta$text": "<p>The reasoning the model used to return the output.</p>",
         "ToolResultBlockStart$type": "<p>The type for the tool that was used to generate this tool result block.</p>",
@@ -1867,7 +2082,8 @@
       "base": "<p>Configuration information for the tools that you pass to a model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Tool use (function calling)</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "ConverseRequest$toolConfig": "<p>Configuration information for the tools that the model can use when generating a response. </p> <p>For information about models that support tool use, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html#conversation-inference-supported-models-features\">Supported models and model features</a>.</p>",
-        "ConverseStreamRequest$toolConfig": "<p>Configuration information for the tools that the model can use when generating a response.</p> <p>For information about models that support streaming tool use, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html#conversation-inference-supported-models-features\">Supported models and model features</a>.</p>"
+        "ConverseStreamRequest$toolConfig": "<p>Configuration information for the tools that the model can use when generating a response.</p> <p>For information about models that support streaming tool use, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html#conversation-inference-supported-models-features\">Supported models and model features</a>.</p>",
+        "ConverseTokensRequest$toolConfig": "<p>The toolConfig of Converse input request to count tokens for. Configuration information for the tools that the model can use when generating a response.</p>"
       }
     },
     "ToolConfigurationToolsList": {

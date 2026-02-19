@@ -13,6 +13,24 @@
     "uid":"bedrock-data-automation-2023-07-26"
   },
   "operations":{
+    "CopyBlueprintStage":{
+      "name":"CopyBlueprintStage",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/blueprints/{blueprintArn}/copy-stage",
+        "responseCode":200
+      },
+      "input":{"shape":"CopyBlueprintStageRequest"},
+      "output":{"shape":"CopyBlueprintStageResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "CreateBlueprint":{
       "name":"CreateBlueprint",
       "http":{
@@ -124,6 +142,24 @@
       ],
       "readonly":true
     },
+    "GetBlueprintOptimizationStatus":{
+      "name":"GetBlueprintOptimizationStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/getBlueprintOptimizationStatus/{invocationArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetBlueprintOptimizationStatusRequest"},
+      "output":{"shape":"GetBlueprintOptimizationStatusResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "GetDataAutomationProject":{
       "name":"GetDataAutomationProject",
       "http":{
@@ -141,6 +177,25 @@
         {"shape":"ResourceNotFoundException"}
       ],
       "readonly":true
+    },
+    "InvokeBlueprintOptimizationAsync":{
+      "name":"InvokeBlueprintOptimizationAsync",
+      "http":{
+        "method":"POST",
+        "requestUri":"/invokeBlueprintOptimizationAsync",
+        "responseCode":200
+      },
+      "input":{"shape":"InvokeBlueprintOptimizationAsyncRequest"},
+      "output":{"shape":"InvokeBlueprintOptimizationAsyncResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
     },
     "ListBlueprints":{
       "name":"ListBlueprints",
@@ -332,7 +387,8 @@
       "type":"structure",
       "members":{
         "modalityProcessing":{"shape":"ModalityProcessingConfiguration"},
-        "languageConfiguration":{"shape":"AudioLanguageConfiguration"}
+        "languageConfiguration":{"shape":"AudioLanguageConfiguration"},
+        "sensitiveDataConfiguration":{"shape":"SensitiveDataConfiguration"}
       }
     },
     "AudioStandardExtraction":{
@@ -389,7 +445,9 @@
         "blueprintVersion":{"shape":"BlueprintVersion"},
         "blueprintStage":{"shape":"BlueprintStage"},
         "kmsKeyId":{"shape":"KmsKeyId"},
-        "kmsEncryptionContext":{"shape":"KmsEncryptionContext"}
+        "kmsEncryptionContext":{"shape":"KmsEncryptionContext"},
+        "optimizationSamples":{"shape":"BlueprintOptimizationSamples"},
+        "optimizationTime":{"shape":"DateTimestamp"}
       }
     },
     "BlueprintArn":{
@@ -426,6 +484,52 @@
       "min":1,
       "pattern":"[a-zA-Z0-9-_]+",
       "sensitive":true
+    },
+    "BlueprintOptimizationInvocationArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"arn:aws(|-cn|-iso|-iso-[a-z]|-us-gov):bedrock:[a-zA-Z0-9-]*:[0-9]{12}:blueprint-optimization-invocation/[a-zA-Z0-9-_]+"
+    },
+    "BlueprintOptimizationJobStatus":{
+      "type":"string",
+      "enum":[
+        "Created",
+        "InProgress",
+        "Success",
+        "ServiceError",
+        "ClientError"
+      ]
+    },
+    "BlueprintOptimizationObject":{
+      "type":"structure",
+      "required":["blueprintArn"],
+      "members":{
+        "blueprintArn":{"shape":"BlueprintArn"},
+        "stage":{"shape":"BlueprintStage"}
+      }
+    },
+    "BlueprintOptimizationOutputConfiguration":{
+      "type":"structure",
+      "required":["s3Object"],
+      "members":{
+        "s3Object":{"shape":"S3Object"}
+      }
+    },
+    "BlueprintOptimizationSample":{
+      "type":"structure",
+      "required":[
+        "assetS3Object",
+        "groundTruthS3Object"
+      ],
+      "members":{
+        "assetS3Object":{"shape":"S3Object"},
+        "groundTruthS3Object":{"shape":"S3Object"}
+      }
+    },
+    "BlueprintOptimizationSamples":{
+      "type":"list",
+      "member":{"shape":"BlueprintOptimizationSample"}
     },
     "BlueprintSchema":{
       "type":"string",
@@ -501,6 +605,31 @@
       },
       "exception":true
     },
+    "CopyBlueprintStageRequest":{
+      "type":"structure",
+      "required":[
+        "blueprintArn",
+        "sourceStage",
+        "targetStage"
+      ],
+      "members":{
+        "blueprintArn":{
+          "shape":"BlueprintArn",
+          "location":"uri",
+          "locationName":"blueprintArn"
+        },
+        "sourceStage":{"shape":"BlueprintStage"},
+        "targetStage":{"shape":"BlueprintStage"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CopyBlueprintStageResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "CreateBlueprintRequest":{
       "type":"structure",
       "required":[
@@ -560,6 +689,7 @@
         "projectName":{"shape":"DataAutomationProjectName"},
         "projectDescription":{"shape":"DataAutomationProjectDescription"},
         "projectStage":{"shape":"DataAutomationProjectStage"},
+        "projectType":{"shape":"DataAutomationProjectType"},
         "standardOutputConfiguration":{"shape":"StandardOutputConfiguration"},
         "customOutputConfiguration":{"shape":"CustomOutputConfiguration"},
         "overrideConfiguration":{"shape":"OverrideConfiguration"},
@@ -586,6 +716,12 @@
         "blueprints":{"shape":"BlueprintItems"}
       }
     },
+    "DataAutomationProfileArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"arn:aws(|-cn|-us-gov):bedrock:[a-zA-Z0-9-]*:(aws|[0-9]{12}):data-automation-profile/[a-zA-Z0-9-_.]+"
+    },
     "DataAutomationProject":{
       "type":"structure",
       "required":[
@@ -601,6 +737,7 @@
         "lastModifiedTime":{"shape":"DateTimestamp"},
         "projectName":{"shape":"DataAutomationProjectName"},
         "projectStage":{"shape":"DataAutomationProjectStage"},
+        "projectType":{"shape":"DataAutomationProjectType"},
         "projectDescription":{"shape":"DataAutomationProjectDescription"},
         "standardOutputConfiguration":{"shape":"StandardOutputConfiguration"},
         "customOutputConfiguration":{"shape":"CustomOutputConfiguration"},
@@ -673,9 +810,17 @@
       "members":{
         "projectArn":{"shape":"DataAutomationProjectArn"},
         "projectStage":{"shape":"DataAutomationProjectStage"},
+        "projectType":{"shape":"DataAutomationProjectType"},
         "projectName":{"shape":"DataAutomationProjectName"},
         "creationTime":{"shape":"DateTimestamp"}
       }
+    },
+    "DataAutomationProjectType":{
+      "type":"string",
+      "enum":[
+        "ASYNC",
+        "SYNC"
+      ]
     },
     "DateTimestamp":{
       "type":"timestamp",
@@ -797,7 +942,8 @@
       "type":"structure",
       "members":{
         "splitter":{"shape":"SplitterConfiguration"},
-        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"},
+        "sensitiveDataConfiguration":{"shape":"SensitiveDataConfiguration"}
       }
     },
     "DocumentStandardExtraction":{
@@ -845,6 +991,26 @@
       "max":2000,
       "min":1,
       "pattern":".*\\S.*"
+    },
+    "GetBlueprintOptimizationStatusRequest":{
+      "type":"structure",
+      "required":["invocationArn"],
+      "members":{
+        "invocationArn":{
+          "shape":"BlueprintOptimizationInvocationArn",
+          "location":"uri",
+          "locationName":"invocationArn"
+        }
+      }
+    },
+    "GetBlueprintOptimizationStatusResponse":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"BlueprintOptimizationJobStatus"},
+        "errorType":{"shape":"String"},
+        "errorMessage":{"shape":"String"},
+        "outputConfiguration":{"shape":"BlueprintOptimizationOutputConfiguration"}
+      }
     },
     "GetBlueprintRequest":{
       "type":"structure",
@@ -915,7 +1081,8 @@
     "ImageOverrideConfiguration":{
       "type":"structure",
       "members":{
-        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"},
+        "sensitiveDataConfiguration":{"shape":"SensitiveDataConfiguration"}
       }
     },
     "ImageStandardExtraction":{
@@ -963,6 +1130,30 @@
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "InvokeBlueprintOptimizationAsyncRequest":{
+      "type":"structure",
+      "required":[
+        "blueprint",
+        "samples",
+        "outputConfiguration",
+        "dataAutomationProfileArn"
+      ],
+      "members":{
+        "blueprint":{"shape":"BlueprintOptimizationObject"},
+        "samples":{"shape":"BlueprintOptimizationSamples"},
+        "outputConfiguration":{"shape":"BlueprintOptimizationOutputConfiguration"},
+        "dataAutomationProfileArn":{"shape":"DataAutomationProfileArn"},
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "InvokeBlueprintOptimizationAsyncResponse":{
+      "type":"structure",
+      "required":["invocationArn"],
+      "members":{
+        "invocationArn":{"shape":"BlueprintOptimizationInvocationArn"}
+      }
     },
     "KmsEncryptionContext":{
       "type":"map",
@@ -1083,6 +1274,63 @@
         "modalityRouting":{"shape":"ModalityRoutingConfiguration"}
       }
     },
+    "PIIEntitiesConfiguration":{
+      "type":"structure",
+      "members":{
+        "piiEntityTypes":{"shape":"PIIEntityTypes"},
+        "redactionMaskMode":{"shape":"PIIRedactionMaskMode"}
+      }
+    },
+    "PIIEntityType":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "ADDRESS",
+        "AGE",
+        "NAME",
+        "EMAIL",
+        "PHONE",
+        "USERNAME",
+        "PASSWORD",
+        "DRIVER_ID",
+        "LICENSE_PLATE",
+        "VEHICLE_IDENTIFICATION_NUMBER",
+        "CREDIT_DEBIT_CARD_CVV",
+        "CREDIT_DEBIT_CARD_EXPIRY",
+        "CREDIT_DEBIT_CARD_NUMBER",
+        "PIN",
+        "INTERNATIONAL_BANK_ACCOUNT_NUMBER",
+        "SWIFT_CODE",
+        "IP_ADDRESS",
+        "MAC_ADDRESS",
+        "URL",
+        "AWS_ACCESS_KEY",
+        "AWS_SECRET_KEY",
+        "US_BANK_ACCOUNT_NUMBER",
+        "US_BANK_ROUTING_NUMBER",
+        "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER",
+        "US_PASSPORT_NUMBER",
+        "US_SOCIAL_SECURITY_NUMBER",
+        "CA_HEALTH_NUMBER",
+        "CA_SOCIAL_INSURANCE_NUMBER",
+        "UK_NATIONAL_HEALTH_SERVICE_NUMBER",
+        "UK_NATIONAL_INSURANCE_NUMBER",
+        "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER"
+      ]
+    },
+    "PIIEntityTypes":{
+      "type":"list",
+      "member":{"shape":"PIIEntityType"},
+      "max":32,
+      "min":1
+    },
+    "PIIRedactionMaskMode":{
+      "type":"string",
+      "enum":[
+        "PII",
+        "ENTITY_TYPE"
+      ]
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -1099,6 +1347,54 @@
       "enum":[
         "SERVICE",
         "ACCOUNT"
+      ]
+    },
+    "S3Object":{
+      "type":"structure",
+      "required":["s3Uri"],
+      "members":{
+        "s3Uri":{"shape":"S3Uri"},
+        "version":{"shape":"S3ObjectVersion"}
+      }
+    },
+    "S3ObjectVersion":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "S3Uri":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"s3://[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9](/.*)?"
+    },
+    "SensitiveDataConfiguration":{
+      "type":"structure",
+      "required":["detectionMode"],
+      "members":{
+        "detectionMode":{"shape":"SensitiveDataDetectionMode"},
+        "detectionScope":{"shape":"SensitiveDataDetectionScope"},
+        "piiEntitiesConfiguration":{"shape":"PIIEntitiesConfiguration"}
+      }
+    },
+    "SensitiveDataDetectionMode":{
+      "type":"string",
+      "enum":[
+        "DETECTION",
+        "DETECTION_AND_REDACTION"
+      ]
+    },
+    "SensitiveDataDetectionScope":{
+      "type":"list",
+      "member":{"shape":"SensitiveDataDetectionScopeType"},
+      "max":2,
+      "min":1
+    },
+    "SensitiveDataDetectionScopeType":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "CUSTOM"
       ]
     },
     "ServiceQuotaExceededException":{
@@ -1141,6 +1437,7 @@
         "DISABLED"
       ]
     },
+    "String":{"type":"string"},
     "Tag":{
       "type":"structure",
       "required":[
@@ -1193,7 +1490,7 @@
       "type":"string",
       "max":1011,
       "min":20,
-      "pattern":"arn:aws(|-cn|-us-gov):bedrock:[a-z0-9-]*:[0-9]{12}:(blueprint|data-automation-project)/[a-zA-Z0-9-]{12,36}"
+      "pattern":"arn:aws(|-cn|-iso|-iso-[a-z]|-us-gov):bedrock:[a-z0-9-]*:[0-9]{12}:(blueprint|data-automation-project|blueprint-optimization-invocation)/[a-zA-Z0-9-]{12,36}"
     },
     "ThrottlingException":{
       "type":"structure",
@@ -1348,7 +1645,8 @@
     "VideoOverrideConfiguration":{
       "type":"structure",
       "members":{
-        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"},
+        "sensitiveDataConfiguration":{"shape":"SensitiveDataConfiguration"}
       }
     },
     "VideoStandardExtraction":{

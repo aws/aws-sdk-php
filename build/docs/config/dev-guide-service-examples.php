@@ -130,5 +130,11 @@ return [
         'scenarios' => [
             'Send events to Amazon EventBridge global endpoints' => 'https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/eventbridge-examples.html'
         ]
+    ],
+    '_service_id_map' => [
+        'apigateway' => 'api-gateway',
+        'email' => 'ses',
+        'autoscaling' => 'auto-scaling',
+        'rds-data' => 'aurora',
     ]
 ];

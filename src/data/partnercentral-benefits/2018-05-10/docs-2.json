@@ -1,0 +1,1057 @@
+{
+  "version": "2.0",
+  "service": "<p>AWS Partner Central Benefits Service provides APIs for managing partner benefits, applications, and allocations within the AWS Partner Network ecosystem.</p>",
+  "operations": {
+    "AmendBenefitApplication": "<p>Modifies an existing benefit application by applying amendments to specific fields while maintaining revision control.</p>",
+    "AssociateBenefitApplicationResource": "<p>Links an AWS resource to an existing benefit application for tracking and management purposes.</p>",
+    "CancelBenefitApplication": "<p>Cancels a benefit application that is currently in progress, preventing further processing.</p>",
+    "CreateBenefitApplication": "<p>Creates a new benefit application for a partner to request access to AWS benefits and programs.</p>",
+    "DisassociateBenefitApplicationResource": "<p>Removes the association between an AWS resource and a benefit application.</p>",
+    "GetBenefit": "<p>Retrieves detailed information about a specific benefit available in the partner catalog.</p>",
+    "GetBenefitAllocation": "<p>Retrieves detailed information about a specific benefit allocation that has been granted to a partner.</p>",
+    "GetBenefitApplication": "<p>Retrieves detailed information about a specific benefit application.</p>",
+    "ListBenefitAllocations": "<p>Retrieves a paginated list of benefit allocations based on specified filter criteria.</p>",
+    "ListBenefitApplications": "<p>Retrieves a paginated list of benefit applications based on specified filter criteria.</p>",
+    "ListBenefits": "<p>Retrieves a paginated list of available benefits based on specified filter criteria.</p>",
+    "ListTagsForResource": "<p>Retrieves all tags associated with a specific resource.</p>",
+    "RecallBenefitApplication": "<p>Recalls a submitted benefit application, returning it to draft status for further modifications.</p>",
+    "SubmitBenefitApplication": "<p>Submits a benefit application for review and processing by AWS.</p>",
+    "TagResource": "<p>Adds or updates tags for a specified resource.</p>",
+    "UntagResource": "<p>Removes specified tags from a resource.</p>",
+    "UpdateBenefitApplication": "<p>Updates an existing benefit application with new information while maintaining revision control.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>Thrown when the caller does not have sufficient permissions to perform the requested operation.</p>",
+      "refs": {}
+    },
+    "AccessDetails": {
+      "base": "<p>Contains information about access-based benefit fulfillment, such as service permissions or feature access.</p>",
+      "refs": {
+        "FulfillmentDetails$AccessDetails": "<p>Details about access-based fulfillment, if applicable to this benefit allocation.</p>"
+      }
+    },
+    "AmendBenefitApplicationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "AmendBenefitApplicationInputAmendmentReasonString": {
+      "base": null,
+      "refs": {
+        "AmendBenefitApplicationInput$AmendmentReason": "<p>A descriptive reason explaining why the benefit application is being amended.</p>"
+      }
+    },
+    "AmendBenefitApplicationInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "AmendBenefitApplicationInput$ClientToken": "<p>A unique, case-sensitive identifier to ensure idempotent processing of the amendment request.</p>"
+      }
+    },
+    "AmendBenefitApplicationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "Amendment": {
+      "base": "<p>Represents a specific change to be made to a benefit application field.</p>",
+      "refs": {
+        "AmendmentList$member": null
+      }
+    },
+    "AmendmentList": {
+      "base": null,
+      "refs": {
+        "AmendBenefitApplicationInput$Amendments": "<p>A list of specific field amendments to apply to the benefit application.</p>"
+      }
+    },
+    "Arn": {
+      "base": null,
+      "refs": {
+        "Arns$member": null,
+        "AssociatedResource$ResourceArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the AWS resource.</p>",
+        "CreateBenefitApplicationInputAssociatedResourcesList$member": null,
+        "GetBenefitApplicationOutput$Arn": "<p>The Amazon Resource Name (ARN) of the benefit application.</p>",
+        "GetBenefitApplicationOutputAssociatedResourcesList$member": null
+      }
+    },
+    "Arns": {
+      "base": null,
+      "refs": {
+        "BenefitApplicationSummary$AssociatedResources": "<p>AWS resources that are associated with this benefit application.</p>",
+        "ListBenefitApplicationsInput$AssociatedResourceArns": "<p>Filter benefit applications by specific AWS resource ARNs.</p>"
+      }
+    },
+    "AssociateBenefitApplicationResourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateBenefitApplicationResourceInputResourceArnString": {
+      "base": null,
+      "refs": {
+        "AssociateBenefitApplicationResourceInput$ResourceArn": "<p>The Amazon Resource Name (ARN) of the AWS resource to associate with the benefit application.</p>"
+      }
+    },
+    "AssociateBenefitApplicationResourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociatedResource": {
+      "base": "<p>Represents an AWS resource that is associated with a benefit application for tracking and management.</p>",
+      "refs": {
+        "AssociatedResources$member": null
+      }
+    },
+    "AssociatedResources": {
+      "base": null,
+      "refs": {
+        "ListBenefitApplicationsInput$AssociatedResources": "<p>Filter benefit applications by associated AWS resources.</p>"
+      }
+    },
+    "Attributes": {
+      "base": null,
+      "refs": {
+        "BenefitApplicationSummary$BenefitApplicationDetails": "<p>Additional attributes and metadata associated with the benefit application.</p>"
+      }
+    },
+    "BenefitAllocationArn": {
+      "base": null,
+      "refs": {
+        "GetBenefitAllocationOutput$Arn": "<p>The Amazon Resource Name (ARN) of the benefit allocation.</p>"
+      }
+    },
+    "BenefitAllocationId": {
+      "base": null,
+      "refs": {
+        "BenefitAllocationSummary$Id": "<p>The unique identifier of the benefit allocation.</p>",
+        "GetBenefitAllocationOutput$Id": "<p>The unique identifier of the benefit allocation.</p>"
+      }
+    },
+    "BenefitAllocationIdentifier": {
+      "base": null,
+      "refs": {
+        "GetBenefitAllocationInput$Identifier": "<p>The unique identifier of the benefit allocation to retrieve.</p>"
+      }
+    },
+    "BenefitAllocationName": {
+      "base": null,
+      "refs": {
+        "BenefitAllocationSummary$Name": "<p>The human-readable name of the benefit allocation.</p>"
+      }
+    },
+    "BenefitAllocationStatus": {
+      "base": null,
+      "refs": {
+        "BenefitAllocationSummary$Status": "<p>The current status of the benefit allocation.</p>",
+        "CreditCode$Status": "<p>The current status of the credit code (e.g., active, redeemed, expired).</p>",
+        "GetBenefitAllocationOutput$Status": "<p>The current status of the benefit allocation (e.g., active, expired, consumed).</p>",
+        "ListBenefitAllocationsInputStatusList$member": null
+      }
+    },
+    "BenefitAllocationSummaries": {
+      "base": null,
+      "refs": {
+        "ListBenefitAllocationsOutput$BenefitAllocationSummaries": "<p>A list of benefit allocation summaries matching the specified criteria.</p>"
+      }
+    },
+    "BenefitAllocationSummary": {
+      "base": "<p>A summary view of a benefit allocation containing key information for list operations.</p>",
+      "refs": {
+        "BenefitAllocationSummaries$member": null
+      }
+    },
+    "BenefitApplicationDescription": {
+      "base": null,
+      "refs": {
+        "CreateBenefitApplicationInput$Description": "<p>A detailed description of the benefit application and its intended use.</p>",
+        "GetBenefitApplicationOutput$Description": "<p>A detailed description of the benefit application.</p>",
+        "UpdateBenefitApplicationInput$Description": "<p>The updated detailed description of the benefit application.</p>"
+      }
+    },
+    "BenefitApplicationId": {
+      "base": null,
+      "refs": {
+        "AssociateBenefitApplicationResourceOutput$Id": "<p>The unique identifier of the benefit application after the resource association.</p>",
+        "BenefitAllocationSummary$BenefitApplicationId": "<p>The identifier of the benefit application that resulted in this allocation.</p>",
+        "BenefitApplicationSummary$Id": "<p>The unique identifier of the benefit application.</p>",
+        "CreateBenefitApplicationOutput$Id": "<p>The unique identifier assigned to the newly created benefit application.</p>",
+        "DisassociateBenefitApplicationResourceOutput$Id": "<p>The unique identifier of the benefit application after the resource disassociation.</p>",
+        "GetBenefitAllocationOutput$BenefitApplicationId": "<p>The identifier of the benefit application that resulted in this allocation.</p>",
+        "GetBenefitApplicationOutput$Id": "<p>The unique identifier of the benefit application.</p>",
+        "UpdateBenefitApplicationOutput$Id": "<p>The unique identifier of the updated benefit application.</p>"
+      }
+    },
+    "BenefitApplicationIdentifier": {
+      "base": null,
+      "refs": {
+        "AmendBenefitApplicationInput$Identifier": "<p>The unique identifier of the benefit application to be amended.</p>",
+        "AssociateBenefitApplicationResourceInput$BenefitApplicationIdentifier": "<p>The unique identifier of the benefit application to associate the resource with.</p>",
+        "CancelBenefitApplicationInput$Identifier": "<p>The unique identifier of the benefit application to cancel.</p>",
+        "DisassociateBenefitApplicationResourceInput$BenefitApplicationIdentifier": "<p>The unique identifier of the benefit application to disassociate the resource from.</p>",
+        "GetBenefitApplicationInput$Identifier": "<p>The unique identifier of the benefit application to retrieve.</p>",
+        "ListBenefitAllocationsInputBenefitApplicationIdentifiersList$member": null,
+        "RecallBenefitApplicationInput$Identifier": "<p>The unique identifier of the benefit application to recall.</p>",
+        "SubmitBenefitApplicationInput$Identifier": "<p>The unique identifier of the benefit application to submit.</p>",
+        "UpdateBenefitApplicationInput$Identifier": "<p>The unique identifier of the benefit application to update.</p>"
+      }
+    },
+    "BenefitApplicationName": {
+      "base": null,
+      "refs": {
+        "BenefitApplicationSummary$Name": "<p>The human-readable name of the benefit application.</p>",
+        "CreateBenefitApplicationInput$Name": "<p>A human-readable name for the benefit application.</p>",
+        "GetBenefitApplicationOutput$Name": "<p>The human-readable name of the benefit application.</p>",
+        "UpdateBenefitApplicationInput$Name": "<p>The updated human-readable name for the benefit application.</p>"
+      }
+    },
+    "BenefitApplicationStage": {
+      "base": null,
+      "refs": {
+        "BenefitApplicationSummary$Stage": "<p>The current stage in the benefit application processing workflow..</p>",
+        "GetBenefitApplicationOutput$Stage": "<p>The current stage in the benefit application processing workflow.</p>",
+        "ListBenefitApplicationsInputStagesList$member": null
+      }
+    },
+    "BenefitApplicationStatus": {
+      "base": null,
+      "refs": {
+        "BenefitApplicationSummary$Status": "<p>The current processing status of the benefit application.</p>",
+        "GetBenefitApplicationOutput$Status": "<p>The current processing status of the benefit application.</p>",
+        "ListBenefitApplicationsInputStatusList$member": null
+      }
+    },
+    "BenefitApplicationSummaries": {
+      "base": null,
+      "refs": {
+        "ListBenefitApplicationsOutput$BenefitApplicationSummaries": "<p>A list of benefit application summaries matching the specified criteria.</p>"
+      }
+    },
+    "BenefitApplicationSummary": {
+      "base": "<p>A summary view of a benefit application containing key information for list operations.</p>",
+      "refs": {
+        "BenefitApplicationSummaries$member": null
+      }
+    },
+    "BenefitId": {
+      "base": null,
+      "refs": {
+        "BenefitAllocationSummary$BenefitId": "<p>The identifier of the benefit that this allocation is based on.</p>",
+        "BenefitApplicationSummary$BenefitId": "<p>The identifier of the benefit being requested in this application.</p>",
+        "BenefitIdentifiers$member": null,
+        "BenefitIds$member": null,
+        "GetBenefitAllocationOutput$BenefitId": "<p>The identifier of the benefit that this allocation is based on.</p>",
+        "GetBenefitApplicationOutput$BenefitId": "<p>The identifier of the benefit being requested in this application.</p>",
+        "ListBenefitAllocationsInputBenefitIdentifiersList$member": null,
+        "ListBenefitApplicationsInputBenefitIdentifiersList$member": null
+      }
+    },
+    "BenefitIdentifiers": {
+      "base": null,
+      "refs": {
+        "GetBenefitAllocationOutput$ApplicableBenefitIds": "<p>A list of benefit identifiers that this allocation can be applied to.</p>"
+      }
+    },
+    "BenefitIds": {
+      "base": null,
+      "refs": {
+        "BenefitAllocationSummary$ApplicableBenefitIds": "<p>The identifiers of the benefits applicable for this allocation.</p>"
+      }
+    },
+    "BenefitStatus": {
+      "base": null,
+      "refs": {
+        "BenefitSummary$Status": "<p>The current status of the benefit.</p>",
+        "GetBenefitOutput$Status": "<p>The current status of the benefit (e.g., active, inactive, deprecated).</p>",
+        "ListBenefitsInputStatusList$member": null
+      }
+    },
+    "BenefitSummaries": {
+      "base": null,
+      "refs": {
+        "ListBenefitsOutput$BenefitSummaries": "<p>A list of benefit summaries matching the specified criteria.</p>"
+      }
+    },
+    "BenefitSummary": {
+      "base": "<p>A summary view of a benefit containing key information for list operations.</p>",
+      "refs": {
+        "BenefitSummaries$member": null
+      }
+    },
+    "BenefitSummaryDescriptionString": {
+      "base": null,
+      "refs": {
+        "BenefitSummary$Description": "<p>A brief description of the benefit and its purpose.</p>"
+      }
+    },
+    "BenefitSummaryIdString": {
+      "base": null,
+      "refs": {
+        "BenefitSummary$Id": "<p>The unique identifier of the benefit.</p>"
+      }
+    },
+    "BenefitSummaryNameString": {
+      "base": null,
+      "refs": {
+        "BenefitSummary$Name": "<p>The human-readable name of the benefit.</p>"
+      }
+    },
+    "CancelBenefitApplicationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelBenefitApplicationInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "CancelBenefitApplicationInput$ClientToken": "<p>A unique, case-sensitive identifier to ensure idempotent processing of the cancellation request.</p>"
+      }
+    },
+    "CancelBenefitApplicationInputReasonString": {
+      "base": null,
+      "refs": {
+        "CancelBenefitApplicationInput$Reason": "<p>A descriptive reason explaining why the benefit application is being cancelled.</p>"
+      }
+    },
+    "CancelBenefitApplicationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CatalogName": {
+      "base": null,
+      "refs": {
+        "AmendBenefitApplicationInput$Catalog": "<p>The catalog identifier that specifies which benefit catalog the application belongs to.</p>",
+        "AssociateBenefitApplicationResourceInput$Catalog": "<p>The catalog identifier that specifies which benefit catalog the application belongs to.</p>",
+        "BenefitAllocationSummary$Catalog": "<p>The catalog identifier that the benefit allocation belongs to.</p>",
+        "BenefitApplicationSummary$Catalog": "<p>The catalog identifier that the benefit application belongs to.</p>",
+        "BenefitSummary$Catalog": "<p>The catalog identifier that the benefit belongs to.</p>",
+        "CancelBenefitApplicationInput$Catalog": "<p>The catalog identifier that specifies which benefit catalog the application belongs to.</p>",
+        "CreateBenefitApplicationInput$Catalog": "<p>The catalog identifier that specifies which benefit catalog to create the application in.</p>",
+        "DisassociateBenefitApplicationResourceInput$Catalog": "<p>The catalog identifier that specifies which benefit catalog the application belongs to.</p>",
+        "GetBenefitAllocationInput$Catalog": "<p>The catalog identifier that specifies which benefit catalog to query.</p>",
+        "GetBenefitAllocationOutput$Catalog": "<p>The catalog identifier that the benefit allocation belongs to.</p>",
+        "GetBenefitApplicationInput$Catalog": "<p>The catalog identifier that specifies which benefit catalog to query.</p>",
+        "GetBenefitApplicationOutput$Catalog": "<p>The catalog identifier that the benefit application belongs to.</p>",
+        "GetBenefitInput$Catalog": "<p>The catalog identifier that specifies which benefit catalog to query.</p>",
+        "GetBenefitOutput$Catalog": "<p>The catalog identifier that the benefit belongs to.</p>",
+        "ListBenefitAllocationsInput$Catalog": "<p>The catalog identifier to filter benefit allocations by catalog.</p>",
+        "ListBenefitApplicationsInput$Catalog": "<p>The catalog identifier to filter benefit applications by catalog.</p>",
+        "ListBenefitsInput$Catalog": "<p>The catalog identifier to filter benefits by catalog.</p>",
+        "RecallBenefitApplicationInput$Catalog": "<p>The catalog identifier that specifies which benefit catalog the application belongs to.</p>",
+        "SubmitBenefitApplicationInput$Catalog": "<p>The catalog identifier that specifies which benefit catalog the application belongs to.</p>",
+        "UpdateBenefitApplicationInput$Catalog": "<p>The catalog identifier that specifies which benefit catalog the application belongs to.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>Thrown when the request conflicts with the current state of the resource, such as attempting to modify a resource that has been changed by another process.</p>",
+      "refs": {}
+    },
+    "ConsumableDetails": {
+      "base": "<p>Contains information about consumable benefit fulfillment, such as usage quotas or service limits.</p>",
+      "refs": {
+        "FulfillmentDetails$ConsumableDetails": "<p>Details about consumable-based fulfillment, if applicable to this benefit allocation.</p>"
+      }
+    },
+    "Contact": {
+      "base": "<p>Represents contact information for a partner representative.</p>",
+      "refs": {
+        "Contacts$member": null,
+        "CreateBenefitApplicationInputPartnerContactsList$member": null,
+        "UpdateBenefitApplicationInputPartnerContactsList$member": null
+      }
+    },
+    "ContactBusinessTitleString": {
+      "base": null,
+      "refs": {
+        "Contact$BusinessTitle": "<p>The business title or role of the contact person within the organization.</p>"
+      }
+    },
+    "ContactEmail": {
+      "base": null,
+      "refs": {
+        "Contact$Email": "<p>The email address of the contact person.</p>"
+      }
+    },
+    "ContactFirstName": {
+      "base": null,
+      "refs": {
+        "Contact$FirstName": "<p>The first name of the contact person.</p>"
+      }
+    },
+    "ContactLastName": {
+      "base": null,
+      "refs": {
+        "Contact$LastName": "<p>The last name of the contact person.</p>"
+      }
+    },
+    "ContactPhone": {
+      "base": null,
+      "refs": {
+        "Contact$Phone": "<p>The phone number of the contact person.</p>"
+      }
+    },
+    "Contacts": {
+      "base": null,
+      "refs": {
+        "GetBenefitApplicationOutput$PartnerContacts": "<p>Contact information for partner representatives responsible for this benefit application.</p>"
+      }
+    },
+    "CreateBenefitApplicationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateBenefitApplicationInputAssociatedResourcesList": {
+      "base": null,
+      "refs": {
+        "CreateBenefitApplicationInput$AssociatedResources": "<p>AWS resources that are associated with this benefit application.</p>"
+      }
+    },
+    "CreateBenefitApplicationInputBenefitIdentifierString": {
+      "base": null,
+      "refs": {
+        "CreateBenefitApplicationInput$BenefitIdentifier": "<p>The unique identifier of the benefit being requested in this application.</p>"
+      }
+    },
+    "CreateBenefitApplicationInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateBenefitApplicationInput$ClientToken": "<p>A unique, case-sensitive identifier to ensure idempotent processing of the creation request.</p>"
+      }
+    },
+    "CreateBenefitApplicationInputFileDetailsList": {
+      "base": null,
+      "refs": {
+        "CreateBenefitApplicationInput$FileDetails": "<p>Supporting documents and files attached to the benefit application.</p>"
+      }
+    },
+    "CreateBenefitApplicationInputPartnerContactsList": {
+      "base": null,
+      "refs": {
+        "CreateBenefitApplicationInput$PartnerContacts": "<p>Contact information for partner representatives responsible for this benefit application.</p>"
+      }
+    },
+    "CreateBenefitApplicationInputTagsList": {
+      "base": null,
+      "refs": {
+        "CreateBenefitApplicationInput$Tags": "<p>Key-value pairs to categorize and organize the benefit application.</p>"
+      }
+    },
+    "CreateBenefitApplicationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreditCode": {
+      "base": "<p>Represents an AWS credit code that can be applied to an AWS account for billing purposes.</p>",
+      "refs": {
+        "CreditCodes$member": null
+      }
+    },
+    "CreditCodes": {
+      "base": null,
+      "refs": {
+        "CreditDetails$Codes": "<p>A list of credit codes that have been generated for this benefit allocation.</p>"
+      }
+    },
+    "CreditDetails": {
+      "base": "<p>Contains information about credit-based benefit fulfillment, including AWS promotional credits.</p>",
+      "refs": {
+        "FulfillmentDetails$CreditDetails": "<p>Details about credit-based fulfillment, if applicable to this benefit allocation.</p>"
+      }
+    },
+    "CurrencyCode": {
+      "base": null,
+      "refs": {
+        "MonetaryValue$CurrencyCode": "<p>The ISO 4217 currency code (e.g., USD, EUR) for the monetary amount.</p>"
+      }
+    },
+    "DisassociateBenefitApplicationResourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateBenefitApplicationResourceInputResourceArnString": {
+      "base": null,
+      "refs": {
+        "DisassociateBenefitApplicationResourceInput$ResourceArn": "<p>The Amazon Resource Name (ARN) of the AWS resource to disassociate from the benefit application.</p>"
+      }
+    },
+    "DisassociateBenefitApplicationResourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DisbursementDetails": {
+      "base": "<p>Contains information about disbursement-based benefit fulfillment, such as direct payments or reimbursements.</p>",
+      "refs": {
+        "FulfillmentDetails$DisbursementDetails": "<p>Details about disbursement-based fulfillment, if applicable to this benefit allocation.</p>"
+      }
+    },
+    "Document": {
+      "base": null,
+      "refs": {
+        "CreateBenefitApplicationInput$BenefitApplicationDetails": "<p>Detailed information and requirements specific to the benefit being requested.</p>",
+        "GetBenefitApplicationOutput$BenefitApplicationDetails": "<p>Detailed information and requirements specific to the benefit being requested.</p>",
+        "GetBenefitOutput$BenefitRequestSchema": "<p>The schema definition that describes the required fields for requesting this benefit.</p>",
+        "UpdateBenefitApplicationInput$BenefitApplicationDetails": "<p>Updated detailed information and requirements specific to the benefit being requested.</p>"
+      }
+    },
+    "FileDetail": {
+      "base": "<p>Represents detailed information about a file attached to a benefit application.</p>",
+      "refs": {
+        "GetBenefitApplicationOutputFileDetailsList$member": null
+      }
+    },
+    "FileDetailCreatedByString": {
+      "base": null,
+      "refs": {
+        "FileDetail$CreatedBy": "<p>The identifier of the user who uploaded the file.</p>"
+      }
+    },
+    "FileDetailFileNameString": {
+      "base": null,
+      "refs": {
+        "FileDetail$FileName": "<p>The original name of the uploaded file.</p>"
+      }
+    },
+    "FileDetailFileStatusString": {
+      "base": null,
+      "refs": {
+        "FileDetail$FileStatus": "<p>The current processing status of the file (e.g., uploaded, processing, approved, rejected).</p>"
+      }
+    },
+    "FileInput": {
+      "base": "<p>Represents input information for uploading a file to a benefit application.</p>",
+      "refs": {
+        "CreateBenefitApplicationInputFileDetailsList$member": null,
+        "UpdateBenefitApplicationInputFileDetailsList$member": null
+      }
+    },
+    "FileType": {
+      "base": null,
+      "refs": {
+        "FileDetail$FileType": "<p>The type or category of the file (e.g., document, image, spreadsheet).</p>"
+      }
+    },
+    "FileURI": {
+      "base": null,
+      "refs": {
+        "FileDetail$FileURI": "<p>The URI or location where the file is stored.</p>",
+        "FileInput$FileURI": "<p>The URI or location where the file should be stored or has been uploaded.</p>"
+      }
+    },
+    "FulfillmentDetails": {
+      "base": "<p>Contains comprehensive information about how a benefit allocation is fulfilled across different fulfillment types.</p>",
+      "refs": {
+        "GetBenefitAllocationOutput$FulfillmentDetail": "<p>Detailed information about how the benefit allocation is fulfilled.</p>"
+      }
+    },
+    "FulfillmentType": {
+      "base": null,
+      "refs": {
+        "FulfillmentTypes$member": null,
+        "GetBenefitAllocationOutput$FulfillmentType": "<p>The fulfillment type used for this benefit allocation.</p>",
+        "ListBenefitAllocationsInputFulfillmentTypesList$member": null,
+        "ListBenefitApplicationsInputFulfillmentTypesList$member": null,
+        "ListBenefitsInputFulfillmentTypesList$member": null
+      }
+    },
+    "FulfillmentTypes": {
+      "base": null,
+      "refs": {
+        "BenefitAllocationSummary$FulfillmentTypes": "<p>The fulfillment types used for this benefit allocation.</p>",
+        "BenefitApplicationSummary$FulfillmentTypes": "<p>The fulfillment types requested for this benefit application.</p>",
+        "BenefitSummary$FulfillmentTypes": "<p>The available fulfillment types for this benefit.</p>",
+        "CreateBenefitApplicationInput$FulfillmentTypes": "<p>The types of fulfillment requested for this benefit application (e.g., credits, access, disbursement).</p>",
+        "GetBenefitApplicationOutput$FulfillmentTypes": "<p>The fulfillment types requested for this benefit application.</p>",
+        "GetBenefitOutput$FulfillmentTypes": "<p>The available fulfillment types for this benefit (e.g., credits, access, disbursement).</p>"
+      }
+    },
+    "GetBenefitAllocationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBenefitAllocationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBenefitApplicationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBenefitApplicationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBenefitApplicationOutputAssociatedResourcesList": {
+      "base": null,
+      "refs": {
+        "GetBenefitApplicationOutput$AssociatedResources": "<p>AWS resources that are associated with this benefit application.</p>"
+      }
+    },
+    "GetBenefitApplicationOutputFileDetailsList": {
+      "base": null,
+      "refs": {
+        "GetBenefitApplicationOutput$FileDetails": "<p>Supporting documents and files attached to the benefit application.</p>"
+      }
+    },
+    "GetBenefitApplicationOutputStatusReasonString": {
+      "base": null,
+      "refs": {
+        "GetBenefitApplicationOutput$StatusReason": "<p>Additional information explaining the current status of the benefit application.</p>"
+      }
+    },
+    "GetBenefitInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBenefitInputIdentifierString": {
+      "base": null,
+      "refs": {
+        "GetBenefitInput$Identifier": "<p>The unique identifier of the benefit to retrieve.</p>"
+      }
+    },
+    "GetBenefitOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBenefitOutputDescriptionString": {
+      "base": null,
+      "refs": {
+        "GetBenefitOutput$Description": "<p>A detailed description of the benefit and its purpose.</p>"
+      }
+    },
+    "GetBenefitOutputIdString": {
+      "base": null,
+      "refs": {
+        "GetBenefitOutput$Id": "<p>The unique identifier of the benefit.</p>"
+      }
+    },
+    "GetBenefitOutputNameString": {
+      "base": null,
+      "refs": {
+        "GetBenefitOutput$Name": "<p>The human-readable name of the benefit.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>Thrown when an unexpected error occurs on the server side during request processing.</p>",
+      "refs": {}
+    },
+    "IssuanceDetail": {
+      "base": "<p>Represents detailed information about a specific issuance of benefit value.</p>",
+      "refs": {
+        "ConsumableDetails$IssuanceDetails": "<p>Detailed information about how the consumable benefit was issued and distributed.</p>",
+        "DisbursementDetails$IssuanceDetails": "<p>Detailed information about how the disbursement was issued and processed.</p>"
+      }
+    },
+    "ListBenefitAllocationsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBenefitAllocationsInputBenefitApplicationIdentifiersList": {
+      "base": null,
+      "refs": {
+        "ListBenefitAllocationsInput$BenefitApplicationIdentifiers": "<p>Filter benefit allocations by specific benefit application identifiers.</p>"
+      }
+    },
+    "ListBenefitAllocationsInputBenefitIdentifiersList": {
+      "base": null,
+      "refs": {
+        "ListBenefitAllocationsInput$BenefitIdentifiers": "<p>Filter benefit allocations by specific benefit identifiers.</p>"
+      }
+    },
+    "ListBenefitAllocationsInputFulfillmentTypesList": {
+      "base": null,
+      "refs": {
+        "ListBenefitAllocationsInput$FulfillmentTypes": "<p>Filter benefit allocations by specific fulfillment types.</p>"
+      }
+    },
+    "ListBenefitAllocationsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListBenefitAllocationsInput$MaxResults": "<p>The maximum number of benefit allocations to return in a single response.</p>"
+      }
+    },
+    "ListBenefitAllocationsInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListBenefitAllocationsInput$NextToken": "<p>A pagination token to retrieve the next set of results from a previous request.</p>"
+      }
+    },
+    "ListBenefitAllocationsInputStatusList": {
+      "base": null,
+      "refs": {
+        "ListBenefitAllocationsInput$Status": "<p>Filter benefit allocations by their current status.</p>"
+      }
+    },
+    "ListBenefitAllocationsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBenefitAllocationsOutputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListBenefitAllocationsOutput$NextToken": "<p>A pagination token to retrieve the next set of results, if more results are available.</p>"
+      }
+    },
+    "ListBenefitApplicationsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBenefitApplicationsInputBenefitIdentifiersList": {
+      "base": null,
+      "refs": {
+        "ListBenefitApplicationsInput$BenefitIdentifiers": "<p>Filter benefit applications by specific benefit identifiers.</p>"
+      }
+    },
+    "ListBenefitApplicationsInputFulfillmentTypesList": {
+      "base": null,
+      "refs": {
+        "ListBenefitApplicationsInput$FulfillmentTypes": "<p>Filter benefit applications by specific fulfillment types.</p>"
+      }
+    },
+    "ListBenefitApplicationsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListBenefitApplicationsInput$MaxResults": "<p>The maximum number of benefit applications to return in a single response.</p>"
+      }
+    },
+    "ListBenefitApplicationsInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListBenefitApplicationsInput$NextToken": "<p>A pagination token to retrieve the next set of results from a previous request.</p>"
+      }
+    },
+    "ListBenefitApplicationsInputProgramsList": {
+      "base": null,
+      "refs": {
+        "ListBenefitApplicationsInput$Programs": "<p>Filter benefit applications by specific AWS partner programs.</p>"
+      }
+    },
+    "ListBenefitApplicationsInputStagesList": {
+      "base": null,
+      "refs": {
+        "ListBenefitApplicationsInput$Stages": "<p>Filter benefit applications by their current processing stage.</p>"
+      }
+    },
+    "ListBenefitApplicationsInputStatusList": {
+      "base": null,
+      "refs": {
+        "ListBenefitApplicationsInput$Status": "<p>Filter benefit applications by their current processing status.</p>"
+      }
+    },
+    "ListBenefitApplicationsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBenefitApplicationsOutputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListBenefitApplicationsOutput$NextToken": "<p>A pagination token to retrieve the next set of results, if more results are available.</p>"
+      }
+    },
+    "ListBenefitsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBenefitsInputFulfillmentTypesList": {
+      "base": null,
+      "refs": {
+        "ListBenefitsInput$FulfillmentTypes": "<p>Filter benefits by specific fulfillment types.</p>"
+      }
+    },
+    "ListBenefitsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListBenefitsInput$MaxResults": "<p>The maximum number of benefits to return in a single response.</p>"
+      }
+    },
+    "ListBenefitsInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListBenefitsInput$NextToken": "<p>A pagination token to retrieve the next set of results from a previous request.</p>"
+      }
+    },
+    "ListBenefitsInputProgramsList": {
+      "base": null,
+      "refs": {
+        "ListBenefitsInput$Programs": "<p>Filter benefits by specific AWS partner programs.</p>"
+      }
+    },
+    "ListBenefitsInputStatusList": {
+      "base": null,
+      "refs": {
+        "ListBenefitsInput$Status": "<p>Filter benefits by their current status.</p>"
+      }
+    },
+    "ListBenefitsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBenefitsOutputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListBenefitsOutput$NextToken": "<p>A pagination token to retrieve the next set of results, if more results are available.</p>"
+      }
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "MonetaryValue": {
+      "base": "<p>Represents a monetary amount with its associated currency.</p>",
+      "refs": {
+        "ConsumableDetails$AllocatedAmount": "<p>The total amount of the consumable benefit that has been allocated.</p>",
+        "ConsumableDetails$RemainingAmount": "<p>The remaining amount of the consumable benefit that is still available for use.</p>",
+        "ConsumableDetails$UtilizedAmount": "<p>The amount of the consumable benefit that has already been used.</p>",
+        "CreditCode$Value": "<p>The monetary value of the credit code.</p>",
+        "CreditDetails$AllocatedAmount": "<p>The total amount of credits that have been allocated for this benefit.</p>",
+        "CreditDetails$IssuedAmount": "<p>The amount of credits that have actually been issued and are available for use.</p>",
+        "DisbursementDetails$DisbursedAmount": "<p>The total amount that has been disbursed for this benefit allocation.</p>",
+        "IssuanceDetail$IssuanceAmount": "<p>The monetary amount or value that was issued in this specific issuance.</p>"
+      }
+    },
+    "Program": {
+      "base": null,
+      "refs": {
+        "ListBenefitApplicationsInputProgramsList$member": null,
+        "ListBenefitsInputProgramsList$member": null,
+        "Programs$member": null
+      }
+    },
+    "Programs": {
+      "base": null,
+      "refs": {
+        "BenefitApplicationSummary$Programs": "<p>The AWS partner programs associated with this benefit application.</p>",
+        "BenefitSummary$Programs": "<p>The AWS partner programs that this benefit is associated with.</p>",
+        "GetBenefitApplicationOutput$Programs": "<p>The AWS partner programs associated with this benefit application.</p>",
+        "GetBenefitOutput$Programs": "<p>The AWS partner programs that this benefit is associated with.</p>"
+      }
+    },
+    "RecallBenefitApplicationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "RecallBenefitApplicationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>Thrown when the requested resource cannot be found or does not exist.</p>",
+      "refs": {}
+    },
+    "ResourceType": {
+      "base": null,
+      "refs": {
+        "AssociatedResource$ResourceType": "<p>The type of AWS resource (e.g., EC2 instance, S3 bucket, Lambda function).</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>Thrown when the request would exceed the service quotas or limits for the account.</p>",
+      "refs": {}
+    },
+    "StatusReasonCode": {
+      "base": null,
+      "refs": {
+        "GetBenefitApplicationOutput$StatusReasonCode": "<p>A standardized code representing the reason for the current status.</p>",
+        "StatusReasonCodes$member": null
+      }
+    },
+    "StatusReasonCodes": {
+      "base": "<p>List of StatusReasonCodes</p>",
+      "refs": {
+        "GetBenefitApplicationOutput$StatusReasonCodes": "<p>The list of standardized codes representing the reason for the current status.</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$Message": "<p>A message describing the access denial.</p>",
+        "AccessDetails$Description": "<p>A description of the access privileges or permissions granted by this benefit.</p>",
+        "AmendBenefitApplicationInput$Revision": "<p>The current revision number of the benefit application to ensure optimistic concurrency control.</p>",
+        "Amendment$FieldPath": "<p>The JSON path or field identifier specifying which field in the benefit application to modify.</p>",
+        "Amendment$NewValue": "<p>The new value to set for the specified field in the benefit application.</p>",
+        "AssociateBenefitApplicationResourceOutput$Arn": "<p>The Amazon Resource Name (ARN) of the benefit application after the resource association.</p>",
+        "AssociateBenefitApplicationResourceOutput$Revision": "<p>The updated revision number of the benefit application after the resource association.</p>",
+        "AssociatedResource$ResourceIdentifier": "<p>The unique identifier of the AWS resource within its service.</p>",
+        "Attributes$key": null,
+        "Attributes$value": null,
+        "BenefitAllocationSummary$Arn": "<p>The Amazon Resource Name (ARN) of the benefit allocation.</p>",
+        "BenefitAllocationSummary$StatusReason": "<p>Additional information explaining the current status of the benefit allocation.</p>",
+        "BenefitApplicationSummary$Arn": "<p>The Amazon Resource Name (ARN) of the benefit application.</p>",
+        "BenefitSummary$Arn": "<p>The Amazon Resource Name (ARN) of the benefit.</p>",
+        "ConflictException$Message": "<p>A message describing the conflict.</p>",
+        "CreateBenefitApplicationOutput$Arn": "<p>The Amazon Resource Name (ARN) of the newly created benefit application.</p>",
+        "CreateBenefitApplicationOutput$Revision": "<p>The initial revision number of the newly created benefit application.</p>",
+        "CreditCode$AwsAccountId": "<p>The AWS account ID that the credit code is associated with or can be applied to.</p>",
+        "CreditCode$AwsCreditCode": "<p>The actual credit code string that can be redeemed in the AWS billing console.</p>",
+        "DisassociateBenefitApplicationResourceOutput$Arn": "<p>The Amazon Resource Name (ARN) of the benefit application after the resource disassociation.</p>",
+        "DisassociateBenefitApplicationResourceOutput$Revision": "<p>The updated revision number of the benefit application after the resource disassociation.</p>",
+        "FileDetail$BusinessUseCase": "<p>The business purpose or use case that this file supports in the benefit application.</p>",
+        "FileDetail$FileStatusReason": "<p>The reason for that particulat file status.</p>",
+        "FileInput$BusinessUseCase": "<p>The business purpose or use case that this file supports in the benefit application.</p>",
+        "GetBenefitAllocationOutput$Name": "<p>The human-readable name of the benefit allocation.</p>",
+        "GetBenefitAllocationOutput$Description": "<p>A detailed description of the benefit allocation.</p>",
+        "GetBenefitAllocationOutput$StatusReason": "<p>Additional information explaining the current status of the benefit allocation.</p>",
+        "GetBenefitApplicationOutput$Revision": "<p>The current revision number of the benefit application.</p>",
+        "GetBenefitOutput$Arn": "<p>The Amazon Resource Name (ARN) of the benefit.</p>",
+        "InternalServerException$Message": "<p>A message describing the internal server error.</p>",
+        "IssuanceDetail$IssuanceId": "<p>The unique identifier for this specific issuance.</p>",
+        "MonetaryValue$Amount": "<p>The numeric amount of the monetary value.</p>",
+        "RecallBenefitApplicationInput$ClientToken": "<p>A unique, case-sensitive identifier to ensure idempotent processing of the recall request.</p>",
+        "RecallBenefitApplicationInput$Reason": "<p>A descriptive reason explaining why the benefit application is being recalled.</p>",
+        "ResourceNotFoundException$Message": "<p>A message describing the resource not found error.</p>",
+        "ServiceQuotaExceededException$Message": "<p>A message describing the service quota exceeded error.</p>",
+        "ServiceQuotaExceededException$ResourceId": "<p>The identifier of the resource that would exceed the quota.</p>",
+        "ServiceQuotaExceededException$ResourceType": "<p>The type of the resource that would exceed the quota.</p>",
+        "ServiceQuotaExceededException$QuotaCode": "<p>The code identifying the specific quota that would be exceeded.</p>",
+        "ThrottlingException$Message": "<p>A message describing the throttling error.</p>",
+        "UpdateBenefitApplicationInput$Revision": "<p>The current revision number of the benefit application to ensure optimistic concurrency control.</p>",
+        "UpdateBenefitApplicationOutput$Arn": "<p>The Amazon Resource Name (ARN) of the updated benefit application.</p>",
+        "UpdateBenefitApplicationOutput$Revision": "<p>The new revision number of the benefit application after the update.</p>",
+        "ValidationException$Message": "<p>A message describing the validation error.</p>",
+        "ValidationExceptionField$Name": "<p>The name of the field that failed validation.</p>",
+        "ValidationExceptionField$Message": "<p>A detailed message explaining why the field validation failed.</p>"
+      }
+    },
+    "SubmitBenefitApplicationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "SubmitBenefitApplicationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "Tag": {
+      "base": "<p>Represents a key-value pair used for categorizing and organizing AWS resources.</p>",
+      "refs": {
+        "CreateBenefitApplicationInputTagsList$member": null,
+        "Tags$member": null
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "Tag$Key": "<p>The tag key, which acts as a category or label for the tag.</p>",
+        "TagKeyList$member": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p>A list of tag keys to remove from the resource.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "Tag$Value": "<p>The tag value, which provides additional information or context for the tag key.</p>"
+      }
+    },
+    "TaggableResourceArn": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to list tags for.</p>",
+        "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to add tags to.</p>",
+        "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to remove tags from.</p>"
+      }
+    },
+    "Tags": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceResponse$tags": "<p>A list of key-value pairs representing the tags associated with the resource.</p>",
+        "TagResourceRequest$tags": "<p>A list of key-value pairs to add as tags to the resource.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>Thrown when the request rate exceeds the allowed limits and the request is being throttled.</p>",
+      "refs": {}
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "BenefitAllocationSummary$CreatedAt": "<p>The timestamp when the benefit allocation was created.</p>",
+        "BenefitAllocationSummary$ExpiresAt": "<p>The timestamp when the benefit allocation expires.</p>",
+        "BenefitApplicationSummary$CreatedAt": "<p>The timestamp when the benefit application was created.</p>",
+        "BenefitApplicationSummary$UpdatedAt": "<p>The timestamp when the benefit application was last updated.</p>",
+        "CreditCode$IssuedAt": "<p>The timestamp when the credit code was issued.</p>",
+        "CreditCode$ExpiresAt": "<p>The timestamp when the credit code expires and can no longer be redeemed.</p>",
+        "FileDetail$CreatedAt": "<p>The timestamp when the file was uploaded.</p>",
+        "GetBenefitAllocationOutput$CreatedAt": "<p>The timestamp when the benefit allocation was created.</p>",
+        "GetBenefitAllocationOutput$UpdatedAt": "<p>The timestamp when the benefit allocation was last updated.</p>",
+        "GetBenefitAllocationOutput$StartsAt": "<p>The timestamp when the benefit allocation becomes active and usable.</p>",
+        "GetBenefitAllocationOutput$ExpiresAt": "<p>The timestamp when the benefit allocation expires and is no longer usable.</p>",
+        "GetBenefitApplicationOutput$CreatedAt": "<p>The timestamp when the benefit application was created.</p>",
+        "GetBenefitApplicationOutput$UpdatedAt": "<p>The timestamp when the benefit application was last updated.</p>",
+        "IssuanceDetail$IssuedAt": "<p>The timestamp when this specific issuance was processed.</p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateBenefitApplicationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateBenefitApplicationInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "UpdateBenefitApplicationInput$ClientToken": "<p>A unique, case-sensitive identifier to ensure idempotent processing of the update request.</p>"
+      }
+    },
+    "UpdateBenefitApplicationInputFileDetailsList": {
+      "base": null,
+      "refs": {
+        "UpdateBenefitApplicationInput$FileDetails": "<p>Updated supporting documents and files attached to the benefit application.</p>"
+      }
+    },
+    "UpdateBenefitApplicationInputPartnerContactsList": {
+      "base": null,
+      "refs": {
+        "UpdateBenefitApplicationInput$PartnerContacts": "<p>Updated contact information for partner representatives responsible for this benefit application.</p>"
+      }
+    },
+    "UpdateBenefitApplicationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ValidationException": {
+      "base": "<p>Thrown when the request contains invalid parameters or fails input validation requirements.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionErrorCode": {
+      "base": null,
+      "refs": {
+        "ValidationExceptionField$Code": "<p>An error code explaining why the field validation failed.</p>"
+      }
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Represents a field-specific validation error with detailed information.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$FieldList": "<p>A list of fields that failed validation.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$Reason": "<p>The reason for the validation failure.</p>"
+      }
+    }
+  }
+}

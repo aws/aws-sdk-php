@@ -31,6 +31,42 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "CreateS3TableIntegration":{
+      "name":"CreateS3TableIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateS3TableIntegration",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateS3TableIntegrationInput"},
+      "output":{"shape":"CreateS3TableIntegrationOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "CreateTelemetryPipeline":{
+      "name":"CreateTelemetryPipeline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateTelemetryPipeline",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateTelemetryPipelineInput"},
+      "output":{"shape":"CreateTelemetryPipelineOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
     "CreateTelemetryRule":{
       "name":"CreateTelemetryRule",
       "http":{
@@ -83,6 +119,42 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "DeleteS3TableIntegration":{
+      "name":"DeleteS3TableIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteS3TableIntegration",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteS3TableIntegrationInput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidStateException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "DeleteTelemetryPipeline":{
+      "name":"DeleteTelemetryPipeline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteTelemetryPipeline",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteTelemetryPipelineInput"},
+      "output":{"shape":"DeleteTelemetryPipelineOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "idempotent":true
+    },
     "DeleteTelemetryRule":{
       "name":"DeleteTelemetryRule",
       "http":{
@@ -133,6 +205,24 @@
       ],
       "readonly":true
     },
+    "GetS3TableIntegration":{
+      "name":"GetS3TableIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetS3TableIntegration",
+        "responseCode":200
+      },
+      "input":{"shape":"GetS3TableIntegrationInput"},
+      "output":{"shape":"GetS3TableIntegrationOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
+    },
     "GetTelemetryEnrichmentStatus":{
       "name":"GetTelemetryEnrichmentStatus",
       "http":{
@@ -173,6 +263,24 @@
       },
       "output":{"shape":"GetTelemetryEvaluationStatusForOrganizationOutput"},
       "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
+    },
+    "GetTelemetryPipeline":{
+      "name":"GetTelemetryPipeline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetTelemetryPipeline",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTelemetryPipelineInput"},
+      "output":{"shape":"GetTelemetryPipelineOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -267,6 +375,23 @@
       ],
       "readonly":true
     },
+    "ListS3TableIntegrations":{
+      "name":"ListS3TableIntegrations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListS3TableIntegrations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListS3TableIntegrationsInput"},
+      "output":{"shape":"ListS3TableIntegrationsOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -278,6 +403,23 @@
       "output":{"shape":"ListTagsForResourceOutput"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
+    },
+    "ListTelemetryPipelines":{
+      "name":"ListTelemetryPipelines",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListTelemetryPipelines",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTelemetryPipelinesInput"},
+      "output":{"shape":"ListTelemetryPipelinesOutput"},
+      "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -422,6 +564,22 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "TestTelemetryPipeline":{
+      "name":"TestTelemetryPipeline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/TestTelemetryPipeline",
+        "responseCode":200
+      },
+      "input":{"shape":"TestTelemetryPipelineInput"},
+      "output":{"shape":"TestTelemetryPipelineOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
     "UntagResource":{
       "name":"UntagResource",
       "http":{
@@ -456,6 +614,23 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "UpdateTelemetryPipeline":{
+      "name":"UpdateTelemetryPipeline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateTelemetryPipeline",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateTelemetryPipelineInput"},
+      "output":{"shape":"UpdateTelemetryPipelineOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
     "UpdateTelemetryRule":{
       "name":"UpdateTelemetryRule",
       "http":{
@@ -468,6 +643,7 @@
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -486,6 +662,22 @@
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "ValidateTelemetryPipelineConfiguration":{
+      "name":"ValidateTelemetryPipelineConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ValidateTelemetryPipelineConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"ValidateTelemetryPipelineConfigurationInput"},
+      "output":{"shape":"ValidateTelemetryPipelineConfigurationOutput"},
+      "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -521,6 +713,48 @@
       "member":{"shape":"AccountIdentifier"},
       "max":10,
       "min":1
+    },
+    "Action":{
+      "type":"string",
+      "enum":[
+        "ALLOW",
+        "BLOCK",
+        "COUNT",
+        "CAPTCHA",
+        "CHALLENGE",
+        "EXCLUDED_AS_COUNT"
+      ]
+    },
+    "ActionCondition":{
+      "type":"structure",
+      "members":{
+        "Action":{"shape":"Action"}
+      }
+    },
+    "AdvancedEventSelector":{
+      "type":"structure",
+      "required":["FieldSelectors"],
+      "members":{
+        "Name":{"shape":"String"},
+        "FieldSelectors":{"shape":"FieldSelectors"}
+      }
+    },
+    "AdvancedEventSelectors":{
+      "type":"list",
+      "member":{"shape":"AdvancedEventSelector"}
+    },
+    "AdvancedFieldSelector":{
+      "type":"structure",
+      "required":["Field"],
+      "members":{
+        "Field":{"shape":"String"},
+        "Equals":{"shape":"StringList"},
+        "StartsWith":{"shape":"StringList"},
+        "EndsWith":{"shape":"StringList"},
+        "NotEquals":{"shape":"StringList"},
+        "NotStartsWith":{"shape":"StringList"},
+        "NotEndsWith":{"shape":"StringList"}
+      }
     },
     "AwsResourceExplorerManagedViewArn":{
       "type":"string",
@@ -588,10 +822,41 @@
         "DestinationRegion":{"shape":"Region"}
       }
     },
+    "CloudtrailParameters":{
+      "type":"structure",
+      "required":["AdvancedEventSelectors"],
+      "members":{
+        "AdvancedEventSelectors":{"shape":"AdvancedEventSelectors"}
+      }
+    },
+    "Condition":{
+      "type":"structure",
+      "members":{
+        "ActionCondition":{"shape":"ActionCondition"},
+        "LabelNameCondition":{"shape":"LabelNameCondition"}
+      }
+    },
+    "Conditions":{
+      "type":"list",
+      "member":{"shape":"Condition"},
+      "min":1
+    },
+    "ConfigurationSummary":{
+      "type":"structure",
+      "members":{
+        "Sources":{"shape":"Sources"},
+        "DataSources":{"shape":"DataSources"},
+        "Processors":{"shape":"Processors"},
+        "ProcessorCount":{"shape":"Integer"},
+        "Sinks":{"shape":"Sinks"}
+      }
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"String"}
+        "Message":{"shape":"String"},
+        "ResourceId":{"shape":"String"},
+        "ResourceType":{"shape":"String"}
       },
       "error":{
         "httpStatusCode":409,
@@ -615,6 +880,42 @@
       "type":"structure",
       "members":{
         "RuleArn":{"shape":"ResourceArn"}
+      }
+    },
+    "CreateS3TableIntegrationInput":{
+      "type":"structure",
+      "required":[
+        "Encryption",
+        "RoleArn"
+      ],
+      "members":{
+        "Encryption":{"shape":"Encryption"},
+        "RoleArn":{"shape":"ResourceArn"},
+        "Tags":{"shape":"TagMapInput"}
+      }
+    },
+    "CreateS3TableIntegrationOutput":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ResourceArn"}
+      }
+    },
+    "CreateTelemetryPipelineInput":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Configuration"
+      ],
+      "members":{
+        "Name":{"shape":"TelemetryPipelineName"},
+        "Configuration":{"shape":"TelemetryPipelineConfiguration"},
+        "Tags":{"shape":"TagMapInput"}
+      }
+    },
+    "CreateTelemetryPipelineOutput":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ResourceArn"}
       }
     },
     "CreateTelemetryRuleForOrganizationInput":{
@@ -653,12 +954,41 @@
         "RuleArn":{"shape":"ResourceArn"}
       }
     },
+    "DataSource":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String"},
+        "Type":{"shape":"String"}
+      }
+    },
+    "DataSources":{
+      "type":"list",
+      "member":{"shape":"DataSource"}
+    },
     "DeleteCentralizationRuleForOrganizationInput":{
       "type":"structure",
       "required":["RuleIdentifier"],
       "members":{
         "RuleIdentifier":{"shape":"RuleIdentifier"}
       }
+    },
+    "DeleteS3TableIntegrationInput":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"ResourceArn"}
+      }
+    },
+    "DeleteTelemetryPipelineInput":{
+      "type":"structure",
+      "required":["PipelineIdentifier"],
+      "members":{
+        "PipelineIdentifier":{"shape":"TelemetryPipelineIdentifier"}
+      }
+    },
+    "DeleteTelemetryPipelineOutput":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteTelemetryRuleForOrganizationInput":{
       "type":"structure",
@@ -685,12 +1015,27 @@
       "type":"string",
       "enum":["cloud-watch-logs"]
     },
+    "ELBLoadBalancerLoggingParameters":{
+      "type":"structure",
+      "members":{
+        "OutputFormat":{"shape":"OutputFormat"},
+        "FieldDelimiter":{"shape":"String"}
+      }
+    },
     "EncryptedLogGroupStrategy":{
       "type":"string",
       "enum":[
         "ALLOW",
         "SKIP"
       ]
+    },
+    "Encryption":{
+      "type":"structure",
+      "required":["SseAlgorithm"],
+      "members":{
+        "SseAlgorithm":{"shape":"SSEAlgorithm"},
+        "KmsKeyArn":{"shape":"ResourceArn"}
+      }
     },
     "EncryptionConflictResolutionStrategy":{
       "type":"string",
@@ -707,6 +1052,51 @@
       ]
     },
     "FailureReason":{"type":"string"},
+    "FieldMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
+    "FieldSelectors":{
+      "type":"list",
+      "member":{"shape":"AdvancedFieldSelector"}
+    },
+    "FieldToMatch":{
+      "type":"structure",
+      "members":{
+        "SingleHeader":{"shape":"SingleHeader"},
+        "UriPath":{"shape":"String"},
+        "QueryString":{"shape":"String"},
+        "Method":{"shape":"String"}
+      }
+    },
+    "Filter":{
+      "type":"structure",
+      "members":{
+        "Behavior":{"shape":"FilterBehavior"},
+        "Requirement":{"shape":"FilterRequirement"},
+        "Conditions":{"shape":"Conditions"}
+      }
+    },
+    "FilterBehavior":{
+      "type":"string",
+      "enum":[
+        "KEEP",
+        "DROP"
+      ]
+    },
+    "FilterRequirement":{
+      "type":"string",
+      "enum":[
+        "MEETS_ALL",
+        "MEETS_ANY"
+      ]
+    },
+    "Filters":{
+      "type":"list",
+      "member":{"shape":"Filter"},
+      "min":1
+    },
     "GetCentralizationRuleForOrganizationInput":{
       "type":"structure",
       "required":["RuleIdentifier"],
@@ -728,6 +1118,24 @@
         "CentralizationRule":{"shape":"CentralizationRule"}
       }
     },
+    "GetS3TableIntegrationInput":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"ResourceArn"}
+      }
+    },
+    "GetS3TableIntegrationOutput":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ResourceArn"},
+        "RoleArn":{"shape":"ResourceArn"},
+        "Status":{"shape":"IntegrationStatus"},
+        "Encryption":{"shape":"Encryption"},
+        "DestinationTableBucketArn":{"shape":"ResourceArn"},
+        "CreatedTimeStamp":{"shape":"Long"}
+      }
+    },
     "GetTelemetryEnrichmentStatusOutput":{
       "type":"structure",
       "members":{
@@ -747,6 +1155,19 @@
       "members":{
         "Status":{"shape":"Status"},
         "FailureReason":{"shape":"FailureReason"}
+      }
+    },
+    "GetTelemetryPipelineInput":{
+      "type":"structure",
+      "required":["PipelineIdentifier"],
+      "members":{
+        "PipelineIdentifier":{"shape":"TelemetryPipelineIdentifier"}
+      }
+    },
+    "GetTelemetryPipelineOutput":{
+      "type":"structure",
+      "members":{
+        "Pipeline":{"shape":"TelemetryPipeline"}
       }
     },
     "GetTelemetryRuleForOrganizationInput":{
@@ -787,6 +1208,24 @@
       "type":"integer",
       "box":true
     },
+    "IntegrationStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "DELETING"
+      ]
+    },
+    "IntegrationSummaries":{
+      "type":"list",
+      "member":{"shape":"IntegrationSummary"}
+    },
+    "IntegrationSummary":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ResourceArn"},
+        "Status":{"shape":"IntegrationStatus"}
+      }
+    },
     "InternalServerException":{
       "type":"structure",
       "members":{
@@ -795,11 +1234,39 @@
           "shape":"String",
           "location":"header",
           "locationName":"x-amzn-ErrorType"
+        },
+        "retryAfterSeconds":{
+          "shape":"Integer",
+          "location":"header",
+          "locationName":"Retry-After"
         }
       },
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "InvalidStateException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "LabelNameCondition":{
+      "type":"structure",
+      "members":{
+        "LabelName":{"shape":"LabelNameConditionLabelNameString"}
+      }
+    },
+    "LabelNameConditionLabelNameString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[0-9A-Za-z_\\-:]+"
     },
     "ListCentralizationRulesForOrganizationInput":{
       "type":"structure",
@@ -877,6 +1344,26 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListS3TableIntegrationsInput":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListS3TableIntegrationsMaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListS3TableIntegrationsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListS3TableIntegrationsOutput":{
+      "type":"structure",
+      "members":{
+        "IntegrationSummaries":{"shape":"IntegrationSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListTagsForResourceInput":{
       "type":"structure",
       "required":["ResourceARN"],
@@ -889,6 +1376,26 @@
       "required":["Tags"],
       "members":{
         "Tags":{"shape":"TagMapOutput"}
+      }
+    },
+    "ListTelemetryPipelinesInput":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListTelemetryPipelinesMaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListTelemetryPipelinesMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListTelemetryPipelinesOutput":{
+      "type":"structure",
+      "members":{
+        "PipelineSummaries":{"shape":"TelemetryPipelineSummaries"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "ListTelemetryRulesForOrganizationInput":{
@@ -935,6 +1442,30 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "LogDeliveryParameters":{
+      "type":"structure",
+      "members":{
+        "LogTypes":{"shape":"LogTypes"}
+      }
+    },
+    "LogType":{
+      "type":"string",
+      "enum":[
+        "APPLICATION_LOGS",
+        "USAGE_LOGS"
+      ]
+    },
+    "LogTypes":{
+      "type":"list",
+      "member":{"shape":"LogType"}
+    },
+    "LoggingFilter":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"Filters"},
+        "DefaultBehavior":{"shape":"FilterBehavior"}
+      }
+    },
     "LogsBackupConfiguration":{
       "type":"structure",
       "required":["Region"],
@@ -971,6 +1502,58 @@
       "member":{"shape":"OrganizationUnitIdentifier"},
       "min":1
     },
+    "OutputFormat":{
+      "type":"string",
+      "enum":[
+        "plain",
+        "json"
+      ]
+    },
+    "PipelineOutput":{
+      "type":"structure",
+      "members":{
+        "Record":{"shape":"Record"},
+        "Error":{"shape":"PipelineOutputError"}
+      }
+    },
+    "PipelineOutputError":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      }
+    },
+    "PipelineOutputs":{
+      "type":"list",
+      "member":{"shape":"PipelineOutput"}
+    },
+    "Processors":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "Record":{
+      "type":"structure",
+      "members":{
+        "Data":{"shape":"String"},
+        "Type":{"shape":"RecordFormat"}
+      }
+    },
+    "RecordFormat":{
+      "type":"string",
+      "enum":[
+        "STRING",
+        "JSON"
+      ]
+    },
+    "Records":{
+      "type":"list",
+      "member":{"shape":"Record"}
+    },
+    "RedactedFields":{
+      "type":"list",
+      "member":{"shape":"FieldToMatch"},
+      "max":100,
+      "min":0
+    },
     "Region":{
       "type":"string",
       "min":1
@@ -995,7 +1578,9 @@
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"String"}
+        "Message":{"shape":"String"},
+        "ResourceId":{"shape":"String"},
+        "ResourceType":{"shape":"String"}
       },
       "error":{
         "httpStatusCode":404,
@@ -1008,7 +1593,15 @@
       "enum":[
         "AWS::EC2::Instance",
         "AWS::EC2::VPC",
-        "AWS::Lambda::Function"
+        "AWS::Lambda::Function",
+        "AWS::CloudTrail",
+        "AWS::EKS::Cluster",
+        "AWS::WAFv2::WebACL",
+        "AWS::ElasticLoadBalancingV2::LoadBalancer",
+        "AWS::Route53Resolver::ResolverEndpoint",
+        "AWS::BedrockAgentCore::Runtime",
+        "AWS::BedrockAgentCore::Browser",
+        "AWS::BedrockAgentCore::CodeInterpreter"
       ]
     },
     "ResourceTypes":{
@@ -1042,10 +1635,21 @@
       "min":1,
       "pattern":"[0-9A-Za-z-_.#/]+"
     },
+    "SSEAlgorithm":{
+      "type":"string",
+      "enum":[
+        "aws:kms",
+        "AES256"
+      ]
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
         "Message":{"shape":"String"},
+        "ResourceId":{"shape":"String"},
+        "ResourceType":{"shape":"String"},
+        "ServiceCode":{"shape":"String"},
+        "QuotaCode":{"shape":"String"},
         "amznErrorType":{
           "shape":"String",
           "location":"header",
@@ -1057,6 +1661,27 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "SingleHeader":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"SingleHeaderNameString"}
+      }
+    },
+    "SingleHeaderNameString":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "Sinks":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "Source":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"String"}
+      }
     },
     "SourceFilterString":{
       "type":"string",
@@ -1073,6 +1698,10 @@
         "LogGroupSelectionCriteria":{"shape":"LogsFilterString"},
         "EncryptedLogGroupStrategy":{"shape":"EncryptedLogGroupStrategy"}
       }
+    },
+    "Sources":{
+      "type":"list",
+      "member":{"shape":"Source"}
     },
     "StartTelemetryEnrichmentOutput":{
       "type":"structure",
@@ -1100,6 +1729,10 @@
       }
     },
     "String":{"type":"string"},
+    "StringList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -1167,7 +1800,11 @@
         "DestinationType":{"shape":"DestinationType"},
         "DestinationPattern":{"shape":"String"},
         "RetentionInDays":{"shape":"RetentionPeriodInDays"},
-        "VPCFlowLogParameters":{"shape":"VPCFlowLogParameters"}
+        "VPCFlowLogParameters":{"shape":"VPCFlowLogParameters"},
+        "CloudtrailParameters":{"shape":"CloudtrailParameters"},
+        "ELBLoadBalancerLoggingParameters":{"shape":"ELBLoadBalancerLoggingParameters"},
+        "WAFLoggingParameters":{"shape":"WAFLoggingParameters"},
+        "LogDeliveryParameters":{"shape":"LogDeliveryParameters"}
       }
     },
     "TelemetryEnrichmentStatus":{
@@ -1178,12 +1815,82 @@
         "Impaired"
       ]
     },
+    "TelemetryPipeline":{
+      "type":"structure",
+      "members":{
+        "CreatedTimeStamp":{"shape":"Long"},
+        "LastUpdateTimeStamp":{"shape":"Long"},
+        "Arn":{"shape":"ResourceArn"},
+        "Name":{"shape":"TelemetryPipelineName"},
+        "Configuration":{"shape":"TelemetryPipelineConfiguration"},
+        "Status":{"shape":"TelemetryPipelineStatus"},
+        "StatusReason":{"shape":"TelemetryPipelineStatusReason"},
+        "Tags":{"shape":"TagMapOutput"}
+      }
+    },
+    "TelemetryPipelineConfiguration":{
+      "type":"structure",
+      "required":["Body"],
+      "members":{
+        "Body":{"shape":"TelemetryPipelineConfigurationBody"}
+      }
+    },
+    "TelemetryPipelineConfigurationBody":{
+      "type":"string",
+      "max":24000,
+      "min":1
+    },
+    "TelemetryPipelineIdentifier":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "TelemetryPipelineName":{
+      "type":"string",
+      "max":28,
+      "min":3,
+      "pattern":".*[a-z][a-z0-9\\-]+.*"
+    },
+    "TelemetryPipelineStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING",
+        "CREATE_FAILED",
+        "UPDATE_FAILED"
+      ]
+    },
+    "TelemetryPipelineStatusReason":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"String"}
+      }
+    },
+    "TelemetryPipelineSummaries":{
+      "type":"list",
+      "member":{"shape":"TelemetryPipelineSummary"}
+    },
+    "TelemetryPipelineSummary":{
+      "type":"structure",
+      "members":{
+        "CreatedTimeStamp":{"shape":"Long"},
+        "LastUpdateTimeStamp":{"shape":"Long"},
+        "Arn":{"shape":"ResourceArn"},
+        "Name":{"shape":"TelemetryPipelineName"},
+        "Status":{"shape":"TelemetryPipelineStatus"},
+        "Tags":{"shape":"TagMapOutput"},
+        "ConfigurationSummary":{"shape":"ConfigurationSummary"}
+      }
+    },
     "TelemetryRule":{
       "type":"structure",
       "required":["TelemetryType"],
       "members":{
         "ResourceType":{"shape":"ResourceType"},
         "TelemetryType":{"shape":"TelemetryType"},
+        "TelemetrySourceTypes":{"shape":"TelemetrySourceTypes"},
         "DestinationConfiguration":{"shape":"TelemetryDestinationConfiguration"},
         "Scope":{"shape":"String"},
         "SelectionCriteria":{"shape":"String"}
@@ -1201,8 +1908,25 @@
         "CreatedTimeStamp":{"shape":"Long"},
         "LastUpdateTimeStamp":{"shape":"Long"},
         "ResourceType":{"shape":"ResourceType"},
-        "TelemetryType":{"shape":"TelemetryType"}
+        "TelemetryType":{"shape":"TelemetryType"},
+        "TelemetrySourceTypes":{"shape":"TelemetrySourceTypes"}
       }
+    },
+    "TelemetrySourceType":{
+      "type":"string",
+      "enum":[
+        "VPC_FLOW_LOGS",
+        "ROUTE53_RESOLVER_QUERY_LOGS",
+        "EKS_AUDIT_LOGS",
+        "EKS_AUTHENTICATOR_LOGS",
+        "EKS_CONTROLLER_MANAGER_LOGS",
+        "EKS_SCHEDULER_LOGS",
+        "EKS_API_LOGS"
+      ]
+    },
+    "TelemetrySourceTypes":{
+      "type":"list",
+      "member":{"shape":"TelemetrySourceType"}
     },
     "TelemetryState":{
       "type":"string",
@@ -1219,6 +1943,23 @@
         "Metrics",
         "Traces"
       ]
+    },
+    "TestTelemetryPipelineInput":{
+      "type":"structure",
+      "required":[
+        "Records",
+        "Configuration"
+      ],
+      "members":{
+        "Records":{"shape":"Records"},
+        "Configuration":{"shape":"TelemetryPipelineConfiguration"}
+      }
+    },
+    "TestTelemetryPipelineOutput":{
+      "type":"structure",
+      "members":{
+        "Results":{"shape":"PipelineOutputs"}
+      }
     },
     "TooManyRequestsException":{
       "type":"structure",
@@ -1258,6 +1999,21 @@
       "members":{
         "RuleArn":{"shape":"ResourceArn"}
       }
+    },
+    "UpdateTelemetryPipelineInput":{
+      "type":"structure",
+      "required":[
+        "PipelineIdentifier",
+        "Configuration"
+      ],
+      "members":{
+        "PipelineIdentifier":{"shape":"TelemetryPipelineIdentifier"},
+        "Configuration":{"shape":"TelemetryPipelineConfiguration"}
+      }
+    },
+    "UpdateTelemetryPipelineOutput":{
+      "type":"structure",
+      "members":{}
     },
     "UpdateTelemetryRuleForOrganizationInput":{
       "type":"structure",
@@ -1301,16 +2057,54 @@
         "MaxAggregationInterval":{"shape":"Integer"}
       }
     },
+    "ValidateTelemetryPipelineConfigurationInput":{
+      "type":"structure",
+      "required":["Configuration"],
+      "members":{
+        "Configuration":{"shape":"TelemetryPipelineConfiguration"}
+      }
+    },
+    "ValidateTelemetryPipelineConfigurationOutput":{
+      "type":"structure",
+      "members":{
+        "Errors":{"shape":"ValidationErrors"}
+      }
+    },
+    "ValidationError":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"},
+        "Reason":{"shape":"String"},
+        "FieldMap":{"shape":"FieldMap"}
+      }
+    },
+    "ValidationErrors":{
+      "type":"list",
+      "member":{"shape":"ValidationError"}
+    },
     "ValidationException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"String"}
+        "Message":{"shape":"String"},
+        "Errors":{"shape":"ValidationErrors"}
       },
       "error":{
         "httpStatusCode":400,
         "senderFault":true
       },
       "exception":true
+    },
+    "WAFLogType":{
+      "type":"string",
+      "enum":["WAF_LOGS"]
+    },
+    "WAFLoggingParameters":{
+      "type":"structure",
+      "members":{
+        "RedactedFields":{"shape":"RedactedFields"},
+        "LoggingFilter":{"shape":"LoggingFilter"},
+        "LogType":{"shape":"WAFLogType"}
+      }
     }
   }
 }

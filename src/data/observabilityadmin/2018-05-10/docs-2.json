@@ -3,34 +3,45 @@
   "service": "<p> You can use Amazon CloudWatch Observability Admin to discover and understand the state of telemetry configuration in CloudWatch for your Amazon Web Services Organization or account. This simplifies the process of auditing your telemetry collection configurations across multiple resource types within your Amazon Web Services Organization or account. By providing a consolidated view, it allows you to easily review and manage telemetry settings, helping you ensure proper monitoring and data collection across your Amazon Web Services environment. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/telemetry-config-cloudwatch.html\">Auditing CloudWatch telemetry conﬁgurations</a> in the CloudWatch User Guide.</p> <p>For information on the permissions you need to use this API, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/auth-and-access-control-cw.html\">Identity and access management for Amazon CloudWatch</a> in the CloudWatch User Guide.</p>",
   "operations": {
     "CreateCentralizationRuleForOrganization": "<p>Creates a centralization rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
+    "CreateS3TableIntegration": "<p>Creates an integration between CloudWatch and S3 Tables for analytics. This integration enables querying CloudWatch telemetry data using analytics engines like Amazon Athena, Amazon Redshift, and Apache Spark.</p>",
+    "CreateTelemetryPipeline": "<p>Creates a telemetry pipeline for processing and transforming telemetry data. The pipeline defines how data flows from sources through processors to destinations, enabling data transformation and delivering capabilities. </p>",
     "CreateTelemetryRule": "<p> Creates a telemetry rule that defines how telemetry should be configured for Amazon Web Services resources in your account. The rule specifies which resources should have telemetry enabled and how that telemetry data should be collected based on resource type, telemetry type, and selection criteria. </p>",
     "CreateTelemetryRuleForOrganization": "<p> Creates a telemetry rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
     "DeleteCentralizationRuleForOrganization": "<p>Deletes an organization-wide centralization rule. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
+    "DeleteS3TableIntegration": "<p>Deletes an S3 Table integration and its associated data. This operation removes the connection between CloudWatch Observability Admin and S3 Tables.</p>",
+    "DeleteTelemetryPipeline": "<p>Deletes a telemetry pipeline and its associated resources. This operation stops data processing and removes the pipeline configuration.</p>",
     "DeleteTelemetryRule": "<p> Deletes a telemetry rule from your account. Any telemetry configurations previously created by the rule will remain but no new resources will be configured by this rule. </p>",
     "DeleteTelemetryRuleForOrganization": "<p> Deletes an organization-wide telemetry rule. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
     "GetCentralizationRuleForOrganization": "<p>Retrieves the details of a specific organization centralization rule. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
-    "GetTelemetryEnrichmentStatus": "<p> Returns the current status of the resource tags for telemetry feature, which enhances telemetry data with additional resource metadata from Amazon Web Services Resource Explorer. </p>",
+    "GetS3TableIntegration": "<p>Retrieves information about a specific S3 Table integration, including its configuration, status, and metadata.</p>",
+    "GetTelemetryEnrichmentStatus": "<p> Returns the current status of the resource tags for telemetry feature, which enhances telemetry data with additional resource metadata from Resource Explorer. </p>",
     "GetTelemetryEvaluationStatus": "<p> Returns the current onboarding status of the telemetry config feature, including the status of the feature and reason the feature failed to start or stop. </p>",
     "GetTelemetryEvaluationStatusForOrganization": "<p> This returns the onboarding status of the telemetry configuration feature for the organization. It can only be called by a Management Account of an Amazon Web Services Organization or an assigned Delegated Admin Account of Amazon CloudWatch telemetry config. </p>",
+    "GetTelemetryPipeline": "<p>Retrieves information about a specific telemetry pipeline, including its configuration, status, and metadata.</p>",
     "GetTelemetryRule": "<p> Retrieves the details of a specific telemetry rule in your account. </p>",
     "GetTelemetryRuleForOrganization": "<p> Retrieves the details of a specific organization telemetry rule. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
     "ListCentralizationRulesForOrganization": "<p>Lists all centralization rules in your organization. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
     "ListResourceTelemetry": "<p> Returns a list of telemetry configurations for Amazon Web Services resources supported by telemetry config. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/telemetry-config-cloudwatch.html\">Auditing CloudWatch telemetry configurations</a>. </p>",
     "ListResourceTelemetryForOrganization": "<p> Returns a list of telemetry configurations for Amazon Web Services resources supported by telemetry config in the organization. </p>",
-    "ListTagsForResource": "<p> Lists all tags attached to the specified telemetry rule resource. </p>",
+    "ListS3TableIntegrations": "<p>Lists all S3 Table integrations in your account. We recommend using pagination to ensure that the operation returns quickly and successfully.</p>",
+    "ListTagsForResource": "<p> Lists all tags attached to the specified resource. Supports telemetry rule resources and telemetry pipeline resources. </p>",
+    "ListTelemetryPipelines": "<p>Returns a list of telemetry pipelines in your account. Returns up to 100 results. If more than 100 telemetry pipelines exist, include the <code>NextToken</code> value from the response to retrieve the next set of results.</p>",
     "ListTelemetryRules": "<p> Lists all telemetry rules in your account. You can filter the results by specifying a rule name prefix. </p>",
     "ListTelemetryRulesForOrganization": "<p> Lists all telemetry rules in your organization. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
-    "StartTelemetryEnrichment": "<p> Enables the resource tags for telemetry feature for your account, which enhances telemetry data with additional resource metadata from Amazon Web Services Resource Explorer to provide richer context for monitoring and observability. </p>",
+    "StartTelemetryEnrichment": "<p> Enables the resource tags for telemetry feature for your account, which enhances telemetry data with additional resource metadata from Resource Explorer to provide richer context for monitoring and observability. </p>",
     "StartTelemetryEvaluation": "<p> This action begins onboarding the caller Amazon Web Services account to the telemetry config feature. </p>",
     "StartTelemetryEvaluationForOrganization": "<p> This actions begins onboarding the organization and all member accounts to the telemetry config feature. </p>",
     "StopTelemetryEnrichment": "<p> Disables the resource tags for telemetry feature for your account, stopping the enhancement of telemetry data with additional resource metadata. </p>",
     "StopTelemetryEvaluation": "<p> This action begins offboarding the caller Amazon Web Services account from the telemetry config feature. </p>",
     "StopTelemetryEvaluationForOrganization": "<p> This action offboards the Organization of the caller Amazon Web Services account from the telemetry config feature. </p>",
-    "TagResource": "<p> Adds or updates tags for a telemetry rule resource. </p>",
-    "UntagResource": "<p> Removes tags from a telemetry rule resource. </p>",
+    "TagResource": "<p> Adds or updates tags for a resource. Supports telemetry rule resources and telemetry pipeline resources. </p>",
+    "TestTelemetryPipeline": "<p>Tests a pipeline configuration with sample records to validate data processing before deployment. This operation helps ensure your pipeline configuration works as expected. </p>",
+    "UntagResource": "<p> Removes tags from a resource. Supports telemetry rule resources and telemetry pipeline resources. </p>",
     "UpdateCentralizationRuleForOrganization": "<p>Updates an existing centralization rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
-    "UpdateTelemetryRule": "<p> Updates an existing telemetry rule in your account. </p>",
-    "UpdateTelemetryRuleForOrganization": "<p> Updates an existing telemetry rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account. </p>"
+    "UpdateTelemetryPipeline": "<p>Updates the configuration of an existing telemetry pipeline.</p> <note> <p>The following attributes cannot be updated after pipeline creation:</p> <ul> <li> <p> <b>Pipeline name</b> - The pipeline name is immutable</p> </li> <li> <p> <b>Pipeline ARN</b> - The ARN is automatically generated and cannot be changed</p> </li> <li> <p> <b>Source type</b> - Once a pipeline is created with a specific source type (such as S3, CloudWatch Logs, GitHub, or third-party sources), it cannot be changed to a different source type</p> </li> </ul> <p>Processors can be added, removed, or modified. However, some processors are not supported for third-party pipelines and cannot be added through updates.</p> </note> <p> <b>Source-Specific Update Rules</b> </p> <dl> <dt>CloudWatch Logs Sources (Vended and Custom)</dt> <dd> <p> <b>Updatable:</b> <code>sts_role_arn</code> </p> <p> <b>Fixed:</b> <code>data_source_name</code>, <code>data_source_type</code>, sink (must remain <code>@original</code>)</p> </dd> <dt>S3 Sources (Crowdstrike, Zscaler, SentinelOne, Custom)</dt> <dd> <p> <b>Updatable:</b> All SQS configuration parameters, <code>sts_role_arn</code>, codec settings, compression type, bucket ownership settings, sink log group</p> <p> <b>Fixed:</b> <code>notification_type</code>, <code>aws.region</code> </p> </dd> <dt>GitHub Audit Logs</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>scope</code> (can switch between ORGANIZATION/ENTERPRISE), <code>organization</code> or <code>enterprise</code> name, <code>range</code>, authentication credentials (PAT or GitHub App)</p> </dd> <dt>Microsoft Sources (Entra ID, Office365, Windows)</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>tenant_id</code>, <code>workspace_id</code> (Windows only), OAuth2 credentials (<code>client_id</code>, <code>client_secret</code>)</p> </dd> <dt>Okta Sources (SSO, Auth0)</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>domain</code>, <code>range</code> (SSO only), OAuth2 credentials (<code>client_id</code>, <code>client_secret</code>)</p> </dd> <dt>Palo Alto Networks</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>hostname</code>, basic authentication credentials (<code>username</code>, <code>password</code>)</p> </dd> <dt>ServiceNow CMDB</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>instance_url</code>, <code>range</code>, OAuth2 credentials (<code>client_id</code>, <code>client_secret</code>)</p> </dd> <dt>Wiz CNAPP</dt> <dd> <p> <b>Updatable:</b> All Amazon Web Services Secrets Manager attributes, <code>region</code>, <code>range</code>, OAuth2 credentials (<code>client_id</code>, <code>client_secret</code>)</p> </dd> </dl>",
+    "UpdateTelemetryRule": "<p> Updates an existing telemetry rule in your account. If multiple users attempt to modify the same telemetry rule simultaneously, a ConflictException is returned to provide specific error information for concurrent modification scenarios. </p>",
+    "UpdateTelemetryRuleForOrganization": "<p> Updates an existing telemetry rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
+    "ValidateTelemetryPipelineConfiguration": "<p>Validates a pipeline configuration without creating the pipeline. This operation checks the configuration for syntax errors and compatibility issues.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -52,11 +63,41 @@
         "ListTelemetryRulesForOrganizationInput$SourceAccountIds": "<p> The list of account IDs to filter organization telemetry rules by their source accounts. </p>"
       }
     },
+    "Action": {
+      "base": "<p> Enumeration of WAF actions that can be matched in filter conditions. </p>",
+      "refs": {
+        "ActionCondition$Action": "<p> The WAF action to match against (ALLOW, BLOCK, COUNT, CAPTCHA, CHALLENGE, EXCLUDED_AS_COUNT). </p>"
+      }
+    },
+    "ActionCondition": {
+      "base": "<p> Condition that matches based on the specific WAF action taken on the request. </p>",
+      "refs": {
+        "Condition$ActionCondition": "<p> Matches log records based on the WAF rule action taken (ALLOW, BLOCK, COUNT, etc.). </p>"
+      }
+    },
+    "AdvancedEventSelector": {
+      "base": "<p>Advanced event selectors let you create fine-grained selectors for management, data, and network activity events.</p>",
+      "refs": {
+        "AdvancedEventSelectors$member": null
+      }
+    },
+    "AdvancedEventSelectors": {
+      "base": null,
+      "refs": {
+        "CloudtrailParameters$AdvancedEventSelectors": "<p> The advanced event selectors to use for filtering Amazon Web Services CloudTrail events. </p>"
+      }
+    },
+    "AdvancedFieldSelector": {
+      "base": "<p> Defines criteria for selecting resources based on field values. </p>",
+      "refs": {
+        "FieldSelectors$member": null
+      }
+    },
     "AwsResourceExplorerManagedViewArn": {
       "base": null,
       "refs": {
-        "GetTelemetryEnrichmentStatusOutput$AwsResourceExplorerManagedViewArn": "<p> The Amazon Resource Name (ARN) of the Amazon Web Services Resource Explorer managed view used for resource tags for telemetry, if the feature is enabled. </p>",
-        "StartTelemetryEnrichmentOutput$AwsResourceExplorerManagedViewArn": "<p> The Amazon Resource Name (ARN) of the Amazon Web Services Resource Explorer managed view created for resource tags for telemetry. </p>"
+        "GetTelemetryEnrichmentStatusOutput$AwsResourceExplorerManagedViewArn": "<p> The Amazon Resource Name (ARN) of the Resource Explorer managed view used for resource tags for telemetry, if the feature is enabled. </p>",
+        "StartTelemetryEnrichmentOutput$AwsResourceExplorerManagedViewArn": "<p> The Amazon Resource Name (ARN) of the Resource Explorer managed view created for resource tags for telemetry. </p>"
       }
     },
     "Boolean": {
@@ -104,6 +145,30 @@
         "CentralizationRuleSummaries$member": null
       }
     },
+    "CloudtrailParameters": {
+      "base": "<p> Parameters specific to Amazon Web Services CloudTrail telemetry configuration. </p>",
+      "refs": {
+        "TelemetryDestinationConfiguration$CloudtrailParameters": "<p> Configuration parameters specific to Amazon Web Services CloudTrail when CloudTrail is the source type. </p>"
+      }
+    },
+    "Condition": {
+      "base": "<p> A single condition that can match based on WAF rule action or label name. </p>",
+      "refs": {
+        "Conditions$member": null
+      }
+    },
+    "Conditions": {
+      "base": "<p> A list of conditions for filter matching, with at least one condition required. </p>",
+      "refs": {
+        "Filter$Conditions": "<p> The list of conditions that determine if a log record matches this filter. </p>"
+      }
+    },
+    "ConfigurationSummary": {
+      "base": "<p>Provides a summary of pipeline configuration components including sources, processors, and destinations.</p>",
+      "refs": {
+        "TelemetryPipelineSummary$ConfigurationSummary": "<p>A summary of the pipeline configuration components.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p> The requested operation conflicts with the current state of the specified resource or with another request. </p>",
       "refs": {}
@@ -113,6 +178,22 @@
       "refs": {}
     },
     "CreateCentralizationRuleForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateS3TableIntegrationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateS3TableIntegrationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateTelemetryPipelineInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateTelemetryPipelineOutput": {
       "base": null,
       "refs": {}
     },
@@ -132,7 +213,31 @@
       "base": null,
       "refs": {}
     },
+    "DataSource": {
+      "base": "<p>Information about a data source associated with the telemetry pipeline. For CloudWatch Logs sources, this includes both a name and type extracted from the log event metadata. For third-party sources (such as S3), this includes only a name, with the type field left empty.</p>",
+      "refs": {
+        "DataSources$member": null
+      }
+    },
+    "DataSources": {
+      "base": null,
+      "refs": {
+        "ConfigurationSummary$DataSources": "<p>The list of data sources that provide telemetry data to the pipeline.</p>"
+      }
+    },
     "DeleteCentralizationRuleForOrganizationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteS3TableIntegrationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTelemetryPipelineInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTelemetryPipelineOutput": {
       "base": null,
       "refs": {}
     },
@@ -156,10 +261,23 @@
         "TelemetryDestinationConfiguration$DestinationType": "<p> The type of destination for the telemetry data (e.g., \"Amazon CloudWatch Logs\", \"S3\"). </p>"
       }
     },
+    "ELBLoadBalancerLoggingParameters": {
+      "base": "<p> Configuration parameters for ELB load balancer logging, including output format and field delimiter settings. </p>",
+      "refs": {
+        "TelemetryDestinationConfiguration$ELBLoadBalancerLoggingParameters": "<p> Configuration parameters specific to ELB load balancer logging when ELB is the resource type. </p>"
+      }
+    },
     "EncryptedLogGroupStrategy": {
       "base": null,
       "refs": {
         "SourceLogsConfiguration$EncryptedLogGroupStrategy": "<p>A strategy determining whether to centralize source log groups that are encrypted with customer managed KMS keys (CMK). ALLOW will consider CMK encrypted source log groups for centralization while SKIP will skip CMK encrypted source log groups from centralization.</p>"
+      }
+    },
+    "Encryption": {
+      "base": "<p>Defines the encryption configuration for S3 Table integrations, including the encryption algorithm and KMS key settings.</p>",
+      "refs": {
+        "CreateS3TableIntegrationInput$Encryption": "<p>The encryption configuration for the S3 Table integration, including the encryption algorithm and KMS key settings.</p>",
+        "GetS3TableIntegrationOutput$Encryption": "<p>The encryption configuration for the S3 Table integration.</p>"
       }
     },
     "EncryptionConflictResolutionStrategy": {
@@ -181,11 +299,62 @@
         "GetTelemetryEvaluationStatusOutput$FailureReason": "<p> Describes the reason for the failure status. The field will only be populated if <code>Status</code> is <code>FAILED_START</code> or <code>FAILED_STOP</code>. </p>"
       }
     },
+    "FieldMap": {
+      "base": null,
+      "refs": {
+        "ValidationError$FieldMap": "<p>A mapping of field names to specific validation issues within the configuration.</p>"
+      }
+    },
+    "FieldSelectors": {
+      "base": null,
+      "refs": {
+        "AdvancedEventSelector$FieldSelectors": "<p>Contains all selector statements in an advanced event selector.</p>"
+      }
+    },
+    "FieldToMatch": {
+      "base": "<p> Specifies a field in the request to redact from WAF logs, such as headers, query parameters, or body content. </p>",
+      "refs": {
+        "RedactedFields$member": null
+      }
+    },
+    "Filter": {
+      "base": "<p> A single filter condition that specifies behavior, requirement, and matching conditions for WAF log records. </p>",
+      "refs": {
+        "Filters$member": null
+      }
+    },
+    "FilterBehavior": {
+      "base": "<p> Enumeration of filter actions: KEEP to include log records, DROP to exclude them. </p>",
+      "refs": {
+        "Filter$Behavior": "<p> The action to take for log records matching this filter (KEEP or DROP). </p>",
+        "LoggingFilter$DefaultBehavior": "<p> The default action (KEEP or DROP) for log records that don't match any filter conditions. </p>"
+      }
+    },
+    "FilterRequirement": {
+      "base": "<p> Enumeration of condition matching requirements: MEETS_ALL requires all conditions to match, MEETS_ANY requires at least one. </p>",
+      "refs": {
+        "Filter$Requirement": "<p> Whether the log record must meet all conditions (MEETS_ALL) or any condition (MEETS_ANY) to match this filter. </p>"
+      }
+    },
+    "Filters": {
+      "base": "<p> A list of filter conditions, with at least one filter required. </p>",
+      "refs": {
+        "LoggingFilter$Filters": "<p> A list of filter conditions that determine log record handling behavior. </p>"
+      }
+    },
     "GetCentralizationRuleForOrganizationInput": {
       "base": null,
       "refs": {}
     },
     "GetCentralizationRuleForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetS3TableIntegrationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetS3TableIntegrationOutput": {
       "base": null,
       "refs": {}
     },
@@ -198,6 +367,14 @@
       "refs": {}
     },
     "GetTelemetryEvaluationStatusOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTelemetryPipelineInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTelemetryPipelineOutput": {
       "base": null,
       "refs": {}
     },
@@ -220,12 +397,49 @@
     "Integer": {
       "base": null,
       "refs": {
+        "ConfigurationSummary$ProcessorCount": "<p>The total number of processors configured in the pipeline.</p>",
+        "InternalServerException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request.</p>",
         "VPCFlowLogParameters$MaxAggregationInterval": "<p> The maximum interval in seconds between the capture of flow log records. </p>"
+      }
+    },
+    "IntegrationStatus": {
+      "base": null,
+      "refs": {
+        "GetS3TableIntegrationOutput$Status": "<p>The current status of the S3 Table integration.</p>",
+        "IntegrationSummary$Status": "<p>The current status of the S3 Table integration.</p>"
+      }
+    },
+    "IntegrationSummaries": {
+      "base": null,
+      "refs": {
+        "ListS3TableIntegrationsOutput$IntegrationSummaries": "<p>A list of S3 Table integration summaries containing key information about each integration.</p>"
+      }
+    },
+    "IntegrationSummary": {
+      "base": "<p>Contains summary information about an S3 Table integration for listing operations.</p>",
+      "refs": {
+        "IntegrationSummaries$member": null
       }
     },
     "InternalServerException": {
       "base": "<p> Indicates the request has failed to process because of an unknown server error, exception, or failure. </p>",
       "refs": {}
+    },
+    "InvalidStateException": {
+      "base": "<p> The requested operation cannot be completed on the specified resource in the current state. </p>",
+      "refs": {}
+    },
+    "LabelNameCondition": {
+      "base": "<p> Condition that matches based on WAF rule labels, with label names limited to 1024 characters. </p>",
+      "refs": {
+        "Condition$LabelNameCondition": "<p> Matches log records based on WAF rule labels applied to the request. </p>"
+      }
+    },
+    "LabelNameConditionLabelNameString": {
+      "base": null,
+      "refs": {
+        "LabelNameCondition$LabelName": "<p> The label name to match, supporting alphanumeric characters, underscores, hyphens, and colons. </p>"
+      }
     },
     "ListCentralizationRulesForOrganizationInput": {
       "base": null,
@@ -275,11 +489,39 @@
       "base": null,
       "refs": {}
     },
+    "ListS3TableIntegrationsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListS3TableIntegrationsMaxResults": {
+      "base": null,
+      "refs": {
+        "ListS3TableIntegrationsInput$MaxResults": "<p>The maximum number of S3 Table integrations to return in a single call.</p>"
+      }
+    },
+    "ListS3TableIntegrationsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsForResourceInput": {
       "base": null,
       "refs": {}
     },
     "ListTagsForResourceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTelemetryPipelinesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTelemetryPipelinesMaxResults": {
+      "base": null,
+      "refs": {
+        "ListTelemetryPipelinesInput$MaxResults": "<p>The maximum number of telemetry pipelines to return in a single call.</p>"
+      }
+    },
+    "ListTelemetryPipelinesOutput": {
       "base": null,
       "refs": {}
     },
@@ -311,6 +553,30 @@
       "base": null,
       "refs": {}
     },
+    "LogDeliveryParameters": {
+      "base": "<p>Configuration parameters for Amazon Bedrock AgentCore logging, including <code>logType</code> settings.</p>",
+      "refs": {
+        "TelemetryDestinationConfiguration$LogDeliveryParameters": "<p>Configuration parameters specific to Amazon Bedrock AgentCore logging when Amazon Bedrock AgentCore is the resource type.</p>"
+      }
+    },
+    "LogType": {
+      "base": null,
+      "refs": {
+        "LogTypes$member": null
+      }
+    },
+    "LogTypes": {
+      "base": null,
+      "refs": {
+        "LogDeliveryParameters$LogTypes": "<p>The type of log that the source is sending.</p>"
+      }
+    },
+    "LoggingFilter": {
+      "base": "<p> Configuration that determines which WAF log records to keep or drop based on specified conditions. </p>",
+      "refs": {
+        "WAFLoggingParameters$LoggingFilter": "<p> A filter configuration that determines which WAF log records to include or exclude. </p>"
+      }
+    },
     "LogsBackupConfiguration": {
       "base": "<p>Configuration for backing up centralized log data to a secondary region.</p>",
       "refs": {
@@ -336,11 +602,16 @@
         "CentralizationRuleSummary$LastUpdateTimeStamp": "<p>The timestamp when the organization centralization rule was last updated.</p>",
         "GetCentralizationRuleForOrganizationOutput$CreatedTimeStamp": "<p>The timestamp when the organization centralization rule was created.</p>",
         "GetCentralizationRuleForOrganizationOutput$LastUpdateTimeStamp": "<p>The timestamp when the organization centralization rule was last updated.</p>",
+        "GetS3TableIntegrationOutput$CreatedTimeStamp": "<p>The timestamp when the S3 Table integration was created.</p>",
         "GetTelemetryRuleForOrganizationOutput$CreatedTimeStamp": "<p> The timestamp when the organization telemetry rule was created. </p>",
         "GetTelemetryRuleForOrganizationOutput$LastUpdateTimeStamp": "<p> The timestamp when the organization telemetry rule was last updated. </p>",
         "GetTelemetryRuleOutput$CreatedTimeStamp": "<p> The timestamp when the telemetry rule was created. </p>",
         "GetTelemetryRuleOutput$LastUpdateTimeStamp": "<p> The timestamp when the telemetry rule was last updated. </p>",
         "TelemetryConfiguration$LastUpdateTimeStamp": "<p> The timestamp of the last change to the telemetry configuration for the resource. For example, <code>1728679196318</code>. </p>",
+        "TelemetryPipeline$CreatedTimeStamp": "<p>The timestamp when the telemetry pipeline was created.</p>",
+        "TelemetryPipeline$LastUpdateTimeStamp": "<p>The timestamp when the telemetry pipeline was last updated.</p>",
+        "TelemetryPipelineSummary$CreatedTimeStamp": "<p>The timestamp when the telemetry pipeline was created.</p>",
+        "TelemetryPipelineSummary$LastUpdateTimeStamp": "<p>The timestamp when the telemetry pipeline was last updated.</p>",
         "TelemetryRuleSummary$CreatedTimeStamp": "<p> The timestamp when the telemetry rule was created. </p>",
         "TelemetryRuleSummary$LastUpdateTimeStamp": "<p> The timestamp when the telemetry rule was last modified. </p>"
       }
@@ -354,6 +625,10 @@
         "ListResourceTelemetryForOrganizationOutput$NextToken": "<p> The token for the next set of items to return. A previous call provides this token. </p>",
         "ListResourceTelemetryInput$NextToken": "<p> The token for the next set of items to return. A previous call generates this token. </p>",
         "ListResourceTelemetryOutput$NextToken": "<p> The token for the next set of items to return. A previous call generates this token. </p>",
+        "ListS3TableIntegrationsInput$NextToken": "<p>The token for the next set of results. A previous call generates this token.</p>",
+        "ListS3TableIntegrationsOutput$NextToken": "<p>A token to resume pagination of results.</p>",
+        "ListTelemetryPipelinesInput$NextToken": "<p>The token for the next set of results. A previous call generates this token.</p>",
+        "ListTelemetryPipelinesOutput$NextToken": "<p>A token to resume pagination of results.</p>",
         "ListTelemetryRulesForOrganizationInput$NextToken": "<p> The token for the next set of results. A previous call generates this token. </p>",
         "ListTelemetryRulesForOrganizationOutput$NextToken": "<p> A token to resume pagination of results. </p>",
         "ListTelemetryRulesInput$NextToken": "<p> The token for the next set of results. A previous call generates this token. </p>",
@@ -370,6 +645,61 @@
       "base": null,
       "refs": {
         "ListTelemetryRulesForOrganizationInput$SourceOrganizationUnitIds": "<p> The list of organizational unit IDs to filter organization telemetry rules by their source organizational units. </p>"
+      }
+    },
+    "OutputFormat": {
+      "base": "<p> Enumeration of supported output formats for ELB access logs: PLAIN for space-delimited format, JSON for structured JSON format. </p>",
+      "refs": {
+        "ELBLoadBalancerLoggingParameters$OutputFormat": "<p> The format for ELB access log entries (plain text or JSON format). </p>"
+      }
+    },
+    "PipelineOutput": {
+      "base": "<p>Contains the output from pipeline test operations, including processed records and any errors encountered.</p>",
+      "refs": {
+        "PipelineOutputs$member": null
+      }
+    },
+    "PipelineOutputError": {
+      "base": "<p>Contains detailed error information from pipeline test operations, providing structured error responses for better debugging and troubleshooting capabilities.</p>",
+      "refs": {
+        "PipelineOutput$Error": "<p>Any error that occurred during the pipeline test operation for this record.</p>"
+      }
+    },
+    "PipelineOutputs": {
+      "base": null,
+      "refs": {
+        "TestTelemetryPipelineOutput$Results": "<p>The results of processing the test records through the pipeline configuration, including any outputs or errors.</p>"
+      }
+    },
+    "Processors": {
+      "base": null,
+      "refs": {
+        "ConfigurationSummary$Processors": "<p>The list of processors configured in the pipeline for data transformation.</p>"
+      }
+    },
+    "Record": {
+      "base": "<p>Represents a test record structure used for pipeline testing operations to validate data processing.</p>",
+      "refs": {
+        "PipelineOutput$Record": "<p>The processed record output from the pipeline test operation.</p>",
+        "Records$member": null
+      }
+    },
+    "RecordFormat": {
+      "base": null,
+      "refs": {
+        "Record$Type": "<p>The type of the test record, indicating the format or category of the data.</p>"
+      }
+    },
+    "Records": {
+      "base": null,
+      "refs": {
+        "TestTelemetryPipelineInput$Records": "<p>The sample records to process through the pipeline configuration for testing purposes.</p>"
+      }
+    },
+    "RedactedFields": {
+      "base": "<p> A list of fields to redact from WAF logs to protect sensitive information, with a maximum of 100 fields. </p>",
+      "refs": {
+        "WAFLoggingParameters$RedactedFields": "<p> The fields to redact from WAF logs to protect sensitive information. </p>"
       }
     },
     "Region": {
@@ -394,15 +724,27 @@
       "refs": {
         "CentralizationRuleSummary$RuleArn": "<p>The Amazon Resource Name (ARN) of the organization centralization rule.</p>",
         "CreateCentralizationRuleForOrganizationOutput$RuleArn": "<p>The Amazon Resource Name (ARN) of the created organization centralization rule.</p>",
+        "CreateS3TableIntegrationInput$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that grants permissions for the S3 Table integration to access necessary resources.</p>",
+        "CreateS3TableIntegrationOutput$Arn": "<p>The Amazon Resource Name (ARN) of the created S3 Table integration.</p>",
+        "CreateTelemetryPipelineOutput$Arn": "<p>The Amazon Resource Name (ARN) of the created telemetry pipeline.</p>",
         "CreateTelemetryRuleForOrganizationOutput$RuleArn": "<p> The Amazon Resource Name (ARN) of the created organization telemetry rule. </p>",
         "CreateTelemetryRuleOutput$RuleArn": "<p> The Amazon Resource Name (ARN) of the created telemetry rule. </p>",
+        "DeleteS3TableIntegrationInput$Arn": "<p>The Amazon Resource Name (ARN) of the S3 Table integration to delete.</p>",
+        "Encryption$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used for encryption when using customer-managed keys.</p>",
         "GetCentralizationRuleForOrganizationOutput$RuleArn": "<p>The Amazon Resource Name (ARN) of the organization centralization rule.</p>",
+        "GetS3TableIntegrationInput$Arn": "<p>The Amazon Resource Name (ARN) of the S3 Table integration to retrieve.</p>",
+        "GetS3TableIntegrationOutput$Arn": "<p>The Amazon Resource Name (ARN) of the S3 Table integration.</p>",
+        "GetS3TableIntegrationOutput$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role used by the S3 Table integration.</p>",
+        "GetS3TableIntegrationOutput$DestinationTableBucketArn": "<p>The Amazon Resource Name (ARN) of the S3 bucket used as the destination for the table data.</p>",
         "GetTelemetryRuleForOrganizationOutput$RuleArn": "<p> The Amazon Resource Name (ARN) of the organization telemetry rule. </p>",
         "GetTelemetryRuleOutput$RuleArn": "<p> The Amazon Resource Name (ARN) of the telemetry rule. </p>",
+        "IntegrationSummary$Arn": "<p>The Amazon Resource Name (ARN) of the S3 Table integration.</p>",
         "ListTagsForResourceInput$ResourceARN": "<p> The Amazon Resource Name (ARN) of the telemetry rule resource whose tags you want to list. </p>",
-        "LogsBackupConfiguration$KmsKeyArn": "<p>KMS Key arn belonging to the primary destination account and backup region, to encrypt newly created central log groups in the backup destination.</p>",
-        "LogsEncryptionConfiguration$KmsKeyArn": "<p>KMS Key arn belonging to the primary destination account and region, to encrypt newly created central log groups in the primary destination.</p>",
+        "LogsBackupConfiguration$KmsKeyArn": "<p>KMS Key ARN belonging to the primary destination account and backup region, to encrypt newly created central log groups in the backup destination.</p>",
+        "LogsEncryptionConfiguration$KmsKeyArn": "<p>KMS Key ARN belonging to the primary destination account and region, to encrypt newly created central log groups in the primary destination.</p>",
         "TagResourceInput$ResourceARN": "<p> The Amazon Resource Name (ARN) of the telemetry rule resource to tag. </p>",
+        "TelemetryPipeline$Arn": "<p>The Amazon Resource Name (ARN) of the telemetry pipeline.</p>",
+        "TelemetryPipelineSummary$Arn": "<p>The Amazon Resource Name (ARN) of the telemetry pipeline.</p>",
         "TelemetryRuleSummary$RuleArn": "<p> The Amazon Resource Name (ARN) of the telemetry rule. </p>",
         "UntagResourceInput$ResourceARN": "<p> The Amazon Resource Name (ARN) of the telemetry rule resource to remove tags from. </p>",
         "UpdateCentralizationRuleForOrganizationOutput$RuleArn": "<p>The Amazon Resource Name (ARN) of the updated organization centralization rule.</p>",
@@ -413,7 +755,7 @@
     "ResourceIdentifier": {
       "base": null,
       "refs": {
-        "TelemetryConfiguration$ResourceIdentifier": "<p> The identifier of the resource, for example <code>i-0b22a22eec53b9321</code>. </p>"
+        "TelemetryConfiguration$ResourceIdentifier": "<p> The identifier of the resource, for example for Amazon VPC, it would be <code>vpc-1a2b3c4d5e6f1a2b3</code>. </p>"
       }
     },
     "ResourceIdentifierPrefix": {
@@ -431,8 +773,8 @@
       "base": null,
       "refs": {
         "ResourceTypes$member": null,
-        "TelemetryConfiguration$ResourceType": "<p> The type of resource, for example <code>Amazon Web Services::EC2::Instance</code>. </p>",
-        "TelemetryRule$ResourceType": "<p> The type of Amazon Web Services resource to configure telemetry for (e.g., \"AWS::EC2::VPC\"). </p>",
+        "TelemetryConfiguration$ResourceType": "<p> The type of resource, for example <code>Amazon Web Services::EC2::Instance</code>, or <code>Amazon Web Services::EKS::Cluster</code>, etc. </p>",
+        "TelemetryRule$ResourceType": "<p> The type of Amazon Web Services resource to configure telemetry for (e.g., \"AWS::EC2::VPC\", \"AWS::EKS::Cluster\", \"AWS::WAFv2::WebACL\"). </p>",
         "TelemetryRuleSummary$ResourceType": "<p> The type of Amazon Web Services resource the rule applies to. </p>"
       }
     },
@@ -483,9 +825,39 @@
         "TelemetryRuleSummary$RuleName": "<p> The name of the telemetry rule. </p>"
       }
     },
+    "SSEAlgorithm": {
+      "base": null,
+      "refs": {
+        "Encryption$SseAlgorithm": "<p>The server-side encryption algorithm used for encrypting data in the S3 Table integration.</p>"
+      }
+    },
     "ServiceQuotaExceededException": {
       "base": "<p> The requested operation would exceed the allowed quota for the specified resource type. </p>",
       "refs": {}
+    },
+    "SingleHeader": {
+      "base": "<p> Structure containing a name field limited to 64 characters for header or query parameter identification. </p>",
+      "refs": {
+        "FieldToMatch$SingleHeader": "<p> Redacts a specific header field by name from WAF logs. </p>"
+      }
+    },
+    "SingleHeaderNameString": {
+      "base": null,
+      "refs": {
+        "SingleHeader$Name": "<p> The name value, limited to 64 characters. </p>"
+      }
+    },
+    "Sinks": {
+      "base": null,
+      "refs": {
+        "ConfigurationSummary$Sinks": "<p>The list of destinations where processed data is sent.</p>"
+      }
+    },
+    "Source": {
+      "base": "<p>A list of source plugin types used in the pipeline configuration (such as <code>cloudwatch_logs</code> or <code>s3</code>). Currently supports a single source per pipeline, but is structured as a list to accommodate multiple pipelines in the configuration.</p>",
+      "refs": {
+        "Sources$member": null
+      }
     },
     "SourceFilterString": {
       "base": null,
@@ -497,6 +869,12 @@
       "base": "<p>Configuration for selecting and handling source log groups for centralization.</p>",
       "refs": {
         "CentralizationRuleSource$SourceLogsConfiguration": "<p>Log specific configuration for centralization source log groups.</p>"
+      }
+    },
+    "Sources": {
+      "base": null,
+      "refs": {
+        "ConfigurationSummary$Sources": "<p>The list of data sources configured in the pipeline.</p>"
       }
     },
     "StartTelemetryEnrichmentOutput": {
@@ -519,26 +897,65 @@
       "refs": {
         "AccessDeniedException$Message": null,
         "AccessDeniedException$amznErrorType": "<p> The name of the exception. </p>",
+        "AdvancedEventSelector$Name": "<p>An optional, descriptive name for an advanced event selector, such as \"Log data events for only two S3 buckets\".</p>",
+        "AdvancedFieldSelector$Field": "<p> The name of the field to use for selection. </p>",
         "CentralizationRuleSummary$CreatorAccountId": "<p>The Amazon Web Services Account that created the organization centralization rule.</p>",
         "CentralizationRuleSummary$DestinationAccountId": "<p>The primary destination account of the organization centralization rule.</p>",
         "ConflictException$Message": null,
+        "ConflictException$ResourceId": "<p> The identifier of the resource which is in conflict with the requested operation. </p>",
+        "ConflictException$ResourceType": "<p> The type of the resource which is in conflict with the requested operation. </p>",
+        "DataSource$Name": "<p>The name of the data source. For CloudWatch Logs sources, this corresponds to the <code>data_source_name</code> from the log event metadata. For third-party sources, this is either the configured <code>data_source_name</code> or defaults to the plugin name if not specified.</p>",
+        "DataSource$Type": "<p>The type of the data source. For CloudWatch Logs sources, this corresponds to the <code>data_source_type</code> from the log event metadata. For third-party sources, this field is empty.</p>",
+        "ELBLoadBalancerLoggingParameters$FieldDelimiter": "<p> The delimiter character used to separate fields in ELB access log entries when using plain text format. </p>",
+        "FieldMap$key": null,
+        "FieldMap$value": null,
+        "FieldToMatch$UriPath": "<p> Redacts the URI path from WAF logs. </p>",
+        "FieldToMatch$QueryString": "<p> Redacts the entire query string from WAF logs. </p>",
+        "FieldToMatch$Method": "<p> Redacts the HTTP method from WAF logs. </p>",
         "GetCentralizationRuleForOrganizationOutput$CreatorAccountId": "<p>The Amazon Web Services Account that created the organization centralization rule.</p>",
         "InternalServerException$Message": null,
         "InternalServerException$amznErrorType": "<p> The name of the exception. </p>",
+        "InvalidStateException$Message": null,
         "ListTelemetryRulesForOrganizationInput$RuleNamePrefix": "<p> A string to filter organization telemetry rules whose names begin with the specified prefix. </p>",
         "ListTelemetryRulesInput$RuleNamePrefix": "<p> A string to filter telemetry rules whose names begin with the specified prefix. </p>",
+        "PipelineOutputError$Message": "<p>The detailed error message describing what went wrong during the pipeline test operation for this record.</p>",
+        "Processors$member": null,
+        "Record$Data": "<p>The data content of the test record used for pipeline validation.</p>",
         "ResourceNotFoundException$Message": null,
+        "ResourceNotFoundException$ResourceId": "<p> The identifier of the resource which could not be found. </p>",
+        "ResourceNotFoundException$ResourceType": "<p> The type of the resource which could not be found. </p>",
         "ServiceQuotaExceededException$Message": null,
+        "ServiceQuotaExceededException$ResourceId": "<p> The identifier of the resource which exceeds the service quota. </p>",
+        "ServiceQuotaExceededException$ResourceType": "<p> The type of the resource which exceeds the service quota. </p>",
+        "ServiceQuotaExceededException$ServiceCode": "<p> The code for the service of the exceeded quota. </p>",
+        "ServiceQuotaExceededException$QuotaCode": "<p> The code for the exceeded service quota. </p>",
         "ServiceQuotaExceededException$amznErrorType": "<p> The name of the exception. </p>",
+        "Sinks$member": null,
+        "Source$Type": "<p>The plugin name of the source, such as <code>cloudwatch_logs</code> or <code>s3</code>.</p>",
+        "StringList$member": null,
         "TagMapOutput$key": null,
         "TagMapOutput$value": null,
         "TelemetryDestinationConfiguration$DestinationPattern": "<p> The pattern used to generate the destination path or name, supporting macros like &lt;resourceId&gt; and &lt;accountId&gt;. </p>",
+        "TelemetryPipelineStatusReason$Description": "<p>A description of the pipeline status reason, providing additional context about the current state.</p>",
         "TelemetryRule$Scope": "<p> The organizational scope to which the rule applies, specified using accounts or organizational units. </p>",
         "TelemetryRule$SelectionCriteria": "<p> Criteria for selecting which resources the rule applies to, such as resource tags. </p>",
         "TooManyRequestsException$Message": null,
         "VPCFlowLogParameters$LogFormat": "<p> The format in which VPC Flow Log entries should be logged. </p>",
         "VPCFlowLogParameters$TrafficType": "<p> The type of traffic to log (ACCEPT, REJECT, or ALL). </p>",
+        "ValidationError$Message": "<p>The error message describing the validation issue.</p>",
+        "ValidationError$Reason": "<p>The reason code or category for the validation error.</p>",
         "ValidationException$Message": null
+      }
+    },
+    "StringList": {
+      "base": null,
+      "refs": {
+        "AdvancedFieldSelector$Equals": "<p> Matches if the field value equals the specified value. </p>",
+        "AdvancedFieldSelector$StartsWith": "<p> Matches if the field value starts with the specified value. </p>",
+        "AdvancedFieldSelector$EndsWith": "<p> Matches if the field value ends with the specified value. </p>",
+        "AdvancedFieldSelector$NotEquals": "<p> Matches if the field value does not equal the specified value. </p>",
+        "AdvancedFieldSelector$NotStartsWith": "<p> Matches if the field value does not start with the specified value. </p>",
+        "AdvancedFieldSelector$NotEndsWith": "<p> Matches if the field value does not end with the specified value. </p>"
       }
     },
     "TagKey": {
@@ -558,6 +975,8 @@
       "base": null,
       "refs": {
         "CreateCentralizationRuleForOrganizationInput$Tags": "<p>The key-value pairs to associate with the organization telemetry rule resource for categorization and management purposes.</p>",
+        "CreateS3TableIntegrationInput$Tags": "<p>The key-value pairs to associate with the S3 Table integration resource for categorization and management purposes.</p>",
+        "CreateTelemetryPipelineInput$Tags": "<p>The key-value pairs to associate with the telemetry pipeline resource for categorization and management purposes.</p>",
         "CreateTelemetryRuleForOrganizationInput$Tags": "<p> The key-value pairs to associate with the organization telemetry rule resource for categorization and management purposes. </p>",
         "CreateTelemetryRuleInput$Tags": "<p> The key-value pairs to associate with the telemetry rule resource for categorization and management purposes. </p>",
         "ListResourceTelemetryForOrganizationInput$ResourceTags": "<p> A key-value pair to filter resources in the organization based on tags associated with the resource. Fore more information about tags, see <a href=\"https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/what-are-tags.html\">What are tags?</a> </p>",
@@ -569,7 +988,9 @@
       "base": null,
       "refs": {
         "ListTagsForResourceOutput$Tags": "<p> The list of tags associated with the telemetry rule resource. </p>",
-        "TelemetryConfiguration$ResourceTags": "<p> Tags associated with the resource, for example <code>{ Name: \"ExampleInstance\", Environment: \"Development\" }</code>. </p>"
+        "TelemetryConfiguration$ResourceTags": "<p> Tags associated with the resource, for example <code>{ Name: \"ExampleInstance\", Environment: \"Development\" }</code>. </p>",
+        "TelemetryPipeline$Tags": "<p>The key-value pairs associated with the telemetry pipeline resource.</p>",
+        "TelemetryPipelineSummary$Tags": "<p>The key-value pairs associated with the telemetry pipeline resource.</p>"
       }
     },
     "TagResourceInput": {
@@ -617,6 +1038,69 @@
         "StopTelemetryEnrichmentOutput$Status": "<p> The status of the resource tags for telemetry feature after the stop operation (<code>Running</code>, <code>Stopped</code>, or <code>Impaired</code>). </p>"
       }
     },
+    "TelemetryPipeline": {
+      "base": "<p>Represents a complete telemetry pipeline resource with configuration, status, and metadata for data processing and transformation.</p>",
+      "refs": {
+        "GetTelemetryPipelineOutput$Pipeline": "<p>The complete telemetry pipeline resource information, including configuration, status, and metadata.</p>"
+      }
+    },
+    "TelemetryPipelineConfiguration": {
+      "base": "<p>Defines the configuration for a telemetry pipeline, including how data flows from sources through processors to destinations.</p>",
+      "refs": {
+        "CreateTelemetryPipelineInput$Configuration": "<p>The configuration that defines how the telemetry pipeline processes data, including sources, processors, and destinations. For more information about pipeline components, see the <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/pipeline-components-reference.html\">Amazon CloudWatch User Guide</a> </p>",
+        "TelemetryPipeline$Configuration": "<p>The configuration that defines how the telemetry pipeline processes data.</p>",
+        "TestTelemetryPipelineInput$Configuration": "<p>The pipeline configuration to test with the provided sample records.</p>",
+        "UpdateTelemetryPipelineInput$Configuration": "<p>The new configuration for the telemetry pipeline, including updated sources, processors, and destinations.</p>",
+        "ValidateTelemetryPipelineConfigurationInput$Configuration": "<p>The pipeline configuration to validate for syntax and compatibility.</p>"
+      }
+    },
+    "TelemetryPipelineConfigurationBody": {
+      "base": null,
+      "refs": {
+        "TelemetryPipelineConfiguration$Body": "<p>The pipeline configuration body that defines the data processing rules and transformations.</p>"
+      }
+    },
+    "TelemetryPipelineIdentifier": {
+      "base": null,
+      "refs": {
+        "DeleteTelemetryPipelineInput$PipelineIdentifier": "<p>The ARN of the telemetry pipeline to delete.</p>",
+        "GetTelemetryPipelineInput$PipelineIdentifier": "<p>The identifier (name or ARN) of the telemetry pipeline to retrieve.</p>",
+        "UpdateTelemetryPipelineInput$PipelineIdentifier": "<p>The ARN of the telemetry pipeline to update.</p>"
+      }
+    },
+    "TelemetryPipelineName": {
+      "base": null,
+      "refs": {
+        "CreateTelemetryPipelineInput$Name": "<p>The name of the telemetry pipeline to create. The name must be unique within your account.</p>",
+        "TelemetryPipeline$Name": "<p>The name of the telemetry pipeline.</p>",
+        "TelemetryPipelineSummary$Name": "<p>The name of the telemetry pipeline.</p>"
+      }
+    },
+    "TelemetryPipelineStatus": {
+      "base": null,
+      "refs": {
+        "TelemetryPipeline$Status": "<p>The current status of the telemetry pipeline.</p>",
+        "TelemetryPipelineSummary$Status": "<p>The current status of the telemetry pipeline.</p>"
+      }
+    },
+    "TelemetryPipelineStatusReason": {
+      "base": "<p>Provides detailed information about the status of a telemetry pipeline, including reasons for specific states.</p>",
+      "refs": {
+        "TelemetryPipeline$StatusReason": "<p>Additional information about the pipeline status, including reasons for failure states.</p>"
+      }
+    },
+    "TelemetryPipelineSummaries": {
+      "base": null,
+      "refs": {
+        "ListTelemetryPipelinesOutput$PipelineSummaries": "<p>A list of telemetry pipeline summaries containing key information about each pipeline.</p>"
+      }
+    },
+    "TelemetryPipelineSummary": {
+      "base": "<p>Contains summary information about a telemetry pipeline for listing operations.</p>",
+      "refs": {
+        "TelemetryPipelineSummaries$member": null
+      }
+    },
     "TelemetryRule": {
       "base": "<p> Defines how telemetry should be configured for specific Amazon Web Services resources. </p>",
       "refs": {
@@ -641,6 +1125,19 @@
         "TelemetryRuleSummaries$member": null
       }
     },
+    "TelemetrySourceType": {
+      "base": "<p> Specifies the type of telemetry source for a resource, such as EKS cluster logs. </p>",
+      "refs": {
+        "TelemetrySourceTypes$member": null
+      }
+    },
+    "TelemetrySourceTypes": {
+      "base": "<p> A list of telemetry source types that specify what kind of telemetry data to collect from a resource. </p>",
+      "refs": {
+        "TelemetryRule$TelemetrySourceTypes": "<p> The specific telemetry source types to configure for the resource, such as VPC_FLOW_LOGS or EKS_AUDIT_LOGS. TelemetrySourceTypes must be correlated with the specific resource type. </p>",
+        "TelemetryRuleSummary$TelemetrySourceTypes": "<p> The types of telemetry sources configured for this rule, such as VPC Flow Logs or EKS audit logs. TelemetrySourceTypes must be correlated with the specific resource type. </p>"
+      }
+    },
     "TelemetryState": {
       "base": null,
       "refs": {
@@ -655,6 +1152,14 @@
         "TelemetryRuleSummary$TelemetryType": "<p> The type of telemetry (Logs, Metrics, or Traces) the rule configures. </p>"
       }
     },
+    "TestTelemetryPipelineInput": {
+      "base": null,
+      "refs": {}
+    },
+    "TestTelemetryPipelineOutput": {
+      "base": null,
+      "refs": {}
+    },
     "TooManyRequestsException": {
       "base": "<p> The request throughput limit was exceeded. </p>",
       "refs": {}
@@ -668,6 +1173,14 @@
       "refs": {}
     },
     "UpdateCentralizationRuleForOrganizationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTelemetryPipelineInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTelemetryPipelineOutput": {
       "base": null,
       "refs": {}
     },
@@ -693,9 +1206,42 @@
         "TelemetryDestinationConfiguration$VPCFlowLogParameters": "<p> Configuration parameters specific to VPC Flow Logs when VPC is the resource type. </p>"
       }
     },
+    "ValidateTelemetryPipelineConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ValidateTelemetryPipelineConfigurationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ValidationError": {
+      "base": "<p>Represents a detailed validation error with message, reason, and field mapping for comprehensive error reporting.</p>",
+      "refs": {
+        "ValidationErrors$member": null
+      }
+    },
+    "ValidationErrors": {
+      "base": null,
+      "refs": {
+        "ValidateTelemetryPipelineConfigurationOutput$Errors": "<p>A list of validation errors found in the pipeline configuration, if any.</p>",
+        "ValidationException$Errors": "<p> The errors in the input which caused the exception. </p>"
+      }
+    },
     "ValidationException": {
       "base": "<p> Indicates input validation failed. Check your request parameters and retry the request. </p>",
       "refs": {}
+    },
+    "WAFLogType": {
+      "base": "<p> Enumeration of supported WAF log types. Currently only WAF_LOGS is supported. </p>",
+      "refs": {
+        "WAFLoggingParameters$LogType": "<p> The type of WAF logs to collect (currently supports WAF_LOGS). </p>"
+      }
+    },
+    "WAFLoggingParameters": {
+      "base": "<p> Configuration parameters for WAF logging, including redacted fields and logging filters. </p>",
+      "refs": {
+        "TelemetryDestinationConfiguration$WAFLoggingParameters": "<p> Configuration parameters specific to WAF logging when WAF is the resource type. </p>"
+      }
     }
   }
 }

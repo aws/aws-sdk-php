@@ -1,0 +1,582 @@
+[
+  {
+    "summary": "Test download with part GET - single object download (object size < part size)",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "responseChecksumValidation": "WHEN_SUPPORTED"
+    },
+    "downloadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "checksumMode": "ENABLED"
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "GetObject",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1048576",
+            "Content-Range": "bytes 0-1048575/1048576",
+            "PartsCount": 1,
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "downloadType": "single_object",
+        "totalBytes": 1048576,
+        "partCount": 1
+      }
+    ]
+  },
+  {
+    "summary": "Test download with part GET - multipart download (object size > part size)",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "responseChecksumValidation": "WHEN_SUPPORTED"
+    },
+    "downloadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "checksumMode": "ENABLED"
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "GetObject",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "8388608",
+            "Content-Range": "bytes 0-8388607/25165824",
+            "PartsCount": 3,
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "partNumber": 2,
+          "headers": {
+            "If-Match": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "8388608",
+            "Content-Range": "bytes 8388608-16777215/25165824",
+            "PartsCount": 3,
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "partNumber": 3,
+          "headers": {
+            "If-Match": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "8388608",
+            "Content-Range": "bytes 16777216-25165823/25165824",
+            "PartsCount": 3,
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "downloadType": "multipart",
+        "totalBytes": 25165824,
+        "partCount": 3
+      }
+    ]
+  },
+  {
+    "summary": "Test download with ranged GET - single object download (object size < part size)",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "RANGE",
+      "responseChecksumValidation": "WHEN_SUPPORTED"
+    },
+    "downloadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "checksumMode": "ENABLED"
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "GetObject",
+          "headers": {
+            "Range": "bytes=0-8388607"
+          }
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1048576",
+            "Content-Range": "bytes 0-1048575/1048576",
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "downloadType": "single_object",
+        "totalBytes": 1048576,
+        "partCount": 1
+      }
+    ]
+  },
+  {
+    "summary": "Test download with ranged GET - multipart download (object size > part size)",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "RANGE",
+      "responseChecksumValidation": "WHEN_SUPPORTED"
+    },
+    "downloadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "checksumMode": "ENABLED"
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "GetObject",
+          "headers": {
+            "Range": "bytes=0-8388607"
+          }
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "8388608",
+            "Content-Range": "bytes 0-8388607/25165824",
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "headers": {
+            "Range": "bytes=8388608-16777215",
+            "If-Match": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "8388608",
+            "Content-Range": "bytes 8388608-16777215/25165824",
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "headers": {
+            "Range": "bytes=16777216-25165823",
+            "If-Match": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "8388608",
+            "Content-Range": "bytes 16777216-25165823/25165824",
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "downloadType": "multipart",
+        "totalBytes": 25165824,
+        "partCount": 3
+      }
+    ]
+  },
+  {
+    "summary": "Test download with part GET - error handling when part request fails",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "responseChecksumValidation": "WHEN_SUPPORTED"
+    },
+    "downloadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "checksumMode": "ENABLED"
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "GetObject",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "8388608",
+            "Content-Range": "bytes 0-8388607/25165824",
+            "PartsCount": 3,
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "partNumber": 2,
+          "headers": {
+            "If-Match": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        },
+        "response": {
+          "status": 500,
+          "errorCode": "InternalServerError",
+          "errorMessage": "Internal Server Error"
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "error",
+        "errorCode": "InternalServerError",
+        "errorMessage": "Internal Server Error"
+      }
+    ]
+  },
+  {
+    "summary": "Test download with ranged GET - error handling when range request fails",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "RANGE",
+      "responseChecksumValidation": "WHEN_SUPPORTED"
+    },
+    "downloadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "checksumMode": "ENABLED"
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "GetObject",
+          "headers": {
+            "Range": "bytes=0-8388607"
+          }
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "8388608",
+            "Content-Range": "bytes 0-8388607/25165824",
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "headers": {
+            "Range": "bytes=8388608-16777215",
+            "If-Match": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        },
+        "response": {
+          "status": 500,
+          "errorCode": "InternalServerError",
+          "errorMessage": "Internal Server Error"
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "error",
+        "errorCode": "InternalServerError",
+        "errorMessage": "Internal Server Error"
+      }
+    ]
+  },
+  {
+    "summary": "Test download with part GET - checksum validation success",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "responseChecksumValidation": "WHEN_SUPPORTED"
+    },
+    "downloadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "checksumMode": "ENABLED"
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "GetObject",
+          "partNumber": 1,
+          "checksumMode": "ENABLED"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "8388608",
+            "Content-Range": "bytes 0-8388607/8388608",
+            "PartsCount": 1,
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumCRC32": "abcdef12"
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "downloadType": "single_object",
+        "totalBytes": 8388608,
+        "partCount": 1,
+        "checksumValidated": true,
+        "checksumAlgorithm": "CRC32"
+      }
+    ]
+  },
+  {
+    "summary": "Test download with part GET - checksum validation failure",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "responseChecksumValidation": "WHEN_SUPPORTED"
+    },
+    "downloadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "checksumMode": "ENABLED"
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "GetObject",
+          "partNumber": 1,
+          "checksumMode": "ENABLED"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "8388608",
+            "Content-Range": "bytes 0-8388607/8388608",
+            "PartsCount": 1,
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumCRC32": "abcdef12"
+          },
+          "body": "CORRUPTED_DATA"
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "error",
+        "errorCode": "ChecksumMismatch",
+        "errorMessage": "Calculated response checksum did not match the expected value"
+      }
+    ]
+  },
+  {
+    "summary": "Test download with part GET - multipart download with uneven last part",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "responseChecksumValidation": "WHEN_SUPPORTED"
+    },
+    "downloadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "checksumMode": "ENABLED"
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "GetObject",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "8388608",
+            "Content-Range": "bytes 0-8388607/10485760",
+            "PartsCount": 2,
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "partNumber": 2,
+          "headers": {
+            "If-Match": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "2097152",
+            "Content-Range": "bytes 8388608-10485759/10485760",
+            "PartsCount": 2,
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "downloadType": "multipart",
+        "totalBytes": 10485760,
+        "partCount": 2,
+        "lastPartSize": 2097152
+      }
+    ]
+  },
+  {
+    "summary": "Test download with ranged GET - multipart download with uneven last part",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "RANGE",
+      "responseChecksumValidation": "WHEN_SUPPORTED"
+    },
+    "downloadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "checksumMode": "ENABLED"
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "GetObject",
+          "headers": {
+            "Range": "bytes=0-8388607"
+          }
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "8388608",
+            "Content-Range": "bytes 0-8388607/10485760",
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "headers": {
+            "Range": "bytes=8388608-16777215",
+            "If-Match": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "2097152",
+            "Content-Range": "bytes 8388608-10485759/10485760",
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "downloadType": "multipart",
+        "totalBytes": 10485760,
+        "partCount": 2,
+        "lastPartSize": 2097152
+      }
+    ]
+  },
+  {
+    "summary": "Test download with part GET - validation failure when part count mismatch",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "responseChecksumValidation": "WHEN_SUPPORTED"
+    },
+    "downloadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "checksumMode": "ENABLED"
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "GetObject",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "8388608",
+            "Content-Range": "bytes 0-8388607/25165824",
+            "PartsCount": 3,
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "partNumber": 2,
+          "headers": {
+            "If-Match": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "8388608",
+            "Content-Range": "bytes 8388608-16777215/25165824",
+            "PartsCount": 3,
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "error",
+        "errorCode": "ValidationError",
+        "errorMessage": "Expected 3 parts but only received 2"
+      }
+    ]
+  }
+]

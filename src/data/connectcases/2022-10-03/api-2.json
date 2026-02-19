@@ -867,7 +867,7 @@
     },
     "AuditEventFieldValueUnionStringValueString":{
       "type":"string",
-      "max":500,
+      "max":4100,
       "min":0
     },
     "AuditEventId":{
@@ -1072,7 +1072,7 @@
     "CaseEventIncludedDataFieldsList":{
       "type":"list",
       "member":{"shape":"FieldIdentifier"},
-      "max":200,
+      "max":400,
       "min":0
     },
     "CaseFilter":{
@@ -1080,6 +1080,7 @@
       "members":{
         "field":{"shape":"FieldFilter"},
         "not":{"shape":"CaseFilter"},
+        "tag":{"shape":"TagFilter"},
         "andAll":{"shape":"CaseFilterAndAllList"},
         "orAll":{"shape":"CaseFilterOrAllList"}
       },
@@ -1306,7 +1307,8 @@
           "shape":"CreateCaseRequestClientTokenString",
           "idempotencyToken":true
         },
-        "performedBy":{"shape":"UserUnion"}
+        "performedBy":{"shape":"UserUnion"},
+        "tags":{"shape":"MutableTags"}
       }
     },
     "CreateCaseRequestClientTokenString":{
@@ -1317,7 +1319,7 @@
     "CreateCaseRequestFieldsList":{
       "type":"list",
       "member":{"shape":"FieldValue"},
-      "max":100,
+      "max":220,
       "min":0
     },
     "CreateCaseResponse":{
@@ -1395,7 +1397,8 @@
         },
         "name":{"shape":"FieldName"},
         "type":{"shape":"FieldType"},
-        "description":{"shape":"FieldDescription"}
+        "description":{"shape":"FieldDescription"},
+        "attributes":{"shape":"FieldAttributes"}
       }
     },
     "CreateFieldResponse":{
@@ -1489,7 +1492,8 @@
         "layoutConfiguration":{"shape":"LayoutConfiguration"},
         "requiredFields":{"shape":"RequiredFieldList"},
         "status":{"shape":"TemplateStatus"},
-        "rules":{"shape":"TemplateCaseRuleList"}
+        "rules":{"shape":"TemplateCaseRuleList"},
+        "tagPropagationConfigurations":{"shape":"TagPropagationConfigurationList"}
       }
     },
     "CreateTemplateResponse":{
@@ -1795,6 +1799,13 @@
       "max":500,
       "min":1
     },
+    "FieldAttributes":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"TextAttributes"}
+      },
+      "union":true
+    },
     "FieldDescription":{
       "type":"string",
       "max":255,
@@ -1835,7 +1846,7 @@
     "FieldGroupFieldsList":{
       "type":"list",
       "member":{"shape":"FieldItem"},
-      "max":100,
+      "max":220,
       "min":0
     },
     "FieldGroupNameString":{
@@ -1940,7 +1951,8 @@
         "fieldArn":{"shape":"FieldArn"},
         "name":{"shape":"FieldName"},
         "type":{"shape":"FieldType"},
-        "namespace":{"shape":"FieldNamespace"}
+        "namespace":{"shape":"FieldNamespace"},
+        "attributes":{"shape":"FieldAttributes"}
       }
     },
     "FieldType":{
@@ -1983,7 +1995,7 @@
     },
     "FieldValueUnionStringValueString":{
       "type":"string",
-      "max":3000,
+      "max":4100,
       "min":0
     },
     "FileArn":{
@@ -2088,7 +2100,7 @@
     "GetCaseRequestFieldsList":{
       "type":"list",
       "member":{"shape":"FieldIdentifier"},
-      "max":100,
+      "max":220,
       "min":1
     },
     "GetCaseResponse":{
@@ -2107,7 +2119,7 @@
     "GetCaseResponseFieldsList":{
       "type":"list",
       "member":{"shape":"FieldValue"},
-      "max":100,
+      "max":220,
       "min":0
     },
     "GetCaseRuleResponse":{
@@ -2178,7 +2190,8 @@
         "tags":{"shape":"Tags"},
         "deleted":{"shape":"Deleted"},
         "createdTime":{"shape":"CreatedTime"},
-        "lastModifiedTime":{"shape":"LastModifiedTime"}
+        "lastModifiedTime":{"shape":"LastModifiedTime"},
+        "attributes":{"shape":"FieldAttributes"}
       }
     },
     "GetLayoutRequest":{
@@ -2258,7 +2271,8 @@
         "deleted":{"shape":"Deleted"},
         "createdTime":{"shape":"CreatedTime"},
         "lastModifiedTime":{"shape":"LastModifiedTime"},
-        "rules":{"shape":"TemplateCaseRuleList"}
+        "rules":{"shape":"TemplateCaseRuleList"},
+        "tagPropagationConfigurations":{"shape":"TagPropagationConfigurationList"}
       }
     },
     "HiddenCaseRule":{
@@ -2623,6 +2637,19 @@
       "max":100,
       "min":1
     },
+    "MutableTagKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"(?![aA][wW][sS]:)[a-zA-Z0-9 _.:/=+\\-@]+"
+    },
+    "MutableTags":{
+      "type":"map",
+      "key":{"shape":"MutableTagKey"},
+      "value":{"shape":"TagValueString"},
+      "max":50,
+      "min":0
+    },
     "NextToken":{
       "type":"string",
       "max":9000,
@@ -2948,7 +2975,8 @@
       "required":["cases"],
       "members":{
         "nextToken":{"shape":"NextToken"},
-        "cases":{"shape":"SearchCasesResponseCasesList"}
+        "cases":{"shape":"SearchCasesResponseCasesList"},
+        "totalCount":{"shape":"TotalCount"}
       }
     },
     "SearchCasesResponseCasesList":{
@@ -3041,6 +3069,12 @@
       "member":{"shape":"SearchRelatedItemsResponseItem"},
       "max":25,
       "min":0
+    },
+    "SearchTagKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9 _.:/=+\\-@]+"
     },
     "Section":{
       "type":"structure",
@@ -3167,6 +3201,13 @@
       }
     },
     "String":{"type":"string"},
+    "TagFilter":{
+      "type":"structure",
+      "members":{
+        "equalTo":{"shape":"TagValue"}
+      },
+      "union":true
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -3178,6 +3219,34 @@
       "member":{"shape":"TagKey"},
       "max":50,
       "min":0
+    },
+    "TagPropagationConfiguration":{
+      "type":"structure",
+      "required":[
+        "resourceType",
+        "tagMap"
+      ],
+      "members":{
+        "resourceType":{"shape":"TagPropagationResourceType"},
+        "tagMap":{"shape":"TagPropagationConfigurationTagMapMap"}
+      }
+    },
+    "TagPropagationConfigurationList":{
+      "type":"list",
+      "member":{"shape":"TagPropagationConfiguration"},
+      "max":1,
+      "min":0
+    },
+    "TagPropagationConfigurationTagMapMap":{
+      "type":"map",
+      "key":{"shape":"MutableTagKey"},
+      "value":{"shape":"TagValueString"},
+      "max":10,
+      "min":0
+    },
+    "TagPropagationResourceType":{
+      "type":"string",
+      "enum":["Cases"]
     },
     "TagResourceRequest":{
       "type":"structure",
@@ -3193,6 +3262,19 @@
         },
         "tags":{"shape":"Tags"}
       }
+    },
+    "TagValue":{
+      "type":"structure",
+      "members":{
+        "key":{"shape":"SearchTagKey"},
+        "value":{"shape":"TagValueString"}
+      }
+    },
+    "TagValueString":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"([a-zA-Z0-9 _.:/=+\\-@]*)"
     },
     "Tags":{
       "type":"map",
@@ -3265,7 +3347,15 @@
         "templateId":{"shape":"TemplateId"},
         "templateArn":{"shape":"TemplateArn"},
         "name":{"shape":"TemplateName"},
-        "status":{"shape":"TemplateStatus"}
+        "status":{"shape":"TemplateStatus"},
+        "tagPropagationConfigurations":{"shape":"TagPropagationConfigurationList"}
+      }
+    },
+    "TextAttributes":{
+      "type":"structure",
+      "required":["isMultiline"],
+      "members":{
+        "isMultiline":{"shape":"Boolean"}
       }
     },
     "ThrottlingException":{
@@ -3280,6 +3370,10 @@
       },
       "exception":true,
       "retryable":{"throttling":false}
+    },
+    "TotalCount":{
+      "type":"long",
+      "min":0
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -3325,7 +3419,7 @@
     "UpdateCaseRequestFieldsList":{
       "type":"list",
       "member":{"shape":"FieldValue"},
-      "max":100,
+      "max":220,
       "min":0
     },
     "UpdateCaseResponse":{
@@ -3376,7 +3470,8 @@
           "locationName":"fieldId"
         },
         "name":{"shape":"FieldName"},
-        "description":{"shape":"FieldDescription"}
+        "description":{"shape":"FieldDescription"},
+        "attributes":{"shape":"FieldAttributes"}
       }
     },
     "UpdateFieldResponse":{
@@ -3430,7 +3525,8 @@
         "layoutConfiguration":{"shape":"LayoutConfiguration"},
         "requiredFields":{"shape":"RequiredFieldList"},
         "status":{"shape":"TemplateStatus"},
-        "rules":{"shape":"TemplateCaseRuleList"}
+        "rules":{"shape":"TemplateCaseRuleList"},
+        "tagPropagationConfigurations":{"shape":"TagPropagationConfigurationList"}
       }
     },
     "UpdateTemplateResponse":{

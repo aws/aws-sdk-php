@@ -1194,6 +1194,12 @@
       "type":"list",
       "member":{"shape":"AmazonResourceName"}
     },
+    "AmazonRoleResourceName":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws:iam::[0-9]{12}:role/.+"
+    },
     "AndroidPaths":{
       "type":"list",
       "member":{"shape":"String"}
@@ -1290,11 +1296,6 @@
       },
       "exception":true
     },
-    "ClientId":{
-      "type":"string",
-      "max":64,
-      "min":0
-    },
     "ContentType":{
       "type":"string",
       "max":64,
@@ -1383,7 +1384,9 @@
       "members":{
         "name":{"shape":"Name"},
         "defaultJobTimeoutMinutes":{"shape":"JobTimeoutMinutes"},
-        "vpcConfig":{"shape":"VpcConfig"}
+        "vpcConfig":{"shape":"VpcConfig"},
+        "environmentVariables":{"shape":"EnvironmentVariables"},
+        "executionRoleArn":{"shape":"AmazonRoleResourceName"}
       }
     },
     "CreateProjectResult":{
@@ -1412,14 +1415,14 @@
         "deviceArn":{"shape":"AmazonResourceName"},
         "appArn":{"shape":"AmazonResourceName"},
         "instanceArn":{"shape":"AmazonResourceName"},
-        "sshPublicKey":{"shape":"SshPublicKey"},
-        "remoteDebugEnabled":{"shape":"Boolean"},
-        "remoteRecordEnabled":{"shape":"Boolean"},
-        "remoteRecordAppArn":{"shape":"AmazonResourceName"},
         "name":{"shape":"Name"},
-        "clientId":{"shape":"ClientId"},
         "configuration":{"shape":"CreateRemoteAccessSessionConfiguration"},
-        "interactionMode":{"shape":"InteractionMode"},
+        "interactionMode":{
+          "shape":"InteractionMode",
+          "deprecated":true,
+          "deprecatedMessage":"Changing the interactive mode of Remote Access sessions is no longer available.",
+          "deprecatedSince":"2019-09-09"
+        },
         "skipAppResign":{"shape":"Boolean"}
       }
     },
@@ -1633,7 +1636,12 @@
         "carrier":{"shape":"String"},
         "radio":{"shape":"String"},
         "remoteAccessEnabled":{"shape":"Boolean"},
-        "remoteDebugEnabled":{"shape":"Boolean"},
+        "remoteDebugEnabled":{
+          "shape":"Boolean",
+          "deprecated":true,
+          "deprecatedMessage":"Direct Device Access is no longer available.",
+          "deprecatedSince":"2019-09-09"
+        },
         "fleetType":{"shape":"String"},
         "fleetName":{"shape":"String"},
         "instances":{"shape":"DeviceInstances"},
@@ -1833,6 +1841,34 @@
       "member":{"shape":"Device"}
     },
     "Double":{"type":"double"},
+    "EnvironmentVariable":{
+      "type":"structure",
+      "required":[
+        "name",
+        "value"
+      ],
+      "members":{
+        "name":{"shape":"EnvironmentVariableName"},
+        "value":{"shape":"EnvironmentVariableValue"}
+      }
+    },
+    "EnvironmentVariableName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z_][a-zA-Z_0-9]*"
+    },
+    "EnvironmentVariableValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "EnvironmentVariables":{
+      "type":"list",
+      "member":{"shape":"EnvironmentVariable"},
+      "max":32,
+      "min":1
+    },
     "ExceptionMessage":{"type":"string"},
     "ExecutionConfiguration":{
       "type":"structure",
@@ -2120,10 +2156,6 @@
       "members":{
         "vpceConfiguration":{"shape":"VPCEConfiguration"}
       }
-    },
-    "HostAddress":{
-      "type":"string",
-      "max":1024
     },
     "IdempotencyException":{
       "type":"structure",
@@ -2822,7 +2854,9 @@
         "name":{"shape":"Name"},
         "defaultJobTimeoutMinutes":{"shape":"JobTimeoutMinutes"},
         "created":{"shape":"DateTime"},
-        "vpcConfig":{"shape":"VpcConfig"}
+        "vpcConfig":{"shape":"VpcConfig"},
+        "environmentVariables":{"shape":"EnvironmentVariables"},
+        "executionRoleArn":{"shape":"AmazonRoleResourceName"}
       }
     },
     "Projects":{
@@ -2876,6 +2910,13 @@
       "type":"list",
       "member":{"shape":"RecurringCharge"}
     },
+    "RemoteAccessEndpoints":{
+      "type":"structure",
+      "members":{
+        "remoteDriverEndpoint":{"shape":"SensitiveURL"},
+        "interactiveEndpoint":{"shape":"SensitiveURL"}
+      }
+    },
     "RemoteAccessSession":{
       "type":"structure",
       "members":{
@@ -2889,20 +2930,26 @@
         "stopped":{"shape":"DateTime"},
         "device":{"shape":"Device"},
         "instanceArn":{"shape":"AmazonResourceName"},
-        "remoteDebugEnabled":{"shape":"Boolean"},
-        "remoteRecordEnabled":{"shape":"Boolean"},
-        "remoteRecordAppArn":{"shape":"AmazonResourceName"},
-        "hostAddress":{"shape":"HostAddress"},
-        "clientId":{"shape":"ClientId"},
         "billingMethod":{"shape":"BillingMethod"},
         "deviceMinutes":{"shape":"DeviceMinutes"},
-        "endpoint":{"shape":"String"},
+        "endpoint":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"This field is deprecated, and is replaced by the new endpoints.interactiveEndpoint field.",
+          "deprecatedSince":"2025-11-17"
+        },
         "deviceUdid":{"shape":"String"},
-        "interactionMode":{"shape":"InteractionMode"},
+        "interactionMode":{
+          "shape":"InteractionMode",
+          "deprecated":true,
+          "deprecatedMessage":"Changing the interactive mode of Remote Access sessions is no longer available.",
+          "deprecatedSince":"2019-09-09"
+        },
         "skipAppResign":{"shape":"SkipAppResign"},
         "vpcConfig":{"shape":"VpcConfig"},
         "deviceProxy":{"shape":"DeviceProxy"},
-        "appUpload":{"shape":"AmazonResourceName"}
+        "appUpload":{"shape":"AmazonResourceName"},
+        "endpoints":{"shape":"RemoteAccessEndpoints"}
       }
     },
     "RemoteAccessSessions":{
@@ -3011,7 +3058,9 @@
         "skipAppResign":{"shape":"SkipAppResign"},
         "testSpecArn":{"shape":"AmazonResourceName"},
         "deviceSelectionResult":{"shape":"DeviceSelectionResult"},
-        "vpcConfig":{"shape":"VpcConfig"}
+        "vpcConfig":{"shape":"VpcConfig"},
+        "executionRoleArn":{"shape":"AmazonRoleResourceName"},
+        "environmentVariables":{"shape":"EnvironmentVariables"}
       }
     },
     "Runs":{
@@ -3064,7 +3113,9 @@
         "customerArtifactPaths":{"shape":"CustomerArtifactPaths"},
         "radios":{"shape":"Radios"},
         "auxiliaryApps":{"shape":"AmazonResourceNames"},
-        "billingMethod":{"shape":"BillingMethod"}
+        "billingMethod":{"shape":"BillingMethod"},
+        "environmentVariables":{"shape":"EnvironmentVariables"},
+        "executionRoleArn":{"shape":"AmazonRoleResourceName"}
       }
     },
     "ScheduleRunRequest":{
@@ -3119,7 +3170,7 @@
     },
     "SensitiveURL":{
       "type":"string",
-      "max":2048,
+      "max":4096,
       "min":0,
       "sensitive":true
     },
@@ -3136,11 +3187,6 @@
       "min":0
     },
     "SkipAppResign":{"type":"boolean"},
-    "SshPublicKey":{
-      "type":"string",
-      "max":8192,
-      "min":0
-    },
     "StopJobRequest":{
       "type":"structure",
       "required":["arn"],
@@ -3552,7 +3598,9 @@
         "arn":{"shape":"AmazonResourceName"},
         "name":{"shape":"Name"},
         "defaultJobTimeoutMinutes":{"shape":"JobTimeoutMinutes"},
-        "vpcConfig":{"shape":"VpcConfig"}
+        "vpcConfig":{"shape":"VpcConfig"},
+        "environmentVariables":{"shape":"EnvironmentVariables"},
+        "executionRoleArn":{"shape":"AmazonRoleResourceName"}
       }
     },
     "UpdateProjectResult":{

@@ -22,9 +22,9 @@
     "DescribeSchedulingPolicies": "<p>Describes one or more of your scheduling policies.</p>",
     "DescribeServiceEnvironments": "<p>Describes one or more of your service environments.</p>",
     "DescribeServiceJob": "<p>The details of a service job.</p>",
-    "GetJobQueueSnapshot": "<p>Provides a list of the first 100 <code>RUNNABLE</code> jobs associated to a single job queue.</p>",
+    "GetJobQueueSnapshot": "<p>Provides a list of the first 100 <code>RUNNABLE</code> jobs associated to a single job queue and includes capacity utilization, including total usage and breakdown by share for fairshare scheduling job queues. </p>",
     "ListConsumableResources": "<p>Returns a list of Batch consumable resources.</p>",
-    "ListJobs": "<p>Returns a list of Batch jobs.</p> <p>You must specify only one of the following items:</p> <ul> <li> <p>A job queue ID to return a list of jobs in that job queue</p> </li> <li> <p>A multi-node parallel job ID to return a list of nodes for that job</p> </li> <li> <p>An array job ID to return a list of the children for that job</p> </li> </ul> <p>You can filter the results by job status with the <code>jobStatus</code> parameter. If you don't specify a status, only <code>RUNNING</code> jobs are returned.</p>",
+    "ListJobs": "<p>Returns a list of Batch jobs.</p> <p>You must specify only one of the following items:</p> <ul> <li> <p>A job queue ID to return a list of jobs in that job queue</p> </li> <li> <p>A multi-node parallel job ID to return a list of nodes for that job</p> </li> <li> <p>An array job ID to return a list of the children for that job</p> </li> </ul>",
     "ListJobsByConsumableResource": "<p>Returns a list of Batch jobs that require a specific consumable resource.</p>",
     "ListSchedulingPolicies": "<p>Returns a list of Batch scheduling policies.</p>",
     "ListServiceJobs": "<p>Returns a list of service jobs for a specified job queue.</p>",
@@ -52,7 +52,8 @@
     "ArrayJobStatusSummary": {
       "base": null,
       "refs": {
-        "ArrayPropertiesDetail$statusSummary": "<p>A summary of the number of array job children in each available job status. This parameter is returned for parent array jobs.</p>"
+        "ArrayPropertiesDetail$statusSummary": "<p>A summary of the number of array job children in each available job status. This parameter is returned for parent array jobs.</p>",
+        "ArrayPropertiesSummary$statusSummary": "<p>A summary of the number of array job children in each available job status. This parameter is returned for parent array jobs.</p>"
       }
     },
     "ArrayProperties": {
@@ -503,6 +504,16 @@
         "LinuxParameters$devices": "<p>Any of the host devices to expose to the container. This parameter maps to <code>Devices</code> in the <a href=\"https://docs.docker.com/engine/api/v1.23/#create-a-container\">Create a container</a> section of the <a href=\"https://docs.docker.com/engine/api/v1.23/\">Docker Remote API</a> and the <code>--device</code> option to <a href=\"https://docs.docker.com/engine/reference/run/\">docker run</a>.</p> <note> <p>This parameter isn't applicable to jobs that are running on Fargate resources. Don't provide it for these jobs.</p> </note>"
       }
     },
+    "Double": {
+      "base": null,
+      "refs": {
+        "FairshareCapacityUsage$quantity": "<p>The quantity of capacity being used, measured in the units specified by <code>capacityUnit</code>.</p>",
+        "JobCapacityUsageSummary$quantity": "<p>The quantity of capacity being used by the job, measured in the units specified by <code>capacityUnit</code>.</p>",
+        "QueueSnapshotCapacityUsage$quantity": "<p>The quantity of capacity being used in the queue snapshot, measured in the units specified by <code>capacityUnit</code>.</p>",
+        "ServiceJobCapacityUsageDetail$quantity": "<p>The quantity of capacity being used by the service job, measured in the units specified by <code>capacityUnit</code>.</p>",
+        "ServiceJobCapacityUsageSummary$quantity": "<p>The quantity of capacity being used by the service job, measured in the units specified by <code>capacityUnit</code>.</p>"
+      }
+    },
     "EFSAuthorizationConfig": {
       "base": "<p>The authorization configuration details for the Amazon EFS file system.</p>",
       "refs": {
@@ -826,12 +837,42 @@
         "RetryStrategy$evaluateOnExit": "<p>Array of up to 5 objects that specify the conditions where jobs are retried or failed. If this parameter is specified, then the <code>attempts</code> parameter must also be specified. If none of the listed conditions match, then the job is retried.</p>"
       }
     },
+    "FairshareCapacityUsage": {
+      "base": "<p>The capacity usage for a fairshare scheduling job queue.</p>",
+      "refs": {
+        "FairshareCapacityUsageList$member": null
+      }
+    },
+    "FairshareCapacityUsageList": {
+      "base": null,
+      "refs": {
+        "FairshareCapacityUtilization$capacityUsage": "<p>The capacity usage information for this share, including the unit of measure and quantity being used. This is <code>VCPU</code> for Amazon EC2 and <code>cpu</code> for Amazon EKS.</p>"
+      }
+    },
+    "FairshareCapacityUtilization": {
+      "base": "<p>The capacity utilization for a specific share in a fairshare scheduling job queue, including the share identifier and its current usage.</p>",
+      "refs": {
+        "FairshareCapacityUtilizationList$member": null
+      }
+    },
+    "FairshareCapacityUtilizationList": {
+      "base": null,
+      "refs": {
+        "FairshareUtilizationDetail$topCapacityUtilization": "<p>A list of the top 20 shares with the highest capacity utilization, ordered by usage amount.</p>"
+      }
+    },
     "FairsharePolicy": {
       "base": "<p>The fair-share scheduling policy details.</p>",
       "refs": {
         "CreateSchedulingPolicyRequest$fairsharePolicy": "<p>The fair-share scheduling policy details.</p>",
         "SchedulingPolicyDetail$fairsharePolicy": "<p>The fair-share scheduling policy details.</p>",
         "UpdateSchedulingPolicyRequest$fairsharePolicy": "<p>The fair-share policy scheduling details.</p>"
+      }
+    },
+    "FairshareUtilizationDetail": {
+      "base": "<p>The fairshare utilization for a job queue, including the number of active shares and top capacity utilization.</p>",
+      "refs": {
+        "QueueSnapshotUtilizationDetail$fairshareUtilization": "<p>The utilization information for a fairshare scheduling job queues, including active share count and top capacity utilization by share.</p>"
       }
     },
     "FargatePlatformConfiguration": {
@@ -1016,6 +1057,18 @@
         "JobQueueDetail$status": "<p>The status of the job queue (for example, <code>CREATING</code> or <code>VALID</code>).</p>"
       }
     },
+    "JobCapacityUsageSummary": {
+      "base": "<p>The capacity usage for a job, including the unit of measure and quantity of resources being used.</p>",
+      "refs": {
+        "JobCapacityUsageSummaryList$member": null
+      }
+    },
+    "JobCapacityUsageSummaryList": {
+      "base": null,
+      "refs": {
+        "JobSummary$capacityUsage": "<p>The configured capacity usage information for this job, including the unit of measure and quantity of resources.</p>"
+      }
+    },
     "JobDefinition": {
       "base": "<p>An object that represents an Batch job definition.</p>",
       "refs": {
@@ -1115,7 +1168,7 @@
       "refs": {
         "JobDetail$status": "<p>The current status for the job.</p> <note> <p>If your jobs don't progress to <code>STARTING</code>, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/troubleshooting.html#job_stuck_in_runnable\">Jobs stuck in RUNNABLE status</a> in the troubleshooting section of the <i>Batch User Guide</i>.</p> </note>",
         "JobSummary$status": "<p>The current status for the job.</p>",
-        "ListJobsRequest$jobStatus": "<p>The job status used to filter jobs in the specified queue. If the <code>filters</code> parameter is specified, the <code>jobStatus</code> parameter is ignored and jobs with any status are returned. If you don't specify a status, only <code>RUNNING</code> jobs are returned.</p>"
+        "ListJobsRequest$jobStatus": "<p>The job status used to filter jobs in the specified queue. If the <code>filters</code> parameter is specified, the <code>jobStatus</code> parameter is ignored and jobs with any status are returned. The exception is the <code>SHARE_IDENTIFIER</code> filter and <code>jobStatus</code> can be used together. If you don't specify a status, only <code>RUNNING</code> jobs are returned.</p> <note> <p>Array job parents are updated to <code>PENDING</code> when any child job is updated to <code>RUNNABLE</code> and remain in <code>PENDING</code> status while child jobs are running. To view these jobs, filter by <code>PENDING</code> status until all child jobs reach a terminal state.</p> </note>"
       }
     },
     "JobSummary": {
@@ -1261,8 +1314,8 @@
     "ListJobsFilterList": {
       "base": null,
       "refs": {
-        "ListJobsRequest$filters": "<p>The filter to apply to the query. Only one filter can be used at a time. When the filter is used, <code>jobStatus</code> is ignored. The filter doesn't apply to child jobs in an array or multi-node parallel (MNP) jobs. The results are sorted by the <code>createdAt</code> field, with the most recent jobs being first.</p> <dl> <dt>JOB_NAME</dt> <dd> <p>The value of the filter is a case-insensitive match for the job name. If the value ends with an asterisk (*), the filter matches any job name that begins with the string before the '*'. This corresponds to the <code>jobName</code> value. For example, <code>test1</code> matches both <code>Test1</code> and <code>test1</code>, and <code>test1*</code> matches both <code>test1</code> and <code>Test10</code>. When the <code>JOB_NAME</code> filter is used, the results are grouped by the job name and version.</p> </dd> <dt>JOB_DEFINITION</dt> <dd> <p>The value for the filter is the name or Amazon Resource Name (ARN) of the job definition. This corresponds to the <code>jobDefinition</code> value. The value is case sensitive. When the value for the filter is the job definition name, the results include all the jobs that used any revision of that job definition name. If the value ends with an asterisk (*), the filter matches any job definition name that begins with the string before the '*'. For example, <code>jd1</code> matches only <code>jd1</code>, and <code>jd1*</code> matches both <code>jd1</code> and <code>jd1A</code>. The version of the job definition that's used doesn't affect the sort order. When the <code>JOB_DEFINITION</code> filter is used and the ARN is used (which is in the form <code>arn:${Partition}:batch:${Region}:${Account}:job-definition/${JobDefinitionName}:${Revision}</code>), the results include jobs that used the specified revision of the job definition. Asterisk (*) isn't supported when the ARN is used.</p> </dd> <dt>BEFORE_CREATED_AT</dt> <dd> <p>The value for the filter is the time that's before the job was created. This corresponds to the <code>createdAt</code> value. The value is a string representation of the number of milliseconds since 00:00:00 UTC (midnight) on January 1, 1970.</p> </dd> <dt>AFTER_CREATED_AT</dt> <dd> <p>The value for the filter is the time that's after the job was created. This corresponds to the <code>createdAt</code> value. The value is a string representation of the number of milliseconds since 00:00:00 UTC (midnight) on January 1, 1970.</p> </dd> </dl>",
-        "ListServiceJobsRequest$filters": "<p>The filter to apply to the query. Only one filter can be used at a time. When the filter is used, <code>jobStatus</code> is ignored. The results are sorted by the <code>createdAt</code> field, with the most recent jobs being first.</p> <dl> <dt>JOB_NAME</dt> <dd> <p>The value of the filter is a case-insensitive match for the job name. If the value ends with an asterisk (*), the filter matches any job name that begins with the string before the '*'. This corresponds to the <code>jobName</code> value. For example, <code>test1</code> matches both <code>Test1</code> and <code>test1</code>, and <code>test1*</code> matches both <code>test1</code> and <code>Test10</code>. When the <code>JOB_NAME</code> filter is used, the results are grouped by the job name and version.</p> </dd> <dt>BEFORE_CREATED_AT</dt> <dd> <p>The value for the filter is the time that's before the job was created. This corresponds to the <code>createdAt</code> value. The value is a string representation of the number of milliseconds since 00:00:00 UTC (midnight) on January 1, 1970.</p> </dd> <dt>AFTER_CREATED_AT</dt> <dd> <p>The value for the filter is the time that's after the job was created. This corresponds to the <code>createdAt</code> value. The value is a string representation of the number of milliseconds since 00:00:00 UTC (midnight) on January 1, 1970.</p> </dd> </dl>"
+        "ListJobsRequest$filters": "<p>The filter to apply to the query. Only one filter can be used at a time. When the filter is used, <code>jobStatus</code> is ignored with the exception that <code>SHARE_IDENTIFIER</code> and <code>jobStatus</code> can be used together. The filter doesn't apply to child jobs in an array or multi-node parallel (MNP) jobs. The results are sorted by the <code>createdAt</code> field, with the most recent jobs being first.</p> <note> <p>The <code>SHARE_IDENTIFIER</code> filter and the <code>jobStatus</code> field can be used together to filter results.</p> </note> <dl> <dt>JOB_NAME</dt> <dd> <p>The value of the filter is a case-insensitive match for the job name. If the value ends with an asterisk (*), the filter matches any job name that begins with the string before the '*'. This corresponds to the <code>jobName</code> value. For example, <code>test1</code> matches both <code>Test1</code> and <code>test1</code>, and <code>test1*</code> matches both <code>test1</code> and <code>Test10</code>. When the <code>JOB_NAME</code> filter is used, the results are grouped by the job name and version.</p> </dd> <dt>JOB_DEFINITION</dt> <dd> <p>The value for the filter is the name or Amazon Resource Name (ARN) of the job definition. This corresponds to the <code>jobDefinition</code> value. The value is case sensitive. When the value for the filter is the job definition name, the results include all the jobs that used any revision of that job definition name. If the value ends with an asterisk (*), the filter matches any job definition name that begins with the string before the '*'. For example, <code>jd1</code> matches only <code>jd1</code>, and <code>jd1*</code> matches both <code>jd1</code> and <code>jd1A</code>. The version of the job definition that's used doesn't affect the sort order. When the <code>JOB_DEFINITION</code> filter is used and the ARN is used (which is in the form <code>arn:${Partition}:batch:${Region}:${Account}:job-definition/${JobDefinitionName}:${Revision}</code>), the results include jobs that used the specified revision of the job definition. Asterisk (*) isn't supported when the ARN is used.</p> </dd> <dt>BEFORE_CREATED_AT</dt> <dd> <p>The value for the filter is the time that's before the job was created. This corresponds to the <code>createdAt</code> value. The value is a string representation of the number of milliseconds since 00:00:00 UTC (midnight) on January 1, 1970.</p> </dd> <dt>AFTER_CREATED_AT</dt> <dd> <p>The value for the filter is the time that's after the job was created. This corresponds to the <code>createdAt</code> value. The value is a string representation of the number of milliseconds since 00:00:00 UTC (midnight) on January 1, 1970.</p> </dd> <dt>SHARE_IDENTIFIER</dt> <dd> <p>The value for the filter is the fairshare scheduling share identifier.</p> </dd> </dl>",
+        "ListServiceJobsRequest$filters": "<p>The filter to apply to the query. Only one filter can be used at a time. When the filter is used, <code>jobStatus</code> is ignored with the exception that <code>SHARE_IDENTIFIER</code> and <code>jobStatus</code> can be used together. The results are sorted by the <code>createdAt</code> field, with the most recent jobs being first.</p> <note> <p>The <code>SHARE_IDENTIFIER</code> filter and the <code>jobStatus</code> field can be used together to filter results.</p> </note> <dl> <dt>JOB_NAME</dt> <dd> <p>The value of the filter is a case-insensitive match for the job name. If the value ends with an asterisk (*), the filter matches any job name that begins with the string before the '*'. This corresponds to the <code>jobName</code> value. For example, <code>test1</code> matches both <code>Test1</code> and <code>test1</code>, and <code>test1*</code> matches both <code>test1</code> and <code>Test10</code>. When the <code>JOB_NAME</code> filter is used, the results are grouped by the job name and version.</p> </dd> <dt>BEFORE_CREATED_AT</dt> <dd> <p>The value for the filter is the time that's before the job was created. This corresponds to the <code>createdAt</code> value. The value is a string representation of the number of milliseconds since 00:00:00 UTC (midnight) on January 1, 1970.</p> </dd> <dt>AFTER_CREATED_AT</dt> <dd> <p>The value for the filter is the time that's after the job was created. This corresponds to the <code>createdAt</code> value. The value is a string representation of the number of milliseconds since 00:00:00 UTC (midnight) on January 1, 1970.</p> </dd> <dt>SHARE_IDENTIFIER</dt> <dd> <p>The value for the filter is the fairshare scheduling share identifier.</p> </dd> </dl>"
       }
     },
     "ListJobsRequest": {
@@ -1345,6 +1398,8 @@
     "Long": {
       "base": null,
       "refs": {
+        "ArrayPropertiesDetail$statusSummaryLastUpdatedAt": "<p>The Unix timestamp (in milliseconds) for when the <code>statusSummary</code> was last updated.</p>",
+        "ArrayPropertiesSummary$statusSummaryLastUpdatedAt": "<p>The Unix timestamp (in milliseconds) for when the <code>statusSummary</code> was last updated.</p>",
         "AttemptDetail$startedAt": "<p>The Unix timestamp (in milliseconds) for when the attempt was started (when the attempt transitioned from the <code>STARTING</code> state to the <code>RUNNING</code> state).</p>",
         "AttemptDetail$stoppedAt": "<p>The Unix timestamp (in milliseconds) for when the attempt was stopped (when the attempt transitioned from the <code>RUNNING</code> state to a terminal state, such as <code>SUCCEEDED</code> or <code>FAILED</code>).</p>",
         "ConsumableResourceRequirement$quantity": "<p>The quantity of the consumable resource that is needed.</p>",
@@ -1356,26 +1411,31 @@
         "DescribeConsumableResourceResponse$availableQuantity": "<p>The amount of the consumable resource that is currently available to use.</p>",
         "DescribeConsumableResourceResponse$createdAt": "<p>The Unix timestamp (in milliseconds) for when the consumable resource was created.</p>",
         "DescribeServiceJobResponse$createdAt": "<p>The Unix timestamp (in milliseconds) for when the service job was created.</p>",
+        "DescribeServiceJobResponse$scheduledAt": "<p>The Unix timestamp (in milliseconds) for when the service job was scheduled. This represents when the service job was dispatched to SageMaker and the service job transitioned to the <code>SCHEDULED</code> state.</p>",
         "DescribeServiceJobResponse$startedAt": "<p>The Unix timestamp (in milliseconds) for when the service job was started.</p>",
         "DescribeServiceJobResponse$stoppedAt": "<p>The Unix timestamp (in milliseconds) for when the service job stopped running.</p>",
         "EksAttemptDetail$startedAt": "<p>The Unix timestamp (in milliseconds) for when the attempt was started (when the attempt transitioned from the <code>STARTING</code> state to the <code>RUNNING</code> state).</p>",
         "EksAttemptDetail$stoppedAt": "<p>The Unix timestamp (in milliseconds) for when the attempt was stopped. This happens when the attempt transitioned from the <code>RUNNING</code> state to a terminal state, such as <code>SUCCEEDED</code> or <code>FAILED</code>.</p>",
         "EksContainerSecurityContext$runAsUser": "<p>When this parameter is specified, the container is run as the specified user ID (<code>uid</code>). If this parameter isn't specified, the default is the user that's specified in the image metadata. This parameter maps to <code>RunAsUser</code> and <code>MustRanAs</code> policy in the <a href=\"https://kubernetes.io/docs/concepts/security/pod-security-policy/#users-and-groups\">Users and groups pod security policies</a> in the <i>Kubernetes documentation</i>.</p>",
         "EksContainerSecurityContext$runAsGroup": "<p>When this parameter is specified, the container is run as the specified group ID (<code>gid</code>). If this parameter isn't specified, the default is the group that's specified in the image metadata. This parameter maps to <code>RunAsGroup</code> and <code>MustRunAs</code> policy in the <a href=\"https://kubernetes.io/docs/concepts/security/pod-security-policy/#users-and-groups\">Users and groups pod security policies</a> in the <i>Kubernetes documentation</i>.</p>",
+        "FairshareUtilizationDetail$activeShareCount": "<p>The total number of active shares in the fairshare scheduling job queue that are currently utilizing capacity.</p>",
         "FrontOfQueueDetail$lastUpdatedAt": "<p>The Unix timestamp (in milliseconds) for when each of the first 100 <code>RUNNABLE</code> jobs were last updated. </p>",
         "FrontOfQueueJobSummary$earliestTimeAtPosition": "<p>The Unix timestamp (in milliseconds) for when the job transitioned to its current position in the job queue.</p>",
         "JobDetail$createdAt": "<p>The Unix timestamp (in milliseconds) for when the job was created. For non-array jobs and parent array jobs, this is when the job entered the <code>SUBMITTED</code> state. This is specifically at the time <a href=\"https://docs.aws.amazon.com/batch/latest/APIReference/API_SubmitJob.html\">SubmitJob</a> was called. For array child jobs, this is when the child job was spawned by its parent and entered the <code>PENDING</code> state.</p>",
         "JobDetail$startedAt": "<p>The Unix timestamp (in milliseconds) for when the job was started. More specifically, it's when the job transitioned from the <code>STARTING</code> state to the <code>RUNNING</code> state. </p>",
         "JobDetail$stoppedAt": "<p>The Unix timestamp (in milliseconds) for when the job was stopped. More specifically, it's when the job transitioned from the <code>RUNNING</code> state to a terminal state, such as <code>SUCCEEDED</code> or <code>FAILED</code>.</p>",
         "JobSummary$createdAt": "<p>The Unix timestamp (in milliseconds) for when the job was created. For non-array jobs and parent array jobs, this is when the job entered the <code>SUBMITTED</code> state (at the time <a href=\"https://docs.aws.amazon.com/batch/latest/APIReference/API_SubmitJob.html\">SubmitJob</a> was called). For array child jobs, this is when the child job was spawned by its parent and entered the <code>PENDING</code> state.</p>",
+        "JobSummary$scheduledAt": "<p>The Unix timestamp (in milliseconds) for when the job was scheduled for execution. For more information on job statues, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/service-job-status.html\">Service job status</a> in the <i>Batch User Guide</i>.</p>",
         "JobSummary$startedAt": "<p>The Unix timestamp for when the job was started. More specifically, it's when the job transitioned from the <code>STARTING</code> state to the <code>RUNNING</code> state.</p>",
         "JobSummary$stoppedAt": "<p>The Unix timestamp for when the job was stopped. More specifically, it's when the job transitioned from the <code>RUNNING</code> state to a terminal state, such as <code>SUCCEEDED</code> or <code>FAILED</code>.</p>",
         "ListJobsByConsumableResourceSummary$quantity": "<p>The total amount of the consumable resource that is available.</p>",
         "ListJobsByConsumableResourceSummary$startedAt": "<p>The Unix timestamp for when the job was started. More specifically, it's when the job transitioned from the <code>STARTING</code> state to the <code>RUNNING</code> state.</p>",
         "ListJobsByConsumableResourceSummary$createdAt": "<p>The Unix timestamp (in milliseconds) for when the consumable resource was created.</p>",
+        "QueueSnapshotUtilizationDetail$lastUpdatedAt": "<p>The Unix timestamp (in milliseconds) for when the queue utilization information was last updated.</p>",
         "ServiceJobAttemptDetail$startedAt": "<p>The Unix timestamp (in milliseconds) for when the service job attempt was started.</p>",
         "ServiceJobAttemptDetail$stoppedAt": "<p>The Unix timestamp (in milliseconds) for when the service job attempt stopped running.</p>",
         "ServiceJobSummary$createdAt": "<p>The Unix timestamp (in milliseconds) for when the service job was created.</p>",
+        "ServiceJobSummary$scheduledAt": "<p>The Unix timestamp (in milliseconds) for when the service job was scheduled for execution.</p>",
         "ServiceJobSummary$startedAt": "<p>The Unix timestamp (in milliseconds) for when the service job was started.</p>",
         "ServiceJobSummary$stoppedAt": "<p>The Unix timestamp (in milliseconds) for when the service job stopped running.</p>",
         "UpdateConsumableResourceRequest$quantity": "<p>The change in the total quantity of the consumable resource. The <code>operation</code> parameter determines whether the value specified here will be the new total quantity, or the amount by which the total quantity will be increased or reduced. Must be a non-negative value.</p>",
@@ -1507,6 +1567,24 @@
         "EksEmptyDir$sizeLimit": "<p>The maximum size of the volume. By default, there's no maximum size defined.</p>",
         "EksLimits$value": null,
         "EksRequests$value": null
+      }
+    },
+    "QueueSnapshotCapacityUsage": {
+      "base": "<p>The configured capacity usage for a job queue snapshot, including the unit of measure and quantity of resources being used.</p>",
+      "refs": {
+        "QueueSnapshotCapacityUsageList$member": null
+      }
+    },
+    "QueueSnapshotCapacityUsageList": {
+      "base": null,
+      "refs": {
+        "QueueSnapshotUtilizationDetail$totalCapacityUsage": "<p>The total capacity usage for the entire job queue, for both first-in, first-out (FIFO) and fairshare scheduling job queue.</p>"
+      }
+    },
+    "QueueSnapshotUtilizationDetail": {
+      "base": "<p>The job queue utilization at a specific point in time, including total capacity usage and fairshare utilization breakdown.</p>",
+      "refs": {
+        "GetJobQueueSnapshotResponse$queueUtilization": "<p>The job queue's capacity utilization, including total usage and breakdown by fairshare scheduling queue.</p>"
       }
     },
     "RegisterJobDefinitionRequest": {
@@ -1676,6 +1754,30 @@
         "DescribeServiceJobResponse$attempts": "<p>A list of job attempts associated with the service job.</p>"
       }
     },
+    "ServiceJobCapacityUsageDetail": {
+      "base": "<p>The capacity usage for a service job, including the unit of measure and quantity of resources being consumed.</p>",
+      "refs": {
+        "ServiceJobCapacityUsageDetailList$member": null
+      }
+    },
+    "ServiceJobCapacityUsageDetailList": {
+      "base": null,
+      "refs": {
+        "DescribeServiceJobResponse$capacityUsage": "<p>The configured capacity for the service job, such as the number of instances. The number of instances should be the same value as the <code>serviceRequestPayload.InstanceCount</code> field.</p>"
+      }
+    },
+    "ServiceJobCapacityUsageSummary": {
+      "base": "<p>The capacity usage for a service job, including the unit of measure and quantity of resources being used.</p>",
+      "refs": {
+        "ServiceJobCapacityUsageSummaryList$member": null
+      }
+    },
+    "ServiceJobCapacityUsageSummaryList": {
+      "base": null,
+      "refs": {
+        "ServiceJobSummary$capacityUsage": "<p>The capacity usage information for this service job, including the unit of measure and quantity of resources being used.</p>"
+      }
+    },
     "ServiceJobEvaluateOnExit": {
       "base": "<p>Specifies conditions for when to exit or retry a service job based on the exit status or status reason.</p>",
       "refs": {
@@ -1705,7 +1807,7 @@
       "base": null,
       "refs": {
         "DescribeServiceJobResponse$status": "<p>The current status of the service job. </p>",
-        "ListServiceJobsRequest$jobStatus": "<p>The job status with which to filter service jobs. </p>",
+        "ListServiceJobsRequest$jobStatus": "<p>The job status used to filter service jobs in the specified queue. If the <code>filters</code> parameter is specified, the <code>jobStatus</code> parameter is ignored and jobs with any status are returned. The exception is the <code>SHARE_IDENTIFIER</code> filter and <code>jobStatus</code> can be used together. If you don't specify a status, only <code>RUNNING</code> jobs are returned.</p> <note> <p>The <code>SHARE_IDENTIFIER</code> filter and the <code>jobStatus</code> field can be used together to filter results.</p> </note>",
         "ServiceJobSummary$status": "<p>The current status of the service job. </p>"
       }
     },
@@ -1925,6 +2027,8 @@
         "EvaluateOnExit$onStatusReason": "<p>Contains a glob pattern to match against the <code>StatusReason</code> returned for a job. The pattern can contain up to 512 characters. It can contain letters, numbers, periods (.), colons (:), and white spaces (including spaces or tabs). It can optionally end with an asterisk (*) so that only the start of the string needs to be an exact match.</p>",
         "EvaluateOnExit$onReason": "<p>Contains a glob pattern to match against the <code>Reason</code> returned for a job. The pattern can contain up to 512 characters. It can contain letters, numbers, periods (.), colons (:), and white space (including spaces and tabs). It can optionally end with an asterisk (*) so that only the start of the string needs to be an exact match.</p>",
         "EvaluateOnExit$onExitCode": "<p>Contains a glob pattern to match against the decimal representation of the <code>ExitCode</code> returned for a job. The pattern can be up to 512 characters long. It can contain only numbers, and can end with an asterisk (*) so that only the start of the string needs to be an exact match.</p> <p>The string can contain up to 512 characters.</p>",
+        "FairshareCapacityUsage$capacityUnit": "<p>The unit of measure for the capacity usage. For compute jobs, this is <code>VCPU</code> for Amazon EC2 and <code>cpu</code> for Amazon EKS. For service jobs, this is <code>NUM_INSTANCES</code>.</p>",
+        "FairshareCapacityUtilization$shareIdentifier": "<p>The share identifier for the fairshare scheduling job queue.</p>",
         "FargatePlatformConfiguration$platformVersion": "<p>The Fargate platform version where the jobs are running. A platform version is specified only for jobs that are running on Fargate resources. If one isn't specified, the <code>LATEST</code> platform version is used by default. This uses a recent, approved version of the Fargate platform for compute resources. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/platform_versions.html\">Fargate platform versions</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p>",
         "FirelensConfigurationOptionsMap$key": null,
         "FirelensConfigurationOptionsMap$value": null,
@@ -1932,6 +2036,7 @@
         "GetJobQueueSnapshotRequest$jobQueue": "<p>The job queue’s name or full queue Amazon Resource Name (ARN).</p>",
         "Host$sourcePath": "<p>The path on the host container instance that's presented to the container. If this parameter is empty, then the Docker daemon has assigned a host path for you. If this parameter contains a file location, then the data volume persists at the specified location on the host container instance until you delete it manually. If the source path location doesn't exist on the host container instance, the Docker daemon creates it. If the location does exist, the contents of the source path folder are exported.</p> <note> <p>This parameter isn't applicable to jobs that run on Fargate resources. Don't provide this for these jobs.</p> </note>",
         "ImagePullSecret$name": "<p>Provides a unique identifier for the <code>ImagePullSecret</code>. This object is required when <code>EksPodProperties$imagePullSecrets</code> is used.</p>",
+        "JobCapacityUsageSummary$capacityUnit": "<p>The unit of measure for the capacity usage. This is <code>VCPU</code> for Amazon EC2 and <code>cpu</code> for Amazon EKS.</p>",
         "JobDefinition$jobDefinitionName": "<p>The name of the job definition.</p>",
         "JobDefinition$jobDefinitionArn": "<p>The Amazon Resource Name (ARN) for the job definition.</p>",
         "JobDefinition$status": "<p>The status of the job definition.</p>",
@@ -1952,6 +2057,7 @@
         "JobSummary$jobArn": "<p>The Amazon Resource Name (ARN) of the job.</p>",
         "JobSummary$jobId": "<p>The job ID.</p>",
         "JobSummary$jobName": "<p>The job name.</p>",
+        "JobSummary$shareIdentifier": "<p>The share identifier for the fairshare scheduling queue that this job is associated with.</p>",
         "JobSummary$statusReason": "<p>A short, human-readable string to provide more details for the current status of the job.</p>",
         "JobSummary$jobDefinition": "<p>The Amazon Resource Name (ARN) of the job definition.</p>",
         "KeyValuePair$name": "<p>The name of the key-value pair. For environment variables, this is the name of the environment variable.</p>",
@@ -1972,7 +2078,7 @@
         "ListJobsByConsumableResourceSummary$jobQueueArn": "<p>The Amazon Resource Name (ARN) of the job queue.</p>",
         "ListJobsByConsumableResourceSummary$jobName": "<p>The name of the job.</p>",
         "ListJobsByConsumableResourceSummary$jobDefinitionArn": "<p>The Amazon Resource Name (ARN) of the job definition.</p>",
-        "ListJobsByConsumableResourceSummary$shareIdentifier": "<p>The fair-share scheduling policy identifier for the job.</p>",
+        "ListJobsByConsumableResourceSummary$shareIdentifier": "<p>The fair-share scheduling identifier for the job.</p>",
         "ListJobsByConsumableResourceSummary$jobStatus": "<p>The status of the job. Can be one of:</p> <ul> <li> <p> <code>SUBMITTED</code> </p> </li> <li> <p> <code>PENDING</code> </p> </li> <li> <p> <code>RUNNABLE</code> </p> </li> <li> <p> <code>STARTING</code> </p> </li> <li> <p> <code>RUNNING</code> </p> </li> <li> <p> <code>SUCCEEDED</code> </p> </li> <li> <p> <code>FAILED</code> </p> </li> </ul>",
         "ListJobsByConsumableResourceSummary$statusReason": "<p>A short, human-readable string to provide more details for the current status of the job.</p>",
         "ListJobsRequest$jobQueue": "<p>The name or full Amazon Resource Name (ARN) of the job queue used to list jobs.</p>",
@@ -1997,6 +2103,7 @@
         "NodeRangeProperty$targetNodes": "<p>The range of nodes, using node index values. A range of <code>0:3</code> indicates nodes with index values of <code>0</code> through <code>3</code>. If the starting range value is omitted (<code>:n</code>), then <code>0</code> is used to start the range. If the ending range value is omitted (<code>n:</code>), then the highest possible node index is used to end the range. Your accumulative node ranges must account for all nodes (<code>0:n</code>). You can nest node ranges (for example, <code>0:10</code> and <code>4:5</code>). In this case, the <code>4:5</code> range properties override the <code>0:10</code> properties.</p>",
         "ParametersMap$key": null,
         "ParametersMap$value": null,
+        "QueueSnapshotCapacityUsage$capacityUnit": "<p>The unit of measure for the capacity usage. For compute jobs, this is <code>VCPU</code> for Amazon EC2 and <code>cpu</code> for Amazon EKS. For service jobs, this is <code>NUM_INSTANCES</code>.</p>",
         "RegisterJobDefinitionRequest$jobDefinitionName": "<p>The name of the job definition to register. It can be up to 128 letters long. It can contain uppercase and lowercase letters, numbers, hyphens (-), and underscores (_).</p>",
         "RegisterJobDefinitionResponse$jobDefinitionName": "<p>The name of the job definition.</p>",
         "RegisterJobDefinitionResponse$jobDefinitionArn": "<p>The Amazon Resource Name (ARN) of the job definition.</p>",
@@ -2014,6 +2121,8 @@
         "ServiceEnvironmentDetail$serviceEnvironmentArn": "<p>The Amazon Resource Name (ARN) of the service environment.</p>",
         "ServiceEnvironmentOrder$serviceEnvironment": "<p>The name or ARN of the service environment.</p>",
         "ServiceJobAttemptDetail$statusReason": "<p>A string that provides additional details for the current status of the service job attempt.</p>",
+        "ServiceJobCapacityUsageDetail$capacityUnit": "<p>The unit of measure for the service job capacity usage. For service jobs, this is <code>NUM_INSTANCES</code>.</p>",
+        "ServiceJobCapacityUsageSummary$capacityUnit": "<p>The unit of measure for the service job capacity usage. For service jobs, this is <code>NUM_INSTANCES</code>.</p>",
         "ServiceJobEvaluateOnExit$onStatusReason": "<p>Contains a glob pattern to match against the StatusReason returned for a job. The pattern can contain up to 512 characters and can contain all printable characters. It can optionally end with an asterisk (*) so that only the start of the string needs to be an exact match.</p>",
         "ServiceJobSummary$jobArn": "<p>The Amazon Resource Name (ARN) of the service job.</p>",
         "ServiceJobSummary$jobId": "<p>The job ID for the service job.</p>",

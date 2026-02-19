@@ -61,6 +61,7 @@
     "DeleteColumnStatisticsForTable": "<p>Retrieves table statistics of columns.</p> <p>The Identity and Access Management (IAM) permission required for this operation is <code>DeleteTable</code>.</p>",
     "DeleteColumnStatisticsTaskSettings": "<p>Deletes settings for a column statistics task.</p>",
     "DeleteConnection": "<p>Deletes a connection from the Data Catalog.</p>",
+    "DeleteConnectionType": "<p>Deletes a custom connection type in Glue.</p> <p>The connection type must exist and be registered before it can be deleted. This operation supports cleanup of connection type resources and helps maintain proper lifecycle management of custom connection types.</p>",
     "DeleteCrawler": "<p>Removes a specified crawler from the Glue Data Catalog, unless the crawler state is <code>RUNNING</code>.</p>",
     "DeleteCustomEntityType": "<p>Deletes a custom pattern by specifying its name.</p>",
     "DeleteDataQualityRuleset": "<p>Deletes a data quality ruleset.</p>",
@@ -68,6 +69,7 @@
     "DeleteDevEndpoint": "<p>Deletes a specified development endpoint.</p>",
     "DeleteGlueIdentityCenterConfiguration": "<p>Deletes the existing Glue Identity Center configuration, removing the integration between Glue and Amazon Web Services IAM Identity Center.</p>",
     "DeleteIntegration": "<p>Deletes the specified Zero-ETL integration.</p>",
+    "DeleteIntegrationResourceProperty": "<p>This API is used for deleting the <code>ResourceProperty</code> of the Glue connection (for the source) or Glue database ARN (for the target).</p>",
     "DeleteIntegrationTableProperties": "<p>Deletes the table properties that have been created for the tables that need to be replicated.</p>",
     "DeleteJob": "<p>Deletes a specified job definition. If the job definition is not found, no exception is thrown.</p>",
     "DeleteMLTransform": "<p>Deletes an Glue machine learning transform. Machine learning transforms are a special type of transform that use machine learning to learn the details of the transformation to be performed by learning from examples provided by humans. These transformations are then saved by Glue. If you no longer need a transform, you can delete it by calling <code>DeleteMLTransforms</code>. However, any Glue jobs that still reference the deleted transform will no longer succeed.</p>",
@@ -86,7 +88,7 @@
     "DeleteUsageProfile": "<p>Deletes the Glue specified usage profile.</p>",
     "DeleteUserDefinedFunction": "<p>Deletes an existing function definition from the Data Catalog.</p>",
     "DeleteWorkflow": "<p>Deletes a workflow.</p>",
-    "DescribeConnectionType": "<p>The <code>DescribeConnectionType</code> API provides full details of the supported options for a given connection type in Glue.</p>",
+    "DescribeConnectionType": "<p>The <code>DescribeConnectionType</code> API provides full details of the supported options for a given connection type in Glue. The response includes authentication configuration details that show supported authentication types and properties, and RestConfiguration for custom REST-based connection types registered via <code>RegisterConnectionType</code>.</p> <p>See also: <code>ListConnectionTypes</code>, <code>RegisterConnectionType</code>, <code>DeleteConnectionType</code> </p>",
     "DescribeEntity": "<p>Provides details regarding the entity used with the connection type, with a description of the data model for each field in the selected entity.</p> <p> The response includes all the fields which make up the entity.</p>",
     "DescribeInboundIntegrations": "<p>Returns a list of inbound integrations for the specified integration.</p>",
     "DescribeIntegrations": "<p>The API is used to retrieve a list of integrations.</p>",
@@ -135,6 +137,7 @@
     "GetMLTransform": "<p>Gets an Glue machine learning transform artifact and all its corresponding metadata. Machine learning transforms are a special type of transform that use machine learning to learn the details of the transformation to be performed by learning from examples provided by humans. These transformations are then saved by Glue. You can retrieve their metadata by calling <code>GetMLTransform</code>.</p>",
     "GetMLTransforms": "<p>Gets a sortable, filterable list of existing Glue machine learning transforms. Machine learning transforms are a special type of transform that use machine learning to learn the details of the transformation to be performed by learning from examples provided by humans. These transformations are then saved by Glue, and you can retrieve their metadata by calling <code>GetMLTransforms</code>.</p>",
     "GetMapping": "<p>Creates mappings.</p>",
+    "GetMaterializedViewRefreshTaskRun": "<p>Get the associated metadata/information for a task run, given a task run ID.</p>",
     "GetPartition": "<p>Retrieves information about a specified partition.</p>",
     "GetPartitionIndexes": "<p>Retrieves the partition indexes associated with a table.</p>",
     "GetPartitions": "<p>Retrieves information about the partitions in a table.</p>",
@@ -171,7 +174,7 @@
     "ImportCatalogToGlue": "<p>Imports an existing Amazon Athena Data Catalog to Glue.</p>",
     "ListBlueprints": "<p>Lists all the blueprint names in an account.</p>",
     "ListColumnStatisticsTaskRuns": "<p>List all task runs for a particular account.</p>",
-    "ListConnectionTypes": "<p>The <code>ListConnectionTypes</code> API provides a discovery mechanism to learn available connection types in Glue. The response contains a list of connection types with high-level details of what is supported for each connection type. The connection types listed are the set of supported options for the <code>ConnectionType</code> value in the <code>CreateConnection</code> API.</p>",
+    "ListConnectionTypes": "<p>The <code>ListConnectionTypes</code> API provides a discovery mechanism to learn available connection types in Glue. The response contains a list of connection types with high-level details of what is supported for each connection type, including both built-in connection types and custom connection types registered via <code>RegisterConnectionType</code>. The connection types listed are the set of supported options for the <code>ConnectionType</code> value in the <code>CreateConnection</code> API.</p> <p>See also: <code>DescribeConnectionType</code>, <code>RegisterConnectionType</code>, <code>DeleteConnectionType</code> </p>",
     "ListCrawlers": "<p>Retrieves the names of all crawler resources in this Amazon Web Services account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
     "ListCrawls": "<p>Returns all the crawls of a specified crawler. Returns only the crawls that have occurred since the launch date of the crawler history feature, and only retains up to 12 months of crawls. Older crawls will not be returned.</p> <p>You may use this API to:</p> <ul> <li> <p>Retrive all the crawls of a specified crawler.</p> </li> <li> <p>Retrieve all the crawls of a specified crawler within a limited count.</p> </li> <li> <p>Retrieve all the crawls of a specified crawler in a specific time range.</p> </li> <li> <p>Retrieve all the crawls of a specified crawler with a particular state, crawl ID, or DPU hour value.</p> </li> </ul>",
     "ListCustomEntityTypes": "<p>Lists all the custom patterns that have been created.</p>",
@@ -183,8 +186,10 @@
     "ListDataQualityStatistics": "<p>Retrieves a list of data quality statistics.</p>",
     "ListDevEndpoints": "<p>Retrieves the names of all <code>DevEndpoint</code> resources in this Amazon Web Services account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
     "ListEntities": "<p>Returns the available entities supported by the connection type. </p>",
+    "ListIntegrationResourceProperties": "<p>List integration resource properties for a single customer. It supports the filters, maxRecords and markers.</p>",
     "ListJobs": "<p>Retrieves the names of all job resources in this Amazon Web Services account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
     "ListMLTransforms": "<p> Retrieves a sortable, filterable list of existing Glue machine learning transforms in this Amazon Web Services account, or the resources with the specified tag. This operation takes the optional <code>Tags</code> field, which you can use as a filter of the responses so that tagged resources can be retrieved as a group. If you choose to use tag filtering, only resources with the tags are retrieved. </p>",
+    "ListMaterializedViewRefreshTaskRuns": "<p>List all task runs for a particular account.</p>",
     "ListRegistries": "<p>Returns a list of registries that you have created, with minimal registry information. Registries in the <code>Deleting</code> status will not be included in the results. Empty results will be returned if there are no registries available.</p>",
     "ListSchemaVersions": "<p>Returns a list of schema versions that you have created, with minimal information. Schema versions in Deleted status will not be included in the results. Empty results will be returned if there are no schema versions available.</p>",
     "ListSchemas": "<p>Returns a list of schemas with minimal details. Schemas in Deleting status will not be included in the results. Empty results will be returned if there are no schemas available.</p> <p>When the <code>RegistryId</code> is not provided, all the schemas across registries will be part of the API response.</p>",
@@ -201,6 +206,7 @@
     "PutSchemaVersionMetadata": "<p>Puts the metadata key value pair for a specified schema version ID. A maximum of 10 key value pairs will be allowed per schema version. They can be added over one or more calls.</p>",
     "PutWorkflowRunProperties": "<p>Puts the specified workflow run properties for the given workflow run. If a property already exists for the specified run, then it overrides the value otherwise adds the property to existing properties.</p>",
     "QuerySchemaVersionMetadata": "<p>Queries for the schema version metadata information. </p>",
+    "RegisterConnectionType": "<p>Registers a custom connection type in Glue based on the configuration provided. This operation enables customers to configure custom connectors for any data source with REST-based APIs, eliminating the need for building custom Lambda connectors.</p> <p>The registered connection type stores details about how requests and responses are interpreted by REST sources, including connection properties, authentication configuration, and REST configuration with entity definitions. Once registered, customers can create connections using this connection type and work with them the same way as natively supported Glue connectors.</p> <p>Supports multiple authentication types including Basic, OAuth2 (Client Credentials, JWT Bearer, Authorization Code), and Custom Auth configurations.</p>",
     "RegisterSchemaVersion": "<p>Adds a new version to the existing schema. Returns an error if new version of schema does not meet the compatibility requirements of the schema set. This API will not create a new schema set and will return a 404 error if the schema set is not already present in the Schema Registry.</p> <p>If this is the first schema definition to be registered in the Schema Registry, this API will store the schema version and return immediately. Otherwise, this call has the potential to run longer than other operations due to compatibility modes. You can call the <code>GetSchemaVersion</code> API with the <code>SchemaVersionId</code> to check compatibility modes.</p> <p>If the same schema definition is already stored in Schema Registry as a version, the schema ID of the existing schema is returned to the caller.</p>",
     "RemoveSchemaVersionMetadata": "<p>Removes a key value pair from the schema version metadata for the specified schema version ID.</p>",
     "ResetJobBookmark": "<p>Resets a bookmark entry.</p> <p>For more information about enabling and using job bookmarks, see:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-continuations.html\">Tracking processed data using job bookmarks</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html\">Job parameters used by Glue</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-jobs-job.html#aws-glue-api-jobs-job-Job\">Job structure</a> </p> </li> </ul>",
@@ -219,12 +225,14 @@
     "StartJobRun": "<p>Starts a job run using a job definition.</p>",
     "StartMLEvaluationTaskRun": "<p>Starts a task to estimate the quality of the transform. </p> <p>When you provide label sets as examples of truth, Glue machine learning uses some of those examples to learn from them. The rest of the labels are used as a test to estimate quality.</p> <p>Returns a unique identifier for the run. You can call <code>GetMLTaskRun</code> to get more information about the stats of the <code>EvaluationTaskRun</code>.</p>",
     "StartMLLabelingSetGenerationTaskRun": "<p>Starts the active learning workflow for your machine learning transform to improve the transform's quality by generating label sets and adding labels.</p> <p>When the <code>StartMLLabelingSetGenerationTaskRun</code> finishes, Glue will have generated a \"labeling set\" or a set of questions for humans to answer.</p> <p>In the case of the <code>FindMatches</code> transform, these questions are of the form, “What is the correct way to group these rows together into groups composed entirely of matching records?” </p> <p>After the labeling process is finished, you can upload your labels with a call to <code>StartImportLabelsTaskRun</code>. After <code>StartImportLabelsTaskRun</code> finishes, all future runs of the machine learning transform will use the new and improved labels and perform a higher-quality transformation.</p> <p>Note: The role used to write the generated labeling set to the <code>OutputS3Path</code> is the role associated with the Machine Learning Transform, specified in the <code>CreateMLTransform</code> API.</p>",
+    "StartMaterializedViewRefreshTaskRun": "<p>Starts a materialized view refresh task run, for a specified table and columns.</p>",
     "StartTrigger": "<p>Starts an existing trigger. See <a href=\"https://docs.aws.amazon.com/glue/latest/dg/trigger-job.html\">Triggering Jobs</a> for information about how different types of trigger are started.</p>",
     "StartWorkflowRun": "<p>Starts a new run of the specified workflow.</p>",
     "StopColumnStatisticsTaskRun": "<p>Stops a task run for the specified table.</p>",
     "StopColumnStatisticsTaskRunSchedule": "<p>Stops a column statistics task run schedule.</p>",
     "StopCrawler": "<p>If the specified crawler is running, stops the crawl.</p>",
     "StopCrawlerSchedule": "<p>Sets the schedule state of the specified crawler to <code>NOT_SCHEDULED</code>, but does not stop the crawler if it is already running.</p>",
+    "StopMaterializedViewRefreshTaskRun": "<p>Stops a materialized view refresh task run, for a specified table and columns.</p>",
     "StopSession": "<p>Stops the session.</p>",
     "StopTrigger": "<p>Stops a specified trigger.</p>",
     "StopWorkflowRun": "<p>Stops the execution of the specified workflow run.</p>",
@@ -281,7 +289,8 @@
       "base": null,
       "refs": {
         "ColumnStatisticsTaskRun$CustomerId": "<p>The Amazon Web Services account ID.</p>",
-        "LakeFormationConfiguration$AccountId": "<p>Required for cross account crawls. For same account crawls as the target data, this can be left as null.</p>"
+        "LakeFormationConfiguration$AccountId": "<p>Required for cross account crawls. For same account crawls as the target data, this can be left as null.</p>",
+        "MaterializedViewRefreshTaskRun$CustomerId": "<p>The Amazon Web Services account ID.</p>"
       }
     },
     "Action": {
@@ -558,7 +567,8 @@
       "base": null,
       "refs": {
         "Capabilities$SupportedAuthenticationTypes": "<p>A list of supported authentication types.</p>",
-        "ComputeEnvironmentConfiguration$SupportedAuthenticationTypes": "<p>The supported authentication types for the compute environment.</p>"
+        "ComputeEnvironmentConfiguration$SupportedAuthenticationTypes": "<p>The supported authentication types for the compute environment.</p>",
+        "ConnectorAuthenticationConfiguration$AuthenticationTypes": "<p>A list of authentication types supported by this connection type, such as Basic, OAuth2, or Custom authentication methods.</p>"
       }
     },
     "AuthorizationCode": {
@@ -616,6 +626,12 @@
       "base": "<p>For supplying basic auth credentials when not providing a <code>SecretArn</code> value.</p>",
       "refs": {
         "AuthenticationConfigurationInput$BasicAuthenticationCredentials": "<p>The credentials used when the authentication type is basic authentication.</p>"
+      }
+    },
+    "BasicAuthenticationProperties": {
+      "base": "<p>Basic authentication configuration that defines the username and password properties for HTTP Basic authentication.</p>",
+      "refs": {
+        "ConnectorAuthenticationConfiguration$BasicAuthenticationProperties": null
       }
     },
     "BasicCatalogTarget": {
@@ -982,6 +998,7 @@
       "base": null,
       "refs": {
         "ComputeEnvironmentConfiguration$PhysicalConnectionPropertiesRequired": "<p>Indicates whether <code>PhysicalConnectionProperties</code> are required for the compute environment.</p>",
+        "ConnectorProperty$Required": "<p>Indicates whether the property is required.</p>",
         "Field$IsPrimaryKey": "<p>Indicates whether this field can used as a primary key for the given entity.</p>",
         "Field$IsNullable": "<p>Indicates whether this field can be nullable or not.</p>",
         "Field$IsRetrievable": "<p>Indicates whether this field can be added in Select clause of SQL query or whether it is retrievable or not.</p>",
@@ -1010,6 +1027,7 @@
         "GetUnfilteredPartitionMetadataResponse$IsRegisteredWithLakeFormation": "<p>A Boolean value that indicates whether the partition location is registered with Lake Formation.</p>",
         "GetUnfilteredTableMetadataResponse$IsRegisteredWithLakeFormation": "<p>A Boolean value that indicates whether the partition location is registered with Lake Formation.</p>",
         "GetUnfilteredTableMetadataResponse$IsMultiDialectView": "<p>Specifies whether the view supports the SQL dialects of one or more different query engines and can therefore be read by those engines.</p>",
+        "GetUnfilteredTableMetadataResponse$IsMaterializedView": "<p>Indicates if a table is a materialized view.</p>",
         "GetUnfilteredTableMetadataResponse$IsProtected": "<p>A flag that instructs the engine not to push user-provided operations into the logical plan of the view during query planning. However, if set this flag does not guarantee that the engine will comply. Refer to the engine's documentation to understand the guarantees provided, if any.</p>",
         "IcebergStructField$Required": "<p>Indicates whether this field is required (non-nullable) or optional (nullable) in the table schema.</p>",
         "StorageDescriptor$Compressed": "<p> <code>True</code> if the data in the table is compressed, or <code>False</code> if not.</p>",
@@ -1152,6 +1170,12 @@
         "DirectKinesisSource$WindowSize": "<p>The amount of time to spend processing each micro batch.</p>",
         "PIIDetection$NumLeftCharsToExclude": "<p>The number of characters to exclude from redaction on the left side of detected PII content. This allows preserving context around the sensitive data.</p>",
         "PIIDetection$NumRightCharsToExclude": "<p>The number of characters to exclude from redaction on the right side of detected PII content. This allows preserving context around the sensitive data.</p>"
+      }
+    },
+    "ByteCount": {
+      "base": null,
+      "refs": {
+        "MaterializedViewRefreshTaskRun$ProcessedBytes": "<p>The number of bytes the refresh task run has scanned to refresh the materialized view.</p>"
       }
     },
     "CancelDataQualityRuleRecommendationRunRequest": {
@@ -1314,6 +1338,7 @@
         "ListEntitiesRequest$CatalogId": "<p>The catalog ID of the catalog that contains the connection. This can be null, By default, the Amazon Web Services Account ID is the catalog ID.</p>",
         "ListTableOptimizerRunsRequest$CatalogId": "<p>The Catalog ID of the table.</p>",
         "ListTableOptimizerRunsResponse$CatalogId": "<p>The Catalog ID of the table.</p>",
+        "MaterializedViewRefreshTaskRun$CatalogId": "<p>The ID of the Data Catalog where the table resides. If none is supplied, the account ID is used by default.</p>",
         "Partition$CatalogId": "<p>The ID of the Data Catalog in which the partition resides.</p>",
         "PutDataCatalogEncryptionSettingsRequest$CatalogId": "<p>The ID of the Data Catalog to set the security configuration for. If none is provided, the Amazon Web Services account ID is used by default.</p>",
         "SearchTablesRequest$CatalogId": "<p>A unique identifier, consisting of <code> <i>account_id</i> </code>.</p>",
@@ -1460,6 +1485,12 @@
         "Crawler$Classifiers": "<p>A list of UTF-8 strings that specify the custom classifiers that are associated with the crawler.</p>",
         "CreateCrawlerRequest$Classifiers": "<p>A list of custom classifiers that the user has registered. By default, all built-in classifiers are included in a crawl, but these custom classifiers always override the default classifiers for a given classification.</p>",
         "UpdateCrawlerRequest$Classifiers": "<p>A list of custom classifiers that the user has registered. By default, all built-in classifiers are included in a crawl, but these custom classifiers always override the default classifiers for a given classification.</p>"
+      }
+    },
+    "ClientCredentialsProperties": {
+      "base": "<p>OAuth2 client credentials configuration that defines the properties needed for the Client Credentials grant type flow.</p>",
+      "refs": {
+        "ConnectorOAuth2Properties$ClientCredentialsProperties": "<p>Configuration properties specific to the OAuth2 Client Credentials grant type flow.</p>"
       }
     },
     "CloudWatchEncryption": {
@@ -1955,6 +1986,12 @@
         "TestConnectionInput$ConnectionProperties": "<p>The key-value pairs that define parameters for the connection.</p> <p>JDBC connections use the following connection properties:</p> <ul> <li> <p>Required: All of (<code>HOST</code>, <code>PORT</code>, <code>JDBC_ENGINE</code>) or <code>JDBC_CONNECTION_URL</code>.</p> </li> <li> <p>Required: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> <li> <p>Optional: <code>JDBC_ENFORCE_SSL</code>, <code>CUSTOM_JDBC_CERT</code>, <code>CUSTOM_JDBC_CERT_STRING</code>, <code>SKIP_CUSTOM_JDBC_CERT_VALIDATION</code>. These parameters are used to configure SSL with JDBC.</p> </li> </ul> <p>SALESFORCE connections require the <code>AuthenticationConfiguration</code> member to be configured.</p>"
       }
     },
+    "ConnectionPropertiesConfiguration": {
+      "base": "<p>Configuration that defines the base URL and additional request parameters needed during connection creation.</p>",
+      "refs": {
+        "RegisterConnectionTypeRequest$ConnectionProperties": "<p>Defines the base URL and additional request parameters needed during connection creation for this connection type.</p>"
+      }
+    },
     "ConnectionPropertyKey": {
       "base": null,
       "refs": {
@@ -1991,7 +2028,7 @@
       "base": null,
       "refs": {
         "Connection$ConnectionType": "<p>The type of the connection. Currently, SFTP is not supported.</p>",
-        "ConnectionInput$ConnectionType": "<p>The type of the connection. Currently, these types are supported:</p> <ul> <li> <p> <code>JDBC</code> - Designates a connection to a database through Java Database Connectivity (JDBC).</p> <p> <code>JDBC</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: All of (<code>HOST</code>, <code>PORT</code>, <code>JDBC_ENGINE</code>) or <code>JDBC_CONNECTION_URL</code>.</p> </li> <li> <p>Required: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> <li> <p>Optional: <code>JDBC_ENFORCE_SSL</code>, <code>CUSTOM_JDBC_CERT</code>, <code>CUSTOM_JDBC_CERT_STRING</code>, <code>SKIP_CUSTOM_JDBC_CERT_VALIDATION</code>. These parameters are used to configure SSL with JDBC.</p> </li> </ul> </li> <li> <p> <code>KAFKA</code> - Designates a connection to an Apache Kafka streaming platform.</p> <p> <code>KAFKA</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>KAFKA_BOOTSTRAP_SERVERS</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SSL_ENABLED</code>, <code>KAFKA_CUSTOM_CERT</code>, <code>KAFKA_SKIP_CUSTOM_CERT_VALIDATION</code>. These parameters are used to configure SSL with <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_CLIENT_KEYSTORE</code>, <code>KAFKA_CLIENT_KEYSTORE_PASSWORD</code>, <code>KAFKA_CLIENT_KEY_PASSWORD</code>, <code>ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD</code>, <code>ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD</code>. These parameters are used to configure TLS client configuration with SSL in <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_MECHANISM</code>. Can be specified as <code>SCRAM-SHA-512</code>, <code>GSSAPI</code>, or <code>AWS_MSK_IAM</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_SCRAM_USERNAME</code>, <code>KAFKA_SASL_SCRAM_PASSWORD</code>, <code>ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD</code>. These parameters are used to configure SASL/SCRAM-SHA-512 authentication with <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_GSSAPI_KEYTAB</code>, <code>KAFKA_SASL_GSSAPI_KRB5_CONF</code>, <code>KAFKA_SASL_GSSAPI_SERVICE</code>, <code>KAFKA_SASL_GSSAPI_PRINCIPAL</code>. These parameters are used to configure SASL/GSSAPI authentication with <code>KAFKA</code>.</p> </li> </ul> </li> <li> <p> <code>MONGODB</code> - Designates a connection to a MongoDB document database.</p> <p> <code>MONGODB</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>CONNECTION_URL</code>.</p> </li> <li> <p>Required: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> </ul> </li> <li> <p> <code>VIEW_VALIDATION_REDSHIFT</code> - Designates a connection used for view validation by Amazon Redshift.</p> </li> <li> <p> <code>VIEW_VALIDATION_ATHENA</code> - Designates a connection used for view validation by Amazon Athena.</p> </li> <li> <p> <code>NETWORK</code> - Designates a network connection to a data source within an Amazon Virtual Private Cloud environment (Amazon VPC).</p> <p> <code>NETWORK</code> Connections do not require ConnectionParameters. Instead, provide a PhysicalConnectionRequirements.</p> </li> <li> <p> <code>MARKETPLACE</code> - Uses configuration settings contained in a connector purchased from Amazon Web Services Marketplace to read from and write to data stores that are not natively supported by Glue.</p> <p> <code>MARKETPLACE</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>CONNECTOR_TYPE</code>, <code>CONNECTOR_URL</code>, <code>CONNECTOR_CLASS_NAME</code>, <code>CONNECTION_URL</code>.</p> </li> <li> <p>Required for <code>JDBC</code> <code>CONNECTOR_TYPE</code> connections: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> </ul> </li> <li> <p> <code>CUSTOM</code> - Uses configuration settings contained in a custom connector to read from and write to data stores that are not natively supported by Glue.</p> </li> </ul> <p>Additionally, a <code>ConnectionType</code> for the following SaaS connectors is supported:</p> <ul> <li> <p> <code>FACEBOOKADS</code> - Designates a connection to Facebook Ads.</p> </li> <li> <p> <code>GOOGLEADS</code> - Designates a connection to Google Ads.</p> </li> <li> <p> <code>GOOGLESHEETS</code> - Designates a connection to Google Sheets.</p> </li> <li> <p> <code>GOOGLEANALYTICS4</code> - Designates a connection to Google Analytics 4.</p> </li> <li> <p> <code>HUBSPOT</code> - Designates a connection to HubSpot.</p> </li> <li> <p> <code>INSTAGRAMADS</code> - Designates a connection to Instagram Ads.</p> </li> <li> <p> <code>INTERCOM</code> - Designates a connection to Intercom.</p> </li> <li> <p> <code>JIRACLOUD</code> - Designates a connection to Jira Cloud.</p> </li> <li> <p> <code>MARKETO</code> - Designates a connection to Adobe Marketo Engage.</p> </li> <li> <p> <code>NETSUITEERP</code> - Designates a connection to Oracle NetSuite.</p> </li> <li> <p> <code>SALESFORCE</code> - Designates a connection to Salesforce using OAuth authentication.</p> </li> <li> <p> <code>SALESFORCEMARKETINGCLOUD</code> - Designates a connection to Salesforce Marketing Cloud.</p> </li> <li> <p> <code>SALESFORCEPARDOT</code> - Designates a connection to Salesforce Marketing Cloud Account Engagement (MCAE).</p> </li> <li> <p> <code>SAPODATA</code> - Designates a connection to SAP OData.</p> </li> <li> <p> <code>SERVICENOW</code> - Designates a connection to ServiceNow.</p> </li> <li> <p> <code>SLACK</code> - Designates a connection to Slack.</p> </li> <li> <p> <code>SNAPCHATADS</code> - Designates a connection to Snapchat Ads.</p> </li> <li> <p> <code>STRIPE</code> - Designates a connection to Stripe.</p> </li> <li> <p> <code>ZENDESK</code> - Designates a connection to Zendesk.</p> </li> <li> <p> <code>ZOHOCRM</code> - Designates a connection to Zoho CRM.</p> </li> </ul> <p>For more information on the connection parameters needed for a particular connector, see the documentation for the connector in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/console-connections.html\">Adding an Glue connection</a>in the Glue User Guide.</p> <p> <code>SFTP</code> is not supported.</p> <p>For more information about how optional ConnectionProperties are used to configure features in Glue, consult <a href=\"https://docs.aws.amazon.com/glue/latest/dg/connection-defining.html\">Glue connection properties</a>.</p> <p>For more information about how optional ConnectionProperties are used to configure features in Glue Studio, consult <a href=\"https://docs.aws.amazon.com/glue/latest/ug/connectors-chapter.html\">Using connectors and connections</a>.</p>",
+        "ConnectionInput$ConnectionType": "<p>The type of the connection. Currently, these types are supported:</p> <ul> <li> <p> <code>JDBC</code> - Designates a connection to a database through Java Database Connectivity (JDBC).</p> <p> <code>JDBC</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: All of (<code>HOST</code>, <code>PORT</code>, <code>JDBC_ENGINE</code>) or <code>JDBC_CONNECTION_URL</code>.</p> </li> <li> <p>Required: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> <li> <p>Optional: <code>JDBC_ENFORCE_SSL</code>, <code>CUSTOM_JDBC_CERT</code>, <code>CUSTOM_JDBC_CERT_STRING</code>, <code>SKIP_CUSTOM_JDBC_CERT_VALIDATION</code>. These parameters are used to configure SSL with JDBC.</p> </li> </ul> </li> <li> <p> <code>KAFKA</code> - Designates a connection to an Apache Kafka streaming platform.</p> <p> <code>KAFKA</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>KAFKA_BOOTSTRAP_SERVERS</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SSL_ENABLED</code>, <code>KAFKA_CUSTOM_CERT</code>, <code>KAFKA_SKIP_CUSTOM_CERT_VALIDATION</code>. These parameters are used to configure SSL with <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_CLIENT_KEYSTORE</code>, <code>KAFKA_CLIENT_KEYSTORE_PASSWORD</code>, <code>KAFKA_CLIENT_KEY_PASSWORD</code>, <code>ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD</code>, <code>ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD</code>. These parameters are used to configure TLS client configuration with SSL in <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_MECHANISM</code>. Can be specified as <code>SCRAM-SHA-512</code>, <code>GSSAPI</code>, or <code>AWS_MSK_IAM</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_SCRAM_USERNAME</code>, <code>KAFKA_SASL_SCRAM_PASSWORD</code>, <code>ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD</code>. These parameters are used to configure SASL/SCRAM-SHA-512 authentication with <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_GSSAPI_KEYTAB</code>, <code>KAFKA_SASL_GSSAPI_KRB5_CONF</code>, <code>KAFKA_SASL_GSSAPI_SERVICE</code>, <code>KAFKA_SASL_GSSAPI_PRINCIPAL</code>. These parameters are used to configure SASL/GSSAPI authentication with <code>KAFKA</code>.</p> </li> </ul> </li> <li> <p> <code>MONGODB</code> - Designates a connection to a MongoDB document database.</p> <p> <code>MONGODB</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>CONNECTION_URL</code>.</p> </li> <li> <p>Required: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> </ul> </li> <li> <p> <code>VIEW_VALIDATION_REDSHIFT</code> - Designates a connection used for view validation by Amazon Redshift.</p> </li> <li> <p> <code>VIEW_VALIDATION_ATHENA</code> - Designates a connection used for view validation by Amazon Athena.</p> </li> <li> <p> <code>NETWORK</code> - Designates a network connection to a data source within an Amazon Virtual Private Cloud environment (Amazon VPC).</p> <p> <code>NETWORK</code> Connections do not require ConnectionParameters. Instead, provide a PhysicalConnectionRequirements.</p> </li> <li> <p> <code>MARKETPLACE</code> - Uses configuration settings contained in a connector purchased from Amazon Web Services Marketplace to read from and write to data stores that are not natively supported by Glue.</p> <p> <code>MARKETPLACE</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>CONNECTOR_TYPE</code>, <code>CONNECTOR_URL</code>, <code>CONNECTOR_CLASS_NAME</code>, <code>CONNECTION_URL</code>.</p> </li> <li> <p>Required for <code>JDBC</code> <code>CONNECTOR_TYPE</code> connections: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> </ul> </li> <li> <p> <code>CUSTOM</code> - Uses configuration settings contained in a custom connector to read from and write to data stores that are not natively supported by Glue.</p> </li> </ul> <p>For more information on the connection parameters needed for a particular connector, see the documentation for the connector in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/console-connections.html\">Adding an Glue connection</a>in the Glue User Guide.</p> <p> <code>SFTP</code> is not supported.</p> <p>For more information about how optional ConnectionProperties are used to configure features in Glue, consult <a href=\"https://docs.aws.amazon.com/glue/latest/dg/connection-defining.html\">Glue connection properties</a>.</p> <p>For more information about how optional ConnectionProperties are used to configure features in Glue Studio, consult <a href=\"https://docs.aws.amazon.com/glue/latest/ug/connectors-chapter.html\">Using connectors and connections</a>.</p>",
         "ConnectionTypeBrief$ConnectionType": "<p>The name of the connection type.</p>",
         "GetConnectionsFilter$ConnectionType": "<p>The type of connections to return. Currently, SFTP is not supported.</p>",
         "TestConnectionInput$ConnectionType": "<p>The type of connection to test. This operation is only available for the <code>JDBC</code> or <code>SALESFORCE</code> connection types.</p>"
@@ -2010,7 +2047,7 @@
       }
     },
     "ConnectionTypeVariant": {
-      "base": "<p>Represents a variant of a connection type in Glue Data Catalog. Connection type variants provide specific configurations and behaviors for different implementations of the same general connection type.</p>",
+      "base": "<p>Represents a variant of a connection type in Glue. Connection type variants provide specific configurations and behaviors for different implementations of the same general connection type.</p>",
       "refs": {
         "ConnectionTypeVariantList$member": null
       }
@@ -2031,6 +2068,18 @@
         "Session$Connections": "<p>The number of connections used for the session.</p>"
       }
     },
+    "ConnectorAuthenticationConfiguration": {
+      "base": "<p>Configuration that defines the supported authentication types and required properties for the connection type.</p>",
+      "refs": {
+        "RegisterConnectionTypeRequest$ConnectorAuthenticationConfiguration": "<p>Defines the supported authentication types and required properties for this connection type, including Basic, OAuth2, and Custom authentication methods.</p>"
+      }
+    },
+    "ConnectorAuthorizationCodeProperties": {
+      "base": "<p>OAuth2 authorization code configuration that defines the properties needed for the Authorization Code grant type flow.</p>",
+      "refs": {
+        "ConnectorOAuth2Properties$AuthorizationCodeProperties": "<p>Configuration properties specific to the OAuth2 Authorization Code grant type flow.</p>"
+      }
+    },
     "ConnectorDataSource": {
       "base": "<p>Specifies a source generated with standard connection options.</p>",
       "refs": {
@@ -2043,11 +2092,73 @@
         "CodeGenConfigurationNode$ConnectorDataTarget": "<p>Specifies a target generated with standard connection options.</p>"
       }
     },
+    "ConnectorOAuth2GrantType": {
+      "base": null,
+      "refs": {
+        "ConnectorOAuth2Properties$OAuth2GrantType": "<p>The OAuth2 grant type to use for authentication, such as CLIENT_CREDENTIALS, JWT_BEARER, or AUTHORIZATION_CODE.</p>"
+      }
+    },
+    "ConnectorOAuth2Properties": {
+      "base": "<p>OAuth2 configuration container that defines the authentication properties and flow-specific configurations for OAuth2-based connections.</p>",
+      "refs": {
+        "ConnectorAuthenticationConfiguration$OAuth2Properties": null
+      }
+    },
     "ConnectorOptions": {
       "base": null,
       "refs": {
         "ConnectorDataSource$Data": "<p>A map specifying connection options for the node. You can find standard connection options for the corresponding connection type in the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect.html\"> Connection parameters</a> section of the Glue documentation.</p>",
         "ConnectorDataTarget$Data": "<p>A map specifying connection options for the node. You can find standard connection options for the corresponding connection type in the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect.html\"> Connection parameters</a> section of the Glue documentation.</p>"
+      }
+    },
+    "ConnectorProperty": {
+      "base": "<p>Defines a property configuration for connection types, default values, and where the property should be used in requests.</p>",
+      "refs": {
+        "BasicAuthenticationProperties$Username": "<p>The username property name to use for Basic authentication credentials.</p>",
+        "BasicAuthenticationProperties$Password": "<p>The password property name to use for Basic authentication credentials.</p>",
+        "ClientCredentialsProperties$TokenUrl": "<p>The token endpoint URL where the client will request access tokens using client credentials.</p>",
+        "ClientCredentialsProperties$ClientId": "<p>The OAuth2 client identifier provided by the authorization server.</p>",
+        "ClientCredentialsProperties$ClientSecret": "<p>The OAuth2 client secret provided by the authorization server.</p>",
+        "ClientCredentialsProperties$Scope": "<p>The OAuth2 scope that defines the level of access requested for the client credentials flow.</p>",
+        "ConnectionPropertiesConfiguration$Url": "<p>The base instance URL for the endpoint that this connection type will connect to.</p>",
+        "ConnectorAuthorizationCodeProperties$AuthorizationCodeUrl": "<p>The authorization endpoint URL where users will be redirected to grant authorization.</p>",
+        "ConnectorAuthorizationCodeProperties$AuthorizationCode": "<p>The authorization code received from the authorization server after user consent.</p>",
+        "ConnectorAuthorizationCodeProperties$RedirectUri": "<p>The redirect URI that must match the URI registered with the authorization server.</p>",
+        "ConnectorAuthorizationCodeProperties$TokenUrl": "<p>The token endpoint URL where the authorization code will be exchanged for an access token.</p>",
+        "ConnectorAuthorizationCodeProperties$ClientId": "<p>The OAuth2 client identifier provided by the authorization server.</p>",
+        "ConnectorAuthorizationCodeProperties$ClientSecret": "<p>The OAuth2 client secret provided by the authorization server.</p>",
+        "ConnectorAuthorizationCodeProperties$Scope": "<p>The OAuth2 scope that defines the level of access requested for the authorization code flow.</p>",
+        "ConnectorAuthorizationCodeProperties$Prompt": "<p>The OAuth2 prompt parameter that controls the authorization server's behavior during user authentication.</p>",
+        "ConnectorPropertyList$member": null,
+        "JWTBearerProperties$TokenUrl": "<p>The token endpoint URL where the JWT bearer token will be exchanged for an access token.</p>",
+        "JWTBearerProperties$JwtToken": "<p>The JWT token to be used in the bearer token grant flow for authentication.</p>"
+      }
+    },
+    "ConnectorPropertyKey": {
+      "base": null,
+      "refs": {
+        "ConnectorProperty$KeyOverride": "<p>A key name to use when sending this property in API requests, if different from the display name.</p>",
+        "ExtractedParameter$Key": "<p>The parameter key name that will be used in subsequent requests.</p>",
+        "ResponseExtractionMapping$HeaderKey": "<p>The name of an HTTP response header from which to extract the value.</p>"
+      }
+    },
+    "ConnectorPropertyList": {
+      "base": null,
+      "refs": {
+        "ClientCredentialsProperties$TokenUrlParameters": "<p>Additional parameters to include in token URL requests as key-value pairs.</p>",
+        "ConnectionPropertiesConfiguration$AdditionalRequestParameters": "<p>Key-value pairs of additional request parameters that may be needed during connection creation, such as API versions or service-specific configuration options.</p>",
+        "ConnectorAuthorizationCodeProperties$TokenUrlParameters": "<p>Additional parameters to include in token URL requests as key-value pairs.</p>",
+        "CustomAuthenticationProperties$AuthenticationParameters": "<p>A map of custom authentication parameters that define the specific authentication mechanism and required properties.</p>",
+        "JWTBearerProperties$TokenUrlParameters": "<p>Additional parameters to include in token URL requests as key-value pairs.</p>",
+        "SourceConfiguration$RequestParameters": "<p>Configuration for request parameters that should be included in API calls, such as query parameters, headers, or body content.</p>"
+      }
+    },
+    "ContentType": {
+      "base": null,
+      "refs": {
+        "ClientCredentialsProperties$ContentType": "<p>The content type to use for token requests, such as application/x-www-form-urlencoded or application/json.</p>",
+        "ConnectorAuthorizationCodeProperties$ContentType": "<p>The content type to use for token exchange requests, such as application/x-www-form-urlencoded or application/json.</p>",
+        "JWTBearerProperties$ContentType": "<p>The content type to use for JWT bearer token requests, such as application/x-www-form-urlencoded or application/json.</p>"
       }
     },
     "ContextKey": {
@@ -2573,6 +2684,18 @@
         "UpdateCsvClassifierRequest$Serde": "<p>Sets the SerDe for processing CSV in the classifier, which will be applied in the Data Catalog. Valid values are <code>OpenCSVSerDe</code>, <code>LazySimpleSerDe</code>, and <code>None</code>. You can specify the <code>None</code> value when you want the crawler to do the detection.</p>"
       }
     },
+    "CursorConfiguration": {
+      "base": "<p>Cursor-based pagination configuration that defines how to handle pagination using cursor tokens or next page identifiers.</p>",
+      "refs": {
+        "PaginationConfiguration$CursorConfiguration": "<p>Configuration for cursor-based pagination, where the API provides a cursor or token to retrieve the next page of results.</p>"
+      }
+    },
+    "CustomAuthenticationProperties": {
+      "base": "<p>Custom authentication configuration that allows for flexible authentication mechanisms beyond standard Basic and OAuth2 flows.</p>",
+      "refs": {
+        "ConnectorAuthenticationConfiguration$CustomAuthenticationProperties": null
+      }
+    },
     "CustomCode": {
       "base": "<p>Specifies a transform that uses custom code you provide to perform the data transformation. The output is a collection of DynamicFrames.</p>",
       "refs": {
@@ -3047,6 +3170,7 @@
         "Crawler$DatabaseName": "<p>The name of the database in which the crawler's output is stored.</p>",
         "CreateCrawlerRequest$DatabaseName": "<p>The Glue database where results are written, such as: <code>arn:aws:daylight:us-east-1::database/sometable/*</code>.</p>",
         "GetColumnStatisticsTaskRunsRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
+        "MaterializedViewRefreshTaskRun$DatabaseName": "<p>The database where the table resides.</p>",
         "StopColumnStatisticsTaskRunRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
         "UpdateCrawlerRequest$DatabaseName": "<p>The Glue database where results are stored, such as: <code>arn:aws:daylight:us-east-1::database/sometable/*</code>.</p>"
       }
@@ -3098,6 +3222,12 @@
       "refs": {
         "DecimalColumnStatisticsData$MinimumValue": "<p>The lowest value in the column.</p>",
         "DecimalColumnStatisticsData$MaximumValue": "<p>The highest value in the column.</p>"
+      }
+    },
+    "DefaultValue": {
+      "base": null,
+      "refs": {
+        "ExtractedParameter$DefaultValue": "<p>The default value to use if the parameter cannot be extracted from the response.</p>"
       }
     },
     "DeleteBehavior": {
@@ -3168,6 +3298,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteConnectionTypeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteConnectionTypeResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteCrawlerRequest": {
       "base": null,
       "refs": {}
@@ -3217,6 +3355,14 @@
       "refs": {}
     },
     "DeleteIntegrationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteIntegrationResourcePropertyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteIntegrationResourcePropertyResponse": {
       "base": null,
       "refs": {}
     },
@@ -3423,7 +3569,8 @@
       "refs": {
         "ConnectionTypeBrief$Description": "<p>A description of the connection type.</p>",
         "ConnectionTypeVariant$Description": "<p>A detailed description of the connection type variant, including its purpose, use cases, and any specific configuration requirements.</p>",
-        "DescribeConnectionTypeResponse$Description": "<p>A description of the connection type.</p>"
+        "DescribeConnectionTypeResponse$Description": "<p>A description of the connection type.</p>",
+        "RegisterConnectionTypeRequest$Description": "<p>A description of the connection type. Can be up to 2048 characters and provides details about the purpose and functionality of the connection type.</p>"
       }
     },
     "DescriptionString": {
@@ -3465,6 +3612,7 @@
         "JobUpdate$Description": "<p>Description of the job being defined.</p>",
         "LastCrawlInfo$ErrorMessage": "<p>If an error occurred, the error information about the last crawl.</p>",
         "MLTransform$Description": "<p>A user-defined, long-form description text for the machine learning transform. Descriptions are not guaranteed to be unique and can be changed at any time.</p>",
+        "MaterializedViewRefreshTaskRun$ErrorMessage": "<p>The error message for the job.</p>",
         "RegistryListItem$Description": "<p>A description of the registry.</p>",
         "SchemaListItem$Description": "<p>A description for the schema.</p>",
         "Session$ErrorMessage": "<p>The error message displayed during the session.</p>",
@@ -3871,6 +4019,12 @@
         "SqlAlias$Alias": "<p>A temporary name given to a table, or a column in a table.</p>"
       }
     },
+    "EncryptedKeyMetadataString": {
+      "base": null,
+      "refs": {
+        "IcebergEncryptedKey$EncryptedKeyMetadata": "<p>Encrypted key and metadata, base64 encoded. The format of encrypted key metadata is determined by the table's encryption scheme and can be a wrapped format specific to the table's KMS provider.</p>"
+      }
+    },
     "EncryptionAtRest": {
       "base": "<p>Specifies the encryption-at-rest configuration for the Data Catalog.</p>",
       "refs": {
@@ -3884,10 +4038,36 @@
         "SecurityConfiguration$EncryptionConfiguration": "<p>The encryption configuration associated with this security configuration.</p>"
       }
     },
+    "EncryptionKeyIdString": {
+      "base": null,
+      "refs": {
+        "IcebergEncryptedKey$KeyId": "<p>Unique identifier of the encryption key used for Iceberg table encryption. This ID is used to reference the key in table metadata and track which key was used to encrypt specific data.</p>",
+        "IcebergEncryptedKey$EncryptedById": "<p>Optional ID of the key used to encrypt or wrap the key metadata in Iceberg table encryption. This field references another encryption key that was used to encrypt the current key's metadata.</p>",
+        "IcebergTableUpdate$KeyId": "<p>Identifier of the encryption key involved in an Iceberg table update operation. References the specific key being added to or removed from the table's encryption configuration.</p>"
+      }
+    },
     "Entity": {
       "base": "<p>An entity supported by a given <code>ConnectionType</code>.</p>",
       "refs": {
         "EntityList$member": null
+      }
+    },
+    "EntityConfiguration": {
+      "base": "<p>Configuration that defines how to interact with a specific data entity through the REST API, including its access patterns and schema definition.</p>",
+      "refs": {
+        "EntityConfigurationMap$value": null
+      }
+    },
+    "EntityConfigurationMap": {
+      "base": "<p>A map of entity configurations that associates entity names with their corresponding configuration settings for REST API interactions.</p>",
+      "refs": {
+        "RestConfiguration$EntityConfigurations": "<p>A map of entity configurations that define how to interact with different data entities available through the REST API, including their schemas and access patterns.</p>"
+      }
+    },
+    "EntityConfigurationMapKeyString": {
+      "base": null,
+      "refs": {
+        "EntityConfigurationMap$key": null
       }
     },
     "EntityDescription": {
@@ -4077,6 +4257,15 @@
         "CustomCode$Code": "<p>The custom code that is used to perform the data transformation.</p>"
       }
     },
+    "ExtractedParameter": {
+      "base": "<p>Parameter extraction configuration that defines how to extract and map values from API responses to request parameters.</p>",
+      "refs": {
+        "CursorConfiguration$NextPage": "<p>The parameter name or JSON path that contains the cursor or token for retrieving the next page of results.</p>",
+        "CursorConfiguration$LimitParameter": "<p>The parameter name used to specify the maximum number of results to return per page.</p>",
+        "OffsetConfiguration$OffsetParameter": "<p>The parameter name used to specify the starting position or offset for retrieving results.</p>",
+        "OffsetConfiguration$LimitParameter": "<p>The parameter name used to specify the maximum number of results to return per page.</p>"
+      }
+    },
     "FederatedCatalog": {
       "base": "<p>A catalog that points to an entity outside the Glue Data Catalog.</p>",
       "refs": {
@@ -4133,7 +4322,26 @@
     "FieldDataType": {
       "base": null,
       "refs": {
-        "Field$FieldType": "<p>The type of data in the field.</p>"
+        "Field$FieldType": "<p>The type of data in the field.</p>",
+        "FieldDefinition$FieldDataType": "<p>The data type of the field.</p>"
+      }
+    },
+    "FieldDefinition": {
+      "base": "<p>Defines a field in an entity schema for REST connector data sources, specifying the field name and data type.</p>",
+      "refs": {
+        "FieldDefinitionMap$value": null
+      }
+    },
+    "FieldDefinitionMap": {
+      "base": "<p>A map of field definitions that define the schema structure for an entity in a REST connector data source.</p>",
+      "refs": {
+        "EntityConfiguration$Schema": "<p>The schema definition for this entity, including field names, types, and other metadata that describes the structure of the data.</p>"
+      }
+    },
+    "FieldDefinitionMapKeyString": {
+      "base": null,
+      "refs": {
+        "FieldDefinitionMap$key": null
       }
     },
     "FieldDescription": {
@@ -4276,6 +4484,14 @@
       "refs": {
         "StorageDescriptor$InputFormat": "<p>The input format: <code>SequenceFileInputFormat</code> (binary), or <code>TextInputFormat</code>, or a custom format.</p>",
         "StorageDescriptor$OutputFormat": "<p>The output format: <code>SequenceFileOutputFormat</code> (binary), or <code>IgnoreKeyTextOutputFormat</code>, or a custom format.</p>"
+      }
+    },
+    "FunctionType": {
+      "base": null,
+      "refs": {
+        "GetUserDefinedFunctionsRequest$FunctionType": "<p>An optional function-type pattern string that filters the function definitions returned from Amazon Redshift Federated Permissions Catalog.</p> <p>Specify a value of <code>REGULAR_FUNCTION</code> or <code>STORED_PROCEDURE</code>. The <code>STORED_PROCEDURE</code> function type is only compatible with Amazon Redshift Federated Permissions Catalog. </p>",
+        "UserDefinedFunction$FunctionType": "<p>The type of the function.</p>",
+        "UserDefinedFunctionInput$FunctionType": "<p>The type of the function.</p>"
       }
     },
     "Generic512CharString": {
@@ -4833,6 +5049,14 @@
       "base": null,
       "refs": {}
     },
+    "GetMaterializedViewRefreshTaskRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetMaterializedViewRefreshTaskRunResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetPartitionIndexesRequest": {
       "base": null,
       "refs": {}
@@ -5144,6 +5368,7 @@
         "GetTagsRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to retrieve tags.</p>",
         "PutResourcePolicyRequest$ResourceArn": "<p>Do not use. For internal use only.</p>",
         "PutSchemaVersionMetadataResponse$SchemaArn": "<p>The Amazon Resource Name (ARN) for the schema.</p>",
+        "RegisterConnectionTypeResponse$ConnectionTypeArn": "<p>The Amazon Resource Name (ARN) of the registered connection type. This unique identifier can be used to reference the connection type in other Glue operations.</p>",
         "RegistryId$RegistryArn": "<p>Arn of the registry to be updated. One of <code>RegistryArn</code> or <code>RegistryName</code> has to be provided.</p>",
         "RegistryListItem$RegistryArn": "<p>The Amazon Resource Name (ARN) of the registry.</p>",
         "RemoveSchemaVersionMetadataResponse$SchemaArn": "<p>The Amazon Resource Name (ARN) of the schema.</p>",
@@ -5317,6 +5542,15 @@
         "Route$GroupFiltersList": "<p>A list of group filters that define the routing conditions and criteria for directing data to different output paths.</p>"
       }
     },
+    "HTTPMethod": {
+      "base": null,
+      "refs": {
+        "ClientCredentialsProperties$RequestMethod": "<p>The HTTP method to use when making token requests, typically POST.</p>",
+        "ConnectorAuthorizationCodeProperties$RequestMethod": "<p>The HTTP method to use when making token exchange requests, typically POST.</p>",
+        "JWTBearerProperties$RequestMethod": "<p>The HTTP method to use when making JWT bearer token requests, typically POST.</p>",
+        "SourceConfiguration$RequestMethod": "<p>The HTTP method to use for requests to this endpoint, such as GET, POST.</p>"
+      }
+    },
     "HashString": {
       "base": null,
       "refs": {
@@ -5413,7 +5647,8 @@
         "TaskRun$TaskRunId": "<p>The unique identifier for this task run.</p>",
         "TransformIdList$member": null,
         "UpdateMLTransformRequest$TransformId": "<p>A unique identifier that was generated when the transform was created.</p>",
-        "UpdateMLTransformResponse$TransformId": "<p>The unique identifier for the transform that was updated.</p>"
+        "UpdateMLTransformResponse$TransformId": "<p>The unique identifier for the transform that was updated.</p>",
+        "ViewDefinition$ViewVersionToken": "<p>The version ID of the Apache Iceberg table.</p>"
       }
     },
     "HudiTarget": {
@@ -5465,7 +5700,15 @@
     "IcebergDocument": {
       "base": null,
       "refs": {
-        "IcebergStructField$Type": "<p>The data type definition for this field, specifying the structure and format of the data it contains.</p>"
+        "IcebergStructField$Type": "<p>The data type definition for this field, specifying the structure and format of the data it contains.</p>",
+        "IcebergStructField$InitialDefault": "<p>Default value used to populate the field's value for all records that were written before the field was added to the schema. This enables backward compatibility when adding new fields to existing Iceberg tables.</p>",
+        "IcebergStructField$WriteDefault": "<p>Default value used to populate the field's value for any records written after the field was added to the schema, if the writer does not supply the field's value. This can be changed through schema evolution.</p>"
+      }
+    },
+    "IcebergEncryptedKey": {
+      "base": "<p>Encryption key structure used for Iceberg table encryption. Contains the key ID, encrypted key metadata, optional reference to the encrypting key, and additional properties for the table's encryption scheme.</p>",
+      "refs": {
+        "IcebergTableUpdate$EncryptionKey": "<p>Encryption key information associated with an Iceberg table update operation. Used when adding or removing encryption keys from the table metadata during table evolution.</p>"
       }
     },
     "IcebergInput": {
@@ -5620,6 +5863,12 @@
       "refs": {
         "IcebergPartitionField$Transform": "<p>The transformation function applied to the source field to create the partition, such as identity, bucket, truncate, year, month, day, or hour.</p>",
         "IcebergSortField$Transform": "<p>The transformation function applied to the source field before sorting, such as identity, bucket, or truncate.</p>"
+      }
+    },
+    "IcebergUpdateAction": {
+      "base": null,
+      "refs": {
+        "IcebergTableUpdate$Action": "<p>The type of update action to be performed on the Iceberg table. Defines the specific operation such as adding schema, setting current schema, adding partition spec, or managing encryption keys.</p>"
       }
     },
     "IdString": {
@@ -5816,8 +6065,8 @@
         "CreateIntegrationResponse$IntegrationConfig": "<p>The configuration settings.</p>",
         "InboundIntegration$IntegrationConfig": "<p>Properties associated with the integration.</p>",
         "Integration$IntegrationConfig": "<p>Properties associated with the integration.</p>",
-        "ModifyIntegrationRequest$IntegrationConfig": null,
-        "ModifyIntegrationResponse$IntegrationConfig": null
+        "ModifyIntegrationRequest$IntegrationConfig": "<p>The configuration settings for the integration. Currently, only the RefreshInterval can be modified. </p>",
+        "ModifyIntegrationResponse$IntegrationConfig": "<p>The updated configuration settings for the integration.</p>"
       }
     },
     "IntegrationConflictOperationFault": {
@@ -5886,7 +6135,8 @@
       "base": null,
       "refs": {
         "DescribeInboundIntegrationsRequest$MaxRecords": "<p>The total number of items to return in the output.</p>",
-        "DescribeIntegrationsRequest$MaxRecords": "<p>The total number of items to return in the output.</p>"
+        "DescribeIntegrationsRequest$MaxRecords": "<p>The total number of items to return in the output.</p>",
+        "ListIntegrationResourcePropertiesRequest$MaxRecords": "<p>This is total number of items to be evaluated.</p>"
       }
     },
     "IntegrationNotFoundFault": {
@@ -5908,6 +6158,36 @@
     "IntegrationQuotaExceededFault": {
       "base": "<p>The data processed through your integration exceeded your quota.</p>",
       "refs": {}
+    },
+    "IntegrationResourceProperty": {
+      "base": "<p>A structure representing an integration resource property.</p>",
+      "refs": {
+        "IntegrationResourcePropertyList$member": null
+      }
+    },
+    "IntegrationResourcePropertyFilter": {
+      "base": "<p>A filter for integration resource properties.</p>",
+      "refs": {
+        "IntegrationResourcePropertyFilterList$member": null
+      }
+    },
+    "IntegrationResourcePropertyFilterList": {
+      "base": null,
+      "refs": {
+        "ListIntegrationResourcePropertiesRequest$Filters": "<p>A list of filters, supported filter Key is <code>SourceArn</code> and <code>TargetArn</code>.</p>"
+      }
+    },
+    "IntegrationResourcePropertyFilterValues": {
+      "base": null,
+      "refs": {
+        "IntegrationResourcePropertyFilter$Values": "<p>A list of filter values.</p>"
+      }
+    },
+    "IntegrationResourcePropertyList": {
+      "base": null,
+      "refs": {
+        "ListIntegrationResourcePropertiesResponse$IntegrationResourcePropertyList": "<p>A list of integration resource property meeting the filter criteria.</p>"
+      }
     },
     "IntegrationSourcePropertiesMap": {
       "base": null,
@@ -5938,6 +6218,7 @@
       "base": null,
       "refs": {
         "CreateIntegrationRequest$Tags": "<p>Metadata assigned to the resource consisting of a list of key-value pairs.</p>",
+        "CreateIntegrationResourcePropertyRequest$Tags": "<p>Metadata assigned to the resource consisting of a list of key-value pairs.</p>",
         "CreateIntegrationResponse$Tags": "<p>Metadata assigned to the resource consisting of a list of key-value pairs.</p>",
         "DeleteIntegrationResponse$Tags": "<p>Metadata assigned to the resource consisting of a list of key-value pairs.</p>",
         "Integration$Tags": "<p>Metadata assigned to the resource consisting of a list of key-value pairs.</p>",
@@ -5952,6 +6233,12 @@
         "InboundIntegration$CreateTime": "<p>The time that the integration was created, in UTC.</p>",
         "Integration$CreateTime": "<p>The time that the integration was created, in UTC.</p>",
         "ModifyIntegrationResponse$CreateTime": "<p>The time when the integration was created, in UTC.</p>"
+      }
+    },
+    "IntegrationType": {
+      "base": null,
+      "refs": {
+        "RegisterConnectionTypeRequest$IntegrationType": "<p>The integration type for the connection. Currently only \"REST\" protocol is supported.</p>"
       }
     },
     "IntegrationsList": {
@@ -6033,6 +6320,12 @@
       "base": null,
       "refs": {
         "JDBCConnectorOptions$DataTypeMapping": "<p>Custom data type mapping that builds a mapping from a JDBC data type to an Glue data type. For example, the option <code>\"dataTypeMapping\":{\"FLOAT\":\"STRING\"}</code> maps data fields of JDBC type <code>FLOAT</code> into the Java <code>String</code> type by calling the <code>ResultSet.getString()</code> method of the driver, and uses it to build the Glue record. The <code>ResultSet</code> object is implemented by each driver, so the behavior is specific to the driver you use. Refer to the documentation for your JDBC driver to understand how the driver performs the conversions.</p>"
+      }
+    },
+    "JWTBearerProperties": {
+      "base": "<p>JWT bearer token configuration that defines the properties needed for the JWT Bearer grant type flow.</p>",
+      "refs": {
+        "ConnectorOAuth2Properties$JWTBearerProperties": "<p>Configuration properties specific to the OAuth2 JWT Bearer grant type flow.</p>"
       }
     },
     "JdbcMetadataEntry": {
@@ -6190,6 +6483,14 @@
         "UpdateJsonClassifierRequest$JsonPath": "<p>A <code>JsonPath</code> string defining the JSON data for the classifier to classify. Glue supports a subset of JsonPath, as described in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html#custom-classifier-json\">Writing JsonPath Custom Classifiers</a>.</p>"
       }
     },
+    "JsonPathString": {
+      "base": null,
+      "refs": {
+        "ResponseConfiguration$ResultPath": "<p>The JSON path expression that identifies where the actual result data is located within the API response.</p>",
+        "ResponseConfiguration$ErrorPath": "<p>The JSON path expression that identifies where error information is located within API responses when requests fail.</p>",
+        "ResponseExtractionMapping$ContentPath": "<p>A JSON path expression that specifies how to extract a value from the response body content.</p>"
+      }
+    },
     "JsonValue": {
       "base": null,
       "refs": {
@@ -6305,6 +6606,13 @@
       "base": null,
       "refs": {
         "LastCrawlInfo$Status": "<p>Status of the last crawl.</p>"
+      }
+    },
+    "LastRefreshType": {
+      "base": null,
+      "refs": {
+        "ViewDefinition$LastRefreshType": "<p>Sets the method used for the most recent refresh.</p>",
+        "ViewDefinitionInput$LastRefreshType": "<p>The type of the materialized view's last refresh. Valid values: <code>Full</code>, <code>Incremental</code>.</p>"
       }
     },
     "LatestSchemaVersionBoolean": {
@@ -6453,6 +6761,14 @@
       "base": null,
       "refs": {}
     },
+    "ListIntegrationResourcePropertiesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIntegrationResourcePropertiesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListJobsRequest": {
       "base": null,
       "refs": {}
@@ -6469,11 +6785,20 @@
       "base": null,
       "refs": {}
     },
+    "ListMaterializedViewRefreshTaskRunsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListMaterializedViewRefreshTaskRunsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListOfString": {
       "base": null,
       "refs": {
         "ComputeEnvironmentConfiguration$ConnectionPropertiesRequiredOverrides": "<p>The connection properties that are required as overrides for the compute environment.</p>",
         "ConnectionTypeBrief$Categories": "<p>A list of categories that this connection type belongs to. Categories help users filter and find appropriate connection types based on their use cases.</p>",
+        "ConnectorProperty$AllowedValues": "<p>A list of <code>AllowedValue</code> objects representing the values allowed for the property.</p>",
         "Field$SupportedValues": "<p>A list of supported values for the field.</p>"
       }
     },
@@ -6726,6 +7051,43 @@
         "GetConnectionsFilter$MatchCriteria": "<p>A criteria string that must match the criteria recorded in the connection definition for that connection definition to be returned.</p>"
       }
     },
+    "MaterializedViewRefreshState": {
+      "base": null,
+      "refs": {
+        "MaterializedViewRefreshTaskRun$Status": "<p>The status of the task run.</p>"
+      }
+    },
+    "MaterializedViewRefreshTaskNotRunningException": {
+      "base": "<p>Exception thrown when stopping a task that is not in running state.</p>",
+      "refs": {}
+    },
+    "MaterializedViewRefreshTaskRun": {
+      "base": "<p>The object that shows the details of the materialized view refresh task run.</p>",
+      "refs": {
+        "GetMaterializedViewRefreshTaskRunResponse$MaterializedViewRefreshTaskRun": "<p>A MaterializedViewRefreshTaskRun object representing the details of the task run.</p>",
+        "MaterializedViewRefreshTaskRunsList$member": null
+      }
+    },
+    "MaterializedViewRefreshTaskRunningException": {
+      "base": "<p>Exception thrown when a task is already in running state.</p>",
+      "refs": {}
+    },
+    "MaterializedViewRefreshTaskRunsList": {
+      "base": null,
+      "refs": {
+        "ListMaterializedViewRefreshTaskRunsResponse$MaterializedViewRefreshTaskRuns": "<p>The results of the ListMaterializedViewRefreshTaskRuns action. </p>"
+      }
+    },
+    "MaterializedViewRefreshTaskStoppingException": {
+      "base": "<p>Exception thrown when a task is already in stopping state.</p>",
+      "refs": {}
+    },
+    "MaterializedViewRefreshType": {
+      "base": null,
+      "refs": {
+        "MaterializedViewRefreshTaskRun$RefreshType": "<p>The type of the refresh task run. Either FULL or INCREMENTAL.</p>"
+      }
+    },
     "MaxConcurrentRuns": {
       "base": null,
       "refs": {
@@ -6804,6 +7166,9 @@
         "InvalidInputException$Message": "<p>A message describing the problem.</p>",
         "InvalidStateException$Message": "<p>A message describing the problem.</p>",
         "MLTransformNotReadyException$Message": "<p>A message describing the problem.</p>",
+        "MaterializedViewRefreshTaskNotRunningException$Message": null,
+        "MaterializedViewRefreshTaskRunningException$Message": null,
+        "MaterializedViewRefreshTaskStoppingException$Message": null,
         "NoScheduleException$Message": "<p>A message describing the problem.</p>",
         "OperationNotSupportedException$Message": "<p>A message describing the problem.</p>",
         "OperationTimeoutException$Message": "<p>A message describing the problem.</p>",
@@ -7066,6 +7431,7 @@
         "DeleteColumnStatisticsTaskSettingsRequest$TableName": "<p>The name of the table for which to delete column statistics.</p>",
         "DeleteConnectionNameList$member": null,
         "DeleteConnectionRequest$ConnectionName": "<p>The name of the connection to delete.</p>",
+        "DeleteConnectionTypeRequest$ConnectionType": "<p>The name of the connection type to delete. Must reference an existing registered connection type.</p>",
         "DeleteCrawlerRequest$Name": "<p>The name of the crawler to remove.</p>",
         "DeleteCustomEntityTypeRequest$Name": "<p>The name of the custom pattern that you want to delete.</p>",
         "DeleteCustomEntityTypeResponse$Name": "<p>The name of the custom pattern you deleted.</p>",
@@ -7141,6 +7507,7 @@
         "GetJobRunRequest$JobName": "<p>Name of the job definition being run.</p>",
         "GetJobRunsRequest$JobName": "<p>The name of the job definition for which to retrieve all job runs.</p>",
         "GetMLTransformResponse$Name": "<p>The unique name given to the transform when it was created.</p>",
+        "GetMaterializedViewRefreshTaskRunRequest$CatalogId": "<p>The ID of the Data Catalog where the table resides. If none is supplied, the account ID is used by default.</p>",
         "GetPartitionIndexesRequest$DatabaseName": "<p>Specifies the name of a database from which you want to retrieve partition indexes.</p>",
         "GetPartitionIndexesRequest$TableName": "<p>Specifies the name of a table for which you want to retrieve the partition indexes.</p>",
         "GetPartitionRequest$DatabaseName": "<p>The name of the catalog database where the partition resides.</p>",
@@ -7201,6 +7568,9 @@
         "Labels$value": null,
         "ListCrawlsRequest$CrawlerName": "<p>The name of the crawler whose runs you want to retrieve.</p>",
         "ListEntitiesRequest$ConnectionName": "<p>A name for the connection that has required credentials to query any connection type.</p>",
+        "ListMaterializedViewRefreshTaskRunsRequest$CatalogId": "<p>The ID of the Data Catalog where the table resides. If none is supplied, the account ID is used by default.</p>",
+        "ListMaterializedViewRefreshTaskRunsRequest$DatabaseName": "<p>The database where the table resides.</p>",
+        "ListMaterializedViewRefreshTaskRunsRequest$TableName": "<p>The name of the table for which statistics is generated.</p>",
         "ListStatementsRequest$SessionId": "<p>The Session ID of the statements.</p>",
         "ListTableOptimizerRunsRequest$DatabaseName": "<p>The name of the database in the catalog in which the table resides.</p>",
         "ListTableOptimizerRunsRequest$TableName": "<p>The name of the table.</p>",
@@ -7226,6 +7596,7 @@
         "Predecessor$JobName": "<p>The name of the job definition used by the predecessor job run.</p>",
         "PutWorkflowRunPropertiesRequest$Name": "<p>Name of the workflow which was run.</p>",
         "ReferenceDatasetsList$member": null,
+        "RegisterConnectionTypeRequest$ConnectionType": "<p>The name of the connection type. Must be between 1 and 255 characters and must be prefixed with \"REST-\" to indicate it is a REST-based connector.</p>",
         "ResumeWorkflowRunRequest$Name": "<p>The name of the workflow to resume.</p>",
         "RuleMetricsMap$key": null,
         "RulesetNames$member": null,
@@ -7252,6 +7623,9 @@
         "StartDataQualityRuleRecommendationRunRequest$DataQualitySecurityConfiguration": "<p>The name of the security configuration created with the data quality encryption option.</p>",
         "StartJobRunRequest$JobName": "<p>The name of the job definition to use.</p>",
         "StartJobRunRequest$SecurityConfiguration": "<p>The name of the <code>SecurityConfiguration</code> structure to be used with this job run.</p>",
+        "StartMaterializedViewRefreshTaskRunRequest$CatalogId": "<p>The ID of the Data Catalog where the table reside. If none is supplied, the account ID is used by default.</p>",
+        "StartMaterializedViewRefreshTaskRunRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
+        "StartMaterializedViewRefreshTaskRunRequest$TableName": "<p>The name of the table to generate run the materialized view refresh task.</p>",
         "StartTriggerRequest$Name": "<p>The name of the trigger to start.</p>",
         "StartTriggerResponse$Name": "<p>The name of the trigger that was started.</p>",
         "StartWorkflowRunRequest$Name": "<p>The name of the workflow to start.</p>",
@@ -7261,6 +7635,9 @@
         "StopColumnStatisticsTaskRunScheduleRequest$TableName": "<p>The name of the table for which to stop a column statistic task run schedule.</p>",
         "StopCrawlerRequest$Name": "<p>Name of the crawler to stop.</p>",
         "StopCrawlerScheduleRequest$CrawlerName": "<p>Name of the crawler whose schedule state to set.</p>",
+        "StopMaterializedViewRefreshTaskRunRequest$CatalogId": "<p>The ID of the Data Catalog where the table reside. If none is supplied, the account ID is used by default.</p>",
+        "StopMaterializedViewRefreshTaskRunRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
+        "StopMaterializedViewRefreshTaskRunRequest$TableName": "<p>The name of the table to generate statistics.</p>",
         "StopSessionRequest$Id": "<p>The ID of the session to be stopped.</p>",
         "StopSessionResponse$Id": "<p>Returns the Id of the stopped session.</p>",
         "StopTriggerRequest$Name": "<p>The name of the trigger to stop.</p>",
@@ -7513,6 +7890,7 @@
         "CrawlerMetrics$TimeLeftSeconds": "<p>The estimated time left to complete a running crawl.</p>",
         "CrawlerMetrics$LastRuntimeSeconds": "<p>The duration of the crawler's most recent run, in seconds.</p>",
         "CrawlerMetrics$MedianRuntimeSeconds": "<p>The median duration of this crawler's runs, in seconds.</p>",
+        "MaterializedViewRefreshTaskRun$DPUSeconds": "<p>The calculated DPU usage in seconds for all autoscaled workers.</p>",
         "StringColumnStatisticsData$AverageLength": "<p>The average string length in the column.</p>"
       }
     },
@@ -7625,7 +8003,9 @@
         "LakeFormationConfiguration$UseLakeFormationCredentials": "<p>Specifies whether to use Lake Formation credentials for the crawler instead of the IAM role credentials.</p>",
         "MongoDBTarget$ScanAll": "<p>Indicates whether to scan all the records, or to sample rows from the table. Scanning all the records can take a long time when the table is not a high throughput table.</p> <p>A value of <code>true</code> means to scan all records, while a value of <code>false</code> means to sample the records. If no value is specified, the value defaults to <code>true</code>.</p>",
         "StartJobRunRequest$JobRunQueuingEnabled": "<p>Specifies whether job run queuing is enabled for the job run.</p> <p>A value of true means job run queuing is enabled for the job run. If false or not populated, the job run will not be considered for queueing.</p>",
+        "StartMaterializedViewRefreshTaskRunRequest$FullRefresh": "<p>Specifies whether this is a full refresh of the task run.</p>",
         "Table$IsMultiDialectView": "<p>Specifies whether the view supports the SQL dialects of one or more different query engines and can therefore be read by those engines.</p>",
+        "Table$IsMaterializedView": "<p>Indicates a table is a <code>MaterializedView</code>.</p>",
         "TableOptimizerConfiguration$enabled": "<p>Whether table optimization is enabled.</p>",
         "UpdateCsvClassifierRequest$DisableValueTrimming": "<p>Specifies not to trim values before identifying the type of column values. The default value is true.</p>",
         "UpdateCsvClassifierRequest$AllowSingleColumn": "<p>Enables the processing of files that contain only one column.</p>",
@@ -7763,6 +8143,12 @@
       "base": "<p>A structure containing properties for OAuth2 in the CreateConnection request.</p>",
       "refs": {
         "AuthenticationConfigurationInput$OAuth2Properties": "<p>The properties for OAuth2 authentication in the CreateConnection request.</p>"
+      }
+    },
+    "OffsetConfiguration": {
+      "base": "<p>Offset-based pagination configuration that defines how to handle pagination using numeric offsets and limits.</p>",
+      "refs": {
+        "PaginationConfiguration$OffsetConfiguration": "<p>Configuration for offset-based pagination, where the API uses numeric offsets and limits to control which results are returned.</p>"
       }
     },
     "OneInput": {
@@ -8061,8 +8447,15 @@
         "ListDevEndpointsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListJobsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListMLTransformsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
+        "ListMaterializedViewRefreshTaskRunsRequest$MaxResults": "<p>The maximum size of the response.</p>",
         "ListSessionsRequest$MaxResults": "<p>The maximum number of results. </p>",
         "SearchTablesRequest$MaxResults": "<p>The maximum number of tables to return in a single response.</p>"
+      }
+    },
+    "PaginationConfiguration": {
+      "base": "<p>Configuration that defines how to handle paginated responses from REST APIs, supporting different pagination strategies used by various services.</p>",
+      "refs": {
+        "SourceConfiguration$PaginationConfiguration": "<p>Configuration for handling paginated responses from the REST API, supporting both cursor-based and offset-based pagination strategies.</p>"
       }
     },
     "PaginationToken": {
@@ -8264,6 +8657,12 @@
         "S3Target$Exclusions": "<p>A list of glob patterns used to exclude from the crawl. For more information, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/add-crawler.html\">Catalog Tables with a Crawler</a>.</p>"
       }
     },
+    "PathString": {
+      "base": null,
+      "refs": {
+        "SourceConfiguration$RequestPath": "<p>The URL path for the REST endpoint, which may include parameter placeholders that will be replaced with actual values during requests.</p>"
+      }
+    },
     "Permission": {
       "base": null,
       "refs": {
@@ -8461,6 +8860,14 @@
         "PropertyMap$key": null
       }
     },
+    "PropertyLocation": {
+      "base": null,
+      "refs": {
+        "ConnectorProperty$PropertyLocation": "<p>Specifies where this property should be included in REST requests, such as in headers, query parameters, or request body.</p>",
+        "ExtractedParameter$PropertyLocation": "<p>Specifies where this extracted parameter should be placed in subsequent requests, such as in headers, query parameters, or request body.</p>",
+        "Property$PropertyLocation": "<p>Specifies where this property should be included in REST requests, such as in headers, query parameters, or request body.</p>"
+      }
+    },
     "PropertyMap": {
       "base": null,
       "refs": {
@@ -8475,6 +8882,7 @@
     "PropertyName": {
       "base": null,
       "refs": {
+        "ConnectorProperty$Name": "<p>The name of the property.</p>",
         "PropertiesMap$key": null,
         "Property$Name": "<p>The name of the property.</p>",
         "PropertyNameOverrides$key": null,
@@ -8497,6 +8905,7 @@
     "PropertyType": {
       "base": null,
       "refs": {
+        "ConnectorProperty$PropertyType": "<p>The data type of this property</p>",
         "PropertyTypes$member": null
       }
     },
@@ -8699,11 +9108,26 @@
         "StatisticSummary$ReferencedDatasets": "<p>The list of datasets referenced by the statistic.</p>"
       }
     },
+    "RefreshSeconds": {
+      "base": null,
+      "refs": {
+        "ViewDefinition$RefreshSeconds": "<p>Auto refresh interval in seconds for the materialized view. If not specified, the view will not automatically refresh.</p>",
+        "ViewDefinitionInput$RefreshSeconds": "<p>Auto refresh interval in seconds for the materialized view. If not specified, the view will not automatically refresh.</p>"
+      }
+    },
     "RefreshToken": {
       "base": null,
       "refs": {
         "OAuth2Credentials$RefreshToken": "<p>The refresh token used when the authentication type is OAuth2.</p>"
       }
+    },
+    "RegisterConnectionTypeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RegisterConnectionTypeResponse": {
+      "base": "<p>Contains the Amazon Resource Name (ARN) of the newly registered connection type.</p>",
+      "refs": {}
     },
     "RegisterSchemaVersionInput": {
       "base": null,
@@ -8838,6 +9262,25 @@
         "UserDefinedFunctionInput$ResourceUris": "<p>The resource URIs for the function.</p>"
       }
     },
+    "ResponseConfiguration": {
+      "base": "<p>Configuration that defines how to parse JSON responses from REST API calls, including paths to result data and error information.</p>",
+      "refs": {
+        "SourceConfiguration$ResponseConfiguration": "<p>Configuration that defines how to parse and extract data from API responses, including success and error handling.</p>"
+      }
+    },
+    "ResponseExtractionMapping": {
+      "base": "<p>Configuration that defines how to extract values from HTTP response content or headers for use in subsequent requests or parameter mapping.</p>",
+      "refs": {
+        "ExtractedParameter$Value": "<p>The JSON path or extraction mapping that defines how to extract the parameter value from API responses.</p>"
+      }
+    },
+    "RestConfiguration": {
+      "base": "<p>Configuration that defines HTTP request and response handling, validation endpoints, and entity configurations for REST API interactions.</p>",
+      "refs": {
+        "DescribeConnectionTypeResponse$RestConfiguration": "<p>HTTP request and response configuration, validation endpoint, and entity configurations for REST based data source.</p>",
+        "RegisterConnectionTypeRequest$RestConfiguration": "<p>Defines the HTTP request and response configuration, validation endpoint, and entity configurations for REST API interactions.</p>"
+      }
+    },
     "ResumeWorkflowRunRequest": {
       "base": null,
       "refs": {}
@@ -8865,6 +9308,7 @@
         "ColumnStatisticsTaskSettings$Role": "<p>The role used for running the column statistics.</p>",
         "Crawler$Role": "<p>The Amazon Resource Name (ARN) of an IAM role that's used to access customer resources, such as Amazon Simple Storage Service (Amazon S3) data.</p>",
         "CreateCrawlerRequest$Role": "<p>The IAM role or Amazon Resource Name (ARN) of an IAM role used by the new crawler to access customer resources.</p>",
+        "MaterializedViewRefreshTaskRun$Role": "<p>The IAM role that the service assumes to generate statistics.</p>",
         "UpdateCrawlerRequest$Role": "<p>The IAM role or Amazon Resource Name (ARN) of an IAM role that is used by the new crawler to access customer resources.</p>"
       }
     },
@@ -9548,6 +9992,14 @@
         "TransformSortCriteria$SortDirection": "<p>The sort direction to be used in the sorting criteria that are associated with the machine learning transform.</p>"
       }
     },
+    "SourceConfiguration": {
+      "base": "<p>Configuration that defines how to make requests to endpoints, including request methods, paths, parameters, and response handling.</p>",
+      "refs": {
+        "EntityConfiguration$SourceConfiguration": "<p>The source configuration that defines how to make requests to access this entity's data through the REST API.</p>",
+        "RestConfiguration$GlobalSourceConfiguration": "<p>Global configuration settings that apply to all REST API requests for this connection type, including common request methods, paths, and parameters.</p>",
+        "RestConfiguration$ValidationEndpointConfiguration": "<p>Configuration for the endpoint used to validate connection credentials and test connectivity during connection creation.</p>"
+      }
+    },
     "SourceControlAuthStrategy": {
       "base": null,
       "refs": {
@@ -9578,6 +10030,7 @@
         "CreateIntegrationResourcePropertyRequest$SourceProcessingProperties": "<p>The resource properties associated with the integration source.</p>",
         "CreateIntegrationResourcePropertyResponse$SourceProcessingProperties": "<p>The resource properties associated with the integration source.</p>",
         "GetIntegrationResourcePropertyResponse$SourceProcessingProperties": "<p>The resource properties associated with the integration source.</p>",
+        "IntegrationResourceProperty$SourceProcessingProperties": "<p>The resource properties associated with the integration source.</p>",
         "UpdateIntegrationResourcePropertyRequest$SourceProcessingProperties": "<p>The resource properties associated with the integration source.</p>",
         "UpdateIntegrationResourcePropertyResponse$SourceProcessingProperties": "<p>The resource properties associated with the integration source.</p>"
       }
@@ -9741,6 +10194,14 @@
       "base": null,
       "refs": {}
     },
+    "StartMaterializedViewRefreshTaskRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartMaterializedViewRefreshTaskRunResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StartTriggerRequest": {
       "base": null,
       "refs": {}
@@ -9887,6 +10348,14 @@
       "base": null,
       "refs": {}
     },
+    "StopMaterializedViewRefreshTaskRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopMaterializedViewRefreshTaskRunResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StopSessionRequest": {
       "base": null,
       "refs": {}
@@ -9932,67 +10401,58 @@
     "String": {
       "base": null,
       "refs": {
+        "ConnectorProperty$DefaultValue": "<p>The default value for the property.</p>",
         "CustomProperties$key": null,
         "CustomProperties$value": null,
         "Field$ParentField": "<p>A parent field name for a nested field.</p>",
         "Field$NativeDataType": "<p>The data type returned by the SaaS API, such as “picklist” or “textarea” from Salesforce.</p>",
+        "FieldDefinition$Name": "<p>The name of the field in the entity schema.</p>",
         "GetEntityRecordsRequest$OrderBy": "<p>A parameter that orders the response preview data.</p>",
         "ListOfString$member": null,
-        "Property$DefaultValue": "<p>The default value for the property.</p>"
+        "Property$DefaultValue": "<p>The default value for the property.</p>",
+        "Property$KeyOverride": "<p>A key name to use when sending this property in API requests, if different from the display name.</p>"
+      }
+    },
+    "String1024": {
+      "base": null,
+      "refs": {
+        "ListIntegrationResourcePropertiesRequest$Marker": "<p>This is the pagination token for next page, initial value is <code>null</code>.</p>",
+        "ListIntegrationResourcePropertiesResponse$Marker": "<p>This is the pagination token for the next page.</p>"
       }
     },
     "String128": {
       "base": null,
       "refs": {
         "CreateIntegrationRequest$IntegrationName": "<p>A unique name for an integration in Glue.</p>",
-        "CreateIntegrationRequest$SourceArn": "<p>The ARN of the source resource for the integration.</p>",
-        "CreateIntegrationRequest$TargetArn": "<p>The ARN of the target resource for the integration.</p>",
-        "CreateIntegrationResourcePropertyRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
-        "CreateIntegrationResourcePropertyResponse$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
-        "CreateIntegrationResponse$SourceArn": "<p>The ARN of the source resource for the integration.</p>",
-        "CreateIntegrationResponse$TargetArn": "<p>The ARN of the target resource for the integration.</p>",
         "CreateIntegrationResponse$IntegrationName": "<p>A unique name for an integration in Glue.</p>",
         "CreateIntegrationResponse$IntegrationArn": "<p>The Amazon Resource Name (ARN) for the created integration.</p>",
-        "CreateIntegrationTablePropertiesRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the target table for which to create integration table properties. Currently, this API only supports creating integration table properties for target tables, and the provided ARN should be the ARN of the target table in the Glue Data Catalog. Support for creating integration table properties for source connections (using the connection ARN) is not yet implemented and will be added in a future release. </p>",
         "CreateIntegrationTablePropertiesRequest$TableName": "<p>The name of the table to be replicated.</p>",
         "DeleteIntegrationRequest$IntegrationIdentifier": "<p>The Amazon Resource Name (ARN) for the integration.</p>",
-        "DeleteIntegrationResponse$SourceArn": "<p>The ARN of the source for the integration.</p>",
-        "DeleteIntegrationResponse$TargetArn": "<p>The ARN of the target for the integration.</p>",
         "DeleteIntegrationResponse$IntegrationName": "<p>A unique name for an integration in Glue.</p>",
         "DeleteIntegrationResponse$IntegrationArn": "<p>The Amazon Resource Name (ARN) for the integration.</p>",
-        "DeleteIntegrationTablePropertiesRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
         "DeleteIntegrationTablePropertiesRequest$TableName": "<p>The name of the table to be replicated.</p>",
         "DescribeInboundIntegrationsRequest$IntegrationArn": "<p>The Amazon Resource Name (ARN) of the integration.</p>",
         "DescribeInboundIntegrationsRequest$Marker": "<p>A token to specify where to start paginating. This is the marker from a previously truncated response.</p>",
-        "DescribeInboundIntegrationsRequest$TargetArn": "<p>The Amazon Resource Name (ARN) of the target resource in the integration.</p>",
         "DescribeInboundIntegrationsResponse$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request.</p>",
         "DescribeIntegrationsRequest$IntegrationIdentifier": "<p>The Amazon Resource Name (ARN) for the integration.</p>",
         "DescribeIntegrationsRequest$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request.</p>",
         "DescribeIntegrationsResponse$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request.</p>",
-        "GetIntegrationResourcePropertyRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
-        "GetIntegrationResourcePropertyResponse$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
-        "GetIntegrationTablePropertiesRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the target table for which to retrieve integration table properties. Currently, this API only supports retrieving properties for target tables, and the provided ARN should be the ARN of the target table in the Glue Data Catalog. Support for retrieving integration table properties for source connections (using the connection ARN) is not yet implemented and will be added in a future release. </p>",
         "GetIntegrationTablePropertiesRequest$TableName": "<p>The name of the table to be replicated.</p>",
-        "GetIntegrationTablePropertiesResponse$ResourceArn": "<p>The Amazon Resource Name (ARN) of the target table for which to retrieve integration table properties. Currently, this API only supports retrieving properties for target tables, and the provided ARN should be the ARN of the target table in the Glue Data Catalog. Support for retrieving integration table properties for source connections (using the connection ARN) is not yet implemented and will be added in a future release. </p>",
         "GetIntegrationTablePropertiesResponse$TableName": "<p>The name of the table to be replicated.</p>",
-        "InboundIntegration$SourceArn": "<p>The ARN of the source resource for the integration.</p>",
-        "InboundIntegration$TargetArn": "<p>The ARN of the target resource for the integration.</p>",
         "InboundIntegration$IntegrationArn": "<p>The ARN of the zero-ETL integration.</p>",
-        "Integration$SourceArn": "<p>The ARN for the source of the integration.</p>",
-        "Integration$TargetArn": "<p>The ARN for the target of the integration.</p>",
         "Integration$IntegrationName": "<p>A unique name for the integration.</p>",
         "Integration$IntegrationArn": "<p>The Amazon Resource Name (ARN) for the integration.</p>",
-        "IntegrationConfig$RefreshInterval": "<p>Specifies the frequency at which CDC (Change Data Capture) pulls or incremental loads should occur. This parameter provides flexibility to align the refresh rate with your specific data update patterns, system load considerations, and performance optimization goals. Time increment can be set from 15 minutes to 8640 minutes (six days). Currently supports creation of <code>RefreshInterval</code> only.</p>",
+        "IntegrationConfig$RefreshInterval": "<p>Specifies the frequency at which CDC (Change Data Capture) pulls or incremental loads should occur. This parameter provides flexibility to align the refresh rate with your specific data update patterns, system load considerations, and performance optimization goals. Time increment can be set from 15 minutes to 8640 minutes (six days).</p>",
         "IntegrationError$ErrorCode": "<p>The code associated with this error.</p>",
         "IntegrationFilter$Name": "<p>The name of the filter.</p>",
         "IntegrationFilterValues$member": null,
         "IntegrationPartition$FieldName": "<p>The field name used to partition data on the target. Avoid using columns that have unique values for each row (for example, `LastModifiedTimestamp`, `SystemModTimeStamp`) as the partition column. These columns are not suitable for partitioning because they create a large number of small partitions, which can lead to performance issues.</p>",
         "IntegrationPartition$FunctionSpec": "<p>Specifies the function used to partition data on the target. The accepted values for this parameter are:</p> <ul> <li> <p> <code>identity</code> - Uses source values directly without transformation</p> </li> <li> <p> <code>year</code> - Extracts the year from timestamp values (e.g., 2023)</p> </li> <li> <p> <code>month</code> - Extracts the month from timestamp values (e.g., 2023-01)</p> </li> <li> <p> <code>day</code> - Extracts the day from timestamp values (e.g., 2023-01-15)</p> </li> <li> <p> <code>hour</code> - Extracts the hour from timestamp values (e.g., 2023-01-15-14)</p> </li> </ul>",
         "IntegrationPartition$ConversionSpec": "<p>Specifies the timestamp format of the source data. Valid values are:</p> <ul> <li> <p> <code>epoch_sec</code> - Unix epoch timestamp in seconds</p> </li> <li> <p> <code>epoch_milli</code> - Unix epoch timestamp in milliseconds</p> </li> <li> <p> <code>iso</code> - ISO 8601 formatted timestamp</p> </li> </ul> <note> <p> Only specify <code>ConversionSpec</code> when using timestamp-based partition functions (year, month, day, or hour). Glue Zero-ETL uses this parameter to correctly transform source data into timestamp format before partitioning. </p> <p> Do not use high-cardinality columns with the <code>identity</code> partition function. High-cardinality columns include: </p> <ul> <li> <p>Primary keys</p> </li> <li> <p>Timestamp fields (such as <code>LastModifiedTimestamp</code>, <code>CreatedDate</code>)</p> </li> <li> <p>System-generated timestamps</p> </li> </ul> <p> Using high-cardinality columns with identity partitioning creates many small partitions, which can significantly degrade ingestion performance. </p> </note>",
+        "IntegrationResourcePropertyFilter$Name": "<p>The name of the filter. Supported filter keys are <code>SourceArn</code> and <code>TargetArn</code>.</p>",
+        "IntegrationResourcePropertyFilterValues$member": null,
         "ModifyIntegrationRequest$IntegrationIdentifier": "<p>The Amazon Resource Name (ARN) for the integration.</p>",
         "ModifyIntegrationRequest$IntegrationName": "<p>A unique name for an integration in Glue.</p>",
-        "ModifyIntegrationResponse$SourceArn": "<p>The ARN of the source for the integration.</p>",
-        "ModifyIntegrationResponse$TargetArn": "<p>The ARN of the target for the integration.</p>",
         "ModifyIntegrationResponse$IntegrationName": "<p>A unique name for an integration in Glue.</p>",
         "ModifyIntegrationResponse$IntegrationArn": "<p>The Amazon Resource Name (ARN) for the integration.</p>",
         "PrimaryKeyList$member": null,
@@ -10003,9 +10463,6 @@
         "TargetProcessingProperties$RoleArn": "<p>The IAM role to access the Glue database.</p>",
         "TargetProcessingProperties$ConnectionName": "<p>The Glue network connection to configure the Glue job running in the customer VPC.</p>",
         "TargetTableConfig$TargetTableName": "<p>The optional name of a target table.</p>",
-        "UpdateIntegrationResourcePropertyRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
-        "UpdateIntegrationResourcePropertyResponse$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
-        "UpdateIntegrationTablePropertiesRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
         "UpdateIntegrationTablePropertiesRequest$TableName": "<p>The name of the table to be replicated.</p>"
       }
     },
@@ -10028,6 +10485,41 @@
         "TargetProcessingProperties$EventBusArn": "<p>The ARN of an Eventbridge event bus to receive the integration status notification.</p>"
       }
     },
+    "String512": {
+      "base": null,
+      "refs": {
+        "CreateIntegrationRequest$SourceArn": "<p>The ARN of the source resource for the integration.</p>",
+        "CreateIntegrationRequest$TargetArn": "<p>The ARN of the target resource for the integration.</p>",
+        "CreateIntegrationResourcePropertyRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "CreateIntegrationResourcePropertyResponse$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "CreateIntegrationResourcePropertyResponse$ResourcePropertyArn": "<p>The resource ARN created through this create API. The format is something like arn:aws:glue:&lt;region&gt;:&lt;account_id&gt;:integrationresourceproperty/*</p>",
+        "CreateIntegrationResponse$SourceArn": "<p>The ARN of the source resource for the integration.</p>",
+        "CreateIntegrationResponse$TargetArn": "<p>The ARN of the target resource for the integration.</p>",
+        "CreateIntegrationTablePropertiesRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the target table for which to create integration table properties. Currently, this API only supports creating integration table properties for target tables, and the provided ARN should be the ARN of the target table in the Glue Data Catalog. Support for creating integration table properties for source connections (using the connection ARN) is not yet implemented and will be added in a future release. </p>",
+        "DeleteIntegrationResourcePropertyRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "DeleteIntegrationResponse$SourceArn": "<p>The ARN of the source for the integration.</p>",
+        "DeleteIntegrationResponse$TargetArn": "<p>The ARN of the target for the integration.</p>",
+        "DeleteIntegrationTablePropertiesRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "DescribeInboundIntegrationsRequest$TargetArn": "<p>The Amazon Resource Name (ARN) of the target resource in the integration.</p>",
+        "GetIntegrationResourcePropertyRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "GetIntegrationResourcePropertyResponse$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "GetIntegrationResourcePropertyResponse$ResourcePropertyArn": "<p>The resource ARN created through this create API. The format is something like arn:aws:glue:&lt;region&gt;:&lt;account_id&gt;:integrationresourceproperty/*</p>",
+        "GetIntegrationTablePropertiesRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the target table for which to retrieve integration table properties. Currently, this API only supports retrieving properties for target tables, and the provided ARN should be the ARN of the target table in the Glue Data Catalog. Support for retrieving integration table properties for source connections (using the connection ARN) is not yet implemented and will be added in a future release. </p>",
+        "GetIntegrationTablePropertiesResponse$ResourceArn": "<p>The Amazon Resource Name (ARN) of the target table for which to retrieve integration table properties. Currently, this API only supports retrieving properties for target tables, and the provided ARN should be the ARN of the target table in the Glue Data Catalog. Support for retrieving integration table properties for source connections (using the connection ARN) is not yet implemented and will be added in a future release. </p>",
+        "InboundIntegration$SourceArn": "<p>The ARN of the source resource for the integration.</p>",
+        "InboundIntegration$TargetArn": "<p>The ARN of the target resource for the integration.</p>",
+        "Integration$SourceArn": "<p>The ARN for the source of the integration.</p>",
+        "Integration$TargetArn": "<p>The ARN for the target of the integration.</p>",
+        "IntegrationResourceProperty$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "IntegrationResourceProperty$ResourcePropertyArn": "<p>The resource ARN created through this create API. The format is something like arn:aws:glue:&lt;region&gt;:&lt;account_id&gt;:integrationresourceproperty/*</p>",
+        "ModifyIntegrationResponse$SourceArn": "<p>The ARN of the source for the integration.</p>",
+        "ModifyIntegrationResponse$TargetArn": "<p>The ARN of the target for the integration.</p>",
+        "UpdateIntegrationResourcePropertyRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "UpdateIntegrationResourcePropertyResponse$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "UpdateIntegrationResourcePropertyResponse$ResourcePropertyArn": "<p>The resource ARN created through this create API. The format is something like arn:aws:glue:&lt;region&gt;:&lt;account_id&gt;:integrationresourceproperty/*</p>",
+        "UpdateIntegrationTablePropertiesRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>"
+      }
+    },
     "StringColumnStatisticsData": {
       "base": "<p>Defines column statistics supported for character sequence data values.</p>",
       "refs": {
@@ -10047,6 +10539,7 @@
       "base": null,
       "refs": {
         "CreateIcebergTableInput$Properties": "<p>Key-value pairs of additional table properties and configuration settings for the Iceberg table.</p>",
+        "IcebergEncryptedKey$Properties": "<p>A string to string map of additional metadata used by the table's encryption scheme. These properties provide additional context and configuration for the encryption key implementation.</p>",
         "IcebergTableUpdate$Properties": "<p>Updated key-value pairs of table properties and configuration settings for the Iceberg table.</p>"
       }
     },
@@ -10117,7 +10610,8 @@
         "ColumnStatisticsTaskRun$TableName": "<p>The name of the table for which column statistics is generated.</p>",
         "ColumnStatisticsTaskSettings$TableName": "<p>The name of the table for which to generate column statistics.</p>",
         "MappingEntry$SourceTable": "<p>The name of the source table.</p>",
-        "MappingEntry$TargetTable": "<p>The target table.</p>"
+        "MappingEntry$TargetTable": "<p>The target table.</p>",
+        "MaterializedViewRefreshTaskRun$TableName": "<p>The name of the table for which statistics is generated.</p>"
       }
     },
     "TableOptimizer": {
@@ -10191,7 +10685,7 @@
     "TableStatus": {
       "base": "<p>A structure containing information about the state of an asynchronous change to a table.</p>",
       "refs": {
-        "Table$Status": null
+        "Table$Status": "<p>Indicates the the state of an asynchronous change to a table.</p>"
       }
     },
     "TableTypeString": {
@@ -10218,6 +10712,14 @@
       "base": null,
       "refs": {
         "BatchDeleteTableVersionResponse$Errors": "<p>A list of errors encountered while trying to delete the specified table versions.</p>"
+      }
+    },
+    "TableVersionId": {
+      "base": null,
+      "refs": {
+        "ViewDefinition$ViewVersionId": "<p>The ID value that identifies this view's version. For materialized views, the version ID is the Apache Iceberg table's snapshot ID. </p>",
+        "ViewDefinitionInput$ViewVersionId": "<p>The ID value that identifies this view's version. For materialized views, the version ID is the Apache Iceberg table's snapshot ID. </p>",
+        "ViewSubObjectVersionIdsList$member": null
       }
     },
     "Tag": {
@@ -10287,6 +10789,7 @@
         "ListMLTransformsRequest$Tags": "<p>Specifies to return only these tagged resources.</p>",
         "ListSessionsRequest$Tags": "<p>Tags belonging to the session. </p>",
         "ListTriggersRequest$Tags": "<p>Specifies to return only these tagged resources.</p>",
+        "RegisterConnectionTypeRequest$Tags": "<p>The tags you assign to the connection type.</p>",
         "TagResourceRequest$TagsToAdd": "<p>Tags to add to this resource.</p>"
       }
     },
@@ -10312,6 +10815,7 @@
         "CreateIntegrationResourcePropertyRequest$TargetProcessingProperties": "<p>The resource properties associated with the integration target.</p>",
         "CreateIntegrationResourcePropertyResponse$TargetProcessingProperties": "<p>The resource properties associated with the integration target.</p>",
         "GetIntegrationResourcePropertyResponse$TargetProcessingProperties": "<p>The resource properties associated with the integration target.</p>",
+        "IntegrationResourceProperty$TargetProcessingProperties": "<p>The resource properties associated with the integration target.</p>",
         "UpdateIntegrationResourcePropertyRequest$TargetProcessingProperties": "<p>The resource properties associated with the integration target.</p>",
         "UpdateIntegrationResourcePropertyResponse$TargetProcessingProperties": "<p>The resource properties associated with the integration target.</p>"
       }
@@ -10505,6 +11009,10 @@
         "LastCrawlInfo$StartTime": "<p>The time at which the crawl started.</p>",
         "MLTransform$CreatedOn": "<p>A timestamp. The time and date that this machine learning transform was created.</p>",
         "MLTransform$LastModifiedOn": "<p>A timestamp. The last point in time when this machine learning transform was modified.</p>",
+        "MaterializedViewRefreshTaskRun$CreationTime": "<p>The time that this task was created.</p>",
+        "MaterializedViewRefreshTaskRun$LastUpdated": "<p>The last point in time when this task was modified.</p>",
+        "MaterializedViewRefreshTaskRun$StartTime": "<p>The start time of the task.</p>",
+        "MaterializedViewRefreshTaskRun$EndTime": "<p>The end time of the task.</p>",
         "Partition$CreationTime": "<p>The time at which the partition was created.</p>",
         "Partition$LastAccessTime": "<p>The last time at which the partition was accessed.</p>",
         "Partition$LastAnalyzedTime": "<p>The last time at which column statistics were computed for this partition.</p>",
@@ -10623,6 +11131,8 @@
         "ListCrawlersResponse$NextToken": "<p>A continuation token, if the returned list does not contain the last metric available.</p>",
         "ListCrawlsRequest$NextToken": "<p>A continuation token, if this is a continuation call.</p>",
         "ListCrawlsResponse$NextToken": "<p>A continuation token for paginating the returned list of tokens, returned if the current segment of the list is not the last.</p>",
+        "ListMaterializedViewRefreshTaskRunsRequest$NextToken": "<p>A continuation token, if this is a continuation call.</p>",
+        "ListMaterializedViewRefreshTaskRunsResponse$NextToken": "<p>A continuation token, if not all task run IDs have yet been returned.</p>",
         "SearchTablesRequest$NextToken": "<p>A continuation token, included if this is a continuation call.</p>",
         "SearchTablesResponse$NextToken": "<p>A continuation token, present if the current list segment is not the last.</p>"
       }
@@ -10831,6 +11341,14 @@
         "Database$LocationUri": "<p>The location of the database (for example, an HDFS path).</p>",
         "DatabaseInput$LocationUri": "<p>The location of the database (for example, an HDFS path). </p>",
         "ResourceUri$Uri": "<p>The URI for accessing the resource.</p>"
+      }
+    },
+    "UUIDv4": {
+      "base": null,
+      "refs": {
+        "GetMaterializedViewRefreshTaskRunRequest$MaterializedViewRefreshTaskRunId": "<p>The identifier for the particular materialized view refresh task run.</p>",
+        "MaterializedViewRefreshTaskRun$MaterializedViewRefreshTaskRunId": "<p>The identifier of the materialized view refresh task run.</p>",
+        "StartMaterializedViewRefreshTaskRunResponse$MaterializedViewRefreshTaskRunId": "<p>The identifier for the materialized view refresh task run.</p>"
       }
     },
     "UnfilteredPartition": {
@@ -11325,7 +11843,8 @@
         "Table$VersionId": "<p>The ID of the table version.</p>",
         "TableVersion$VersionId": "<p>The ID value that identifies this table version. A <code>VersionId</code> is a string representation of an integer. Each version is incremented by 1.</p>",
         "TableVersionError$VersionId": "<p>The ID value of the version in question. A <code>VersionID</code> is a string representation of an integer. Each version is incremented by 1.</p>",
-        "UpdateTableRequest$VersionId": "<p>The version ID at which to update the table contents. </p>"
+        "UpdateTableRequest$VersionId": "<p>The version ID at which to update the table contents. </p>",
+        "ViewDefinitionInput$ViewVersionToken": "<p>The version ID of the Apache Iceberg table.</p>"
       }
     },
     "VersionsString": {
@@ -11386,6 +11905,13 @@
       "base": null,
       "refs": {
         "ViewDefinition$Representations": "<p>A list of representations.</p>"
+      }
+    },
+    "ViewSubObjectVersionIdsList": {
+      "base": null,
+      "refs": {
+        "ViewDefinition$SubObjectVersionIds": "<p>List of the Apache Iceberg table versions referenced by the materialized view.</p>",
+        "ViewDefinitionInput$SubObjectVersionIds": "<p>List of the Apache Iceberg table versions referenced by the materialized view.</p>"
       }
     },
     "ViewSubObjectsList": {

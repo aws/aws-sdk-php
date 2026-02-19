@@ -15,8 +15,10 @@
     "ListCaseEdits": "<p>Views the case history for edits made to a designated case.</p>",
     "ListCases": "<p>Lists all cases the requester has access to.</p>",
     "ListComments": "<p>Returns comments for a designated case.</p>",
+    "ListInvestigations": "<p>Investigation performed by an agent for a security incident...</p>",
     "ListMemberships": "<p>Returns the memberships that the calling principal can access.</p>",
     "ListTagsForResource": "<p>Returns currently configured tags on a resource.</p>",
+    "SendFeedback": "<p>Send feedback based on response investigation action</p>",
     "TagResource": "<p>Adds a tag(s) to a designated resource.</p>",
     "UntagResource": "<p>Removes a tag(s) from a designate resource.</p>",
     "UpdateCase": "<p>Updates an existing case.</p>",
@@ -46,6 +48,12 @@
     "AccessDeniedException": {
       "base": "<p/>",
       "refs": {}
+    },
+    "ActionType": {
+      "base": null,
+      "refs": {
+        "InvestigationAction$actionType": "<p>The type of investigation action being performed. This categorizes the investigation method or approach used in the case.</p>"
+      }
     },
     "Arn": {
       "base": null,
@@ -171,11 +179,38 @@
         "ListCaseEditsRequest$caseId": "<p>Required element used with ListCaseEdits to identify the case to query.</p>",
         "ListCasesItem$caseId": "<p/>",
         "ListCommentsRequest$caseId": "<p>Required element for ListComments to designate the case to query.</p>",
+        "ListInvestigationsRequest$caseId": "<p>Investigation performed by an agent for a security incident per caseID</p>",
+        "SendFeedbackRequest$caseId": "<p>Send feedback based on request caseID</p>",
         "UpdateCaseCommentRequest$caseId": "<p>Required element for UpdateCaseComment to identify the case ID containing the comment to be updated. </p>",
         "UpdateCaseRequest$caseId": "<p>Required element for UpdateCase to identify the case ID for updates.</p>",
         "UpdateCaseStatusRequest$caseId": "<p>Required element for UpdateCaseStatus to identify the case to update.</p>",
         "UpdateResolverTypeRequest$caseId": "<p>Required element for UpdateResolverType to identify the case to update.</p>",
         "UpdateResolverTypeResponse$caseId": "<p>Response element for UpdateResolver identifying the case ID being updated.</p>"
+      }
+    },
+    "CaseMetadata": {
+      "base": null,
+      "refs": {
+        "GetCaseResponse$caseMetadata": "<p>Case response metadata</p>",
+        "UpdateCaseRequest$caseMetadata": "<p>Update the case request with case metadata</p>"
+      }
+    },
+    "CaseMetadataEntry": {
+      "base": "<p>Represents a single metadata entry associated with a case. Each entry consists of a key-value pair that provides additional contextual information about the case, such as classification tags, custom attributes, or system-generated properties. </p>",
+      "refs": {
+        "CaseMetadata$member": null
+      }
+    },
+    "CaseMetadataEntryKeyString": {
+      "base": null,
+      "refs": {
+        "CaseMetadataEntry$key": "<p>The identifier for the metadata field. This key uniquely identifies the type of metadata being stored, such as \"severity\", \"category\", or \"assignee\".</p>"
+      }
+    },
+    "CaseMetadataEntryValueString": {
+      "base": null,
+      "refs": {
+        "CaseMetadataEntry$value": "<p>The value associated with the metadata key. This contains the actual data for the metadata field identified by the key.</p>"
       }
     },
     "CaseStatus": {
@@ -312,6 +347,19 @@
         "GetCaseResponse$engagementType": "<p>Response element for GetCase that provides the engagement type. Options for engagement type include <code>Active Security Event | Investigations</code> </p>",
         "ListCasesItem$engagementType": "<p/>",
         "UpdateCaseRequest$engagementType": "<p>Optional element for UpdateCase to provide content for the engagement type field. <code>Available engagement types include Security Incident | Investigation</code>. </p>"
+      }
+    },
+    "ExecutionStatus": {
+      "base": null,
+      "refs": {
+        "InvestigationAction$status": "<p>The current execution status of the investigation. This indicates whether the investigation is pending, in progress, completed, or failed.</p>"
+      }
+    },
+    "FeedbackComment": {
+      "base": null,
+      "refs": {
+        "InvestigationFeedback$comment": "<p>Optional user comments providing additional context about the investigation feedback. This allows users to explain their rating or provide suggestions for improvement.</p>",
+        "SendFeedbackRequest$comment": "<p>Send feedback based on request comments</p>"
       }
     },
     "FileName": {
@@ -459,6 +507,42 @@
       "base": "<p/>",
       "refs": {}
     },
+    "InvestigationAction": {
+      "base": "<p>Represents an investigation action performed within a case. This structure captures the details of an automated or manual investigation, including its status, results, and user feedback.</p>",
+      "refs": {
+        "InvestigationActionList$member": null
+      }
+    },
+    "InvestigationActionList": {
+      "base": null,
+      "refs": {
+        "ListInvestigationsResponse$investigationActions": "<p>Investigation performed by an agent for a security incid…Unique identifier for the specific investigation&gt;</p>"
+      }
+    },
+    "InvestigationContent": {
+      "base": null,
+      "refs": {
+        "InvestigationAction$content": "<p>Detailed investigation results in rich markdown format. This field contains the comprehensive findings, analysis, and conclusions from the investigation.</p>"
+      }
+    },
+    "InvestigationFeedback": {
+      "base": "<p>Represents user feedback for an investigation result. This structure captures the user's evaluation of the investigation's quality, usefulness, and any additional comments.</p>",
+      "refs": {
+        "InvestigationAction$feedback": "<p>User feedback for this investigation result. This contains the user's assessment and comments about the quality and usefulness of the investigation findings.</p>"
+      }
+    },
+    "InvestigationId": {
+      "base": null,
+      "refs": {
+        "InvestigationAction$investigationId": "<p>The unique identifier for this investigation action. This ID is used to track and reference the specific investigation throughout its lifecycle.</p>"
+      }
+    },
+    "InvestigationTitle": {
+      "base": null,
+      "refs": {
+        "InvestigationAction$title": "<p>Human-readable summary of the investigation focus. This provides a brief description of what the investigation is examining or analyzing.</p>"
+      }
+    },
     "JobTitle": {
       "base": null,
       "refs": {
@@ -547,6 +631,26 @@
       }
     },
     "ListCommentsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListInvestigationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListInvestigationsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListInvestigationsRequest$maxResults": "<p>Investigation performed by an agent for a security incident request, returning max results</p>"
+      }
+    },
+    "ListInvestigationsRequestNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListInvestigationsRequest$nextToken": "<p>Investigation performed by an agent for a security incident request</p>"
+      }
+    },
+    "ListInvestigationsResponse": {
       "base": null,
       "refs": {}
     },
@@ -737,6 +841,12 @@
       "base": "<p/>",
       "refs": {}
     },
+    "ResultId": {
+      "base": null,
+      "refs": {
+        "SendFeedbackRequest$resultId": "<p>Send feedback based on request result ID</p>"
+      }
+    },
     "SecurityIncidentResponseNotActiveException": {
       "base": "<p/>",
       "refs": {}
@@ -747,6 +857,14 @@
         "UpdateCaseStatusRequest$caseStatus": "<p>Required element for UpdateCaseStatus to identify the status for a case. Options include <code>Submitted | Detection and Analysis | Containment, Eradication and Recovery | Post-incident Activities</code>. </p>",
         "UpdateCaseStatusResponse$caseStatus": "<p>Response element for UpdateCaseStatus showing the newly configured status.</p>"
       }
+    },
+    "SendFeedbackRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SendFeedbackResponse": {
+      "base": null,
+      "refs": {}
     },
     "ServiceQuotaExceededException": {
       "base": "<p/>",
@@ -767,6 +885,7 @@
         "ListCaseEditsResponse$nextToken": "<p>An optional string that, if supplied on subsequent calls to ListCaseEdits, allows the API to fetch the next page of results. </p>",
         "ListCasesResponse$nextToken": "<p>An optional string that, if supplied on subsequent calls to ListCases, allows the API to fetch the next page of results. </p>",
         "ListCommentsResponse$nextToken": "<p>An optional string that, if supplied on subsequent calls to ListComments, allows the API to fetch the next page of results. </p>",
+        "ListInvestigationsResponse$nextToken": "<p>Investigation performed by an agent for a security incident for next Token</p>",
         "ListMembershipsResponse$nextToken": "<p>An optional string that, if supplied on subsequent calls to ListMemberships, allows the API to fetch the next page of results. </p>",
         "ResourceNotFoundException$message": "<p>The exception message.</p>",
         "SecurityIncidentResponseNotActiveException$message": "<p>The exception message.</p>",
@@ -852,6 +971,8 @@
         "GetCaseResponse$closedDate": "<p>Response element for GetCase that provides the date a specified case was closed.</p>",
         "GetMembershipResponse$membershipActivationTimestamp": "<p>Response element for GetMembership that provides the configured membership activation timestamp.</p>",
         "GetMembershipResponse$membershipDeactivationTimestamp": "<p>Response element for GetMembership that provides the configured membership name deactivation timestamp. </p>",
+        "InvestigationAction$lastUpdated": "<p>ISO 8601 timestamp of the most recent status update. This indicates when the investigation was last modified or when its status last changed.</p>",
+        "InvestigationFeedback$submittedAt": "<p>ISO 8601 timestamp when the feedback was submitted. This records when the user provided their assessment of the investigation results.</p>",
         "ListCasesItem$lastUpdatedDate": "<p/>",
         "ListCasesItem$createdDate": "<p/>",
         "ListCasesItem$closedDate": "<p/>",
@@ -914,6 +1035,13 @@
       "refs": {
         "GetCaseAttachmentDownloadUrlResponse$attachmentPresignedUrl": "<p>Response element providing the Amazon S3 presigned URL to download an attachment.</p>",
         "GetCaseAttachmentUploadUrlResponse$attachmentPresignedUrl": "<p>Response element providing the Amazon S3 presigned URL to upload the attachment.</p>"
+      }
+    },
+    "UsefulnessRating": {
+      "base": null,
+      "refs": {
+        "InvestigationFeedback$usefulness": "<p>User assessment of the investigation result's quality and helpfulness. This rating indicates how valuable the investigation findings were in addressing the case.</p>",
+        "SendFeedbackRequest$usefulness": "<p>Required enum value indicating user assessment of result q.....</p>"
       }
     },
     "UserAgent": {

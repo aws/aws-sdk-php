@@ -55,6 +55,74 @@
         "title": "CreateInvoiceUnit"
       }
     ],
+    "CreateProcurementPortalPreference": [
+      {
+        "input": {
+          "BuyerDomain": "NetworkID",
+          "BuyerIdentifier": "BuyerId_1",
+          "ClientToken": "e362c68e-4e74-48d7-9228-0bc5aa447b42",
+          "Contacts": [
+            {
+              "Email": "example-placeholder@amazon.com",
+              "Name": "John Doe"
+            }
+          ],
+          "EinvoiceDeliveryEnabled": true,
+          "EinvoiceDeliveryPreference": {
+            "ConnectionTestingMethod": "PROD_ENV_DOLLAR_TEST",
+            "EinvoiceDeliveryActivationDate": 1750279280.091,
+            "EinvoiceDeliveryAttachmentTypes": [
+              "INVOICE_PDF"
+            ],
+            "EinvoiceDeliveryDocumentTypes": [
+              "AWS_CLOUD_INVOICE"
+            ],
+            "Protocol": "CXML",
+            "PurchaseOrderDataSources": [
+              {
+                "EinvoiceDeliveryDocumentType": "AWS_CLOUD_INVOICE",
+                "PurchaseOrderDataSourceType": "ASSOCIATED_PURCHASE_ORDER_REQUIRED"
+              }
+            ]
+          },
+          "ProcurementPortalInstanceEndpoint": "https://www.placeholder-domain.test",
+          "ProcurementPortalName": "COUPA",
+          "ProcurementPortalSharedSecret": "Coupa_Secret",
+          "PurchaseOrderRetrievalEnabled": true,
+          "ResourceTags": [
+            {
+              "Key": "testKey",
+              "Value": "testValue"
+            }
+          ],
+          "Selector": {
+            "InvoiceUnitArns": [
+              "arn:aws:invoicing::111111111111:invoice-unit/12345678",
+              "arn:aws:invoicing::111111111111:invoice-unit/12345679"
+            ],
+            "SellerOfRecords": [
+              "AWS_INC",
+              "AWS_EUROPE"
+            ]
+          },
+          "SupplierDomain": "NetworkID",
+          "SupplierIdentifier": "SupplierId_1",
+          "TestEnvPreference": {
+            "BuyerDomain": "NetworkID",
+            "BuyerIdentifier": "BuyerId_1_Test",
+            "ProcurementPortalInstanceEndpoint": "https://www.placeholder-domain.test",
+            "ProcurementPortalSharedSecret": "Coupa_Secret_test",
+            "SupplierDomain": "NetworkID",
+            "SupplierIdentifier": "SupplierId_1_Test"
+          }
+        },
+        "output": {
+          "ProcurementPortalPreferenceArn": "arn:aws:invoicing::111111111111:procurement-portal-preference/a34fd666-7810-4414-9360-aaa4bcab0abd"
+        },
+        "id": "example-1",
+        "title": "CreateProcurementPortalPreference for Coupa"
+      }
+    ],
     "DeleteInvoiceUnit": [
       {
         "input": {
@@ -65,6 +133,18 @@
         },
         "id": "example-1",
         "title": "DeleteInvoiceUnit"
+      }
+    ],
+    "DeleteProcurementPortalPreference": [
+      {
+        "input": {
+          "ProcurementPortalPreferenceArn": "arn:aws:invoicing::111111111111:procurement-portal-preference/f71dd02e-f855-4b13-b793-0fd25c0b3ecd"
+        },
+        "output": {
+          "ProcurementPortalPreferenceArn": "arn:aws:invoicing::111111111111:procurement-portal-preference/f71dd02e-f855-4b13-b793-0fd25c0b3ecd"
+        },
+        "id": "example-1",
+        "title": "DeleteProcurementPortalPreference call"
       }
     ],
     "GetInvoicePDF": [
@@ -145,6 +225,78 @@
         },
         "id": "example-2",
         "title": "GetInvoiceUnit as of specified time"
+      }
+    ],
+    "GetProcurementPortalPreference": [
+      {
+        "input": {
+          "ProcurementPortalPreferenceArn": "arn:aws:invoicing::111111111111:procurement-portal-preference/a34fd666-7810-4414-9360-aaa4bcab0abd"
+        },
+        "output": {
+          "ProcurementPortalPreference": {
+            "AwsAccountId": "111111111111",
+            "BuyerDomain": "NetworkID",
+            "BuyerIdentifier": "BuyerId_1",
+            "Contacts": [
+              {
+                "Email": "example-placeholder@amazon.com",
+                "Name": "John Doe"
+              }
+            ],
+            "CreateDate": 1750375489.242,
+            "EinvoiceDeliveryEnabled": true,
+            "EinvoiceDeliveryPreference": {
+              "ConnectionTestingMethod": "PROD_ENV_DOLLAR_TEST",
+              "EinvoiceDeliveryActivationDate": 1750279280.091,
+              "EinvoiceDeliveryAttachmentTypes": [
+                "INVOICE_PDF"
+              ],
+              "EinvoiceDeliveryDocumentTypes": [
+                "AWS_CLOUD_INVOICE"
+              ],
+              "Protocol": "CXML",
+              "PurchaseOrderDataSources": [
+                {
+                  "EinvoiceDeliveryDocumentType": "AWS_CLOUD_INVOICE",
+                  "PurchaseOrderDataSourceType": "ASSOCIATED_PURCHASE_ORDER_REQUIRED"
+                }
+              ]
+            },
+            "EinvoiceDeliveryPreferenceStatus": "PENDING_VERIFICATION",
+            "LastUpdateDate": 1750375489.242,
+            "ProcurementPortalInstanceEndpoint": "https://www.placeholder-domain.test",
+            "ProcurementPortalName": "COUPA",
+            "ProcurementPortalPreferenceArn": "arn:aws:invoicing::111111111111:procurement-portal-preference/a34fd666-7810-4414-9360-aaa4bcab0abd",
+            "ProcurementPortalSharedSecret": "Coupa_Secret",
+            "PurchaseOrderRetrievalEnabled": true,
+            "PurchaseOrderRetrievalEndpoint": "https://www.placeholder-domain.test",
+            "PurchaseOrderRetrievalPreferenceStatus": "PENDING_VERIFICATION",
+            "Selector": {
+              "InvoiceUnitArns": [
+                "arn:aws:invoicing::111111111111:invoice-unit/12345678",
+                "arn:aws:invoicing::111111111111:invoice-unit/12345679"
+              ],
+              "SellerOfRecords": [
+                "AWS_INC",
+                "AWS_EUROPE"
+              ]
+            },
+            "SupplierDomain": "NetworkID",
+            "SupplierIdentifier": "SupplierId_1",
+            "TestEnvPreference": {
+              "BuyerDomain": "NetworkID",
+              "BuyerIdentifier": "BuyerId_1_Test",
+              "ProcurementPortalInstanceEndpoint": "https://www.placeholder-domain.test",
+              "ProcurementPortalSharedSecret": "Coupa_Secret_test",
+              "PurchaseOrderRetrievalEndpoint": "https://www.placeholder-domain.test",
+              "SupplierDomain": "NetworkID",
+              "SupplierIdentifier": "SupplierId_1_Test"
+            },
+            "Version": 1
+          }
+        },
+        "id": "example-1",
+        "title": "GetProcurementPortalPreference for Coupa pref"
       }
     ],
     "ListInvoiceSummaries": [
@@ -762,6 +914,106 @@
         "title": "ListInvoiceUnits with pagination - second page"
       }
     ],
+    "ListProcurementPortalPreferences": [
+      {
+        "input": {
+          "MaxResults": 2
+        },
+        "output": {
+          "NextToken": "AAQA-EFRSURBSGpkVFU5MVNUVWNXTzNoUEptWEFGcEt0QzBBeHZaZmRUU2w3L0hRQmdDeEx3R0NuSnF2NjM5NGNmM1I5KzNIQzNnT0FBQUFmakI4QmdrcWhraUc5dzBCQndhZ2J6QnRBZ0VBTUdnR0NTcUdTSWIzRFFFSEFUQWVCZ2xnaGtnQlpRTUVBUzR3RVFRTVhPSnhEQ04rWk1idnAyb1RBZ0VRZ0RzbFJBeFlXMk9RRGFtTU8vdFc0MUJlTFFNU2hPR1E5bDM3MHcyS05mSjIzbU93MG1aVXk1MzBiWWVsZ3FaZzhjMndhTjZtNzNYTWd3bnpsZz09E8JRNUKK1r2-b9X8Qd1RAOSKHZOCy-UCpOQjJdSfZHcUefTH0YmlIW8ykllegYUWB1D1NjDjC3u2z2e4cLBTmQhrQewSBW-I_i8okXup9RWN60eMOnB6dl5jUiinJ-FjY_jGjbOkiWuJhXteDKP16RfVRW7mxp2-v1-B8gPPxGLolXHBHrb8gt18P8eWs8RcvRRmmbGUy5qa6nFH5WiCq9Bx2fTUTy9Iz_xZooNuiqC6y119EGQqJ9WsWsIUa8MbWHFXtn9-Uriz7osYocbFm1Evv_NCn3YK-wFy9rUlUskcM2n9AqvPYhOyf0reV7E8cErZFR_Ev8l008QcxQfaqK19-gKR9clddwoDzMVfVuyiW3vbzUXz7fzQLr-UMLCGdE3yHf1oz2SEbcxhHZ2eh7-9wEYDv0v92wXg7m7xaYvaKuVBPKqBaq66GdpS1HTfakkjRGvsoBStXWVgPahISglPO__-Ym5NnXOw2wENBVXZ7RsVe6nJ1X15bB1RDkqLV8xJD0L83snuCEBtM9pyUUQOPvfGHzC4yRusMgBav_y1kq0wjqsbJV5EhHV_SIwf-WZa_A==",
+          "ProcurementPortalPreferences": [
+            {
+              "AwsAccountId": "111111111111",
+              "BuyerDomain": "NetworkID",
+              "BuyerIdentifier": "BuyerId_2",
+              "CreateDate": 1750375489.242,
+              "EinvoiceDeliveryEnabled": true,
+              "EinvoiceDeliveryPreferenceStatus": "PENDING_VERIFICATION",
+              "LastUpdateDate": 1750375489.242,
+              "ProcurementPortalName": "COUPA",
+              "ProcurementPortalPreferenceArn": "arn:aws:invoicing::111111111111:procurement-portal-preference/1c7c6d71-fbc1-45bd-a18c-40cb61810679",
+              "PurchaseOrderRetrievalEnabled": true,
+              "PurchaseOrderRetrievalPreferenceStatus": "PENDING_VERIFICATION",
+              "Selector": {
+                "InvoiceUnitArns": [
+                  "arn:aws:invoicing::111111111111:invoice-unit/12345679"
+                ],
+                "SellerOfRecords": [
+                  "AWS_INC"
+                ]
+              },
+              "SupplierDomain": "NetworkID",
+              "SupplierIdentifier": "SupplierId_1",
+              "Version": 1
+            },
+            {
+              "AwsAccountId": "111111111111",
+              "BuyerDomain": "NetworkID",
+              "BuyerIdentifier": "BuyerId_4",
+              "CreateDate": 1750375489.242,
+              "EinvoiceDeliveryEnabled": true,
+              "EinvoiceDeliveryPreferenceStatus": "PENDING_VERIFICATION",
+              "LastUpdateDate": 1750375489.242,
+              "ProcurementPortalName": "COUPA",
+              "ProcurementPortalPreferenceArn": "arn:aws:invoicing::111111111111:procurement-portal-preference/ae467ebd-ec8c-4089-b904-a7cd9e76f970",
+              "PurchaseOrderRetrievalEnabled": true,
+              "PurchaseOrderRetrievalPreferenceStatus": "PENDING_VERIFICATION",
+              "Selector": {
+                "InvoiceUnitArns": [
+                  "arn:aws:invoicing::111111111111:invoice-unit/12345678"
+                ],
+                "SellerOfRecords": [
+                  "AWS_INC"
+                ]
+              },
+              "SupplierDomain": "NetworkID",
+              "SupplierIdentifier": "SupplierId_1",
+              "Version": 1
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "ListProcurementPortalPreferences for Coupa prefs. First Call with following pages"
+      },
+      {
+        "input": {
+          "MaxResults": 2,
+          "NextToken": "AAQA-EFRSURBSGpkVFU5MVNUVWNXTzNoUEptWEFGcEt0QzBBeHZaZmRUU2w3L0hRQmdDeEx3R0NuSnF2NjM5NGNmM1I5KzNIQzNnT0FBQUFmakI4QmdrcWhraUc5dzBCQndhZ2J6QnRBZ0VBTUdnR0NTcUdTSWIzRFFFSEFUQWVCZ2xnaGtnQlpRTUVBUzR3RVFRTVhPSnhEQ04rWk1idnAyb1RBZ0VRZ0RzbFJBeFlXMk9RRGFtTU8vdFc0MUJlTFFNU2hPR1E5bDM3MHcyS05mSjIzbU93MG1aVXk1MzBiWWVsZ3FaZzhjMndhTjZtNzNYTWd3bnpsZz09E8JRNUKK1r2-b9X8Qd1RAOSKHZOCy-UCpOQjJdSfZHcUefTH0YmlIW8ykllegYUWB1D1NjDjC3u2z2e4cLBTmQhrQewSBW-I_i8okXup9RWN60eMOnB6dl5jUiinJ-FjY_jGjbOkiWuJhXteDKP16RfVRW7mxp2-v1-B8gPPxGLolXHBHrb8gt18P8eWs8RcvRRmmbGUy5qa6nFH5WiCq9Bx2fTUTy9Iz_xZooNuiqC6y119EGQqJ9WsWsIUa8MbWHFXtn9-Uriz7osYocbFm1Evv_NCn3YK-wFy9rUlUskcM2n9AqvPYhOyf0reV7E8cErZFR_Ev8l008QcxQfaqK19-gKR9clddwoDzMVfVuyiW3vbzUXz7fzQLr-UMLCGdE3yHf1oz2SEbcxhHZ2eh7-9wEYDv0v92wXg7m7xaYvaKuVBPKqBaq66GdpS1HTfakkjRGvsoBStXWVgPahISglPO__-Ym5NnXOw2wENBVXZ7RsVe6nJ1X15bB1RDkqLV8xJD0L83snuCEBtM9pyUUQOPvfGHzC4yRusMgBav_y1kq0wjqsbJV5EhHV_SIwf-WZa_A=="
+        },
+        "output": {
+          "ProcurementPortalPreferences": [
+            {
+              "AwsAccountId": "111111111111",
+              "BuyerDomain": "NetworkID",
+              "BuyerIdentifier": "BuyerId_1",
+              "CreateDate": 1750375489.242,
+              "EinvoiceDeliveryEnabled": true,
+              "EinvoiceDeliveryPreferenceStatus": "TEST_INITIALIZED",
+              "EinvoiceDeliveryPreferenceStatusReason": "test initialized example reason",
+              "LastUpdateDate": 1750375489.242,
+              "ProcurementPortalName": "COUPA",
+              "ProcurementPortalPreferenceArn": "arn:aws:invoicing::111111111111:procurement-portal-preference/f71dd02e-f855-4b13-b793-0fd25c0b3ecd",
+              "PurchaseOrderRetrievalEnabled": true,
+              "PurchaseOrderRetrievalPreferenceStatus": "TEST_INITIALIZED",
+              "PurchaseOrderRetrievalPreferenceStatusReason": "test initialized example reason",
+              "Selector": {
+                "InvoiceUnitArns": [
+                  "arn:aws:invoicing::111111111111:invoice-unit/12345678"
+                ],
+                "SellerOfRecords": [
+                  "AWS_INC"
+                ]
+              },
+              "SupplierDomain": "NetworkID",
+              "SupplierIdentifier": "SupplierId_1",
+              "Version": 3
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "ListProcurementPortalPreferences for Coupa prefs. Second Call with the last page"
+      }
+    ],
     "ListTagsForResource": [
       {
         "input": {
@@ -777,6 +1029,61 @@
         },
         "id": "example-1",
         "title": "ListTagsForResource"
+      }
+    ],
+    "PutProcurementPortalPreference": [
+      {
+        "input": {
+          "Contacts": [
+            {
+              "Email": "example-placeholder2@amazon.com",
+              "Name": "John Doe2"
+            }
+          ],
+          "EinvoiceDeliveryEnabled": true,
+          "EinvoiceDeliveryPreference": {
+            "ConnectionTestingMethod": "PROD_ENV_DOLLAR_TEST",
+            "EinvoiceDeliveryActivationDate": 1750279280.091,
+            "EinvoiceDeliveryAttachmentTypes": [
+              "INVOICE_PDF"
+            ],
+            "EinvoiceDeliveryDocumentTypes": [
+              "AWS_CLOUD_INVOICE"
+            ],
+            "Protocol": "CXML",
+            "PurchaseOrderDataSources": [
+              {
+                "EinvoiceDeliveryDocumentType": "AWS_CLOUD_INVOICE",
+                "PurchaseOrderDataSourceType": "ASSOCIATED_PURCHASE_ORDER_REQUIRED"
+              }
+            ]
+          },
+          "ProcurementPortalInstanceEndpoint": "https://www.placeholder-domain.test",
+          "ProcurementPortalPreferenceArn": "arn:aws:invoicing::111111111111:procurement-portal-preference/f71dd02e-f855-4b13-b793-0fd25c0b3ecd",
+          "ProcurementPortalSharedSecret": "Coupa_Secret_2",
+          "PurchaseOrderRetrievalEnabled": true,
+          "Selector": {
+            "InvoiceUnitArns": [
+              "arn:aws:invoicing::111111111111:invoice-unit/12345679"
+            ],
+            "SellerOfRecords": [
+              "AWS_INC"
+            ]
+          },
+          "TestEnvPreference": {
+            "BuyerDomain": "NetworkID",
+            "BuyerIdentifier": "BuyerId_1_Test",
+            "ProcurementPortalInstanceEndpoint": "https://www.placeholder-domain.test",
+            "ProcurementPortalSharedSecret": "Coupa_Secret_test_2",
+            "SupplierDomain": "NetworkID",
+            "SupplierIdentifier": "SupplierId_1_Test"
+          }
+        },
+        "output": {
+          "ProcurementPortalPreferenceArn": "arn:aws:invoicing::111111111111:procurement-portal-preference/f71dd02e-f855-4b13-b793-0fd25c0b3ecd"
+        },
+        "id": "example-1",
+        "title": "PutProcurementPortalPreference for Coupa pref"
       }
     ],
     "TagResource": [
@@ -837,6 +1144,22 @@
         },
         "id": "example-2",
         "title": "UpdateInvoiceUnit with specific fields"
+      }
+    ],
+    "UpdateProcurementPortalPreferenceStatus": [
+      {
+        "input": {
+          "EinvoiceDeliveryPreferenceStatus": "SUSPENDED",
+          "EinvoiceDeliveryPreferenceStatusReason": "suspended example reason",
+          "ProcurementPortalPreferenceArn": "arn:aws:invoicing::111111111111:procurement-portal-preference/f71dd02e-f855-4b13-b793-0fd25c0b3ecd",
+          "PurchaseOrderRetrievalPreferenceStatus": "SUSPENDED",
+          "PurchaseOrderRetrievalPreferenceStatusReason": "suspended example reason"
+        },
+        "output": {
+          "ProcurementPortalPreferenceArn": "arn:aws:invoicing::111111111111:procurement-portal-preference/f71dd02e-f855-4b13-b793-0fd25c0b3ecd"
+        },
+        "id": "example-1",
+        "title": "UpdateProcurementPortalPreference for EinvoiceDeliveryPreferenceStatus and PurchaseOrderRetrievalPreferenceStatus"
       }
     ]
   }

@@ -304,7 +304,6 @@ class AwsClientTest extends TestCase
     {
         $client = $this->createClient([]);
         $ref = new \ReflectionMethod($client, 'getSignatureProvider');
-        $ref->setAccessible(true);
         $provider = $ref->invoke($client);
         $this->assertIsCallable($provider);
     }
@@ -474,9 +473,7 @@ class AwsClientTest extends TestCase
         ]);
         $ref = new \ReflectionClass(AwsClient::class);
         $method = $ref->getMethod('loadAliases');
-        $method->setAccessible(true);
         $property = $ref->getProperty('aliases');
-        $property->setAccessible(true);
         $method->invokeArgs(
             $client,
             [__DIR__ . '/fixtures/aws_client_test/aliases.json']
@@ -499,7 +496,6 @@ class AwsClientTest extends TestCase
         ]);
         $ref = new \ReflectionClass(AwsClient::class);
         $method = $ref->getMethod('loadAliases');
-        $method->setAccessible(true);
         $method->invokeArgs(
             $client,
             [__DIR__ . '/fixtures/aws_client_test/aliases.json']
@@ -1155,5 +1151,18 @@ EOT
                 'present' => false
             ]
         ];
+    public function testSupportsNamedArgs()
+    {
+        $client = new S3Client([
+            'region' => 'us-east-2',
+            'handler' => function (CommandInterface $command, RequestInterface $request) {
+                $this->assertEquals('foo', $command['Bucket']);
+
+                return new Result();
+            }
+        ]);
+        $client->listObjects(args: [
+            'Bucket' => 'foo',
+        ]);
     }
 }

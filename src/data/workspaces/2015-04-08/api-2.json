@@ -1671,7 +1671,8 @@
         "ValidationError.InsufficientMemory",
         "ValidationError.UnsupportedOperatingSystem",
         "DeploymentError.InternalServerError",
-        "DeploymentError.WorkspaceUnreachable"
+        "DeploymentError.WorkspaceUnreachable",
+        "ValidationError.ApplicationOldVersionExists"
       ]
     },
     "AssociationState":{
@@ -1897,7 +1898,19 @@
         "GENERALPURPOSE_8XLARGE",
         "GRAPHICSPRO",
         "GRAPHICS_G4DN",
-        "GRAPHICSPRO_G4DN"
+        "GRAPHICSPRO_G4DN",
+        "GRAPHICS_G6_XLARGE",
+        "GRAPHICS_G6_2XLARGE",
+        "GRAPHICS_G6_4XLARGE",
+        "GRAPHICS_G6_8XLARGE",
+        "GRAPHICS_G6_16XLARGE",
+        "GRAPHICS_GR6_4XLARGE",
+        "GRAPHICS_GR6_8XLARGE",
+        "GRAPHICS_G6F_LARGE",
+        "GRAPHICS_G6F_XLARGE",
+        "GRAPHICS_G6F_2XLARGE",
+        "GRAPHICS_G6F_4XLARGE",
+        "GRAPHICS_GR6F_4XLARGE"
       ]
     },
     "ComputeList":{
@@ -2278,6 +2291,16 @@
       "enum":[
         "PENDING",
         "IN_PROGRESS",
+        "PROCESSING_SOURCE_IMAGE",
+        "IMAGE_TESTING_START",
+        "UPDATING_OPERATING_SYSTEM",
+        "IMAGE_COMPATIBILITY_CHECKING",
+        "IMAGE_TESTING_GENERALIZATION",
+        "CREATING_TEST_INSTANCE",
+        "INSTALLING_COMPONENTS",
+        "GENERALIZING",
+        "VALIDATING",
+        "PUBLISHING",
         "COMPLETED",
         "ERROR"
       ]
@@ -2688,6 +2711,8 @@
         "ImageId":{"shape":"WorkspaceImageId"},
         "InfrastructureConfigurationArn":{"shape":"InfrastructureConfigurationArn"},
         "State":{"shape":"CustomWorkspaceImageImportState"},
+        "StateMessage":{"shape":"WorkflowStateMessage"},
+        "ProgressPercentage":{"shape":"Percentage"},
         "Created":{"shape":"Timestamp"},
         "LastUpdatedTime":{"shape":"Timestamp"},
         "ImageSource":{"shape":"ImageSourceIdentifier"},
@@ -3210,7 +3235,8 @@
       "type":"string",
       "enum":[
         "BASE",
-        "GRAPHICS_G4DN"
+        "GRAPHICS_G4DN",
+        "GRAPHICS_G6"
       ]
     },
     "ImageErrorMessage":{
@@ -3835,6 +3861,11 @@
     "PendingCreateStandbyWorkspacesRequestList":{
       "type":"list",
       "member":{"shape":"PendingCreateStandbyWorkspacesRequest"}
+    },
+    "Percentage":{
+      "type":"integer",
+      "max":100,
+      "min":0
     },
     "Platform":{
       "type":"string",
@@ -4663,6 +4694,11 @@
     "WorkSpaceAssociatedResourceTypeList":{
       "type":"list",
       "member":{"shape":"WorkSpaceAssociatedResourceType"}
+    },
+    "WorkflowStateMessage":{
+      "type":"string",
+      "max":1000,
+      "min":1
     },
     "Workspace":{
       "type":"structure",

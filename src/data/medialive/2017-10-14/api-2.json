@@ -6080,6 +6080,14 @@
         "ChannelEngineVersion": {
           "shape": "ChannelEngineVersionResponse",
           "locationName": "channelEngineVersion"
+        },
+        "LinkedChannelSettings": {
+          "shape": "DescribeLinkedChannelSettings",
+          "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -6206,6 +6214,14 @@
         "UsedChannelEngineVersions": {
           "shape": "__listOfChannelEngineVersionResponse",
           "locationName": "usedChannelEngineVersions"
+        },
+        "LinkedChannelSettings": {
+          "shape": "DescribeLinkedChannelSettings",
+          "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -6354,6 +6370,14 @@
         "DryRun": {
           "shape": "__boolean",
           "locationName": "dryRun"
+        },
+        "LinkedChannelSettings": {
+          "shape": "LinkedChannelSettings",
+          "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -6429,6 +6453,14 @@
         "DryRun": {
           "shape": "__boolean",
           "locationName": "dryRun"
+        },
+        "LinkedChannelSettings": {
+          "shape": "LinkedChannelSettings",
+          "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -6517,6 +6549,10 @@
         "SdiSources": {
           "shape": "InputSdiSources",
           "locationName": "sdiSources"
+        },
+        "RouterSettings": {
+          "shape": "RouterSettings",
+          "locationName": "routerSettings"
         }
       }
     },
@@ -6587,6 +6623,10 @@
         "SdiSources": {
           "shape": "InputSdiSources",
           "locationName": "sdiSources"
+        },
+        "RouterSettings": {
+          "shape": "RouterSettings",
+          "locationName": "routerSettings"
         }
       }
     },
@@ -6957,6 +6997,14 @@
         "ChannelEngineVersion": {
           "shape": "ChannelEngineVersionResponse",
           "locationName": "channelEngineVersion"
+        },
+        "LinkedChannelSettings": {
+          "shape": "DescribeLinkedChannelSettings",
+          "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -7343,6 +7391,14 @@
         "ChannelEngineVersion": {
           "shape": "ChannelEngineVersionResponse",
           "locationName": "channelEngineVersion"
+        },
+        "LinkedChannelSettings": {
+          "shape": "DescribeLinkedChannelSettings",
+          "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -7576,6 +7632,10 @@
         "SdiSources": {
           "shape": "InputSdiSources",
           "locationName": "sdiSources"
+        },
+        "RouterSettings": {
+          "shape": "RouterInputSettings",
+          "locationName": "routerSettings"
         }
       }
     },
@@ -7618,6 +7678,10 @@
         "WhitelistRules": {
           "shape": "__listOfInputWhitelistRule",
           "locationName": "whitelistRules"
+        },
+        "Channels": {
+          "shape": "__listOf__string",
+          "locationName": "channels"
         }
       }
     },
@@ -9429,6 +9493,10 @@
         "Rec709Settings": {
           "shape": "Rec709Settings",
           "locationName": "rec709Settings"
+        },
+        "Hlg2020Settings": {
+          "shape": "Hlg2020Settings",
+          "locationName": "hlg2020Settings"
         }
       }
     },
@@ -10440,6 +10508,10 @@
         "SdiSources": {
           "shape": "InputSdiSources",
           "locationName": "sdiSources"
+        },
+        "RouterSettings": {
+          "shape": "RouterInputSettings",
+          "locationName": "routerSettings"
         }
       }
     },
@@ -11200,6 +11272,10 @@
         "WhitelistRules": {
           "shape": "__listOfInputWhitelistRule",
           "locationName": "whitelistRules"
+        },
+        "Channels": {
+          "shape": "__listOf__string",
+          "locationName": "channels"
         }
       }
     },
@@ -11392,7 +11468,9 @@
         "SRT_CALLER",
         "MULTICAST",
         "SMPTE_2110_RECEIVER_GROUP",
-        "SDI"
+        "SDI",
+        "MEDIACONNECT_ROUTER",
+        "SRT_LISTENER"
       ]
     },
     "InputVpcRequest": {
@@ -12556,6 +12634,14 @@
         "ChannelName": {
           "shape": "__stringMin1",
           "locationName": "channelName"
+        },
+        "ChannelEndpointId": {
+          "shape": "__stringMin1",
+          "locationName": "channelEndpointId"
+        },
+        "MediaPackageRegionName": {
+          "shape": "__stringMin1",
+          "locationName": "mediaPackageRegionName"
         }
       }
     },
@@ -13661,6 +13747,10 @@
         "PipelineLockingSettings": {
           "shape": "PipelineLockingSettings",
           "locationName": "pipelineLockingSettings"
+        },
+        "DisabledLockingSettings": {
+          "shape": "DisabledLockingSettings",
+          "locationName": "disabledLockingSettings"
         }
       }
     },
@@ -13760,7 +13850,16 @@
     },
     "PipelineLockingSettings": {
       "type": "structure",
-      "members": {}
+      "members": {
+        "PipelineLockingMethod": {
+          "shape": "PipelineLockingMethod",
+          "locationName": "pipelineLockingMethod"
+        },
+        "CustomEpoch": {
+          "shape": "__string",
+          "locationName": "customEpoch"
+        }
+      }
     },
     "PipelinePauseStateSettings": {
       "type": "structure",
@@ -14917,6 +15016,14 @@
         "ChannelEngineVersion": {
           "shape": "ChannelEngineVersionResponse",
           "locationName": "channelEngineVersion"
+        },
+        "LinkedChannelSettings": {
+          "shape": "DescribeLinkedChannelSettings",
+          "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -15266,6 +15373,14 @@
         "ChannelEngineVersion": {
           "shape": "ChannelEngineVersionResponse",
           "locationName": "channelEngineVersion"
+        },
+        "LinkedChannelSettings": {
+          "shape": "DescribeLinkedChannelSettings",
+          "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -15834,6 +15949,14 @@
         "AnywhereSettings": {
           "shape": "AnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "LinkedChannelSettings": {
+          "shape": "LinkedChannelSettings",
+          "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -15939,6 +16062,14 @@
         "AnywhereSettings": {
           "shape": "AnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "LinkedChannelSettings": {
+          "shape": "LinkedChannelSettings",
+          "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       },
       "required": [
@@ -16009,6 +16140,10 @@
         "SdiSources": {
           "shape": "InputSdiSources",
           "locationName": "sdiSources"
+        },
+        "SpecialRouterSettings": {
+          "shape": "SpecialRouterSettings",
+          "locationName": "specialRouterSettings"
         }
       }
     },
@@ -16182,6 +16317,10 @@
         "SdiSources": {
           "shape": "InputSdiSources",
           "locationName": "sdiSources"
+        },
+        "SpecialRouterSettings": {
+          "shape": "SpecialRouterSettings",
+          "locationName": "specialRouterSettings"
         }
       },
       "required": [
@@ -17451,6 +17590,14 @@
         "ChannelEngineVersion": {
           "shape": "ChannelEngineVersionResponse",
           "locationName": "channelEngineVersion"
+        },
+        "LinkedChannelSettings": {
+          "shape": "DescribeLinkedChannelSettings",
+          "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -21535,6 +21682,10 @@
         "SrtCallerSources": {
           "shape": "__listOfSrtCallerSource",
           "locationName": "srtCallerSources"
+        },
+        "SrtListenerSettings": {
+          "shape": "SrtListenerSettings",
+          "locationName": "srtListenerSettings"
         }
       }
     },
@@ -21544,6 +21695,10 @@
         "SrtCallerSources": {
           "shape": "__listOfSrtCallerSourceRequest",
           "locationName": "srtCallerSources"
+        },
+        "SrtListenerSettings": {
+          "shape": "SrtListenerSettingsRequest",
+          "locationName": "srtListenerSettings"
         }
       }
     },
@@ -21729,6 +21884,22 @@
         "MinBitrate": {
           "shape": "__integerMin0Max8000000",
           "locationName": "minBitrate"
+        },
+        "SpatialAq": {
+          "shape": "Av1SpatialAq",
+          "locationName": "spatialAq"
+        },
+        "TemporalAq": {
+          "shape": "Av1TemporalAq",
+          "locationName": "temporalAq"
+        },
+        "TimecodeInsertion": {
+          "shape": "Av1TimecodeInsertionBehavior",
+          "locationName": "timecodeInsertion"
+        },
+        "BitDepth": {
+          "shape": "Av1BitDepth",
+          "locationName": "bitDepth"
         }
       },
       "required": [
@@ -23299,6 +23470,10 @@
         "PhysicalInterfaceName": {
           "shape": "__string",
           "locationName": "physicalInterfaceName"
+        },
+        "PhysicalInterfaceIpAddresses": {
+          "shape": "__listOf__string",
+          "locationName": "physicalInterfaceIpAddresses"
         }
       }
     },
@@ -23413,6 +23588,14 @@
         "Url": {
           "shape": "__string",
           "locationName": "url"
+        },
+        "ConnectionMode": {
+          "shape": "ConnectionMode",
+          "locationName": "connectionMode"
+        },
+        "ListenerPort": {
+          "shape": "__integerMin1Max65535",
+          "locationName": "listenerPort"
         }
       }
     },
@@ -24683,6 +24866,10 @@
         "TimedMetadataPassthrough": {
           "shape": "CmafTimedMetadataPassthrough",
           "locationName": "timedMetadataPassthrough"
+        },
+        "AdditionalDestinations": {
+          "shape": "__listOfMediaPackageAdditionalDestinations",
+          "locationName": "additionalDestinations"
         }
       }
     },
@@ -25012,6 +25199,322 @@
       "member": {
         "shape": "MultiplexAlert"
       }
+    },
+    "Av1SpatialAq": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "Av1TemporalAq": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "Hlg2020Settings": {
+      "type": "structure",
+      "members": {}
+    },
+    "RouterDestination": {
+      "type": "structure",
+      "members": {
+        "AvailabilityZoneName": {
+          "shape": "__string",
+          "locationName": "availabilityZoneName"
+        },
+        "RouterOutputArn": {
+          "shape": "__string",
+          "locationName": "routerOutputArn"
+        }
+      }
+    },
+    "RouterDestinationSettings": {
+      "type": "structure",
+      "members": {
+        "AvailabilityZoneName": {
+          "shape": "__string",
+          "locationName": "availabilityZoneName"
+        }
+      },
+      "required": [
+        "AvailabilityZoneName"
+      ]
+    },
+    "RouterEncryptionType": {
+      "type": "string",
+      "enum": [
+        "AUTOMATIC",
+        "SECRETS_MANAGER"
+      ]
+    },
+    "RouterInputSettings": {
+      "type": "structure",
+      "members": {
+        "Destinations": {
+          "shape": "__listOfRouterDestination",
+          "locationName": "destinations"
+        },
+        "EncryptionType": {
+          "shape": "RouterEncryptionType",
+          "locationName": "encryptionType"
+        },
+        "SecretArn": {
+          "shape": "__string",
+          "locationName": "secretArn"
+        }
+      }
+    },
+    "RouterSettings": {
+      "type": "structure",
+      "members": {
+        "Destinations": {
+          "shape": "__listOfRouterDestinationSettings",
+          "locationName": "destinations"
+        },
+        "EncryptionType": {
+          "shape": "RouterEncryptionType",
+          "locationName": "encryptionType"
+        },
+        "SecretArn": {
+          "shape": "__string",
+          "locationName": "secretArn"
+        }
+      }
+    },
+    "SpecialRouterSettings": {
+      "type": "structure",
+      "members": {
+        "RouterArn": {
+          "shape": "__string",
+          "locationName": "routerArn"
+        }
+      }
+    },
+    "__listOfRouterDestination": {
+      "type": "list",
+      "member": {
+        "shape": "RouterDestination"
+      }
+    },
+    "__listOfRouterDestinationSettings": {
+      "type": "list",
+      "member": {
+        "shape": "RouterDestinationSettings"
+      }
+    },
+    "DescribeFollowerChannelSettings": {
+      "type": "structure",
+      "members": {
+        "LinkedChannelType": {
+          "shape": "LinkedChannelType",
+          "locationName": "linkedChannelType"
+        },
+        "PrimaryChannelArn": {
+          "shape": "__string",
+          "locationName": "primaryChannelArn"
+        }
+      }
+    },
+    "DescribeLinkedChannelSettings": {
+      "type": "structure",
+      "members": {
+        "FollowerChannelSettings": {
+          "shape": "DescribeFollowerChannelSettings",
+          "locationName": "followerChannelSettings"
+        },
+        "PrimaryChannelSettings": {
+          "shape": "DescribePrimaryChannelSettings",
+          "locationName": "primaryChannelSettings"
+        }
+      }
+    },
+    "DescribePrimaryChannelSettings": {
+      "type": "structure",
+      "members": {
+        "FollowingChannelArns": {
+          "shape": "__listOf__string",
+          "locationName": "followingChannelArns"
+        },
+        "LinkedChannelType": {
+          "shape": "LinkedChannelType",
+          "locationName": "linkedChannelType"
+        }
+      }
+    },
+    "FollowerChannelSettings": {
+      "type": "structure",
+      "members": {
+        "LinkedChannelType": {
+          "shape": "LinkedChannelType",
+          "locationName": "linkedChannelType"
+        },
+        "PrimaryChannelArn": {
+          "shape": "__string",
+          "locationName": "primaryChannelArn"
+        }
+      }
+    },
+    "LinkedChannelSettings": {
+      "type": "structure",
+      "members": {
+        "FollowerChannelSettings": {
+          "shape": "FollowerChannelSettings",
+          "locationName": "followerChannelSettings"
+        },
+        "PrimaryChannelSettings": {
+          "shape": "PrimaryChannelSettings",
+          "locationName": "primaryChannelSettings"
+        }
+      }
+    },
+    "LinkedChannelType": {
+      "type": "string",
+      "enum": [
+        "FOLLOWING_CHANNEL",
+        "PRIMARY_CHANNEL"
+      ]
+    },
+    "PipelineLockingMethod": {
+      "type": "string",
+      "enum": [
+        "SOURCE_TIMECODE",
+        "VIDEO_ALIGNMENT"
+      ]
+    },
+    "PrimaryChannelSettings": {
+      "type": "structure",
+      "members": {
+        "LinkedChannelType": {
+          "shape": "LinkedChannelType",
+          "locationName": "linkedChannelType"
+        }
+      }
+    },
+    "MediaPackageAdditionalDestinations": {
+      "type": "structure",
+      "members": {
+        "Destination": {
+          "shape": "OutputLocationRef",
+          "locationName": "destination"
+        }
+      },
+      "required": [
+        "Destination"
+      ]
+    },
+    "__listOfMediaPackageAdditionalDestinations": {
+      "type": "list",
+      "member": {
+        "shape": "MediaPackageAdditionalDestinations"
+      }
+    },
+    "Av1TimecodeInsertionBehavior": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "METADATA_OBU"
+      ]
+    },
+    "DisabledLockingSettings": {
+      "type": "structure",
+      "members": {
+        "CustomEpoch": {
+          "shape": "__string",
+          "locationName": "customEpoch"
+        }
+      }
+    },
+    "ConnectionMode": {
+      "type": "string",
+      "enum": [
+        "CALLER",
+        "LISTENER"
+      ]
+    },
+    "SrtListenerDecryption": {
+      "type": "structure",
+      "members": {
+        "Algorithm": {
+          "shape": "Algorithm",
+          "locationName": "algorithm"
+        },
+        "PassphraseSecretArn": {
+          "shape": "__string",
+          "locationName": "passphraseSecretArn"
+        }
+      },
+      "required": [
+        "PassphraseSecretArn",
+        "Algorithm"
+      ]
+    },
+    "SrtListenerDecryptionRequest": {
+      "type": "structure",
+      "members": {
+        "Algorithm": {
+          "shape": "Algorithm",
+          "locationName": "algorithm"
+        },
+        "PassphraseSecretArn": {
+          "shape": "__string",
+          "locationName": "passphraseSecretArn"
+        }
+      },
+      "required": [
+        "PassphraseSecretArn",
+        "Algorithm"
+      ]
+    },
+    "SrtListenerSettings": {
+      "type": "structure",
+      "members": {
+        "Decryption": {
+          "shape": "SrtListenerDecryption",
+          "locationName": "decryption"
+        },
+        "MinimumLatency": {
+          "shape": "__integer",
+          "locationName": "minimumLatency"
+        },
+        "StreamId": {
+          "shape": "__string",
+          "locationName": "streamId"
+        }
+      }
+    },
+    "SrtListenerSettingsRequest": {
+      "type": "structure",
+      "members": {
+        "Decryption": {
+          "shape": "SrtListenerDecryptionRequest",
+          "locationName": "decryption"
+        },
+        "MinimumLatency": {
+          "shape": "__integer",
+          "locationName": "minimumLatency"
+        },
+        "StreamId": {
+          "shape": "__string",
+          "locationName": "streamId"
+        }
+      },
+      "required": [
+        "MinimumLatency",
+        "Decryption"
+      ]
+    },
+    "__integerMin1Max65535": {
+      "type": "integer"
+    },
+    "Av1BitDepth": {
+      "type": "string",
+      "enum": [
+        "DEPTH_10",
+        "DEPTH_8"
+      ]
     }
   }
 }

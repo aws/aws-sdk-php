@@ -528,6 +528,39 @@
         "title": "To get information about a policy"
       }
     ],
+    "DescribeResponsibilityTransfer": [
+      {
+        "input": {
+          "Id": "rt-exampletransferid222"
+        },
+        "output": {
+          "ResponsibilityTransfer": {
+            "Arn": "arn:aws:organizations::222222222222:transfer/o-exampleorgid222/billing/outbound/rt-exampletransferid222",
+            "EndTimestamp": "2026-01-31T23:59:59+00:00",
+            "Id": "rt-exampletransferid222",
+            "Name": "sample transfer",
+            "Source": {
+              "ManagementAccountEmail": "alice@example.com",
+              "ManagementAccountId": "222222222222"
+            },
+            "StartTimestamp": "2026-01-01T00:00:00+00:00",
+            "Status": "WITHDRAWN",
+            "Target": {
+              "ManagementAccountEmail": "juan@example.com",
+              "ManagementAccountId": "333333333333"
+            },
+            "Type": "BILLING"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example shows how to request information about a transfer:/n/n",
+        "id": "to-get-information-about-a-transfer",
+        "title": "To get information about a transfer"
+      }
+    ],
     "DetachPolicy": [
       {
         "input": {
@@ -688,6 +721,85 @@
         "description": "The following example shows the admin of the master account owned by bill@example.com inviting the account owned by juan@example.com to join an organization.",
         "id": "to-invite-an-account-to-join-an-organization-1472508594110",
         "title": "To invite an account to join an organization"
+      }
+    ],
+    "InviteOrganizationToTransferResponsibility": [
+      {
+        "input": {
+          "Notes": "transfer notes",
+          "SourceName": "transfer name",
+          "StartTimestamp": "1767225600",
+          "Target": {
+            "Id": "juan@example.com",
+            "Type": "EMAIL"
+          },
+          "Type": "BILLING"
+        },
+        "output": {
+          "Handshake": {
+            "Action": "TRANSFER_RESPONSIBILITY",
+            "Arn": "arn:aws:organizations::111111111111:handshake/o-exampleorgid/transfer_responsibility/h-examplehandshakeid111",
+            "ExpirationTimestamp": "2025-12-31T00:00:00+00:00",
+            "Id": "h-examplehandshakeid111",
+            "Parties": [
+              {
+                "Id": "o-exampleorgid",
+                "Type": "ORGANIZATION"
+              },
+              {
+                "Id": "juan@example.com",
+                "Type": "EMAIL"
+              }
+            ],
+            "RequestedTimestamp": "2025-10-21T04:27:19+00:00",
+            "Resources": [
+              {
+                "Resources": [
+                  {
+                    "Type": "TRANSFER_START_TIMESTAMP",
+                    "Value": "1767225600"
+                  },
+                  {
+                    "Type": "TRANSFER_TYPE",
+                    "Value": "BILLING"
+                  }
+                ],
+                "Type": "RESPONSIBILITY_TRANSFER",
+                "Value": "rt-exampletransferid111"
+              },
+              {
+                "Resources": [
+                  {
+                    "Type": "MANAGEMENT_EMAIL",
+                    "Value": "diego@example.com"
+                  },
+                  {
+                    "Type": "MANAGEMENT_NAME",
+                    "Value": "Org management account"
+                  },
+                  {
+                    "Type": "MANAGEMENT_ACCOUNT",
+                    "Value": "&ExampleAccountId3;"
+                  }
+                ],
+                "Type": "ORGANIZATION",
+                "Value": "o-exampleorgid"
+              },
+              {
+                "Type": "EMAIL",
+                "Value": "juan@example.com"
+              }
+            ],
+            "State": "REQUESTED"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example shows the management account owned by diego@example.com inviting the management account owned by juan@example.com to transfer responsibility.",
+        "id": "to-invite-an-organization-to-transfer-responsibility",
+        "title": "To invite an organization to transfer responsibility"
       }
     ],
     "LeaveOrganization": [
@@ -1102,6 +1214,39 @@
         "title": "To retrieve a list of the handshakes associated with an organization"
       }
     ],
+    "ListInboundResponsibilityTransfers": [
+      {
+        "input": {
+          "Type": "BILLING"
+        },
+        "output": {
+          "ResponsibilityTransfers": [
+            {
+              "Arn": "arn:aws:organizations::222222222222:transfer/o-exampleorgid/billing/inbound/rt-exampletransferid222",
+              "EndTimestamp": "2026-01-31T23:59:59+00:00",
+              "Id": "rt-exampletransferid222",
+              "Name": "transfer name",
+              "Source": {
+                "ManagementAccountId": "222222222222"
+              },
+              "StartTimestamp": "2026-01-01T00:00:00+00:00",
+              "Status": "WITHDRAWN",
+              "Target": {
+                "ManagementAccountId": "333333333333"
+              },
+              "Type": "BILLING"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example shows how to get a list of all inbound responsibility transfers that are associated with the account of the credentials that were used to call the operation:",
+        "id": "to-get-a-list-of-all-inbound-responsibility-transfers",
+        "title": "To get a list of all inbound responsibility transfers"
+      }
+    ],
     "ListOrganizationalUnitsForParent": [
       {
         "input": {
@@ -1128,6 +1273,39 @@
         "description": "The following example shows how to get a list of OUs in a specified root:/n/n",
         "id": "to-retrieve-a-list-of-all-of-the-OUs-in-a-parent-container",
         "title": "To retrieve a list of all of the child OUs in a parent root or OU"
+      }
+    ],
+    "ListOutboundResponsibilityTransfers": [
+      {
+        "input": {
+          "Type": "BILLING"
+        },
+        "output": {
+          "ResponsibilityTransfers": [
+            {
+              "Arn": "arn:aws:organizations::222222222222:transfer/o-exampleorgid222/billing/outbound/rt-exampletransferid222",
+              "EndTimestamp": "2026-01-31T23:59:59+00:00",
+              "Id": "rt-exampletransferid222",
+              "Name": "transfer name",
+              "Source": {
+                "ManagementAccountId": "222222222222"
+              },
+              "StartTimestamp": "2026-01-01T00:00:00+00:00",
+              "Status": "WITHDRAWN",
+              "Target": {
+                "ManagementAccountId": "333333333333"
+              },
+              "Type": "BILLING"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example shows how to get a list of all outbound responsibility transfers that are associated with the account of the credentials that were used to call the operation:",
+        "id": "to-get-a-list-of-all-outbound-responsibility-transfers",
+        "title": "To get a list of all outbound responsibility transfers"
       }
     ],
     "ListParents": [
@@ -1314,6 +1492,38 @@
         "title": "To remove an account from an organization as the master account"
       }
     ],
+    "TerminateResponsibilityTransfer": [
+      {
+        "input": {
+          "EndTimestamp": "1769903999",
+          "Id": "rt-exampletransferid222"
+        },
+        "output": {
+          "ResponsibilityTransfer": {
+            "Arn": "arn:aws:organizations::222222222222:transfer/o-exampleorgid222/billing/outbound/rt-exampletransferid222",
+            "EndTimestamp": "2026-01-31T23:59:59+00:00",
+            "Id": "rt-exampletransferid222",
+            "Name": "transfer name",
+            "Source": {
+              "ManagementAccountId": "222222222222"
+            },
+            "StartTimestamp": "2026-01-01T00:00:00+00:00",
+            "Status": "WITHDRAWN",
+            "Target": {
+              "ManagementAccountId": "333333333333"
+            },
+            "Type": "BILLING"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example shows how to terminate a transfer:/n/n",
+        "id": "to-terminate-a-transfer",
+        "title": "To terminate a transfer"
+      }
+    ],
     "UpdateOrganizationalUnit": [
       {
         "input": {
@@ -1389,6 +1599,38 @@
         "description": "The following example shows how to replace the JSON text of the SCP from the preceding example with a new JSON policy text string that allows S3 actions instead of EC2 actions:/n/n",
         "id": "to-update-the-content-of-a-policy",
         "title": "To update the content of a policy"
+      }
+    ],
+    "UpdateResponsibilityTransfer": [
+      {
+        "input": {
+          "Id": "rt-exampletransferid222",
+          "Name": "new name"
+        },
+        "output": {
+          "ResponsibilityTransfer": {
+            "Arn": "arn:aws:organizations::222222222222:transfer/o-exampleorgid222/billing/outbound/rt-exampletransferid222",
+            "EndTimestamp": "2026-01-31T23:59:59+00:00",
+            "Id": "rt-exampletransferid222",
+            "Name": "new name",
+            "Source": {
+              "ManagementAccountId": "222222222222"
+            },
+            "StartTimestamp": "2026-01-01T00:00:00+00:00",
+            "Status": "WITHDRAWN",
+            "Target": {
+              "ManagementAccountId": "333333333333"
+            },
+            "Type": "BILLING"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example shows how to rename a transfer. The output confirms the new name:/n/n",
+        "id": "to-rename-a-transfer",
+        "title": "To rename a transfer"
       }
     ]
   }

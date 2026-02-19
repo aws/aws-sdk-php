@@ -1,4 +1,36 @@
 {
   "version": "1.0",
-  "examples": {}
+  "examples": {
+    "ListRoute53HealthChecksInRegion": [
+      {
+        "input": {
+          "arn": "arn:aws:arc-region-switch::123456789012:plan/example:000000",
+          "hostedZoneId": "Z0123456789ABCDEFGHI",
+          "maxResults": 10,
+          "nextToken": "eyJNYXJrZXIiOiBudWxsLCAiYm90b190cnVuY2F0ZV9hbW91bnQiOiAxfQ",
+          "recordName": "my.record.name"
+        },
+        "output": {
+          "healthChecks": [
+            {
+              "healthCheckId": "01234567-8901-abcd-efgh-ijklmnop0123",
+              "hostedZoneId": "Z0123456789ABCDEFGHI",
+              "recordName": "my.record.name",
+              "region": "us-west-2",
+              "status": "healthy"
+            },
+            {
+              "healthCheckId": "zyxwvuts-rqpo-9876-5432-10nmlkji0123",
+              "hostedZoneId": "Z0123456789ABCDEFGHI",
+              "recordName": "my.record.name",
+              "region": "us-east-1",
+              "status": "healthy"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Example ListRoute53HealthChecksInRegion"
+      }
+    ]
+  }
 }

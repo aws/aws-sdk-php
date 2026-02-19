@@ -2,8 +2,8 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-08-18",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"grafana",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"Amazon Managed Grafana",
@@ -194,7 +194,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeWorkspaceAuthentication":{
       "name":"DescribeWorkspaceAuthentication",
@@ -212,7 +213,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeWorkspaceConfiguration":{
       "name":"DescribeWorkspaceConfiguration",
@@ -262,7 +264,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -279,7 +282,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListVersions":{
       "name":"ListVersions",
@@ -296,7 +300,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListWorkspaceServiceAccountTokens":{
       "name":"ListWorkspaceServiceAccountTokens",
@@ -314,7 +319,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListWorkspaceServiceAccounts":{
       "name":"ListWorkspaceServiceAccounts",
@@ -332,7 +338,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListWorkspaces":{
       "name":"ListWorkspaces",
@@ -347,7 +354,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -502,35 +510,35 @@
     "AssertionAttributes":{
       "type":"structure",
       "members":{
+        "name":{"shape":"AssertionAttribute"},
+        "login":{"shape":"AssertionAttribute"},
         "email":{"shape":"AssertionAttribute"},
         "groups":{"shape":"AssertionAttribute"},
-        "login":{"shape":"AssertionAttribute"},
-        "name":{"shape":"AssertionAttribute"},
-        "org":{"shape":"AssertionAttribute"},
-        "role":{"shape":"AssertionAttribute"}
+        "role":{"shape":"AssertionAttribute"},
+        "org":{"shape":"AssertionAttribute"}
       }
     },
     "AssociateLicenseRequest":{
       "type":"structure",
       "required":[
-        "licenseType",
-        "workspaceId"
+        "workspaceId",
+        "licenseType"
       ],
       "members":{
-        "grafanaToken":{
-          "shape":"GrafanaToken",
-          "location":"header",
-          "locationName":"Grafana-Token"
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
         },
         "licenseType":{
           "shape":"LicenseType",
           "location":"uri",
           "locationName":"licenseType"
         },
-        "workspaceId":{
-          "shape":"WorkspaceId",
-          "location":"uri",
-          "locationName":"workspaceId"
+        "grafanaToken":{
+          "shape":"GrafanaToken",
+          "location":"header",
+          "locationName":"Grafana-Token"
         }
       }
     },
@@ -545,9 +553,9 @@
       "type":"structure",
       "required":["providers"],
       "members":{
-        "awsSso":{"shape":"AwsSsoAuthentication"},
         "providers":{"shape":"AuthenticationProviders"},
-        "saml":{"shape":"SamlAuthentication"}
+        "saml":{"shape":"SamlAuthentication"},
+        "awsSso":{"shape":"AwsSsoAuthentication"}
       }
     },
     "AuthenticationProviderTypes":{
@@ -581,7 +589,7 @@
     },
     "ClientToken":{
       "type":"string",
-      "pattern":"^[!-~]{1,64}$"
+      "pattern":"[!-~]{1,64}"
     },
     "ConflictException":{
       "type":"structure",
@@ -629,13 +637,13 @@
     "CreateWorkspaceApiKeyResponse":{
       "type":"structure",
       "required":[
-        "key",
         "keyName",
+        "key",
         "workspaceId"
       ],
       "members":{
-        "key":{"shape":"ApiKeyToken"},
         "keyName":{"shape":"ApiKeyName"},
+        "key":{"shape":"ApiKeyToken"},
         "workspaceId":{"shape":"WorkspaceId"}
       }
     },
@@ -643,33 +651,34 @@
       "type":"structure",
       "required":[
         "accountAccessType",
-        "authenticationProviders",
-        "permissionType"
+        "permissionType",
+        "authenticationProviders"
       ],
       "members":{
         "accountAccessType":{"shape":"AccountAccessType"},
-        "authenticationProviders":{"shape":"AuthenticationProviders"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "configuration":{
-          "shape":"OverridableConfigurationJson",
-          "jsonvalue":true
-        },
-        "grafanaVersion":{"shape":"GrafanaVersion"},
-        "networkAccessControl":{"shape":"NetworkAccessConfiguration"},
         "organizationRoleName":{"shape":"OrganizationRoleName"},
         "permissionType":{"shape":"PermissionType"},
         "stackSetName":{"shape":"StackSetName"},
-        "tags":{"shape":"TagMap"},
-        "vpcConfiguration":{"shape":"VpcConfiguration"},
         "workspaceDataSources":{"shape":"DataSourceTypesList"},
         "workspaceDescription":{"shape":"Description"},
         "workspaceName":{"shape":"WorkspaceName"},
         "workspaceNotificationDestinations":{"shape":"NotificationDestinationsList"},
         "workspaceOrganizationalUnits":{"shape":"OrganizationalUnitList"},
-        "workspaceRoleArn":{"shape":"IamRoleArn"}
+        "workspaceRoleArn":{"shape":"IamRoleArn"},
+        "authenticationProviders":{"shape":"AuthenticationProviders"},
+        "tags":{"shape":"TagMap"},
+        "vpcConfiguration":{"shape":"VpcConfiguration"},
+        "configuration":{
+          "shape":"OverridableConfigurationJson",
+          "jsonvalue":true
+        },
+        "networkAccessControl":{"shape":"NetworkAccessConfiguration"},
+        "grafanaVersion":{"shape":"GrafanaVersion"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "CreateWorkspaceResponse":{
@@ -682,13 +691,13 @@
     "CreateWorkspaceServiceAccountRequest":{
       "type":"structure",
       "required":[
-        "grafanaRole",
         "name",
+        "grafanaRole",
         "workspaceId"
       ],
       "members":{
-        "grafanaRole":{"shape":"Role"},
         "name":{"shape":"ServiceAccountName"},
+        "grafanaRole":{"shape":"Role"},
         "workspaceId":{
           "shape":"WorkspaceId",
           "location":"uri",
@@ -699,15 +708,15 @@
     "CreateWorkspaceServiceAccountResponse":{
       "type":"structure",
       "required":[
-        "grafanaRole",
         "id",
         "name",
+        "grafanaRole",
         "workspaceId"
       ],
       "members":{
-        "grafanaRole":{"shape":"Role"},
         "id":{"shape":"String"},
         "name":{"shape":"String"},
+        "grafanaRole":{"shape":"Role"},
         "workspaceId":{"shape":"WorkspaceId"}
       }
     },
@@ -743,13 +752,13 @@
     "CreateWorkspaceServiceAccountTokenResponse":{
       "type":"structure",
       "required":[
-        "serviceAccountId",
         "serviceAccountToken",
+        "serviceAccountId",
         "workspaceId"
       ],
       "members":{
-        "serviceAccountId":{"shape":"String"},
         "serviceAccountToken":{"shape":"ServiceAccountTokenSummaryWithKey"},
+        "serviceAccountId":{"shape":"String"},
         "workspaceId":{"shape":"WorkspaceId"}
       }
     },
@@ -852,20 +861,20 @@
     "DeleteWorkspaceServiceAccountTokenRequest":{
       "type":"structure",
       "required":[
-        "serviceAccountId",
         "tokenId",
+        "serviceAccountId",
         "workspaceId"
       ],
       "members":{
-        "serviceAccountId":{
-          "shape":"String",
-          "location":"uri",
-          "locationName":"serviceAccountId"
-        },
         "tokenId":{
           "shape":"String",
           "location":"uri",
           "locationName":"tokenId"
+        },
+        "serviceAccountId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"serviceAccountId"
         },
         "workspaceId":{
           "shape":"WorkspaceId",
@@ -877,13 +886,13 @@
     "DeleteWorkspaceServiceAccountTokenResponse":{
       "type":"structure",
       "required":[
-        "serviceAccountId",
         "tokenId",
+        "serviceAccountId",
         "workspaceId"
       ],
       "members":{
-        "serviceAccountId":{"shape":"String"},
         "tokenId":{"shape":"String"},
+        "serviceAccountId":{"shape":"String"},
         "workspaceId":{"shape":"WorkspaceId"}
       }
     },
@@ -954,19 +963,19 @@
     "DisassociateLicenseRequest":{
       "type":"structure",
       "required":[
-        "licenseType",
-        "workspaceId"
+        "workspaceId",
+        "licenseType"
       ],
       "members":{
-        "licenseType":{
-          "shape":"LicenseType",
-          "location":"uri",
-          "locationName":"licenseType"
-        },
         "workspaceId":{
           "shape":"WorkspaceId",
           "location":"uri",
           "locationName":"workspaceId"
+        },
+        "licenseType":{
+          "shape":"LicenseType",
+          "location":"uri",
+          "locationName":"licenseType"
         }
       }
     },
@@ -1035,6 +1044,12 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
+    "KmsKeyId":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[a-zA-Z0-9:/_-]+"
+    },
     "LicenseType":{
       "type":"string",
       "enum":[
@@ -1046,11 +1061,6 @@
       "type":"structure",
       "required":["workspaceId"],
       "members":{
-        "groupId":{
-          "shape":"SsoId",
-          "location":"querystring",
-          "locationName":"groupId"
-        },
         "maxResults":{
           "shape":"ListPermissionsRequestMaxResultsInteger",
           "location":"querystring",
@@ -1061,15 +1071,20 @@
           "location":"querystring",
           "locationName":"nextToken"
         },
+        "userType":{
+          "shape":"UserType",
+          "location":"querystring",
+          "locationName":"userType"
+        },
         "userId":{
           "shape":"SsoId",
           "location":"querystring",
           "locationName":"userId"
         },
-        "userType":{
-          "shape":"UserType",
+        "groupId":{
+          "shape":"SsoId",
           "location":"querystring",
-          "locationName":"userType"
+          "locationName":"groupId"
         },
         "workspaceId":{
           "shape":"WorkspaceId",
@@ -1138,8 +1153,8 @@
     "ListVersionsResponse":{
       "type":"structure",
       "members":{
-        "grafanaVersions":{"shape":"GrafanaVersionList"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "grafanaVersions":{"shape":"GrafanaVersionList"}
       }
     },
     "ListWorkspaceServiceAccountTokensRequest":{
@@ -1180,14 +1195,14 @@
     "ListWorkspaceServiceAccountTokensResponse":{
       "type":"structure",
       "required":[
-        "serviceAccountId",
         "serviceAccountTokens",
+        "serviceAccountId",
         "workspaceId"
       ],
       "members":{
         "nextToken":{"shape":"PaginationToken"},
-        "serviceAccountId":{"shape":"String"},
         "serviceAccountTokens":{"shape":"ServiceAccountTokenList"},
+        "serviceAccountId":{"shape":"String"},
         "workspaceId":{"shape":"WorkspaceId"}
       }
     },
@@ -1255,8 +1270,8 @@
       "type":"structure",
       "required":["workspaces"],
       "members":{
-        "nextToken":{"shape":"PaginationToken"},
-        "workspaces":{"shape":"WorkspaceList"}
+        "workspaces":{"shape":"WorkspaceList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "LoginValidityDuration":{"type":"integer"},
@@ -1300,12 +1315,12 @@
     "PermissionEntry":{
       "type":"structure",
       "required":[
-        "role",
-        "user"
+        "user",
+        "role"
       ],
       "members":{
-        "role":{"shape":"Role"},
-        "user":{"shape":"User"}
+        "user":{"shape":"User"},
+        "role":{"shape":"Role"}
       }
     },
     "PermissionEntryList":{
@@ -1367,8 +1382,8 @@
     "RoleValues":{
       "type":"structure",
       "members":{
-        "admin":{"shape":"RoleValueList"},
-        "editor":{"shape":"RoleValueList"}
+        "editor":{"shape":"RoleValueList"},
+        "admin":{"shape":"RoleValueList"}
       }
     },
     "SSOClientId":{"type":"string"},
@@ -1376,19 +1391,19 @@
       "type":"structure",
       "required":["status"],
       "members":{
-        "configuration":{"shape":"SamlConfiguration"},
-        "status":{"shape":"SamlConfigurationStatus"}
+        "status":{"shape":"SamlConfigurationStatus"},
+        "configuration":{"shape":"SamlConfiguration"}
       }
     },
     "SamlConfiguration":{
       "type":"structure",
       "required":["idpMetadata"],
       "members":{
-        "allowedOrganizations":{"shape":"AllowedOrganizations"},
-        "assertionAttributes":{"shape":"AssertionAttributes"},
         "idpMetadata":{"shape":"IdpMetadata"},
-        "loginValidityDuration":{"shape":"LoginValidityDuration"},
-        "roleValues":{"shape":"RoleValues"}
+        "assertionAttributes":{"shape":"AssertionAttributes"},
+        "roleValues":{"shape":"RoleValues"},
+        "allowedOrganizations":{"shape":"AllowedOrganizations"},
+        "loginValidityDuration":{"shape":"LoginValidityDuration"}
       }
     },
     "SamlConfigurationStatus":{
@@ -1421,16 +1436,16 @@
     "ServiceAccountSummary":{
       "type":"structure",
       "required":[
-        "grafanaRole",
         "id",
+        "name",
         "isDisabled",
-        "name"
+        "grafanaRole"
       ],
       "members":{
-        "grafanaRole":{"shape":"Role"},
         "id":{"shape":"String"},
+        "name":{"shape":"String"},
         "isDisabled":{"shape":"String"},
-        "name":{"shape":"String"}
+        "grafanaRole":{"shape":"Role"}
       }
     },
     "ServiceAccountTokenKey":{
@@ -1449,47 +1464,47 @@
     "ServiceAccountTokenSummary":{
       "type":"structure",
       "required":[
-        "createdAt",
-        "expiresAt",
         "id",
-        "name"
+        "name",
+        "createdAt",
+        "expiresAt"
       ],
       "members":{
+        "id":{"shape":"String"},
+        "name":{"shape":"String"},
         "createdAt":{"shape":"Timestamp"},
         "expiresAt":{"shape":"Timestamp"},
-        "id":{"shape":"String"},
-        "lastUsedAt":{"shape":"Timestamp"},
-        "name":{"shape":"String"}
+        "lastUsedAt":{"shape":"Timestamp"}
       }
     },
     "ServiceAccountTokenSummaryWithKey":{
       "type":"structure",
       "required":[
         "id",
-        "key",
-        "name"
+        "name",
+        "key"
       ],
       "members":{
         "id":{"shape":"String"},
-        "key":{"shape":"ServiceAccountTokenKey"},
-        "name":{"shape":"String"}
+        "name":{"shape":"String"},
+        "key":{"shape":"ServiceAccountTokenKey"}
       }
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
         "message",
-        "quotaCode",
         "resourceId",
         "resourceType",
-        "serviceCode"
+        "serviceCode",
+        "quotaCode"
       ],
       "members":{
         "message":{"shape":"String"},
-        "quotaCode":{"shape":"String"},
         "resourceId":{"shape":"String"},
         "resourceType":{"shape":"String"},
-        "serviceCode":{"shape":"String"}
+        "serviceCode":{"shape":"String"},
+        "quotaCode":{"shape":"String"}
       },
       "error":{
         "httpStatusCode":402,
@@ -1548,8 +1563,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1561,13 +1575,13 @@
       "required":["message"],
       "members":{
         "message":{"shape":"String"},
+        "serviceCode":{"shape":"String"},
         "quotaCode":{"shape":"String"},
         "retryAfterSeconds":{
           "shape":"Integer",
           "location":"header",
           "locationName":"Retry-After"
-        },
-        "serviceCode":{"shape":"String"}
+        }
       },
       "error":{
         "httpStatusCode":429,
@@ -1598,8 +1612,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAction":{
       "type":"string",
@@ -1611,14 +1624,14 @@
     "UpdateError":{
       "type":"structure",
       "required":[
-        "causedBy",
         "code",
-        "message"
+        "message",
+        "causedBy"
       ],
       "members":{
-        "causedBy":{"shape":"UpdateInstruction"},
         "code":{"shape":"UpdateErrorCodeInteger"},
-        "message":{"shape":"String"}
+        "message":{"shape":"String"},
+        "causedBy":{"shape":"UpdateInstruction"}
       }
     },
     "UpdateErrorCodeInteger":{
@@ -1675,17 +1688,17 @@
     "UpdateWorkspaceAuthenticationRequest":{
       "type":"structure",
       "required":[
-        "authenticationProviders",
-        "workspaceId"
+        "workspaceId",
+        "authenticationProviders"
       ],
       "members":{
-        "authenticationProviders":{"shape":"AuthenticationProviders"},
-        "samlConfiguration":{"shape":"SamlConfiguration"},
         "workspaceId":{
           "shape":"WorkspaceId",
           "location":"uri",
           "locationName":"workspaceId"
-        }
+        },
+        "authenticationProviders":{"shape":"AuthenticationProviders"},
+        "samlConfiguration":{"shape":"SamlConfiguration"}
       }
     },
     "UpdateWorkspaceAuthenticationResponse":{
@@ -1706,31 +1719,26 @@
           "shape":"OverridableConfigurationJson",
           "jsonvalue":true
         },
-        "grafanaVersion":{"shape":"GrafanaVersion"},
         "workspaceId":{
           "shape":"WorkspaceId",
           "location":"uri",
           "locationName":"workspaceId"
-        }
+        },
+        "grafanaVersion":{"shape":"GrafanaVersion"}
       }
     },
     "UpdateWorkspaceConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateWorkspaceRequest":{
       "type":"structure",
       "required":["workspaceId"],
       "members":{
         "accountAccessType":{"shape":"AccountAccessType"},
-        "networkAccessControl":{"shape":"NetworkAccessConfiguration"},
         "organizationRoleName":{"shape":"OrganizationRoleName"},
         "permissionType":{"shape":"PermissionType"},
-        "removeNetworkAccessConfiguration":{"shape":"Boolean"},
-        "removeVpcConfiguration":{"shape":"Boolean"},
         "stackSetName":{"shape":"StackSetName"},
-        "vpcConfiguration":{"shape":"VpcConfiguration"},
         "workspaceDataSources":{"shape":"DataSourceTypesList"},
         "workspaceDescription":{"shape":"Description"},
         "workspaceId":{
@@ -1741,7 +1749,11 @@
         "workspaceName":{"shape":"WorkspaceName"},
         "workspaceNotificationDestinations":{"shape":"NotificationDestinationsList"},
         "workspaceOrganizationalUnits":{"shape":"OrganizationalUnitList"},
-        "workspaceRoleArn":{"shape":"IamRoleArn"}
+        "workspaceRoleArn":{"shape":"IamRoleArn"},
+        "vpcConfiguration":{"shape":"VpcConfiguration"},
+        "removeVpcConfiguration":{"shape":"Boolean"},
+        "networkAccessControl":{"shape":"NetworkAccessConfiguration"},
+        "removeNetworkAccessConfiguration":{"shape":"Boolean"}
       }
     },
     "UpdateWorkspaceResponse":{
@@ -1780,9 +1792,9 @@
         "reason"
       ],
       "members":{
-        "fieldList":{"shape":"ValidationExceptionFieldList"},
         "message":{"shape":"String"},
-        "reason":{"shape":"ValidationExceptionReason"}
+        "reason":{"shape":"ValidationExceptionReason"},
+        "fieldList":{"shape":"ValidationExceptionFieldList"}
       },
       "error":{
         "httpStatusCode":400,
@@ -1793,12 +1805,12 @@
     "ValidationExceptionField":{
       "type":"structure",
       "required":[
-        "message",
-        "name"
+        "name",
+        "message"
       ],
       "members":{
-        "message":{"shape":"String"},
-        "name":{"shape":"String"}
+        "name":{"shape":"String"},
+        "message":{"shape":"String"}
       }
     },
     "ValidationExceptionFieldList":{
@@ -1837,46 +1849,47 @@
     "WorkspaceDescription":{
       "type":"structure",
       "required":[
-        "authentication",
         "created",
         "dataSources",
         "endpoint",
         "grafanaVersion",
         "id",
         "modified",
-        "status"
+        "status",
+        "authentication"
       ],
       "members":{
         "accountAccessType":{"shape":"AccountAccessType"},
-        "authentication":{"shape":"AuthenticationSummary"},
         "created":{"shape":"Timestamp"},
         "dataSources":{"shape":"DataSourceTypesList"},
         "description":{"shape":"Description"},
         "endpoint":{"shape":"Endpoint"},
-        "freeTrialConsumed":{"shape":"Boolean"},
-        "freeTrialExpiration":{"shape":"Timestamp"},
-        "grafanaToken":{"shape":"GrafanaToken"},
         "grafanaVersion":{"shape":"GrafanaVersion"},
         "id":{"shape":"WorkspaceId"},
-        "licenseExpiration":{"shape":"Timestamp"},
-        "licenseType":{"shape":"LicenseType"},
         "modified":{"shape":"Timestamp"},
         "name":{"shape":"WorkspaceName"},
-        "networkAccessControl":{"shape":"NetworkAccessConfiguration"},
-        "notificationDestinations":{"shape":"NotificationDestinationsList"},
         "organizationRoleName":{"shape":"OrganizationRoleName"},
+        "notificationDestinations":{"shape":"NotificationDestinationsList"},
         "organizationalUnits":{"shape":"OrganizationalUnitList"},
         "permissionType":{"shape":"PermissionType"},
         "stackSetName":{"shape":"StackSetName"},
         "status":{"shape":"WorkspaceStatus"},
+        "workspaceRoleArn":{"shape":"IamRoleArn"},
+        "licenseType":{"shape":"LicenseType"},
+        "freeTrialConsumed":{"shape":"Boolean"},
+        "licenseExpiration":{"shape":"Timestamp"},
+        "freeTrialExpiration":{"shape":"Timestamp"},
+        "authentication":{"shape":"AuthenticationSummary"},
         "tags":{"shape":"TagMap"},
         "vpcConfiguration":{"shape":"VpcConfiguration"},
-        "workspaceRoleArn":{"shape":"IamRoleArn"}
+        "networkAccessControl":{"shape":"NetworkAccessConfiguration"},
+        "grafanaToken":{"shape":"GrafanaToken"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "WorkspaceId":{
       "type":"string",
-      "pattern":"^g-[0-9a-f]{10}$"
+      "pattern":"g-[0-9a-f]{10}"
     },
     "WorkspaceList":{
       "type":"list",
@@ -1884,7 +1897,7 @@
     },
     "WorkspaceName":{
       "type":"string",
-      "pattern":"^[a-zA-Z0-9-._~]{1,255}$",
+      "pattern":"[a-zA-Z0-9-._~]{1,255}",
       "sensitive":true
     },
     "WorkspaceStatus":{
@@ -1908,28 +1921,28 @@
     "WorkspaceSummary":{
       "type":"structure",
       "required":[
-        "authentication",
         "created",
         "endpoint",
         "grafanaVersion",
         "id",
         "modified",
-        "status"
+        "status",
+        "authentication"
       ],
       "members":{
-        "authentication":{"shape":"AuthenticationSummary"},
         "created":{"shape":"Timestamp"},
         "description":{"shape":"Description"},
         "endpoint":{"shape":"Endpoint"},
-        "grafanaToken":{"shape":"GrafanaToken"},
         "grafanaVersion":{"shape":"GrafanaVersion"},
         "id":{"shape":"WorkspaceId"},
-        "licenseType":{"shape":"LicenseType"},
         "modified":{"shape":"Timestamp"},
         "name":{"shape":"WorkspaceName"},
         "notificationDestinations":{"shape":"NotificationDestinationsList"},
         "status":{"shape":"WorkspaceStatus"},
-        "tags":{"shape":"TagMap"}
+        "authentication":{"shape":"AuthenticationSummary"},
+        "tags":{"shape":"TagMap"},
+        "licenseType":{"shape":"LicenseType"},
+        "grafanaToken":{"shape":"GrafanaToken"}
       }
     }
   }

@@ -1509,6 +1509,7 @@
       "required":["ServiceViewArn"],
       "members":{
         "ServiceViewArn":{"shape":"String"},
+        "ServiceViewName":{"shape":"ServiceViewName"},
         "Filters":{"shape":"SearchFilter"},
         "IncludedProperties":{"shape":"IncludedPropertyList"},
         "StreamingAccessForService":{"shape":"String"},
@@ -1518,6 +1519,10 @@
     "ServiceViewArnList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "ServiceViewName":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9\\-]{1,64}"
     },
     "StreamingAccessDetails":{
       "type":"structure",
@@ -1690,6 +1695,7 @@
       "type":"structure",
       "members":{
         "ViewArn":{"shape":"String"},
+        "ViewName":{"shape":"ViewName"},
         "Owner":{"shape":"String"},
         "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
         "Scope":{"shape":"String"},

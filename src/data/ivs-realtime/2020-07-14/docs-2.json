@@ -407,6 +407,13 @@
         "Event$name": "<p>The name of the event.</p>"
       }
     },
+    "ExchangedParticipantToken": {
+      "base": "<p>Object specifying an exchanged participant token in a stage, created when an original participant token is updated.</p> <p> <b>Important</b>: Treat tokens as opaque; i.e., do not build functionality based on token contents. The format of tokens could change in the future.</p>",
+      "refs": {
+        "Event$previousToken": "<p>Source participant token for <code>TOKEN_EXCHANGED</code> event.</p>",
+        "Event$newToken": "<p>Participant token created during <code>TOKEN_EXCHANGED</code> event.</p>"
+      }
+    },
     "Framerate": {
       "base": null,
       "refs": {
@@ -958,7 +965,8 @@
       "base": null,
       "refs": {
         "CreateParticipantTokenRequest$attributes": "<p>Application-provided attributes to encode into the token and attach to a stage. Map keys and values can contain UTF-8 encoded text. The maximum length of this field is 1 KB total. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>",
-        "ParticipantToken$attributes": "<p>Application-provided attributes to encode into the token and attach to a stage. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>",
+        "ExchangedParticipantToken$attributes": "<p>Application-provided attributes to encode into the token and attach to a stage. Map keys and values can contain UTF-8 encoded text. The maximum length of this field is 1 KB total. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>",
+        "ParticipantToken$attributes": "<p>Application-provided attributes to encode into the token and attach to a stage. Map keys and values can contain UTF-8 encoded text. The maximum length of this field is 1 KB total. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>",
         "ParticipantTokenConfiguration$attributes": "<p>Application-provided attributes to encode into the corresponding participant token and attach to a stage. Map keys and values can contain UTF-8 encoded text. The maximum length of this field is 1 KB total. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>"
       }
     },
@@ -966,6 +974,7 @@
       "base": null,
       "refs": {
         "CreateParticipantTokenRequest$capabilities": "<p>Set of capabilities that the user is allowed to perform in the stage. Default: <code>PUBLISH, SUBSCRIBE</code>.</p>",
+        "ExchangedParticipantToken$capabilities": "<p>Set of capabilities that the user is allowed to perform in the stage.</p>",
         "ParticipantToken$capabilities": "<p>Set of capabilities that the user is allowed to perform in the stage.</p>",
         "ParticipantTokenConfiguration$capabilities": "<p>Set of capabilities that the user is allowed to perform in the stage.</p>"
       }
@@ -999,6 +1008,7 @@
     "ParticipantTokenExpirationTime": {
       "base": null,
       "refs": {
+        "ExchangedParticipantToken$expirationTime": "<p>ISO 8601 timestamp (returned as a string) for when this token expires.</p>",
         "ParticipantToken$expirationTime": "<p>ISO 8601 timestamp (returned as a string) for when this token expires.</p>"
       }
     },
@@ -1025,6 +1035,7 @@
       "base": null,
       "refs": {
         "CreateParticipantTokenRequest$userId": "<p>Name that can be specified to help identify the token. This can be any UTF-8 encoded text. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>",
+        "ExchangedParticipantToken$userId": "<p>Customer-assigned name to help identify the token; this can be used to link a participant to a user in the customer’s own systems. This can be any UTF-8 encoded text. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>",
         "ParticipantToken$userId": "<p>Customer-assigned name to help identify the token; this can be used to link a participant to a user in the customer’s own systems. This can be any UTF-8 encoded text. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>",
         "ParticipantTokenConfiguration$userId": "<p>Customer-assigned name to help identify the token; this can be used to link a participant to a user in the customer’s own systems. This can be any UTF-8 encoded text. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>"
       }

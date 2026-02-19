@@ -52,10 +52,8 @@ class SignatureV4Test extends TestCase
         $s = new SignatureV4('foo', 'bar');
         $r = new Request('GET', 'http://httpbin.org', ['X-amz-Foo' => ['baz', '  bar ']]);
         $methA = new \ReflectionMethod($s, 'parseRequest');
-        $methA->setAccessible(true);
         $reqArray = $methA->invoke($s, $r);
         $methB = new \ReflectionMethod($s, 'createContext');
-        $methB->setAccessible(true);
         $result = $methB->invoke($s, $reqArray, '123');
         $this->assertSame('host;x-amz-foo', $result['headers']);
         $this->assertSame("GET\n/\n\nhost:httpbin.org\nx-amz-foo:bar,baz\n\nhost;x-amz-foo\n123", $result['creq']);
@@ -68,7 +66,6 @@ class SignatureV4Test extends TestCase
             'x-amz-content-sha256' => '123'
         ]);
         $method = new \ReflectionMethod($sig, 'getPayload');
-        $method->setAccessible(true);
         $this->assertSame('123', $method->invoke($sig, $req));
     }
 
@@ -77,7 +74,6 @@ class SignatureV4Test extends TestCase
         $sig = new SignatureV4('foo', 'bar');
         // Hack the class so that it thinks it needs 3 more entries to be full
         $p = new \ReflectionProperty($sig, 'cacheSize');
-        $p->setAccessible(true);
         $p->setValue($sig, 47);
 
         $request = new Request('GET', 'http://www.example.com');
@@ -105,6 +101,21 @@ class SignatureV4Test extends TestCase
         $signature = new SignatureV4('service', 'region');
 
         return array($request, $credentials, $signature);
+    }
+
+    private function decodeQueryPairs(string $query): array
+    {
+        if ($query === '') {
+            return [];
+        }
+
+        $pairs = [];
+        foreach (explode('&', $query) as $pair) {
+            $parts = explode('=', $pair, 2);
+            $pairs[] = array_map('rawurldecode', $parts + ['', '']);
+        }
+
+        return $pairs;
     }
 
     public function getExpiresDateTimeInterfaceInputs()
@@ -312,6 +323,54 @@ class SignatureV4Test extends TestCase
         $this->assertStringNotContainsString('Content-Type', (string)$presigned->getUri());
     }
 
+    public function testCanonicalQuerySortingOccursAfterEncoding()
+    {
+        $_SERVER['aws_time'] = '20110909T233600Z';
+
+        $signature = new SignatureV4('service', 'region');
+        $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET);
+        $query = 'param[0]=1111&param[1]=1111&param[10]=1111&param[2]=1111&param[3]=1111&param[4]=1111&param[5]=1111&param[6]=1111&param[7]=1111&param[8]=1111&param[9]=1111';
+        $request = new Request('GET', 'https://example.com/service?' . $query);
+
+        $parseRequest = new \ReflectionMethod($signature, 'parseRequest');
+        $parsedRequest = $parseRequest->invoke($signature, $request);
+
+        $getPayload = new \ReflectionMethod($signature, 'getPayload');
+        $payload = $getPayload->invoke($signature, $request);
+
+        $createContext = new \ReflectionMethod($signature, 'createContext');
+        $context = $createContext->invoke($signature, $parsedRequest, $payload);
+
+        $canonicalQuery = explode("\n", $context['creq'])[2];
+        $expectedPairs = [
+            ['param[0]', '1111'],
+            ['param[1]', '1111'],
+            ['param[10]', '1111'],
+            ['param[2]', '1111'],
+            ['param[3]', '1111'],
+            ['param[4]', '1111'],
+            ['param[5]', '1111'],
+            ['param[6]', '1111'],
+            ['param[7]', '1111'],
+            ['param[8]', '1111'],
+            ['param[9]', '1111'],
+        ];
+
+        $this->assertSame($expectedPairs, $this->decodeQueryPairs($canonicalQuery));
+
+        $expectedCanonical = "GET\n/service\n" . $canonicalQuery . "\nhost:example.com\n\nhost\n" . $payload;
+        $this->assertSame($expectedCanonical, $context['creq']);
+
+        $signed = $signature->signRequest($request, $credentials);
+        $this->assertSame($expectedPairs, $this->decodeQueryPairs($signed->getUri()->getQuery()));
+
+        $expectedSigned = "GET /service?param%5B0%5D=1111&param%5B1%5D=1111&param%5B10%5D=1111&param%5B2%5D=1111&param%5B3%5D=1111&param%5B4%5D=1111&param%5B5%5D=1111&param%5B6%5D=1111&param%5B7%5D=1111&param%5B8%5D=1111&param%5B9%5D=1111 HTTP/1.1\r\n"
+            . "Host: example.com\r\n"
+            . "X-Amz-Date: 20110909T233600Z\r\n"
+            . "Authorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/region/service/aws4_request, SignedHeaders=host;x-amz-date, Signature=db59e82a5b69e8d4a0fb1a6ceff6a0ff7beca86ac5531b8c69fa93ea0028634b\r\n\r\n";
+        $this->assertSame($expectedSigned, Psr7\Message::toString($signed));
+    }
+
     public function testEnsuresContentSha256CanBeCalculated()
     {
         $this->expectException(\Aws\Exception\CouldNotCreateChecksumException::class);
@@ -398,12 +457,9 @@ class SignatureV4Test extends TestCase
         $signature = new SignatureV4('host', 'us-east-1', ['unsigned-body' => 'true']);
         $request = Psr7\Message::parseRequest($req);
         $contextFn = new \ReflectionMethod($signature, 'createContext');
-        $contextFn->setAccessible(true);
         $parseFn = new \ReflectionMethod($signature, 'parseRequest');
-        $parseFn->setAccessible(true);
         $parsed = $parseFn->invoke($signature, $request);
         $payloadFn = new \ReflectionMethod($signature, 'getPayload');
-        $payloadFn->setAccessible(true);
         $payload = $payloadFn->invoke($signature, $request);
         $this->assertSame('UNSIGNED-PAYLOAD',$payload);
         $ctx = $contextFn->invoke($signature, $parsed, $payload);
@@ -524,12 +580,9 @@ class SignatureV4Test extends TestCase
         $signature = new SignatureV4('host', 'us-east-1');
         $request = Psr7\Message::parseRequest($req);
         $contextFn = new \ReflectionMethod($signature, 'createContext');
-        $contextFn->setAccessible(true);
         $parseFn = new \ReflectionMethod($signature, 'parseRequest');
-        $parseFn->setAccessible(true);
         $parsed = $parseFn->invoke($signature, $request);
         $payloadFn = new \ReflectionMethod($signature, 'getPayload');
-        $payloadFn->setAccessible(true);
         $payload = $payloadFn->invoke($signature, $request);
         $ctx = $contextFn->invoke($signature, $parsed, $payload);
         $this->assertEquals($creq, $ctx['creq']);

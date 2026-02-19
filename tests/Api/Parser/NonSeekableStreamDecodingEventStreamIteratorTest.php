@@ -4,11 +4,16 @@ namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Parser\NonSeekableStreamDecodingEventStreamIterator;
 use GuzzleHttp\Psr7\NoSeekStream;
+use GuzzleHttp\Psr7\StreamDecoratorTrait;
 use GuzzleHttp\Psr7\Utils;
+use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class NonSeekableStreamDecodingEventStreamIteratorTest extends TestCase
 {
+    const EVENT_STREAMS_DIR = __DIR__ . '/event-streams/';
+    const CASES_FILE = self::EVENT_STREAMS_DIR . 'cases.json';
+
     public function testFailOnNonSeekableStream()
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -66,5 +71,72 @@ EOF;
         $iterator->rewind();
         $iterator->next();
         $this->assertFalse($iterator->valid());
+    }
+
+    /**
+     * @param string $eventName
+     * @param array $expected
+     *
+     * @dataProvider readAndHashBytesHandlesPartialReadsProvider
+     *
+     * @return void
+     */
+    public function testReadAndHashBytesHandlesPartialReads(
+        string $eventName,
+        array $expected
+    ): void
+    {
+        $eventPath = self::EVENT_STREAMS_DIR . "events/$eventName";
+        $eventStream = Utils::streamFor(
+            base64_decode(
+                file_get_contents($eventPath)
+            )
+        );
+        $partialReadStream = $this->createMock(StreamInterface::class);
+        $partialReadStream->method('isSeekable')->willReturn(false);
+        $partialReadStream->method('isReadable')->willReturn(true);
+        $partialReadStream->method('read')
+            ->willReturnCallback(function ($length) use ($eventStream) {
+                if ($eventStream->eof()) {
+                    return '';
+                }
+
+                $readLength = min($length, 20);
+                return $eventStream->read($readLength);
+            });
+        $noSeekStreamDecodingEventStreamIterator = new NonSeekableStreamDecodingEventStreamIterator(
+            $partialReadStream
+        );
+        $noSeekStreamDecodingEventStreamIterator->next();
+        $event = $noSeekStreamDecodingEventStreamIterator->current();
+        $this->assertEquals(
+            $expected['headers'],
+            $event['headers']
+        );
+        $decodedPayload = json_decode(
+            $event['payload']->getContents(),
+            true
+        );
+        $this->assertEquals(
+            $expected['payload'],
+            $decodedPayload
+        );
+    }
+
+    /**
+     * @return \Generator
+     */
+    public function readAndHashBytesHandlesPartialReadsProvider(): \Generator
+    {
+        $cases = json_decode(
+            file_get_contents(self::CASES_FILE),
+            true
+        );
+        foreach ($cases as $case) {
+            yield $case['eventName'] => [
+                'eventName' => $case['eventName'],
+                'expected' => $case['expected'],
+            ];
+        }
     }
 }

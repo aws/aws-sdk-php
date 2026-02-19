@@ -454,6 +454,12 @@
         "CreateOntapVolumeConfiguration$AggregateConfiguration": "<p>Use to specify configuration options for a volume’s storage aggregate or aggregates.</p>"
       }
     },
+    "CreateAndAttachS3AccessPointOntapConfiguration": {
+      "base": "<p>Specifies the FSx for ONTAP volume that the S3 access point will be attached to, and the file system user identity.</p>",
+      "refs": {
+        "CreateAndAttachS3AccessPointRequest$OntapConfiguration": null
+      }
+    },
     "CreateAndAttachS3AccessPointOpenZFSConfiguration": {
       "base": "<p>Specifies the FSx for OpenZFS volume that the S3 access point will be attached to, and the file system user identity.</p>",
       "refs": {
@@ -1549,7 +1555,8 @@
         "UpdateOntapVolumeConfiguration$CopyTagsToBackups": "<p>A boolean flag indicating whether tags for the volume should be copied to backups. This value defaults to false. If it's set to true, all tags for the volume are copied to all automatic and user-initiated backups where the user doesn't specify tags. If this value is true, and you specify one or more tags, only the specified tags are copied to backups. If you specify one or more tags when creating a user-initiated backup, no tags are copied from the volume, regardless of this value.</p>",
         "UpdateSnaplockConfiguration$AuditLogVolume": "<p>Enables or disables the audit log volume for an FSx for ONTAP SnapLock volume. The default value is <code>false</code>. If you set <code>AuditLogVolume</code> to <code>true</code>, the SnapLock volume is created as an audit log volume. The minimum retention period for an audit log volume is six months. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/how-snaplock-works.html#snaplock-audit-log-volume\"> SnapLock audit log volumes</a>. </p>",
         "UpdateSnaplockConfiguration$VolumeAppendModeEnabled": "<p>Enables or disables volume-append mode on an FSx for ONTAP SnapLock volume. Volume-append mode allows you to create WORM-appendable files and write data to them incrementally. The default value is <code>false</code>. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/worm-state.html#worm-state-append\">Volume-append mode</a>. </p>",
-        "WindowsFileSystemConfiguration$CopyTagsToBackups": "<p>A boolean flag indicating whether tags on the file system should be copied to backups. This value defaults to false. If it's set to true, all tags on the file system are copied to all automatic backups and any user-initiated backups where the user doesn't specify any tags. If this value is true, and you specify one or more tags, only the specified tags are copied to backups. If you specify one or more tags when creating a user-initiated backup, no tags are copied from the file system, regardless of this value.</p>"
+        "WindowsFileSystemConfiguration$CopyTagsToBackups": "<p>A boolean flag indicating whether tags on the file system should be copied to backups. This value defaults to false. If it's set to true, all tags on the file system are copied to all automatic backups and any user-initiated backups where the user doesn't specify any tags. If this value is true, and you specify one or more tags, only the specified tags are copied to backups. If you specify one or more tags when creating a user-initiated backup, no tags are copied from the file system, regardless of this value.</p>",
+        "WindowsFsrmConfiguration$FsrmServiceEnabled": "<p>Specifies whether FSRM is enabled or disabled on the file system. When <code>TRUE</code>, the FSRM service is enabled and monitor file operations according to configured policies. When <code>FALSE</code> or omitted, FSRM is disabled. The default value is <code>FALSE</code>. </p>"
       }
     },
     "FlexCacheEndpointType": {
@@ -1565,7 +1572,8 @@
         "LustreLogCreateConfiguration$Destination": "<p>The Amazon Resource Name (ARN) that specifies the destination of the logs.</p> <p>The destination can be any Amazon CloudWatch Logs log group ARN, with the following requirements:</p> <ul> <li> <p>The destination ARN that you provide must be in the same Amazon Web Services partition, Amazon Web Services Region, and Amazon Web Services account as your Amazon FSx file system.</p> </li> <li> <p>The name of the Amazon CloudWatch Logs log group must begin with the <code>/aws/fsx</code> prefix.</p> </li> <li> <p>If you do not provide a destination, Amazon FSx will create and use a log stream in the CloudWatch Logs <code>/aws/fsx/lustre</code> log group (for Amazon FSx for Lustre) or <code>/aws/fsx/filecache</code> (for Amazon File Cache).</p> </li> <li> <p>If <code>Destination</code> is provided and the resource does not exist, the request will fail with a <code>BadRequest</code> error.</p> </li> <li> <p>If <code>Level</code> is set to <code>DISABLED</code>, you cannot specify a destination in <code>Destination</code>.</p> </li> </ul>",
         "S3AccessPoint$ResourceARN": "<p>he S3 access point's ARN.</p>",
         "WindowsAuditLogConfiguration$AuditLogDestination": "<p>The Amazon Resource Name (ARN) for the destination of the audit logs. The destination can be any Amazon CloudWatch Logs log group ARN or Amazon Kinesis Data Firehose delivery stream ARN.</p> <p>The name of the Amazon CloudWatch Logs log group must begin with the <code>/aws/fsx</code> prefix. The name of the Amazon Kinesis Data Firehose delivery stream must begin with the <code>aws-fsx</code> prefix.</p> <p>The destination ARN (either CloudWatch Logs log group or Kinesis Data Firehose delivery stream) must be in the same Amazon Web Services partition, Amazon Web Services Region, and Amazon Web Services account as your Amazon FSx file system.</p>",
-        "WindowsAuditLogCreateConfiguration$AuditLogDestination": "<p>The Amazon Resource Name (ARN) that specifies the destination of the audit logs.</p> <p>The destination can be any Amazon CloudWatch Logs log group ARN or Amazon Kinesis Data Firehose delivery stream ARN, with the following requirements:</p> <ul> <li> <p>The destination ARN that you provide (either CloudWatch Logs log group or Kinesis Data Firehose delivery stream) must be in the same Amazon Web Services partition, Amazon Web Services Region, and Amazon Web Services account as your Amazon FSx file system.</p> </li> <li> <p>The name of the Amazon CloudWatch Logs log group must begin with the <code>/aws/fsx</code> prefix. The name of the Amazon Kinesis Data Firehose delivery stream must begin with the <code>aws-fsx</code> prefix.</p> </li> <li> <p>If you do not provide a destination in <code>AuditLogDestination</code>, Amazon FSx will create and use a log stream in the CloudWatch Logs <code>/aws/fsx/windows</code> log group.</p> </li> <li> <p>If <code>AuditLogDestination</code> is provided and the resource does not exist, the request will fail with a <code>BadRequest</code> error.</p> </li> <li> <p>If <code>FileAccessAuditLogLevel</code> and <code>FileShareAccessAuditLogLevel</code> are both set to <code>DISABLED</code>, you cannot specify a destination in <code>AuditLogDestination</code>.</p> </li> </ul>"
+        "WindowsAuditLogCreateConfiguration$AuditLogDestination": "<p>The Amazon Resource Name (ARN) that specifies the destination of the audit logs.</p> <p>The destination can be any Amazon CloudWatch Logs log group ARN or Amazon Kinesis Data Firehose delivery stream ARN, with the following requirements:</p> <ul> <li> <p>The destination ARN that you provide (either CloudWatch Logs log group or Kinesis Data Firehose delivery stream) must be in the same Amazon Web Services partition, Amazon Web Services Region, and Amazon Web Services account as your Amazon FSx file system.</p> </li> <li> <p>The name of the Amazon CloudWatch Logs log group must begin with the <code>/aws/fsx</code> prefix. The name of the Amazon Kinesis Data Firehose delivery stream must begin with the <code>aws-fsx</code> prefix.</p> </li> <li> <p>If you do not provide a destination in <code>AuditLogDestination</code>, Amazon FSx will create and use a log stream in the CloudWatch Logs <code>/aws/fsx/windows</code> log group.</p> </li> <li> <p>If <code>AuditLogDestination</code> is provided and the resource does not exist, the request will fail with a <code>BadRequest</code> error.</p> </li> <li> <p>If <code>FileAccessAuditLogLevel</code> and <code>FileShareAccessAuditLogLevel</code> are both set to <code>DISABLED</code>, you cannot specify a destination in <code>AuditLogDestination</code>.</p> </li> </ul>",
+        "WindowsFsrmConfiguration$EventLogDestination": "<p>The Amazon Resource Name (ARN) for the destination of the FSRM event logs. The destination can be any Amazon CloudWatch Logs log group ARN or Amazon Kinesis Data Firehose delivery stream ARN.</p> <p>The name of the Amazon CloudWatch Logs log group must begin with the <code>/aws/fsx</code> prefix. The name of the Amazon Kinesis Data Firehose delivery stream must begin with the <code>aws-fsx</code> prefix.</p> <p>The destination ARN (either CloudWatch Logs log group or Kinesis Data Firehose delivery stream) must be in the same Amazon Web Services partition, Amazon Web Services Region, and Amazon Web Services account as your Amazon FSx file system.</p>"
       }
     },
     "HAPairs": {
@@ -2016,6 +2024,32 @@
         "FileSystem$OntapConfiguration": "<p>The configuration for this Amazon FSx for NetApp ONTAP file system.</p>"
       }
     },
+    "OntapFileSystemIdentity": {
+      "base": "<p>Specifies the file system user identity that will be used for authorizing all file access requests that are made using the S3 access point. The identity can be either a UNIX user or a Windows user.</p>",
+      "refs": {
+        "CreateAndAttachS3AccessPointOntapConfiguration$FileSystemIdentity": "<p>Specifies the file system user identity to use for authorizing file read and write requests that are made using this S3 access point.</p>",
+        "S3AccessPointOntapConfiguration$FileSystemIdentity": "<p>The file system identity used to authorize file access requests made using the S3 access point.</p>"
+      }
+    },
+    "OntapFileSystemUserName": {
+      "base": null,
+      "refs": {
+        "OntapUnixFileSystemUser$Name": "<p>The name of the UNIX user. The name can be up to 256 characters long.</p>",
+        "OntapWindowsFileSystemUser$Name": "<p>The name of the Windows user. The name can be up to 256 characters long and supports Active Directory users.</p>"
+      }
+    },
+    "OntapFileSystemUserType": {
+      "base": null,
+      "refs": {
+        "OntapFileSystemIdentity$Type": "<p>Specifies the FSx for ONTAP user identity type. Valid values are <code>UNIX</code> and <code>WINDOWS</code>.</p>"
+      }
+    },
+    "OntapUnixFileSystemUser": {
+      "base": "<p>The FSx for ONTAP UNIX file system user that is used for authorizing all file access requests that are made using the S3 access point.</p>",
+      "refs": {
+        "OntapFileSystemIdentity$UnixUser": "<p>Specifies the UNIX user identity for file system operations.</p>"
+      }
+    },
     "OntapVolumeConfiguration": {
       "base": "<p>The configuration of an Amazon FSx for NetApp ONTAP volume.</p>",
       "refs": {
@@ -2026,6 +2060,12 @@
       "base": null,
       "refs": {
         "OntapVolumeConfiguration$OntapVolumeType": "<p>Specifies the type of volume. Valid values are the following:</p> <ul> <li> <p> <code>RW</code> specifies a read/write volume. <code>RW</code> is the default.</p> </li> <li> <p> <code>DP</code> specifies a data-protection volume. You can protect data by replicating it to data-protection mirror copies. If a disaster occurs, you can use these data-protection mirror copies to recover data.</p> </li> <li> <p> <code>LS</code> specifies a load-sharing mirror volume. A load-sharing mirror reduces the network traffic to a FlexVol volume by providing additional read-only access to clients.</p> </li> </ul>"
+      }
+    },
+    "OntapWindowsFileSystemUser": {
+      "base": "<p>The FSx for ONTAP Windows file system user that is used for authorizing all file access requests that are made using the S3 access point.</p>",
+      "refs": {
+        "OntapFileSystemIdentity$WindowsUser": "<p>Specifies the Windows user identity for file system operations.</p>"
       }
     },
     "OpenZFSClientConfiguration": {
@@ -2469,6 +2509,12 @@
       "base": null,
       "refs": {
         "DescribeS3AccessPointAttachmentsRequest$Filters": "<p>Enter a filter Name and Values pair to view a select set of S3 access point attachments.</p>"
+      }
+    },
+    "S3AccessPointOntapConfiguration": {
+      "base": "<p>Describes the FSx for ONTAP attachment configuration of an S3 access point attachment.</p>",
+      "refs": {
+        "S3AccessPointAttachment$OntapConfiguration": "<p>The ONTAP configuration of the S3 access point attachment.</p>"
       }
     },
     "S3AccessPointOpenZFSConfiguration": {
@@ -3231,6 +3277,7 @@
       "refs": {
         "CopySnapshotAndUpdateVolumeRequest$VolumeId": "<p>Specifies the ID of the volume that you are copying the snapshot to.</p>",
         "CopySnapshotAndUpdateVolumeResponse$VolumeId": "<p>The ID of the volume that you copied the snapshot to.</p>",
+        "CreateAndAttachS3AccessPointOntapConfiguration$VolumeId": "<p>The ID of the FSx for ONTAP volume to which you want the S3 access point attached.</p>",
         "CreateAndAttachS3AccessPointOpenZFSConfiguration$VolumeId": "<p>The ID of the FSx for OpenZFS volume to which you want the S3 access point attached.</p>",
         "CreateBackupRequest$VolumeId": "<p>(Optional) The ID of the FSx for ONTAP volume to back up.</p>",
         "CreateOpenZFSVolumeConfiguration$ParentVolumeId": "<p>The ID of the volume to use as the parent volume of the volume that you are creating.</p>",
@@ -3241,6 +3288,7 @@
         "OpenZFSVolumeConfiguration$ParentVolumeId": "<p>The ID of the parent volume.</p>",
         "RestoreVolumeFromSnapshotRequest$VolumeId": "<p>The ID of the volume that you are restoring.</p>",
         "RestoreVolumeFromSnapshotResponse$VolumeId": "<p>The ID of the volume that you restored.</p>",
+        "S3AccessPointOntapConfiguration$VolumeId": "<p>The ID of the FSx for ONTAP volume that the S3 access point is attached to.</p>",
         "S3AccessPointOpenZFSConfiguration$VolumeId": "<p>The ID of the FSx for OpenZFS volume that the S3 access point is attached to.</p>",
         "Snapshot$VolumeId": "<p>The ID of the volume that the snapshot is of.</p>",
         "UpdateVolumeRequest$VolumeId": "<p>The ID of the volume that you want to update, in the format <code>fsvol-0123456789abcdef0</code>.</p>",
@@ -3364,6 +3412,14 @@
       "base": "<p>The configuration for this Microsoft Windows file system.</p>",
       "refs": {
         "FileSystem$WindowsConfiguration": "<p>The configuration for this Amazon FSx for Windows File Server file system.</p>"
+      }
+    },
+    "WindowsFsrmConfiguration": {
+      "base": "<p>The File Server Resource Manager (FSRM) configuration that Amazon FSx for Windows File Server uses for the file system. When FSRM is enabled, you can manage and monitor storage quotas, file screening, storage reports, and file classification.</p>",
+      "refs": {
+        "CreateFileSystemWindowsConfiguration$FsrmConfiguration": "<p>The File Server Resource Manager (FSRM) configuration that Amazon FSx for Windows File Server uses for the file system. FSRM is disabled by default.</p>",
+        "UpdateFileSystemWindowsConfiguration$FsrmConfiguration": "<p>The File Server Resource Manager (FSRM) configuration that Amazon FSx for Windows File Server uses for the file system. FSRM is disabled by default.</p>",
+        "WindowsFileSystemConfiguration$FsrmConfiguration": "<p>The File Server Resource Manager (FSRM) configuration that Amazon FSx for Windows File Server uses for the file system. FSRM is disabled by default.</p>"
       }
     }
   }

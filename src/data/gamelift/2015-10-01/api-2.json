@@ -2807,7 +2807,8 @@
         "Version":{"shape":"NonZeroAndMaxString"},
         "StorageLocation":{"shape":"S3Location"},
         "ZipFile":{"shape":"ZipBlob"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "NodeJsVersion":{"shape":"NodeJsVersion"}
       }
     },
     "CreateScriptOutput":{
@@ -4320,7 +4321,8 @@
         "InstanceType":{"shape":"EC2InstanceType"},
         "InstanceCounts":{"shape":"EC2InstanceCounts"},
         "Location":{"shape":"LocationStringModel"},
-        "GameServerContainerGroupCounts":{"shape":"GameServerContainerGroupCounts"}
+        "GameServerContainerGroupCounts":{"shape":"GameServerContainerGroupCounts"},
+        "ManagedCapacityConfiguration":{"shape":"ManagedCapacityConfiguration"}
       }
     },
     "FleetCapacityExceededException":{
@@ -5579,6 +5581,13 @@
       "min":1,
       "pattern":"[a-zA-Z0-9:/\\-\\*]+"
     },
+    "ManagedCapacityConfiguration":{
+      "type":"structure",
+      "members":{
+        "ZeroCapacityStrategy":{"shape":"ZeroCapacityStrategy"},
+        "ScaleInAfterInactivityMinutes":{"shape":"ScaleInAfterInactivityMinutes"}
+      }
+    },
     "MatchedPlayerSession":{
       "type":"structure",
       "members":{
@@ -5758,6 +5767,11 @@
       "type":"integer",
       "max":75,
       "min":30
+    },
+    "NodeJsVersion":{
+      "type":"string",
+      "max":16,
+      "pattern":"^\\d+\\.[x0-9]+$"
     },
     "NonBlankAndLengthConstraintString":{
       "type":"string",
@@ -6211,6 +6225,11 @@
         "ObjectVersion":{"shape":"NonEmptyString"}
       }
     },
+    "ScaleInAfterInactivityMinutes":{
+      "type":"integer",
+      "max":1440,
+      "min":5
+    },
     "ScalingAdjustmentType":{
       "type":"string",
       "enum":[
@@ -6263,7 +6282,8 @@
         "Version":{"shape":"NonZeroAndMaxString"},
         "SizeOnDisk":{"shape":"PositiveLong"},
         "CreationTime":{"shape":"Timestamp"},
-        "StorageLocation":{"shape":"S3Location"}
+        "StorageLocation":{"shape":"S3Location"},
+        "NodeJsVersion":{"shape":"NodeJsVersion"}
       }
     },
     "ScriptArn":{
@@ -6781,7 +6801,8 @@
         "DesiredInstances":{"shape":"WholeNumber"},
         "MinSize":{"shape":"WholeNumber"},
         "MaxSize":{"shape":"WholeNumber"},
-        "Location":{"shape":"LocationStringModel"}
+        "Location":{"shape":"LocationStringModel"},
+        "ManagedCapacityConfiguration":{"shape":"ManagedCapacityConfiguration"}
       }
     },
     "UpdateFleetCapacityOutput":{
@@ -6789,7 +6810,8 @@
       "members":{
         "FleetId":{"shape":"FleetId"},
         "FleetArn":{"shape":"FleetArn"},
-        "Location":{"shape":"LocationStringModel"}
+        "Location":{"shape":"LocationStringModel"},
+        "ManagedCapacityConfiguration":{"shape":"ManagedCapacityConfiguration"}
       }
     },
     "UpdateFleetPortSettingsInput":{
@@ -7014,6 +7036,13 @@
     "WholeNumber":{
       "type":"integer",
       "min":0
+    },
+    "ZeroCapacityStrategy":{
+      "type":"string",
+      "enum":[
+        "MANUAL",
+        "SCALE_TO_AND_FROM_ZERO"
+      ]
     },
     "ZipBlob":{
       "type":"blob",

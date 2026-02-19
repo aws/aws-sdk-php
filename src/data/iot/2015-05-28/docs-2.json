@@ -103,7 +103,7 @@
     "DescribeDetectMitigationActionsTask": "<p> Gets information about a Device Defender ML Detect mitigation action. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DescribeDetectMitigationActionsTask</a> action.</p>",
     "DescribeDimension": "<p>Provides details about a dimension that is defined in your Amazon Web Services accounts.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DescribeDimension</a> action.</p>",
     "DescribeDomainConfiguration": "<p>Gets summary information about a domain configuration.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DescribeDomainConfiguration</a> action.</p>",
-    "DescribeEncryptionConfiguration": "<p>Retrieves the encryption configuration for resources and data of your Amazon Web Services account in Amazon Web Services IoT Core. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/key-management.html\">Key management in IoT</a> from the <i>Amazon Web Services IoT Core Developer Guide</i>.</p>",
+    "DescribeEncryptionConfiguration": "<p>Retrieves the encryption configuration for resources and data of your Amazon Web Services account in Amazon Web Services IoT Core. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/encryption-at-rest.html\">Data encryption at rest</a> in the <i>Amazon Web Services IoT Core Developer Guide</i>.</p>",
     "DescribeEndpoint": "<p>Returns or creates a unique endpoint specific to the Amazon Web Services account making the call.</p> <note> <p>The first time <code>DescribeEndpoint</code> is called, an endpoint is created. All subsequent calls to <code>DescribeEndpoint</code> return the same endpoint.</p> </note> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DescribeEndpoint</a> action.</p>",
     "DescribeEventConfigurations": "<p>Describes event configurations.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DescribeEventConfigurations</a> action.</p>",
     "DescribeFleetMetric": "<p>Gets information about the specified fleet metric.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DescribeFleetMetric</a> action.</p>",
@@ -240,7 +240,7 @@
     "TagResource": "<p>Adds to or modifies the tags of the given resource. Tags are metadata which can be used to manage a resource.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">TagResource</a> action.</p>",
     "TestAuthorization": "<p>Tests if a specified principal is authorized to perform an IoT action on a specified resource. Use this to test and debug the authorization behavior of devices that connect to the IoT device gateway.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">TestAuthorization</a> action.</p>",
     "TestInvokeAuthorizer": "<p>Tests a custom authorization behavior by invoking a specified custom authorizer. Use this to test and debug the custom authorization behavior of devices that connect to the IoT device gateway.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">TestInvokeAuthorizer</a> action.</p>",
-    "TransferCertificate": "<p>Transfers the specified certificate to the specified Amazon Web Services account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">TransferCertificate</a> action.</p> <p>You can cancel the transfer until it is acknowledged by the recipient.</p> <p>No notification is sent to the transfer destination's account. It's up to the caller to notify the transfer target.</p> <p>The certificate being transferred must not be in the <code>ACTIVE</code> state. You can use the <a>UpdateCertificate</a> action to deactivate it.</p> <p>The certificate must not have any policies attached to it. You can use the <a>DetachPolicy</a> action to detach them.</p> <p> <b>Customer managed key behavior:</b> When you use a customer managed key to secure your data and then transfer the key to a customer in a different account using the <a>TransferCertificate</a> operation, the certificates will no longer be protected by their customer managed key configuration. During the transfer process, certificates are encrypted using IoT owned keys.</p> <p>While a certificate is in the <b>PENDING_TRANSFER</b> state, it's always protected by IoT owned keys, regardless of the customer managed key configuration of either the source or destination account. </p> <p>Once the transfer is completed through <a>AcceptCertificateTransfer</a>, <a>RejectCertificateTransfer</a>, or <a>CancelCertificateTransfer</a>, the certificate will be protected by the customer managed key configuration of the account that owns the certificate after the transfer operation:</p> <ul> <li> <p>If the transfer is accepted: The certificate is protected by the destination account's customer managed key configuration.</p> </li> <li> <p>If the transfer is rejected or cancelled: The certificate is protected by the source account's customer managed key configuration.</p> </li> </ul>",
+    "TransferCertificate": "<p>Transfers the specified certificate to the specified Amazon Web Services account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">TransferCertificate</a> action.</p> <p>You can cancel the transfer until it is accepted by the recipient.</p> <p>No notification is sent to the transfer destination's account. The caller is responsible for notifying the transfer target.</p> <p>The certificate being transferred must not be in the <code>ACTIVE</code> state. You can use the <a>UpdateCertificate</a> action to deactivate it.</p> <p>The certificate must not have any policies attached to it. You can use the <a>DetachPolicy</a> action to detach them.</p> <p> <b>Customer managed key behavior:</b> When you use a customer managed key to encrypt your data and then transfer the certificate to a customer in a different account using the <code>TransferCertificate</code> operation, the certificates will no longer be encrypted by their customer managed key configuration. During the transfer process, certificates are encrypted using Amazon Web Services IoT Core owned keys.</p> <p>While a certificate is in the <b>PENDING_TRANSFER</b> state, it's always protected by Amazon Web Services IoT Core owned keys, regardless of the customer managed key configuration of either the source or destination account. </p> <p>Once the transfer is completed through <a>AcceptCertificateTransfer</a>, <a>RejectCertificateTransfer</a>, or <a>CancelCertificateTransfer</a>, the certificate will be protected by the customer managed key configuration of the account that owns the certificate after the transfer operation:</p> <ul> <li> <p>If the transfer is accepted: The certificate is encrypted by the target account's customer managed key configuration.</p> </li> <li> <p>If the transfer is rejected or cancelled: The certificate is protected by the source account's customer managed key configuration.</p> </li> </ul>",
     "UntagResource": "<p>Removes the given tags (metadata) from the resource.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UntagResource</a> action.</p>",
     "UpdateAccountAuditConfiguration": "<p>Configures or reconfigures the Device Defender audit settings for this account. Settings include how audit notifications are sent and which audit checks are enabled or disabled.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateAccountAuditConfiguration</a> action.</p>",
     "UpdateAuditSuppression": "<p> Updates a Device Defender audit suppression. </p>",
@@ -254,7 +254,7 @@
     "UpdateDimension": "<p>Updates the definition for a dimension. You cannot change the type of a dimension after it is created (you can delete it and recreate it).</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateDimension</a> action.</p>",
     "UpdateDomainConfiguration": "<p>Updates values stored in the domain configuration. Domain configurations for default endpoints can't be updated.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateDomainConfiguration</a> action.</p>",
     "UpdateDynamicThingGroup": "<p>Updates a dynamic thing group.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateDynamicThingGroup</a> action.</p>",
-    "UpdateEncryptionConfiguration": "<p>Updates the encryption configuration. By default, all Amazon Web Services IoT Core data at rest is encrypted using Amazon Web Services owned keys. Amazon Web Services IoT Core also supports symmetric customer managed keys from Amazon Web Services Key Management Service (KMS). With customer managed keys, you create, own, and manage the KMS keys in your Amazon Web Services account. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/data-encryption.html\">Data encryption</a> in the <i>Amazon Web Services IoT Core Developer Guide</i>.</p>",
+    "UpdateEncryptionConfiguration": "<p>Updates the encryption configuration. By default, Amazon Web Services IoT Core encrypts your data at rest using Amazon Web Services owned keys. Amazon Web Services IoT Core also supports symmetric customer managed keys from Key Management Service (KMS). With customer managed keys, you create, own, and manage the KMS keys in your Amazon Web Services account. </p> <p>Before using this API, you must set up permissions for Amazon Web Services IoT Core to access KMS. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/encryption-at-rest.html\">Data encryption at rest</a> in the <i>Amazon Web Services IoT Core Developer Guide</i>.</p>",
     "UpdateEventConfigurations": "<p>Updates the event configurations.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateEventConfigurations</a> action.</p>",
     "UpdateFleetMetric": "<p>Updates the data for a fleet metric.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateFleetMetric</a> action.</p>",
     "UpdateIndexingConfiguration": "<p>Updates the search configuration.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateIndexingConfiguration</a> action.</p>",
@@ -1220,6 +1220,18 @@
         "AwsJobTimeoutConfig$inProgressTimeoutInMinutes": "<p>Specifies the amount of time, in minutes, this device has to finish execution of this job. The timeout interval can be anywhere between 1 minute and 7 days (1 to 10080 minutes). The in progress timer can't be updated and will apply to all job executions for the job. Whenever a job execution remains in the IN_PROGRESS status for longer than this interval, the job execution will fail and switch to the terminal <code>TIMED_OUT</code> status.</p>"
       }
     },
+    "AwsJsonSubstitutionCommandPreprocessorConfig": {
+      "base": "<p>Configures the command to treat the <code>payloadTemplate</code> as a JSON document for preprocessing. This preprocessor substitutes placeholders with parameter values to generate the command execution request payload. </p>",
+      "refs": {
+        "CommandPreprocessor$awsJsonSubstitution": "<p>Configuration for the JSON substitution preprocessor.</p>"
+      }
+    },
+    "BatchConfig": {
+      "base": "<p>Configuration settings for batching.</p>",
+      "refs": {
+        "HttpAction$batchConfig": "<p>The configuration settings for batching. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/http_batching.html\"> Batching HTTP action messages</a>.</p>"
+      }
+    },
     "BatchMode": {
       "base": null,
       "refs": {
@@ -1989,7 +2001,7 @@
     "CommandParameterList": {
       "base": null,
       "refs": {
-        "CreateCommandRequest$mandatoryParameters": "<p>A list of parameters that are required by the <code>StartCommandExecution</code> API. These parameters need to be specified only when using the <code>AWS-IoT-FleetWise</code> namespace. You can either specify them here or when running the command using the <code>StartCommandExecution</code> API.</p>",
+        "CreateCommandRequest$mandatoryParameters": "<p>A list of parameters that are used by <code>StartCommandExecution</code> API for execution payload generation.</p>",
         "GetCommandResponse$mandatoryParameters": "<p>A list of parameters for the command created.</p>"
       }
     },
@@ -2001,18 +2013,61 @@
         "ListCommandsRequest$commandParameterName": "<p>A filter that can be used to display the list of commands that have a specific command parameter name.</p>"
       }
     },
+    "CommandParameterType": {
+      "base": null,
+      "refs": {
+        "CommandParameter$type": "<p>The type of the command parameter.</p>"
+      }
+    },
     "CommandParameterValue": {
-      "base": "<p>The range of possible values that's used to describe a specific command parameter.</p> <note> <p>The <code>commandParameterValue</code> can only have one of the below fields listed.</p> </note>",
+      "base": "<p>The value of a command parameter used to create a command execution.</p> <note> <p>The <code>commandParameterValue</code> can only have one of the below fields listed.</p> </note>",
       "refs": {
         "CommandExecutionParameterMap$value": null,
-        "CommandParameter$value": "<p>The value used to describe the command. When you assign a value to a parameter, it will override any default value that you had already specified.</p>",
+        "CommandParameter$value": "<p>Parameter value that overrides the default value, if set.</p>",
         "CommandParameter$defaultValue": "<p>The default value used to describe the command. This is the value assumed by the parameter if no other value is assigned to it.</p>"
+      }
+    },
+    "CommandParameterValueComparisonOperand": {
+      "base": "<p>The comparison operand used to compare the defined value against the value supplied in request.</p>",
+      "refs": {
+        "CommandParameterValueCondition$operand": "<p>The comparison operand for the command parameter.</p>"
+      }
+    },
+    "CommandParameterValueComparisonOperator": {
+      "base": null,
+      "refs": {
+        "CommandParameterValueCondition$comparisonOperator": "<p>The comparison operator for the command parameter.</p> <note> <p>IN_RANGE, and NOT_IN_RANGE operators include boundary values.</p> </note>"
+      }
+    },
+    "CommandParameterValueCondition": {
+      "base": "<p>A condition for the command parameter that must be evaluated to true for successful creation of a command execution.</p>",
+      "refs": {
+        "CommandParameterValueConditionList$member": null
+      }
+    },
+    "CommandParameterValueConditionList": {
+      "base": null,
+      "refs": {
+        "CommandParameter$valueConditions": "<p>The list of conditions that a command parameter value must satisfy to create a command execution.</p>"
+      }
+    },
+    "CommandParameterValueNumberRange": {
+      "base": "<p>The numerical range value type to compare a command parameter value against.</p>",
+      "refs": {
+        "CommandParameterValueComparisonOperand$numberRange": "<p>An operand of numerical range value type.</p>"
+      }
+    },
+    "CommandParameterValueStringList": {
+      "base": null,
+      "refs": {
+        "CommandParameterValueComparisonOperand$numbers": "<p>A List of operands of numerical value type, defined as strings.</p>",
+        "CommandParameterValueComparisonOperand$strings": "<p>A List of operands of string value type.</p>"
       }
     },
     "CommandPayload": {
       "base": "<p>The command payload object that contains the instructions for the device to process.</p>",
       "refs": {
-        "CreateCommandRequest$payload": "<p>The payload object for the command. You must specify this information when using the <code>AWS-IoT</code> namespace.</p> <p>You can upload a static payload file from your local storage that contains the instructions for the device to process. The payload file can use any format. To make sure that the device correctly interprets the payload, we recommend you to specify the payload content type.</p>",
+        "CreateCommandRequest$payload": "<p>The payload object for the static command.</p> <p>You can upload a static payload file from your local storage that contains the instructions for the device to process. The payload file can use any format. To make sure that the device correctly interprets the payload, we recommend you to specify the payload content type.</p>",
         "GetCommandResponse$payload": "<p>The payload object that you provided for the command.</p>"
       }
     },
@@ -2020,6 +2075,20 @@
       "base": null,
       "refs": {
         "CommandPayload$content": "<p>The static payload file for the command.</p>"
+      }
+    },
+    "CommandPayloadTemplateString": {
+      "base": null,
+      "refs": {
+        "CreateCommandRequest$payloadTemplate": "<p>The payload template for the dynamic command.</p> <note> <p>This parameter is required for dynamic commands where the command execution placeholders are supplied either from <code>mandatoryParameters</code> or when <code>StartCommandExecution</code> is invoked.</p> </note>",
+        "GetCommandResponse$payloadTemplate": "<p>The payload template for the dynamic command.</p>"
+      }
+    },
+    "CommandPreprocessor": {
+      "base": "<p>Configuration that determines how the <code>payloadTemplate</code> is processed by the service to generate the final payload sent to devices at <code>StartCommandExecution</code> API invocation.</p>",
+      "refs": {
+        "CreateCommandRequest$preprocessor": "<p>Configuration that determines how <code>payloadTemplate</code> is processed to generate command execution payload.</p> <note> <p>This parameter is required for dynamic commands, along with <code>payloadTemplate</code>, and <code>mandatoryParameters</code>.</p> </note>",
+        "GetCommandResponse$preprocessor": "<p>Configuration that determines how <code>payloadTemplate</code> is processed to generate command execution payload.</p>"
       }
     },
     "CommandSummary": {
@@ -2080,7 +2149,7 @@
       }
     },
     "ConfigurationDetails": {
-      "base": "<p>The encryption configuration details that include the status information of the Amazon Web Services Key Management Service (KMS) key and the KMS access role.</p>",
+      "base": "<p>The encryption configuration details that include the status information of the Key Management Service (KMS) key and the KMS access role.</p>",
       "refs": {
         "DescribeEncryptionConfigurationResponse$configurationDetails": "<p>The encryption configuration details that include the status information of the KMS key and the KMS access role.</p>"
       }
@@ -2088,7 +2157,7 @@
     "ConfigurationStatus": {
       "base": null,
       "refs": {
-        "ConfigurationDetails$configurationStatus": "<p>The health status of KMS key and KMS access role. If either KMS key or KMS access role is <code>UNHEALTHY</code>, the return value will be <code>UNHEALTHY</code>. To use a customer-managed KMS key, the value of <code>configurationStatus</code> must be <code>HEALTHY</code>. </p>"
+        "ConfigurationDetails$configurationStatus": "<p>The health status of KMS key and KMS access role. If either KMS key or KMS access role is <code>UNHEALTHY</code>, the return value will be <code>UNHEALTHY</code>. To use a customer managed KMS key, the value of <code>configurationStatus</code> must be <code>HEALTHY</code>. </p>"
       }
     },
     "ConfirmTopicRuleDestinationRequest": {
@@ -3604,6 +3673,12 @@
         "OpenSearchAction$type": "<p>The type of document you are storing.</p>"
       }
     },
+    "EnableBatching": {
+      "base": null,
+      "refs": {
+        "HttpAction$enableBatching": "<p>Whether to process the HTTP action messages into a single request. Value can be true or false.</p>"
+      }
+    },
     "EnableCachingForHttp": {
       "base": null,
       "refs": {
@@ -3649,8 +3724,8 @@
     "EncryptionType": {
       "base": null,
       "refs": {
-        "DescribeEncryptionConfigurationResponse$encryptionType": "<p>The type of the Amazon Web Services Key Management Service (KMS) key.</p>",
-        "UpdateEncryptionConfigurationRequest$encryptionType": "<p>The type of the Amazon Web Services Key Management Service (KMS) key.</p>"
+        "DescribeEncryptionConfigurationResponse$encryptionType": "<p>The type of the KMS key.</p>",
+        "UpdateEncryptionConfigurationRequest$encryptionType": "<p>The type of the KMS key.</p>"
       }
     },
     "EndpointAddress": {
@@ -4794,15 +4869,15 @@
     "KmsAccessRoleArn": {
       "base": null,
       "refs": {
-        "DescribeEncryptionConfigurationResponse$kmsAccessRoleArn": "<p>The ARN of the customer-managed KMS key.</p>",
+        "DescribeEncryptionConfigurationResponse$kmsAccessRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role assumed by Amazon Web Services IoT Core to call KMS on behalf of the customer.</p>",
         "UpdateEncryptionConfigurationRequest$kmsAccessRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role assumed by Amazon Web Services IoT Core to call KMS on behalf of the customer.</p>"
       }
     },
     "KmsKeyArn": {
       "base": null,
       "refs": {
-        "DescribeEncryptionConfigurationResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the IAM role assumed by Amazon Web Services IoT Core to call KMS on behalf of the customer.</p>",
-        "UpdateEncryptionConfigurationRequest$kmsKeyArn": "<p>The ARN of the customer-managed KMS key.</p>"
+        "DescribeEncryptionConfigurationResponse$kmsKeyArn": "<p>The ARN of the customer managed KMS key.</p>",
+        "UpdateEncryptionConfigurationRequest$kmsKeyArn": "<p>The ARN of the customer managedKMS key.</p>"
       }
     },
     "LambdaAction": {
@@ -5389,6 +5464,31 @@
         "LocationAction$timestamp": "<p>The time that the location data was sampled. The default value is the time the MQTT message was processed.</p>"
       }
     },
+    "LogDestination": {
+      "base": null,
+      "refs": {
+        "LogEventConfiguration$logDestination": "<p> CloudWatch Log Group for event-based logging. Specifies where log events should be sent. The log destination for event-based logging overrides default Log Group for the specified event type and applies to all resources associated with that event. </p>"
+      }
+    },
+    "LogEventConfiguration": {
+      "base": "<p> Configuration for event-based logging that specifies which event types to log and their logging settings. Used for account-level logging overrides. </p>",
+      "refs": {
+        "LogEventConfigurations$member": null
+      }
+    },
+    "LogEventConfigurations": {
+      "base": null,
+      "refs": {
+        "GetV2LoggingOptionsResponse$eventConfigurations": "<p> The list of event configurations that override account-level logging. </p>",
+        "SetV2LoggingOptionsRequest$eventConfigurations": "<p> The list of event configurations that override account-level logging. </p>"
+      }
+    },
+    "LogEventType": {
+      "base": null,
+      "refs": {
+        "LogEventConfiguration$eventType": "<p> The type of event to log. These include event types like Connect, Publish, and Disconnect. </p>"
+      }
+    },
     "LogGroupName": {
       "base": null,
       "refs": {
@@ -5401,6 +5501,7 @@
         "EnableIoTLoggingParams$logLevel": "<p>Specifies the type of information to be logged.</p>",
         "GetLoggingOptionsResponse$logLevel": "<p>The logging level.</p>",
         "GetV2LoggingOptionsResponse$defaultLogLevel": "<p>The default log level.</p>",
+        "LogEventConfiguration$logLevel": "<p> The logging level for the specified event type. Determines the verbosity of log messages generated for this event type. </p>",
         "LogTargetConfiguration$logLevel": "<p>The logging level.</p>",
         "LoggingOptionsPayload$logLevel": "<p>The log level.</p>",
         "SetV2LoggingLevelRequest$logLevel": "<p>The log level.</p>",
@@ -5535,6 +5636,24 @@
         "ListRoleAliasesResponse$nextMarker": "<p>A marker used to get the next set of results.</p>",
         "ListTargetsForPolicyRequest$marker": "<p>A marker used to get the next set of results.</p>",
         "ListTargetsForPolicyResponse$nextMarker": "<p>A marker used to get the next set of results.</p>"
+      }
+    },
+    "MaxBatchOpenMs": {
+      "base": null,
+      "refs": {
+        "BatchConfig$maxBatchOpenMs": "<p>The maximum amount of time (in milliseconds) that an outgoing call waits for other calls with which it batches messages of the same type. The higher the setting, the longer the latency of the batched HTTP Action will be.</p>"
+      }
+    },
+    "MaxBatchSize": {
+      "base": null,
+      "refs": {
+        "BatchConfig$maxBatchSize": "<p>The maximum number of messages that are batched together in a single action execution.</p>"
+      }
+    },
+    "MaxBatchSizeBytes": {
+      "base": null,
+      "refs": {
+        "BatchConfig$maxBatchSizeBytes": "<p>Maximum size of a message batch, in bytes.</p>"
       }
     },
     "MaxBuckets": {
@@ -6175,6 +6294,12 @@
         "ListOutgoingCertificatesResponse$outgoingCertificates": "<p>The certificates that are being transferred but not yet accepted.</p>"
       }
     },
+    "OutputFormat": {
+      "base": null,
+      "refs": {
+        "AwsJsonSubstitutionCommandPreprocessorConfig$outputFormat": "<p>Converts the command preprocessor result to the format defined by this parameter, before sending it to the device.</p>"
+      }
+    },
     "OverrideDynamicGroups": {
       "base": null,
       "refs": {
@@ -6586,7 +6711,7 @@
         "ListPrincipalPoliciesRequest$principal": "<p>The principal. Valid principals are CertificateArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>), thingGroupArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>) and CognitoId (<i>region</i>:<i>id</i>).</p>",
         "ListPrincipalThingsRequest$principal": "<p>The principal.</p>",
         "ListPrincipalThingsV2Request$principal": "<p>The principal. A principal can be an X.509 certificate or an Amazon Cognito ID.</p>",
-        "TestAuthorizationRequest$principal": "<p>The principal. Valid principals are CertificateArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>), thingGroupArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>) and CognitoId (<i>region</i>:<i>id</i>).</p>",
+        "TestAuthorizationRequest$principal": "<p>The principal. Valid principals are CertificateArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>) and CognitoId (<i>region</i>:<i>id</i>).</p>",
         "ThingPrincipalObject$principal": "<p>The principal of the thing principal object.</p>"
       }
     },
@@ -7218,7 +7343,7 @@
       "refs": {
         "AlertTarget$roleArn": "<p>The ARN of the role that grants permission to send alerts to the notification target.</p>",
         "AuditNotificationTarget$roleArn": "<p>The ARN of the role that grants permission to send notifications to the target.</p>",
-        "CreateCommandRequest$roleArn": "<p>The IAM role that you must provide when using the <code>AWS-IoT-FleetWise</code> namespace. The role grants IoT Device Management the permission to access IoT FleetWise resources for generating the payload for the command. This field is not required when you use the <code>AWS-IoT</code> namespace.</p>",
+        "CreateCommandRequest$roleArn": "<p>The IAM role that you must provide when using the <code>AWS-IoT-FleetWise</code> namespace. The role grants IoT Device Management the permission to access IoT FleetWise resources for generating the payload for the command. This field is not supported when you use the <code>AWS-IoT</code> namespace.</p>",
         "CreateMitigationActionRequest$roleArn": "<p>The ARN of the IAM role that is used to apply the mitigation action.</p>",
         "CreateOTAUpdateRequest$roleArn": "<p>The IAM role that grants Amazon Web Services IoT Core access to the Amazon S3, IoT jobs and Amazon Web Services Code Signing resources to create an OTA update job.</p>",
         "CreateProvisioningTemplateRequest$provisioningRoleArn": "<p>The role ARN for the role associated with the provisioning template. This IoT role grants permission to provision a device.</p>",
@@ -8048,7 +8173,12 @@
     "StringParameterValue": {
       "base": null,
       "refs": {
-        "CommandParameterValue$S": "<p>An attribute of type String. For example:</p> <p> <code>\"S\": \"Hello\"</code> </p>"
+        "CommandParameterValue$S": "<p>An attribute of type String. For example:</p> <p> <code>\"S\": \"Hello\"</code> </p>",
+        "CommandParameterValueComparisonOperand$number": "<p>An operand of number value type, defined as a string.</p>",
+        "CommandParameterValueComparisonOperand$string": "<p>An operand of string value type.</p>",
+        "CommandParameterValueNumberRange$min": "<p>The minimum value of a numerical range of a command parameter value.</p>",
+        "CommandParameterValueNumberRange$max": "<p>The maximum value of a numerical range of a command parameter value.</p>",
+        "CommandParameterValueStringList$member": null
       }
     },
     "SubnetId": {
@@ -9382,6 +9512,12 @@
       "base": null,
       "refs": {
         "Statistics$variance": "<p>The variance of the aggregated field values.</p>"
+      }
+    },
+    "VerboseFlag": {
+      "base": null,
+      "refs": {
+        "GetV2LoggingOptionsRequest$verbose": "<p> The flag is used to get all the event types and their respective configuration that event-based logging supports. </p>"
       }
     },
     "VerificationState": {

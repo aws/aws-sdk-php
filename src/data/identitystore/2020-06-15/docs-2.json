@@ -79,7 +79,19 @@
       "base": "<p>The value of the attribute. This is a <code>Document</code> type. This type is not supported by Java V1, Go V1, and older versions of the CLI.</p>",
       "refs": {
         "AttributeOperation$AttributeValue": "<p>The value of the attribute. This is a <code>Document</code> type. This type is not supported by Java V1, Go V1, and older versions of the CLI.</p>",
+        "Extensions$value": null,
         "UniqueAttribute$AttributeValue": "<p>The value of the attribute. This is a <code>Document</code> type. This type is not supported by Java V1, Go V1, and older versions of the CLI.</p>"
+      }
+    },
+    "BooleanType": {
+      "base": null,
+      "refs": {
+        "Address$Primary": "<p>A Boolean value representing whether this is the primary address for the associated resource.</p>",
+        "Email$Primary": "<p>A Boolean value representing whether this is the primary email address for the associated resource.</p>",
+        "GroupMembershipExistenceResult$MembershipExists": "<p>Indicates whether a membership relation exists or not.</p>",
+        "PhoneNumber$Primary": "<p>A Boolean value representing whether this is the primary phone number for the associated resource.</p>",
+        "Photo$Primary": "<p>Specifies whether this is the user's primary photo. Default value is <code>false</code>. Only one photo can be designated as primary per user.</p>",
+        "Role$Primary": "<p>A Boolean value representing whether this is the primary role for the associated resource.</p>"
       }
     },
     "ConflictException": {
@@ -89,7 +101,7 @@
     "ConflictExceptionReason": {
       "base": null,
       "refs": {
-        "ConflictException$Reason": "<p>This request cannot be completed for one of the following reasons:</p> <ul> <li> <p>Performing the requested operation would violate an existing uniqueness claim in the identity store. Resolve the conflict before retrying this request.</p> </li> <li> <p>The requested resource was being concurrently modified by another request.</p> </li> </ul>"
+        "ConflictException$Reason": "<p>Indicates the reason for a conflict error when the service is unable to access a Customer Managed KMS key. For non-KMS permission errors, this field is not included.</p>"
       }
     },
     "CreateGroupMembershipRequest": {
@@ -205,6 +217,28 @@
         "ServiceQuotaExceededException$Message": null,
         "ThrottlingException$Message": null,
         "ValidationException$Message": null
+      }
+    },
+    "ExtensionName": {
+      "base": null,
+      "refs": {
+        "ExtensionNames$member": null,
+        "Extensions$key": null
+      }
+    },
+    "ExtensionNames": {
+      "base": null,
+      "refs": {
+        "DescribeUserRequest$Extensions": "<p>A collection of extension names indicating what extensions the service should retrieve alongside other user attributes. <code>aws:identitystore:enterprise</code> is the only supported extension name.</p>",
+        "ListUsersRequest$Extensions": "<p>A collection of extension names indicating what extensions the service should retrieve alongside other user attributes. <code>aws:identitystore:enterprise</code> is the only supported extension name.</p>"
+      }
+    },
+    "Extensions": {
+      "base": null,
+      "refs": {
+        "CreateUserRequest$Extensions": "<p>A map with additional attribute extensions for the user. Each map key corresponds to an extension name, while map values represent extension data in <code>Document</code> type (not supported by Java V1, Go V1 and older versions of the CLI). <code>aws:identitystore:enterprise</code> is the only supported extension name.</p>",
+        "DescribeUserResponse$Extensions": "<p>A map of explicitly requested attribute extensions associated with the user. Not populated if the user has no requested extensions.</p>",
+        "User$Extensions": "<p>A map of explicitly requested attribute extensions associated with the user. Not populated if the user has no requested extensions.</p>"
       }
     },
     "ExternalId": {
@@ -542,14 +576,18 @@
         "ThrottlingException$RetryAfterSeconds": "<p>The number of seconds to wait before retrying the next request.</p>"
       }
     },
-    "SensitiveBooleanType": {
+    "Role": {
+      "base": "<p>The role associated with the user.</p>",
+      "refs": {
+        "Roles$member": null
+      }
+    },
+    "Roles": {
       "base": null,
       "refs": {
-        "Address$Primary": "<p>A Boolean value representing whether this is the primary address for the associated resource.</p>",
-        "Email$Primary": "<p>A Boolean value representing whether this is the primary email address for the associated resource.</p>",
-        "GroupMembershipExistenceResult$MembershipExists": "<p>Indicates whether a membership relation exists or not.</p>",
-        "PhoneNumber$Primary": "<p>A Boolean value representing whether this is the primary phone number for the associated resource.</p>",
-        "Photo$Primary": "<p>Specifies whether this is the user's primary photo. Default value is <code>false</code>. Only one photo can be designated as primary per user.</p>"
+        "CreateUserRequest$Roles": "<p>A list of <code>Role</code> objects containing roles associated with the user.</p>",
+        "DescribeUserResponse$Roles": "<p>The roles of the user.</p>",
+        "User$Roles": "<p>A list of <code>Role</code> objects containing roles associated with the user.</p>"
       }
     },
     "SensitiveStringType": {
@@ -599,6 +637,8 @@
         "Photo$Value": "<p>The photo data or URL. Supported formats include jpg, jpeg, png, and gif. This field is required for all photo entries.</p>",
         "Photo$Type": "<p>The type of photo. This field is optional and can be used to categorize different types of photos.</p>",
         "Photo$Display": "<p>A human-readable description of the photo for display purposes. This optional field provides context about the photo.</p>",
+        "Role$Value": "<p>A string containing a role name. For example, \"Researcher.\"</p>",
+        "Role$Type": "<p>A string representing the type of role. For example, \"Work.\"</p>",
         "User$DisplayName": "<p>A string containing the name of the user that is formatted for display when the user is referenced. For example, \"John Doe.\"</p> <p>Prefix search supports a maximum of 1,000 characters for the string.</p>",
         "User$NickName": "<p>A string containing an alternate name for the user.</p>",
         "User$ProfileUrl": "<p>A string containing a URL that might be associated with the user.</p>",
