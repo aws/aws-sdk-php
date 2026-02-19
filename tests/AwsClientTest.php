@@ -1151,6 +1151,8 @@ EOT
                 'present' => false
             ]
         ];
+    }
+
     public function testSupportsNamedArgs()
     {
         $client = new S3Client([
