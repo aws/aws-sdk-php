@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.38 - 2026-02-19
 
 * `Aws\ECR` - Adds multiple artifact types filter support in ListImageReferrers API.
 * `Aws\BCMDashboards` - The Billing and Cost Management GetDashboard API now returns identifier for each widget, enabling users to uniquely identify widgets within their dashboards.
