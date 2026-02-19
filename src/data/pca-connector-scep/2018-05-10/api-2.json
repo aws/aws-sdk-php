@@ -23,8 +23,8 @@
       "input":{"shape":"CreateChallengeRequest"},
       "output":{"shape":"CreateChallengeResponse"},
       "errors":[
-        {"shape":"ResourceNotFoundException"},
         {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
@@ -103,7 +103,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetChallengePassword":{
       "name":"GetChallengePassword",
@@ -120,7 +121,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetConnector":{
       "name":"GetConnector",
@@ -137,7 +139,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListChallengeMetadata":{
       "name":"ListChallengeMetadata",
@@ -154,7 +157,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListConnectors":{
       "name":"ListConnectors",
@@ -170,7 +174,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -187,7 +192,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -368,7 +374,9 @@
         "INTERNAL_FAILURE",
         "PRIVATECA_ACCESS_DENIED",
         "PRIVATECA_INVALID_STATE",
-        "PRIVATECA_RESOURCE_NOT_FOUND"
+        "PRIVATECA_RESOURCE_NOT_FOUND",
+        "VPC_ENDPOINT_RESOURCE_NOT_FOUND",
+        "VPC_ENDPOINT_DNS_ENTRIES_NOT_FOUND"
       ]
     },
     "ConnectorSummary":{
@@ -417,6 +425,7 @@
       "members":{
         "CertificateAuthorityArn":{"shape":"CertificateAuthorityArn"},
         "MobileDeviceManagement":{"shape":"MobileDeviceManagement"},
+        "VpcEndpointId":{"shape":"VpcEndpointId"},
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -743,6 +752,12 @@
         "UNKNOWN_OPERATION",
         "OTHER"
       ]
+    },
+    "VpcEndpointId":{
+      "type":"string",
+      "max":22,
+      "min":13,
+      "pattern":"vpce-[0-9a-f]{8}([0-9a-f]{9})?"
     }
   }
 }
