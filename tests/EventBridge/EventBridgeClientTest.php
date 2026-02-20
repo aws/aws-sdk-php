@@ -2,20 +2,21 @@
 namespace Aws\Test\EventBridge;
 
 use Aws\CommandInterface;
-use Aws\Exception\UnresolvedEndpointException;
-use Aws\Result;
 use Aws\EventBridge\EventBridgeClient;
+use Aws\Result;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
+#[CoversClass(EventBridgeClient::class)]
 class EventBridgeClientTest extends TestCase
 {
     use UsesServiceTrait;
 
-    public function putEventsEndpointSuccessProvider()
+    public static function putEventsEndpointSuccessProvider(): array
     {
-
         return [
             [
                 "us-east-1",
@@ -54,7 +55,8 @@ class EventBridgeClientTest extends TestCase
             ],
             [
                 "us-iso-east-1",
-                [], 'abc123.456def',
+                [],
+                'abc123.456def',
                 'https://abc123.456def.endpoint.events.c2s.ic.gov/',
                 ['x-amz-region-set' => '*'],
             ],
@@ -75,15 +77,7 @@ class EventBridgeClientTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider putEventsEndpointSuccessProvider
-     *
-     * @param $clientRegion
-     * @param $additionalConfig
-     * @param $endpointId
-     * @param $expectedEndpoint
-     * @param $additionalHeaders
-     */
+    #[DataProvider('putEventsEndpointSuccessProvider')]
     public function testPutEventsEndpointSuccessCases(
         $clientRegion,
         $additionalConfig,
@@ -138,9 +132,8 @@ class EventBridgeClientTest extends TestCase
         $client->execute($command);
     }
 
-    public function putEventsEndpointFailureProvider()
+    public static function putEventsEndpointFailureProvider(): array
     {
-
         return [
             ["us-east-1", [], 'badactor.com?foo=bar', 'EndpointId must be a valid host label.'],
             ["us-east-1", ['use_fips_endpoint' => true], 'abc123.456def', 'Invalid Configuration: FIPS is not supported with EventBridge multi-region endpoints.'],
@@ -148,14 +141,7 @@ class EventBridgeClientTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider putEventsEndpointFailureProvider
-     *
-     * @param $clientRegion
-     * @param $additionalConfig
-     * @param $endpointId
-     * @param $expectedException
-     */
+    #[DataProvider('putEventsEndpointFailureProvider')]
     public function testPutEventsEndpointFailureCases(
         $clientRegion,
         $additionalConfig,

@@ -1,14 +1,15 @@
 <?php
 namespace Aws\Test\S3;
 
-
 use Aws\Api\Parser\Exception\ParserException;
 use Aws\CommandInterface;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\RetryableMalformedResponseParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
+#[CoversClass(RetryableMalformedResponseParser::class)]
 class RetryableMalformedResponseParserTest extends TestCase
 {
     public function testConvertsParserExceptionsToRetryableExceptions()

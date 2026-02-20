@@ -3,10 +3,9 @@ namespace Aws\Test;
 
 use Aws\JsonCompiler;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\JsonCompiler
- */
+#[CoversClass(JsonCompiler::class)]
 class JsonCompilerTest extends TestCase
 {
     private $models;

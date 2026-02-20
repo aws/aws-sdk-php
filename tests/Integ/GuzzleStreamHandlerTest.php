@@ -2,8 +2,10 @@
 namespace Aws\Test\Integ;
 
 use GuzzleHttp\Handler\StreamHandler;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
+#[CoversNothing]
 class GuzzleStreamHandlerTest extends TestCase
 {
     use IntegUtils;
