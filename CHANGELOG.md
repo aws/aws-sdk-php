@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.370.0 - 2026-02-20
 
 * `Aws\SignerData` - This release introduces AWS Signer Data Plane SDK client supporting GetRevocationStatus API. The new client enables AWS PrivateLink connectivity with both private DNS and VPC endpoint URLs.
 * `Aws\SSM` - Add support for AssociationDispatchAssumeRole in AWS SSM State Manager.
