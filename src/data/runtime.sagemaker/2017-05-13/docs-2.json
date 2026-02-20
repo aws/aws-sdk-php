@@ -45,6 +45,12 @@
         "ModelStreamError$ErrorCode": "<p>This error can have the following error codes:</p> <dl> <dt>ModelInvocationTimeExceeded</dt> <dd> <p>The model failed to finish sending the response within the timeout period allowed by Amazon SageMaker AI.</p> </dd> <dt>StreamBroken</dt> <dd> <p>The Transmission Control Protocol (TCP) connection between the client and the model was reset or closed.</p> </dd> </dl>"
       }
     },
+    "FilenameHeader": {
+      "base": null,
+      "refs": {
+        "InvokeEndpointAsyncInput$Filename": "<p>The filename for the inference response payload stored in Amazon S3. If not specified, Amazon SageMaker AI generates a filename based on the inference ID.</p>"
+      }
+    },
     "Header": {
       "base": null,
       "refs": {
@@ -190,6 +196,12 @@
       "base": "<p>A stream of payload parts. Each part contains a portion of the response for a streaming inference request.</p>",
       "refs": {
         "InvokeEndpointWithResponseStreamOutput$Body": null
+      }
+    },
+    "S3OutputPathExtensionHeader": {
+      "base": null,
+      "refs": {
+        "InvokeEndpointAsyncInput$S3OutputPathExtension": "<p>The path extension that is appended to the Amazon S3 output path where the inference response payload is stored.</p>"
       }
     },
     "ServiceUnavailable": {

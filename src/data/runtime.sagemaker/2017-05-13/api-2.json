@@ -88,6 +88,12 @@
       "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*"
     },
     "ErrorCode":{"type":"string"},
+    "FilenameHeader":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"^(?!.*\\..*\\.)[a-zA-Z0-9][a-zA-Z0-9-_\\.]*$"
+    },
     "Header":{
       "type":"string",
       "max":1024,
@@ -180,6 +186,16 @@
           "shape":"InputLocationHeader",
           "location":"header",
           "locationName":"X-Amzn-SageMaker-InputLocation"
+        },
+        "S3OutputPathExtension":{
+          "shape":"S3OutputPathExtensionHeader",
+          "location":"header",
+          "locationName":"X-Amzn-SageMaker-S3OutputPathExtension"
+        },
+        "Filename":{
+          "shape":"FilenameHeader",
+          "location":"header",
+          "locationName":"X-Amzn-SageMaker-Filename"
         },
         "RequestTTLSeconds":{
           "shape":"RequestTTLSecondsHeader",
@@ -453,6 +469,12 @@
         "InternalStreamFailure":{"shape":"InternalStreamFailure"}
       },
       "eventstream":true
+    },
+    "S3OutputPathExtensionHeader":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"^(?!s3:|https:)[a-zA-Z0-9!_.*'()/-]+$"
     },
     "ServiceUnavailable":{
       "type":"structure",
