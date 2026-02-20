@@ -39,8 +39,13 @@ trait JsonParserTrait
 
         $parsedBody = null;
         $body = $response->getBody();
-        if (!$body->isSeekable() || $body->getSize()) {
-            $parsedBody = $this->parseJson((string) $body, $response);
+        if ($body->isSeekable()) {
+            $body->rewind();
+        }
+
+        $rawBody = $body->getContents();
+        if (!empty($rawBody)) {
+            $parsedBody = $this->parseJson($rawBody, $response);
         }
 
         // Parse error code from response body
@@ -133,10 +138,15 @@ trait JsonParserTrait
         StructureShape $member
     ) {
         $body = $response->getBody();
-        if (!$body->isSeekable() || $body->getSize()) {
-            $jsonBody = $this->parseJson($body, $response);
+        if ($body->isSeekable()) {
+            $body->rewind();
+        }
+
+        $rawBody = $body->getContents();
+        if (!empty($rawBody)) {
+            $jsonBody = $this->parseJson($rawBody, $response);
         } else {
-            $jsonBody = (string) $body;
+            $jsonBody = $rawBody;
         }
 
         return $this->parser->parse($member, $jsonBody);

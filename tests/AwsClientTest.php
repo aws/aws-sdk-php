@@ -3,6 +3,7 @@ namespace Aws\Test;
 
 use Aws\Api\ApiProvider;
 use Aws\Api\ErrorParser\JsonRpcErrorParser;
+use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\CommandInterface;
 use Aws\Credentials\Credentials;
@@ -22,6 +23,7 @@ use Aws\Sts\StsClient;
 use Aws\Token\Token;
 use Aws\Waiter;
 use Aws\WrappedHttpHandler;
+use Exception;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
@@ -99,14 +101,14 @@ class AwsClientTest extends TestCase
 
     public function testWrapsExceptions()
     {
-        $this->expectExceptionMessage("Error executing \"foo\" on \"http://us-east-1.foo.amazonaws.com/\"; AWS HTTP error: Baz Bar!");
-        $this->expectException(\Aws\S3\Exception\S3Exception::class);
+        $this->expectExceptionMessage("Error executing \"foo\" on \"http://us-east-1.foo.amazonaws.com/\"; AWS HTTP error:\nBaz Bar!");
+        $this->expectException(S3Exception::class);
         $parser = function () {};
         $errorParser = new JsonRpcErrorParser();
         $h = new WrappedHttpHandler(
             function () {
                 return new RejectedPromise([
-                    'exception'        => new \Exception('Baz Bar!'),
+                    'exception'        => new Exception('Baz Bar!'),
                     'connection_error' => true,
                     'response'         => null
                 ]);
@@ -1016,6 +1018,139 @@ EOT
             }
         ]);
         $client->listBuckets();
+    }
+
+    /**
+     * @dataProvider appendEventStreamFlagMiddlewareProvider
+     *
+     * @param array $definition
+     * @param bool $isFlagPresent
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
+    public function testAppendEventStreamHttpFlagMiddleware(
+        array $definition,
+        bool $isFlagPresent
+    ): void
+    {
+
+        $service = new Service($definition, function () {});
+        $client = new AwsClient([
+            'service'      => 'TestService',
+            'api_provider' => function () use ($service) {
+                return $service->toArray();
+            },
+            'region'       => 'us-east-1',
+            'version'      => 'latest',
+        ]);
+        $called = false;
+        $client->getHandlerList()->setHandler(new MockHandler([new Result()]));
+        $client->getHandlerList()->appendInit(function(callable $handler)
+        use ($isFlagPresent, &$called) {
+            return function (CommandInterface $command, ?RequestInterface $request = null)
+            use ($handler, $isFlagPresent, &$called) {
+                $called = true;
+                $this->assertTrue(
+                    ($command['@http']['stream'] ?? false) === $isFlagPresent,
+                );
+
+                return $handler($command, $request);
+            };
+        });
+
+        $command = $client->getCommand('OperationTest');
+        $client->execute($command);
+        $this->assertTrue($called);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function appendEventStreamFlagMiddlewareProvider(): array
+    {
+        return [
+            'service_with_flag_present' => [
+                'definition' => [
+                    'metadata' => [
+                        'protocol' => 'rest-json',
+                        'protocols' => [
+                            'rest-json'
+                        ]
+                    ],
+                    'operations' => [
+                        'OperationTest' => [
+                            'name' => 'OperationTest',
+                            'http' => [
+                                'method' => 'POST',
+                                'requestUri' => '/operationTest',
+                                'responseCode' => 200,
+                            ],
+                            'input' => ['shape' => 'OperationTestInput'],
+                            'output' => ['shape' => 'OperationTestOutput'],
+                        ]
+                    ],
+                    'shapes' => [
+                        'OperationTestInput' => [
+                            'type' => 'structure',
+                            'members' => [
+                            ]
+                        ],
+                        'OperationTestOutput' => [
+                            'type' => 'structure',
+                            'members' => [
+                                'Stream' => [
+                                    'shape' => 'StreamShape',
+                                    'eventstream' => true
+                                ]
+                            ]
+                        ],
+                        'StreamShape' => ['type' => 'structure']
+                    ]
+                ],
+                'present' => true
+            ],
+            'service_with_flag_no_present' => [
+                'definition' => [
+                    'metadata' => [
+                        'protocol' => 'rest-json',
+                        'protocols' => [
+                            'rest-json'
+                        ]
+                    ],
+                    'operations' => [
+                        'OperationTest' => [
+                            'name' => 'OperationTest',
+                            'http' => [
+                                'method' => 'POST',
+                                'requestUri' => '/operationTest',
+                                'responseCode' => 200,
+                            ],
+                            'input' => ['shape' => 'OperationTestInput'],
+                            'output' => ['shape' => 'OperationTestOutput'],
+                        ]
+                    ],
+                    'shapes' => [
+                        'OperationTestInput' => [
+                            'type' => 'structure',
+                            'members' => [
+                            ]
+                        ],
+                        'OperationTestOutput' => [
+                            'type' => 'structure',
+                            'members' => [
+                                'NoStream' => [
+                                    'shape' => 'NoStreamShape',
+                                ]
+                            ]
+                        ],
+                        'NoStreamShape' => ['type' => 'structure']
+                    ]
+                ],
+                'present' => false
+            ]
+        ];
     }
 
     public function testSupportsNamedArgs()

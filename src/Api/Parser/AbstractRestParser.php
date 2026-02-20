@@ -2,10 +2,13 @@
 namespace Aws\Api\Parser;
 
 use Aws\Api\DateTimeResult;
+use Aws\Api\ResponseWrapper;
 use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 use Aws\Result;
 use Aws\CommandInterface;
+use GuzzleHttp\Psr7\CachingStream;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -39,6 +42,26 @@ abstract class AbstractRestParser extends AbstractParser
 
         if ($payload = $output['payload']) {
             $this->extractPayload($payload, $output, $response, $result);
+        } else {
+            $body = $response->getBody();
+            if (!$body->isSeekable()) {
+                $response = $response->withBody(
+                    new CachingStream($body)
+                );
+            }
+
+            $body = $response->getBody();
+            if ($body->isSeekable()) {
+                $body->rewind();
+            }
+
+            $rawBody = $body->getContents();
+            if (!empty($rawBody)
+                && count($output->getMembers()) > 0
+            ) {
+                // if no payload was found, then parse the contents of the body
+                $this->payload($response, $output, $result);
+            }
         }
 
         foreach ($output->getMembers() as $name => $member) {
@@ -55,15 +78,6 @@ abstract class AbstractRestParser extends AbstractParser
             }
         }
 
-        $body = $response->getBody();
-        if (!$payload
-            && (!$body->isSeekable() || $body->getSize())
-            && count($output->getMembers()) > 0
-        ) {
-            // if no payload was found, then parse the contents of the body
-            $this->payload($response, $output, $result);
-        }
-
         return new Result($result);
     }
 
@@ -75,17 +89,33 @@ abstract class AbstractRestParser extends AbstractParser
     ) {
         $member = $output->getMember($payload);
         $body = $response->getBody();
-
         if (!empty($member['eventstream'])) {
             $result[$payload] = new EventParsingIterator(
                 $body,
                 $member,
                 $this
             );
-        } elseif ($member instanceof StructureShape) {
+
+            return;
+        }
+
+        if (!$body->isSeekable()) {
+            $response = $response->withBody(
+                new CachingStream($response->getBody())
+            );
+        }
+
+        if ($member instanceof StructureShape) {
             //Unions must have at least one member set to a non-null value
             // If the body is empty, we can assume it is unset
-            if (!empty($member['union']) && ($body->isSeekable() && !$body->getSize())) {
+            $body = $response->getBody();
+            if ($body->isSeekable()) {
+                $body->rewind();
+            }
+
+            $rawBody = $body->getContents();
+            if (!empty($member['union'])
+                && empty($rawBody)) {
                 return;
             }
 
