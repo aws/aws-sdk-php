@@ -2,9 +2,11 @@ name: Unit Tests (Windows)
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
   pull_request:
-    branches: [master]
+    branches:
+      - master
 
 permissions:
   contents: read
@@ -12,6 +14,7 @@ permissions:
 jobs:
   run:
     runs-on: windows-latest
+
     strategy:
       matrix:
         include:
@@ -25,12 +28,15 @@ jobs:
             composer-options: ''
           - php-versions: '8.5'
             composer-options: ''
+
     name: PHP ${{ matrix.php-versions }} ${{ matrix.composer-options }}
+
     env:
       AWS_ACCESS_KEY_ID: foo
       AWS_SECRET_ACCESS_KEY: bar
       AWS_CSM_ENABLED: false
       AWS_SUPPRESS_PHP_DEPRECATION_WARNING: true
+
     steps:
       - name: Setup PHP with JIT
         uses: shivammathur/setup-php@v2
