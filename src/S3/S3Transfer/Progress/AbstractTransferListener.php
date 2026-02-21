@@ -24,7 +24,7 @@ abstract class AbstractTransferListener
      *   as part of the operation that originated the bytes transferred event.
      * - progress_snapshot: (TransferProgressSnapshot) The transfer snapshot holder.
      *
-     * @return bool
+     * @return bool true to notify successful handling otherwise false.
      */
     public function bytesTransferred(array $context): bool {
         return true;
@@ -50,4 +50,15 @@ abstract class AbstractTransferListener
      * @return void
      */
     public function transferFail(array $context): void {}
+
+    /**
+     * To provide an order on which listener is notified first.
+     * By default, it will provide a neutral value.
+     *
+     * @return int
+     */
+    public function priority(): int
+    {
+        return 0;
+    }
 }
