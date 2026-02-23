@@ -1397,10 +1397,6 @@ EOF
     {
         $s3Delimiter = "*";
         $fileNameWithDelimiter = "dir-file-$s3Delimiter.txt";
-        $this->expectException(S3TransferException::class);
-        $this->expectExceptionMessage(
-            "The filename `$fileNameWithDelimiter` must not contain the provided delimiter `$s3Delimiter`"
-        );
         $directory = sys_get_temp_dir() . "/upload-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
@@ -1420,7 +1416,7 @@ EOF
             $manager = new S3TransferManager(
                 $client
             );
-            $manager->uploadDirectory(
+            $result = $manager->uploadDirectory(
                 new UploadDirectoryRequest(
                     $directory,
                     "Bucket",
@@ -1428,6 +1424,15 @@ EOF
                     ['s3_delimiter' => $s3Delimiter]
                 )
             )->wait();
+            $reason = $result->getReason();
+            $this->assertInstanceOf(
+                S3TransferException::class,
+                $reason
+            );
+            $this->assertEquals(
+                "The filename `$fileNameWithDelimiter` must not contain the provided delimiter `$s3Delimiter`",
+                $reason->getMessage(),
+            );
         } finally {
             TestsUtility::cleanUpDir($directory);
         }
@@ -1481,6 +1486,8 @@ EOF
                     "Bucket",
                     [],
                     [],
+                    [],
+                    null,
                     [
                         $transferListener
                     ]
@@ -2726,14 +2733,6 @@ EOF
         array $expectedOutput
     ): void
     {
-        if ($expectedOutput['success'] === false) {
-            $this->expectException(S3TransferException::class);
-            $this->expectExceptionMessageMatches(
-                '/Cannot download key [^\s]+ its relative path'
-                .' resolves outside the parent directory\./'
-            );
-        }
-
         $bucket = "test-bucket";
         $directory = "test-directory";
         try {
@@ -2789,7 +2788,7 @@ EOF
             $manager = new S3TransferManager(
                 $client,
             );
-            $manager->downloadDirectory(
+            $result = $manager->downloadDirectory(
                 new DownloadDirectoryRequest(
                     $bucket,
                     $fullDirectoryPath,
@@ -2806,6 +2805,17 @@ EOF
                     $fullDirectoryPath
                     . DIRECTORY_SEPARATOR
                     . $expectedOutput['filename']
+                );
+            } else {
+                $reason = $result->getReason();
+                $this->assertInstanceOf(
+                    S3TransferException::class,
+                    $reason
+                );
+                $this->assertMatchesRegularExpression(
+                    '/Cannot download key \S+ its relative path'
+                    .' resolves outside the parent directory\./',
+                    $reason->getMessage()
                 );
             }
         } finally {

@@ -457,7 +457,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
         array $requestArgs
     ): void
     {
-        $partTransferredBytes = $result['ContentLength'];
+        $partTransferredBytes = $result['ContentLength'] ?? 0;
         // Snapshot and context for listeners
         $newSnapshot = new TransferProgressSnapshot(
             $this->currentSnapshot->getIdentifier(),

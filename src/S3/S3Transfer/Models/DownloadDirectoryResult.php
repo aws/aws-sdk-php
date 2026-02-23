@@ -2,6 +2,8 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
+use Throwable;
+
 final class DownloadDirectoryResult
 {
     /** @var int */
@@ -10,8 +12,8 @@ final class DownloadDirectoryResult
     /** @var int */
     private int $objectsFailed;
 
-    /** @var array */
-    private array $reasons;
+    /** @var \Throwable|null $reason */
+    private ?\Throwable $reason;
 
     /**
      * @param int $objectsDownloaded
@@ -21,11 +23,11 @@ final class DownloadDirectoryResult
     public function __construct(
         int $objectsDownloaded,
         int $objectsFailed,
-        array $reasons = []
+        ?Throwable $reason = null
     ) {
         $this->objectsDownloaded = $objectsDownloaded;
         $this->objectsFailed = $objectsFailed;
-        $this->reasons = $reasons;
+        $this->reason = $reason;
     }
 
     /**
@@ -45,11 +47,11 @@ final class DownloadDirectoryResult
     }
 
     /**
-     * @return array
+     * @return Throwable|null
      */
-    public function getReasons(): array
+    public function getReason(): ?Throwable
     {
-        return $this->reasons;
+        return $this->reason;
     }
 
     /**

@@ -18,6 +18,9 @@ abstract class AbstractTransferRequest
     protected ?AbstractTransferListener $progressTracker;
 
     /** @var array */
+    protected array $singleObjectListeners;
+
+    /** @var array */
     protected array $config;
 
     /**
@@ -28,10 +31,12 @@ abstract class AbstractTransferRequest
     public function __construct(
         array                     $listeners,
         ?AbstractTransferListener $progressTracker,
-        array                     $config
+        array                     $config,
+        array                     $singleObjectListeners = []
     ) {
         $this->listeners = $listeners;
         $this->progressTracker = $progressTracker;
+        $this->singleObjectListeners = $singleObjectListeners;
         $this->config = $config;
     }
 
@@ -53,6 +58,16 @@ abstract class AbstractTransferRequest
     public function getProgressTracker(): ?AbstractTransferListener
     {
         return $this->progressTracker;
+    }
+
+    /**
+     * Get listeners that should receive single-object events.
+     *
+     * @return array
+     */
+    public function getSingleObjectListeners(): array
+    {
+        return $this->singleObjectListeners;
     }
 
     /**

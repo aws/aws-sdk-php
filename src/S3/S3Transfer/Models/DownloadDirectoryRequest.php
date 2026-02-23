@@ -68,11 +68,9 @@ final class DownloadDirectoryRequest extends AbstractTransferRequest
      *    - MaxKeys: (int) Sets the maximum number of keys returned in the response.
      *    - Prefix: (string) To limit the response to keys that begin with the
      *      specified prefix.
-     * @param AbstractTransferListener[] $listeners The listeners for watching
-     * transfer events. Each listener will be cloned per file upload.
-     * @param AbstractTransferListener|null $progressTracker Ideally the progress
-     * tracker implementation provided here should be able to track multiple
-     * transfers at once. Please see MultiProgressTracker implementation.
+     * @param AbstractTransferListener[] $listeners Directory-level listeners that receive directory snapshots.
+     * @param AbstractTransferListener|null $progressTracker Directory-level progress tracker.
+     * @param array $singleObjectListeners Per-object listeners that receive single-object snapshots.
      */
     public function __construct(
         string $sourceBucket,
@@ -80,9 +78,15 @@ final class DownloadDirectoryRequest extends AbstractTransferRequest
         array $downloadRequestArgs = [],
         array $config = [],
         array $listeners = [],
-        ?AbstractTransferListener $progressTracker = null
+        ?AbstractTransferListener $progressTracker = null,
+        array $singleObjectListeners = []
     ) {
-        parent::__construct($listeners, $progressTracker, $config);
+        parent::__construct(
+            $listeners,
+            $progressTracker,
+            $config,
+            $singleObjectListeners
+        );
         if (ArnParser::isArn($sourceBucket)) {
             $sourceBucket = ArnParser::parse($sourceBucket)->getResource();
         }
