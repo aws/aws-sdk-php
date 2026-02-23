@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DataZone` - Add workflow properties support to connections APIs
+* `Aws\ControlCatalog` - Updated ExemptedPrincipalArns parameter documentation for improved accuracy
+* `Aws\MediaTailor` - Updated endpoint rule set for dualstack endpoints. Added a new opt-in option to log raw ad decision server requests for Playback Configurations.
+* `Aws\ConnectCases` - SearchCases API can now accept 25 fields in the request and response as opposed to the previous limit of 10. DeleteField's hard limit of 100 fields per domain has been lifted.
+* `Aws\QuickSight` - Adds support for SEMISTRUCT to InputColumn Type
+* `Aws\DynamoDB` - This change supports the creation of multi-account global tables. It adds one new arguments to UpdateTable, GlobalTableSettingsReplicationMode.
+* `Aws\Bedrock` - Automated Reasoning checks in Amazon Bedrock Guardrails now support fidelity report generation. The new workflow type assesses policy coverage and accuracy against customer documents. The GetAutomatedReasoningPolicyBuildWorkflowResultAssets API adds support for the three new asset types.
+* `Aws\Wickr` - AWS Wickr now provides APIs to manage your Wickr OpenTDF integration. These APIs enable you to test and save your OpenTDF configuration allowing you to manage rooms based on Trusted Data Format attributes.
+
 ## 3.370.0 - 2026-02-20
 
 * `Aws\SignerData` - This release introduces AWS Signer Data Plane SDK client supporting GetRevocationStatus API. The new client enables AWS PrivateLink connectivity with both private DNS and VPC endpoint URLs.

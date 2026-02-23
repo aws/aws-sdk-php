@@ -4725,7 +4725,9 @@
         "sparkGlueProperties":{"shape":"SparkGluePropertiesInput"},
         "s3Properties":{"shape":"S3PropertiesInput"},
         "amazonQProperties":{"shape":"AmazonQPropertiesInput"},
-        "mlflowProperties":{"shape":"MlflowPropertiesInput"}
+        "mlflowProperties":{"shape":"MlflowPropertiesInput"},
+        "workflowsMwaaProperties":{"shape":"WorkflowsMwaaPropertiesInput"},
+        "workflowsServerlessProperties":{"shape":"WorkflowsServerlessPropertiesInput"}
       },
       "union":true
     },
@@ -4741,7 +4743,9 @@
         "sparkGlueProperties":{"shape":"SparkGluePropertiesOutput"},
         "s3Properties":{"shape":"S3PropertiesOutput"},
         "amazonQProperties":{"shape":"AmazonQPropertiesOutput"},
-        "mlflowProperties":{"shape":"MlflowPropertiesOutput"}
+        "mlflowProperties":{"shape":"MlflowPropertiesOutput"},
+        "workflowsMwaaProperties":{"shape":"WorkflowsMwaaPropertiesOutput"},
+        "workflowsServerlessProperties":{"shape":"WorkflowsServerlessPropertiesOutput"}
       },
       "union":true
     },
@@ -16819,6 +16823,26 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "WorkflowsMwaaPropertiesInput":{
+      "type":"structure",
+      "members":{
+        "mwaaEnvironmentName":{"shape":"String"}
+      }
+    },
+    "WorkflowsMwaaPropertiesOutput":{
+      "type":"structure",
+      "members":{
+        "mwaaEnvironmentName":{"shape":"String"}
+      }
+    },
+    "WorkflowsServerlessPropertiesInput":{
+      "type":"structure",
+      "members":{}
+    },
+    "WorkflowsServerlessPropertiesOutput":{
+      "type":"structure",
+      "members":{}
     }
   }
 }

@@ -441,6 +441,14 @@
         "AutomatedReasoningLogicStatement$naturalLanguage": "<p>The natural language representation of the logical statement, providing a human-readable interpretation of the formal logic.</p>"
       }
     },
+    "AutomatedReasoningPolicyAccuracyScore": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyFidelityReport$accuracyScore": "<p>A score from 0.0 to 1.0 indicating how accurate the policy rules are relative to the source documents. A higher score means the policy rules more faithfully represent the source material.</p>",
+        "AutomatedReasoningPolicyRuleReport$accuracyScore": "<p>A score from 0.0 to 1.0 indicating how accurately this rule represents the source material.</p>",
+        "AutomatedReasoningPolicyVariableReport$accuracyScore": "<p>A score from 0.0 to 1.0 indicating how accurately this variable represents concepts from the source material.</p>"
+      }
+    },
     "AutomatedReasoningPolicyAddRuleAnnotation": {
       "base": "<p>An annotation for adding a new rule to an Automated Reasoning policy using a formal logical expression.</p>",
       "refs": {
@@ -487,6 +495,36 @@
       "base": "<p>A mutation operation that adds a new variable to the policy definition during the build process.</p>",
       "refs": {
         "AutomatedReasoningPolicyMutation$addVariable": "<p>A mutation to add a new variable to the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAnnotatedChunk": {
+      "base": "<p>Represents a portion of a source document with line number annotations. Chunks help organize document content for easier navigation and reference.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotatedChunkList$member": null
+      }
+    },
+    "AutomatedReasoningPolicyAnnotatedChunkList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyReportSourceDocument$documentContent": "<p>The document's content organized into annotated chunks with line number information for precise referencing.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAnnotatedContent": {
+      "base": "<p>Represents a content element within an annotated chunk. This union type allows for different types of content elements to be included in document chunks, such as individual lines of text with their line numbers.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotatedContentList$member": null
+      }
+    },
+    "AutomatedReasoningPolicyAnnotatedContentList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyAnnotatedChunk$content": "<p>The lines of text contained within this chunk, each annotated with its line number.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAnnotatedLine": {
+      "base": "<p>Represents a single line of text from a source document, annotated with its line number for precise referencing.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotatedContent$line": "<p>An annotated line of text from the source document, including both the line number and the text content.</p>"
       }
     },
     "AutomatedReasoningPolicyAnnotation": {
@@ -577,16 +615,30 @@
         "UpdateAutomatedReasoningPolicyTestCaseResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the policy that contains the updated test.</p>"
       }
     },
+    "AutomatedReasoningPolicyAtomicStatement": {
+      "base": "<p>Represents a single, indivisible statement extracted from a source document. Atomic statements are the fundamental units used to ground policy rules and variables to their source material.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAtomicStatementList$member": null
+      }
+    },
+    "AutomatedReasoningPolicyAtomicStatementList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyReportSourceDocument$atomicStatements": "<p>The list of atomic statements extracted from this document, representing the fundamental units of meaning used for grounding.</p>"
+      }
+    },
     "AutomatedReasoningPolicyBuildDocumentBlob": {
       "base": null,
       "refs": {
-        "AutomatedReasoningPolicyBuildWorkflowDocument$document": "<p>The actual content of the source document that will be analyzed to extract policy rules and concepts.</p>"
+        "AutomatedReasoningPolicyBuildWorkflowDocument$document": "<p>The actual content of the source document that will be analyzed to extract policy rules and concepts.</p>",
+        "AutomatedReasoningPolicySourceDocument$document": "<p>The raw content of the source document as a binary blob.</p>"
       }
     },
     "AutomatedReasoningPolicyBuildDocumentContentType": {
       "base": null,
       "refs": {
         "AutomatedReasoningPolicyBuildWorkflowDocument$documentContentType": "<p>The MIME type of the document content (e.g., text/plain, application/pdf, text/markdown).</p>",
+        "AutomatedReasoningPolicySourceDocument$documentContentType": "<p>The MIME type of the document (e.g., application/pdf, text/plain).</p>",
         "GetAutomatedReasoningPolicyBuildWorkflowResponse$documentContentType": "<p>The content type of the source document (e.g., text/plain, application/pdf).</p>"
       }
     },
@@ -594,6 +646,7 @@
       "base": null,
       "refs": {
         "AutomatedReasoningPolicyBuildWorkflowDocument$documentDescription": "<p>A detailed description of the document's content and how it should be used in the policy generation process.</p>",
+        "AutomatedReasoningPolicySourceDocument$documentDescription": "<p>An optional description providing context about the document's content and purpose.</p>",
         "GetAutomatedReasoningPolicyBuildWorkflowResponse$documentDescription": "<p>A detailed description of the document's content and how it should be used in the policy generation process.</p>"
       }
     },
@@ -601,6 +654,8 @@
       "base": null,
       "refs": {
         "AutomatedReasoningPolicyBuildWorkflowDocument$documentName": "<p>A descriptive name for the document that helps identify its purpose and content.</p>",
+        "AutomatedReasoningPolicyReportSourceDocument$documentName": "<p>The name of the source document that was analyzed.</p>",
+        "AutomatedReasoningPolicySourceDocument$documentName": "<p>The name of the source document for identification purposes.</p>",
         "GetAutomatedReasoningPolicyBuildWorkflowResponse$documentName": "<p>The name of the source document used in the build workflow.</p>"
       }
     },
@@ -628,10 +683,42 @@
         "AutomatedReasoningPolicyBuildStepMessage$messageType": "<p>The type of message (e.g., INFO, WARNING, ERROR) indicating its severity and purpose.</p>"
       }
     },
+    "AutomatedReasoningPolicyBuildResultAssetId": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildResultAssetManifestEntry$assetId": "<p>A unique identifier for the asset, if applicable. Use this ID when requesting specific assets through the API.</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowResultAssetsRequest$assetId": "<p>The unique identifier of the specific asset to retrieve when multiple assets of the same type exist. This is required when retrieving SOURCE_DOCUMENT assets, as multiple source documents may have been used in the workflow. The asset ID can be obtained from the asset manifest.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildResultAssetManifest": {
+      "base": "<p>A catalog of all artifacts produced by a build workflow, providing a comprehensive list of available assets including their types and identifiers.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildResultAssets$assetManifest": "<p>A manifest listing all available artifacts produced by the build workflow. This provides a catalog of all assets that can be retrieved, including their types, names, and identifiers.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildResultAssetManifestEntry": {
+      "base": "<p>Represents a single entry in the asset manifest, describing one artifact produced by the build workflow.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildResultAssetManifestList$member": null
+      }
+    },
+    "AutomatedReasoningPolicyBuildResultAssetManifestList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildResultAssetManifest$entries": "<p>The list of asset entries in the manifest, each describing an available artifact that can be retrieved.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildResultAssetName": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildResultAssetManifestEntry$assetName": "<p>A human-readable name for the asset, if applicable. This helps identify specific documents or reports within the workflow results.</p>"
+      }
+    },
     "AutomatedReasoningPolicyBuildResultAssetType": {
       "base": null,
       "refs": {
-        "GetAutomatedReasoningPolicyBuildWorkflowResultAssetsRequest$assetType": "<p>The type of asset to retrieve (e.g., BUILD_LOG, QUALITY_REPORT, POLICY_DEFINITION).</p>"
+        "AutomatedReasoningPolicyBuildResultAssetManifestEntry$assetType": "<p>The type of asset (e.g., BUILD_LOG, QUALITY_REPORT, POLICY_DEFINITION, GENERATED_TEST_CASES, POLICY_SCENARIOS, FIDELITY_REPORT, ASSET_MANIFEST, SOURCE_DOCUMENT).</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowResultAssetsRequest$assetType": "<p>The type of asset to retrieve (e.g., BUILD_LOG, QUALITY_REPORT, POLICY_DEFINITION, GENERATED_TEST_CASES, POLICY_SCENARIOS, FIDELITY_REPORT, ASSET_MANIFEST, SOURCE_DOCUMENT).</p>"
       }
     },
     "AutomatedReasoningPolicyBuildResultAssets": {
@@ -673,7 +760,8 @@
     "AutomatedReasoningPolicyBuildWorkflowDocument": {
       "base": "<p>Represents a source document used in the policy build workflow, containing the content and metadata needed for policy generation.</p>",
       "refs": {
-        "AutomatedReasoningPolicyBuildWorkflowDocumentList$member": null
+        "AutomatedReasoningPolicyBuildWorkflowDocumentList$member": null,
+        "AutomatedReasoningPolicyGenerateFidelityReportDocumentList$member": null
       }
     },
     "AutomatedReasoningPolicyBuildWorkflowDocumentList": {
@@ -748,6 +836,12 @@
         "AutomatedReasoningPolicyDefinitionQualityReport$conflictingRules": "<p>A list of rules that may conflict with each other, potentially leading to inconsistent policy behavior.</p>"
       }
     },
+    "AutomatedReasoningPolicyCoverageScore": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyFidelityReport$coverageScore": "<p>A score from 0.0 to 1.0 indicating how well the policy covers the statements in the source documents. A higher score means more of the source content is represented in the policy.</p>"
+      }
+    },
     "AutomatedReasoningPolicyDefinition": {
       "base": "<p>Contains the formal logic rules, variables, and custom variable types that define an Automated Reasoning policy. The policy definition specifies the constraints used to validate foundation model responses for accuracy and logical consistency.</p>",
       "refs": {
@@ -803,6 +897,8 @@
         "AutomatedReasoningPolicyDeleteRuleAnnotation$ruleId": "<p>The unique identifier of the rule to delete from the policy.</p>",
         "AutomatedReasoningPolicyDeleteRuleMutation$id": "<p>The unique identifier of the rule to delete.</p>",
         "AutomatedReasoningPolicyDisjointedRuleIdList$member": null,
+        "AutomatedReasoningPolicyRuleReport$rule": "<p>The identifier of the policy rule being analyzed in this report.</p>",
+        "AutomatedReasoningPolicyRuleReportMap$key": null,
         "AutomatedReasoningPolicyUpdateRuleAnnotation$ruleId": "<p>The unique identifier of the rule to update.</p>"
       }
     },
@@ -940,7 +1036,9 @@
         "AutomatedReasoningPolicyDeleteVariableAnnotation$name": "<p>The name of the variable to delete from the policy. The variable must not be referenced by any rules.</p>",
         "AutomatedReasoningPolicyDeleteVariableMutation$name": "<p>The name of the variable to delete.</p>",
         "AutomatedReasoningPolicyUpdateVariableAnnotation$name": "<p>The current name of the variable to update.</p>",
-        "AutomatedReasoningPolicyUpdateVariableAnnotation$newName": "<p>The new name for the variable, if you want to rename it. If not provided, the name remains unchanged.</p>"
+        "AutomatedReasoningPolicyUpdateVariableAnnotation$newName": "<p>The new name for the variable, if you want to rename it. If not provided, the name remains unchanged.</p>",
+        "AutomatedReasoningPolicyVariableReport$policyVariable": "<p>The name of the policy variable being analyzed in this report.</p>",
+        "AutomatedReasoningPolicyVariableReportMap$key": null
       }
     },
     "AutomatedReasoningPolicyDefinitionVariableNameList": {
@@ -1021,10 +1119,42 @@
         "AutomatedReasoningPolicyDisjointRuleSet$rules": "<p>The list of rules that form this disjoint set, all operating on the same set of variables.</p>"
       }
     },
+    "AutomatedReasoningPolicyDocumentId": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyReportSourceDocument$documentId": "<p>A unique identifier for this document within the fidelity report.</p>",
+        "AutomatedReasoningPolicyStatementReference$documentId": "<p>The unique identifier of the document containing the referenced statement.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDocumentSha256": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyReportSourceDocument$documentHash": "<p>A SHA-256 hash of the document content, used for verification and ensuring the document hasn't changed since analysis.</p>",
+        "AutomatedReasoningPolicySourceDocument$documentHash": "<p>A SHA-256 hash of the document content, used for verification and integrity checking.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyFidelityReport": {
+      "base": "<p>A comprehensive analysis report that measures how accurately a generated policy represents the source documents. The report includes coverage and accuracy scores, detailed grounding information linking policy elements to source statements, and annotated document content.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildResultAssets$fidelityReport": "<p>A comprehensive fidelity report that measures how accurately the generated policy represents the source documents. The report includes coverage and accuracy scores, along with detailed grounding information for rules and variables.</p>"
+      }
+    },
     "AutomatedReasoningPolicyFormatVersion": {
       "base": null,
       "refs": {
         "AutomatedReasoningPolicyDefinition$version": "<p>The version of the policy definition format.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyGenerateFidelityReportContent": {
+      "base": "<p>Configuration for generating a fidelity report, which can either analyze new documents or update an existing fidelity report with a new policy definition.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyWorkflowTypeContent$generateFidelityReportContent": "<p>The content configuration for generating a fidelity report workflow. This can include source documents to analyze or an existing fidelity report to update with a new policy definition.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyGenerateFidelityReportDocumentList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyGenerateFidelityReportContent$documents": "<p>Source documents to analyze for generating a new fidelity report. The documents will be processed to create atomic statements and grounding information.</p>"
       }
     },
     "AutomatedReasoningPolicyGeneratedTestCase": {
@@ -1071,6 +1201,33 @@
         "AutomatedReasoningPolicyAnnotation$ingestContent": "<p>An operation to process and incorporate new content into the policy, extracting additional rules and concepts.</p>"
       }
     },
+    "AutomatedReasoningPolicyJustificationList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyRuleReport$groundingJustifications": "<p>Explanations describing how the source statements support and justify this specific rule.</p>",
+        "AutomatedReasoningPolicyVariableReport$groundingJustifications": "<p>Explanations describing how the source statements support and justify this specific variable definition.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyJustificationText": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyJustificationList$member": null,
+        "AutomatedReasoningPolicyRuleReport$accuracyJustification": "<p>A textual explanation of the accuracy score, describing why the rule received this particular accuracy rating.</p>",
+        "AutomatedReasoningPolicyVariableReport$accuracyJustification": "<p>A textual explanation of the accuracy score, describing why the variable received this particular accuracy rating.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyLineNumberList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyStatementLocation$lines": "<p>The line numbers in the source document where this statement appears.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyLineText": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyAnnotatedLine$lineText": "<p>The actual text content of this line from the source document.</p>"
+      }
+    },
     "AutomatedReasoningPolicyMutation": {
       "base": "<p>A container for various mutation operations that can be applied to an Automated Reasoning policy, including adding, updating, and deleting policy elements.</p>",
       "refs": {
@@ -1094,6 +1251,30 @@
       "base": "<p>Represents the planning phase of policy build workflow, where the system analyzes source content and determines what operations to perform.</p>",
       "refs": {
         "AutomatedReasoningPolicyBuildStepContext$planning": "<p>Indicates that this build step was part of the planning phase, where the system determines what operations to perform.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyReportSourceDocument": {
+      "base": "<p>Represents a source document that was analyzed during fidelity report generation, including the document's metadata and its content broken down into atomic statements.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyReportSourceDocumentList$member": null
+      }
+    },
+    "AutomatedReasoningPolicyReportSourceDocumentList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyFidelityReport$documentSources": "<p>A list of source documents with their content broken down into atomic statements and annotated with line numbers for precise referencing.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyRuleReport": {
+      "base": "<p>Provides detailed fidelity analysis for a specific policy rule, including which source document statements support it and how accurate the rule is.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyRuleReportMap$value": null
+      }
+    },
+    "AutomatedReasoningPolicyRuleReportMap": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyFidelityReport$ruleReports": "<p>A mapping from rule identifiers to detailed fidelity reports for each rule, showing which source statements ground each rule and how accurate it is.</p>"
       }
     },
     "AutomatedReasoningPolicyScenario": {
@@ -1126,6 +1307,44 @@
       "base": "<p>Contains a comprehensive entity encompassing all the scenarios generated by the build workflow, which can be used to validate an Automated Reasoning policy.</p>",
       "refs": {
         "AutomatedReasoningPolicyBuildResultAssets$policyScenarios": "<p>An entity encompassing all the policy scenarios generated by the build workflow, which can be used to validate an Automated Reasoning policy. </p>"
+      }
+    },
+    "AutomatedReasoningPolicySourceDocument": {
+      "base": "<p>Represents a source document that was processed during a build workflow. Contains the document content, metadata, and a hash for verification.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildResultAssets$document": "<p>A source document that was used as input during the build workflow. This allows you to retrieve the original documents that were processed to generate the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyStatementId": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyAtomicStatement$id": "<p>A unique identifier for this atomic statement within the fidelity report.</p>",
+        "AutomatedReasoningPolicyStatementReference$statementId": "<p>The unique identifier of the specific atomic statement being referenced.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyStatementLocation": {
+      "base": "<p>Describes the location of a statement within a source document using line numbers.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAtomicStatement$location": "<p>Information about where this statement appears in the source document, including line numbers.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyStatementReference": {
+      "base": "<p>References a specific atomic statement within a source document, used to link policy elements back to their source material.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyStatementReferenceList$member": null
+      }
+    },
+    "AutomatedReasoningPolicyStatementReferenceList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyRuleReport$groundingStatements": "<p>References to statements from the source documents that provide the basis or justification for this rule.</p>",
+        "AutomatedReasoningPolicyVariableReport$groundingStatements": "<p>References to statements from the source documents that provide the basis or justification for this variable.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyStatementText": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyAtomicStatement$text": "<p>The actual text content of the atomic statement as extracted from the source document.</p>"
       }
     },
     "AutomatedReasoningPolicySummaries": {
@@ -1280,6 +1499,18 @@
       "base": "<p>A mutation operation that modifies an existing variable in the policy definition during the build process.</p>",
       "refs": {
         "AutomatedReasoningPolicyMutation$updateVariable": "<p>A mutation to modify an existing variable in the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyVariableReport": {
+      "base": "<p>Provides detailed fidelity analysis for a specific policy variable, including which source document statements support it and how accurate the variable definition is.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyVariableReportMap$value": null
+      }
+    },
+    "AutomatedReasoningPolicyVariableReportMap": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyFidelityReport$variableReports": "<p>A mapping from variable names to detailed fidelity reports for each variable, showing which source statements ground each variable and how accurate it is.</p>"
       }
     },
     "AutomatedReasoningPolicyVersion": {
@@ -3520,9 +3751,12 @@
     "Integer": {
       "base": null,
       "refs": {
+        "AutomatedReasoningPolicyAnnotatedChunk$pageNumber": "<p>The page number where this chunk begins, if the document is divided into pages.</p>",
+        "AutomatedReasoningPolicyAnnotatedLine$lineNumber": "<p>The line number of this text within the source document.</p>",
         "AutomatedReasoningPolicyDefinitionQualityReport$typeCount": "<p>The total number of custom types defined in the policy.</p>",
         "AutomatedReasoningPolicyDefinitionQualityReport$variableCount": "<p>The total number of variables defined in the policy.</p>",
         "AutomatedReasoningPolicyDefinitionQualityReport$ruleCount": "<p>The total number of rules defined in the policy.</p>",
+        "AutomatedReasoningPolicyLineNumberList$member": null,
         "CustomModelUnits$customModelUnitsPerModelCopy": "<p>The number of custom model units used to host a model copy. </p>",
         "TeacherModelConfig$maxResponseLengthForInference": "<p>The maximum number of tokens requested when the customization job invokes the teacher model.</p>"
       }

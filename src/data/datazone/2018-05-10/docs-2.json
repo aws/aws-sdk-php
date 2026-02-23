@@ -7808,7 +7808,9 @@
         "UpdateSubscriptionTargetInput$provider": "<p>The provider to be updated as part of the <code>UpdateSubscriptionTarget</code> action.</p>",
         "UpdateSubscriptionTargetOutput$type": "<p>The type to be updated as part of the <code>UpdateSubscriptionTarget</code> action.</p>",
         "UpdateSubscriptionTargetOutput$provider": "<p>The provider to be updated as part of the <code>UpdateSubscriptionTarget</code> action.</p>",
-        "UserDetails$userId": "<p>The identifier of the Amazon DataZone user.</p>"
+        "UserDetails$userId": "<p>The identifier of the Amazon DataZone user.</p>",
+        "WorkflowsMwaaPropertiesInput$mwaaEnvironmentName": "<p>The MWAA environment name.</p>",
+        "WorkflowsMwaaPropertiesOutput$mwaaEnvironmentName": "<p>The MWAA environment name.</p>"
       }
     },
     "StringList": {
@@ -8983,6 +8985,30 @@
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by the Amazon Web Services service.</p>",
       "refs": {}
+    },
+    "WorkflowsMwaaPropertiesInput": {
+      "base": "<p>The Amazon MWAA properties.</p>",
+      "refs": {
+        "ConnectionPropertiesInput$workflowsMwaaProperties": "<p>The Amazon MWAA properties of a connection.</p>"
+      }
+    },
+    "WorkflowsMwaaPropertiesOutput": {
+      "base": "<p>The Amazon MWAA properties.</p>",
+      "refs": {
+        "ConnectionPropertiesOutput$workflowsMwaaProperties": "<p>The Amazon MWAA properties of a connection.</p>"
+      }
+    },
+    "WorkflowsServerlessPropertiesInput": {
+      "base": "<p>The MWAA serverless properties.</p>",
+      "refs": {
+        "ConnectionPropertiesInput$workflowsServerlessProperties": "<p>The MWAA serverless properties of a connection.</p>"
+      }
+    },
+    "WorkflowsServerlessPropertiesOutput": {
+      "base": "<p>The MWAA serverless properties.</p>",
+      "refs": {
+        "ConnectionPropertiesOutput$workflowsServerlessProperties": "<p>The MWAA serverless properties of a connection.</p>"
+      }
     }
   }
 }
