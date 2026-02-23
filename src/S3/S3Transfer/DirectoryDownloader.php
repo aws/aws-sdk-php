@@ -322,8 +322,8 @@ final class DirectoryDownloader
     ): bool
     {
         $resolved = [];
-        $sections = explode('/', $sink);
-        $targetSectionsLength = count(explode('/', $objectKey));
+        $sections = explode(DIRECTORY_SEPARATOR, $sink);
+        $targetSectionsLength = count(explode(DIRECTORY_SEPARATOR, $objectKey));
         $targetSections = array_slice($sections, -($targetSectionsLength + 1));
         $targetDirectory = $targetSections[0];
 
