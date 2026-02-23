@@ -9,8 +9,8 @@ use Aws\S3\AmbiguousSuccessParser;
 use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Psr\Http\Message\ResponseInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -52,7 +52,7 @@ class AmbiguousSuccessParserTest extends TestCase
     }
 
     #[DataProvider('opsWithoutAmbiguousSuccessesProvider')]
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testIgnoresAmbiguousSuccessesOnUnaffectedOperations(string $operation)
     {
         $command = $this->getMockBuilder(CommandInterface::class)->getMock();
@@ -66,7 +66,6 @@ class AmbiguousSuccessParserTest extends TestCase
 
         $instance = $this->instance;
         $instance($command, $response);
-        $this->assertTrue(true);
     }
 
     #[DataProvider('opsWithAmbiguousSuccessesProvider')]

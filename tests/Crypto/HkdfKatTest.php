@@ -8,6 +8,7 @@ use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use Aws\Crypto\AesGcmDecryptingStream;
 use Aws\Crypto\AlgorithmSuite;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
 use Aws\Crypto\Cipher\CipherMethod;
 use Aws\Exception\CryptoException;
@@ -15,9 +16,8 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\LimitStream;
 use PHPUnit\Framework\Constraint\IsEmpty;
 use Psr\Http\Message\StreamInterface;
-use PHPUnit\Framework\Attributes\CoversNothing;
 
-#[CoversNothing]
+#[DoesNotPerformAssertions]
 class HkdfKatTest extends TestCase
 {
     public static function getKats(): array

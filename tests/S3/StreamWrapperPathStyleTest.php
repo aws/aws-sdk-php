@@ -11,10 +11,10 @@ use Aws\S3\S3Client;
 use Aws\S3\StreamWrapper;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\CoversNothing;
 
 #[CoversClass(StreamWrapper::class)]
 class StreamWrapperPathStyleTest extends TestCase
@@ -78,7 +78,7 @@ class StreamWrapperPathStyleTest extends TestCase
         fopen('s3://bucket/key', 'x');
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testSuccessfulXMode()
     {
         $this->addMockResults(
@@ -92,7 +92,6 @@ class StreamWrapperPathStyleTest extends TestCase
         );
         $r = fopen('s3://bucket/key', 'x');
         fclose($r);
-        $this->assertTrue(true);
     }
 
     public function testOpensNonSeekableReadStream()
@@ -769,7 +768,7 @@ class StreamWrapperPathStyleTest extends TestCase
         closedir($r);
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testCanSetDelimiterStreamContext()
     {
         $this->addMockResults($this->client, [
@@ -795,7 +794,6 @@ class StreamWrapperPathStyleTest extends TestCase
         $context = stream_context_create(['s3' => ['delimiter' => '']]);
         $r = opendir('s3://bucket', $context);
         closedir($r);
-        $this->assertTrue(true);
     }
 
     public function testCachesReaddirs()

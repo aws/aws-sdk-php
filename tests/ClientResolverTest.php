@@ -20,6 +20,7 @@ use Aws\HandlerList;
 use Aws\Result;
 use Generator;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -38,7 +39,7 @@ class ClientResolverTest extends TestCase
         $r->resolve([], new HandlerList());
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testAddsValidationSubscriber()
     {
         $c = new DynamoDbClient([
@@ -52,10 +53,9 @@ class ClientResolverTest extends TestCase
             $this->fail('Did not validate');
         } catch (\InvalidArgumentException $e) {
         }
-        $this->assertTrue(true);
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testCanDisableValidation()
     {
         $c = new DynamoDbClient([
@@ -67,10 +67,9 @@ class ClientResolverTest extends TestCase
         $handler = \Aws\constantly(new Result([]));
         $command->getHandlerList()->setHandler($handler);
         $c->execute($command);
-        $this->assertTrue(true);
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testCanDisableSpecificValidationConstraints()
     {
         $c = new DynamoDbClient([
@@ -317,7 +316,7 @@ class ClientResolverTest extends TestCase
         $this->assertSame($exp, $creds->getExpiration());
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testCanDisableRetries()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -327,10 +326,9 @@ class ClientResolverTest extends TestCase
             'version' => 'latest',
             'retries' => 0,
         ], new HandlerList());
-        $this->assertTrue(true);
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testCanEnableRetries()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -340,10 +338,9 @@ class ClientResolverTest extends TestCase
             'version' => 'latest',
             'retries' => 2,
         ], new HandlerList());
-        $this->assertTrue(true);
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testCanEnableRetriesStandardMode()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -356,10 +353,9 @@ class ClientResolverTest extends TestCase
                 'max_attempts' => 10,
             ]
         ], new HandlerList());
-        $this->assertTrue(true);
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testCanEnableRetriesAdaptivedMode()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -372,7 +368,6 @@ class ClientResolverTest extends TestCase
                 'max_attempts' => 10,
             ]
         ], new HandlerList());
-        $this->assertTrue(true);
     }
 
     public function testCanCreateNullCredentials()
@@ -705,7 +700,7 @@ EOT;
         ];
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testAddsLoggerWithDebugSettings()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -716,10 +711,9 @@ EOT;
             'endpoint' => 'http://us-east-1.foo.amazonaws.com',
             'version' => 'latest'
         ], new HandlerList());
-        $this->assertTrue(true);
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testAddsDebugListener()
     {
         $em = new HandlerList();
@@ -731,7 +725,6 @@ EOT;
             'endpoint' => 'http://us-east-1.foo.amazonaws.com',
             'version' => 'latest'
         ], $em);
-        $this->assertTrue(true);
     }
 
     public function canSetDebugToFalse()
@@ -769,7 +762,7 @@ EOT;
         $this->assertTrue($c->getConfig('bucket_endpoint'));
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testSkipsNonRequiredKeys()
     {
         $r = new ClientResolver([
@@ -779,7 +772,6 @@ EOT;
             ]
         ]);
         $r->resolve([], new HandlerList());
-        $this->assertTrue(true);
     }
 
     public function testAppliesLatestAsDefaultVersionWithoutSuppliedVersion()

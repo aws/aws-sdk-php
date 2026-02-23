@@ -7,7 +7,7 @@ use Aws\HandlerList;
 use Aws\Middleware;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(HandlerList::class)]
@@ -64,12 +64,11 @@ class HandlerListTest extends TestCase
         $this->assertSame($handler, $list->resolve());
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testIgnoreWhenNameNotFound()
     {
         $list = new HandlerList();
         $list->remove('foo');
-        $this->assertTrue(true);
     }
 
     public function testCanRemoveByName()

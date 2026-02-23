@@ -15,6 +15,7 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -945,14 +946,13 @@ class InstanceProfileProviderTest extends TestCase
         )->wait();
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testDoesNotRequireConfig()
     {
         new InstanceProfileProvider();
-        $this->assertTrue(true);
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testEnvDisableFlag()
     {
         $flag = getenv(InstanceProfileProvider::ENV_DISABLE);
@@ -972,7 +972,6 @@ class InstanceProfileProviderTest extends TestCase
         } finally {
             putenv(InstanceProfileProvider::ENV_DISABLE . '=' . $flag);
         }
-        $this->assertTrue(true);
     }
 
     public function testRetriesEnvVarIsUsed()

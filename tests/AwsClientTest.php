@@ -25,10 +25,10 @@ use Aws\WrappedHttpHandler;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(AwsClient::class)]
@@ -281,24 +281,22 @@ class AwsClientTest extends TestCase
         $this->assertStringContainsString('AWS4-HMAC-SHA256', $str);
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testAllowsFactoryMethodForBc()
     {
         Ec2Client::factory([
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
-        $this->assertTrue(true);
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testCanInstantiateAliasedClients()
     {
         new SesClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
-        $this->assertTrue(true);
     }
 
     public function testCanGetSignatureProvider()

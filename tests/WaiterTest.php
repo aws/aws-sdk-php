@@ -18,11 +18,11 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\CoversNothing;
 
 #[CoversClass(Waiter::class)]
 class WaiterTest extends TestCase
@@ -62,7 +62,7 @@ class WaiterTest extends TestCase
         );
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testContinueWaitingOnHandlerError()
     {
         $retries = 10;
@@ -93,10 +93,9 @@ class WaiterTest extends TestCase
         $client->waitUntil('TableExists', [
             'TableName' => 'table',
         ]);
-        $this->assertTrue(true);
     }
 
-    #[CoversNothing]
+    #[DoesnotPerformAssertions]
     public function testCanCancel()
     {
         $client = $this->getTestClient('DynamoDb');
@@ -106,7 +105,6 @@ class WaiterTest extends TestCase
             '@http' => ['debug' => true]
         ])->promise()->cancel();
         sleep(1);
-        $this->assertTrue(true);
     }
 
     public function testCanWait()

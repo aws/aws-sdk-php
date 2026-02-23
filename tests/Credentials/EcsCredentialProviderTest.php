@@ -15,11 +15,11 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Ring\Future\CompletedFutureArray;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\CoversNothing;
 
 #[CoversClass(EcsCredentialProvider::class)]
 class EcsCredentialProviderTest extends TestCase
@@ -102,11 +102,10 @@ class EcsCredentialProviderTest extends TestCase
         $this->assertSame($t, $c->getExpiration());
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testDoesNotRequireConfig()
     {
         new EcsCredentialProvider();
-        $this->assertTrue(true);
     }
 
     public function testRequestHeaderWithAuthorisationKey()

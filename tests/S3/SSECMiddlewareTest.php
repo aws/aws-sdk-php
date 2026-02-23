@@ -6,8 +6,8 @@ use Aws\Result;
 use Aws\S3\SSECMiddleware;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 #[CoversClass(SSECMiddleware::class)]
@@ -85,12 +85,11 @@ class SSECMiddlewareTest extends TestCase
         ]);
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testCanUseWithoutHttpsForNonSse()
     {
         $client = $this->getTestClient('s3', ['scheme' => 'http']);
         $this->addMockResults($client, [new Result()]);
         $client->listBuckets();
-        $this->assertTrue(true);
     }
 }

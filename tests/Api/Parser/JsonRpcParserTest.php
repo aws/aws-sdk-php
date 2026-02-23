@@ -14,13 +14,13 @@ use Aws\CommandInterface;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(JsonRpcParser::class)]
 class JsonRpcParserTest extends TestCase
 {
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testCanHandleNullResponses()
     {
         $operation = $this->getMockBuilder(Operation::class)
@@ -60,7 +60,6 @@ class JsonRpcParserTest extends TestCase
             $this->getMockBuilder(CommandInterface::class)->getMock(),
             new Response(200, [], json_encode(null))
         );
-        $this->assertTrue(true);
     }
 
     public function testCanHandleEmptyResponses()

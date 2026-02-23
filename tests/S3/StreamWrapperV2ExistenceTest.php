@@ -13,8 +13,8 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -44,7 +44,7 @@ class StreamWrapperV2ExistenceTest extends TestCase
         $this->client = null;
     }
 
-    #[CoversNothing]
+    #[DoesNotPerformAssertions]
     public function testSuccessfulXMode()
     {
         $this->addMockResults(
@@ -62,7 +62,6 @@ class StreamWrapperV2ExistenceTest extends TestCase
         );
         $r = fopen('s3://bucket/key', 'x');
         fclose($r);
-        $this->assertTrue(true);
     }
 
     public function testOpensNonSeekableReadStream()
