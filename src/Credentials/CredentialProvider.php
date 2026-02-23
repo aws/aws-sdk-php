@@ -721,6 +721,12 @@ class CredentialProvider
         $sourceProfileName = "";
         if (!empty($roleProfile['source_profile'])) {
             $sourceProfileName = $roleProfile['source_profile'];
+            # in ~/.aws/config all the named profile (except 'default') are
+            # prefix with 'profile '
+            if ($filename == (self::getHomeDir() . '/.aws/config') &&
+                $sourceProfileName != 'default') {
+                $sourceProfileName = 'profile ' . $sourceProfileName;
+            }
             if (!isset($profiles[$sourceProfileName])) {
                 return self::reject("source_profile " . $sourceProfileName
                     . " using profile " . $profileName . " does not exist"
