@@ -350,6 +350,11 @@ class SignatureV4 implements SignatureInterface
             return strcmp(rawurlencode($a), rawurlencode($b));
         });
         foreach ($query as $k => $v) {
+            if(is_numeric($k)){
+                $qs .= rawurlencode((string)$v) . '=&';
+                continue;
+            }
+
             if (!is_array($v)) {
                 $qs .= rawurlencode($k) . '=' . rawurlencode($v !== null ? $v : '') . '&';
             } else {
