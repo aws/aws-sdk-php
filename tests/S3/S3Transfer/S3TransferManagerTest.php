@@ -712,8 +712,10 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
                 ->getMock();
+            $client->method('getHandlerList')
+                ->willReturn(new HandlerList());
             $manager = new S3TransferManager(
                 $client,
             );
@@ -758,8 +760,10 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
                 ->getMock();
+            $client->method('getHandlerList')
+                ->willReturn(new HandlerList());
             $client->method('getCommand')
                 ->willReturnCallback(function ($commandName, $args) {
                     return new Command($commandName, $args);
@@ -824,8 +828,10 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
                 ->getMock();
+            $client->method('getHandlerList')
+                ->willReturn(new HandlerList());
             $client->method('getCommand')
                 ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
                     $objectKeys[$args["Key"]] = true;
@@ -883,8 +889,10 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
                 ->getMock();
+            $client->method('getHandlerList')
+                ->willReturn(new HandlerList());
             $client->method('getCommand')
                 ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
                     $objectKeys[$args["Key"]] = true;
@@ -961,8 +969,10 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
                 ->getMock();
+            $client->method('getHandlerList')
+                ->willReturn(new HandlerList());
             $client->method('getCommand')
                 ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
                     $objectKeys[$args["Key"]] = true;
@@ -1097,8 +1107,10 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
                 ->getMock();
+            $client->method('getHandlerList')
+                ->willReturn(new HandlerList());
             $client->method('getCommand')
                 ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
                     $objectKeys[$args["Key"]] = true;
@@ -1159,8 +1171,10 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
                 ->getMock();
+            $client->method('getHandlerList')
+                ->willReturn(new HandlerList());
             $client->method('getCommand')
                 ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
                     $objectKeys[$args["Key"]] = true;
@@ -1243,8 +1257,10 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
                 ->getMock();
+            $client->method('getHandlerList')
+                ->willReturn(new HandlerList());
             $client->method('getCommand')
                 ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
                     return new Command($commandName, $args);
@@ -3846,9 +3862,15 @@ EOF
             };
         }
 
+        $methodsCallback['getHandlerList'] = function () {
+            return new HandlerList();
+        };
+
         $client = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(array_keys($methodsCallback))
+            ->onlyMethods(array_merge(
+                array_keys($methodsCallback),
+            ))
             ->getMock();
         foreach ($methodsCallback as $name => $callback) {
             $client->method($name)->willReturnCallback($callback);
@@ -3867,7 +3889,10 @@ EOF
 
         $mockClient = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
+            ->onlyMethods(['getHandlerList'])
             ->getMock();
+        $mockClient->method('getHandlerList')
+            ->willReturn(new HandlerList());
 
         $manager = new S3TransferManager($mockClient);
         $request = new ResumeDownloadRequest($invalidResumeFile);
@@ -3906,7 +3931,9 @@ EOF
 
         $mockClient = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
+            ->onlyMethods(['getHandlerList'])
             ->getMock();
+        $mockClient->method('getHandlerList')->willReturn(new HandlerList());
 
         $manager = new S3TransferManager($mockClient);
         $request = new ResumeDownloadRequest($resumeFile);
@@ -3928,7 +3955,9 @@ EOF
 
         $mockClient = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
+            ->onlyMethods(['getHandlerList'])
             ->getMock();
+        $mockClient->method('getHandlerList')->willReturn(new HandlerList());
 
         $manager = new S3TransferManager($mockClient);
         $request = new ResumeUploadRequest($invalidResumeFile);
@@ -3964,7 +3993,9 @@ EOF
 
         $mockClient = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
+            ->onlyMethods(['getHandlerList'])
             ->getMock();
+        $mockClient->method('getHandlerList')->willReturn(new HandlerList());
 
         $manager = new S3TransferManager($mockClient);
         $request = new ResumeUploadRequest($resumeFile);
@@ -4001,8 +4032,9 @@ EOF
 
         $mockClient = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
+            ->onlyMethods(['getHandlerList', 'executeAsync', 'getCommand'])
             ->getMock();
-
+        $mockClient->method('getHandlerList')->willReturn(new HandlerList());
         $mockClient->method('executeAsync')
             ->willReturnCallback(function ($command) {
                 if ($command->getName() === 'ListMultipartUploads') {
@@ -4051,8 +4083,9 @@ EOF
 
         $mockClient = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['__call'])
+            ->onlyMethods(['__call', 'getHandlerList'])
             ->getMock();
+        $mockClient->method('getHandlerList')->willReturn(new HandlerList());
 
         $mockClient->method('__call')
             ->willReturnCallback(function ($name, $args) {
@@ -4102,9 +4135,10 @@ EOF
 
         $mockClient = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['__call', 'getCommand', 'executeAsync'])
+            ->onlyMethods(['__call', 'getCommand', 'executeAsync', 'getHandlerList'])
             ->getMock();
 
+        $mockClient->method('getHandlerList')->willReturn(new HandlerList());
         $mockClient->method('__call')
             ->willReturnCallback(function ($name, $args) {
                 if ($name === 'headObject') {
@@ -4166,9 +4200,10 @@ EOF
 
         $mockClient = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['__call', 'getCommand', 'executeAsync'])
+            ->onlyMethods(['__call', 'getCommand', 'executeAsync', 'getHandlerList'])
             ->getMock();
 
+        $mockClient->method('getHandlerList')->willReturn(new HandlerList());
         $mockClient->method('__call')
             ->willReturnCallback(function ($name, $args) {
                 if ($name === 'listMultipartUploads') {

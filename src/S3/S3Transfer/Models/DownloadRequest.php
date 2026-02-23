@@ -59,11 +59,11 @@ final class DownloadRequest extends AbstractTransferRequest
      * @param AbstractTransferListener|null $progressTracker
      */
     public function __construct(
-        string|array|null        $source,
-        array                    $downloadRequestArgs = [],
-        array                    $config = [],
+        string|array|null $source,
+        array $downloadRequestArgs = [],
+        array $config = [],
         ?AbstractDownloadHandler $downloadHandler = null,
-        array                    $listeners = [],
+        array $listeners = [],
         ?AbstractTransferListener $progressTracker = null
     ) {
         parent::__construct($listeners, $progressTracker, $config);
