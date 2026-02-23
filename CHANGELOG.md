@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.370.1 - 2026-02-23
 
 * `Aws\DataZone` - Add workflow properties support to connections APIs
 * `Aws\ControlCatalog` - Updated ExemptedPrincipalArns parameter documentation for improved accuracy
