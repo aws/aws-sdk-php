@@ -2,7 +2,6 @@
 namespace Aws\Api\Parser;
 
 use Aws\Api\DateTimeResult;
-use Aws\Api\ResponseWrapper;
 use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 use Aws\Result;
