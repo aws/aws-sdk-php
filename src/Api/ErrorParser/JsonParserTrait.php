@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Api\ErrorParser;
 
+use Aws\Api\Parser\AbstractParser;
 use Aws\Api\Parser\PayloadParserTrait;
 use Aws\Api\StructureShape;
 use Psr\Http\Message\ResponseInterface;
@@ -38,12 +39,8 @@ trait JsonParserTrait
         }
 
         $parsedBody = null;
-        $body = $response->getBody();
-        if ($body->isSeekable()) {
-            $body->rewind();
-        }
 
-        $rawBody = $body->getContents();
+        $rawBody = AbstractParser::getBodyContents($response);
         if (!empty($rawBody)) {
             $parsedBody = $this->parseJson($rawBody, $response);
         }
@@ -137,12 +134,8 @@ trait JsonParserTrait
         ResponseInterface $response,
         StructureShape $member
     ) {
-        $body = $response->getBody();
-        if ($body->isSeekable()) {
-            $body->rewind();
-        }
+        $rawBody = AbstractParser::getBodyContents($response);
 
-        $rawBody = $body->getContents();
         if (!empty($rawBody)) {
             $jsonBody = $this->parseJson($rawBody, $response);
         } else {

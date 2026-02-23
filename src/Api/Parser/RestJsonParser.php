@@ -28,12 +28,7 @@ class RestJsonParser extends AbstractRestParser
         StructureShape $member,
         array &$result
     ) {
-        $body = $response->getBody();
-        if ($body->isSeekable()) {
-            $body->rewind();
-        }
-
-        $rawBody = $body->getContents();
+        $rawBody = AbstractParser::getBodyContents($response);
 
         // Parse JSON if we have content
         if (!empty($rawBody)) {

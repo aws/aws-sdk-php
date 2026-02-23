@@ -43,4 +43,14 @@ abstract class AbstractParser
         StructureShape $member,
         $response
     );
+
+    public static function getBodyContents(ResponseInterface $response): string
+    {
+        $body = $response->getBody();
+        if ($body->isSeekable()) {
+            $body->rewind();
+        }
+
+        return $body->getContents();
+    }
 }

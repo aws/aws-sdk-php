@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Api\ErrorParser;
 
+use Aws\Api\Parser\AbstractParser;
 use Aws\Api\Parser\PayloadParserTrait;
 use Aws\Api\Parser\XmlParser;
 use Aws\Api\Service;
@@ -100,12 +101,8 @@ class XmlErrorParser extends AbstractErrorParser
         ResponseInterface $response,
         StructureShape $member
     ) {
-        $body = $response->getBody();
-        if ($body->isSeekable()) {
-            $body->rewind();
-        }
+        $rawBody = AbstractParser::getBodyContents($response);
 
-        $rawBody = $body->getContents();
         if (empty($rawBody)) {
             return $rawBody;
         }
