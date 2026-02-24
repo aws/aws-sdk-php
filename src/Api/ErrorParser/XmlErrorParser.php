@@ -28,6 +28,7 @@ class XmlErrorParser extends AbstractErrorParser
         ResponseInterface $response,
         ?CommandInterface $command = null
     ) {
+        $response = AbstractParser::getResponseWithCachingStream($response);
         $code = (string) $response->getStatusCode();
 
         $data = [
@@ -38,9 +39,9 @@ class XmlErrorParser extends AbstractErrorParser
             'parsed' => null
         ];
 
-        $body = $response->getBody();
-        if ($body->getSize() > 0) {
-            $this->parseBody($this->parseXml($body, $response), $data);
+        $rawBody = AbstractParser::getBodyContents($response);
+        if (!empty($rawBody)) {
+            $this->parseBody($this->parseXml($rawBody, $response), $data);
         } else {
             $this->parseHeaders($response, $data);
         }

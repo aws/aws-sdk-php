@@ -41,7 +41,7 @@ class QueryParser extends AbstractParser
     ) {
         $output = $this->api->getOperation($command->getName())->getOutput();
         // Read the full payload, even in non-seekable streams
-        $body = $response->getBody()->getContents();
+        $body = AbstractParser::getBodyContents($response);
         // Just parse when the body is not empty
         $xml = !empty($body)
             ? $this->parseXml($body, $response)
