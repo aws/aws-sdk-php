@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.371.0 - 2026-02-24
 
 * `Aws\ElementalInference` - Initial GA launch for AWS Elemental Inference including capabilities of Smart Crop and Live Event Clipping
 * `Aws\OpenSearchService` - Fixed HTTP binding for DescribeDomainAutoTunes API to correctly pass request parameters as query parameters in the HTTP request.
