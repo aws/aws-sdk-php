@@ -14,11 +14,12 @@ use Aws\S3\S3Transfer\Progress\DirectoryTransferProgressAggregator;
 use Closure;
 use GuzzleHttp\Promise\Each;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise\PromisorInterface;
 use Throwable;
 use function Aws\filter;
 use function Aws\map;
 
-final class DirectoryDownloader
+final class DirectoryDownloader implements PromisorInterface
 {
     /** @var S3ClientInterface */
     private S3ClientInterface $s3Client;
@@ -35,19 +36,32 @@ final class DirectoryDownloader
     /** @var int */
     private int $objectsFailed = 0;
 
+    /** @var DownloadDirectoryRequest */
+    private DownloadDirectoryRequest $downloadDirectoryRequest;
+
     /**
      * @param S3ClientInterface $s3Client
      * @param array $config
      * @param Closure $downloadFile A closure that receives (S3ClientInterface, DownloadFileRequest) and returns PromiseInterface
+     * @param DownloadDirectoryRequest $downloadDirectoryRequest
      */
     public function __construct(
         S3ClientInterface $s3Client,
         array $config,
-        Closure $downloadFile
+        Closure $downloadFile,
+        DownloadDirectoryRequest $downloadDirectoryRequest
     ) {
         $this->s3Client = $s3Client;
         $this->config = $config;
         $this->downloadFile = $downloadFile;
+        $this->downloadDirectoryRequest = $downloadDirectoryRequest;
+
+        // Validations
+        $this->downloadDirectoryRequest->updateConfigWithDefaults(
+            $this->config
+        );
+        $this->downloadDirectoryRequest->validateConfig();
+        $this->downloadDirectoryRequest->validateDestinationDirectory();
 
         MetricsBuilder::appendMetricsCaptureMiddleware(
             $this->s3Client->getHandlerList(),
@@ -56,29 +70,20 @@ final class DirectoryDownloader
     }
 
     /**
-     * @param DownloadDirectoryRequest $downloadDirectoryRequest
-     *
      * @return PromiseInterface
+     *
+     * @throws Throwable
      */
-    public function promise(
-        DownloadDirectoryRequest $downloadDirectoryRequest
-    ): PromiseInterface
+    public function promise(): PromiseInterface
     {
         $this->objectsDownloaded = 0;
         $this->objectsFailed = 0;
 
-        $downloadDirectoryRequest->validateDestinationDirectory();
-        $destinationDirectory = $downloadDirectoryRequest->getDestinationDirectory();
-        $sourceBucket = $downloadDirectoryRequest->getSourceBucket();
-        $progressTracker = $downloadDirectoryRequest->getProgressTracker();
+        $destinationDirectory = $this->downloadDirectoryRequest->getDestinationDirectory();
+        $sourceBucket = $this->downloadDirectoryRequest->getSourceBucket();
+        $progressTracker = $this->downloadDirectoryRequest->getProgressTracker();
 
-        $downloadDirectoryRequest->updateConfigWithDefaults(
-            $this->config
-        );
-
-        $downloadDirectoryRequest->validateConfig();
-
-        $config = $downloadDirectoryRequest->getConfig();
+        $config = $this->downloadDirectoryRequest->getConfig();
         if ($progressTracker === null && $config['track_progress']) {
             $progressTracker = new DirectoryProgressTracker();
         }
@@ -119,8 +124,8 @@ final class DirectoryDownloader
             ?? null;
         $failurePolicyCallback = $config['failure_policy'] ?? null;
 
-        $directoryListeners = $downloadDirectoryRequest->getListeners();
-        $singleObjectListeners = $downloadDirectoryRequest->getSingleObjectListeners();
+        $directoryListeners = $this->downloadDirectoryRequest->getListeners();
+        $singleObjectListeners = $this->downloadDirectoryRequest->getSingleObjectListeners();
         $aggregator = new DirectoryTransferProgressAggregator(
             identifier: $this->buildDirectoryIdentifier(
                 $sourceBucket,
@@ -145,7 +150,6 @@ final class DirectoryDownloader
         return Each::ofLimitAll(
             $this->createDownloadPromises(
                 $objects,
-                $downloadDirectoryRequest,
                 $config,
                 $destinationDirectory,
                 $sourceBucket,
@@ -177,7 +181,6 @@ final class DirectoryDownloader
 
     /**
      * @param iterable $objects
-     * @param DownloadDirectoryRequest $downloadDirectoryRequest
      * @param array $config
      * @param string $destinationDirectory
      * @param string $sourceBucket
@@ -188,10 +191,10 @@ final class DirectoryDownloader
      * @param array $singleObjectListeners
      *
      * @return \Generator
+     * @throws Throwable
      */
     private function createDownloadPromises(
         iterable $objects,
-        DownloadDirectoryRequest $downloadDirectoryRequest,
         array $config,
         string $destinationDirectory,
         string $sourceBucket,
@@ -231,7 +234,7 @@ final class DirectoryDownloader
                 );
             }
 
-            $requestArgs = $downloadDirectoryRequest->getDownloadRequestArgs();
+            $requestArgs = $this->downloadDirectoryRequest->getDownloadRequestArgs();
             foreach ($bucketAndKeyArray as $key => $value) {
                 $requestArgs[$key] = $value;
             }

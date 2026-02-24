@@ -163,9 +163,8 @@ final class S3TransferManager
             $this->s3Client,
             $this->config->toArray(),
             fn(S3ClientInterface $client, UploadRequest $request): PromiseInterface => $this->upload($request, $client),
-        ))->promise(
-            $uploadDirectoryRequest
-        );
+            $uploadDirectoryRequest,
+        ))->promise();
     }
 
     /**
@@ -420,9 +419,8 @@ final class S3TransferManager
             $this->s3Client,
             $this->config->toArray(),
             fn(S3ClientInterface $client, DownloadFileRequest $request): PromiseInterface => $this->downloadFile($request, $client),
-        ))->promise(
-            $downloadDirectoryRequest
-        );
+            $downloadDirectoryRequest,
+        ))->promise();
     }
 
     /**

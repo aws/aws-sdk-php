@@ -15,12 +15,13 @@ use Closure;
 use FilesystemIterator;
 use GuzzleHttp\Promise\Each;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise\PromisorInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Throwable;
 use function Aws\filter;
 
-final class DirectoryUploader
+final class DirectoryUploader implements PromisorInterface
 {
     /** @var array */
     private array $config;
@@ -37,6 +38,9 @@ final class DirectoryUploader
     /** @var int */
     private int $objectsFailed = 0;
 
+    /** @var UploadDirectoryRequest */
+    private UploadDirectoryRequest $uploadDirectoryRequest;
+
     /**
      * @param array $config
      * @param S3ClientInterface $s3Client
@@ -45,11 +49,20 @@ final class DirectoryUploader
     public function __construct(
         S3ClientInterface $s3Client,
         array $config,
-        Closure $uploadObject
+        Closure $uploadObject,
+        UploadDirectoryRequest $uploadDirectoryRequest
     ) {
         $this->s3Client = $s3Client;
         $this->config = $config;
         $this->uploadObject = $uploadObject;
+        $this->uploadDirectoryRequest = $uploadDirectoryRequest;
+
+        // Validations
+        $this->uploadDirectoryRequest->updateConfigWithDefaults(
+            $this->config
+        );
+        $this->uploadDirectoryRequest->validateSourceDirectory();
+        $this->uploadDirectoryRequest->validateConfig();
 
         MetricsBuilder::appendMetricsCaptureMiddleware(
             $this->s3Client->getHandlerList(),
@@ -58,33 +71,23 @@ final class DirectoryUploader
     }
 
     /**
-     * @param UploadDirectoryRequest $uploadDirectoryRequest
-     *
      * @return PromiseInterface
+     *
+     * @throws Throwable
      */
-    public function promise(
-        UploadDirectoryRequest $uploadDirectoryRequest,
-    ): PromiseInterface
+    public function promise(): PromiseInterface
     {
         $this->objectsUploaded = 0;
         $this->objectsFailed = 0;
 
-        $uploadDirectoryRequest->validateSourceDirectory();
-
-        $uploadDirectoryRequest->updateConfigWithDefaults(
-            $this->config
-        );
-
-        $uploadDirectoryRequest->validateConfig();
-
-        $config = $uploadDirectoryRequest->getConfig();
+        $config = $this->uploadDirectoryRequest->getConfig();
 
         $filter = $config['filter'] ?? null;
         $uploadObjectRequestModifier = $config['upload_object_request_modifier']
             ?? null;
         $failurePolicyCallback = $config['failure_policy'] ?? null;
 
-        $sourceDirectory = $uploadDirectoryRequest->getSourceDirectory();
+        $sourceDirectory = $this->uploadDirectoryRequest->getSourceDirectory();
         $filesIteratorFactory = fn() => $this->iterateSourceFiles(
             $sourceDirectory,
             $config,
@@ -102,17 +105,17 @@ final class DirectoryUploader
             $s3Prefix .= '/';
         }
 
-        $targetBucket = $uploadDirectoryRequest->getTargetBucket();
+        $targetBucket = $this->uploadDirectoryRequest->getTargetBucket();
 
-        $directoryProgressTracker = $uploadDirectoryRequest->getProgressTracker();
+        $directoryProgressTracker = $this->uploadDirectoryRequest->getProgressTracker();
         if ($directoryProgressTracker === null
             && ($config['track_progress']
                 ?? ($this->config['track_progress'] ?? false))) {
             $directoryProgressTracker = new DirectoryProgressTracker();
         }
 
-        $directoryListeners = $uploadDirectoryRequest->getListeners();
-        $singleObjectListeners = $uploadDirectoryRequest->getSingleObjectListeners();
+        $directoryListeners = $this->uploadDirectoryRequest->getListeners();
+        $singleObjectListeners = $this->uploadDirectoryRequest->getSingleObjectListeners();
         $aggregator = new DirectoryTransferProgressAggregator(
             identifier: $this->buildDirectoryIdentifier(
                 $sourceDirectory,
@@ -137,7 +140,6 @@ final class DirectoryUploader
         return Each::ofLimitAll(
             $this->createUploadPromises(
                 $filesIteratorFactory(),
-                $uploadDirectoryRequest,
                 $config,
                 $uploadObjectRequestModifier,
                 $failurePolicyCallback,
@@ -187,7 +189,6 @@ final class DirectoryUploader
      */
     private function createUploadPromises(
         iterable $files,
-        UploadDirectoryRequest $uploadDirectoryRequest,
         array $config,
         ?callable $uploadObjectRequestModifier,
         ?callable $failurePolicyCallback,
@@ -214,7 +215,7 @@ final class DirectoryUploader
                 $delimiter,
                 $objectKey
             );
-            $uploadRequestArgs = $uploadDirectoryRequest->getUploadRequestArgs();
+            $uploadRequestArgs = $this->uploadDirectoryRequest->getUploadRequestArgs();
             $uploadRequestArgs['Bucket'] = $targetBucket;
             $uploadRequestArgs['Key'] = $objectKey;
 
