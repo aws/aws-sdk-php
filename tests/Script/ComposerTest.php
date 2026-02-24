@@ -119,12 +119,16 @@ class ComposerTest extends TestCase
         $filesystem = $this->getMockBuilder(Filesystem::class)
             ->disableOriginalConstructor()
             ->getMock();
+
+        $calls = 0;
         $filesystem->expects($this->any())
             ->method('remove')
-            ->willReturnCallback(function () use ($success) {
-                if ($success) {
+            ->willReturnCallback(function () use ($success, &$writeCalls, &$calls) {
+                if ($success && $calls >= ($writeCalls - 1)) {
                     return true;
                 }
+
+                $calls++;
 
                 throw new IOException('Simulated Exception');
             });
@@ -162,7 +166,7 @@ class ComposerTest extends TestCase
     public static function retryProvider(): array
     {
         return [
-            'success' => [true , 1],
+            'success' => [true , 3],
             'failure' => [false, 2]
         ];
     }

@@ -15,6 +15,7 @@ use Aws\S3\Exception\PermanentRedirectException;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\RegionalEndpoint\Configuration;
 use Aws\S3\S3Client;
+use Aws\S3\S3ClientTrait;
 use Aws\S3\UseArnRegion\Configuration as UseArnRegionConfiguration;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Exception\ConnectException;
@@ -33,6 +34,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(S3Client::class)]
+#[CoversClass(S3ClientTrait::class)]
 class S3ClientTest extends TestCase
 {
     use UsesServiceTrait;

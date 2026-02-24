@@ -68,9 +68,7 @@ class MetricsBuilderTest extends TestCase
 
     public function testAppendMetricsCaptureMiddleware()
     {
-        $handlerList = new HandlerList(function (){
-            $this->assertTrue(true);
-        });
+        $handlerList = new HandlerList(function (){});
         $metric = "Foo";
         // It should be appended into the build step
         MetricsBuilder::appendMetricsCaptureMiddleware(
@@ -176,9 +174,7 @@ class MetricsBuilderTest extends TestCase
      */
     public function testAppendMetricsCaptureMiddlewareJustOnce(): void
     {
-        $handlerList = new HandlerList(function (){
-            $this->assertTrue(true);
-        });
+        $handlerList = new HandlerList(function (){});
         MetricsBuilder::appendMetricsCaptureMiddleware(
             $handlerList,
             'test'

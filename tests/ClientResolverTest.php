@@ -85,7 +85,6 @@ class ClientResolverTest extends TestCase
         $handler = \Aws\constantly(new Result([]));
         $command->getHandlerList()->setHandler($handler);
         $c->execute($command);
-        $this->assertTrue(true);
     }
 
     public function testAppliesLegacyDefaults()

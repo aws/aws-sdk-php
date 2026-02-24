@@ -260,7 +260,6 @@ class RestJsonSerializerTest extends TestCase
         $this->assertSame('POST', $request->getMethod());
         $this->assertSame('http://foo.com/', (string) $request->getUri());
         $this->assertSame('', $request->getHeaderLine('Content-Type'));
-        $this->assertTrue(true);
     }
 
     public function testPreparesRequestsWithJsonValueTraitArray(): void

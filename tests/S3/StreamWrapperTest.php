@@ -41,7 +41,7 @@ class StreamWrapperTest extends TestCase
     {
         stream_wrapper_unregister('s3');
         $this->client = null;
-        restore_exception_handler(); // In case it was not restored
+        restore_error_handler(); // In case it was not restored
     }
 
     public function testRegistersStreamWrapperOnlyOnce()

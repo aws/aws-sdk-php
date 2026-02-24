@@ -17,7 +17,10 @@ class HandlerTest extends TestCase
         $this->expectExceptionMessage(
             'Using the "Aws\Handler\GuzzleV6\GuzzleHandler" class is deprecated, use "Aws\Handler\Guzzle\GuzzleHandler" instead.'
         );
-        $this->assertTrue(class_exists(\Aws\Handler\GuzzleV6\GuzzleHandler::class));
-        restore_error_handler();
+        try {
+            $this->assertTrue(class_exists(\Aws\Handler\GuzzleV6\GuzzleHandler::class));
+        } finally {
+            restore_error_handler();
+        }
     }
 }

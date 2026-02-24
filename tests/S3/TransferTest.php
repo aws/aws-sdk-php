@@ -519,34 +519,38 @@ class TransferTest extends TestCase
         set_error_handler(function ($err, $message) {
             throw new \RuntimeException($message);
         }, E_USER_DEPRECATED);
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('S3 no longer supports MD5 checksums.');
-        $s3->getHandlerList()->appendSign(Middleware::tap(
-            function (CommandInterface $cmd, RequestInterface $req) {
-                $this->assertTrue(isset($command['x-amz-checksum-crc32']));
-            }
-        ));
+        try {
+            $this->expectException(\RuntimeException::class);
+            $this->expectExceptionMessage('S3 no longer supports MD5 checksums.');
+            $s3->getHandlerList()->appendSign(Middleware::tap(
+                function (CommandInterface $cmd, RequestInterface $req) {
+                    $this->assertTrue(isset($command['x-amz-checksum-crc32']));
+                }
+            ));
 
-        $dir = sys_get_temp_dir() . '/unittest';
-        $this->deleteDirectory($dir);
-        mkdir($dir);
-        $filename = $dir . '/foo.txt';
-        $f = fopen($filename, 'w+');
-        fwrite($f, 'foo');
-        fclose($f);
+            $dir = sys_get_temp_dir() . '/unittest';
+            $this->deleteDirectory($dir);
+            mkdir($dir);
+            $filename = $dir . '/foo.txt';
+            $f = fopen($filename, 'w+');
+            fwrite($f, 'foo');
+            fclose($f);
 
-        $res = fopen('php://temp', 'r+');
-        $t = new Transfer($s3, $dir, 's3://foo/bar', [
-            'debug' => $res,
-            'add_content_md5' => true
-        ]);
+            $res = fopen('php://temp', 'r+');
+            $t = new Transfer($s3, $dir, 's3://foo/bar', [
+                'debug' => $res,
+                'add_content_md5' => true
+            ]);
 
-        $t->transfer();
-        rewind($res);
-        $output = stream_get_contents($res);
-        $normalizedFilename = str_replace('\\', '/', $filename);
-        $this->assertStringContainsString("Transferring $normalizedFilename -> s3://foo/bar/foo.txt", $output);
-        $this->deleteDirectory($dir);
+            $t->transfer();
+            rewind($res);
+            $output = stream_get_contents($res);
+            $normalizedFilename = str_replace('\\', '/', $filename);
+            $this->assertStringContainsString("Transferring $normalizedFilename -> s3://foo/bar/foo.txt", $output);
+            $this->deleteDirectory($dir);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     #[DataProvider('flexibleChecksumsProvider')]

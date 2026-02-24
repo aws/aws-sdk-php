@@ -188,7 +188,6 @@ class ComplianceTest extends TestCase
                 $this->assertNotTrue($request->hasHeader($header));
             }
         }
-        $this->assertTrue(true);
     }
 
     private function assertXmlEquals(

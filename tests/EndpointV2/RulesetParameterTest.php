@@ -5,6 +5,7 @@ use Aws\EndpointV2\Ruleset\RulesetParameter;
 use Aws\Exception\UnresolvedEndpointException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(RulesetParameter::class)]
@@ -84,10 +85,10 @@ class RulesetParameterTest extends TestCase
     }
 
     #[DataProvider('validTypesProvider')]
+    #[DoesNotPerformAssertions]
     public function testRulesetCreationWithValidTypes($spec)
     {
         new RulesetParameter('FooParam', $spec);
-        $this->assertTrue(true);
     }
 
     public static function validTypesProvider(): array

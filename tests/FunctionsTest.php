@@ -47,9 +47,7 @@ class FunctionsTest extends TestCase
 
     public function testComposesOrFunctions()
     {
-        $a = function ($a, $b) { return null; 
-
-        $this->assertTrue(true);};
+        $a = function ($a, $b) { return null;};
         $b = function ($a, $b) { return $a . $b; };
         $c = function ($a, $b) { return 'C'; };
         $comp = Aws\or_chain($a, $b, $c);

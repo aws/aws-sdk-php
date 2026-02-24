@@ -189,7 +189,6 @@ class MultipartUploaderTest extends TestCase
 
         $this->assertTrue($uploader->getState()->isCompleted());
         $this->assertSame($url, $result['ObjectURL']);
-        $this->assertTrue(true);
     }
 
     public static function getContentTypeSettingTests(): array

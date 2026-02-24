@@ -275,7 +275,6 @@ class S3EndpointMiddlewareTest extends TestCase
         }, array_keys($s3Operations));
 
         foreach ($commands as $command) {
-            $command = new Command('CreateBucket', ['Bucket' => 'bucket']);
             $middleware = new S3EndpointMiddleware(
                 $this->dualStackAssertingHandler($command),
                 'us-west-2',

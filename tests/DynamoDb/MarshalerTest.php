@@ -11,6 +11,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(Marshaler::class)]
+#[CoversClass(NumberValue::class)]
 class MarshalerTest extends TestCase
 {
     const ERROR = 'ERROR';

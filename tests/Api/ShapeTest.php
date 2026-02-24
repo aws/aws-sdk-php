@@ -1,12 +1,14 @@
 <?php
 namespace Aws\Test\Api;
 
+use Aws\Api\AbstractModel;
 use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(Shape::class)]
+#[CoversClass(AbstractModel::class)]
 class ShapeTest extends TestCase
 {
     public function testImplementsArray()

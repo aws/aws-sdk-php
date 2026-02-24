@@ -595,7 +595,6 @@ class InstanceProfileProviderTest extends TestCase
             $this->assertSame($expected->getMessage(), $e->getMessage());
         }
     }
-
     public static function failureDataProvider(): \Generator
     {
         $requestClass = self::getRequestClass();
@@ -1008,8 +1007,7 @@ class InstanceProfileProviderTest extends TestCase
     /**
      *
      * @param $client
-
- */
+     */
     #[DataProvider('returnsExpiredCredsProvider')]
     public function testExtendsExpirationAndSendsRequestIfImdsYieldsExpiredCreds($client)
     {
@@ -1098,8 +1096,7 @@ class InstanceProfileProviderTest extends TestCase
     /**
      *
      * @param $client
-
- */
+     */
     #[DataProvider('imdsUnavailableProvider')]
     public function testExtendsExpirationAndSendsRequestIfImdsUnavailable($client)
     {

@@ -7,7 +7,7 @@ use GuzzleHttp\Psr7\CachingStream;
 
 trait AesEncryptionStreamTestTrait
 {
-    public function cartesianJoinInputCipherMethodProvider(): array
+    public static function cartesianJoinInputCipherMethodProvider(): array
     {
         $toReturn = [];
         $plainTexts = self::unwrapProvider([__CLASS__, 'plainTextProvider']);
