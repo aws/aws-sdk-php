@@ -42,12 +42,7 @@ abstract class AbstractRestParser extends AbstractParser
         if ($payload = $output['payload']) {
             $this->extractPayload($payload, $output, $response, $result);
         } else {
-            $body = $response->getBody();
-            if (!$body->isSeekable()) {
-                $response = $response->withBody(
-                    new CachingStream($body)
-                );
-            }
+            $response = AbstractParser::getResponseWithCachingStream($response);
 
             $rawBody = AbstractParser::getBodyContents($response);
             if (!empty($rawBody)
@@ -94,9 +89,7 @@ abstract class AbstractRestParser extends AbstractParser
         }
 
         if (!$body->isSeekable()) {
-            $response = $response->withBody(
-                new CachingStream($response->getBody())
-            );
+            $response = AbstractParser::getResponseWithCachingStream($response);
         }
 
         if ($member instanceof StructureShape) {
