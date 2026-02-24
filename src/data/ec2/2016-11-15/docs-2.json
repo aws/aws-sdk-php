@@ -2145,6 +2145,7 @@
     "AvailabilityZoneName": {
       "base": null,
       "refs": {
+        "AllocateHostsRequest$AvailabilityZone": "<p>The Availability Zone in which to allocate the Dedicated Host.</p>",
         "AssociateNatGatewayAddressRequest$AvailabilityZone": "<p>For regional NAT gateways only: The Availability Zone where you want to associate an Elastic IP address (EIP). The regional NAT gateway uses a separate EIP in each AZ to handle outbound NAT traffic from that AZ.</p> <p>A regional NAT gateway is a single NAT Gateway that works across multiple availability zones (AZs) in your VPC, providing redundancy, scalability and availability across all the AZs in a Region.</p>",
         "AvailabilityZoneAddress$AvailabilityZone": "<p>For regional NAT gateways only: The Availability Zone where this specific NAT gateway configuration will be active. Each AZ in a regional NAT gateway has its own configuration to handle outbound NAT traffic from that AZ. </p> <p>A regional NAT gateway is a single NAT Gateway that works across multiple availability zones (AZs) in your VPC, providing redundancy, scalability and availability across all the AZs in a Region.</p>",
         "CapacityBlockExtension$AvailabilityZone": "<p>The Availability Zone of the Capacity Block extension.</p>",
@@ -6444,6 +6445,12 @@
       "base": null,
       "refs": {
         "NetworkCardInfo$DefaultEnaQueueCountPerInterface": "<p>The default number of the ENA queues for each interface.</p>"
+      }
+    },
+    "DefaultHttpTokensEnforcedState": {
+      "base": null,
+      "refs": {
+        "ModifyInstanceMetadataDefaultsRequest$HttpTokensEnforced": "<p>Specifies whether to enforce the requirement of IMDSv2 on an instance at the time of launch. When enforcement is enabled, the instance can't launch unless IMDSv2 (<code>HttpTokens</code>) is set to <code>required</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-IMDS-new-instances.html#enforce-imdsv2-at-the-account-level\">Enforce IMDSv2 at the account level</a> in the <i>Amazon EC2 User Guide</i>.</p>"
       }
     },
     "DefaultInstanceMetadataEndpointState": {
@@ -13271,6 +13278,12 @@
         "InstanceEventWindowTimeRange$EndHour": "<p>The hour when the time range ends.</p>",
         "InstanceEventWindowTimeRangeRequest$StartHour": "<p>The hour when the time range begins.</p>",
         "InstanceEventWindowTimeRangeRequest$EndHour": "<p>The hour when the time range ends.</p>"
+      }
+    },
+    "HttpTokensEnforcedState": {
+      "base": null,
+      "refs": {
+        "InstanceMetadataDefaultsResponse$HttpTokensEnforced": "<p>Indicates whether to enforce the requirement of IMDSv2 on an instance at the time of launch. When enforcement is enabled, the instance can't launch unless IMDSv2 (<code>HttpTokens</code>) is set to <code>required</code>.</p>"
       }
     },
     "HttpTokensState": {
@@ -24358,7 +24371,6 @@
         "AllocateHostsRequest$OutpostArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Outpost on which to allocate the Dedicated Host. If you specify <b>OutpostArn</b>, you can optionally specify <b>AssetIds</b>.</p> <p>If you are allocating the Dedicated Host in a Region, omit this parameter.</p>",
         "AllocateHostsRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring Idempotency</a>.</p>",
         "AllocateHostsRequest$InstanceType": "<p>Specifies the instance type to be supported by the Dedicated Hosts. If you specify an instance type, the Dedicated Hosts support instances of the specified instance type only.</p> <p>If you want the Dedicated Hosts to support multiple instance types in a specific instance family, omit this parameter and specify <b>InstanceFamily</b> instead. You cannot specify <b>InstanceType</b> and <b>InstanceFamily</b> in the same request.</p>",
-        "AllocateHostsRequest$AvailabilityZone": "<p>The Availability Zone in which to allocate the Dedicated Host.</p>",
         "AllocateIpamPoolCidrRequest$Cidr": "<p>The CIDR you would like to allocate from the IPAM pool. Note the following:</p> <ul> <li> <p>If there is no DefaultNetmaskLength allocation rule set on the pool, you must specify either the NetmaskLength or the CIDR.</p> </li> <li> <p>If the DefaultNetmaskLength allocation rule is set on the pool, you can specify either the NetmaskLength or the CIDR and the DefaultNetmaskLength allocation rule will be ignored.</p> </li> </ul> <p>Possible values: Any available IPv4 or IPv6 CIDR.</p>",
         "AllocateIpamPoolCidrRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "AllocateIpamPoolCidrRequest$Description": "<p>A description for the allocation.</p>",

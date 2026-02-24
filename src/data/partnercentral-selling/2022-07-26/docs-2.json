@@ -718,7 +718,9 @@
         "LifeCycleSummary$TargetCloseDate": "<p>Specifies the date when Amazon Web Services expects to start significant billing, when the project finishes, and when it moves into production. This field informs the Amazon Web Services seller about when the opportunity launches and starts to incur Amazon Web Services usage.</p> <p>Ensure the <code>Target Close Date</code> isn't in the past.</p>",
         "ProjectDetails$TargetCompletionDate": "<p>Specifies the estimated date of project completion. This field helps track the project timeline and manage expectations.</p>",
         "SoftwareRevenue$EffectiveDate": "<p>Specifies the <code>Opportunity</code>'s customer engagement start date for the contract's effectiveness.</p>",
-        "SoftwareRevenue$ExpirationDate": "<p>Specifies the expiration date for the contract between the customer and Amazon Web Services partner. It signifies the termination date of the agreed-upon engagement period between both parties.</p>"
+        "SoftwareRevenue$ExpirationDate": "<p>Specifies the expiration date for the contract between the customer and Amazon Web Services partner. It signifies the termination date of the agreed-upon engagement period between both parties.</p>",
+        "TargetCloseDateFilter$AfterTargetCloseDate": "<p>Filters opportunities with a target close date after this date. Use the <code>YYYY-MM-DD</code> format.</p>",
+        "TargetCloseDateFilter$BeforeTargetCloseDate": "<p>Filters opportunities with a target close date before this date. Use the <code>YYYY-MM-DD</code> format.</p>"
       }
     },
     "DateTime": {
@@ -1230,7 +1232,7 @@
     "Invitation": {
       "base": "<p> The Invitation structure represents an invitation exchanged between partners and AWS. It includes a message, receiver information, and a payload providing context for the invitation. </p>",
       "refs": {
-        "CreateEngagementInvitationRequest$Invitation": "<p> The <code>Invitation</code> object all information necessary to initiate an engagement invitation to a partner. It contains a personalized message from the sender, the invitation's receiver, and a payload. The <code>Payload</code> can be the <code>OpportunityInvitation</code>, which includes detailed structures for sender contacts, partner responsibilities, customer information, and project details. </p>"
+        "CreateEngagementInvitationRequest$Invitation": "<p> The <code>Invitation</code> object all information necessary to initiate an engagement invitation to a partner. It contains a personalized message from the sender, the invitation's receiver, and a payload. The <code>Payload</code> can be the <code>OpportunityInvitation</code>, which includes detailed structures for sender contacts, partner responsibilities, customer information, and project details, or <code>LeadInvitation</code>, which includes structures for customer information and interaction details. </p>"
       }
     },
     "InvitationMessage": {
@@ -2480,6 +2482,12 @@
         "ListTagsForResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which you want to retrieve tags.</p>",
         "TagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to tag.</p>",
         "UntagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to untag.</p>"
+      }
+    },
+    "TargetCloseDateFilter": {
+      "base": "<p>Filters opportunities based on their target close date.</p>",
+      "refs": {
+        "ListOpportunitiesRequest$TargetCloseDate": "<p>Filters opportunities based on their target close date. This filter helps retrieve opportunities with an expected close date before or after a specified date.</p>"
       }
     },
     "TaskArn": {

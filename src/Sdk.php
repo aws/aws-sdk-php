@@ -300,6 +300,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionElasticLoadBalancingV2(array $args = [])
  * @method \Aws\ElasticsearchService\ElasticsearchServiceClient createElasticsearchService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionElasticsearchService(array $args = [])
+ * @method \Aws\ElementalInference\ElementalInferenceClient createElementalInference(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionElementalInference(array $args = [])
  * @method \Aws\Emr\EmrClient createEmr(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionEmr(array $args = [])
  * @method \Aws\EntityResolution\EntityResolutionClient createEntityResolution(array $args = [])

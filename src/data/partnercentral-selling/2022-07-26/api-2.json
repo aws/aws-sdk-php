@@ -3418,7 +3418,8 @@
         "LifeCycleStage":{"shape":"ListOpportunitiesRequestLifeCycleStageList"},
         "LifeCycleReviewStatus":{"shape":"ListOpportunitiesRequestLifeCycleReviewStatusList"},
         "CustomerCompanyName":{"shape":"ListOpportunitiesRequestCustomerCompanyNameList"},
-        "CreatedDate":{"shape":"CreatedDateFilter"}
+        "CreatedDate":{"shape":"CreatedDateFilter"},
+        "TargetCloseDate":{"shape":"TargetCloseDateFilter"}
       }
     },
     "ListOpportunitiesRequestCustomerCompanyNameList":{
@@ -3777,7 +3778,8 @@
         "LastModifiedDate",
         "Identifier",
         "CustomerCompanyName",
-        "CreatedDate"
+        "CreatedDate",
+        "TargetCloseDate"
       ]
     },
     "OpportunitySummaries":{
@@ -4520,6 +4522,13 @@
     "TaggableResourceArn":{
       "type":"string",
       "pattern":"(?=.{1,1000}$)arn:[\\w+=/,.@-]+:partnercentral:[\\w+=/,.@-]*:[0-9]{12}:catalog/([a-zA-Z]+)/[\\w+=,.@-]+(/[\\w+=,.@-]+)*"
+    },
+    "TargetCloseDateFilter":{
+      "type":"structure",
+      "members":{
+        "AfterTargetCloseDate":{"shape":"Date"},
+        "BeforeTargetCloseDate":{"shape":"Date"}
+      }
     },
     "TaskArn":{
       "type":"string",

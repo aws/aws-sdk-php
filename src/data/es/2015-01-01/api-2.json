@@ -1444,8 +1444,16 @@
           "location":"uri",
           "locationName":"DomainName"
         },
-        "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"NextToken"}
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
       }
     },
     "DescribeDomainAutoTunesResponse":{

@@ -6088,6 +6088,10 @@
         "ChannelSecurityGroups": {
           "shape": "__listOf__string",
           "locationName": "channelSecurityGroups"
+        },
+        "InferenceSettings": {
+          "shape": "DescribeInferenceSettings",
+          "locationName": "inferenceSettings"
         }
       }
     },
@@ -6222,6 +6226,10 @@
         "ChannelSecurityGroups": {
           "shape": "__listOf__string",
           "locationName": "channelSecurityGroups"
+        },
+        "InferenceSettings": {
+          "shape": "DescribeInferenceSettings",
+          "locationName": "inferenceSettings"
         }
       }
     },
@@ -6378,6 +6386,10 @@
         "ChannelSecurityGroups": {
           "shape": "__listOf__string",
           "locationName": "channelSecurityGroups"
+        },
+        "InferenceSettings": {
+          "shape": "InferenceSettings",
+          "locationName": "inferenceSettings"
         }
       }
     },
@@ -6461,6 +6473,10 @@
         "ChannelSecurityGroups": {
           "shape": "__listOf__string",
           "locationName": "channelSecurityGroups"
+        },
+        "InferenceSettings": {
+          "shape": "InferenceSettings",
+          "locationName": "inferenceSettings"
         }
       }
     },
@@ -7005,6 +7021,10 @@
         "ChannelSecurityGroups": {
           "shape": "__listOf__string",
           "locationName": "channelSecurityGroups"
+        },
+        "InferenceSettings": {
+          "shape": "DescribeInferenceSettings",
+          "locationName": "inferenceSettings"
         }
       }
     },
@@ -7399,6 +7419,10 @@
         "ChannelSecurityGroups": {
           "shape": "__listOf__string",
           "locationName": "channelSecurityGroups"
+        },
+        "InferenceSettings": {
+          "shape": "DescribeInferenceSettings",
+          "locationName": "inferenceSettings"
         }
       }
     },
@@ -15024,6 +15048,10 @@
         "ChannelSecurityGroups": {
           "shape": "__listOf__string",
           "locationName": "channelSecurityGroups"
+        },
+        "InferenceSettings": {
+          "shape": "DescribeInferenceSettings",
+          "locationName": "inferenceSettings"
         }
       }
     },
@@ -15381,6 +15409,10 @@
         "ChannelSecurityGroups": {
           "shape": "__listOf__string",
           "locationName": "channelSecurityGroups"
+        },
+        "InferenceSettings": {
+          "shape": "DescribeInferenceSettings",
+          "locationName": "inferenceSettings"
         }
       }
     },
@@ -15957,6 +15989,10 @@
         "ChannelSecurityGroups": {
           "shape": "__listOf__string",
           "locationName": "channelSecurityGroups"
+        },
+        "InferenceSettings": {
+          "shape": "InferenceSettings",
+          "locationName": "inferenceSettings"
         }
       }
     },
@@ -16070,6 +16106,10 @@
         "ChannelSecurityGroups": {
           "shape": "__listOf__string",
           "locationName": "channelSecurityGroups"
+        },
+        "InferenceSettings": {
+          "shape": "InferenceSettings",
+          "locationName": "inferenceSettings"
         }
       },
       "required": [
@@ -16648,7 +16688,8 @@
       "type": "string",
       "enum": [
         "DEFAULT",
-        "STRETCH_TO_OUTPUT"
+        "STRETCH_TO_OUTPUT",
+        "SMART_CROP"
       ]
     },
     "VideoSelector": {
@@ -17598,6 +17639,10 @@
         "ChannelSecurityGroups": {
           "shape": "__listOf__string",
           "locationName": "channelSecurityGroups"
+        },
+        "InferenceSettings": {
+          "shape": "DescribeInferenceSettings",
+          "locationName": "inferenceSettings"
         }
       }
     },
@@ -25515,6 +25560,24 @@
         "DEPTH_10",
         "DEPTH_8"
       ]
+    },
+    "DescribeInferenceSettings": {
+      "type": "structure",
+      "members": {
+        "FeedArn": {
+          "shape": "__string",
+          "locationName": "feedArn"
+        }
+      }
+    },
+    "InferenceSettings": {
+      "type": "structure",
+      "members": {
+        "FeedArn": {
+          "shape": "__string",
+          "locationName": "feedArn"
+        }
+      }
     }
   }
 }

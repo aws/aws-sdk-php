@@ -7626,7 +7626,7 @@
           "locationName":"quantity"
         },
         "AvailabilityZone":{
-          "shape":"String",
+          "shape":"AvailabilityZoneName",
           "locationName":"availabilityZone"
         }
       }
@@ -16360,6 +16360,14 @@
       }
     },
     "DefaultEnaQueueCountPerInterface":{"type":"integer"},
+    "DefaultHttpTokensEnforcedState":{
+      "type":"string",
+      "enum":[
+        "disabled",
+        "enabled",
+        "no-preference"
+      ]
+    },
     "DefaultInstanceMetadataEndpointState":{
       "type":"string",
       "enum":[
@@ -31158,6 +31166,13 @@
       "max":23,
       "min":0
     },
+    "HttpTokensEnforcedState":{
+      "type":"string",
+      "enum":[
+        "disabled",
+        "enabled"
+      ]
+    },
     "HttpTokensState":{
       "type":"string",
       "enum":[
@@ -33705,6 +33720,10 @@
         "ManagedExceptionMessage":{
           "shape":"String",
           "locationName":"managedExceptionMessage"
+        },
+        "HttpTokensEnforced":{
+          "shape":"HttpTokensEnforcedState",
+          "locationName":"httpTokensEnforced"
         }
       }
     },
@@ -41475,7 +41494,8 @@
         "HttpPutResponseHopLimit":{"shape":"BoxedInteger"},
         "HttpEndpoint":{"shape":"DefaultInstanceMetadataEndpointState"},
         "InstanceMetadataTags":{"shape":"DefaultInstanceMetadataTagsState"},
-        "DryRun":{"shape":"Boolean"}
+        "DryRun":{"shape":"Boolean"},
+        "HttpTokensEnforced":{"shape":"DefaultHttpTokensEnforcedState"}
       }
     },
     "ModifyInstanceMetadataDefaultsResult":{

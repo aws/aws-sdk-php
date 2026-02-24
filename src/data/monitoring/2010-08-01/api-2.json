@@ -21,6 +21,14 @@
     "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "DeleteAlarmMuteRule":{
+      "name":"DeleteAlarmMuteRule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteAlarmMuteRuleInput"}
+    },
     "DeleteAlarms":{
       "name":"DeleteAlarms",
       "http":{
@@ -242,6 +250,21 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "GetAlarmMuteRule":{
+      "name":"GetAlarmMuteRule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAlarmMuteRuleInput"},
+      "output":{
+        "shape":"GetAlarmMuteRuleOutput",
+        "resultWrapper":"GetAlarmMuteRuleResult"
+      },
+      "errors":[
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetDashboard":{
       "name":"GetDashboard",
       "http":{
@@ -340,6 +363,22 @@
         "resultWrapper":"GetMetricWidgetImageResult"
       }
     },
+    "ListAlarmMuteRules":{
+      "name":"ListAlarmMuteRules",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAlarmMuteRulesInput"},
+      "output":{
+        "shape":"ListAlarmMuteRulesOutput",
+        "resultWrapper":"ListAlarmMuteRulesResult"
+      },
+      "errors":[
+        {"shape":"InvalidNextToken"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListDashboards":{
       "name":"ListDashboards",
       "http":{
@@ -422,6 +461,17 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceFault"}
+      ]
+    },
+    "PutAlarmMuteRule":{
+      "name":"PutAlarmMuteRule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutAlarmMuteRuleInput"},
+      "errors":[
+        {"shape":"LimitExceededFault"}
       ]
     },
     "PutAnomalyDetector":{
@@ -710,6 +760,32 @@
       "type":"list",
       "member":{"shape":"AlarmHistoryItem"}
     },
+    "AlarmMuteRuleStatus":{
+      "type":"string",
+      "enum":[
+        "SCHEDULED",
+        "ACTIVE",
+        "EXPIRED"
+      ]
+    },
+    "AlarmMuteRuleStatuses":{
+      "type":"list",
+      "member":{"shape":"AlarmMuteRuleStatus"}
+    },
+    "AlarmMuteRuleSummaries":{
+      "type":"list",
+      "member":{"shape":"AlarmMuteRuleSummary"}
+    },
+    "AlarmMuteRuleSummary":{
+      "type":"structure",
+      "members":{
+        "AlarmMuteRuleArn":{"shape":"Arn"},
+        "ExpireDate":{"shape":"Timestamp"},
+        "Status":{"shape":"AlarmMuteRuleStatus"},
+        "MuteType":{"shape":"MuteType"},
+        "LastUpdatedTimestamp":{"shape":"Timestamp"}
+      }
+    },
     "AlarmName":{
       "type":"string",
       "max":255,
@@ -820,6 +896,11 @@
     "AnomalyDetectors":{
       "type":"list",
       "member":{"shape":"AnomalyDetector"}
+    },
+    "Arn":{
+      "type":"string",
+      "max":1600,
+      "min":1
     },
     "AttributeName":{
       "type":"string",
@@ -1029,6 +1110,13 @@
     "DatapointsToAlarm":{
       "type":"integer",
       "min":1
+    },
+    "DeleteAlarmMuteRuleInput":{
+      "type":"structure",
+      "required":["AlarmMuteRuleName"],
+      "members":{
+        "AlarmMuteRuleName":{"shape":"Name"}
+      }
     },
     "DeleteAlarmsInput":{
       "type":"structure",
@@ -1279,6 +1367,11 @@
         "Failures":{"shape":"BatchFailures"}
       }
     },
+    "Duration":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
     "EnableAlarmActionsInput":{
       "type":"structure",
       "required":["AlarmNames"],
@@ -1374,6 +1467,11 @@
       ]
     },
     "ExceptionType":{"type":"string"},
+    "Expression":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "ExtendedStatistic":{"type":"string"},
     "ExtendedStatistics":{
       "type":"list",
@@ -1385,6 +1483,28 @@
     "FailureDescription":{"type":"string"},
     "FailureResource":{"type":"string"},
     "FaultDescription":{"type":"string"},
+    "GetAlarmMuteRuleInput":{
+      "type":"structure",
+      "required":["AlarmMuteRuleName"],
+      "members":{
+        "AlarmMuteRuleName":{"shape":"Name"}
+      }
+    },
+    "GetAlarmMuteRuleOutput":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"Name"},
+        "AlarmMuteRuleArn":{"shape":"Arn"},
+        "Description":{"shape":"AlarmDescription"},
+        "Rule":{"shape":"Rule"},
+        "MuteTargets":{"shape":"MuteTargets"},
+        "StartDate":{"shape":"Timestamp"},
+        "ExpireDate":{"shape":"Timestamp"},
+        "Status":{"shape":"AlarmMuteRuleStatus"},
+        "LastUpdatedTimestamp":{"shape":"Timestamp"},
+        "MuteType":{"shape":"MuteType"}
+      }
+    },
     "GetDashboardInput":{
       "type":"structure",
       "required":["DashboardName"],
@@ -1765,6 +1885,22 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ListAlarmMuteRulesInput":{
+      "type":"structure",
+      "members":{
+        "AlarmName":{"shape":"Name"},
+        "Statuses":{"shape":"AlarmMuteRuleStatuses"},
+        "MaxRecords":{"shape":"MaxRecords"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAlarmMuteRulesOutput":{
+      "type":"structure",
+      "members":{
+        "AlarmMuteRuleSummaries":{"shape":"AlarmMuteRuleSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
     },
     "ListDashboardsInput":{
       "type":"structure",
@@ -2195,6 +2331,24 @@
       "exception":true,
       "synthetic":true
     },
+    "MuteTargetAlarmNameList":{
+      "type":"list",
+      "member":{"shape":"Name"},
+      "max":100
+    },
+    "MuteTargets":{
+      "type":"structure",
+      "required":["AlarmNames"],
+      "members":{
+        "AlarmNames":{"shape":"MuteTargetAlarmNameList"}
+      }
+    },
+    "MuteType":{"type":"string"},
+    "Name":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
     "Namespace":{
       "type":"string",
       "max":255,
@@ -2221,6 +2375,22 @@
       "min":1
     },
     "PeriodicSpikes":{"type":"boolean"},
+    "PutAlarmMuteRuleInput":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Rule"
+      ],
+      "members":{
+        "Name":{"shape":"Name"},
+        "Description":{"shape":"AlarmDescription"},
+        "Rule":{"shape":"Rule"},
+        "MuteTargets":{"shape":"MuteTargets"},
+        "Tags":{"shape":"TagList"},
+        "StartDate":{"shape":"Timestamp"},
+        "ExpireDate":{"shape":"Timestamp"}
+      }
+    },
     "PutAnomalyDetectorInput":{
       "type":"structure",
       "members":{
@@ -2450,12 +2620,31 @@
     },
     "ResourceType":{"type":"string"},
     "ReturnData":{"type":"boolean"},
+    "Rule":{
+      "type":"structure",
+      "required":["Schedule"],
+      "members":{
+        "Schedule":{"shape":"Schedule"}
+      }
+    },
     "ScanBy":{
       "type":"string",
       "enum":[
         "TimestampDescending",
         "TimestampAscending"
       ]
+    },
+    "Schedule":{
+      "type":"structure",
+      "required":[
+        "Expression",
+        "Duration"
+      ],
+      "members":{
+        "Expression":{"shape":"Expression"},
+        "Duration":{"shape":"Duration"},
+        "Timezone":{"shape":"Timezone"}
+      }
     },
     "SetAlarmStateInput":{
       "type":"structure",
@@ -2656,6 +2845,11 @@
     "Timestamps":{
       "type":"list",
       "member":{"shape":"Timestamp"}
+    },
+    "Timezone":{
+      "type":"string",
+      "max":50,
+      "min":1
     },
     "TreatMissingData":{
       "type":"string",

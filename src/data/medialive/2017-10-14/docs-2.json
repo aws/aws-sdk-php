@@ -5304,7 +5304,9 @@
         "SrtListenerDecryption$PassphraseSecretArn": "The ARN for the secret in Secrets Manager that holds the passphrase for decryption.",
         "SrtListenerDecryptionRequest$PassphraseSecretArn": "Required. The ARN for the secret in Secrets Manager that holds the passphrase.",
         "SrtListenerSettings$StreamId": "The stream ID, if the upstream system uses this identifier.",
-        "SrtListenerSettingsRequest$StreamId": "Optional. The stream ID if the upstream system uses this identifier."
+        "SrtListenerSettingsRequest$StreamId": "Optional. The stream ID if the upstream system uses this identifier.",
+        "DescribeInferenceSettings$FeedArn": "The ARN of the feed resource that is associated with this channel. The feed is a resource in the Elemental Inference service.",
+        "InferenceSettings$FeedArn": "The ARN of the feed resource that is associated with this channel. The feed is a resource in the Elemental Inference service."
       }
     },
     "__stringMax1000": {
@@ -7559,6 +7561,20 @@
       "base": "Av1 Bit Depth",
       "refs": {
         "Av1Settings$BitDepth": "Specifies the bit depth for the output encode. Choose a value. Or leave the field empty to use the default, which is 8 bit."
+      }
+    },
+    "DescribeInferenceSettings": {
+      "base": "Configures Elemental Inference features in a channel.",
+      "refs": {
+        "Channel$InferenceSettings": "Include this setting to include Elemental Inference features in this channel.",
+        "ChannelSummary$InferenceSettings": "Include this setting to include Elemental Inference features in this channel."
+      }
+    },
+    "InferenceSettings": {
+      "base": "Configures Elemental Inference features in a channel.",
+      "refs": {
+        "CreateChannel$InferenceSettings": "Include this setting to include Elemental Inference features in this channel.",
+        "UpdateChannel$InferenceSettings": "Include this setting to include Elemental Inference features in this channel."
       }
     }
   },
