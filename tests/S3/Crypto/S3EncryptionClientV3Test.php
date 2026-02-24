@@ -335,7 +335,6 @@ class S3EncryptionClientV3Test extends TestCase
     /**
      * Test that by default, S3EC stores content metadata in S3 Object Metadata (headers)
      * This verifies the specification requirement that metadata is stored in object headers by default.
-     *
      */
     public function testV3MetadataStorageInObjectHeaders(): void
     {
@@ -392,7 +391,6 @@ class S3EncryptionClientV3Test extends TestCase
     /**
      * Test that the default metadata strategy does not write instruction files
      * This verifies the specification requirement that instruction files are not enabled by default.
-     *
      */
     public function testDefaultMetadataStrategyDoesNotWriteInstructionFile(): void
     {
@@ -1398,9 +1396,6 @@ EOXML;
     // Key Commitment Tests
 
 
-    /**
-
- */
     #[DataProvider('getValidMaterialsProviders')]
     public function testPutObjectTakesValidMaterialsProvidersKC(
         $provider,

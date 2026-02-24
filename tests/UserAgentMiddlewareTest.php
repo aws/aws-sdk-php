@@ -138,8 +138,7 @@ class UserAgentMiddlewareTest extends TestCase
      * @param string $expected
      *
      * @return void
-
- */
+     */
     #[DataProvider('userAgentCasesDataProvider')]
     public function testUserAgentContainsValue(array $args, string $expected)
     {
@@ -324,8 +323,7 @@ class UserAgentMiddlewareTest extends TestCase
      * Tests user agent captures retry config metric.
      *
      * @return void
-
- */
+     */
     #[DataProvider('retryConfigMetricProvider')]
     public function testUserAgentCaptureRetryConfigMetric(
         $retryMode,
@@ -840,8 +838,7 @@ class UserAgentMiddlewareTest extends TestCase
      * @param bool $supported
      *
      * @return void
-
- */
+     */
     #[DataProvider('flexibleChecksumTestProvider')]
     public function testUserAgentCaptureFlexibleChecksumMetric(
         string $algorithm,

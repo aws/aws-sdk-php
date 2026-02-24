@@ -81,9 +81,6 @@ class S3ClientTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('bucketNameProvider')]
     public function testValidatesDnsBucketNames($bucket, $valid)
     {
@@ -314,9 +311,6 @@ class S3ClientTest extends TestCase
         return new S3Exception('', new Command('mockCommand'), $context);
     }
 
-    /**
-
- */
     #[DataProvider('doesExistProvider')]
     public function testsIfExists(
         $bucket,
@@ -511,9 +505,6 @@ class S3ClientTest extends TestCase
         $client->copy('from-bucket', 'fromKey', 'to-bucket', 'toKey');
     }
 
-    /**
-
- */
     #[DataProvider('getTestCasesForLocationConstraints')]
     public function testAddsLocationConstraintAutomatically($region, $target, $command, $contains)
     {
@@ -559,9 +550,7 @@ class S3ClientTest extends TestCase
 
     /**
      * @param string $bucket
-     *
-
- */
+     */
     #[DataProvider('directoryBucketLocationConstraintProvider')]
     public function testDoesNotAddLocationConstraintForDirectoryBuckets(
         string $bucket
@@ -628,8 +617,7 @@ class S3ClientTest extends TestCase
     /**
      *
      * @param array $retrySettings
-
- */
+     */
     #[DataProvider('clientRetrySettingsProvider')]
     public function testRetriesConnectionErrors($retrySettings)
     {
@@ -689,8 +677,7 @@ class S3ClientTest extends TestCase
      * @param string   $operation
      * @param array    $payload
      * @param array    $retryOptions
-
- */
+     */
     #[DataProvider('s3OperationsProvider')]
     public function testRetries200Errors(
         string $operation,
@@ -792,8 +779,7 @@ EOXML;
     /**
      *
      * @param array $retrySettings
-
- */
+     */
     #[DataProvider('clientRetrySettingsProvider')]
     public function testClientSocketTimeoutErrorsAreNotRetriedIndefinitely($retrySettings)
     {
@@ -837,7 +823,7 @@ EOXML;
     /**
      *
      * @param array $retrySettings
- */
+     */
     #[DataProvider('clientRetrySettingsProvider')]
     public function testNetworkingErrorsAreRetriedOnIdempotentCommands(
         array $retrySettings
@@ -878,8 +864,7 @@ EOXML;
     /**
      *
      * @param array $retrySettings
-
- */
+     */
     #[DataProvider('clientRetrySettingsProvider')]
     public function testNetworkingErrorsAreNotRetriedOnNonIdempotentCommands($retrySettings)
     {
@@ -921,8 +906,7 @@ EOXML;
     /**
      *
      * @param array $retrySettings
-
- */
+     */
     #[DataProvider('clientRetrySettingsProvider')]
     public function testErrorsWithUnparseableBodiesCanBeRetried($retrySettings)
     {
@@ -960,8 +944,7 @@ EOXML;
 
     /**
      * @param $retrySettings
-
- */
+     */
     #[DataProvider('clientRetrySettingsProvider')]
     public function testRetriesFailOn400Errors($retrySettings) {
         $retryCount = 0;
@@ -1568,8 +1551,7 @@ EOXML;
      *
      * @param $options
      * @param $host
-
- */
+     */
     #[DataProvider('optionsToEndpointsCases')]
     public function testResolvesOptionsToProperEndpoints($options, $host)
     {
@@ -1713,9 +1695,6 @@ EOXML;
         ];
     }
 
-    /**
-
- */
     #[DataProvider('multiRegionSuccessProvider')]
     public function testMrapParsing(
         $bucketFieldInput,
@@ -1788,9 +1767,6 @@ EOXML;
         ];
     }
 
-    /**
-
- */
     #[DataProvider('mrapExceptionTestProvider')]
     public function testMrapExceptions(
         $bucketFieldInput,
@@ -1834,8 +1810,7 @@ EOXML;
      * @param $useArnRegion
      * @param $disableMraps
      * @param $expectedException
-
- */
+     */
     #[DataProvider('AccessPointFailureProvider')]
     public function testAccessPointFailures (
         $bucketFieldInput,
@@ -1971,8 +1946,7 @@ EOXML;
     /**
      *
      * @param array $testCase
-
- */
+     */
     #[DataProvider('jsonCaseProvider')]
     public function testPassesCompliance(
         $bucket,
@@ -2013,8 +1987,7 @@ EOXML;
      * @param $useArnRegion
      * @param $endpointUrl
      * @param $expectedEndpoint
-
- */
+     */
     #[DataProvider('objectLambdasSuccessProvider')]
     public function testObjectLambdaArnSuccess(
         $bucketFieldInput,
@@ -2088,8 +2061,7 @@ EOXML;
      * @param $useArnRegion
      * @param $endpointUrl
      * @param $expectedException
-
- */
+     */
     #[DataProvider('objectLambdasFailureProvider')]
     public function testObjectLambdaArnFailures(
         $bucketFieldInput,
@@ -2216,8 +2188,7 @@ EOXML;
      * @param $route
      * @param $endpointUrl
      * @param $expectedEndpoint
-
- */
+     */
     #[DataProvider('writeGetObjectResponseProvider')]
     public function testWriteGetObjectResponse(
         $clientRegion,
@@ -2321,9 +2292,6 @@ EOXML;
         ];
     }
 
-    /**
-
- */
     #[DataProvider('addMD5Provider')]
     public function testAddContentMd5EmitsDeprecationNotice($options, $operation)
     {
@@ -2343,9 +2311,6 @@ EOXML;
         }
     }
 
-    /**
-
- */
     #[DataProvider('dotSegmentProvider')]
     public function testHandlesDotSegmentsInKey($key, $expectedUri)
     {
@@ -2371,9 +2336,6 @@ EOXML;
         ];
     }
 
-    /**
-
- */
     #[DataProvider('dotSegmentPathStyleProvider')]
     public function testHandlesDotSegmentsInKeyWithPathStyle($key, $expectedUri)
     {
@@ -2399,9 +2361,6 @@ EOXML;
         ];
     }
 
-    /**
-
- */
     #[DataProvider('builtinRegionProvider')]
     public function testCorrectlyResolvesGlobalEndpointWithoutRegionInConstructor(
         $region, $expected
@@ -2526,8 +2485,7 @@ EOXML;
      * @param array $retrySettings
      *
      * @return void
-
- */
+     */
     #[DataProvider('clientRetrySettingsProvider')]
     public function testS3RetriesOnNotParsableBody(array $retrySettings)
     {
@@ -2553,9 +2511,7 @@ EOXML;
      * @param bool $expected
      *
      * @return void
-     *
-
- */
+     */
     #[DataProvider('directoryBucketProvider')]
     public function testIsDirectoryBucket(string $bucketName, bool $expected): void
     {
@@ -2598,9 +2554,6 @@ EOXML;
         $s3->execute($command);
     }
 
-    /**
-
- */
     #[DataProvider('getContentSha256UseCases')]
     public function testAddsContentSHA256AsAppropriate($operation, $args, $hashAdded, $hashValue)
     {
@@ -2645,9 +2598,6 @@ EOXML;
         ];
     }
 
-    /**
-
- */
     #[DataProvider('getFlexibleChecksumUseCases')]
     public function testAddsFlexibleChecksumAsAppropriate($operation, $clientArgs, $operationArgs, $headerAdded, $headerValue)
     {
@@ -2779,9 +2729,7 @@ EOXML;
     /**
      * @param array $clientConfig
      * @return void
-     *
-
- */
+     */
     #[DataProvider('responseChecksumValidationProvider')]
     public function testResponseChecksumValidation(
         array $clientConfig,
@@ -2854,8 +2802,7 @@ EOXML;
 
     /**
      * @return void
-
- */
+     */
     #[DataProvider('checksumConfigProvider')]
     public function testChecksumConfigThrowsForInvalidInput(
         string $option,
@@ -2945,9 +2892,7 @@ EOXML;
     /**
      * The purpose of this test is to ensure ApplyChecksumMiddleware is
      * not invoked twice, ensuring checksum calculation is not repeated.
-     *
-
- */
+     */
     #[DataProvider('retriesWithoutRecalculatingChecksumProvider')]
     public function testRetriesWithoutRecalculatingChecksum(
         string $commandName,

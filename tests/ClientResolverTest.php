@@ -586,8 +586,7 @@ EOT;
      * @param $useFipsEndpoint
      * @param $region
      * @param $expectedEndpoint
-
- */
+     */
     #[DataProvider('dualStackEndpointCases')]
     public function testDualstackEndpoints(
         $service,
@@ -670,8 +669,7 @@ EOT;
      *
      * @param $config
      * @param $endpoint
-
- */
+     */
     #[DataProvider('s3EndpointCases')]
     public function testCanPassS3RegionalEndpointToEndpointProvider($config, $endpoint)
     {
@@ -853,8 +851,7 @@ EOT;
     /**
      * @param bool|array $userValue
      * @param array $resolvedValue
-
- */
+     */
     #[DataProvider('statValueProvider')]
     public function testAcceptsBooleansAndArraysForSelectiveStatCollection($userValue, array $resolvedValue)
     {
@@ -899,8 +896,7 @@ EOT;
      * @param string $argName
      * @param string $expected
      * @param string $override
-
- */
+     */
     #[DataProvider('endpointProviderReturnProvider')]
     public function testResolvesValuesReturnedByEndpointProvider(
         array $args,
@@ -964,8 +960,7 @@ EOT;
      * @param array $args
      * @param string $argName
      * @param string $expected
-
- */
+     */
     #[DataProvider('partitionReturnProvider')]
     public function testSigningValuesAreFetchedFromPartition(
         array $args,
@@ -1013,8 +1008,7 @@ EOT;
      *
      * @param mixed $value
      * @param bool $shouldAddIdempotencyMiddleware
-
- */
+     */
     #[DataProvider('idempotencyAutoFillProvider')]
     public function testIdempotencyTokenMiddlewareAddedAsAppropriate(
         $value,
@@ -1050,8 +1044,7 @@ EOT;
      *
      * @param $region
      * @param $expected
-
- */
+     */
     #[DataProvider('validateRegionProvider')]
     public function testValidatesRegion($region, $expected)
     {
@@ -1103,9 +1096,6 @@ EOT;
         ];
     }
 
-    /**
-
- */
     #[DataProvider('invalidDisableRequestCompressionValues')]
     public function testInvalidDisableRequestCompressionTypeThrowsException($invalidType)
     {
@@ -1149,9 +1139,6 @@ EOT;
         ];
     }
 
-    /**
-
- */
     #[DataProvider('invalidMinCompressionSizeValues')]
     public function testInvalidMinCompressionSizeValues($invalidType)
     {
@@ -1189,8 +1176,7 @@ EOT;
      * @param $expected
      * @param $configKey
      * @param $configType
-
- */
+     */
     #[DataProvider('configResolutionProvider')]
     public function testConfigResolutionOrder($ini, $env, $expected, $configKey, $configType)
     {
@@ -1536,9 +1522,7 @@ EOF;
      * @param string|null $ini
      * @param string|null $env
      * @return void
-     *
-
- */
+     */
     #[DataProvider('resolvesAuthSchemePreferenceProvider')]
     public function testResolvesAuthSchemePreference(
         bool $isExpected,

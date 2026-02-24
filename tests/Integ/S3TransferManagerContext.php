@@ -488,7 +488,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
 
     /**
      * @When /^I upload this directory (.*) to s3$/
-    */
+     */
     public function iUploadThisDirectory($directory): void
     {
         $s3TransferManager = new S3TransferManager(

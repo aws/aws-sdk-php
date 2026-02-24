@@ -315,8 +315,7 @@ class InstanceProfileProviderTest extends TestCase
      * @param array $clientDefinition
      * @param CredentialsInterface $expected
      * @param int|null $expectedAttempts
-
- */
+     */
     #[DataProvider('successDataProvider')]
     public function testHandlesSuccessScenarios(
         array $clientDefinition,
@@ -559,8 +558,7 @@ class InstanceProfileProviderTest extends TestCase
      *
      * @param array $clientDefinition
      * @param \Exception $expected
-
- */
+     */
     #[DataProvider('failureDataProvider')]
     public function testHandlesFailureScenarios(
         array $clientDefinition,
@@ -1404,9 +1402,7 @@ class InstanceProfileProviderTest extends TestCase
      * test config file name.
      * @param string $expectedEndpointMode this parameter is the endpoint mode that is expected to be resolved by
      * the credential provider.
-     *
-
- */
+     */
     #[DataProvider('endpointModeCasesProvider')]
     public function testEndpointModeResolution(
       ?string $endpointModeClientConfig,
@@ -1530,9 +1526,7 @@ class InstanceProfileProviderTest extends TestCase
      *  test config file name.
      * @param string $expectedEndpoint this parameter is the endpoint that is expected to be resolved
      * by the credential provider.
-     *
-
- */
+     */
     #[DataProvider('endpointCasesProvider')]
     public function testEndpointResolution(
         string  $endpointMode,

@@ -280,9 +280,6 @@ EOT;
         $this->assertNull($creds->getSecurityToken());
     }
 
-    /**
-
- */
     #[DataProvider('iniFileProvider')]
     public function testCreatesFromIniFile(
         string $iniFile,
@@ -1942,9 +1939,6 @@ EOT;
         $this->assertSame('configFoo', $creds->getAccessKeyId());
     }
 
-    /**
-
- */
     #[DataProvider('shouldUseEcsProvider')]
     public function testShouldUseEcs(
         string $relative,
@@ -2736,9 +2730,6 @@ djiIaHK3dBvvdE7MGj5HsepzLm3Kj91bqA==
         $this->assertSame('cachedLoginToken', $credentials->getSecurityToken());
     }
 
-    /**
-
- */
     #[DataProvider('loginInvalidCacheProvider')]
     public function testLoginWithInvalidCache(
         string $cacheContent,
