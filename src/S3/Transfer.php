@@ -25,6 +25,7 @@ class Transfer implements PromisorInterface
     private $sourceMetadata;
     private $destination;
     private $concurrency;
+    private $partSize;
     private $mupThreshold;
     private $before;
     private $after;
@@ -118,6 +119,9 @@ class Transfer implements PromisorInterface
         $this->concurrency = isset($options['concurrency'])
             ? $options['concurrency']
             : MultipartUploader::DEFAULT_CONCURRENCY;
+        $this->partSize = isset($options['part_size'])
+            ? $options['part_size']
+            : MultipartUploader::PART_MIN_SIZE;
         $this->mupThreshold = isset($options['mup_threshold'])
             ? $options['mup_threshold']
             : 16777216;
@@ -387,6 +391,7 @@ class Transfer implements PromisorInterface
             'before_upload'   => $this->before,
             'before_complete' => $this->before,
             'concurrency'     => $this->concurrency,
+            'part_size'       => $this->partSize,
             'add_content_md5' => $this->addContentMD5
         ]))->promise();
     }
