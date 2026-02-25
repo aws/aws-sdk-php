@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.371.1 - 2026-02-25
 
 * `Aws\Batch` - AWS Batch documentation update for service job capacity units.
 * `Aws\Neptune` - Neptune global clusters now supports tags
