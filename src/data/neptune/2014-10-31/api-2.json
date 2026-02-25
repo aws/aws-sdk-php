@@ -970,7 +970,10 @@
       },
       "errors":[
         {"shape":"GlobalClusterNotFoundFault"},
-        {"shape":"InvalidGlobalClusterStateFault"}
+        {"shape":"GlobalClusterAlreadyExistsFault"},
+        {"shape":"InvalidGlobalClusterStateFault"},
+        {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"InvalidDBInstanceStateFault"}
       ]
     },
     "PromoteReadReplicaDBCluster":{
@@ -1660,6 +1663,8 @@
         "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "DeletionProtection":{"shape":"BooleanOptional"},
+        "DatabaseName":{"shape":"String"},
+        "Tags":{"shape":"TagList"},
         "StorageEncrypted":{"shape":"BooleanOptional"}
       }
     },
@@ -2959,10 +2964,12 @@
         "Status":{"shape":"String"},
         "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
+        "DatabaseName":{"shape":"String"},
         "StorageEncrypted":{"shape":"BooleanOptional"},
         "DeletionProtection":{"shape":"BooleanOptional"},
         "GlobalClusterMembers":{"shape":"GlobalClusterMemberList"},
-        "FailoverState":{"shape":"FailoverState"}
+        "FailoverState":{"shape":"FailoverState"},
+        "TagList":{"shape":"TagList"}
       },
       "wrapper":true
     },

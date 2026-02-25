@@ -516,6 +516,22 @@
         {"shape":"WAFInvalidParameterException"}
       ]
     },
+    "GetTopPathStatisticsByTraffic":{
+      "name":"GetTopPathStatisticsByTraffic",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetTopPathStatisticsByTrafficRequest"},
+      "output":{"shape":"GetTopPathStatisticsByTrafficResponse"},
+      "errors":[
+        {"shape":"WAFInternalErrorException"},
+        {"shape":"WAFInvalidParameterException"},
+        {"shape":"WAFNonexistentItemException"},
+        {"shape":"WAFInvalidOperationException"},
+        {"shape":"WAFFeatureNotIncludedInPricingPlanException"}
+      ]
+    },
     "GetWebACL":{
       "name":"GetWebACL",
       "http":{
@@ -1133,6 +1149,23 @@
       ]
     },
     "Boolean":{"type":"boolean"},
+    "BotStatistics":{
+      "type":"structure",
+      "required":[
+        "BotName",
+        "RequestCount",
+        "Percentage"
+      ],
+      "members":{
+        "BotName":{"shape":"FilterString"},
+        "RequestCount":{"shape":"RequestCount"},
+        "Percentage":{"shape":"PercentageValue"}
+      }
+    },
+    "BotStatisticsList":{
+      "type":"list",
+      "member":{"shape":"BotStatistics"}
+    },
     "ByteMatchStatement":{
       "type":"structure",
       "required":[
@@ -2138,6 +2171,20 @@
         "MEETS_ANY"
       ]
     },
+    "FilterSource":{
+      "type":"structure",
+      "members":{
+        "BotCategory":{"shape":"FilterString"},
+        "BotOrganization":{"shape":"FilterString"},
+        "BotName":{"shape":"FilterString"}
+      }
+    },
+    "FilterString":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":".*\\S.*"
+    },
     "Filters":{
       "type":"list",
       "member":{"shape":"Filter"},
@@ -2405,6 +2452,41 @@
         "SampledRequests":{"shape":"SampledHTTPRequests"},
         "PopulationSize":{"shape":"PopulationSize"},
         "TimeWindow":{"shape":"TimeWindow"}
+      }
+    },
+    "GetTopPathStatisticsByTrafficRequest":{
+      "type":"structure",
+      "required":[
+        "WebAclArn",
+        "Scope",
+        "TimeWindow",
+        "Limit",
+        "NumberOfTopTrafficBotsPerPath"
+      ],
+      "members":{
+        "WebAclArn":{"shape":"ResourceArn"},
+        "Scope":{"shape":"Scope"},
+        "UriPathPrefix":{"shape":"UriPathPrefixString"},
+        "TimeWindow":{"shape":"TimeWindow"},
+        "BotCategory":{"shape":"FilterString"},
+        "BotOrganization":{"shape":"FilterString"},
+        "BotName":{"shape":"FilterString"},
+        "Limit":{"shape":"PathStatisticsLimit"},
+        "NumberOfTopTrafficBotsPerPath":{"shape":"NumberOfTopTrafficBotsPerPath"},
+        "NextMarker":{"shape":"NextMarker"}
+      }
+    },
+    "GetTopPathStatisticsByTrafficResponse":{
+      "type":"structure",
+      "required":[
+        "PathStatistics",
+        "TotalRequestCount"
+      ],
+      "members":{
+        "PathStatistics":{"shape":"PathStatisticsList"},
+        "TotalRequestCount":{"shape":"RequestCount"},
+        "NextMarker":{"shape":"NextMarker"},
+        "TopCategories":{"shape":"PathStatisticsList"}
       }
     },
     "GetWebACLForResourceRequest":{
@@ -3149,6 +3231,11 @@
         "Statement":{"shape":"Statement"}
       }
     },
+    "NumberOfTopTrafficBotsPerPath":{
+      "type":"integer",
+      "max":10,
+      "min":1
+    },
     "OnSourceDDoSProtectionConfig":{
       "type":"structure",
       "required":["ALBLowReputationMode"],
@@ -3272,12 +3359,46 @@
         "Identifier":{"shape":"FieldIdentifier"}
       }
     },
+    "PathStatistics":{
+      "type":"structure",
+      "required":[
+        "Path",
+        "RequestCount",
+        "Percentage"
+      ],
+      "members":{
+        "Source":{"shape":"FilterSource"},
+        "Path":{"shape":"PathString"},
+        "RequestCount":{"shape":"RequestCount"},
+        "Percentage":{"shape":"PercentageValue"},
+        "TopBots":{"shape":"BotStatisticsList"}
+      }
+    },
+    "PathStatisticsLimit":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
+    "PathStatisticsList":{
+      "type":"list",
+      "member":{"shape":"PathStatistics"}
+    },
+    "PathString":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
     "PayloadType":{
       "type":"string",
       "enum":[
         "JSON",
         "FORM_ENCODED"
       ]
+    },
+    "PercentageValue":{
+      "type":"double",
+      "max":100.0,
+      "min":0.0
     },
     "PhoneNumberField":{
       "type":"structure",
@@ -3644,6 +3765,10 @@
       "members":{
         "DefaultSizeInspectionLimit":{"shape":"SizeInspectionLimit"}
       }
+    },
+    "RequestCount":{
+      "type":"long",
+      "min":0
     },
     "RequestInspection":{
       "type":"structure",
@@ -4384,6 +4509,12 @@
     "UriPath":{
       "type":"structure",
       "members":{}
+    },
+    "UriPathPrefixString":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"^\\/[^ ]*$"
     },
     "UsageOfAction":{
       "type":"string",

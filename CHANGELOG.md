@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Batch` - AWS Batch documentation update for service job capacity units.
+* `Aws\Neptune` - Neptune global clusters now supports tags
+* `Aws\WAFV2` - AWS WAF now supports GetTopPathStatisticsByTraffic that provides aggregated statistics on the top URI paths accessed by bot traffic. Use this operation to see which paths receive the most bot traffic, identify the specific bots accessing them, and filter by category, organization, or bot name.
+* `Aws\ECR` - Update repository name regex to comply with OCI Distribution Specification
+* `Aws\EC2` - Add support for EC2 Capacity Blocks in Local Zones.
+
 ## 3.371.0 - 2026-02-24
 
 * `Aws\ElementalInference` - Initial GA launch for AWS Elemental Inference including capabilities of Smart Crop and Live Event Clipping
