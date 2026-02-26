@@ -2,9 +2,11 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2021-01-01",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"backup-gateway",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWS Backup Gateway",
     "serviceId":"Backup Gateway",
     "signatureVersion":"v4",
@@ -415,7 +417,7 @@
       "type":"string",
       "max":50,
       "min":1,
-      "pattern":"^[0-9a-zA-Z\\-]+$"
+      "pattern":"[0-9a-zA-Z\\-]+"
     },
     "AssociateGatewayToServerInput":{
       "type":"structure",
@@ -443,19 +445,19 @@
     "BandwidthRateLimitInterval":{
       "type":"structure",
       "required":[
-        "DaysOfWeek",
-        "EndHourOfDay",
-        "EndMinuteOfHour",
         "StartHourOfDay",
-        "StartMinuteOfHour"
+        "EndHourOfDay",
+        "StartMinuteOfHour",
+        "EndMinuteOfHour",
+        "DaysOfWeek"
       ],
       "members":{
         "AverageUploadRateLimitInBitsPerSec":{"shape":"AverageUploadRateLimit"},
-        "DaysOfWeek":{"shape":"DaysOfWeek"},
-        "EndHourOfDay":{"shape":"HourOfDay"},
-        "EndMinuteOfHour":{"shape":"MinuteOfHour"},
         "StartHourOfDay":{"shape":"HourOfDay"},
-        "StartMinuteOfHour":{"shape":"MinuteOfHour"}
+        "EndHourOfDay":{"shape":"HourOfDay"},
+        "StartMinuteOfHour":{"shape":"MinuteOfHour"},
+        "EndMinuteOfHour":{"shape":"MinuteOfHour"},
+        "DaysOfWeek":{"shape":"DaysOfWeek"}
       }
     },
     "BandwidthRateLimitIntervals":{
@@ -562,9 +564,9 @@
     },
     "GatewayArn":{
       "type":"string",
-      "max":500,
+      "max":180,
       "min":50,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov):backup-gateway(:[a-zA-Z-0-9]+){3}\\/[a-zA-Z-0-9]+$"
+      "pattern":"arn:(aws|aws-cn|aws-us-gov):backup-gateway(:[a-zA-Z-0-9]+){3}\\/[a-zA-Z-0-9]+"
     },
     "GatewayDetails":{
       "type":"structure",
@@ -576,7 +578,9 @@
         "LastSeenTime":{"shape":"Time"},
         "MaintenanceStartTime":{"shape":"MaintenanceStartTime"},
         "NextUpdateAvailabilityTime":{"shape":"Time"},
-        "VpcEndpoint":{"shape":"VpcEndpoint"}
+        "VpcEndpoint":{"shape":"VpcEndpoint"},
+        "DeprecationDate":{"shape":"Time"},
+        "SoftwareVersion":{"shape":"Name"}
       }
     },
     "GatewayType":{
@@ -597,8 +601,8 @@
     "GetBandwidthRateLimitScheduleOutput":{
       "type":"structure",
       "members":{
-        "BandwidthRateLimitIntervals":{"shape":"BandwidthRateLimitIntervals"},
-        "GatewayArn":{"shape":"GatewayArn"}
+        "GatewayArn":{"shape":"GatewayArn"},
+        "BandwidthRateLimitIntervals":{"shape":"BandwidthRateLimitIntervals"}
       }
     },
     "GetGatewayInput":{
@@ -638,8 +642,8 @@
       "type":"structure",
       "members":{
         "HypervisorArn":{"shape":"ServerArn"},
-        "IamRoleArn":{"shape":"IamRoleArn"},
-        "VmwareToAwsTagMappings":{"shape":"VmwareToAwsTagMappings"}
+        "VmwareToAwsTagMappings":{"shape":"VmwareToAwsTagMappings"},
+        "IamRoleArn":{"shape":"IamRoleArn"}
       }
     },
     "GetVirtualMachineInput":{
@@ -659,7 +663,7 @@
       "type":"string",
       "max":128,
       "min":3,
-      "pattern":"^.+$"
+      "pattern":".+"
     },
     "HourOfDay":{
       "type":"integer",
@@ -683,12 +687,12 @@
         "Host":{"shape":"Host"},
         "HypervisorArn":{"shape":"ServerArn"},
         "KmsKeyArn":{"shape":"KmsKeyArn"},
-        "LastSuccessfulMetadataSyncTime":{"shape":"Time"},
-        "LatestMetadataSyncStatus":{"shape":"SyncMetadataStatus"},
-        "LatestMetadataSyncStatusMessage":{"shape":"string"},
-        "LogGroupArn":{"shape":"LogGroupArn"},
         "Name":{"shape":"Name"},
-        "State":{"shape":"HypervisorState"}
+        "LogGroupArn":{"shape":"LogGroupArn"},
+        "State":{"shape":"HypervisorState"},
+        "LastSuccessfulMetadataSyncTime":{"shape":"Time"},
+        "LatestMetadataSyncStatusMessage":{"shape":"string"},
+        "LatestMetadataSyncStatus":{"shape":"SyncMetadataStatus"}
       }
     },
     "HypervisorId":{
@@ -713,21 +717,21 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov):iam::([0-9]+):role/(\\S+)$"
+      "pattern":"arn:(aws|aws-cn|aws-us-gov):iam::([0-9]+):role/(\\S+)"
     },
     "ImportHypervisorConfigurationInput":{
       "type":"structure",
       "required":[
-        "Host",
-        "Name"
+        "Name",
+        "Host"
       ],
       "members":{
-        "Host":{"shape":"Host"},
-        "KmsKeyArn":{"shape":"KmsKeyArn"},
         "Name":{"shape":"Name"},
+        "Host":{"shape":"Host"},
+        "Username":{"shape":"Username"},
         "Password":{"shape":"Password"},
-        "Tags":{"shape":"Tags"},
-        "Username":{"shape":"Username"}
+        "KmsKeyArn":{"shape":"KmsKeyArn"},
+        "Tags":{"shape":"Tags"}
       }
     },
     "ImportHypervisorConfigurationOutput":{
@@ -749,7 +753,7 @@
       "type":"string",
       "max":500,
       "min":50,
-      "pattern":"^(^arn:(aws|aws-cn|aws-us-gov):kms:([a-zA-Z0-9-]+):([0-9]+):(key|alias)/(\\S+)$)|(^alias/(\\S+)$)$"
+      "pattern":"(^arn:(aws|aws-cn|aws-us-gov):kms:([a-zA-Z0-9-]+):([0-9]+):(key|alias)/(\\S+)$)|(^alias/(\\S+)$)"
     },
     "ListGatewaysInput":{
       "type":"structure",
@@ -804,15 +808,15 @@
     "ListVirtualMachinesOutput":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"NextToken"},
-        "VirtualMachines":{"shape":"VirtualMachines"}
+        "VirtualMachines":{"shape":"VirtualMachines"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "LogGroupArn":{
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^$|^arn:(aws|aws-cn|aws-us-gov):logs:([a-zA-Z0-9-]+):([0-9]+):log-group:[a-zA-Z0-9_\\-\\/\\.]+:\\*$"
+      "pattern":"$|^arn:(aws|aws-cn|aws-us-gov):logs:([a-zA-Z0-9-]+):([0-9]+):log-group:[a-zA-Z0-9_\\-\\/\\.]+:\\*"
     },
     "MaintenanceStartTime":{
       "type":"structure",
@@ -842,36 +846,36 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-]*$"
+      "pattern":"[a-zA-Z0-9-]*"
     },
     "NextToken":{
       "type":"string",
       "max":1000,
       "min":1,
-      "pattern":"^.+$"
+      "pattern":".+"
     },
     "Password":{
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[ -~]+$",
+      "pattern":"[ -~]+",
       "sensitive":true
     },
     "Path":{
       "type":"string",
       "max":4096,
       "min":1,
-      "pattern":"^[^\\x00]+$"
+      "pattern":"[^\\x00]+"
     },
     "PutBandwidthRateLimitScheduleInput":{
       "type":"structure",
       "required":[
-        "BandwidthRateLimitIntervals",
-        "GatewayArn"
+        "GatewayArn",
+        "BandwidthRateLimitIntervals"
       ],
       "members":{
-        "BandwidthRateLimitIntervals":{"shape":"BandwidthRateLimitIntervals"},
-        "GatewayArn":{"shape":"GatewayArn"}
+        "GatewayArn":{"shape":"GatewayArn"},
+        "BandwidthRateLimitIntervals":{"shape":"BandwidthRateLimitIntervals"}
       }
     },
     "PutBandwidthRateLimitScheduleOutput":{
@@ -884,13 +888,13 @@
       "type":"structure",
       "required":[
         "HypervisorArn",
-        "IamRoleArn",
-        "VmwareToAwsTagMappings"
+        "VmwareToAwsTagMappings",
+        "IamRoleArn"
       ],
       "members":{
         "HypervisorArn":{"shape":"ServerArn"},
-        "IamRoleArn":{"shape":"IamRoleArn"},
-        "VmwareToAwsTagMappings":{"shape":"VmwareToAwsTagMappings"}
+        "VmwareToAwsTagMappings":{"shape":"VmwareToAwsTagMappings"},
+        "IamRoleArn":{"shape":"IamRoleArn"}
       }
     },
     "PutHypervisorPropertyMappingsOutput":{
@@ -907,11 +911,11 @@
         "MinuteOfHour"
       ],
       "members":{
-        "DayOfMonth":{"shape":"DayOfMonth"},
-        "DayOfWeek":{"shape":"DayOfWeek"},
         "GatewayArn":{"shape":"GatewayArn"},
         "HourOfDay":{"shape":"HourOfDay"},
-        "MinuteOfHour":{"shape":"MinuteOfHour"}
+        "MinuteOfHour":{"shape":"MinuteOfHour"},
+        "DayOfWeek":{"shape":"DayOfWeek"},
+        "DayOfMonth":{"shape":"DayOfMonth"}
       }
     },
     "PutMaintenanceStartTimeOutput":{
@@ -924,7 +928,7 @@
       "type":"string",
       "max":500,
       "min":50,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov):backup-gateway(:[a-zA-Z-0-9]+){3}\\/[a-zA-Z-0-9]+$"
+      "pattern":"arn:(aws|aws-cn|aws-us-gov):backup-gateway(:[a-zA-Z-0-9]+){3}\\/[a-zA-Z-0-9]+"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -938,7 +942,7 @@
       "type":"string",
       "max":500,
       "min":50,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov):backup-gateway(:[a-zA-Z-0-9]+){3}\\/[a-zA-Z-0-9]+$"
+      "pattern":"arn:(aws|aws-cn|aws-us-gov):backup-gateway(:[a-zA-Z-0-9]+){3}\\/[a-zA-Z-0-9]+"
     },
     "StartVirtualMachinesMetadataSyncInput":{
       "type":"structure",
@@ -978,7 +982,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
     },
     "TagKeys":{
       "type":"list",
@@ -1005,7 +1009,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^[^\\x00]*$"
+      "pattern":"[^\\x00]*"
     },
     "Tags":{
       "type":"list",
@@ -1020,8 +1024,8 @@
       "members":{
         "GatewayArn":{"shape":"GatewayArn"},
         "Host":{"shape":"Host"},
-        "Password":{"shape":"Password"},
-        "Username":{"shape":"Username"}
+        "Username":{"shape":"Username"},
+        "Password":{"shape":"Password"}
       }
     },
     "TestHypervisorConfigurationOutput":{
@@ -1087,12 +1091,12 @@
       "type":"structure",
       "required":["HypervisorArn"],
       "members":{
-        "Host":{"shape":"Host"},
         "HypervisorArn":{"shape":"ServerArn"},
-        "LogGroupArn":{"shape":"LogGroupArn"},
-        "Name":{"shape":"Name"},
+        "Host":{"shape":"Host"},
+        "Username":{"shape":"Username"},
         "Password":{"shape":"Password"},
-        "Username":{"shape":"Username"}
+        "Name":{"shape":"Name"},
+        "LogGroupArn":{"shape":"LogGroupArn"}
       }
     },
     "UpdateHypervisorOutput":{
@@ -1105,7 +1109,7 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[ -\\.0-\\[\\]-~]*[!-\\.0-\\[\\]-~][ -\\.0-\\[\\]-~]*$",
+      "pattern":"[ -\\.0-\\[\\]-~]*[!-\\.0-\\[\\]-~][ -\\.0-\\[\\]-~]*",
       "sensitive":true
     },
     "ValidationException":{
@@ -1121,10 +1125,10 @@
       "members":{
         "HostName":{"shape":"Name"},
         "HypervisorId":{"shape":"string"},
-        "LastBackupDate":{"shape":"Time"},
         "Name":{"shape":"Name"},
         "Path":{"shape":"Path"},
-        "ResourceArn":{"shape":"ResourceArn"}
+        "ResourceArn":{"shape":"ResourceArn"},
+        "LastBackupDate":{"shape":"Time"}
       }
     },
     "VirtualMachineDetails":{
@@ -1132,10 +1136,10 @@
       "members":{
         "HostName":{"shape":"Name"},
         "HypervisorId":{"shape":"string"},
-        "LastBackupDate":{"shape":"Time"},
         "Name":{"shape":"Name"},
         "Path":{"shape":"Path"},
         "ResourceArn":{"shape":"ResourceArn"},
+        "LastBackupDate":{"shape":"Time"},
         "VmwareTags":{"shape":"VmwareTags"}
       }
     },
@@ -1152,8 +1156,8 @@
       "type":"structure",
       "members":{
         "VmwareCategory":{"shape":"VmwareCategory"},
-        "VmwareTagDescription":{"shape":"string"},
-        "VmwareTagName":{"shape":"VmwareTagName"}
+        "VmwareTagName":{"shape":"VmwareTagName"},
+        "VmwareTagDescription":{"shape":"string"}
       }
     },
     "VmwareTagName":{
@@ -1168,16 +1172,16 @@
     "VmwareToAwsTagMapping":{
       "type":"structure",
       "required":[
-        "AwsTagKey",
-        "AwsTagValue",
         "VmwareCategory",
-        "VmwareTagName"
+        "VmwareTagName",
+        "AwsTagKey",
+        "AwsTagValue"
       ],
       "members":{
-        "AwsTagKey":{"shape":"TagKey"},
-        "AwsTagValue":{"shape":"TagValue"},
         "VmwareCategory":{"shape":"VmwareCategory"},
-        "VmwareTagName":{"shape":"VmwareTagName"}
+        "VmwareTagName":{"shape":"VmwareTagName"},
+        "AwsTagKey":{"shape":"TagKey"},
+        "AwsTagValue":{"shape":"TagValue"}
       }
     },
     "VmwareToAwsTagMappings":{

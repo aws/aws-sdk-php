@@ -32,7 +32,8 @@
         {"shape":"InvalidCustomerIdentifierException"},
         {"shape":"TimestampOutOfBoundsException"},
         {"shape":"ThrottlingException"},
-        {"shape":"DisabledApiException"}
+        {"shape":"DisabledApiException"},
+        {"shape":"InvalidLicenseException"}
       ]
     },
     "MeterUsage":{
@@ -101,10 +102,7 @@
     },
     "BatchMeterUsageRequest":{
       "type":"structure",
-      "required":[
-        "UsageRecords",
-        "ProductCode"
-      ],
+      "required":["UsageRecords"],
       "members":{
         "UsageRecords":{"shape":"UsageRecordList"},
         "ProductCode":{"shape":"ProductCode"}
@@ -192,6 +190,13 @@
       },
       "exception":true
     },
+    "InvalidLicenseException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"errorMessage"}
+      },
+      "exception":true
+    },
     "InvalidProductCodeException":{
       "type":"structure",
       "members":{
@@ -241,6 +246,10 @@
       },
       "exception":true
     },
+    "LicenseArn":{
+      "type":"string",
+      "pattern":"^arn:aws[a-zA-Z-]*:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$"
+    },
     "MeterUsageRequest":{
       "type":"structure",
       "required":[
@@ -286,7 +295,7 @@
     "ProductCode":{
       "type":"string",
       "max":255,
-      "min":1,
+      "min":0,
       "pattern":"^[-a-zA-Z0-9/=:_.@]*$"
     },
     "RegisterUsageRequest":{
@@ -320,7 +329,8 @@
       "members":{
         "CustomerIdentifier":{"shape":"CustomerIdentifier"},
         "ProductCode":{"shape":"ProductCode"},
-        "CustomerAWSAccountId":{"shape":"CustomerAWSAccountId"}
+        "CustomerAWSAccountId":{"shape":"CustomerAWSAccountId"},
+        "LicenseArn":{"shape":"LicenseArn"}
       }
     },
     "String":{"type":"string"},
@@ -405,7 +415,8 @@
         "Dimension":{"shape":"UsageDimension"},
         "Quantity":{"shape":"UsageQuantity"},
         "UsageAllocations":{"shape":"UsageAllocations"},
-        "CustomerAWSAccountId":{"shape":"CustomerAWSAccountId"}
+        "CustomerAWSAccountId":{"shape":"CustomerAWSAccountId"},
+        "LicenseArn":{"shape":"LicenseArn"}
       }
     },
     "UsageRecordList":{

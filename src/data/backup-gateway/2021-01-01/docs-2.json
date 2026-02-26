@@ -10,7 +10,7 @@
     "GetBandwidthRateLimitSchedule": "<p>Retrieves the bandwidth rate limit schedule for a specified gateway. By default, gateways do not have bandwidth rate limit schedules, which means no bandwidth rate limiting is in effect. Use this to get a gateway's bandwidth rate limit schedule.</p>",
     "GetGateway": "<p>By providing the ARN (Amazon Resource Name), this API returns the gateway.</p>",
     "GetHypervisor": "<p>This action requests information about the specified hypervisor to which the gateway will connect. A hypervisor is hardware, software, or firmware that creates and manages virtual machines, and allocates resources to them.</p>",
-    "GetHypervisorPropertyMappings": "<p>This action retrieves the property mappings for the specified hypervisor. A hypervisor property mapping displays the relationship of entity properties available from the on-premises hypervisor to the properties available in Amazon Web Services.</p>",
+    "GetHypervisorPropertyMappings": "<p>This action retrieves the property mappings for the specified hypervisor. A hypervisor property mapping displays the relationship of entity properties available from the hypervisor to the properties available in Amazon Web Services.</p>",
     "GetVirtualMachine": "<p>By providing the ARN (Amazon Resource Name), this API returns the virtual machine.</p>",
     "ImportHypervisorConfiguration": "<p>Connect to a hypervisor by importing its configuration.</p>",
     "ListGateways": "<p>Lists backup gateways owned by an Amazon Web Services account in an Amazon Web Services Region. The returned list is ordered by gateway Amazon Resource Name (ARN).</p>",
@@ -18,7 +18,7 @@
     "ListTagsForResource": "<p>Lists the tags applied to the resource identified by its Amazon Resource Name (ARN).</p>",
     "ListVirtualMachines": "<p>Lists your virtual machines.</p>",
     "PutBandwidthRateLimitSchedule": "<p>This action sets the bandwidth rate limit schedule for a specified gateway. By default, gateways do not have a bandwidth rate limit schedule, which means no bandwidth rate limiting is in effect. Use this to initiate a gateway's bandwidth rate limit schedule.</p>",
-    "PutHypervisorPropertyMappings": "<p>This action sets the property mappings for the specified hypervisor. A hypervisor property mapping displays the relationship of entity properties available from the on-premises hypervisor to the properties available in Amazon Web Services.</p>",
+    "PutHypervisorPropertyMappings": "<p>This action sets the property mappings for the specified hypervisor. A hypervisor property mapping displays the relationship of entity properties available from the hypervisor to the properties available in Amazon Web Services.</p>",
     "PutMaintenanceStartTime": "<p>Set the maintenance start time for a gateway.</p>",
     "StartVirtualMachinesMetadataSync": "<p>This action sends a request to sync metadata across the specified virtual machines.</p>",
     "TagResource": "<p>Tag the resource.</p>",
@@ -53,7 +53,7 @@
     "AverageUploadRateLimit": {
       "base": null,
       "refs": {
-        "BandwidthRateLimitInterval$AverageUploadRateLimitInBitsPerSec": "<p>The average upload rate limit component of the bandwidth rate limit interval, in bits per second. This field does not appear in the response if the upload rate limit is not set.</p> <note> <p>For Backup Gateway, the minimum value is <code>(Value)</code>.</p> </note>"
+        "BandwidthRateLimitInterval$AverageUploadRateLimitInBitsPerSec": "<p>The average upload rate limit component of the bandwidth rate limit interval, in bits per second. This field does not appear in the response if the upload rate limit is not set.</p>"
       }
     },
     "BandwidthRateLimitInterval": {
@@ -250,8 +250,8 @@
     "HourOfDay": {
       "base": null,
       "refs": {
-        "BandwidthRateLimitInterval$EndHourOfDay": "<p>The hour of the day to end the bandwidth rate limit interval.</p>",
         "BandwidthRateLimitInterval$StartHourOfDay": "<p>The hour of the day to start the bandwidth rate limit interval.</p>",
+        "BandwidthRateLimitInterval$EndHourOfDay": "<p>The hour of the day to end the bandwidth rate limit interval.</p>",
         "MaintenanceStartTime$HourOfDay": "<p>The hour component of the maintenance start time represented as <i>hh</i>, where <i>hh</i> is the hour (0 to 23). The hour of the day is in the time zone of the gateway.</p>",
         "PutMaintenanceStartTimeInput$HourOfDay": "<p>The hour of the day to start maintenance on a gateway.</p>"
       }
@@ -382,8 +382,8 @@
     "MinuteOfHour": {
       "base": null,
       "refs": {
-        "BandwidthRateLimitInterval$EndMinuteOfHour": "<p>The minute of the hour to end the bandwidth rate limit interval.</p> <important> <p>The bandwidth rate limit interval ends at the end of the minute. To end an interval at the end of an hour, use the value <code>59</code>.</p> </important>",
         "BandwidthRateLimitInterval$StartMinuteOfHour": "<p>The minute of the hour to start the bandwidth rate limit interval. The interval begins at the start of that minute. To begin an interval exactly at the start of the hour, use the value <code>0</code>.</p>",
+        "BandwidthRateLimitInterval$EndMinuteOfHour": "<p>The minute of the hour to end the bandwidth rate limit interval.</p> <important> <p>The bandwidth rate limit interval ends at the end of the minute. To end an interval at the end of an hour, use the value <code>59</code>.</p> </important>",
         "MaintenanceStartTime$MinuteOfHour": "<p>The minute component of the maintenance start time represented as <i>mm</i>, where <i>mm</i> is the minute (0 to 59). The minute of the hour is in the time zone of the gateway.</p>",
         "PutMaintenanceStartTimeInput$MinuteOfHour": "<p>The minute of the hour to start maintenance on a gateway.</p>"
       }
@@ -394,6 +394,7 @@
         "CreateGatewayInput$GatewayDisplayName": "<p>The display name of the created gateway.</p>",
         "Gateway$GatewayDisplayName": "<p>The display name of the gateway.</p>",
         "GatewayDetails$GatewayDisplayName": "<p>The display name of the gateway.</p>",
+        "GatewayDetails$SoftwareVersion": "<p>The version number of the software running on the gateway appliance.</p>",
         "Hypervisor$Name": "<p>The name of the hypervisor.</p>",
         "HypervisorDetails$Name": "<p>This is the name of the specified hypervisor.</p>",
         "ImportHypervisorConfigurationInput$Name": "<p>The name of the hypervisor.</p>",
@@ -518,7 +519,7 @@
       }
     },
     "Tag": {
-      "base": "<p>A key-value pair you can use to manage, filter, and search for your resources. Allowed characters include UTF-8 letters, numbers, spaces, and the following characters: + - = . _ : /.</p>",
+      "base": "<p>A key-value pair you can use to manage, filter, and search for your resources. Allowed characters include UTF-8 letters, numbers, and the following characters: + - = . _ : /. Spaces are not allowed in tag values.</p>",
       "refs": {
         "Tags$member": null
       }
@@ -584,6 +585,7 @@
         "Gateway$LastSeenTime": "<p>The last time Backup gateway communicated with the gateway, in Unix format and UTC time.</p>",
         "GatewayDetails$LastSeenTime": "<p>Details showing the last time Backup gateway communicated with the cloud, in Unix format and UTC time.</p>",
         "GatewayDetails$NextUpdateAvailabilityTime": "<p>Details showing the next update availability time of the gateway.</p>",
+        "GatewayDetails$DeprecationDate": "<p>Date after which this gateway will not receive software updates for new features and bug fixes.</p>",
         "HypervisorDetails$LastSuccessfulMetadataSyncTime": "<p>This is the time when the most recent successful sync of metadata occurred.</p>",
         "VirtualMachine$LastBackupDate": "<p>The most recent date a virtual machine was backed up, in Unix format and UTC time.</p>",
         "VirtualMachineDetails$LastBackupDate": "<p>The most recent date a virtual machine was backed up, in Unix format and UTC time.</p>"
@@ -687,7 +689,7 @@
       }
     },
     "VmwareToAwsTagMapping": {
-      "base": "<p>This displays the mapping of on-premises VMware tags to the corresponding Amazon Web Services tags.</p>",
+      "base": "<p>This displays the mapping of VMware tags to the corresponding Amazon Web Services tags.</p>",
       "refs": {
         "VmwareToAwsTagMappings$member": null
       }
@@ -695,8 +697,8 @@
     "VmwareToAwsTagMappings": {
       "base": null,
       "refs": {
-        "GetHypervisorPropertyMappingsOutput$VmwareToAwsTagMappings": "<p>This is a display of the mappings of on-premises VMware tags to the Amazon Web Services tags.</p>",
-        "PutHypervisorPropertyMappingsInput$VmwareToAwsTagMappings": "<p>This action requests the mappings of on-premises VMware tags to the Amazon Web Services tags.</p>"
+        "GetHypervisorPropertyMappingsOutput$VmwareToAwsTagMappings": "<p>This is a display of the mappings of VMware tags to the Amazon Web Services tags.</p>",
+        "PutHypervisorPropertyMappingsInput$VmwareToAwsTagMappings": "<p>This action requests the mappings of VMware tags to the Amazon Web Services tags.</p>"
       }
     },
     "VpcEndpoint": {
