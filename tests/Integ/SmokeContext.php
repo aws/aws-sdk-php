@@ -376,6 +376,22 @@ class SmokeContext extends Assert implements
     }
 
     /**
+     * @Then I expect the response error code to be :errorCode1 or :errorCode2
+     *
+     * @param $errorCode1
+     * @param $errorCode2
+     */
+    public function iExpectTheResponseErrorCodesToBe($errorCode1, $errorCode2)
+    {
+        $this->assertTrue(
+            in_array(
+                $this->error->getAwsErrorCode(),
+                [$errorCode1, $errorCode2]
+            )
+        );
+    }
+
+    /**
      * @Then I expect the marketplace commerce analytics response error code to be :errorCode
      *
      * @param string $errorCode
