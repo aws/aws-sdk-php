@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Api\Serializer;
 
+use Aws\Api\Cbor\CborDecoder;
 use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Signature\SignatureInterface;
@@ -17,11 +18,11 @@ use PHPUnit\Framework\TestCase;
  * @covers \Aws\Api\Serializer\XmlBody
  * @covers \Aws\Api\Serializer\Ec2ParamBuilder
  * @covers \Aws\Api\Serializer\QueryParamBuilder
+ * @covers \Aws\Api\Serializer\AbstractRpcV2Serializer
+ * @covers \Aws\Api\Serializer\RpcV2CborSerializer
  */
 class ComplianceTest extends TestCase
 {
-    use UsesServiceTrait;
-
     public const TEST_CASES_DIR = __DIR__ . '/../test_cases/protocols/input/';
 
     private static array $excludedCases = [
@@ -38,6 +39,16 @@ class ComplianceTest extends TestCase
         'RestXmlHttpPayloadWithUnion' => true,
         'HttpPayloadWithMemberXmlName' => true
     ];
+
+    private CborDecoder $cborDecoder;
+
+    use UsesServiceTrait;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->cborDecoder = new CborDecoder();
+    }
 
     /** @doesNotPerformAssertions */
     public function testCaseProvider(): \Generator
@@ -86,7 +97,7 @@ class ComplianceTest extends TestCase
      */
     public function testPassesComplianceTest(
         Service $service,
-        $name,
+        string $name,
         array $args,
         array $serialized,
         ?string $clientEndpoint
@@ -111,47 +122,68 @@ class ComplianceTest extends TestCase
             }
         ]);
 
+        $protocol = $service->getProtocol();
+        if ($protocol === 'smithy-rpc-v2-cbor') {
+            $args = self::normalizeSpecialFloats($args);
+        }
+
         $command = $client->getCommand($name, $args);
         $request = \Aws\serialize($command);
+        $protocol = $service->getProtocol();
 
         if (isset($serialized['method'])) {
             $this->assertEquals($serialized['method'], $request->getMethod());
         }
+
         $this->assertEquals($serialized['uri'], $request->getRequestTarget());
 
-        $body = (string) $request->getBody();
-
-        switch ($protocol = $service->getProtocol()) {
-            case 'json':
-            case 'rest-json':
-                if (!empty($serialized['body'])) {
-                    $body = json_encode(json_decode($body, true));
-                    $serialized['body'] = json_encode(json_decode($serialized['body'], true));
-                }
-
-                break;
-            case 'rest-xml':
-                // Remove XML declaration from body
-                $body = preg_replace('/<\?xml[^>]*\?>\s*/', '', $body);
-                break;
-        }
-
-        if (isset($serialized['method'])) {
-            $this->assertEquals($serialized['method'], $request->getMethod());
-        }
-
+        // Assert body if provided
         if (isset($serialized['body'])) {
-            if ($protocol === 'rest-xml' && !empty($serialized['body'])) {
-                $this->assertXmlEquals($serialized['body'], $body);
-            } else {
-                $this->assertEqualsIgnoringCase($serialized['body'], $body);
+            $body = (string) $request->getBody();
+            $expectedBody = $serialized['body'];
+
+            switch ($protocol) {
+                case 'json':
+                case 'rest-json':
+                    if (!empty($expectedBody)) {
+                        // Normalize JSON for comparison
+                        $body = json_encode(json_decode($body, true));
+                        $expectedBody = json_encode(json_decode($expectedBody, true));
+                    }
+                    $this->assertEqualsIgnoringCase($expectedBody, $body);
+                    break;
+
+                case 'rest-xml':
+                    // Remove XML declaration from body
+                    $body = preg_replace('/<\?xml[^>]*\?>\s*/', '', $body);
+                    if (!empty($expectedBody)) {
+                        $this->assertXmlEquals($expectedBody, $body);
+                    } else {
+                        $this->assertEqualsIgnoringCase($expectedBody, $body);
+                    }
+                    break;
+
+                case 'smithy-rpc-v2-cbor':
+                    if (!empty($expectedBody)) {
+                        // Decode and normalize CBOR for comparison
+                        $expectedBody = $this->cborDecoder->decode(base64_decode($expectedBody));
+                        $body = $this->cborDecoder->decode($body);
+
+                        array_walk_recursive($expectedBody, [$this, 'normalizeCborForComparison']);
+                        array_walk_recursive($body, [$this, 'normalizeCborForComparison']);
+                    }
+                    $this->assertEquals($expectedBody, $body);
+                    break;
+
+                default:
+                    $this->assertEqualsIgnoringCase($expectedBody, $body);
+                    break;
             }
         }
 
         if (isset($serialized['host'])) {
             $expectedHost = $serialized['host'];
-
-            if (strpos($expectedHost, '/') !== false) {
+            if (str_contains($expectedHost, '/')) {
                 // Expected host contains a path, compare full authority + path
                 $actualHostWithPath = $request->getUri()->getHost() . $request->getUri()->getPath();
                 $this->assertStringStartsWith($expectedHost, $actualHostWithPath);
@@ -170,8 +202,6 @@ class ComplianceTest extends TestCase
         if (isset($serialized['headers'])) {
             foreach ($serialized['headers'] as $key => $expectedValue) {
                 $headerValues = $request->getHeader($key);
-
-                // Custom join logic that matches the expected format
                 $actualValue = $this->formatHeaderValues($headerValues);
                 $this->assertEquals($expectedValue, $actualValue, "Header {$key} mismatch");
             }
@@ -179,7 +209,7 @@ class ComplianceTest extends TestCase
 
         if (isset($serialized['forbidHeaders'])) {
             foreach ($serialized['forbidHeaders'] as $header) {
-                $this->assertNotTrue($request->hasHeader($header));
+                $this->assertFalse($request->hasHeader($header));
             }
         }
     }
@@ -258,5 +288,35 @@ class ComplianceTest extends TestCase
             '/^\w{3},\s+\d{1,2}\s+\w{3}\s+\d{4}\s+\d{2}:\d{2}:\d{2}\s+GMT$/',
             $value
         );
+    }
+
+    /**
+     * Normalizes DateTime objects to unix timestamp values and
+     * converts NAN to 'NaN' because NAN cannot be compared
+     *
+     * @param mixed $value
+     * @return void
+     */
+    private function normalizeCborForComparison(mixed &$value): void
+    {
+        if ($value instanceof \DateTime) {
+            $value = (float)$value->format('U.u') * 1000;
+        } elseif (is_float($value) && is_nan($value)) {
+            $value = 'NaN';
+        }
+    }
+
+    private static function normalizeSpecialFloats(mixed $value): mixed
+    {
+        if (is_array($value)) {
+            return array_map(self::normalizeSpecialFloats(...), $value);
+        }
+
+        return match ($value) {
+            'NaN' => NAN,
+            'Infinity' => INF,
+            '-Infinity' => -INF,
+            default => $value
+        };
     }
 }

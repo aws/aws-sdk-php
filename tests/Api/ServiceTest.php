@@ -356,8 +356,6 @@ class ServiceTest extends TestCase
     {
         return [
             [['smithy-rpc-v2-cbor', 'json'], 'json'],
-            //Handles failure to select by falling back to 'protocol'
-            [['smithy-rpc-v2-cbor'], 'json'],
             [['smithy-rpc-v2-cbor', 'json', 'query'], 'json'],
             [['json', 'query'], 'json'],
             [['query'], 'query'],
