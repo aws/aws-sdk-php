@@ -44,9 +44,14 @@ abstract class AbstractRestParser extends AbstractParser
         } else {
             $response = AbstractParser::getResponseWithCachingStream($response);
 
-            $rawBody = AbstractParser::getBodyContents($response);
-            if (!empty($rawBody)
-                && count($output->getMembers()) > 0
+            if ($response->getBody()->getSize() === null) {
+                $rawBody = AbstractParser::getBodyContents($response);
+                $isEmpty = empty($rawBody);
+            } else {
+                $isEmpty = $response->getBody()->getSize() === 0;
+            }
+
+            if (!$isEmpty && count($output->getMembers()) > 0
             ) {
                 // if no payload was found, then parse the contents of the body
                 $this->payload($response, $output, $result);
@@ -95,9 +100,14 @@ abstract class AbstractRestParser extends AbstractParser
         if ($member instanceof StructureShape) {
             //Unions must have at least one member set to a non-null value
             // If the body is empty, we can assume it is unset
-            $rawBody = AbstractParser::getBodyContents($response);
-            if (!empty($member['union'])
-                && empty($rawBody)) {
+            if ($response->getBody()->getSize() === null) {
+                $rawBody = AbstractParser::getBodyContents($response);
+                $isEmpty = empty($rawBody);
+            } else {
+                $isEmpty = $response->getBody()->getSize() === 0;
+            }
+
+            if (!empty($member['union']) && $isEmpty) {
                 return;
             }
 

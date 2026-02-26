@@ -183,6 +183,11 @@ class RestJsonParserTest extends TestCase
         $this->assertArrayNotHasKey('Empty', $result);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     *
+     * @return void
+     */
     public function testParsesEmptyResponseOnNonSeekableStream(): void
     {
         $shape = [
@@ -221,10 +226,5 @@ class RestJsonParserTest extends TestCase
         $command->method('getName')->willReturn('TestOperation');
 
         $parser($command, $response);
-
-        // Not error occurred. Test successfully.
-        // Previously, on non-seekable streams it would have failed.
-        // Because, it would have tried to parse an empty string.
-        $this->assertTrue(true);
     }
 }
