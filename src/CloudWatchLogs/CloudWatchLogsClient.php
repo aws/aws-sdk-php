@@ -225,11 +225,6 @@ use Generator;
  */
 class CloudWatchLogsClient extends AwsClient {
 
-    public function __construct(array $args)
-    {
-        parent::__construct($args);
-    }
-
     /**
      * Helper method for 'startLiveTail' operation that checks for results.
      *
