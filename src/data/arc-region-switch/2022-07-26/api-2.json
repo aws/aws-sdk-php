@@ -350,6 +350,7 @@
         "executionState":{"shape":"ExecutionState"},
         "executionAction":{"shape":"ExecutionAction"},
         "executionRegion":{"shape":"String"},
+        "recoveryExecutionId":{"shape":"String"},
         "actualRecoveryTime":{"shape":"Duration"}
       }
     },
@@ -807,7 +808,8 @@
       "type":"string",
       "enum":[
         "activate",
-        "deactivate"
+        "deactivate",
+        "postRecovery"
       ]
     },
     "ExecutionApprovalConfiguration":{
@@ -836,7 +838,9 @@
         "ecsCapacityIncreaseConfig":{"shape":"EcsCapacityIncreaseConfiguration"},
         "eksResourceScalingConfig":{"shape":"EksResourceScalingConfiguration"},
         "route53HealthCheckConfig":{"shape":"Route53HealthCheckConfiguration"},
-        "documentDbConfig":{"shape":"DocumentDbConfiguration"}
+        "documentDbConfig":{"shape":"DocumentDbConfiguration"},
+        "rdsPromoteReadReplicaConfig":{"shape":"RdsPromoteReadReplicaConfiguration"},
+        "rdsCreateCrossRegionReadReplicaConfig":{"shape":"RdsCreateCrossRegionReplicaConfiguration"}
       },
       "union":true
     },
@@ -853,7 +857,9 @@
         "ECSServiceScaling",
         "EKSResourceScaling",
         "Route53HealthCheck",
-        "DocumentDb"
+        "DocumentDb",
+        "RdsPromoteReadReplica",
+        "RdsCreateCrossRegionReplica"
       ]
     },
     "ExecutionComment":{
@@ -1025,6 +1031,7 @@
         "executionState":{"shape":"ExecutionState"},
         "executionAction":{"shape":"ExecutionAction"},
         "executionRegion":{"shape":"String"},
+        "recoveryExecutionId":{"shape":"String"},
         "stepStates":{"shape":"StepStates"},
         "plan":{"shape":"Plan"},
         "actualRecoveryTime":{"shape":"Duration"},
@@ -1430,12 +1437,55 @@
       "type":"list",
       "member":{"shape":"ResourceWarning"}
     },
+    "RdsCreateCrossRegionReplicaConfiguration":{
+      "type":"structure",
+      "required":["dbInstanceArnMap"],
+      "members":{
+        "timeoutMinutes":{"shape":"RdsCreateCrossRegionReplicaConfigurationTimeoutMinutesInteger"},
+        "crossAccountRole":{"shape":"IamRoleArn"},
+        "externalId":{"shape":"String"},
+        "dbInstanceArnMap":{"shape":"RdsDbInstanceArnMap"}
+      }
+    },
+    "RdsCreateCrossRegionReplicaConfigurationTimeoutMinutesInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "RdsDbInstanceArn":{
+      "type":"string",
+      "pattern":"arn:aws[a-zA-Z-]*:rds:[a-z0-9-]+:\\d{12}:db:[a-zA-Z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*"
+    },
+    "RdsDbInstanceArnMap":{
+      "type":"map",
+      "key":{"shape":"Region"},
+      "value":{"shape":"RdsDbInstanceArn"}
+    },
+    "RdsPromoteReadReplicaConfiguration":{
+      "type":"structure",
+      "required":["dbInstanceArnMap"],
+      "members":{
+        "timeoutMinutes":{"shape":"RdsPromoteReadReplicaConfigurationTimeoutMinutesInteger"},
+        "crossAccountRole":{"shape":"IamRoleArn"},
+        "externalId":{"shape":"String"},
+        "dbInstanceArnMap":{"shape":"RdsDbInstanceArnMap"}
+      }
+    },
+    "RdsPromoteReadReplicaConfigurationTimeoutMinutesInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
     "RecoveryApproach":{
       "type":"string",
       "enum":[
         "activeActive",
         "activePassive"
       ]
+    },
+    "RecoveryExecutionId":{
+      "type":"string",
+      "pattern":"[a-z]{2}(-[a-z]+)+-[0-9]+/[0-9a-fA-F]{16}"
     },
     "Region":{
       "type":"string",
@@ -1465,7 +1515,9 @@
       "type":"string",
       "enum":[
         "activatingRegion",
-        "deactivatingRegion"
+        "deactivatingRegion",
+        "activeRegion",
+        "inactiveRegion"
       ]
     },
     "RegionalScalingResource":{
@@ -1676,7 +1728,8 @@
         "action":{"shape":"ExecutionAction"},
         "mode":{"shape":"ExecutionMode"},
         "comment":{"shape":"ExecutionComment"},
-        "latestVersion":{"shape":"String"}
+        "latestVersion":{"shape":"String"},
+        "recoveryExecutionId":{"shape":"RecoveryExecutionId"}
       }
     },
     "StartPlanExecutionResponse":{
@@ -1929,7 +1982,8 @@
       "type":"string",
       "enum":[
         "activate",
-        "deactivate"
+        "deactivate",
+        "postRecovery"
       ]
     }
   }

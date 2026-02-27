@@ -31,6 +31,23 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "AddUserPoolClientSecret":{
+      "name":"AddUserPoolClientSecret",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AddUserPoolClientSecretRequest"},
+      "output":{"shape":"AddUserPoolClientSecretResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalServerException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "AdminAddUserToGroup":{
       "name":"AdminAddUserToGroup",
       "http":{
@@ -599,6 +616,7 @@
         {"shape":"WebAuthnRelyingPartyMismatchException"},
         {"shape":"WebAuthnClientMismatchException"},
         {"shape":"WebAuthnOriginNotAllowedException"},
+        {"shape":"PasswordResetRequiredException"},
         {"shape":"WebAuthnCredentialNotSupportedException"}
       ],
       "authtype":"none",
@@ -1012,6 +1030,22 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "DeleteUserPoolClientSecret":{
+      "name":"DeleteUserPoolClientSecret",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteUserPoolClientSecretRequest"},
+      "output":{"shape":"DeleteUserPoolClientSecretResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalServerException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "DeleteUserPoolDomain":{
       "name":"DeleteUserPoolDomain",
       "http":{
@@ -1042,6 +1076,7 @@
         {"shape":"InvalidParameterException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"LimitExceededException"},
+        {"shape":"PasswordResetRequiredException"},
         {"shape":"NotAuthorizedException"},
         {"shape":"ResourceNotFoundException"}
       ],
@@ -1660,6 +1695,22 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "ListUserPoolClientSecrets":{
+      "name":"ListUserPoolClientSecrets",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListUserPoolClientSecretsRequest"},
+      "output":{"shape":"ListUserPoolClientSecretsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalServerException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListUserPoolClients":{
       "name":"ListUserPoolClients",
       "http":{
@@ -1737,6 +1788,7 @@
         {"shape":"InvalidParameterException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"LimitExceededException"},
+        {"shape":"PasswordResetRequiredException"},
         {"shape":"NotAuthorizedException"}
       ],
       "authtype":"none",
@@ -2002,6 +2054,7 @@
         {"shape":"NotAuthorizedException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"WebAuthnNotEnabledException"},
+        {"shape":"PasswordResetRequiredException"},
         {"shape":"WebAuthnConfigurationMissingException"}
       ],
       "authtype":"none",
@@ -2338,6 +2391,13 @@
       "max":12,
       "pattern":"[0-9]+"
     },
+    "AccessDeniedException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"MessageType"}
+      },
+      "exception":true
+    },
     "AccessTokenValidityType":{
       "type":"integer",
       "max":86400,
@@ -2400,6 +2460,24 @@
     "AddCustomAttributesResponse":{
       "type":"structure",
       "members":{}
+    },
+    "AddUserPoolClientSecretRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "ClientId"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "ClientSecret":{"shape":"ClientSecretType"}
+      }
+    },
+    "AddUserPoolClientSecretResponse":{
+      "type":"structure",
+      "members":{
+        "ClientSecretDescriptor":{"shape":"ClientSecretDescriptorType"}
+      }
     },
     "AdminAddUserToGroupRequest":{
       "type":"structure",
@@ -3051,7 +3129,7 @@
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+"
+      "pattern":"[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r ]+"
     },
     "AttributeType":{
       "type":"structure",
@@ -3253,10 +3331,27 @@
       "max":2048,
       "min":1
     },
+    "ClientSecretDescriptorListType":{
+      "type":"list",
+      "member":{"shape":"ClientSecretDescriptorType"}
+    },
+    "ClientSecretDescriptorType":{
+      "type":"structure",
+      "members":{
+        "ClientSecretId":{"shape":"ClientSecretIdType"},
+        "ClientSecretValue":{"shape":"ClientSecretType"},
+        "ClientSecretCreateDate":{"shape":"DateType"}
+      }
+    },
+    "ClientSecretIdType":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "ClientSecretType":{
       "type":"string",
       "max":64,
-      "min":1,
+      "min":24,
       "pattern":"[\\w+]+",
       "sensitive":true
     },
@@ -3583,6 +3678,7 @@
         "UserPoolId":{"shape":"UserPoolIdType"},
         "ClientName":{"shape":"ClientNameType"},
         "GenerateSecret":{"shape":"GenerateSecret"},
+        "ClientSecret":{"shape":"ClientSecretType"},
         "RefreshTokenValidity":{"shape":"RefreshTokenValidityType"},
         "AccessTokenValidity":{"shape":"AccessTokenValidityType"},
         "IdTokenValidity":{"shape":"IdTokenValidityType"},
@@ -3804,6 +3900,23 @@
         "UserPoolId":{"shape":"UserPoolIdType"},
         "ClientId":{"shape":"ClientIdType"}
       }
+    },
+    "DeleteUserPoolClientSecretRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "ClientId",
+        "ClientSecretId"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "ClientSecretId":{"shape":"ClientSecretIdType"}
+      }
+    },
+    "DeleteUserPoolClientSecretResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteUserPoolDomainRequest":{
       "type":"structure",
@@ -4742,6 +4855,14 @@
       "exception":true,
       "fault":true
     },
+    "InternalServerException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"MessageType"}
+      },
+      "exception":true,
+      "fault":true
+    },
     "InvalidEmailRoleAccessPolicyException":{
       "type":"structure",
       "members":{
@@ -4976,6 +5097,25 @@
       "members":{
         "UserImportJobs":{"shape":"UserImportJobsListType"},
         "PaginationToken":{"shape":"PaginationKeyType"}
+      }
+    },
+    "ListUserPoolClientSecretsRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "ClientId"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "NextToken":{"shape":"PaginationKey"}
+      }
+    },
+    "ListUserPoolClientSecretsResponse":{
+      "type":"structure",
+      "members":{
+        "ClientSecrets":{"shape":"ClientSecretDescriptorListType"},
+        "NextToken":{"shape":"PaginationKey"}
       }
     },
     "ListUserPoolClientsRequest":{

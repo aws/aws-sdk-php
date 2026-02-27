@@ -4451,6 +4451,14 @@
         "ModelInvocationJobSummary$timeoutDurationInHours": "<p>The number of hours after which the batch inference job was set to time out.</p>"
       }
     },
+    "ModelInvocationType": {
+      "base": null,
+      "refs": {
+        "CreateModelInvocationJobRequest$modelInvocationType": "<p>The invocation endpoint for ModelInvocationJob</p>",
+        "GetModelInvocationJobResponse$modelInvocationType": "<p>The invocation endpoint for ModelInvocationJob</p>",
+        "ModelInvocationJobSummary$modelInvocationType": "<p>The invocation endpoint for ModelInvocationJob</p>"
+      }
+    },
     "ModelModality": {
       "base": null,
       "refs": {
@@ -5386,6 +5394,10 @@
         "DeleteAutomatedReasoningPolicyBuildWorkflowRequest$lastUpdatedAt": "<p>The timestamp when the build workflow was last updated. This is used for optimistic concurrency control to prevent accidental deletion of workflows that have been modified.</p>",
         "DeleteAutomatedReasoningPolicyTestCaseRequest$lastUpdatedAt": "<p>The timestamp when the test was last updated. This is used as a concurrency token to prevent conflicting modifications.</p>",
         "EvaluationSummary$creationTime": "<p>The time the evaluation job was created.</p>",
+        "FoundationModelLifecycle$startOfLifeTime": "<p>Launch time when the model first becomes available</p>",
+        "FoundationModelLifecycle$endOfLifeTime": "<p>Time when the model is no longer available for use</p>",
+        "FoundationModelLifecycle$legacyTime": "<p>Time when the model enters legacy state. Models in legacy state can still be used, but users should plan to transition to an Active model before the end of life time</p>",
+        "FoundationModelLifecycle$publicExtendedAccessTime": "<p>Public extended access portion of the legacy period, when users should expect higher pricing</p>",
         "GetAutomatedReasoningPolicyAnnotationsResponse$updatedAt": "<p>The timestamp when the annotations were last updated.</p>",
         "GetAutomatedReasoningPolicyBuildWorkflowResponse$createdAt": "<p>The timestamp when the build workflow was created.</p>",
         "GetAutomatedReasoningPolicyBuildWorkflowResponse$updatedAt": "<p>The timestamp when the build workflow was last updated.</p>",

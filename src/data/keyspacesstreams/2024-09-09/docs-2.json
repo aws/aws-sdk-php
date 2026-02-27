@@ -10,8 +10,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You don't have sufficient access permissions to perform this operation. </p> <p>This exception occurs when your IAM user or role lacks the required permissions to access the Amazon Keyspaces resource or perform the requested action. Check your IAM policies and ensure they grant the necessary permissions.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Blob": {
       "base": null,
@@ -34,50 +33,43 @@
     },
     "GetRecordsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecordsInputMaxResultsInteger": {
       "base": null,
       "refs": {
-        "GetRecordsInput$maxResults": "<p> The maximum number of records to return in a single <code>GetRecords</code> request. Default value is 1000. You can specify a limit between 1 and 1000, but the actual number returned might be less than the specified maximum if the size of the data for the returned records exceeds the internal size limit. </p>"
+        "GetRecordsInput$maxResults": "<p> The maximum number of records to return in a single <code>GetRecords</code> request. The default value is 100. You can specify a limit between 1 and 1000, but the actual number returned might be less than the specified maximum if the size of the data for the returned records exceeds the internal size limit. </p>"
       }
     },
     "GetRecordsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetShardIteratorInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetShardIteratorOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStreamInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStreamInputMaxResultsInteger": {
       "base": null,
       "refs": {
-        "GetStreamInput$maxResults": "<p> The maximum number of shard objects to return in a single <code>GetStream</code> request. Default value is 100. The minimum value is 1 and the maximum value is 100. </p>"
+        "GetStreamInput$maxResults": "<p> The maximum number of shard objects to return in a single <code>GetStream</code> request. The default value is 100. The minimum value is 1 and the maximum value is 100. </p>"
       }
     },
     "GetStreamOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalServerException": {
       "base": "<p>The Amazon Keyspaces service encountered an unexpected error while processing the request. </p> <p>This internal server error is not related to your request parameters. Retry your request after a brief delay. If the issue persists, contact Amazon Web Services Support with details of your request to help identify and resolve the problem.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KeyspaceName": {
       "base": null,
@@ -161,19 +153,17 @@
     },
     "ListStreamsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStreamsInputMaxResultsInteger": {
       "base": null,
       "refs": {
-        "ListStreamsInput$maxResults": "<p> The maximum number of streams to return in a single <code>ListStreams</code> request. Default value is 100. The minimum value is 1 and the maximum value is 100. </p>"
+        "ListStreamsInput$maxResults": "<p> The maximum number of streams to return in a single <code>ListStreams</code> request. The default value is 100. The minimum value is 1 and the maximum value is 100. </p>"
       }
     },
     "ListStreamsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "OriginType": {
       "base": null,
@@ -195,8 +185,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The requested resource doesn't exist or could not be found. </p> <p>This exception occurs when you attempt to access a keyspace, table, stream, or other Amazon Keyspaces resource that doesn't exist or that has been deleted. Verify that the resource identifier is correct and that the resource exists in your account.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SequenceNumber": {
       "base": null,
@@ -228,7 +217,7 @@
     "ShardFilter": {
       "base": "<p>A filter used to limit the shards returned by a <code>GetStream</code> operation.</p>",
       "refs": {
-        "GetStreamInput$shardFilter": "<p> Optional filter criteria to apply when retrieving shards. You can filter shards based on their state or other attributes to narrow down the results returned by the <code>GetStream</code> operation. </p>"
+        "GetStreamInput$shardFilter": "<p> Optional filter criteria to apply when retrieving shards. You can filter shards based on their parent <code>shardID</code> to get a list of children shards to narrow down the results returned by the <code>GetStream</code> operation. </p>"
       }
     },
     "ShardFilterType": {
@@ -255,22 +244,22 @@
     "ShardIdToken": {
       "base": null,
       "refs": {
-        "GetStreamInput$nextToken": "<p> An optional pagination token provided by a previous <code>GetStream</code> operation. If this parameter is specified, the response includes only records beyond the token, up to the value specified by <code>maxResults</code>. </p>",
+        "GetStreamInput$nextToken": "<p> An optional pagination token provided by a previous <code>GetStream</code> operation. If this parameter is specified, the response includes only records beyond the token, up to the value specified by <code>MaxResults</code>. </p>",
         "GetStreamOutput$nextToken": "<p> A pagination token that can be used in a subsequent <code>GetStream</code> request. This token is returned if the response contains more shards than can be returned in a single response. </p>"
       }
     },
     "ShardIterator": {
       "base": null,
       "refs": {
-        "GetRecordsInput$shardIterator": "<p> The unique identifier of the shard iterator. A shard iterator specifies the position in the shard from which you want to start reading data records sequentially. You obtain this value by calling the <code>GetShardIterator</code> operation. Each shard iterator is valid for 15 minutes after creation. </p>",
-        "GetRecordsOutput$nextShardIterator": "<p> The next position in the shard from which to start sequentially reading data records. If null, the shard has been closed and the requested iterator doesn't return any more data. </p>",
+        "GetRecordsInput$shardIterator": "<p> The unique identifier of the shard iterator. A shard iterator specifies the position in the shard from which you want to start reading data records sequentially. You obtain this value by calling the <code>GetShardIterator </code> operation. Each shard iterator is valid for 15 minutes after creation. </p>",
+        "GetRecordsOutput$nextShardIterator": "<p> The next position in the shard from which to start sequentially reading data records. If null, the shard has been closed and the requested iterator will not return any more data. </p>",
         "GetShardIteratorOutput$shardIterator": "<p> The unique identifier for the shard iterator. This value is used in the <code>GetRecords</code> operation to retrieve data records from the specified shard. Each shard iterator expires 15 minutes after it is returned to the requester. </p>"
       }
     },
     "ShardIteratorType": {
       "base": null,
       "refs": {
-        "GetShardIteratorInput$shardIteratorType": "<p> Determines how the shard iterator is positioned. Must be one of the following:</p> <ul> <li> <p> <code>TRIM_HORIZON</code> - Start reading at the last untrimmed record in the shard, which is the oldest data record in the shard.</p> </li> <li> <p> <code>AT_SEQUENCE_NUMBER</code> - Start reading exactly from the specified sequence number.</p> </li> <li> <p> <code>AFTER_SEQUENCE_NUMBER</code> - Start reading right after the specified sequence number.</p> </li> <li> <p> <code>LATEST</code> - Start reading just after the most recent record in the shard, so that you always read the most recent data.</p> </li> </ul>"
+        "GetShardIteratorInput$shardIteratorType": "<p> Determines how the shard iterator is positioned. Must be one of the following: </p> <ul> <li> <p> <code>TRIM_HORIZON</code> - Start reading at the last untrimmed record in the shard, which is the oldest data record in the shard.</p> </li> <li> <p> <code>AT_SEQUENCE_NUMBER</code> - Start reading exactly from the specified sequence number.</p> </li> <li> <p> <code>AFTER_SEQUENCE_NUMBER</code> - Start reading right after the specified sequence number. </p> </li> <li> <p> <code>LATEST</code> - Start reading just after the most recent record in the shard, so that you always read the most recent data. </p> </li> </ul>"
       }
     },
     "Stream": {
@@ -292,7 +281,7 @@
       "base": null,
       "refs": {
         "ListStreamsInput$nextToken": "<p> An optional pagination token provided by a previous <code>ListStreams</code> operation. If this parameter is specified, the response includes only records beyond the token, up to the value specified by <code>maxResults</code>. </p>",
-        "ListStreamsOutput$nextToken": "<p> A pagination token that can be used in a subsequent <code>ListStreams</code> request. This token is returned if the response contains more streams than can be returned in a single response based on the <code>MaxResults</code> parameter. </p>"
+        "ListStreamsOutput$nextToken": "<p> A pagination token that can be used in a subsequent <code>ListStreams</code> request. This token is returned if the response contains more streams than can be returned in a single response based on the <code>maxResults</code> parameter. </p>"
       }
     },
     "StreamList": {
@@ -310,7 +299,7 @@
     "StreamViewType": {
       "base": null,
       "refs": {
-        "GetStreamOutput$streamViewType": "<p> The format of the data records in this stream. Currently, this can be one of the following options:</p> <ul> <li> <p> <code>NEW_AND_OLD_IMAGES</code> - both versions of the row, before and after the change. This is the default.</p> </li> <li> <p> <code>NEW_IMAGE</code> - the version of the row after the change.</p> </li> <li> <p> <code>OLD_IMAGE</code> - the version of the row before the change.</p> </li> <li> <p> <code>KEYS_ONLY</code> - the partition and clustering keys of the row that was changed.</p> </li> </ul>"
+        "GetStreamOutput$streamViewType": "<p> The format of the data records in this stream. Currently, this can be one of the following options: </p> <ul> <li> <p> <code>NEW_AND_OLD_IMAGES</code> - both versions of the row, before and after the change. This is the default.</p> </li> <li> <p> <code>NEW_IMAGE</code> - the version of the row after the change.</p> </li> <li> <p> <code>OLD_IMAGE</code> - the version of the row before the change.</p> </li> <li> <p> <code>KEYS_ONLY</code> - the partition and clustering keys of the row that was changed.</p> </li> </ul>"
       }
     },
     "String": {
@@ -325,6 +314,7 @@
         "KeyspacesCellValue$dateT": "<p>A date value without a time component, represented as days since epoch (January 1, 1970). </p>",
         "KeyspacesCellValue$decimalT": "<p>A variable-precision decimal number value. </p>",
         "KeyspacesCellValue$doubleT": "<p>A 64-bit double-precision floating point value. </p>",
+        "KeyspacesCellValue$durationT": "<p>A duration value with nanosecond precision, representing a period of time encoded as 32-bit months, 32-bit days, and 64-bit nanoseconds. </p>",
         "KeyspacesCellValue$floatT": "<p>A 32-bit single-precision floating point value. </p>",
         "KeyspacesCellValue$inetT": "<p>An IP address value, either IPv4 or IPv6 format. </p>",
         "KeyspacesCellValue$intT": "<p>A 32-bit signed integer value. </p>",
@@ -336,7 +326,7 @@
         "KeyspacesCellValue$tinyintT": "<p>An 8-bit signed integer value. </p>",
         "KeyspacesCellValue$uuidT": "<p>A universally unique identifier (UUID) value. </p>",
         "KeyspacesCellValue$varcharT": "<p>A UTF-8 encoded string value, functionally equivalent to text type. </p>",
-        "KeyspacesCellValue$varintT": "<p>A variable precision integer value with arbitrary length. </p>",
+        "KeyspacesCellValue$varintT": "<p>An integer value within the +/-10^38 range. </p>",
         "KeyspacesCells$key": null,
         "KeyspacesKeysMap$key": null,
         "KeyspacesMetadata$expirationTime": "<p>The time at which the associated data will expire, based on the time-to-live (TTL) setting.</p>",
@@ -358,14 +348,12 @@
       }
     },
     "ThrottlingException": {
-      "base": "<p>The request rate is too high and exceeds the service's throughput limits. </p> <p>This exception occurs when you send too many requests in a short period of time. Implement exponential backoff in your retry strategy to handle this exception. Reducing your request frequency or distributing requests more evenly can help avoid throughput exceptions.</p>",
-      "refs": {
-      }
+      "base": "<p>The request rate is too high and exceeds the service's throughput limits. </p> <p>This exception occurs when you send too many requests in a short period of time. Implement exponential backoff in your retry strategy to handle this exception. Reducing your request frequency or distributing requests more evenly can help avoid throughput exceptions.</p> <p>This exception can also occur when more than two processes are reading from the same stream shard at the same time. Ensure that only one process reads from a stream shard at the same time. </p>",
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>The request validation failed because one or more input parameters failed validation. </p> <p>This exception occurs when there are syntax errors in the request, field constraints are violated, or required parameters are missing. To help you fix the issue, the exception message provides details about which parameter failed and why.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionType": {
       "base": null,
