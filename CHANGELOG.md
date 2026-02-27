@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.371.3 - 2026-02-27
 
 * `Aws\Health` - Updates the regex for validating availabilityZone strings used in the describe events filters.
 * `Aws\RAM` - Resource owners can now specify ResourceShareConfiguration request parameter for CreateResourceShare API including RetainSharingOnAccountLeaveOrganization boolean parameter
