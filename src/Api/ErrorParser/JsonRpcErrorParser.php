@@ -5,8 +5,6 @@ use Aws\Api\Parser\AbstractParser;
 use Aws\Api\Parser\JsonParser;
 use Aws\Api\Service;
 use Aws\CommandInterface;
-use GuzzleHttp\Psr7\CachingStream;
-use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
 /**

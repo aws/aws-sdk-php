@@ -6,8 +6,6 @@ use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 use Aws\Result;
 use Aws\CommandInterface;
-use GuzzleHttp\Psr7\CachingStream;
-use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -93,9 +91,7 @@ abstract class AbstractRestParser extends AbstractParser
             return;
         }
 
-        if (!$body->isSeekable()) {
-            $response = AbstractParser::getResponseWithCachingStream($response);
-        }
+        $response = AbstractParser::getResponseWithCachingStream($response);
 
         if ($member instanceof StructureShape) {
             //Unions must have at least one member set to a non-null value
