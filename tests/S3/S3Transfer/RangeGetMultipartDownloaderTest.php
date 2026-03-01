@@ -5,20 +5,38 @@ namespace Aws\Test\S3\S3Transfer;
 use Aws\Command;
 use Aws\Result;
 use Aws\S3\S3Client;
-use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadResult;
 use Aws\S3\S3Transfer\RangeGetMultipartDownloader;
+use Aws\S3\S3Transfer\Utils\FileDownloadHandler;
 use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
+use Aws\Test\TestsUtility;
 use Generator;
 use GuzzleHttp\Promise\Create;
+use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests RangeGetMultipartDownloader implementation.
+ * @covers \Aws\S3\S3Transfer\RangeGetMultipartDownloader
  */
-class RangeGetMultipartDownloaderTest extends TestCase
+final class RangeGetMultipartDownloaderTest extends TestCase
 {
+    /** @var string */
+    private string $tempDir;
+
+    protected function setUp(): void
+    {
+        $this->tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'part-downloader-resume-test/';
+        if (!is_dir($this->tempDir)) {
+            mkdir($this->tempDir, 0777, true);
+        }
+    }
+
+    protected function tearDown(): void
+    {
+        TestsUtility::cleanUpDir($this->tempDir);
+    }
+
     /**
      * Tests range get multipart downloader.
      *
@@ -42,12 +60,12 @@ class RangeGetMultipartDownloaderTest extends TestCase
         $remainingToTransfer = $objectSizeInBytes;
         $mockClient->method('executeAsync')
             -> willReturnCallback(function ($command)
-                use (
-                    $objectSizeInBytes,
-                    $partsCount,
-                    $targetPartSize,
-                    &$remainingToTransfer
-                ) {
+            use (
+                $objectSizeInBytes,
+                $partsCount,
+                $targetPartSize,
+                &$remainingToTransfer
+            ) {
                 $currentPartLength = min(
                     $targetPartSize,
                     $remainingToTransfer
@@ -96,7 +114,7 @@ class RangeGetMultipartDownloaderTest extends TestCase
      *
      * @return array[]
      */
-    public function rangeGetMultipartDownloaderProvider(): array {
+    public static function rangeGetMultipartDownloaderProvider(): array {
         return [
             [
                 'objectKey' => 'ObjectKey_1',
@@ -136,7 +154,7 @@ class RangeGetMultipartDownloaderTest extends TestCase
         $mockClient = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
             ->getMock();
-        
+
         $mockClient->method('getCommand')
             ->willReturnCallback(function ($commandName, $args) {
                 return new Command($commandName, $args);
@@ -157,17 +175,12 @@ class RangeGetMultipartDownloaderTest extends TestCase
 
         // Use reflection to test the protected nextCommand method
         $reflection = new \ReflectionClass($downloader);
-        $nextCommandMethod = $reflection->getMethod('nextCommand');
+        $nextCommandMethod = $reflection->getMethod('getFetchCommandArgs');
 
         // First call should create range 0-1023
         $command1 = $nextCommandMethod->invoke($downloader);
         $this->assertEquals('bytes=0-1023', $command1['Range']);
         $this->assertEquals(1, $downloader->getCurrentPartNo());
-
-        // Second call should create range 1024-2047
-        $command2 = $nextCommandMethod->invoke($downloader);
-        $this->assertEquals('bytes=1024-2047', $command2['Range']);
-        $this->assertEquals(2, $downloader->getCurrentPartNo());
     }
 
     /**
@@ -208,48 +221,6 @@ class RangeGetMultipartDownloaderTest extends TestCase
         // Should be single part download
         $this->assertEquals(1, $downloader->getObjectPartsCount());
         $this->assertEquals(512, $downloader->getObjectSizeInBytes());
-    }
-
-    /**
-     * Tests nextCommand method includes IfMatch header when ETag is present.
-     *
-     * @return void
-     * @throws \ReflectionException
-     */
-    public function testNextCommandIncludesIfMatchWhenETagPresent(): void
-    {
-        $mockClient = $this->getMockBuilder(S3Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        
-        $mockClient->method('getCommand')
-            ->willReturnCallback(function ($commandName, $args) {
-                return new Command($commandName, $args);
-            });
-
-        $eTag = '"abc123"';
-        $downloader = new RangeGetMultipartDownloader(
-            $mockClient,
-            [
-                'Bucket' => 'TestBucket',
-                'Key' => 'TestKey',
-            ],
-            [
-                'minimum_part_size' => 1024,
-            ],
-            new StreamDownloadHandler(),
-            0, // currentPartNo
-            0, // objectPartsCount
-            0, // objectSizeInBytes
-            $eTag // eTag
-        );
-
-        // Use reflection to test the protected nextCommand method
-        $reflection = new \ReflectionClass($downloader);
-        $nextCommandMethod = $reflection->getMethod('nextCommand');
-
-        $command = $nextCommandMethod->invoke($downloader);
-        $this->assertEquals($eTag, $command['IfMatch']);
     }
 
     /**
@@ -336,7 +307,7 @@ class RangeGetMultipartDownloaderTest extends TestCase
     /**
      * @return Generator
      */
-    public function ifMatchIsPresentInEachRangeRequestAfterFirstProvider(): Generator
+    public static function ifMatchIsPresentInEachRangeRequestAfterFirstProvider(): Generator
     {
         yield 'multipart_download_with_3_parts_1' => [
             'object_size_in_bytes' => 1024 * 1024 * 20,
@@ -356,4 +327,172 @@ class RangeGetMultipartDownloaderTest extends TestCase
             'eTag' => 'ETag12345678',
         ];
     }
+
+    /**
+     * @return void
+     */
+    public function testGeneratesResumeFileWhenDownloadFailsAndResumeIsEnabled(): void
+    {
+        $destination = $this->tempDir . 'download.txt';
+        $objectSize = 1000;
+        $partSize = 500;
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $callCount = 0;
+        $mockClient->method('executeAsync')
+            ->willReturnCallback(function () use (&$callCount, $objectSize, $partSize) {
+                $callCount++;
+                if ($callCount === 1) {
+                    return Create::promiseFor(new Result([
+                        'Body' => Utils::streamFor(str_repeat('a', $partSize)),
+                        'ContentRange' => "bytes 0-499/$objectSize",
+                        'ContentLength' => $partSize,
+                        'ETag' => 'test-etag'
+                    ]));
+                }
+
+                return new RejectedPromise(new \Exception('Download failed'));
+            });
+
+        $mockClient->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+
+        $handler = new FileDownloadHandler(
+            $destination,
+            false,
+            true,
+            null,
+            $partSize
+        );
+        $downloader = new RangeGetMultipartDownloader(
+            $mockClient,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            ['target_part_size_bytes' => $partSize, 'resume_enabled' => true],
+            $handler
+        );
+
+        try {
+            $downloader->promise()->wait();
+        } catch (\Exception $e) {
+            // Expected to fail
+        }
+
+        $this->assertFileExists($handler->getResumeFilePath());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGeneratesResumeFileWithCustomPath(): void
+    {
+        $destination = $this->tempDir . 'download.txt';
+        $customResumePath = $this->tempDir . 'custom-resume.resume';
+        $objectSize = 1000;
+        $partSize = 500;
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $callCount = 0;
+        $mockClient->method('executeAsync')
+            ->willReturnCallback(function () use (&$callCount, $objectSize, $partSize) {
+                $callCount++;
+                if ($callCount === 1) {
+                    return Create::promiseFor(new Result([
+                        'Body' => Utils::streamFor(str_repeat('a', $partSize)),
+                        'ContentRange' => "bytes 0-499/$objectSize",
+                        'ContentLength' => $partSize,
+                        'ETag' => 'test-etag'
+                    ]));
+                }
+                return new RejectedPromise(new \Exception('Download failed'));
+            });
+
+        $mockClient->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+
+        $handler = new FileDownloadHandler(
+            $destination,
+            false,
+            true,
+            null,
+            $partSize
+        );
+        $downloader = new RangeGetMultipartDownloader(
+            $mockClient,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            [
+                'target_part_size_bytes' => $partSize,
+                'resume_enabled' => true,
+                'resume_file_path' => $customResumePath
+            ],
+            $handler
+        );
+
+        try {
+            $downloader->promise()->wait();
+        } catch (\Exception $e) {
+            // Expected to fail
+        }
+
+        $this->assertFileExists($customResumePath);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemovesResumeFileAfterSuccessfulCompletion(): void
+    {
+        $destination = $this->tempDir . 'download.txt';
+        $objectSize = 1000;
+        $partSize = 500;
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockClient->method('executeAsync')
+            ->willReturnCallback(function () use ($objectSize, $partSize) {
+                static $callCount = 0;
+                $callCount++;
+
+                $from = ($callCount - 1) * $partSize;
+                $to = min($from + $partSize - 1, $objectSize - 1);
+                $length = $to - $from + 1;
+
+                return Create::promiseFor(new Result([
+                    'Body' => Utils::streamFor(str_repeat('a', $length)),
+                    'ContentRange' => "bytes $from-$to/$objectSize",
+                    'ContentLength' => $length,
+                    'ETag' => 'test-etag'
+                ]));
+            });
+
+        $mockClient->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+
+        $handler = new FileDownloadHandler($destination, false, true, null, $partSize);
+        $downloader = new RangeGetMultipartDownloader(
+            $mockClient,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            ['target_part_size_bytes' => $partSize, 'resume_enabled' => true],
+            $handler
+        );
+
+        $resumeFile = $handler->getResumeFilePath();
+        $downloader->promise()->wait();
+
+        $this->assertFileDoesNotExist($resumeFile);
+    }
+
 }

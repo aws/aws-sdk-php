@@ -57,6 +57,7 @@ Feature: S3 Transfer Manager
     Examples:
       | filename                | content                            | checksum_algorithm |
       | myfile-test-5-1.txt     | This is a test file content #1     | crc32              |
+      | myfile-test-5-2.txt     | This is a test file content #2     | crc32c             |
       | myfile-test-5-3.txt     | This is a test file content #3     | sha256             |
       | myfile-test-5-4.txt     | This is a test file content #4     | sha1               |
 
@@ -140,3 +141,28 @@ Feature: S3 Transfer Manager
       | myfile-9-4 | 10485760  | crc32     | vMU7HA== |
       | myfile-9-5 | 15728640  | crc32     | gjLQ1Q== |
       | myfile-9-6 | 7340032   | crc32     | CKbfZQ== |
+
+  Scenario Outline: Resume multipart download
+    Given I have a file <file> in S3 that requires multipart download
+    When I try the download for file <file>, with resume enabled, it fails
+    Then A resumable file for file <file> must exists
+    Then We resume the download for file <file> and it should succeed
+    Examples:
+      | file                       |
+      | resume-download-file-1.txt |
+      | resume-download-file-2.txt |
+      | resume-download-file-3.txt |
+      | resume-download-file-4.txt |
+
+  Scenario Outline: Resume multipart upload
+    Given I have a file <file> on disk that requires multipart upload
+    When I try to upload the file <file>, with resume enabled, it fails
+    Then A resumable file for file <file> must exists
+    Then We resume the upload for file <file> and it should succeed
+    Then The file <file> in s3 should match the local file
+    Examples:
+      | file                       |
+      | resume-upload-file-1.txt |
+      | resume-upload-file-2.txt |
+      | resume-upload-file-3.txt |
+      | resume-upload-file-4.txt |

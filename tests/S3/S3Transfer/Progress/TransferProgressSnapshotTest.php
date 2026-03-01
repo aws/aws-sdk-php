@@ -5,7 +5,10 @@ namespace Aws\Test\S3\S3Transfer\Progress;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use PHPUnit\Framework\TestCase;
 
-class TransferProgressSnapshotTest extends TestCase
+/**
+ * @covers \Aws\S3\S3Transfer\Progress\TransferProgressSnapshot
+ */
+final class TransferProgressSnapshotTest extends TestCase
 {
     /**
      * @return void
@@ -30,9 +33,9 @@ class TransferProgressSnapshotTest extends TestCase
      * @param int $totalBytes
      * @param float $expectedRatio
      *
-     * @return void
      * @dataProvider ratioTransferredProvider
      *
+     * @return void
      */
     public function testRatioTransferred(
         int $transferredBytes,
@@ -51,7 +54,7 @@ class TransferProgressSnapshotTest extends TestCase
     /**
      * @return array
      */
-    public function ratioTransferredProvider(): array
+    public static function ratioTransferredProvider(): array
     {
         return [
             'ratio_1' => [

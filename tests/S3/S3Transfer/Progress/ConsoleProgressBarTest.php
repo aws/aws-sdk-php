@@ -10,9 +10,9 @@ use Aws\S3\S3Transfer\Progress\TransferProgressBarFormat;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests console progress bar.
+ * @covers \Aws\S3\S3Transfer\Progress\ConsoleProgressBar
  */
-class ConsoleProgressBarTest extends TestCase
+final class ConsoleProgressBarTest extends TestCase
 {
     /**
      * Tests each instance of ConsoleProgressBar defaults to the
@@ -91,13 +91,13 @@ class ConsoleProgressBarTest extends TestCase
      * @param string $progressBarChar
      * @param int $progressBarWidth
      * @param int $percentCompleted
-     * @param AbstractProgressBarFormatTest $progressBarFormat
+     * @param AbstractProgressBarFormat $progressBarFormat
      * @param array $progressBarFormatArgs
      * @param string $expectedOutput
      *
-     * @return void
      * @dataProvider progressBarRenderingProvider
      *
+     * @return void
      */
     public function testProgressBarRendering(
         string                    $progressBarChar,
@@ -124,7 +124,7 @@ class ConsoleProgressBarTest extends TestCase
      *
      * @return array
      */
-    public function progressBarRenderingProvider(): array
+    public static function progressBarRenderingProvider(): array
     {
         return [
             'plain_progress_bar_format_1' => [

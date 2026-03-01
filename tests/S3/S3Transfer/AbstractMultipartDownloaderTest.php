@@ -19,9 +19,11 @@ use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests MultipartDownloader abstract class implementation.
+ * @covers \Aws\S3\S3Transfer\AbstractMultipartDownloader
+ * @covers \Aws\S3\S3Transfer\PartGetMultipartDownloader
+ * @covers \Aws\S3\S3Transfer\RangeGetMultipartDownloader
  */
-class AbstractMultipartDownloaderTest extends TestCase
+final class AbstractMultipartDownloaderTest extends TestCase
 {
     /**
      * Tests chooseDownloaderClass factory method.
@@ -118,7 +120,7 @@ class AbstractMultipartDownloaderTest extends TestCase
             $requestArgs,
             [],
             new StreamDownloadHandler(),
-            0,
+            [],
             0,
             0,
             '',
@@ -171,7 +173,7 @@ class AbstractMultipartDownloaderTest extends TestCase
             $requestArgs,
             [],
             new StreamDownloadHandler(),
-            0,
+            [],
             0,
             0,
             null,
@@ -222,7 +224,7 @@ class AbstractMultipartDownloaderTest extends TestCase
             $requestArgs,
             [],
             new StreamDownloadHandler(),
-            0,
+            [],
             0,
             0,
             null,
