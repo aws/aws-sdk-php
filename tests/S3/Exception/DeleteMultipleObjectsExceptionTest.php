@@ -3,10 +3,9 @@ namespace Aws\Test\S3\Exception;
 
 use Aws\S3\Exception\DeleteMultipleObjectsException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\S3\Exception\DeleteMultipleObjectsException
- */
+#[CoversClass(DeleteMultipleObjectsException::class)]
 class DeleteMultipleObjectsExceptionTest extends TestCase
 {
     public function testReturnsData()

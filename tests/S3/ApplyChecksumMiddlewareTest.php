@@ -5,17 +5,15 @@ use Aws\S3\ApplyChecksumMiddleware;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Request;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\S3\ApplyChecksumMiddleware
- */
+#[CoversClass(ApplyChecksumMiddleware::class)]
 class ApplyChecksumMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @dataProvider getFlexibleChecksumUseCases
-     */
+    #[DataProvider('getFlexibleChecksumUseCases')]
     public function testFlexibleChecksums(
         $operation,
         $config,
@@ -54,7 +52,7 @@ class ApplyChecksumMiddlewareTest extends TestCase
         $mw($command, $request);
     }
 
-    public function getFlexibleChecksumUseCases()
+    public static function getFlexibleChecksumUseCases(): array
     {
         return [
             'http_checksum_not_modeled' => [
@@ -197,9 +195,7 @@ class ApplyChecksumMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getContentSha256UseCases
-     */
+    #[DataProvider('getContentSha256UseCases')]
     public function testAddsContentSHA256($operation, $args, $hashAdded, $hashValue)
     {
         $client = $this->getTestClient('s3');
@@ -215,7 +211,7 @@ class ApplyChecksumMiddlewareTest extends TestCase
         $mw($command, $request);
     }
 
-    public function getContentSha256UseCases()
+    public static function getContentSha256UseCases(): array
     {
         $hash = 'SHA256HASH';
 
@@ -246,18 +242,25 @@ class ApplyChecksumMiddlewareTest extends TestCase
 
     public function testAddContentMd5EmitsDeprecationWarning()
     {
-        $this->expectDeprecation();
-        $this->expectDeprecationMessage('S3 no longer supports MD5 checksums.');
-        $client = $this->getTestClient('s3');
-        $nextHandler = function ($cmd, $request) {
-            $this->assertTrue($request->hasHeader('x-amz-checksum-crc32'));
-        };
-        $service = $client->getApi();
-        $mw = new ApplyChecksumMiddleware($nextHandler, $service);
-        $command = $client->getCommand('putObject', ['AddContentMD5' => true]);
-        $request = new Request('PUT', 'foo');
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        });
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('S3 no longer supports MD5 checksums.');
+        try {
+            $client = $this->getTestClient('s3');
+            $nextHandler = function ($cmd, $request) {
+                $this->assertTrue($request->hasHeader('x-amz-checksum-crc32'));
+            };
+            $service = $client->getApi();
+            $mw = new ApplyChecksumMiddleware($nextHandler, $service);
+            $command = $client->getCommand('putObject', ['AddContentMD5' => true]);
+            $request = new Request('PUT', 'foo');
 
-        $mw($command, $request);
+            $mw($command, $request);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testInvalidChecksumThrows()

@@ -8,7 +8,10 @@ use Aws\RequestCompressionMiddleware;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(RequestCompressionMiddleware::class)]
 class RequestCompressionMiddlewareTest extends TestCase
 {
     public function testCompressesRequestByDefault()
@@ -46,17 +49,24 @@ class RequestCompressionMiddlewareTest extends TestCase
         $list->appendSign(Middleware::tap(function($cmd, $req) {
             $body = $req->getBody()->getContents();
             $this->assertEmpty($req->getHeader('content-encoding'));
-            $this->expectWarning();
+            $this->expectException(\RuntimeException::class);
+            set_error_handler(function ($errno, $errstr) {
+                throw new \RuntimeException($errstr, $errno);
+            });
             gzdecode($body);
         }));
 
-        $client->putMetricData([
-            'MetricData' => $metricData,
-            'Namespace' => 'foo'
-        ]);
+        try {
+            $client->putMetricData([
+                'MetricData' => $metricData,
+                'Namespace' => 'foo'
+            ]);
+        } finally {
+            restore_error_handler();
+        }
     }
 
-    public function specificSizeProvider()
+    public static function specificSizeProvider(): array
     {
         return [
             [60, 0, 65],
@@ -66,13 +76,7 @@ class RequestCompressionMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider specificSizeProvider
-     *
-     * @param $minSize
-     * @param $numMetricData
-     * @param $expectedBodySize
-     */
+    #[DataProvider('specificSizeProvider')]
     public function testCompressesRequestAtSpecificSize($minSize, $numMetricData, $expectedBodySize)
     {
         $service = $this->generateTestService();
@@ -140,15 +144,22 @@ class RequestCompressionMiddlewareTest extends TestCase
         $list->appendSign(Middleware::tap(function($cmd, $req) {
             $body = $req->getBody()->getContents();
             $this->assertEmpty($req->getHeader('content-encoding'));
-            $this->expectWarning();
+            $this->expectException(\RuntimeException::class);
+            set_error_handler(function ($errno, $errstr) {
+                throw new \RuntimeException($errstr, $errno);
+            });
             gzdecode($body);
         }));
 
-        $client->putMetricData([
-            'MetricData' => $metricData,
-            'Namespace' => 'foo',
-            '@disable_request_compression' => true
-        ]);
+        try {
+            $client->putMetricData([
+                'MetricData' => $metricData,
+                'Namespace' => 'foo',
+                '@disable_request_compression' => true
+            ]);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testCommandLevelMinRequestSizeOverrides()
@@ -161,18 +172,25 @@ class RequestCompressionMiddlewareTest extends TestCase
         $list->appendSign(Middleware::tap(function($cmd, $req) {
             $body = $req->getBody()->getContents();
             $this->assertEmpty($req->getHeader('content-encoding'));
-            $this->expectWarning();
+            $this->expectException(\RuntimeException::class);
+            set_error_handler(function ($errno, $errstr) {
+                throw new \RuntimeException($errstr, $errno);
+            });
             gzdecode($body);
         }));
 
-        $client->putMetricData([
-            'MetricData' => $metricData,
-            'Namespace' => 'foo',
-            '@request_min_compression_size_bytes' => 10485760
-        ]);
+        try {
+            $client->putMetricData([
+                'MetricData' => $metricData,
+                'Namespace' => 'foo',
+                '@request_min_compression_size_bytes' => 10485760
+            ]);
+        } finally {
+            restore_error_handler();
+        }
     }
 
-    public function invalidDisableCompressionType()
+    public static function invalidDisableCompressionType(): array
     {
         return [
             ['foo'],
@@ -180,11 +198,7 @@ class RequestCompressionMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidDisableCompressionType
-     *
-     * @param $invalidType
-     */
+    #[DataProvider('invalidDisableCompressionType')]
     public function testThrowsExceptionWhenDisableMinCompressionNotBool($invalidType)
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -193,7 +207,7 @@ class RequestCompressionMiddlewareTest extends TestCase
         $client = $this->generateTestClient($service, ['disable_request_compression' => $invalidType]);
     }
 
-    public function invalidMinRequestSizeProvider()
+    public static function invalidMinRequestSizeProvider(): array
     {
         return [
             [-1],
@@ -202,11 +216,7 @@ class RequestCompressionMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidMinRequestSizeProvider
-     *
-     * @param $minRequestSize
-     */
+    #[DataProvider('invalidMinRequestSizeProvider')]
     public function testThrowsExceptionWhenInvalidMinCompressionSizeOnClient($minRequestSize)
     {
         if (is_int($minRequestSize)) {
@@ -226,11 +236,7 @@ class RequestCompressionMiddlewareTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider invalidMinRequestSizeProvider
-     *
-     * @param $minRequestSize
-     */
+    #[DataProvider('invalidMinRequestSizeProvider')]
     public function testThrowsExceptionWhenInvalidMinCompressionSize($minRequestSize)
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -299,24 +305,22 @@ XML;
     {
         //40 brings the request body size above the default minimum
         // compression threshold of 10240. 10919 to be exact.
-            return array_fill(
-                0,
-                $numElements,
-                [
-                    'MetricName' => 'MyMetric',
-                    'Timestamp' => time(),
-                    'Dimensions' => [
-                        [
-                            'Name' => 'MyDimension1',
-                            'Value' => 'MyValue1'
+        return array_fill(
+            0,
+            $numElements,
+            [
+                'MetricName' => 'MyMetric',
+                'Timestamp' => time(),
+                'Dimensions' => [
+                    [
+                        'Name' => 'MyDimension1',
+                        'Value' => 'MyValue1'
 
-                        ],
                     ],
-                    'Unit' => 'Count',
-                    'Value' => 1
-                ]
-            );
-        }
+                ],
+                'Unit' => 'Count',
+                'Value' => 1
+            ]
+        );
+    }
 }
-
-

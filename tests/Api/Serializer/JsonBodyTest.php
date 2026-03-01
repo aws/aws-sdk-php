@@ -7,10 +7,10 @@ use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Api\Serializer\JsonBody
- */
+#[CoversClass(JsonBody::class)]
 class JsonBodyTest extends TestCase
 {
     use UsesServiceTrait;
@@ -24,7 +24,7 @@ class JsonBodyTest extends TestCase
         );
     }
 
-    public function formatProvider()
+    public static function formatProvider(): iterable
     {
         yield [['type' => 'string'], ['foo' => 'bar'], '{"foo":"bar"}'];
         yield [['type' => 'integer'], ['foo' => 1], '{"foo":1}'];
@@ -144,9 +144,7 @@ class JsonBodyTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider formatProvider
-     */
+    #[DataProvider('formatProvider')]
     public function testFormatsJson(array $def, array $args, string $result): void
     {
         $j = new JsonBody(new Service([], function() { return []; }));
@@ -154,7 +152,7 @@ class JsonBodyTest extends TestCase
         $this->assertEquals($result, $j->build($shape, $args));
     }
 
-    public function formatNoReferencesProvider(): iterable
+    public static function formatNoReferencesProvider(): iterable
     {
         return [
             // Formats nested maps and structures
@@ -192,9 +190,7 @@ class JsonBodyTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider formatNoReferencesProvider
-     */
+    #[DataProvider('formatNoReferencesProvider')]
     public function testFormatsJsonDoesNotCreateReferences(
         array $def,
         array $args,
@@ -211,13 +207,7 @@ class JsonBodyTest extends TestCase
         $this->assertEquals($result, $builtShape);
     }
 
-    /**
-     * @param string|array $args
-     * @param string $expected
-     *
-     * @return void
-     * @dataProvider buildsDocTypesProvider
-     */
+    #[DataProvider('buildsDocTypesProvider')]
     public function testBuildsDocTypes(string|array $args, string $expected): void
     {
         $j = new JsonBody(new Service([], function() { return []; }));
@@ -233,7 +223,7 @@ class JsonBodyTest extends TestCase
         $this->assertEquals($expected, $builtShape);
     }
 
-    public function buildsDocTypesProvider(): iterable
+    public static function buildsDocTypesProvider(): iterable
     {
         return [
             ['hello', '"hello"'],

@@ -109,7 +109,7 @@ trait UsesServiceTrait
         $type = $type ?: AwsException::class;
 
         $client = $this->getMockBuilder(AwsClientInterface::class)
-            ->setMethods(['getApi'])
+            ->onlyMethods(['getApi'])
             ->getMockForAbstractClass();
 
         $client->expects($this->any())

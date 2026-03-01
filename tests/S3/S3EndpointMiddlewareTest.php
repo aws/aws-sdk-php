@@ -12,36 +12,46 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(S3EndpointMiddleware::class)]
 class S3EndpointMiddlewareTest extends TestCase
 {
+    private static array $excludedOperations = [
+        'ListBuckets',
+        'CreateBucket',
+        'DeleteBucket'
+    ];
     use UsesServiceTrait;
 
-    /**
-     * @dataProvider includedCommandProvider
-     *
-     * @param CommandInterface $command
-     */
-    public function testAppliesAccelerateDualStackEndpointToCommand(CommandInterface $command)
+    public function testAppliesAccelerateDualStackEndpointToCommand()
     {
-        $middleware = new S3EndpointMiddleware(
-            $this->acceleratePatternAssertingHandler($command, 's3-accelerate.dualstack'),
-            'us-west-2',
-            [
-                'dual_stack' => true,
-                'accelerate' => true,
-            ]
-        );
+        $s3Operations = $this->getTestClient('s3')->getApi()->getOperations();
+        foreach (self::$excludedOperations as $excludedOperation) {
+            unset($s3Operations[$excludedOperation]);
+        }
 
-        $middleware($command, $this->getRequest($command));
+        $commands = array_map(function ($commandName) {
+            return new Command($commandName, ['Bucket' => 'bucket']);
+        }, array_keys($s3Operations));
+
+        foreach ($commands as $command) {
+            $middleware = new S3EndpointMiddleware(
+                $this->acceleratePatternAssertingHandler($command, 's3-accelerate.dualstack'),
+                'us-west-2',
+                [
+                    'dual_stack' => true,
+                    'accelerate' => true,
+                ]
+            );
+
+            $middleware($command, $this->getRequest($command));
+        }
     }
 
-    /**
-     * @dataProvider excludedCommandProvider
-     *
-     * @param CommandInterface $command
-     */
+    #[DataProvider('excludedCommandProvider')]
     public function testAppliesDualStackToCommandForInvalidOperationsWhenEnableBoth(CommandInterface $command)
     {
         $middleware = new S3EndpointMiddleware(
@@ -56,11 +66,7 @@ class S3EndpointMiddlewareTest extends TestCase
         $middleware($command, $this->getRequest($command));
     }
 
-    /**
-     * @dataProvider excludedCommandProvider
-     *
-     * @param CommandInterface $command
-     */
+    #[DataProvider('excludedCommandProvider')]
     public function testAppliesDualStackWithPathStyleToCommandForInvalidOperationsWhenEnableBoth(CommandInterface $command)
     {
         $middleware = new S3EndpointMiddleware(
@@ -76,56 +82,64 @@ class S3EndpointMiddlewareTest extends TestCase
         $middleware($command, $this->getPathStyleRequest($command));
     }
 
-    /**
-     * @dataProvider includedCommandProvider
-     *
-     * @param CommandInterface $command
-     */
-    public function testDoesNothingWithoutOptIn(CommandInterface $command)
+    public function testDoesNothingWithoutOptIn()
     {
-        $middleware = new S3EndpointMiddleware(
-            $this->noAcceleratePatternAssertingHandler($command, 's3-accelerate.dualstack'),
-            'us-west-2',
-            []
-        );
+        $s3Operations = $this->getTestClient('s3')->getApi()->getOperations();
+        foreach (self::$excludedOperations as $excludedOperation) {
+            unset($s3Operations[$excludedOperation]);
+        }
 
-        $middleware($command, $this->getRequest($command));
+        $commands = array_map(function ($commandName) {
+            return new Command($commandName, ['Bucket' => 'bucket']);
+        }, array_keys($s3Operations));
 
-        $middleware = new S3EndpointMiddleware(
-            $this->noDualStackAssertingHandler($command),
-            'us-west-2',
-            []
-        );
+        foreach ($commands as $command) {
+            $middleware = new S3EndpointMiddleware(
+                $this->noAcceleratePatternAssertingHandler($command, 's3-accelerate.dualstack'),
+                'us-west-2',
+                []
+            );
 
-        $middleware($command, $this->getRequest($command));
+            $middleware($command, $this->getRequest($command));
+
+            $middleware = new S3EndpointMiddleware(
+                $this->noDualStackAssertingHandler($command),
+                'us-west-2',
+                []
+            );
+
+            $middleware($command, $this->getRequest($command));
+        }
     }
 
-    /**
-     * @dataProvider includedCommandProvider
-     *
-     * @param CommandInterface $command
-     */
-    public function testAppliesAccelerateDualStackEndpointWithOperationalLevelOptIn(CommandInterface $command)
+    public function testAppliesAccelerateDualStackEndpointWithOperationalLevelOptIn()
     {
-        $middleware = new S3EndpointMiddleware(
-            $this->acceleratePatternAssertingHandler($command, 's3-accelerate.dualstack'),
-            'us-west-2',
-            [
-                'dual_stack' => false,
-                'accelerate' => false,
-            ]
-        );
+        $s3Operations = $this->getTestClient('s3')->getApi()->getOperations();
+        foreach (self::$excludedOperations as $excludedOperation) {
+            unset($s3Operations[$excludedOperation]);
+        }
 
-        $command['@use_accelerate_endpoint'] = true;
-        $command['@use_dual_stack_endpoint'] = true;
-        $middleware($command, $this->getRequest($command));
+        $commands = array_map(function ($commandName) {
+            return new Command($commandName, ['Bucket' => 'bucket']);
+        }, array_keys($s3Operations));
+
+        foreach ($commands as $command) {
+            $middleware = new S3EndpointMiddleware(
+                $this->acceleratePatternAssertingHandler($command, 's3-accelerate.dualstack'),
+                'us-west-2',
+                [
+                    'dual_stack' => false,
+                    'accelerate' => false,
+                ]
+            );
+
+            $command['@use_accelerate_endpoint'] = true;
+            $command['@use_dual_stack_endpoint'] = true;
+            $middleware($command, $this->getRequest($command));
+        }
     }
 
-    /**
-     * @dataProvider excludedCommandProvider
-     *
-     * @param CommandInterface $command
-     */
+    #[DataProvider('excludedCommandProvider')]
     public function testAppliesDualStackForInvalidOperationsWhenEnableBothAtOperationalLevel(CommandInterface $command)
     {
         $middleware = new S3EndpointMiddleware(
@@ -139,11 +153,7 @@ class S3EndpointMiddlewareTest extends TestCase
         $middleware($command, $this->getRequest($command));
     }
 
-    /**
-     * @dataProvider excludedCommandProvider
-     *
-     * @param CommandInterface $command
-     */
+    #[DataProvider('excludedCommandProvider')]
     public function testAppliesDualStackForInvalidOperationsWhenEnableBothWithPathStyleAtOperationalLevel(CommandInterface $command)
     {
         $middleware = new S3EndpointMiddleware(
@@ -158,43 +168,45 @@ class S3EndpointMiddlewareTest extends TestCase
         $middleware($command, $this->getPathStyleRequest($command));
     }
 
-    /**
-     * @dataProvider includedCommandProvider
-     *
-     * @param CommandInterface $command
-     */
-    public function testDoesNothingWhenDisabledBothOnOperationLevel(CommandInterface $command)
+    public function testDoesNothingWhenDisabledBothOnOperationLevel()
     {
-        $middleware = new S3EndpointMiddleware(
-            $this->noAcceleratePatternAssertingHandler($command, 's3-accelerate.dualstack'),
-            'us-west-2',
-            [
-                'dual_stack' => true,
-                'accelerate' => true,
-            ]
-        );
-        $command['@use_accelerate_endpoint'] = false;
-        $command['@use_dual_stack_endpoint'] = false;
-        $middleware($command, $this->getRequest($command));
+        $s3Operations = $this->getTestClient('s3')->getApi()->getOperations();
+        foreach (self::$excludedOperations as $excludedOperation) {
+            unset($s3Operations[$excludedOperation]);
+        }
 
-        $middleware = new S3EndpointMiddleware(
-            $this->noDualStackAssertingHandler($command),
-            'us-west-2',
-            [
-                'dual_stack' => true,
-                'accelerate' => true,
-            ]
-        );
-        $command['@use_accelerate_endpoint'] = false;
-        $command['@use_dual_stack_endpoint'] = false;
-        $middleware($command, $this->getRequest($command));
+        $commands = array_map(function ($commandName) {
+            return new Command($commandName, ['Bucket' => 'bucket']);
+        }, array_keys($s3Operations));
+
+        foreach ($commands as $command) {
+            $middleware = new S3EndpointMiddleware(
+                $this->noAcceleratePatternAssertingHandler($command, 's3-accelerate.dualstack'),
+                'us-west-2',
+                [
+                    'dual_stack' => true,
+                    'accelerate' => true,
+                ]
+            );
+            $command['@use_accelerate_endpoint'] = false;
+            $command['@use_dual_stack_endpoint'] = false;
+            $middleware($command, $this->getRequest($command));
+
+            $middleware = new S3EndpointMiddleware(
+                $this->noDualStackAssertingHandler($command),
+                'us-west-2',
+                [
+                    'dual_stack' => true,
+                    'accelerate' => true,
+                ]
+            );
+            $command['@use_accelerate_endpoint'] = false;
+            $command['@use_dual_stack_endpoint'] = false;
+            $middleware($command, $this->getRequest($command));
+        }
     }
 
-    /**
-     * @dataProvider excludedCommandProvider
-     *
-     * @param CommandInterface $command
-     */
+    #[DataProvider('excludedCommandProvider')]
     public function testIgnoresExcludedCommands(CommandInterface $command)
     {
         $middleware = new S3EndpointMiddleware(
@@ -206,48 +218,70 @@ class S3EndpointMiddlewareTest extends TestCase
         $middleware($command, $this->getRequest($command));
     }
 
-    /**
-     * @dataProvider includedCommandProvider
-     *
-     * @param CommandInterface $command
-     */
-    public function testAppliesAccelerateEndpointToCommands(CommandInterface $command)
+    public function testAppliesAccelerateEndpointToCommands()
     {
-        $middleware = new S3EndpointMiddleware(
-            $this->acceleratePatternAssertingHandler($command, 's3-accelerate'),
-            'us-west-2',
-            ['accelerate' => true,]
-        );
+        $s3Operations = $this->getTestClient('s3')->getApi()->getOperations();
+        foreach (self::$excludedOperations as $excludedOperation) {
+            unset($s3Operations[$excludedOperation]);
+        }
 
-        $middleware($command, $this->getRequest($command));
+        $commands = array_map(function ($commandName) {
+            return new Command($commandName, ['Bucket' => 'bucket']);
+        }, array_keys($s3Operations));
+
+        foreach ($commands as $command) {
+            $middleware = new S3EndpointMiddleware(
+                $this->acceleratePatternAssertingHandler($command, 's3-accelerate'),
+                'us-west-2',
+                ['accelerate' => true,]
+            );
+
+            $middleware($command, $this->getRequest($command));
+        }
     }
 
-    /**
-     * @dataProvider includedCommandProvider
-     *
-     * @param CommandInterface $command
-     */
-    public function testDoesNothingWhenAccelerationDisabledOnOperationLevel(CommandInterface $command)
+    public function testDoesNothingWhenAccelerationDisabledOnOperationLevel()
     {
-        $middleware = new S3EndpointMiddleware(
-            $this->noAcceleratePatternAssertingHandler($command, 's3-accelerate'),
-            'us-west-2',
-            ['accelerate' => true,]
-        );
+        $s3Operations = $this->getTestClient('s3')->getApi()->getOperations();
+        foreach (self::$excludedOperations as $excludedOperation) {
+            unset($s3Operations[$excludedOperation]);
+        }
 
-        $command['@use_accelerate_endpoint'] = false;
-        $middleware($command, $this->getRequest($command));
+        $commands = array_map(function ($commandName) {
+            return new Command($commandName, ['Bucket' => 'bucket']);
+        }, array_keys($s3Operations));
+
+        foreach ($commands as $command) {
+            $middleware = new S3EndpointMiddleware(
+                $this->noAcceleratePatternAssertingHandler($command, 's3-accelerate'),
+                'us-west-2',
+                ['accelerate' => true,]
+            );
+
+            $command['@use_accelerate_endpoint'] = false;
+            $middleware($command, $this->getRequest($command));
+        }
     }
 
     public function testAppliesDualStackEndpointToCommand()
     {
-        $command = new Command('CreateBucket', ['Bucket' => 'bucket']);
-        $middleware = new S3EndpointMiddleware(
-            $this->dualStackAssertingHandler($command),
-            'us-west-2',
-            ['dual_stack' => true,]
-        );
-        $middleware($command, $this->getRequest($command));
+        $s3Operations = $this->getTestClient('s3')->getApi()->getOperations();
+        foreach (self::$excludedOperations as $excludedOperation) {
+            unset($s3Operations[$excludedOperation]);
+        }
+
+        $commands = array_map(function ($commandName) {
+            return new Command($commandName, ['Bucket' => 'bucket']);
+        }, array_keys($s3Operations));
+
+        foreach ($commands as $command) {
+            $middleware = new S3EndpointMiddleware(
+                $this->dualStackAssertingHandler($command),
+                'us-west-2',
+                ['dual_stack' => true,]
+            );
+            $middleware($command, $this->getRequest($command));
+        }
     }
 
     public function testAppliesDualStackWithPathStyleEndpointToCommand()
@@ -354,26 +388,11 @@ class S3EndpointMiddlewareTest extends TestCase
         $middleware($command, $request);
     }
 
-    public function excludedCommandProvider()
+    public static function excludedCommandProvider(): array
     {
         return array_map(function ($commandName) {
             return [new Command($commandName, ['Bucket' => 'bucket'])];
-        }, ['ListBuckets', 'CreateBucket', 'DeleteBucket']);
-    }
-
-    public function includedCommandProvider()
-    {
-        $excludedOperations = array_map(function (array $args) {
-            return $args[0]->getName();
-        }, $this->excludedCommandProvider());
-        $s3Operations = $this->getTestClient('s3')->getApi()->getOperations();
-        foreach ($excludedOperations as $excludedOperation) {
-            unset($s3Operations[$excludedOperation]);
-        }
-
-        return array_map(function ($commandName) {
-            return [new Command($commandName, ['Bucket' => 'bucket'])];
-        }, array_keys($s3Operations));
+        }, self::$excludedOperations);
     }
 
     private function getRequest(CommandInterface $command)
@@ -488,7 +507,7 @@ class S3EndpointMiddlewareTest extends TestCase
         };
     }
 
-    public function jsonCaseProvider()
+    public static function jsonCaseProvider(): array
     {
         return json_decode(
             file_get_contents(__DIR__ . '/test_cases/uri_addressing.json'),
@@ -496,11 +515,7 @@ class S3EndpointMiddlewareTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider jsonCaseProvider
-     *
-     * @param array $testCase
-     */
+    #[DataProvider('jsonCaseProvider')]
     public function testPassesCompliance(
         $bucket,
         $configuredAddressingStyle,
@@ -532,16 +547,7 @@ class S3EndpointMiddlewareTest extends TestCase
         ]);
     }
 
-    /**
-     * @dataProvider objectLambdasSuccessProvider
-     *
-     * @param $bucketFieldInput
-     * @param $clientRegion
-     * @param $additionalFlags
-     * @param $useArnRegion
-     * @param $endpointUrl
-     * @param $expectedEndpoint
-     */
+    #[DataProvider('objectLambdasSuccessProvider')]
     public function testObjectLambdaArnSuccess(
         $bucketFieldInput,
         $clientRegion,
@@ -585,7 +591,7 @@ class S3EndpointMiddlewareTest extends TestCase
         $client->execute($command);
     }
 
-    public function objectLambdasSuccessProvider()
+    public static function objectLambdasSuccessProvider(): array
     {
         return [
             ["arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "us-east-1", "none", false, null, "mybanner-123456789012.s3-object-lambda.us-east-1.amazonaws.com"],
@@ -606,16 +612,7 @@ class S3EndpointMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider objectLambdasFailureProvider
-     *
-     * @param $bucketFieldInput
-     * @param $clientRegion
-     * @param $additionalFlags
-     * @param $useArnRegion
-     * @param $endpointUrl
-     * @param $expectedException
-     */
+    #[DataProvider('objectLambdasFailureProvider')]
     public function testObjectLambdaArnFailures(
         $bucketFieldInput,
         $clientRegion,
@@ -664,7 +661,7 @@ class S3EndpointMiddlewareTest extends TestCase
         }
     }
 
-    public function objectLambdasFailureProvider()
+    public static function objectLambdasFailureProvider(): array
     {
         return [
             ["arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "us-west-2", "none", false, null,
@@ -733,15 +730,7 @@ class S3EndpointMiddlewareTest extends TestCase
         ];
     }
 
-
-    /**
-     * @dataProvider writeGetObjectResponseProvider
-     *
-     * @param $clientRegion
-     * @param $route
-     * @param $endpointUrl
-     * @param $expectedEndpoint
-     */
+    #[DataProvider('writeGetObjectResponseProvider')]
     public function testWriteGetObjectResponse(
         $clientRegion,
         $route,
@@ -775,7 +764,7 @@ class S3EndpointMiddlewareTest extends TestCase
         $client->execute($command);
     }
 
-    public function writeGetObjectResponseProvider()
+    public static function writeGetObjectResponseProvider(): array
     {
 
         return [

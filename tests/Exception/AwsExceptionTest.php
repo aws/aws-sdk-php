@@ -12,10 +12,10 @@ use Aws\Result;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Exception\AwsException
- */
+#[CoversClass(AwsException::class)]
 class AwsExceptionTest extends TestCase
 {
     use UsesServiceTrait;
@@ -223,9 +223,7 @@ class AwsExceptionTest extends TestCase
         $this->assertNull($e->getPrevious());
     }
 
-    /**
-     * @dataProvider previousThrowableProvider
-     */
+    #[DataProvider('previousThrowableProvider')]
     public function testAcceptsVariousThrowableTypes(\Throwable $previous): void
     {
         $command = new Command('foo');
@@ -235,7 +233,7 @@ class AwsExceptionTest extends TestCase
         $this->assertInstanceOf(\Throwable::class, $e->getPrevious());
     }
 
-    public function previousThrowableProvider(): array
+    public static function previousThrowableProvider(): array
     {
         return [
             'standard exception' => [new \Exception('Standard exception')],

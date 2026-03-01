@@ -23,7 +23,10 @@ use GuzzleHttp\Psr7\Response;
 use TypeError;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
+#[CoversClass(S3EncryptionClientV3::class)]
 class S3EncryptionClientV3Test extends TestCase
 {
     use S3EncryptionClientTestingTrait;
@@ -54,9 +57,7 @@ class S3EncryptionClientV3Test extends TestCase
         return $client;
     }
 
-    /**
-     * @dataProvider getValidMaterialsProviders
-     */
+    #[DataProvider('getValidMaterialsProviders')]
     public function testPutObjectTakesValidMaterialsProviders(
         $provider,
         $exception
@@ -96,9 +97,7 @@ class S3EncryptionClientV3Test extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @dataProvider getInvalidMaterialsProviders
-     */
+    #[DataProvider('getInvalidMaterialsProviders')]
     public function testPutObjectRejectsInvalidMaterialsProviders(
         $provider,
         $exception
@@ -125,9 +124,7 @@ class S3EncryptionClientV3Test extends TestCase
         ]);
     }
 
-    /**
-     * @dataProvider getValidMetadataStrategies
-     */
+    #[DataProvider('getValidMetadataStrategies')]
     public function testPutObjectTakesValidMetadataStrategy(
         $strategy,
         $exception,
@@ -174,9 +171,7 @@ class S3EncryptionClientV3Test extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @dataProvider getInvalidMetadataStrategies
-     */
+    #[DataProvider('getInvalidMetadataStrategies')]
     public function testPutObjectRejectsInvalidMetadataStrategy(
         $strategy,
         $exception
@@ -286,9 +281,7 @@ class S3EncryptionClientV3Test extends TestCase
     /**
      * Test that by default, S3EC stores content metadata in S3 Object Metadata (headers)
      * This verifies the specification requirement that metadata is stored in object headers by default.
-     *
-     * @covers \Aws\S3\Crypto\S3EncryptionClientV3::putObject
-     */
+     * */
     public function testV2MetadataStorageInObjectHeaders(): void
     {
         $s3 = new S3Client([
@@ -342,8 +335,6 @@ class S3EncryptionClientV3Test extends TestCase
     /**
      * Test that by default, S3EC stores content metadata in S3 Object Metadata (headers)
      * This verifies the specification requirement that metadata is stored in object headers by default.
-     *
-     * @covers \Aws\S3\Crypto\S3EncryptionClientV3::putObject
      */
     public function testV3MetadataStorageInObjectHeaders(): void
     {
@@ -400,8 +391,6 @@ class S3EncryptionClientV3Test extends TestCase
     /**
      * Test that the default metadata strategy does not write instruction files
      * This verifies the specification requirement that instruction files are not enabled by default.
-     *
-     * @covers \Aws\S3\Crypto\S3EncryptionClientV3::putObject
      */
     public function testDefaultMetadataStrategyDoesNotWriteInstructionFile(): void
     {
@@ -533,9 +522,7 @@ class S3EncryptionClientV3Test extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @dataProvider getCiphers
-     */
+    #[DataProvider('getCiphers')]
     public function testPutObjectValidatesCipher(
         $cipher,
         $exception = null
@@ -577,9 +564,7 @@ class S3EncryptionClientV3Test extends TestCase
         ]);
     }
 
-    /**
-     * @dataProvider getKeySizes
-     */
+    #[DataProvider('getKeySizes')]
     public function testPutObjectValidatesKeySize(
         $keySize,
         $exception
@@ -693,46 +678,53 @@ EOXML;
      */
     public function testTriggersWarningForGcmEncryptionWithAad(): void
     {
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('\'Aad\' has been supplied for content encryption'
             . ' with AES/GCM/NoPadding');
-        $this->expectWarning();
-        $s3 = new S3Client([
-            'region' => 'us-west-2',
-            'version' => 'latest',
-            'http_handler' => function (RequestInterface $request) {
-                return new FulfilledPromise(new Response(
-                    200,
-                    [],
-                    $this->getSuccessfulPutObjectResponse()
-                ));
-            },
-        ]);
+        set_error_handler(function ($errno, $errstr) {
+            throw new \RuntimeException($errstr, $errno);
+        }, E_USER_WARNING);
+        try {
+            $s3 = new S3Client([
+                'region' => 'us-west-2',
+                'version' => 'latest',
+                'http_handler' => function (RequestInterface $request) {
+                    return new FulfilledPromise(new Response(
+                        200,
+                        [],
+                        $this->getSuccessfulPutObjectResponse()
+                    ));
+                },
+            ]);
 
-        $kms = $this->getKmsClient();
-        $keyId = '11111111-2222-3333-4444-555555555555';
-        $provider = new KmsMaterialsProviderV3($kms, $keyId);
-        $this->addMockResults($kms, [
-            new Result([
-                'CiphertextBlob' => 'encrypted',
-                'Plaintext' => random_bytes(32),
-            ])
-        ]);
+            $kms = $this->getKmsClient();
+            $keyId = '11111111-2222-3333-4444-555555555555';
+            $provider = new KmsMaterialsProviderV3($kms, $keyId);
+            $this->addMockResults($kms, [
+                new Result([
+                    'CiphertextBlob' => 'encrypted',
+                    'Plaintext' => random_bytes(32),
+                ])
+            ]);
 
-        $client = new S3EncryptionClientV3($s3);
-        $client->putObject([
-            'Bucket' => 'foo',
-            'Key' => 'bar',
-            'Body' => 'test',
-            '@MaterialsProvider' => $provider,
-            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
-            '@CipherOptions' => [
-                'Cipher' => 'gcm',
-                'Aad' => 'test'
-            ],
-            '@KmsEncryptionContext' => [],
-        ]);
+            $client = new S3EncryptionClientV3($s3);
+            $client->putObject([
+                'Bucket' => 'foo',
+                'Key' => 'bar',
+                'Body' => 'test',
+                '@MaterialsProvider' => $provider,
+                '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
+                '@CipherOptions' => [
+                    'Cipher' => 'gcm',
+                    'Aad' => 'test'
+                ],
+                '@KmsEncryptionContext' => [],
+            ]);
 
-        $this->assertTrue($this->mockQueueEmpty());
+            $this->assertTrue($this->mockQueueEmpty());
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testAddsEncryptionContextForKms(): void
@@ -1218,49 +1210,57 @@ EOXML;
 
     public function testEmitsWarningForLegacySecurityProfile(): void
     {
+        set_error_handler(function ($errno, $errstr) {
+            throw new \RuntimeException($errstr, $errno);
+        }, E_USER_WARNING);
         $this->expectExceptionMessage('This S3 Encryption Client operation'
             . ' is configured to read encrypted data with legacy encryption modes');
-        $this->expectWarning();
-        $kms = $this->getKmsClient();
-        $list = $kms->getHandlerList();
-        $list->setHandler(function ($cmd, $req) {
-            // Verify decryption command has correct parameters
-            $this->assertSame('cek', $cmd['CiphertextBlob']);
-            $this->assertEquals(
-                [
-                    'kms_cmk_id' => '11111111-2222-3333-4444-555555555555'
-                ],
-                $cmd['EncryptionContext']
-            );
-            return Promise\Create::promiseFor(
-                new Result(['Plaintext' => random_bytes(32)])
-            );
-        });
-        $providerV1 = new KmsMaterialsProvider($kms);
-        $providerV3 = new KmsMaterialsProviderV3($kms);
+        $this->expectException(\RuntimeException::class);
 
-        $s3 = new S3Client([
-            'region' => 'us-west-2',
-            'version' => 'latest',
-            'http_handler' => function () use ($providerV1) {
-                return new FulfilledPromise(new Response(
-                    200,
-                    $this->getFieldsAsMetaHeaders(
-                        $this->getValidV1CbcMetadataFields($providerV1)
-                    ),
-                    'test'
-                ));
-            },
-        ]);
+        try {
+            $kms = $this->getKmsClient();
+            $list = $kms->getHandlerList();
+            $list->setHandler(function ($cmd, $req) {
+                // Verify decryption command has correct parameters
+                $this->assertSame('cek', $cmd['CiphertextBlob']);
+                $this->assertEquals(
+                    [
+                        'kms_cmk_id' => '11111111-2222-3333-4444-555555555555'
+                    ],
+                    $cmd['EncryptionContext']
+                );
+                return Promise\Create::promiseFor(
+                    new Result(['Plaintext' => random_bytes(32)])
+                );
+            });
+            $providerV1 = new KmsMaterialsProvider($kms);
+            $providerV3 = new KmsMaterialsProviderV3($kms);
 
-        $client = new S3EncryptionClientV3($s3);
-        $client->getObject([
-            'Bucket' => 'foo',
-            'Key' => 'bar',
-            '@MaterialsProvider' => $providerV3,
-            '@CommitmentPolicy' => "FORBID_ENCRYPT_ALLOW_DECRYPT",
-            '@SecurityProfile' => 'V3_AND_LEGACY',
-        ]);
+            $s3 = new S3Client([
+                'region' => 'us-west-2',
+                'version' => 'latest',
+                'http_handler' => function () use ($providerV1) {
+                    return new FulfilledPromise(new Response(
+                        200,
+                        $this->getFieldsAsMetaHeaders(
+                            $this->getValidV1CbcMetadataFields($providerV1)
+                        ),
+                        'test'
+                    ));
+                },
+            ]);
+
+            $client = new S3EncryptionClientV3($s3);
+            $client->getObject([
+                'Bucket' => 'foo',
+                'Key' => 'bar',
+                '@MaterialsProvider' => $providerV3,
+                '@CommitmentPolicy' => "FORBID_ENCRYPT_ALLOW_DECRYPT",
+                '@SecurityProfile' => 'V3_AND_LEGACY',
+            ]);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testThrowsForV3ProfileAndLegacyObject(): void
@@ -1396,9 +1396,7 @@ EOXML;
     // Key Commitment Tests
 
 
-    /**
-     * @dataProvider getValidMaterialsProviders
-     */
+    #[DataProvider('getValidMaterialsProviders')]
     public function testPutObjectTakesValidMaterialsProvidersKC(
         $provider,
         $exception
@@ -1466,8 +1464,8 @@ EOXML;
 
     /**
      * Test that putObject rejects invalid commitment policies
-     * @dataProvider getInvalidCommitmentPolicies
      */
+    #[DataProvider('getInvalidCommitmentPolicies')]
     public function testPutObjectRejectsInvalidCommitmentPolicy($policy, $expectedException): void
     {
         $this->expectException($expectedException[0]);
@@ -1535,8 +1533,8 @@ EOXML;
 
     /**
      * Test that V2 security profiles are rejected in V3
-     * @dataProvider getV2SecurityProfiles
      */
+    #[DataProvider('getV2SecurityProfiles')]
     public function testGetObjectRejectsV2SecurityProfiles($securityProfile): void
     {
         $this->expectException(\Aws\Exception\CryptoException::class);
@@ -1558,47 +1556,54 @@ EOXML;
 
     /**
      * Test valid V3 security profiles are accepted
-     * @dataProvider getValidV3SecurityProfiles
      */
+    #[DataProvider('getValidV3SecurityProfiles')]
     public function testGetObjectAcceptsValidV3SecurityProfiles($securityProfile): void
     {
+        set_error_handler(function ($errno, $errstr) {
+            throw new \RuntimeException($errstr, $errno);
+        }, E_USER_WARNING);
         if ($securityProfile === 'V3_AND_LEGACY') {
             $this->expectExceptionMessage("This S3 Encryption Client operation is configured to read encrypted data with legacy encryption modes");
-            $this->expectWarning();
+            $this->expectException(\RuntimeException::class);
         } elseif ($securityProfile === 'V3') {
             $this->expectExceptionMessage("Invalid MessageId length found in object envelope.");
             $this->expectException(\Aws\Exception\CryptoException::class);
         }
-        $kms = $this->getKmsClient();
-        $provider = new KmsMaterialsProviderV3($kms, 'test-key');
-        $this->addMockResults($kms, [
-            new Result(['Plaintext' => random_bytes(32)])
-        ]);
+        try {
+            $kms = $this->getKmsClient();
+            $provider = new KmsMaterialsProviderV3($kms, 'test-key');
+            $this->addMockResults($kms, [
+                new Result(['Plaintext' => random_bytes(32)])
+            ]);
 
-        $s3 = new S3Client([
-            'region' => 'us-west-2',
-            'version' => 'latest',
-            'http_handler' => function () use ($provider) {
-                return new FulfilledPromise(new Response(
-                    200,
-                    $this->getFieldsAsMetaHeaders(
-                        $this->getValidV3MetadataFields($provider)
-                    ),
-                    'test'
-                ));
-            },
-        ]);
+            $s3 = new S3Client([
+                'region' => 'us-west-2',
+                'version' => 'latest',
+                'http_handler' => function () use ($provider) {
+                    return new FulfilledPromise(new Response(
+                        200,
+                        $this->getFieldsAsMetaHeaders(
+                            $this->getValidV3MetadataFields($provider)
+                        ),
+                        'test'
+                    ));
+                },
+            ]);
 
-        $client = new S3EncryptionClientV3($s3);
-        $result = $client->getObject([
-            'Bucket' => 'foo',
-            'Key' => 'bar',
-            '@MaterialsProvider' => $provider,
-            '@CommitmentPolicy' => 'REQUIRE_ENCRYPT_REQUIRE_DECRYPT',
-            '@SecurityProfile' => $securityProfile,
-        ]);
+            $client = new S3EncryptionClientV3($s3);
+            $result = $client->getObject([
+                'Bucket' => 'foo',
+                'Key' => 'bar',
+                '@MaterialsProvider' => $provider,
+                '@CommitmentPolicy' => 'REQUIRE_ENCRYPT_REQUIRE_DECRYPT',
+                '@SecurityProfile' => $securityProfile,
+            ]);
 
-        $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
+            $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     /**
@@ -1735,8 +1740,8 @@ EOXML;
 
     /**
      * Test that we validate the commitment policy with the encryption algorithm
-     * @dataProvider getCiphersAndKCPolicies 
      */
+    #[DataProvider('getCiphersAndKCPolicies')]
     public function testCompatibleCipherAndKC(
         $cipherName,
         $keySize,
@@ -1783,8 +1788,8 @@ EOXML;
     
     /**
      * Test that we validate the commitment policy with the encryption algorithm
-     * @dataProvider getIncompatibleCiphersAndKCPolicies 
      */
+    #[DataProvider('getIncompatibleCiphersAndKCPolicies')]
     public function testIncompatibleCipherAndKC(
         $cipherName,
         $keySize,
@@ -1823,8 +1828,8 @@ EOXML;
     
     /**
      * Test that we validate the commitment policy with the encryption algorithm
-     * @dataProvider getKCPolicies
      */
+    #[DataProvider('getKCPolicies')]
     public function testIncompatibleCipherCBCAndKCGetObject(
         $commitmentPolicy
     ): void
@@ -1903,8 +1908,8 @@ EOXML;
     
     /**
      * Test that we validate the commitment policy with the encryption algorithm
-     * @dataProvider getKCPolicies
      */
+    #[DataProvider('getKCPolicies')]
     public function testIncompatibleCipherGCMAndKCGetObject(
         $commitmentPolicy
     ): void

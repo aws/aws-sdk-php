@@ -11,10 +11,10 @@ use Aws\EndpointDiscovery\Exception\ConfigurationException;
 use Aws\LruArrayCache;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\EndpointDiscovery\ConfigurationProvider
- */
+#[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
     private static $originalEnv;
@@ -75,10 +75,7 @@ EOT;
         putenv('HOME=' . self::$originalEnv['home']);
     }
 
-    /**
-     * @dataProvider getEnvVariableNames
-     * @param $envName
-     */
+    #[DataProvider('getEnvVariableNames')]
     public function testCreatesFromEnvironmentVariables($envName)
     {
         $this->clearEnv();
@@ -88,7 +85,7 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
-    public function getEnvVariableNames()
+    public static function getEnvVariableNames(): array
     {
         return [
             [ConfigurationProvider::ENV_ENABLED],
@@ -389,7 +386,7 @@ EOT;
     {
         $expected = new Configuration(true, 3500);
         $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
-        $cacheBuilder->setMethods(['get', 'set', 'remove']);
+        $cacheBuilder->onlyMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())
             ->method('get')
@@ -402,7 +399,6 @@ EOT;
         $this->assertInstanceOf(Configuration::class, $result);
         $this->assertSame($expected->toArray(), $result->toArray());
     }
-
 
     public function testUsesIniWithUseAwsConfigFileTrue()
     {
@@ -432,7 +428,7 @@ EOT;
         unlink($dir . '/config');
     }
 
-    public function getSuccessfulUnwrapData()
+    public static function getSuccessfulUnwrapData(): array
     {
         $expected = new Configuration(true, 4000);
         return [
@@ -469,11 +465,7 @@ EOT;
         ];
     }
 
-    /**
-     * @dataProvider getSuccessfulUnwrapData
-     * @param $toUnwrap
-     * @param ConfigurationInterface $expected
-     */
+    #[DataProvider('getSuccessfulUnwrapData')]
     public function testSuccessfulUnwraps($toUnwrap, ConfigurationInterface $expected)
     {
         $this->assertSame(

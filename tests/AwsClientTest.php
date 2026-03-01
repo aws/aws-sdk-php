@@ -25,12 +25,13 @@ use Aws\WrappedHttpHandler;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers Aws\AwsClient
- */
+#[CoversClass(AwsClient::class)]
 class AwsClientTest extends TestCase
 {
     use UsesServiceTrait;
@@ -280,7 +281,7 @@ class AwsClientTest extends TestCase
         $this->assertStringContainsString('AWS4-HMAC-SHA256', $str);
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testAllowsFactoryMethodForBc()
     {
         Ec2Client::factory([
@@ -289,7 +290,7 @@ class AwsClientTest extends TestCase
         ]);
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testCanInstantiateAliasedClients()
     {
         new SesClient([
@@ -353,23 +354,41 @@ class AwsClientTest extends TestCase
         $client->bar();
     }
 
-    /**
-     * @param $service
-     * @param $clientConfig
-     *
-     * @dataProvider signOperationsWithAnAuthTypeProvider
-     */
-    public function testSignOperationsWithAnAuthType($service, $clientConfig)
+    #[DataProvider('signOperationsWithAnAuthTypeProvider')]
+    public function testSignOperationsWithAnAuthType(
+        array $serviceDefinition,
+        array $clientArguments,
+        array $expectedHeaders,
+        array $expectedHeaderValues
+    )
     {
-        $client = $this->createHttpsEndpointClient($service, $clientConfig);
+        $clientArguments += [
+            'handler' => function(CommandInterface $command,
+                                  RequestInterface $request)
+            use ($expectedHeaders, $expectedHeaderValues) {
+                foreach ($expectedHeaders as $header) {
+                    $this->assertTrue($request->hasHeader($header));
+                }
+
+                foreach ($expectedHeaderValues as $headerValue) {
+                    $this->assertEquals(
+                        $headerValue['value'],
+                        $request->getHeaderLine($headerValue['header'])
+                    );
+                }
+
+                return new Result();
+            }
+        ];
+        $client = $this->createHttpsEndpointClient($serviceDefinition, $clientArguments);
         $client->bar();
     }
 
-    public function signOperationsWithAnAuthTypeProvider()
+    public static function signOperationsWithAnAuthTypeProvider(): array
     {
         return [
-            [
-                [
+            'unsigned_payload' => [
+                'service_definition' => [
                     'metadata' => [
                         'signatureVersion' => 'v4',
                     ],
@@ -380,21 +399,14 @@ class AwsClientTest extends TestCase
                         ],
                     ],
                 ],
-                [
-                    'handler' => function (
-                        CommandInterface $command,
-                        RequestInterface $request
-                    ) {
-                        foreach (['Authorization','X-Amz-Content-Sha256', 'X-Amz-Date'] as $signatureHeader) {
-                            $this->assertTrue($request->hasHeader($signatureHeader));
-                        }
-                        $this->assertSame('UNSIGNED-PAYLOAD', $request->getHeader('X-Amz-Content-Sha256')[0]);
-                        return new Result;
-                    }
+                'client_arguments' => [],
+                'expected_headers' => ['Authorization','X-Amz-Content-Sha256', 'X-Amz-Date'],
+                'expected_header_values' => [
+                    ['header' => 'X-Amz-Content-Sha256', 'value' => 'UNSIGNED-PAYLOAD']
                 ]
             ],
-            [
-                [
+            'bearer_token' => [
+                'service_definition' => [
                     'metadata' => [
                         'signatureVersion' => 'v4',
                     ],
@@ -405,17 +417,12 @@ class AwsClientTest extends TestCase
                         ],
                     ],
                 ],
-                [
-                    'handler' => function (
-                        CommandInterface $command,
-                        RequestInterface $request
-                    ) {
-
-                        $this->assertTrue($request->hasHeader('Authorization'));
-                        $this->assertSame('Bearer foo', $request->getHeader('Authorization')[0]);
-                        return new Result;
-                    },
+                'client_arguments' => [
                     'token' => new Token('foo', time() + 1000)
+                ],
+                'expected_headers' => ['Authorization'],
+                'expected_header_values' => [
+                    ['header' => 'Authorization', 'value' => 'Bearer foo']
                 ]
             ]
         ];
@@ -603,7 +610,7 @@ class AwsClientTest extends TestCase
         );
     }
 
-    /** @dataProvider configuredEndpointUrlProvider */
+    #[DataProvider('configuredEndpointUrlProvider')]
     public function testAppliesConfiguredEndpointUrl($ini, $env, $expected)
     {
         $dir = sys_get_temp_dir() . '/.aws';
@@ -634,7 +641,7 @@ class AwsClientTest extends TestCase
         }
     }
 
-    /** @dataProvider configuredEndpointUrlProvider */
+    #[DataProvider('configuredEndpointUrlProvider')]
     public function testDoesNotApplyConfiguredEndpointWhenConfiguredUrlsIgnored($ini, $env)
     {
         putenv('AWS_IGNORE_CONFIGURED_ENDPOINT_URLS=true');
@@ -669,7 +676,7 @@ class AwsClientTest extends TestCase
         putenv('AWS_IGNORE_CONFIGURED_ENDPOINT_URLS=');
     }
 
-    public function configuredEndpointUrlProvider()
+    public static function configuredEndpointUrlProvider(): array
     {
         return [
             [
@@ -774,21 +781,7 @@ EOT
         $client->foo();
     }
 
-
-    public function testCallingEmitDeprecationWarningEmitsDeprecationWarning()
-    {
-        $this->expectDeprecation();
-        $this->expectDeprecationMessage(
-            "This method is deprecated. It will be removed in an upcoming release."
-        );
-        $client = $this->createClient();
-        $client::emitDeprecationWarning();
-    }
-
-    /**
-     * @dataProvider signingRegionSetProvider
-     * @runInSeparateProcess
-     */
+    #[DataProvider('signingRegionSetProvider')]
     public function testSigningRegionSetResolution(
         $command,
         $env,
@@ -853,7 +846,7 @@ EOT
         putenv('AWS_SIGV4A_SIGNING_REGION_SET=');
     }
 
-    public function signingRegionSetProvider()
+    public static function signingRegionSetProvider(): array
     {
         return [
             [null, null, null, null, 'us-west-2'],

@@ -9,16 +9,17 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(MultipartCopy::class)]
 class MultipartCopyTest extends TestCase
 {
     use UsesServiceTrait;
 
     const MB = 1048576;
 
-    /**
-     * @dataProvider getTestCases
-     */
+    #[DataProvider('getTestCases')]
     public function testS3MultipartCopyWorkflow(
         array $uploadOptions = [],
         $error = false
@@ -48,7 +49,7 @@ class MultipartCopyTest extends TestCase
         $this->assertSame($url, $result['ObjectURL']);
     }
 
-    public function getTestCases()
+    public static function getTestCases(): array
     {
         $defaults = [
             'bucket' => 'foo',

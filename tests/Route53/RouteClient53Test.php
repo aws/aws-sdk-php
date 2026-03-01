@@ -3,10 +3,9 @@ namespace Aws\Test\Route53;
 
 use Aws\Route53\Route53Client;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Route53\Route53Client
- */
+#[CoversClass(Route53Client::class)]
 class RouteClient53Test extends TestCase
 {
     public function testCleansIds()

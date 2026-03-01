@@ -3,19 +3,19 @@ namespace Aws\Test\S3;
 
 use Aws\Middleware;
 use Aws\Result;
+use Aws\S3\SSECMiddleware;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-/**
- * @covers Aws\S3\SSECMiddleware
- */
+#[CoversClass(SSECMiddleware::class)]
 class SSECMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @dataProvider getListenerTestCases
-     */
+    #[DataProvider('getListenerTestCases')]
     public function testSseCpkListener($operation, array $params, array $expectedResults)
     {
         $s3 = $this->getTestClient('s3');
@@ -31,7 +31,7 @@ class SSECMiddlewareTest extends TestCase
         $s3->execute($cmd);
     }
 
-    public function getListenerTestCases()
+    public static function getListenerTestCases(): array
     {
         return [
             [
@@ -85,7 +85,7 @@ class SSECMiddlewareTest extends TestCase
         ]);
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testCanUseWithoutHttpsForNonSse()
     {
         $client = $this->getTestClient('s3', ['scheme' => 'http']);

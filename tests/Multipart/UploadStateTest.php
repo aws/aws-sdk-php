@@ -3,10 +3,10 @@ namespace Aws\Test\Multipart;
 
 use Aws\Multipart\UploadState;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Multipart\UploadState
- */
+#[CoversClass(UploadState::class)]
 class UploadStateTest extends TestCase
 {
     public function testCanManageStatusAndUploadId()
@@ -78,9 +78,7 @@ class UploadStateTest extends TestCase
         $this->expectOutputString('');
     }
 
-    /**
-     * @dataProvider getDisplayProgressCases
-     */
+    #[DataProvider('getDisplayProgressCases')]
     public function testGetDisplayProgressPrintsProgress(
         $totalSize,
         $totalUploaded,
@@ -93,7 +91,7 @@ class UploadStateTest extends TestCase
         $this->expectOutputString($progressBar);
     }
 
-    public function getDisplayProgressCases()
+    public static function getDisplayProgressCases(): array
     {
         $progressBar = ["Transfer initiated...\n|                    | 0.0%\n",
                         "|==                  | 12.5%\n",
@@ -173,9 +171,7 @@ class UploadStateTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getThresholdCases
-     */
+    #[DataProvider('getThresholdCases')]
     public function testUploadThresholds($totalSize)
     {
         $state = new UploadState([]);
@@ -185,7 +181,7 @@ class UploadStateTest extends TestCase
         $this->assertCount(9, $threshold);
     }
 
-    public function getThresholdCases()
+    public static function getThresholdCases(): array
     {
         return [
             [0],
@@ -194,9 +190,7 @@ class UploadStateTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidIntCases
-     */
+    #[DataProvider('getInvalidIntCases')]
     public function testSetProgressThresholdsThrowsException($totalSize)
     {
         $state = new UploadState([]);
@@ -206,9 +200,7 @@ class UploadStateTest extends TestCase
         $state->setProgressThresholds($totalSize);
     }
 
-    /**
-     * @dataProvider getInvalidIntCases
-     */
+    #[DataProvider('getInvalidIntCases')]
     public function testDisplayProgressThrowsException($totalUploaded)
     {
         $state = new UploadState([]);
@@ -217,7 +209,7 @@ class UploadStateTest extends TestCase
         $state->getDisplayProgress($totalUploaded);
     }
 
-    public function getInvalidIntCases()
+    public static function getInvalidIntCases(): array
     {
         return [
             [''],

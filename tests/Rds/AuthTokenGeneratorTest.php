@@ -5,10 +5,10 @@ use Aws\Credentials\Credentials;
 use Aws\Rds\AuthTokenGenerator;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Rds\AuthTokenGenerator
- */
+#[CoversClass(AuthTokenGenerator::class)]
 class AuthTokenGeneratorTest extends TestCase
 {
     public function testCanCreateAuthTokenWthCredentialInstance()
@@ -56,7 +56,7 @@ class AuthTokenGeneratorTest extends TestCase
         $this->assertStringContainsString('Action=connect', $token);
     }
 
-    public function lifetimeProvider()
+    public static function lifetimeProvider(): array
     {
         return [
             [1],
@@ -66,11 +66,7 @@ class AuthTokenGeneratorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider lifetimeProvider
-     *
-     * @param $lifetime
-     */
+    #[DataProvider('lifetimeProvider')]
     public function testCanCreateAuthTokenWthNonDefaultLifetime($lifetime)
     {
         $creds = new Credentials('foo', 'bar', 'baz');
@@ -91,7 +87,7 @@ class AuthTokenGeneratorTest extends TestCase
         $this->assertStringContainsString('Action=connect', $token);
     }
 
-    public function lifetimeFailureProvider()
+    public static function lifetimeFailureProvider(): array
     {
         return [
             [0],
@@ -104,11 +100,7 @@ class AuthTokenGeneratorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider lifetimeFailureProvider
-     *
-     * @param $lifetime
-     */
+    #[DataProvider('lifetimeFailureProvider')]
     public function testThrowsExceptionWithInvalidLifetime($lifetime)
     {
         $this->expectExceptionMessage("Lifetime must be a positive number less than or equal to 15, was");

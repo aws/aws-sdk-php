@@ -6,10 +6,10 @@ use Aws\CloudFront\CloudFrontClient;
 use Aws\CloudFront\UrlSigner;
 use GuzzleHttp\Psr7\Uri;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\CloudFront\UrlSigner
- */
+#[CoversClass(UrlSigner::class)]
 class UrlSignerTest extends TestCase
 {
     protected $key;
@@ -131,12 +131,7 @@ class UrlSignerTest extends TestCase
         $s->getSignedUrl('bar.com');
     }
 
-    /**
-     * @dataProvider urlAndResourceProvider
-     *
-     * @param  string  $url
-     * @param  string  $resource
-     */
+    #[DataProvider('urlAndResourceProvider')]
     public function testIsolatesResourceIUrls($url, $resource)
     {
         $s = new UrlSigner('a', $this->key);
@@ -152,7 +147,7 @@ class UrlSignerTest extends TestCase
         $this->assertSame($resource, $result);
     }
 
-    public function urlAndResourceProvider()
+    public static function urlAndResourceProvider(): array
     {
         return [
             ['rtmp://foo.cloudfront.net/videos/test.mp4', 'videos/test.mp4'],

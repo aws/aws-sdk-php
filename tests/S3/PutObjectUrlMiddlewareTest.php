@@ -1,12 +1,12 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\S3\PutObjectUrlMiddleware;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\S3\PutObjectUrlMiddleware
- */
+#[CoversClass(PutObjectUrlMiddleware::class)]
 class PutObjectUrlMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;

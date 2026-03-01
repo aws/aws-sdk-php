@@ -9,10 +9,10 @@ use Aws\DefaultsMode\ConfigurationProvider;
 use Aws\DefaultsMode\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\DefaultsMode\ConfigurationProvider
- */
+#[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
     private static $originalEnv;
@@ -335,7 +335,7 @@ EOT;
     {
         $expected = new Configuration('standard');
         $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
-        $cacheBuilder->setMethods(['get', 'set', 'remove']);
+        $cacheBuilder->onlyMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())
             ->method('get')
@@ -349,7 +349,7 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
-    public function getSuccessfulUnwrapData()
+    public static function getSuccessfulUnwrapData(): array
     {
         $expected = new Configuration('standard');
         return [
@@ -375,11 +375,7 @@ EOT;
         ];
     }
 
-    /**
-     * @dataProvider getSuccessfulUnwrapData
-     * @param $toUnwrap
-     * @param ConfigurationInterface $expected
-     */
+    #[DataProvider('getSuccessfulUnwrapData')]
     public function testSuccessfulUnwraps($toUnwrap, ConfigurationInterface $expected)
     {
         $this->assertSame(
@@ -387,7 +383,6 @@ EOT;
             ConfigurationProvider::unwrap($toUnwrap)->toArray()
         );
     }
-
 
     public function testCreatesLegacy()
     {

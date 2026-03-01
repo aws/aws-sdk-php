@@ -4,7 +4,6 @@ namespace Aws\Test\Credentials;
 use Aws\Arn\ArnParser;
 use Aws\Command;
 use Aws\Credentials\AssumeRoleWithWebIdentityCredentialProvider;
-use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
 use Aws\Middleware;
 use Aws\Result;
@@ -15,10 +14,10 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\RejectedPromise;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\Credentials\AssumeRoleWithWebIdentityCredentialProvider
- */
+#[CoversClass(AssumeRoleWithWebIdentityCredentialProvider::class)]
 class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
 {
     const SAMPLE_ROLE_ARN = 'arn:aws:iam::123456789012:role/role_name';
@@ -400,10 +399,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         }
     }
 
-    /**
-     * Tests region precedence: config > env var > fallback
-     * @dataProvider regionPrecedenceProvider
-     */
+    #[DataProvider('regionPrecedenceProvider')]
     public function testRegionPrecedence(
         ?string $configRegion,
         ?string $envRegion,
@@ -433,8 +429,11 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
             }
 
             if ($expectNotice) {
-                $this->expectNotice();
-                $this->expectNoticeMessage(
+                set_error_handler(function ($errno, $errstr) use ($config) {
+                    throw new \RuntimeException($errstr, $errno);
+                });
+                $this->expectException(\RuntimeException::class);
+                $this->expectExceptionMessage(
                     'NOTICE: STS client created without explicit `region` configuration.'
                 );
             }
@@ -457,10 +456,14 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
             } else {
                 putenv("AWS_REGION");
             }
+
+            if ($expectNotice) {
+                restore_error_handler();
+            }
         }
     }
 
-    public function regionPrecedenceProvider(): array
+    public static function regionPrecedenceProvider(): array
     {
         return [
             'config overrides env' => ['us-west-2', 'eu-west-1', 'us-west-2', false],
@@ -470,10 +473,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         ];
     }
 
-    /**
-     * Tests that correct endpoints are called
-     * @dataProvider endpointProvider
-     */
+    #[DataProvider('endpointProvider')]
     public function testEndpointSelection(
         string $region,
         string $expectedEndpoint
@@ -537,7 +537,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         }
     }
 
-    public function endpointProvider(): array
+    public static function endpointProvider(): array
     {
         return [
             'us-east-1' => [

@@ -7,31 +7,22 @@ use Aws\Exception\InvalidRegionException;
 use Aws\Exception\UnresolvedEndpointException;
 use Aws\Middleware;
 use Aws\Result;
+use Aws\S3\BucketEndpointMiddleware;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\S3\BucketEndpointMiddleware
- */
+#[CoversClass(BucketEndpointMiddleware::class)]
 class BucketEndpointArnMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @dataProvider accessPointArnCases
-     *
-     * @param $arn
-     * @param $options
-     * @param $endpoint
-     * @param $key
-     * @param $signingRegion
-     * @param $signingService
-     * @throws \Exception
-     */
+    #[DataProvider('accessPointArnCases')]
     public function testCorrectlyModifiesUri(
         $arn,
         $options,
@@ -84,7 +75,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         $s3->execute($command);
     }
 
-    public function accessPointArnCases()
+    public static function accessPointArnCases(): array
     {
         return [
             // Standard case
@@ -329,13 +320,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider incorrectUsageProvider
-     *
-     * @param CommandInterface $command
-     * @param array $config
-     * @param \Exception $expected
-     */
+    #[DataProvider('incorrectUsageProvider')]
     public function testThrowsForIncorrectArnUsage($command, $config, \Exception $expected)
     {
         try {
@@ -356,7 +341,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         }
     }
 
-    public function incorrectUsageProvider()
+    public static function incorrectUsageProvider(): array
     {
         return [
             [

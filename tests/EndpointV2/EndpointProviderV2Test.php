@@ -14,10 +14,10 @@ use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Uri;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\EndpointV2\EndpointProviderV2
- */
+#[CoversClass(EndpointProviderV2::class)]
 class EndpointProviderV2Test extends TestCase
 {
     use UsesServiceTrait;
@@ -26,7 +26,7 @@ class EndpointProviderV2Test extends TestCase
      * Iterates through test cases located in ../test-cases and
      * ../valid-rules, parses into parameters used for endpoint and error tests
      */
-    public function basicTestCaseProvider(): \Generator
+    public static function basicTestCaseProvider(): \Generator
     {
         $testfileNames = [
             "aws-region",
@@ -67,9 +67,7 @@ class EndpointProviderV2Test extends TestCase
         }
     }
 
-    /**
-     * @dataProvider basicTestCaseProvider
-     */
+    #[DataProvider('basicTestCaseProvider')]
     public function testBasicEndpointAndErrorCases(
         $ruleset,
         $isSuccessCase,
@@ -103,7 +101,7 @@ class EndpointProviderV2Test extends TestCase
      * Iterates through test cases located in each service's endpoint test file.
      * Parses into parameters used for endpoint and error tests
      */
-    public function serviceTestCaseProvider(): \Generator
+    public static function serviceTestCaseProvider(): \Generator
     {
         $services = \Aws\Manifest();
 
@@ -129,9 +127,7 @@ class EndpointProviderV2Test extends TestCase
         }
     }
 
-    /**
-     * @dataProvider serviceTestCaseProvider
-     */
+    #[DataProvider('serviceTestCaseProvider')]
     public function testServiceEndpointAndErrorCases(
         $service,
         $isSuccessCase,
@@ -161,7 +157,7 @@ class EndpointProviderV2Test extends TestCase
         }
     }
 
-    public function rulesetProtocolEndpointAndErrorCaseProvider(): \Generator
+    public static function rulesetProtocolEndpointAndErrorCaseProvider(): \Generator
     {
         $serviceList = \Aws\manifest();
 
@@ -224,9 +220,8 @@ class EndpointProviderV2Test extends TestCase
      * End-to-end tests which ensure the correct values are resolved
      * before being passed into the endpoint provider and after other
      * middleware has acted upon the request.
-     *
-     * @dataProvider rulesetProtocolEndpointAndErrorCaseProvider
      */
+    #[DataProvider('rulesetProtocolEndpointAndErrorCaseProvider')]
     public function testRulesetProtocolEndpointAndErrorCases($service, $clientArgs, $operationInput, $expected, $errorCase)
     {
         if ($errorCase) {
@@ -352,7 +347,7 @@ class EndpointProviderV2Test extends TestCase
 
         $endpointMock = $this->getMockBuilder(RulesetEndpoint::class)
             ->disableOriginalConstructor()
-            ->setMethods([])
+            ->onlyMethods([])
             ->getMock();
 
         $rulesetMock = $this->getMockBuilder(Ruleset::class)
@@ -377,10 +372,7 @@ class EndpointProviderV2Test extends TestCase
         $endpointProvider->resolveEndpoint(['Region' => 'us-west-2']);
     }
 
-    /**
-     * @dataProvider stringArrayOperationInputsProvider
-     * @return void
-     */
+    #[DataProvider('stringArrayOperationInputsProvider')]
     public function testStringArrayOperationInputs(
         $params,
         $expected,
@@ -434,7 +426,7 @@ class EndpointProviderV2Test extends TestCase
         }
     }
 
-    public function stringArrayOperationInputsProvider(): \Generator
+    public static function stringArrayOperationInputsProvider(): \Generator
     {
         $cases = json_decode(
             file_get_contents(__DIR__ . '/test-cases/string-array.json'),

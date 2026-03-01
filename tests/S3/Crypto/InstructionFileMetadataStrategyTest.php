@@ -8,17 +8,15 @@ use Aws\Crypto\MetadataEnvelope;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\S3\Crypto\InstructionFileMetadataStrategy
- */
+#[CoversClass(InstructionFileMetadataStrategy::class)]
 class InstructionFileMetadataStrategyTest extends TestCase
 {
     use UsesMetadataEnvelopeTrait, UsesServiceTrait;
 
-    /**
-     * @dataProvider getMetadataFields
-     */
+    #[DataProvider('getMetadataFields')]
     public function testSave($fields)
     {
         /** @var S3Client $client */
@@ -46,8 +44,8 @@ class InstructionFileMetadataStrategyTest extends TestCase
     /**
      * Tests that only required data gets saved to the instruction file
      * and other data is left to the object metadata headers
-     * @dataProvider getV3MetadataFields
      */
+    #[DataProvider('getV3MetadataFields')]
     public function testSaveV3MetadataEnvelope($fields): void
     {
         /** @var S3Client $client */
@@ -109,9 +107,7 @@ class InstructionFileMetadataStrategyTest extends TestCase
 
     }
 
-    /**
-     * @dataProvider getMetadataResult
-     */
+    #[DataProvider('getMetadataResult')]
     public function testLoad($args, $metadata)
     {
         /** @var S3Client $client */
@@ -135,9 +131,7 @@ class InstructionFileMetadataStrategyTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider getV3FieldsForInstructionFile
-     */
+    #[DataProvider('getV3FieldsForInstructionFile')]
     public function testLoadV3FromInstructionFileAndMetadata($args, $instructionFile): void
     {
         /** @var S3Client $client */
@@ -165,9 +159,7 @@ class InstructionFileMetadataStrategyTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider getV3MetadataResult
-     */
+    #[DataProvider('getV3MetadataResult')]
     public function testLoadV3FromInstructionFileAndMetadataCorruptInstructionFile($args, $instructionFile)
     {
         /** @var S3Client $client */
@@ -182,10 +174,8 @@ class InstructionFileMetadataStrategyTest extends TestCase
         $this->expectExceptionMessage("One or more reserved keys found in Instruction file when they should not be present.");
         $envelope = $strategy->load($args);
     }
-    
-    /**
-     * @dataProvider getMetadataResult
-     */
+
+    #[DataProvider('getMetadataResult')]
     public function testLoadV2FromInstructionFileAndMetadataCorruptInstructionFile($args, $instructionFile)
     {
         /** @var S3Client $client */
@@ -202,10 +192,8 @@ class InstructionFileMetadataStrategyTest extends TestCase
         $this->expectExceptionMessage("Malformed metadata envelope.");
         $envelope = $strategy->load($args);
     }
-    
-    /**
-     * @dataProvider getMetadataResult
-     */
+
+    #[DataProvider('getMetadataResult')]
     public function testLoadV2FromInstructionFileAndMetadataInvalidJson($args, $instructionFile)
     {
         /** @var S3Client $client */

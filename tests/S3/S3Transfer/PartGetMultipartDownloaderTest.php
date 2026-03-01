@@ -12,10 +12,13 @@ use Generator;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Tests PartGetMultipartDownloader implementation.
  */
+#[CoversClass(PartGetMultipartDownloader::class)]
 class PartGetMultipartDownloaderTest extends TestCase
 {
     /**
@@ -25,10 +28,9 @@ class PartGetMultipartDownloaderTest extends TestCase
      * @param int $objectSizeInBytes
      * @param int $targetPartSize
      *
-     * @dataProvider partGetMultipartDownloaderProvider
-     *
      * @return void
      */
+    #[DataProvider('partGetMultipartDownloaderProvider')]
     public function testPartGetMultipartDownloader(
         string $objectKey,
         int $objectSizeInBytes,
@@ -40,7 +42,7 @@ class PartGetMultipartDownloaderTest extends TestCase
             ->getMock();
         $remainingToTransfer = $objectSizeInBytes;
         $mockClient->method('executeAsync')
-            -> willReturnCallback(function ($command)
+            ->willReturnCallback(function ($command)
                 use (
                     $objectSizeInBytes,
                     $partsCount,
@@ -63,7 +65,7 @@ class PartGetMultipartDownloaderTest extends TestCase
                 ]));
             });
         $mockClient->method('getCommand')
-            -> willReturnCallback(function ($commandName, $args) {
+            ->willReturnCallback(function ($commandName, $args) {
                 return new Command($commandName, $args);
             });
 
@@ -95,7 +97,8 @@ class PartGetMultipartDownloaderTest extends TestCase
      *
      * @return array[]
      */
-    public function partGetMultipartDownloaderProvider(): array {
+    public static function partGetMultipartDownloaderProvider(): array
+    {
         return [
             [
                 'objectKey' => 'ObjectKey_1',
@@ -209,10 +212,9 @@ class PartGetMultipartDownloaderTest extends TestCase
      * @param int $targetPartSize
      * @param string $eTag
      *
-     * @dataProvider ifMatchIsPresentInEachPartRequestAfterFirstProvider
-     *
      * @return void
      */
+    #[DataProvider('ifMatchIsPresentInEachPartRequestAfterFirstProvider')]
     public function testIfMatchIsPresentInEachRangeRequestAfterFirst(
         int $objectSizeInBytes,
         int $targetPartSize,
@@ -240,7 +242,7 @@ class PartGetMultipartDownloaderTest extends TestCase
                 return new Command($commandName, $args);
             });
         $s3Client->method('executeAsync')
-            -> willReturnCallback(function ($command)
+            ->willReturnCallback(function ($command)
             use (
                 $eTag,
                 $objectSizeInBytes,
@@ -288,7 +290,7 @@ class PartGetMultipartDownloaderTest extends TestCase
     /**
      * @return Generator
      */
-    public function ifMatchIsPresentInEachPartRequestAfterFirstProvider(): Generator
+    public static function ifMatchIsPresentInEachPartRequestAfterFirstProvider(): Generator
     {
         yield 'multipart_download_with_3_parts_1' => [
             'object_size_in_bytes' => 1024 * 1024 * 20,

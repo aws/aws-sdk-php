@@ -7,13 +7,13 @@ use Aws\Api\Parser\Exception\ParserException;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Stream;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Api\Parser\DecodingEventStreamIterator
- */
+#[CoversClass(DecodingEventStreamIterator::class)]
 class DecodingEventStreamIteratorTest extends TestCase
 {
-    public function complianceTests(): \Generator
+    public static function complianceTests(): \Generator
     {
         $dataFilesIterator = \Aws\recursive_dir_iterator(
             realpath(__DIR__ . '/../test_cases/eventstream/encoded/')
@@ -37,9 +37,7 @@ class DecodingEventStreamIteratorTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider complianceTests
-     */
+    #[DataProvider('complianceTests')]
     public function testPassesComplianceTest(
         Stream $encodedData,
         Stream $decodedData,

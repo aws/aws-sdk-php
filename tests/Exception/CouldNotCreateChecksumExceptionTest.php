@@ -3,10 +3,9 @@ namespace Aws\Test\Exception;
 
 use Aws\Exception\CouldNotCreateChecksumException;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Exception\CouldNotCreateChecksumException
- */
+#[CoversClass(CouldNotCreateChecksumException::class)]
 class CouldNotCreateChecksumExceptionTest extends TestCase
 {
     public function testUsesCorrectWords()

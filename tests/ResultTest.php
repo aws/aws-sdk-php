@@ -3,10 +3,9 @@ namespace Aws\Test;
 
 use Aws\Result;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Result
- */
+#[CoversClass(Result::class)]
 class ResultTest extends TestCase
 {
     public function testHasData()

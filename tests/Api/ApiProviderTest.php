@@ -4,10 +4,9 @@ namespace Aws\Test\Api;
 use Aws\Api\ApiProvider;
 use Aws\Exception\UnresolvedApiException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Api\ApiProvider
- */
+#[CoversClass(ApiProvider::class)]
 class ApiProviderTest extends TestCase
 {
     /**
@@ -25,7 +24,9 @@ class ApiProviderTest extends TestCase
 
     public function testCanResolveProvider()
     {
-        $p = function ($a, $b, $c) {return [];};
+        $p = function ($a, $b, $c) {
+            return [];
+        };
         $result = ['metadata'=> ['serviceIdentifier' => 's']];
         $this->assertEquals($result, ApiProvider::resolve($p, 't', 's', 'v'));
 

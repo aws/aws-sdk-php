@@ -14,10 +14,13 @@ use Aws\S3\Parser\S3ResultMutator;
 use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
+#[CoversClass(S3Parser::class)]
 class S3ParserTest extends TestCase
 {
     const INTERNAL_S3200_ERROR = <<<EOXML
@@ -31,12 +34,7 @@ class S3ParserTest extends TestCase
 </Error>
 EOXML;
 
-    /**
-     * @dataProvider s3200ErrorHandlingCasesProvider
-     * @param string $operation The operation to test.
-     *
-     * @return void
-     */
+    #[DataProvider('s3200ErrorHandlingCasesProvider')]
     public function testHandle200Errors(string $operation)
     {
         $this->expectException(AwsException::class);
@@ -58,7 +56,7 @@ EOXML;
      *
      * @return \Generator
      */
-    public function s3200ErrorHandlingCasesProvider(): \Generator
+    public static function s3200ErrorHandlingCasesProvider(): \Generator
     {
         $operations = [
             'AbortMultipartUpload',
@@ -249,14 +247,7 @@ EOXML;
         $this->assertFalse(isset($mutators[$s3MutatorName]));
     }
 
-    /**
-     * @param StreamInterface $stream
-     * @param bool $expectValidation
-     *
-     * @dataProvider validate200ErrorValidationJustInSeekableStreamsProvider
-     *
-     * @return void
-     */
+    #[DataProvider('validate200ErrorValidationJustInSeekableStreamsProvider')]
     public function testValidate200ErrorValidationJustInSeekableStreams(
         StreamInterface $stream,
         bool $expectValidation
@@ -284,7 +275,7 @@ EOXML;
     /**
      * @return array[]
      */
-    public function validate200ErrorValidationJustInSeekableStreamsProvider(): array
+    public static function validate200ErrorValidationJustInSeekableStreamsProvider(): array
     {
         return [
             'seekable_stream_1' => [

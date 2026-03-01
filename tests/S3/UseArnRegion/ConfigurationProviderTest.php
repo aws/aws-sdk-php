@@ -8,11 +8,10 @@ use Aws\S3\UseArnRegion\ConfigurationInterface;
 use Aws\S3\UseArnRegion\ConfigurationProvider;
 use Aws\S3\UseArnRegion\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\S3\UseArnRegion\ConfigurationProvider
- */
+#[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
     private static $originalEnv;
@@ -31,7 +30,7 @@ s3_use_arn_region = false
 s3_use_arn_region = true
 EOT;
 
-    public static function set_up_before_class()
+    public static function setUpBeforeClass(): void
     {
         self::$originalEnv = [
             'use_arn_region' => getenv(ConfigurationProvider::ENV_USE_ARN_REGION) ?: '',
@@ -56,7 +55,7 @@ EOT;
         return $dir;
     }
 
-    public static function tear_down_after_class()
+    public static function tearDownAfterClass(): void
     {
         putenv(ConfigurationProvider::ENV_USE_ARN_REGION . '=' .
             self::$originalEnv['use_arn_region']);
@@ -216,16 +215,15 @@ EOT;
     public function testEnsuresIniFileIsValid()
     {
         $this->expectExceptionMessage("Invalid config file:");
-        $this->expectException(\Aws\S3\UseArnRegion\Exception\ConfigurationException::class);
+        $this->expectException(ConfigurationException::class);
         $dir = $this->clearEnv();
         file_put_contents($dir . '/config', "wef \n=\nwef");
         putenv('HOME=' . dirname($dir));
 
         try {
-            @call_user_func(ConfigurationProvider::ini())->wait();
-        } catch (\Exception $e) {
+            call_user_func(ConfigurationProvider::ini())->wait();
+        } finally {
             unlink($dir . '/config');
-            throw $e;
         }
     }
 
@@ -338,7 +336,7 @@ EOT;
     {
         $expected = new Configuration(true);
         $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
-        $cacheBuilder->setMethods(['get', 'set', 'remove']);
+        $cacheBuilder->onlyMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())
             ->method('get')
@@ -352,4 +350,3 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 }
-

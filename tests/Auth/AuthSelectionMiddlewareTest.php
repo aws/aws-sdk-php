@@ -13,17 +13,14 @@ use Aws\Identity\BearerTokenIdentity;
 use Aws\MockHandler;
 use Aws\Result;
 use GuzzleHttp\Promise;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(AuthSelectionMiddleware::class)]
 class AuthSelectionMiddlewareTest extends TestCase
 {
-    /**
-     * @param $serviceAuth
-     * @param $operationAuth
-     * @param $expected
-     *
-     * @dataProvider resolvesAuthSchemeWithoutCRTProvider
-     */
+    #[DataProvider('resolvesAuthSchemeWithoutCRTProvider')]
     public function testResolvesAuthSchemeWithoutCRT(
         $serviceAuth,
         $operationAuth,
@@ -59,7 +56,7 @@ class AuthSelectionMiddlewareTest extends TestCase
         $middleware($command);
     }
 
-    public function ResolvesAuthSchemeWithoutCRTProvider()
+    public static function resolvesAuthSchemeWithoutCRTProvider(): array
     {
         return [
             [
@@ -91,13 +88,7 @@ class AuthSelectionMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @param $serviceAuth
-     * @param $operationAuth
-     * @param $expected
-     *
-     * @dataProvider ResolvesAuthSchemeWithCRTprovider
-     */
+    #[DataProvider('resolvesAuthSchemeWithCRTProvider')]
     public function testResolvesAuthSchemeWithCRT(
         $serviceAuth,
         $operationAuth,
@@ -127,7 +118,7 @@ class AuthSelectionMiddlewareTest extends TestCase
         $middleware($command);
     }
 
-    public function ResolvesAuthSchemeWithCRTprovider()
+    public static function resolvesAuthSchemeWithCRTProvider(): array
     {
         return [
             [
@@ -159,20 +150,21 @@ class AuthSelectionMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @param $serviceAuth
-     * @param $operationAuth
-     * @param $identity
-     * @param $expected
-     *
-     * @dataProvider resolvesBearerAuthSchemeProvider
-     */
+    #[DataProvider('resolvesBearerAuthSchemeProvider')]
     public function testResolvesBearerAuthScheme(
         $serviceAuth,
         $operationAuth,
-        $tokenProvider,
+        $identity,
         $expected
     ){
+        // Normalize token provider
+        $tokenProvider = $identity === null
+            ? null
+            : function () use ($identity) {
+                return Promise\Create::promiseFor(
+                    $this->createMock($identity)
+                );
+        };
         $nextHandler = function (CommandInterface $command) use ($expected) {
             $this->assertEquals($expected, $command['@context']['signature_version']);
         };
@@ -198,37 +190,25 @@ class AuthSelectionMiddlewareTest extends TestCase
         $middleware($command);
     }
 
-    public function resolvesBearerAuthSchemeProvider()
+    public static function resolvesBearerAuthSchemeProvider(): array
     {
         return [
             [
                 ['smithy.api#httpBearerAuth', 'aws.auth#sigv4'],
                 [],
-                function () {
-                    return Promise\Create::promiseFor(
-                        $this->createMock(BearerTokenIdentity::class)
-                    );
-                },
+                BearerTokenIdentity::class,
                 'bearer'
             ],
             [
                 ['smithy.api#httpBearerAuth', 'aws.auth#sigv4'],
                 [],
-                function () {
-                    return Promise\Create::promiseFor(
-                        null
-                    );
-                },
+                null,
                 'v4'
             ],
             [
                 ['aws.auth#sigv4', 'aws.auth#sigv4a'],
                 ['smithy.api#httpBearerAuth'],
-                function () {
-                    return Promise\Create::promiseFor(
-                        $this->createMock(BearerTokenIdentity::class)
-                    );
-                },
+                BearerTokenIdentity::class,
                 'bearer'
             ]
         ];
@@ -316,17 +296,8 @@ class AuthSelectionMiddlewareTest extends TestCase
 
     /**
      * Test auth select is done based on user's provided auth schemes.
-     *
-     * @dataProvider authSelectionBasedOnUserPreferenceProvider
-     *
-     * @param array $supportedAuthSchemes
-     * @param array|null $serviceAuthSchemes
-     * @param array|null $operationAuthSchemes
-     * @param array|null $userPreferredAuthSchemes
-     * @param string $expected
-     *
-     * @return void
      */
+    #[DataProvider('authSelectionBasedOnUserPreferenceProvider')]
     public function testAuthSelectionBasedOnUserPreference(
         array $supportedAuthSchemes,
         ?array $serviceAuthSchemes,
@@ -377,10 +348,7 @@ class AuthSelectionMiddlewareTest extends TestCase
         $middleware($command);
     }
 
-    /**
-     * @return \Generator
-     */
-    public function authSelectionBasedOnUserPreferenceProvider(): \Generator
+    public static function authSelectionBasedOnUserPreferenceProvider(): \Generator
     {
         $cases = [
             'user_auth_scheme_preferred_none' => [

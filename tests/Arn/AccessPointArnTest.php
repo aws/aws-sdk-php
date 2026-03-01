@@ -4,19 +4,13 @@ namespace Aws\Test\Arn;
 use Aws\Arn\AccessPointArn;
 use Aws\Arn\Exception\InvalidArnException;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\Arn\AccessPointArn
- */
+#[CoversClass(AccessPointArn::class)]
 class AccessPointArnTest extends TestCase
 {
-    /**
-     * @dataProvider parsedArnProvider
-     *
-     * @param $string
-     * @param $expected
-     * @param $expectedString
-     */
+    #[DataProvider('parsedArnProvider')]
     public function testParsesArnString($string, $expected, $expectedString)
     {
         $arn = new AccessPointArn($string);
@@ -31,7 +25,7 @@ class AccessPointArnTest extends TestCase
         $this->assertEquals($expectedString, (string) $arn);
     }
 
-    public function parsedArnProvider()
+    public static function parsedArnProvider(): array
     {
         return [
             // All components
@@ -85,12 +79,7 @@ class AccessPointArnTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidArnCases
-     *
-     * @param $string
-     * @param $message
-     */
+    #[DataProvider('invalidArnCases')]
     public function testThrowsOnInvalidArn($string, $message)
     {
         try {
@@ -101,7 +90,7 @@ class AccessPointArnTest extends TestCase
         }
     }
 
-    public function invalidArnCases()
+    public static function invalidArnCases(): array
     {
         return [
             [

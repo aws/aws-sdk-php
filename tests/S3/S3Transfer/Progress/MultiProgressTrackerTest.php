@@ -11,7 +11,10 @@ use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Closure;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(MultiProgressTracker::class)]
 class MultiProgressTrackerTest extends TestCase
 {
     /**
@@ -28,8 +31,6 @@ class MultiProgressTrackerTest extends TestCase
     }
 
     /**
-     * @dataProvider customInitializationProvider
-     *
      * @param array $progressTrackers
      * @param mixed $output
      * @param int $transferCount
@@ -38,14 +39,14 @@ class MultiProgressTrackerTest extends TestCase
      *
      * @return void
      */
+    #[DataProvider('customInitializationProvider')]
     public function testCustomInitialization(
         array $progressTrackers,
         mixed $output,
         int $transferCount,
         int $completed,
         int $failed
-    ): void
-    {
+    ): void {
         $progressTracker = new MultiProgressTracker(
             $progressTrackers,
             $output,
@@ -65,15 +66,13 @@ class MultiProgressTrackerTest extends TestCase
      * @param array $expectedOutputs
      *
      * @return void
-     * @dataProvider multiProgressTrackerProvider
-     *
      */
+    #[DataProvider('multiProgressTrackerProvider')]
     public function testMultiProgressTracker(
         Closure $progressBarFactory,
         callable $eventInvoker,
         array $expectedOutputs,
-    ): void
-    {
+    ): void {
         $output = fopen("php://temp", "w+");
         $progressTracker = new MultiProgressTracker(
             output: $output,
@@ -107,7 +106,7 @@ class MultiProgressTrackerTest extends TestCase
     /**
      * @return array
      */
-    public function customInitializationProvider(): array
+    public static function customInitializationProvider(): array
     {
         return [
             'custom_initialization_1' => [
@@ -147,7 +146,7 @@ class MultiProgressTrackerTest extends TestCase
     /**
      * @return array
      */
-    public function multiProgressTrackerProvider(): array
+    public static function multiProgressTrackerProvider(): array
     {
         return [
             'multi_progress_tracker_1_single_tracking_object' => [

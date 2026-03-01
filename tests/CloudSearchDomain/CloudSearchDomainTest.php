@@ -4,10 +4,9 @@ namespace Aws\Test\CloudSearchDomain;
 use Aws\CloudSearchDomain\CloudSearchDomainClient;
 use GuzzleHttp\Psr7\Request;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\CloudSearchDomain\CloudSearchDomainClient
- */
+#[CoversClass(CloudSearchDomainClient::class)]
 class CloudSearchDomainTest extends TestCase
 {
     public function testRequiresEndpoint()

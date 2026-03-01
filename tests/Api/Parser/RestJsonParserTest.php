@@ -7,22 +7,16 @@ use Aws\Api\Service;
 use Aws\CommandInterface;
 use Aws\Test\Api\Parser\ParserTestServiceTrait;
 use GuzzleHttp\Psr7\Response;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Api\Parser\RestJsonParser
- */
+#[CoversClass(RestJsonParser::class)]
 class RestJsonParserTest extends TestCase
 {
     use ParserTestServiceTrait;
 
-    /**
-     * @param string|array $value
-     * @param array $expected
-     *
-     * @return void
-     * @dataProvider parsesDocumentTypePayloadProvider
-     */
+    #[DataProvider('parsesDocumentTypePayloadProvider')]
     public function testParsesDocumentTypePayload(
         string $value,
         string|array $expected
@@ -40,7 +34,7 @@ class RestJsonParserTest extends TestCase
         self::assertEquals($expected, $result['documentValue']);
     }
 
-    public function parsesDocumentTypePayloadProvider(): iterable
+    public static function parsesDocumentTypePayloadProvider(): iterable
     {
         return [
             'string payload' => ["\"hello\"", 'hello'],

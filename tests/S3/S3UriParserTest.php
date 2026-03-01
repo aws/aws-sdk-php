@@ -4,13 +4,13 @@ namespace Aws\Test\S3;
 use Aws\Arn\Exception\InvalidArnException;
 use Aws\S3\S3UriParser;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\S3\S3UriParser
- */
+#[CoversClass(S3UriParser::class)]
 class S3UriParserTest extends TestCase
 {
-    public function uriProvider()
+    public static function uriProvider(): array
     {
         return [
             ['http://s3.amazonaws.com', ['region' => null, 'bucket' => null, 'key' => null, 'path_style' => true]],
@@ -89,9 +89,7 @@ class S3UriParserTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider uriProvider
-     */
+    #[DataProvider('uriProvider')]
     public function testParsesUrls($uri, $result, $isError = false)
     {
         ksort($result);

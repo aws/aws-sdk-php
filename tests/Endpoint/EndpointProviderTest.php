@@ -5,10 +5,9 @@ use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Endpoint\PatternEndpointProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Endpoint\EndpointProvider
- */
+#[CoversClass(EndpointProvider::class)]
 class EndpointProviderTest extends TestCase
 {
     public function testThrowsWhenUnresolved()

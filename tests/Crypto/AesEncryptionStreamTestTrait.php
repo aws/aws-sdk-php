@@ -7,11 +7,11 @@ use GuzzleHttp\Psr7\CachingStream;
 
 trait AesEncryptionStreamTestTrait
 {
-    public function cartesianJoinInputCipherMethodProvider()
+    public static function cartesianJoinInputCipherMethodProvider(): array
     {
         $toReturn = [];
-        $plainTexts = $this->unwrapProvider([$this, 'plainTextProvider']);
-        $ivs = $this->unwrapProvider([$this, 'cipherMethodProvider']);
+        $plainTexts = self::unwrapProvider([__CLASS__, 'plainTextProvider']);
+        $ivs = self::unwrapProvider([__CLASS__, 'cipherMethodProvider']);
 
         for ($i = 0; $i < count($plainTexts); $i++) {
             for ($j = 0; $j < count($ivs); $j++) {
@@ -22,11 +22,11 @@ trait AesEncryptionStreamTestTrait
         return $toReturn;
     }
 
-    public function cartesianJoinInputKeySizeProvider()
+    public static function cartesianJoinInputKeySizeProvider(): array
     {
         $toReturn = [];
-        $plainTexts = $this->unwrapProvider([$this, 'plainTextProvider']);
-        $keySizes = $this->unwrapProvider([$this, 'keySizeProvider']);
+        $plainTexts = self::unwrapProvider([__CLASS__, 'plainTextProvider']);
+        $keySizes = self::unwrapProvider([__CLASS__, 'keySizeProvider']);
 
         for ($i = 0; $i < count($plainTexts); $i++) {
             for ($j = 0; $j < count($keySizes); $j++) {
@@ -40,10 +40,10 @@ trait AesEncryptionStreamTestTrait
         return $toReturn;
     }
 
-    public function cipherMethodProvider()
+    public static function cipherMethodProvider(): array
     {
         $toReturn = [];
-        foreach ($this->unwrapProvider([$this, 'keySizeProvider']) as $keySize) {
+        foreach (self::unwrapProvider([__CLASS__, 'keySizeProvider']) as $keySize) {
             $toReturn []= [new Cbc(
                 openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc')),
                 $keySize
@@ -53,14 +53,24 @@ trait AesEncryptionStreamTestTrait
         return $toReturn;
     }
 
-    public function seekableCipherMethodProvider()
+    public static function seekableCipherMethodProvider(): array
     {
-        return array_filter($this->cipherMethodProvider(), function (array $args) {
+        $data = array_filter(self::cipherMethodProvider(), function (array $args) {
             return !($args[0] instanceof Cbc);
         });
+
+        if (empty($data)) {
+            return [
+                'empty_data' => [null, true]
+            ];
+        }
+
+        return array_map(function ($entry) {
+            return [$entry[0], false];
+        }, $data);
     }
 
-    public function keySizeProvider()
+    public static function keySizeProvider(): array
     {
         return [
             [128],
@@ -69,7 +79,7 @@ trait AesEncryptionStreamTestTrait
         ];
     }
 
-    public function plainTextProvider()
+    public static function plainTextProvider(): array
     {
         return [
             [Psr7\Utils::streamFor('The rain in Spain falls mainly on the plain.')],
@@ -79,7 +89,7 @@ trait AesEncryptionStreamTestTrait
         ];
     }
 
-    private function unwrapProvider(callable $provider)
+    private static function unwrapProvider(callable $provider): array
     {
         return array_map(function (array $wrapped) {
             return $wrapped[0];

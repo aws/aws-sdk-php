@@ -9,10 +9,9 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Ec2\Ec2Client
- */
+#[CoversClass(Ec2Client::class)]
 class Ec2ClientTest extends TestCase
 {
     use UsesServiceTrait;
@@ -95,7 +94,6 @@ class Ec2ClientTest extends TestCase
 
     public function testSkipEmptyListSerialization()
     {
-
         $ec2Client = new Ec2Client([
             'region' => 'us-east-1',
             'http_handler' => function (RequestInterface $request) {

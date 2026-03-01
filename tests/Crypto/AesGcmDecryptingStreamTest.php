@@ -5,17 +5,15 @@ use Aws\Crypto\AesGcmDecryptingStream;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(AesGcmDecryptingStream::class)]
 class AesGcmDecryptingStreamTest extends TestCase
 {
     use AesEncryptionStreamTestTrait;
 
-    /**
-     * @dataProvider cartesianJoinInputKeySizeProvider
-     *
-     * @param StreamInterface $plainText
-     * @param int $keySize
-     */
+    #[DataProvider('cartesianJoinInputKeySizeProvider')]
     public function testStreamOutputSameAsOpenSSL(
         StreamInterface $plainText,
         $keySize
@@ -54,12 +52,7 @@ class AesGcmDecryptingStreamTest extends TestCase
         $this->assertSame((string) $decryptingStream, $plainText);
     }
 
-    /**
-     * @dataProvider cartesianJoinInputKeySizeProvider
-     *
-     * @param StreamInterface $plainText
-     * @param int $keySize
-     */
+    #[DataProvider('cartesianJoinInputKeySizeProvider')]
     public function testThrowsForInvalidTag(
         StreamInterface $plainText,
         $keySize

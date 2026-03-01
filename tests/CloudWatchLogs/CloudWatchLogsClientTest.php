@@ -7,9 +7,11 @@ use Aws\CommandInterface;
 use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
+#[CoversClass(CloudWatchLogsClient::class)]
 class CloudWatchLogsClientTest extends TestCase
 {
     public function testSetStreamingFlagMiddleware()

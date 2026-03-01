@@ -9,20 +9,15 @@ use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use Aws\Test\UsesServiceTrait;
 use ReflectionClass;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(EndpointV2Middleware::class)]
 class EndpointV2MiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @dataProvider providedSuccessCases
-     *
-     * @param $service
-     * @param $clientArgs
-     * @param $commandName
-     * @param $commandArgs
-     * @param $expectedUri
-     */
+    #[DataProvider('providedSuccessCases')]
     public function testSuccessfullyResolvesEndpointAndAuthScheme(
         $service,
         $clientArgs,
@@ -47,7 +42,7 @@ class EndpointV2MiddlewareTest extends TestCase
         $mw($command);
     }
 
-    public function providedSuccessCases()
+    public static function providedSuccessCases(): array
     {
         return [
             [
@@ -120,12 +115,7 @@ class EndpointV2MiddlewareTest extends TestCase
         $method->invoke($middleware, [['name' => 'invalidAuthScheme']]);
     }
 
-    /**
-     * @param $authSchemes
-     * @param $expected
-     *
-     * @dataProvider v4aAuthProvider
-     */
+    #[DataProvider('v4aAuthProvider')]
     public function testV4aAuthSchemeSelection($authSchemes, $expected)
     {
         if ($expected === 'v4a' && (!extension_loaded('awscrt'))) {
@@ -153,7 +143,7 @@ class EndpointV2MiddlewareTest extends TestCase
         $this->assertSame($expected, $result['version']);
     }
 
-    public function v4aAuthProvider()
+    public static function v4aAuthProvider(): array
     {
         return [
             [
@@ -193,66 +183,67 @@ class EndpointV2MiddlewareTest extends TestCase
 
         $reflection = new ReflectionClass(EndpointV2Middleware::class);
         $method = $reflection->getMethod('resolveAuthScheme');
-       $method->invoke($middleware, [['name' => 'sigv4a']]);
+        $method->invoke($middleware, [['name' => 'sigv4a']]);
     }
 
-    /**
-     * @dataProvider invalidInitializationProvider
-     */
+    #[DataProvider('invalidInitializationProvider')]
     public function testInitializationWithInvalidParameters(
         $nextHandler,
-        $endpointProvider,
-        $api,
+        bool $validEndpointProvider,
+        bool $validApi,
         $args
     )
     {
+        $endpointProvider = 'invalid';
+        if ($validEndpointProvider) {
+            $endpointProvider = $this->getMockBuilder(EndpointProviderV2::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+        }
+
+        $api = 'invalid';
+        if ($validApi) {
+            $api = $this->getMockBuilder(Service::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+        }
+
         $this->expectException(\TypeError::class);
         new EndpointV2Middleware($nextHandler, $endpointProvider, $api, $args);
     }
 
-    public function invalidInitializationProvider()
+    public static function invalidInitializationProvider(): array
     {
         return [
             'Invalid nextHandler' => [
                 'not_a_callable',
-                $this->getMockBuilder(EndpointProviderV2::class)
-                    ->disableOriginalConstructor()
-                    ->getMock(),
-                $this->getMockBuilder(Service::class)
-                    ->disableOriginalConstructor()
-                    ->getMock(),
+                true,
+                true,
                 []
             ],
             'Invalid endpointProvider' => [
                 function ($command, $endpoint) {},
-                'not_an_endpoint_provider',
-                $this->getMockBuilder(Service::class)
-                    ->disableOriginalConstructor()
-                    ->getMock(),
+                false,
+                true,
                 []
             ],
             'Invalid api' => [
                 function ($command, $endpoint) {},
-                $this->getMockBuilder(EndpointProviderV2::class)
-                    ->disableOriginalConstructor()
-                    ->getMock(),
-                'not_a_service',
+                true,
+                false,
                 []
             ],
             'Invalid array' => [
                 function ($command, $endpoint) {},
-                $this->getMockBuilder(EndpointProviderV2::class)
-                    ->disableOriginalConstructor()
-                    ->getMock(),
-                $this->getMockBuilder(Service::class)
-                    ->disableOriginalConstructor()
-                    ->getMock(),
+                true,
+                true,
                 'not_an_array'
             ],
         ];
     }
 
-    public function testBadParametersOnInvocation() {
+    public function testBadParametersOnInvocation()
+    {
         $this->expectException(\TypeError::class);
 
         $nextHandler = function ($command, $endpoint) {};

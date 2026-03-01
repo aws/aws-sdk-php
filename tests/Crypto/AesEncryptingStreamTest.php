@@ -8,7 +8,10 @@ use Aws\Crypto\Cipher\CipherMethod;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(AesEncryptingStream::class)]
 class AesEncryptingStreamTest extends TestCase
 {
     const KB = 1024;
@@ -16,12 +19,7 @@ class AesEncryptingStreamTest extends TestCase
 
     use AesEncryptionStreamTestTrait;
 
-    /**
-     * @dataProvider cartesianJoinInputCipherMethodProvider
-     *
-     * @param StreamInterface $plainText
-     * @param CipherMethod $iv
-     */
+    #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testStreamOutputSameAsOpenSSL(
         StreamInterface $plainText,
         CipherMethod $iv
@@ -42,12 +40,7 @@ class AesEncryptingStreamTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider cartesianJoinInputCipherMethodProvider
-     *
-     * @param StreamInterface $plainText
-     * @param CipherMethod $iv
-     */
+    #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testGetOpenSslName(
         StreamInterface $plainText,
         CipherMethod $iv
@@ -62,12 +55,7 @@ class AesEncryptingStreamTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider cartesianJoinInputCipherMethodProvider
-     *
-     * @param StreamInterface $plainText
-     * @param CipherMethod $iv
-     */
+    #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testGetCurrentIv(
         StreamInterface $plainText,
         CipherMethod $iv
@@ -82,12 +70,7 @@ class AesEncryptingStreamTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider cartesianJoinInputCipherMethodProvider
-     *
-     * @param StreamInterface $plainText
-     * @param CipherMethod $iv
-     */
+    #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testSupportsRewinding(
         StreamInterface $plainText,
         CipherMethod $iv
@@ -99,12 +82,7 @@ class AesEncryptingStreamTest extends TestCase
         $this->assertSame($firstBytes, $cipherText->read(256 * 2 + 3));
     }
 
-    /**
-     * @dataProvider cartesianJoinInputCipherMethodProvider
-     *
-     * @param StreamInterface $plainText
-     * @param CipherMethod $iv
-     */
+    #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testAccuratelyReportsSizeOfCipherText(
         StreamInterface $plainText,
         CipherMethod $iv
@@ -114,11 +92,7 @@ class AesEncryptingStreamTest extends TestCase
         $this->assertSame($cipherText->getSize(), strlen((string) $cipherText));
     }
 
-    /**
-     * @dataProvider cipherMethodProvider
-     *
-     * @param CipherMethod $cipherMethod
-     */
+    #[DataProvider('cipherMethodProvider')]
     public function testMemoryUsageRemainsConstant(CipherMethod $cipherMethod)
     {
         $memory = memory_get_usage();
@@ -148,11 +122,7 @@ class AesEncryptingStreamTest extends TestCase
         $this->assertFalse($stream->isWritable());
     }
 
-    /**
-     * @dataProvider cipherMethodProvider
-     *
-     * @param CipherMethod $cipherMethod
-     */
+    #[DataProvider('cipherMethodProvider')]
     public function testReturnsPaddedOrEmptyStringWhenSourceStreamEmpty(
         CipherMethod $cipherMethod
     ) {
@@ -168,11 +138,7 @@ class AesEncryptingStreamTest extends TestCase
         $this->assertSame($stream->read(self::MB), '');
     }
 
-    /**
-     * @dataProvider cipherMethodProvider
-     *
-     * @param CipherMethod $cipherMethod
-     */
+    #[DataProvider('cipherMethodProvider')]
     public function testDoesNotSupportSeekingFromEnd(CipherMethod $cipherMethod)
     {
         $this->expectException(\LogicException::class);
@@ -181,14 +147,15 @@ class AesEncryptingStreamTest extends TestCase
         $stream->seek(1, SEEK_END);
     }
 
-    /**
-     * @dataProvider seekableCipherMethodProvider
-     *
-     * @param CipherMethod $cipherMethod
-     */
+    #[DataProvider('seekableCipherMethodProvider')]
     public function testSupportsSeekingFromCurrentPosition(
-        CipherMethod $cipherMethod
+        ?CipherMethod $cipherMethod,
+        bool $skipTest
     ) {
+        if ($skipTest) {
+            $this->markTestSkipped();
+        }
+
         $stream = new AesEncryptingStream(
             Psr7\Utils::streamFor(openssl_random_pseudo_bytes(2 * self::MB)),
             'foo',

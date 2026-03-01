@@ -5,13 +5,30 @@ use Aws;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
+use PHPUnit\Framework\Attributes\CoversFunction;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversFunction('Aws\recursive_dir_iterator')]
+#[CoversFunction('Aws\or_chain')]
+#[CoversFunction('Aws\load_compiled_json')]
+#[CoversFunction('Aws\constantly')]
+#[CoversFunction('Aws\filter')]
+#[CoversFunction('Aws\map')]
+#[CoversFunction('Aws\flatmap')]
+#[CoversFunction('Aws\partition')]
+#[CoversFunction('Aws\describe_type')]
+#[CoversFunction('Aws\dir_iterator')]
+#[CoversFunction('Aws\default_http_handler')]
+#[CoversFunction('Aws\serialize')]
+#[CoversFunction('Aws\manifest')]
+#[CoversFunction('Aws\is_valid_hostname')]
+#[CoversFunction('Aws\is_valid_hostlabel')]
+#[CoversFunction('Aws\parse_ini_file')]
+#[CoversFunction('Aws\parse_ini_section_with_subsections')]
+#[CoversFunction('Aws\is_associative')]
 class FunctionsTest extends TestCase
 {
-    /**
-     * @covers Aws\recursive_dir_iterator()
-     */
     public function testCreatesRecursiveDirIterator()
     {
         $iter = Aws\recursive_dir_iterator(__DIR__);
@@ -20,9 +37,6 @@ class FunctionsTest extends TestCase
         $this->assertContains(realpath(__FILE__), $files);
     }
 
-    /**
-     * @covers Aws\dir_iterator()
-     */
     public function testCreatesNonRecursiveDirIterator()
     {
         $iter = Aws\dir_iterator(__DIR__);
@@ -31,21 +45,15 @@ class FunctionsTest extends TestCase
         $this->assertContains('FunctionsTest.php', $files);
     }
 
-    /**
-     * @covers Aws\or_chain()
-     */
     public function testComposesOrFunctions()
     {
-        $a = function ($a, $b) { return null; };
+        $a = function ($a, $b) { return null;};
         $b = function ($a, $b) { return $a . $b; };
         $c = function ($a, $b) { return 'C'; };
         $comp = Aws\or_chain($a, $b, $c);
         $this->assertSame('+-', $comp('+', '-'));
     }
 
-    /**
-     * @covers Aws\or_chain()
-     */
     public function testReturnsNullWhenNonResolve()
     {
         $called = [];
@@ -57,27 +65,18 @@ class FunctionsTest extends TestCase
         $this->assertEquals(['a', 'b', 'c'], $called);
     }
 
-    /**
-     * @covers Aws\constantly()
-     */
     public function testCreatesConstantlyFunctions()
     {
         $fn = Aws\constantly('foo');
         $this->assertSame('foo', $fn());
     }
 
-    /**
-     * @covers Aws\load_compiled_json()
-     */
     public function testUsesJsonCompiler()
     {
         $this->expectException(\InvalidArgumentException::class);
         Aws\load_compiled_json('/path/to/not/here.json');
     }
 
-    /**
-     * @covers Aws\load_compiled_json()
-     */
     public function testUsesPhpCompilationOfJsonIfPossible()
     {
         $soughtData = ['foo' => 'bar'];
@@ -98,9 +97,6 @@ class FunctionsTest extends TestCase
         $this->assertSame($soughtData, Aws\load_compiled_json($jsonPath));
     }
 
-    /**
-     * @covers Aws\load_compiled_json()
-     */
     public function testOnlyLoadsCompiledJsonOnce()
     {
         $soughtData = ['foo' => 'bar'];
@@ -130,9 +126,6 @@ class FunctionsTest extends TestCase
         $this->assertEquals($compiledAtime, fileatime($compiledPath));
     }
 
-    /**
-     * @covers Aws\filter()
-     */
     public function testFilter()
     {
         $data = [0, 1, 2, 3, 4];
@@ -141,9 +134,6 @@ class FunctionsTest extends TestCase
         $this->assertEquals([1, 3], iterator_to_array($result));
     }
 
-    /**
-     * @covers Aws\map()
-     */
     public function testMap()
     {
         $data = [0, 1, 2, 3, 4];
@@ -151,9 +141,6 @@ class FunctionsTest extends TestCase
         $this->assertEquals([1, 2, 3, 4, 5], iterator_to_array($result));
     }
 
-    /**
-     * @covers Aws\flatmap()
-     */
     public function testFlatMap()
     {
         $data = ['Hello', 'World'];
@@ -165,9 +152,6 @@ class FunctionsTest extends TestCase
         );
     }
 
-    /**
-     * @covers Aws\partition()
-     */
     public function testPartition()
     {
         $data = [1, 2, 3, 4, 5];
@@ -175,27 +159,18 @@ class FunctionsTest extends TestCase
         $this->assertEquals([[1, 2], [3, 4], [5]], iterator_to_array($result));
     }
 
-    /**
-     * @covers Aws\describe_type()
-     */
     public function testDescribeObject()
     {
         $obj = new \stdClass();
         $this->assertSame('object(stdClass)', Aws\describe_type($obj));
     }
 
-    /**
-     * @covers Aws\describe_type()
-     */
     public function testDescribeArray()
     {
         $arr = [0, 1, 2];
         $this->assertSame('array(3)', Aws\describe_type($arr));
     }
 
-    /**
-     * @covers Aws\describe_type()
-     */
     public function testDescribeDoubleToFloat()
     {
         if (PHP_VERSION_ID >= 80500) {
@@ -208,18 +183,12 @@ class FunctionsTest extends TestCase
         $this->assertSame('float(1.3)', Aws\describe_type($double));
     }
 
-    /**
-     * @covers Aws\describe_type()
-     */
     public function testDescribeType()
     {
         $this->assertSame('int(1)', Aws\describe_type(1));
         $this->assertSame('string(4) "test"', Aws\describe_type("test"));
     }
 
-    /**
-     * @covers Aws\default_http_handler()
-     */
     public function testGuzzleHttpHandler()
     {
         if (!class_exists('GuzzleHttp\Handler\StreamHandler')) {
@@ -231,9 +200,6 @@ class FunctionsTest extends TestCase
         );
     }
 
-    /**
-     * @covers Aws\serialize()
-     */
     public function testSerializesHttpRequests()
     {
         $mock = new MockHandler([new Result([])]);
@@ -264,17 +230,11 @@ class FunctionsTest extends TestCase
         $this->assertSame('123', (string) $request->getBody());
     }
 
-    /**
-     * @covers Aws\manifest()
-     */
     public function testLoadsManifest()
     {
         $this->assertNotNull(Aws\manifest());
     }
 
-    /**
-     * @covers Aws\manifest()
-     */
     public function testServiceManifest()
     {
         $manifest = Aws\manifest('s3');
@@ -290,9 +250,6 @@ class FunctionsTest extends TestCase
         $this->assertEquals($data, $manifest);
     }
 
-    /**
-     * @covers Aws\manifest()
-     */
     public function testAliasManifest()
     {
         $manifest = Aws\manifest('iotdataplane');
@@ -308,25 +265,19 @@ class FunctionsTest extends TestCase
         $this->assertEquals($data, $manifest);
     }
 
-    /**
-     * @covers Aws\manifest()
-     */
     public function testInvalidManifest()
     {
         $this->expectException(\InvalidArgumentException::class);
         Aws\manifest('notarealservicename');
     }
 
-    /**
-     * @covers Aws\is_valid_hostname()
-     * @dataProvider getHostnameTestCases
-     */
+    #[DataProvider('getHostnameTestCases')]
     public function testValidatesHostnames($hostname, $expected)
     {
         $this->assertEquals($expected, Aws\is_valid_hostname($hostname));
     }
 
-    public function getHostnameTestCases()
+    public static function getHostnameTestCases(): array
     {
         return [
             ['a', true],
@@ -368,17 +319,16 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers Aws\is_valid_hostlabel()
-     * @dataProvider getHostlabelTestCases
      * @param string $label
      * @param bool $expected
      */
+    #[DataProvider('getHostlabelTestCases')]
     public function testValidatesHostlabels($label, $expected)
     {
         $this->assertEquals($expected, Aws\is_valid_hostlabel($label));
     }
 
-    public function getHostlabelTestCases()
+    public static function getHostlabelTestCases(): array
     {
         return [
             ['us-west-2', true],
@@ -404,10 +354,7 @@ class FunctionsTest extends TestCase
         ];
     }
 
-    /**
-     * @covers Aws\parse_ini_file()
-     * @dataProvider getIniFileTestCases
-     */
+    #[DataProvider('getIniFileTestCases')]
     public function testParsesIniFile($ini, $expected)
     {
         $tmpFile = sys_get_temp_dir() . '/test.ini';
@@ -419,7 +366,7 @@ class FunctionsTest extends TestCase
         unlink($tmpFile);
     }
 
-    public function getIniFileTestCases()
+    public static function getIniFileTestCases(): array
     {
         return [
             [
@@ -464,10 +411,7 @@ EOT
         ];
     }
 
-    /**
-     * @covers Aws\parse_ini_section_with_subsections()
-     * @dataProvider getIniFileServiceTestCases
-     */
+    #[DataProvider('getIniFileServiceTestCases')]
     public function testParsesIniSectionsWithSubsections($ini, $expected)
     {
         $tmpFile = sys_get_temp_dir() . '/test.ini';
@@ -479,7 +423,7 @@ EOT
         unlink($tmpFile);
     }
 
-    public function getIniFileServiceTestCases()
+    public static function getIniFileServiceTestCases(): array
     {
         return [
             [
@@ -512,16 +456,15 @@ EOT
     /**
      * @param $array
      * @param $expected
-     *
-     * @dataProvider isAssociativeProvider
      */
+    #[DataProvider('isAssociativeProvider')]
     public function testIsAssociative($array, $expected)
     {
         $result = Aws\is_associative($array);
         $this->assertEquals($expected, $result);
     }
 
-    public function isAssociativeProvider()
+    public static function isAssociativeProvider(): array
     {
         return [
            [[], false],

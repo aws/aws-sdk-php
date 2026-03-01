@@ -6,8 +6,11 @@ use Aws\Crypto\Cipher\Cbc;
 use Aws\Crypto\Cipher\CipherMethod;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
+#[CoversClass(AesDecryptingStream::class)]
 class AesDecryptingStreamTest extends TestCase
 {
     const KB = 1024;
@@ -15,12 +18,7 @@ class AesDecryptingStreamTest extends TestCase
 
     use AesEncryptionStreamTestTrait;
 
-    /**
-     * @dataProvider cartesianJoinInputCipherMethodProvider
-     *
-     * @param StreamInterface $plainText
-     * @param CipherMethod $iv
-     */
+    #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testStreamOutputSameAsOpenSSL(
         StreamInterface $plainText,
         CipherMethod $iv
@@ -57,12 +55,7 @@ class AesDecryptingStreamTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider cartesianJoinInputCipherMethodProvider
-     *
-     * @param StreamInterface $plainText
-     * @param CipherMethod $iv
-     */
+    #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testReportsSizeOfPlaintextWherePossible(
         StreamInterface $plainText,
         CipherMethod $iv
@@ -88,12 +81,7 @@ class AesDecryptingStreamTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider cartesianJoinInputCipherMethodProvider
-     *
-     * @param StreamInterface $plainText
-     * @param CipherMethod $iv
-     */
+    #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testSupportsRewinding(
         StreamInterface $plainText,
         CipherMethod $iv
@@ -112,11 +100,7 @@ class AesDecryptingStreamTest extends TestCase
         $this->assertSame($firstBytes, $deciphered->read(256 * 2 + 3));
     }
 
-    /**
-     * @dataProvider cipherMethodProvider
-     *
-     * @param CipherMethod $iv
-     */
+    #[DataProvider('cipherMethodProvider')]
     public function testMemoryUsageRemainsConstant(CipherMethod $iv)
     {
         $memory = memory_get_usage();
@@ -154,11 +138,7 @@ class AesDecryptingStreamTest extends TestCase
         $stream->seek(1);
     }
 
-    /**
-     * @dataProvider cipherMethodProvider
-     *
-     * @param CipherMethod $cipherMethod
-     */
+    #[DataProvider('cipherMethodProvider')]
     public function testReturnsEmptyStringWhenSourceStreamEmpty(
         CipherMethod $cipherMethod
     ) {

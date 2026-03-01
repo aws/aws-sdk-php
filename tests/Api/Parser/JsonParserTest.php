@@ -2,19 +2,23 @@
 namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Parser\Exception\ParserException;
+use Aws\Api\Parser\JsonRpcParser;
+use Aws\Api\Parser\JsonParser;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
  * This class tests the custom functionality of the JsonParser;
  * generic testing is done in ComplianceTest.php
- * @covers \Aws\Api\Parser\JsonRpcParser
- * @covers \Aws\Api\Parser\JsonParser
  */
+#[CoversClass(JsonRpcParser::class)]
+#[CoversClass(JsonParser::class)]
 class JsonParserTest extends TestCase
 {
     use ParserTestServiceTrait;
 
-    public function timeStampModelProvider()
+    public static function timeStampModelProvider(): array
     {
         return [
             [932169600, "ParseIso8601", "1999-07-17T00:00:00+00:00"],
@@ -59,7 +63,7 @@ class JsonParserTest extends TestCase
         ];
     }
 
-    public function timeStampExceptionModelProvider()
+    public static function timeStampExceptionModelProvider(): array
     {
         return [
             ["this text is not a date", "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
@@ -92,9 +96,7 @@ class JsonParserTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider timeStampModelProvider
-     */
+    #[DataProvider('timeStampModelProvider')]
     public function testHandlesTimeStamps(
         $timestamp,
         $commandName,
@@ -113,9 +115,7 @@ class JsonParserTest extends TestCase
         self::assertEquals($expectedValue, $result);
     }
 
-    /**
-     * @dataProvider timeStampExceptionModelProvider
-     */
+    #[DataProvider('timeStampExceptionModelProvider')]
     public function testTimeStampExceptions(
         $timestamp,
         $commandName,
@@ -135,4 +135,3 @@ class JsonParserTest extends TestCase
         $handler($command)->wait();
     }
 }
-

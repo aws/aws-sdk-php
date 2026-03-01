@@ -13,10 +13,13 @@ use Generator;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Tests RangeGetMultipartDownloader implementation.
  */
+#[CoversClass(RangeGetMultipartDownloader::class)]
 class RangeGetMultipartDownloaderTest extends TestCase
 {
     /**
@@ -26,10 +29,9 @@ class RangeGetMultipartDownloaderTest extends TestCase
      * @param int $objectSizeInBytes
      * @param int $targetPartSize
      *
-     * @dataProvider rangeGetMultipartDownloaderProvider
-     *
      * @return void
      */
+    #[DataProvider('rangeGetMultipartDownloaderProvider')]
     public function testRangeGetMultipartDownloader(
         string $objectKey,
         int $objectSizeInBytes,
@@ -96,7 +98,8 @@ class RangeGetMultipartDownloaderTest extends TestCase
      *
      * @return array[]
      */
-    public function rangeGetMultipartDownloaderProvider(): array {
+    public static function rangeGetMultipartDownloaderProvider(): array
+    {
         return [
             [
                 'objectKey' => 'ObjectKey_1',
@@ -259,10 +262,9 @@ class RangeGetMultipartDownloaderTest extends TestCase
      * @param int $targetPartSize
      * @param string $eTag
      *
-     * @dataProvider ifMatchIsPresentInEachRangeRequestAfterFirstProvider
-     *
      * @return void
      */
+    #[DataProvider('ifMatchIsPresentInEachRangeRequestAfterFirstProvider')]
     public function testIfMatchIsPresentInEachRangeRequestAfterFirst(
         int $objectSizeInBytes,
         int $targetPartSize,
@@ -336,7 +338,7 @@ class RangeGetMultipartDownloaderTest extends TestCase
     /**
      * @return Generator
      */
-    public function ifMatchIsPresentInEachRangeRequestAfterFirstProvider(): Generator
+    public static function ifMatchIsPresentInEachRangeRequestAfterFirstProvider(): Generator
     {
         yield 'multipart_download_with_3_parts_1' => [
             'object_size_in_bytes' => 1024 * 1024 * 20,

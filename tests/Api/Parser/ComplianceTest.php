@@ -11,17 +11,25 @@ use Aws\Api\Shape;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
+use Aws\Api\Parser\AbstractParser;
+use Aws\Api\Parser\AbstractRestParser;
+use Aws\Api\Parser\JsonRpcParser;
+use Aws\Api\Parser\JsonParser;
+use Aws\Api\Parser\RestJsonParser;
+use Aws\Api\Parser\RestXmlParser;
+use Aws\Api\Parser\QueryParser;
+use Aws\Api\Parser\XmlParser;
 
-/**
- * @covers \Aws\Api\Parser\AbstractParser
- * @covers \Aws\Api\Parser\AbstractRestParser
- * @covers \Aws\Api\Parser\JsonRpcParser
- * @covers \Aws\Api\Parser\JsonParser
- * @covers \Aws\Api\Parser\RestJsonParser
- * @covers \Aws\Api\Parser\RestXmlParser
- * @covers \Aws\Api\Parser\QueryParser
- * @covers \Aws\Api\Parser\XmlParser
- */
+#[CoversClass(AbstractParser::class)]
+#[CoversClass(AbstractRestParser::class)]
+#[CoversClass(JsonRpcParser::class)]
+#[CoversClass(JsonParser::class)]
+#[CoversClass(RestJsonParser::class)]
+#[CoversClass(RestXmlParser::class)]
+#[CoversClass(QueryParser::class)]
+#[CoversClass(XmlParser::class)]
 class ComplianceTest extends TestCase
 {
     use UsesServiceTrait;
@@ -47,8 +55,7 @@ class ComplianceTest extends TestCase
         'legacy query Flattened list with location name' => true
     ];
 
-    /** @doesNotPerformAssertions */
-    public function testCaseProvider(): \Generator
+    public static function caseProvider(): \Generator
     {
         $iterator = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator(
@@ -105,17 +112,7 @@ class ComplianceTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider testCaseProvider
-     *
-     * @param $about
-     * @param Service $service
-     * @param $name
-     * @param array $expectedResult
-     * @param $res
-     * @param string|null $errorCode
-     * @param string|null $errorMessage
-     */
+    #[DataProvider('caseProvider')]
     public function testPassesComplianceTest(
         string $about,
         Service $service,

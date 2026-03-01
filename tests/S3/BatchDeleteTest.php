@@ -7,11 +7,10 @@ use Aws\Result;
 use Aws\S3\BatchDelete;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
 use Aws\Test\UsesServiceTrait;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\S3\BatchDelete
- */
+#[CoversClass(BatchDelete::class)]
 class BatchDeleteTest extends TestCase
 {
     use UsesServiceTrait;
@@ -186,7 +185,7 @@ class BatchDeleteTest extends TestCase
         $keys = \JmesPath\search('[].Delete.Objects[].Key', $cmds);
         $this->assertEquals(range(0, 9), $keys);
     }
-    
+
     public function testWithNoMatchingObjects()
     {
         $client = $this->getTestClient('s3');

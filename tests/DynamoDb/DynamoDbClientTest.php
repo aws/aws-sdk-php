@@ -13,10 +13,10 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Stream;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\DynamoDb\DynamoDbClient
- */
+#[CoversClass(DynamoDbClient::class)]
 class DynamoDbClientTest extends TestCase
 {
     use UsesServiceTrait;
@@ -31,7 +31,7 @@ class DynamoDbClientTest extends TestCase
         );
     }
 
-    public function dataForFormatValueTest()
+    public static function dataForFormatValueTest(): array
     {
         $handle = fopen('php://memory', 'w+');
         fwrite($handle, 'foo');
@@ -84,9 +84,7 @@ class DynamoDbClientTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderRetrySettings
-     */
+    #[DataProvider('dataProviderRetrySettings')]
     public function testRetriesOnDynamoSpecificRetryableException($settings)
     {
         $params = [
@@ -137,7 +135,7 @@ class DynamoDbClientTest extends TestCase
         $this->assertSame(3, $attemptCount);
     }
 
-    public function dataProviderRetrySettings()
+    public static function dataProviderRetrySettings(): array
     {
         return [
             [
@@ -188,11 +186,7 @@ class DynamoDbClientTest extends TestCase
         $this->assertEmpty($queue);
     }
 
-    /**
-     * @dataProvider dataProviderRetrySettings
-     *
-     * @param $settings
-     */
+    #[DataProvider('dataProviderRetrySettings')]
     public function testAppliesRetryStatsConfig($settings)
     {
         $client = new DynamoDbClient([

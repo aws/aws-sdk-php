@@ -8,7 +8,10 @@ use Aws\Identity\AwsCredentialIdentity;
 use Aws\Identity\BearerTokenIdentity;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(AuthSchemeResolver::class)]
 class AuthSchemeResolverTest extends TestCase
 {
     public function testUsesDefaultSchemeMapWhenNoneProvided()
@@ -34,9 +37,7 @@ class AuthSchemeResolverTest extends TestCase
         $this->assertEquals('v4', $resolver->selectAuthScheme(['custom.auth#example']));
     }
 
-    /**
-     * @dataProvider schemeForIdentityProvider
-     */
+    #[DataProvider('schemeForIdentityProvider')]
     public function testSelectAuthSchemeReturnsCorrectSchemeForIdentity(
         $authScheme,
         $expectedSignatureVersion,
@@ -62,7 +63,7 @@ class AuthSchemeResolverTest extends TestCase
         $this->assertEquals($expectedSignatureVersion, $resolver->selectAuthScheme($authScheme, $args));
     }
 
-    public function schemeForIdentityProvider()
+    public static function schemeForIdentityProvider(): array
     {
         return [
           [
@@ -189,16 +190,24 @@ class AuthSchemeResolverTest extends TestCase
         $resolver->selectAuthScheme(['aws.auth#sigv4a']);
     }
 
-    /**
-     * @dataProvider fallsBackWhenIdentityNotAvailableProvider
-     */
+    #[DataProvider('fallsBackWhenIdentityNotAvailableProvider')]
     public function testFallsBackWhenIdentityNotAvailable(
-        $credentialProvider,
-        $tokenProvider,
-        $authSchemes,
-        $expected
+        string $credentialIdentityClass,
+        string $tokenIdentityClass,
+        array $authSchemes,
+        string $expected
     )
     {
+        $credentialProvider = function () use ($credentialIdentityClass) {
+            return Promise\Create::promiseFor(
+                $this->createMock($credentialIdentityClass)
+            );
+        };
+        $tokenProvider = function () use ($tokenIdentityClass) {
+            return Promise\Create::promiseFor(
+                $this->createMock($tokenIdentityClass)
+            );
+        };
         if ($expected === 'error') {
             $this->expectException(UnresolvedAuthSchemeException::class);
         }
@@ -206,35 +215,42 @@ class AuthSchemeResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->selectAuthScheme($authSchemes));
     }
 
-    public function fallsBackWhenIdentityNotAvailableProvider()
+    public static function fallsBackWhenIdentityNotAvailableProvider(): array
     {
-        $credentialProvider = function () {
-            return Promise\Create::promiseFor(
-                $this->createMock(AwsCredentialIdentity::class)
-            );
-        };
-        $tokenProvider = function () {
-            return Promise\Create::promiseFor(
-                $this->createMock(BearerTokenIdentity::class)
-            );
-        };
-        $badCredentialProvider = function () {
-            return Promise\Create::promiseFor(
-                $this->createMock(BearerTokenIdentity::class)
-            );
-        };
-        $badTokenProvider = function () {
-            return Promise\Create::promiseFor(
-                $this->createMock(AwsCredentialIdentity::class)
-            );
-        };
+        $credentialIdentity = AwsCredentialIdentity::class;
+        $tokenIdentity = BearerTokenIdentity::class;
 
         return [
-            [$credentialProvider, $tokenProvider, ['aws.auth#sigv4', 'smithy.api#httpBearerAuth'], 'v4'],
-            [$badCredentialProvider, $tokenProvider, ['aws.auth#sigv4', 'smithy.api#httpBearerAuth'], 'bearer'],
-            [$credentialProvider, $badTokenProvider, ['aws.auth#sigv4', 'smithy.api#httpBearerAuth'], 'v4'],
-            [$badCredentialProvider, $badTokenProvider, ['aws.auth#sigv4', 'smithy.api#httpBearerAuth'], 'error'],
-            [$badCredentialProvider, $tokenProvider, ['aws.auth#sigv4'], 'error']
+            'credential_provider' => [
+                'credential_identity' => $credentialIdentity,
+                'token_identity' => $tokenIdentity,
+                'auth_schemes' => ['aws.auth#sigv4', 'smithy.api#httpBearerAuth'],
+                'resolved_auth_scheme' => 'v4'
+            ],
+            'bad_credential_provider' => [
+                'credential_identity' => $tokenIdentity,
+                'token_identity' => $tokenIdentity,
+                'auth_schemes' => ['aws.auth#sigv4', 'smithy.api#httpBearerAuth'],
+                'resolved_auth_scheme' => 'bearer'
+            ],
+            'bad_token_provider' => [
+                'credential_identity' => $credentialIdentity,
+                'token_identity' => $credentialIdentity,
+                'auth_schemes' => ['aws.auth#sigv4', 'smithy.api#httpBearerAuth'],
+                'resolved_auth_scheme' => 'v4'
+            ],
+            'bad_credential_provider_2' => [
+                'credential_identity' => $tokenIdentity,
+                'token_identity' => $credentialIdentity,
+                'auth_schemes' => ['aws.auth#sigv4', 'smithy.api#httpBearerAuth'],
+                'resolved_auth_scheme' => 'error'
+            ],
+            'bad_credential_provider_3' => [
+                'credential_identity' => $tokenIdentity,
+                'token_identity' => $tokenIdentity,
+                'auth_schemes' => ['aws.auth#sigv4'],
+                'resolved_auth_scheme' => 'error'
+            ]
         ];
     }
 }

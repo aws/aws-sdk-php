@@ -13,7 +13,10 @@ use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use GuzzleHttp\Psr7;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(S3EncryptionMultipartUploaderV2::class)]
 class S3EncryptionMultipartUploaderV2Test extends TestCase
 {
     use UsesServiceTrait, UsesMetadataEnvelopeTrait, UsesCryptoParamsTraitV2;
@@ -51,9 +54,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         }
     }
 
-    /**
-     * @dataProvider getValidMaterialsProviders
-     */
+    #[DataProvider('getValidMaterialsProviders')]
     public function testPutObjectTakesValidMaterialsProviders(
         $provider,
         $exception
@@ -99,9 +100,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $this->assertSame(self::TEST_URL, $result['ObjectURL']);
     }
 
-    /**
-     * @dataProvider getInvalidMaterialsProviders
-     */
+    #[DataProvider('getInvalidMaterialsProviders')]
     public function testPutObjectRejectsInvalidMaterialsProviders(
         $provider,
         $exception
@@ -128,9 +127,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $uploader->upload();
     }
 
-    /**
-     * @dataProvider getValidMetadataStrategies
-     */
+    #[DataProvider('getValidMetadataStrategies')]
     public function testPutObjectTakesValidMetadataStrategy(
         $strategy,
         $exception,
@@ -184,9 +181,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $this->assertSame(self::TEST_URL, $result['ObjectURL']);
     }
 
-    /**
-     * @dataProvider getInvalidMetadataStrategies
-     */
+    #[DataProvider('getInvalidMetadataStrategies')]
     public function testPutObjectRejectsInvalidMetadataStrategy(
         $strategy,
         $exception
@@ -261,9 +256,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $this->assertSame(self::TEST_URL, $result['ObjectURL']);
     }
 
-    /**
-     * @dataProvider getCiphers
-     */
+    #[DataProvider('getCiphers')]
     public function testPutObjectValidatesCipher(
         $cipher,
         $exception = null
@@ -311,9 +304,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $this->assertSame(self::TEST_URL, $result['ObjectURL']);
     }
 
-    /**
-     * @dataProvider getKeySizes
-     */
+    #[DataProvider('getKeySizes')]
     public function testPutObjectValidatesKeySize(
         $keySize,
         $exception

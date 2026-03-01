@@ -9,10 +9,9 @@ use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Api\Serializer\JsonRpcSerializer
- */
+#[CoversClass(JsonRpcSerializer::class)]
 class JsonRpcSerializerTest extends TestCase
 {
     use UsesServiceTrait;

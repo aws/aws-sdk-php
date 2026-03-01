@@ -6,11 +6,10 @@ use Aws\Command;
 use Aws\History;
 use Aws\Exception\AwsException;
 use GuzzleHttp\Psr7\Request;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\History
- */
+#[CoversClass(History::class)]
 class HistoryTest extends TestCase
 {
     public function testIsCountable()

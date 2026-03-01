@@ -15,10 +15,10 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\TraceMiddleware
- */
+#[CoversClass(TraceMiddleware::class)]
 class TraceMiddlewareTest extends TestCase
 {
     public function testEmitsDebugInfo()
@@ -128,13 +128,7 @@ class TraceMiddlewareTest extends TestCase
         $this->assertStringContainsString('string(5) "error"', $str);
     }
 
-    /**
-     * @dataProvider authStringProvider
-     *
-     * @param string $key
-     * @param string $signature
-     * @param array $headers
-     */
+    #[DataProvider('authStringProvider')]
     public function testScrubsAuthStrings($key, $signature, array $headers)
     {
         $str = '';
@@ -239,7 +233,7 @@ class TraceMiddlewareTest extends TestCase
         $this->assertEquals('success', $result[0]);
     }
 
-    public function authStringProvider()
+    public static function authStringProvider(): array
     {
         return [
             // v4 signature example from http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-auth-using-authorization-header.html

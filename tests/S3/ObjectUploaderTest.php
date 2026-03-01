@@ -8,19 +8,20 @@ use Aws\S3\ObjectUploader;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\FnStream;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
+#[CoversClass(ObjectUploader::class)]
 class ObjectUploaderTest extends TestCase
 {
     use UsesServiceTrait;
 
     const MB = 1048576;
 
-    /**
-     * @dataProvider getUploadTestCases
-     */
+    #[DataProvider('uploadDataProvider')]
     public function testDoesCorrectOperation(
         StreamInterface $body,
         array $mockedResults,
@@ -35,9 +36,7 @@ class ObjectUploaderTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @dataProvider getUploadTestCasesWithPathStyle
-     */
+    #[DataProvider('getUploadTestCasesWithPathStyle')]
     public function testDoesCorrectOperationWithPathStyle(
         StreamInterface $body,
         array $mockedResults,
@@ -54,9 +53,7 @@ class ObjectUploaderTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @dataProvider getUploadTestCases
-     */
+    #[DataProvider('uploadDataProvider')]
     public function testDoesCorrectOperationWithAccessPointArn(
         StreamInterface $body,
         array $mockedResults,
@@ -90,9 +87,7 @@ class ObjectUploaderTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @dataProvider getUploadTestCases
-     */
+    #[DataProvider('uploadDataProvider')]
     public function testDoesCorrectOperationAsynchronously(
         StreamInterface $body,
         array $mockedResults,
@@ -108,9 +103,7 @@ class ObjectUploaderTest extends TestCase
         $this->assertSame('https://bucket.s3.amazonaws.com/key', $result['ObjectURL']);
     }
 
-    /**
-     * @dataProvider getUploadTestCasesWithPathStyle
-     */
+    #[DataProvider('getUploadTestCasesWithPathStyle')]
     public function testDoesCorrectOperationAsynchronouslyWithPathStyle(
         StreamInterface $body,
         array $mockedResults,
@@ -128,7 +121,7 @@ class ObjectUploaderTest extends TestCase
         $this->assertSame('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
     }
 
-    public function getUploadTestCases()
+    public static function uploadDataProvider(): array
     {
         $putObject = new Result();
         $initiate = new Result(['UploadId' => 'foo']);
@@ -138,44 +131,44 @@ class ObjectUploaderTest extends TestCase
         return [
             [
                 // 3 MB, known-size stream (put)
-                $this->generateStream(1024 * 1024 * 3),
+                self::generateStream(1024 * 1024 * 3),
                 [$putObject],
                 ['before_upload' => function () {}]
             ],
             [
                 // 3 MB, unknown-size stream (put)
-                $this->generateStream(1024 * 1024 * 3, false),
+                self::generateStream(1024 * 1024 * 3, false),
                 [$putObject],
                 []
             ],
             [
                 // 6 MB, known-size stream (put)
-                $this->generateStream(1024 * 1024 * 6),
+                self::generateStream(1024 * 1024 * 6),
                 [$putObject],
                 []
             ],
             [
                 // 6 MB, known-size stream, above threshold (mup)
-                $this->generateStream(1024 * 1024 * 6),
+                self::generateStream(1024 * 1024 * 6),
                 [$initiate, $putPart, $putPart, $complete],
                 ['mup_threshold' => 1024 * 1024 * 4]
             ],
             [
                 // 6 MB, unknown-size stream (mup)
-                $this->generateStream(1024 * 1024 * 6, false),
+                self::generateStream(1024 * 1024 * 6, false),
                 [$initiate, $putPart, $putPart, $complete],
                 []
             ],
             [
                 // 6 MB, unknown-size, non-seekable stream (mup)
-                $this->generateStream(1024 * 1024 * 6, false, false),
+                self::generateStream(1024 * 1024 * 6, false, false),
                 [$initiate, $putPart, $putPart, $complete],
                 []
             ]
         ];
     }
 
-    public function getUploadTestCasesWithPathStyle()
+    public static function getUploadTestCasesWithPathStyle(): array
     {
         $putObject = new Result();
         $initiate = new Result(['UploadId' => 'foo']);
@@ -185,44 +178,48 @@ class ObjectUploaderTest extends TestCase
         return [
             [
                 // 3 MB, known-size stream (put)
-                $this->generateStream(1024 * 1024 * 3),
+                self::generateStream(1024 * 1024 * 3),
                 [$putObject],
                 ['before_upload' => function () {}]
             ],
             [
                 // 3 MB, unknown-size stream (put)
-                $this->generateStream(1024 * 1024 * 3, false),
+                self::generateStream(1024 * 1024 * 3, false),
                 [$putObject],
                 []
             ],
             [
                 // 6 MB, known-size stream (put)
-                $this->generateStream(1024 * 1024 * 6),
+                self::generateStream(1024 * 1024 * 6),
                 [$putObject],
                 []
             ],
             [
                 // 6 MB, known-size stream, above threshold (mup)
-                $this->generateStream(1024 * 1024 * 6),
+                self::generateStream(1024 * 1024 * 6),
                 [$initiate, $putPart, $putPart, $complete],
                 ['mup_threshold' => 1024 * 1024 * 4]
             ],
             [
                 // 6 MB, unknown-size stream (mup)
-                $this->generateStream(1024 * 1024 * 6, false),
+                self::generateStream(1024 * 1024 * 6, false),
                 [$initiate, $putPart, $putPart, $complete],
                 []
             ],
             [
                 // 6 MB, unknown-size, non-seekable stream (mup)
-                $this->generateStream(1024 * 1024 * 6, false, false),
+                self::generateStream(1024 * 1024 * 6, false, false),
                 [$initiate, $putPart, $putPart, $complete],
                 []
             ]
         ];
     }
 
-    private function generateStream($size, $sizeKnown = true, $seekable = true)
+    private static function generateStream(
+        $size, 
+        $sizeKnown = true, 
+        $seekable = true
+    ): FnStream
     {
         return FnStream::decorate(Psr7\Utils::streamFor(str_repeat('.', $size)), [
             'getSize' => function () use ($sizeKnown, $size) {
@@ -322,9 +319,8 @@ class ObjectUploaderTest extends TestCase
     /**
      * @param $checksumAlgorithm
      * @return void
-     *
-     * @dataProvider flexibleChecksumsProvider
      */
+    #[DataProvider('flexibleChecksumsProvider')]
     public function testAddsFlexibleChecksums($checksumAlgorithm, $value)
     {
         if ($checksumAlgorithm === 'crc32c'
@@ -347,13 +343,14 @@ class ObjectUploaderTest extends TestCase
             $client,
             'bucket',
             'key',
-            $this->generateStream(1024 * 1024 * 1),
+            self::generateStream(1024 * 1024 * 1),
             'private',
             ['params' => ['ChecksumAlgorithm' => $checksumAlgorithm]]
         ))->upload();
     }
 
-    public function flexibleChecksumsProvider() {
+    public static function flexibleChecksumsProvider(): array
+    {
         return [
             ['sha1', 'VfWih+7phcE4uG3HQZCHKfpUwFs='],
             ['sha256', 'FT+vHyoAcJfTMSC77mlEpBy4vnZDwSIva8a8aewxaI8='],
@@ -364,17 +361,24 @@ class ObjectUploaderTest extends TestCase
 
     public function testAddContentMd5EmitsDeprecationNotice()
     {
-        $this->expectDeprecation();
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        });
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('S3 no longer supports MD5 checksums.');
-        $client = $this->getTestClient('S3');
-        $this->addMockResults($client, [new Result()]);
-        $result = (new ObjectUploader(
-            $client,
-            'bucket',
-            'key',
-            $this->generateStream(1024 * 1024 * 1),
-            'private',
-            ['add_content_md5' => true]
-        ))->upload();
+        try {
+            $client = $this->getTestClient('S3');
+            $this->addMockResults($client, [new Result()]);
+            (new ObjectUploader(
+                $client,
+                'bucket',
+                'key',
+                self::generateStream(1024 * 1024 * 1),
+                'private',
+                ['add_content_md5' => true]
+            ))->upload();
+        } finally {
+            restore_error_handler();
+        }
     }
 }

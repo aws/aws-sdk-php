@@ -3,25 +3,20 @@ namespace Aws\Test\S3\UseArnRegion;
 
 use Aws\S3\UseArnRegion\Configuration;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\S3\UseArnRegion\Configuration
- */
+#[CoversClass(Configuration::class)]
 class ConfigurationTest extends TestCase
 {
-    /**
-     * @dataProvider correctValueCases
-     *
-     * @param $param
-     * @param $expected
-     */
+    #[DataProvider('correctValueCases')]
     public function testGetsCorrectValues($param, $expected)
     {
         $config = new Configuration($param);
         $this->assertEquals($expected, $config->isUseArnRegion());
     }
 
-    public function correctValueCases()
+    public static function correctValueCases(): array
     {
         return [
             [true, true],

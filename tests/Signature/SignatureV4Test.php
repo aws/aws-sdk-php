@@ -7,12 +7,12 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\NoSeekStream;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 require_once __DIR__ . '/sig_hack.php';
 
-/**
- * @covers Aws\Signature\SignatureV4
- */
+#[CoversClass(SignatureV4::class)]
 class SignatureV4Test extends TestCase
 {
     const DEFAULT_KEY = 'AKIDEXAMPLE';
@@ -118,7 +118,7 @@ class SignatureV4Test extends TestCase
         return $pairs;
     }
 
-    public function getExpiresDateTimeInterfaceInputs()
+    public static function getExpiresDateTimeInterfaceInputs(): array
     {
         return [
             [
@@ -130,9 +130,7 @@ class SignatureV4Test extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getExpiresDateTimeInterfaceInputs
-     */
+    #[DataProvider('getExpiresDateTimeInterfaceInputs')]
     public function testCreatesPresignedDatesFromDateTime($dateTime)
     {
         $_SERVER['override_v4_time'] = true;
@@ -181,7 +179,7 @@ class SignatureV4Test extends TestCase
         $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
-    public function getStartDateTimeInterfaceInputs()
+    public static function getStartDateTimeInterfaceInputs(): array
     {
         return [
             [
@@ -193,9 +191,7 @@ class SignatureV4Test extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getStartDateTimeInterfaceInputs
-     */
+    #[DataProvider('getStartDateTimeInterfaceInputs')]
     public function testUsesStartDateFromDateTimeIfPresent($dateTime)
     {
         $options = ['start_time' => $dateTime];
@@ -392,8 +388,7 @@ class SignatureV4Test extends TestCase
         $signature->signRequest($request, $credentials);
     }
 
-    /** @doesNotPerformAssertions */
-    public function testUnsignedPayloadProvider()
+    public static function unsignedPayloadProvider(): array
     {
         return [
             // POST headers should be signed.
@@ -447,9 +442,7 @@ class SignatureV4Test extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider testUnsignedPayloadProvider
-     */
+    #[DataProvider('unsignedPayloadProvider')]
     public function testSignRequestUnsignedPayload($req, $sreq, $creq)
     {
         $_SERVER['aws_time'] = '20110909T233600Z';
@@ -467,8 +460,7 @@ class SignatureV4Test extends TestCase
         $this->assertSame($sreq, Psr7\Message::toString($signature->signRequest($request, $credentials)));
     }
 
-    /** @doesNotPerformAssertions */
-    public function testProvider()
+    public static function provider(): array
     {
         return [
             // POST headers should be signed.
@@ -570,9 +562,7 @@ class SignatureV4Test extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider testProvider
-     */
+    #[DataProvider('provider')]
     public function testSignsRequests($req, $sreq, $creq)
     {
         $_SERVER['aws_time'] = '20110909T233600Z';

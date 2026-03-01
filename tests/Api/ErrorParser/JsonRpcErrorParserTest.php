@@ -2,35 +2,46 @@
 namespace Aws\Test\Api\ErrorParser;
 
 use Aws\Api\ErrorParser\JsonRpcErrorParser;
-use Aws\Api\ErrorParser\RestJsonErrorParser;
-use Aws\Api\StructureShape;
+use Aws\Api\ErrorParser\JsonParserTrait;
 use Aws\Test\TestServiceTrait;
-use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\Api\ErrorParser\JsonRpcErrorParser
- * @covers \Aws\Api\ErrorParser\JsonParserTrait
- */
+#[CoversClass(JsonRpcErrorParser::class)]
+#[CoversClass(JsonParserTrait::class)]
 class JsonRpcErrorParserTest extends TestCase
 {
     use TestServiceTrait;
 
-    /**
-     * @dataProvider errorResponsesProvider
-     *
-     * @param $response
-     * @param $command
-     * @param $parser
-     * @param $expected
-     */
+    #[DataProvider('errorResponsesProvider')]
     public function testParsesClientErrorResponses(
-        $response,
-        $command,
-        $parser,
-        $expected
+        string $response,
+        ?string $commandName,
+        bool $parserWithService,
+        array $expected
     ) {
+        $service = $this->generateTestService('json');
+        $awsQueryCompatibleService = $this->generateTestService(
+            'json',
+            ['awsQueryCompatible' => true]
+        );
+        $shapes = $service->getErrorShapes();
+        $errorShape = $shapes[0];
+        $client = $this->generateTestClient($service);
+        $command = $commandName === null
+            ? null
+            : $client->getCommand($commandName);
+        $parser = $parserWithService
+            ? new JsonRpcErrorParser($awsQueryCompatibleService)
+            : new JsonRpcErrorParser();
+
+        // If error shape required in the expected
+        if ($expected['error_shape'] ?? false) {
+            $expected['error_shape'] = $errorShape;
+        }
+
         $response = Psr7\Message::parseResponse($response);
         $parsed = $parser($response, $command);
         $this->assertCount(
@@ -49,18 +60,8 @@ class JsonRpcErrorParserTest extends TestCase
         }
     }
 
-    public function errorResponsesProvider()
+    public static function errorResponsesProvider(): array
     {
-        $service = $this->generateTestService('json');
-        $awsQueryCompatibleService = $this->generateTestService(
-            'json',
-            ['awsQueryCompatible' => true]
-        );
-        $shapes = $service->getErrorShapes();
-        $errorShape = $shapes[0];
-        $client = $this->generateTestClient($service);
-        $command = $client->getCommand('TestOperation', []);
-
         return [
             // Non-modeled exception, mixed casing
             [
@@ -68,7 +69,7 @@ class JsonRpcErrorParserTest extends TestCase
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "__Type": "foo", "Message": "lorem ipsum" }',
                 null,
-                new JsonRpcErrorParser(),
+                false,
                 [
                     'code'       => 'foo',
                     'message'    => 'lorem ipsum',
@@ -89,8 +90,8 @@ class JsonRpcErrorParserTest extends TestCase
                 "x-meta-bar: bar-meta\r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "TestString": "foo", "TestInt": 123, "NotModeled": "bar", "__type": "TestException", "message": "Test Message" }',
-                $command,
-                new JsonRpcErrorParser($service),
+                'TestOperation',
+                true,
                 [
                     'code'       => 'TestException',
                     'type'       => 'client',
@@ -113,7 +114,7 @@ class JsonRpcErrorParserTest extends TestCase
                         'TestStatus'        => 400,
                     ],
                     'message' => 'Test Message',
-                    'error_shape' => $errorShape
+                    'error_shape' => true
                 ]
             ],
             // Unmodeled shape, with service
@@ -125,7 +126,7 @@ class JsonRpcErrorParserTest extends TestCase
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "TestString": "foo", "TestInt": 123, "NotModeled": "bar", "__type": "NonExistentException", "message": "Test Message" }',
                 null,
-                new JsonRpcErrorParser($service),
+                true,
                 [
                     'code'       => 'NonExistentException',
                     'message'    => 'Test Message',
@@ -148,7 +149,7 @@ class JsonRpcErrorParserTest extends TestCase
                 "x-amzn-query-error: NonExistentException;Sender\r\n\r\n" .
                 '{ "__Type": "foo", "Message": "lorem ipsum" }',
                 null,
-                new JsonRpcErrorParser($awsQueryCompatibleService),
+                true,
                 [
                     'code'       => 'NonExistentException',
                     'message'    => 'lorem ipsum',
@@ -168,7 +169,7 @@ class JsonRpcErrorParserTest extends TestCase
                 "x-amzn-query-error: ;Sender\r\n\r\n" .
                 '{ "__Type": "foo", "Message": "lorem ipsum" }',
                 null,
-                new JsonRpcErrorParser($awsQueryCompatibleService),
+                true,
                 [
                     'code'       => 'foo',
                     'message'    => 'lorem ipsum',
@@ -188,7 +189,7 @@ class JsonRpcErrorParserTest extends TestCase
                 "x-amzn-query-error: \r\n\r\n" .
                 '{ "__Type": "foo", "Message": "lorem ipsum" }',
                 null,
-                new JsonRpcErrorParser(),
+                false,
                 [
                     'code'       => 'foo',
                     'message'    => 'lorem ipsum',

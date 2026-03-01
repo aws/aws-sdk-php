@@ -2,14 +2,16 @@
 namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\CookieSigner;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
 
+#[CoversClass(CookieSigner::class)]
 class CookieSignerTest extends TestCase
 {
     protected $key;
     protected $kp;
 
-    public function set_up()
+    public function setUp(): void
     {
         openssl_pkey_export(openssl_pkey_new(),$this->key);
         $this->kp  = 'test';

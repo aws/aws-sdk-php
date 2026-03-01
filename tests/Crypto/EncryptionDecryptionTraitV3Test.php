@@ -16,11 +16,11 @@ use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\AppendStream;
 use PHPUnit\Framework\MockObject\MockObject;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\Crypto\EncryptionTraitV3
- * @covers \Aws\Crypto\DecryptionTraitV3
- */
+#[CoversClass(EncryptionTraitV3::class)]
+#[CoversClass(DecryptionTraitV3::class)]
 class EncryptionDecryptionTraitV3Test extends TestCase
 {
     use UsesCryptoParamsTraitV3;
@@ -231,8 +231,7 @@ class EncryptionDecryptionTraitV3Test extends TestCase
     }
 
     /**
-     * Tests that a V2 envelope with V3 fields appropriately errors 
-     * @return void
+     * Tests that a V2 envelope with V3 fields appropriately errors
      */
     public function testV2EnvelopeWithV3FieldsThrows(): void
     {
@@ -286,8 +285,7 @@ class EncryptionDecryptionTraitV3Test extends TestCase
     }
     
     /**
-     * Tests that a V3 envelope with V2 fields appropriately errors 
-     * @return void
+     * Tests that a V3 envelope with V2 fields appropriately errors
      */
     public function testV3EnvelopeWithV2FieldsThrows(): void
     {
@@ -381,11 +379,7 @@ class EncryptionDecryptionTraitV3Test extends TestCase
         $this->assertEquals($envelope[MetadataEnvelope::ENCRYPTED_DATA_KEY_ALGORITHM_V3], 12);
     }
 
-    /**
-     * Summary of testDiffAlgorithmSuitesProduceDiffObjectVersions
-     * @dataProvider getAlgorithmSuites
-     * @return void
-     */
+    #[DataProvider('getAlgorithmSuites')]
     public function testDiffAlgorithmSuitesProduceDiffObjectVersions(AlgorithmSuite $algorithmSuite): void
     {
         $plaintext = new Stream(fopen('data://text/plain,Hello World', 'r'));
@@ -433,7 +427,6 @@ class EncryptionDecryptionTraitV3Test extends TestCase
     
     /**
      * Summary of testDiffAlgorithmSuitesProduceDiffObjectVersions
-     * @return void
      */
     public function testCbcAlgSuiteProducesV2Envelope(): void
     {
@@ -483,8 +476,8 @@ class EncryptionDecryptionTraitV3Test extends TestCase
     /**
      * Given a CommitmentPolicy assert error gets appropriately thrown if the key commitment policy
      * does not support decryption of the object.
-     * @dataProvider getCommitmentPolicies
      */
+    #[DataProvider('getCommitmentPolicies')]
     public function testThrowsOnInvalidKCPolicyAndNoKeyCommitmentAlgSuite($commitmentPolicy): void
     {
         $plaintext = new Stream(fopen('data://text/plain,Hello World', 'r'));
@@ -562,8 +555,8 @@ class EncryptionDecryptionTraitV3Test extends TestCase
     /**
      * Given a CommitmentPolicy assert error gets appropriately thrown if the key commitment policy
      * does not support decryption of the object.
-     * @dataProvider getCommitmentPolicies
      */
+    #[DataProvider('getCommitmentPolicies')]
     public function testThrowsOnInvalidKCPolicyAndKeyCommitmentAlgSuite($commitmentPolicy): void
     {
         $plaintext = new Stream(fopen('data://text/plain,Hello World', 'r'));

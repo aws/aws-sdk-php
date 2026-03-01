@@ -6,11 +6,11 @@ use Aws\CommandInterface;
 use Aws\HandlerList;
 use Aws\Middleware;
 use GuzzleHttp\Psr7\Request;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\TestCase;
 
-/**
- * @covers Aws\HandlerList
- */
+#[CoversClass(HandlerList::class)]
 class HandlerListTest extends TestCase
 {
     public function testEnsuresHandlerIsSet()
@@ -58,7 +58,7 @@ class HandlerListTest extends TestCase
         $this->assertSame($handler, $list->resolve());
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testIgnoreWhenNameNotFound()
     {
         $list = new HandlerList();

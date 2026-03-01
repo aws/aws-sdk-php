@@ -10,10 +10,10 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\S3\MultipartUploader
- */
+#[CoversClass(MultipartUploader::class)]
 class MultipartUploaderTest extends TestCase
 {
     use UsesServiceTrait;
@@ -26,9 +26,7 @@ class MultipartUploaderTest extends TestCase
         @unlink(sys_get_temp_dir() . '/' . self::FILENAME);
     }
 
-    /**
-     * @dataProvider getTestCases
-     */
+    #[DataProvider('getTestCases')]
     public function testS3MultipartUploadWorkflow(
         array $clientOptions = [],
         array $uploadOptions = [],
@@ -60,7 +58,7 @@ class MultipartUploaderTest extends TestCase
         $this->assertSame($url, $result['ObjectURL']);
     }
 
-    public function getTestCases()
+    public static function getTestCases(): array
     {
         $defaults = [
             'bucket' => 'foo',
@@ -134,8 +132,7 @@ class MultipartUploaderTest extends TestCase
         $this->assertSame($configProp->getValue($classicMup), $configProp->getValue($putObjectMup));
     }
 
-    /** @doesNotPerformAssertions */
-    public function testMultipartSuccessStreams()
+    public static function multipartSuccessStreams(): array
     {
         $size = 12 * self::MB;
         $data = str_repeat('.', $size);
@@ -154,9 +151,7 @@ class MultipartUploaderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider testMultipartSuccessStreams
-     */
+    #[DataProvider('multipartSuccessStreams')]
     public function testS3MultipartUploadParams($stream, $size)
     {
         /** @var \Aws\S3\S3Client $client */
@@ -196,7 +191,7 @@ class MultipartUploaderTest extends TestCase
         $this->assertSame($url, $result['ObjectURL']);
     }
 
-    public function getContentTypeSettingTests()
+    public static function getContentTypeSettingTests(): array
     {
         $size = 12 * self::MB;
         $data = str_repeat('.', $size);
@@ -227,9 +222,7 @@ class MultipartUploaderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getContentTypeSettingTests
-     */
+    #[DataProvider('getContentTypeSettingTests')]
     public function testS3MultipartContentTypeSetting(
         $stream,
         $params,
@@ -304,9 +297,7 @@ class MultipartUploaderTest extends TestCase
         $uploader->upload();
     }
 
-    /**
-     * @dataProvider testMultipartSuccessStreams
-     */
+    #[DataProvider('multipartSuccessStreams')]
     public function testUploaderAddsFlexibleChecksums($stream, $size)
     {
         /** @var \Aws\S3\S3Client $client */
@@ -352,25 +343,32 @@ class MultipartUploaderTest extends TestCase
 
     public function testAddContentMd5EmitsDeprecationNotice()
     {
-        $this->expectDeprecation();
-        $this->expectDeprecationMessage('S3 no longer supports MD5 checksums.');
-        $data = str_repeat('.', 12 * self::MB);
-        $filename = sys_get_temp_dir() . '/' . self::FILENAME;
-        file_put_contents($filename, $data);
-        $source = Psr7\Utils::streamFor(fopen($filename, 'r'));
-        $client = $this->getTestClient('s3');
-        $options = ['bucket' => 'foo', 'key' => 'bar', 'add_content_md5' => true];
-        $this->addMockResults($client, [
-            new Result(['UploadId' => 'baz']),
-            new Result(['ETag' => 'A']),
-            new Result(['ETag' => 'B']),
-            new Result(['ETag' => 'C']),
-        ]);
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        });
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('S3 no longer supports MD5 checksums.');
+        try {
+            $data = str_repeat('.', 12 * self::MB);
+            $filename = sys_get_temp_dir() . '/' . self::FILENAME;
+            file_put_contents($filename, $data);
+            $source = Psr7\Utils::streamFor(fopen($filename, 'r'));
+            $client = $this->getTestClient('s3');
+            $options = ['bucket' => 'foo', 'key' => 'bar', 'add_content_md5' => true];
+            $this->addMockResults($client, [
+                new Result(['UploadId' => 'baz']),
+                new Result(['ETag' => 'A']),
+                new Result(['ETag' => 'B']),
+                new Result(['ETag' => 'C']),
+            ]);
 
-        $uploader = new MultipartUploader($client, $source, $options);
-        $result = $uploader->upload();
+            $uploader = new MultipartUploader($client, $source, $options);
+            $uploader->upload();
+        } finally {
+            restore_error_handler();
+        }
     }
-  
+
     public function testUploadPrintsProgress()
     {
         $progressBar = [

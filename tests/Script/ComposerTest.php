@@ -6,10 +6,13 @@ use Aws\Script\Composer\Composer;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(Composer::class)]
 class ComposerTest extends TestCase
 {
-    public function invalidServiceNameProvider()
+    public static function invalidServiceNameProvider(): array
     {
         return [
             [['foo'], 'foo'],
@@ -19,12 +22,7 @@ class ComposerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidServiceNameProvider
-     *
-     * @param $serviceList
-     * @param $invalidService
-     */
+    #[DataProvider('invalidServiceNameProvider')]
     public function testListInvalidServiceName($serviceList, $invalidService)
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -45,7 +43,7 @@ class ComposerTest extends TestCase
         Composer::removeUnusedServices($this->getMockEvent([]));
     }
 
-    public function servicesToKeepProvider()
+    public static function servicesToKeepProvider(): array
     {
         return [
             [['S3']],
@@ -57,11 +55,7 @@ class ComposerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider servicesToKeepProvider
-     *
-     * @param $servicesToKeep
-     */
+    #[DataProvider('servicesToKeepProvider')]
     public function testRemoveServices($servicesToKeep)
     {
         $filesystem = new Filesystem();
@@ -113,9 +107,7 @@ class ComposerTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider retryProvider
-     */
+    #[DataProvider('retryProvider')]
     public function testRetriesOnException($success, $writeCalls)
     {
         if (!$success) {
@@ -124,17 +116,22 @@ class ComposerTest extends TestCase
                 'Removal failed after several attempts. Last error: Simulated Exception'
             );
         }
-        $exception = new IOException('Simulated Exception');
         $filesystem = $this->getMockBuilder(Filesystem::class)
             ->disableOriginalConstructor()
             ->getMock();
+
+        $calls = 0;
         $filesystem->expects($this->any())
             ->method('remove')
-            ->will($this->onConsecutiveCalls(
-                $this->throwException($exception),
-                $this->throwException($exception),
-                $success ? $this->returnValue(true) : $this->throwException($exception)
-            ));
+            ->willReturnCallback(function () use ($success, &$writeCalls, &$calls) {
+                if ($success && $calls >= ($writeCalls - 1)) {
+                    return true;
+                }
+
+                $calls++;
+
+                throw new IOException('Simulated Exception');
+            });
         $filesystem->expects($this->any())
             ->method('exists')
             ->willReturn(true);
@@ -166,7 +163,7 @@ class ComposerTest extends TestCase
         );
     }
 
-    public function retryProvider()
+    public static function retryProvider(): array
     {
         return [
             'success' => [true , 3],

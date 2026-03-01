@@ -10,10 +10,10 @@ use Aws\Middleware;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Api\Serializer\RestXmlSerializer
- */
+#[CoversClass(RestXmlSerializer::class)]
 class RestXmlSerializerTest extends TestCase
 {
     use UsesServiceTrait;
@@ -83,10 +83,10 @@ class RestXmlSerializerTest extends TestCase
     }
 
     /**
-     * @dataProvider boolProvider
      * @param bool $arg
      * @param string $expected
      */
+    #[DataProvider('boolProvider')]
     public function testSerializesHeaderValueToBoolString($arg, $expected)
     {
         $request = $this->getRequest('PutObject', [
@@ -101,7 +101,8 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    public function boolProvider() {
+    public static function boolProvider(): array
+    {
         return [
             [true, 'true'],
             [false, 'false']
@@ -118,9 +119,7 @@ class RestXmlSerializerTest extends TestCase
         $this->assertSame('http://foo.com/', (string) $request->getUri());
     }
 
-    /**
-     * @dataProvider s3EndpointResolutionProvider
-     */
+    #[DataProvider('s3EndpointResolutionProvider')]
     public function testS3EndpointResolution(
         string $endpoint,
         string $bucket,
@@ -142,9 +141,7 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider s3EndpointResolutionProvider
-     */
+    #[DataProvider('s3EndpointResolutionProvider')]
     public function testS3EndpointV2Resolution(
         string $endpoint,
         string $bucket,
@@ -167,9 +164,7 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider s3DotSegmentProvider
-     */
+    #[DataProvider('s3DotSegmentProvider')]
     public function testS3DotSegmentPreservation(
         string $endpoint,
         string $bucket,
@@ -191,9 +186,7 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider s3DotSegmentProvider
-     */
+    #[DataProvider('s3DotSegmentProvider')]
     public function testS3DotSegmentV2Preservation(
         string $endpoint,
         string $bucket,
@@ -216,9 +209,7 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider restXmlEndpointResolutionProvider
-     */
+    #[DataProvider('restXmlEndpointResolutionProvider')]
     public function testRestXmlEndpointResolution(
         string $endpoint,
         string $requestUri,
@@ -241,9 +232,7 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider restXmlEndpointResolutionProvider
-     */
+    #[DataProvider('restXmlEndpointResolutionProvider')]
     public function testRestXmlEndpointV2Resolution(
         string $endpoint,
         string $requestUri,
@@ -267,7 +256,7 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    public function s3EndpointResolutionProvider(): \Generator
+    public static function s3EndpointResolutionProvider(): \Generator
     {
         // Virtual-hosted-style (default)
         yield 's3_virtual_hosted_standard' => [
@@ -379,7 +368,7 @@ class RestXmlSerializerTest extends TestCase
         ];
     }
 
-    public function s3DotSegmentProvider(): \Generator
+    public static function s3DotSegmentProvider(): \Generator
     {
         // Virtual-hosted-style (default)
         yield 's3_virtual_dot_segment_start' => [
@@ -440,7 +429,7 @@ class RestXmlSerializerTest extends TestCase
         ];
     }
 
-    public function restXmlEndpointResolutionProvider(): \Generator
+    public static function restXmlEndpointResolutionProvider(): \Generator
     {
         // Basic REST XML service endpoints
         yield 'restxml_no_path' => [
@@ -489,9 +478,7 @@ class RestXmlSerializerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider s3E2EProvider
-     */
+    #[DataProvider('s3E2EProvider')]
     public function testS3EndpointResolutionE2E(
         string $region,
         string $bucket,
@@ -525,9 +512,7 @@ class RestXmlSerializerTest extends TestCase
         $client->getObject(['Bucket' => $bucket, 'Key' => $key]);
     }
 
-    /**
-     * @dataProvider s3E2EProvider
-     */
+    #[DataProvider('s3E2EProvider')]
     public function testS3EndpointResolutionE2ELegacyProvider(
         string $region,
         string $bucket,
@@ -562,7 +547,7 @@ class RestXmlSerializerTest extends TestCase
         $client->getObject(['Bucket' => $bucket, 'Key' => $key]);
     }
 
-    public function s3E2EProvider(): \Generator
+    public static function s3E2EProvider(): \Generator
     {
         // Virtual-hosted style (default)
         yield 's3_virtual_simple' => [

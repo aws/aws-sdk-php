@@ -7,22 +7,21 @@ use Aws\S3\S3Transfer\Progress\PlainProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\AbstractProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\TransferProgressBarFormat;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(AbstractProgressBarFormat::class)]
+#[CoversClass(ColoredTransferProgressBarFormat::class)]
+#[CoversClass(PlainProgressBarFormat::class)]
+#[CoversClass(TransferProgressBarFormat::class)]
 class AbstractProgressBarFormatTest extends TestCase
 {
     /**
      * Tests the different implementations of
      * ProgressBarFormat. Each template and parameter
      * can be seen in each of the implementations.
-     *
-     * @param string $implementationClass
-     * @param array $args
-     * @param string $expectedFormat
-     *
-     * @return void
-     * @dataProvider progressBarFormatProvider
-     *
      */
+    #[DataProvider('progressBarFormatProvider')]
     public function testProgressBarFormat(
         string $implementationClass,
         array $args,
@@ -39,7 +38,7 @@ class AbstractProgressBarFormatTest extends TestCase
     /**
      * @return array[]
      */
-    public function progressBarFormatProvider(): array
+    public static function progressBarFormatProvider(): array
     {
         return [
             'plain_progress_bar_format_1' => [

@@ -7,15 +7,16 @@ use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\MetricsBuilder;
 use Aws\Result;
+use Aws\ResultPaginator;
 use Aws\S3\S3Client;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\ResultPaginator
- */
+#[CoversClass(ResultPaginator::class)]
 class ResultPaginatorTest extends TestCase
 {
     use UsesServiceTrait;
@@ -41,9 +42,7 @@ class ResultPaginatorTest extends TestCase
         ]);
     }
 
-    /**
-     * @dataProvider getPaginatorIterationData
-     */
+    #[DataProvider('getPaginatorIterationData')]
     public function testStandardIterationWorkflow(
         array $config,
         array $results,
@@ -77,9 +76,7 @@ class ResultPaginatorTest extends TestCase
         $this->assertEquals($expectedTableNames, $tableNames);
     }
 
-    /**
-     * @dataProvider getPaginatorIterationData
-     */
+    #[DataProvider('getPaginatorIterationData')]
     public function testAsyncWorkflow(
         array $config,
         array $results,
@@ -103,8 +100,9 @@ class ResultPaginatorTest extends TestCase
     public function testNonIterator()
     {
         // Get test data
-        $config = $this->getPaginatorIterationData()[0][0];
-        $results = $this->getPaginatorIterationData()[0][1];
+        $data = self::getPaginatorIterationData();
+        $config = $data[0][0];
+        $results = $data[0][1];
         // Create the client and paginator
         $client = $this->getCustomClientProvider($config);
         $this->addMockResults($client, $results);
@@ -122,7 +120,7 @@ class ResultPaginatorTest extends TestCase
     /**
      * @return array Test data
      */
-    public function getPaginatorIterationData()
+    public static function getPaginatorIterationData(): array
     {
         return [
             // Single field token case

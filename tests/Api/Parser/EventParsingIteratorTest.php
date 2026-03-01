@@ -15,10 +15,10 @@ use Aws\Exception\EventStreamDataException;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Api\Parser\EventParsingIterator
- */
+#[CoversClass(EventParsingIterator::class)]
 class EventParsingIteratorTest extends TestCase
 {
     const PROTOCOL_XML = 'XML';
@@ -67,11 +67,11 @@ class EventParsingIteratorTest extends TestCase
      *
      * @return \Generator
      */
-    public function iteratorDataProvider()
+    public static function iteratorDataProvider(): \Generator
     {
        foreach (self::$eventCases as $eventCase) {
-            $shape = $this->loadEventStreamShapeFromJson($eventCase['shape']);
-            $restParser = $this->createRestParser($eventCase['protocol']);
+            $shape = self::loadEventStreamShapeFromJson($eventCase['shape']);
+            $restParser = self::createRestParser($eventCase['protocol']);
             foreach ($eventCase['eventNames'] as $eventName) {
                 $input = base64_decode(file_get_contents(
                     __DIR__ . '/../eventstream_fixtures/input/' . $eventName
@@ -95,9 +95,8 @@ class EventParsingIteratorTest extends TestCase
      * this unique element against the expected output, otherwise we evaluate the whole array
      * against the expected output. The reason for this is to test parsing either single or multiple
      * events.
-     *
-     * @dataProvider iteratorDataProvider
      */
+    #[DataProvider('iteratorDataProvider')]
     public function testParsedEventsMatchExpectedOutput($iterator, $expectedOutput)
     {
         $parsedMessage = [];
@@ -115,9 +114,8 @@ class EventParsingIteratorTest extends TestCase
     /**
      * This method tests for whether the deserialized event members match the equivalent
      * shape member types.
-     *
-     * @dataProvider iteratorDataProvider
      */
+    #[DataProvider('iteratorDataProvider')]
     public function testParsedEventsMatchExpectedType($iterator)
     {
         $reflectedIteratorClass = new \ReflectionClass(get_class($iterator));
@@ -197,7 +195,7 @@ class EventParsingIteratorTest extends TestCase
                 __DIR__ . '/../eventstream_fixtures/input/error_event'
             ))
         );
-        $shape = $this->loadEventStreamShapeFromJson(self::EVENT_STREAM_SHAPE);
+        $shape = self::loadEventStreamShapeFromJson(self::EVENT_STREAM_SHAPE);
         $iterator = new EventParsingIterator(
             $stream,
             $shape,
@@ -226,7 +224,7 @@ class EventParsingIteratorTest extends TestCase
     {
         $this->expectExceptionMessage("Failed to parse unknown message type.");
         $this->expectException(\Aws\Api\Parser\Exception\ParserException::class);
-        $shape = $this->loadEventStreamShapeFromJson(self::EVENT_STREAM_SHAPE);
+        $shape = self::loadEventStreamShapeFromJson(self::EVENT_STREAM_SHAPE);
         $stream = Psr7\Utils::streamFor(
             base64_decode(file_get_contents(
                 __DIR__ . '/../eventstream_fixtures/input/unknown_message_type'
@@ -251,7 +249,7 @@ class EventParsingIteratorTest extends TestCase
     {
         $this->expectExceptionMessage("Failed to parse without event type.");
         $this->expectException(\Aws\Api\Parser\Exception\ParserException::class);
-        $shape = $this->loadEventStreamShapeFromJson(self::EVENT_STREAM_SHAPE);
+        $shape = self::loadEventStreamShapeFromJson(self::EVENT_STREAM_SHAPE);
         $stream = Psr7\Utils::streamFor(
             base64_decode(file_get_contents(
                 __DIR__ . '/../eventstream_fixtures/input/unknown_event_type'
@@ -277,7 +275,7 @@ class EventParsingIteratorTest extends TestCase
      *
      * @return StructureShape
      */
-    private function loadEventStreamShapeFromJson($jsonFilePath)
+    private static function loadEventStreamShapeFromJson($jsonFilePath): StructureShape
     {
        $shape = json_decode(
             file_get_contents($jsonFilePath),
@@ -293,22 +291,21 @@ class EventParsingIteratorTest extends TestCase
     /**
      * This method creates an instance of a RestParser class based on the protocol provided.
      *
+     * @param $protocol
+     *
      * @return AbstractRestParser
      */
-    private function createRestParser($protocol)
+    private static function createRestParser($protocol): AbstractRestParser
     {
-        switch ($protocol) {
-            case self::PROTOCOL_XML:
-                return new RestXmlParser(new Service([], function () {
-                    return [];
-                }));
-            case self::PROTOCOL_JSON:
-                return new RestJsonParser(new Service([], function () {
-                    return [];
-                }));
-            default:
-                throw new ParserException('Unknown parser protocol "' . $protocol . '"');
-        }
+        return match ($protocol) {
+            self::PROTOCOL_XML => new RestXmlParser(new Service([], function () {
+                return [];
+            })),
+            self::PROTOCOL_JSON => new RestJsonParser(new Service([], function () {
+                return [];
+            })),
+            default => throw new ParserException('Unknown parser protocol "' . $protocol . '"'),
+        };
     }
 
     public function testCanHandleNonSeekableStream()
@@ -345,7 +342,7 @@ EOF;
         $eventParsingIterator = new EventParsingIterator(
             $noSeekableStream,
             $structureShape,
-            $this->createRestParser(self::PROTOCOL_JSON)
+            self::createRestParser(self::PROTOCOL_JSON)
         );
         $expected = [
             'person' => [
@@ -366,20 +363,12 @@ AAAAaAAAAFZOaBckDTptZXNzYWdlLXR5cGUHAAVldmVudAs6ZXZlbnQtdHlwZQcAEGluaXRpYWwtcmVz
 EOF;
         $stream = Psr7\Utils::streamFor(base64_decode($event));
         $structureShape = new StructureShape([], new ShapeMap([]));
-        $iterator = new EventParsingIterator($stream, $structureShape, $this->createRestParser(self::PROTOCOL_JSON));
+        $iterator = new EventParsingIterator($stream, $structureShape, self::createRestParser(self::PROTOCOL_JSON));
 
         $this->assertEquals(['initial-response' => []], $iterator->current());
     }
 
-    /**
-     * @param array $eventStreams
-     * @param string $expectedExceptionMessage
-     *
-     * @return void
-     *
-     * @dataProvider handleEventWithExceptionsProvider
-     *
-     */
+    #[DataProvider('handleEventWithExceptionsProvider')]
     public function testHandleEventWithExceptions(
         array $eventStreams,
         string $expectedExceptionMessage,
@@ -404,7 +393,7 @@ EOF;
         $iterator = new EventParsingIterator(
             $stream,
             $structureShape,
-            $this->createRestParser(self::PROTOCOL_JSON)
+            self::createRestParser(self::PROTOCOL_JSON)
         );
         foreach ($iterator as $_) {}
     }
@@ -412,7 +401,8 @@ EOF;
     /**
      * @return array[]
      */
-    public function handleEventWithExceptionsProvider(): array {
+    public static function handleEventWithExceptionsProvider(): array
+    {
         return [
             'handle_event_with_exceptions_1' => [
                 'event_streams' =>

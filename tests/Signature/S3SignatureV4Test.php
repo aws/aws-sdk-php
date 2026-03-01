@@ -5,11 +5,11 @@ use Aws\Credentials\Credentials;
 use Aws\Signature\S3SignatureV4;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use GuzzleHttp\Psr7\Request;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 require_once __DIR__ . '/sig_hack.php';
-/**
- * @covers Aws\Signature\S3SignatureV4
- */
+
+#[CoversClass(S3SignatureV4::class)]
 class S3SignatureV4Test extends TestCase
 {
     public static function set_up_before_class()
