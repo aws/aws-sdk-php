@@ -3,10 +3,9 @@ namespace Aws\Test;
 
 use Aws\LruArrayCache;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\LruArrayCache
- */
+#[CoversClass(LruArrayCache::class)]
 class LruArrayCacheTest extends TestCase
 {
     public function testSetRemoveAndRetrieve()

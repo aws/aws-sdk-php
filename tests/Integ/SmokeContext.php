@@ -384,7 +384,6 @@ class SmokeContext extends Assert implements
     {
         if ($this->error->getAwsErrorCode() === 'SubscriptionRequiredException') {
             // For skipping subscription required exceptions
-            $this->assertTrue(true);
             return;
         }
 

@@ -4,11 +4,10 @@ namespace Aws\Test\Api;
 use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Api\MapShape;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\Api\MapShape
- */
+#[CoversClass(MapShape::class)]
 class MapShapeTest extends TestCase
 {
     public function testReturnsValue()

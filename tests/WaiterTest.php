@@ -18,12 +18,13 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Waiter
- */
+#[CoversClass(Waiter::class)]
 class WaiterTest extends TestCase
 {
     use UsesServiceTrait;
@@ -61,7 +62,7 @@ class WaiterTest extends TestCase
         );
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testContinueWaitingOnHandlerError()
     {
         $retries = 10;
@@ -94,7 +95,7 @@ class WaiterTest extends TestCase
         ]);
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesnotPerformAssertions]
     public function testCanCancel()
     {
         $client = $this->getTestClient('DynamoDb');
@@ -146,11 +147,20 @@ class WaiterTest extends TestCase
         $this->assertSame(6000, $waitTime, 'Did not delay long enough.');
     }
 
-    /**
-     * @dataProvider getWaiterWorkflowTestCases
-     */
+    #[DataProvider('waiterWorkflowDataProvider')]
     public function testWaiterWorkflow($results, $expectedException)
     {
+        // Normalize results
+        foreach ($results as &$result) {
+            if (is_array($result)) {
+                $result = $this->createMockAwsException(
+                    $result['code'],
+                    $result['type'],
+                    $result['message']
+                );
+            }
+        }
+
         // Prepare a client
         $client = $this->getTestClient('DynamoDb', [
             'api_provider' => $this->getApiProvider()
@@ -178,12 +188,16 @@ class WaiterTest extends TestCase
         $this->assertEquals($expectedException, $actualException);
     }
 
-    public function getWaiterWorkflowTestCases()
+    public static function waiterWorkflowDataProvider(): array
     {
         return [
             [
                 [
-                    $this->createMockAwsException('ResourceNotFoundException'),
+                    [
+                        'code' => 'ResourceNotFoundException',
+                        'type' => null,
+                        'message' => null
+                    ],
                     new Result(['Table' => ['TableStatus' => 'CREATING']]),
                     new Result(['Table' => ['TableStatus' => 'CREATING']]),
                     new Result(['Table' => ['TableStatus' => 'ACTIVE']]),
@@ -209,7 +223,11 @@ class WaiterTest extends TestCase
             ],
             [
                 [
-                    $this->createMockAwsException(null, null, 'foo'),
+                    [
+                        'code' => null,
+                        'type' => null,
+                        'message' => 'foo'
+                    ],
                 ],
                 'The TableExists waiter entered a failure state. Reason: foo'
             ],
@@ -260,22 +278,22 @@ class WaiterTest extends TestCase
         };
     }
 
-    /**
-     * @dataProvider getMatchersTestCases
-     */
+    #[DataProvider('matcherDataProvider')]
     public function testMatchers($matcher, $result, $acceptor, $expected)
     {
+
         $waiter = new \ReflectionClass(Waiter::class);
         $matcher = $waiter->getMethod($matcher);
         $waiter = $waiter->newInstanceWithoutConstructor();
 
-        $this->assertEquals($expected, $matcher->invoke($waiter, $result, $acceptor));
+        $this->assertEquals($expected, $matcher->invoke(
+            $waiter,
+            $result === null ? null : $this->getMockResult($result),
+            $acceptor
+        ));
     }
 
-    /**
-     * @return array
-     */
-    public function getMatchersTestCases(): array
+    public static function matcherDataProvider(): array
     {
         return [
             'matches_path_1' => [
@@ -286,31 +304,31 @@ class WaiterTest extends TestCase
             ],
             'matches_path_2' => [
                 'matcher' => 'matchesPath',
-                'result' => $this->getMockResult(['a' => ['b' => 'c']]),
+                'result' => ['a' => ['b' => 'c']],
                 'acceptor' => ['argument' => 'a.b', 'expected' => 'c'],
                 'expected' => true
             ],
             'matches_path_3' => [
                 'matcher' => 'matchesPath',
-                'result' => $this->getMockResult(['a' => ['b' => 'c']]),
+                'result' => ['a' => ['b' => 'c']],
                 'acceptor' => ['argument' => 'a', 'expected' => 'z'],
                 'expected' => false
             ],
             'matches_path_4_same_value_different_type' => [
                 'matcher' => 'matchesPath',
-                'result' => $this->getMockResult(['a' => ['b' => 'false']]),
+                'result' => ['a' => ['b' => 'false']],
                 'acceptor' => ['argument' => 'a.b', 'expected' => false],
                 'expected' => false
             ],
             'matches_path_5_same_value_same_type' => [
                 'matcher' => 'matchesPath',
-                'result' => $this->getMockResult(['a' => ['b' => false]]),
+                'result' => ['a' => ['b' => false]],
                 'acceptor' => ['argument' => 'a.b', 'expected' => false],
                 'expected' => true
             ],
             'matches_path_6_same_value_same_type' => [
                 'matcher' => 'matchesPath',
-                'result' => $this->getMockResult(['a' => ['b' => 'false']]),
+                'result' => ['a' => ['b' => 'false']],
                 'acceptor' => ['argument' => 'a.b', 'expected' => 'false'],
                 'expected' => true
             ],
@@ -322,35 +340,35 @@ class WaiterTest extends TestCase
             ],
             'matches_path_all_2' => [
                 'matcher' => 'matchesPathAll',
-                'result' =>  $this->getMockResult([
+                'result' =>  [
                     'a' => [
                         ['b' => 'c'],
                         ['b' => 'c'],
                         ['b' => 'c']
                     ]
-                ]),
+                ],
                 'acceptor' => ['argument' => 'a[].b', 'expected' => 'c'],
                 'expected' => true,
             ],
             'matches_path_all_3' => [
                 'matcher' => 'matchesPathAll',
-                'result' =>  $this->getMockResult(['a' => [
+                'result' =>  ['a' => [
                     ['b' => 'c'],
                     ['b' => 'z'],
                     ['b' => 'c']
-                ]]),
+                ]],
                 'acceptor' => ['argument' => 'a[].b', 'expected' => 'c'],
                 'expected' => false,
             ],
             'matches_path_all_4_empty_array_as_result' => [
                 'matcher' => 'matchesPathAll',
-                'result' =>  $this->getMockResult(),
+                'result' =>  [],
                 'acceptor' => ['argument' => 'a', 'expected' => 'c'],
                 'expected' => false,
             ],
             'matches_path_all_4_non_array_value_as_result' => [
                 'matcher' => 'matchesPathAll',
-                'result' =>  $this->getMockResult(['a' => 'FooValue']),
+                'result' =>  ['a' => 'FooValue'],
                 'acceptor' => ['argument' => 'a[].b', 'expected' => 'c'],
                 'expected' => false,
             ],
@@ -362,37 +380,37 @@ class WaiterTest extends TestCase
             ],
             'matches_path_any_2' => [
                 'matcher' => 'matchesPathAny',
-                'result' =>  $this->getMockResult([
+                'result' =>  [
                     'a' => [
                         ['b' => 'c'],
                         ['b' => 'd'],
                         ['b' => 'e']
                     ]
-                ]),
+                ],
                 'acceptor' => ['argument' => 'a[].b', 'expected' => 'c'],
                 'expected' => true,
             ],
             'matches_path_any_3' => [
                 'matcher' => 'matchesPathAny',
-                'result' =>  $this->getMockResult([
+                'result' =>  [
                     'a' => [
                         ['b' => 'x'],
                         ['b' => 'y'],
                         ['b' => 'z']
                     ]
-                ]),
+                ],
                 'acceptor' => ['argument' => 'a[].b', 'expected' => 'c'],
                 'expected' => false,
             ],
             'matches_path_any_4_empty_array_as_result' => [
                 'matcher' => 'matchesPathAny',
-                'result' =>  $this->getMockResult(),
+                'result' =>  [],
                 'acceptor' => ['argument' => 'a', 'expected' => 'c'],
                 'expected' => false,
             ],
             'matches_path_any_5_non_array_value_as_result' => [
                 'matcher' => 'matchesPathAll',
-                'result' =>  $this->getMockResult(['a' => 'FooValue']),
+                'result' =>  ['a' => 'FooValue'],
                 'acceptor' => ['argument' => 'a[].b', 'expected' => 'c'],
                 'expected' => false,
             ],
@@ -404,13 +422,13 @@ class WaiterTest extends TestCase
             ],
             'matches_status_2' => [
                 'matcher' => 'matchesStatus',
-                'result' =>  $this->getMockResult(),
+                'result' =>  [],
                 'acceptor' => ['expected' => 200],
                 'expected' => true,
             ],
             'matches_status_3' => [
                 'matcher' => 'matchesStatus',
-                'result' =>  $this->getMockResult(),
+                'result' =>  [],
                 'acceptor' => ['expected' => 400],
                 'expected' => false,
             ],
@@ -422,13 +440,13 @@ class WaiterTest extends TestCase
             ],
             'matches_error_2' => [
                 'matcher' => 'matchesError',
-                'result' =>  $this->getMockResult('InvalidData'),
+                'result' =>  'InvalidData',
                 'acceptor' => ['expected' => 'InvalidData'],
                 'expected' => true,
             ],
             'matches_error_3' => [
                 'matcher' => 'matchesError',
-                'result' =>  $this->getMockResult('InvalidData'),
+                'result' =>  'InvalidData',
                 'acceptor' => ['expected' => 'Foo'],
                 'expected' => false,
             ],
@@ -449,7 +467,6 @@ class WaiterTest extends TestCase
 
         return new Result($data + ['@metadata' => ['statusCode' => 200]]);
     }
-
 
     /**
      * Tests the waiter expects not error.

@@ -4,15 +4,16 @@ namespace Aws\Test\Api;
 use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Api\Validator;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Api\Validator
- */
+#[CoversClass(Validator::class)]
 class ValidatorTest extends TestCase
 {
-    public function validationProvider()
+    public static function validationProvider(): array
     {
         return [
             [
@@ -638,9 +639,7 @@ class ValidatorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider validationProvider
-     */
+    #[DataProvider('validationProvider')]
     public function testValidatesInput($shape, $input, $result)
     {
         $shape = Shape::create($shape, new ShapeMap([]));
@@ -681,7 +680,7 @@ class ValidatorTest extends TestCase
         $validator->validate('Foo', $shape, ['foo' => '']);
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testDoesNotValidateMaxByDefault()
     {
         $shape = Shape::create(
@@ -695,7 +694,7 @@ class ValidatorTest extends TestCase
         $validator->validate('Foo', $shape, ['foo' => '1234567890']);
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testDoesNotValidatePatternsByDefault()
     {
         $validator = new Validator();
@@ -714,7 +713,7 @@ class ValidatorTest extends TestCase
         $validator->validate('Foo', $shape, ['caps' => 'abc']);
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testCanDisableRequiredTrait()
     {
         $validator = new Validator(['required' => false]);

@@ -20,9 +20,12 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Aws\Test\MetricsBuilderTestTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
+#[CoversClass(S3EncryptionClient::class)]
 class S3EncryptionClientTest extends TestCase
 {
     use S3EncryptionClientTestingTrait;
@@ -61,9 +64,7 @@ class S3EncryptionClientTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider getValidMaterialsProviders
-     */
+    #[DataProvider('getValidMaterialsProviders')]
     public function testPutObjectTakesValidMaterialsProviders(
         $provider,
         $exception
@@ -95,9 +96,7 @@ class S3EncryptionClientTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @dataProvider getInvalidMaterialsProviders
-     */
+    #[DataProvider('getInvalidMaterialsProviders')]
     public function testPutObjectRejectsInvalidMaterialsProviders(
         $provider,
         $exception
@@ -120,9 +119,7 @@ class S3EncryptionClientTest extends TestCase
         ]);
     }
 
-    /**
-     * @dataProvider getValidMetadataStrategies
-     */
+    #[DataProvider('getValidMetadataStrategies')]
     public function testPutObjectTakesValidMetadataStrategy(
         $strategy,
         $exception,
@@ -161,9 +158,7 @@ class S3EncryptionClientTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @dataProvider getInvalidMetadataStrategies
-     */
+    #[DataProvider('getInvalidMetadataStrategies')]
     public function testPutObjectRejectsInvalidMetadataStrategy($strategy, $exception)
     {
         if ($exception) {
@@ -249,9 +244,7 @@ class S3EncryptionClientTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @dataProvider getCiphers
-     */
+    #[DataProvider('getCiphers')]
     public function testPutObjectValidatesCipher(
         $cipher,
         $exception = null,
@@ -286,9 +279,7 @@ class S3EncryptionClientTest extends TestCase
         ]);
     }
 
-    /**
-     * @dataProvider getKeySizes
-     */
+    #[DataProvider('getKeySizes')]
     public function testPutObjectValidatesKeySize(
         $keySize,
         $exception
@@ -710,8 +701,11 @@ EOXML;
      */
     public function testTriggersWarningForGcmEncryptionWithAad()
     {
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("'Aad' has been supplied for content encryption with AES/GCM/NoPadding");
-        $this->expectWarning();
+        set_error_handler(function ($errno, $errstr) {
+            throw new \RuntimeException($errstr, $errno);
+        }, E_USER_WARNING);
         $s3 = new S3Client([
             'region' => 'us-west-2',
             'version' => 'latest',
@@ -724,28 +718,32 @@ EOXML;
             },
         ]);
 
-        $kms = $this->getKmsClient();
-        $keyId = '11111111-2222-3333-4444-555555555555';
-        $provider = new KmsMaterialsProvider($kms, $keyId);
-        $this->addMockResults($kms, [
-            new Result([
-                'CiphertextBlob' => 'encrypted',
-                'Plaintext' => random_bytes(32),
-            ])
-        ]);
+        try {
+            $kms = $this->getKmsClient();
+            $keyId = '11111111-2222-3333-4444-555555555555';
+            $provider = new KmsMaterialsProvider($kms, $keyId);
+            $this->addMockResults($kms, [
+                new Result([
+                    'CiphertextBlob' => 'encrypted',
+                    'Plaintext' => random_bytes(32),
+                ])
+            ]);
 
-        $client = @new S3EncryptionClient($s3);
-        $client->putObject([
-            'Bucket' => 'foo',
-            'Key' => 'bar',
-            'Body' => 'test',
-            '@MaterialsProvider' => $provider,
-            '@CipherOptions' => [
-                'Cipher' => 'gcm',
-                'Aad' => 'test'
-            ],
-        ]);
-        $this->assertTrue($this->mockQueueEmpty());
+            $client = @new S3EncryptionClient($s3);
+            $client->putObject([
+                'Bucket' => 'foo',
+                'Key' => 'bar',
+                'Body' => 'test',
+                '@MaterialsProvider' => $provider,
+                '@CipherOptions' => [
+                    'Cipher' => 'gcm',
+                    'Aad' => 'test'
+                ],
+            ]);
+            $this->assertTrue($this->mockQueueEmpty());
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testAppendsMetricsCaptureMiddleware()

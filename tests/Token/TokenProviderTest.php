@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Token;
 
 use Aws\LruArrayCache;
@@ -11,12 +12,12 @@ use Aws\Token\TokenInterface;
 use Aws\Token\TokenProvider;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 require_once __DIR__ . '/../Token/token_hack.php';
 
-/**
- * @covers Aws\Token\TokenProvider
- */
+#[CoversClass(TokenProvider::class)]
 class TokenProviderTest extends TestCase
 {
     use UsesServiceTrait;
@@ -28,7 +29,8 @@ class TokenProviderTest extends TestCase
         unset($_SERVER['aws_str_to_time']);
     }
 
-    private function clearEnv() {
+    private function clearEnv()
+    {
         putenv('AWS_SHARED_CREDENTIALS_FILE');
         putenv('HOME');
         putenv('AWS_PROFILE');
@@ -49,7 +51,8 @@ class TokenProviderTest extends TestCase
         return $dir;
     }
 
-    private function getHomeDir() {
+    private function getHomeDir()
+    {
         if ($homeDir = getenv('HOME')) {
             return $homeDir;
         }
@@ -71,7 +74,7 @@ sso_session = admin
 sso_region = us-east-1
 sso_start_url = https://d-abc123.awsapps.com/start
 EOT;
-        $time =  gmdate(
+        $time = gmdate(
             'Y-m-d\TH:i:s\Z',
             time() + 5000
         );
@@ -124,7 +127,8 @@ EOT;
         $this->assertEquals($token->getExpiration(), $found->getExpiration());
     }
 
-    public function tokenProviderSuccessCases() {
+    public static function tokenProviderSuccessCases(): array
+    {
         return [
             "Valid token with all fields" =>
                 [
@@ -157,9 +161,7 @@ EOT;
         ];
     }
 
-    /**
-     * @dataProvider tokenProviderSuccessCases
-     */
+    #[DataProvider('tokenProviderSuccessCases')]
     public function testTokenProviderCachedSuccess($cachedToken, $expectedToken)
     {
         $_SERVER['aws_time'] = 1640466950;
@@ -187,7 +189,8 @@ EOT;
         $this->assertEquals(strtotime($expectedToken['expiration']), $found->getExpiration());
     }
 
-    public function tokenProviderSuccessCasesWithRefresh() {
+    public static function tokenProviderSuccessCasesWithRefresh(): array
+    {
         return [
             "Expired token refresh with refresh token" =>
                 [
@@ -258,9 +261,7 @@ EOT;
         ];
     }
 
-    /**
-     * @dataProvider tokenProviderSuccessCasesWithRefresh
-     */
+    #[DataProvider('tokenProviderSuccessCasesWithRefresh')]
     public function testTokenProviderCachedSuccessWithRefresh(
         $currentTime,
         $cachedToken,
@@ -327,7 +328,7 @@ EOT;
                 isset($cachedToken['registrationExpiresAt']) ? strToTime($cachedToken['registrationExpiresAt']) : null,
                 isset($cachedToken['region']) ? $cachedToken['region'] : null,
                 isset($cachedToken['startUrl']) ? $cachedToken['startUrl'] : null
-                );
+            );
             $saved = [
                 'token' => $token,
                 'refreshMethod' => function () use ($ssoTokenProvider) {
@@ -350,7 +351,8 @@ EOT;
         }
     }
 
-    public function tokenProviderFailureCases() {
+    public static function tokenProviderFailureCases(): array
+    {
         return [
             "Minimal expired cached token" =>
                 [
@@ -391,9 +393,7 @@ EOT;
         ];
     }
 
-    /**
-     * @dataProvider tokenProviderFailureCases
-     */
+    #[DataProvider('tokenProviderFailureCases')]
     public function testTokenProviderFailureCases($cachedToken, $expectedException)
     {
         $cache = new LruArrayCache;
@@ -430,7 +430,7 @@ EOT;
         $token = new Token('test-token', strtotime('+1 hour'));
         $providerCallCount = 0;
 
-        $provider = function() use ($token, &$providerCallCount) {
+        $provider = function () use ($token, &$providerCallCount) {
             $providerCallCount++;
             return Promise\Create::promiseFor($token);
         };

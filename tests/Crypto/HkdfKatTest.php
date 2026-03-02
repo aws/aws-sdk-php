@@ -1,20 +1,10 @@
 <?php
 namespace Aws\Test\S3\Crypto;
 
-use Aws\Crypto;
-use Aws\Result;
-use Aws\S3\S3Client;
-use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use Aws\Crypto\AesGcmDecryptingStream;
 use Aws\Crypto\AlgorithmSuite;
-use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
-use Aws\Crypto\Cipher\CipherMethod;
-use Aws\Exception\CryptoException;
 use GuzzleHttp\Psr7;
-use GuzzleHttp\Psr7\LimitStream;
-use PHPUnit\Framework\Constraint\IsEmpty;
-use Psr\Http\Message\StreamInterface;
 
 class HkdfKatTest extends TestCase
 {
@@ -48,7 +38,7 @@ class HkdfKatTest extends TestCase
         ];
     }
 
-    public function testHkdf(): void 
+    public function testHkdf(): void
     {
         $kats = HkdfKatTest::getKats();
         foreach ($kats as $kat) {

@@ -2,11 +2,12 @@
 namespace Aws\Test\S3;
 
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use Aws\S3\PermanentRedirectMiddleware;
 
-/**
- * @covers \Aws\S3\PermanentRedirectMiddleware
- */
+#[CoversClass(PermanentRedirectMiddleware::class)]
 class PermanentRedirectMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
@@ -20,7 +21,7 @@ class PermanentRedirectMiddlewareTest extends TestCase
         $s3->getObject(['Bucket' => 'test', 'Key' => 'key']);
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testPassesThroughUntouched()
     {
         $s3 = $this->getTestClient('s3');

@@ -16,11 +16,13 @@ use Aws\S3\S3Transfer\Utils\AbstractDownloadHandler;
 use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Tests MultipartDownloader abstract class implementation.
  */
+#[CoversClass(AbstractMultipartDownloader::class)]
 class AbstractMultipartDownloaderTest extends TestCase
 {
     /**
