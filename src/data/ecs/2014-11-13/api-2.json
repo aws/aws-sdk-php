@@ -1357,7 +1357,8 @@
       "type":"string",
       "enum":[
         "ON_DEMAND",
-        "SPOT"
+        "SPOT",
+        "RESERVED"
       ]
     },
     "CapacityProvider":{
@@ -1441,6 +1442,21 @@
     "CapacityProviders":{
       "type":"list",
       "member":{"shape":"CapacityProvider"}
+    },
+    "CapacityReservationPreference":{
+      "type":"string",
+      "enum":[
+        "RESERVATIONS_ONLY",
+        "RESERVATIONS_FIRST",
+        "RESERVATIONS_EXCLUDED"
+      ]
+    },
+    "CapacityReservationRequest":{
+      "type":"structure",
+      "members":{
+        "reservationGroupArn":{"shape":"String"},
+        "reservationPreference":{"shape":"CapacityReservationPreference"}
+      }
     },
     "ClientException":{
       "type":"structure",
@@ -2941,7 +2957,8 @@
         "monitoring":{"shape":"ManagedInstancesMonitoringOptions"},
         "capacityOptionType":{"shape":"CapacityOptionType"},
         "instanceRequirements":{"shape":"InstanceRequirementsRequest"},
-        "fipsEnabled":{"shape":"BoxedBoolean"}
+        "fipsEnabled":{"shape":"BoxedBoolean"},
+        "capacityReservations":{"shape":"CapacityReservationRequest"}
       }
     },
     "InstanceLaunchTemplateUpdate":{
@@ -2951,7 +2968,8 @@
         "networkConfiguration":{"shape":"ManagedInstancesNetworkConfiguration"},
         "storageConfiguration":{"shape":"ManagedInstancesStorageConfiguration"},
         "monitoring":{"shape":"ManagedInstancesMonitoringOptions"},
-        "instanceRequirements":{"shape":"InstanceRequirementsRequest"}
+        "instanceRequirements":{"shape":"InstanceRequirementsRequest"},
+        "capacityReservations":{"shape":"CapacityReservationRequest"}
       }
     },
     "InstanceRequirementsRequest":{

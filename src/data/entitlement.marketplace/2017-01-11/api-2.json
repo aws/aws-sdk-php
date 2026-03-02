@@ -41,7 +41,8 @@
         "CustomerIdentifier":{"shape":"NonEmptyString"},
         "CustomerAWSAccountId":{"shape":"NonEmptyString"},
         "Value":{"shape":"EntitlementValue"},
-        "ExpirationDate":{"shape":"Timestamp"}
+        "ExpirationDate":{"shape":"Timestamp"},
+        "LicenseArn":{"shape":"String"}
       }
     },
     "EntitlementList":{
@@ -70,7 +71,8 @@
       "enum":[
         "CUSTOMER_IDENTIFIER",
         "DIMENSION",
-        "CUSTOMER_AWS_ACCOUNT_ID"
+        "CUSTOMER_AWS_ACCOUNT_ID",
+        "LICENSE_ARN"
       ]
     },
     "GetEntitlementFilters":{

@@ -1511,6 +1511,7 @@
         "peerNetworkId":{"shape":"ResourceIdOrArn"},
         "displayName":{"shape":"ResourceDisplayName"},
         "peerNetworkCidrsToBeAdded":{"shape":"PeeredCidrList"},
+        "peerNetworkRouteTableIds":{"shape":"PeerNetworkRouteTableIdList"},
         "clientToken":{
           "shape":"CreateOdbPeeringConnectionInputClientTokenString",
           "idempotencyToken":true
@@ -2780,6 +2781,16 @@
         "ROLLING",
         "NONROLLING"
       ]
+    },
+    "PeerNetworkRouteTableId":{
+      "type":"string",
+      "pattern":"rtb-[a-z0-9]{8,17}"
+    },
+    "PeerNetworkRouteTableIdList":{
+      "type":"list",
+      "member":{"shape":"PeerNetworkRouteTableId"},
+      "max":1,
+      "min":1
     },
     "PeeredCidr":{
       "type":"string",

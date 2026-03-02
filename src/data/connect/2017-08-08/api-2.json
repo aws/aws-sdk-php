@@ -13760,15 +13760,23 @@
     },
     "EvaluationReviewMetadata":{
       "type":"structure",
-      "required":[
-        "CreatedTime",
-        "CreatedBy",
-        "ReviewRequestComments"
-      ],
+      "required":["ReviewRequestComments"],
       "members":{
         "ReviewId":{"shape":"ResourceId"},
-        "CreatedTime":{"shape":"Timestamp"},
-        "CreatedBy":{"shape":"ARN"},
+        "RequestedTime":{"shape":"Timestamp"},
+        "RequestedBy":{"shape":"ARN"},
+        "CreatedTime":{
+          "shape":"Timestamp",
+          "deprecated":true,
+          "deprecatedMessage":"CreatedTime is deprecated.",
+          "deprecatedSince":"02/17/2026"
+        },
+        "CreatedBy":{
+          "shape":"ARN",
+          "deprecated":true,
+          "deprecatedMessage":"CreatedBy is deprecated.",
+          "deprecatedSince":"02/17/2026"
+        },
         "ReviewRequestComments":{"shape":"EvaluationReviewRequestCommentList"}
       }
     },

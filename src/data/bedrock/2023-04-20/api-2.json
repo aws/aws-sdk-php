@@ -3998,7 +3998,8 @@
         "outputDataConfig":{"shape":"ModelInvocationJobOutputDataConfig"},
         "vpcConfig":{"shape":"VpcConfig"},
         "timeoutDurationInHours":{"shape":"ModelInvocationJobTimeoutDurationInHours"},
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "modelInvocationType":{"shape":"ModelInvocationType"}
       }
     },
     "CreateModelInvocationJobResponse":{
@@ -5027,7 +5028,11 @@
       "type":"structure",
       "required":["status"],
       "members":{
-        "status":{"shape":"FoundationModelLifecycleStatus"}
+        "status":{"shape":"FoundationModelLifecycleStatus"},
+        "startOfLifeTime":{"shape":"Timestamp"},
+        "endOfLifeTime":{"shape":"Timestamp"},
+        "legacyTime":{"shape":"Timestamp"},
+        "publicExtendedAccessTime":{"shape":"Timestamp"}
       }
     },
     "FoundationModelLifecycleStatus":{
@@ -5752,7 +5757,8 @@
         "outputDataConfig":{"shape":"ModelInvocationJobOutputDataConfig"},
         "vpcConfig":{"shape":"VpcConfig"},
         "timeoutDurationInHours":{"shape":"ModelInvocationJobTimeoutDurationInHours"},
-        "jobExpirationTime":{"shape":"Timestamp"}
+        "jobExpirationTime":{"shape":"Timestamp"},
+        "modelInvocationType":{"shape":"ModelInvocationType"}
       }
     },
     "GetModelInvocationLoggingConfigurationRequest":{
@@ -8262,7 +8268,8 @@
         "outputDataConfig":{"shape":"ModelInvocationJobOutputDataConfig"},
         "vpcConfig":{"shape":"VpcConfig"},
         "timeoutDurationInHours":{"shape":"ModelInvocationJobTimeoutDurationInHours"},
-        "jobExpirationTime":{"shape":"Timestamp"}
+        "jobExpirationTime":{"shape":"Timestamp"},
+        "modelInvocationType":{"shape":"ModelInvocationType"}
       }
     },
     "ModelInvocationJobTimeoutDurationInHours":{
@@ -8270,6 +8277,13 @@
       "box":true,
       "max":168,
       "min":24
+    },
+    "ModelInvocationType":{
+      "type":"string",
+      "enum":[
+        "InvokeModel",
+        "Converse"
+      ]
     },
     "ModelModality":{
       "type":"string",
