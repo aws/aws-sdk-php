@@ -84,6 +84,7 @@ class Signer
             self::validatePolicy($policy);
             $signatureHash['Policy'] = $this->encode($policy);
         } elseif ($resource && $expires) {
+            self::validateResourceUrl($resource);
             $expires = (int) $expires; // Handle epoch passed as string
             $policy = $this->createCannedPolicy($resource, $expires);
             $signatureHash['Expires'] = $expires;
