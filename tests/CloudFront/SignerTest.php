@@ -188,6 +188,18 @@ class SignerTest extends TestCase
         $this->instance->getSignature(null, null, $policy);
     }
 
+    /**
+     * @dataProvider invalidResourceUrlProvider
+     */
+    public function testValidatesInvalidURLs(string $resourceUrl)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('URL contains invalid characters: ", \\, or control characters');
+
+        $expires = time() + 3600;
+        $this->instance->getSignature($resourceUrl, $expires);
+    }
+
     public static function invalidResourceUrlProvider(): array
     {
         return [
