@@ -4,14 +4,18 @@ namespace Aws\S3\S3Transfer;
 use Aws\HashingStream;
 use Aws\PhpHash;
 use Aws\ResultInterface;
+use Aws\S3\ApplyChecksumMiddleware;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exception\S3TransferException;
+use Aws\S3\S3Transfer\Models\ResumableUpload;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Models\UploadResult;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\Each;
+use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\LazyOpenStream;
 use GuzzleHttp\Psr7\LimitStream;
@@ -24,14 +28,6 @@ use Throwable;
  */
 final class MultipartUploader extends AbstractMultipartUploader
 {
-    static array $supportedAlgorithms = [
-        'ChecksumCRC32',
-        'ChecksumCRC32C',
-        'ChecksumCRC64NVME',
-        'ChecksumSHA1',
-        'ChecksumSHA256',
-    ];
-
     private const STREAM_WRAPPER_TYPE_PLAIN_FILE = 'plainfile';
     public const DEFAULT_CHECKSUM_CALCULATION_ALGORITHM = 'crc32';
     private const CHECKSUM_TYPE_FULL_OBJECT = 'FULL_OBJECT';
@@ -41,6 +37,9 @@ final class MultipartUploader extends AbstractMultipartUploader
 
     /** @var StreamInterface */
     private StreamInterface $body;
+
+    /** @var StreamInterface|string */
+    private StreamInterface|string $source;
 
     /**
      * For custom or default checksum.
@@ -59,6 +58,12 @@ final class MultipartUploader extends AbstractMultipartUploader
     /** @var bool */
     private bool $isFullObjectChecksum;
 
+    /** @var bool */
+    private bool $isResuming;
+
+    /** @var ResumableUpload|null */
+    private ?ResumableUpload $resumableUpload;
+
     /**
      * @param S3ClientInterface $s3Client
      * @param array $requestArgs
@@ -67,36 +72,55 @@ final class MultipartUploader extends AbstractMultipartUploader
      *  - target_part_size_bytes: (int, optional)
      *  - request_checksum_calculation: (string, optional)
      *  - concurrency: (int, optional)
-     * @param string|null $uploadId
-     * @param array $parts
-     * @param TransferProgressSnapshot|null $currentSnapshot
      * @param TransferListenerNotifier|null $listenerNotifier
+     * @param ResumableUpload|null $resumableUpload
      */
     public function __construct(
         S3ClientInterface $s3Client,
         array $requestArgs,
         string|StreamInterface $source,
         array $config = [],
-        ?string $uploadId = null,
-        array $parts = [],
-        ?TransferProgressSnapshot $currentSnapshot = null,
         ?TransferListenerNotifier $listenerNotifier = null,
+        ?ResumableUpload $resumableUpload = null,
     ) {
         if (!isset($config['request_checksum_calculation'])) {
             $config['request_checksum_calculation'] = S3TransferManagerConfig::DEFAULT_REQUEST_CHECKSUM_CALCULATION;
         }
+
+        $uploadId = null;
+        $partsCompleted = [];
+        $currentSnapshot = null;
+        $calculatedObjectSize = 0;
+        $isFullObjectChecksum = false;
+        $this->resumableUpload = $resumableUpload;
+        $this->isResuming = $resumableUpload !== null;
+        if ($this->isResuming) {
+            $config = $resumableUpload->getConfig();
+            $uploadId = $resumableUpload->getUploadId();
+            $partsCompleted = $resumableUpload->getPartsCompleted();
+            $snapshotData = $resumableUpload->getCurrentSnapshot();
+            if (!empty($snapshotData)) {
+                $currentSnapshot = TransferProgressSnapshot::fromArray(
+                    $snapshotData
+                );
+            }
+            $calculatedObjectSize = $resumableUpload->getObjectSize();
+            $isFullObjectChecksum = $resumableUpload->isFullObjectChecksum();
+        }
+
         parent::__construct(
             $s3Client,
             $requestArgs,
             $config,
             $uploadId,
-            $parts,
+            $partsCompleted,
             $currentSnapshot,
             $listenerNotifier
         );
+        $this->source = $source;
         $this->body = $this->parseBody($source);
-        $this->calculatedObjectSize = 0;
-        $this->isFullObjectChecksum = false;
+        $this->calculatedObjectSize = $calculatedObjectSize;
+        $this->isFullObjectChecksum = $isFullObjectChecksum;
         $this->evaluateCustomChecksum();
     }
 
@@ -129,6 +153,11 @@ final class MultipartUploader extends AbstractMultipartUploader
             }
         }
 
+        if ($this->isResuming && $this->uploadId !== null) {
+            // Not need to initialize multipart
+            return Create::promiseFor("");
+        }
+
         $this->operationInitiated($createMultipartUploadArgs);
         $command = $this->s3Client->getCommand(
             'CreateMultipartUpload',
@@ -138,8 +167,37 @@ final class MultipartUploader extends AbstractMultipartUploader
         return $this->s3Client->executeAsync($command)
             ->then(function (ResultInterface $result) {
                 $this->uploadId = $result['UploadId'];
-                return $result;
             });
+    }
+
+    /**
+     * Process a multipart upload operation.
+     *
+     * @return PromiseInterface
+     */
+    protected function processMultipartOperation(): PromiseInterface
+    {
+        $uploadPartCommandArgs = $this->requestArgs;
+        $this->calculatedObjectSize = 0;
+        $partSize = $this->calculatePartSize();
+        $partsCount = ceil($this->getTotalSize() / $partSize);
+        $uploadPartCommandArgs['UploadId'] = $this->uploadId;
+        // Customer provided checksum
+        if ($this->requestChecksum !== null) {
+            // To avoid default calculation for individual parts
+            $uploadPartCommandArgs['@context']['request_checksum_calculation'] = 'when_required';
+            unset($uploadPartCommandArgs['Checksum'. strtoupper($this->requestChecksumAlgorithm)]);
+        } elseif ($this->requestChecksumAlgorithm !== null) {
+            $uploadPartCommandArgs['ChecksumAlgorithm'] = $this->requestChecksumAlgorithm;
+        }
+
+        $promises = $this->createUploadPartPromises(
+            $uploadPartCommandArgs,
+            $partSize,
+            $partsCount,
+        );
+
+        return Each::ofLimitAll($promises, $this->config['concurrency']);
     }
 
     /**
@@ -153,7 +211,7 @@ final class MultipartUploader extends AbstractMultipartUploader
         $completeMultipartUploadArgs = $this->requestArgs;
         $completeMultipartUploadArgs['UploadId'] = $this->uploadId;
         $completeMultipartUploadArgs['MultipartUpload'] = [
-            'Parts' => $this->parts
+            'Parts' => array_values($this->partsCompleted)
         ];
         $completeMultipartUploadArgs['MpuObjectSize'] = $this->getTotalSize();
 
@@ -172,8 +230,34 @@ final class MultipartUploader extends AbstractMultipartUploader
         return $this->s3Client->executeAsync($command)
             ->then(function (ResultInterface $result) {
                 $this->operationCompleted($result);
+
+                // Clean resume file on completion
+                if ($this->allowResume()) {
+                    $this->resumableUpload?->deleteResumeFile();
+                }
+
                 return $result;
             });
+    }
+
+    /**
+     * @return PromiseInterface
+     */
+    protected function abortMultipartOperation(): PromiseInterface
+    {
+        // When resume is enabled then we skip aborting.
+        if ($this->allowResume()) {
+            return Create::promiseFor("");
+        }
+
+        $abortMultipartUploadArgs = $this->requestArgs;
+        $abortMultipartUploadArgs['UploadId'] = $this->uploadId;
+        $command = $this->s3Client->getCommand(
+            'AbortMultipartUpload',
+            $abortMultipartUploadArgs
+        );
+
+        return $this->s3Client->executeAsync($command);
     }
 
     /**
@@ -232,7 +316,9 @@ final class MultipartUploader extends AbstractMultipartUploader
     private function evaluateCustomChecksum(): void
     {
         // Evaluation for custom provided checksums
-        $checksumName = self::filterChecksum($this->requestArgs);
+        $checksumName = ApplyChecksumMiddleware::filterChecksum(
+            $this->requestArgs
+        );
         if ($checksumName !== null) {
             $this->requestChecksum = $this->requestArgs[$checksumName];
             $this->requestChecksumAlgorithm = str_replace(
@@ -250,36 +336,6 @@ final class MultipartUploader extends AbstractMultipartUploader
     }
 
     /**
-     * Process a multipart upload operation.
-     *
-     * @return PromiseInterface
-     */
-    protected function processMultipartOperation(): PromiseInterface
-    {
-        $uploadPartCommandArgs = $this->requestArgs;
-        $this->calculatedObjectSize = 0;
-        $partSize = $this->calculatePartSize();
-        $partsCount = ceil($this->getTotalSize() / $partSize);
-        $uploadPartCommandArgs['UploadId'] = $this->uploadId;
-        // Customer provided checksum
-        if ($this->requestChecksum !== null) {
-            // To avoid default calculation for individual parts
-            $uploadPartCommandArgs['@context']['request_checksum_calculation'] = 'when_required';
-            unset($uploadPartCommandArgs['Checksum'. strtoupper($this->requestChecksumAlgorithm)]);
-        } elseif ($this->requestChecksumAlgorithm !== null) {
-            $uploadPartCommandArgs['ChecksumAlgorithm'] = $this->requestChecksumAlgorithm;
-        }
-
-        $promises = $this->createUploadPartPromises(
-            $uploadPartCommandArgs,
-            $partSize,
-            $partsCount,
-        );
-
-        return Each::ofLimitAll($promises, $this->config['concurrency']);
-    }
-
-    /**
      * @param array $uploadPartCommandArgs
      * @param int $partSize
      * @param int $partsCount
@@ -292,11 +348,16 @@ final class MultipartUploader extends AbstractMultipartUploader
         int $partsCount
     ): \Generator
     {
-        $partNo = count($this->parts);
         $bytesRead = 0;
         $isSeekable = $this->body->isSeekable()
             && $this->body->getMetadata('wrapper_type')
             === self::STREAM_WRAPPER_TYPE_PLAIN_FILE;
+
+        if ($isSeekable) {
+            $this->body->rewind();
+        }
+
+        $partNo = 0;
         while (!$this->body->eof()) {
             if ($isSeekable) {
                 $partBody = new LimitStream(
@@ -360,23 +421,30 @@ final class MultipartUploader extends AbstractMultipartUploader
                 $this->body->seek($bytesRead);
             }
 
+            if (isset($this->partsCompleted[$partNo])) {
+                // Part already uploaded
+                continue;
+            }
+
             yield $this->s3Client->executeAsync($command)
                 ->then(function (ResultInterface $result)
-                    use ($command, $partBody) {
+                use ($command, $partBody) {
                     $partBody->close();
                     // To make sure we don't continue when a failure occurred
                     if ($this->currentSnapshot->getReason() !== null) {
                         throw $this->currentSnapshot->getReason();
                     }
 
-                    $this->collectPart(
+                    $partData = $this->collectPart(
                         $result,
                         $command
                     );
+
                     // Part Upload Completed Event
                     $this->partCompleted(
                         $command['ContentLength'],
-                        $command->toArray()
+                        $command->toArray(),
+                        $partData,
                     );
                 })->otherwise(function (Throwable $e) use ($partBody) {
                     $partBody->close();
@@ -385,6 +453,92 @@ final class MultipartUploader extends AbstractMultipartUploader
                     throw $e;
                 });
         }
+    }
+
+    /**
+     * @param int $partSize
+     * @param array $requestArgs
+     * @param array $partData
+     *
+     * @return void
+     */
+    protected function partCompleted(
+        int $partSize,
+        array $requestArgs,
+        array $partData
+    ): void
+    {
+        $newSnapshot = new TransferProgressSnapshot(
+            $this->currentSnapshot->getIdentifier(),
+            $this->currentSnapshot->getTransferredBytes() + $partSize,
+            $this->currentSnapshot->getTotalBytes(),
+            $this->currentSnapshot->getResponse(),
+            $this->currentSnapshot->getReason(),
+        );
+
+        $this->currentSnapshot = $newSnapshot;
+
+        // Persist resume state if allowed
+        if ($this->allowResume()) {
+            $this->persistResumeState($partData);
+        }
+
+        $this->listenerNotifier?->bytesTransferred([
+            AbstractTransferListener::REQUEST_ARGS_KEY => $requestArgs,
+            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot
+        ]);
+    }
+
+    /**
+     * Resume works just when the source is a file path and is enabled.
+     *
+     * @return bool
+     */
+    private function allowResume(): bool
+    {
+        return ($this->config['resume_enabled'] ?? false)
+            && is_string($this->source);
+    }
+
+    /**
+     * Persist the current upload state to a resume file.
+     *
+     * @param array $partData
+     */
+    private function persistResumeState(array $partData): void
+    {
+        if ($this->resumableUpload === null) {
+            if ($this->config['resume_file_path'] ?? false) {
+                $resumeFilePath = $this->config['resume_file_path'];
+            } else {
+                $resumeFilePath = $this->source . '.resume';
+            }
+
+            $this->resumableUpload = new ResumableUpload(
+                $resumeFilePath,
+                $this->requestArgs,
+                $this->config,
+                $this->currentSnapshot->toArray(),
+                $this->uploadId,
+                $this->partsCompleted,
+                $this->source,
+                $this->getTotalSize(),
+                $this->calculatePartSize(),
+                $this->isFullObjectChecksum
+            );
+        }
+
+        // Update the completed parts and current snapshot
+        $this->resumableUpload->markPartCompleted(
+            $partData['PartNumber'],
+            $partData
+        );
+        $this->resumableUpload->updateCurrentSnapshot(
+            $this->currentSnapshot->toArray()
+        );
+
+        // Save to file
+        $this->resumableUpload->toFile();
     }
 
     /**
@@ -427,23 +581,5 @@ final class MultipartUploader extends AbstractMultipartUploader
         return new HashingStream($stream, $hash, function ($result) use (&$data) {
             $data['ContentSHA256'] = bin2hex($result);
         });
-    }
-
-    /**
-     * Filters a provided checksum if one was provided.
-     *
-     * @param array $requestArgs
-     *
-     * @return string|null
-     */
-    private static function filterChecksum(array $requestArgs):? string
-    {
-        foreach (self::$supportedAlgorithms as $algorithm) {
-            if (isset($requestArgs[$algorithm])) {
-                return $algorithm;
-            }
-        }
-
-        return null;
     }
 }

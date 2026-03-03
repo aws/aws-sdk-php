@@ -15,6 +15,10 @@ use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryResult;
 use Aws\S3\S3Transfer\Models\DownloadRequest;
 use Aws\S3\S3Transfer\Models\DownloadResult;
+use Aws\S3\S3Transfer\Models\ResumableDownload;
+use Aws\S3\S3Transfer\Models\ResumableUpload;
+use Aws\S3\S3Transfer\Models\ResumeDownloadRequest;
+use Aws\S3\S3Transfer\Models\ResumeUploadRequest;
 use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\UploadDirectoryResult;
 use Aws\S3\S3Transfer\Models\UploadRequest;
@@ -37,19 +41,18 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
-use RecursiveDirectoryIterator;
 use RuntimeException;
 use function Aws\filter;
 
-class S3TransferManagerTest extends TestCase
+/**
+ * @covers \Aws\S3\S3Transfer\S3TransferManager
+ */
+final class S3TransferManagerTest extends TestCase
 {
     private const DOWNLOAD_BASE_CASES = __DIR__ . '/test-cases/download-single-object.json';
     private const UPLOAD_BASE_CASES = __DIR__ . '/test-cases/upload-single-object.json';
     private const UPLOAD_DIRECTORY_BASE_CASES = __DIR__ . '/test-cases/upload-directory.json';
     private const DOWNLOAD_DIRECTORY_BASE_CASES = __DIR__ . '/test-cases/download-directory.json';
-    private const UPLOAD_DIRECTORY_CROSS_PLATFORM_BASE_CASES = __DIR__ . '/test-cases/upload-directory-cross-platform-compatibility.json';
-    private const DOWNLOAD_DIRECTORY_CROSS_PLATFORM_BASE_CASES = __DIR__ . '/test-cases/download-directory-cross-platform-compatibility.json';
-
     private static array $s3BodyTemplates = [
         'CreateMultipartUpload' => <<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -81,6 +84,8 @@ EOF,
     </Contents>
 EOF
     ];
+
+    /** @var string */
     private string $tempDir;
 
     protected function setUp(): void
@@ -90,9 +95,9 @@ EOF
         });
         $this->tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR
             . uniqid("transfer-manager-test-");
-         if (!is_dir($this->tempDir)) {
-             mkdir($this->tempDir, 0777, true);
-         }
+        if (!is_dir($this->tempDir)) {
+            mkdir($this->tempDir, 0777, true);
+        }
     }
 
     protected function tearDown(): void
@@ -198,10 +203,10 @@ EOF
     }
 
     /**
-     * @dataProvider uploadBucketAndKeyProvider
-     *
      * @param array $bucketKeyArgs
      * @param string $missingProperty
+     *
+     * @dataProvider uploadBucketAndKeyProvider
      *
      * @return void
      */
@@ -226,7 +231,7 @@ EOF
     /**
      * @return array[]
      */
-    public function uploadBucketAndKeyProvider(): array
+    public static function uploadBucketAndKeyProvider(): array
     {
         return [
             'bucket_missing' => [
@@ -430,7 +435,7 @@ EOF
     /**
      * @return array
      */
-    public function uploadUsesCustomMupThresholdProvider(): array
+    public static function uploadUsesCustomMupThresholdProvider(): array
     {
         return [
             'mup_threshold_multipart_upload' => [
@@ -492,8 +497,8 @@ EOF
         $expectedPartCount = 2;
         $expectedPartSize = 6 * 1024 * 1024; // 6 MBs
         $transferListener = $this->getMockBuilder(AbstractTransferListener::class)
-        ->onlyMethods(['bytesTransferred'])
-        ->getMock();
+            ->onlyMethods(['bytesTransferred'])
+            ->getMock();
         $expectedIncrementalPartSize = $expectedPartSize;
         $transferListener->method('bytesTransferred')
             ->willReturnCallback(function ($context) use (
@@ -564,7 +569,7 @@ EOF
     /**
      * @return array[]
      */
-    public function uploadUsesCustomChecksumAlgorithmProvider(): array
+    public static function uploadUsesCustomChecksumAlgorithmProvider(): array
     {
         return [
             'checksum_crc32c' => [
@@ -656,7 +661,7 @@ EOF
             $this->expectException(InvalidArgumentException::class);
             $this->expectExceptionMessage(
                 "Please provide a valid directory path. "
-            . "Provided = " . $directory);
+                . "Provided = " . $directory);
         } else {
             // If the directory is valid then not exception is expected
             $this->assertTrue(true);
@@ -676,7 +681,7 @@ EOF
     /**
      * @return array[]
      */
-    public function uploadDirectoryValidatesProvidedDirectoryProvider(): array
+    public static function uploadDirectoryValidatesProvidedDirectoryProvider(): array
     {
         return [
             'valid_directory' => [
@@ -1423,10 +1428,6 @@ EOF
     {
         $s3Delimiter = "!";
         $fileNameWithDelimiter = "dir-file-$s3Delimiter.txt";
-        $this->expectException(S3TransferException::class);
-        $this->expectExceptionMessage(
-            "The filename `$fileNameWithDelimiter` must not contain the provided delimiter `$s3Delimiter`"
-        );
         $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
@@ -1446,7 +1447,7 @@ EOF
         $manager = new S3TransferManager(
             $client
         );
-        $manager->uploadDirectory(
+        $result = $manager->uploadDirectory(
             new UploadDirectoryRequest(
                 $directory,
                 "Bucket",
@@ -1454,6 +1455,15 @@ EOF
                 ['s3_delimiter' => $s3Delimiter]
             )
         )->wait();
+        $reason = $result->getReason();
+        $this->assertInstanceOf(
+            S3TransferException::class,
+            $reason
+        );
+        $this->assertEquals(
+            "The filename `$fileNameWithDelimiter` must not contain the provided delimiter `$s3Delimiter`",
+            $reason->getMessage()
+        );
     }
 
     /**
@@ -1515,9 +1525,9 @@ EOF
                 "Bucket",
                 [],
                 [],
-                [
-                    $transferListener
-                ]
+                [],
+                null,
+                [$transferListener]
             )
         )->wait();
         foreach ($objectKeys as $key => $validated) {
@@ -1549,10 +1559,10 @@ EOF
     }
 
     /**
-     * @dataProvider downloadFailsWhenSourceAsArrayMissesBucketOrKeyPropertyProvider
-     *
      * @param array $sourceAsArray
      * @param string $expectedExceptionMessage
+     *
+     * @dataProvider downloadFailsWhenSourceAsArrayMissesBucketOrKeyPropertyProvider
      *
      * @return void
      */
@@ -1575,7 +1585,7 @@ EOF
     /**
      * @return array
      */
-    public function downloadFailsWhenSourceAsArrayMissesBucketOrKeyPropertyProvider(): array
+    public static function downloadFailsWhenSourceAsArrayMissesBucketOrKeyPropertyProvider(): array
     {
         return [
             'missing_key' => [
@@ -1615,6 +1625,8 @@ EOF
                 return Create::promiseFor(new Result([
                     'Body' => Utils::streamFor(),
                     'PartsCount' => 1,
+                    'ContentLength' => random_int(0, 100),
+                    'ContentRange' => 'bytes 0-1/1',
                     '@metadata' => []
                 ]));
             },
@@ -1650,6 +1662,7 @@ EOF
                 return Create::promiseFor(new Result([
                     'Body' => Utils::streamFor(),
                     'PartsCount' => 1,
+                    'ContentLength' => random_int(0, 100),
                     '@metadata' => []
                 ]));
             },
@@ -1672,9 +1685,9 @@ EOF
      * @param array $downloadArgs
      * @param bool $expectedChecksumMode
      *
-     * @return void
      * @dataProvider downloadAppliesChecksumProvider
      *
+     * @return void
      */
     public function testDownloadAppliesChecksumMode(
         array $transferManagerConfig,
@@ -1703,6 +1716,7 @@ EOF
                     return Create::promiseFor(new Result([
                         'Body' => Utils::streamFor(),
                         'PartsCount' => 1,
+                        'ContentLength' => random_int(0, 100),
                         '@metadata' => []
                     ]));
                 }
@@ -1727,7 +1741,7 @@ EOF
     /**
      * @return array
      */
-    public function downloadAppliesChecksumProvider(): array
+    public static function downloadAppliesChecksumProvider(): array
     {
         return [
             'checksum_mode_from_default_transfer_manager_config' => [
@@ -1820,6 +1834,7 @@ EOF
                 return Create::promiseFor(new Result([
                     'Body' => Utils::streamFor(),
                     'PartsCount' => 1,
+                    'ContentLength' => random_int(0, 100),
                     '@metadata' => []
                 ]));
             }
@@ -1840,7 +1855,7 @@ EOF
     /**
      * @return array
      */
-    public function downloadChoosesMultipartDownloadTypeProvider(): array
+    public static function downloadChoosesMultipartDownloadTypeProvider(): array
     {
         return [
             'part_get_multipart_download' => [
@@ -1859,10 +1874,9 @@ EOF
      * @param int $objectSize
      * @param array $expectedRangeSizes
      *
-     * @return void
-     *
      * @dataProvider rangeGetMultipartDownloadMinimumPartSizeProvider
      *
+     * @return void
      */
     public function testRangeGetMultipartDownloadMinimumPartSize(
         int $minimumPartSize,
@@ -1890,6 +1904,7 @@ EOF
                     'Body' => Utils::streamFor(),
                     'ContentRange' => "0-$objectSize/$objectSize",
                     'ETag' => 'TestEtag',
+                    'ContentLength' => random_int(0, 100),
                     '@metadata' => []
                 ]));
             }
@@ -1913,7 +1928,7 @@ EOF
     /**
      * @return array
      */
-    public function rangeGetMultipartDownloadMinimumPartSizeProvider(): array
+    public static function rangeGetMultipartDownloadMinimumPartSizeProvider(): array
     {
         return [
             'minimum_part_size_1' => [
@@ -2077,7 +2092,7 @@ EOF
     /**
      * @return array
      */
-    public function downloadDirectoryAppliesS3PrefixProvider(): array
+    public static function downloadDirectoryAppliesS3PrefixProvider(): array
     {
         return [
             's3_prefix_from_config' => [
@@ -2294,7 +2309,7 @@ EOF
      * @param array $objectList
      * @param array $expectedObjectList
      *
-     * @dataProvider downloadDirectoryAppliesFilterProvider
+     * @dataProvider downloadDirectoryAppliesFilter
      *
      * @return void
      */
@@ -2364,7 +2379,7 @@ EOF
 
         $this->assertTrue($called);
 
-        $dirIterator = new RecursiveDirectoryIterator(
+        $dirIterator = new \RecursiveDirectoryIterator(
             $destinationDirectory
         );
         $dirIterator->setFlags(FilesystemIterator::SKIP_DOTS);
@@ -2398,12 +2413,12 @@ EOF
     /**
      * @return array[]
      */
-    public function downloadDirectoryAppliesFilterProvider(): array
+    public static function downloadDirectoryAppliesFilter(): array
     {
         return [
             'filter_1' => [
                 'filter' => function (string $objectKey) {
-                    return str_starts_with($objectKey, "folder_2" . DIRECTORY_SEPARATOR);
+                    return str_starts_with($objectKey, "folder_2/");
                 },
                 'object_list' => [
                     [
@@ -2426,7 +2441,7 @@ EOF
             ],
             'filter_2' => [
                 'filter' => function (string $objectKey) {
-                    return $objectKey === "folder_2" . DIRECTORY_SEPARATOR . "key_1.txt";
+                    return $objectKey === "folder_2/key_1.txt";
                 },
                 'object_list' => [
                     [
@@ -2448,7 +2463,7 @@ EOF
             ],
             'filter_3' => [
                 'filter' => function (string $objectKey) {
-                    return $objectKey !== "folder_2" . DIRECTORY_SEPARATOR . "key_1.txt";
+                    return $objectKey !== "folder_2/key_1.txt";
                 },
                 'object_list' => [
                     [
@@ -2465,9 +2480,9 @@ EOF
                     ]
                 ],
                 'expected_object_list' => [
-                    "folder_1/key_1.txt",
-                    "folder_1/key_2.txt",
                     "folder_2/key_2.txt",
+                    "folder_1/key_1.txt",
+                    "folder_1/key_1.txt",
                 ]
             ]
         ];
@@ -2637,12 +2652,15 @@ EOF
                     ]));
                 }
 
+                $body = Utils::streamFor(
+                    "Test file " . $command['Key']
+                );
                 return Create::promiseFor(new Result([
-                    'Body' => Utils::streamFor(
-                        "Test file " . $command['Key']
-                    ),
+                    'Body' => $body,
                     'PartsCount' => 1,
-                    '@metadata' => []
+                    '@metadata' => [],
+                    'ContentLength' => $body->getSize(),
+                    'ContentRange' => "bytes 0/{$body->getSize()}/{$body->getSize()}"
                 ]));
             },
             'getApi' => function () {
@@ -2668,13 +2686,17 @@ EOF
         $manager = new S3TransferManager(
             $client,
         );
-        $manager->downloadDirectory(
+        $result = $manager->downloadDirectory(
             new DownloadDirectoryRequest(
                 "Bucket",
                 $destinationDirectory,
             )
         )->wait();
         $this->assertTrue($called);
+        $this->assertEquals(
+            count($expectedFileKeys),
+            $result->getObjectsDownloaded()
+        );
         foreach ($expectedFileKeys as $key) {
             $file = $destinationDirectory . DIRECTORY_SEPARATOR . $key;
             $this->assertFileExists($file);
@@ -2688,7 +2710,7 @@ EOF
     /**
      * @return array
      */
-    public function downloadDirectoryCreateFilesProvider(): array
+    public static function downloadDirectoryCreateFilesProvider(): array
     {
         return [
             'files_1' => [
@@ -2725,8 +2747,9 @@ EOF
      * @param array $objects
      * @param array $expectedOutput
      *
-     * @return void
      * @dataProvider resolvesOutsideTargetDirectoryProvider
+     *
+     * @return void
      */
     public function testResolvesOutsideTargetDirectory(
         ?string $prefix,
@@ -2734,15 +2757,7 @@ EOF
         array $expectedOutput
     ): void
     {
-        if ($expectedOutput['success'] === false) {
-            $this->expectException(S3TransferException::class);
-            $this->expectExceptionMessageMatches(
-                '/Cannot download key [^\s]+ its relative path'
-                .' resolves outside the parent directory\./'
-            );
-        }
-
-        $bucket = "test-bucket";
+       $bucket = "test-bucket";
         $directory = $this->tempDir . DIRECTORY_SEPARATOR . "test-directory";
         if (is_dir($directory)) {
             TestsUtility::cleanUpDir($directory);
@@ -2761,12 +2776,16 @@ EOF
                     ]));
                 }
 
+                $body = Utils::streamFor(
+                    "Test file " . $command['Key']
+                );
+
                 return Create::promiseFor(new Result([
-                    'Body' => Utils::streamFor(
-                        "Test file " . $command['Key']
-                    ),
+                    'Body' => $body,
                     'PartsCount' => 1,
-                    '@metadata' => []
+                    '@metadata' => [],
+                    'ContentRange' => "bytes 0/{$body->getSize()}/{$body->getSize()}",
+                    'ContentLength' => $body->getSize(),
                 ]));
             },
             'getApi' => function () {
@@ -2792,7 +2811,7 @@ EOF
         $manager = new S3TransferManager(
             $client,
         );
-        $manager->downloadDirectory(
+        $result = $manager->downloadDirectory(
             new DownloadDirectoryRequest(
                 $bucket,
                 $directory,
@@ -2816,28 +2835,27 @@ EOF
             $this->assertFileExists(
                 $fullFilePath
             );
+        } else {
+            $reason = $result->getReason();
+            $this->assertInstanceOf(
+                S3TransferException::class,
+                $reason
+            );
+            $this->assertMatchesRegularExpression(
+                '/Cannot download key \S+ its relative path'
+                .' resolves outside the parent directory\./',
+                $reason->getMessage()
+            );
         }
     }
 
     /**
      * @return array
      */
-    public function resolvesOutsideTargetDirectoryProvider(): array
+    public static function resolvesOutsideTargetDirectoryProvider(): array
     {
         return [
             'download_directory_1_linux' => [
-                'prefix' => null,
-                'objects' => [
-                    [
-                        'Key' => '2023/Jan/1.png'
-                    ],
-                ],
-                'expected_output' => [
-                    'success' => true,
-                    'filename' => '2023/Jan/1.png',
-                ]
-            ],
-            'download_directory_1_windows_or_linux' => [
                 'prefix' => null,
                 'objects' => [
                     [
@@ -2928,9 +2946,9 @@ EOF
      * @param array $expectations
      * @param array $outcomes
      *
-     * @return void
      * @dataProvider modeledDownloadCasesProvider
      *
+     * @return void
      */
     public function testModeledCasesForDownload(
         string $testId,
@@ -3034,9 +3052,7 @@ EOF
                             }
 
                             /**
-                             * @param array $context
-                             *
-                             * @return bool
+                             * @inheritDoc
                              */
                             public function bytesTransferred(array $context): bool {
                                 $snapshot = $context[
@@ -3103,9 +3119,9 @@ EOF
      * @param array $expectations
      * @param array $outcomes
      *
-     * @return void
      * @dataProvider modeledUploadCasesProvider
      *
+     * @return void
      */
     public function testModeledCasesForUpload(
         string $testId,
@@ -3192,9 +3208,7 @@ EOF
                             }
 
                             /**
-                             * @param array $context
-                             *
-                             * @return void
+                             * @inheritDoc
                              */
                             public function bytesTransferred(array $context): bool {
                                 $snapshot = $context[
@@ -3247,18 +3261,19 @@ EOF
     /**
      * @param string $testId
      * @param array $config
-     * @param array|null $uploadDirectoryRequestArgs
+     * @param array $uploadDirectoryRequestArgs
      * @param array|null $sourceStructure
      * @param array $expectations
      * @param array $outcomes
      *
-     * @return void
      * @dataProvider modeledUploadDirectoryCasesProvider
+     *
+     * @return void
      */
     public function testModeledCasesForUploadDirectory(
         string $testId,
         array $config,
-        ?array $uploadDirectoryRequestArgs,
+        array $uploadDirectoryRequestArgs,
         ?array $sourceStructure,
         array $expectations,
         array $outcomes
@@ -3418,9 +3433,9 @@ EOF
      * @param array $expectedFiles
      * @param array $outcomes
      *
-     * @return void
      * @dataProvider modeledDownloadDirectoryCasesProvider
      *
+     * @return void
      */
     public function testModeledCasesForDownloadDirectory(
         string $testId,
@@ -3493,7 +3508,7 @@ EOF
                 if ($operation === 'ListObjectsV2') {
                     $listObjectsV2Template = self::$s3BodyTemplates[$operation];
                     $listObjectsV2ContentsTemplate = self::$s3BodyTemplates[
-                        $operation . "::Contents"
+                    $operation . "::Contents"
                     ];
                     $bodyBuilder = str_replace(
                         "{{Bucket}}",
@@ -3628,13 +3643,13 @@ EOF
                     $headers = $response['headers'] ?? [];
                     $body = call_user_func_array(
                         $bodyBuilder,
-                            [
-                                $response['operation'],
-                                $response['body']
-                                ?? $response['contents']
+                        [
+                            $response['operation'],
+                            $response['body']
+                            ?? $response['contents']
                                 ?? null,
-                                &$headers
-                            ]
+                            &$headers
+                        ]
                     );
 
                     $this->parseCaseHeadersToAmzHeaders($headers);
@@ -3682,7 +3697,7 @@ EOF
     /**
      * @return Generator
      */
-    public function modeledDownloadCasesProvider(): Generator
+    public static function modeledDownloadCasesProvider(): Generator
     {
         $downloadCases = json_decode(
             file_get_contents(
@@ -3704,7 +3719,7 @@ EOF
     /**
      * @return Generator
      */
-    public function modeledUploadCasesProvider(): Generator
+    public static function modeledUploadCasesProvider(): Generator
     {
         $downloadCases = json_decode(
             file_get_contents(
@@ -3726,27 +3741,15 @@ EOF
     /**
      * @return Generator
      */
-    public function modeledUploadDirectoryCasesProvider(): Generator
+    public static function modeledUploadDirectoryCasesProvider(): Generator
     {
-        $uploadDirectoryCases = json_decode(
+        $downloadCases = json_decode(
             file_get_contents(
                 self::UPLOAD_DIRECTORY_BASE_CASES
             ),
             true
         );
-        $crossPlatformUploadDirectoryCases = json_decode(
-            file_get_contents(
-                self::UPLOAD_DIRECTORY_CROSS_PLATFORM_BASE_CASES
-            ),
-            true
-        );
-
-        $allUploadDirectoryCases = array_merge(
-            $uploadDirectoryCases,
-            $crossPlatformUploadDirectoryCases
-        );
-
-        foreach ($allUploadDirectoryCases as $case) {
+        foreach ($downloadCases as $case) {
             yield $case['summary'] => [
                 'test_id' => $case['summary'],
                 'config' => $case['config'],
@@ -3761,25 +3764,15 @@ EOF
     /**
      * @return Generator
      */
-    public function modeledDownloadDirectoryCasesProvider(): Generator
+    public static function modeledDownloadDirectoryCasesProvider(): Generator
     {
-        $downloadDirectoryCases = json_decode(
+        $downloadCases = json_decode(
             file_get_contents(
                 self::DOWNLOAD_DIRECTORY_BASE_CASES
             ),
             true
         );
-        $crossPlatformDownloadDirectoryCases = json_decode(
-            file_get_contents(
-                self::DOWNLOAD_DIRECTORY_CROSS_PLATFORM_BASE_CASES
-            ),
-            true
-        );
-        $allDownloadDirectoryCases = array_merge(
-            $downloadDirectoryCases,
-            $crossPlatformDownloadDirectoryCases
-        );
-        foreach ($allDownloadDirectoryCases as $case) {
+        foreach ($downloadCases as $case) {
             yield $case['summary'] => [
                 'test_id' => $case['summary'],
                 'config' => $case['config'],
@@ -3827,10 +3820,10 @@ EOF
                 default:
                     if (preg_match('/Checksum[A-Z]+/', $key)) {
                         $newKey = 'x-amz-checksum-' . str_replace(
-                            'Checksum',
-                            '',
-                            $key
-                        );
+                                'Checksum',
+                                '',
+                                $key
+                            );
                     }
             }
 
@@ -3886,20 +3879,388 @@ EOF
             };
         }
 
-        if (!isset($methodsCallback['getHandlerList'])) {
-            $methodsCallback['getHandlerList'] = function () {
-                return new HandlerList();
-            };
-        }
+        $methodsCallback['getHandlerList'] = function () {
+            return new HandlerList();
+        };
 
         $client = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(array_keys($methodsCallback))
+            ->onlyMethods(array_merge(
+                array_keys($methodsCallback),
+            ))
             ->getMock();
         foreach ($methodsCallback as $name => $callback) {
             $client->method($name)->willReturnCallback($callback);
         }
 
         return $client;
+    }
+
+    /**
+     * @return void
+     */
+    public function testResumeDownloadFailsWithInvalidResumeFile(): void
+    {
+        $invalidResumeFile = $this->tempDir . 'invalid.resume';
+        file_put_contents($invalidResumeFile, 'invalid json content');
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getHandlerList'])
+            ->getMock();
+        $mockClient->method('getHandlerList')
+            ->willReturn(new HandlerList());
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeDownloadRequest($invalidResumeFile);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage(
+            "Resume file `$invalidResumeFile` is not a valid resumable file."
+        );
+        $manager->resumeDownload($request)->wait();
+    }
+
+    /**
+     * @return void
+     */
+    public function testResumeDownloadFailsWhenTemporaryFileNoLongerExists(): void
+    {
+        $destination = $this->tempDir . 'download.txt';
+        $tempFile = $this->tempDir . 'temp.s3tmp.12345678';
+        $resumeFile = $this->tempDir . 'test.resume';
+
+        $resumable = new ResumableDownload(
+            $resumeFile,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            ['target_part_size_bytes' => 5242880],
+            ['transferred_bytes' => 500, 'total_bytes' => 1000],
+            ['ETag' => 'test-etag', 'ContentLength' => 1000],
+            [1 => true],
+            2,
+            $tempFile,
+            'test-etag',
+            1000,
+            500,
+            $destination
+        );
+        $resumable->toFile();
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getHandlerList'])
+            ->getMock();
+        $mockClient->method('getHandlerList')->willReturn(new HandlerList());
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeDownloadRequest($resumeFile);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage(
+            "Cannot resume download: temporary file does not exist: " . $tempFile
+        );
+        $manager->resumeDownload($request)->wait();
+    }
+
+    /**
+     * @return void
+     */
+    public function testResumeUploadFailsWithInvalidResumeFile(): void
+    {
+        $invalidResumeFile = $this->tempDir . 'invalid.resume';
+        file_put_contents($invalidResumeFile, 'invalid json content');
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getHandlerList'])
+            ->getMock();
+        $mockClient->method('getHandlerList')->willReturn(new HandlerList());
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeUploadRequest($invalidResumeFile);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage(
+            "Resume file `$invalidResumeFile` is not a valid resumable file."
+        );
+        $manager->resumeUpload($request)->wait();
+    }
+
+    /**
+     * @return void
+     */
+    public function testResumeUploadFailsWhenSourceFileNoLongerExists(): void
+    {
+        $sourceFile = $this->tempDir . 'upload.txt';
+        $resumeFile = $this->tempDir . 'test.resume';
+
+        $resumable = new ResumableUpload(
+            $resumeFile,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            ['target_part_size_bytes' => 5242880],
+            ['transferred_bytes' => 500, 'total_bytes' => 1000],
+            'upload-id-123',
+            [1 => ['PartNumber' => 1, 'ETag' => 'etag1']],
+            $sourceFile,
+            1000,
+            500,
+            false
+        );
+        $resumable->toFile();
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getHandlerList'])
+            ->getMock();
+        $mockClient->method('getHandlerList')->willReturn(new HandlerList());
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeUploadRequest($resumeFile);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage(
+            "Cannot resume upload: source file does not exist: " . $sourceFile
+        );
+        $manager->resumeUpload($request)->wait();
+    }
+
+    /**
+     * @return void
+     */
+    public function testResumeUploadFailsWhenUploadIdNotFoundInS3(): void
+    {
+        $sourceFile = $this->tempDir . 'upload.txt';
+        file_put_contents($sourceFile, str_repeat('a', 1000));
+        $resumeFile = $this->tempDir . 'test.resume';
+        $uploadId = 'test-upload-id-123';
+        $resumable = new ResumableUpload(
+            $resumeFile,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            ['target_part_size_bytes' => 500],
+            ['transferred_bytes' => 500, 'total_bytes' => 1000],
+            $uploadId,
+            [1 => ['PartNumber' => 1, 'ETag' => 'etag1']],
+            $sourceFile,
+            1000,
+            500,
+            false
+        );
+        $resumable->toFile();
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getHandlerList', 'executeAsync', 'getCommand'])
+            ->getMock();
+        $mockClient->method('getHandlerList')->willReturn(new HandlerList());
+        $mockClient->method('executeAsync')
+            ->willReturnCallback(function ($command) {
+                if ($command->getName() === 'ListMultipartUploads') {
+                    return Create::promiseFor(new Result(['Uploads' => []]));
+                }
+                return Create::promiseFor(new Result([]));
+            });
+
+        $mockClient->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeUploadRequest($resumeFile);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage(
+            "Cannot resume upload: multipart upload no longer exists (UploadId: " . $uploadId. ")"
+        );
+        $manager->resumeUpload($request)->wait();
+    }
+
+    public function testResumeDownloadFailsWhenETagNoLongerMatches(): void
+    {
+        $destination = $this->tempDir . 'download.txt';
+        $tempFile = $this->tempDir . 'temp.s3tmp.12345678';
+        file_put_contents($tempFile, str_repeat("\0", 1000));
+        $resumeFile = $this->tempDir . 'test.resume';
+
+        $resumable = new ResumableDownload(
+            $resumeFile,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            ['target_part_size_bytes' => 500],
+            ['transferred_bytes' => 500, 'total_bytes' => 1000],
+            ['ETag' => 'old-etag', 'ContentLength' => 500],
+            [1 => true],
+            2,
+            $tempFile,
+            'old-etag',
+            1000,
+            500,
+            $destination
+        );
+        $resumable->toFile();
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['__call', 'getHandlerList'])
+            ->getMock();
+        $mockClient->method('getHandlerList')->willReturn(new HandlerList());
+
+        $mockClient->method('__call')
+            ->willReturnCallback(function ($name, $args) {
+                if ($name === 'headObject') {
+                    return new Result(['ETag' => 'new-etag']);
+                }
+                return new Result([]);
+            });
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeDownloadRequest($resumeFile);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage('ETag mismatch');
+        $manager->resumeDownload($request)->wait();
+    }
+
+    /**
+     * @return void
+     */
+    public function testSuccessfullyResumesFailedDownload(): void
+    {
+        $destination = $this->tempDir . 'download.txt';
+        $tempFile = $this->tempDir . 'temp.s3tmp.12345678';
+        file_put_contents($tempFile, str_repeat('a', 500) . str_repeat("\0", 500));
+        $resumeFile = $this->tempDir . 'test.resume';
+
+        $resumable = new ResumableDownload(
+            $resumeFile,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            [
+                'target_part_size_bytes' => 500,
+                'resume_enabled' => true,
+                'multipart_download_type' => 'ranged'
+            ],
+            ['transferred_bytes' => 500, 'total_bytes' => 1000, 'identifier' => 'test-key'],
+            ['ETag' => 'test-etag', 'ContentLength' => 500],
+            [1 => true],
+            2,
+            $tempFile,
+            'test-etag',
+            1000,
+            500,
+            $destination
+        );
+        $resumable->toFile();
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['__call', 'getCommand', 'executeAsync', 'getHandlerList'])
+            ->getMock();
+
+        $mockClient->method('getHandlerList')->willReturn(new HandlerList());
+        $mockClient->method('__call')
+            ->willReturnCallback(function ($name, $args) {
+                if ($name === 'headObject') {
+                    return new Result(['ETag' => 'test-etag']);
+                }
+                return new Result([]);
+            });
+
+        $mockClient->method('executeAsync')
+            ->willReturnCallback(function ($command) {
+                if ($command->getName() === 'GetObject') {
+                    return Create::promiseFor(new Result([
+                        'Body' => Utils::streamFor(str_repeat('b', 500)),
+                        'ContentRange' => 'bytes 500-999/1000',
+                        'ContentLength' => 500
+                    ]));
+                }
+                return Create::promiseFor(new Result([]));
+            });
+
+        $mockClient->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeDownloadRequest($resumeFile);
+
+        $manager->resumeDownload($request)->wait();
+        $this->assertFileExists($destination);
+        $this->assertEquals(
+            str_repeat('a', 500).str_repeat('b', 500),
+            file_get_contents($destination)
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testSuccessfullyResumesFailedUpload(): void
+    {
+        $sourceFile = $this->tempDir . 'upload.txt';
+        file_put_contents($sourceFile, str_repeat('a', 10485760));
+        $resumeFile = $this->tempDir . 'test.resume';
+
+        $resumable = new ResumableUpload(
+            $resumeFile,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            ['target_part_size_bytes' => 5242880, 'resume_enabled' => true],
+            ['transferred_bytes' => 5242880, 'total_bytes' => 10485760, 'identifier' => 'test-key'],
+            'test-upload-id',
+            [1 => ['PartNumber' => 1, 'ETag' => 'etag1']],
+            $sourceFile,
+            10485760,
+            5242880,
+            false
+        );
+        $resumable->toFile();
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['__call', 'getCommand', 'executeAsync', 'getHandlerList'])
+            ->getMock();
+
+        $mockClient->method('getHandlerList')->willReturn(new HandlerList());
+        $mockClient->method('__call')
+            ->willReturnCallback(function ($name, $args) {
+                if ($name === 'listMultipartUploads') {
+                    return new Result([
+                        'Uploads' => [
+                            ['UploadId' => 'test-upload-id', 'Key' => 'test-key']
+                        ]
+                    ]);
+                }
+                return new Result([]);
+            });
+
+        $mockClient->method('executeAsync')
+            ->willReturnCallback(function ($command) {
+                if ($command->getName() === 'UploadPart') {
+                    return Create::promiseFor(new Result(['ETag' => 'etag2']));
+                }
+                if ($command->getName() === 'CompleteMultipartUpload') {
+                    return Create::promiseFor(new Result(['Location' => 's3://test-bucket/test-key']));
+                }
+                return Create::promiseFor(new Result([]));
+            });
+
+        $mockClient->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeUploadRequest($resumeFile);
+
+        $manager->resumeUpload($request)->wait();
+        $this->assertFileDoesNotExist($resumeFile);
+    }
+
+    public function testDefaultRegionIsRequiredWhenUsingDefaultS3Client(): void
+    {
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage("When using the default S3 Client you must define a default region."
+            . "\nThe config parameter is `default_region`.`");
+        new S3TransferManager();
     }
 }

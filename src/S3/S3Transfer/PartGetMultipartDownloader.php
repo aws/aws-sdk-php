@@ -13,31 +13,13 @@ final class PartGetMultipartDownloader extends AbstractMultipartDownloader
 {
     /**
      * @inheritDoc
-     *
-     * @return CommandInterface
      */
-    protected function nextCommand(): CommandInterface
+    protected function getFetchCommandArgs(): array
     {
-        if ($this->currentPartNo === 0) {
-            $this->currentPartNo = 1;
-        } else {
-            $this->currentPartNo++;
-        }
+        $nextCommandArgs = $this->downloadRequestArgs;
+        $nextCommandArgs['PartNumber'] = $this->currentPartNo;
 
-        $nextRequestArgs = $this->downloadRequestArgs;
-        $nextRequestArgs['PartNumber'] = $this->currentPartNo;
-        if ($this->config['response_checksum_validation'] === 'when_supported') {
-            $nextRequestArgs['ChecksumMode'] = 'ENABLED';
-        }
-
-        if (!empty($this->eTag)) {
-            $nextRequestArgs['IfMatch'] = $this->eTag;
-        }
-
-        return $this->s3Client->getCommand(
-            self::GET_OBJECT_COMMAND,
-            $nextRequestArgs
-        );
+        return $nextCommandArgs;
     }
 
     /**
@@ -55,7 +37,7 @@ final class PartGetMultipartDownloader extends AbstractMultipartDownloader
             $this->objectPartsCount = 1;
         }
 
-        $this->objectSizeInBytes = $this->computeObjectSizeFromContentRange(
+        $this->objectSizeInBytes = self::computeObjectSizeFromContentRange(
             $result['ContentRange'] ?? ""
         );
     }
