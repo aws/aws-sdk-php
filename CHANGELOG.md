@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.371.4 - 2026-03-03
 
 * `Aws\` - Add a validation for custom policies to make sure the property `Resource` has not a non allowed character.
 * `Aws\PartnerCentralChannel` - Adds the Resold Unified Operations support plan and removes the Resold Business support plan in the CreateRelationship and UpdateRelationship APIs
