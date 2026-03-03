@@ -494,7 +494,8 @@
         "FilterValue$booleanValue": "<p> The boolean value for true/false filtering conditions. </p>",
         "GetEvaluatorResponse$lockedForModification": "<p> Whether the evaluator is locked for modification due to being referenced by active online evaluation configurations. </p>",
         "InterceptorInputConfiguration$passRequestHeaders": "<p>Indicates whether to pass request headers as input into the interceptor. When set to true, request headers will be passed.</p>",
-        "RecordingConfig$enabled": "<p>Indicates whether recording is enabled for the browser. When set to true, browser sessions are recorded.</p>"
+        "RecordingConfig$enabled": "<p>Indicates whether recording is enabled for the browser. When set to true, browser sessions are recorded.</p>",
+        "RuntimeMetadataConfiguration$requireMMDSV2": "<p>Enables MMDSv2 (microVM Metadata Service Version 2) requirement for the agent runtime. When set to <code>true</code>, the runtime microVM will only accept MMDSv2 requests.</p>"
       }
     },
     "BrowserArn": {
@@ -1411,10 +1412,9 @@
         "SummaryMemoryStrategyInput$description": "<p>The description of the summary memory strategy.</p>",
         "UpdateAgentRuntimeRequest$description": "<p>The updated description of the AgentCore Runtime.</p>",
         "UpdateMemoryInput$description": "<p>The updated description of the AgentCore Memory resource.</p>",
-        "UpdatePolicyEngineRequest$description": "<p>The new description for the policy engine.</p>",
         "UpdatePolicyEngineResponse$description": "<p>The updated description of the policy engine.</p>",
-        "UpdatePolicyRequest$description": "<p>The new human-readable description for the policy. This optional field allows updating the policy's documentation while keeping the same policy logic.</p>",
         "UpdatePolicyResponse$description": "<p>The updated description of the policy.</p>",
+        "UpdatedDescription$optionalValue": "<p>Represents an optional value that is used to update the human-readable description of the resource. If set to null, it will clear the current description of the resource.</p>",
         "UserPreferenceMemoryStrategyInput$description": "<p>The description of the user preference memory strategy.</p>"
       }
     },
@@ -2235,10 +2235,16 @@
       "refs": {
         "CreateGatewayRequest$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt data associated with the gateway.</p>",
         "CreateGatewayResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt data associated with the gateway.</p>",
+        "CreatePolicyEngineRequest$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
+        "CreatePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
+        "DeletePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "GetGatewayResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the gateway.</p>",
+        "GetPolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "KmsConfiguration$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key.</p>",
+        "PolicyEngine$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "UpdateGatewayRequest$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the gateway.</p>",
-        "UpdateGatewayResponse$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the gateway.</p>"
+        "UpdateGatewayResponse$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the gateway.</p>",
+        "UpdatePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>"
       }
     },
     "LambdaFunctionArn": {
@@ -3169,6 +3175,12 @@
         "ListPolicyGenerationAssetsResponse$policyGenerationAssets": "<p>An array of generated policy assets including Cedar policies and related artifacts from the AI-powered policy generation process. Each asset represents a different policy option or variation generated from the original natural language input.</p>"
       }
     },
+    "PolicyGenerationDetails": {
+      "base": "<p>Represents the information identifying a generated policy asset from the AI-powered policy generation process within the AgentCore Policy system. Each asset contains a Cedar policy statement generated from natural language input, along with associated metadata and analysis findings to help users evaluate and select the most appropriate policy option.</p>",
+      "refs": {
+        "PolicyDefinition$policyGeneration": "<p>The generated policy asset information within the policy definition structure. This contains information identifying a generated policy asset from the AI-powered policy generation process within the AgentCore Policy system. Each asset contains a Cedar policy statement generated from natural language input, along with associated metadata and analysis findings to help users evaluate and select the most appropriate policy option.</p>"
+      }
+    },
     "PolicyGenerationName": {
       "base": null,
       "refs": {
@@ -3356,6 +3368,8 @@
         "PolicyGeneration$policyEngineId": "<p>The identifier of the policy engine associated with this generation request.</p>",
         "PolicyGeneration$policyGenerationId": "<p>The unique identifier for this policy generation request.</p>",
         "PolicyGenerationAsset$policyGenerationAssetId": "<p>The unique identifier for this generated policy asset within the policy generation request. This ID can be used to reference specific generated policy options when creating actual policies from the generation results.</p>",
+        "PolicyGenerationDetails$policyGenerationId": "<p>The unique identifier for this policy generation request.</p>",
+        "PolicyGenerationDetails$policyGenerationAssetId": "<p>The unique identifier for this generated policy asset within the policy generation request.</p>",
         "StartPolicyGenerationRequest$policyEngineId": "<p>The identifier of the policy engine that provides the context for policy generation. This engine's schema and tool context are used to ensure generated policies are valid and applicable.</p>",
         "StartPolicyGenerationResponse$policyEngineId": "<p>The identifier of the policy engine associated with the started policy generation. </p>",
         "StartPolicyGenerationResponse$policyGenerationId": "<p>The unique identifier assigned to the policy generation request for tracking progress. </p>",
@@ -3463,6 +3477,13 @@
       "base": null,
       "refs": {
         "ContainerConfiguration$containerUri": "<p>The ECR URI of the container.</p>"
+      }
+    },
+    "RuntimeMetadataConfiguration": {
+      "base": "<p>Configuration for microVM metadata service settings.</p>",
+      "refs": {
+        "GetAgentRuntimeResponse$metadataConfiguration": "<p>Configuration for microVM Metadata Service (MMDS) settings for the AgentCore Runtime.</p>",
+        "UpdateAgentRuntimeRequest$metadataConfiguration": "<p>The updated configuration for microVM Metadata Service (MMDS) settings for the AgentCore Runtime.</p>"
       }
     },
     "S3BucketUri": {
@@ -3911,6 +3932,7 @@
         "CreateMemoryInput$tags": "<p>A map of tag keys and values to assign to an AgentCore Memory. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateOauth2CredentialProviderRequest$tags": "<p>A map of tag keys and values to assign to the OAuth2 credential provider. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateOnlineEvaluationConfigRequest$tags": "<p>A map of tag keys and values to assign to an AgentCore Online Evaluation Config. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
+        "CreatePolicyEngineRequest$tags": "<p>A map of tag keys and values to assign to an AgentCore Policy. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateWorkloadIdentityRequest$tags": "<p>A map of tag keys and values to assign to the workload identity. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags associated with the resource.</p>",
         "TagResourceRequest$tags": "<p>The tags to add to the resource. A tag is a key-value pair.</p>"
@@ -4289,6 +4311,13 @@
     "UpdateWorkloadIdentityResponse": {
       "base": null,
       "refs": {}
+    },
+    "UpdatedDescription": {
+      "base": "<p>Respresents an optional value that can be provided to update the human-readable description of the resource. If the field is omitted from the request, it will leave the current decription value unchanged.</p>",
+      "refs": {
+        "UpdatePolicyEngineRequest$description": "<p>The new description for the policy engine.</p>",
+        "UpdatePolicyRequest$description": "<p>The new human-readable description for the policy. This optional field allows updating the policy's documentation while keeping the same policy logic.</p>"
+      }
     },
     "UserPreferenceConsolidationOverride": {
       "base": "<p>Contains user preference consolidation override configuration.</p>",

@@ -1177,6 +1177,22 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "PutBearerTokenAuthentication":{
+      "name":"PutBearerTokenAuthentication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutBearerTokenAuthenticationRequest"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidOperationException"}
+      ]
+    },
     "PutDataProtectionPolicy":{
       "name":"PutDataProtectionPolicy",
       "http":{
@@ -1842,6 +1858,7 @@
       "max":256,
       "min":1
     },
+    "BearerTokenAuthenticationEnabled":{"type":"boolean"},
     "Boolean":{"type":"boolean"},
     "CSV":{
       "type":"structure",
@@ -4030,7 +4047,8 @@
         "inheritedProperties":{"shape":"InheritedProperties"},
         "logGroupClass":{"shape":"LogGroupClass"},
         "logGroupArn":{"shape":"Arn"},
-        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"}
+        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
+        "bearerTokenAuthenticationEnabled":{"shape":"BearerTokenAuthenticationEnabled"}
       }
     },
     "LogGroupArn":{
@@ -4593,7 +4611,7 @@
     },
     "PolicyDocument":{
       "type":"string",
-      "max":5120,
+      "max":51200,
       "min":1
     },
     "PolicyName":{"type":"string"},
@@ -4671,6 +4689,17 @@
       "type":"structure",
       "members":{
         "accountPolicy":{"shape":"AccountPolicy"}
+      }
+    },
+    "PutBearerTokenAuthenticationRequest":{
+      "type":"structure",
+      "required":[
+        "logGroupIdentifier",
+        "bearerTokenAuthenticationEnabled"
+      ],
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "bearerTokenAuthenticationEnabled":{"shape":"BearerTokenAuthenticationEnabled"}
       }
     },
     "PutDataProtectionPolicyRequest":{

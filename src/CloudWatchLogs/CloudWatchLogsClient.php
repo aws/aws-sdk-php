@@ -164,6 +164,8 @@ use Generator;
  * @method \GuzzleHttp\Promise\Promise listTagsLogGroupAsync(array $args = [])
  * @method \Aws\Result putAccountPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putAccountPolicyAsync(array $args = [])
+ * @method \Aws\Result putBearerTokenAuthentication(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putBearerTokenAuthenticationAsync(array $args = [])
  * @method \Aws\Result putDataProtectionPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putDataProtectionPolicyAsync(array $args = [])
  * @method \Aws\Result putDeliveryDestination(array $args = [])

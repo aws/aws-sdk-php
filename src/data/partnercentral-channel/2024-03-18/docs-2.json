@@ -51,7 +51,8 @@
         "ProgramManagementAccountSummary$accountId": "<p>The AWS account ID associated with the program management account.</p>",
         "RelationshipDetail$associatedAccountId": "<p>The AWS account ID associated in this relationship.</p>",
         "RelationshipSummary$associatedAccountId": "<p>The AWS account ID associated in this relationship.</p>",
-        "ResoldEnterprise$chargeAccountId": "<p>The AWS account ID to charge for the support plan.</p>"
+        "ResoldEnterprise$chargeAccountId": "<p>The AWS account ID to charge for the support plan.</p>",
+        "ResoldUnifiedOperations$chargeAccountId": "<p>The AWS account ID to charge for the support plan.</p>"
       }
     },
     "AccountIdList": {
@@ -203,8 +204,8 @@
       "base": null,
       "refs": {
         "PartnerLedSupport$coverage": "<p>The coverage level for partner-led support.</p>",
-        "ResoldBusiness$coverage": "<p>The coverage level for resold business support.</p>",
-        "ResoldEnterprise$coverage": "<p>The coverage level for resold enterprise support.</p>"
+        "ResoldEnterprise$coverage": "<p>The coverage level for resold enterprise support.</p>",
+        "ResoldUnifiedOperations$coverage": "<p>The coverage level for resold unified operations support.</p>"
       }
     },
     "CreateChannelHandshakeDetail": {
@@ -650,16 +651,16 @@
         "RelationshipDetail$resaleAccountModel": "<p>The resale account model for the relationship.</p>"
       }
     },
-    "ResoldBusiness": {
-      "base": "<p>Configuration for resold business support plans.</p>",
-      "refs": {
-        "SupportPlan$resoldBusiness": "<p>Configuration for resold business support plans.</p>"
-      }
-    },
     "ResoldEnterprise": {
       "base": "<p>Configuration for resold enterprise support plans.</p>",
       "refs": {
         "SupportPlan$resoldEnterprise": "<p>Configuration for resold enterprise support plans.</p>"
+      }
+    },
+    "ResoldUnifiedOperations": {
+      "base": "<p>Configuration for resold unified operations support plans.</p>",
+      "refs": {
+        "SupportPlan$resoldUnifiedOperations": "<p>Configuration for resold unified operations support plans.</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -787,6 +788,7 @@
         "InternalServerException$message": "<p>A message describing the internal server error.</p>",
         "PartnerLedSupport$tamLocation": "<p>The location of the Technical Account Manager (TAM).</p>",
         "ResoldEnterprise$tamLocation": "<p>The location of the Technical Account Manager (TAM).</p>",
+        "ResoldUnifiedOperations$tamLocation": "<p>The location of the Technical Account Manager (TAM).</p>",
         "ResourceNotFoundException$message": "<p>A message describing the resource not found error.</p>",
         "ResourceNotFoundException$resourceId": "<p>The identifier of the resource that was not found.</p>",
         "ResourceNotFoundException$resourceType": "<p>The type of the resource that was not found.</p>",
