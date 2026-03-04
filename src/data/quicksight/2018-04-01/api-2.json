@@ -6664,6 +6664,7 @@
         "PublishWithoutApproval":{"shape":"CapabilityState"},
         "UseBedrockModels":{"shape":"CapabilityState"},
         "PerformFlowUiTask":{"shape":"CapabilityState"},
+        "ApproveFlowShareRequests":{"shape":"CapabilityState"},
         "UseAgentWebSearch":{"shape":"CapabilityState"},
         "KnowledgeBase":{"shape":"CapabilityState"},
         "Action":{"shape":"CapabilityState"},
@@ -6839,11 +6840,16 @@
         "CreateAndUpdateNewRelicAction":{"shape":"CapabilityState"},
         "ShareNewRelicAction":{"shape":"CapabilityState"},
         "UseNewRelicAction":{"shape":"CapabilityState"},
+        "Topic":{"shape":"CapabilityState"},
+        "EditVisualWithQ":{"shape":"CapabilityState"},
+        "BuildCalculatedFieldWithQ":{"shape":"CapabilityState"},
+        "CreateDashboardExecutiveSummaryWithQ":{"shape":"CapabilityState"},
         "Space":{"shape":"CapabilityState"},
         "ChatAgent":{"shape":"CapabilityState"},
         "CreateChatAgents":{"shape":"CapabilityState"},
         "Research":{"shape":"CapabilityState"},
-        "SelfUpgradeUserRole":{"shape":"CapabilityState"}
+        "SelfUpgradeUserRole":{"shape":"CapabilityState"},
+        "Extension":{"shape":"CapabilityState"}
       }
     },
     "CapabilityState":{
@@ -14412,7 +14418,7 @@
     "FilteredVisualsList":{
       "type":"list",
       "member":{"shape":"ShortRestrictiveResourceId"},
-      "max":50
+      "max":75
     },
     "FiltersOperation":{
       "type":"structure",
@@ -23013,7 +23019,7 @@
     "SheetVisualScopingConfigurations":{
       "type":"list",
       "member":{"shape":"SheetVisualScopingConfiguration"},
-      "max":50,
+      "max":75,
       "min":1
     },
     "ShortFormatText":{
@@ -24224,8 +24230,8 @@
     "TargetVisualList":{
       "type":"list",
       "member":{"shape":"ShortRestrictiveResourceId"},
-      "max":50,
-      "min":1
+      "max":75,
+      "min":0
     },
     "TargetVisualOptions":{
       "type":"string",
@@ -27783,7 +27789,7 @@
     "VisualList":{
       "type":"list",
       "member":{"shape":"Visual"},
-      "max":50
+      "max":75
     },
     "VisualMenuOption":{
       "type":"structure",

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Fixes how response with empty bodies for non-seekable streams are handled and adds streaming flag automatically based on the operation.
+* `Aws\QuickSight` - Added several new values for Capabilities, increased visual limit per sheet from previous limit to 75, renamed Quick Suite to Quick in several places.
+* `Aws\OpenSearchService` - Adding support for DeploymentStrategyOptions
+* `Aws\ElasticsearchService` - Adds support for DeploymentStrategyOptions.
+* `Aws\GameLift` - Amazon GameLift Servers now offers DDoS protection for Linux-based EC2 and Container Fleets on SDKv5. The player gateway proxy relay network provides traffic validation, per-player rate limiting, and game server IP address obfuscation all with negligible added latency and no additional cost.
+* `Aws\Connect` - Added support for configuring additional email addresses on queues in Amazon Connect. Agents can now select an outbound email address and associate additional email addresses for replying to or initiating emails.
+* `Aws\ElasticBeanstalk` - As part of this release, Beanstalk introduce a new info type - analyze for request environment info and retrieve environment info operations. When customers request an Al analysis, Elastic Beanstalk runs a script on an instance in their environment and returns an analysis of events, health and logs.
+
 ## 3.371.4 - 2026-03-03
 
 * `Aws\` - Add a validation for custom policies to make sure the property `Resource` has not a non allowed character.

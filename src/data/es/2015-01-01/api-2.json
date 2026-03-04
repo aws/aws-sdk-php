@@ -1259,7 +1259,8 @@
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsInput"},
         "AutoTuneOptions":{"shape":"AutoTuneOptionsInput"},
-        "TagList":{"shape":"TagList"}
+        "TagList":{"shape":"TagList"},
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"}
       }
     },
     "CreateElasticsearchDomainResponse":{
@@ -1429,6 +1430,31 @@
         "NOT_ELIGIBLE",
         "ELIGIBLE"
       ]
+    },
+    "DeploymentStrategy":{
+      "type":"string",
+      "enum":[
+        "Default",
+        "CapacityOptimized"
+      ]
+    },
+    "DeploymentStrategyOptions":{
+      "type":"structure",
+      "required":["DeploymentStrategy"],
+      "members":{
+        "DeploymentStrategy":{"shape":"DeploymentStrategy"}
+      }
+    },
+    "DeploymentStrategyOptionsStatus":{
+      "type":"structure",
+      "required":[
+        "Options",
+        "Status"
+      ],
+      "members":{
+        "Options":{"shape":"DeploymentStrategyOptions"},
+        "Status":{"shape":"OptionStatus"}
+      }
     },
     "DeploymentType":{
       "type":"string",
@@ -2008,7 +2034,8 @@
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsStatus"},
         "AutoTuneOptions":{"shape":"AutoTuneOptionsStatus"},
         "ChangeProgressDetails":{"shape":"ChangeProgressDetails"},
-        "ModifyingProperties":{"shape":"ModifyingPropertiesList"}
+        "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptionsStatus"}
       }
     },
     "ElasticsearchDomainStatus":{
@@ -2046,7 +2073,8 @@
         "AutoTuneOptions":{"shape":"AutoTuneOptionsOutput"},
         "ChangeProgressDetails":{"shape":"ChangeProgressDetails"},
         "DomainProcessingStatus":{"shape":"DomainProcessingStatusType"},
-        "ModifyingProperties":{"shape":"ModifyingPropertiesList"}
+        "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"}
       }
     },
     "ElasticsearchDomainStatusList":{
@@ -3175,7 +3203,8 @@
         "NodeToNodeEncryptionOptions":{"shape":"NodeToNodeEncryptionOptions"},
         "EncryptionAtRestOptions":{"shape":"EncryptionAtRestOptions"},
         "AutoTuneOptions":{"shape":"AutoTuneOptions"},
-        "DryRun":{"shape":"DryRun"}
+        "DryRun":{"shape":"DryRun"},
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"}
       }
     },
     "UpdateElasticsearchDomainConfigResponse":{

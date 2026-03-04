@@ -233,6 +233,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "AssociateQueueEmailAddresses":{
+      "name":"AssociateQueueEmailAddresses",
+      "http":{
+        "method":"POST",
+        "requestUri":"/queues/{InstanceId}/{QueueId}/associate-email-addresses"
+      },
+      "input":{"shape":"AssociateQueueEmailAddressesRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "AssociateQueueQuickConnects":{
       "name":"AssociateQueueQuickConnects",
       "http":{
@@ -2514,6 +2531,22 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "DisassociateQueueEmailAddresses":{
+      "name":"DisassociateQueueEmailAddresses",
+      "http":{
+        "method":"POST",
+        "requestUri":"/queues/{InstanceId}/{QueueId}/disassociate-email-addresses"
+      },
+      "input":{"shape":"DisassociateQueueEmailAddressesRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "DisassociateQueueQuickConnects":{
       "name":"DisassociateQueueQuickConnects",
       "http":{
@@ -3510,6 +3543,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "ListQueueEmailAddresses":{
+      "name":"ListQueueEmailAddresses",
+      "http":{
+        "method":"GET",
+        "requestUri":"/queues/{InstanceId}/{QueueId}/email-addresses"
+      },
+      "input":{"shape":"ListQueueEmailAddressesRequest"},
+      "output":{"shape":"ListQueueEmailAddressesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "ListQueueQuickConnects":{
@@ -6860,6 +6910,31 @@
         "ContactFlowId":{"shape":"ContactFlowId"}
       }
     },
+    "AssociateQueueEmailAddressesRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "QueueId",
+        "EmailAddressesConfig"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "QueueId":{
+          "shape":"QueueId",
+          "location":"uri",
+          "locationName":"QueueId"
+        },
+        "EmailAddressesConfig":{"shape":"EmailAddressConfigList"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
     "AssociateQueueQuickConnectsRequest":{
       "type":"structure",
       "required":[
@@ -9383,6 +9458,7 @@
           "box":true
         },
         "QuickConnectIds":{"shape":"QuickConnectsList"},
+        "EmailAddressesConfig":{"shape":"EmailAddressConfigList"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -12416,6 +12492,31 @@
         }
       }
     },
+    "DisassociateQueueEmailAddressesRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "QueueId",
+        "EmailAddressesId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "QueueId":{
+          "shape":"QueueId",
+          "location":"uri",
+          "locationName":"QueueId"
+        },
+        "EmailAddressesId":{"shape":"EmailAddressIdList"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
     "DisassociateQueueQuickConnectsRequest":{
       "type":"structure",
       "required":[
@@ -12711,6 +12812,19 @@
       "max":500,
       "min":1
     },
+    "EmailAddressConfig":{
+      "type":"structure",
+      "required":["EmailAddressId"],
+      "members":{
+        "EmailAddressId":{"shape":"EmailAddressId"}
+      }
+    },
+    "EmailAddressConfigList":{
+      "type":"list",
+      "member":{"shape":"EmailAddressConfig"},
+      "max":50,
+      "min":1
+    },
     "EmailAddressDisplayName":{
       "type":"string",
       "max":256,
@@ -12720,6 +12834,12 @@
     "EmailAddressId":{
       "type":"string",
       "max":500,
+      "min":1
+    },
+    "EmailAddressIdList":{
+      "type":"list",
+      "member":{"shape":"EmailAddressId"},
+      "max":50,
       "min":1
     },
     "EmailAddressInfo":{
@@ -12745,6 +12865,10 @@
         "AliasConfigurations":{"shape":"AliasConfigurationList"}
       }
     },
+    "EmailAddressMetadataList":{
+      "type":"list",
+      "member":{"shape":"EmailAddressSummary"}
+    },
     "EmailAddressRecipientList":{
       "type":"list",
       "member":{"shape":"EmailAddressInfo"},
@@ -12767,6 +12891,14 @@
       "type":"structure",
       "members":{
         "TagFilter":{"shape":"ControlPlaneTagFilter"}
+      }
+    },
+    "EmailAddressSummary":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"EmailAddressId"},
+        "Arn":{"shape":"EmailAddressArn"},
+        "IsDefaultOutboundEmail":{"shape":"Boolean"}
       }
     },
     "EmailAttachment":{
@@ -17009,6 +17141,45 @@
       "members":{
         "PromptSummaryList":{"shape":"PromptSummaryList"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListQueueEmailAddressesRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "QueueId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "QueueId":{
+          "shape":"QueueId",
+          "location":"uri",
+          "locationName":"QueueId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListQueueEmailAddressesResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "EmailAddressMetadataList":{"shape":"EmailAddressMetadataList"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"}
       }
     },
     "ListQueueQuickConnectsRequest":{

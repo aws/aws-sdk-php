@@ -2111,7 +2111,8 @@
         "AutoTuneOptions":{"shape":"AutoTuneOptionsInput"},
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
         "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"},
-        "AIMLOptions":{"shape":"AIMLOptionsInput"}
+        "AIMLOptions":{"shape":"AIMLOptionsInput"},
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"}
       }
     },
     "CreateDomainResponse":{
@@ -2449,6 +2450,31 @@
         "NOT_ELIGIBLE",
         "ELIGIBLE"
       ]
+    },
+    "DeploymentStrategy":{
+      "type":"string",
+      "enum":[
+        "Default",
+        "CapacityOptimized"
+      ]
+    },
+    "DeploymentStrategyOptions":{
+      "type":"structure",
+      "required":["DeploymentStrategy"],
+      "members":{
+        "DeploymentStrategy":{"shape":"DeploymentStrategy"}
+      }
+    },
+    "DeploymentStrategyOptionsStatus":{
+      "type":"structure",
+      "required":[
+        "Options",
+        "Status"
+      ],
+      "members":{
+        "Options":{"shape":"DeploymentStrategyOptions"},
+        "Status":{"shape":"OptionStatus"}
+      }
     },
     "DeploymentType":{
       "type":"string",
@@ -2931,7 +2957,8 @@
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptionsStatus"},
         "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptionsStatus"},
         "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
-        "AIMLOptions":{"shape":"AIMLOptionsStatus"}
+        "AIMLOptions":{"shape":"AIMLOptionsStatus"},
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptionsStatus"}
       }
     },
     "DomainEndpointOptions":{
@@ -3128,7 +3155,8 @@
         "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"},
         "DomainProcessingStatus":{"shape":"DomainProcessingStatusType"},
         "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
-        "AIMLOptions":{"shape":"AIMLOptionsOutput"}
+        "AIMLOptions":{"shape":"AIMLOptionsOutput"},
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"}
       }
     },
     "DomainStatusList":{
@@ -5476,7 +5504,8 @@
         "DryRunMode":{"shape":"DryRunMode"},
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
         "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"},
-        "AIMLOptions":{"shape":"AIMLOptionsInput"}
+        "AIMLOptions":{"shape":"AIMLOptionsInput"},
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"}
       }
     },
     "UpdateDomainConfigResponse":{
