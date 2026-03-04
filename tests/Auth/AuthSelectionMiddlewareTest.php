@@ -8,8 +8,10 @@ use Aws\Auth\AuthSchemeResolver;
 use Aws\Auth\Exception\UnresolvedAuthSchemeException;
 use Aws\AwsClient;
 use Aws\CommandInterface;
+use Aws\Credentials\Credentials;
 use Aws\Identity\AwsCredentialIdentity;
 use Aws\Identity\BearerTokenIdentity;
+use Aws\Middleware;
 use Aws\MockHandler;
 use Aws\Result;
 use GuzzleHttp\Promise;
@@ -485,5 +487,33 @@ class AuthSelectionMiddlewareTest extends TestCase
         foreach ($cases as $key => $case) {
             yield $key => $case;
         }
+    }
+
+    public function testAuthSchemePreferenceClientConfig(): void
+    {
+        $credentialProvider = function () {
+            return Promise\Create::promiseFor(
+                new Credentials('foo', 'bar', 'baz')
+            );
+        };
+        $service = $this->generateTestService(
+            ['aws.auth#sigv4a', 'aws.auth#sigv4'],
+            null,
+        );
+        $client = $this->generateTestClient($service, [
+            'credentials' => $credentialProvider,
+            'auth_scheme_preference' => 'aws.auth#sigv4, aws.auth#sigv4a'
+        ]);
+        $middleware = Middleware::tap(function ($cmd, $req) {
+            $this->assertSame('v4', $cmd['@context']['signature_version']);
+        });
+        $client->getHandlerList()->prependSign($middleware, 'assert-order');
+
+        $command = $client->getCommand(
+            'fooOperation',
+            ['FooParam' => 'bar']
+        );
+
+        $client->execute($command);
     }
 }
