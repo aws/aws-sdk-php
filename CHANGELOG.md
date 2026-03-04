@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.371.5 - 2026-03-04
 
 * `Aws\` - Fixes how response with empty bodies for non-seekable streams are handled and adds streaming flag automatically based on the operation.
 * `Aws\QuickSight` - Added several new values for Capabilities, increased visual limit per sheet from previous limit to 75, renamed Quick Suite to Quick in several places.
