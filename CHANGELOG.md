@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.372.0 - 2026-03-05
 
 * `Aws\Api` - Adds support for the Smithy RPC V2 CBOR protocol.
 * `Aws\EC2` - Added metadata field to CapacityAllocation.
