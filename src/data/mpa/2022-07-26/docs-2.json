@@ -20,6 +20,7 @@
     "ListSessions": "<p>Returns a list of approval sessions. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-concepts.html\">Session</a> in the <i>Multi-party approval User Guide</i>.</p>",
     "ListTagsForResource": "<p>Returns a list of the tags for a resource.</p>",
     "StartActiveApprovalTeamDeletion": "<p>Starts the deletion process for an active approval team.</p> <note> <p> <b>Deletions require team approval</b> </p> <p>Requests to delete an active team must be approved by the team.</p> </note>",
+    "StartApprovalTeamBaseline": "<p>Starts a baseline session for specified approvers on an <code>ACTIVE</code> approval team.</p>",
     "TagResource": "<p>Creates or updates a resource tag. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources.</p>",
     "UntagResource": "<p>Removes a resource tag. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources. </p>",
     "UpdateApprovalTeam": "<p>Updates an approval team. You can request to update the team description, approval threshold, and approvers in the team.</p> <note> <p> <b>Updates require team approval</b> </p> <p>Updates to an active team must be approved by the team.</p> </note>"
@@ -90,6 +91,7 @@
         "ListSessionsRequest$ApprovalTeamArn": "<p>Amazon Resource Name (ARN) for the approval team.</p>",
         "ListSessionsResponseSession$ApprovalTeamArn": "<p>Amazon Resource Name (ARN) for the approval team.</p>",
         "StartActiveApprovalTeamDeletionRequest$Arn": "<p>Amazon Resource Name (ARN) for the team.</p>",
+        "StartApprovalTeamBaselineRequest$Arn": "<p>Amazon Resource Name (ARN) for the approval team.</p>",
         "UpdateApprovalTeamRequest$Arn": "<p>Amazon Resource Name (ARN) for the team.</p>"
       }
     },
@@ -129,6 +131,12 @@
         "GetApprovalTeamResponse$StatusCode": "<p>Status code for the approval team. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-health.html\">Team health</a> in the <i>Multi-party approval User Guide</i>.</p>",
         "ListApprovalTeamsResponseApprovalTeam$StatusCode": "<p>Status code for the team. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-health.html\">Team health</a> in the <i>Multi-party approval User Guide</i>.</p>",
         "PendingUpdate$StatusCode": "<p>Status code for the update. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-health.html\">Team health</a> in the <i>Multi-party approval User Guide</i>.</p>"
+      }
+    },
+    "ApproverLastActivity": {
+      "base": null,
+      "refs": {
+        "GetApprovalTeamResponseApprover$LastActivity": "<p>Last Activity performed by the approver.</p>"
       }
     },
     "Boolean": {
@@ -388,6 +396,7 @@
         "GetApprovalTeamResponse$CreationTime": "<p>Timestamp when the team was created.</p>",
         "GetApprovalTeamResponse$LastUpdateTime": "<p>Timestamp when the team was last updated.</p>",
         "GetApprovalTeamResponseApprover$ResponseTime": "<p>Timestamp when the approver responded to an approval team invitation.</p>",
+        "GetApprovalTeamResponseApprover$LastActivityTime": "<p>Timestamp when the approver last responded to an operation or invitation request.</p>",
         "GetIdentitySourceResponse$CreationTime": "<p>Timestamp when the identity source was created.</p>",
         "GetSessionResponse$InitiationTime": "<p>Timestamp when the session was initiated.</p>",
         "GetSessionResponse$ExpirationTime": "<p>Timestamp when the session will expire.</p>",
@@ -567,7 +576,8 @@
       "base": null,
       "refs": {
         "GetApprovalTeamResponseApprover$ApproverId": "<p>ID for the approver.</p>",
-        "GetSessionResponseApproverResponse$ApproverId": "<p>ID for the approver.</p>"
+        "GetSessionResponseApproverResponse$ApproverId": "<p>ID for the approver.</p>",
+        "StartApprovalTeamBaselineApproverIds$member": null
       }
     },
     "PendingUpdate": {
@@ -702,9 +712,11 @@
       "base": null,
       "refs": {
         "CancelSessionRequest$SessionArn": "<p>Amazon Resource Name (ARN) for the session.</p>",
+        "GetApprovalTeamResponseApprover$PendingBaselineSessionArn": "<p>Amazon Resource Name (ARN) for the pending baseline session.</p>",
         "GetSessionRequest$SessionArn": "<p>Amazon Resource Name (ARN) for the session.</p>",
         "GetSessionResponse$SessionArn": "<p>Amazon Resource Name (ARN) for the session.</p>",
-        "ListSessionsResponseSession$SessionArn": "<p>Amazon Resource Name (ARN) for the session.</p>"
+        "ListSessionsResponseSession$SessionArn": "<p>Amazon Resource Name (ARN) for the session.</p>",
+        "StartApprovalTeamBaselineResponse$BaselineSessionArn": "<p>Amazon Resource Name (ARN) for the session.</p>"
       }
     },
     "SessionExecutionStatus": {
@@ -756,6 +768,20 @@
       "refs": {}
     },
     "StartActiveApprovalTeamDeletionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartApprovalTeamBaselineApproverIds": {
+      "base": null,
+      "refs": {
+        "StartApprovalTeamBaselineRequest$ApproverIds": "<p>Array of approver IDs.</p>"
+      }
+    },
+    "StartApprovalTeamBaselineRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartApprovalTeamBaselineResponse": {
       "base": null,
       "refs": {}
     },

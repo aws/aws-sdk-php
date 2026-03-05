@@ -10296,7 +10296,31 @@
         "Count":{
           "shape":"Integer",
           "locationName":"count"
+        },
+        "AllocationMetadata":{
+          "shape":"CapacityAllocationMetadataList",
+          "locationName":"allocationMetadataList"
         }
+      }
+    },
+    "CapacityAllocationMetadataEntry":{
+      "type":"structure",
+      "members":{
+        "Key":{
+          "shape":"String",
+          "locationName":"key"
+        },
+        "Value":{
+          "shape":"String",
+          "locationName":"value"
+        }
+      }
+    },
+    "CapacityAllocationMetadataList":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityAllocationMetadataEntry",
+        "locationName":"item"
       }
     },
     "CapacityAllocations":{

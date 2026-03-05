@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Adds support for the Smithy RPC V2 CBOR protocol.
+* `Aws\EC2` - Added metadata field to CapacityAllocation.
+* `Aws\MPA` - Updates to multi-party approval (MPA) service to add support for approval team baseline operations.
+* `Aws\ConnectHealth` - Connect-Health SDK is AWS's unified SDK for the Amazon Connect Health offering. It allows healthcare developers to integrate purpose-built agents - such as patient insights, ambient documentation, and medical coding - into their existing applications, including EHRs, telehealth, and revenue cycle.
+* `Aws\SageMaker` - Adds support for S3 Bucket Ownership validation for SageMaker Managed MLflow.
+* `Aws\SavingsPlans` - Added support for OpenSearch and Neptune Analytics to Database Savings Plans.
+* `Aws\GuardDuty` - Added MALICIOUS FILE to IndicatorType enum in MDC Sequence
+
 ## 3.371.5 - 2026-03-04
 
 * `Aws\` - Fixes how response with empty bodies for non-seekable streams are handled and adds streaming flag automatically based on the operation.
