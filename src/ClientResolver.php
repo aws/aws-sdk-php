@@ -1167,7 +1167,7 @@ class ClientResolver
         }
 
         // Assign user's preferred auth scheme list
-        $args['auth_scheme_preference'] = $value;
+        $args['config']['auth_scheme_preference'] = $value;
     }
 
     public static function _default_signature_version(array &$args)
