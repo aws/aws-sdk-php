@@ -2346,6 +2346,25 @@
       },
       "union":true
     },
+    "ContentConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"ContentType"},
+        "level":{"shape":"ContentLevel"}
+      }
+    },
+    "ContentLevel":{
+      "type":"string",
+      "enum":[
+        "METADATA_ONLY",
+        "FULL_CONTENT"
+      ]
+    },
+    "ContentType":{
+      "type":"string",
+      "enum":["MEMORY_RECORDS"]
+    },
     "CreateAgentRuntimeEndpointRequest":{
       "type":"structure",
       "required":[
@@ -2715,6 +2734,7 @@
         "memoryExecutionRoleArn":{"shape":"Arn"},
         "eventExpiryDuration":{"shape":"CreateMemoryInputEventExpiryDurationInteger"},
         "memoryStrategies":{"shape":"MemoryStrategyInputList"},
+        "streamDeliveryResources":{"shape":"StreamDeliveryResources"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -4906,6 +4926,23 @@
         "ServiceManagedKey"
       ]
     },
+    "KinesisResource":{
+      "type":"structure",
+      "required":[
+        "dataStreamArn",
+        "contentConfigurations"
+      ],
+      "members":{
+        "dataStreamArn":{"shape":"Arn"},
+        "contentConfigurations":{"shape":"KinesisResourceContentConfigurationsList"}
+      }
+    },
+    "KinesisResourceContentConfigurationsList":{
+      "type":"list",
+      "member":{"shape":"ContentConfiguration"},
+      "max":1,
+      "min":1
+    },
     "KmsConfiguration":{
       "type":"structure",
       "required":["keyType"],
@@ -5568,7 +5605,8 @@
         "failureReason":{"shape":"String"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
-        "strategies":{"shape":"MemoryStrategyList"}
+        "strategies":{"shape":"MemoryStrategyList"},
+        "streamDeliveryResources":{"shape":"StreamDeliveryResources"}
       }
     },
     "MemoryArn":{
@@ -6855,6 +6893,26 @@
         "selfManagedConfiguration":{"shape":"SelfManagedConfiguration"}
       }
     },
+    "StreamDeliveryResource":{
+      "type":"structure",
+      "members":{
+        "kinesis":{"shape":"KinesisResource"}
+      },
+      "union":true
+    },
+    "StreamDeliveryResources":{
+      "type":"structure",
+      "required":["resources"],
+      "members":{
+        "resources":{"shape":"StreamDeliveryResourcesList"}
+      }
+    },
+    "StreamDeliveryResourcesList":{
+      "type":"list",
+      "member":{"shape":"StreamDeliveryResource"},
+      "max":1,
+      "min":0
+    },
     "String":{"type":"string"},
     "SubnetId":{
       "type":"string",
@@ -7505,7 +7563,8 @@
         "description":{"shape":"Description"},
         "eventExpiryDuration":{"shape":"UpdateMemoryInputEventExpiryDurationInteger"},
         "memoryExecutionRoleArn":{"shape":"Arn"},
-        "memoryStrategies":{"shape":"ModifyMemoryStrategies"}
+        "memoryStrategies":{"shape":"ModifyMemoryStrategies"},
+        "streamDeliveryResources":{"shape":"StreamDeliveryResources"}
       }
     },
     "UpdateMemoryInputClientTokenString":{

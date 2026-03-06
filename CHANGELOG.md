@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SESv2` - Adds support for longer email message header values, increasing the maximum length from 870 to 995 characters for RFC 5322 compliance.
+* `Aws\BedrockAgentCoreControl` - Adds support for streaming memory records in AgentCore Memory
+* `Aws\AppIntegrationsService` - This release adds support for webhooks, allowing customers to create an Event Integration with a webhook source.
+* `Aws\Deadline` - AWS Deadline Cloud now supports cost scale factors for farms, enabling studios to adjust reported costs to reflect their actual rendering economics. Adjusted costs are reflected in Deadline Cloud's Usage Explorer and Budgets.
+* `Aws\BCMDataExports` - Fixed wrong endpoint resolutions in few regions. Added AWS CFN resource schema for BCM Data Exports. Added max value validation for pagination parameter. Fixed ARN format validation for BCM Data Exports resources. Updated size constraints for table properties. Added AccessDeniedException error.
+* `Aws\Connect` - Amazon Connect now supports the ability to programmatically configure and run automated tests for contact center experiences for Chat. Integrate testing into CICD pipelines, run multiple tests at scale, and retrieve results via API to automate validation of chat interactions and workflows.
+* `Aws\Bedrock` - Amazon Bedrock Guardrails account-level enforcement APIs now support lists for model inclusion and exclusion from guardrail enforcement.
+* `Aws\GameLiftStreams` - Added new Gen6 stream classes based on the EC2 G6f instance family. These stream classes provide cost-optimized options for streaming well-optimized or lower-fidelity games on Windows environments.
+
 ## 3.372.0 - 2026-03-05
 
 * `Aws\Api` - Adds support for the Smithy RPC V2 CBOR protocol.

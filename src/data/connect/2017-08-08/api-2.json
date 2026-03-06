@@ -7925,6 +7925,12 @@
       "max":10080,
       "min":60
     },
+    "ChatEntryPointParameters":{
+      "type":"structure",
+      "members":{
+        "FlowId":{"shape":"ContactFlowId"}
+      }
+    },
     "ChatEvent":{
       "type":"structure",
       "required":["Type"],
@@ -23513,12 +23519,16 @@
       "type":"structure",
       "members":{
         "Type":{"shape":"TestCaseEntryPointType"},
-        "VoiceCallEntryPointParameters":{"shape":"VoiceCallEntryPointParameters"}
+        "VoiceCallEntryPointParameters":{"shape":"VoiceCallEntryPointParameters"},
+        "ChatEntryPointParameters":{"shape":"ChatEntryPointParameters"}
       }
     },
     "TestCaseEntryPointType":{
       "type":"string",
-      "enum":["VOICE_CALL"]
+      "enum":[
+        "VOICE_CALL",
+        "CHAT"
+      ]
     },
     "TestCaseExecution":{
       "type":"structure",

@@ -2976,6 +2976,12 @@
         "templateType":{"shape":"JobTemplateType"}
       }
     },
+    "CostScaleFactor":{
+      "type":"float",
+      "box":true,
+      "max":100,
+      "min":0
+    },
     "CpuArchitectureType":{
       "type":"string",
       "enum":[
@@ -3034,6 +3040,7 @@
         "displayName":{"shape":"ResourceName"},
         "description":{"shape":"Description"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "costScaleFactor":{"shape":"CostScaleFactor"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -4407,6 +4414,7 @@
       "required":[
         "farmId",
         "displayName",
+        "costScaleFactor",
         "createdAt",
         "createdBy"
       ],
@@ -4415,6 +4423,7 @@
         "displayName":{"shape":"ResourceName"},
         "description":{"shape":"Description"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "costScaleFactor":{"shape":"CostScaleFactor"},
         "createdAt":{"shape":"CreatedAt"},
         "createdBy":{"shape":"CreatedBy"},
         "updatedAt":{"shape":"UpdatedAt"},
@@ -8732,7 +8741,8 @@
           "locationName":"farmId"
         },
         "displayName":{"shape":"ResourceName"},
-        "description":{"shape":"Description"}
+        "description":{"shape":"Description"},
+        "costScaleFactor":{"shape":"CostScaleFactor"}
       }
     },
     "UpdateFarmResponse":{

@@ -2,9 +2,11 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2023-11-26",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"bcm-data-exports",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWS Billing and Cost Management Data Exports",
     "serviceId":"BCM Data Exports",
     "signatureVersion":"v4",
@@ -25,7 +27,8 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DeleteExport":{
@@ -57,7 +60,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetExport":{
       "name":"GetExport",
@@ -72,7 +76,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTable":{
       "name":"GetTable",
@@ -86,7 +91,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListExecutions":{
       "name":"ListExecutions",
@@ -101,7 +107,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListExports":{
       "name":"ListExports",
@@ -115,7 +122,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTables":{
       "name":"ListTables",
@@ -129,7 +137,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -143,8 +152,10 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ValidationException"}
-      ]
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -158,7 +169,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "UntagResource":{
@@ -173,7 +185,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "UpdateExport":{
@@ -193,18 +206,26 @@
     }
   },
   "shapes":{
+    "AccessDeniedException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"GenericString"}
+      },
+      "exception":true
+    },
     "Arn":{
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:aws[-a-z0-9]*:[-a-z0-9]+:[-a-z0-9]*:[0-9]{12}:[-a-zA-Z0-9/:_]+$"
+      "pattern":"arn:aws[-a-z0-9]*:(bcm-data-exports):[-a-z0-9]*:[0-9]{12}:[-a-zA-Z0-9/:_]+"
     },
     "Column":{
       "type":"structure",
       "members":{
-        "Description":{"shape":"GenericString"},
         "Name":{"shape":"GenericString"},
-        "Type":{"shape":"GenericString"}
+        "Type":{"shape":"GenericString"},
+        "Description":{"shape":"GenericString"}
       }
     },
     "ColumnList":{
@@ -278,11 +299,11 @@
     "ExecutionStatus":{
       "type":"structure",
       "members":{
-        "CompletedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "CreatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
         "StatusCode":{"shape":"ExecutionStatusCode"},
-        "StatusReason":{"shape":"ExecutionStatusReason"}
+        "StatusReason":{"shape":"ExecutionStatusReason"},
+        "CreatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "CompletedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "ExecutionStatusCode":{
@@ -308,17 +329,17 @@
     "Export":{
       "type":"structure",
       "required":[
+        "Name",
         "DataQuery",
         "DestinationConfigurations",
-        "Name",
         "RefreshCadence"
       ],
       "members":{
-        "DataQuery":{"shape":"DataQuery"},
-        "Description":{"shape":"GenericString"},
-        "DestinationConfigurations":{"shape":"DestinationConfigurations"},
         "ExportArn":{"shape":"Arn"},
         "Name":{"shape":"ExportName"},
+        "Description":{"shape":"GenericString"},
+        "DataQuery":{"shape":"DataQuery"},
+        "DestinationConfigurations":{"shape":"DestinationConfigurations"},
         "RefreshCadence":{"shape":"RefreshCadence"}
       }
     },
@@ -326,7 +347,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[0-9A-Za-z!\\-_.*\\'()]+$"
+      "pattern":"[0-9A-Za-z\\-_]+"
     },
     "ExportReference":{
       "type":"structure",
@@ -348,11 +369,11 @@
     "ExportStatus":{
       "type":"structure",
       "members":{
-        "CreatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "LastRefreshedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
         "StatusCode":{"shape":"ExportStatusCode"},
-        "StatusReason":{"shape":"ExecutionStatusReason"}
+        "StatusReason":{"shape":"ExecutionStatusReason"},
+        "CreatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "LastRefreshedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "ExportStatusCode":{
@@ -377,7 +398,7 @@
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"^[\\S\\s]*$"
+      "pattern":"[\\S\\s]*"
     },
     "GenericStringList":{
       "type":"list",
@@ -386,20 +407,20 @@
     "GetExecutionRequest":{
       "type":"structure",
       "required":[
-        "ExecutionId",
-        "ExportArn"
+        "ExportArn",
+        "ExecutionId"
       ],
       "members":{
-        "ExecutionId":{"shape":"GenericString"},
-        "ExportArn":{"shape":"Arn"}
+        "ExportArn":{"shape":"Arn"},
+        "ExecutionId":{"shape":"GenericString"}
       }
     },
     "GetExecutionResponse":{
       "type":"structure",
       "members":{
         "ExecutionId":{"shape":"GenericString"},
-        "ExecutionStatus":{"shape":"ExecutionStatus"},
-        "Export":{"shape":"Export"}
+        "Export":{"shape":"Export"},
+        "ExecutionStatus":{"shape":"ExecutionStatus"}
       }
     },
     "GetExportRequest":{
@@ -427,10 +448,10 @@
     "GetTableResponse":{
       "type":"structure",
       "members":{
-        "Description":{"shape":"GenericString"},
-        "Schema":{"shape":"ColumnList"},
         "TableName":{"shape":"TableName"},
-        "TableProperties":{"shape":"TableProperties"}
+        "Description":{"shape":"GenericString"},
+        "TableProperties":{"shape":"TableProperties"},
+        "Schema":{"shape":"ColumnList"}
       }
     },
     "InternalServerException":{
@@ -475,43 +496,44 @@
     "ListTablesRequest":{
       "type":"structure",
       "members":{
-        "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"NextPageToken"}
+        "NextToken":{"shape":"NextPageToken"},
+        "MaxResults":{"shape":"MaxResults"}
       }
     },
     "ListTablesResponse":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"NextPageToken"},
-        "Tables":{"shape":"TableList"}
+        "Tables":{"shape":"TableList"},
+        "NextToken":{"shape":"NextPageToken"}
       }
     },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["ResourceArn"],
       "members":{
+        "ResourceArn":{"shape":"Arn"},
         "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"NextPageToken"},
-        "ResourceArn":{"shape":"Arn"}
+        "NextToken":{"shape":"NextPageToken"}
       }
     },
     "ListTagsForResourceResponse":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"NextPageToken"},
-        "ResourceTags":{"shape":"ResourceTagList"}
+        "ResourceTags":{"shape":"ResourceTagList"},
+        "NextToken":{"shape":"NextPageToken"}
       }
     },
     "MaxResults":{
       "type":"integer",
       "box":true,
+      "max":300,
       "min":1
     },
     "NextPageToken":{
       "type":"string",
       "max":8192,
       "min":0,
-      "pattern":"^[\\S\\s]*$"
+      "pattern":"[\\S\\s]*"
     },
     "OverwriteOption":{
       "type":"string",
@@ -524,7 +546,7 @@
       "type":"string",
       "max":36000,
       "min":1,
-      "pattern":"^[\\S\\s]*$"
+      "pattern":"[\\S\\s]*"
     },
     "RefreshCadence":{
       "type":"structure",
@@ -584,29 +606,29 @@
       "type":"structure",
       "required":[
         "S3Bucket",
-        "S3OutputConfigurations",
         "S3Prefix",
-        "S3Region"
+        "S3Region",
+        "S3OutputConfigurations"
       ],
       "members":{
         "S3Bucket":{"shape":"GenericString"},
-        "S3OutputConfigurations":{"shape":"S3OutputConfigurations"},
         "S3Prefix":{"shape":"GenericString"},
-        "S3Region":{"shape":"GenericString"}
+        "S3Region":{"shape":"GenericString"},
+        "S3OutputConfigurations":{"shape":"S3OutputConfigurations"}
       }
     },
     "S3OutputConfigurations":{
       "type":"structure",
       "required":[
-        "Compression",
-        "Format",
         "OutputType",
+        "Format",
+        "Compression",
         "Overwrite"
       ],
       "members":{
-        "Compression":{"shape":"CompressionOption"},
-        "Format":{"shape":"FormatOption"},
         "OutputType":{"shape":"S3OutputType"},
+        "Format":{"shape":"FormatOption"},
+        "Compression":{"shape":"CompressionOption"},
         "Overwrite":{"shape":"OverwriteOption"}
       }
     },
@@ -623,9 +645,9 @@
       ],
       "members":{
         "Message":{"shape":"GenericString"},
-        "QuotaCode":{"shape":"GenericString"},
         "ResourceId":{"shape":"GenericString"},
         "ResourceType":{"shape":"GenericString"},
+        "QuotaCode":{"shape":"GenericString"},
         "ServiceCode":{"shape":"GenericString"}
       },
       "exception":true
@@ -637,8 +659,8 @@
     "Table":{
       "type":"structure",
       "members":{
-        "Description":{"shape":"GenericString"},
         "TableName":{"shape":"TableName"},
+        "Description":{"shape":"GenericString"},
         "TableProperties":{"shape":"TablePropertyDescriptionList"}
       }
     },
@@ -655,31 +677,37 @@
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"^[\\S\\s]*$"
+      "pattern":"[\\S\\s]*"
     },
     "TableProperties":{
       "type":"map",
       "key":{"shape":"TableProperty"},
-      "value":{"shape":"GenericString"}
+      "value":{"shape":"TablePropertyGenericString"}
     },
     "TableProperty":{
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"^[\\S\\s]*$"
+      "pattern":"[\\S\\s]*"
     },
     "TablePropertyDescription":{
       "type":"structure",
       "members":{
-        "DefaultValue":{"shape":"GenericString"},
-        "Description":{"shape":"GenericString"},
         "Name":{"shape":"GenericString"},
-        "ValidValues":{"shape":"GenericStringList"}
+        "ValidValues":{"shape":"GenericStringList"},
+        "DefaultValue":{"shape":"GenericString"},
+        "Description":{"shape":"GenericString"}
       }
     },
     "TablePropertyDescriptionList":{
       "type":"list",
       "member":{"shape":"TablePropertyDescription"}
+    },
+    "TablePropertyGenericString":{
+      "type":"string",
+      "max":16384,
+      "min":0,
+      "pattern":"[\\S\\s]*"
     },
     "TagResourceRequest":{
       "type":"structure",
@@ -694,8 +722,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ThrottlingException":{
       "type":"structure",
@@ -720,18 +747,17 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateExportRequest":{
       "type":"structure",
       "required":[
-        "Export",
-        "ExportArn"
+        "ExportArn",
+        "Export"
       ],
       "members":{
-        "Export":{"shape":"Export"},
-        "ExportArn":{"shape":"Arn"}
+        "ExportArn":{"shape":"Arn"},
+        "Export":{"shape":"Export"}
       }
     },
     "UpdateExportResponse":{
@@ -744,21 +770,21 @@
       "type":"structure",
       "required":["Message"],
       "members":{
-        "Fields":{"shape":"ValidationExceptionFieldList"},
         "Message":{"shape":"GenericString"},
-        "Reason":{"shape":"ValidationExceptionReason"}
+        "Reason":{"shape":"ValidationExceptionReason"},
+        "Fields":{"shape":"ValidationExceptionFieldList"}
       },
       "exception":true
     },
     "ValidationExceptionField":{
       "type":"structure",
       "required":[
-        "Message",
-        "Name"
+        "Name",
+        "Message"
       ],
       "members":{
-        "Message":{"shape":"GenericString"},
-        "Name":{"shape":"GenericString"}
+        "Name":{"shape":"GenericString"},
+        "Message":{"shape":"GenericString"}
       }
     },
     "ValidationExceptionFieldList":{

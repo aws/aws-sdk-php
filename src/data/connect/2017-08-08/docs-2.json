@@ -1936,6 +1936,12 @@
         "StartOutboundChatContactRequest$ChatDurationInMinutes": "<p>The total duration of the newly started chat session. If not specified, the chat session duration defaults to 25 hour. The minimum configurable time is 60 minutes. The maximum configurable time is 10,080 minutes (7 days).</p>"
       }
     },
+    "ChatEntryPointParameters": {
+      "base": "<p>Parameters for initiating a chat test.</p>",
+      "refs": {
+        "TestCaseEntryPoint$ChatEntryPointParameters": "<p>Parameters for chat entry point.</p>"
+      }
+    },
     "ChatEvent": {
       "base": "<p>Chat integration event containing payload to perform different chat actions such as:</p> <ul> <li> <p>Sending a chat message</p> </li> <li> <p>Sending a chat event, such as typing</p> </li> <li> <p>Disconnecting from a chat</p> </li> </ul>",
       "refs": {
@@ -2282,6 +2288,7 @@
       "base": null,
       "refs": {
         "AssociatePhoneNumberContactFlowRequest$ContactFlowId": "<p>The identifier of the flow.</p>",
+        "ChatEntryPointParameters$FlowId": "<p>The flow identifier for the test.</p>",
         "ContactFlow$Id": "<p>The identifier of the flow.</p>",
         "ContactFlowSummary$Id": "<p>The identifier of the flow.</p>",
         "CreateContactFlowResponse$ContactFlowId": "<p>The identifier of the flow.</p>",

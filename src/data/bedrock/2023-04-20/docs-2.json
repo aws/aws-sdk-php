@@ -2484,6 +2484,18 @@
         "EvaluationSummary$customMetricsEvaluatorModelIdentifiers": "<p>The Amazon Resource Names (ARNs) of the models used to compute custom metrics in an Amazon Bedrock evaluation job.</p>"
       }
     },
+    "ExcludedModelId": {
+      "base": null,
+      "refs": {
+        "ExcludedModelsList$member": null
+      }
+    },
+    "ExcludedModelsList": {
+      "base": null,
+      "refs": {
+        "ModelEnforcement$excludedModels": "<p>Models to exclude from enforcement of the guardrail.</p>"
+      }
+    },
     "ExportAutomatedReasoningPolicyVersionRequest": {
       "base": null,
       "refs": {}
@@ -3617,6 +3629,18 @@
         "ListImportedModelsResponse$modelSummaries": "<p>Model summaries.</p>"
       }
     },
+    "IncludedModelId": {
+      "base": null,
+      "refs": {
+        "IncludedModelsList$member": null
+      }
+    },
+    "IncludedModelsList": {
+      "base": null,
+      "refs": {
+        "ModelEnforcement$includedModels": "<p>Models to enforce the guardrail on.</p>"
+      }
+    },
     "InferenceProfileArn": {
       "base": null,
       "refs": {
@@ -4309,6 +4333,13 @@
         "CustomModelDeploymentSummary$customModelDeploymentName": "<p>The name of the custom model deployment.</p>",
         "GetCustomModelDeploymentResponse$modelDeploymentName": "<p>The name of the custom model deployment.</p>",
         "ListCustomModelDeploymentsRequest$nameContains": "<p>Filters deployments whose names contain the specified string. </p>"
+      }
+    },
+    "ModelEnforcement": {
+      "base": "<p>Model-specific information for the enforced guardrail configuration.</p>",
+      "refs": {
+        "AccountEnforcedGuardrailInferenceInputConfiguration$modelEnforcement": "<p>Model-specific information for the enforced guardrail configuration. If not present, the configuration is enforced on all models</p>",
+        "AccountEnforcedGuardrailOutputConfiguration$modelEnforcement": "<p>Model-specific information for the enforced guardrail configuration.</p>"
       }
     },
     "ModelId": {

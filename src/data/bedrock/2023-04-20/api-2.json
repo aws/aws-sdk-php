@@ -541,6 +541,7 @@
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
+        {"shape":"ResourceInUseException"},
         {"shape":"ThrottlingException"}
       ],
       "idempotent":true
@@ -1845,7 +1846,8 @@
       "members":{
         "guardrailIdentifier":{"shape":"GuardrailIdentifier"},
         "guardrailVersion":{"shape":"GuardrailNumericalVersion"},
-        "inputTags":{"shape":"InputTags"}
+        "inputTags":{"shape":"InputTags"},
+        "modelEnforcement":{"shape":"ModelEnforcement"}
       }
     },
     "AccountEnforcedGuardrailOutputConfiguration":{
@@ -1860,14 +1862,15 @@
         "createdBy":{"shape":"String"},
         "updatedAt":{"shape":"Timestamp"},
         "updatedBy":{"shape":"String"},
-        "owner":{"shape":"ConfigurationOwner"}
+        "owner":{"shape":"ConfigurationOwner"},
+        "modelEnforcement":{"shape":"ModelEnforcement"}
       }
     },
     "AccountEnforcedGuardrailsOutputConfiguration":{
       "type":"list",
       "member":{"shape":"AccountEnforcedGuardrailOutputConfiguration"},
       "max":1,
-      "min":1
+      "min":0
     },
     "AccountId":{
       "type":"string",
@@ -4885,6 +4888,15 @@
       "max":1,
       "min":0
     },
+    "ExcludedModelId":{
+      "type":"string",
+      "pattern":"([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2}(/[a-z0-9]{12}){0,1}"
+    },
+    "ExcludedModelsList":{
+      "type":"list",
+      "member":{"shape":"ExcludedModelId"},
+      "min":0
+    },
     "ExportAutomatedReasoningPolicyVersionRequest":{
       "type":"structure",
       "required":["policyArn"],
@@ -6765,6 +6777,15 @@
       "type":"list",
       "member":{"shape":"ImportedModelSummary"}
     },
+    "IncludedModelId":{
+      "type":"string",
+      "pattern":"(ALL|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2}(/[a-z0-9]{12}){0,1})"
+    },
+    "IncludedModelsList":{
+      "type":"list",
+      "member":{"shape":"IncludedModelId"},
+      "min":1
+    },
     "InferenceProfileArn":{
       "type":"string",
       "max":2048,
@@ -8111,6 +8132,17 @@
       "max":63,
       "min":1,
       "pattern":"([0-9a-zA-Z][_-]?){1,63}"
+    },
+    "ModelEnforcement":{
+      "type":"structure",
+      "required":[
+        "includedModels",
+        "excludedModels"
+      ],
+      "members":{
+        "includedModels":{"shape":"IncludedModelsList"},
+        "excludedModels":{"shape":"ExcludedModelsList"}
+      }
     },
     "ModelId":{
       "type":"string",

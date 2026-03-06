@@ -407,6 +407,7 @@
         "CreateMemoryInput$memoryExecutionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the memory to access Amazon Web Services services.</p>",
         "InvocationConfiguration$topicArn": "<p>The ARN of the SNS topic for job notifications.</p>",
         "InvocationConfigurationInput$topicArn": "<p>The ARN of the SNS topic for job notifications.</p>",
+        "KinesisResource$dataStreamArn": "<p>ARN of the Kinesis Data Stream.</p>",
         "Memory$encryptionKeyArn": "<p>The ARN of the KMS key used to encrypt the memory.</p>",
         "Memory$memoryExecutionRoleArn": "<p>The ARN of the IAM role that provides permissions for the memory.</p>",
         "ModifyInvocationConfigurationInput$topicArn": "<p>The updated ARN of the SNS topic for job notifications.</p>",
@@ -839,6 +840,24 @@
       "base": "<p>Represents content input for policy generation operations. This structure encapsulates the natural language descriptions or other content formats that are used as input for AI-powered policy generation.</p>",
       "refs": {
         "StartPolicyGenerationRequest$content": "<p>The natural language description of the desired policy behavior. This content is processed by AI to generate corresponding Cedar policy statements that match the described intent.</p>"
+      }
+    },
+    "ContentConfiguration": {
+      "base": "<p>Defines what content to stream and at what level of detail.</p>",
+      "refs": {
+        "KinesisResourceContentConfigurationsList$member": null
+      }
+    },
+    "ContentLevel": {
+      "base": null,
+      "refs": {
+        "ContentConfiguration$level": "<p>Level of detail for streamed content.</p>"
+      }
+    },
+    "ContentType": {
+      "base": null,
+      "refs": {
+        "ContentConfiguration$type": "<p>Type of content to stream.</p>"
       }
     },
     "CreateAgentRuntimeEndpointRequest": {
@@ -2220,6 +2239,18 @@
       "base": null,
       "refs": {
         "KmsConfiguration$keyType": "<p>The type of KMS key (CustomerManagedKey or ServiceManagedKey).</p>"
+      }
+    },
+    "KinesisResource": {
+      "base": "<p>Configuration for Kinesis Data Stream delivery.</p>",
+      "refs": {
+        "StreamDeliveryResource$kinesis": "<p>Kinesis Data Stream configuration.</p>"
+      }
+    },
+    "KinesisResourceContentConfigurationsList": {
+      "base": null,
+      "refs": {
+        "KinesisResource$contentConfigurations": "<p>Content configurations for stream delivery.</p>"
       }
     },
     "KmsConfiguration": {
@@ -3761,6 +3792,26 @@
       "base": "<p>Contains configuration information for a memory strategy.</p>",
       "refs": {
         "MemoryStrategy$configuration": "<p>The configuration of the memory strategy.</p>"
+      }
+    },
+    "StreamDeliveryResource": {
+      "base": "<p>Supported stream delivery resource types.</p>",
+      "refs": {
+        "StreamDeliveryResourcesList$member": null
+      }
+    },
+    "StreamDeliveryResources": {
+      "base": "<p>Configuration for streaming memory record data to external resources.</p>",
+      "refs": {
+        "CreateMemoryInput$streamDeliveryResources": "<p>Configuration for streaming memory record data to external resources.</p>",
+        "Memory$streamDeliveryResources": "<p>Configuration for streaming memory record data to external resources.</p>",
+        "UpdateMemoryInput$streamDeliveryResources": "<p>Configuration for streaming memory record data to external resources.</p>"
+      }
+    },
+    "StreamDeliveryResourcesList": {
+      "base": null,
+      "refs": {
+        "StreamDeliveryResources$resources": "<p>List of stream delivery resource configurations.</p>"
       }
     },
     "String": {
