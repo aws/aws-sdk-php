@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.372.1 - 2026-03-06
 
 * `Aws\SESv2` - Adds support for longer email message header values, increasing the maximum length from 870 to 995 characters for RFC 5322 compliance.
 * `Aws\BedrockAgentCoreControl` - Adds support for streaming memory records in AgentCore Memory
