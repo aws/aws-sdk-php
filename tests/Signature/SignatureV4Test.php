@@ -613,4 +613,23 @@ class SignatureV4Test extends TestCase
             $this->assertEquals($value, $req->getHeaderLine($key));
         }
     }
+
+    public function testSortHeadersAlphabetically()
+    {
+        $signature = new SignatureV4('foo', 'bar');
+        $credentials = new Credentials('a', 'b');
+        $headers = [
+            'z-header-1' => 'foo',
+            'x-header-2' => 'bar',
+            'b-header-3' => 'baz',
+            'a-header-3' => 'baz',
+            'r-header-4' => 'bar',
+        ];
+        $req = new Request('PUT', 'http://foo.com', $headers);
+        $presigned = $signature->presign($req, $credentials, '+5 minutes');
+        $this->assertStringContainsString(
+            urlencode('a-header-3;b-header-3;host;r-header-4;x-header-2;z-header-1'),
+            (string)$presigned->getUri()
+        );
+    }
 }
