@@ -155,6 +155,9 @@ class SignatureV4 implements SignatureInterface
                 $presignHeaders[] = $lName;
             }
         }
+
+        sort($presignHeaders);
+
         return $presignHeaders;
     }
 
