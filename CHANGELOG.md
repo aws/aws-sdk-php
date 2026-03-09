@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.372.2 - 2026-03-09
 
 * `Aws\Multipart` - Fixes bug in `AbstractUploadManager` where valid falsy values are excluded.
 * `Aws\OpenSearchService` - This change enables cross-account and cross-region access for DataSources. Customers can now define access policies on their datasources to allow other AWS accounts to access and query their data.
