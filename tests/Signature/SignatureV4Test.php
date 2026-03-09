@@ -304,7 +304,7 @@ class SignatureV4Test extends TestCase
             'x-amz-content-sha256' => 'abc',
         ]);
         $presigned = $sig->presign($req, $creds, '+5 minutes');
-        $this->assertStringContainsString(urlencode('host;x-amz-foo;content-md5;x-amz-meta-foo'), (string)$presigned->getUri());
+        $this->assertStringContainsString(urlencode('content-md5;host;x-amz-foo;x-amz-meta-foo'), (string)$presigned->getUri());
     }
 
     public function testPresignBlacklistedHeaders()
