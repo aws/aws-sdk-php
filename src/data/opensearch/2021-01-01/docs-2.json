@@ -2753,8 +2753,11 @@
       "base": "<p>Access policy rules for an Amazon OpenSearch Service domain endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html#createdomain-configure-access-policies\">Configuring access policies</a>. The maximum size of a policy document is 100 KB.</p>",
       "refs": {
         "AccessPoliciesStatus$Options": "<p>The access policy configured for the domain. Access policies can be resource-based, IP-based, or IAM-based. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html#createdomain-configure-access-policies\">Configuring access policies</a>.</p>",
+        "AddDirectQueryDataSourceRequest$DataSourceAccessPolicy": "<p> An optional IAM access policy document that defines the permissions for accessing the data source. The policy document must be in valid JSON format and follow IAM policy syntax.</p>",
         "CreateDomainRequest$AccessPolicies": "<p>Identity and Access Management (IAM) policy document specifying the access policies for the new domain.</p>",
         "DomainStatus$AccessPolicies": "<p>Identity and Access Management (IAM) policy document specifying the access policies for the domain.</p>",
+        "GetDirectQueryDataSourceResponse$DataSourceAccessPolicy": "<p> The IAM access policy document that defines the permissions for accessing the direct query data source. Returns the current policy configuration in JSON format, or null if no custom policy is configured. </p>",
+        "UpdateDirectQueryDataSourceRequest$DataSourceAccessPolicy": "<p> An optional IAM access policy document that defines the updated permissions for accessing the direct query data source. The policy document must be in valid JSON format and follow IAM policy syntax. If not specified, the existing access policy if present remains unchanged. </p>",
         "UpdateDomainConfigRequest$AccessPolicies": "<p>Identity and Access Management (IAM) access policy as a JSON-formatted string.</p>"
       }
     },
@@ -2897,6 +2900,7 @@
       "base": null,
       "refs": {
         "CognitoOptions$RoleArn": "<p>The <code>AmazonOpenSearchServiceCognitoAccess</code> role that allows OpenSearch Service to configure your user pool and identity pool.</p>",
+        "DataSource$iamRoleForDataSourceArn": "<p>The ARN of the IAM role to be used for cross account/region data source association.</p>",
         "IamIdentityCenterOptions$iamRoleForIdentityCenterApplicationArn": "<p>The Amazon Resource Name (ARN) of the IAM role assigned to the IAM Identity Center application for the OpenSearch application.</p>",
         "IamIdentityCenterOptionsInput$iamRoleForIdentityCenterApplicationArn": "<p>The ARN of the IAM role associated with the IAM Identity Center application.</p>",
         "KeyStoreAccessOption$KeyAccessRoleArn": "<p>Role ARN to access the KeyStore Key</p>",

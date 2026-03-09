@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Multipart` - Fixes bug in `AbstractUploadManager` where valid falsy values are excluded.
+* `Aws\OpenSearchService` - This change enables cross-account and cross-region access for DataSources. Customers can now define access policies on their datasources to allow other AWS accounts to access and query their data.
+* `Aws\IAM` - Added support for CloudWatch Logs long-term API keys, currently available in Preview
+* `Aws\Route53GlobalResolver` - Adds support for dual stack Global Resolvers and Dictionary-based Domain Generation Firewall Advanced Protection.
+* `Aws\mgn` - Adds support for new storeSnapshotOnLocalZone field in ReplicationConfiguration and updateReplicationConfiguration
+
 ## 3.372.1 - 2026-03-06
 
 * `Aws\SESv2` - Adds support for longer email message header values, increasing the maximum length from 870 to 995 characters for RFC 5322 compliance.
