@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.372.3 - 2026-03-10
 
 * `Aws\` - Sorts presigned headers alphabetically.
 * `Aws\Kafka` - Add dual stack endpoint to SDK
