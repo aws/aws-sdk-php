@@ -1034,7 +1034,9 @@
       "type":"structure",
       "members":{
         "equalTo":{"shape":"BooleanOperands"},
-        "notEqualTo":{"shape":"BooleanOperands"}
+        "notEqualTo":{"shape":"BooleanOperands"},
+        "andAll":{"shape":"CompoundCondition"},
+        "orAll":{"shape":"CompoundCondition"}
       },
       "union":true
     },
@@ -1213,6 +1215,13 @@
     "CommentFilter":{
       "type":"structure",
       "members":{}
+    },
+    "CompoundCondition":{
+      "type":"structure",
+      "required":["conditions"],
+      "members":{
+        "conditions":{"shape":"BooleanConditionList"}
+      }
     },
     "ConflictException":{
       "type":"structure",

@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Sorts presigned headers alphabetically.
+* `Aws\Kafka` - Add dual stack endpoint to SDK
+* `Aws\ConnectCases` - Added functionality for the Required and Hidden case rule types to be conditionally evaluated on up to 5 conditions.
+* `Aws\DatabaseMigrationService` - Not need to include to any release notes. The only change is to correct LoadTimeout unit from milliseconds to seconds in RedshiftSettings
+* `Aws\BedrockAgentCoreControl` - Adding first class support for AG-UI protocol in AgentCore Runtime.
+* `Aws\LexModelsV2` - This release introduces a new generative AI feature called Lex Bot Analyzer. This feature leverage AI to analyze the bot configuration against AWS Lex best practices to identify configuration issues and provides recommendations.
+
 ## 3.372.2 - 2026-03-09
 
 * `Aws\Multipart` - Fixes bug in `AbstractUploadManager` where valid falsy values are excluded.

@@ -228,6 +228,7 @@
     "BooleanConditionList": {
       "base": null,
       "refs": {
+        "CompoundCondition$conditions": "<p>The list of conditions to combine using the logical operator.</p>",
         "HiddenCaseRule$conditions": "<p>A list of conditions that determine field visibility.</p>",
         "RequiredCaseRule$conditions": "<p>List of conditions for the required rule; the first condition to evaluate to true dictates the value of the rule.</p>"
       }
@@ -405,6 +406,13 @@
       "base": "<p>A filter for related items of type <code>Comment</code>.</p>",
       "refs": {
         "RelatedItemTypeFilter$comment": "<p>A filter for related items of type <code>Comment</code>.</p>"
+      }
+    },
+    "CompoundCondition": {
+      "base": "<p>A compound condition that combines multiple boolean conditions using logical operators. In the Amazon Connect admin website, case rules are known as <i>case field conditions</i>. For more information about case field conditions, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/case-field-conditions.html\">Add case field conditions to a case template</a>.</p>",
+      "refs": {
+        "BooleanCondition$andAll": "<p>Combines multiple conditions with AND operator. All conditions must be true for the compound condition to be true.</p>",
+        "BooleanCondition$orAll": "<p>Combines multiple conditions with OR operator. At least one condition must be true for the compound condition to be true.</p>"
       }
     },
     "ConflictException": {
