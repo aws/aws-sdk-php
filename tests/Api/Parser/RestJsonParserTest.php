@@ -6,10 +6,13 @@ use Aws\Api\Parser\RestJsonParser;
 use Aws\Api\Service;
 use Aws\CommandInterface;
 use Aws\Test\Api\Parser\ParserTestServiceTrait;
+use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
+use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 #[CoversClass(RestJsonParser::class)]
 class RestJsonParserTest extends TestCase
@@ -173,5 +176,49 @@ class RestJsonParserTest extends TestCase
 
         // Empty string should still be skipped
         $this->assertArrayNotHasKey('Empty', $result);
+    }
+
+    /**
+     * @return void
+     */
+    #[DoesNotPerformAssertions]
+    public function testParsesEmptyResponseOnNonSeekableStream(): void
+    {
+        $shape = [
+            'type' => 'structure',
+            'members' => [
+                'TestMember' => [
+                    'type' => 'string',
+                ]
+            ]
+        ];
+
+        $api = new Service([
+            'metadata' => [
+                'protocol' => 'rest-json'
+            ],
+            'operations' => [
+                'TestOperation' => [
+                    'http' => ['method' => 'GET'],
+                    'output' => $shape
+                ]
+            ],
+            'shapes' => []
+        ], function () {});
+
+        $parser = new RestJsonParser($api);
+        $response = new Response(
+            200,
+            [],
+            new NoSeekStream(
+                Utils::streamFor()
+            )
+        );
+        $command = $this->getMockBuilder(
+            CommandInterface::class
+        )->getMock();
+        $command->method('getName')->willReturn('TestOperation');
+
+        $parser($command, $response);
     }
 }

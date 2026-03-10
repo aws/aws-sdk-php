@@ -329,6 +329,7 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
@@ -367,6 +368,7 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
@@ -530,6 +532,7 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
@@ -769,6 +772,7 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
@@ -788,6 +792,7 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
@@ -807,6 +812,7 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
@@ -825,6 +831,7 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
@@ -844,6 +851,7 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
@@ -863,6 +871,7 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
@@ -1235,7 +1244,7 @@
     },
     "Cidr":{
       "type":"string",
-      "max":42,
+      "max":43,
       "min":1
     },
     "ClientToken":{
@@ -1524,6 +1533,7 @@
           "idempotencyToken":true
         },
         "description":{"shape":"ResourceDescription"},
+        "ipAddressType":{"shape":"GlobalResolverIpAddressType"},
         "name":{"shape":"ResourceName"},
         "observabilityRegion":{"shape":"Region"},
         "regions":{"shape":"Regions"},
@@ -1551,7 +1561,9 @@
         "createdAt":{"shape":"ISO8601TimeString"},
         "description":{"shape":"ResourceDescription"},
         "dnsName":{"shape":"Sni"},
+        "ipAddressType":{"shape":"GlobalResolverIpAddressType"},
         "ipv4Addresses":{"shape":"IPv4Addresses"},
+        "ipv6Addresses":{"shape":"IPv6Addresses"},
         "name":{"shape":"ResourceName"},
         "observabilityRegion":{"shape":"Region"},
         "regions":{"shape":"Regions"},
@@ -1800,7 +1812,9 @@
         "createdAt":{"shape":"ISO8601TimeString"},
         "updatedAt":{"shape":"ISO8601TimeString"},
         "status":{"shape":"CRResourceStatus"},
-        "ipv4Addresses":{"shape":"IPv4Addresses"}
+        "ipv4Addresses":{"shape":"IPv4Addresses"},
+        "ipv6Addresses":{"shape":"IPv6Addresses"},
+        "ipAddressType":{"shape":"GlobalResolverIpAddressType"}
       }
     },
     "DisableDNSViewInput":{
@@ -1889,7 +1903,8 @@
       "type":"string",
       "enum":[
         "DGA",
-        "DNS_TUNNELING"
+        "DNS_TUNNELING",
+        "DICTIONARY_DGA"
       ]
     },
     "DnsProtocol":{
@@ -1916,7 +1931,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"\\*?[-a-zA-Z0-9.]+"
+      "pattern":"\\*?[a-zA-Z0-9!\"#$%&'()*+,./:;<=>?@\\[\\\\\\]^_`{|}~-]+"
     },
     "Domains":{
       "type":"list",
@@ -2297,7 +2312,9 @@
         "createdAt":{"shape":"ISO8601TimeString"},
         "updatedAt":{"shape":"ISO8601TimeString"},
         "status":{"shape":"CRResourceStatus"},
-        "ipv4Addresses":{"shape":"IPv4Addresses"}
+        "ipv4Addresses":{"shape":"IPv4Addresses"},
+        "ipv6Addresses":{"shape":"IPv6Addresses"},
+        "ipAddressType":{"shape":"GlobalResolverIpAddressType"}
       }
     },
     "GetHostedZoneAssociationInput":{
@@ -2359,6 +2376,13 @@
         "managedListType":{"shape":"String"}
       }
     },
+    "GlobalResolverIpAddressType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "DUAL_STACK"
+      ]
+    },
     "GlobalResolvers":{
       "type":"list",
       "member":{"shape":"GlobalResolversItem"}
@@ -2389,7 +2413,9 @@
         "createdAt":{"shape":"ISO8601TimeString"},
         "updatedAt":{"shape":"ISO8601TimeString"},
         "status":{"shape":"CRResourceStatus"},
-        "ipv4Addresses":{"shape":"IPv4Addresses"}
+        "ipv4Addresses":{"shape":"IPv4Addresses"},
+        "ipv6Addresses":{"shape":"IPv6Addresses"},
+        "ipAddressType":{"shape":"GlobalResolverIpAddressType"}
       }
     },
     "HostedZoneAssociationStatus":{
@@ -2446,6 +2472,16 @@
     "IPv4Addresses":{
       "type":"list",
       "member":{"shape":"IPv4Address"}
+    },
+    "IPv6Address":{
+      "type":"string",
+      "max":39,
+      "min":1,
+      "pattern":"(?:[A-F0-9]{1,4}:){7}[A-F0-9]{1,4}"
+    },
+    "IPv6Addresses":{
+      "type":"list",
+      "member":{"shape":"IPv6Address"}
     },
     "ISO8601TimeString":{
       "type":"timestamp",
@@ -3188,7 +3224,8 @@
         },
         "name":{"shape":"ResourceName"},
         "observabilityRegion":{"shape":"Region"},
-        "description":{"shape":"ResourceDescription"}
+        "description":{"shape":"ResourceDescription"},
+        "ipAddressType":{"shape":"GlobalResolverIpAddressType"}
       }
     },
     "UpdateGlobalResolverOutput":{
@@ -3217,7 +3254,9 @@
         "createdAt":{"shape":"ISO8601TimeString"},
         "updatedAt":{"shape":"ISO8601TimeString"},
         "status":{"shape":"CRResourceStatus"},
-        "ipv4Addresses":{"shape":"IPv4Addresses"}
+        "ipv4Addresses":{"shape":"IPv4Addresses"},
+        "ipv6Addresses":{"shape":"IPv6Addresses"},
+        "ipAddressType":{"shape":"GlobalResolverIpAddressType"}
       }
     },
     "UpdateHostedZoneAssociationInput":{

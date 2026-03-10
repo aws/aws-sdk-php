@@ -342,6 +342,11 @@
       "members":{
         "message":{"shape":"String"}
       },
+      "error":{
+        "code":"AccessDeniedException",
+        "httpStatusCode":403,
+        "senderFault":true
+      },
       "exception":true
     },
     "AutoScalingPolicy":{
@@ -479,6 +484,11 @@
       "members":{
         "message":{"shape":"String"}
       },
+      "error":{
+        "code":"ConflictException",
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "CreateKeyspaceRequest":{
@@ -518,7 +528,8 @@
         "clientSideTimestamps":{"shape":"ClientSideTimestamps"},
         "autoScalingSpecification":{"shape":"AutoScalingSpecification"},
         "replicaSpecifications":{"shape":"ReplicaSpecificationList"},
-        "cdcSpecification":{"shape":"CdcSpecification"}
+        "cdcSpecification":{"shape":"CdcSpecification"},
+        "warmThroughputSpecification":{"shape":"WarmThroughputSpecification"}
       }
     },
     "CreateTableResponse":{
@@ -567,8 +578,7 @@
     },
     "DeleteKeyspaceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTableRequest":{
       "type":"structure",
@@ -583,8 +593,7 @@
     },
     "DeleteTableResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTypeRequest":{
       "type":"structure",
@@ -729,7 +738,8 @@
         "clientSideTimestamps":{"shape":"ClientSideTimestamps"},
         "replicaSpecifications":{"shape":"ReplicaSpecificationSummaryList"},
         "latestStreamArn":{"shape":"StreamArn"},
-        "cdcSpecification":{"shape":"CdcSpecificationSummary"}
+        "cdcSpecification":{"shape":"CdcSpecificationSummary"},
+        "warmThroughputSpecification":{"shape":"WarmThroughputSpecificationSummary"}
       }
     },
     "GetTypeRequest":{
@@ -767,6 +777,10 @@
       "type":"structure",
       "members":{
         "message":{"shape":"String"}
+      },
+      "error":{
+        "code":"InternalServerException",
+        "httpStatusCode":500
       },
       "exception":true,
       "fault":true
@@ -868,6 +882,10 @@
         "types":{"shape":"TypeNameList"}
       }
     },
+    "Long":{
+      "type":"long",
+      "box":true
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -949,7 +967,8 @@
       "members":{
         "region":{"shape":"region"},
         "status":{"shape":"TableStatus"},
-        "capacitySpecification":{"shape":"CapacitySpecificationSummary"}
+        "capacitySpecification":{"shape":"CapacitySpecificationSummary"},
+        "warmThroughputSpecification":{"shape":"WarmThroughputSpecificationSummary"}
       }
     },
     "ReplicaSpecificationSummaryList":{
@@ -987,6 +1006,11 @@
       "members":{
         "message":{"shape":"String"},
         "resourceArn":{"shape":"ARN"}
+      },
+      "error":{
+        "code":"ResourceNotFoundException",
+        "httpStatusCode":404,
+        "senderFault":true
       },
       "exception":true
     },
@@ -1036,6 +1060,11 @@
       "type":"structure",
       "members":{
         "message":{"shape":"String"}
+      },
+      "error":{
+        "code":"ServiceQuotaExceededException",
+        "httpStatusCode":402,
+        "senderFault":true
       },
       "exception":true
     },
@@ -1144,8 +1173,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1212,8 +1240,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateKeyspaceRequest":{
       "type":"structure",
@@ -1252,7 +1279,8 @@
         "clientSideTimestamps":{"shape":"ClientSideTimestamps"},
         "autoScalingSpecification":{"shape":"AutoScalingSpecification"},
         "replicaSpecifications":{"shape":"ReplicaSpecificationList"},
-        "cdcSpecification":{"shape":"CdcSpecification"}
+        "cdcSpecification":{"shape":"CdcSpecification"},
+        "warmThroughputSpecification":{"shape":"WarmThroughputSpecification"}
       }
     },
     "UpdateTableResponse":{
@@ -1267,6 +1295,11 @@
       "members":{
         "message":{"shape":"String"}
       },
+      "error":{
+        "code":"ValidationException",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "ViewType":{
@@ -1276,6 +1309,43 @@
         "OLD_IMAGE",
         "KEYS_ONLY",
         "NEW_AND_OLD_IMAGES"
+      ]
+    },
+    "WarmThroughputSpecification":{
+      "type":"structure",
+      "members":{
+        "readUnitsPerSecond":{"shape":"WarmThroughputSpecificationReadUnitsPerSecondLong"},
+        "writeUnitsPerSecond":{"shape":"WarmThroughputSpecificationWriteUnitsPerSecondLong"}
+      }
+    },
+    "WarmThroughputSpecificationReadUnitsPerSecondLong":{
+      "type":"long",
+      "box":true,
+      "min":1
+    },
+    "WarmThroughputSpecificationSummary":{
+      "type":"structure",
+      "required":[
+        "readUnitsPerSecond",
+        "writeUnitsPerSecond",
+        "status"
+      ],
+      "members":{
+        "readUnitsPerSecond":{"shape":"Long"},
+        "writeUnitsPerSecond":{"shape":"Long"},
+        "status":{"shape":"WarmThroughputStatus"}
+      }
+    },
+    "WarmThroughputSpecificationWriteUnitsPerSecondLong":{
+      "type":"long",
+      "box":true,
+      "min":1
+    },
+    "WarmThroughputStatus":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "UPDATING"
       ]
     },
     "kmsKeyARN":{

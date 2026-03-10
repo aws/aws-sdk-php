@@ -2,13 +2,13 @@
   "version": "2.0",
   "service": "<p>Connector for SCEP creates a connector between Amazon Web Services Private CA and your SCEP-enabled clients and devices. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/scep-connector.htmlconnector-for-scep.html\">Connector for SCEP</a> in the <i>Amazon Web Services Private CA User Guide</i>.</p>",
   "operations": {
-    "CreateChallenge": "<p>For general-purpose connectors. Creates a <i>challenge password</i> for the specified connector. The SCEP protocol uses a challenge password to authenticate a request before issuing a certificate from a certificate authority (CA). Your SCEP clients include the challenge password as part of their certificate request to Connector for SCEP. To retrieve the connector Amazon Resource Names (ARNs) for the connectors in your account, call <a href=\"https://docs.aws.amazon.com/C4SCEP_API/pca-connector-scep/latest/APIReference/API_ListConnectors.html\">ListConnectors</a>.</p> <p>To create additional challenge passwords for the connector, call <code>CreateChallenge</code> again. We recommend frequently rotating your challenge passwords.</p>",
+    "CreateChallenge": "<p>For general-purpose connectors. Creates a <i>challenge password</i> for the specified connector. The SCEP protocol uses a challenge password to authenticate a request before issuing a certificate from a certificate authority (CA). Your SCEP clients include the challenge password as part of their certificate request to Connector for SCEP. To retrieve the connector Amazon Resource Names (ARNs) for the connectors in your account, call <a href=\"https://docs.aws.amazon.com/pca-connector-scep/latest/APIReference/API_ListConnectors.html\">ListConnectors</a>.</p> <p>To create additional challenge passwords for the connector, call <code>CreateChallenge</code> again. We recommend frequently rotating your challenge passwords.</p>",
     "CreateConnector": "<p>Creates a SCEP connector. A SCEP connector links Amazon Web Services Private Certificate Authority to your SCEP-compatible devices and mobile device management (MDM) systems. Before you create a connector, you must complete a set of prerequisites, including creation of a private certificate authority (CA) to use with this connector. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/scep-connector.htmlconnector-for-scep-prerequisites.html\">Connector for SCEP prerequisites</a>.</p>",
-    "DeleteChallenge": "<p>Deletes the specified <a href=\"https://docs.aws.amazon.com/C4SCEP_API/pca-connector-scep/latest/APIReference/API_Challenge.html\">Challenge</a>.</p>",
-    "DeleteConnector": "<p>Deletes the specified <a href=\"https://docs.aws.amazon.com/C4SCEP_API/pca-connector-scep/latest/APIReference/API_Connector.html\">Connector</a>. This operation also deletes any challenges associated with the connector.</p>",
-    "GetChallengeMetadata": "<p>Retrieves the metadata for the specified <a href=\"https://docs.aws.amazon.com/C4SCEP_API/pca-connector-scep/latest/APIReference/API_Challenge.html\">Challenge</a>.</p>",
-    "GetChallengePassword": "<p>Retrieves the challenge password for the specified <a href=\"https://docs.aws.amazon.com/C4SCEP_API/pca-connector-scep/latest/APIReference/API_Challenge.html\">Challenge</a>.</p>",
-    "GetConnector": "<p>Retrieves details about the specified <a href=\"https://docs.aws.amazon.com/C4SCEP_API/pca-connector-scep/latest/APIReference/API_Connector.html\">Connector</a>. Calling this action returns important details about the connector, such as the public SCEP URL where your clients can request certificates.</p>",
+    "DeleteChallenge": "<p>Deletes the specified <a href=\"https://docs.aws.amazon.com/pca-connector-scep/latest/APIReference/API_Challenge.html\">Challenge</a>.</p>",
+    "DeleteConnector": "<p>Deletes the specified <a href=\"https://docs.aws.amazon.com/pca-connector-scep/latest/APIReference/API_Connector.html\">Connector</a>. This operation also deletes any challenges associated with the connector.</p>",
+    "GetChallengeMetadata": "<p>Retrieves the metadata for the specified <a href=\"https://docs.aws.amazon.com/pca-connector-scep/latest/APIReference/API_Challenge.html\">Challenge</a>.</p>",
+    "GetChallengePassword": "<p>Retrieves the challenge password for the specified <a href=\"https://docs.aws.amazon.com/pca-connector-scep/latest/APIReference/API_Challenge.html\">Challenge</a>.</p>",
+    "GetConnector": "<p>Retrieves details about the specified <a href=\"https://docs.aws.amazon.com/pca-connector-scep/latest/APIReference/API_Connector.html\">Connector</a>. Calling this action returns important details about the connector, such as the public SCEP URL where your clients can request certificates.</p>",
     "ListChallengeMetadata": "<p>Retrieves the challenge metadata for the specified ARN.</p>",
     "ListConnectors": "<p>Lists the connectors belonging to your Amazon Web Services account.</p>",
     "ListTagsForResource": "<p>Retrieves the tags associated with the specified resource. Tags are key-value pairs that you can use to categorize and manage your resources, for purposes like billing. For example, you might set the tag key to \"customer\" and the value to the customer name or ID. You can specify one or more tags to add to each Amazon Web Services resource, up to 50 tags for a resource.</p>",
@@ -18,8 +18,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You can receive this error if you attempt to perform an operation and you don't have the required permissions. This can be caused by insufficient permissions in policies attached to your Amazon Web Services Identity and Access Management (IAM) principal. It can also happen because of restrictions in place from an Amazon Web Services Organizations service control policy (SCP) that affects your Amazon Web Services account.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AzureApplicationId": {
       "base": null,
@@ -35,8 +34,7 @@
     },
     "BadRequestException": {
       "base": "<p>The request is malformed or contains an error such as an invalid parameter value or a missing required parameter.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CertificateAuthorityArn": {
       "base": null,
@@ -76,7 +74,7 @@
       }
     },
     "ChallengeMetadataSummary": {
-      "base": "<p>Details about the specified challenge, returned by the <a href=\"https://docs.aws.amazon.com/C4SCEP_API/pca-connector-scep/latest/APIReference/API_GetChallengeMetadata.html\">GetChallengeMetadata</a> action.</p>",
+      "base": "<p>Details about the specified challenge, returned by the <a href=\"https://docs.aws.amazon.com/pca-connector-scep/latest/APIReference/API_GetChallengeMetadata.html\">GetChallengeMetadata</a> action.</p>",
       "refs": {
         "ChallengeMetadataList$member": null
       }
@@ -84,14 +82,13 @@
     "ClientToken": {
       "base": null,
       "refs": {
-        "CreateChallengeRequest$ClientToken": "<p>Custom string that can be used to distinguish between calls to the <a href=\"https://docs.aws.amazon.com/C4SCEP_API/pca-connector-scep/latest/APIReference/API_CreateChallenge.html\">CreateChallenge</a> action. Client tokens for <code>CreateChallenge</code> time out after five minutes. Therefore, if you call <code>CreateChallenge</code> multiple times with the same client token within five minutes, Connector for SCEP recognizes that you are requesting only one challenge and will only respond with one. If you change the client token for each call, Connector for SCEP recognizes that you are requesting multiple challenge passwords.</p>",
-        "CreateConnectorRequest$ClientToken": "<p>Custom string that can be used to distinguish between calls to the <a href=\"https://docs.aws.amazon.com/C4SCEP_API/pca-connector-scep/latest/APIReference/API_CreateChallenge.html\">CreateChallenge</a> action. Client tokens for <code>CreateChallenge</code> time out after five minutes. Therefore, if you call <code>CreateChallenge</code> multiple times with the same client token within five minutes, Connector for SCEP recognizes that you are requesting only one challenge and will only respond with one. If you change the client token for each call, Connector for SCEP recognizes that you are requesting multiple challenge passwords.</p>"
+        "CreateChallengeRequest$ClientToken": "<p>Custom string that can be used to distinguish between calls to the <a href=\"https://docs.aws.amazon.com/pca-connector-scep/latest/APIReference/API_CreateChallenge.html\">CreateChallenge</a> action. Client tokens for <code>CreateChallenge</code> time out after five minutes. Therefore, if you call <code>CreateChallenge</code> multiple times with the same client token within five minutes, Connector for SCEP recognizes that you are requesting only one challenge and will only respond with one. If you change the client token for each call, Connector for SCEP recognizes that you are requesting multiple challenge passwords.</p>",
+        "CreateConnectorRequest$ClientToken": "<p>Custom string that can be used to distinguish between calls to the <a href=\"https://docs.aws.amazon.com/pca-connector-scep/latest/APIReference/API_CreateChallenge.html\">CreateChallenge</a> action. Client tokens for <code>CreateChallenge</code> time out after five minutes. Therefore, if you call <code>CreateChallenge</code> multiple times with the same client token within five minutes, Connector for SCEP recognizes that you are requesting only one challenge and will only respond with one. If you change the client token for each call, Connector for SCEP recognizes that you are requesting multiple challenge passwords.</p>"
       }
     },
     "ConflictException": {
       "base": "<p>This request can't be completed for one of the following reasons because the requested resource was being concurrently modified by another request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Connector": {
       "base": "<p>Connector for SCEP is a service that links Amazon Web Services Private Certificate Authority to your SCEP-enabled devices. The connector brokers the exchange of certificates from Amazon Web Services Private CA to your SCEP-enabled devices and mobile device management systems. The connector is a complex type that contains the connector's configuration settings.</p>",
@@ -149,68 +146,55 @@
     },
     "CreateChallengeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateChallengeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteChallengeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetChallengeMetadataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetChallengeMetadataResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetChallengePasswordRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetChallengePasswordResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalServerException": {
       "base": "<p>The request processing has failed because of an unknown error, exception or failure with an internal server.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IntuneConfiguration": {
       "base": "<p>Contains configuration details for use with Microsoft Intune. For information about using Connector for SCEP for Microsoft Intune, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/scep-connector.htmlconnector-for-scep-intune.html\">Using Connector for SCEP for Microsoft Intune</a>.</p> <p>When you use Connector for SCEP for Microsoft Intune, certain functionalities are enabled by accessing Microsoft Intune through the Microsoft API. Your use of the Connector for SCEP and accompanying Amazon Web Services services doesn't remove your need to have a valid license for your use of the Microsoft Intune service. You should also review the <a href=\"https://learn.microsoft.com/en-us/mem/intune/apps/app-protection-policy\">Microsoft Intune® App Protection Policies</a>.</p>",
@@ -220,33 +204,27 @@
     },
     "ListChallengeMetadataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListChallengeMetadataResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConnectorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConnectorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResults": {
       "base": null,
@@ -281,8 +259,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The operation tried to access a nonexistent resource. The resource might be incorrectly specified, or it might have a status other than <code>ACTIVE</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SensitiveString": {
       "base": null,
@@ -293,8 +270,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The request would cause a service quota to be exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -335,8 +311,7 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Tags": {
       "base": null,
@@ -349,8 +324,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The limit on the number of requests per second was exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -369,18 +343,22 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>An input validation error occurred. For example, invalid characters in a name tag, or an invalid pagination token.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionReason": {
       "base": null,
       "refs": {
         "ValidationException$Reason": "<p>The reason for the validation error, if available. The service doesn't return a reason for every validation exception.</p>"
+      }
+    },
+    "VpcEndpointId": {
+      "base": null,
+      "refs": {
+        "CreateConnectorRequest$VpcEndpointId": "<p>If you don't supply a value, by default Connector for SCEP creates a connector accessible over the public internet. If you provide a VPC endpoint ID, creates a connector accessible only through that specific VPC endpoint.</p>"
       }
     }
   }

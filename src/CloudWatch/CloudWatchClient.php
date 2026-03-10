@@ -6,6 +6,8 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with the **Amazon CloudWatch** service.
  *
+ * @method \Aws\Result deleteAlarmMuteRule(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteAlarmMuteRuleAsync(array $args = [])
  * @method \Aws\Result deleteAlarms(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAlarmsAsync(array $args = [])
  * @method \Aws\Result deleteAnomalyDetector(array $args = [])
@@ -36,6 +38,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise enableAlarmActionsAsync(array $args = [])
  * @method \Aws\Result enableInsightRules(array $args = [])
  * @method \GuzzleHttp\Promise\Promise enableInsightRulesAsync(array $args = [])
+ * @method \Aws\Result getAlarmMuteRule(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAlarmMuteRuleAsync(array $args = [])
  * @method \Aws\Result getDashboard(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDashboardAsync(array $args = [])
  * @method \Aws\Result getInsightRuleReport(array $args = [])
@@ -48,6 +52,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getMetricStreamAsync(array $args = [])
  * @method \Aws\Result getMetricWidgetImage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getMetricWidgetImageAsync(array $args = [])
+ * @method \Aws\Result listAlarmMuteRules(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAlarmMuteRulesAsync(array $args = [])
  * @method \Aws\Result listDashboards(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDashboardsAsync(array $args = [])
  * @method \Aws\Result listManagedInsightRules(array $args = [])
@@ -58,6 +64,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listMetricsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result putAlarmMuteRule(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putAlarmMuteRuleAsync(array $args = [])
  * @method \Aws\Result putAnomalyDetector(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putAnomalyDetectorAsync(array $args = [])
  * @method \Aws\Result putCompositeAlarm(array $args = [])

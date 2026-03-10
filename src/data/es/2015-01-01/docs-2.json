@@ -552,6 +552,27 @@
         "ServiceSoftwareOptions$UpdateStatus": "<p>The status of your service software update. This field can take the following values: <code>ELIGIBLE</code>, <code>PENDING_UPDATE</code>, <code>IN_PROGRESS</code>, <code>COMPLETED</code>, and <code>NOT_ELIGIBLE</code>.</p>"
       }
     },
+    "DeploymentStrategy": {
+      "base": "<p>Specifies the deployment strategy for the domain. Valid values are <code>Default</code> and <code>CapacityOptimized</code>.</p>",
+      "refs": {
+        "DeploymentStrategyOptions$DeploymentStrategy": "<p>Specifies the deployment strategy for the domain. Valid values are <code>Default</code> and <code>CapacityOptimized</code>.</p>"
+      }
+    },
+    "DeploymentStrategyOptions": {
+      "base": "<p>Specifies the deployment strategy options for the domain.</p>",
+      "refs": {
+        "CreateElasticsearchDomainRequest$DeploymentStrategyOptions": "<p>Specifies the deployment strategy options.</p>",
+        "DeploymentStrategyOptionsStatus$Options": "<p>Specifies deployment strategy options for the specified Elasticsearch domain.</p>",
+        "ElasticsearchDomainStatus$DeploymentStrategyOptions": "<p>The current status of the Elasticsearch domain's deployment strategy options.</p>",
+        "UpdateElasticsearchDomainConfigRequest$DeploymentStrategyOptions": "<p>Specifies the deployment strategy options.</p>"
+      }
+    },
+    "DeploymentStrategyOptionsStatus": {
+      "base": "<p>Specifies the status of deployment strategy options for the specified Elasticsearch domain.</p>",
+      "refs": {
+        "ElasticsearchDomainConfig$DeploymentStrategyOptions": "<p>Specifies <code>DeploymentStrategyOptions</code> for the domain. </p>"
+      }
+    },
     "DeploymentType": {
       "base": null,
       "refs": {
@@ -1473,6 +1494,7 @@
         "AdvancedOptionsStatus$Status": "<p> Specifies the status of <code>OptionStatus</code> for advanced options for the specified Elasticsearch domain.</p>",
         "AdvancedSecurityOptionsStatus$Status": "<p> Status of the advanced security options for the specified Elasticsearch domain.</p>",
         "CognitoOptionsStatus$Status": "<p>Specifies the status of the Cognito options for the specified Elasticsearch domain.</p>",
+        "DeploymentStrategyOptionsStatus$Status": "<p>Specifies the status of the deployment strategy options for the specified Elasticsearch domain.</p>",
         "DomainEndpointOptionsStatus$Status": "<p>The status of the endpoint options for the Elasticsearch domain. See <code>OptionStatus</code> for the status information that's included. </p>",
         "EBSOptionsStatus$Status": "<p> Specifies the status of the EBS options for the specified Elasticsearch domain.</p>",
         "ElasticsearchClusterConfigStatus$Status": "<p> Specifies the status of the configuration for the specified Elasticsearch domain.</p>",

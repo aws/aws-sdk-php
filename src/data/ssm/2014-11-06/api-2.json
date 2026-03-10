@@ -2488,12 +2488,22 @@
           "box":true
         },
         "AlarmConfiguration":{"shape":"AlarmConfiguration"},
-        "TriggeredAlarms":{"shape":"AlarmStateInformationList"}
+        "TriggeredAlarms":{"shape":"AlarmStateInformationList"},
+        "AssociationDispatchAssumeRole":{
+          "shape":"AssociationDispatchAssumeRoleArn",
+          "box":true
+        }
       }
     },
     "AssociationDescriptionList":{
       "type":"list",
       "member":{"shape":"AssociationDescription"}
+    },
+    "AssociationDispatchAssumeRoleArn":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+"
     },
     "AssociationDoesNotExist":{
       "type":"structure",
@@ -2758,6 +2768,10 @@
         },
         "TargetMaps":{
           "shape":"TargetMaps",
+          "box":true
+        },
+        "AssociationDispatchAssumeRole":{
+          "shape":"AssociationDispatchAssumeRoleArn",
           "box":true
         }
       }
@@ -3631,7 +3645,11 @@
       "type":"structure",
       "required":["Entries"],
       "members":{
-        "Entries":{"shape":"CreateAssociationBatchRequestEntries"}
+        "Entries":{"shape":"CreateAssociationBatchRequestEntries"},
+        "AssociationDispatchAssumeRole":{
+          "shape":"AssociationDispatchAssumeRoleArn",
+          "box":true
+        }
       }
     },
     "CreateAssociationBatchRequestEntries":{
@@ -3717,7 +3735,11 @@
           "shape":"TagList",
           "box":true
         },
-        "AlarmConfiguration":{"shape":"AlarmConfiguration"}
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"},
+        "AssociationDispatchAssumeRole":{
+          "shape":"AssociationDispatchAssumeRoleArn",
+          "box":true
+        }
       }
     },
     "CreateAssociationResult":{
@@ -11405,7 +11427,11 @@
           "shape":"TargetMaps",
           "box":true
         },
-        "AlarmConfiguration":{"shape":"AlarmConfiguration"}
+        "AlarmConfiguration":{"shape":"AlarmConfiguration"},
+        "AssociationDispatchAssumeRole":{
+          "shape":"AssociationDispatchAssumeRoleArn",
+          "box":true
+        }
       }
     },
     "UpdateAssociationResult":{

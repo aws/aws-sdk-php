@@ -60,7 +60,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetResourcePolicy":{
       "name":"GetResourcePolicy",
@@ -76,7 +77,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDashboards":{
       "name":"ListDashboards",
@@ -91,7 +93,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -106,7 +109,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -746,6 +750,7 @@
         "configs"
       ],
       "members":{
+        "id":{"shape":"WidgetId"},
         "title":{"shape":"WidgetTitle"},
         "description":{"shape":"Description"},
         "width":{"shape":"WidgetWidth"},
@@ -776,6 +781,12 @@
       "box":true,
       "max":10,
       "min":4
+    },
+    "WidgetId":{
+      "type":"string",
+      "max":32,
+      "min":32,
+      "pattern":"[0-9a-f]{32}"
     },
     "WidgetList":{
       "type":"list",

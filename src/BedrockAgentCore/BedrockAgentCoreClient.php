@@ -61,6 +61,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listSessionsAsync(array $args = [])
  * @method \Aws\Result retrieveMemoryRecords(array $args = [])
  * @method \GuzzleHttp\Promise\Promise retrieveMemoryRecordsAsync(array $args = [])
+ * @method \Aws\Result saveBrowserSessionProfile(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise saveBrowserSessionProfileAsync(array $args = [])
  * @method \Aws\Result startBrowserSession(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startBrowserSessionAsync(array $args = [])
  * @method \Aws\Result startCodeInterpreterSession(array $args = [])

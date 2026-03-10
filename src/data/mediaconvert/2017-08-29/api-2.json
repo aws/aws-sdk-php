@@ -1300,7 +1300,8 @@
         "CODING_MODE_1_0",
         "CODING_MODE_1_1",
         "CODING_MODE_2_0",
-        "CODING_MODE_5_1"
+        "CODING_MODE_5_1",
+        "CODING_MODE_AUTO"
       ]
     },
     "AacLoudnessMeasurementMode": {
@@ -1412,7 +1413,8 @@
         "CODING_MODE_1_0",
         "CODING_MODE_1_1",
         "CODING_MODE_2_0",
-        "CODING_MODE_3_2_LFE"
+        "CODING_MODE_3_2_LFE",
+        "CODING_MODE_AUTO"
       ]
     },
     "Ac3DynamicRangeCompressionLine": {
@@ -1583,7 +1585,7 @@
           "locationName": "bitDepth"
         },
         "Channels": {
-          "shape": "__integerMin1Max64",
+          "shape": "__integerMin0Max64",
           "locationName": "channels"
         },
         "SampleRate": {
@@ -4358,6 +4360,10 @@
     "DolbyVision": {
       "type": "structure",
       "members": {
+        "Compatibility": {
+          "shape": "DolbyVisionCompatibility",
+          "locationName": "compatibility"
+        },
         "L6Metadata": {
           "shape": "DolbyVisionLevel6Metadata",
           "locationName": "l6Metadata"
@@ -4375,6 +4381,13 @@
           "locationName": "profile"
         }
       }
+    },
+    "DolbyVisionCompatibility": {
+      "type": "string",
+      "enum": [
+        "DUPLICATE_STREAM",
+        "SUPPLEMENTAL_CODECS"
+      ]
     },
     "DolbyVisionLevel6Metadata": {
       "type": "structure",
@@ -4914,7 +4927,8 @@
       "enum": [
         "CODING_MODE_1_0",
         "CODING_MODE_2_0",
-        "CODING_MODE_3_2"
+        "CODING_MODE_3_2",
+        "CODING_MODE_AUTO"
       ]
     },
     "Eac3DcFilter": {
@@ -5317,7 +5331,7 @@
           "locationName": "bitDepth"
         },
         "Channels": {
-          "shape": "__integerMin1Max8",
+          "shape": "__integerMin0Max8",
           "locationName": "channels"
         },
         "SampleRate": {
@@ -5367,7 +5381,8 @@
         "quicktime",
         "matroska",
         "webm",
-        "mxf"
+        "mxf",
+        "wave"
       ]
     },
     "FrameCaptureSettings": {
@@ -9073,7 +9088,7 @@
           "locationName": "bitrate"
         },
         "Channels": {
-          "shape": "__integerMin1Max2",
+          "shape": "__integerMin0Max2",
           "locationName": "channels"
         },
         "SampleRate": {
@@ -9097,7 +9112,7 @@
           "locationName": "bitrate"
         },
         "Channels": {
-          "shape": "__integerMin1Max2",
+          "shape": "__integerMin0Max2",
           "locationName": "channels"
         },
         "RateControlMode": {
@@ -9710,11 +9725,22 @@
           "shape": "MxfProfile",
           "locationName": "profile"
         },
+        "UncompressedAudioWrapping": {
+          "shape": "MxfUncompressedAudioWrapping",
+          "locationName": "uncompressedAudioWrapping"
+        },
         "XavcProfileSettings": {
           "shape": "MxfXavcProfileSettings",
           "locationName": "xavcProfileSettings"
         }
       }
+    },
+    "MxfUncompressedAudioWrapping": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "AES3"
+      ]
     },
     "MxfXavcDurationMode": {
       "type": "string",
@@ -9963,7 +9989,7 @@
           "locationName": "bitrate"
         },
         "Channels": {
-          "shape": "__integerMin1Max2",
+          "shape": "__integerMin0Max2",
           "locationName": "channels"
         },
         "SampleRate": {
@@ -12208,7 +12234,7 @@
       "type": "structure",
       "members": {
         "Channels": {
-          "shape": "__integerMin1Max2",
+          "shape": "__integerMin0Max2",
           "locationName": "channels"
         },
         "SampleRate": {
@@ -12450,7 +12476,7 @@
           "locationName": "bitDepth"
         },
         "Channels": {
-          "shape": "__integerMin1Max64",
+          "shape": "__integerMin0Max64",
           "locationName": "channels"
         },
         "Format": {
@@ -12942,6 +12968,11 @@
       "min": 0,
       "max": 16
     },
+    "__integerMin0Max2": {
+      "type": "integer",
+      "min": 0,
+      "max": 2
+    },
     "__integerMin0Max2147483647": {
       "type": "integer",
       "min": 0,
@@ -13006,6 +13037,11 @@
       "type": "integer",
       "min": 0,
       "max": 50000
+    },
+    "__integerMin0Max64": {
+      "type": "integer",
+      "min": 0,
+      "max": 64
     },
     "__integerMin0Max65534": {
       "type": "integer",
@@ -13137,11 +13173,6 @@
       "min": 1,
       "max": 17895697
     },
-    "__integerMin1Max2": {
-      "type": "integer",
-      "min": 1,
-      "max": 2
-    },
     "__integerMin1Max20": {
       "type": "integer",
       "min": 1,
@@ -13201,11 +13232,6 @@
       "type": "integer",
       "min": 1,
       "max": 64
-    },
-    "__integerMin1Max8": {
-      "type": "integer",
-      "min": 1,
-      "max": 8
     },
     "__integerMin1Max86400000": {
       "type": "integer",

@@ -2,23 +2,22 @@
   "version": "2.0",
   "service": "<p>TrustedAdvisor Public API</p>",
   "operations": {
-    "BatchUpdateRecommendationResourceExclusion": "<p>Update one or more exclusion status for a list of recommendation resources</p>",
-    "GetOrganizationRecommendation": "<p>Get a specific recommendation within an AWS Organizations organization. This API supports only prioritized recommendations. </p>",
-    "GetRecommendation": "<p>Get a specific Recommendation</p>",
-    "ListChecks": "<p>List a filterable set of Checks</p>",
-    "ListOrganizationRecommendationAccounts": "<p>Lists the accounts that own the resources for an organization aggregate recommendation. This API only supports prioritized recommendations. </p>",
-    "ListOrganizationRecommendationResources": "<p>List Resources of a Recommendation within an Organization. This API only supports prioritized recommendations. </p>",
-    "ListOrganizationRecommendations": "<p>List a filterable set of Recommendations within an Organization. This API only supports prioritized recommendations. </p>",
-    "ListRecommendationResources": "<p>List Resources of a Recommendation</p>",
-    "ListRecommendations": "<p>List a filterable set of Recommendations</p>",
-    "UpdateOrganizationRecommendationLifecycle": "<p>Update the lifecycle of a Recommendation within an Organization. This API only supports prioritized recommendations. </p>",
-    "UpdateRecommendationLifecycle": "<p>Update the lifecyle of a Recommendation. This API only supports prioritized recommendations.</p>"
+    "BatchUpdateRecommendationResourceExclusion": "<p>Update one or more exclusion statuses for a list of recommendation resources. This API supports up to 25 unique recommendation resource ARNs per request. This API currently doesn't support prioritized recommendation resources. This API updates global recommendations, eliminating the need to call the API in each AWS Region. After submitting an exclusion update, note that it might take a few minutes for the changes to be reflected in the system.</p>",
+    "GetOrganizationRecommendation": "<p>Get a specific recommendation within an AWS Organizations organization. This API supports only prioritized recommendations and provides global priority recommendations, eliminating the need to call the API in each AWS Region. </p>",
+    "GetRecommendation": "<p>Get a specific Recommendation. This API provides global recommendations, eliminating the need to call the API in each AWS Region.</p>",
+    "ListChecks": "<p>List a filterable set of Checks. This API provides global recommendations, eliminating the need to call the API in each AWS Region.</p>",
+    "ListOrganizationRecommendationAccounts": "<p>Lists the accounts that own the resources for an organization aggregate recommendation. This API only supports prioritized recommendations and provides global priority recommendations, eliminating the need to call the API in each AWS Region. </p>",
+    "ListOrganizationRecommendationResources": "<p>List Resources of a Recommendation within an Organization. This API only supports prioritized recommendations and provides global priority recommendations, eliminating the need to call the API in each AWS Region. </p>",
+    "ListOrganizationRecommendations": "<p>List a filterable set of Recommendations within an Organization. This API only supports prioritized recommendations and provides global priority recommendations, eliminating the need to call the API in each AWS Region. </p>",
+    "ListRecommendationResources": "<p>List Resources of a Recommendation. This API provides global recommendations, eliminating the need to call the API in each AWS Region.</p>",
+    "ListRecommendations": "<p>List a filterable set of Recommendations. This API provides global recommendations, eliminating the need to call the API in each AWS Region.</p>",
+    "UpdateOrganizationRecommendationLifecycle": "<p>Update the lifecycle of a Recommendation within an Organization. This API only supports prioritized recommendations and updates global priority recommendations, eliminating the need to call the API in each AWS Region. </p>",
+    "UpdateRecommendationLifecycle": "<p>Update the lifecyle of a Recommendation. This API only supports prioritized recommendations and updates global priority recommendations, eliminating the need to call the API in each AWS Region.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>Exception that access has been denied due to insufficient access</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountId": {
       "base": null,
@@ -60,13 +59,11 @@
     },
     "BatchUpdateRecommendationResourceExclusionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchUpdateRecommendationResourceExclusionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
@@ -101,8 +98,7 @@
     },
     "ConflictException": {
       "base": "<p>Exception that the request was denied due to conflictions in state</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Double": {
       "base": null,
@@ -122,33 +118,27 @@
     },
     "GetOrganizationRecommendationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOrganizationRecommendationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecommendationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecommendationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalServerException": {
       "base": "<p>Exception to notify that an unexpected internal error occurred during processing of the request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListChecksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListChecksRequestMaxResultsInteger": {
       "base": null,
@@ -164,8 +154,7 @@
     },
     "ListChecksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListChecksResponseNextTokenString": {
       "base": null,
@@ -175,8 +164,7 @@
     },
     "ListOrganizationRecommendationAccountsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOrganizationRecommendationAccountsRequestMaxResultsInteger": {
       "base": null,
@@ -192,8 +180,7 @@
     },
     "ListOrganizationRecommendationAccountsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOrganizationRecommendationAccountsResponseNextTokenString": {
       "base": null,
@@ -203,8 +190,7 @@
     },
     "ListOrganizationRecommendationResourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOrganizationRecommendationResourcesRequestMaxResultsInteger": {
       "base": null,
@@ -220,8 +206,7 @@
     },
     "ListOrganizationRecommendationResourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOrganizationRecommendationResourcesResponseNextTokenString": {
       "base": null,
@@ -231,8 +216,7 @@
     },
     "ListOrganizationRecommendationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOrganizationRecommendationsRequestMaxResultsInteger": {
       "base": null,
@@ -248,8 +232,7 @@
     },
     "ListOrganizationRecommendationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOrganizationRecommendationsResponseNextTokenString": {
       "base": null,
@@ -259,8 +242,7 @@
     },
     "ListRecommendationResourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecommendationResourcesRequestMaxResultsInteger": {
       "base": null,
@@ -276,8 +258,7 @@
     },
     "ListRecommendationResourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecommendationResourcesResponseNextTokenString": {
       "base": null,
@@ -287,8 +268,7 @@
     },
     "ListRecommendationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecommendationsRequestMaxResultsInteger": {
       "base": null,
@@ -304,8 +284,7 @@
     },
     "ListRecommendationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecommendationsResponseNextTokenString": {
       "base": null,
@@ -316,9 +295,10 @@
     "Long": {
       "base": null,
       "refs": {
-        "RecommendationResourcesAggregates$errorCount": "<p>The number of AWS resources that were flagged to have errors according to the Trusted Advisor check</p>",
         "RecommendationResourcesAggregates$okCount": "<p>The number of AWS resources that were flagged to be OK according to the Trusted Advisor check</p>",
-        "RecommendationResourcesAggregates$warningCount": "<p>The number of AWS resources that were flagged to have warning according to the Trusted Advisor check </p>"
+        "RecommendationResourcesAggregates$warningCount": "<p>The number of AWS resources that were flagged to have warning according to the Trusted Advisor check </p>",
+        "RecommendationResourcesAggregates$errorCount": "<p>The number of AWS resources that were flagged to have errors according to the Trusted Advisor check</p>",
+        "RecommendationResourcesAggregates$excludedCount": "<p>The number of AWS resources belonging to this Trusted Advisor check that were excluded by the customer</p>"
       }
     },
     "OrganizationRecommendation": {
@@ -402,7 +382,10 @@
     "RecommendationLanguage": {
       "base": null,
       "refs": {
-        "ListChecksRequest$language": "<p>The ISO 639-1 code for the language that you want your checks to appear in.</p>"
+        "GetRecommendationRequest$language": "<p>The ISO 639-1 code for the language that you want your recommendations to appear in.</p>",
+        "ListChecksRequest$language": "<p>The ISO 639-1 code for the language that you want your checks to appear in.</p>",
+        "ListRecommendationResourcesRequest$language": "<p>The ISO 639-1 code for the language that you want your recommendations to appear in.</p>",
+        "ListRecommendationsRequest$language": "<p>The ISO 639-1 code for the language that you want your recommendations to appear in.</p>"
       }
     },
     "RecommendationLifecycleStage": {
@@ -551,8 +534,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>Exception that the requested resource has not been found</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceStatus": {
       "base": null,
@@ -563,42 +545,49 @@
         "RecommendationResourceSummary$status": "<p>The current status of the Recommendation Resource</p>"
       }
     },
+    "StatusReason": {
+      "base": null,
+      "refs": {
+        "Recommendation$statusReason": "<p>This attribute provides additional details about potential discrepancies in check status determination.</p>",
+        "RecommendationSummary$statusReason": "<p>This attribute provides additional details about potential discrepancies in check status determination.</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
         "AccountRecommendationLifecycleSummary$updatedOnBehalfOf": "<p>The person on whose behalf a Technical Account Manager (TAM) updated the recommendation. This information is only available when a Technical Account Manager takes an action on a recommendation managed by AWS Trusted Advisor Priority </p>",
         "AccountRecommendationLifecycleSummary$updatedOnBehalfOfJobTitle": "<p>The job title of the person on whose behalf a Technical Account Manager (TAM) updated the recommendation. This information is only available when a Technical Account Manager takes an action on a recommendation managed by AWS Trusted Advisor Priority </p>",
-        "CheckSummary$description": "<p>A description of what the AWS Trusted Advisor Check is monitoring</p>",
         "CheckSummary$id": "<p>The unique identifier of the AWS Trusted Advisor Check</p>",
         "CheckSummary$name": "<p>The name of the AWS Trusted Advisor Check</p>",
+        "CheckSummary$description": "<p>A description of what the AWS Trusted Advisor Check is monitoring</p>",
         "ConflictException$message": null,
         "InternalServerException$message": null,
         "ListOrganizationRecommendationResourcesRequest$regionCode": "<p>The AWS Region code of the resource</p>",
         "ListRecommendationResourcesRequest$regionCode": "<p>The AWS Region code of the resource</p>",
-        "OrganizationRecommendation$checkArn": "<p>The AWS Trusted Advisor Check ARN that relates to the Recommendation</p>",
-        "OrganizationRecommendation$createdBy": "<p>The creator, if created by AWS Trusted Advisor Priority</p>",
-        "OrganizationRecommendation$description": "<p>A description for AWS Trusted Advisor recommendations</p>",
         "OrganizationRecommendation$id": "<p>The ID which identifies where the Recommendation was produced</p>",
+        "OrganizationRecommendation$checkArn": "<p>The AWS Trusted Advisor Check ARN that relates to the Recommendation</p>",
         "OrganizationRecommendation$name": "<p>The name of the AWS Trusted Advisor Recommendation</p>",
+        "OrganizationRecommendation$description": "<p>A description for AWS Trusted Advisor recommendations</p>",
+        "OrganizationRecommendation$createdBy": "<p>The creator, if created by AWS Trusted Advisor Priority</p>",
         "OrganizationRecommendation$updatedOnBehalfOf": "<p>The person on whose behalf a Technical Account Manager (TAM) updated the recommendation. This information is only available when a Technical Account Manager takes an action on a recommendation managed by AWS Trusted Advisor Priority </p>",
         "OrganizationRecommendation$updatedOnBehalfOfJobTitle": "<p>The job title of the person on whose behalf a Technical Account Manager (TAM) updated the recommendation. This information is only available when a Technical Account Manager takes an action on a recommendation managed by AWS Trusted Advisor Priority </p>",
-        "OrganizationRecommendationResourceSummary$awsResourceId": "<p>The AWS resource identifier</p>",
         "OrganizationRecommendationResourceSummary$id": "<p>The ID of the Recommendation Resource</p>",
-        "OrganizationRecommendationSummary$checkArn": "<p>The AWS Trusted Advisor Check ARN that relates to the Recommendation</p>",
+        "OrganizationRecommendationResourceSummary$awsResourceId": "<p>The AWS resource identifier. There are certain checks that generate recommendation resources without an awsResourceId.</p>",
         "OrganizationRecommendationSummary$id": "<p>The ID which identifies where the Recommendation was produced</p>",
+        "OrganizationRecommendationSummary$checkArn": "<p>The AWS Trusted Advisor Check ARN that relates to the Recommendation</p>",
         "OrganizationRecommendationSummary$name": "<p>The name of the AWS Trusted Advisor Recommendation</p>",
-        "Recommendation$checkArn": "<p>The AWS Trusted Advisor Check ARN that relates to the Recommendation</p>",
-        "Recommendation$createdBy": "<p>The creator, if created by AWS Trusted Advisor Priority</p>",
-        "Recommendation$description": "<p>A description for AWS Trusted Advisor recommendations</p>",
         "Recommendation$id": "<p>The ID which identifies where the Recommendation was produced</p>",
+        "Recommendation$checkArn": "<p>The AWS Trusted Advisor Check ARN that relates to the Recommendation</p>",
         "Recommendation$name": "<p>The name of the AWS Trusted Advisor Recommendation</p>",
+        "Recommendation$description": "<p>A description for AWS Trusted Advisor recommendations</p>",
+        "Recommendation$createdBy": "<p>The creator, if created by AWS Trusted Advisor Priority</p>",
         "Recommendation$updatedOnBehalfOf": "<p>The person on whose behalf a Technical Account Manager (TAM) updated the recommendation. This information is only available when a Technical Account Manager takes an action on a recommendation managed by AWS Trusted Advisor Priority </p>",
         "Recommendation$updatedOnBehalfOfJobTitle": "<p>The job title of the person on whose behalf a Technical Account Manager (TAM) updated the recommendation. This information is only available when a Technical Account Manager takes an action on a recommendation managed by AWS Trusted Advisor Priority </p>",
-        "RecommendationResourceSummary$awsResourceId": "<p>The AWS resource identifier</p>",
         "RecommendationResourceSummary$id": "<p>The ID of the Recommendation Resource</p>",
-        "RecommendationSummary$checkArn": "<p>The AWS Trusted Advisor Check ARN that relates to the Recommendation</p>",
+        "RecommendationResourceSummary$awsResourceId": "<p>The AWS resource identifier. There are certain checks that generate recommendation resources without an awsResourceId.</p>",
         "RecommendationSummary$id": "<p>The ID which identifies where the Recommendation was produced</p>",
+        "RecommendationSummary$checkArn": "<p>The AWS Trusted Advisor Check ARN that relates to the Recommendation</p>",
         "RecommendationSummary$name": "<p>The name of the AWS Trusted Advisor Recommendation</p>",
         "ResourceNotFoundException$message": null,
         "StringMap$key": null,
@@ -637,8 +626,7 @@
     },
     "ThrottlingException": {
       "base": "<p>Exception to notify that requests are being throttled</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -651,13 +639,11 @@
     },
     "UpdateOrganizationRecommendationLifecycleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRecommendationLifecycleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRecommendationLifecycleStage": {
       "base": null,
@@ -690,8 +676,7 @@
     },
     "ValidationException": {
       "base": "<p>Exception that the request failed to satisfy service constraints</p>",
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }

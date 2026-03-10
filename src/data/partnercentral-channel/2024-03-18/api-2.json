@@ -1093,14 +1093,19 @@
         "SOLUTION_PROVIDER"
       ]
     },
-    "ResoldBusiness":{
+    "ResoldEnterprise":{
       "type":"structure",
-      "required":["coverage"],
+      "required":[
+        "coverage",
+        "tamLocation"
+      ],
       "members":{
-        "coverage":{"shape":"Coverage"}
+        "coverage":{"shape":"Coverage"},
+        "tamLocation":{"shape":"String"},
+        "chargeAccountId":{"shape":"AccountId"}
       }
     },
-    "ResoldEnterprise":{
+    "ResoldUnifiedOperations":{
       "type":"structure",
       "required":[
         "coverage",
@@ -1259,9 +1264,9 @@
     "SupportPlan":{
       "type":"structure",
       "members":{
-        "resoldBusiness":{"shape":"ResoldBusiness"},
         "resoldEnterprise":{"shape":"ResoldEnterprise"},
-        "partnerLedSupport":{"shape":"PartnerLedSupport"}
+        "partnerLedSupport":{"shape":"PartnerLedSupport"},
+        "resoldUnifiedOperations":{"shape":"ResoldUnifiedOperations"}
       },
       "union":true
     },

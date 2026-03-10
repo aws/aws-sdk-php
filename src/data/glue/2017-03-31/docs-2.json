@@ -61,6 +61,7 @@
     "DeleteColumnStatisticsForTable": "<p>Retrieves table statistics of columns.</p> <p>The Identity and Access Management (IAM) permission required for this operation is <code>DeleteTable</code>.</p>",
     "DeleteColumnStatisticsTaskSettings": "<p>Deletes settings for a column statistics task.</p>",
     "DeleteConnection": "<p>Deletes a connection from the Data Catalog.</p>",
+    "DeleteConnectionType": "<p>Deletes a custom connection type in Glue.</p> <p>The connection type must exist and be registered before it can be deleted. This operation supports cleanup of connection type resources and helps maintain proper lifecycle management of custom connection types.</p>",
     "DeleteCrawler": "<p>Removes a specified crawler from the Glue Data Catalog, unless the crawler state is <code>RUNNING</code>.</p>",
     "DeleteCustomEntityType": "<p>Deletes a custom pattern by specifying its name.</p>",
     "DeleteDataQualityRuleset": "<p>Deletes a data quality ruleset.</p>",
@@ -87,7 +88,7 @@
     "DeleteUsageProfile": "<p>Deletes the Glue specified usage profile.</p>",
     "DeleteUserDefinedFunction": "<p>Deletes an existing function definition from the Data Catalog.</p>",
     "DeleteWorkflow": "<p>Deletes a workflow.</p>",
-    "DescribeConnectionType": "<p>The <code>DescribeConnectionType</code> API provides full details of the supported options for a given connection type in Glue.</p>",
+    "DescribeConnectionType": "<p>The <code>DescribeConnectionType</code> API provides full details of the supported options for a given connection type in Glue. The response includes authentication configuration details that show supported authentication types and properties, and RestConfiguration for custom REST-based connection types registered via <code>RegisterConnectionType</code>.</p> <p>See also: <code>ListConnectionTypes</code>, <code>RegisterConnectionType</code>, <code>DeleteConnectionType</code> </p>",
     "DescribeEntity": "<p>Provides details regarding the entity used with the connection type, with a description of the data model for each field in the selected entity.</p> <p> The response includes all the fields which make up the entity.</p>",
     "DescribeInboundIntegrations": "<p>Returns a list of inbound integrations for the specified integration.</p>",
     "DescribeIntegrations": "<p>The API is used to retrieve a list of integrations.</p>",
@@ -173,7 +174,7 @@
     "ImportCatalogToGlue": "<p>Imports an existing Amazon Athena Data Catalog to Glue.</p>",
     "ListBlueprints": "<p>Lists all the blueprint names in an account.</p>",
     "ListColumnStatisticsTaskRuns": "<p>List all task runs for a particular account.</p>",
-    "ListConnectionTypes": "<p>The <code>ListConnectionTypes</code> API provides a discovery mechanism to learn available connection types in Glue. The response contains a list of connection types with high-level details of what is supported for each connection type. The connection types listed are the set of supported options for the <code>ConnectionType</code> value in the <code>CreateConnection</code> API.</p>",
+    "ListConnectionTypes": "<p>The <code>ListConnectionTypes</code> API provides a discovery mechanism to learn available connection types in Glue. The response contains a list of connection types with high-level details of what is supported for each connection type, including both built-in connection types and custom connection types registered via <code>RegisterConnectionType</code>. The connection types listed are the set of supported options for the <code>ConnectionType</code> value in the <code>CreateConnection</code> API.</p> <p>See also: <code>DescribeConnectionType</code>, <code>RegisterConnectionType</code>, <code>DeleteConnectionType</code> </p>",
     "ListCrawlers": "<p>Retrieves the names of all crawler resources in this Amazon Web Services account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
     "ListCrawls": "<p>Returns all the crawls of a specified crawler. Returns only the crawls that have occurred since the launch date of the crawler history feature, and only retains up to 12 months of crawls. Older crawls will not be returned.</p> <p>You may use this API to:</p> <ul> <li> <p>Retrive all the crawls of a specified crawler.</p> </li> <li> <p>Retrieve all the crawls of a specified crawler within a limited count.</p> </li> <li> <p>Retrieve all the crawls of a specified crawler in a specific time range.</p> </li> <li> <p>Retrieve all the crawls of a specified crawler with a particular state, crawl ID, or DPU hour value.</p> </li> </ul>",
     "ListCustomEntityTypes": "<p>Lists all the custom patterns that have been created.</p>",
@@ -205,6 +206,7 @@
     "PutSchemaVersionMetadata": "<p>Puts the metadata key value pair for a specified schema version ID. A maximum of 10 key value pairs will be allowed per schema version. They can be added over one or more calls.</p>",
     "PutWorkflowRunProperties": "<p>Puts the specified workflow run properties for the given workflow run. If a property already exists for the specified run, then it overrides the value otherwise adds the property to existing properties.</p>",
     "QuerySchemaVersionMetadata": "<p>Queries for the schema version metadata information. </p>",
+    "RegisterConnectionType": "<p>Registers a custom connection type in Glue based on the configuration provided. This operation enables customers to configure custom connectors for any data source with REST-based APIs, eliminating the need for building custom Lambda connectors.</p> <p>The registered connection type stores details about how requests and responses are interpreted by REST sources, including connection properties, authentication configuration, and REST configuration with entity definitions. Once registered, customers can create connections using this connection type and work with them the same way as natively supported Glue connectors.</p> <p>Supports multiple authentication types including Basic, OAuth2 (Client Credentials, JWT Bearer, Authorization Code), and Custom Auth configurations.</p>",
     "RegisterSchemaVersion": "<p>Adds a new version to the existing schema. Returns an error if new version of schema does not meet the compatibility requirements of the schema set. This API will not create a new schema set and will return a 404 error if the schema set is not already present in the Schema Registry.</p> <p>If this is the first schema definition to be registered in the Schema Registry, this API will store the schema version and return immediately. Otherwise, this call has the potential to run longer than other operations due to compatibility modes. You can call the <code>GetSchemaVersion</code> API with the <code>SchemaVersionId</code> to check compatibility modes.</p> <p>If the same schema definition is already stored in Schema Registry as a version, the schema ID of the existing schema is returned to the caller.</p>",
     "RemoveSchemaVersionMetadata": "<p>Removes a key value pair from the schema version metadata for the specified schema version ID.</p>",
     "ResetJobBookmark": "<p>Resets a bookmark entry.</p> <p>For more information about enabling and using job bookmarks, see:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-continuations.html\">Tracking processed data using job bookmarks</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html\">Job parameters used by Glue</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-jobs-job.html#aws-glue-api-jobs-job-Job\">Job structure</a> </p> </li> </ul>",
@@ -565,7 +567,8 @@
       "base": null,
       "refs": {
         "Capabilities$SupportedAuthenticationTypes": "<p>A list of supported authentication types.</p>",
-        "ComputeEnvironmentConfiguration$SupportedAuthenticationTypes": "<p>The supported authentication types for the compute environment.</p>"
+        "ComputeEnvironmentConfiguration$SupportedAuthenticationTypes": "<p>The supported authentication types for the compute environment.</p>",
+        "ConnectorAuthenticationConfiguration$AuthenticationTypes": "<p>A list of authentication types supported by this connection type, such as Basic, OAuth2, or Custom authentication methods.</p>"
       }
     },
     "AuthorizationCode": {
@@ -623,6 +626,12 @@
       "base": "<p>For supplying basic auth credentials when not providing a <code>SecretArn</code> value.</p>",
       "refs": {
         "AuthenticationConfigurationInput$BasicAuthenticationCredentials": "<p>The credentials used when the authentication type is basic authentication.</p>"
+      }
+    },
+    "BasicAuthenticationProperties": {
+      "base": "<p>Basic authentication configuration that defines the username and password properties for HTTP Basic authentication.</p>",
+      "refs": {
+        "ConnectorAuthenticationConfiguration$BasicAuthenticationProperties": null
       }
     },
     "BasicCatalogTarget": {
@@ -989,6 +998,7 @@
       "base": null,
       "refs": {
         "ComputeEnvironmentConfiguration$PhysicalConnectionPropertiesRequired": "<p>Indicates whether <code>PhysicalConnectionProperties</code> are required for the compute environment.</p>",
+        "ConnectorProperty$Required": "<p>Indicates whether the property is required.</p>",
         "Field$IsPrimaryKey": "<p>Indicates whether this field can used as a primary key for the given entity.</p>",
         "Field$IsNullable": "<p>Indicates whether this field can be nullable or not.</p>",
         "Field$IsRetrievable": "<p>Indicates whether this field can be added in Select clause of SQL query or whether it is retrievable or not.</p>",
@@ -1475,6 +1485,12 @@
         "Crawler$Classifiers": "<p>A list of UTF-8 strings that specify the custom classifiers that are associated with the crawler.</p>",
         "CreateCrawlerRequest$Classifiers": "<p>A list of custom classifiers that the user has registered. By default, all built-in classifiers are included in a crawl, but these custom classifiers always override the default classifiers for a given classification.</p>",
         "UpdateCrawlerRequest$Classifiers": "<p>A list of custom classifiers that the user has registered. By default, all built-in classifiers are included in a crawl, but these custom classifiers always override the default classifiers for a given classification.</p>"
+      }
+    },
+    "ClientCredentialsProperties": {
+      "base": "<p>OAuth2 client credentials configuration that defines the properties needed for the Client Credentials grant type flow.</p>",
+      "refs": {
+        "ConnectorOAuth2Properties$ClientCredentialsProperties": "<p>Configuration properties specific to the OAuth2 Client Credentials grant type flow.</p>"
       }
     },
     "CloudWatchEncryption": {
@@ -1970,6 +1986,12 @@
         "TestConnectionInput$ConnectionProperties": "<p>The key-value pairs that define parameters for the connection.</p> <p>JDBC connections use the following connection properties:</p> <ul> <li> <p>Required: All of (<code>HOST</code>, <code>PORT</code>, <code>JDBC_ENGINE</code>) or <code>JDBC_CONNECTION_URL</code>.</p> </li> <li> <p>Required: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> <li> <p>Optional: <code>JDBC_ENFORCE_SSL</code>, <code>CUSTOM_JDBC_CERT</code>, <code>CUSTOM_JDBC_CERT_STRING</code>, <code>SKIP_CUSTOM_JDBC_CERT_VALIDATION</code>. These parameters are used to configure SSL with JDBC.</p> </li> </ul> <p>SALESFORCE connections require the <code>AuthenticationConfiguration</code> member to be configured.</p>"
       }
     },
+    "ConnectionPropertiesConfiguration": {
+      "base": "<p>Configuration that defines the base URL and additional request parameters needed during connection creation.</p>",
+      "refs": {
+        "RegisterConnectionTypeRequest$ConnectionProperties": "<p>Defines the base URL and additional request parameters needed during connection creation for this connection type.</p>"
+      }
+    },
     "ConnectionPropertyKey": {
       "base": null,
       "refs": {
@@ -2025,7 +2047,7 @@
       }
     },
     "ConnectionTypeVariant": {
-      "base": "<p>Represents a variant of a connection type in Glue Data Catalog. Connection type variants provide specific configurations and behaviors for different implementations of the same general connection type.</p>",
+      "base": "<p>Represents a variant of a connection type in Glue. Connection type variants provide specific configurations and behaviors for different implementations of the same general connection type.</p>",
       "refs": {
         "ConnectionTypeVariantList$member": null
       }
@@ -2046,6 +2068,18 @@
         "Session$Connections": "<p>The number of connections used for the session.</p>"
       }
     },
+    "ConnectorAuthenticationConfiguration": {
+      "base": "<p>Configuration that defines the supported authentication types and required properties for the connection type.</p>",
+      "refs": {
+        "RegisterConnectionTypeRequest$ConnectorAuthenticationConfiguration": "<p>Defines the supported authentication types and required properties for this connection type, including Basic, OAuth2, and Custom authentication methods.</p>"
+      }
+    },
+    "ConnectorAuthorizationCodeProperties": {
+      "base": "<p>OAuth2 authorization code configuration that defines the properties needed for the Authorization Code grant type flow.</p>",
+      "refs": {
+        "ConnectorOAuth2Properties$AuthorizationCodeProperties": "<p>Configuration properties specific to the OAuth2 Authorization Code grant type flow.</p>"
+      }
+    },
     "ConnectorDataSource": {
       "base": "<p>Specifies a source generated with standard connection options.</p>",
       "refs": {
@@ -2058,11 +2092,73 @@
         "CodeGenConfigurationNode$ConnectorDataTarget": "<p>Specifies a target generated with standard connection options.</p>"
       }
     },
+    "ConnectorOAuth2GrantType": {
+      "base": null,
+      "refs": {
+        "ConnectorOAuth2Properties$OAuth2GrantType": "<p>The OAuth2 grant type to use for authentication, such as CLIENT_CREDENTIALS, JWT_BEARER, or AUTHORIZATION_CODE.</p>"
+      }
+    },
+    "ConnectorOAuth2Properties": {
+      "base": "<p>OAuth2 configuration container that defines the authentication properties and flow-specific configurations for OAuth2-based connections.</p>",
+      "refs": {
+        "ConnectorAuthenticationConfiguration$OAuth2Properties": null
+      }
+    },
     "ConnectorOptions": {
       "base": null,
       "refs": {
         "ConnectorDataSource$Data": "<p>A map specifying connection options for the node. You can find standard connection options for the corresponding connection type in the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect.html\"> Connection parameters</a> section of the Glue documentation.</p>",
         "ConnectorDataTarget$Data": "<p>A map specifying connection options for the node. You can find standard connection options for the corresponding connection type in the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect.html\"> Connection parameters</a> section of the Glue documentation.</p>"
+      }
+    },
+    "ConnectorProperty": {
+      "base": "<p>Defines a property configuration for connection types, default values, and where the property should be used in requests.</p>",
+      "refs": {
+        "BasicAuthenticationProperties$Username": "<p>The username property name to use for Basic authentication credentials.</p>",
+        "BasicAuthenticationProperties$Password": "<p>The password property name to use for Basic authentication credentials.</p>",
+        "ClientCredentialsProperties$TokenUrl": "<p>The token endpoint URL where the client will request access tokens using client credentials.</p>",
+        "ClientCredentialsProperties$ClientId": "<p>The OAuth2 client identifier provided by the authorization server.</p>",
+        "ClientCredentialsProperties$ClientSecret": "<p>The OAuth2 client secret provided by the authorization server.</p>",
+        "ClientCredentialsProperties$Scope": "<p>The OAuth2 scope that defines the level of access requested for the client credentials flow.</p>",
+        "ConnectionPropertiesConfiguration$Url": "<p>The base instance URL for the endpoint that this connection type will connect to.</p>",
+        "ConnectorAuthorizationCodeProperties$AuthorizationCodeUrl": "<p>The authorization endpoint URL where users will be redirected to grant authorization.</p>",
+        "ConnectorAuthorizationCodeProperties$AuthorizationCode": "<p>The authorization code received from the authorization server after user consent.</p>",
+        "ConnectorAuthorizationCodeProperties$RedirectUri": "<p>The redirect URI that must match the URI registered with the authorization server.</p>",
+        "ConnectorAuthorizationCodeProperties$TokenUrl": "<p>The token endpoint URL where the authorization code will be exchanged for an access token.</p>",
+        "ConnectorAuthorizationCodeProperties$ClientId": "<p>The OAuth2 client identifier provided by the authorization server.</p>",
+        "ConnectorAuthorizationCodeProperties$ClientSecret": "<p>The OAuth2 client secret provided by the authorization server.</p>",
+        "ConnectorAuthorizationCodeProperties$Scope": "<p>The OAuth2 scope that defines the level of access requested for the authorization code flow.</p>",
+        "ConnectorAuthorizationCodeProperties$Prompt": "<p>The OAuth2 prompt parameter that controls the authorization server's behavior during user authentication.</p>",
+        "ConnectorPropertyList$member": null,
+        "JWTBearerProperties$TokenUrl": "<p>The token endpoint URL where the JWT bearer token will be exchanged for an access token.</p>",
+        "JWTBearerProperties$JwtToken": "<p>The JWT token to be used in the bearer token grant flow for authentication.</p>"
+      }
+    },
+    "ConnectorPropertyKey": {
+      "base": null,
+      "refs": {
+        "ConnectorProperty$KeyOverride": "<p>A key name to use when sending this property in API requests, if different from the display name.</p>",
+        "ExtractedParameter$Key": "<p>The parameter key name that will be used in subsequent requests.</p>",
+        "ResponseExtractionMapping$HeaderKey": "<p>The name of an HTTP response header from which to extract the value.</p>"
+      }
+    },
+    "ConnectorPropertyList": {
+      "base": null,
+      "refs": {
+        "ClientCredentialsProperties$TokenUrlParameters": "<p>Additional parameters to include in token URL requests as key-value pairs.</p>",
+        "ConnectionPropertiesConfiguration$AdditionalRequestParameters": "<p>Key-value pairs of additional request parameters that may be needed during connection creation, such as API versions or service-specific configuration options.</p>",
+        "ConnectorAuthorizationCodeProperties$TokenUrlParameters": "<p>Additional parameters to include in token URL requests as key-value pairs.</p>",
+        "CustomAuthenticationProperties$AuthenticationParameters": "<p>A map of custom authentication parameters that define the specific authentication mechanism and required properties.</p>",
+        "JWTBearerProperties$TokenUrlParameters": "<p>Additional parameters to include in token URL requests as key-value pairs.</p>",
+        "SourceConfiguration$RequestParameters": "<p>Configuration for request parameters that should be included in API calls, such as query parameters, headers, or body content.</p>"
+      }
+    },
+    "ContentType": {
+      "base": null,
+      "refs": {
+        "ClientCredentialsProperties$ContentType": "<p>The content type to use for token requests, such as application/x-www-form-urlencoded or application/json.</p>",
+        "ConnectorAuthorizationCodeProperties$ContentType": "<p>The content type to use for token exchange requests, such as application/x-www-form-urlencoded or application/json.</p>",
+        "JWTBearerProperties$ContentType": "<p>The content type to use for JWT bearer token requests, such as application/x-www-form-urlencoded or application/json.</p>"
       }
     },
     "ContextKey": {
@@ -2586,6 +2682,18 @@
         "CreateCsvClassifierRequest$Serde": "<p>Sets the SerDe for processing CSV in the classifier, which will be applied in the Data Catalog. Valid values are <code>OpenCSVSerDe</code>, <code>LazySimpleSerDe</code>, and <code>None</code>. You can specify the <code>None</code> value when you want the crawler to do the detection.</p>",
         "CsvClassifier$Serde": "<p>Sets the SerDe for processing CSV in the classifier, which will be applied in the Data Catalog. Valid values are <code>OpenCSVSerDe</code>, <code>LazySimpleSerDe</code>, and <code>None</code>. You can specify the <code>None</code> value when you want the crawler to do the detection.</p>",
         "UpdateCsvClassifierRequest$Serde": "<p>Sets the SerDe for processing CSV in the classifier, which will be applied in the Data Catalog. Valid values are <code>OpenCSVSerDe</code>, <code>LazySimpleSerDe</code>, and <code>None</code>. You can specify the <code>None</code> value when you want the crawler to do the detection.</p>"
+      }
+    },
+    "CursorConfiguration": {
+      "base": "<p>Cursor-based pagination configuration that defines how to handle pagination using cursor tokens or next page identifiers.</p>",
+      "refs": {
+        "PaginationConfiguration$CursorConfiguration": "<p>Configuration for cursor-based pagination, where the API provides a cursor or token to retrieve the next page of results.</p>"
+      }
+    },
+    "CustomAuthenticationProperties": {
+      "base": "<p>Custom authentication configuration that allows for flexible authentication mechanisms beyond standard Basic and OAuth2 flows.</p>",
+      "refs": {
+        "ConnectorAuthenticationConfiguration$CustomAuthenticationProperties": null
       }
     },
     "CustomCode": {
@@ -3116,6 +3224,12 @@
         "DecimalColumnStatisticsData$MaximumValue": "<p>The highest value in the column.</p>"
       }
     },
+    "DefaultValue": {
+      "base": null,
+      "refs": {
+        "ExtractedParameter$DefaultValue": "<p>The default value to use if the parameter cannot be extracted from the response.</p>"
+      }
+    },
     "DeleteBehavior": {
       "base": null,
       "refs": {
@@ -3181,6 +3295,14 @@
       "refs": {}
     },
     "DeleteConnectionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteConnectionTypeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteConnectionTypeResponse": {
       "base": null,
       "refs": {}
     },
@@ -3447,7 +3569,8 @@
       "refs": {
         "ConnectionTypeBrief$Description": "<p>A description of the connection type.</p>",
         "ConnectionTypeVariant$Description": "<p>A detailed description of the connection type variant, including its purpose, use cases, and any specific configuration requirements.</p>",
-        "DescribeConnectionTypeResponse$Description": "<p>A description of the connection type.</p>"
+        "DescribeConnectionTypeResponse$Description": "<p>A description of the connection type.</p>",
+        "RegisterConnectionTypeRequest$Description": "<p>A description of the connection type. Can be up to 2048 characters and provides details about the purpose and functionality of the connection type.</p>"
       }
     },
     "DescriptionString": {
@@ -3929,6 +4052,24 @@
         "EntityList$member": null
       }
     },
+    "EntityConfiguration": {
+      "base": "<p>Configuration that defines how to interact with a specific data entity through the REST API, including its access patterns and schema definition.</p>",
+      "refs": {
+        "EntityConfigurationMap$value": null
+      }
+    },
+    "EntityConfigurationMap": {
+      "base": "<p>A map of entity configurations that associates entity names with their corresponding configuration settings for REST API interactions.</p>",
+      "refs": {
+        "RestConfiguration$EntityConfigurations": "<p>A map of entity configurations that define how to interact with different data entities available through the REST API, including their schemas and access patterns.</p>"
+      }
+    },
+    "EntityConfigurationMapKeyString": {
+      "base": null,
+      "refs": {
+        "EntityConfigurationMap$key": null
+      }
+    },
     "EntityDescription": {
       "base": null,
       "refs": {
@@ -4116,6 +4257,15 @@
         "CustomCode$Code": "<p>The custom code that is used to perform the data transformation.</p>"
       }
     },
+    "ExtractedParameter": {
+      "base": "<p>Parameter extraction configuration that defines how to extract and map values from API responses to request parameters.</p>",
+      "refs": {
+        "CursorConfiguration$NextPage": "<p>The parameter name or JSON path that contains the cursor or token for retrieving the next page of results.</p>",
+        "CursorConfiguration$LimitParameter": "<p>The parameter name used to specify the maximum number of results to return per page.</p>",
+        "OffsetConfiguration$OffsetParameter": "<p>The parameter name used to specify the starting position or offset for retrieving results.</p>",
+        "OffsetConfiguration$LimitParameter": "<p>The parameter name used to specify the maximum number of results to return per page.</p>"
+      }
+    },
     "FederatedCatalog": {
       "base": "<p>A catalog that points to an entity outside the Glue Data Catalog.</p>",
       "refs": {
@@ -4172,7 +4322,26 @@
     "FieldDataType": {
       "base": null,
       "refs": {
-        "Field$FieldType": "<p>The type of data in the field.</p>"
+        "Field$FieldType": "<p>The type of data in the field.</p>",
+        "FieldDefinition$FieldDataType": "<p>The data type of the field.</p>"
+      }
+    },
+    "FieldDefinition": {
+      "base": "<p>Defines a field in an entity schema for REST connector data sources, specifying the field name and data type.</p>",
+      "refs": {
+        "FieldDefinitionMap$value": null
+      }
+    },
+    "FieldDefinitionMap": {
+      "base": "<p>A map of field definitions that define the schema structure for an entity in a REST connector data source.</p>",
+      "refs": {
+        "EntityConfiguration$Schema": "<p>The schema definition for this entity, including field names, types, and other metadata that describes the structure of the data.</p>"
+      }
+    },
+    "FieldDefinitionMapKeyString": {
+      "base": null,
+      "refs": {
+        "FieldDefinitionMap$key": null
       }
     },
     "FieldDescription": {
@@ -5199,6 +5368,7 @@
         "GetTagsRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to retrieve tags.</p>",
         "PutResourcePolicyRequest$ResourceArn": "<p>Do not use. For internal use only.</p>",
         "PutSchemaVersionMetadataResponse$SchemaArn": "<p>The Amazon Resource Name (ARN) for the schema.</p>",
+        "RegisterConnectionTypeResponse$ConnectionTypeArn": "<p>The Amazon Resource Name (ARN) of the registered connection type. This unique identifier can be used to reference the connection type in other Glue operations.</p>",
         "RegistryId$RegistryArn": "<p>Arn of the registry to be updated. One of <code>RegistryArn</code> or <code>RegistryName</code> has to be provided.</p>",
         "RegistryListItem$RegistryArn": "<p>The Amazon Resource Name (ARN) of the registry.</p>",
         "RemoveSchemaVersionMetadataResponse$SchemaArn": "<p>The Amazon Resource Name (ARN) of the schema.</p>",
@@ -5370,6 +5540,15 @@
       "base": null,
       "refs": {
         "Route$GroupFiltersList": "<p>A list of group filters that define the routing conditions and criteria for directing data to different output paths.</p>"
+      }
+    },
+    "HTTPMethod": {
+      "base": null,
+      "refs": {
+        "ClientCredentialsProperties$RequestMethod": "<p>The HTTP method to use when making token requests, typically POST.</p>",
+        "ConnectorAuthorizationCodeProperties$RequestMethod": "<p>The HTTP method to use when making token exchange requests, typically POST.</p>",
+        "JWTBearerProperties$RequestMethod": "<p>The HTTP method to use when making JWT bearer token requests, typically POST.</p>",
+        "SourceConfiguration$RequestMethod": "<p>The HTTP method to use for requests to this endpoint, such as GET, POST.</p>"
       }
     },
     "HashString": {
@@ -6056,6 +6235,12 @@
         "ModifyIntegrationResponse$CreateTime": "<p>The time when the integration was created, in UTC.</p>"
       }
     },
+    "IntegrationType": {
+      "base": null,
+      "refs": {
+        "RegisterConnectionTypeRequest$IntegrationType": "<p>The integration type for the connection. Currently only \"REST\" protocol is supported.</p>"
+      }
+    },
     "IntegrationsList": {
       "base": null,
       "refs": {
@@ -6135,6 +6320,12 @@
       "base": null,
       "refs": {
         "JDBCConnectorOptions$DataTypeMapping": "<p>Custom data type mapping that builds a mapping from a JDBC data type to an Glue data type. For example, the option <code>\"dataTypeMapping\":{\"FLOAT\":\"STRING\"}</code> maps data fields of JDBC type <code>FLOAT</code> into the Java <code>String</code> type by calling the <code>ResultSet.getString()</code> method of the driver, and uses it to build the Glue record. The <code>ResultSet</code> object is implemented by each driver, so the behavior is specific to the driver you use. Refer to the documentation for your JDBC driver to understand how the driver performs the conversions.</p>"
+      }
+    },
+    "JWTBearerProperties": {
+      "base": "<p>JWT bearer token configuration that defines the properties needed for the JWT Bearer grant type flow.</p>",
+      "refs": {
+        "ConnectorOAuth2Properties$JWTBearerProperties": "<p>Configuration properties specific to the OAuth2 JWT Bearer grant type flow.</p>"
       }
     },
     "JdbcMetadataEntry": {
@@ -6290,6 +6481,14 @@
         "CreateJsonClassifierRequest$JsonPath": "<p>A <code>JsonPath</code> string defining the JSON data for the classifier to classify. Glue supports a subset of JsonPath, as described in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html#custom-classifier-json\">Writing JsonPath Custom Classifiers</a>.</p>",
         "JsonClassifier$JsonPath": "<p>A <code>JsonPath</code> string defining the JSON data for the classifier to classify. Glue supports a subset of JsonPath, as described in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html#custom-classifier-json\">Writing JsonPath Custom Classifiers</a>.</p>",
         "UpdateJsonClassifierRequest$JsonPath": "<p>A <code>JsonPath</code> string defining the JSON data for the classifier to classify. Glue supports a subset of JsonPath, as described in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html#custom-classifier-json\">Writing JsonPath Custom Classifiers</a>.</p>"
+      }
+    },
+    "JsonPathString": {
+      "base": null,
+      "refs": {
+        "ResponseConfiguration$ResultPath": "<p>The JSON path expression that identifies where the actual result data is located within the API response.</p>",
+        "ResponseConfiguration$ErrorPath": "<p>The JSON path expression that identifies where error information is located within API responses when requests fail.</p>",
+        "ResponseExtractionMapping$ContentPath": "<p>A JSON path expression that specifies how to extract a value from the response body content.</p>"
       }
     },
     "JsonValue": {
@@ -6599,6 +6798,7 @@
       "refs": {
         "ComputeEnvironmentConfiguration$ConnectionPropertiesRequiredOverrides": "<p>The connection properties that are required as overrides for the compute environment.</p>",
         "ConnectionTypeBrief$Categories": "<p>A list of categories that this connection type belongs to. Categories help users filter and find appropriate connection types based on their use cases.</p>",
+        "ConnectorProperty$AllowedValues": "<p>A list of <code>AllowedValue</code> objects representing the values allowed for the property.</p>",
         "Field$SupportedValues": "<p>A list of supported values for the field.</p>"
       }
     },
@@ -7231,6 +7431,7 @@
         "DeleteColumnStatisticsTaskSettingsRequest$TableName": "<p>The name of the table for which to delete column statistics.</p>",
         "DeleteConnectionNameList$member": null,
         "DeleteConnectionRequest$ConnectionName": "<p>The name of the connection to delete.</p>",
+        "DeleteConnectionTypeRequest$ConnectionType": "<p>The name of the connection type to delete. Must reference an existing registered connection type.</p>",
         "DeleteCrawlerRequest$Name": "<p>The name of the crawler to remove.</p>",
         "DeleteCustomEntityTypeRequest$Name": "<p>The name of the custom pattern that you want to delete.</p>",
         "DeleteCustomEntityTypeResponse$Name": "<p>The name of the custom pattern you deleted.</p>",
@@ -7395,6 +7596,7 @@
         "Predecessor$JobName": "<p>The name of the job definition used by the predecessor job run.</p>",
         "PutWorkflowRunPropertiesRequest$Name": "<p>Name of the workflow which was run.</p>",
         "ReferenceDatasetsList$member": null,
+        "RegisterConnectionTypeRequest$ConnectionType": "<p>The name of the connection type. Must be between 1 and 255 characters and must be prefixed with \"REST-\" to indicate it is a REST-based connector.</p>",
         "ResumeWorkflowRunRequest$Name": "<p>The name of the workflow to resume.</p>",
         "RuleMetricsMap$key": null,
         "RulesetNames$member": null,
@@ -7943,6 +8145,12 @@
         "AuthenticationConfigurationInput$OAuth2Properties": "<p>The properties for OAuth2 authentication in the CreateConnection request.</p>"
       }
     },
+    "OffsetConfiguration": {
+      "base": "<p>Offset-based pagination configuration that defines how to handle pagination using numeric offsets and limits.</p>",
+      "refs": {
+        "PaginationConfiguration$OffsetConfiguration": "<p>Configuration for offset-based pagination, where the API uses numeric offsets and limits to control which results are returned.</p>"
+      }
+    },
     "OneInput": {
       "base": null,
       "refs": {
@@ -8244,6 +8452,12 @@
         "SearchTablesRequest$MaxResults": "<p>The maximum number of tables to return in a single response.</p>"
       }
     },
+    "PaginationConfiguration": {
+      "base": "<p>Configuration that defines how to handle paginated responses from REST APIs, supporting different pagination strategies used by various services.</p>",
+      "refs": {
+        "SourceConfiguration$PaginationConfiguration": "<p>Configuration for handling paginated responses from the REST API, supporting both cursor-based and offset-based pagination strategies.</p>"
+      }
+    },
     "PaginationToken": {
       "base": null,
       "refs": {
@@ -8443,6 +8657,12 @@
         "S3Target$Exclusions": "<p>A list of glob patterns used to exclude from the crawl. For more information, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/add-crawler.html\">Catalog Tables with a Crawler</a>.</p>"
       }
     },
+    "PathString": {
+      "base": null,
+      "refs": {
+        "SourceConfiguration$RequestPath": "<p>The URL path for the REST endpoint, which may include parameter placeholders that will be replaced with actual values during requests.</p>"
+      }
+    },
     "Permission": {
       "base": null,
       "refs": {
@@ -8640,6 +8860,14 @@
         "PropertyMap$key": null
       }
     },
+    "PropertyLocation": {
+      "base": null,
+      "refs": {
+        "ConnectorProperty$PropertyLocation": "<p>Specifies where this property should be included in REST requests, such as in headers, query parameters, or request body.</p>",
+        "ExtractedParameter$PropertyLocation": "<p>Specifies where this extracted parameter should be placed in subsequent requests, such as in headers, query parameters, or request body.</p>",
+        "Property$PropertyLocation": "<p>Specifies where this property should be included in REST requests, such as in headers, query parameters, or request body.</p>"
+      }
+    },
     "PropertyMap": {
       "base": null,
       "refs": {
@@ -8654,6 +8882,7 @@
     "PropertyName": {
       "base": null,
       "refs": {
+        "ConnectorProperty$Name": "<p>The name of the property.</p>",
         "PropertiesMap$key": null,
         "Property$Name": "<p>The name of the property.</p>",
         "PropertyNameOverrides$key": null,
@@ -8676,6 +8905,7 @@
     "PropertyType": {
       "base": null,
       "refs": {
+        "ConnectorProperty$PropertyType": "<p>The data type of this property</p>",
         "PropertyTypes$member": null
       }
     },
@@ -8891,6 +9121,14 @@
         "OAuth2Credentials$RefreshToken": "<p>The refresh token used when the authentication type is OAuth2.</p>"
       }
     },
+    "RegisterConnectionTypeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RegisterConnectionTypeResponse": {
+      "base": "<p>Contains the Amazon Resource Name (ARN) of the newly registered connection type.</p>",
+      "refs": {}
+    },
     "RegisterSchemaVersionInput": {
       "base": null,
       "refs": {}
@@ -9022,6 +9260,25 @@
       "refs": {
         "UserDefinedFunction$ResourceUris": "<p>The resource URIs for the function.</p>",
         "UserDefinedFunctionInput$ResourceUris": "<p>The resource URIs for the function.</p>"
+      }
+    },
+    "ResponseConfiguration": {
+      "base": "<p>Configuration that defines how to parse JSON responses from REST API calls, including paths to result data and error information.</p>",
+      "refs": {
+        "SourceConfiguration$ResponseConfiguration": "<p>Configuration that defines how to parse and extract data from API responses, including success and error handling.</p>"
+      }
+    },
+    "ResponseExtractionMapping": {
+      "base": "<p>Configuration that defines how to extract values from HTTP response content or headers for use in subsequent requests or parameter mapping.</p>",
+      "refs": {
+        "ExtractedParameter$Value": "<p>The JSON path or extraction mapping that defines how to extract the parameter value from API responses.</p>"
+      }
+    },
+    "RestConfiguration": {
+      "base": "<p>Configuration that defines HTTP request and response handling, validation endpoints, and entity configurations for REST API interactions.</p>",
+      "refs": {
+        "DescribeConnectionTypeResponse$RestConfiguration": "<p>HTTP request and response configuration, validation endpoint, and entity configurations for REST based data source.</p>",
+        "RegisterConnectionTypeRequest$RestConfiguration": "<p>Defines the HTTP request and response configuration, validation endpoint, and entity configurations for REST API interactions.</p>"
       }
     },
     "ResumeWorkflowRunRequest": {
@@ -9735,6 +9992,14 @@
         "TransformSortCriteria$SortDirection": "<p>The sort direction to be used in the sorting criteria that are associated with the machine learning transform.</p>"
       }
     },
+    "SourceConfiguration": {
+      "base": "<p>Configuration that defines how to make requests to endpoints, including request methods, paths, parameters, and response handling.</p>",
+      "refs": {
+        "EntityConfiguration$SourceConfiguration": "<p>The source configuration that defines how to make requests to access this entity's data through the REST API.</p>",
+        "RestConfiguration$GlobalSourceConfiguration": "<p>Global configuration settings that apply to all REST API requests for this connection type, including common request methods, paths, and parameters.</p>",
+        "RestConfiguration$ValidationEndpointConfiguration": "<p>Configuration for the endpoint used to validate connection credentials and test connectivity during connection creation.</p>"
+      }
+    },
     "SourceControlAuthStrategy": {
       "base": null,
       "refs": {
@@ -10136,13 +10401,16 @@
     "String": {
       "base": null,
       "refs": {
+        "ConnectorProperty$DefaultValue": "<p>The default value for the property.</p>",
         "CustomProperties$key": null,
         "CustomProperties$value": null,
         "Field$ParentField": "<p>A parent field name for a nested field.</p>",
         "Field$NativeDataType": "<p>The data type returned by the SaaS API, such as “picklist” or “textarea” from Salesforce.</p>",
+        "FieldDefinition$Name": "<p>The name of the field in the entity schema.</p>",
         "GetEntityRecordsRequest$OrderBy": "<p>A parameter that orders the response preview data.</p>",
         "ListOfString$member": null,
-        "Property$DefaultValue": "<p>The default value for the property.</p>"
+        "Property$DefaultValue": "<p>The default value for the property.</p>",
+        "Property$KeyOverride": "<p>A key name to use when sending this property in API requests, if different from the display name.</p>"
       }
     },
     "String1024": {
@@ -10521,6 +10789,7 @@
         "ListMLTransformsRequest$Tags": "<p>Specifies to return only these tagged resources.</p>",
         "ListSessionsRequest$Tags": "<p>Tags belonging to the session. </p>",
         "ListTriggersRequest$Tags": "<p>Specifies to return only these tagged resources.</p>",
+        "RegisterConnectionTypeRequest$Tags": "<p>The tags you assign to the connection type.</p>",
         "TagResourceRequest$TagsToAdd": "<p>Tags to add to this resource.</p>"
       }
     },

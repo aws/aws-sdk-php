@@ -1,0 +1,89 @@
+{
+  "version": "2.0",
+  "service": "<p>AWS Signer Data Plane service provides APIs for checking revocation status of signed artifacts.</p>",
+  "operations": {
+    "GetRevocationStatus": "<p>Retrieves the revocation status for a signed artifact by checking if the signing profile, job, or certificate has been revoked.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You do not have sufficient permissions to perform this action.</p>",
+      "refs": {}
+    },
+    "Arn": {
+      "base": null,
+      "refs": {
+        "GetRevocationStatusRequest$profileVersionArn": "<p>The ARN of the signing profile version used to sign the artifact.</p>",
+        "GetRevocationStatusRequest$jobArn": "<p>The ARN of the signing job that produced the signature.</p>"
+      }
+    },
+    "CertificateHash": {
+      "base": null,
+      "refs": {
+        "CertificateHashes$member": null
+      }
+    },
+    "CertificateHashes": {
+      "base": null,
+      "refs": {
+        "GetRevocationStatusRequest$certificateHashes": "<p>List of certificate hashes to check for revocation.</p>"
+      }
+    },
+    "GetRevocationStatusRequest": {
+      "base": "<p>Request structure for checking revocation status.</p>",
+      "refs": {}
+    },
+    "GetRevocationStatusResponse": {
+      "base": "<p>Response containing the list of revoked entities.</p>",
+      "refs": {}
+    },
+    "InternalServiceErrorException": {
+      "base": "<p>An internal service error occurred.</p>",
+      "refs": {}
+    },
+    "PlatformId": {
+      "base": null,
+      "refs": {
+        "GetRevocationStatusRequest$platformId": "<p>The platform identifier for the signing platform used.</p>"
+      }
+    },
+    "RevokedEntities": {
+      "base": null,
+      "refs": {
+        "GetRevocationStatusResponse$revokedEntities": "<p>List of entity identifiers that have been revoked. Empty if no revocations found.</p>"
+      }
+    },
+    "RevokedEntity": {
+      "base": null,
+      "refs": {
+        "RevokedEntities$member": null
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "AccessDeniedException$code": null,
+        "InternalServiceErrorException$message": null,
+        "InternalServiceErrorException$code": null,
+        "TooManyRequestsException$message": null,
+        "TooManyRequestsException$code": null,
+        "ValidationException$message": null,
+        "ValidationException$code": null
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "GetRevocationStatusRequest$signatureTimestamp": "<p>The timestamp when the artifact was signed, in ISO 8601 format.</p>"
+      }
+    },
+    "TooManyRequestsException": {
+      "base": "<p>The request was denied due to request throttling.</p>",
+      "refs": {}
+    },
+    "ValidationException": {
+      "base": "<p>The request contains invalid parameters or is malformed.</p>",
+      "refs": {}
+    }
+  }
+}

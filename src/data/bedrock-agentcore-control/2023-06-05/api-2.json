@@ -95,6 +95,25 @@
       ],
       "idempotent":true
     },
+    "CreateBrowserProfile":{
+      "name":"CreateBrowserProfile",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/browser-profiles",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateBrowserProfileRequest"},
+      "output":{"shape":"CreateBrowserProfileResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "CreateCodeInterpreter":{
       "name":"CreateCodeInterpreter",
       "http":{
@@ -245,10 +264,10 @@
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -358,6 +377,25 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteBrowserProfile":{
+      "name":"DeleteBrowserProfile",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/browser-profiles/{profileId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteBrowserProfileRequest"},
+      "output":{"shape":"DeleteBrowserProfileResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -508,9 +546,9 @@
       "input":{"shape":"DeletePolicyRequest"},
       "output":{"shape":"DeletePolicyResponse"},
       "errors":[
+        {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -527,9 +565,9 @@
       "input":{"shape":"DeletePolicyEngineRequest"},
       "output":{"shape":"DeletePolicyEngineResponse"},
       "errors":[
+        {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -641,6 +679,24 @@
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetBrowserProfile":{
+      "name":"GetBrowserProfile",
+      "http":{
+        "method":"GET",
+        "requestUri":"/browser-profiles/{profileId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetBrowserProfileRequest"},
+      "output":{"shape":"GetBrowserProfileResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -787,8 +843,8 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ],
       "readonly":true
@@ -805,8 +861,8 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ],
       "readonly":true
@@ -823,8 +879,8 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ],
       "readonly":true
@@ -951,6 +1007,23 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListBrowserProfiles":{
+      "name":"ListBrowserProfiles",
+      "http":{
+        "method":"POST",
+        "requestUri":"/browser-profiles",
+        "responseCode":200
+      },
+      "input":{"shape":"ListBrowserProfilesRequest"},
+      "output":{"shape":"ListBrowserProfilesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ],
@@ -1107,8 +1180,8 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ],
       "readonly":true
@@ -1142,8 +1215,8 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ],
       "readonly":true
@@ -1160,8 +1233,8 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ],
       "readonly":true
@@ -1503,7 +1576,7 @@
     "UpdatePolicy":{
       "name":"UpdatePolicy",
       "http":{
-        "method":"PUT",
+        "method":"PATCH",
         "requestUri":"/policy-engines/{policyEngineId}/policies/{policyId}",
         "responseCode":202
       },
@@ -1511,10 +1584,10 @@
       "output":{"shape":"UpdatePolicyResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -1522,7 +1595,7 @@
     "UpdatePolicyEngine":{
       "name":"UpdatePolicyEngine",
       "http":{
-        "method":"PUT",
+        "method":"PATCH",
         "requestUri":"/policy-engines/{policyEngineId}",
         "responseCode":202
       },
@@ -1530,10 +1603,10 @@
       "output":{"shape":"UpdatePolicyEngineResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -1586,7 +1659,8 @@
         "PYTHON_3_10",
         "PYTHON_3_11",
         "PYTHON_3_12",
-        "PYTHON_3_13"
+        "PYTHON_3_13",
+        "PYTHON_3_14"
       ]
     },
     "AgentRuntime":{
@@ -1956,6 +2030,58 @@
         "VPC"
       ]
     },
+    "BrowserProfileArn":{
+      "type":"string",
+      "pattern":"arn:(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:browser-profile/[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10}"
+    },
+    "BrowserProfileId":{
+      "type":"string",
+      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10}"
+    },
+    "BrowserProfileName":{
+      "type":"string",
+      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,47}"
+    },
+    "BrowserProfileStatus":{
+      "type":"string",
+      "enum":[
+        "READY",
+        "DELETING",
+        "DELETED",
+        "SAVING"
+      ]
+    },
+    "BrowserProfileSummaries":{
+      "type":"list",
+      "member":{"shape":"BrowserProfileSummary"}
+    },
+    "BrowserProfileSummary":{
+      "type":"structure",
+      "required":[
+        "profileId",
+        "profileArn",
+        "name",
+        "status",
+        "createdAt",
+        "lastUpdatedAt"
+      ],
+      "members":{
+        "profileId":{"shape":"BrowserProfileId"},
+        "profileArn":{"shape":"BrowserProfileArn"},
+        "name":{"shape":"BrowserProfileName"},
+        "description":{"shape":"Description"},
+        "status":{"shape":"BrowserProfileStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "lastUpdatedAt":{"shape":"DateTimestamp"},
+        "lastSavedAt":{"shape":"DateTimestamp"},
+        "lastSavedBrowserSessionId":{"shape":"BrowserSessionId"},
+        "lastSavedBrowserId":{"shape":"BrowserId"}
+      }
+    },
+    "BrowserSessionId":{
+      "type":"string",
+      "pattern":"[0-9a-zA-Z]{1,40}"
+    },
     "BrowserSigningConfigInput":{
       "type":"structure",
       "required":["enabled"],
@@ -2220,6 +2346,25 @@
       },
       "union":true
     },
+    "ContentConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"ContentType"},
+        "level":{"shape":"ContentLevel"}
+      }
+    },
+    "ContentLevel":{
+      "type":"string",
+      "enum":[
+        "METADATA_ONLY",
+        "FULL_CONTENT"
+      ]
+    },
+    "ContentType":{
+      "type":"string",
+      "enum":["MEMORY_RECORDS"]
+    },
     "CreateAgentRuntimeEndpointRequest":{
       "type":"structure",
       "required":[
@@ -2330,6 +2475,34 @@
         "credentialProviderArn":{"shape":"ApiKeyCredentialProviderArnType"}
       }
     },
+    "CreateBrowserProfileRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"BrowserProfileName"},
+        "description":{"shape":"Description"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "CreateBrowserProfileResponse":{
+      "type":"structure",
+      "required":[
+        "profileId",
+        "profileArn",
+        "createdAt",
+        "status"
+      ],
+      "members":{
+        "profileId":{"shape":"BrowserProfileId"},
+        "profileArn":{"shape":"BrowserProfileArn"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "status":{"shape":"BrowserProfileStatus"}
+      }
+    },
     "CreateBrowserRequest":{
       "type":"structure",
       "required":[
@@ -2413,7 +2586,8 @@
         "evaluatorName":{"shape":"CustomEvaluatorName"},
         "description":{"shape":"EvaluatorDescription"},
         "evaluatorConfig":{"shape":"EvaluatorConfig"},
-        "level":{"shape":"EvaluatorLevel"}
+        "level":{"shape":"EvaluatorLevel"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreateEvaluatorResponse":{
@@ -2560,6 +2734,7 @@
         "memoryExecutionRoleArn":{"shape":"Arn"},
         "eventExpiryDuration":{"shape":"CreateMemoryInputEventExpiryDurationInteger"},
         "memoryStrategies":{"shape":"MemoryStrategyInputList"},
+        "streamDeliveryResources":{"shape":"StreamDeliveryResources"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -2630,7 +2805,8 @@
         "dataSourceConfig":{"shape":"DataSourceConfig"},
         "evaluators":{"shape":"EvaluatorList"},
         "evaluationExecutionRoleArn":{"shape":"RoleArn"},
-        "enableOnCreate":{"shape":"Boolean"}
+        "enableOnCreate":{"shape":"Boolean"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreateOnlineEvaluationConfigResponse":{
@@ -2661,7 +2837,9 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "encryptionKeyArn":{"shape":"KmsKeyArn"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreatePolicyEngineResponse":{
@@ -2683,7 +2861,8 @@
         "updatedAt":{"shape":"DateTimestamp"},
         "policyEngineArn":{"shape":"PolicyEngineArn"},
         "status":{"shape":"PolicyEngineStatus"},
-        "statusReasons":{"shape":"PolicyStatusReasons"}
+        "statusReasons":{"shape":"PolicyStatusReasons"},
+        "encryptionKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "CreatePolicyRequest":{
@@ -3050,6 +3229,39 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteBrowserProfileRequest":{
+      "type":"structure",
+      "required":["profileId"],
+      "members":{
+        "profileId":{
+          "shape":"BrowserProfileId",
+          "location":"uri",
+          "locationName":"profileId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "DeleteBrowserProfileResponse":{
+      "type":"structure",
+      "required":[
+        "profileId",
+        "profileArn",
+        "status",
+        "lastUpdatedAt"
+      ],
+      "members":{
+        "profileId":{"shape":"BrowserProfileId"},
+        "profileArn":{"shape":"BrowserProfileArn"},
+        "status":{"shape":"BrowserProfileStatus"},
+        "lastUpdatedAt":{"shape":"DateTimestamp"},
+        "lastSavedAt":{"shape":"DateTimestamp"}
+      }
+    },
     "DeleteBrowserRequest":{
       "type":"structure",
       "required":["browserId"],
@@ -3296,7 +3508,8 @@
         "updatedAt":{"shape":"DateTimestamp"},
         "policyEngineArn":{"shape":"PolicyEngineArn"},
         "status":{"shape":"PolicyEngineStatus"},
-        "statusReasons":{"shape":"PolicyStatusReasons"}
+        "statusReasons":{"shape":"PolicyStatusReasons"},
+        "encryptionKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "DeletePolicyRequest":{
@@ -3989,7 +4202,8 @@
         "protocolConfiguration":{"shape":"ProtocolConfiguration"},
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
         "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
-        "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"}
+        "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"},
+        "metadataConfiguration":{"shape":"RuntimeMetadataConfiguration"}
       }
     },
     "GetApiKeyCredentialProviderRequest":{
@@ -4014,6 +4228,40 @@
         "credentialProviderArn":{"shape":"ApiKeyCredentialProviderArnType"},
         "createdTime":{"shape":"Timestamp"},
         "lastUpdatedTime":{"shape":"Timestamp"}
+      }
+    },
+    "GetBrowserProfileRequest":{
+      "type":"structure",
+      "required":["profileId"],
+      "members":{
+        "profileId":{
+          "shape":"BrowserProfileId",
+          "location":"uri",
+          "locationName":"profileId"
+        }
+      }
+    },
+    "GetBrowserProfileResponse":{
+      "type":"structure",
+      "required":[
+        "profileId",
+        "profileArn",
+        "name",
+        "status",
+        "createdAt",
+        "lastUpdatedAt"
+      ],
+      "members":{
+        "profileId":{"shape":"BrowserProfileId"},
+        "profileArn":{"shape":"BrowserProfileArn"},
+        "name":{"shape":"BrowserProfileName"},
+        "description":{"shape":"Description"},
+        "status":{"shape":"BrowserProfileStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "lastUpdatedAt":{"shape":"DateTimestamp"},
+        "lastSavedAt":{"shape":"DateTimestamp"},
+        "lastSavedBrowserSessionId":{"shape":"BrowserSessionId"},
+        "lastSavedBrowserId":{"shape":"BrowserId"}
       }
     },
     "GetBrowserRequest":{
@@ -4339,7 +4587,8 @@
         "updatedAt":{"shape":"DateTimestamp"},
         "policyEngineArn":{"shape":"PolicyEngineArn"},
         "status":{"shape":"PolicyEngineStatus"},
-        "statusReasons":{"shape":"PolicyStatusReasons"}
+        "statusReasons":{"shape":"PolicyStatusReasons"},
+        "encryptionKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "GetPolicyGenerationRequest":{
@@ -4677,6 +4926,23 @@
         "ServiceManagedKey"
       ]
     },
+    "KinesisResource":{
+      "type":"structure",
+      "required":[
+        "dataStreamArn",
+        "contentConfigurations"
+      ],
+      "members":{
+        "dataStreamArn":{"shape":"Arn"},
+        "contentConfigurations":{"shape":"KinesisResourceContentConfigurationsList"}
+      }
+    },
+    "KinesisResourceContentConfigurationsList":{
+      "type":"list",
+      "member":{"shape":"ContentConfiguration"},
+      "max":1,
+      "min":1
+    },
     "KmsConfiguration":{
       "type":"structure",
       "required":["keyType"],
@@ -4836,6 +5102,29 @@
       "members":{
         "credentialProviders":{"shape":"ApiKeyCredentialProviders"},
         "nextToken":{"shape":"String"}
+      }
+    },
+    "ListBrowserProfilesRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListBrowserProfilesResponse":{
+      "type":"structure",
+      "required":["profileSummaries"],
+      "members":{
+        "profileSummaries":{"shape":"BrowserProfileSummaries"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListBrowsersRequest":{
@@ -5316,7 +5605,8 @@
         "failureReason":{"shape":"String"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
-        "strategies":{"shape":"MemoryStrategyList"}
+        "strategies":{"shape":"MemoryStrategyList"},
+        "streamDeliveryResources":{"shape":"StreamDeliveryResources"}
       }
     },
     "MemoryArn":{
@@ -5877,7 +6167,8 @@
     "PolicyDefinition":{
       "type":"structure",
       "members":{
-        "cedar":{"shape":"CedarPolicy"}
+        "cedar":{"shape":"CedarPolicy"},
+        "policyGeneration":{"shape":"PolicyGenerationDetails"}
       },
       "union":true
     },
@@ -5900,7 +6191,8 @@
         "updatedAt":{"shape":"DateTimestamp"},
         "policyEngineArn":{"shape":"PolicyEngineArn"},
         "status":{"shape":"PolicyEngineStatus"},
-        "statusReasons":{"shape":"PolicyStatusReasons"}
+        "statusReasons":{"shape":"PolicyStatusReasons"},
+        "encryptionKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "PolicyEngineArn":{
@@ -5982,6 +6274,17 @@
     "PolicyGenerationAssets":{
       "type":"list",
       "member":{"shape":"PolicyGenerationAsset"}
+    },
+    "PolicyGenerationDetails":{
+      "type":"structure",
+      "required":[
+        "policyGenerationId",
+        "policyGenerationAssetId"
+      ],
+      "members":{
+        "policyGenerationId":{"shape":"ResourceId"},
+        "policyGenerationAssetId":{"shape":"ResourceId"}
+      }
     },
     "PolicyGenerationName":{
       "type":"string",
@@ -6206,6 +6509,13 @@
       "max":1024,
       "min":1,
       "pattern":"([0-9]{12})\\.dkr\\.ecr\\.([a-z0-9-]+)\\.amazonaws\\.com/((?:[a-z0-9]+(?:[._-][a-z0-9]+)*/)*[a-z0-9]+(?:[._-][a-z0-9]+)*)(?::([^:@]{1,300}))?(?:@(.+))?"
+    },
+    "RuntimeMetadataConfiguration":{
+      "type":"structure",
+      "required":["requireMMDSV2"],
+      "members":{
+        "requireMMDSV2":{"shape":"Boolean"}
+      }
     },
     "S3BucketUri":{
       "type":"string",
@@ -6559,7 +6869,7 @@
     },
     "Statement":{
       "type":"string",
-      "max":153600,
+      "max":10000,
       "min":35
     },
     "StatusReason":{
@@ -6582,6 +6892,26 @@
         "reflection":{"shape":"ReflectionConfiguration"},
         "selfManagedConfiguration":{"shape":"SelfManagedConfiguration"}
       }
+    },
+    "StreamDeliveryResource":{
+      "type":"structure",
+      "members":{
+        "kinesis":{"shape":"KinesisResource"}
+      },
+      "union":true
+    },
+    "StreamDeliveryResources":{
+      "type":"structure",
+      "required":["resources"],
+      "members":{
+        "resources":{"shape":"StreamDeliveryResourcesList"}
+      }
+    },
+    "StreamDeliveryResourcesList":{
+      "type":"list",
+      "member":{"shape":"StreamDeliveryResource"},
+      "max":1,
+      "min":0
     },
     "String":{"type":"string"},
     "SubnetId":{
@@ -7013,6 +7343,7 @@
         "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"},
         "protocolConfiguration":{"shape":"ProtocolConfiguration"},
         "lifecycleConfiguration":{"shape":"LifecycleConfiguration"},
+        "metadataConfiguration":{"shape":"RuntimeMetadataConfiguration"},
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
         "clientToken":{
           "shape":"ClientToken",
@@ -7232,7 +7563,8 @@
         "description":{"shape":"Description"},
         "eventExpiryDuration":{"shape":"UpdateMemoryInputEventExpiryDurationInteger"},
         "memoryExecutionRoleArn":{"shape":"Arn"},
-        "memoryStrategies":{"shape":"ModifyMemoryStrategies"}
+        "memoryStrategies":{"shape":"ModifyMemoryStrategies"},
+        "streamDeliveryResources":{"shape":"StreamDeliveryResources"}
       }
     },
     "UpdateMemoryInputClientTokenString":{
@@ -7335,7 +7667,7 @@
           "location":"uri",
           "locationName":"policyEngineId"
         },
-        "description":{"shape":"Description"}
+        "description":{"shape":"UpdatedDescription"}
       }
     },
     "UpdatePolicyEngineResponse":{
@@ -7357,15 +7689,15 @@
         "updatedAt":{"shape":"DateTimestamp"},
         "policyEngineArn":{"shape":"PolicyEngineArn"},
         "status":{"shape":"PolicyEngineStatus"},
-        "statusReasons":{"shape":"PolicyStatusReasons"}
+        "statusReasons":{"shape":"PolicyStatusReasons"},
+        "encryptionKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "UpdatePolicyRequest":{
       "type":"structure",
       "required":[
         "policyEngineId",
-        "policyId",
-        "definition"
+        "policyId"
       ],
       "members":{
         "policyEngineId":{
@@ -7378,7 +7710,7 @@
           "location":"uri",
           "locationName":"policyId"
         },
-        "description":{"shape":"Description"},
+        "description":{"shape":"UpdatedDescription"},
         "definition":{"shape":"PolicyDefinition"},
         "validationMode":{"shape":"PolicyValidationMode"}
       }
@@ -7431,6 +7763,12 @@
         "allowedResourceOauth2ReturnUrls":{"shape":"ResourceOauth2ReturnUrlListType"},
         "createdTime":{"shape":"Timestamp"},
         "lastUpdatedTime":{"shape":"Timestamp"}
+      }
+    },
+    "UpdatedDescription":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"Description"}
       }
     },
     "UserPreferenceConsolidationOverride":{

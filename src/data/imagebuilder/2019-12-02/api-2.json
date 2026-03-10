@@ -3801,7 +3801,7 @@
       ],
       "members":{
         "name":{"shape":"ResourceName"},
-        "semanticVersion":{"shape":"VersionNumber"}
+        "semanticVersion":{"shape":"WildcardVersionNumber"}
       }
     },
     "LifecyclePolicyResourceSelectionRecipes":{
@@ -4859,7 +4859,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(?!aws:)[a-zA-Z+-=._:/]+$"
+      "pattern":"^(?!aws:)[a-zA-Z0-9\\s_.:/=+\\-@]*$"
     },
     "TagKeyList":{
       "type":"list",

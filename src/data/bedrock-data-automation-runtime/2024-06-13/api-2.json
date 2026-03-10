@@ -337,16 +337,15 @@
         "dataAutomationConfiguration":{"shape":"DataAutomationConfiguration"},
         "blueprints":{"shape":"BlueprintList"},
         "dataAutomationProfileArn":{"shape":"DataAutomationProfileArn"},
-        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "outputConfiguration":{"shape":"OutputConfiguration"}
       }
     },
     "InvokeDataAutomationResponse":{
       "type":"structure",
-      "required":[
-        "semanticModality",
-        "outputSegments"
-      ],
+      "required":["semanticModality"],
       "members":{
+        "outputConfiguration":{"shape":"OutputConfiguration"},
         "semanticModality":{"shape":"SemanticModality"},
         "outputSegments":{"shape":"OutputSegmentList"}
       }

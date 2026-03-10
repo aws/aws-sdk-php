@@ -283,6 +283,7 @@ class AwsClient implements AwsClientInterface
             $args['with_resolved']($config);
         }
         $this->addUserAgentMiddleware($config);
+        $this->addEventStreamHttpFlagMiddleware();
     }
 
     public function getHandlerList()
@@ -647,6 +648,33 @@ class AwsClient implements AwsClientInterface
             UserAgentMiddleware::wrap($args),
             'user-agent'
         );
+    }
+
+    /**
+     * Enables streaming the response by using the stream flag.
+     *
+     * @return void
+     */
+    private function addEventStreamHttpFlagMiddleware(): void
+    {
+        $this->getHandlerList()
+            -> appendInit(
+                function (callable $handler) {
+                    return function (CommandInterface $command, $request = null) use ($handler) {
+                        $operation = $this->getApi()->getOperation($command->getName());
+                        $output = $operation->getOutput();
+                        foreach ($output->getMembers() as $memberProps) {
+                            if (!empty($memberProps['eventstream'])) {
+                                $command['@http']['stream'] = true;
+                                break;
+                            }
+                        }
+
+                        return $handler($command, $request);
+                    };
+                },
+                'event-streaming-flag-middleware'
+            );
     }
 
     /**

@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2022-09-15",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"trustedadvisor",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"TrustedAdvisor Public API",
     "serviceId":"TrustedAdvisor",
     "signatureVersion":"v4",
@@ -43,9 +44,10 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"}
-      ]
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
     },
     "GetRecommendation":{
       "name":"GetRecommendation",
@@ -60,9 +62,10 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"}
-      ]
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
     },
     "ListChecks":{
       "name":"ListChecks",
@@ -78,7 +81,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListOrganizationRecommendationAccounts":{
       "name":"ListOrganizationRecommendationAccounts",
@@ -93,9 +97,10 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"}
-      ]
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
     },
     "ListOrganizationRecommendationResources":{
       "name":"ListOrganizationRecommendationResources",
@@ -110,9 +115,10 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"}
-      ]
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
     },
     "ListOrganizationRecommendations":{
       "name":"ListOrganizationRecommendations",
@@ -128,7 +134,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListRecommendationResources":{
       "name":"ListRecommendationResources",
@@ -143,9 +150,10 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"}
-      ]
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
     },
     "ListRecommendations":{
       "name":"ListRecommendations",
@@ -161,7 +169,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "UpdateOrganizationRecommendationLifecycle":{
       "name":"UpdateOrganizationRecommendationLifecycle",
@@ -176,8 +185,8 @@
         {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
     },
@@ -194,8 +203,8 @@
         {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
     }
@@ -217,31 +226,31 @@
       "type":"string",
       "max":12,
       "min":12,
-      "pattern":"^\\d+$"
+      "pattern":"\\d+"
     },
     "AccountRecommendationArn":{
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:[\\w-]+:trustedadvisor::\\d{12}:recommendation\\/[\\w-]+$"
+      "pattern":"arn:[\\w-]+:trustedadvisor::\\d{12}:recommendation\\/[\\w-]+"
     },
     "AccountRecommendationIdentifier":{
       "type":"string",
       "max":200,
       "min":20,
-      "pattern":"^arn:[\\w-]+:trustedadvisor::\\d{12}:recommendation\\/[\\w-]+$"
+      "pattern":"arn:[\\w-]+:trustedadvisor::\\d{12}:recommendation\\/[\\w-]+"
     },
     "AccountRecommendationLifecycleSummary":{
       "type":"structure",
       "members":{
         "accountId":{"shape":"AccountId"},
         "accountRecommendationArn":{"shape":"AccountRecommendationArn"},
-        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
         "lifecycleStage":{"shape":"RecommendationLifecycleStage"},
+        "updatedOnBehalfOf":{"shape":"String"},
+        "updatedOnBehalfOfJobTitle":{"shape":"String"},
         "updateReason":{"shape":"RecommendationUpdateReason"},
         "updateReasonCode":{"shape":"UpdateRecommendationLifecycleStageReasonCode"},
-        "updatedOnBehalfOf":{"shape":"String"},
-        "updatedOnBehalfOfJobTitle":{"shape":"String"}
+        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "AccountRecommendationLifecycleSummaryList":{
@@ -270,35 +279,35 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:[\\w-]+:trustedadvisor:::check\\/[\\w-]+$"
+      "pattern":"arn:[\\w-]+:trustedadvisor:::check\\/[\\w-]+"
     },
     "CheckIdentifier":{
       "type":"string",
       "max":64,
       "min":20,
-      "pattern":"^arn:[\\w-]+:trustedadvisor:::check\\/[\\w-]+$"
+      "pattern":"arn:[\\w-]+:trustedadvisor:::check\\/[\\w-]+"
     },
     "CheckSummary":{
       "type":"structure",
       "required":[
-        "arn",
-        "awsServices",
-        "description",
         "id",
-        "metadata",
+        "arn",
         "name",
+        "description",
         "pillars",
-        "source"
+        "awsServices",
+        "source",
+        "metadata"
       ],
       "members":{
-        "arn":{"shape":"CheckArn"},
-        "awsServices":{"shape":"RecommendationAwsServiceList"},
-        "description":{"shape":"String"},
         "id":{"shape":"String"},
-        "metadata":{"shape":"StringMap"},
+        "arn":{"shape":"CheckArn"},
         "name":{"shape":"String"},
+        "description":{"shape":"String"},
         "pillars":{"shape":"RecommendationPillarList"},
-        "source":{"shape":"RecommendationSource"}
+        "awsServices":{"shape":"RecommendationAwsServiceList"},
+        "source":{"shape":"RecommendationSource"},
+        "metadata":{"shape":"StringMap"}
       }
     },
     "CheckSummaryList":{
@@ -353,6 +362,11 @@
           "shape":"AccountRecommendationIdentifier",
           "location":"uri",
           "locationName":"recommendationIdentifier"
+        },
+        "language":{
+          "shape":"RecommendationLanguage",
+          "location":"querystring",
+          "locationName":"language"
         }
       }
     },
@@ -376,35 +390,35 @@
     "ListChecksRequest":{
       "type":"structure",
       "members":{
-        "awsService":{
-          "shape":"RecommendationAwsService",
+        "nextToken":{
+          "shape":"ListChecksRequestNextTokenString",
           "location":"querystring",
-          "locationName":"awsService"
-        },
-        "language":{
-          "shape":"RecommendationLanguage",
-          "location":"querystring",
-          "locationName":"language"
+          "locationName":"nextToken"
         },
         "maxResults":{
           "shape":"ListChecksRequestMaxResultsInteger",
           "location":"querystring",
           "locationName":"maxResults"
         },
-        "nextToken":{
-          "shape":"ListChecksRequestNextTokenString",
-          "location":"querystring",
-          "locationName":"nextToken"
-        },
         "pillar":{
           "shape":"RecommendationPillar",
           "location":"querystring",
           "locationName":"pillar"
         },
+        "awsService":{
+          "shape":"RecommendationAwsService",
+          "location":"querystring",
+          "locationName":"awsService"
+        },
         "source":{
           "shape":"RecommendationSource",
           "location":"querystring",
           "locationName":"source"
+        },
+        "language":{
+          "shape":"RecommendationLanguage",
+          "location":"querystring",
+          "locationName":"language"
         }
       }
     },
@@ -423,8 +437,8 @@
       "type":"structure",
       "required":["checkSummaries"],
       "members":{
-        "checkSummaries":{"shape":"CheckSummaryList"},
-        "nextToken":{"shape":"ListChecksResponseNextTokenString"}
+        "nextToken":{"shape":"ListChecksResponseNextTokenString"},
+        "checkSummaries":{"shape":"CheckSummaryList"}
       }
     },
     "ListChecksResponseNextTokenString":{
@@ -436,25 +450,25 @@
       "type":"structure",
       "required":["organizationRecommendationIdentifier"],
       "members":{
-        "affectedAccountId":{
-          "shape":"AccountId",
+        "nextToken":{
+          "shape":"ListOrganizationRecommendationAccountsRequestNextTokenString",
           "location":"querystring",
-          "locationName":"affectedAccountId"
+          "locationName":"nextToken"
         },
         "maxResults":{
           "shape":"ListOrganizationRecommendationAccountsRequestMaxResultsInteger",
           "location":"querystring",
           "locationName":"maxResults"
         },
-        "nextToken":{
-          "shape":"ListOrganizationRecommendationAccountsRequestNextTokenString",
-          "location":"querystring",
-          "locationName":"nextToken"
-        },
         "organizationRecommendationIdentifier":{
           "shape":"OrganizationRecommendationIdentifier",
           "location":"uri",
           "locationName":"organizationRecommendationIdentifier"
+        },
+        "affectedAccountId":{
+          "shape":"AccountId",
+          "location":"querystring",
+          "locationName":"affectedAccountId"
         }
       }
     },
@@ -473,8 +487,8 @@
       "type":"structure",
       "required":["accountRecommendationLifecycleSummaries"],
       "members":{
-        "accountRecommendationLifecycleSummaries":{"shape":"AccountRecommendationLifecycleSummaryList"},
-        "nextToken":{"shape":"ListOrganizationRecommendationAccountsResponseNextTokenString"}
+        "nextToken":{"shape":"ListOrganizationRecommendationAccountsResponseNextTokenString"},
+        "accountRecommendationLifecycleSummaries":{"shape":"AccountRecommendationLifecycleSummaryList"}
       }
     },
     "ListOrganizationRecommendationAccountsResponseNextTokenString":{
@@ -486,40 +500,40 @@
       "type":"structure",
       "required":["organizationRecommendationIdentifier"],
       "members":{
-        "affectedAccountId":{
-          "shape":"AccountId",
+        "nextToken":{
+          "shape":"ListOrganizationRecommendationResourcesRequestNextTokenString",
           "location":"querystring",
-          "locationName":"affectedAccountId"
-        },
-        "exclusionStatus":{
-          "shape":"ExclusionStatus",
-          "location":"querystring",
-          "locationName":"exclusionStatus"
+          "locationName":"nextToken"
         },
         "maxResults":{
           "shape":"ListOrganizationRecommendationResourcesRequestMaxResultsInteger",
           "location":"querystring",
           "locationName":"maxResults"
         },
-        "nextToken":{
-          "shape":"ListOrganizationRecommendationResourcesRequestNextTokenString",
+        "status":{
+          "shape":"ResourceStatus",
           "location":"querystring",
-          "locationName":"nextToken"
+          "locationName":"status"
         },
-        "organizationRecommendationIdentifier":{
-          "shape":"OrganizationRecommendationIdentifier",
-          "location":"uri",
-          "locationName":"organizationRecommendationIdentifier"
+        "exclusionStatus":{
+          "shape":"ExclusionStatus",
+          "location":"querystring",
+          "locationName":"exclusionStatus"
         },
         "regionCode":{
           "shape":"String",
           "location":"querystring",
           "locationName":"regionCode"
         },
-        "status":{
-          "shape":"ResourceStatus",
+        "organizationRecommendationIdentifier":{
+          "shape":"OrganizationRecommendationIdentifier",
+          "location":"uri",
+          "locationName":"organizationRecommendationIdentifier"
+        },
+        "affectedAccountId":{
+          "shape":"AccountId",
           "location":"querystring",
-          "locationName":"status"
+          "locationName":"affectedAccountId"
         }
       }
     },
@@ -550,55 +564,55 @@
     "ListOrganizationRecommendationsRequest":{
       "type":"structure",
       "members":{
-        "afterLastUpdatedAt":{
-          "shape":"Timestamp",
+        "nextToken":{
+          "shape":"ListOrganizationRecommendationsRequestNextTokenString",
           "location":"querystring",
-          "locationName":"afterLastUpdatedAt"
-        },
-        "awsService":{
-          "shape":"RecommendationAwsService",
-          "location":"querystring",
-          "locationName":"awsService"
-        },
-        "beforeLastUpdatedAt":{
-          "shape":"Timestamp",
-          "location":"querystring",
-          "locationName":"beforeLastUpdatedAt"
-        },
-        "checkIdentifier":{
-          "shape":"CheckIdentifier",
-          "location":"querystring",
-          "locationName":"checkIdentifier"
+          "locationName":"nextToken"
         },
         "maxResults":{
           "shape":"ListOrganizationRecommendationsRequestMaxResultsInteger",
           "location":"querystring",
           "locationName":"maxResults"
         },
-        "nextToken":{
-          "shape":"ListOrganizationRecommendationsRequestNextTokenString",
+        "type":{
+          "shape":"RecommendationType",
           "location":"querystring",
-          "locationName":"nextToken"
-        },
-        "pillar":{
-          "shape":"RecommendationPillar",
-          "location":"querystring",
-          "locationName":"pillar"
-        },
-        "source":{
-          "shape":"RecommendationSource",
-          "location":"querystring",
-          "locationName":"source"
+          "locationName":"type"
         },
         "status":{
           "shape":"RecommendationStatus",
           "location":"querystring",
           "locationName":"status"
         },
-        "type":{
-          "shape":"RecommendationType",
+        "pillar":{
+          "shape":"RecommendationPillar",
           "location":"querystring",
-          "locationName":"type"
+          "locationName":"pillar"
+        },
+        "awsService":{
+          "shape":"RecommendationAwsService",
+          "location":"querystring",
+          "locationName":"awsService"
+        },
+        "source":{
+          "shape":"RecommendationSource",
+          "location":"querystring",
+          "locationName":"source"
+        },
+        "checkIdentifier":{
+          "shape":"CheckIdentifier",
+          "location":"querystring",
+          "locationName":"checkIdentifier"
+        },
+        "afterLastUpdatedAt":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"afterLastUpdatedAt"
+        },
+        "beforeLastUpdatedAt":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"beforeLastUpdatedAt"
         }
       }
     },
@@ -630,42 +644,47 @@
       "type":"structure",
       "required":["recommendationIdentifier"],
       "members":{
-        "exclusionStatus":{
-          "shape":"ExclusionStatus",
+        "nextToken":{
+          "shape":"ListRecommendationResourcesRequestNextTokenString",
           "location":"querystring",
-          "locationName":"exclusionStatus"
+          "locationName":"nextToken"
         },
         "maxResults":{
           "shape":"ListRecommendationResourcesRequestMaxResultsInteger",
           "location":"querystring",
           "locationName":"maxResults"
         },
-        "nextToken":{
-          "shape":"ListRecommendationResourcesRequestNextTokenString",
+        "status":{
+          "shape":"ResourceStatus",
           "location":"querystring",
-          "locationName":"nextToken"
+          "locationName":"status"
         },
-        "recommendationIdentifier":{
-          "shape":"AccountRecommendationIdentifier",
-          "location":"uri",
-          "locationName":"recommendationIdentifier"
+        "exclusionStatus":{
+          "shape":"ExclusionStatus",
+          "location":"querystring",
+          "locationName":"exclusionStatus"
         },
         "regionCode":{
           "shape":"String",
           "location":"querystring",
           "locationName":"regionCode"
         },
-        "status":{
-          "shape":"ResourceStatus",
+        "recommendationIdentifier":{
+          "shape":"AccountRecommendationIdentifier",
+          "location":"uri",
+          "locationName":"recommendationIdentifier"
+        },
+        "language":{
+          "shape":"RecommendationLanguage",
           "location":"querystring",
-          "locationName":"status"
+          "locationName":"language"
         }
       }
     },
     "ListRecommendationResourcesRequestMaxResultsInteger":{
       "type":"integer",
       "box":true,
-      "max":200,
+      "max":5000,
       "min":1
     },
     "ListRecommendationResourcesRequestNextTokenString":{
@@ -689,55 +708,60 @@
     "ListRecommendationsRequest":{
       "type":"structure",
       "members":{
-        "afterLastUpdatedAt":{
-          "shape":"Timestamp",
+        "nextToken":{
+          "shape":"ListRecommendationsRequestNextTokenString",
           "location":"querystring",
-          "locationName":"afterLastUpdatedAt"
-        },
-        "awsService":{
-          "shape":"RecommendationAwsService",
-          "location":"querystring",
-          "locationName":"awsService"
-        },
-        "beforeLastUpdatedAt":{
-          "shape":"Timestamp",
-          "location":"querystring",
-          "locationName":"beforeLastUpdatedAt"
-        },
-        "checkIdentifier":{
-          "shape":"CheckIdentifier",
-          "location":"querystring",
-          "locationName":"checkIdentifier"
+          "locationName":"nextToken"
         },
         "maxResults":{
           "shape":"ListRecommendationsRequestMaxResultsInteger",
           "location":"querystring",
           "locationName":"maxResults"
         },
-        "nextToken":{
-          "shape":"ListRecommendationsRequestNextTokenString",
+        "type":{
+          "shape":"RecommendationType",
           "location":"querystring",
-          "locationName":"nextToken"
-        },
-        "pillar":{
-          "shape":"RecommendationPillar",
-          "location":"querystring",
-          "locationName":"pillar"
-        },
-        "source":{
-          "shape":"RecommendationSource",
-          "location":"querystring",
-          "locationName":"source"
+          "locationName":"type"
         },
         "status":{
           "shape":"RecommendationStatus",
           "location":"querystring",
           "locationName":"status"
         },
-        "type":{
-          "shape":"RecommendationType",
+        "pillar":{
+          "shape":"RecommendationPillar",
           "location":"querystring",
-          "locationName":"type"
+          "locationName":"pillar"
+        },
+        "awsService":{
+          "shape":"RecommendationAwsService",
+          "location":"querystring",
+          "locationName":"awsService"
+        },
+        "source":{
+          "shape":"RecommendationSource",
+          "location":"querystring",
+          "locationName":"source"
+        },
+        "checkIdentifier":{
+          "shape":"CheckIdentifier",
+          "location":"querystring",
+          "locationName":"checkIdentifier"
+        },
+        "afterLastUpdatedAt":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"afterLastUpdatedAt"
+        },
+        "beforeLastUpdatedAt":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"beforeLastUpdatedAt"
+        },
+        "language":{
+          "shape":"RecommendationLanguage",
+          "location":"querystring",
+          "locationName":"language"
         }
       }
     },
@@ -772,75 +796,75 @@
     "OrganizationRecommendation":{
       "type":"structure",
       "required":[
-        "arn",
-        "description",
         "id",
-        "name",
-        "pillars",
-        "resourcesAggregates",
-        "source",
+        "type",
         "status",
-        "type"
+        "pillars",
+        "source",
+        "name",
+        "resourcesAggregates",
+        "arn",
+        "description"
       ],
       "members":{
-        "arn":{"shape":"OrganizationRecommendationArn"},
-        "awsServices":{"shape":"RecommendationAwsServiceList"},
-        "checkArn":{"shape":"String"},
-        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "createdBy":{"shape":"String"},
-        "description":{"shape":"String"},
         "id":{"shape":"String"},
-        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "lifecycleStage":{"shape":"RecommendationLifecycleStage"},
-        "name":{"shape":"String"},
-        "pillarSpecificAggregates":{"shape":"RecommendationPillarSpecificAggregates"},
-        "pillars":{"shape":"RecommendationPillarList"},
-        "resolvedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "resourcesAggregates":{"shape":"RecommendationResourcesAggregates"},
-        "source":{"shape":"RecommendationSource"},
-        "status":{"shape":"RecommendationStatus"},
         "type":{"shape":"RecommendationType"},
+        "checkArn":{"shape":"String"},
+        "status":{"shape":"RecommendationStatus"},
+        "lifecycleStage":{"shape":"RecommendationLifecycleStage"},
+        "pillars":{"shape":"RecommendationPillarList"},
+        "source":{"shape":"RecommendationSource"},
+        "awsServices":{"shape":"RecommendationAwsServiceList"},
+        "name":{"shape":"String"},
+        "resourcesAggregates":{"shape":"RecommendationResourcesAggregates"},
+        "pillarSpecificAggregates":{"shape":"RecommendationPillarSpecificAggregates"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "arn":{"shape":"OrganizationRecommendationArn"},
+        "description":{"shape":"String"},
+        "createdBy":{"shape":"String"},
+        "updatedOnBehalfOf":{"shape":"String"},
+        "updatedOnBehalfOfJobTitle":{"shape":"String"},
         "updateReason":{"shape":"RecommendationUpdateReason"},
         "updateReasonCode":{"shape":"UpdateRecommendationLifecycleStageReasonCode"},
-        "updatedOnBehalfOf":{"shape":"String"},
-        "updatedOnBehalfOfJobTitle":{"shape":"String"}
+        "resolvedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "OrganizationRecommendationArn":{
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:[\\w-]+:trustedadvisor:::organization-recommendation\\/[\\w-]+$"
+      "pattern":"arn:[\\w-]+:trustedadvisor:::organization-recommendation\\/[\\w-]+"
     },
     "OrganizationRecommendationIdentifier":{
       "type":"string",
       "max":200,
       "min":20,
-      "pattern":"^arn:[\\w-]+:trustedadvisor:::organization-recommendation\\/[\\w-]+$"
+      "pattern":"arn:[\\w-]+:trustedadvisor:::organization-recommendation\\/[\\w-]+"
     },
     "OrganizationRecommendationResourceSummary":{
       "type":"structure",
       "required":[
+        "id",
         "arn",
         "awsResourceId",
-        "id",
-        "lastUpdatedAt",
-        "metadata",
-        "recommendationArn",
         "regionCode",
-        "status"
+        "status",
+        "metadata",
+        "lastUpdatedAt",
+        "recommendationArn"
       ],
       "members":{
-        "accountId":{"shape":"AccountId"},
+        "id":{"shape":"String"},
         "arn":{"shape":"RecommendationResourceArn"},
         "awsResourceId":{"shape":"String"},
-        "exclusionStatus":{"shape":"ExclusionStatus"},
-        "id":{"shape":"String"},
-        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "metadata":{"shape":"StringMap"},
-        "recommendationArn":{"shape":"OrganizationRecommendationArn"},
         "regionCode":{"shape":"RecommendationRegionCode"},
-        "status":{"shape":"ResourceStatus"}
+        "status":{"shape":"ResourceStatus"},
+        "metadata":{"shape":"StringMap"},
+        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "exclusionStatus":{"shape":"ExclusionStatus"},
+        "accountId":{"shape":"AccountId"},
+        "recommendationArn":{"shape":"OrganizationRecommendationArn"}
       }
     },
     "OrganizationRecommendationResourceSummaryList":{
@@ -850,30 +874,30 @@
     "OrganizationRecommendationSummary":{
       "type":"structure",
       "required":[
-        "arn",
         "id",
-        "name",
-        "pillars",
-        "resourcesAggregates",
-        "source",
+        "type",
         "status",
-        "type"
+        "pillars",
+        "source",
+        "name",
+        "resourcesAggregates",
+        "arn"
       ],
       "members":{
-        "arn":{"shape":"OrganizationRecommendationArn"},
-        "awsServices":{"shape":"RecommendationAwsServiceList"},
-        "checkArn":{"shape":"String"},
-        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "id":{"shape":"String"},
-        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "lifecycleStage":{"shape":"RecommendationLifecycleStage"},
-        "name":{"shape":"String"},
-        "pillarSpecificAggregates":{"shape":"RecommendationPillarSpecificAggregates"},
-        "pillars":{"shape":"RecommendationPillarList"},
-        "resourcesAggregates":{"shape":"RecommendationResourcesAggregates"},
-        "source":{"shape":"RecommendationSource"},
+        "type":{"shape":"RecommendationType"},
+        "checkArn":{"shape":"String"},
         "status":{"shape":"RecommendationStatus"},
-        "type":{"shape":"RecommendationType"}
+        "lifecycleStage":{"shape":"RecommendationLifecycleStage"},
+        "pillars":{"shape":"RecommendationPillarList"},
+        "source":{"shape":"RecommendationSource"},
+        "awsServices":{"shape":"RecommendationAwsServiceList"},
+        "name":{"shape":"String"},
+        "resourcesAggregates":{"shape":"RecommendationResourcesAggregates"},
+        "pillarSpecificAggregates":{"shape":"RecommendationPillarSpecificAggregates"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "arn":{"shape":"OrganizationRecommendationArn"}
       }
     },
     "OrganizationRecommendationSummaryList":{
@@ -883,38 +907,39 @@
     "Recommendation":{
       "type":"structure",
       "required":[
-        "arn",
-        "description",
         "id",
-        "name",
-        "pillars",
-        "resourcesAggregates",
-        "source",
+        "type",
         "status",
-        "type"
+        "pillars",
+        "source",
+        "name",
+        "resourcesAggregates",
+        "arn",
+        "description"
       ],
       "members":{
-        "arn":{"shape":"AccountRecommendationArn"},
-        "awsServices":{"shape":"RecommendationAwsServiceList"},
-        "checkArn":{"shape":"String"},
-        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "createdBy":{"shape":"String"},
-        "description":{"shape":"String"},
         "id":{"shape":"String"},
-        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "lifecycleStage":{"shape":"RecommendationLifecycleStage"},
-        "name":{"shape":"String"},
-        "pillarSpecificAggregates":{"shape":"RecommendationPillarSpecificAggregates"},
-        "pillars":{"shape":"RecommendationPillarList"},
-        "resolvedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "resourcesAggregates":{"shape":"RecommendationResourcesAggregates"},
-        "source":{"shape":"RecommendationSource"},
-        "status":{"shape":"RecommendationStatus"},
         "type":{"shape":"RecommendationType"},
+        "checkArn":{"shape":"String"},
+        "status":{"shape":"RecommendationStatus"},
+        "lifecycleStage":{"shape":"RecommendationLifecycleStage"},
+        "pillars":{"shape":"RecommendationPillarList"},
+        "source":{"shape":"RecommendationSource"},
+        "awsServices":{"shape":"RecommendationAwsServiceList"},
+        "name":{"shape":"String"},
+        "resourcesAggregates":{"shape":"RecommendationResourcesAggregates"},
+        "pillarSpecificAggregates":{"shape":"RecommendationPillarSpecificAggregates"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "arn":{"shape":"AccountRecommendationArn"},
+        "statusReason":{"shape":"StatusReason"},
+        "description":{"shape":"String"},
+        "createdBy":{"shape":"String"},
+        "updatedOnBehalfOf":{"shape":"String"},
+        "updatedOnBehalfOfJobTitle":{"shape":"String"},
         "updateReason":{"shape":"RecommendationUpdateReason"},
         "updateReasonCode":{"shape":"UpdateRecommendationLifecycleStageReasonCode"},
-        "updatedOnBehalfOf":{"shape":"String"},
-        "updatedOnBehalfOfJobTitle":{"shape":"String"}
+        "resolvedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "RecommendationAwsService":{
@@ -975,7 +1000,9 @@
     },
     "RecommendationPillarList":{
       "type":"list",
-      "member":{"shape":"RecommendationPillar"}
+      "member":{"shape":"RecommendationPillar"},
+      "max":50,
+      "min":1
     },
     "RecommendationPillarSpecificAggregates":{
       "type":"structure",
@@ -992,7 +1019,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:[\\w-]+:trustedadvisor::\\d{12}:recommendation-resource\\/[\\w-]+\\/[\\w-]+$"
+      "pattern":"arn:[\\w-]+:trustedadvisor::\\d{12}:recommendation-resource\\/[\\w-]+\\/[\\w-]+"
     },
     "RecommendationResourceExclusion":{
       "type":"structure",
@@ -1008,31 +1035,31 @@
     "RecommendationResourceExclusionList":{
       "type":"list",
       "member":{"shape":"RecommendationResourceExclusion"},
-      "max":100,
+      "max":25,
       "min":1
     },
     "RecommendationResourceSummary":{
       "type":"structure",
       "required":[
+        "id",
         "arn",
         "awsResourceId",
-        "id",
-        "lastUpdatedAt",
-        "metadata",
-        "recommendationArn",
         "regionCode",
-        "status"
+        "status",
+        "metadata",
+        "lastUpdatedAt",
+        "recommendationArn"
       ],
       "members":{
+        "id":{"shape":"String"},
         "arn":{"shape":"RecommendationResourceArn"},
         "awsResourceId":{"shape":"String"},
-        "exclusionStatus":{"shape":"ExclusionStatus"},
-        "id":{"shape":"String"},
-        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "metadata":{"shape":"StringMap"},
-        "recommendationArn":{"shape":"AccountRecommendationArn"},
         "regionCode":{"shape":"RecommendationRegionCode"},
-        "status":{"shape":"ResourceStatus"}
+        "status":{"shape":"ResourceStatus"},
+        "metadata":{"shape":"StringMap"},
+        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "exclusionStatus":{"shape":"ExclusionStatus"},
+        "recommendationArn":{"shape":"AccountRecommendationArn"}
       }
     },
     "RecommendationResourceSummaryList":{
@@ -1042,14 +1069,15 @@
     "RecommendationResourcesAggregates":{
       "type":"structure",
       "required":[
-        "errorCount",
         "okCount",
-        "warningCount"
+        "warningCount",
+        "errorCount"
       ],
       "members":{
-        "errorCount":{"shape":"Long"},
         "okCount":{"shape":"Long"},
-        "warningCount":{"shape":"Long"}
+        "warningCount":{"shape":"Long"},
+        "errorCount":{"shape":"Long"},
+        "excludedCount":{"shape":"Long"}
       }
     },
     "RecommendationSource":{
@@ -1067,7 +1095,8 @@
         "security_hub",
         "stir",
         "ta_check",
-        "well_architected"
+        "well_architected",
+        "cost_optimization_hub"
       ]
     },
     "RecommendationStatus":{
@@ -1081,30 +1110,31 @@
     "RecommendationSummary":{
       "type":"structure",
       "required":[
-        "arn",
         "id",
-        "name",
-        "pillars",
-        "resourcesAggregates",
-        "source",
+        "type",
         "status",
-        "type"
+        "pillars",
+        "source",
+        "name",
+        "resourcesAggregates",
+        "arn"
       ],
       "members":{
-        "arn":{"shape":"AccountRecommendationArn"},
-        "awsServices":{"shape":"RecommendationAwsServiceList"},
-        "checkArn":{"shape":"String"},
-        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "id":{"shape":"String"},
-        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "lifecycleStage":{"shape":"RecommendationLifecycleStage"},
-        "name":{"shape":"String"},
-        "pillarSpecificAggregates":{"shape":"RecommendationPillarSpecificAggregates"},
-        "pillars":{"shape":"RecommendationPillarList"},
-        "resourcesAggregates":{"shape":"RecommendationResourcesAggregates"},
-        "source":{"shape":"RecommendationSource"},
+        "type":{"shape":"RecommendationType"},
+        "checkArn":{"shape":"String"},
         "status":{"shape":"RecommendationStatus"},
-        "type":{"shape":"RecommendationType"}
+        "lifecycleStage":{"shape":"RecommendationLifecycleStage"},
+        "pillars":{"shape":"RecommendationPillarList"},
+        "source":{"shape":"RecommendationSource"},
+        "awsServices":{"shape":"RecommendationAwsServiceList"},
+        "name":{"shape":"String"},
+        "resourcesAggregates":{"shape":"RecommendationResourcesAggregates"},
+        "pillarSpecificAggregates":{"shape":"RecommendationPillarSpecificAggregates"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "arn":{"shape":"AccountRecommendationArn"},
+        "statusReason":{"shape":"StatusReason"}
       }
     },
     "RecommendationSummaryList":{
@@ -1122,7 +1152,7 @@
       "type":"string",
       "max":4096,
       "min":10,
-      "pattern":"^[\\s\\S]*$",
+      "pattern":"[\\s\\S]*",
       "sensitive":true
     },
     "ResourceNotFoundException":{
@@ -1144,6 +1174,10 @@
         "warning",
         "error"
       ]
+    },
+    "StatusReason":{
+      "type":"string",
+      "enum":["no_data_ok"]
     },
     "String":{"type":"string"},
     "StringMap":{
@@ -1177,13 +1211,13 @@
       ],
       "members":{
         "lifecycleStage":{"shape":"UpdateRecommendationLifecycleStage"},
+        "updateReason":{"shape":"RecommendationUpdateReason"},
+        "updateReasonCode":{"shape":"UpdateRecommendationLifecycleStageReasonCode"},
         "organizationRecommendationIdentifier":{
           "shape":"OrganizationRecommendationIdentifier",
           "location":"uri",
           "locationName":"organizationRecommendationIdentifier"
-        },
-        "updateReason":{"shape":"RecommendationUpdateReason"},
-        "updateReasonCode":{"shape":"UpdateRecommendationLifecycleStageReasonCode"}
+        }
       }
     },
     "UpdateRecommendationLifecycleRequest":{
@@ -1194,13 +1228,13 @@
       ],
       "members":{
         "lifecycleStage":{"shape":"UpdateRecommendationLifecycleStage"},
+        "updateReason":{"shape":"RecommendationUpdateReason"},
+        "updateReasonCode":{"shape":"UpdateRecommendationLifecycleStageReasonCode"},
         "recommendationIdentifier":{
           "shape":"AccountRecommendationIdentifier",
           "location":"uri",
           "locationName":"recommendationIdentifier"
-        },
-        "updateReason":{"shape":"RecommendationUpdateReason"},
-        "updateReasonCode":{"shape":"UpdateRecommendationLifecycleStageReasonCode"}
+        }
       }
     },
     "UpdateRecommendationLifecycleStage":{

@@ -164,6 +164,8 @@ use Generator;
  * @method \GuzzleHttp\Promise\Promise listTagsLogGroupAsync(array $args = [])
  * @method \Aws\Result putAccountPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putAccountPolicyAsync(array $args = [])
+ * @method \Aws\Result putBearerTokenAuthentication(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putBearerTokenAuthenticationAsync(array $args = [])
  * @method \Aws\Result putDataProtectionPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putDataProtectionPolicyAsync(array $args = [])
  * @method \Aws\Result putDeliveryDestination(array $args = [])
@@ -224,37 +226,6 @@ use Generator;
  * @method \GuzzleHttp\Promise\Promise updateScheduledQueryAsync(array $args = [])
  */
 class CloudWatchLogsClient extends AwsClient {
-    static $streamingCommands = [
-        'StartLiveTail' => true
-    ];
-
-    public function __construct(array $args)
-    {
-        parent::__construct($args);
-        $this->addStreamingFlagMiddleware();
-    }
-
-    private function addStreamingFlagMiddleware()
-    {
-        $this->getHandlerList()
-            -> appendInit(
-                $this->getStreamingFlagMiddleware(),
-                'streaming-flag-middleware'
-            );
-    }
-
-    private function getStreamingFlagMiddleware(): callable
-    {
-        return function (callable $handler) {
-            return function (CommandInterface $command, $request = null) use ($handler) {
-                if (!empty(self::$streamingCommands[$command->getName()])) {
-                    $command['@http']['stream'] = true;
-                }
-
-                return $handler($command, $request);
-            };
-        };
-    }
 
     /**
      * Helper method for 'startLiveTail' operation that checks for results.

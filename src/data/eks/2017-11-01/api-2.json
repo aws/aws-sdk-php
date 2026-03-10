@@ -1038,6 +1038,8 @@
         "WINDOWS_FULL_2019_x86_64",
         "WINDOWS_CORE_2022_x86_64",
         "WINDOWS_FULL_2022_x86_64",
+        "WINDOWS_CORE_2025_x86_64",
+        "WINDOWS_FULL_2025_x86_64",
         "AL2023_x86_64_STANDARD",
         "AL2023_ARM_64_STANDARD",
         "AL2023_x86_64_NEURON",
@@ -2067,7 +2069,8 @@
         },
         "tags":{"shape":"TagMap"},
         "disableSessionTags":{"shape":"BoxedBoolean"},
-        "targetRoleArn":{"shape":"String"}
+        "targetRoleArn":{"shape":"String"},
+        "policy":{"shape":"String"}
       }
     },
     "CreatePodIdentityAssociationResponse":{
@@ -3931,7 +3934,8 @@
         "ownerArn":{"shape":"String"},
         "disableSessionTags":{"shape":"BoxedBoolean"},
         "targetRoleArn":{"shape":"String"},
-        "externalId":{"shape":"String"}
+        "externalId":{"shape":"String"},
+        "policy":{"shape":"String"}
       }
     },
     "PodIdentityAssociationSummaries":{
@@ -4643,7 +4647,8 @@
           "idempotencyToken":true
         },
         "disableSessionTags":{"shape":"BoxedBoolean"},
-        "targetRoleArn":{"shape":"String"}
+        "targetRoleArn":{"shape":"String"},
+        "policy":{"shape":"String"}
       }
     },
     "UpdatePodIdentityAssociationResponse":{
@@ -4693,7 +4698,8 @@
         "AutoModeUpdate",
         "RemoteNetworkConfigUpdate",
         "DeletionProtectionUpdate",
-        "ControlPlaneScalingConfigUpdate"
+        "ControlPlaneScalingConfigUpdate",
+        "VendedLogsUpdate"
       ]
     },
     "UpgradePolicyRequest":{

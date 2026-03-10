@@ -1360,6 +1360,24 @@
         "UseS3ExpressControlEndpoint":{"value":true}
       }
     },
+    "UpdateObjectEncryption":{
+      "name":"UpdateObjectEncryption",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/{Bucket}/{Key+}?encryption"
+      },
+      "input":{"shape":"UpdateObjectEncryptionRequest"},
+      "output":{"shape":"UpdateObjectEncryptionResponse"},
+      "errors":[
+        {"shape":"NoSuchKey"},
+        {"shape":"InvalidRequest"},
+        {"shape":"AccessDenied"}
+      ],
+      "httpChecksum":{
+        "requestAlgorithmMember":"ChecksumAlgorithm",
+        "requestChecksumRequired":true
+      }
+    },
     "UploadPart":{
       "name":"UploadPart",
       "http":{
@@ -1492,6 +1510,13 @@
       "members":{
         "Owner":{"shape":"OwnerOverride"}
       }
+    },
+    "AccessDenied":{
+      "type":"structure",
+      "members":{},
+      "error":{"httpStatusCode":403},
+      "exception":true,
+      "synthetic":true
     },
     "AccessKeyIdValue":{"type":"string"},
     "AccessPointAlias":{
@@ -6737,6 +6762,13 @@
       "error":{"httpStatusCode":404},
       "exception":true
     },
+    "NonEmptyKmsKeyArnString":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[a-zA-Z0-9-]*:kms:[a-z0-9-]+:[0-9]{12}:key/[a-zA-Z0-9-]+",
+      "sensitive":true
+    },
     "NoncurrentVersionExpiration":{
       "type":"structure",
       "members":{
@@ -6838,6 +6870,16 @@
         "bucket-owner-read",
         "bucket-owner-full-control"
       ]
+    },
+    "ObjectEncryption":{
+      "type":"structure",
+      "members":{
+        "SSEKMS":{
+          "shape":"SSEKMSEncryption",
+          "locationName":"SSE-KMS"
+        }
+      },
+      "union":true
     },
     "ObjectIdentifier":{
       "type":"structure",
@@ -9182,6 +9224,15 @@
       },
       "locationName":"SSE-KMS"
     },
+    "SSEKMSEncryption":{
+      "type":"structure",
+      "required":["KMSKeyArn"],
+      "members":{
+        "KMSKeyArn":{"shape":"NonEmptyKmsKeyArnString"},
+        "BucketKeyEnabled":{"shape":"BucketKeyEnabled"}
+      },
+      "locationName":"SSE-KMS"
+    },
     "SSEKMSEncryptionContext":{
       "type":"string",
       "sensitive":true
@@ -9720,6 +9771,68 @@
         }
       },
       "payload":"JournalTableConfiguration"
+    },
+    "UpdateObjectEncryptionRequest":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "Key",
+        "ObjectEncryption"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "contextParam":{"name":"Bucket"},
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "Key":{
+          "shape":"ObjectKey",
+          "location":"uri",
+          "locationName":"Key"
+        },
+        "VersionId":{
+          "shape":"ObjectVersionId",
+          "location":"querystring",
+          "locationName":"versionId"
+        },
+        "ObjectEncryption":{
+          "shape":"ObjectEncryption",
+          "locationName":"ObjectEncryption",
+          "xmlNamespace":{"uri":"http://s3.amazonaws.com/doc/2006-03-01/"}
+        },
+        "RequestPayer":{
+          "shape":"RequestPayer",
+          "location":"header",
+          "locationName":"x-amz-request-payer"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
+        },
+        "ContentMD5":{
+          "shape":"ContentMD5",
+          "location":"header",
+          "locationName":"Content-MD5"
+        },
+        "ChecksumAlgorithm":{
+          "shape":"ChecksumAlgorithm",
+          "location":"header",
+          "locationName":"x-amz-sdk-checksum-algorithm"
+        }
+      },
+      "payload":"ObjectEncryption"
+    },
+    "UpdateObjectEncryptionResponse":{
+      "type":"structure",
+      "members":{
+        "RequestCharged":{
+          "shape":"RequestCharged",
+          "location":"header",
+          "locationName":"x-amz-request-charged"
+        }
+      }
     },
     "UploadIdMarker":{"type":"string"},
     "UploadPartCopyOutput":{

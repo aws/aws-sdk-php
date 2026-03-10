@@ -175,6 +175,46 @@ class SignerTest extends TestCase
         ];
     }
 
+    /**
+     * @dataProvider invalidResourceUrlProvider
+     */
+    public function testValidatesCustomPolicy(string $resourceUrl)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('URL contains invalid characters: ", \\, or control characters');
+        $policy = json_encode([
+            'Statement' => [
+                ['Resource' => $resourceUrl]
+            ]
+        ], JSON_UNESCAPED_SLASHES);
+        $this->instance->getSignature(null, null, $policy);
+    }
+
+    /**
+     * @dataProvider invalidResourceUrlProvider
+     */
+    public function testValidatesInvalidURLs(string $resourceUrl)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('URL contains invalid characters: ", \\, or control characters');
+
+        $expires = time() + 3600;
+        $this->instance->getSignature($resourceUrl, $expires);
+    }
+
+    public static function invalidResourceUrlProvider(): array
+    {
+        return [
+            'json_injection' => ["https://example.com/file\",\"Resource\":\"*\",\"x\":\""],
+            'double_quote' => ['test"invalid.mp4'],
+            'backslash' => ['test\\invalid.mp4'],
+            'newline' => ["test\ninvalid.mp4"],
+            'carriage_return' => ["test\rinvalid.mp4"],
+            'null_byte' => ["test\x00invalid.mp4"],
+            'tab' => ["test\tinvalid.mp4"],
+        ];
+    }
+
     private function getCustomPolicy()
     {
         return json_encode([

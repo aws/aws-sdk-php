@@ -350,6 +350,7 @@
         "executionState":{"shape":"ExecutionState"},
         "executionAction":{"shape":"ExecutionAction"},
         "executionRegion":{"shape":"String"},
+        "recoveryExecutionId":{"shape":"String"},
         "actualRecoveryTime":{"shape":"Duration"}
       }
     },
@@ -510,7 +511,10 @@
       "key":{"shape":"String"},
       "value":{"shape":"AssociatedAlarm"}
     },
-    "AuroraClusterArn":{"type":"string"},
+    "AuroraClusterArn":{
+      "type":"string",
+      "pattern":"arn:aws[a-zA-Z-]*:rds:[a-z0-9-]+:\\d{12}:cluster:[A-Za-z][0-9A-Za-z-:._]*"
+    },
     "AuroraClusterArns":{
       "type":"list",
       "member":{"shape":"AuroraClusterArn"}
@@ -804,7 +808,8 @@
       "type":"string",
       "enum":[
         "activate",
-        "deactivate"
+        "deactivate",
+        "postRecovery"
       ]
     },
     "ExecutionApprovalConfiguration":{
@@ -833,7 +838,9 @@
         "ecsCapacityIncreaseConfig":{"shape":"EcsCapacityIncreaseConfiguration"},
         "eksResourceScalingConfig":{"shape":"EksResourceScalingConfiguration"},
         "route53HealthCheckConfig":{"shape":"Route53HealthCheckConfiguration"},
-        "documentDbConfig":{"shape":"DocumentDbConfiguration"}
+        "documentDbConfig":{"shape":"DocumentDbConfiguration"},
+        "rdsPromoteReadReplicaConfig":{"shape":"RdsPromoteReadReplicaConfiguration"},
+        "rdsCreateCrossRegionReadReplicaConfig":{"shape":"RdsCreateCrossRegionReplicaConfiguration"}
       },
       "union":true
     },
@@ -850,7 +857,9 @@
         "ECSServiceScaling",
         "EKSResourceScaling",
         "Route53HealthCheck",
-        "DocumentDb"
+        "DocumentDb",
+        "RdsPromoteReadReplica",
+        "RdsCreateCrossRegionReplica"
       ]
     },
     "ExecutionComment":{
@@ -1022,6 +1031,7 @@
         "executionState":{"shape":"ExecutionState"},
         "executionAction":{"shape":"ExecutionAction"},
         "executionRegion":{"shape":"String"},
+        "recoveryExecutionId":{"shape":"String"},
         "stepStates":{"shape":"StepStates"},
         "plan":{"shape":"Plan"},
         "actualRecoveryTime":{"shape":"Duration"},
@@ -1100,7 +1110,12 @@
       "type":"string",
       "enum":["failover"]
     },
-    "GlobalClusterIdentifier":{"type":"string"},
+    "GlobalClusterIdentifier":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z][0-9A-Za-z-:._]*"
+    },
     "IamRoleArn":{
       "type":"string",
       "pattern":"arn:aws[a-zA-Z0-9-]*:iam::[0-9]{12}:role/.+"
@@ -1422,12 +1437,55 @@
       "type":"list",
       "member":{"shape":"ResourceWarning"}
     },
+    "RdsCreateCrossRegionReplicaConfiguration":{
+      "type":"structure",
+      "required":["dbInstanceArnMap"],
+      "members":{
+        "timeoutMinutes":{"shape":"RdsCreateCrossRegionReplicaConfigurationTimeoutMinutesInteger"},
+        "crossAccountRole":{"shape":"IamRoleArn"},
+        "externalId":{"shape":"String"},
+        "dbInstanceArnMap":{"shape":"RdsDbInstanceArnMap"}
+      }
+    },
+    "RdsCreateCrossRegionReplicaConfigurationTimeoutMinutesInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "RdsDbInstanceArn":{
+      "type":"string",
+      "pattern":"arn:aws[a-zA-Z-]*:rds:[a-z0-9-]+:\\d{12}:db:[a-zA-Z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*"
+    },
+    "RdsDbInstanceArnMap":{
+      "type":"map",
+      "key":{"shape":"Region"},
+      "value":{"shape":"RdsDbInstanceArn"}
+    },
+    "RdsPromoteReadReplicaConfiguration":{
+      "type":"structure",
+      "required":["dbInstanceArnMap"],
+      "members":{
+        "timeoutMinutes":{"shape":"RdsPromoteReadReplicaConfigurationTimeoutMinutesInteger"},
+        "crossAccountRole":{"shape":"IamRoleArn"},
+        "externalId":{"shape":"String"},
+        "dbInstanceArnMap":{"shape":"RdsDbInstanceArnMap"}
+      }
+    },
+    "RdsPromoteReadReplicaConfigurationTimeoutMinutesInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
     "RecoveryApproach":{
       "type":"string",
       "enum":[
         "activeActive",
         "activePassive"
       ]
+    },
+    "RecoveryExecutionId":{
+      "type":"string",
+      "pattern":"[a-z]{2}(-[a-z]+)+-[0-9]+/[0-9a-fA-F]{16}"
     },
     "Region":{
       "type":"string",
@@ -1457,7 +1515,9 @@
       "type":"string",
       "enum":[
         "activatingRegion",
-        "deactivatingRegion"
+        "deactivatingRegion",
+        "activeRegion",
+        "inactiveRegion"
       ]
     },
     "RegionalScalingResource":{
@@ -1668,7 +1728,8 @@
         "action":{"shape":"ExecutionAction"},
         "mode":{"shape":"ExecutionMode"},
         "comment":{"shape":"ExecutionComment"},
-        "latestVersion":{"shape":"String"}
+        "latestVersion":{"shape":"String"},
+        "recoveryExecutionId":{"shape":"RecoveryExecutionId"}
       }
     },
     "StartPlanExecutionResponse":{
@@ -1921,7 +1982,8 @@
       "type":"string",
       "enum":[
         "activate",
-        "deactivate"
+        "deactivate",
+        "postRecovery"
       ]
     }
   }

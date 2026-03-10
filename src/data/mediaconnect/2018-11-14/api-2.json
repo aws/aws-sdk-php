@@ -2692,6 +2692,10 @@
           "shape":"NdiConfig",
           "locationName":"ndiConfig"
         },
+        "EncodingConfig":{
+          "shape":"EncodingConfig",
+          "locationName":"encodingConfig"
+        },
         "FlowTags":{
           "shape":"__mapOfString",
           "locationName":"flowTags"
@@ -3243,6 +3247,10 @@
         "TransportMediaInfo":{
           "shape":"TransportMediaInfo",
           "locationName":"transportMediaInfo"
+        },
+        "NdiInfo":{
+          "shape":"NdiSourceMetadataInfo",
+          "locationName":"ndiInfo"
         }
       }
     },
@@ -3440,6 +3448,19 @@
         "high"
       ]
     },
+    "EncodingConfig":{
+      "type":"structure",
+      "members":{
+        "EncodingProfile":{
+          "shape":"EncodingProfile",
+          "locationName":"encodingProfile"
+        },
+        "VideoMaxBitrate":{
+          "shape":"Integer",
+          "locationName":"videoMaxBitrate"
+        }
+      }
+    },
     "EncodingName":{
       "type":"string",
       "enum":[
@@ -3482,6 +3503,13 @@
           "locationName":"encoderProfile"
         }
       }
+    },
+    "EncodingProfile":{
+      "type":"string",
+      "enum":[
+        "DISTRIBUTION_H264_DEFAULT",
+        "CONTRIBUTION_H264_DEFAULT"
+      ]
     },
     "Encryption":{
       "type":"structure",
@@ -3773,6 +3801,10 @@
         "NdiConfig":{
           "shape":"NdiConfig",
           "locationName":"ndiConfig"
+        },
+        "EncodingConfig":{
+          "shape":"EncodingConfig",
+          "locationName":"encodingConfig"
         }
       }
     },
@@ -3788,7 +3820,8 @@
       "type":"string",
       "enum":[
         "MEDIUM",
-        "LARGE"
+        "LARGE",
+        "LARGE_4X"
       ]
     },
     "FlowSourceArn":{
@@ -5677,6 +5710,103 @@
         }
       }
     },
+    "NdiMediaInfo":{
+      "type":"structure",
+      "required":["Streams"],
+      "members":{
+        "Streams":{
+          "shape":"__listOfNdiMediaStreamInfo",
+          "locationName":"streams"
+        }
+      }
+    },
+    "NdiMediaStreamInfo":{
+      "type":"structure",
+      "required":[
+        "StreamType",
+        "Codec",
+        "StreamId"
+      ],
+      "members":{
+        "StreamType":{
+          "shape":"String",
+          "locationName":"streamType"
+        },
+        "Codec":{
+          "shape":"String",
+          "locationName":"codec"
+        },
+        "StreamId":{
+          "shape":"Integer",
+          "locationName":"streamId"
+        },
+        "ScanMode":{
+          "shape":"ScanMode",
+          "locationName":"scanMode"
+        },
+        "FrameResolution":{
+          "shape":"FrameResolution",
+          "locationName":"frameResolution"
+        },
+        "FrameRate":{
+          "shape":"String",
+          "locationName":"frameRate"
+        },
+        "Channels":{
+          "shape":"Integer",
+          "locationName":"channels"
+        },
+        "SampleRate":{
+          "shape":"Integer",
+          "locationName":"sampleRate"
+        }
+      }
+    },
+    "NdiSourceInfo":{
+      "type":"structure",
+      "required":["SourceName"],
+      "members":{
+        "SourceName":{
+          "shape":"String",
+          "locationName":"sourceName"
+        }
+      }
+    },
+    "NdiSourceMetadataInfo":{
+      "type":"structure",
+      "required":[
+        "DiscoveredSources",
+        "MediaInfo",
+        "Messages"
+      ],
+      "members":{
+        "ActiveSource":{
+          "shape":"NdiSourceInfo",
+          "locationName":"activeSource"
+        },
+        "DiscoveredSources":{
+          "shape":"__listOfNdiSourceInfo",
+          "locationName":"discoveredSources"
+        },
+        "MediaInfo":{
+          "shape":"NdiMediaInfo",
+          "locationName":"mediaInfo"
+        },
+        "Messages":{
+          "shape":"__listOfMessageDetail",
+          "locationName":"messages"
+        }
+      }
+    },
+    "NdiSourceSettings":{
+      "type":"structure",
+      "members":{
+        "SourceName":{
+          "shape":"String",
+          "locationName":"sourceName"
+        }
+      }
+    },
     "NdiState":{
       "type":"string",
       "enum":[
@@ -7500,6 +7630,10 @@
           "shape":"SetGatewayBridgeSourceRequest",
           "locationName":"gatewayBridgeSource"
         },
+        "NdiSourceSettings":{
+          "shape":"NdiSourceSettings",
+          "locationName":"ndiSourceSettings"
+        },
         "SourceTags":{
           "shape":"__mapOfString",
           "locationName":"sourceTags"
@@ -8308,6 +8442,10 @@
         "NdiProgramName":{
           "shape":"String",
           "locationName":"ndiProgramName"
+        },
+        "NdiSourceSettings":{
+          "shape":"NdiSourceSettings",
+          "locationName":"ndiSourceSettings"
         }
       }
     },
@@ -8984,6 +9122,10 @@
         "FlowSize":{
           "shape":"FlowSize",
           "locationName":"flowSize"
+        },
+        "EncodingConfig":{
+          "shape":"EncodingConfig",
+          "locationName":"encodingConfig"
         }
       }
     },
@@ -9088,6 +9230,10 @@
         "GatewayBridgeSource":{
           "shape":"UpdateGatewayBridgeSourceRequest",
           "locationName":"gatewayBridgeSource"
+        },
+        "NdiSourceSettings":{
+          "shape":"NdiSourceSettings",
+          "locationName":"ndiSourceSettings"
         },
         "RouterIntegrationState":{
           "shape":"State",
@@ -9587,6 +9733,14 @@
     "__listOfNdiDiscoveryServerConfig":{
       "type":"list",
       "member":{"shape":"NdiDiscoveryServerConfig"}
+    },
+    "__listOfNdiMediaStreamInfo":{
+      "type":"list",
+      "member":{"shape":"NdiMediaStreamInfo"}
+    },
+    "__listOfNdiSourceInfo":{
+      "type":"list",
+      "member":{"shape":"NdiSourceInfo"}
     },
     "__listOfOffering":{
       "type":"list",

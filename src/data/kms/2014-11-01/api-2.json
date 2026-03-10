@@ -1343,7 +1343,6 @@
     "DateType":{"type":"timestamp"},
     "DecryptRequest":{
       "type":"structure",
-      "required":["CiphertextBlob"],
       "members":{
         "CiphertextBlob":{"shape":"CiphertextType"},
         "EncryptionContext":{"shape":"EncryptionContextType"},
@@ -1351,7 +1350,8 @@
         "KeyId":{"shape":"KeyIdType"},
         "EncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"},
         "Recipient":{"shape":"RecipientInfo"},
-        "DryRun":{"shape":"NullableBooleanType"}
+        "DryRun":{"shape":"NullableBooleanType"},
+        "DryRunModifiers":{"shape":"DryRunModifierList"}
       }
     },
     "DecryptResponse":{
@@ -1498,6 +1498,14 @@
     "DisconnectCustomKeyStoreResponse":{
       "type":"structure",
       "members":{}
+    },
+    "DryRunModifierList":{
+      "type":"list",
+      "member":{"shape":"DryRunModifierType"}
+    },
+    "DryRunModifierType":{
+      "type":"string",
+      "enum":["IGNORE_CIPHERTEXT"]
     },
     "DryRunOperationException":{
       "type":"structure",
@@ -2417,10 +2425,7 @@
     },
     "ReEncryptRequest":{
       "type":"structure",
-      "required":[
-        "CiphertextBlob",
-        "DestinationKeyId"
-      ],
+      "required":["DestinationKeyId"],
       "members":{
         "CiphertextBlob":{"shape":"CiphertextType"},
         "SourceEncryptionContext":{"shape":"EncryptionContextType"},
@@ -2430,7 +2435,8 @@
         "SourceEncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"},
         "DestinationEncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"},
         "GrantTokens":{"shape":"GrantTokenList"},
-        "DryRun":{"shape":"NullableBooleanType"}
+        "DryRun":{"shape":"NullableBooleanType"},
+        "DryRunModifiers":{"shape":"DryRunModifierList"}
       }
     },
     "ReEncryptResponse":{

@@ -447,6 +447,26 @@
       ],
       "readonly":true
     },
+    "GetOpentdfConfig":{
+      "name":"GetOpentdfConfig",
+      "http":{
+        "method":"GET",
+        "requestUri":"/networks/{networkId}/tdf",
+        "responseCode":200
+      },
+      "input":{"shape":"GetOpentdfConfigRequest"},
+      "output":{"shape":"GetOpentdfConfigResponse"},
+      "errors":[
+        {"shape":"ValidationError"},
+        {"shape":"BadRequestError"},
+        {"shape":"ResourceNotFoundError"},
+        {"shape":"ForbiddenError"},
+        {"shape":"UnauthorizedError"},
+        {"shape":"InternalServerError"},
+        {"shape":"RateLimitError"}
+      ],
+      "readonly":true
+    },
     "GetSecurityGroup":{
       "name":"GetSecurityGroup",
       "http":{
@@ -694,6 +714,25 @@
       },
       "input":{"shape":"RegisterOidcConfigTestRequest"},
       "output":{"shape":"RegisterOidcConfigTestResponse"},
+      "errors":[
+        {"shape":"ValidationError"},
+        {"shape":"BadRequestError"},
+        {"shape":"ResourceNotFoundError"},
+        {"shape":"ForbiddenError"},
+        {"shape":"UnauthorizedError"},
+        {"shape":"InternalServerError"},
+        {"shape":"RateLimitError"}
+      ]
+    },
+    "RegisterOpentdfConfig":{
+      "name":"RegisterOpentdfConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/networks/{networkId}/tdf",
+        "responseCode":200
+      },
+      "input":{"shape":"RegisterOpentdfConfigRequest"},
+      "output":{"shape":"RegisterOpentdfConfigResponse"},
       "errors":[
         {"shape":"ValidationError"},
         {"shape":"BadRequestError"},
@@ -1680,6 +1719,32 @@
         "tokenInfo":{"shape":"OidcTokenInfo"}
       }
     },
+    "GetOpentdfConfigRequest":{
+      "type":"structure",
+      "required":["networkId"],
+      "members":{
+        "networkId":{
+          "shape":"NetworkId",
+          "location":"uri",
+          "locationName":"networkId"
+        }
+      }
+    },
+    "GetOpentdfConfigResponse":{
+      "type":"structure",
+      "required":[
+        "clientId",
+        "domain",
+        "clientSecret",
+        "provider"
+      ],
+      "members":{
+        "clientId":{"shape":"GenericString"},
+        "domain":{"shape":"GenericString"},
+        "clientSecret":{"shape":"SensitiveString"},
+        "provider":{"shape":"GenericString"}
+      }
+    },
     "GetSecurityGroupRequest":{
       "type":"structure",
       "required":[
@@ -2250,7 +2315,8 @@
       "members":{
         "enableClientMetrics":{"shape":"Boolean"},
         "readReceiptConfig":{"shape":"ReadReceiptConfig"},
-        "dataRetention":{"shape":"Boolean"}
+        "dataRetention":{"shape":"Boolean"},
+        "enableTrustedDataFormat":{"shape":"Boolean"}
       }
     },
     "OidcConfigInfo":{
@@ -2429,6 +2495,47 @@
         "revocationEndpoint":{"shape":"GenericString"},
         "tokenEndpointAuthMethodsSupported":{"shape":"StringList"},
         "microsoftMultiRefreshToken":{"shape":"Boolean"}
+      }
+    },
+    "RegisterOpentdfConfigRequest":{
+      "type":"structure",
+      "required":[
+        "networkId",
+        "clientId",
+        "clientSecret",
+        "domain",
+        "provider"
+      ],
+      "members":{
+        "networkId":{
+          "shape":"NetworkId",
+          "location":"uri",
+          "locationName":"networkId"
+        },
+        "clientId":{"shape":"GenericString"},
+        "clientSecret":{"shape":"SensitiveString"},
+        "domain":{"shape":"GenericString"},
+        "provider":{"shape":"GenericString"},
+        "dryRun":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"dryRun"
+        }
+      }
+    },
+    "RegisterOpentdfConfigResponse":{
+      "type":"structure",
+      "required":[
+        "clientId",
+        "domain",
+        "clientSecret",
+        "provider"
+      ],
+      "members":{
+        "clientId":{"shape":"GenericString"},
+        "domain":{"shape":"GenericString"},
+        "clientSecret":{"shape":"SensitiveString"},
+        "provider":{"shape":"GenericString"}
       }
     },
     "ResourceNotFoundError":{
@@ -2851,7 +2958,8 @@
     "ValidationError":{
       "type":"structure",
       "members":{
-        "reasons":{"shape":"ErrorDetailList"}
+        "reasons":{"shape":"ErrorDetailList"},
+        "message":{"shape":"GenericString"}
       },
       "error":{
         "httpStatusCode":422,
