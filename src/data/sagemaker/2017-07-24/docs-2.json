@@ -202,6 +202,7 @@
     "DescribeSubscribedWorkteam": "<p>Gets information about a work team provided by a vendor. It returns details about the subscription with a vendor in the Amazon Web Services Marketplace.</p>",
     "DescribeTrainingJob": "<p>Returns information about a training job. </p> <p>Some of the attributes below only appear if the training job successfully starts. If the training job fails, <code>TrainingJobStatus</code> is <code>Failed</code> and, depending on the <code>FailureReason</code>, attributes like <code>TrainingStartTime</code>, <code>TrainingTimeInSeconds</code>, <code>TrainingEndTime</code>, and <code>BillableTimeInSeconds</code> may not be present in the response.</p>",
     "DescribeTrainingPlan": "<p>Retrieves detailed information about a specific training plan.</p>",
+    "DescribeTrainingPlanExtensionHistory": "<p>Retrieves the extension history for a specified training plan. The response includes details about each extension, such as the offering ID, start and end dates, status, payment status, and cost information.</p>",
     "DescribeTransformJob": "<p>Returns information about a transform job.</p>",
     "DescribeTrial": "<p>Provides a list of a trial's properties.</p>",
     "DescribeTrialComponent": "<p>Provides a list of a trials component's properties.</p>",
@@ -212,6 +213,7 @@
     "DisableSagemakerServicecatalogPortfolio": "<p>Disables using Service Catalog in SageMaker. Service Catalog is used to create SageMaker projects.</p>",
     "DisassociateTrialComponent": "<p>Disassociates a trial component from a trial. This doesn't effect other trials the component is associated with. Before you can delete a component, you must disassociate the component from all trials it is associated with. To associate a trial component with a trial, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AssociateTrialComponent.html\">AssociateTrialComponent</a> API.</p> <p>To get a list of the trials a component is associated with, use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API. Specify <code>ExperimentTrialComponent</code> for the <code>Resource</code> parameter. The list appears in the response under <code>Results.TrialComponent.Parents</code>.</p>",
     "EnableSagemakerServicecatalogPortfolio": "<p>Enables using Service Catalog in SageMaker. Service Catalog is used to create SageMaker projects.</p>",
+    "ExtendTrainingPlan": "<p>Extends an existing training plan by purchasing an extension offering. This allows you to add additional compute capacity time to your training plan without creating a new plan or reconfiguring your workloads.</p> <p>To find available extension offerings, use the <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_SearchTrainingPlanOfferings.html\">SearchTrainingPlanOfferings</a> </code> API with the <code>TrainingPlanArn</code> parameter.</p> <p>To view the history of extensions for a training plan, use the <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeTrainingPlanExtensionHistory.html\">DescribeTrainingPlanExtensionHistory</a> </code> API.</p>",
     "GetDeviceFleetReport": "<p>Describes a fleet.</p>",
     "GetLineageGroupPolicy": "<p>The resource policy for the lineage group.</p>",
     "GetModelPackageGroupPolicy": "<p>Gets a resource policy that manages access for a model group. For information about resource policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_identity-vs-resource.html\">Identity-based policies and resource-based policies</a> in the <i>Amazon Web Services Identity and Access Management User Guide.</i>.</p>",
@@ -1630,6 +1632,12 @@
         "ReservedCapacityOffering$AvailabilityZone": "<p>The availability zone for the reserved capacity offering.</p>",
         "ReservedCapacitySummary$AvailabilityZone": "<p>The availability zone for the reserved capacity.</p>",
         "UltraServer$AvailabilityZone": "<p>The name of the Availability Zone where the UltraServer is provisioned.</p>"
+      }
+    },
+    "AvailabilityZoneId": {
+      "base": null,
+      "refs": {
+        "TrainingPlanExtension$AvailabilityZoneId": "<p>The Availability Zone ID of the extension.</p>"
       }
     },
     "AvailableInstanceCount": {
@@ -4482,6 +4490,8 @@
       "base": null,
       "refs": {
         "DescribeTrainingPlanResponse$CurrencyCode": "<p>The currency code for the upfront fee (e.g., USD).</p>",
+        "TrainingPlanExtension$CurrencyCode": "<p>The currency code for the upfront fee (e.g., USD).</p>",
+        "TrainingPlanExtensionOffering$CurrencyCode": "<p>The currency code for the upfront fee (e.g., USD).</p>",
         "TrainingPlanOffering$CurrencyCode": "<p>The currency code for the upfront fee (e.g., USD).</p>",
         "TrainingPlanSummary$CurrencyCode": "<p>The currency code for the upfront fee (e.g., USD).</p>"
       }
@@ -5675,6 +5685,14 @@
       "refs": {}
     },
     "DescribeTrainingJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTrainingPlanExtensionHistoryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTrainingPlanExtensionHistoryResponse": {
       "base": null,
       "refs": {}
     },
@@ -7166,6 +7184,14 @@
         "DescribeEndpointConfigOutput$ExplainerConfig": "<p>The configuration parameters for an explainer.</p>",
         "DescribeEndpointOutput$ExplainerConfig": "<p>The configuration parameters for an explainer.</p>"
       }
+    },
+    "ExtendTrainingPlanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ExtendTrainingPlanResponse": {
+      "base": null,
+      "refs": {}
     },
     "FSxLustreConfig": {
       "base": "<p>Configuration settings for an Amazon FSx for Lustre file system to be used with the cluster.</p>",
@@ -10904,6 +10930,7 @@
       "base": null,
       "refs": {
         "CreateHubContentPresignedUrlsRequest$MaxResults": "<p>The maximum number of presigned URLs to return in the response. Default value is 100. Large models may contain hundreds of files, requiring pagination to retrieve all URLs.</p>",
+        "DescribeTrainingPlanExtensionHistoryRequest$MaxResults": "<p>The maximum number of extensions to return in the response.</p>",
         "ListActionsRequest$MaxResults": "<p>The maximum number of actions to return in the response. The default value is 10.</p>",
         "ListAlgorithmsInput$MaxResults": "<p>The maximum number of algorithms to return in the response.</p>",
         "ListAliasesRequest$MaxResults": "<p>The maximum number of aliases to return.</p>",
@@ -12735,6 +12762,8 @@
         "DescribeEdgeDeploymentPlanResponse$NextToken": "<p>Token to use when calling the next set of stages in the edge deployment plan.</p>",
         "DescribeFeatureGroupRequest$NextToken": "<p>A token to resume pagination of the list of <code>Features</code> (<code>FeatureDefinitions</code>). 2,500 <code>Features</code> are returned by default.</p>",
         "DescribeFeatureGroupResponse$NextToken": "<p>A token to resume pagination of the list of <code>Features</code> (<code>FeatureDefinitions</code>).</p>",
+        "DescribeTrainingPlanExtensionHistoryRequest$NextToken": "<p>A token to continue pagination if more results are available.</p>",
+        "DescribeTrainingPlanExtensionHistoryResponse$NextToken": "<p>A token to continue pagination if more results are available.</p>",
         "ListActionsRequest$NextToken": "<p>If the previous call to <code>ListActions</code> didn't return the full set of actions, the call returns a token for getting the next set of actions.</p>",
         "ListActionsResponse$NextToken": "<p>A token for getting the next set of actions, if there are any.</p>",
         "ListAlgorithmsInput$NextToken": "<p>If the response to a previous <code>ListAlgorithms</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of algorithms, use the token in the next request.</p>",
@@ -16955,6 +16984,7 @@
         "S3ModelDataSource$ManifestEtag": "<p>The ETag associated with Manifest S3 URI.</p>",
         "ScheduleConfig$DataAnalysisStartTime": "<p>Sets the start time for a monitoring job window. Express this time as an offset to the times that you schedule your monitoring jobs to run. You schedule monitoring jobs with the <code>ScheduleExpression</code> parameter. Specify this offset in ISO 8601 duration format. For example, if you want to monitor the five hours of data in your dataset that precede the start of each monitoring job, you would specify: <code>\"-PT5H\"</code>.</p> <p>The start time that you specify must not precede the end time that you specify by more than 24 hours. You specify the end time with the <code>DataAnalysisEndTime</code> parameter.</p> <p>If you set <code>ScheduleExpression</code> to <code>NOW</code>, this parameter is required.</p>",
         "ScheduleConfig$DataAnalysisEndTime": "<p>Sets the end time for a monitoring job window. Express this time as an offset to the times that you schedule your monitoring jobs to run. You schedule monitoring jobs with the <code>ScheduleExpression</code> parameter. Specify this offset in ISO 8601 duration format. For example, if you want to end the window one hour before the start of each monitoring job, you would specify: <code>\"-PT1H\"</code>.</p> <p>The end time that you specify must not follow the start time that you specify by more than 24 hours. You specify the start time with the <code>DataAnalysisStartTime</code> parameter.</p> <p>If you set <code>ScheduleExpression</code> to <code>NOW</code>, this parameter is required.</p>",
+        "SearchTrainingPlanOfferingsRequest$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of an existing training plan to search for extension offerings. When specified, the API returns extension offerings that can be used to extend the specified training plan.</p>",
         "SourceAlgorithm$ModelDataETag": "<p>The ETag associated with Model Data URL.</p>",
         "SubscribedWorkteam$SellerName": "<p>The name of the vendor in the Amazon Marketplace.</p>",
         "SubscribedWorkteam$ListingId": "<p>Marketplace product listing ID.</p>",
@@ -17072,6 +17102,12 @@
         "RegisterModelStepMetadata$Arn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
         "SelectedStep$StepName": "<p>The name of the pipeline step.</p>",
         "SendPipelineExecutionStepFailureRequest$FailureReason": "<p>A message describing why the step failed.</p>",
+        "TrainingPlanExtension$Status": "<p>The current status of the extension (e.g., Pending, Active, Scheduled, Failed, Expired).</p>",
+        "TrainingPlanExtension$PaymentStatus": "<p>The payment processing status of the extension.</p>",
+        "TrainingPlanExtension$AvailabilityZone": "<p>The Availability Zone of the extension.</p>",
+        "TrainingPlanExtension$UpfrontFee": "<p>The upfront fee for the extension.</p>",
+        "TrainingPlanExtensionOffering$AvailabilityZone": "<p>The Availability Zone for this extension offering.</p>",
+        "TrainingPlanExtensionOffering$UpfrontFee": "<p>The upfront fee for this extension offering.</p>",
         "TrainingPlanOffering$UpfrontFee": "<p>The upfront fee for this training plan offering.</p>",
         "TrainingPlanSummary$UpfrontFee": "<p>The upfront fee for the training plan.</p>"
       }
@@ -18075,6 +18111,8 @@
         "QueryFilters$ModifiedAfter": "<p>Filter the lineage entities connected to the <code>StartArn</code>(s) after the last modified date.</p>",
         "ReservedCapacityOffering$StartTime": "<p>The start time of the reserved capacity offering.</p>",
         "ReservedCapacityOffering$EndTime": "<p>The end time of the reserved capacity offering.</p>",
+        "ReservedCapacityOffering$ExtensionStartTime": "<p>The start time of the extension for the reserved capacity offering.</p>",
+        "ReservedCapacityOffering$ExtensionEndTime": "<p>The end time of the extension for the reserved capacity offering.</p>",
         "ReservedCapacitySummary$StartTime": "<p>The start time of the reserved capacity.</p>",
         "ReservedCapacitySummary$EndTime": "<p>The end time of the reserved capacity.</p>",
         "ResourceCatalog$CreationTime": "<p> The time the <code>ResourceCatalog</code> was created. </p>",
@@ -18093,6 +18131,11 @@
         "TrainingJobSummary$CreationTime": "<p>A timestamp that shows when the training job was created.</p>",
         "TrainingJobSummary$TrainingEndTime": "<p>A timestamp that shows when the training job ended. This field is set only if the training job has one of the terminal statuses (<code>Completed</code>, <code>Failed</code>, or <code>Stopped</code>). </p>",
         "TrainingJobSummary$LastModifiedTime": "<p> Timestamp when the training job was last modified. </p>",
+        "TrainingPlanExtension$ExtendedAt": "<p>The timestamp when the extension was created.</p>",
+        "TrainingPlanExtension$StartDate": "<p>The start date of the extension period.</p>",
+        "TrainingPlanExtension$EndDate": "<p>The end date of the extension period.</p>",
+        "TrainingPlanExtensionOffering$StartDate": "<p>The start date of this extension offering.</p>",
+        "TrainingPlanExtensionOffering$EndDate": "<p>The end date of this extension offering.</p>",
         "TrainingPlanOffering$RequestedStartTimeAfter": "<p>The requested start time that the user specified when searching for the training plan offering.</p>",
         "TrainingPlanOffering$RequestedEndTimeBefore": "<p>The requested end time that the user specified when searching for the training plan offering.</p>",
         "TrainingPlanSummary$StartTime": "<p>The start time of the training plan.</p>",
@@ -18464,6 +18507,7 @@
         "ClusterRestrictedInstanceGroupDetails$TrainingPlanArn": "<p>The Amazon Resource Name (ARN) of the training plan to filter clusters by. For more information about reserving GPU capacity for your SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
         "ClusterRestrictedInstanceGroupSpecification$TrainingPlanArn": "<p>The Amazon Resource Name (ARN) of the training plan to filter clusters by. For more information about reserving GPU capacity for your SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
         "CreateTrainingPlanResponse$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the created training plan.</p>",
+        "DescribeTrainingPlanExtensionHistoryRequest$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the training plan to retrieve extension history for.</p>",
         "DescribeTrainingPlanResponse$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the training plan.</p>",
         "ListClustersRequest$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the training plan to filter clusters by. For more information about reserving GPU capacity for your SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
         "ListTrainingJobsRequest$TrainingPlanArnEquals": "<p>The Amazon Resource Name (ARN); of the training plan to filter training jobs by. For more information about reserving GPU capacity for your SageMaker training jobs using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
@@ -18499,6 +18543,46 @@
         "DescribeTrainingPlanResponse$DurationMinutes": "<p>The additional minutes beyond whole hours in the total duration for this training plan.</p>",
         "TrainingPlanOffering$DurationMinutes": "<p>The additional minutes beyond whole hours in the total duration for this training plan offering.</p>",
         "TrainingPlanSummary$DurationMinutes": "<p>The additional minutes beyond whole hours in the total duration for this training plan.</p>"
+      }
+    },
+    "TrainingPlanExtension": {
+      "base": "<p>Details about an extension to a training plan, including the offering ID, dates, status, and cost information.</p>",
+      "refs": {
+        "TrainingPlanExtensions$member": null
+      }
+    },
+    "TrainingPlanExtensionDurationHours": {
+      "base": null,
+      "refs": {
+        "TrainingPlanExtension$DurationHours": "<p>The duration of the extension in hours.</p>",
+        "TrainingPlanExtensionOffering$DurationHours": "<p>The duration of this extension offering in hours.</p>"
+      }
+    },
+    "TrainingPlanExtensionOffering": {
+      "base": "<p>Details about an available extension offering for a training plan. Use the offering ID with the <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ExtendTrainingPlan.html\">ExtendTrainingPlan</a> </code> API to extend a training plan.</p>",
+      "refs": {
+        "TrainingPlanExtensionOfferings$member": null
+      }
+    },
+    "TrainingPlanExtensionOfferingId": {
+      "base": null,
+      "refs": {
+        "ExtendTrainingPlanRequest$TrainingPlanExtensionOfferingId": "<p>The unique identifier of the extension offering to purchase. You can retrieve this ID from the <code>TrainingPlanExtensionOfferings</code> in the response of the <code>SearchTrainingPlanOfferings</code> API.</p>",
+        "TrainingPlanExtension$TrainingPlanExtensionOfferingId": "<p>The unique identifier of the extension offering that was used to create this extension.</p>",
+        "TrainingPlanExtensionOffering$TrainingPlanExtensionOfferingId": "<p>The unique identifier for this extension offering.</p>"
+      }
+    },
+    "TrainingPlanExtensionOfferings": {
+      "base": null,
+      "refs": {
+        "SearchTrainingPlanOfferingsResponse$TrainingPlanExtensionOfferings": "<p>A list of extension offerings available for the specified training plan. These offerings can be used with the <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ExtendTrainingPlan.html\">ExtendTrainingPlan</a> </code> API to extend an existing training plan.</p>"
+      }
+    },
+    "TrainingPlanExtensions": {
+      "base": null,
+      "refs": {
+        "DescribeTrainingPlanExtensionHistoryResponse$TrainingPlanExtensions": "<p>A list of extensions for the specified training plan.</p>",
+        "ExtendTrainingPlanResponse$TrainingPlanExtensions": "<p>The list of extensions for the training plan, including the newly created extension.</p>"
       }
     },
     "TrainingPlanFilter": {

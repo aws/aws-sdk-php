@@ -1,0 +1,206 @@
+{
+  "version": "2.0",
+  "service": "<p>Amazon SimpleDB is a web service providing the core database functions of data indexing and querying in the cloud. By offloading the time and effort associated with building and operating a web-scale database, SimpleDB provides developers the freedom to focus on application development.</p> <pre><code> A traditional, clustered relational database requires a sizable upfront capital outlay, is complex to design, and often requires extensive and repetitive database administration. Amazon SimpleDB is dramatically simpler, requiring no schema, automatically indexing your data and providing a simple API for storage and access. This approach eliminates the administrative burden of data modeling, index maintenance, and performance tuning. Developers gain access to this functionality within Amazon's proven computing environment, are able to scale instantly, and pay only for what they use. </code></pre>",
+  "operations": {
+    "GetExport": "<p>Returns information for an existing domain export.</p>",
+    "ListExports": "<p>Lists all exports that were created. The results are paginated and can be filtered by domain name.</p>",
+    "StartDomainExport": "<p>Initiates the export of a SimpleDB domain to an S3 bucket.</p>"
+  },
+  "shapes": {
+    "AwsAccountId": {
+      "base": null,
+      "refs": {
+        "GetExportResponse$s3BucketOwner": "<p>The S3 bucket owner account ID for this export.</p>",
+        "StartDomainExportRequest$s3BucketOwner": "<p>The ID of the AWS account that owns the bucket the export will be stored in.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>Indicates a conflict with one or more parameters of the request.</p>",
+      "refs": {}
+    },
+    "DomainName": {
+      "base": "<p>The domain name that uniquely identifies a SimpleDB domain within your account.</p>",
+      "refs": {
+        "ExportSummary$domainName": "<p>The name of the domain for which the export was created.</p>",
+        "GetExportResponse$domainName": "<p>The name of the domain that was exported.</p>",
+        "ListExportsRequest$domainName": "<p>The name of the domain to filter exports. If not provided, exports for all the domains will be listed.</p>",
+        "StartDomainExportRequest$domainName": "<p>The name of the domain to export.</p>"
+      }
+    },
+    "ExportArn": {
+      "base": "<p>A unique ARN identifier for the export.</p>",
+      "refs": {
+        "ExportSummary$exportArn": "<p>Unique ARN identifier of the export.</p>",
+        "GetExportRequest$exportArn": "<p>Unique ARN identifier of the export.</p>",
+        "GetExportResponse$exportArn": "<p>Unique ARN identifier of the export.</p>",
+        "StartDomainExportResponse$exportArn": "<p>Unique ARN identifier of the export.</p>"
+      }
+    },
+    "ExportDataCutoffTime": {
+      "base": null,
+      "refs": {
+        "GetExportResponse$exportDataCutoffTime": "<p>The timestamp indicating the cutoff point for data inclusion in the export. All data inserted or modified before this time will be present in the exported data. Data insertions or modifications after this timestamp may or may not be present in the export.</p>"
+      }
+    },
+    "ExportManifestSummary": {
+      "base": null,
+      "refs": {
+        "GetExportResponse$exportManifest": "<p>The name of the manifest summary file for the export.</p>"
+      }
+    },
+    "ExportStatus": {
+      "base": "<p>The current state of the export. Current possible values include : PENDING - export request received, IN_PROGRESS - export is being processed, SUCCEEDED - export completed successfully, and FAILED - export encountered an error.</p>",
+      "refs": {
+        "ExportSummary$exportStatus": "<p>The current state of the export. Current possible values include : PENDING - export request received, IN_PROGRESS - export is being processed, SUCCEEDED - export completed successfully, and FAILED - export encountered an error.</p>",
+        "GetExportResponse$exportStatus": "<p>The current state of the export. Current possible values include : PENDING - export request received, IN_PROGRESS - export is being processed, SUCCEEDED - export completed successfully, and FAILED - export encountered an error.</p>"
+      }
+    },
+    "ExportSummaries": {
+      "base": "<p>List of export summaries containing export ARN, status, creation timestamp, and associated domain name.</p>",
+      "refs": {
+        "ListExportsResponse$exportSummaries": "<p>List of export summaries containing export ARN, status, request timestamp, and associated domain name.</p>"
+      }
+    },
+    "ExportSummary": {
+      "base": "<p>Summary information about an export, including its unique identifier, current status, creation time, and the domain being exported.</p>",
+      "refs": {
+        "ExportSummaries$member": null
+      }
+    },
+    "FailureCode": {
+      "base": null,
+      "refs": {
+        "GetExportResponse$failureCode": "<p>Failure code for the result of the failed export.</p>"
+      }
+    },
+    "FailureMessage": {
+      "base": null,
+      "refs": {
+        "GetExportResponse$failureMessage": "<p>Export failure reason description.</p>"
+      }
+    },
+    "GetExportRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetExportResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "IdempotencyToken": {
+      "base": null,
+      "refs": {
+        "GetExportResponse$clientToken": "<p>The client token provided for this export.</p>",
+        "StartDomainExportRequest$clientToken": "<p>Providing a ClientToken makes the call to StartDomainExport API idempotent, meaning that multiple identical calls have the same effect as one single call. A client token is valid for 8 hours after the first request that uses it is completed. After 8 hours, any request with the same client token is treated as a new request. Do not resubmit the same request with the same client token for more than 8 hours, or the result might not be idempotent. If you submit a request with the same client token but a change in other parameters within the 8-hour idempotency window, a ConflictException will be returned.</p>",
+        "StartDomainExportResponse$clientToken": "<p>The client token that was provided in the request.</p>"
+      }
+    },
+    "InvalidNextTokenException": {
+      "base": "<p>The specified next token is not valid.</p>",
+      "refs": {}
+    },
+    "InvalidParameterCombinationException": {
+      "base": "<p>Parameters that must not be used together were used together in the request.</p>",
+      "refs": {}
+    },
+    "InvalidParameterValueException": {
+      "base": "<p>The specified parameter value is not valid.</p>",
+      "refs": {}
+    },
+    "ItemsCount": {
+      "base": null,
+      "refs": {
+        "GetExportResponse$itemsCount": "<p>Total number of exported items.</p>"
+      }
+    },
+    "ListExportsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListExportsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "MaxResults": {
+      "base": "<p>The maximum number of results to return in a single response. Note: The actual number of results returned might be less than the specified maxResults.</p>",
+      "refs": {
+        "ListExportsRequest$maxResults": "<p>The maximum number of exports to return in a single response.</p>"
+      }
+    },
+    "NextToken": {
+      "base": "<p>A pagination token used for retrieving subsequent pages of results.</p>",
+      "refs": {
+        "ListExportsRequest$nextToken": "<p>A pagination token used to retrieve the next page of results. This token is obtained from the nextToken field in the previous ListExportsResponse. Leave empty for the first request.</p>",
+        "ListExportsResponse$nextToken": "<p>A pagination token indicating that more results are available. To retrieve the next page of results, provide this token in a subsequent ListExports request. If null or empty, there are no more results to retrieve.</p>"
+      }
+    },
+    "NoSuchDomainException": {
+      "base": "<p>The specified domain does not exist.</p>",
+      "refs": {}
+    },
+    "NoSuchExportException": {
+      "base": "<p>Export with specified ARN does not exist.</p>",
+      "refs": {}
+    },
+    "NumberExportsLimitExceeded": {
+      "base": "<p>Cannot start export as export quota limit was exceeded</p>",
+      "refs": {}
+    },
+    "RequestedAt": {
+      "base": "<p>Timestamp when the export (or any other operation) was requested.</p>",
+      "refs": {
+        "ExportSummary$requestedAt": "<p>Timestamp when the export request was received by the service</p>",
+        "GetExportResponse$requestedAt": "<p>Timestamp when the export request was received by the service.</p>",
+        "StartDomainExportResponse$requestedAt": "<p>Timestamp when the export request was received by the service.</p>"
+      }
+    },
+    "S3BucketName": {
+      "base": null,
+      "refs": {
+        "GetExportResponse$s3Bucket": "<p>The name of the S3 bucket for this export.</p>",
+        "StartDomainExportRequest$s3Bucket": "<p>The name of the S3 bucket where the domain data will be exported.</p>"
+      }
+    },
+    "S3KeyPrefix": {
+      "base": null,
+      "refs": {
+        "GetExportResponse$s3KeyPrefix": "<p>The S3 key prefix provided in the corresponding StartDomainExport request.</p>",
+        "StartDomainExportRequest$s3KeyPrefix": "<p>The prefix string to be used to generate the S3 object keys for export artifacts.</p>"
+      }
+    },
+    "S3SseAlgorithm": {
+      "base": null,
+      "refs": {
+        "GetExportResponse$s3SseAlgorithm": "<p>The S3 SSE encryption algorithm for this export.</p>",
+        "StartDomainExportRequest$s3SseAlgorithm": "<p>The server-side encryption algorithm to use for the exported data in S3. Valid values are: AES256 (SSE-S3) and KMS (SSE-KMS). If not specified, bucket's default encryption will apply.</p>"
+      }
+    },
+    "S3SseKmsKeyId": {
+      "base": null,
+      "refs": {
+        "GetExportResponse$s3SseKmsKeyId": "<p>The KMS key ID for this export.</p>",
+        "StartDomainExportRequest$s3SseKmsKeyId": "<p>The KMS key ID to use for server-side encryption with AWS KMS-managed keys (SSE-KMS). This parameter is only expected with KMS as the S3 SSE algorithm.</p>"
+      }
+    },
+    "StartDomainExportRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartDomainExportResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "ConflictException$message": null,
+        "InvalidNextTokenException$message": null,
+        "InvalidParameterCombinationException$message": null,
+        "InvalidParameterValueException$message": null,
+        "NoSuchDomainException$message": null,
+        "NoSuchExportException$message": null,
+        "NumberExportsLimitExceeded$message": null
+      }
+    }
+  }
+}

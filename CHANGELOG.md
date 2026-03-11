@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WorkSpaces` - Added WINDOWS SERVER 2025 OperatingSystemName.
+* `Aws\SimpleDBv2` - Introduced Amazon SimpleDB export functionality enabling domain data export to S3 in JSON format. Added three new APIs StartDomainExport, GetExport, and ListExports via SimpleDBv2 service. Supports cross-region exports and KMS encryption.
+* `Aws\Polly` - Added support for the new voices - Ambre (fr-FR), Beatrice (it-IT), Florian (fr-FR), Lennart (de-DE), Lorenzo (it-IT) and Tiffany (en-US). They are available as a Generative voices only.
+* `Aws\CustomerProfiles` - Today, Amazon Connect is announcing the ability to filter (include or exclude) recommendations based on properties of items and interactions.
+* `Aws\SageMaker` - SageMaker training plans allow you to extend your existing training plans to avoid workload interruptions without workload reconfiguration. When a training plan is approaching expiration, you can extend it directly through the SageMaker AI console or programmatically using the API or AWS CLI.
+* `Aws\EKS` - Adds support for a new tier in controlPlaneScalingConfig on EKS Clusters.
+
 ## 3.372.3 - 2026-03-10
 
 * `Aws\` - Sorts presigned headers alphabetically.
