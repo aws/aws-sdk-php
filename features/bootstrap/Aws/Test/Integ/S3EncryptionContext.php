@@ -8,7 +8,6 @@ use Aws\S3\Crypto\S3EncryptionClient;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
-use Behat\Behat\Tester\Exception\PendingException;
 use Aws\Crypto\AbstractCryptoClient;
 use Aws\Kms\KmsClient;
 use PHPUnit\Framework\Assert;

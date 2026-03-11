@@ -8,23 +8,18 @@ use Aws\CommandInterface;
 use Aws\Test\Api\Parser\ParserTestServiceTrait;
 use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-/**
- * @covers Aws\Api\Parser\RestJsonParser
- */
+#[CoversClass(RestJsonParser::class)]
 class RestJsonParserTest extends TestCase
 {
     use ParserTestServiceTrait;
 
-    /**
-     * @param string|array $value
-     * @param array $expected
-     *
-     * @return void
-     * @dataProvider parsesDocumentTypePayloadProvider
-     */
+    #[DataProvider('parsesDocumentTypePayloadProvider')]
     public function testParsesDocumentTypePayload(
         string $value,
         string|array $expected
@@ -42,7 +37,7 @@ class RestJsonParserTest extends TestCase
         self::assertEquals($expected, $result['documentValue']);
     }
 
-    public function parsesDocumentTypePayloadProvider(): iterable
+    public static function parsesDocumentTypePayloadProvider(): iterable
     {
         return [
             'string payload' => ["\"hello\"", 'hello'],
@@ -184,10 +179,9 @@ class RestJsonParserTest extends TestCase
     }
 
     /**
-     * @doesNotPerformAssertions
-     *
      * @return void
      */
+    #[DoesNotPerformAssertions]
     public function testParsesEmptyResponseOnNonSeekableStream(): void
     {
         $shape = [

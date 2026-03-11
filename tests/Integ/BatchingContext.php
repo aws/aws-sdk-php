@@ -9,15 +9,11 @@ use Aws\Result;
 use Aws\Sqs\SqsClient;
 use Behat\Behat\Hook\Scope\AfterFeatureScope;
 use Behat\Behat\Hook\Scope\BeforeFeatureScope;
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use PHPUnit\Framework\Assert;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class BatchingContext extends TestCase implements
+class BatchingContext implements
     Context,
     SnippetAcceptingContext
 {
@@ -163,7 +159,7 @@ class BatchingContext extends TestCase implements
             'TableName' => self::$resource,
         ]);
 
-        $this->assertSame((int) $itemCount, iterator_count($actualItems));
+        Assert::assertSame((int) $itemCount, iterator_count($actualItems));
     }
 
     /**
@@ -171,7 +167,7 @@ class BatchingContext extends TestCase implements
      */
     public function theBatchShouldHaveBeenFlushedTimes($flushCount)
     {
-        $this->assertGreaterThanOrEqual((int) $flushCount, $this->flushCount);
+        Assert::assertGreaterThanOrEqual((int) $flushCount, $this->flushCount);
     }
 
     /**
@@ -230,6 +226,6 @@ class BatchingContext extends TestCase implements
             ? count($this->response['Successful'])
             : 0;
 
-        $this->assertSame((int) $messageCount, $failedCount + $successfulCount);
+        Assert::assertSame((int) $messageCount, $failedCount + $successfulCount);
     }
 }

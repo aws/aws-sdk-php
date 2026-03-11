@@ -2,25 +2,36 @@
 namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Cbor\CborDecoder;
+use Aws\Api\Serializer\AbstractRpcV2Serializer;
+use Aws\Api\Serializer\RpcV2CborSerializer;
 use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Signature\SignatureInterface;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
+use Aws\Api\Serializer\QuerySerializer;
+use Aws\Api\Serializer\JsonRpcSerializer;
+use Aws\Api\Serializer\RestSerializer;
+use Aws\Api\Serializer\RestJsonSerializer;
+use Aws\Api\Serializer\RestXmlSerializer;
+use Aws\Api\Serializer\JsonBody;
+use Aws\Api\Serializer\XmlBody;
+use Aws\Api\Serializer\Ec2ParamBuilder;
+use Aws\Api\Serializer\QueryParamBuilder;
 
-/**
- * @covers \Aws\Api\Serializer\QuerySerializer
- * @covers \Aws\Api\Serializer\JsonRpcSerializer
- * @covers \Aws\Api\Serializer\RestSerializer
- * @covers \Aws\Api\Serializer\RestJsonSerializer
- * @covers \Aws\Api\Serializer\RestXmlSerializer
- * @covers \Aws\Api\Serializer\JsonBody
- * @covers \Aws\Api\Serializer\XmlBody
- * @covers \Aws\Api\Serializer\Ec2ParamBuilder
- * @covers \Aws\Api\Serializer\QueryParamBuilder
- * @covers \Aws\Api\Serializer\AbstractRpcV2Serializer
- * @covers \Aws\Api\Serializer\RpcV2CborSerializer
- */
+#[CoversClass(QuerySerializer::class)]
+#[CoversClass(JsonRpcSerializer::class)]
+#[CoversClass(RestSerializer::class)]
+#[CoversClass(RestJsonSerializer::class)]
+#[CoversClass(RestXmlSerializer::class)]
+#[CoversClass(JsonBody::class)]
+#[CoversClass(XmlBody::class)]
+#[CoversClass(Ec2ParamBuilder::class)]
+#[CoversClass(QueryParamBuilder::class)]
+#[CoversClass(AbstractRpcV2Serializer::class)]
+#[CoversClass(RpcV2CborSerializer::class)]
 class ComplianceTest extends TestCase
 {
     public const TEST_CASES_DIR = __DIR__ . '/../test_cases/protocols/input/';
@@ -50,8 +61,7 @@ class ComplianceTest extends TestCase
         $this->cborDecoder = new CborDecoder();
     }
 
-    /** @doesNotPerformAssertions */
-    public function testCaseProvider(): \Generator
+    public static function caseProvider(): \Generator
     {
         $iterator = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator(
@@ -92,9 +102,7 @@ class ComplianceTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider testCaseProvider
-     */
+    #[DataProvider('caseProvider')]
     public function testPassesComplianceTest(
         Service $service,
         string $name,

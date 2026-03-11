@@ -7,22 +7,16 @@ use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\DownloadFileRequest;
 use Aws\S3\S3Transfer\Models\DownloadRequest;
-use Aws\S3\S3Transfer\Models\DownloadResult;
-use Aws\S3\S3Transfer\Models\ResumeDownloadRequest;
-use Aws\S3\S3Transfer\Models\ResumeUploadRequest;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\UploadRequest;
 use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
-use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\S3TransferManager;
 use Aws\Test\TestsUtility;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Behat\Tester\Exception\PendingException;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\Assert;
-use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
 
 class S3TransferManagerContext implements Context, SnippetAcceptingContext
@@ -488,7 +482,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
 
     /**
      * @When /^I upload this directory (.*) to s3$/
-    */
+     */
     public function iUploadThisDirectory($directory): void
     {
         $s3TransferManager = new S3TransferManager(
@@ -696,12 +690,20 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         };
 
         // To make sure transferFail is called
-        $testCase = new class extends TestCase {};
-        $transferListener2 = $testCase->getMockBuilder(
-            AbstractTransferListener::class
-        )->getMock();
-        $transferListener2->expects($testCase->once())->method('transferInitiated');
-        $transferListener2->expects($testCase->once())->method('transferFail');
+        $transferListener2 = new class extends AbstractTransferListener {
+            public int $initiatedCount = 0;
+            public int $failCount = 0;
+
+            public function transferInitiated(array $context): void
+            {
+                $this->initiatedCount++;
+            }
+
+            public function transferFail(array $context): void
+            {
+                $this->failCount++;
+            }
+        };
 
         try {
             $s3TransferManager->upload(
@@ -727,6 +729,8 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
                 "Transfer failed at part number {$partNumberFail} failed",
                 $exception->getMessage(),
             );
+            Assert::assertEquals(1, $transferListener2->initiatedCount, "transferInitiated should be called once");
+            Assert::assertEquals(1, $transferListener2->failCount, "transferFail should be called once");
         } catch (\Exception $e) {
             Assert::fail("Unexpected exception type: " . get_class($e) . " - " . $e->getMessage());
         } finally {

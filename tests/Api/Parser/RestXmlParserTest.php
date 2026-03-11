@@ -7,12 +7,12 @@ use Aws\Api\Service;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\CoversClass;
 use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-/**
- * @covers Aws\Api\Parser\RestXmlParser
- */
+#[CoversClass(RestXmlParser::class)]
 class RestXmlParserTest extends TestCase
 {
     public function testParsesFalsyHeaderValues(): void
@@ -113,6 +113,7 @@ class RestXmlParserTest extends TestCase
         $this->assertArrayNotHasKey('Empty', $result);
     }
 
+    #[DoesNotPerformAssertions]
     public function testParsesEmptyResponseOnNonSeekableStream(): void
     {
         $shape = [
@@ -151,10 +152,5 @@ class RestXmlParserTest extends TestCase
         $command->method('getName')->willReturn('TestOperation');
 
         $parser($command, $response);
-
-        // Not error occurred. Test successfully.
-        // Previously, on non-seekable streams it would have failed.
-        // Because, it would have tried to parse an empty string.
-        $this->assertTrue(true);
     }
 }

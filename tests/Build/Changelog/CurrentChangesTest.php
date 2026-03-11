@@ -2,6 +2,7 @@
 
 namespace Aws\Test\Build\Changelog;
 
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
 
 class CurrentChangesTest extends TestCase
@@ -12,7 +13,7 @@ class CurrentChangesTest extends TestCase
         return end($portions);
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testVerifyDotChangesFolder()
     {
         $files = glob(__DIR__ . '/../../../.changes/*');
@@ -31,7 +32,7 @@ class CurrentChangesTest extends TestCase
         }
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testVerifyNextreleaseContents()
     {
         if (!is_dir(__DIR__ . '/../../../.changes/nextrelease/')) {

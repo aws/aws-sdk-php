@@ -6,13 +6,11 @@ use Aws\MultiRegionClient;
 use Aws\S3\S3MultiRegionClient;
 use Aws\Sdk;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Sdk
- */
+#[CoversClass(Sdk::class)]
 class SdkTest extends TestCase
 {
-
     public function testEnsuresMissingMethodThrowsException()
     {
         $this->expectException(\BadMethodCallException::class);
@@ -22,7 +20,7 @@ class SdkTest extends TestCase
     public function testHasMagicMethods()
     {
         $sdk = $this->getMockBuilder(Sdk::class)
-            ->setMethods(['createClient'])
+            ->onlyMethods(['createClient'])
             ->getMock();
         $sdk->expects($this->once())
             ->method('createClient')

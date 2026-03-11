@@ -5,18 +5,14 @@ namespace Aws\Test\Integ;
 use Aws\S3\S3Client;
 use Behat\Behat\Hook\Scope\AfterFeatureScope;
 use Behat\Behat\Hook\Scope\BeforeFeatureScope;
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use PHPUnit\Framework\Assert;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Defines application features from the specific context.
  */
-class NativeStreamContext extends TestCase implements
+class NativeStreamContext implements
     Context,
     SnippetAcceptingContext
 {
@@ -108,7 +104,7 @@ class NativeStreamContext extends TestCase implements
      */
     public function theCallShouldReturn($booleanString)
     {
-        $this->assertSame(
+        Assert::assertSame(
             filter_var($booleanString, FILTER_VALIDATE_BOOLEAN),
             $this->callSucceeded
         );
@@ -119,7 +115,7 @@ class NativeStreamContext extends TestCase implements
      */
     public function iHaveAFileAtWithTheContent($path, $contents)
     {
-        $this->assertGreaterThan(
+        Assert::assertGreaterThan(
             0,
             file_put_contents($this->getS3Path($path), $contents)
         );
@@ -130,7 +126,7 @@ class NativeStreamContext extends TestCase implements
      */
     public function iHaveAFileAtWithNoContent($path)
     {
-        $this->assertSame(0, file_put_contents($this->getS3Path($path), ''));
+        Assert::assertSame(0, file_put_contents($this->getS3Path($path), ''));
     }
 
     /**
@@ -138,7 +134,7 @@ class NativeStreamContext extends TestCase implements
      */
     public function theFileAtShouldContain($key, $contents)
     {
-        $this->assertStringEqualsFile($this->getS3Path($key), $contents);
+        Assert::assertStringEqualsFile($this->getS3Path($key), $contents);
     }
 
     /**
@@ -154,7 +150,7 @@ class NativeStreamContext extends TestCase implements
      */
     public function readingBytesShouldReturn($byteCount, $expected)
     {
-        $this->assertSame($expected, fread($this->handle, $byteCount));
+        Assert::assertSame($expected, fread($this->handle, $byteCount));
     }
 
     /**
@@ -162,7 +158,7 @@ class NativeStreamContext extends TestCase implements
      */
     public function callingFstatShouldReportASizeOf($size)
     {
-        $this->assertSame((int) $size, fstat($this->handle)['size']);
+        Assert::assertSame((int) $size, fstat($this->handle)['size']);
     }
 
     /**
@@ -170,7 +166,7 @@ class NativeStreamContext extends TestCase implements
      */
     public function scanningTheDirectoryAtShouldReturnAListWithOneMemberNamed($dir, $file)
     {
-        $this->assertSame([$file], scandir($this->getS3Path($dir)));
+        Assert::assertSame([$file], scandir($this->getS3Path($dir)));
     }
 
     private function getS3Path($path)

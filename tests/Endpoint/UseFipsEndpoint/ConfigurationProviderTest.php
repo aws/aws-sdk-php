@@ -9,10 +9,9 @@ use Aws\Endpoint\UseFipsEndpoint\ConfigurationInterface;
 use Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider
- */
+#[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
     private static $originalEnv;
@@ -347,7 +346,7 @@ EOT;
     {
         $expected = new Configuration(true);
         $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
-        $cacheBuilder->setMethods(['get', 'set', 'remove']);
+        $cacheBuilder->onlyMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())
             ->method('get')
@@ -361,4 +360,3 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 }
-

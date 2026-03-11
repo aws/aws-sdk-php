@@ -16,7 +16,7 @@ use Behat\Gherkin\Node\TableNode;
 use JmesPath\Env;
 use PHPUnit\Framework\Assert;
 
-class SmokeContext extends Assert implements
+class SmokeContext implements
     Context,
     SnippetAcceptingContext
 {
@@ -348,12 +348,8 @@ class SmokeContext extends Assert implements
      */
     public function theValueAtShouldBeAList($key)
     {
-        $this->assertInstanceOf(Result::class, $this->response);
-        if (method_exists($this, 'assertIsArray')) {
-            $this->assertIsArray($this->response->search($key));
-        } else {
-            $this->assertInternalType('array', $this->response->search($key));
-        }
+        Assert::assertInstanceOf(Result::class, $this->response);
+        Assert::assertIsArray($this->response->search($key));
     }
 
     /**
@@ -363,7 +359,7 @@ class SmokeContext extends Assert implements
      */
     public function iExpectTheResponseErrorCodeToBe($errorCode)
     {
-        $this->assertSame($errorCode, $this->error->getAwsErrorCode());
+        Assert::assertSame($errorCode, $this->error->getAwsErrorCode());
     }
 
     /**
@@ -373,7 +369,7 @@ class SmokeContext extends Assert implements
      */
     public function iExpectTheResponseErrorMessageToInclude(PyStringNode $string)
     {
-        $this->assertContains($string->getRaw(), $this->error->getMessage());
+        Assert::assertStringContainsString($string->getRaw(), $this->error->getMessage());
     }
 
     /**
@@ -383,8 +379,8 @@ class SmokeContext extends Assert implements
      */
     public function theResponseShouldContainA($key)
     {
-        $this->assertInstanceOf(Result::class, $this->response);
-        $this->assertNotNull($this->response->search($key));
+        Assert::assertInstanceOf(Result::class, $this->response);
+        Assert::assertNotNull($this->response->search($key));
     }
 
     /**
@@ -407,7 +403,7 @@ class SmokeContext extends Assert implements
      */
     public function theRequestShouldBeSuccessful()
     {
-        $this->assertEmpty($this->error);
+        Assert::assertEmpty($this->error);
     }
 
     /**
@@ -415,7 +411,7 @@ class SmokeContext extends Assert implements
      */
     public function theRequestShouldFail()
     {
-        $this->assertNotEmpty($this->error);
+        Assert::assertNotEmpty($this->error);
     }
 
     /**
@@ -425,7 +421,7 @@ class SmokeContext extends Assert implements
      */
     public function theErrorMessageShouldContain(PyStringNode $string)
     {
-        $this->assertContains($string->getRaw(), $this->error->getMessage());
+        Assert::assertStringContainsString($string->getRaw(), $this->error->getMessage());
     }
 
     /**
@@ -435,6 +431,6 @@ class SmokeContext extends Assert implements
      */
     public function theStatusCodeShouldBe($statusCode)
     {
-        $this->assertEquals($statusCode, $this->error->getStatusCode());
+        Assert::assertEquals($statusCode, $this->error->getStatusCode());
     }
 }

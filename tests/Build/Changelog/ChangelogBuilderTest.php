@@ -2,11 +2,10 @@
 namespace Aws\Test\Build\Changelog;
 
 use Aws\Build\Changelog\ChangelogBuilder;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Build\Changelog\ChangelogBuilder
- */
+#[CoversClass(ChangelogBuilder::class)]
 class ChangelogBuilderTest extends TestCase
 {
     private static $resourceDir = 'tests/Build/Changelog/resources/';
@@ -48,13 +47,8 @@ class ChangelogBuilderTest extends TestCase
 
     public function testBuildChangelogInvalidPathChangelog()
     {
-        if (PHP_VERSION_ID >= 80300) {
-            $this->expectException(\PHPUnit\Framework\Error\Deprecated::class);
-        } else {
-            $this->expectException(\InvalidArgumentException::class);
-            $this->expectExceptionMessage('Invalid tag value');
-        }
-
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid tag value');
         $params = [];
         $params['base_dir'] = self::$invalidResourceDir;
         $params['release_notes_output_dir'] = sys_get_temp_dir() . "/";

@@ -4,20 +4,19 @@ namespace Tests\Api;
 
 use Aws\Api\SupportedProtocols;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(SupportedProtocols::class)]
 class SupportedProtocolsTest extends TestCase
 {
-    /**
-     * @dataProvider validProtocolsProvider
-     */
+    #[DataProvider('validProtocolsProvider')]
     public function testIsSupportedReturnsTrueForValidProtocols(string $protocol)
     {
         $this->assertTrue(SupportedProtocols::isSupported($protocol));
     }
 
-    /**
-     * @dataProvider invalidProtocolsProvider
-     */
+    #[DataProvider('invalidProtocolsProvider')]
     public function testIsSupportedReturnsFalseForInvalidProtocols(string $protocol)
     {
         $this->assertFalse(SupportedProtocols::isSupported($protocol));
@@ -28,7 +27,7 @@ class SupportedProtocolsTest extends TestCase
      *
      * @return array
      */
-    public function validProtocolsProvider(): array
+    public static function validProtocolsProvider(): array
     {
         return [
             ['rest-json'],
@@ -44,7 +43,7 @@ class SupportedProtocolsTest extends TestCase
      *
      * @return array
      */
-    public function invalidProtocolsProvider(): array
+    public static function invalidProtocolsProvider(): array
     {
         return [
             ['graphql'],

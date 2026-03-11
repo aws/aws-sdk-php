@@ -10,17 +10,15 @@ use Aws\Command;
 use Aws\Result;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\S3\ValidateResponseChecksumParser
- */
+#[CoversClass(ValidateResponseChecksumParser::class)]
 class ValidateResponseChecksumParserTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @dataProvider getChosenChecksumCases
-     */
+    #[DataProvider('getChosenChecksumCases')]
     public function testValidatesChoosesRightChecksum(
         $responseAlgorithms, $checksumHeadersReturned, $expectedChecksum
     ) {
@@ -46,7 +44,7 @@ class ValidateResponseChecksumParserTest extends TestCase
         $this->assertEquals($expectedChecksum, $chosenChecksum);
     }
 
-    public function getChosenChecksumCases()
+    public static function getChosenChecksumCases(): array
     {
         return [
             [['crc32', 'crc32c'], [], null],

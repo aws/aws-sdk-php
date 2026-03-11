@@ -11,10 +11,10 @@ use Aws\Signin\SigninClient;
 use Aws\Signin\Exception\SigninException;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Credentials\LoginCredentialProvider
- */
+#[CoversClass(LoginCredentialProvider::class)]
 class LoginCredentialProviderTest extends TestCase
 {
     use UsesServiceTrait;
@@ -301,9 +301,7 @@ EOT;
         $provider()->wait();
     }
 
-    /**
-     * @dataProvider missingCacheKeysProvider
-     */
+    #[DataProvider('missingCacheKeysProvider')]
     public function testLoadTokenFailsWithMissingOrEmptyCacheKeys(
         array $tokenData,
         string $expectedMessage
@@ -327,7 +325,7 @@ EOT;
         $provider()->wait();
     }
     
-    public function missingCacheKeysProvider(): array
+    public static function missingCacheKeysProvider(): array
     {
         $validDpopKey = "-----BEGIN EC PRIVATE KEY-----\n" .
             "MHcCAQEEID9l+ckeHBxlF47cg0h5qJnAErPvCm1brUY8i7b6qSJToAoGCCqGSM49\n" .
@@ -1249,9 +1247,7 @@ EOT;
         $this->assertEquals('123456789012', $credentials->getAccountId());
     }
 
-    /**
-     * @dataProvider loginTestCasesProvider
-     */
+    #[DataProvider('loginTestCasesProvider')]
     public function testLoginCredentialProviderFromTestCases(
         string $documentation,
         string $configContents,
@@ -1381,7 +1377,7 @@ EOT;
      * @return \Generator
      * @throws \JsonException
      */
-    public function loginTestCasesProvider(): \Generator
+    public static function loginTestCasesProvider(): \Generator
     {
         $testCasesFile = __DIR__ . '/fixtures/login/test-cases.json';
 
@@ -1407,9 +1403,7 @@ EOT;
         }
     }
 
-    /**
-     * @dataProvider externalRefreshProvider
-     */
+    #[DataProvider('externalRefreshProvider')]
     public function testExternalRefreshBehavior(
         string $scenario,
         int $currentExpiryMinutes,
@@ -1532,7 +1526,7 @@ EOT;
         }
     }
 
-    public function externalRefreshProvider(): array
+    public static function externalRefreshProvider(): array
     {
         return [
             'external refresh detected - all conditions met' => [
