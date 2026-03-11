@@ -1,14 +1,10 @@
 <?php
 namespace Aws\Test\Integ;
 
-use Aws\S3\Exception\S3Exception;
-use Aws\Sts\StsClient;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Aws\S3\S3Client;
-use Aws\S3\PostObject;
 use Aws\S3\PostObjectV4;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
