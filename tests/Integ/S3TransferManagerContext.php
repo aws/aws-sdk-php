@@ -7,19 +7,16 @@ use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\DownloadFileRequest;
 use Aws\S3\S3Transfer\Models\DownloadRequest;
-use Aws\S3\S3Transfer\Models\DownloadResult;
 use Aws\S3\S3Transfer\Models\ResumeDownloadRequest;
 use Aws\S3\S3Transfer\Models\ResumeUploadRequest;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\UploadRequest;
 use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
-use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\S3TransferManager;
 use Aws\Test\TestsUtility;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Behat\Tester\Exception\PendingException;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
@@ -240,7 +237,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
             ])
         );
         $s3TransferManager->upload(
-             new UploadRequest(
+            new UploadRequest(
                 $this->stream,
                 [
                     'Bucket' => self::getResourceName(),
@@ -488,7 +485,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
 
     /**
      * @When /^I upload this directory (.*) to s3$/
-    */
+     */
     public function iUploadThisDirectory($directory): void
     {
         $s3TransferManager = new S3TransferManager(
@@ -666,7 +663,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         $partNumberFail
     ): void
     {
-        // Disable warning from error_log
+        // Disable warning from trigger_error
         set_error_handler(function ($errno, $errstr) {});
 
         $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
@@ -730,6 +727,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         } catch (\Exception $e) {
             Assert::fail("Unexpected exception type: " . get_class($e) . " - " . $e->getMessage());
         } finally {
+            // Restore error logging
             restore_error_handler();
         }
     }
@@ -890,5 +888,270 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
             'FULL_OBJECT',
             $checksumAttributes['ChecksumType'],
         );
+    }
+
+    /**
+     * @Given /^I have a file (.*) in S3 that requires multipart download$/
+     */
+    public function iHaveAFileInS3thatRequiresMultipartDownload($file): void
+    {
+        $s3TransferManager = new S3TransferManager(
+            self::getSdk()->createS3()
+        );
+        // File size min bound is 16 MB in order to have a
+        // failure after part number 2.
+        $uploadResult = $s3TransferManager->upload(
+            new UploadRequest(
+                Utils::streamFor(
+                    random_bytes(
+                        random_int(
+                            (1024 * 1024 * 8) * random_int(2, 4),
+                            1024 * 1024 * 45
+                        ),
+                    )
+                ),
+                [
+                    'Bucket' => self::getResourceName(),
+                    'Key' => $file,
+                ],
+                [
+                    'multipart_upload_threshold_bytes' => 1024 * 1024 * 8,
+                ]
+            )
+        )->wait();
+        Assert::assertEquals(
+            200,
+            $uploadResult['@metadata']['statusCode']
+        );
+    }
+
+    /**
+     * @When /^I try the download for file (.*), with resume enabled, it fails$/
+     */
+    public function iTryTheDownloadForFileWithResumeEnabledItFails($file): void
+    {
+        $destinationFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
+        $s3TransferManager = new S3TransferManager(
+            self::getSdk()->createS3()
+        );
+        $failListener = new class extends AbstractTransferListener {
+            /** @var int */
+            private int $failAtTransferredMb = (1024 * 1024 * 8) * 2;
+
+            public function bytesTransferred(array $context): bool
+            {
+                $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
+                $transferredBytes = $snapshot->getTransferredBytes();
+
+                if ($transferredBytes >= $this->failAtTransferredMb) {
+                    throw new S3TransferException(
+                        "Transfer fails at ". $this->failAtTransferredMb." bytes.",
+                    );
+                }
+
+                return true;
+            }
+        };
+        try {
+            $s3TransferManager->downloadFile(
+                new DownloadFileRequest(
+                    $destinationFilePath,
+                    true,
+                    new DownloadRequest(
+                        source: [
+                            'Bucket' => self::getResourceName(),
+                            'Key' => $file,
+                        ],
+                        config: [
+                            'resume_enabled' => true
+                        ],
+                        listeners: [
+                            $failListener,
+                        ]
+                    )
+                )
+            )->wait();
+
+            Assert::fail("Not expecting to succeed");
+        } catch (S3TransferException $e) {
+            // Exception expected
+            Assert::assertTrue(true);
+        }
+    }
+
+    /**
+     * @Then /^A resumable file for file (.*) must exists$/
+     */
+    public function aResumableFileForFileMustExists($file): void
+    {
+        $destinationFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
+        $resumeFileRegex = $destinationFilePath . "*.resume";
+        $matchResumeFile = glob($resumeFileRegex);
+
+        Assert::assertFalse(
+            empty($matchResumeFile),
+        );
+    }
+
+    /**
+     * @Then /^We resume the download for file (.*) and it should succeed$/
+     */
+    public function weResumeTheDownloadForFileAndItShouldSucceed($file): void
+    {
+        $destinationFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
+        $resumeFileRegex = $destinationFilePath . ".s3tmp.*.resume";
+        $matchResumeFile = glob($resumeFileRegex);
+        if (empty($matchResumeFile)) {
+            Assert::fail(
+                "Resume file must exists for file " . $destinationFilePath,
+            );
+        }
+
+        $resumeFile = $matchResumeFile[0];
+        $s3TransferManager = new S3TransferManager(
+            self::getSdk()->createS3()
+        );
+        $s3TransferManager->resumeDownload(
+            new ResumeDownloadRequest(
+                $resumeFile,
+            )
+        )->wait();
+
+        Assert::assertFileDoesNotExist($resumeFile);
+        Assert::assertFileExists($destinationFilePath);
+    }
+
+    /**
+     * @Given /^I have a file (.*) on disk that requires multipart upload$/
+     */
+    public function iHaveAFileOnDiskThatRequiresMultipartUpload($file): void
+    {
+        $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
+        file_put_contents(
+            $fullFilePath,
+            random_bytes(
+                random_int(
+                    (1024 * 1024 * 8) * 2,
+                    (1024 * 1024 * 45)
+                ),
+            )
+        );
+    }
+
+    /**
+     * @When /^I try to upload the file (.*), with resume enabled, it fails$/
+     */
+    public function iTryToUploadTheFileWithResumeEnabledItFails($file): void
+    {
+        $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
+        $failListener = new class extends AbstractTransferListener {
+            /** @var int */
+            private int $failAtTransferredMb = (1024 * 1024 * 8) * 2;
+
+            public function bytesTransferred(array $context): bool
+            {
+                $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
+                $transferredBytes = $snapshot->getTransferredBytes();
+
+                if ($transferredBytes >= $this->failAtTransferredMb) {
+                    throw new S3TransferException(
+                        "Transfer fails at ". $this->failAtTransferredMb." bytes.",
+                    );
+                }
+
+                return true;
+            }
+        };
+        $s3TransferManager = new S3TransferManager(
+            self::getSdk()->createS3()
+        );
+        try {
+            $s3TransferManager->upload(
+                new UploadRequest(
+                    source: $fullFilePath,
+                    uploadRequestArgs: [
+                        'Bucket' => self::getResourceName(),
+                        'Key' => $file,
+                    ],
+                    config: [
+                        'resume_enabled' => true,
+                        'multipart_upload_threshold_bytes' => 8 * 1024 * 1024,
+                    ],
+                    listeners: [
+                        $failListener
+                    ]
+                )
+            )->wait();
+
+            Assert::fail("Not expecting to succeed");
+        } catch (S3TransferException $e) {
+            // Expects a failure
+            Assert::assertTrue(true);
+        }
+    }
+
+    /**
+     * @Then /^We resume the upload for file (.*) and it should succeed$/
+     */
+    public function weResumeTheUploadForFileAndItShouldSucceed($file): void
+    {
+        $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
+        $resumeFilePath = $fullFilePath . ".resume";
+        Assert::assertFileExists($resumeFilePath);
+
+        $s3TransferManager = new S3TransferManager(
+            self::getSdk()->createS3()
+        );
+        $s3TransferManager->resumeUpload(
+            new ResumeUploadRequest(
+                $resumeFilePath,
+            )
+        )->wait();
+
+        Assert::assertFileDoesNotExist($resumeFilePath);
+    }
+
+    /**
+     * @Then /^The file (.*) in s3 should match the local file$/
+     */
+    public function theFileInSshouldMatchTheLocalFile($file): void
+    {
+        $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
+        $s3TransferManager = new S3TransferManager(
+            self::getSdk()->createS3()
+        );
+        $result = $s3TransferManager->download(
+            new DownloadRequest(
+                source: [
+                    'Bucket' => self::getResourceName(),
+                    'Key' => $file,
+                ]
+            )
+        )->wait();
+
+        $dataResult = $result->getDownloadDataResult();
+
+        // Make sure sizes are equals
+        Assert::assertEquals(
+            filesize($fullFilePath),
+            $dataResult->getSize(),
+        );
+
+        // Make sure contents are equals
+        $handle = fopen($fullFilePath, "r");
+        try {
+            $chunkSize = 8192;
+            while (!feof($handle)) {
+                $fileChunk = fread($handle, $chunkSize);
+                $streamChunk = $dataResult->read($chunkSize);
+
+                Assert::assertEquals(
+                    $fileChunk,
+                    $streamChunk,
+                );
+            }
+        } finally {
+            fclose($handle);
+        }
     }
 }

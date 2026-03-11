@@ -12,6 +12,7 @@ final class TransferListenerNotifier extends AbstractTransferListener
      */
     public function __construct(array $listeners = [])
     {
+        usort($listeners, fn($a, $b) => $a->priority() <=> $b->priority());
         foreach ($listeners as $listener) {
             if (!$listener instanceof AbstractTransferListener) {
                 throw new \InvalidArgumentException(
@@ -19,6 +20,7 @@ final class TransferListenerNotifier extends AbstractTransferListener
                 );
             }
         }
+
         $this->listeners = $listeners;
     }
 

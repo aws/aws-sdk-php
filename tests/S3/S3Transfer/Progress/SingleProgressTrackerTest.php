@@ -11,7 +11,10 @@ use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use PHPUnit\Framework\TestCase;
 
-class SingleProgressTrackerTest extends TestCase
+/**
+ * @covers \Aws\S3\S3Transfer\Progress\SingleProgressTracker
+ */
+final class SingleProgressTrackerTest extends TestCase
 {
     /**
      * @return void
@@ -57,7 +60,7 @@ class SingleProgressTrackerTest extends TestCase
     /**
      * @return array[]
      */
-    public function customInitializationProvider(): array
+    public static function customInitializationProvider(): array
     {
         return [
             'initialization_1' => [
@@ -131,7 +134,7 @@ class SingleProgressTrackerTest extends TestCase
     /**
      * @return array[]
      */
-    public function singleProgressTrackingProvider(): array
+    public static function singleProgressTrackingProvider(): array
     {
         return [
             'progress_rendering_1_transfer_initiated' => [
