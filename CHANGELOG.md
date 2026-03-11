@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.373.0 - 2026-03-11
 
 * `Aws\WorkSpaces` - Added WINDOWS SERVER 2025 OperatingSystemName.
 * `Aws\SimpleDBv2` - Introduced Amazon SimpleDB export functionality enabling domain data export to S3 in JSON format. Added three new APIs StartDomainExport, GetExport, and ListExports via SimpleDBv2 service. Supports cross-region exports and KMS encryption.
