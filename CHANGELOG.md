@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.373.1 - 2026-03-12
 
 * `Aws\` - Add support for PHPUnit v10. 
 - Make data provider static functions. 
