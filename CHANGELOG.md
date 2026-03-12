@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Add support for PHPUnit v10. 
+- Make data provider static functions. 
+- Use class attributes instead of annotations for @dataProvider, @covers, and @doesNotPerformAssertions. 
+- Remove/Replace the usage of expectDeprecation, expectDeprecationMessage, expectDeprecationMessageMatches, expectError, expectErrorMessage, expectNotice, expectNoticeMessage, expectWarning, and expectWarningMessage. 
+- Migrate phpunit xml config file.
+* `Aws\S3` - Adds support for account regional namespaces for general purpose buckets. The account regional namespace is a reserved subdivision of the global bucket namespace where only your account can create general purpose buckets.
+* `Aws\ECR` - Add Chainguard to PTC upstreamRegistry enum
+* `Aws\DataSync` - DataSync's 3 location types, Hadoop Distributed File System (HDFS), FSx for Windows File Server (FSx Windows), and FSx for NetApp ONTAP (FSx ONTAP) now have credentials managed via Secrets Manager, which may be encrypted with service keys or be configured to use customer-managed keys or secret.
+
 ## 3.373.0 - 2026-03-11
 
 * `Aws\WorkSpaces` - Added WINDOWS SERVER 2025 OperatingSystemName.

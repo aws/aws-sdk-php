@@ -1741,6 +1741,13 @@
       ]
     },
     "BucketName":{"type":"string"},
+    "BucketNamespace":{
+      "type":"string",
+      "enum":[
+        "account-regional",
+        "global"
+      ]
+    },
     "BucketRegion":{"type":"string"},
     "BucketType":{
       "type":"string",
@@ -2596,6 +2603,11 @@
           "shape":"ObjectOwnership",
           "location":"header",
           "locationName":"x-amz-object-ownership"
+        },
+        "BucketNamespace":{
+          "shape":"BucketNamespace",
+          "location":"header",
+          "locationName":"x-amz-bucket-namespace"
         }
       },
       "payload":"CreateBucketConfiguration"
