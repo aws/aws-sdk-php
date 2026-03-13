@@ -42,7 +42,9 @@ class RestJsonErrorParser extends AbstractErrorParser
 
         // Retrieve error message directly
         $data['message'] = $data['parsed']['message']
-            ?? ($data['parsed']['Message'] ?? null);
+            ?? $data['parsed']['Message']
+            ?? $data['parsed']['error_description']
+            ?? null;
 
         $this->populateShape($data, $response, $command);
 
