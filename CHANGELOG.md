@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.373.2 - 2026-03-13
 
 * `Aws\ConfigService` - Fix pagination support for DescribeConformancePackCompliance, and update OrganizationConfigRule InputParameters max length to match ConfigRule.
 * `Aws\mgn` - Network Migration APIs are now publicly available for direct programmatic access. Customers can now call Network Migration APIs directly without going through AWS Transform (ATX), enabling automation, integration with existing tools, and self-service migration workflows.
