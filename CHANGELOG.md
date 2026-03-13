@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConfigService` - Fix pagination support for DescribeConformancePackCompliance, and update OrganizationConfigRule InputParameters max length to match ConfigRule.
+* `Aws\mgn` - Network Migration APIs are now publicly available for direct programmatic access. Customers can now call Network Migration APIs directly without going through AWS Transform (ATX), enabling automation, integration with existing tools, and self-service migration workflows.
+* `Aws\QuickSight` - The change adds a new capability named ManageSharedFolders in Custom Permissions
+* `Aws\MediaConvert` - This update adds support for Dolby AC-4 audio output, frame rate conversion between non-Dolby Vision inputs to Dolby Vision outputs, and clear lead CMAF HLS output.
+* `Aws\Glue` - Add QuerySessionContext to BatchGetPartitionRequest
+* `Aws\IVSRealTime` - Updates maximum reconnect window seconds from 60 to 300 for participant replication
+* `Aws\MediaLive` - Documents the VideoDescription.ScalingBehavior.SMART(underscore)CROP enum value.
+* `Aws\Connect` - Deprecating PredefinedNotificationID field
+* `Aws\GameLiftStreams` - Feature launch that enables customers to connect streaming sessions to their own VPCs running in AWS.
+* `Aws\APIGateway` - API Gateway now supports an additional security policy "SecurityPolicy-TLS13-1-2-FIPS-PFS-PQ-2025-09" for REST APIs and custom domain names. The new policy is compliant with TLS 1.3, Federal Information Processing Standards (FIPS), Perfect Forward Secrecy (PFS), and post-quantum (PQ) cryptography
+
 ## 3.373.1 - 2026-03-12
 
 * `Aws\` - Add support for PHPUnit v10. 

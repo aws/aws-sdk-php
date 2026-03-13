@@ -9293,7 +9293,12 @@
         "Priority":{"shape":"ConfigurableNotificationPriority"},
         "Content":{"shape":"NotificationContent"},
         "Tags":{"shape":"TagMap"},
-        "PredefinedNotificationId":{"shape":"NotificationId"},
+        "PredefinedNotificationId":{
+          "shape":"NotificationId",
+          "deprecated":true,
+          "deprecatedMessage":"PredefinedNotificationId is deprecated. Use ClientToken for idempotency.",
+          "deprecatedSince":"3/13/2026"
+        },
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
