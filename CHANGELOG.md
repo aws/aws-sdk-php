@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.373.3 - 2026-03-16
 
 * `Aws\` - Handles errors that comes in the `error_description` field, specifically how SSO-OIDC service has it modeled.
 * `Aws\BedrockAgentCore` - Provide support to perform deterministic operations on agent runtime through shell command executions via the new InvokeAgentRuntimeCommand API
