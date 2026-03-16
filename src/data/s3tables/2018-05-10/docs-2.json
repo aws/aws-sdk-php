@@ -361,6 +361,30 @@
         "TableMetadata$iceberg": "<p>Contains details about the metadata of an Iceberg table.</p>"
       }
     },
+    "IcebergNullOrder": {
+      "base": null,
+      "refs": {
+        "IcebergSortField$nullOrder": "<p>Specifies how null values are ordered. Valid values are <code>nulls-first</code> to place nulls before non-null values, or <code>nulls-last</code> to place nulls after non-null values.</p>"
+      }
+    },
+    "IcebergPartitionField": {
+      "base": "<p>Defines a single partition field in an Iceberg partition specification.</p>",
+      "refs": {
+        "IcebergPartitionFieldList$member": null
+      }
+    },
+    "IcebergPartitionFieldList": {
+      "base": null,
+      "refs": {
+        "IcebergPartitionSpec$fields": "<p>The list of partition fields that define how the table data is partitioned. Each field specifies a source field and a transform to apply. This field is required if <code>partitionSpec</code> is provided.</p>"
+      }
+    },
+    "IcebergPartitionSpec": {
+      "base": "<p>Defines how data in an Iceberg table is partitioned. Partitioning helps optimize query performance by organizing data into separate files based on field values. Each partition field specifies a transform to apply to a source field.</p>",
+      "refs": {
+        "IcebergMetadata$partitionSpec": "<p>The partition specification for the Iceberg table. Partitioning organizes data into separate files based on the values of one or more fields, which can improve query performance by reducing the amount of data scanned. Each partition field applies a transform (such as identity, year, month, or bucket) to a single field.</p>"
+      }
+    },
     "IcebergSchema": {
       "base": "<p>Contains details about the schema for an Iceberg table.</p>",
       "refs": {
@@ -373,10 +397,45 @@
         "TableMaintenanceSettings$icebergSnapshotManagement": "<p>Contains details about the Iceberg snapshot management settings for the table.</p>"
       }
     },
+    "IcebergSortDirection": {
+      "base": null,
+      "refs": {
+        "IcebergSortField$direction": "<p>The sort direction. Valid values are <code>asc</code> for ascending order or <code>desc</code> for descending order.</p>"
+      }
+    },
+    "IcebergSortField": {
+      "base": "<p>Defines a single sort field in an Iceberg sort order specification.</p>",
+      "refs": {
+        "IcebergSortFieldList$member": null
+      }
+    },
+    "IcebergSortFieldList": {
+      "base": null,
+      "refs": {
+        "IcebergSortOrder$fields": "<p>The list of sort fields that define how data is sorted within files. Each field specifies a source field, sort direction, and null ordering. This field is required if <code>writeOrder</code> is provided.</p>"
+      }
+    },
+    "IcebergSortOrder": {
+      "base": "<p>Defines the sort order for data within an Iceberg table. Sorting data can improve query performance by enabling more efficient data skipping.</p>",
+      "refs": {
+        "IcebergMetadata$writeOrder": "<p>The sort order for the Iceberg table. Sort order defines how data is sorted within data files, which can improve query performance by enabling more efficient data skipping and filtering.</p>"
+      }
+    },
     "IcebergUnreferencedFileRemovalSettings": {
       "base": "<p>Contains details about the unreferenced file removal settings for an Iceberg table bucket.</p>",
       "refs": {
         "TableBucketMaintenanceSettings$icebergUnreferencedFileRemoval": "<p>The unreferenced file removal settings for the table bucket.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "IcebergPartitionField$sourceId": "<p>The ID of the source schema field to partition by. This must reference a valid field ID from the table schema.</p>",
+        "IcebergPartitionField$fieldId": "<p>An optional unique identifier for this partition field. If not specified, S3 Tables automatically assigns a field ID.</p>",
+        "IcebergPartitionSpec$specId": "<p>The unique identifier for this partition specification. If not specified, defaults to <code>0</code>.</p>",
+        "IcebergSortField$sourceId": "<p>The ID of the source schema field to sort by. This must reference a valid field ID from the table schema.</p>",
+        "IcebergSortOrder$orderId": "<p>The unique identifier for this sort order. If not specified, defaults to <code>1</code>. The order ID is used by Apache Iceberg to track sort order evolution.</p>",
+        "SchemaField$id": "<p>An optional unique identifier for the schema field. Field IDs are used by Apache Iceberg to track schema evolution and maintain compatibility across schema changes. If not specified, S3 Tables automatically assigns field IDs.</p>"
       }
     },
     "InternalServerErrorException": {
@@ -736,6 +795,9 @@
         "GetTableRecordExpirationJobStatusResponse$failureMessage": "<p>If the job failed, this field contains an error message describing the failure reason.</p>",
         "GetTableReplicationResponse$versionToken": "<p>A version token that represents the current state of the table's replication configuration. Use this token when updating the configuration to ensure consistency.</p>",
         "GetTableResponse$managedByService": "<p>The service that manages the table.</p>",
+        "IcebergPartitionField$transform": "<p>The partition transform to apply to the source field. Supported transforms include <code>identity</code>, <code>year</code>, <code>month</code>, <code>day</code>, <code>hour</code>, <code>bucket</code>, and <code>truncate</code>. For more information, see the <a href=\"https://iceberg.apache.org/spec/#partition-transforms\">Apache Iceberg partition transforms documentation</a>.</p>",
+        "IcebergPartitionField$name": "<p>The name for this partition field. This name is used in the partitioned file paths.</p>",
+        "IcebergSortField$transform": "<p>The transform to apply to the source field before sorting. Use <code>identity</code> to sort by the field value directly, or specify other transforms as needed.</p>",
         "PutTableBucketReplicationResponse$status": "<p>The status of the replication configuration operation.</p>",
         "PutTableReplicationRequest$versionToken": "<p>A version token from a previous GetTableReplication call. Use this token to ensure you're updating the expected version of the configuration.</p>",
         "PutTableReplicationResponse$versionToken": "<p>A new version token representing the updated replication configuration.</p>",
@@ -997,7 +1059,7 @@
     "TableProperties": {
       "base": null,
       "refs": {
-        "IcebergMetadata$properties": "<p>Contains configuration properties for an Iceberg table.</p>"
+        "IcebergMetadata$properties": "<p>A map of custom configuration properties for the Iceberg table.</p>"
       }
     },
     "TableRecordExpirationConfigurationValue": {

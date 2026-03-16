@@ -6,10 +6,9 @@ use Aws\Identity\BearerTokenIdentityInterface;
 use Aws\Token\Token;
 use Aws\Identity\IdentityInterface;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Token\Token
- */
+#[CoversClass(Token::class)]
 class TokenTest extends TestCase
 {
     public function testHasGetters()

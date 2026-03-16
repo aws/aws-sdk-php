@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Single Sign-On Admin** service.
+ * @method \Aws\Result addRegion(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise addRegionAsync(array $args = [])
  * @method \Aws\Result attachCustomerManagedPolicyReferenceToPermissionSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise attachCustomerManagedPolicyReferenceToPermissionSetAsync(array $args = [])
  * @method \Aws\Result attachManagedPolicyToPermissionSet(array $args = [])
@@ -65,6 +67,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describePermissionSetAsync(array $args = [])
  * @method \Aws\Result describePermissionSetProvisioningStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describePermissionSetProvisioningStatusAsync(array $args = [])
+ * @method \Aws\Result describeRegion(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeRegionAsync(array $args = [])
  * @method \Aws\Result describeTrustedTokenIssuer(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeTrustedTokenIssuerAsync(array $args = [])
  * @method \Aws\Result detachCustomerManagedPolicyReferenceFromPermissionSet(array $args = [])
@@ -121,6 +125,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listPermissionSetsAsync(array $args = [])
  * @method \Aws\Result listPermissionSetsProvisionedToAccount(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPermissionSetsProvisionedToAccountAsync(array $args = [])
+ * @method \Aws\Result listRegions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRegionsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result listTrustedTokenIssuers(array $args = [])
@@ -141,6 +147,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putInlinePolicyToPermissionSetAsync(array $args = [])
  * @method \Aws\Result putPermissionsBoundaryToPermissionSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putPermissionsBoundaryToPermissionSetAsync(array $args = [])
+ * @method \Aws\Result removeRegion(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise removeRegionAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

@@ -2,6 +2,7 @@
   "version": "2.0",
   "service": "<p>IAM Identity Center is the Amazon Web Services solution for connecting your workforce users to Amazon Web Services managed applications and other Amazon Web Services resources. You can connect your existing identity provider and synchronize users and groups from your directory, or create and manage your users directly in IAM Identity Center. You can then use IAM Identity Center for either or both of the following:</p> <ul> <li> <p>User access to applications</p> </li> <li> <p>User access to Amazon Web Services accounts</p> </li> </ul> <p>This guide provides information about single sign-on operations that you can use for access to applications and Amazon Web Services accounts. For information about IAM Identity Center features, see the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html\">IAM Identity Center User Guide</a>.</p> <note> <p>IAM Identity Center uses the <code>sso</code> and <code>identitystore</code> API namespaces.</p> </note> <p>Many API operations for IAM Identity Center rely on identifiers for users and groups, known as principals. For more information about how to work with principals and principal IDs in IAM Identity Center, see the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/welcome.html\">Identity Store API Reference</a>.</p> <note> <p>Amazon Web Services provides SDKs that consist of libraries and sample code for various programming languages and platforms (Java, Ruby, .Net, iOS, Android, and more). The SDKs provide a convenient way to create programmatic access to IAM Identity Center and other Amazon Web Services services. For more information about the Amazon Web Services SDKs, including how to download and install them, see <a href=\"http://aws.amazon.com/tools/\">Tools for Amazon Web Services</a>.</p> </note>",
   "operations": {
+    "AddRegion": "<p>Adds a Region to an IAM Identity Center instance. This operation initiates an asynchronous workflow to replicate the IAM Identity Center instance to the target Region. The Region status is set to ADDING at first and changes to ACTIVE when the workflow completes.</p> <p>To use this operation, your IAM Identity Center instance and the target Region must meet the requirements described in the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/multi-region-iam-identity-center.html#multi-region-prerequisites\">IAM Identity Center User Guide</a>. </p> <p>The following actions are related to <code>AddRegion</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_RemoveRegion.html\">RemoveRegion</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_DescribeRegion.html\">DescribeRegion</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListRegions.html\">ListRegions</a> </p> </li> </ul>",
     "AttachCustomerManagedPolicyReferenceToPermissionSet": "<p>Attaches the specified customer managed policy to the specified <a>PermissionSet</a>.</p>",
     "AttachManagedPolicyToPermissionSet": "<p>Attaches an Amazon Web Services managed policy ARN to a permission set.</p> <note> <p>If the permission set is already referenced by one or more account assignments, you will need to call <code> <a>ProvisionPermissionSet</a> </code> after this operation. Calling <code>ProvisionPermissionSet</code> applies the corresponding IAM policy updates to all assigned accounts.</p> </note>",
     "CreateAccountAssignment": "<p>Assigns access to a principal for a specified Amazon Web Services account using a specified permission set.</p> <note> <p>The term <i>principal</i> here refers to a user or group that is defined in IAM Identity Center.</p> </note> <note> <p>As part of a successful <code>CreateAccountAssignment</code> call, the specified permission set will automatically be provisioned to the account in the form of an IAM policy. That policy is attached to the IAM role created in IAM Identity Center. If the permission set is subsequently updated, the corresponding IAM policies attached to roles in your accounts will not be updated automatically. In this case, you must call <code> <a>ProvisionPermissionSet</a> </code> to make these updates.</p> </note> <note> <p> After a successful response, call <code>DescribeAccountAssignmentCreationStatus</code> to describe the status of an assignment creation request. </p> </note>",
@@ -32,6 +33,7 @@
     "DescribeInstanceAccessControlAttributeConfiguration": "<p>Returns the list of IAM Identity Center identity store attributes that have been configured to work with attributes-based access control (ABAC) for the specified IAM Identity Center instance. This will not return attributes configured and sent by an external identity provider. For more information about ABAC, see <a href=\"/singlesignon/latest/userguide/abac.html\">Attribute-Based Access Control</a> in the <i>IAM Identity Center User Guide</i>.</p>",
     "DescribePermissionSet": "<p>Gets the details of the permission set.</p>",
     "DescribePermissionSetProvisioningStatus": "<p>Describes the status for the given permission set provisioning request.</p>",
+    "DescribeRegion": "<p>Retrieves details about a specific Region enabled in an IAM Identity Center instance. Details include the Region name, current status (ACTIVE, ADDING, or REMOVING), the date when the Region was added, and whether it is the primary Region. The request must be made from one of the enabled Regions of the IAM Identity Center instance.</p> <p>The following actions are related to <code>DescribeRegion</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_AddRegion.html\"> AddRegion</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_RemoveRegion.html\">RemoveRegion</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListRegions.html\">ListRegions</a> </p> </li> </ul>",
     "DescribeTrustedTokenIssuer": "<p>Retrieves details about a trusted token issuer configuration stored in an instance of IAM Identity Center. Details include the name of the trusted token issuer, the issuer URL, and the path of the source attribute and the destination attribute for a trusted token issuer configuration. </p>",
     "DetachCustomerManagedPolicyReferenceFromPermissionSet": "<p>Detaches the specified customer managed policy from the specified <a>PermissionSet</a>.</p>",
     "DetachManagedPolicyFromPermissionSet": "<p>Detaches the attached Amazon Web Services managed policy ARN from the specified permission set.</p>",
@@ -60,6 +62,7 @@
     "ListPermissionSetProvisioningStatus": "<p>Lists the status of the permission set provisioning requests for a specified IAM Identity Center instance.</p>",
     "ListPermissionSets": "<p>Lists the <a>PermissionSet</a>s in an IAM Identity Center instance.</p>",
     "ListPermissionSetsProvisionedToAccount": "<p>Lists all the permission sets that are provisioned to a specified Amazon Web Services account.</p>",
+    "ListRegions": "<p>Lists all enabled Regions of an IAM Identity Center instance, including those that are being added or removed. This operation returns Regions with ACTIVE, ADDING, or REMOVING status.</p> <p>The following actions are related to <code>ListRegions</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_AddRegion.html\"> AddRegion</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_RemoveRegion.html\">RemoveRegion</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_DescribeRegion.html\">DescribeRegion</a> </p> </li> </ul>",
     "ListTagsForResource": "<p>Lists the tags that are attached to a specified resource.</p>",
     "ListTrustedTokenIssuers": "<p>Lists all the trusted token issuers configured in an instance of IAM Identity Center.</p>",
     "ProvisionPermissionSet": "<p>The process by which a specified permission set is provisioned to the specified target.</p>",
@@ -70,6 +73,7 @@
     "PutApplicationSessionConfiguration": "<p>Updates the session configuration for an application in IAM Identity Center.</p> <p>The session configuration determines how users can access an application. This includes whether user background sessions are enabled. User background sessions allow users to start a job on a supported Amazon Web Services managed application without having to remain signed in to an active session while the job runs.</p>",
     "PutInlinePolicyToPermissionSet": "<p>Attaches an inline policy to a permission set.</p> <note> <p>If the permission set is already referenced by one or more account assignments, you will need to call <code> <a>ProvisionPermissionSet</a> </code> after this action to apply the corresponding IAM policy updates to all assigned accounts.</p> </note>",
     "PutPermissionsBoundaryToPermissionSet": "<p>Attaches an Amazon Web Services managed or customer managed policy to the specified <a>PermissionSet</a> as a permissions boundary.</p>",
+    "RemoveRegion": "<p>Removes an additional Region from an IAM Identity Center instance. This operation initiates an asynchronous workflow to clean up IAM Identity Center resources in the specified additional Region. The Region status is set to REMOVING and the Region record is deleted when the workflow completes. The request must be made from the primary Region. The target Region cannot be the primary Region, and no other add or remove Region workflows can be in progress.</p> <p>The following actions are related to <code>RemoveRegion</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_AddRegion.html\"> AddRegion</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_DescribeRegion.html\">DescribeRegion</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListRegions.html\">ListRegions</a> </p> </li> </ul>",
     "TagResource": "<p>Associates a set of tags with a specified resource.</p>",
     "UntagResource": "<p>Disassociates a set of tags from a specified resource.</p>",
     "UpdateApplication": "<p>Updates application properties. </p>",
@@ -204,6 +208,14 @@
       "refs": {
         "IamAuthenticationMethod$ActorPolicy": "<p>An IAM policy document in JSON.</p>"
       }
+    },
+    "AddRegionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AddRegionResponse": {
+      "base": null,
+      "refs": {}
     },
     "Application": {
       "base": "<p>A structure that describes an application that uses IAM Identity Center for access management.</p>",
@@ -516,10 +528,12 @@
         "Application$CreatedDate": "<p>The date and time when the application was originally created.</p>",
         "DescribeApplicationResponse$CreatedDate": "<p>The date the application was created.</p>",
         "DescribeInstanceResponse$CreatedDate": "<p>The date the instance was created.</p>",
+        "DescribeRegionResponse$AddedDate": "<p>The timestamp when the Region was added to the IAM Identity Center instance. For the primary Region, this is the IAM Identity Center instance creation time.</p>",
         "InstanceMetadata$CreatedDate": "<p>The date and time that the Identity Center instance was created.</p>",
         "PermissionSet$CreatedDate": "<p>The date that the permission set was created.</p>",
         "PermissionSetProvisioningStatus$CreatedDate": "<p>The date that the permission set was created.</p>",
-        "PermissionSetProvisioningStatusMetadata$CreatedDate": "<p>The date that the permission set was created.</p>"
+        "PermissionSetProvisioningStatusMetadata$CreatedDate": "<p>The date that the permission set was created.</p>",
+        "RegionMetadata$AddedDate": "<p>The timestamp when the Region was added to the IAM Identity Center instance. For the primary Region, this is the instance creation time.</p>"
       }
     },
     "DeleteAccountAssignmentRequest": {
@@ -678,6 +692,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeRegionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeRegionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeTrustedTokenIssuerRequest": {
       "base": null,
       "refs": {}
@@ -732,7 +754,7 @@
     "EncryptionConfiguration": {
       "base": "<p> A structure that specifies the KMS key type and KMS key ARN used to encrypt data in your IAM Identity Center instance.</p>",
       "refs": {
-        "UpdateInstanceRequest$EncryptionConfiguration": "<p>Specifies the encryption configuration for your IAM Identity Center instance. You can use this to configure customer managed KMS keys (CMK) or Amazon Web Services owned KMS keys for encrypting your instance data.</p>"
+        "UpdateInstanceRequest$EncryptionConfiguration": "<p>Specifies the encryption configuration for your IAM Identity Center instance. You can use this to configure customer managed KMS keys or Amazon Web Services owned KMS keys for encrypting your instance data.</p>"
       }
     },
     "EncryptionConfigurationDetails": {
@@ -875,6 +897,7 @@
     "InstanceArn": {
       "base": null,
       "refs": {
+        "AddRegionRequest$InstanceArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center instance to replicate to the target Region.</p>",
         "Application$InstanceArn": "<p>The ARN of the instance of IAM Identity Center that is configured with this application.</p>",
         "AttachCustomerManagedPolicyReferenceToPermissionSetRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. </p>",
         "AttachManagedPolicyToPermissionSetRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
@@ -898,6 +921,7 @@
         "DescribeInstanceResponse$InstanceArn": "<p>The ARN of the instance of IAM Identity Center under which the operation will run. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "DescribePermissionSetProvisioningStatusRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "DescribePermissionSetRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
+        "DescribeRegionRequest$InstanceArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center instance.</p>",
         "DetachCustomerManagedPolicyReferenceFromPermissionSetRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. </p>",
         "DetachManagedPolicyFromPermissionSetRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "GetInlinePolicyForPermissionSetRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
@@ -915,11 +939,13 @@
         "ListPermissionSetProvisioningStatusRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "ListPermissionSetsProvisionedToAccountRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "ListPermissionSetsRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
+        "ListRegionsRequest$InstanceArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center instance.</p>",
         "ListTagsForResourceRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "ListTrustedTokenIssuersRequest$InstanceArn": "<p>Specifies the ARN of the instance of IAM Identity Center with the trusted token issuer configurations that you want to list.</p>",
         "ProvisionPermissionSetRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "PutInlinePolicyToPermissionSetRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "PutPermissionsBoundaryToPermissionSetRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. </p>",
+        "RemoveRegionRequest$InstanceArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center instance.</p>",
         "TagResourceRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "UntagResourceRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "UpdateInstanceAccessControlAttributeConfigurationRequest$InstanceArn": "<p>The ARN of the IAM Identity Center instance under which the operation will be executed.</p>",
@@ -955,6 +981,13 @@
     "InternalServerException": {
       "base": "<p>The request processing has failed because of an unknown error, exception, or failure with an internal server.</p>",
       "refs": {}
+    },
+    "IsPrimaryRegion": {
+      "base": null,
+      "refs": {
+        "DescribeRegionResponse$IsPrimaryRegion": "<p>Indicates whether this is the primary Region where the IAM Identity Center instance was originally enabled. For more information on the difference between the primary Region and additional Regions, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/multi-region-iam-identity-center.html\">IAM Identity Center User Guide</a> </p>",
+        "RegionMetadata$IsPrimaryRegion": "<p>Indicates whether this is the primary Region where the IAM Identity Center instance was originally enabled. The primary Region cannot be removed.</p>"
+      }
     },
     "JMESPath": {
       "base": null,
@@ -1164,6 +1197,14 @@
       "base": null,
       "refs": {}
     },
+    "ListRegionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRegionsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {}
@@ -1219,6 +1260,7 @@
         "ListPermissionSetProvisioningStatusRequest$MaxResults": "<p>The maximum number of results to display for the assignment.</p>",
         "ListPermissionSetsProvisionedToAccountRequest$MaxResults": "<p>The maximum number of results to display for the assignment.</p>",
         "ListPermissionSetsRequest$MaxResults": "<p>The maximum number of results to display for the assignment.</p>",
+        "ListRegionsRequest$MaxResults": "<p>The maximum number of results to return in a single call. Default is 100.</p>",
         "ListTrustedTokenIssuersRequest$MaxResults": "<p>Specifies the total number of results that you want included in each response. If additional items exist beyond the number you specify, the <code>NextToken</code> response element is returned with a value (not null). Include the specified value as the <code>NextToken</code> request parameter in the next call to the operation to get the next set of results. Note that the service might return fewer results than the maximum even when there are more results available. You should check <code>NextToken</code> after every operation to ensure that you receive all of the results.</p>"
       }
     },
@@ -1482,6 +1524,39 @@
         "Grant$RefreshToken": "<p>Configuration options for the <code>refresh_token</code> grant type.</p>"
       }
     },
+    "RegionMetadata": {
+      "base": "<p>Contains information about an enabled Region of an IAM Identity Center instance, including the Region name, status, date added, and whether it is the primary Region.</p>",
+      "refs": {
+        "RegionMetadataList$member": null
+      }
+    },
+    "RegionMetadataList": {
+      "base": null,
+      "refs": {
+        "ListRegionsResponse$Regions": "<p>The list of Regions enabled in the IAM Identity Center instance, including Regions with ACTIVE, ADDING, or REMOVING status.</p>"
+      }
+    },
+    "RegionName": {
+      "base": null,
+      "refs": {
+        "AddRegionRequest$RegionName": "<p>The name of the Amazon Web Services Region to add to the IAM Identity Center instance. The Region name must be 1-32 characters long and follow the pattern of Amazon Web Services Region names (for example, us-east-1).</p>",
+        "Application$CreatedFrom": "<p>The Amazon Web Services Region where the application was created in IAM Identity Center.</p>",
+        "DescribeApplicationResponse$CreatedFrom": "<p>The Amazon Web Services Region where the application was created in IAM Identity Center.</p>",
+        "DescribeRegionRequest$RegionName": "<p>The name of the Amazon Web Services Region to retrieve information about. The Region name must be 1-32 characters long and follow the pattern of Amazon Web Services Region names (for example, us-east-1).</p>",
+        "DescribeRegionResponse$RegionName": "<p>The Amazon Web Services Region name.</p>",
+        "RegionMetadata$RegionName": "<p>The Amazon Web Services Region name.</p>",
+        "RemoveRegionRequest$RegionName": "<p>The name of the Amazon Web Services Region to remove from the IAM Identity Center instance. The Region name must be 1-32 characters long and follow the pattern of Amazon Web Services Region names (for example, us-east-1). The primary Region cannot be removed.</p>"
+      }
+    },
+    "RegionStatus": {
+      "base": null,
+      "refs": {
+        "AddRegionResponse$Status": "<p>The status of the Region after the Add operation. The status is ADDING when the asynchronous workflow is in progress and changes to ACTIVE when complete.</p>",
+        "DescribeRegionResponse$Status": "<p>The current status of the Region. Valid values are ACTIVE (Region is operational), ADDING (Region replication workflow is in progress), or REMOVING (Region removal workflow is in progress).</p>",
+        "RegionMetadata$Status": "<p>The current status of the Region. Valid values are ACTIVE (Region is operational), ADDING (Region extension workflow is in progress), or REMOVING (Region removal workflow is in progress).</p>",
+        "RemoveRegionResponse$Status": "<p>The status of the Region after the remove operation. The status is REMOVING when the asynchronous workflow is in progress. The Region record is deleted when the workflow completes.</p>"
+      }
+    },
     "RelayState": {
       "base": null,
       "refs": {
@@ -1489,6 +1564,14 @@
         "PermissionSet$RelayState": "<p>Used to redirect users within the application during the federation authentication process.</p>",
         "UpdatePermissionSetRequest$RelayState": "<p>Used to redirect users within the application during the federation authentication process.</p>"
       }
+    },
+    "RemoveRegionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RemoveRegionResponse": {
+      "base": null,
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>Indicates that a requested resource is not found.</p>",
@@ -1725,6 +1808,8 @@
         "ListPermissionSetsProvisionedToAccountResponse$NextToken": "<p>The pagination token for the list API. Initially the value is null. Use the output of previous API calls to make subsequent calls.</p>",
         "ListPermissionSetsRequest$NextToken": "<p>The pagination token for the list API. Initially the value is null. Use the output of previous API calls to make subsequent calls.</p>",
         "ListPermissionSetsResponse$NextToken": "<p>The pagination token for the list API. Initially the value is null. Use the output of previous API calls to make subsequent calls.</p>",
+        "ListRegionsRequest$NextToken": "<p>The pagination token for the list API. Initially the value is null. Use the output of previous API calls to make subsequent calls.</p>",
+        "ListRegionsResponse$NextToken": "<p>The pagination token to be used in subsequent calls. If the value is null, then there are no more entries.</p>",
         "ListTagsForResourceRequest$NextToken": "<p>The pagination token for the list API. Initially the value is null. Use the output of previous API calls to make subsequent calls.</p>",
         "ListTagsForResourceResponse$NextToken": "<p>The pagination token for the list API. Initially the value is null. Use the output of previous API calls to make subsequent calls.</p>",
         "ListTrustedTokenIssuersRequest$NextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>NextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>NextToken</code> response to request the next page of results.</p>",

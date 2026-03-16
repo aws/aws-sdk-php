@@ -4984,7 +4984,8 @@
         "OriginSslProtocols":{"shape":"OriginSslProtocols"},
         "OriginReadTimeout":{"shape":"integer"},
         "OriginKeepaliveTimeout":{"shape":"integer"},
-        "IpAddressType":{"shape":"IpAddressType"}
+        "IpAddressType":{"shape":"IpAddressType"},
+        "OriginMtlsConfig":{"shape":"OriginMtlsConfig"}
       }
     },
     "CustomizationActionType":{
@@ -9536,6 +9537,13 @@
         "locationName":"Origin"
       },
       "min":1
+    },
+    "OriginMtlsConfig":{
+      "type":"structure",
+      "required":["ClientCertificateArn"],
+      "members":{
+        "ClientCertificateArn":{"shape":"string"}
+      }
     },
     "OriginProtocolPolicy":{
       "type":"string",

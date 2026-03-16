@@ -32,6 +32,7 @@
     "GetRegexPatternSet": "<p>Retrieves the specified <a>RegexPatternSet</a>.</p>",
     "GetRuleGroup": "<p>Retrieves the specified <a>RuleGroup</a>.</p>",
     "GetSampledRequests": "<p>Gets detailed information about a specified number of requests--a sample--that WAF randomly selects from among the first 5,000 requests that your Amazon Web Services resource received during a time range that you choose. You can specify a sample size of up to 500 requests, and you can specify any time range in the previous three hours.</p> <p> <code>GetSampledRequests</code> returns a time range, which is usually the time range that you specified. However, if your resource (such as a CloudFront distribution) received 5,000 requests before the specified time range elapsed, <code>GetSampledRequests</code> returns an updated time range. This new time range indicates the actual period during which WAF selected the requests in the sample.</p>",
+    "GetTopPathStatisticsByTraffic": "<p>Retrieves aggregated statistics about the top URI paths accessed by bot traffic for a specified web ACL and time window. You can use this operation to analyze which paths on your web application receive the most bot traffic and identify the specific bots accessing those paths. The operation supports filtering by bot category, organization, or name, and allows you to drill down into specific path prefixes to view detailed URI-level statistics.</p>",
     "GetWebACL": "<p>Retrieves the specified <a>WebACL</a>.</p>",
     "GetWebACLForResource": "<p>Retrieves the <a>WebACL</a> for the specified resource. </p> <p>This call uses <code>GetWebACL</code>, to verify that your account has permission to access the retrieved web ACL. If you get an error that indicates that your account isn't authorized to perform <code>wafv2:GetWebACL</code> on the resource, that error won't be included in your CloudTrail event history. </p> <p>For Amazon CloudFront, don't use this call. Instead, call the CloudFront action <code>GetDistributionConfig</code>. For information, see <a href=\"https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetDistributionConfig.html\">GetDistributionConfig</a> in the <i>Amazon CloudFront API Reference</i>. </p> <p> <b>Required permissions for customer-managed IAM policies</b> </p> <p>This call requires permissions that are specific to the protected resource type. For details, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/security_iam_service-with-iam.html#security_iam_action-GetWebACLForResource\">Permissions for GetWebACLForResource</a> in the <i>WAF Developer Guide</i>.</p>",
     "ListAPIKeys": "<p>Retrieves a list of the API keys that you've defined for the specified scope. </p> <p>API keys are required for the integration of the CAPTCHA API in your JavaScript client applications. The API lets you customize the placement and characteristics of the CAPTCHA puzzle for your end users. For more information about the CAPTCHA JavaScript integration, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-application-integration.html\">WAF client application integration</a> in the <i>WAF Developer Guide</i>.</p>",
@@ -285,6 +286,18 @@
         "VisibilityConfig$CloudWatchMetricsEnabled": "<p>Indicates whether the associated resource sends metrics to Amazon CloudWatch. For the list of available metrics, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/monitoring-cloudwatch.html#waf-metrics\">WAF Metrics</a> in the <i>WAF Developer Guide</i>.</p> <p>For web ACLs, the metrics are for web requests that have the web ACL default action applied. WAF applies the default action to web requests that pass the inspection of all rules in the web ACL without being either allowed or blocked. For more information, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-default-action.html\">The web ACL default action</a> in the <i>WAF Developer Guide</i>.</p>",
         "WebACL$ManagedByFirewallManager": "<p>Indicates whether this web ACL was created by Firewall Manager and is being managed by Firewall Manager. If true, then only Firewall Manager can delete the web ACL or any Firewall Manager rule groups in the web ACL. See also the properties <code>RetrofittedByFirewallManager</code>, <code>PreProcessFirewallManagerRuleGroups</code>, and <code>PostProcessFirewallManagerRuleGroups</code>. </p>",
         "WebACL$RetrofittedByFirewallManager": "<p>Indicates whether this web ACL was created by a customer account and then retrofitted by Firewall Manager. If true, then the web ACL is currently being managed by a Firewall Manager WAF policy, and only Firewall Manager can manage any Firewall Manager rule groups in the web ACL. See also the properties <code>ManagedByFirewallManager</code>, <code>PreProcessFirewallManagerRuleGroups</code>, and <code>PostProcessFirewallManagerRuleGroups</code>. </p>"
+      }
+    },
+    "BotStatistics": {
+      "base": "<p>Statistics about a specific bot's traffic to a path, including the bot name, request count, and percentage of traffic.</p>",
+      "refs": {
+        "BotStatisticsList$member": null
+      }
+    },
+    "BotStatisticsList": {
+      "base": null,
+      "refs": {
+        "PathStatistics$TopBots": "<p>The list of top bots accessing this path, ordered by request count. The number of bots included is determined by the <code>NumberOfTopTrafficBotsPerPath</code> parameter in the request.</p>"
       }
     },
     "ByteMatchStatement": {
@@ -961,6 +974,24 @@
         "Filter$Requirement": "<p>Logic to apply to the filtering conditions. You can specify that, in order to satisfy the filter, a log must match all conditions or must match at least one condition.</p>"
       }
     },
+    "FilterSource": {
+      "base": "<p>Information about the bot filter that was applied to the request. This structure is populated in the response when you filter by bot category, organization, or name.</p>",
+      "refs": {
+        "PathStatistics$Source": "<p>Information about the bot filter that was applied to generate these statistics. This field is only populated when you filter by bot category, organization, or name.</p>"
+      }
+    },
+    "FilterString": {
+      "base": null,
+      "refs": {
+        "BotStatistics$BotName": "<p>The name of the bot. For example, <code>gptbot</code> or <code>googlebot</code>.</p>",
+        "FilterSource$BotCategory": "<p>The bot category that was used to filter the results. For example, <code>ai</code> or <code>search_engine</code>.</p>",
+        "FilterSource$BotOrganization": "<p>The bot organization that was used to filter the results. For example, <code>OpenAI</code> or <code>Google</code>.</p>",
+        "FilterSource$BotName": "<p>The bot name that was used to filter the results. For example, <code>gptbot</code> or <code>googlebot</code>.</p>",
+        "GetTopPathStatisticsByTrafficRequest$BotCategory": "<p>Filters the results to include only traffic from bots in the specified category. For example, you can filter by <code>ai</code> to see only AI crawler traffic, or <code>search_engine</code> to see only search engine bot traffic. When you apply this filter, the <code>Source</code> field is populated in the response.</p>",
+        "GetTopPathStatisticsByTrafficRequest$BotOrganization": "<p>Filters the results to include only traffic from bots belonging to the specified organization. For example, you can filter by <code>openai</code> or <code>google</code>. When you apply this filter, the <code>Source</code> field is populated in the response.</p>",
+        "GetTopPathStatisticsByTrafficRequest$BotName": "<p>Filters the results to include only traffic from the specified bot. For example, you can filter by <code>gptbot</code> or <code>googlebot</code>. When you apply this filter, the <code>Source</code> field is populated in the response.</p>"
+      }
+    },
     "Filters": {
       "base": null,
       "refs": {
@@ -1098,6 +1129,14 @@
       "refs": {}
     },
     "GetSampledRequestsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTopPathStatisticsByTrafficRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTopPathStatisticsByTrafficResponse": {
       "base": null,
       "refs": {}
     },
@@ -1671,6 +1710,8 @@
     "NextMarker": {
       "base": null,
       "refs": {
+        "GetTopPathStatisticsByTrafficRequest$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
+        "GetTopPathStatisticsByTrafficResponse$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
         "ListAPIKeysRequest$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
         "ListAPIKeysResponse$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
         "ListAvailableManagedRuleGroupVersionsRequest$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
@@ -1705,6 +1746,12 @@
       "base": "<p>A logical rule statement used to negate the results of another rule statement. You provide one <a>Statement</a> within the <code>NotStatement</code>.</p>",
       "refs": {
         "Statement$NotStatement": "<p>A logical rule statement used to negate the results of another rule statement. You provide one <a>Statement</a> within the <code>NotStatement</code>.</p>"
+      }
+    },
+    "NumberOfTopTrafficBotsPerPath": {
+      "base": null,
+      "refs": {
+        "GetTopPathStatisticsByTrafficRequest$NumberOfTopTrafficBotsPerPath": "<p>The maximum number of top bots to include in the statistics for each path. Valid values are 1 to 10.</p>"
       }
     },
     "OnSourceDDoSProtectionConfig": {
@@ -1781,12 +1828,44 @@
         "RequestInspectionACFP$PasswordField": "<p>The name of the field in the request payload that contains your customer's password. </p> <p>How you specify this depends on the request inspection payload type.</p> <ul> <li> <p>For JSON payloads, specify the field name in JSON pointer syntax. For information about the JSON Pointer syntax, see the Internet Engineering Task Force (IETF) documentation <a href=\"https://tools.ietf.org/html/rfc6901\">JavaScript Object Notation (JSON) Pointer</a>. </p> <p>For example, for the JSON payload <code>{ \"form\": { \"password\": \"THE_PASSWORD\" } }</code>, the password field specification is <code>/form/password</code>.</p> </li> <li> <p>For form encoded payload types, use the HTML form names.</p> <p>For example, for an HTML form with the input element named <code>password1</code>, the password field specification is <code>password1</code>.</p> </li> </ul>"
       }
     },
+    "PathStatistics": {
+      "base": "<p>Statistics about bot traffic to a specific URI path, including the path, request count, percentage of total traffic, and the top bots accessing that path.</p>",
+      "refs": {
+        "PathStatisticsList$member": null
+      }
+    },
+    "PathStatisticsLimit": {
+      "base": null,
+      "refs": {
+        "GetTopPathStatisticsByTrafficRequest$Limit": "<p>The maximum number of path statistics to return. Valid values are 1 to 100.</p>"
+      }
+    },
+    "PathStatisticsList": {
+      "base": null,
+      "refs": {
+        "GetTopPathStatisticsByTrafficResponse$PathStatistics": "<p>The list of path statistics, ordered by request count. Each entry includes the path, request count, percentage of total traffic, and the top bots accessing that path.</p>",
+        "GetTopPathStatisticsByTrafficResponse$TopCategories": "<p>Category-level aggregations for visualizing bot category to path relationships. This field is only populated when no bot filters are applied to the request. Each entry includes the bot category and the paths accessed by bots in that category.</p>"
+      }
+    },
+    "PathString": {
+      "base": null,
+      "refs": {
+        "PathStatistics$Path": "<p>The URI path. For example, <code>/api/</code> or <code>/api/v1/users</code>.</p>"
+      }
+    },
     "PayloadType": {
       "base": null,
       "refs": {
         "ManagedRuleGroupConfig$PayloadType": "<note> <p>Instead of this setting, provide your configuration under the request inspection configuration for <code>AWSManagedRulesATPRuleSet</code> or <code>AWSManagedRulesACFPRuleSet</code>. </p> </note>",
         "RequestInspection$PayloadType": "<p>The payload type for your login endpoint, either JSON or form encoded.</p>",
         "RequestInspectionACFP$PayloadType": "<p>The payload type for your account creation endpoint, either JSON or form encoded.</p>"
+      }
+    },
+    "PercentageValue": {
+      "base": null,
+      "refs": {
+        "BotStatistics$Percentage": "<p>The percentage of total requests to the associated path that came from this bot.</p>",
+        "PathStatistics$Percentage": "<p>The percentage of total requests that were made to this path.</p>"
       }
     },
     "PhoneNumberField": {
@@ -2098,6 +2177,14 @@
         "RequestBody$value": null
       }
     },
+    "RequestCount": {
+      "base": null,
+      "refs": {
+        "BotStatistics$RequestCount": "<p>The number of requests from this bot to the associated path within the specified time window.</p>",
+        "GetTopPathStatisticsByTrafficResponse$TotalRequestCount": "<p>The total number of requests that match the query criteria within the specified time window.</p>",
+        "PathStatistics$RequestCount": "<p>The number of requests to this path within the specified time window.</p>"
+      }
+    },
     "RequestInspection": {
       "base": "<p>The criteria for inspecting login requests, used by the ATP rule group to validate credentials usage. </p> <p>This is part of the <code>AWSManagedRulesATPRuleSet</code> configuration in <code>ManagedRuleGroupConfig</code>.</p> <p>In these settings, you specify how your application accepts login attempts by providing the request payload type and the names of the fields within the request body where the username and password are provided. </p>",
       "refs": {
@@ -2130,6 +2217,7 @@
         "GetPermissionPolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the rule group for which you want to get the policy.</p>",
         "GetRuleGroupRequest$ARN": "<p>The Amazon Resource Name (ARN) of the entity.</p>",
         "GetSampledRequestsRequest$WebAclArn": "<p>The Amazon resource name (ARN) of the <code>WebACL</code> for which you want a sample of requests.</p>",
+        "GetTopPathStatisticsByTrafficRequest$WebAclArn": "<p>The Amazon Resource Name (ARN) of the web ACL for which you want to retrieve path statistics.</p>",
         "GetWebACLForResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource whose web ACL you want to retrieve. </p> <p>The ARN must be in one of the following formats:</p> <ul> <li> <p>For an Application Load Balancer: <code>arn:<i>partition</i>:elasticloadbalancing:<i>region</i>:<i>account-id</i>:loadbalancer/app/<i>load-balancer-name</i>/<i>load-balancer-id</i> </code> </p> </li> <li> <p>For an Amazon API Gateway REST API: <code>arn:<i>partition</i>:apigateway:<i>region</i>::/restapis/<i>api-id</i>/stages/<i>stage-name</i> </code> </p> </li> <li> <p>For an AppSync GraphQL API: <code>arn:<i>partition</i>:appsync:<i>region</i>:<i>account-id</i>:apis/<i>GraphQLApiId</i> </code> </p> </li> <li> <p>For an Amazon Cognito user pool: <code>arn:<i>partition</i>:cognito-idp:<i>region</i>:<i>account-id</i>:userpool/<i>user-pool-id</i> </code> </p> </li> <li> <p>For an App Runner service: <code>arn:<i>partition</i>:apprunner:<i>region</i>:<i>account-id</i>:service/<i>apprunner-service-name</i>/<i>apprunner-service-id</i> </code> </p> </li> <li> <p>For an Amazon Web Services Verified Access instance: <code>arn:<i>partition</i>:ec2:<i>region</i>:<i>account-id</i>:verified-access-instance/<i>instance-id</i> </code> </p> </li> <li> <p>For an Amplify application: <code>arn:<i>partition</i>:amplify:<i>region</i>:<i>account-id</i>:apps/<i>app-id</i> </code> </p> </li> </ul>",
         "GetWebACLRequest$ARN": "<p>The Amazon Resource Name (ARN) of the web ACL that you want to retrieve. </p>",
         "IPSet$ARN": "<p>The Amazon Resource Name (ARN) of the entity.</p>",
@@ -2408,6 +2496,7 @@
         "GetRegexPatternSetRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
         "GetRuleGroupRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
         "GetSampledRequestsRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
+        "GetTopPathStatisticsByTrafficRequest$Scope": "<p>Specifies whether the web ACL is for an Amazon Web Services CloudFront distribution or for a regional application. A regional application can be an Application Load Balancer, an AppSync GraphQL API, an Amazon Cognito user pool, an Amazon Web Services App Runner service, or an Amazon Web Services Verified Access instance.</p>",
         "GetWebACLRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
         "ListAPIKeysRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
         "ListAvailableManagedRuleGroupVersionsRequest$Scope": "<p>Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use <code>CLOUDFRONT</code>.</p> <p>To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: </p> <ul> <li> <p>CLI - Specify the Region when you use the CloudFront scope: <code>--scope=CLOUDFRONT --region=us-east-1</code>. </p> </li> <li> <p>API and SDKs - For all calls, use the Region endpoint us-east-1. </p> </li> </ul>",
@@ -2626,7 +2715,8 @@
       "base": "<p>In a <a>GetSampledRequests</a> request, the <code>StartTime</code> and <code>EndTime</code> objects specify the time range for which you want WAF to return a sample of web requests.</p> <p>You must specify the times in Coordinated Universal Time (UTC) format. UTC format includes the special designator, <code>Z</code>. For example, <code>\"2016-09-27T14:50Z\"</code>. You can specify any time range in the previous three hours.</p> <p>In a <a>GetSampledRequests</a> response, the <code>StartTime</code> and <code>EndTime</code> objects specify the time range for which WAF actually returned a sample of web requests. WAF gets the specified number of requests from among the first 5,000 requests that your Amazon Web Services resource receives during the specified time period. If your resource receives more than 5,000 requests during that period, WAF stops sampling after the 5,000th request. In that case, <code>EndTime</code> is the time that WAF received the 5,000th request.</p>",
       "refs": {
         "GetSampledRequestsRequest$TimeWindow": "<p>The start date and time and the end date and time of the range for which you want <code>GetSampledRequests</code> to return a sample of requests. You must specify the times in Coordinated Universal Time (UTC) format. UTC format includes the special designator, <code>Z</code>. For example, <code>\"2016-09-27T14:50Z\"</code>. You can specify any time range in the previous three hours. If you specify a start time that's earlier than three hours ago, WAF sets it to three hours ago.</p>",
-        "GetSampledRequestsResponse$TimeWindow": "<p>Usually, <code>TimeWindow</code> is the time range that you specified in the <code>GetSampledRequests</code> request. However, if your Amazon Web Services resource received more than 5,000 requests during the time range that you specified in the request, <code>GetSampledRequests</code> returns the time range for the first 5,000 requests. Times are in Coordinated Universal Time (UTC) format.</p>"
+        "GetSampledRequestsResponse$TimeWindow": "<p>Usually, <code>TimeWindow</code> is the time range that you specified in the <code>GetSampledRequests</code> request. However, if your Amazon Web Services resource received more than 5,000 requests during the time range that you specified in the request, <code>GetSampledRequests</code> returns the time range for the first 5,000 requests. Times are in Coordinated Universal Time (UTC) format.</p>",
+        "GetTopPathStatisticsByTrafficRequest$TimeWindow": "<p>The time window for which you want to retrieve path statistics. The time window must be within the data retention period for your web ACL.</p>"
       }
     },
     "TimeWindowDay": {
@@ -2741,6 +2831,12 @@
       "base": "<p>Inspect the path component of the URI of the web request. This is the part of the web request that identifies a resource. For example, <code>/images/daily-ad.jpg</code>.</p> <p>This is used in the <a>FieldToMatch</a> specification for some web request component types. </p> <p>JSON specification: <code>\"UriPath\": {}</code> </p>",
       "refs": {
         "FieldToMatch$UriPath": "<p>Inspect the request URI path. This is the part of the web request that identifies a resource, for example, <code>/images/daily-ad.jpg</code>.</p>"
+      }
+    },
+    "UriPathPrefixString": {
+      "base": null,
+      "refs": {
+        "GetTopPathStatisticsByTrafficRequest$UriPathPrefix": "<p>A URI path prefix to filter the results. When you specify this parameter, the operation returns statistics for individual URIs within the specified path prefix. For example, if you specify <code>/api</code>, the response includes statistics for paths like <code>/api/v1/users</code> and <code>/api/v2/orders</code>. If you don't specify this parameter, the operation returns top-level path statistics.</p>"
       }
     },
     "UsageOfAction": {

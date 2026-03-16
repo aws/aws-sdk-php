@@ -952,8 +952,7 @@
       "required":[
         "FsxFilesystemArn",
         "SecurityGroupArns",
-        "User",
-        "Password"
+        "User"
       ],
       "members":{
         "Subdirectory":{"shape":"FsxWindowsSubdirectory"},
@@ -962,7 +961,9 @@
         "Tags":{"shape":"InputTagList"},
         "User":{"shape":"SmbUser"},
         "Domain":{"shape":"SmbDomain"},
-        "Password":{"shape":"SmbPassword"}
+        "Password":{"shape":"SmbPassword"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "CreateLocationFsxWindowsResponse":{
@@ -991,7 +992,9 @@
         "KerberosKeytab":{"shape":"KerberosKeytabFile"},
         "KerberosKrb5Conf":{"shape":"KerberosKrb5ConfFile"},
         "AgentArns":{"shape":"AgentArnList"},
-        "Tags":{"shape":"InputTagList"}
+        "Tags":{"shape":"InputTagList"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "CreateLocationHdfsResponse":{
@@ -1295,7 +1298,10 @@
         "SecurityGroupArns":{"shape":"Ec2SecurityGroupArnList"},
         "CreationTime":{"shape":"Time"},
         "User":{"shape":"SmbUser"},
-        "Domain":{"shape":"SmbDomain"}
+        "Domain":{"shape":"SmbDomain"},
+        "ManagedSecretConfig":{"shape":"ManagedSecretConfig"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "DescribeLocationHdfsRequest":{
@@ -1319,7 +1325,10 @@
         "SimpleUser":{"shape":"HdfsUser"},
         "KerberosPrincipal":{"shape":"KerberosPrincipal"},
         "AgentArns":{"shape":"AgentArnList"},
-        "CreationTime":{"shape":"Time"}
+        "CreationTime":{"shape":"Time"},
+        "ManagedSecretConfig":{"shape":"ManagedSecretConfig"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "DescribeLocationNfsRequest":{
@@ -1630,15 +1639,15 @@
     },
     "FsxProtocolSmb":{
       "type":"structure",
-      "required":[
-        "Password",
-        "User"
-      ],
+      "required":["User"],
       "members":{
         "Domain":{"shape":"SmbDomain"},
         "MountOptions":{"shape":"SmbMountOptions"},
         "Password":{"shape":"SmbPassword"},
-        "User":{"shape":"SmbUser"}
+        "User":{"shape":"SmbUser"},
+        "ManagedSecretConfig":{"shape":"ManagedSecretConfig"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "FsxUpdateProtocol":{
@@ -1654,7 +1663,9 @@
         "Domain":{"shape":"UpdateSmbDomain"},
         "MountOptions":{"shape":"SmbMountOptions"},
         "Password":{"shape":"SmbPassword"},
-        "User":{"shape":"SmbUser"}
+        "User":{"shape":"SmbUser"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "FsxWindowsSubdirectory":{
@@ -2747,7 +2758,9 @@
         "Subdirectory":{"shape":"FsxWindowsSubdirectory"},
         "Domain":{"shape":"UpdateSmbDomain"},
         "User":{"shape":"SmbUser"},
-        "Password":{"shape":"SmbPassword"}
+        "Password":{"shape":"SmbPassword"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "UpdateLocationFsxWindowsResponse":{
@@ -2770,7 +2783,9 @@
         "KerberosPrincipal":{"shape":"KerberosPrincipal"},
         "KerberosKeytab":{"shape":"KerberosKeytabFile"},
         "KerberosKrb5Conf":{"shape":"KerberosKrb5ConfFile"},
-        "AgentArns":{"shape":"AgentArnList"}
+        "AgentArns":{"shape":"AgentArnList"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "UpdateLocationHdfsResponse":{

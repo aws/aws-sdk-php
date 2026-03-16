@@ -51,9 +51,9 @@
       }
     },
     "AacCodingMode": {
-      "base": "The Coding mode that you specify determines the number of audio channels and the audio channel layout metadata in your AAC output. Valid coding modes depend on the Rate control mode and Profile that you select. The following list shows the number of audio channels and channel layout for each coding mode. * 1.0 Audio Description (Receiver Mix): One channel, C. Includes audio description data from your stereo input. For more information see ETSI TS 101 154 Annex E. * 1.0 Mono: One channel, C. * 2.0 Stereo: Two channels, L, R. * 5.1 Surround: Six channels, C, L, R, Ls, Rs, LFE.",
+      "base": "The Coding mode that you specify determines the number of audio channels and the audio channel layout metadata in your AAC output. Valid coding modes depend on the Rate control mode and Profile that you select. The following list shows the number of audio channels and channel layout for each coding mode. * 1.0 Audio Description (Receiver Mix): One channel, C. Includes audio description data from your stereo input. For more information see ETSI TS 101 154 Annex E. * 1.0 Mono: One channel, C. * 2.0 Stereo: Two channels, L, R. * 5.1 Surround: Six channels, C, L, R, Ls, Rs, LFE. To follow the number of channels from your input audio, choose CODING_MODE_AUTO, and the service will automatically choose from one of the coding modes above.",
       "refs": {
-        "AacSettings$CodingMode": "The Coding mode that you specify determines the number of audio channels and the audio channel layout metadata in your AAC output. Valid coding modes depend on the Rate control mode and Profile that you select. The following list shows the number of audio channels and channel layout for each coding mode. * 1.0 Audio Description (Receiver Mix): One channel, C. Includes audio description data from your stereo input. For more information see ETSI TS 101 154 Annex E. * 1.0 Mono: One channel, C. * 2.0 Stereo: Two channels, L, R. * 5.1 Surround: Six channels, C, L, R, Ls, Rs, LFE."
+        "AacSettings$CodingMode": "The Coding mode that you specify determines the number of audio channels and the audio channel layout metadata in your AAC output. Valid coding modes depend on the Rate control mode and Profile that you select. The following list shows the number of audio channels and channel layout for each coding mode. * 1.0 Audio Description (Receiver Mix): One channel, C. Includes audio description data from your stereo input. For more information see ETSI TS 101 154 Annex E. * 1.0 Mono: One channel, C. * 2.0 Stereo: Two channels, L, R. * 5.1 Surround: Six channels, C, L, R, Ls, Rs, LFE. To follow the number of channels from your input audio, choose CODING_MODE_AUTO, and the service will automatically choose from one of the coding modes above."
       }
     },
     "AacLoudnessMeasurementMode": {
@@ -138,6 +138,39 @@
       "base": "Required when you set Codec to the value AC3.",
       "refs": {
         "AudioCodecSettings$Ac3Settings": "Required when you set Codec to the value AC3."
+      }
+    },
+    "Ac4BitstreamMode": {
+      "base": "Specify the bitstream mode for the AC-4 stream that the encoder emits. For more information about the AC-4 bitstream mode, see ETSI TS 103 190. Maps to dlb_paec_ac4_bed_classifier in the encoder implementation. - COMPLETE_MAIN: Complete Main (standard mix) - EMERGENCY: Stereo Emergency content",
+      "refs": {
+        "Ac4Settings$BitstreamMode": "Specify the bitstream mode for the AC-4 stream that the encoder emits. For more information about the AC-4 bitstream mode, see ETSI TS 103 190. Maps to dlb_paec_ac4_bed_classifier in the encoder implementation. - COMPLETE_MAIN: Complete Main (standard mix) - EMERGENCY: Stereo Emergency content"
+      }
+    },
+    "Ac4CodingMode": {
+      "base": "Dolby AC-4 coding mode. Determines number of channels. Maps to dlb_paec_ac4_bed_channel_config in the encoder implementation. - CODING_MODE_2_0: 2.0 (stereo) - maps to DLB_PAEC_AC4_BED_CHANNEL_CONFIG_20   - CODING_MODE_3_2_LFE: 5.1 surround - maps to DLB_PAEC_AC4_BED_CHANNEL_CONFIG_51 - CODING_MODE_5_1_4: 5.1.4 immersive - maps to DLB_PAEC_AC4_BED_CHANNEL_CONFIG_514",
+      "refs": {
+        "Ac4Settings$CodingMode": "Dolby AC-4 coding mode. Determines number of channels. Maps to dlb_paec_ac4_bed_channel_config in the encoder implementation. - CODING_MODE_2_0: 2.0 (stereo) - maps to DLB_PAEC_AC4_BED_CHANNEL_CONFIG_20   - CODING_MODE_3_2_LFE: 5.1 surround - maps to DLB_PAEC_AC4_BED_CHANNEL_CONFIG_51 - CODING_MODE_5_1_4: 5.1.4 immersive - maps to DLB_PAEC_AC4_BED_CHANNEL_CONFIG_514"
+      }
+    },
+    "Ac4DynamicRangeCompressionDrcProfile": {
+      "base": "Choose the Dolby AC-4 dynamic range control (DRC) profile that MediaConvert uses when encoding the metadata in the Dolby AC-4 stream for the specified decoder mode. For information about the Dolby AC-4 DRC profiles, see the Dolby AC-4 specification.",
+      "refs": {
+        "Ac4Settings$DynamicRangeCompressionFlatPanelTv": "Choose the Dolby AC-4 dynamic range control (DRC) profile that MediaConvert uses when encoding the metadata in the Dolby AC-4 stream for the specified decoder mode. For information about the Dolby AC-4 DRC profiles, see the Dolby AC-4 specification.",
+        "Ac4Settings$DynamicRangeCompressionHomeTheater": "Choose the Dolby AC-4 dynamic range control (DRC) profile that MediaConvert uses when encoding the metadata in the Dolby AC-4 stream for the specified decoder mode. For information about the Dolby AC-4 DRC profiles, see the Dolby AC-4 specification.",
+        "Ac4Settings$DynamicRangeCompressionPortableHeadphones": "Choose the Dolby AC-4 dynamic range control (DRC) profile that MediaConvert uses when encoding the metadata in the Dolby AC-4 stream for the specified decoder mode. For information about the Dolby AC-4 DRC profiles, see the Dolby AC-4 specification.",
+        "Ac4Settings$DynamicRangeCompressionPortableSpeakers": "Choose the Dolby AC-4 dynamic range control (DRC) profile that MediaConvert uses when encoding the metadata in the Dolby AC-4 stream for the specified decoder mode. For information about the Dolby AC-4 DRC profiles, see the Dolby AC-4 specification."
+      }
+    },
+    "Ac4Settings": {
+      "base": "Required when you set Codec to the value AC4.",
+      "refs": {
+        "AudioCodecSettings$Ac4Settings": "Required when you set Codec to the value AC4."
+      }
+    },
+    "Ac4StereoDownmix": {
+      "base": "Choose the preferred stereo downmix method. This setting tells the decoder how to downmix multi-channel audio to stereo during playback.",
+      "refs": {
+        "Ac4Settings$StereoDownmix": "Choose the preferred stereo downmix method. This setting tells the decoder how to downmix multi-channel audio to stereo during playback."
       }
     },
     "AccelerationMode": {
@@ -238,13 +271,11 @@
     },
     "AssociateCertificateRequest": {
       "base": "Associates the Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate with an AWS Elemental MediaConvert resource.",
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateCertificateResponse": {
       "base": "Successful association of Certificate Manager Amazon Resource Name (ARN) with Mediaconvert returns an OK message.",
-      "refs": {
-      }
+      "refs": {}
     },
     "AudioChannelTag": {
       "base": "Specify the QuickTime audio channel layout tags for the audio channels in this audio track. Enter channel layout tags in the same order as your output's audio channel order. For example, if your output audio track has a left and a right channel, enter Left (L) for the first channel and Right (R) for the second. If your output has multiple single-channel audio tracks, enter a single channel layout tag for each track.",
@@ -351,9 +382,9 @@
       }
     },
     "AudioSelectorType": {
-      "base": "Specify how MediaConvert selects audio content within your input. The default is Track. PID: Select audio by specifying the Packet Identifier (PID) values for MPEG Transport Stream inputs. Use this when you know the exact PID values of your audio streams. Track: Default. Select audio by track number. This is the most common option and works with most input container formats. If more types of audio data get recognized in the future, these numberings may shift, but the numberings used for Stream mode will not. Language code: Select audio by language using an ISO 639-2 or ISO 639-3 three-letter       code in all capital letters. Use this when your source has embedded language metadata and you want to select tracks based on their language. HLS rendition group: Select audio from an HLS rendition group. Use this when your input is an HLS package with multiple audio renditions and you want to select specific rendition groups. All PCM: Select all uncompressed PCM audio tracks from your input automatically. This is useful when you want to include all PCM audio tracks without specifying individual track numbers. Stream: Select audio by stream number. Stream numbers include all tracks in the source file, regardless of type, and correspond to either the order of tracks in the file, or if applicable, the stream number metadata of the track. Although all tracks count toward these stream numbers, in this audio selector context, only the stream number of a track containing audio data may be used. If your source file contains a track which is not recognized by the service, then the corresponding stream number will still be reserved for future use. If more types of audio data get recognized in the future, these numberings will not shift.",
+      "base": "Specify how MediaConvert selects audio content within your input. The default is Track. PID: Select audio by specifying the Packet Identifier (PID) values for MPEG Transport Stream inputs. Use this when you know the exact PID values of your audio streams. Track: Default. Select audio by track number. This is the most common option and works with most input container formats. If more types of audio data get recognized in the future, these numberings may shift, but the numberings used for Stream mode will not. Language code: Select audio by language using an ISO 639-2 or ISO 639-3 three-letter code in all capital letters. Use this when your source has embedded language metadata and you want to select tracks based on their language. HLS rendition group: Select audio from an HLS rendition group. Use this when your input is an HLS package with multiple audio renditions and you want to select specific rendition groups. All PCM: Select all uncompressed PCM audio tracks from your input automatically. This is useful when you want to include all PCM audio tracks without specifying individual track numbers. Stream: Select audio by stream number. Stream numbers include all tracks in the source file, regardless of type, and correspond to either the order of tracks in the file, or if applicable, the stream number metadata of the track. Although all tracks count toward these stream numbers, in this audio selector context, only the stream number of a track containing audio data may be used. If your source file contains a track which is not recognized by the service, then the corresponding stream number will still be reserved for future use. If more types of audio data get recognized in the future, these numberings will not shift.",
       "refs": {
-        "AudioSelector$SelectorType": "Specify how MediaConvert selects audio content within your input. The default is Track. PID: Select audio by specifying the Packet Identifier (PID) values for MPEG Transport Stream inputs. Use this when you know the exact PID values of your audio streams. Track: Default. Select audio by track number. This is the most common option and works with most input container formats. If more types of audio data get recognized in the future, these numberings may shift, but the numberings used for Stream mode will not. Language code: Select audio by language using an ISO 639-2 or ISO 639-3 three-letter       code in all capital letters. Use this when your source has embedded language metadata and you want to select tracks based on their language. HLS rendition group: Select audio from an HLS rendition group. Use this when your input is an HLS package with multiple audio renditions and you want to select specific rendition groups. All PCM: Select all uncompressed PCM audio tracks from your input automatically. This is useful when you want to include all PCM audio tracks without specifying individual track numbers. Stream: Select audio by stream number. Stream numbers include all tracks in the source file, regardless of type, and correspond to either the order of tracks in the file, or if applicable, the stream number metadata of the track. Although all tracks count toward these stream numbers, in this audio selector context, only the stream number of a track containing audio data may be used. If your source file contains a track which is not recognized by the service, then the corresponding stream number will still be reserved for future use. If more types of audio data get recognized in the future, these numberings will not shift."
+        "AudioSelector$SelectorType": "Specify how MediaConvert selects audio content within your input. The default is Track. PID: Select audio by specifying the Packet Identifier (PID) values for MPEG Transport Stream inputs. Use this when you know the exact PID values of your audio streams. Track: Default. Select audio by track number. This is the most common option and works with most input container formats. If more types of audio data get recognized in the future, these numberings may shift, but the numberings used for Stream mode will not. Language code: Select audio by language using an ISO 639-2 or ISO 639-3 three-letter code in all capital letters. Use this when your source has embedded language metadata and you want to select tracks based on their language. HLS rendition group: Select audio from an HLS rendition group. Use this when your input is an HLS package with multiple audio renditions and you want to select specific rendition groups. All PCM: Select all uncompressed PCM audio tracks from your input automatically. This is useful when you want to include all PCM audio tracks without specifying individual track numbers. Stream: Select audio by stream number. Stream numbers include all tracks in the source file, regardless of type, and correspond to either the order of tracks in the file, or if applicable, the stream number metadata of the track. Although all tracks count toward these stream numbers, in this audio selector context, only the stream number of a track containing audio data may be used. If your source file contains a track which is not recognized by the service, then the corresponding stream number will still be reserved for future use. If more types of audio data get recognized in the future, these numberings will not shift."
       }
     },
     "AudioTypeControl": {
@@ -503,8 +534,7 @@
     },
     "BadRequestException": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BandwidthReductionFilter": {
       "base": "The Bandwidth reduction filter increases the video quality of your output relative to its bitrate. Use to lower the bitrate of your constant quality QVBR output, with little or no perceptual decrease in quality. Or, use to increase the video quality of outputs with other rate control modes relative to the bitrate that you specify. Bandwidth reduction increases further when your input is low quality or noisy. Outputs that use this feature incur pro-tier pricing. When you include Bandwidth reduction filter, you cannot include the Noise reducer preprocessor.",
@@ -594,13 +624,11 @@
     },
     "CancelJobRequest": {
       "base": "Cancel a job by sending a request with the job ID",
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelJobResponse": {
       "base": "A cancel job request will receive a response with an empty body.",
-      "refs": {
-      }
+      "refs": {}
     },
     "CaptionDescription": {
       "base": "This object holds groups of settings related to captions for one output. For each output that has captions, include one instance of CaptionDescriptions.",
@@ -742,9 +770,9 @@
       }
     },
     "CmafIntervalCadence": {
-      "base": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval.",
+      "base": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling.",
       "refs": {
-        "CmafImageBasedTrickPlaySettings$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval."
+        "CmafImageBasedTrickPlaySettings$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling."
       }
     },
     "CmafKeyProviderType": {
@@ -970,8 +998,7 @@
     },
     "ConflictException": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Container": {
       "base": "The container of your media file. This information helps you understand the overall structure and details of your media, including format, duration, and track layout.",
@@ -1000,53 +1027,43 @@
     },
     "CreateJobRequest": {
       "base": "Send your create job request with your job settings and IAM role. Optionally, include user metadata and the ARN for the queue.",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateJobResponse": {
       "base": "Successful create job requests will return the job JSON.",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateJobTemplateRequest": {
       "base": "Send your create job template request with the name of the template and the JSON for the template. The template JSON should include everything in a valid job, except for input location and filename, IAM role, and user metadata.",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateJobTemplateResponse": {
       "base": "Successful create job template requests will return the template JSON.",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePresetRequest": {
       "base": "Send your create preset request with the name of the preset and the JSON for the output settings specified by the preset.",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePresetResponse": {
       "base": "Successful create preset requests will return the preset JSON.",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQueueRequest": {
       "base": "Create an on-demand queue by sending a CreateQueue request with the name of the queue. Create a reserved queue by sending a CreateQueue request with the pricing plan set to RESERVED and with values specified for the settings under reservationPlanSettings. When you create a reserved queue, you enter into a 12-month commitment to purchase the RTS that you specify. You can't cancel this commitment.",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQueueResponse": {
       "base": "Successful create queue requests return the name of the queue that you just created and information about it.",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateResourceShareRequest": {
       "base": "The request to share MediaConvert resources with Support.",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateResourceShareResponse": {
       "base": "Successfully accepted the request to share MediaConvert resources.",
-      "refs": {
-      }
+      "refs": {}
     },
     "DashAdditionalManifest": {
       "base": "Specify the details for each additional DASH manifest that you want the service to generate for this output group. Each manifest can reference a different subset of outputs in the group.",
@@ -1091,9 +1108,9 @@
       }
     },
     "DashIsoIntervalCadence": {
-      "base": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval.",
+      "base": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling.",
       "refs": {
-        "DashIsoImageBasedTrickPlaySettings$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval."
+        "DashIsoImageBasedTrickPlaySettings$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling."
       }
     },
     "DashIsoMpdManifestBandwidthType": {
@@ -1189,43 +1206,35 @@
     },
     "DeleteJobTemplateRequest": {
       "base": "Delete a job template by sending a request with the job template name",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteJobTemplateResponse": {
       "base": "Delete job template requests will return an OK message or error message with an empty body.",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePolicyRequest": {
       "base": "Send a request to permanently delete a policy that you created.",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePolicyResponse": {
       "base": "Successful DELETE policy requests will return an OK message.",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePresetRequest": {
       "base": "Delete a preset by sending a request with the preset name",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePresetResponse": {
       "base": "Delete preset requests will return an OK message or error message with an empty body.",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQueueRequest": {
       "base": "Delete a queue by sending a request with the queue name. You can't delete a queue with an active pricing plan or one that has unprocessed jobs in it.",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQueueResponse": {
       "base": "Delete queue requests return an OK message or error message with an empty body.",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEndpointsMode": {
       "base": "Optional field, defaults to DEFAULT. Specify DEFAULT for this operation to return your endpoints if any exist, or to create an endpoint for you and return it if one doesn't already exist. Specify GET_ONLY to return your endpoints if any exist, or an empty list if none exist.",
@@ -1235,13 +1244,11 @@
     },
     "DescribeEndpointsRequest": {
       "base": "Send a request with an empty body to the regional API endpoint to get your account API endpoint. Note that DescribeEndpoints is no longer required. We recommend that you send your requests directly to the regional endpoint instead.",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEndpointsResponse": {
       "base": "Successful describe endpoints requests will return your account API endpoint.",
-      "refs": {
-      }
+      "refs": {}
     },
     "DestinationSettings": {
       "base": "Settings associated with the destination. Will vary based on the type of destination",
@@ -1255,18 +1262,22 @@
     },
     "DisassociateCertificateRequest": {
       "base": "Removes an association between the Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate and an AWS Elemental MediaConvert resource.",
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateCertificateResponse": {
       "base": "Successful disassociation of Certificate Manager Amazon Resource Name (ARN) with Mediaconvert returns an OK message.",
-      "refs": {
-      }
+      "refs": {}
     },
     "DolbyVision": {
       "base": "Create Dolby Vision Profile 5 or Profile 8.1 compatible video output.",
       "refs": {
         "VideoPreprocessor$DolbyVision": "Enable Dolby Vision feature to produce Dolby Vision compatible video output."
+      }
+    },
+    "DolbyVisionCompatibility": {
+      "base": "When you set Compatibility mapping to Duplicate Stream, DolbyVision streams that have a backward compatible base layer (e.g., DolbyVision 8.1) will cause a duplicate stream to be signaled in the manifest as a duplicate stream. When you set Compatibility mapping to Supplemntal Codecs, DolbyVision streams that have a backward compatible base layer (e.g., DolbyVision 8.1) will cause the associate stream in the manifest to include a SUPPLEMENTAL_CODECS property.",
+      "refs": {
+        "DolbyVision$Compatibility": "When you set Compatibility mapping to Duplicate Stream, DolbyVision streams that have a backward compatible base layer (e.g., DolbyVision 8.1) will cause a duplicate stream to be signaled in the manifest as a duplicate stream. When you set Compatibility mapping to Supplemntal Codecs, DolbyVision streams that have a backward compatible base layer (e.g., DolbyVision 8.1) will cause the associate stream in the manifest to include a SUPPLEMENTAL_CODECS property."
       }
     },
     "DolbyVisionLevel6Metadata": {
@@ -1627,8 +1638,7 @@
     },
     "ExceptionBody": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExtendedDataServices": {
       "base": "If your source content has EIA-608 Line 21 Data Services, enable this feature to specify what MediaConvert does with the Extended Data Services (XDS) packets. You can choose to pass through XDS packets, or remove them from the output. For more information about XDS, see EIA-608 Line Data Services, section 9.5.1.5 05h Content Advisory.",
@@ -1688,8 +1698,7 @@
     },
     "ForbiddenException": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ForceIncludeRenditionSize": {
       "base": "Use Force include renditions to specify one or more resolutions to include your ABR stack. * (Recommended) To optimize automated ABR, specify as few resolutions as possible. * (Required) The number of resolutions that you specify must be equal to, or less than, the Max renditions setting. * If you specify a Min top rendition size rule, specify at least one resolution that is equal to, or greater than, Min top rendition size. * If you specify a Min bottom rendition size rule, only specify resolutions that are equal to, or greater than, Min bottom rendition size. * If you specify a Force include renditions rule, do not specify a separate rule for Allowed renditions. * Note: The ABR stack may include other resolutions that you do not specify here, depending on the Max renditions setting.",
@@ -1700,7 +1709,7 @@
     "Format": {
       "base": null,
       "refs": {
-        "Container$Format": "The format of your media file. For example: MP4, QuickTime (MOV), Matroska (MKV), WebM or MXF. Note that this will be blank if your media file has a format that the MediaConvert Probe operation does not recognize."
+        "Container$Format": "The format of your media file. For example: MP4, QuickTime (MOV), Matroska (MKV), WebM, MXF, Wave, or AVI. Note that this will be blank if your media file has a format that the MediaConvert Probe operation does not recognize."
       }
     },
     "FrameCaptureSettings": {
@@ -1731,63 +1740,51 @@
     },
     "GetJobRequest": {
       "base": "Query a job by sending a request with the job ID.",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobResponse": {
       "base": "Successful get job requests will return an OK message and the job JSON.",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobTemplateRequest": {
       "base": "Query a job template by sending a request with the job template name.",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobTemplateResponse": {
       "base": "Successful get job template requests will return an OK message and the job template JSON.",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobsQueryResultsRequest": {
       "base": "Retrieve a JSON array of up to twenty of your most recent jobs matched by a jobs query.",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobsQueryResultsResponse": {
       "base": "If the jobs query completed successfully, then a JSON array of jobs will be included in this response. To retrieve the twenty next most recent jobs matched by your jobs query, call the StartJobsQuery using the nextToken string returned in this response.",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyRequest": {
       "base": "Send a request to retrieve the JSON for your policy.",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyResponse": {
       "base": "Successful GET policy requests will return the JSON for your policy.",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPresetRequest": {
       "base": "Query a preset by sending a request with the preset name.",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPresetResponse": {
       "base": "Successful get preset requests will return an OK message and the preset JSON.",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueueRequest": {
       "base": "Get information about a queue by sending a request with the queue name.",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueueResponse": {
       "base": "Successful get queue requests return an OK message and information about the queue in JSON.",
-      "refs": {
-      }
+      "refs": {}
     },
     "GifFramerateControl": {
       "base": "If you are using the console, use the Framerate setting to specify the frame rate for this output. If you want to keep the same frame rate as the input video, choose Follow source. If you want to do frame rate conversion, choose a frame rate from the dropdown list or choose Custom. The framerates shown in the dropdown list are decimal approximations of fractions. If you choose Custom, specify your frame rate as a fraction. If you are creating your transcoding job specification as a JSON file without the console, use FramerateControl to specify which value the service uses for the frame rate for this output. Choose INITIALIZE_FROM_SOURCE if you want the service to use the frame rate from the input. Choose SPECIFIED if you want the service to use the frame rate you specify in the settings FramerateNumerator and FramerateDenominator.",
@@ -2246,6 +2243,12 @@
         "HlsGroupSettings$CaptionSegmentLengthControl": "Set Caption segment length control to Match video to create caption segments that align with the video segments from the first video output in this output group. For example, if the video segments are 2 seconds long, your WebVTT segments will also be 2 seconds long. Keep the default setting, Large segments to create caption segments that are 300 seconds long."
       }
     },
+    "HlsClearLead": {
+      "base": "Enable Clear Lead DRM to reduce video startup latency by leaving the first segment unencrypted while DRM license retrieval occurs in parallel. This optimization allows immediate playback startup while maintaining content protection for the remainder of the stream. When enabled, the first output segment remains fully unencrypted, and encryption begins at the start of the second segment. The HLS manifest will omit #EXT-X-KEY tags during the clear segment and insert the first #EXT-X-KEY immediately before the first encrypted fragment. This feature is supported exclusively for CMAF HLS (fMP4) outputs and is compatible with all existing key provider integrations (SPEKE v1, SPEKE v2, and Static Key encryption). Supported codecs: H.264 and H.265 video codecs, and AAC audio codec. Choose Enabled to activate Clear Lead DRM optimization. Choose Disabled to use standard encryption where all segments are encrypted from the beginning.",
+      "refs": {
+        "CmafEncryptionSettings$ClearLead": "Enable Clear Lead DRM to reduce video startup latency by leaving the first segment unencrypted while DRM license retrieval occurs in parallel. This optimization allows immediate playback startup while maintaining content protection for the remainder of the stream. When enabled, the first output segment remains fully unencrypted, and encryption begins at the start of the second segment. The HLS manifest will omit #EXT-X-KEY tags during the clear segment and insert the first #EXT-X-KEY immediately before the first encrypted fragment. This feature is supported exclusively for CMAF HLS (fMP4) outputs and is compatible with all existing key provider integrations (SPEKE v1, SPEKE v2, and Static Key encryption). Supported codecs: H.264 and H.265 video codecs, and AAC audio codec. Choose Enabled to activate Clear Lead DRM optimization. Choose Disabled to use standard encryption where all segments are encrypted from the beginning."
+      }
+    },
     "HlsClientCache": {
       "base": "Disable this setting only when your workflow requires the #EXT-X-ALLOW-CACHE:no tag. Otherwise, keep the default value Enabled and control caching in your video distribution set up. For example, use the Cache-Control http header.",
       "refs": {
@@ -2313,9 +2316,9 @@
       }
     },
     "HlsIntervalCadence": {
-      "base": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval.",
+      "base": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling.",
       "refs": {
-        "HlsImageBasedTrickPlaySettings$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval."
+        "HlsImageBasedTrickPlaySettings$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails. If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence). If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval. If set to FOLLOW_SEGMENTATION, MediaConvert generates thumbnail playlist entries that align exactly with video segment boundaries. FOLLOW_SEGMENTATION requires 1x1 tiling."
       }
     },
     "HlsKeyProviderType": {
@@ -2547,8 +2550,7 @@
     },
     "InternalServerErrorException": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Job": {
       "base": "Each job converts an input file into an output file or files. For more information, see the User Guide at https://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html",
@@ -2655,63 +2657,51 @@
     },
     "ListJobTemplatesRequest": {
       "base": "You can send list job templates requests with an empty body. Optionally, you can filter the response by category by specifying it in your request body. You can also optionally specify the maximum number, up to twenty, of job templates to be returned.",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobTemplatesResponse": {
       "base": "Successful list job templates requests return a JSON array of job templates. If you don't specify how they are ordered, you will receive them in alphabetical order by name.",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobsRequest": {
       "base": "You can send list jobs requests with an empty body. Optionally, you can filter the response by queue and/or job status by specifying them in your request body. You can also optionally specify the maximum number, up to twenty, of jobs to be returned.",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobsResponse": {
       "base": "Successful list jobs requests return a JSON array of jobs. If you don't specify how they are ordered, you will receive the most recently created first.",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPresetsRequest": {
       "base": "You can send list presets requests with an empty body. Optionally, you can filter the response by category by specifying it in your request body. You can also optionally specify the maximum number, up to twenty, of queues to be returned.",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPresetsResponse": {
       "base": "Successful list presets requests return a JSON array of presets. If you don't specify how they are ordered, you will receive them alphabetically by name.",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueuesRequest": {
       "base": "You can send list queues requests with an empty body. You can optionally specify the maximum number, up to twenty, of queues to be returned.",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueuesResponse": {
       "base": "Successful list queues requests return a JSON array of queues. If you don't specify how they are ordered, you will receive them alphabetically by name.",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": "List the tags for your AWS Elemental MediaConvert resource by sending a request with the Amazon Resource Name (ARN) of the resource. To get the ARN, send a GET request with the resource name.",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": "A successful request to list the tags for a resource returns a JSON map of tags.",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVersionsRequest": {
       "base": "Retrieve a JSON array of all available Job engine versions and the date they expire. Job engine versions are in YYYY-MM-DD format. Note that the Job engine version feature is not publicly available at this time. To request access, contact AWS support.",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVersionsResponse": {
       "base": "Successful list versions requests will return a JSON for available Job engine versions.",
-      "refs": {
-      }
+      "refs": {}
     },
     "M2tsAudioBufferModel": {
       "base": "Selects between the DVB and ATSC buffer models for Dolby Digital audio.",
@@ -3243,6 +3233,12 @@
         "ContainerSettings$MxfSettings": "These settings relate to your MXF output container."
       }
     },
+    "MxfUncompressedAudioWrapping": {
+      "base": "Choose the audio frame wrapping mode for PCM tracks in MXF outputs. AUTO (default): Uses codec-appropriate defaults - BWF for H.264/AVC, AES3 for MPEG2/XDCAM. AES3: Use AES3 frame wrapping with SMPTE-compliant descriptors. This setting only takes effect when the MXF profile is OP1a.",
+      "refs": {
+        "MxfSettings$UncompressedAudioWrapping": "Choose the audio frame wrapping mode for PCM tracks in MXF outputs. AUTO (default): Uses codec-appropriate defaults - BWF for H.264/AVC, AES3 for MPEG2/XDCAM. AES3: Use AES3 frame wrapping with SMPTE-compliant descriptors. This setting only takes effect when the MXF profile is OP1a."
+      }
+    },
     "MxfXavcDurationMode": {
       "base": "To create an output that complies with the XAVC file format guidelines for interoperability, keep the default value, Drop frames for compliance. To include all frames from your input in this output, keep the default setting, Allow any duration. The number of frames that MediaConvert excludes when you set this to Drop frames for compliance depends on the output frame rate and duration.",
       "refs": {
@@ -3337,8 +3333,7 @@
     },
     "NotFoundException": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "OpusSettings": {
       "base": "Required when you set Codec, under AudioDescriptions>CodecSettings, to the value OPUS.",
@@ -3487,13 +3482,11 @@
     },
     "ProbeRequest": {
       "base": "The request to probe one or more media files and retrieve metadata about them.",
-      "refs": {
-      }
+      "refs": {}
     },
     "ProbeResponse": {
       "base": "The response from a MediaConvert Probe operation, in JSON form, with detailed information about your input media.",
-      "refs": {
-      }
+      "refs": {}
     },
     "ProbeResult": {
       "base": "Probe results for your media file.",
@@ -3563,13 +3556,11 @@
     },
     "PutPolicyRequest": {
       "base": "Create or change a policy by sending a request that includes your policy in JSON.",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutPolicyResponse": {
       "base": "Successful PUT policy requests will return your policy.",
-      "refs": {
-      }
+      "refs": {}
     },
     "Queue": {
       "base": "You can use queues to manage the resources that are available to your AWS account for running multiple transcoding jobs at the same time. If you don't specify a queue, the service sends all jobs through the default queue. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/working-with-queues.html.",
@@ -3736,13 +3727,11 @@
     },
     "SearchJobsRequest": {
       "base": "Retrieve a JSON array that includes job details for up to twenty of your most recent jobs. Optionally filter results further according to input file, queue, or status. To retrieve the twenty next most recent jobs, use the nextToken string returned with the array.",
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchJobsResponse": {
       "base": "Successful search jobs requests return a JSON array of jobs. If you don't specify how they are ordered, you will receive the most recently created first.",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceOverride": {
       "base": "A service override applied by MediaConvert to the settings that you have configured. If you see any overrides, we recommend that you contact AWS Support.",
@@ -3752,8 +3741,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ShareStatus": {
       "base": null,
@@ -3802,13 +3790,11 @@
     },
     "StartJobsQueryRequest": {
       "base": "Start an asynchronous jobs query using the provided filters. To receive the list of jobs that match your query, call the GetJobsQueryResults API using the query ID returned by this API.",
-      "refs": {
-      }
+      "refs": {}
     },
     "StartJobsQueryResponse": {
       "base": "Successful requests return an ID that corresponds to an asynchronous jobs query.",
-      "refs": {
-      }
+      "refs": {}
     },
     "StaticKeyProvider": {
       "base": "Use these settings to set up encryption with a static key provider.",
@@ -3829,13 +3815,11 @@
     },
     "TagResourceRequest": {
       "base": "To add tags to a queue, preset, or job template, send a request with the Amazon Resource Name (ARN) of the resource and the tags that you want to add.",
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": "A successful request to add tags to a resource returns an OK message.",
-      "refs": {
-      }
+      "refs": {}
     },
     "TamsGapHandling": {
       "base": "Specify how MediaConvert handles gaps between media segments in your TAMS source. Gaps can occur in live streams due to network issues or other interruptions. Choose from the following options: * Skip gaps - Default. Skip over gaps and join segments together. This creates a continuous output with no blank frames, but may cause timeline discontinuities. * Fill with black - Insert black frames to fill gaps between segments. This maintains timeline continuity but adds black frames where content is missing. * Hold last frame - Repeat the last frame before a gap until the next segment begins. This maintains visual continuity during gaps.",
@@ -3913,8 +3897,7 @@
     },
     "TooManyRequestsException": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Track": {
       "base": "Details about each track (video, audio, or data) in the media file.",
@@ -4024,43 +4007,35 @@
     },
     "UntagResourceRequest": {
       "base": "To remove tags from a resource, send a request with the Amazon Resource Name (ARN) of the resource and the keys of the tags that you want to remove.",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": "A successful request to remove tags from a resource returns an OK message.",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateJobTemplateRequest": {
       "base": "Modify a job template by sending a request with the job template name and any of the following that you wish to change: description, category, and queue.",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateJobTemplateResponse": {
       "base": "Successful update job template requests will return the new job template JSON.",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePresetRequest": {
       "base": "Modify a preset by sending a request with the preset name and any of the following that you wish to change: description, category, and transcoding settings.",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePresetResponse": {
       "base": "Successful update preset requests will return the new preset JSON.",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQueueRequest": {
       "base": "Modify a queue by sending a request with the queue name and any changes to the queue.",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQueueResponse": {
       "base": "Successful update queue requests return the new queue information in JSON format.",
-      "refs": {
-      }
+      "refs": {}
     },
     "Vc3Class": {
       "base": "Specify the VC3 class to choose the quality characteristics for this output. VC3 class, together with the settings Framerate (framerateNumerator and framerateDenominator) and Resolution (height and width), determine your output bitrate. For example, say that your video resolution is 1920x1080 and your framerate is 29.97. Then Class 145 gives you an output with a bitrate of approximately 145 Mbps and Class 220 gives you and output with a bitrate of approximately 220 Mbps. VC3 class also specifies the color bit depth of your output.",
@@ -4559,6 +4534,20 @@
         "AutomatedAbrSettings$MaxQualityLevel": "Optional. Specify the QVBR quality level to use for all renditions in your automated ABR stack. To have MediaConvert automatically determine the quality level: Leave blank. To manually specify a quality level: Enter a value from 1 to 10. MediaConvert will use a quality level up to the value that you specify, depending on your source. For more information about QVBR quality levels, see: https://docs.aws.amazon.com/mediaconvert/latest/ug/qvbr-guidelines.html"
       }
     },
+    "__doubleMinNegative1000Max3": {
+      "base": null,
+      "refs": {
+        "Ac4Settings$LoRoCenterMixLevel": "Specify a value for the following Dolby AC-4 setting: Left only/Right only center mix. MediaConvert uses this value for downmixing. How the service uses this value depends on the value that you choose for Stereo downmix. Valid values: 3.0, 1.5, 0.0, -1.5, -3.0, -4.5, -6.0, and -infinity. The value -infinity mutes the channel. This setting applies only if you keep the default value of 3/2 - L, R, C, Ls, Rs for the setting Coding mode. If you choose a different value for Coding mode, the service ignores Left only/Right only center.",
+        "Ac4Settings$LtRtCenterMixLevel": "Specify a value for the following Dolby AC-4 setting: Left total/Right total center mix. MediaConvert uses this value for downmixing. How the service uses this value depends on the value that you choose for Stereo downmix. Valid values: 3.0, 1.5, 0.0, -1.5, -3.0, -4.5, -6.0, and -infinity. The value -infinity mutes the channel. This setting applies only if you keep the default value of 3/2 - L, R, C, Ls, Rs for the setting Coding mode. If you choose a different value for Coding mode, the service ignores Left total/Right total center."
+      }
+    },
+    "__doubleMinNegative1000MaxNegative1": {
+      "base": null,
+      "refs": {
+        "Ac4Settings$LoRoSurroundMixLevel": "Specify a value for the following Dolby AC-4 setting: Left only/Right only surround mix. MediaConvert uses this value for downmixing. How the service uses this value depends on the value that you choose for Stereo downmix. Valid values: -1.5, -3.0, -4.5, -6.0, and -infinity. The value -infinity mutes the channel. This setting applies only if you keep the default value of 3/2 - L, R, C, Ls, Rs for the setting Coding mode. If you choose a different value for Coding mode, the service ignores Left only/Right only surround.",
+        "Ac4Settings$LtRtSurroundMixLevel": "Specify a value for the following Dolby AC-4 setting: Left total/Right total surround mix. MediaConvert uses this value for downmixing. How the service uses this value depends on the value that you choose for Stereo downmix. Valid values: -1.5, -3.0, -4.5, -6.0, and -infinity. The value -infinity mutes the channel. This setting applies only if you keep the default value of 3/2 - L, R, C, Ls, Rs for the setting Coding mode. If you choose a different value for Coding mode, the service ignores Left total/Right total surround."
+      }
+    },
     "__doubleMinNegative59Max0": {
       "base": null,
       "refs": {
@@ -4723,6 +4712,15 @@
         "NoiseReducerTemporalFilterSettings$Strength": "Specify the strength of the noise reducing filter on this output. Higher values produce stronger filtering. We recommend the following value ranges, depending on the result that you want: * 0-2 for complexity reduction with minimal sharpness loss * 2-8 for complexity reduction with image preservation * 8-16 for a high level of complexity reduction"
       }
     },
+    "__integerMin0Max2": {
+      "base": null,
+      "refs": {
+        "Mp2Settings$Channels": "Set Channels to specify the number of channels in this output audio track. Choosing Follow input will use the number of channels found in the audio source; choosing Mono will give you 1 output channel; choosing Stereo will give you 2. In the API, valid values are 0, 1, and 2.",
+        "Mp3Settings$Channels": "Specify the number of channels in this output audio track. Choosing Follow input will use the number of channels found in the audio source; choosing Mono gives you 1 output channel; choosing Stereo gives you 2. In the API, valid values are 0, 1, and 2.",
+        "OpusSettings$Channels": "Specify the number of channels in this output audio track. Choosing Follow input will use the number of channels found in the audio source; choosing Mono gives you 1 output channel; choosing Stereo gives you 2. In the API, valid values are 0, 1, and 2.",
+        "VorbisSettings$Channels": "Optional. Specify the number of channels in this output audio track. Choosing Follow input will use the number of channels found in the audio source; choosing Mono on the console gives you 1 output channel; choosing Stereo gives you 2. In the API, valid values are 0, 1, and 2. The default value is 2."
+      }
+    },
     "__integerMin0Max2147483647": {
       "base": null,
       "refs": {
@@ -4863,6 +4861,13 @@
         "Hdr10Metadata$WhitePointY": "HDR Master Display Information must be provided by a color grader, using color grading tools. Range is 0 to 50,000, each increment represents 0.00002 in CIE1931 color coordinate. Note that this setting is not for color correction."
       }
     },
+    "__integerMin0Max64": {
+      "base": null,
+      "refs": {
+        "AiffSettings$Channels": "Specify the number of channels in this output audio track. Valid values are 0, 1, and even numbers up to 64.  Choose 0 to follow the number of channels from your input audio. Otherwise,  manually choose from 1, 2, 4, 6, and so on, up to 64.",
+        "WavSettings$Channels": "Specify the number of channels in this output audio track. Valid values are 0, 1, and even numbers up to 64.  Choose 0 to follow the number of channels from your input audio. Otherwise,  manually choose from 1, 2, 4, 6, and so on, up to 64."
+      }
+    },
     "__integerMin0Max65534": {
       "base": null,
       "refs": {
@@ -4894,7 +4899,8 @@
     "__integerMin0Max8": {
       "base": null,
       "refs": {
-        "AudioSelector$ProgramSelection": "Use this setting for input streams that contain Dolby E, to have the service extract specific program data from the track. To select multiple programs, create multiple selectors with the same Track and different Program numbers. In the console, this setting is visible when you set Selector type to Track. Choose the program number from the dropdown list. If your input file has incorrect metadata, you can choose All channels instead of a program number to have the service ignore the program IDs and include all the programs in the track."
+        "AudioSelector$ProgramSelection": "Use this setting for input streams that contain Dolby E, to have the service extract specific program data from the track. To select multiple programs, create multiple selectors with the same Track and different Program numbers. In the console, this setting is visible when you set Selector type to Track. Choose the program number from the dropdown list. If your input file has incorrect metadata, you can choose All channels instead of a program number to have the service ignore the program IDs and include all the programs in the track.",
+        "FlacSettings$Channels": "Specify the number of channels in this output audio track. Valid values are 0, 1, and even numbers up to 8.  Choose 0 to follow the number of channels from your input audio. Otherwise, manually choose from 1, 2, 4, 6, and 8."
       }
     },
     "__integerMin0Max9": {
@@ -5000,6 +5006,12 @@
         "WavSettings$BitDepth": "Specify Bit depth, in bits per sample, to choose the encoding quality for this audio track."
       }
     },
+    "__integerMin192000Max1024000": {
+      "base": null,
+      "refs": {
+        "Ac4Settings$Bitrate": "Specify the average bitrate in bits per second. Leave blank to use the default bitrate for the coding mode you select according to ETSI TS 103 190. Valid bitrates for coding mode 2.0 (stereo): 192000, 256000, or 320000. Valid bitrates for coding mode 5.1 (3/2 with LFE): 512000. Valid bitrates for coding mode 5.1.4 (immersive): 512000, 768000, or 1024000."
+      }
+    },
     "__integerMin1Max1": {
       "base": null,
       "refs": {
@@ -5043,23 +5055,14 @@
     "__integerMin1Max150": {
       "base": null,
       "refs": {
-        "JobSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings.  MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all  outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs.",
-        "JobTemplateSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings.  MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all  outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs."
+        "JobSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings. MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs.",
+        "JobTemplateSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings. MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs."
       }
     },
     "__integerMin1Max17895697": {
       "base": null,
       "refs": {
         "MotionImageInsertionFramerate$FramerateDenominator": "The bottom of the fraction that expresses your overlay frame rate. For example, if your frame rate is 24 fps, set this value to 1."
-      }
-    },
-    "__integerMin1Max2": {
-      "base": null,
-      "refs": {
-        "Mp2Settings$Channels": "Set Channels to specify the number of channels in this output audio track. Choosing Mono in will give you 1 output channel; choosing Stereo will give you 2. In the API, valid values are 1 and 2.",
-        "Mp3Settings$Channels": "Specify the number of channels in this output audio track. Choosing Mono gives you 1 output channel; choosing Stereo gives you 2. In the API, valid values are 1 and 2.",
-        "OpusSettings$Channels": "Specify the number of channels in this output audio track. Choosing Mono on gives you 1 output channel; choosing Stereo gives you 2. In the API, valid values are 1 and 2.",
-        "VorbisSettings$Channels": "Optional. Specify the number of channels in this output audio track. Choosing Mono on the console gives you 1 output channel; choosing Stereo gives you 2. In the API, valid values are 1 and 2. The default value is 2."
       }
     },
     "__integerMin1Max20": {
@@ -5195,18 +5198,10 @@
     "__integerMin1Max64": {
       "base": null,
       "refs": {
-        "AiffSettings$Channels": "Specify the number of channels in this output audio track. Valid values are 1 and even numbers up to 64. For example, 1, 2, 4, 6, and so on, up to 64.",
         "RemixSettings$AudioDescriptionAudioChannel": "Optionally specify the channel in your input that contains your audio description audio signal. MediaConvert mixes your audio signal across all output channels, while reducing their volume according to your data stream. When you specify an audio description audio channel, you must also specify an audio description data channel. For more information about audio description signals, see the BBC WHP 198 and 051 white papers.",
         "RemixSettings$AudioDescriptionDataChannel": "Optionally specify the channel in your input that contains your audio description data stream. MediaConvert mixes your audio signal across all output channels, while reducing their volume according to your data stream. When you specify an audio description data channel, you must also specify an audio description audio channel. For more information about audio description signals, see the BBC WHP 198 and 051 white papers.",
         "RemixSettings$ChannelsIn": "Specify the number of audio channels from your input that you want to use in your output. With remixing, you might combine or split the data in these channels, so the number of channels in your final output might be different. If you are doing both input channel mapping and output channel mapping, the number of output channels in your input mapping must be the same as the number of input channels in your output mapping.",
-        "RemixSettings$ChannelsOut": "Specify the number of channels in this output after remixing. Valid values: 1, 2, 4, 6, 8... 64. (1 and even numbers to 64.) If you are doing both input channel mapping and output channel mapping, the number of output channels in your input mapping must be the same as the number of input channels in your output mapping.",
-        "WavSettings$Channels": "Specify the number of channels in this output audio track. Valid values are 1 and even numbers up to 64. For example, 1, 2, 4, 6, and so on, up to 64."
-      }
-    },
-    "__integerMin1Max8": {
-      "base": null,
-      "refs": {
-        "FlacSettings$Channels": "Specify the number of channels in this output audio track. Choosing Mono on the console gives you 1 output channel; choosing Stereo gives you 2. In the API, valid values are between 1 and 8."
+        "RemixSettings$ChannelsOut": "Specify the number of channels in this output after remixing. Valid values: 1, 2, 4, 6, 8... 64. (1 and even numbers to 64.) If you are doing both input channel mapping and output channel mapping, the number of output channels in your input mapping must be the same as the number of input channels in your output mapping."
       }
     },
     "__integerMin1Max86400000": {
@@ -5353,6 +5348,7 @@
       "base": null,
       "refs": {
         "Ac3Settings$SampleRate": "This value is always 48000. It represents the sample rate in Hz.",
+        "Ac4Settings$SampleRate": "This value is always 48000. It represents the sample rate in Hz.",
         "Eac3AtmosSettings$SampleRate": "This value is always 48000. It represents the sample rate in Hz.",
         "Eac3Settings$SampleRate": "This value is always 48000. It represents the sample rate in Hz."
       }
@@ -5827,7 +5823,7 @@
         "AudioSelector$Pids": "Selects a specific PID from within an audio source (e.g. 257 selects PID 0x101).",
         "AudioSelector$Streams": "Identify a track from the input audio to include in this selector by entering the stream index number. These numberings count all tracks in the input file, but only a track containing audio data may be used here. To include several tracks in a single audio selector, specify multiple tracks as follows. Using the console, enter a comma-separated list. For example, type \"1,2,3\" to include tracks 1 through 3.",
         "AudioSelector$Tracks": "Identify a track from the input audio to include in this selector by entering the track index number. These numberings include only tracks recognized as audio. If the service recognizes more types of audio tracks in the future, these numberings may shift. To include several tracks in a single audio selector, specify multiple tracks as follows. Using the console, enter a comma-separated list. For example, type \"1,2,3\" to include tracks 1 through 3.",
-        "VideoSelector$Streams": "Specify one or more video streams for MediaConvert to use from your HLS input. Enter an integer corresponding to the stream number, with the first stream in your HLS multivariant playlist starting at 1.For re-encoding workflows, MediaConvert uses the video stream that you select with the highest bitrate as the input.For video passthrough workflows, you specify whether to passthrough a single video stream or multiple video streams under Video selector source in the output video encoding settings."
+        "VideoSelector$Streams": "Specify one or more video streams for MediaConvert to use from your HLS input. Enter an integer corresponding to the stream number, with the first stream in your HLS multivariant playlist starting at 1. For re-encoding workflows, MediaConvert uses the video stream that you select with the highest bitrate as the input. For video passthrough workflows, you specify whether to passthrough a single video stream or multiple video streams under Video selector source in the output video encoding settings."
       }
     },
     "__listOf__integerMin32Max8182": {

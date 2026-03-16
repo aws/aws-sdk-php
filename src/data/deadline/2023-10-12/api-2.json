@@ -2976,6 +2976,12 @@
         "templateType":{"shape":"JobTemplateType"}
       }
     },
+    "CostScaleFactor":{
+      "type":"float",
+      "box":true,
+      "max":100,
+      "min":0
+    },
     "CpuArchitectureType":{
       "type":"string",
       "enum":[
@@ -3034,6 +3040,7 @@
         "displayName":{"shape":"ResourceName"},
         "description":{"shape":"Description"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "costScaleFactor":{"shape":"CostScaleFactor"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -3116,7 +3123,10 @@
         "maxFailedTasksCount":{"shape":"MaxFailedTasksCount"},
         "maxRetriesPerTask":{"shape":"MaxRetriesPerTask"},
         "maxWorkerCount":{"shape":"MaxWorkerCount"},
-        "sourceJobId":{"shape":"JobId"}
+        "sourceJobId":{"shape":"JobId"},
+        "nameOverride":{"shape":"JobName"},
+        "descriptionOverride":{"shape":"JobDescriptionOverride"},
+        "tags":{"shape":"Tags"}
       }
     },
     "CreateJobResponse":{
@@ -4404,6 +4414,7 @@
       "required":[
         "farmId",
         "displayName",
+        "costScaleFactor",
         "createdAt",
         "createdBy"
       ],
@@ -4412,6 +4423,7 @@
         "displayName":{"shape":"ResourceName"},
         "description":{"shape":"Description"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "costScaleFactor":{"shape":"CostScaleFactor"},
         "createdAt":{"shape":"CreatedAt"},
         "createdBy":{"shape":"CreatedBy"},
         "updatedAt":{"shape":"UpdatedAt"},
@@ -4987,7 +4999,7 @@
           "locationName":"maxResults"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         }
@@ -4998,7 +5010,7 @@
       "required":["status"],
       "members":{
         "statistics":{"shape":"StatisticsList"},
-        "nextToken":{"shape":"String"},
+        "nextToken":{"shape":"NextToken"},
         "status":{"shape":"SessionsStatisticsAggregationStatus"},
         "statusMessage":{"shape":"String"}
       }
@@ -5428,6 +5440,12 @@
       "min":1,
       "sensitive":true
     },
+    "JobDescriptionOverride":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "sensitive":true
+    },
     "JobDetailsEntity":{
       "type":"structure",
       "required":[
@@ -5759,7 +5777,7 @@
       "type":"structure",
       "members":{
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -5775,7 +5793,7 @@
       "required":["meteredProducts"],
       "members":{
         "meteredProducts":{"shape":"MeteredProductSummaryList"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListBudgetsRequest":{
@@ -5783,7 +5801,7 @@
       "required":["farmId"],
       "members":{
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -5808,7 +5826,7 @@
       "type":"structure",
       "required":["budgets"],
       "members":{
-        "nextToken":{"shape":"String"},
+        "nextToken":{"shape":"NextToken"},
         "budgets":{"shape":"BudgetSummaries"}
       }
     },
@@ -5822,7 +5840,7 @@
           "locationName":"farmId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -5838,14 +5856,14 @@
       "required":["members"],
       "members":{
         "members":{"shape":"FarmMembers"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListFarmsRequest":{
       "type":"structure",
       "members":{
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -5865,7 +5883,7 @@
       "type":"structure",
       "required":["farms"],
       "members":{
-        "nextToken":{"shape":"String"},
+        "nextToken":{"shape":"NextToken"},
         "farms":{"shape":"FarmSummaries"}
       }
     },
@@ -5887,7 +5905,7 @@
           "locationName":"fleetId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -5903,7 +5921,7 @@
       "required":["members"],
       "members":{
         "members":{"shape":"FleetMembers"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListFleetsRequest":{
@@ -5931,7 +5949,7 @@
           "locationName":"status"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -5947,7 +5965,7 @@
       "required":["fleets"],
       "members":{
         "fleets":{"shape":"FleetSummaries"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListJobMembersRequest":{
@@ -5974,7 +5992,7 @@
           "locationName":"jobId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -5990,7 +6008,7 @@
       "required":["members"],
       "members":{
         "members":{"shape":"JobMembers"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListJobParameterDefinitionsRequest":{
@@ -6017,7 +6035,7 @@
           "locationName":"queueId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6033,7 +6051,7 @@
       "required":["jobParameterDefinitions"],
       "members":{
         "jobParameterDefinitions":{"shape":"JobParameterDefinitions"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListJobsRequest":{
@@ -6059,7 +6077,7 @@
           "locationName":"queueId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6075,14 +6093,14 @@
       "required":["jobs"],
       "members":{
         "jobs":{"shape":"JobSummaries"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListLicenseEndpointsRequest":{
       "type":"structure",
       "members":{
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6098,7 +6116,7 @@
       "required":["licenseEndpoints"],
       "members":{
         "licenseEndpoints":{"shape":"LicenseEndpointSummaries"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListLimitsRequest":{
@@ -6111,7 +6129,7 @@
           "locationName":"farmId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6127,7 +6145,7 @@
       "required":["limits"],
       "members":{
         "limits":{"shape":"LimitSummaries"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListMeteredProductsRequest":{
@@ -6140,7 +6158,7 @@
           "locationName":"licenseEndpointId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6156,14 +6174,14 @@
       "required":["meteredProducts"],
       "members":{
         "meteredProducts":{"shape":"MeteredProductSummaryList"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListMonitorsRequest":{
       "type":"structure",
       "members":{
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6178,7 +6196,7 @@
       "type":"structure",
       "required":["monitors"],
       "members":{
-        "nextToken":{"shape":"String"},
+        "nextToken":{"shape":"NextToken"},
         "monitors":{"shape":"MonitorSummaries"}
       }
     },
@@ -6200,7 +6218,7 @@
           "locationName":"queueId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6216,7 +6234,7 @@
       "required":["environments"],
       "members":{
         "environments":{"shape":"QueueEnvironmentSummaries"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListQueueFleetAssociationsRequest":{
@@ -6239,7 +6257,7 @@
           "locationName":"fleetId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6255,7 +6273,7 @@
       "required":["queueFleetAssociations"],
       "members":{
         "queueFleetAssociations":{"shape":"QueueFleetAssociationSummaries"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListQueueLimitAssociationsRequest":{
@@ -6278,7 +6296,7 @@
           "locationName":"limitId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6294,7 +6312,7 @@
       "required":["queueLimitAssociations"],
       "members":{
         "queueLimitAssociations":{"shape":"QueueLimitAssociationSummaries"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListQueueMembersRequest":{
@@ -6315,7 +6333,7 @@
           "locationName":"queueId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6331,7 +6349,7 @@
       "required":["members"],
       "members":{
         "members":{"shape":"QueueMemberList"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListQueuesRequest":{
@@ -6354,7 +6372,7 @@
           "locationName":"status"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6370,7 +6388,7 @@
       "required":["queues"],
       "members":{
         "queues":{"shape":"QueueSummaries"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListSessionActionsRequest":{
@@ -6407,7 +6425,7 @@
           "locationName":"taskId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6423,7 +6441,7 @@
       "required":["sessionActions"],
       "members":{
         "sessionActions":{"shape":"SessionActionSummaries"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListSessionsForWorkerRequest":{
@@ -6450,7 +6468,7 @@
           "locationName":"workerId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6466,7 +6484,7 @@
       "required":["sessions"],
       "members":{
         "sessions":{"shape":"ListSessionsForWorkerSummaries"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListSessionsForWorkerSummaries":{
@@ -6497,7 +6515,7 @@
           "locationName":"jobId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6513,7 +6531,7 @@
       "required":["sessions"],
       "members":{
         "sessions":{"shape":"SessionSummaries"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListStepConsumersRequest":{
@@ -6546,7 +6564,7 @@
           "locationName":"stepId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6568,7 +6586,7 @@
       "required":["consumers"],
       "members":{
         "consumers":{"shape":"StepConsumers"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListStepDependenciesRequest":{
@@ -6601,7 +6619,7 @@
           "locationName":"stepId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6623,7 +6641,7 @@
       "required":["dependencies"],
       "members":{
         "dependencies":{"shape":"StepDependencies"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListStepsRequest":{
@@ -6650,7 +6668,7 @@
           "locationName":"jobId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6666,7 +6684,7 @@
       "required":["steps"],
       "members":{
         "steps":{"shape":"StepSummaries"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListStorageProfilesForQueueRequest":{
@@ -6687,7 +6705,7 @@
           "locationName":"queueId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6703,7 +6721,7 @@
       "required":["storageProfiles"],
       "members":{
         "storageProfiles":{"shape":"StorageProfileSummaries"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListStorageProfilesRequest":{
@@ -6716,7 +6734,7 @@
           "locationName":"farmId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6732,7 +6750,7 @@
       "required":["storageProfiles"],
       "members":{
         "storageProfiles":{"shape":"StorageProfileSummaries"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -6782,7 +6800,7 @@
           "locationName":"stepId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6798,7 +6816,7 @@
       "required":["tasks"],
       "members":{
         "tasks":{"shape":"TaskSummaries"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListWorkersRequest":{
@@ -6819,7 +6837,7 @@
           "locationName":"fleetId"
         },
         "nextToken":{
-          "shape":"String",
+          "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
@@ -6834,7 +6852,7 @@
       "type":"structure",
       "required":["workers"],
       "members":{
-        "nextToken":{"shape":"String"},
+        "nextToken":{"shape":"NextToken"},
         "workers":{"shape":"WorkerSummaries"}
       }
     },
@@ -7045,6 +7063,11 @@
       "type":"integer",
       "box":true,
       "max":10000,
+      "min":0
+    },
+    "NextToken":{
+      "type":"string",
+      "max":4096,
       "min":0
     },
     "OutputRelativeDirectoriesList":{
@@ -8718,7 +8741,8 @@
           "locationName":"farmId"
         },
         "displayName":{"shape":"ResourceName"},
-        "description":{"shape":"Description"}
+        "description":{"shape":"Description"},
+        "costScaleFactor":{"shape":"CostScaleFactor"}
       }
     },
     "UpdateFarmResponse":{
@@ -8785,6 +8809,8 @@
         "maxRetriesPerTask":{"shape":"MaxRetriesPerTask"},
         "lifecycleStatus":{"shape":"UpdateJobLifecycleStatus"},
         "maxWorkerCount":{"shape":"MaxWorkerCount"},
+        "name":{"shape":"JobName"},
+        "description":{"shape":"JobDescriptionOverride"},
         "farmId":{
           "shape":"FarmId",
           "location":"uri",

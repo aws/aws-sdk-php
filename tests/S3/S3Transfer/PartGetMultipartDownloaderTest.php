@@ -15,10 +15,10 @@ use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers \Aws\S3\S3Transfer\PartGetMultipartDownloader
- */
+#[CoversClass(PartGetMultipartDownloader::class)]
 final class PartGetMultipartDownloaderTest extends TestCase
 {
 
@@ -45,10 +45,9 @@ final class PartGetMultipartDownloaderTest extends TestCase
      * @param int $objectSizeInBytes
      * @param int $targetPartSize
      *
-     * @dataProvider partGetMultipartDownloaderProvider
-     *
      * @return void
      */
+    #[DataProvider('partGetMultipartDownloaderProvider')]
     public function testPartGetMultipartDownloader(
         string $objectKey,
         int $objectSizeInBytes,
@@ -83,7 +82,7 @@ final class PartGetMultipartDownloaderTest extends TestCase
                 ]));
             });
         $mockClient->method('getCommand')
-            -> willReturnCallback(function ($commandName, $args) {
+            ->willReturnCallback(function ($commandName, $args) {
                 return new Command($commandName, $args);
             });
 
@@ -115,7 +114,8 @@ final class PartGetMultipartDownloaderTest extends TestCase
      *
      * @return array[]
      */
-    public static function partGetMultipartDownloaderProvider(): array {
+    public static function partGetMultipartDownloaderProvider(): array
+    {
         return [
             [
                 'objectKey' => 'ObjectKey_1',
@@ -188,10 +188,9 @@ final class PartGetMultipartDownloaderTest extends TestCase
      * @param int $targetPartSize
      * @param string $eTag
      *
-     * @dataProvider ifMatchIsPresentInEachPartRequestAfterFirstProvider
-     *
      * @return void
      */
+    #[DataProvider('ifMatchIsPresentInEachPartRequestAfterFirstProvider')]
     public function testIfMatchIsPresentInEachRangeRequestAfterFirst(
         int $objectSizeInBytes,
         int $targetPartSize,
@@ -219,7 +218,7 @@ final class PartGetMultipartDownloaderTest extends TestCase
                 return new Command($commandName, $args);
             });
         $s3Client->method('executeAsync')
-            -> willReturnCallback(function ($command)
+            ->willReturnCallback(function ($command)
             use (
                 $eTag,
                 $objectSizeInBytes,

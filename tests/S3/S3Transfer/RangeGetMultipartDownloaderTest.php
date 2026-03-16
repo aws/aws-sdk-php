@@ -15,10 +15,10 @@ use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers \Aws\S3\S3Transfer\RangeGetMultipartDownloader
- */
+#[CoversClass(RangeGetMultipartDownloader::class)]
 final class RangeGetMultipartDownloaderTest extends TestCase
 {
     /** @var string */
@@ -44,10 +44,9 @@ final class RangeGetMultipartDownloaderTest extends TestCase
      * @param int $objectSizeInBytes
      * @param int $targetPartSize
      *
-     * @dataProvider rangeGetMultipartDownloaderProvider
-     *
      * @return void
      */
+    #[DataProvider('rangeGetMultipartDownloaderProvider')]
     public function testRangeGetMultipartDownloader(
         string $objectKey,
         int $objectSizeInBytes,
@@ -114,7 +113,8 @@ final class RangeGetMultipartDownloaderTest extends TestCase
      *
      * @return array[]
      */
-    public static function rangeGetMultipartDownloaderProvider(): array {
+    public static function rangeGetMultipartDownloaderProvider(): array
+    {
         return [
             [
                 'objectKey' => 'ObjectKey_1',
@@ -230,10 +230,9 @@ final class RangeGetMultipartDownloaderTest extends TestCase
      * @param int $targetPartSize
      * @param string $eTag
      *
-     * @dataProvider ifMatchIsPresentInEachRangeRequestAfterFirstProvider
-     *
      * @return void
      */
+    #[DataProvider('ifMatchIsPresentInEachRangeRequestAfterFirstProvider')]
     public function testIfMatchIsPresentInEachRangeRequestAfterFirst(
         int $objectSizeInBytes,
         int $targetPartSize,
@@ -494,5 +493,4 @@ final class RangeGetMultipartDownloaderTest extends TestCase
 
         $this->assertFileDoesNotExist($resumeFile);
     }
-
 }

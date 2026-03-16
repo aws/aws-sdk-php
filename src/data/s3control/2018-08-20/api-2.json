@@ -4139,6 +4139,10 @@
         "S3ComputeObjectChecksum":{
           "shape":"S3ComputeObjectChecksumOperation",
           "box":true
+        },
+        "S3UpdateObjectEncryption":{
+          "shape":"S3UpdateObjectEncryptionOperation",
+          "box":true
         }
       }
     },
@@ -5063,8 +5067,8 @@
     "NoSuchPublicAccessBlockConfigurationMessage":{"type":"string"},
     "NonEmptyKmsKeyArnString":{
       "type":"string",
-      "max":2000,
-      "min":1,
+      "max":2048,
+      "min":20,
       "pattern":"arn:aws[a-zA-Z0-9-]*:kms:[a-z0-9-]+:[0-9]{12}:key/[a-zA-Z0-9-]+"
     },
     "NonEmptyMaxLength1024String":{
@@ -5129,6 +5133,15 @@
     },
     "ObjectAgeValue":{"type":"integer"},
     "ObjectCreationTime":{"type":"timestamp"},
+    "ObjectEncryption":{
+      "type":"structure",
+      "members":{
+        "SSEKMS":{
+          "shape":"S3UpdateObjectEncryptionSSEKMS",
+          "locationName":"SSE-KMS"
+        }
+      }
+    },
     "ObjectEncryptionFilter":{
       "type":"structure",
       "members":{
@@ -5307,7 +5320,8 @@
         "S3PutObjectLegalHold",
         "S3PutObjectRetention",
         "S3ReplicateObject",
-        "S3ComputeObjectChecksum"
+        "S3ComputeObjectChecksum",
+        "S3UpdateObjectEncryption"
       ]
     },
     "Organization":{
@@ -6422,6 +6436,24 @@
     "S3TagSet":{
       "type":"list",
       "member":{"shape":"S3Tag"}
+    },
+    "S3UpdateObjectEncryptionOperation":{
+      "type":"structure",
+      "members":{
+        "ObjectEncryption":{"shape":"ObjectEncryption"}
+      }
+    },
+    "S3UpdateObjectEncryptionSSEKMS":{
+      "type":"structure",
+      "required":["KMSKeyArn"],
+      "members":{
+        "KMSKeyArn":{"shape":"NonEmptyKmsKeyArnString"},
+        "BucketKeyEnabled":{
+          "shape":"Boolean",
+          "box":true
+        }
+      },
+      "locationName":"SSE-KMS"
     },
     "S3UserMetadata":{
       "type":"map",

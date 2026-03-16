@@ -13,16 +13,19 @@ use Aws\Command;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(JsonRpcParser::class)]
 class JsonRpcParserTest extends TestCase
 {
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testCanHandleNullResponses()
     {
         $operation = $this->getMockBuilder(Operation::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getOutput'])
+            ->onlyMethods(['getOutput'])
             ->getMock();
         $operation->expects($this->any())
             ->method('getOutput')
@@ -30,13 +33,13 @@ class JsonRpcParserTest extends TestCase
             ->willReturn(
                 $this->getMockBuilder(Shape::class)
                     ->disableOriginalConstructor()
-                    ->setMethods([])
+                    ->onlyMethods([])
                     ->getMock()
             );
 
         $service = $this->getMockBuilder(Service::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getOperation'])
+            ->onlyMethods(['getOperation'])
             ->getMock();
         $service->expects($this->any())
             ->method('getOperation')
@@ -45,7 +48,7 @@ class JsonRpcParserTest extends TestCase
 
         $parser = $this->getMockBuilder(JsonParser::class)
             ->disableOriginalConstructor()
-            ->setMethods(['parse'])
+            ->onlyMethods(['parse'])
             ->getMock();
         $parser->expects($this->any())
             ->method('parse')
@@ -63,7 +66,7 @@ class JsonRpcParserTest extends TestCase
     {
         $operation = $this->getMockBuilder(Operation::class)
             ->disableOriginalConstructor()
-            ->setMethods(['offsetGet'])
+            ->onlyMethods(['offsetGet'])
             ->getMock();
         $operation->expects($this->atLeastOnce())
             ->method('offsetGet')
@@ -72,7 +75,7 @@ class JsonRpcParserTest extends TestCase
 
         $service = $this->getMockBuilder(Service::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getOperation'])
+            ->onlyMethods(['getOperation'])
             ->getMock();
         $service->expects($this->any())
             ->method('getOperation')
@@ -81,7 +84,7 @@ class JsonRpcParserTest extends TestCase
 
         $parser = $this->getMockBuilder(JsonParser::class)
             ->disableOriginalConstructor()
-            ->setMethods(['parse'])
+            ->onlyMethods(['parse'])
             ->getMock();
         $parser->expects($this->never())
             ->method('parse');
@@ -96,13 +99,13 @@ class JsonRpcParserTest extends TestCase
     public function testCanHandleNonStreamingResponses()
     {
         $service = $this->getMockBuilder(Service::class)
-            -> disableOriginalConstructor()
-            -> setMethods(['getOperation'])
-            -> getMock();
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getOperation'])
+            ->getMock();
         $operation = $this->getMockBuilder(Operation::class)
-            -> disableOriginalConstructor()
-            -> setMethods(['getOutput'])
-            -> getMock();
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getOutput'])
+            ->getMock();
         $outputShape = new StructureShape([
             'type' => 'structure',
             'members' => [
@@ -121,16 +124,16 @@ class JsonRpcParserTest extends TestCase
             ]
         ], new ShapeMap([]));
         $operation->method('getOutput')
-            -> willReturn($outputShape);
+            ->willReturn($outputShape);
         $operation['output'] = $outputShape;
         $service->method('getOperation')
-            -> withAnyParameters()
-            -> willReturn($operation);
+            ->withAnyParameters()
+            ->willReturn($operation);
         $jsonRPCParser = new JsonRpcParser($service);
         $command = $this->getMockBuilder(Command::class)
-            -> disableOriginalConstructor()
-            -> setMethods(['getName'])
-            -> getMock();
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getName'])
+            ->getMock();
         $command->method('getName')
             ->willReturn('TestCommand');
         $body = json_encode([
@@ -154,13 +157,13 @@ class JsonRpcParserTest extends TestCase
     public function testCanHandleStreamingResponses()
     {
         $service = $this->getMockBuilder(Service::class)
-            -> disableOriginalConstructor()
-            -> setMethods(['getOperation'])
-            -> getMock();
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getOperation'])
+            ->getMock();
         $operation = $this->getMockBuilder(Operation::class)
-            -> disableOriginalConstructor()
-            -> setMethods(['getOutput'])
-            -> getMock();
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getOutput'])
+            ->getMock();
         $outputShape = new StructureShape([
             'type' => 'structure',
             'members' => [
@@ -190,16 +193,16 @@ class JsonRpcParserTest extends TestCase
             ]
         ], new ShapeMap([]));
         $operation->method('getOutput')
-            -> willReturn($outputShape);
+            ->willReturn($outputShape);
         $operation['output'] = $outputShape;
         $service->method('getOperation')
-            -> withAnyParameters()
-            -> willReturn($operation);
+            ->withAnyParameters()
+            ->willReturn($operation);
         $jsonRPCParser = new JsonRpcParser($service);
         $command = $this->getMockBuilder(Command::class)
-            -> disableOriginalConstructor()
-            -> setMethods(['getName'])
-            -> getMock();
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getName'])
+            ->getMock();
         $command->method('getName')
             ->willReturn('TestCommand');
         $expectedResult = [

@@ -225,6 +225,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise updateBucketMetadataInventoryTableConfigurationAsync(array $args = [])
  * @method \Aws\Result updateBucketMetadataJournalTableConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateBucketMetadataJournalTableConfigurationAsync(array $args = [])
+ * @method \Aws\Result updateObjectEncryption(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateObjectEncryptionAsync(array $args = [])
  * @method \Aws\Result uploadPart(array $args = [])
  * @method \GuzzleHttp\Promise\Promise uploadPartAsync(array $args = [])
  * @method \Aws\Result uploadPartCopy(array $args = [])

@@ -6,23 +6,20 @@ use Aws\Api\Parser\RestJsonParser;
 use Aws\Api\Service;
 use Aws\CommandInterface;
 use Aws\Test\Api\Parser\ParserTestServiceTrait;
+use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
+use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-/**
- * @covers Aws\Api\Parser\RestJsonParser
- */
+#[CoversClass(RestJsonParser::class)]
 class RestJsonParserTest extends TestCase
 {
     use ParserTestServiceTrait;
 
-    /**
-     * @param string|array $value
-     * @param array $expected
-     *
-     * @return void
-     * @dataProvider parsesDocumentTypePayloadProvider
-     */
+    #[DataProvider('parsesDocumentTypePayloadProvider')]
     public function testParsesDocumentTypePayload(
         string $value,
         string|array $expected
@@ -40,7 +37,7 @@ class RestJsonParserTest extends TestCase
         self::assertEquals($expected, $result['documentValue']);
     }
 
-    public function parsesDocumentTypePayloadProvider(): iterable
+    public static function parsesDocumentTypePayloadProvider(): iterable
     {
         return [
             'string payload' => ["\"hello\"", 'hello'],
@@ -179,5 +176,49 @@ class RestJsonParserTest extends TestCase
 
         // Empty string should still be skipped
         $this->assertArrayNotHasKey('Empty', $result);
+    }
+
+    /**
+     * @return void
+     */
+    #[DoesNotPerformAssertions]
+    public function testParsesEmptyResponseOnNonSeekableStream(): void
+    {
+        $shape = [
+            'type' => 'structure',
+            'members' => [
+                'TestMember' => [
+                    'type' => 'string',
+                ]
+            ]
+        ];
+
+        $api = new Service([
+            'metadata' => [
+                'protocol' => 'rest-json'
+            ],
+            'operations' => [
+                'TestOperation' => [
+                    'http' => ['method' => 'GET'],
+                    'output' => $shape
+                ]
+            ],
+            'shapes' => []
+        ], function () {});
+
+        $parser = new RestJsonParser($api);
+        $response = new Response(
+            200,
+            [],
+            new NoSeekStream(
+                Utils::streamFor()
+            )
+        );
+        $command = $this->getMockBuilder(
+            CommandInterface::class
+        )->getMock();
+        $command->method('getName')->willReturn('TestOperation');
+
+        $parser($command, $response);
     }
 }

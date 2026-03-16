@@ -869,7 +869,8 @@
         "dataflow-endpoint",
         "antenna-uplink",
         "uplink-echo",
-        "s3-recording"
+        "s3-recording",
+        "telemetry-sink"
       ]
     },
     "ConfigDetails":{
@@ -911,7 +912,8 @@
         "antennaDownlinkDemodDecodeConfig":{"shape":"AntennaDownlinkDemodDecodeConfig"},
         "antennaUplinkConfig":{"shape":"AntennaUplinkConfig"},
         "uplinkEchoConfig":{"shape":"UplinkEchoConfig"},
-        "s3RecordingConfig":{"shape":"S3RecordingConfig"}
+        "s3RecordingConfig":{"shape":"S3RecordingConfig"},
+        "telemetrySinkConfig":{"shape":"TelemetrySinkConfig"}
       },
       "union":true
     },
@@ -1053,6 +1055,7 @@
         "minimumViableContactDurationSeconds":{"shape":"PositiveDurationInSeconds"},
         "dataflowEdges":{"shape":"DataflowEdgeList"},
         "trackingConfigArn":{"shape":"ConfigArn"},
+        "telemetrySinkConfigArn":{"shape":"ConfigArn"},
         "tags":{"shape":"TagsMap"},
         "streamsKmsKey":{"shape":"KmsKey"},
         "streamsKmsRole":{"shape":"RoleArn"}
@@ -1784,6 +1787,7 @@
         "minimumViableContactDurationSeconds":{"shape":"PositiveDurationInSeconds"},
         "dataflowEdges":{"shape":"DataflowEdgeList"},
         "trackingConfigArn":{"shape":"ConfigArn"},
+        "telemetrySinkConfigArn":{"shape":"ConfigArn"},
         "tags":{"shape":"TagsMap"},
         "streamsKmsKey":{"shape":"KmsKey"},
         "streamsKmsRole":{"shape":"RoleArn"}
@@ -1915,6 +1919,23 @@
       "pattern":"alias/[a-zA-Z0-9:/_-]+"
     },
     "KeyArn":{"type":"string"},
+    "KinesisDataStreamArn":{
+      "type":"string",
+      "max":275,
+      "min":37,
+      "pattern":"arn:[a-z0-9-.]{1,63}:kinesis:[-a-z0-9]{1,50}:[0-9]{12}:stream/[a-zA-Z0-9_.-]{1,128}"
+    },
+    "KinesisDataStreamData":{
+      "type":"structure",
+      "required":[
+        "kinesisRoleArn",
+        "kinesisDataStreamArn"
+      ],
+      "members":{
+        "kinesisRoleArn":{"shape":"RoleArn"},
+        "kinesisDataStreamArn":{"shape":"KinesisDataStreamArn"}
+      }
+    },
     "KmsKey":{
       "type":"structure",
       "members":{
@@ -2283,7 +2304,12 @@
       },
       "exception":true
     },
-    "RoleArn":{"type":"string"},
+    "RoleArn":{
+      "type":"string",
+      "max":165,
+      "min":30,
+      "pattern":"arn:[a-z0-9-.]{1,63}:iam::[0-9]{12}:role/[\\w+=,.@-]{1,64}"
+    },
     "S3BucketName":{
       "type":"string",
       "max":63,
@@ -2492,6 +2518,28 @@
       "key":{"shape":"String"},
       "value":{"shape":"String"}
     },
+    "TelemetrySinkConfig":{
+      "type":"structure",
+      "required":[
+        "telemetrySinkType",
+        "telemetrySinkData"
+      ],
+      "members":{
+        "telemetrySinkType":{"shape":"TelemetrySinkType"},
+        "telemetrySinkData":{"shape":"TelemetrySinkData"}
+      }
+    },
+    "TelemetrySinkData":{
+      "type":"structure",
+      "members":{
+        "kinesisDataStreamData":{"shape":"KinesisDataStreamData"}
+      },
+      "union":true
+    },
+    "TelemetrySinkType":{
+      "type":"string",
+      "enum":["KINESIS_DATA_STREAM"]
+    },
     "TimeAzEl":{
       "type":"structure",
       "required":[
@@ -2657,6 +2705,7 @@
         "minimumViableContactDurationSeconds":{"shape":"PositiveDurationInSeconds"},
         "dataflowEdges":{"shape":"DataflowEdgeList"},
         "trackingConfigArn":{"shape":"ConfigArn"},
+        "telemetrySinkConfigArn":{"shape":"ConfigArn"},
         "streamsKmsKey":{"shape":"KmsKey"},
         "streamsKmsRole":{"shape":"RoleArn"}
       }

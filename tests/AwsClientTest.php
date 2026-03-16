@@ -3,6 +3,7 @@ namespace Aws\Test;
 
 use Aws\Api\ApiProvider;
 use Aws\Api\ErrorParser\JsonRpcErrorParser;
+use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\CommandInterface;
 use Aws\Credentials\Credentials;
@@ -22,15 +23,17 @@ use Aws\Sts\StsClient;
 use Aws\Token\Token;
 use Aws\Waiter;
 use Aws\WrappedHttpHandler;
+use Exception;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers Aws\AwsClient
- */
+#[CoversClass(AwsClient::class)]
 class AwsClientTest extends TestCase
 {
     use UsesServiceTrait;
@@ -99,14 +102,14 @@ class AwsClientTest extends TestCase
 
     public function testWrapsExceptions()
     {
-        $this->expectExceptionMessage("Error executing \"foo\" on \"http://us-east-1.foo.amazonaws.com/\"; AWS HTTP error: Baz Bar!");
-        $this->expectException(\Aws\S3\Exception\S3Exception::class);
+        $this->expectExceptionMessage("Error executing \"foo\" on \"http://us-east-1.foo.amazonaws.com/\"; AWS HTTP error:\nBaz Bar!");
+        $this->expectException(S3Exception::class);
         $parser = function () {};
         $errorParser = new JsonRpcErrorParser();
         $h = new WrappedHttpHandler(
             function () {
                 return new RejectedPromise([
-                    'exception'        => new \Exception('Baz Bar!'),
+                    'exception'        => new Exception('Baz Bar!'),
                     'connection_error' => true,
                     'response'         => null
                 ]);
@@ -280,7 +283,7 @@ class AwsClientTest extends TestCase
         $this->assertStringContainsString('AWS4-HMAC-SHA256', $str);
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testAllowsFactoryMethodForBc()
     {
         Ec2Client::factory([
@@ -289,7 +292,7 @@ class AwsClientTest extends TestCase
         ]);
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testCanInstantiateAliasedClients()
     {
         new SesClient([
@@ -353,23 +356,41 @@ class AwsClientTest extends TestCase
         $client->bar();
     }
 
-    /**
-     * @param $service
-     * @param $clientConfig
-     *
-     * @dataProvider signOperationsWithAnAuthTypeProvider
-     */
-    public function testSignOperationsWithAnAuthType($service, $clientConfig)
+    #[DataProvider('signOperationsWithAnAuthTypeProvider')]
+    public function testSignOperationsWithAnAuthType(
+        array $serviceDefinition,
+        array $clientArguments,
+        array $expectedHeaders,
+        array $expectedHeaderValues
+    )
     {
-        $client = $this->createHttpsEndpointClient($service, $clientConfig);
+        $clientArguments += [
+            'handler' => function(CommandInterface $command,
+                                  RequestInterface $request)
+            use ($expectedHeaders, $expectedHeaderValues) {
+                foreach ($expectedHeaders as $header) {
+                    $this->assertTrue($request->hasHeader($header));
+                }
+
+                foreach ($expectedHeaderValues as $headerValue) {
+                    $this->assertEquals(
+                        $headerValue['value'],
+                        $request->getHeaderLine($headerValue['header'])
+                    );
+                }
+
+                return new Result();
+            }
+        ];
+        $client = $this->createHttpsEndpointClient($serviceDefinition, $clientArguments);
         $client->bar();
     }
 
-    public function signOperationsWithAnAuthTypeProvider()
+    public static function signOperationsWithAnAuthTypeProvider(): array
     {
         return [
-            [
-                [
+            'unsigned_payload' => [
+                'service_definition' => [
                     'metadata' => [
                         'signatureVersion' => 'v4',
                     ],
@@ -380,21 +401,14 @@ class AwsClientTest extends TestCase
                         ],
                     ],
                 ],
-                [
-                    'handler' => function (
-                        CommandInterface $command,
-                        RequestInterface $request
-                    ) {
-                        foreach (['Authorization','X-Amz-Content-Sha256', 'X-Amz-Date'] as $signatureHeader) {
-                            $this->assertTrue($request->hasHeader($signatureHeader));
-                        }
-                        $this->assertSame('UNSIGNED-PAYLOAD', $request->getHeader('X-Amz-Content-Sha256')[0]);
-                        return new Result;
-                    }
+                'client_arguments' => [],
+                'expected_headers' => ['Authorization','X-Amz-Content-Sha256', 'X-Amz-Date'],
+                'expected_header_values' => [
+                    ['header' => 'X-Amz-Content-Sha256', 'value' => 'UNSIGNED-PAYLOAD']
                 ]
             ],
-            [
-                [
+            'bearer_token' => [
+                'service_definition' => [
                     'metadata' => [
                         'signatureVersion' => 'v4',
                     ],
@@ -405,17 +419,12 @@ class AwsClientTest extends TestCase
                         ],
                     ],
                 ],
-                [
-                    'handler' => function (
-                        CommandInterface $command,
-                        RequestInterface $request
-                    ) {
-
-                        $this->assertTrue($request->hasHeader('Authorization'));
-                        $this->assertSame('Bearer foo', $request->getHeader('Authorization')[0]);
-                        return new Result;
-                    },
+                'client_arguments' => [
                     'token' => new Token('foo', time() + 1000)
+                ],
+                'expected_headers' => ['Authorization'],
+                'expected_header_values' => [
+                    ['header' => 'Authorization', 'value' => 'Bearer foo']
                 ]
             ]
         ];
@@ -603,7 +612,7 @@ class AwsClientTest extends TestCase
         );
     }
 
-    /** @dataProvider configuredEndpointUrlProvider */
+    #[DataProvider('configuredEndpointUrlProvider')]
     public function testAppliesConfiguredEndpointUrl($ini, $env, $expected)
     {
         $dir = sys_get_temp_dir() . '/.aws';
@@ -634,7 +643,7 @@ class AwsClientTest extends TestCase
         }
     }
 
-    /** @dataProvider configuredEndpointUrlProvider */
+    #[DataProvider('configuredEndpointUrlProvider')]
     public function testDoesNotApplyConfiguredEndpointWhenConfiguredUrlsIgnored($ini, $env)
     {
         putenv('AWS_IGNORE_CONFIGURED_ENDPOINT_URLS=true');
@@ -669,7 +678,7 @@ class AwsClientTest extends TestCase
         putenv('AWS_IGNORE_CONFIGURED_ENDPOINT_URLS=');
     }
 
-    public function configuredEndpointUrlProvider()
+    public static function configuredEndpointUrlProvider(): array
     {
         return [
             [
@@ -774,21 +783,7 @@ EOT
         $client->foo();
     }
 
-
-    public function testCallingEmitDeprecationWarningEmitsDeprecationWarning()
-    {
-        $this->expectDeprecation();
-        $this->expectDeprecationMessage(
-            "This method is deprecated. It will be removed in an upcoming release."
-        );
-        $client = $this->createClient();
-        $client::emitDeprecationWarning();
-    }
-
-    /**
-     * @dataProvider signingRegionSetProvider
-     * @runInSeparateProcess
-     */
+    #[DataProvider('signingRegionSetProvider')]
     public function testSigningRegionSetResolution(
         $command,
         $env,
@@ -853,7 +848,7 @@ EOT
         putenv('AWS_SIGV4A_SIGNING_REGION_SET=');
     }
 
-    public function signingRegionSetProvider()
+    public static function signingRegionSetProvider(): array
     {
         return [
             [null, null, null, null, 'us-west-2'],
@@ -1016,5 +1011,153 @@ EOT
             }
         ]);
         $client->listBuckets();
+    }
+
+    /**
+     * @dataProvider appendEventStreamFlagMiddlewareProvider
+     *
+     * @param array $definition
+     * @param bool $isFlagPresent
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
+    public function testAppendEventStreamHttpFlagMiddleware(
+        array $definition,
+        bool $isFlagPresent
+    ): void
+    {
+
+        $service = new Service($definition, function () {});
+        $client = new AwsClient([
+            'service'      => 'TestService',
+            'api_provider' => function () use ($service) {
+                return $service->toArray();
+            },
+            'region'       => 'us-east-1',
+            'version'      => 'latest',
+        ]);
+        $called = false;
+        $client->getHandlerList()->setHandler(new MockHandler([new Result()]));
+        $client->getHandlerList()->appendInit(function(callable $handler)
+        use ($isFlagPresent, &$called) {
+            return function (CommandInterface $command, ?RequestInterface $request = null)
+            use ($handler, $isFlagPresent, &$called) {
+                $called = true;
+                $this->assertTrue(
+                    ($command['@http']['stream'] ?? false) === $isFlagPresent,
+                );
+
+                return $handler($command, $request);
+            };
+        });
+
+        $command = $client->getCommand('OperationTest');
+        $client->execute($command);
+        $this->assertTrue($called);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function appendEventStreamFlagMiddlewareProvider(): array
+    {
+        return [
+            'service_with_flag_present' => [
+                'definition' => [
+                    'metadata' => [
+                        'protocol' => 'rest-json',
+                        'protocols' => [
+                            'rest-json'
+                        ]
+                    ],
+                    'operations' => [
+                        'OperationTest' => [
+                            'name' => 'OperationTest',
+                            'http' => [
+                                'method' => 'POST',
+                                'requestUri' => '/operationTest',
+                                'responseCode' => 200,
+                            ],
+                            'input' => ['shape' => 'OperationTestInput'],
+                            'output' => ['shape' => 'OperationTestOutput'],
+                        ]
+                    ],
+                    'shapes' => [
+                        'OperationTestInput' => [
+                            'type' => 'structure',
+                            'members' => [
+                            ]
+                        ],
+                        'OperationTestOutput' => [
+                            'type' => 'structure',
+                            'members' => [
+                                'Stream' => [
+                                    'shape' => 'StreamShape',
+                                    'eventstream' => true
+                                ]
+                            ]
+                        ],
+                        'StreamShape' => ['type' => 'structure']
+                    ]
+                ],
+                'present' => true
+            ],
+            'service_with_flag_no_present' => [
+                'definition' => [
+                    'metadata' => [
+                        'protocol' => 'rest-json',
+                        'protocols' => [
+                            'rest-json'
+                        ]
+                    ],
+                    'operations' => [
+                        'OperationTest' => [
+                            'name' => 'OperationTest',
+                            'http' => [
+                                'method' => 'POST',
+                                'requestUri' => '/operationTest',
+                                'responseCode' => 200,
+                            ],
+                            'input' => ['shape' => 'OperationTestInput'],
+                            'output' => ['shape' => 'OperationTestOutput'],
+                        ]
+                    ],
+                    'shapes' => [
+                        'OperationTestInput' => [
+                            'type' => 'structure',
+                            'members' => [
+                            ]
+                        ],
+                        'OperationTestOutput' => [
+                            'type' => 'structure',
+                            'members' => [
+                                'NoStream' => [
+                                    'shape' => 'NoStreamShape',
+                                ]
+                            ]
+                        ],
+                        'NoStreamShape' => ['type' => 'structure']
+                    ]
+                ],
+                'present' => false
+            ]
+        ];
+    }
+
+    public function testSupportsNamedArgs()
+    {
+        $client = new S3Client([
+            'region' => 'us-east-2',
+            'handler' => function (CommandInterface $command, RequestInterface $request) {
+                $this->assertEquals('foo', $command['Bucket']);
+
+                return new Result();
+            }
+        ]);
+        $client->listObjects(args: [
+            'Bucket' => 'foo',
+        ]);
     }
 }

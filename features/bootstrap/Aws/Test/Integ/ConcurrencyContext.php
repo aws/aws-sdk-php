@@ -4,26 +4,22 @@ namespace Aws\Test\Integ;
 
 use Aws\CommandInterface;
 use Aws\CommandPool;
-use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Behat\Behat\Hook\Scope\AfterFeatureScope;
 use Behat\Behat\Hook\Scope\BeforeFeatureScope;
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use JmesPath;
 use PHPUnit\Framework\Assert;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Defines application features from the specific context.
  */
-class ConcurrencyContext extends TestCase implements
+class ConcurrencyContext implements
     Context,
     SnippetAcceptingContext
 {
@@ -93,9 +89,12 @@ class ConcurrencyContext extends TestCase implements
      */
     public function theValueAtShouldBeA($key, $type)
     {
-        $this->assertInstanceOf(Result::class, $this->result);
+        Assert::assertInstanceOf(Result::class, $this->result);
         $methodName = 'assertIs' . ucfirst($type);
-        $this->$methodName($this->result->search($key));
+        call_user_func(
+            [Assert::class, $methodName],
+            $this->result->search($key)
+        );
     }
 
     /**
@@ -161,7 +160,7 @@ class ConcurrencyContext extends TestCase implements
      */
     public function thereShouldBeResults($count)
     {
-        $this->assertCount((int) $count, $this->result);
+        Assert::assertCount((int) $count, $this->result);
     }
 
     /**
@@ -169,7 +168,7 @@ class ConcurrencyContext extends TestCase implements
      */
     public function thereShouldBeValueAt($count, $path)
     {
-        $this->assertCount((int) $count, array_unique(
+        Assert::assertCount((int) $count, array_unique(
                 JmesPath\search($path, $this->result)
         ));
     }

@@ -65,6 +65,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getRuleGroupAsync(array $args = [])
  * @method \Aws\Result getSampledRequests(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getSampledRequestsAsync(array $args = [])
+ * @method \Aws\Result getTopPathStatisticsByTraffic(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getTopPathStatisticsByTrafficAsync(array $args = [])
  * @method \Aws\Result getWebACL(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getWebACLAsync(array $args = [])
  * @method \Aws\Result getWebACLForResource(array $args = [])

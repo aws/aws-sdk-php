@@ -7,10 +7,9 @@ use Aws\DynamoDb\SessionHandler;
 use Aws\DynamoDb\StandardSessionConnection;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\DynamoDb\SessionHandler
- */
+#[CoversClass(SessionHandler::class)]
 class SessionHandlerTest extends TestCase
 {
     use UsesServiceTrait;

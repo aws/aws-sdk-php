@@ -10,12 +10,14 @@
     "CreateApplication": "<p>Create application.</p>",
     "CreateConnector": "<p>Create Connector.</p>",
     "CreateLaunchConfigurationTemplate": "<p>Creates a new Launch Configuration Template.</p>",
+    "CreateNetworkMigrationDefinition": "<p>Creates a new network migration definition that specifies the source and target network configuration for a migration.</p>",
     "CreateReplicationConfigurationTemplate": "<p>Creates a new ReplicationConfigurationTemplate.</p>",
     "CreateWave": "<p>Create wave.</p>",
     "DeleteApplication": "<p>Delete application.</p>",
     "DeleteConnector": "<p>Delete Connector.</p>",
     "DeleteJob": "<p>Deletes a single Job by ID.</p>",
     "DeleteLaunchConfigurationTemplate": "<p>Deletes a single Launch Configuration Template by ID.</p>",
+    "DeleteNetworkMigrationDefinition": "<p>Deletes a network migration definition. This operation removes the migration definition and all associated metadata.</p>",
     "DeleteReplicationConfigurationTemplate": "<p>Deletes a single Replication Configuration Template by ID</p>",
     "DeleteSourceServer": "<p>Deletes a single source server by ID.</p>",
     "DeleteVcenterClient": "<p>Deletes a given vCenter client by ID.</p>",
@@ -31,6 +33,8 @@
     "DisconnectFromService": "<p>Disconnects specific Source Servers from Application Migration Service. Data replication is stopped immediately. All AWS resources created by Application Migration Service for enabling the replication of these source servers will be terminated / deleted within 90 minutes. Launched Test or Cutover instances will NOT be terminated. If the agent on the source server has not been prevented from communicating with the Application Migration Service service, then it will receive a command to uninstall itself (within approximately 10 minutes). The following properties of the SourceServer will be changed immediately: dataReplicationInfo.dataReplicationState will be set to DISCONNECTED; The totalStorageBytes property for each of dataReplicationInfo.replicatedDisks will be set to zero; dataReplicationInfo.lagDuration and dataReplicationInfo.lagDuration will be nullified.</p>",
     "FinalizeCutover": "<p>Finalizes the cutover immediately for specific Source Servers. All AWS resources created by Application Migration Service for enabling the replication of these source servers will be terminated / deleted within 90 minutes. Launched Test or Cutover instances will NOT be terminated. The AWS Replication Agent will receive a command to uninstall itself (within 10 minutes). The following properties of the SourceServer will be changed immediately: dataReplicationInfo.dataReplicationState will be changed to DISCONNECTED; The SourceServer.lifeCycle.state will be changed to CUTOVER; The totalStorageBytes property fo each of dataReplicationInfo.replicatedDisks will be set to zero; dataReplicationInfo.lagDuration and dataReplicationInfo.lagDuration will be nullified.</p>",
     "GetLaunchConfiguration": "<p>Lists all LaunchConfigurations available, filtered by Source Server IDs.</p>",
+    "GetNetworkMigrationDefinition": "<p>Retrieves the details of a network migration definition including source and target configurations.</p>",
+    "GetNetworkMigrationMapperSegmentConstruct": "<p>Retrieves detailed information about a specific construct within a mapper segment, including its properties and configuration data.</p>",
     "GetReplicationConfiguration": "<p>Lists all ReplicationConfigurations, filtered by Source Server ID.</p>",
     "InitializeService": "<p>Initialize Application Migration Service.</p>",
     "ListApplications": "<p>Retrieves all applications or multiple applications by ID.</p>",
@@ -38,8 +42,21 @@
     "ListExportErrors": "<p>List export errors.</p>",
     "ListExports": "<p>List exports.</p>",
     "ListImportErrors": "<p>List import errors.</p>",
+    "ListImportFileEnrichments": "<p>Lists import file enrichment jobs with optional filtering by job IDs.</p>",
     "ListImports": "<p>List imports.</p>",
     "ListManagedAccounts": "<p>List Managed Accounts.</p>",
+    "ListNetworkMigrationAnalyses": "<p>Lists network migration analysis jobs for a specified execution. Returns information about analysis job status and results.</p>",
+    "ListNetworkMigrationAnalysisResults": "<p>Lists the results of network migration analyses, showing connectivity and compatibility findings for migrated resources.</p>",
+    "ListNetworkMigrationCodeGenerationSegments": "<p>Lists code generation segments, which represent individual infrastructure components generated as code templates.</p>",
+    "ListNetworkMigrationCodeGenerations": "<p>Lists network migration code generation jobs, which convert network mappings into infrastructure-as-code templates.</p>",
+    "ListNetworkMigrationDefinitions": "<p>Lists all network migration definitions in the account, with optional filtering.</p>",
+    "ListNetworkMigrationDeployedStacks": "<p>Lists CloudFormation stacks that have been deployed as part of the network migration.</p>",
+    "ListNetworkMigrationDeployments": "<p>Lists network migration deployment jobs and their current status.</p>",
+    "ListNetworkMigrationExecutions": "<p>Lists network migration execution instances for a given definition, showing the status and progress of each execution.</p>",
+    "ListNetworkMigrationMapperSegmentConstructs": "<p>Lists constructs within a mapper segment, representing individual infrastructure components like VPCs, subnets, or security groups.</p>",
+    "ListNetworkMigrationMapperSegments": "<p>Lists mapper segments, which represent logical groupings of network resources to be migrated together.</p>",
+    "ListNetworkMigrationMappingUpdates": "<p>Lists mapping update jobs, which apply customer modifications to the generated network mappings.</p>",
+    "ListNetworkMigrationMappings": "<p>Lists network migration mapping jobs, which analyze and create relationships between source and target network resources.</p>",
     "ListSourceServerActions": "<p>List source server post migration custom actions.</p>",
     "ListTagsForResource": "<p>List all tags for your Application Migration Service resources.</p>",
     "ListTemplateActions": "<p>List template post migration custom actions.</p>",
@@ -55,6 +72,12 @@
     "StartCutover": "<p>Launches a Cutover Instance for specific Source Servers. This command starts a LAUNCH job whose initiatedBy property is StartCutover and changes the SourceServer.lifeCycle.state property to CUTTING_OVER.</p>",
     "StartExport": "<p>Start export.</p>",
     "StartImport": "<p>Start import.</p>",
+    "StartImportFileEnrichment": "<p>Starts an import file enrichment job to process and enrich network migration import files with additional metadata and IP assignment strategies.</p>",
+    "StartNetworkMigrationAnalysis": "<p>Starts a network migration analysis job to evaluate connectivity and compatibility of the migration mappings.</p>",
+    "StartNetworkMigrationCodeGeneration": "<p>Starts a code generation job to convert network migration mappings into infrastructure-as-code templates.</p>",
+    "StartNetworkMigrationDeployment": "<p>Starts a deployment job to create the target network infrastructure based on the generated code templates.</p>",
+    "StartNetworkMigrationMapping": "<p>Starts the network migration mapping process for a given network migration execution.</p>",
+    "StartNetworkMigrationMappingUpdate": "<p>Starts a job to apply customer modifications to network migration mappings, such as changing properties.</p>",
     "StartReplication": "<p>Start replication for source server irrespective of its replication type.</p>",
     "StartTest": "<p>Launches a Test Instance for specific Source Servers. This command starts a LAUNCH job whose initiatedBy property is StartTest and changes the SourceServer.lifeCycle.state property to TESTING.</p>",
     "StopReplication": "<p>Stop Replication.</p>",
@@ -67,6 +90,8 @@
     "UpdateConnector": "<p>Update Connector.</p>",
     "UpdateLaunchConfiguration": "<p>Updates multiple LaunchConfigurations by Source Server ID.</p> <note> <p>bootMode valid values are <code>LEGACY_BIOS | UEFI</code> </p> </note>",
     "UpdateLaunchConfigurationTemplate": "<p>Updates an existing Launch Configuration Template by ID.</p>",
+    "UpdateNetworkMigrationDefinition": "<p>Updates an existing network migration definition with new source or target configurations.</p>",
+    "UpdateNetworkMigrationMapperSegment": "<p>Updates a mapper segment's configuration, such as changing its scope tags.</p>",
     "UpdateReplicationConfiguration": "<p>Allows you to update multiple ReplicationConfigurations by Source Server ID.</p>",
     "UpdateReplicationConfigurationTemplate": "<p>Updates multiple ReplicationConfigurationTemplates by ID.</p>",
     "UpdateSourceServer": "<p>Update Source Server.</p>",
@@ -86,6 +111,8 @@
         "LaunchConfigurationTemplate$arn": "<p>ARN of the Launch Configuration Template.</p>",
         "LaunchConfigurationTemplate$parametersEncryptionKey": "<p>Parameters encryption key.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>List tags for resource request by ARN.</p>",
+        "NetworkMigrationDefinition$arn": "<p>The Amazon Resource Name (ARN) of the network migration definition.</p>",
+        "NetworkMigrationDefinitionSummary$arn": "<p>The Amazon Resource Name (ARN) of the network migration definition.</p>",
         "ReplicationConfiguration$ebsEncryptionKeyArn": "<p>Replication Configuration EBS encryption key ARN.</p>",
         "ReplicationConfigurationTemplate$arn": "<p>Replication Configuration template ARN.</p>",
         "ReplicationConfigurationTemplate$ebsEncryptionKeyArn": "<p>Replication Configuration template EBS encryption key ARN.</p>",
@@ -124,6 +151,8 @@
         "DisassociateApplicationsRequest$accountID": "<p>Account ID.</p>",
         "DisassociateSourceServersRequest$accountID": "<p>Account ID.</p>",
         "DisconnectFromServiceRequest$accountID": "<p>Request to disconnect Source Server from service by Account ID.</p>",
+        "EnrichmentSourceS3Configuration$s3BucketOwner": "<p>The AWS account ID of the S3 bucket owner.</p>",
+        "EnrichmentTargetS3Configuration$s3BucketOwner": "<p>The AWS account ID of the target S3 bucket owner.</p>",
         "ExportTask$s3BucketOwner": "<p>Export task s3 bucket owner.</p>",
         "FinalizeCutoverRequest$accountID": "<p>Request to finalize Cutover by Source Account ID.</p>",
         "GetLaunchConfigurationRequest$accountID": "<p>Request to get Launch Configuration information by Account ID.</p>",
@@ -134,17 +163,24 @@
         "ListWavesRequest$accountID": "<p>Request account ID.</p>",
         "ManagedAccount$accountId": "<p>Managed account, account ID.</p>",
         "MarkAsArchivedRequest$accountID": "<p>Mark as archived by Account ID.</p>",
+        "NetworkMigrationDeployedStackDetails$targetAccount": "<p>The target AWS account where the stack was deployed.</p>",
+        "NetworkMigrationMapperSegment$targetAccount": "<p>The target AWS account where this segment will be deployed.</p>",
         "PauseReplicationRequest$accountID": "<p>Pause Replication Request account ID.</p>",
         "PutSourceServerActionRequest$accountID": "<p>Source server post migration custom account ID.</p>",
         "RemoveSourceServerActionRequest$accountID": "<p>Source server post migration account ID.</p>",
         "ResumeReplicationRequest$accountID": "<p>Resume Replication Request account ID.</p>",
         "RetryDataReplicationRequest$accountID": "<p>Retry data replication for Account ID.</p>",
         "S3BucketSource$s3BucketOwner": "<p>S3 bucket source s3 bucket owner.</p>",
+        "S3Configuration$s3BucketOwner": "<p>The AWS account ID of the S3 bucket owner.</p>",
+        "SourceS3Configuration$s3BucketOwner": "<p>The AWS account ID of the S3 bucket owner.</p>",
         "StartCutoverRequest$accountID": "<p>Start Cutover by Account IDs</p>",
         "StartExportRequest$s3BucketOwner": "<p>Start export request s3 bucket owner.</p>",
+        "StartNetworkMigrationMappingUpdateSegment$targetAccount": "<p>The updated target AWS account for the segment.</p>",
         "StartReplicationRequest$accountID": "<p>Account ID on which to start replication.</p>",
         "StartTestRequest$accountID": "<p>Start Test for Account ID.</p>",
         "StopReplicationRequest$accountID": "<p>Stop Replication Request account ID.</p>",
+        "TargetS3Configuration$s3BucketOwner": "<p>The AWS account ID of the S3 bucket owner.</p>",
+        "TargetS3ConfigurationUpdate$s3BucketOwner": "<p>The updated AWS account ID of the S3 bucket owner.</p>",
         "TerminateTargetInstancesRequest$accountID": "<p>Terminate Target instance by Account ID</p>",
         "UnarchiveApplicationRequest$accountID": "<p>Account ID.</p>",
         "UnarchiveWaveRequest$accountID": "<p>Account ID.</p>",
@@ -198,6 +234,12 @@
       "refs": {
         "PutSourceServerActionRequest$actionName": "<p>Source server post migration custom action name.</p>",
         "SourceServerActionDocument$actionName": "<p>Source server post migration custom action name.</p>"
+      }
+    },
+    "AnalyzerType": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationAnalysisResult$analyzerType": "<p>The type of analyzer that generated this result.</p>"
       }
     },
     "Application": {
@@ -331,6 +373,7 @@
         "CreateReplicationConfigurationTemplateRequest$useDedicatedReplicationServer": "<p>Request to use Dedicated Replication Servers during Replication Settings template creation.</p>",
         "CreateReplicationConfigurationTemplateRequest$createPublicIP": "<p>Request to create Public IP during Replication Settings template creation.</p>",
         "CreateReplicationConfigurationTemplateRequest$useFipsEndpoint": "<p>Request to use Fips Endpoint during Replication Settings template creation.</p>",
+        "CreateReplicationConfigurationTemplateRequest$storeSnapshotOnLocalZone": "<p>Request to store snapshot on local zone during Replication Settings template creation.</p>",
         "DescribeSourceServersRequestFilters$isArchived": "<p>Request to filter Source Servers list by archived.</p>",
         "LaunchConfiguration$copyPrivateIp": "<p>Copy Private IP during Launch Configuration.</p>",
         "LaunchConfiguration$copyTags": "<p>Copy Tags during Launch Configuration.</p>",
@@ -352,11 +395,13 @@
         "ReplicationConfiguration$useDedicatedReplicationServer": "<p>Replication Configuration use Dedicated Replication Server.</p>",
         "ReplicationConfiguration$createPublicIP": "<p>Replication Configuration create Public IP.</p>",
         "ReplicationConfiguration$useFipsEndpoint": "<p>Replication Configuration use Fips Endpoint.</p>",
+        "ReplicationConfiguration$storeSnapshotOnLocalZone": "<p>Replication Configuration store snapshot on local zone.</p>",
         "ReplicationConfigurationReplicatedDisk$isBootDisk": "<p>Replication Configuration replicated disk boot disk.</p>",
         "ReplicationConfigurationTemplate$associateDefaultSecurityGroup": "<p>Replication Configuration template associate default Application Migration Service Security group.</p>",
         "ReplicationConfigurationTemplate$useDedicatedReplicationServer": "<p>Replication Configuration template use Dedicated Replication Server.</p>",
         "ReplicationConfigurationTemplate$createPublicIP": "<p>Replication Configuration template create Public IP.</p>",
         "ReplicationConfigurationTemplate$useFipsEndpoint": "<p>Replication Configuration template use Fips Endpoint.</p>",
+        "ReplicationConfigurationTemplate$storeSnapshotOnLocalZone": "<p>Replication Configuration template store snapshot on local zone.</p>",
         "SourceServer$isArchived": "<p>Source server archived status.</p>",
         "SourceServerActionDocument$active": "<p>Source server post migration custom action active status.</p>",
         "SourceServerActionDocument$mustSucceedForCutover": "<p>Source server post migration custom action must succeed for cutover.</p>",
@@ -375,10 +420,12 @@
         "UpdateReplicationConfigurationRequest$useDedicatedReplicationServer": "<p>Update replication configuration use dedicated Replication Server request.</p>",
         "UpdateReplicationConfigurationRequest$createPublicIP": "<p>Update replication configuration create Public IP request.</p>",
         "UpdateReplicationConfigurationRequest$useFipsEndpoint": "<p>Update replication configuration use Fips Endpoint.</p>",
+        "UpdateReplicationConfigurationRequest$storeSnapshotOnLocalZone": "<p>Update replication configuration store snapshot on local zone.</p>",
         "UpdateReplicationConfigurationTemplateRequest$associateDefaultSecurityGroup": "<p>Update replication configuration template associate default Application Migration Service Security group request.</p>",
         "UpdateReplicationConfigurationTemplateRequest$useDedicatedReplicationServer": "<p>Update replication configuration template use dedicated Replication Server request.</p>",
         "UpdateReplicationConfigurationTemplateRequest$createPublicIP": "<p>Update replication configuration template create Public IP request.</p>",
         "UpdateReplicationConfigurationTemplateRequest$useFipsEndpoint": "<p>Update replication configuration template use Fips Endpoint request.</p>",
+        "UpdateReplicationConfigurationTemplateRequest$storeSnapshotOnLocalZone": "<p>Update replication configuration template store snapshot on local zone request.</p>",
         "Wave$isArchived": "<p>Wave archival status.</p>"
       }
     },
@@ -447,9 +494,29 @@
         "ChangeServerLifeCycleStateSourceServerLifecycle$state": "<p>The request to change the source server migration lifecycle state.</p>"
       }
     },
+    "Checksum": {
+      "base": "<p>A checksum structure used to verify data integrity.</p>",
+      "refs": {
+        "ImportFileEnrichment$checksum": "<p>The checksum of the enriched file for integrity verification.</p>",
+        "NetworkMigrationCodeGenerationArtifact$checksum": "<p>The checksum of the artifact for integrity verification.</p>",
+        "NetworkMigrationMapperSegment$checksum": "<p>The checksum of the segment data for integrity verification.</p>"
+      }
+    },
+    "Cidr": {
+      "base": null,
+      "refs": {
+        "TargetNetwork$inboundCidr": "<p>The CIDR block for inbound traffic in the target network.</p>",
+        "TargetNetwork$outboundCidr": "<p>The CIDR block for outbound traffic in the target network.</p>",
+        "TargetNetwork$inspectionCidr": "<p>The CIDR block for inspection traffic in the target network.</p>",
+        "TargetNetworkUpdate$inboundCidr": "<p>The updated CIDR block for inbound traffic.</p>",
+        "TargetNetworkUpdate$outboundCidr": "<p>The updated CIDR block for outbound traffic.</p>",
+        "TargetNetworkUpdate$inspectionCidr": "<p>The updated CIDR block for inspection traffic.</p>"
+      }
+    },
     "ClientIdempotencyToken": {
       "base": null,
       "refs": {
+        "StartImportFileEnrichmentRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "StartImportRequest$clientToken": "<p>Start import request client token.</p>"
       }
     },
@@ -458,6 +525,37 @@
       "refs": {
         "ConnectorSsmCommandConfig$cloudWatchLogGroupName": "<p>Connector SSM command config CloudWatch log group name.</p>",
         "PostLaunchActions$cloudWatchLogGroupName": "<p>AWS Systems Manager Command's CloudWatch log group name.</p>"
+      }
+    },
+    "CodeGenerationOutputFormatStatus": {
+      "base": null,
+      "refs": {
+        "CodeGenerationOutputFormatStatusDetails$status": "<p>The status of the code generation for this output format.</p>"
+      }
+    },
+    "CodeGenerationOutputFormatStatusDetails": {
+      "base": "<p>Status details for a specific code generation output format.</p>",
+      "refs": {
+        "CodeGenerationOutputFormatStatusDetailsMap$value": null
+      }
+    },
+    "CodeGenerationOutputFormatStatusDetailsMap": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationCodeGenerationJobDetails$codeGenerationOutputFormatStatusDetailsMap": "<p>A map of output format types to their status details.</p>"
+      }
+    },
+    "CodeGenerationOutputFormatType": {
+      "base": null,
+      "refs": {
+        "CodeGenerationOutputFormatStatusDetailsMap$key": null,
+        "CodeGenerationOutputFormatTypes$member": null
+      }
+    },
+    "CodeGenerationOutputFormatTypes": {
+      "base": null,
+      "refs": {
+        "StartNetworkMigrationCodeGenerationRequest$codeGenerationOutputFormatTypes": "<p>The output format types for code generation, such as CloudFormation or Terraform.</p>"
       }
     },
     "ConflictException": {
@@ -519,6 +617,28 @@
         "ListConnectorsResponse$items": "<p>List connectors response items.</p>"
       }
     },
+    "ConstructID": {
+      "base": null,
+      "refs": {
+        "GetNetworkMigrationMapperSegmentConstructRequest$constructID": "<p>The unique identifier of the construct within the segment.</p>",
+        "ListNetworkMigrationMapperSegmentConstructsIDsFilter$member": null,
+        "NetworkMigrationMapperSegmentConstruct$constructID": "<p>The unique identifier of the construct.</p>",
+        "StartNetworkMigrationMappingUpdateConstruct$constructID": "<p>The ID of the construct to update.</p>"
+      }
+    },
+    "ConstructProperties": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationMapperSegmentConstruct$properties": "<p>The properties and configuration of the construct.</p>",
+        "UpdateOperation$properties": "<p>The properties to update on the construct.</p>"
+      }
+    },
+    "ConstructPropertyKey": {
+      "base": null,
+      "refs": {
+        "ConstructProperties$key": null
+      }
+    },
     "Cpus": {
       "base": null,
       "refs": {
@@ -534,6 +654,10 @@
       "refs": {}
     },
     "CreateLaunchConfigurationTemplateRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateNetworkMigrationDefinitionRequest": {
       "base": null,
       "refs": {}
     },
@@ -636,6 +760,14 @@
       "refs": {}
     },
     "DeleteLaunchConfigurationTemplateResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteNetworkMigrationDefinitionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteNetworkMigrationDefinitionResponse": {
       "base": null,
       "refs": {}
     },
@@ -819,10 +951,48 @@
         "LaunchConfigurationTemplate$ec2LaunchTemplateID": "<p>EC2 launch template ID.</p>"
       }
     },
+    "EncryptionAlgorithm": {
+      "base": null,
+      "refs": {
+        "Checksum$encryptionAlgorithm": "<p>The encryption algorithm used to generate the checksum.</p>"
+      }
+    },
+    "EnrichmentSourceS3Configuration": {
+      "base": "<p>S3 configuration for the source import file to be enriched.</p>",
+      "refs": {
+        "StartImportFileEnrichmentRequest$s3BucketSource": "<p>The S3 configuration specifying the source location of the import file to be enriched.</p>"
+      }
+    },
+    "EnrichmentTargetS3Configuration": {
+      "base": "<p>S3 configuration for storing the enriched import file.</p>",
+      "refs": {
+        "ImportFileEnrichment$s3BucketTarget": "<p>The target S3 configuration for the enriched import file.</p>",
+        "StartImportFileEnrichmentRequest$s3BucketTarget": "<p>The S3 configuration specifying the target location where the enriched import file will be stored.</p>"
+      }
+    },
     "ErrorDetails": {
       "base": "<p>Error details.</p>",
       "refs": {
         "ConflictExceptionErrors$member": null
+      }
+    },
+    "ExecutionStage": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationExecution$stage": "<p>The current stage of the execution in the migration workflow.</p>"
+      }
+    },
+    "ExecutionStageActivity": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationExecution$activity": "<p>The current activity being performed in the execution.</p>"
+      }
+    },
+    "ExecutionStatus": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationExecution$status": "<p>The current status of the execution.</p>",
+        "NetworkMigrationExecutionStatusesFilter$member": null
       }
     },
     "ExportErrorData": {
@@ -897,9 +1067,27 @@
       "base": null,
       "refs": {}
     },
+    "GetNetworkMigrationDefinitionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetNetworkMigrationMapperSegmentConstructRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetNetworkMigrationMapperSegmentConstructResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetReplicationConfigurationRequest": {
       "base": null,
       "refs": {}
+    },
+    "Hash": {
+      "base": null,
+      "refs": {
+        "Checksum$hash": "<p>The hash value of the checksum.</p>"
+      }
     },
     "IPsList": {
       "base": null,
@@ -975,6 +1163,38 @@
       "base": null,
       "refs": {
         "ListImportErrorsResponse$items": "<p>List imports errors response items.</p>"
+      }
+    },
+    "ImportFileEnrichment": {
+      "base": "<p>Details about an import file enrichment job.</p>",
+      "refs": {
+        "ImportFileEnrichmentsList$member": null
+      }
+    },
+    "ImportFileEnrichmentJobID": {
+      "base": null,
+      "refs": {
+        "ImportFileEnrichment$jobID": "<p>The unique identifier of the import file enrichment job.</p>",
+        "ImportFileEnrichmentsIDsFilter$member": null,
+        "StartImportFileEnrichmentResponse$jobID": "<p>The unique identifier of the import file enrichment job that was started.</p>"
+      }
+    },
+    "ImportFileEnrichmentStatus": {
+      "base": "<p>The status of an import file enrichment job. Can be PENDING, STARTED, FAILED, SUCCEEDED, or SUCCEEDED_WITH_WARNINGS.</p>",
+      "refs": {
+        "ImportFileEnrichment$status": "<p>The current status of the import file enrichment job.</p>"
+      }
+    },
+    "ImportFileEnrichmentsIDsFilter": {
+      "base": null,
+      "refs": {
+        "ListImportFileEnrichmentsFilters$jobIDs": "<p>A list of job IDs to filter by.</p>"
+      }
+    },
+    "ImportFileEnrichmentsList": {
+      "base": null,
+      "refs": {
+        "ListImportFileEnrichmentsResponse$items": "<p>A list of import file enrichment jobs.</p>"
       }
     },
     "ImportID": {
@@ -1074,6 +1294,12 @@
         "LaunchTemplateDiskConf$iops": "<p>Launch template disk iops configuration.</p>"
       }
     },
+    "IpAssignmentStrategy": {
+      "base": "<p>The strategy for assigning IP addresses during the enrichment process. STATIC assigns fixed IP addresses, while DYNAMIC allows for dynamic IP allocation.</p>",
+      "refs": {
+        "StartImportFileEnrichmentRequest$ipAssignmentStrategy": "<p>The IP assignment strategy to use when enriching the import file. Can be STATIC or DYNAMIC.</p>"
+      }
+    },
     "JmesPathString": {
       "base": null,
       "refs": {
@@ -1160,6 +1386,7 @@
       "refs": {
         "AccessDeniedException$message": null,
         "AccessDeniedException$code": null,
+        "CodeGenerationOutputFormatStatusDetails$statusDetailList": "<p>A list of detailed status information for the code generation.</p>",
         "ConflictException$message": null,
         "ConflictException$code": null,
         "ConflictException$resourceId": "<p>A conflict occurred when prompting for the Resource ID.</p>",
@@ -1170,8 +1397,15 @@
         "ErrorDetails$resourceType": "<p>Error details resourceType.</p>",
         "ExportErrorData$rawError": "<p>Export errors data raw error.</p>",
         "ImportErrorData$rawError": "<p>Import error data raw error.</p>",
+        "ImportFileEnrichment$statusDetails": "<p>Detailed status information about the enrichment job.</p>",
         "InternalServerException$message": null,
         "JobLogEventData$rawError": "<p>Job error.</p>",
+        "NetworkMigrationAnalysisJobDetails$statusDetails": "<p>Detailed status information about the job.</p>",
+        "NetworkMigrationCodeGenerationJobDetails$statusDetails": "<p>Detailed status information about the job.</p>",
+        "NetworkMigrationDeployerJobDetails$statusDetails": "<p>Detailed status information about the job.</p>",
+        "NetworkMigrationFailedResourceDetails$statusReason": "<p>The reason why the resource failed.</p>",
+        "NetworkMigrationMappingJobDetails$statusDetails": "<p>Detailed status information about the job.</p>",
+        "NetworkMigrationMappingUpdateJobDetails$statusDetails": "<p>Detailed status information about the job.</p>",
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$code": null,
         "ResourceNotFoundException$resourceId": "<p>Resource ID not found error.</p>",
@@ -1402,6 +1636,20 @@
       "base": "<p>List imports errors response.</p>",
       "refs": {}
     },
+    "ListImportFileEnrichmentsFilters": {
+      "base": "<p>Filters for listing import file enrichment jobs.</p>",
+      "refs": {
+        "ListImportFileEnrichmentsRequest$filters": "<p>Filters to apply when listing import file enrichment jobs.</p>"
+      }
+    },
+    "ListImportFileEnrichmentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListImportFileEnrichmentsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListImportsRequest": {
       "base": "<p>List imports request.</p>",
       "refs": {}
@@ -1422,6 +1670,222 @@
     },
     "ListManagedAccountsResponse": {
       "base": "<p>List managed accounts response.</p>",
+      "refs": {}
+    },
+    "ListNetworkMigrationAnalysesFilters": {
+      "base": "<p>Filters for listing network migration analysis jobs.</p>",
+      "refs": {
+        "ListNetworkMigrationAnalysesRequest$filters": "<p>Filters to apply when listing analysis jobs.</p>"
+      }
+    },
+    "ListNetworkMigrationAnalysesIDsFilter": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationAnalysesFilters$jobIDs": "<p>A list of job IDs to filter by.</p>"
+      }
+    },
+    "ListNetworkMigrationAnalysesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationAnalysesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationAnalysisResultsFilters": {
+      "base": "<p>Filters for listing network migration analysis results.</p>",
+      "refs": {
+        "ListNetworkMigrationAnalysisResultsRequest$filters": "<p>Filters to apply when listing analysis results, such as VPC IDs.</p>"
+      }
+    },
+    "ListNetworkMigrationAnalysisResultsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationAnalysisResultsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationCodeGenerationSegmentsFilters": {
+      "base": "<p>Filters for listing code generation segments.</p>",
+      "refs": {
+        "ListNetworkMigrationCodeGenerationSegmentsRequest$filters": "<p>Filters to apply when listing code generation segments.</p>"
+      }
+    },
+    "ListNetworkMigrationCodeGenerationSegmentsIDsFilter": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationCodeGenerationSegmentsFilters$segmentIDs": "<p>A list of segment IDs to filter by.</p>"
+      }
+    },
+    "ListNetworkMigrationCodeGenerationSegmentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationCodeGenerationSegmentsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationCodeGenerationsFilters": {
+      "base": "<p>Filters for listing code generation jobs.</p>",
+      "refs": {
+        "ListNetworkMigrationCodeGenerationsRequest$filters": "<p>Filters to apply when listing code generation jobs.</p>"
+      }
+    },
+    "ListNetworkMigrationCodeGenerationsIDsFilter": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationCodeGenerationsFilters$jobIDs": "<p>A list of job IDs to filter by.</p>"
+      }
+    },
+    "ListNetworkMigrationCodeGenerationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationCodeGenerationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationDefinitionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationDefinitionsRequestFilters": {
+      "base": "<p>Filters for listing network migration definitions.</p>",
+      "refs": {
+        "ListNetworkMigrationDefinitionsRequest$filters": "<p>Filters to apply when listing network migration definitions.</p>"
+      }
+    },
+    "ListNetworkMigrationDefinitionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationDeployedStacksRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationDeployedStacksResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationDeployerJobFilters": {
+      "base": "<p>Filters for listing deployer jobs.</p>",
+      "refs": {
+        "ListNetworkMigrationDeploymentsRequest$filters": "<p>Filters to apply when listing deployment jobs.</p>"
+      }
+    },
+    "ListNetworkMigrationDeployerJobIDsFilters": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationDeployerJobFilters$jobIDs": "<p>A list of job IDs to filter by.</p>"
+      }
+    },
+    "ListNetworkMigrationDeployerJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationDeploymentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationExecutionRequestFilters": {
+      "base": "<p>Filters for listing network migration executions.</p>",
+      "refs": {
+        "ListNetworkMigrationExecutionsRequest$filters": "<p>Filters to apply when listing executions, such as status or execution ID.</p>"
+      }
+    },
+    "ListNetworkMigrationExecutionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationExecutionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationMapperSegmentConstructTypesFilter": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationMapperSegmentConstructsFilters$constructTypes": "<p>A list of construct types to filter by.</p>"
+      }
+    },
+    "ListNetworkMigrationMapperSegmentConstructsFilters": {
+      "base": "<p>Filters for listing mapper segment constructs.</p>",
+      "refs": {
+        "ListNetworkMigrationMapperSegmentConstructsRequest$filters": "<p>Filters to apply when listing constructs, such as construct type or ID.</p>"
+      }
+    },
+    "ListNetworkMigrationMapperSegmentConstructsIDsFilter": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationMapperSegmentConstructsFilters$constructIDs": "<p>A list of construct IDs to filter by.</p>"
+      }
+    },
+    "ListNetworkMigrationMapperSegmentConstructsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationMapperSegmentConstructsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationMapperSegmentsFilters": {
+      "base": "<p>Filters for listing mapper segments.</p>",
+      "refs": {
+        "ListNetworkMigrationMapperSegmentsRequest$filters": "<p>Filters to apply when listing segments.</p>"
+      }
+    },
+    "ListNetworkMigrationMapperSegmentsIDsFilter": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationMapperSegmentsFilters$segmentIDs": "<p>A list of segment IDs to filter by.</p>"
+      }
+    },
+    "ListNetworkMigrationMapperSegmentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationMapperSegmentsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationMappingUpdatesFilters": {
+      "base": "<p>Filters for listing mapping update jobs.</p>",
+      "refs": {
+        "ListNetworkMigrationMappingUpdatesRequest$filters": "<p>Filters to apply when listing mapping update jobs.</p>"
+      }
+    },
+    "ListNetworkMigrationMappingUpdatesIDsFilter": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationMappingUpdatesFilters$jobIDs": "<p>A list of job IDs to filter by.</p>"
+      }
+    },
+    "ListNetworkMigrationMappingUpdatesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationMappingUpdatesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationMappingsFilters": {
+      "base": "<p>Filters for listing network migration mapping jobs.</p>",
+      "refs": {
+        "ListNetworkMigrationMappingsRequest$filters": "<p>Filters to apply when listing mapping jobs.</p>"
+      }
+    },
+    "ListNetworkMigrationMappingsIDsFilter": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationMappingsFilters$jobIDs": "<p>A list of job IDs to filter by.</p>"
+      }
+    },
+    "ListNetworkMigrationMappingsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworkMigrationMappingsResponse": {
+      "base": null,
       "refs": {}
     },
     "ListSourceServerActionsRequest": {
@@ -1462,6 +1926,17 @@
       "base": null,
       "refs": {}
     },
+    "LogicalID": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationCodeGenerationArtifact$logicalID": "<p>The logical identifier for the artifact.</p>",
+        "NetworkMigrationCodeGenerationSegment$logicalID": "<p>The logical identifier for the segment.</p>",
+        "NetworkMigrationDeployedStackDetails$stackLogicalID": "<p>The logical ID of the stack.</p>",
+        "NetworkMigrationFailedResourceDetails$logicalID": "<p>The logical ID of the failed resource.</p>",
+        "NetworkMigrationMapperSegment$logicalID": "<p>The logical identifier for the segment in the infrastructure code.</p>",
+        "NetworkMigrationMapperSegmentConstruct$logicalID": "<p>The logical identifier for the construct in the infrastructure code.</p>"
+      }
+    },
     "ManagedAccount": {
       "base": "<p>Managed account.</p>",
       "refs": {
@@ -1478,6 +1953,12 @@
       "base": null,
       "refs": {}
     },
+    "MarshalledResourceDefinition": {
+      "base": null,
+      "refs": {
+        "ConstructProperties$value": null
+      }
+    },
     "MaxResultsType": {
       "base": null,
       "refs": {
@@ -1492,8 +1973,21 @@
         "ListExportErrorsRequest$maxResults": "<p>List export errors request max results.</p>",
         "ListExportsRequest$maxResults": "<p>List export request max results.</p>",
         "ListImportErrorsRequest$maxResults": "<p>List import errors request max results.</p>",
+        "ListImportFileEnrichmentsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListImportsRequest$maxResults": "<p>List imports request max results.</p>",
         "ListManagedAccountsRequest$maxResults": "<p>List managed accounts request max results.</p>",
+        "ListNetworkMigrationAnalysesRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListNetworkMigrationAnalysisResultsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListNetworkMigrationCodeGenerationSegmentsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListNetworkMigrationCodeGenerationsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListNetworkMigrationDefinitionsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListNetworkMigrationDeployedStacksRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListNetworkMigrationDeploymentsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListNetworkMigrationExecutionsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListNetworkMigrationMapperSegmentConstructsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListNetworkMigrationMapperSegmentsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListNetworkMigrationMappingUpdatesRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListNetworkMigrationMappingsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListSourceServerActionsRequest$maxResults": "<p>Maximum amount of items to return when listing source server post migration custom actions.</p>",
         "ListTemplateActionsRequest$maxResults": "<p>Maximum amount of items to return when listing template post migration custom actions.</p>",
         "ListWavesRequest$maxResults": "<p>Maximum results to return when listing waves.</p>"
@@ -1511,6 +2005,385 @@
         "SourceProperties$networkInterfaces": "<p>Source server network interfaces.</p>"
       }
     },
+    "NetworkMigrationAnalysesList": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationAnalysesResponse$items": "<p>A list of network migration analysis job details.</p>"
+      }
+    },
+    "NetworkMigrationAnalysisJobDetails": {
+      "base": "<p>Details about a network migration analysis job.</p>",
+      "refs": {
+        "NetworkMigrationAnalysesList$member": null
+      }
+    },
+    "NetworkMigrationAnalysisResult": {
+      "base": "<p>The result of a network migration analysis operation.</p>",
+      "refs": {
+        "NetworkMigrationAnalysisResultsList$member": null
+      }
+    },
+    "NetworkMigrationAnalysisResultSource": {
+      "base": "<p>The source resource information for an analysis result.</p>",
+      "refs": {
+        "NetworkMigrationAnalysisResult$source": "<p>The source resource that was analyzed.</p>"
+      }
+    },
+    "NetworkMigrationAnalysisResultStatus": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationAnalysisResult$status": "<p>The status of the analysis result.</p>"
+      }
+    },
+    "NetworkMigrationAnalysisResultTarget": {
+      "base": "<p>The target resource information for an analysis result.</p>",
+      "refs": {
+        "NetworkMigrationAnalysisResult$target": "<p>The target resource in the analysis.</p>"
+      }
+    },
+    "NetworkMigrationAnalysisResultsList": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationAnalysisResultsResponse$items": "<p>A list of network migration analysis results.</p>"
+      }
+    },
+    "NetworkMigrationCodeGenerationArtifact": {
+      "base": "<p>An artifact generated during code generation, such as a CloudFormation template or Terraform file.</p>",
+      "refs": {
+        "NetworkMigrationCodeGenerationArtifacts$member": null
+      }
+    },
+    "NetworkMigrationCodeGenerationArtifactID": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationCodeGenerationArtifact$artifactID": "<p>The unique identifier of the artifact.</p>"
+      }
+    },
+    "NetworkMigrationCodeGenerationArtifactSubType": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationCodeGenerationArtifact$artifactSubType": "<p>The sub-type of the artifact for further classification.</p>"
+      }
+    },
+    "NetworkMigrationCodeGenerationArtifactType": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationCodeGenerationArtifact$artifactType": "<p>The type of the artifact, such as CLOUDFORMATION_TEMPLATE or TERRAFORM_MODULE.</p>"
+      }
+    },
+    "NetworkMigrationCodeGenerationArtifacts": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationCodeGenerationSegment$artifacts": "<p>A list of artifacts generated for this segment.</p>"
+      }
+    },
+    "NetworkMigrationCodeGenerationJobDetails": {
+      "base": "<p>Details about a network migration code generation job.</p>",
+      "refs": {
+        "NetworkMigrationCodeGenerationsList$member": null
+      }
+    },
+    "NetworkMigrationCodeGenerationSegment": {
+      "base": "<p>A segment of generated code representing a logical grouping of infrastructure resources.</p>",
+      "refs": {
+        "NetworkMigrationCodeGenerationSegmentsList$member": null
+      }
+    },
+    "NetworkMigrationCodeGenerationSegmentType": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationCodeGenerationSegment$segmentType": "<p>The type of the segment.</p>"
+      }
+    },
+    "NetworkMigrationCodeGenerationSegmentsList": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationCodeGenerationSegmentsResponse$items": "<p>A list of network migration code generation segments.</p>"
+      }
+    },
+    "NetworkMigrationCodeGenerationsList": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationCodeGenerationsResponse$items": "<p>A list of network migration code generation job details.</p>"
+      }
+    },
+    "NetworkMigrationDefinition": {
+      "base": null,
+      "refs": {}
+    },
+    "NetworkMigrationDefinitionDescription": {
+      "base": null,
+      "refs": {
+        "CreateNetworkMigrationDefinitionRequest$description": "<p>A description of the network migration definition.</p>",
+        "NetworkMigrationDefinition$description": "<p>A description of the network migration definition.</p>",
+        "UpdateNetworkMigrationDefinitionRequest$description": "<p>The updated description of the network migration definition.</p>"
+      }
+    },
+    "NetworkMigrationDefinitionID": {
+      "base": null,
+      "refs": {
+        "DeleteNetworkMigrationDefinitionRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition to delete.</p>",
+        "GetNetworkMigrationDefinitionRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition to retrieve.</p>",
+        "GetNetworkMigrationMapperSegmentConstructRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "ListNetworkMigrationAnalysesRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "ListNetworkMigrationAnalysisResultsRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "ListNetworkMigrationCodeGenerationSegmentsRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "ListNetworkMigrationCodeGenerationsRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "ListNetworkMigrationDeployedStacksRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "ListNetworkMigrationDeploymentsRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "ListNetworkMigrationExecutionsRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition to list executions for.</p>",
+        "ListNetworkMigrationMapperSegmentConstructsRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "ListNetworkMigrationMapperSegmentsRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "ListNetworkMigrationMappingUpdatesRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "ListNetworkMigrationMappingsRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "NetworkMigrationAnalysisJobDetails$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "NetworkMigrationAnalysisResult$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "NetworkMigrationCodeGenerationJobDetails$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "NetworkMigrationCodeGenerationSegment$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "NetworkMigrationDefinition$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "NetworkMigrationDefinitionSummary$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "NetworkMigrationDefintionsIDsFilter$member": null,
+        "NetworkMigrationDeployerJobDetails$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "NetworkMigrationExecution$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition used by this execution.</p>",
+        "NetworkMigrationMapperSegment$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "NetworkMigrationMappingJobDetails$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "NetworkMigrationMappingUpdateJobDetails$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "StartNetworkMigrationAnalysisRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "StartNetworkMigrationCodeGenerationRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "StartNetworkMigrationDeploymentRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "StartNetworkMigrationMappingRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "StartNetworkMigrationMappingUpdateRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>",
+        "UpdateNetworkMigrationDefinitionRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition to update.</p>",
+        "UpdateNetworkMigrationMapperSegmentRequest$networkMigrationDefinitionID": "<p>The unique identifier of the network migration definition.</p>"
+      }
+    },
+    "NetworkMigrationDefinitionName": {
+      "base": null,
+      "refs": {
+        "CreateNetworkMigrationDefinitionRequest$name": "<p>The name of the network migration definition.</p>",
+        "NetworkMigrationDefinition$name": "<p>The name of the network migration definition.</p>",
+        "NetworkMigrationDefinitionSummary$name": "<p>The name of the network migration definition.</p>",
+        "UpdateNetworkMigrationDefinitionRequest$name": "<p>The updated name of the network migration definition.</p>"
+      }
+    },
+    "NetworkMigrationDefinitionSummariesList": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationDefinitionsResponse$items": "<p>A list of network migration definition summaries.</p>"
+      }
+    },
+    "NetworkMigrationDefinitionSummary": {
+      "base": "<p>A summary of a network migration definition.</p>",
+      "refs": {
+        "NetworkMigrationDefinitionSummariesList$member": null
+      }
+    },
+    "NetworkMigrationDefintionsIDsFilter": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationDefinitionsRequestFilters$networkMigrationDefinitionIDs": "<p>A list of definition IDs to filter by.</p>"
+      }
+    },
+    "NetworkMigrationDeployedStackDetails": {
+      "base": "<p>Details about a CloudFormation stack that has been deployed as part of the network migration.</p>",
+      "refs": {
+        "NetworkMigrationDeployedStacksList$member": null
+      }
+    },
+    "NetworkMigrationDeployedStackStatus": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationDeployedStackDetails$status": "<p>The current status of the deployed stack.</p>"
+      }
+    },
+    "NetworkMigrationDeployedStacksList": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationDeployedStacksResponse$items": "<p>A list of deployed stack details including status and resources.</p>"
+      }
+    },
+    "NetworkMigrationDeployerJobDetails": {
+      "base": "<p>Details about a network migration deployer job.</p>",
+      "refs": {
+        "NetworkMigrationDeployerJobList$member": null
+      }
+    },
+    "NetworkMigrationDeployerJobList": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationDeployerJobResponse$items": "<p>A list of deployer job details.</p>"
+      }
+    },
+    "NetworkMigrationExecution": {
+      "base": "<p>Details about a network migration execution instance.</p>",
+      "refs": {
+        "NetworkMigrationExecutionsList$member": null
+      }
+    },
+    "NetworkMigrationExecutionID": {
+      "base": null,
+      "refs": {
+        "GetNetworkMigrationMapperSegmentConstructRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "ListNetworkMigrationAnalysesRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution to list analyses for.</p>",
+        "ListNetworkMigrationAnalysisResultsRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "ListNetworkMigrationCodeGenerationSegmentsRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "ListNetworkMigrationCodeGenerationsRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "ListNetworkMigrationDeployedStacksRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "ListNetworkMigrationDeploymentsRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "ListNetworkMigrationMapperSegmentConstructsRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "ListNetworkMigrationMapperSegmentsRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "ListNetworkMigrationMappingUpdatesRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "ListNetworkMigrationMappingsRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "NetworkMigrationAnalysisJobDetails$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "NetworkMigrationAnalysisResult$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "NetworkMigrationCodeGenerationJobDetails$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "NetworkMigrationCodeGenerationSegment$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "NetworkMigrationDeployerJobDetails$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "NetworkMigrationExecution$networkMigrationExecutionID": "<p>The unique identifier of the execution.</p>",
+        "NetworkMigrationExecutionIDsFilter$member": null,
+        "NetworkMigrationMapperSegment$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "NetworkMigrationMappingJobDetails$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "NetworkMigrationMappingUpdateJobDetails$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "StartNetworkMigrationAnalysisRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution to analyze.</p>",
+        "StartNetworkMigrationCodeGenerationRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "StartNetworkMigrationDeploymentRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "StartNetworkMigrationMappingRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "StartNetworkMigrationMappingUpdateRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>",
+        "UpdateNetworkMigrationMapperSegmentRequest$networkMigrationExecutionID": "<p>The unique identifier of the network migration execution.</p>"
+      }
+    },
+    "NetworkMigrationExecutionIDsFilter": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationExecutionRequestFilters$networkMigrationExecutionIDs": "<p>A list of execution IDs to filter by.</p>"
+      }
+    },
+    "NetworkMigrationExecutionStatusesFilter": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationExecutionRequestFilters$networkMigrationExecutionStatuses": "<p>A list of execution statuses to filter by.</p>"
+      }
+    },
+    "NetworkMigrationExecutionsList": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationExecutionsResponse$items": "<p>A list of network migration execution details.</p>"
+      }
+    },
+    "NetworkMigrationFailedResourceDetails": {
+      "base": "<p>Details about a resource that failed to deploy.</p>",
+      "refs": {
+        "NetworkMigrationFailedResourcesList$member": null
+      }
+    },
+    "NetworkMigrationFailedResourceStatus": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationFailedResourceDetails$status": "<p>The status of the failed resource.</p>"
+      }
+    },
+    "NetworkMigrationFailedResourcesList": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationDeployedStackDetails$failedResources": "<p>A list of resources that failed to deploy.</p>"
+      }
+    },
+    "NetworkMigrationJobID": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationAnalysesIDsFilter$member": null,
+        "ListNetworkMigrationCodeGenerationsIDsFilter$member": null,
+        "ListNetworkMigrationDeployerJobIDsFilters$member": null,
+        "ListNetworkMigrationMappingUpdatesIDsFilter$member": null,
+        "ListNetworkMigrationMappingsIDsFilter$member": null,
+        "NetworkMigrationAnalysisJobDetails$jobID": "<p>The unique identifier of the analysis job.</p>",
+        "NetworkMigrationAnalysisResult$jobID": "<p>The unique identifier of the analysis job that generated this result.</p>",
+        "NetworkMigrationCodeGenerationJobDetails$jobID": "<p>The unique identifier of the code generation job.</p>",
+        "NetworkMigrationCodeGenerationSegment$jobID": "<p>The unique identifier of the code generation job.</p>",
+        "NetworkMigrationDeployerJobDetails$jobID": "<p>The unique identifier of the deployer job.</p>",
+        "NetworkMigrationMapperSegment$jobID": "<p>The unique identifier of the job that created this segment.</p>",
+        "NetworkMigrationMappingJobDetails$jobID": "<p>The unique identifier of the mapping job.</p>",
+        "NetworkMigrationMappingUpdateJobDetails$jobID": "<p>The unique identifier of the mapping update job.</p>",
+        "StartNetworkMigrationAnalysisResponse$jobID": "<p>The unique identifier of the analysis job that was started.</p>",
+        "StartNetworkMigrationCodeGenerationResponse$jobID": "<p>The unique identifier of the code generation job that was started.</p>",
+        "StartNetworkMigrationDeployerJobResponse$jobID": "<p>The unique identifier of the deployer job that was started.</p>",
+        "StartNetworkMigrationMappingResponse$jobID": "<p>The unique identifier of the mapping job that was started.</p>",
+        "StartNetworkMigrationMappingUpdateResponse$jobID": "<p>The unique identifier of the mapping update job that was started.</p>"
+      }
+    },
+    "NetworkMigrationJobStatus": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationAnalysisJobDetails$status": "<p>The current status of the analysis job.</p>",
+        "NetworkMigrationCodeGenerationJobDetails$status": "<p>The current status of the code generation job.</p>",
+        "NetworkMigrationDeployerJobDetails$status": "<p>The current status of the deployer job.</p>",
+        "NetworkMigrationMappingJobDetails$status": "<p>The current status of the mapping job.</p>",
+        "NetworkMigrationMappingUpdateJobDetails$status": "<p>The current status of the mapping update job.</p>"
+      }
+    },
+    "NetworkMigrationMapperSegment": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationMapperSegmentsList$member": null
+      }
+    },
+    "NetworkMigrationMapperSegmentConstruct": {
+      "base": "<p>Represents a construct within a mapper segment. A construct is an individual infrastructure component such as a VPC, subnet, security group, route table, or other network resource that is part of the network migration.</p>",
+      "refs": {
+        "GetNetworkMigrationMapperSegmentConstructResponse$construct": "<p>The construct metadata including type, name, and configuration.</p>",
+        "NetworkMigrationMapperSegmentConstructs$member": null
+      }
+    },
+    "NetworkMigrationMapperSegmentConstructType": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationMapperSegmentConstructTypesFilter$member": null,
+        "NetworkMigrationMapperSegmentConstruct$constructType": "<p>The type of the construct, such as VPC, subnet, security group, or route table.</p>",
+        "StartNetworkMigrationMappingUpdateConstruct$constructType": "<p>The type of the construct.</p>"
+      }
+    },
+    "NetworkMigrationMapperSegmentConstructs": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationMapperSegmentConstructsResponse$items": "<p>A list of mapper segment constructs.</p>"
+      }
+    },
+    "NetworkMigrationMapperSegmentType": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationMapperSegment$segmentType": "<p>The type of the segment, such as VPC, subnet, or security group.</p>"
+      }
+    },
+    "NetworkMigrationMapperSegmentsList": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationMapperSegmentsResponse$items": "<p>A list of mapper segments.</p>"
+      }
+    },
+    "NetworkMigrationMappingJobDetails": {
+      "base": "<p>Details about a network migration mapping job.</p>",
+      "refs": {
+        "NetworkMigrationMappingsList$member": null
+      }
+    },
+    "NetworkMigrationMappingUpdateJobDetails": {
+      "base": "<p>Details about a network migration mapping update job.</p>",
+      "refs": {
+        "NetworkMigrationMappingUpdatesList$member": null
+      }
+    },
+    "NetworkMigrationMappingUpdatesList": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationMappingUpdatesResponse$items": "<p>A list of mapping update job details.</p>"
+      }
+    },
+    "NetworkMigrationMappingsList": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationMappingsResponse$items": "<p>A list of network migration mapping job details.</p>"
+      }
+    },
     "OS": {
       "base": "<p>Operating System.</p>",
       "refs": {
@@ -1522,6 +2395,12 @@
       "refs": {
         "PutTemplateActionRequest$operatingSystem": "<p>Operating system eligible for this template post migration custom action.</p>",
         "TemplateActionDocument$operatingSystem": "<p>Operating system eligible for this template post migration custom action.</p>"
+      }
+    },
+    "OperationUnion": {
+      "base": "<p>A union type representing the operation to perform on a construct during a mapping update.</p>",
+      "refs": {
+        "StartNetworkMigrationMappingUpdateConstruct$operation": "<p>The operation to perform on the construct.</p>"
       }
     },
     "OrderType": {
@@ -1558,10 +2437,36 @@
         "ListExportsResponse$nextToken": "<p>List export response next token.</p>",
         "ListImportErrorsRequest$nextToken": "<p>List import errors request next token.</p>",
         "ListImportErrorsResponse$nextToken": "<p>List imports errors response next token.</p>",
+        "ListImportFileEnrichmentsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListImportFileEnrichmentsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
         "ListImportsRequest$nextToken": "<p>List imports request next token.</p>",
         "ListImportsResponse$nextToken": "<p>List import response next token.</p>",
         "ListManagedAccountsRequest$nextToken": "<p>List managed accounts request next token.</p>",
         "ListManagedAccountsResponse$nextToken": "<p>List managed accounts response next token.</p>",
+        "ListNetworkMigrationAnalysesRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListNetworkMigrationAnalysesResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListNetworkMigrationAnalysisResultsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListNetworkMigrationAnalysisResultsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListNetworkMigrationCodeGenerationSegmentsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListNetworkMigrationCodeGenerationSegmentsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListNetworkMigrationCodeGenerationsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListNetworkMigrationCodeGenerationsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListNetworkMigrationDefinitionsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListNetworkMigrationDefinitionsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListNetworkMigrationDeployedStacksRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListNetworkMigrationDeployedStacksResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListNetworkMigrationDeployerJobResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListNetworkMigrationDeploymentsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListNetworkMigrationExecutionsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListNetworkMigrationExecutionsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListNetworkMigrationMapperSegmentConstructsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListNetworkMigrationMapperSegmentConstructsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListNetworkMigrationMapperSegmentsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListNetworkMigrationMapperSegmentsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListNetworkMigrationMappingUpdatesRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListNetworkMigrationMappingUpdatesResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListNetworkMigrationMappingsRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListNetworkMigrationMappingsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
         "ListSourceServerActionsRequest$nextToken": "<p>Next token to use when listing source server post migration custom actions.</p>",
         "ListSourceServerActionsResponse$nextToken": "<p>Next token returned when listing source server post migration custom actions.</p>",
         "ListTemplateActionsRequest$nextToken": "<p>Next token to use when listing template post migration custom actions.</p>",
@@ -1585,6 +2490,12 @@
     "PauseReplicationRequest": {
       "base": null,
       "refs": {}
+    },
+    "PhysicalID": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationDeployedStackDetails$stackPhysicalID": "<p>The physical ID of the CloudFormation stack.</p>"
+      }
     },
     "PositiveInteger": {
       "base": null,
@@ -1800,9 +2711,15 @@
       "base": null,
       "refs": {
         "ConnectorSsmCommandConfig$outputS3BucketName": "<p>Connector SSM command config output S3 bucket name.</p>",
+        "EnrichmentSourceS3Configuration$s3Bucket": "<p>The name of the S3 bucket containing the source import file.</p>",
+        "EnrichmentTargetS3Configuration$s3Bucket": "<p>The name of the S3 bucket where the enriched import file will be stored.</p>",
         "ExportTask$s3Bucket": "<p>Export task s3 bucket.</p>",
         "S3BucketSource$s3Bucket": "<p>S3 bucket source s3 bucket.</p>",
-        "StartExportRequest$s3Bucket": "<p>Start export request s3 bucket.</p>"
+        "S3Configuration$s3Bucket": "<p>The name of the S3 bucket.</p>",
+        "SourceS3Configuration$s3Bucket": "<p>The name of the S3 bucket containing source data.</p>",
+        "StartExportRequest$s3Bucket": "<p>Start export request s3 bucket.</p>",
+        "TargetS3Configuration$s3Bucket": "<p>The name of the S3 bucket for target artifacts.</p>",
+        "TargetS3ConfigurationUpdate$s3Bucket": "<p>The updated name of the S3 bucket.</p>"
       }
     },
     "S3BucketSource": {
@@ -1810,6 +2727,13 @@
       "refs": {
         "ImportTask$s3BucketSource": "<p>Import task s3 bucket source.</p>",
         "StartImportRequest$s3BucketSource": "<p>Start import request s3 bucket source.</p>"
+      }
+    },
+    "S3Configuration": {
+      "base": "<p>Configuration for an S3 location.</p>",
+      "refs": {
+        "NetworkMigrationCodeGenerationArtifact$outputS3Configuration": "<p>The S3 location where the artifact is stored.</p>",
+        "NetworkMigrationMapperSegment$outputS3Configuration": "<p>The S3 location where segment artifacts are stored.</p>"
       }
     },
     "S3Key": {
@@ -1820,10 +2744,43 @@
         "StartExportRequest$s3Key": "<p>Start export request s3key.</p>"
       }
     },
+    "S3KeyName": {
+      "base": null,
+      "refs": {
+        "EnrichmentSourceS3Configuration$s3Key": "<p>The S3 key (path) for the source import file.</p>",
+        "EnrichmentTargetS3Configuration$s3Key": "<p>The S3 key (path) where the enriched import file will be stored.</p>",
+        "S3Configuration$s3Key": "<p>The S3 key (path) for the object.</p>",
+        "SourceS3Configuration$s3Key": "<p>The S3 key (path) for the source data.</p>"
+      }
+    },
     "S3LogBucketName": {
       "base": null,
       "refs": {
         "PostLaunchActions$s3LogBucket": "<p>AWS Systems Manager Command's logs S3 log bucket.</p>"
+      }
+    },
+    "ScopeTagKey": {
+      "base": null,
+      "refs": {
+        "ScopeTagsMap$key": null
+      }
+    },
+    "ScopeTagValue": {
+      "base": null,
+      "refs": {
+        "ScopeTagsMap$value": null
+      }
+    },
+    "ScopeTagsMap": {
+      "base": null,
+      "refs": {
+        "CreateNetworkMigrationDefinitionRequest$scopeTags": "<p>Scope tags for the network migration definition to control access and organization.</p>",
+        "NetworkMigrationDefinition$scopeTags": "<p>Scope tags for the network migration definition.</p>",
+        "NetworkMigrationDefinitionSummary$scopeTags": "<p>Scope tags for the network migration definition.</p>",
+        "NetworkMigrationMapperSegment$scopeTags": "<p>Scope tags for the segment.</p>",
+        "StartNetworkMigrationMappingUpdateSegment$scopeTags": "<p>The updated scope tags for the segment.</p>",
+        "UpdateNetworkMigrationDefinitionRequest$scopeTags": "<p>The updated scope tags for the network migration definition.</p>",
+        "UpdateNetworkMigrationMapperSegmentRequest$scopeTags": "<p>The updated scope tags for the segment.</p>"
       }
     },
     "SecretArn": {
@@ -1836,6 +2793,53 @@
       "base": null,
       "refs": {
         "ReplicationServersSecurityGroupsIDs$member": null
+      }
+    },
+    "SecurityGroupMappingStrategy": {
+      "base": null,
+      "refs": {
+        "StartNetworkMigrationMappingRequest$securityGroupMappingStrategy": "<p>The security group mapping strategy to use.</p>"
+      }
+    },
+    "SegmentConstructDescription": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationMapperSegmentConstruct$description": "<p>A description of the construct.</p>"
+      }
+    },
+    "SegmentConstructName": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationMapperSegmentConstruct$name": "<p>The name of the construct.</p>"
+      }
+    },
+    "SegmentDescription": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationMapperSegment$description": "<p>A description of the segment.</p>"
+      }
+    },
+    "SegmentID": {
+      "base": null,
+      "refs": {
+        "GetNetworkMigrationMapperSegmentConstructRequest$segmentID": "<p>The unique identifier of the mapper segment.</p>",
+        "ListNetworkMigrationCodeGenerationSegmentsIDsFilter$member": null,
+        "ListNetworkMigrationMapperSegmentConstructsRequest$segmentID": "<p>The unique identifier of the segment to list constructs for.</p>",
+        "ListNetworkMigrationMapperSegmentsIDsFilter$member": null,
+        "NetworkMigrationCodeGenerationSegment$segmentID": "<p>The unique identifier of the segment.</p>",
+        "NetworkMigrationCodeGenerationSegment$mapperSegmentID": "<p>The ID of the mapper segment that this code generation segment was created from.</p>",
+        "NetworkMigrationDeployedStackDetails$segmentID": "<p>The ID of the segment that this stack was deployed for.</p>",
+        "NetworkMigrationMapperSegment$segmentID": "<p>The unique identifier of the segment.</p>",
+        "StartNetworkMigrationMappingUpdateConstruct$segmentID": "<p>The ID of the segment containing the construct.</p>",
+        "StartNetworkMigrationMappingUpdateSegment$segmentID": "<p>The ID of the segment to update.</p>",
+        "UpdateNetworkMigrationMapperSegmentRequest$segmentID": "<p>The unique identifier of the segment to update.</p>",
+        "referencedSegmentsList$member": null
+      }
+    },
+    "SegmentName": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationMapperSegment$name": "<p>The name of the segment.</p>"
       }
     },
     "ServiceQuotaExceededException": {
@@ -1851,10 +2855,37 @@
         "UpdateReplicationConfigurationRequest$name": "<p>Update replication configuration name request.</p>"
       }
     },
+    "SourceConfiguration": {
+      "base": "<p>Configuration for a migration source environment.</p>",
+      "refs": {
+        "SourceConfigurationList$member": null
+      }
+    },
+    "SourceConfigurationList": {
+      "base": null,
+      "refs": {
+        "CreateNetworkMigrationDefinitionRequest$sourceConfigurations": "<p>A list of source configurations for the network migration.</p>",
+        "NetworkMigrationDefinition$sourceConfigurations": "<p>A list of source configurations for the network migration.</p>",
+        "UpdateNetworkMigrationDefinitionRequest$sourceConfigurations": "<p>The updated list of source configurations.</p>"
+      }
+    },
+    "SourceEnvironment": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationDefinitionSummary$sourceEnvironment": "<p>The source environment configuration.</p>",
+        "SourceConfiguration$sourceEnvironment": "<p>The source environment type.</p>"
+      }
+    },
     "SourceProperties": {
       "base": "<p>Source server properties.</p>",
       "refs": {
         "SourceServer$sourceProperties": "<p>Source server properties.</p>"
+      }
+    },
+    "SourceS3Configuration": {
+      "base": "<p>S3 configuration for source network data.</p>",
+      "refs": {
+        "SourceConfiguration$sourceS3Configuration": "<p>The S3 configuration for the source data.</p>"
       }
     },
     "SourceServer": {
@@ -2041,6 +3072,14 @@
       "base": "<p>Start export response.</p>",
       "refs": {}
     },
+    "StartImportFileEnrichmentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartImportFileEnrichmentResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StartImportRequest": {
       "base": "<p>Start import request.</p>",
       "refs": {}
@@ -2048,6 +3087,70 @@
     "StartImportResponse": {
       "base": "<p>Start import response.</p>",
       "refs": {}
+    },
+    "StartNetworkMigrationAnalysisRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNetworkMigrationAnalysisResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNetworkMigrationCodeGenerationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNetworkMigrationCodeGenerationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNetworkMigrationDeployerJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNetworkMigrationDeploymentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNetworkMigrationMappingRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNetworkMigrationMappingResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNetworkMigrationMappingUpdateConstruct": {
+      "base": "<p>A construct update to apply during a mapping update operation.</p>",
+      "refs": {
+        "StartNetworkMigrationMappingUpdateConstructs$member": null
+      }
+    },
+    "StartNetworkMigrationMappingUpdateConstructs": {
+      "base": null,
+      "refs": {
+        "StartNetworkMigrationMappingUpdateRequest$constructs": "<p>A list of construct updates to apply.</p>"
+      }
+    },
+    "StartNetworkMigrationMappingUpdateRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNetworkMigrationMappingUpdateResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNetworkMigrationMappingUpdateSegment": {
+      "base": "<p>A segment update to apply during a mapping update operation.</p>",
+      "refs": {
+        "StartNetworkMigrationMappingUpdateSegments$member": null
+      }
+    },
+    "StartNetworkMigrationMappingUpdateSegments": {
+      "base": null,
+      "refs": {
+        "StartNetworkMigrationMappingUpdateRequest$segments": "<p>A list of segment updates to apply.</p>"
+      }
     },
     "StartReplicationRequest": {
       "base": null,
@@ -2084,10 +3187,18 @@
         "TemplateActionDocument$timeoutSeconds": "<p>Template post migration custom action timeout in seconds.</p>"
       }
     },
+    "String": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationAnalysisResult$analysisResult": "<p>The detailed analysis findings and recommendations.</p>"
+      }
+    },
     "SubnetID": {
       "base": null,
       "refs": {
         "CreateReplicationConfigurationTemplateRequest$stagingAreaSubnetId": "<p>Request to configure the Staging Area subnet ID during Replication Settings template creation.</p>",
+        "NetworkMigrationAnalysisResultSource$subnetID": "<p>The subnet ID of the source resource.</p>",
+        "NetworkMigrationAnalysisResultTarget$subnetID": "<p>The subnet ID of the target resource.</p>",
         "ReplicationConfiguration$stagingAreaSubnetId": "<p>Replication Configuration Staging Area subnet ID.</p>",
         "ReplicationConfigurationTemplate$stagingAreaSubnetId": "<p>Replication Configuration template Staging Area subnet ID.</p>",
         "UpdateReplicationConfigurationRequest$stagingAreaSubnetId": "<p>Update replication configuration Staging Area subnet request.</p>",
@@ -2130,6 +3241,7 @@
         "CreateApplicationRequest$tags": "<p>Application tags.</p>",
         "CreateConnectorRequest$tags": "<p>Create Connector request tags.</p>",
         "CreateLaunchConfigurationTemplateRequest$tags": "<p>Request to associate tags during creation of a Launch Configuration Template.</p>",
+        "CreateNetworkMigrationDefinitionRequest$tags": "<p>Tags to assign to the network migration definition.</p>",
         "CreateReplicationConfigurationTemplateRequest$stagingAreaTags": "<p>Request to configure Staging Area tags during Replication Settings template creation.</p>",
         "CreateReplicationConfigurationTemplateRequest$tags": "<p>Request to configure tags during Replication Settings template creation.</p>",
         "CreateWaveRequest$tags": "<p>Wave tags.</p>",
@@ -2138,6 +3250,9 @@
         "Job$tags": "<p>Tags associated with specific Job.</p>",
         "LaunchConfigurationTemplate$tags": "<p>Tags of the Launch Configuration Template.</p>",
         "ListTagsForResourceResponse$tags": "<p>List tags for resource response.</p>",
+        "NetworkMigrationDefinition$tags": "<p>Tags assigned to the network migration definition.</p>",
+        "NetworkMigrationDefinitionSummary$tags": "<p>Tags assigned to the network migration definition.</p>",
+        "NetworkMigrationExecution$tags": "<p>Tags assigned to the execution.</p>",
         "ReplicationConfiguration$stagingAreaTags": "<p>Replication Configuration Staging Area tags.</p>",
         "ReplicationConfigurationTemplate$stagingAreaTags": "<p>Replication Configuration template Staging Area Tags.</p>",
         "ReplicationConfigurationTemplate$tags": "<p>Replication Configuration template Tags.</p>",
@@ -2155,6 +3270,14 @@
         "Wave$tags": "<p>Wave tags.</p>"
       }
     },
+    "TargetDeployment": {
+      "base": null,
+      "refs": {
+        "CreateNetworkMigrationDefinitionRequest$targetDeployment": "<p>The target deployment configuration for the migrated network.</p>",
+        "NetworkMigrationDefinition$targetDeployment": "<p>The target deployment configuration for the migrated network.</p>",
+        "UpdateNetworkMigrationDefinitionRequest$targetDeployment": "<p>The updated target deployment configuration.</p>"
+      }
+    },
     "TargetInstanceTypeRightSizingMethod": {
       "base": null,
       "refs": {
@@ -2163,6 +3286,39 @@
         "LaunchConfigurationTemplate$targetInstanceTypeRightSizingMethod": "<p>Target instance type right-sizing method.</p>",
         "UpdateLaunchConfigurationRequest$targetInstanceTypeRightSizingMethod": "<p>Update Launch configuration Target instance right sizing request.</p>",
         "UpdateLaunchConfigurationTemplateRequest$targetInstanceTypeRightSizingMethod": "<p>Target instance type right-sizing method.</p>"
+      }
+    },
+    "TargetNetwork": {
+      "base": "<p>Configuration for the target network topology and addressing.</p>",
+      "refs": {
+        "CreateNetworkMigrationDefinitionRequest$targetNetwork": "<p>The target network configuration including topology and CIDR ranges.</p>",
+        "NetworkMigrationDefinition$targetNetwork": "<p>The target network configuration including topology and CIDR ranges.</p>"
+      }
+    },
+    "TargetNetworkTopology": {
+      "base": null,
+      "refs": {
+        "TargetNetwork$topology": "<p>The network topology type for the target environment.</p>",
+        "TargetNetworkUpdate$topology": "<p>The updated network topology type.</p>"
+      }
+    },
+    "TargetNetworkUpdate": {
+      "base": "<p>Updated configuration for the target network topology and addressing.</p>",
+      "refs": {
+        "UpdateNetworkMigrationDefinitionRequest$targetNetwork": "<p>The updated target network configuration.</p>"
+      }
+    },
+    "TargetS3Configuration": {
+      "base": "<p>S3 configuration for storing target network artifacts.</p>",
+      "refs": {
+        "CreateNetworkMigrationDefinitionRequest$targetS3Configuration": "<p>The S3 configuration for storing the target network artifacts.</p>",
+        "NetworkMigrationDefinition$targetS3Configuration": "<p>The S3 configuration for storing the target network artifacts.</p>"
+      }
+    },
+    "TargetS3ConfigurationUpdate": {
+      "base": "<p>Updated S3 configuration for storing target network artifacts.</p>",
+      "refs": {
+        "UpdateNetworkMigrationDefinitionRequest$targetS3Configuration": "<p>The updated S3 configuration for storing the target network artifacts.</p>"
       }
     },
     "TemplateActionDocument": {
@@ -2207,6 +3363,33 @@
         "LaunchTemplateDiskConf$throughput": "<p>Launch template disk throughput configuration.</p>"
       }
     },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "ImportFileEnrichment$createdAt": "<p>The timestamp when the enrichment job was created.</p>",
+        "ImportFileEnrichment$endedAt": "<p>The timestamp when the enrichment job completed or failed.</p>",
+        "NetworkMigrationAnalysisJobDetails$createdAt": "<p>The timestamp when the job was created.</p>",
+        "NetworkMigrationAnalysisJobDetails$endedAt": "<p>The timestamp when the job completed or failed.</p>",
+        "NetworkMigrationCodeGenerationArtifact$createdAt": "<p>The timestamp when the artifact was created.</p>",
+        "NetworkMigrationCodeGenerationJobDetails$createdAt": "<p>The timestamp when the job was created.</p>",
+        "NetworkMigrationCodeGenerationJobDetails$endedAt": "<p>The timestamp when the job completed or failed.</p>",
+        "NetworkMigrationCodeGenerationSegment$createdAt": "<p>The timestamp when the segment was created.</p>",
+        "NetworkMigrationDefinition$createdAt": "<p>The timestamp when the network migration definition was created.</p>",
+        "NetworkMigrationDefinition$updatedAt": "<p>The timestamp when the network migration definition was last updated.</p>",
+        "NetworkMigrationDeployerJobDetails$createdAt": "<p>The timestamp when the job was created.</p>",
+        "NetworkMigrationDeployerJobDetails$endedAt": "<p>The timestamp when the job completed or failed.</p>",
+        "NetworkMigrationExecution$createdAt": "<p>The timestamp when the execution was created.</p>",
+        "NetworkMigrationExecution$updatedAt": "<p>The timestamp when the execution was last updated.</p>",
+        "NetworkMigrationMapperSegment$createdAt": "<p>The timestamp when the segment was created.</p>",
+        "NetworkMigrationMapperSegment$updatedAt": "<p>The timestamp when the segment was last updated.</p>",
+        "NetworkMigrationMapperSegmentConstruct$createdAt": "<p>The timestamp when the construct was created.</p>",
+        "NetworkMigrationMapperSegmentConstruct$updatedAt": "<p>The timestamp when the construct was last updated.</p>",
+        "NetworkMigrationMappingJobDetails$createdAt": "<p>The timestamp when the job was created.</p>",
+        "NetworkMigrationMappingJobDetails$endedAt": "<p>The timestamp when the job completed or failed.</p>",
+        "NetworkMigrationMappingUpdateJobDetails$createdAt": "<p>The timestamp when the job was created.</p>",
+        "NetworkMigrationMappingUpdateJobDetails$endedAt": "<p>The timestamp when the job completed or failed.</p>"
+      }
+    },
     "UnarchiveApplicationRequest": {
       "base": null,
       "refs": {}
@@ -2238,6 +3421,20 @@
     "UpdateLaunchConfigurationTemplateRequest": {
       "base": null,
       "refs": {}
+    },
+    "UpdateNetworkMigrationDefinitionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateNetworkMigrationMapperSegmentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateOperation": {
+      "base": "<p>An operation that updates the properties of a construct.</p>",
+      "refs": {
+        "OperationUnion$update": "<p>An update operation to modify construct properties.</p>"
+      }
     },
     "UpdateReplicationConfigurationRequest": {
       "base": null,
@@ -2313,6 +3510,20 @@
         "LaunchTemplateDiskConf$volumeType": "<p>Launch template disk volume type configuration.</p>"
       }
     },
+    "VpcID": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationAnalysisResultSource$vpcID": "<p>The VPC ID of the source resource.</p>",
+        "NetworkMigrationAnalysisResultTarget$vpcID": "<p>The VPC ID of the target resource.</p>",
+        "VpcIDsFilter$member": null
+      }
+    },
+    "VpcIDsFilter": {
+      "base": null,
+      "refs": {
+        "ListNetworkMigrationAnalysisResultsFilters$vpcIDs": "<p>A list of VPC IDs to filter results by.</p>"
+      }
+    },
     "Wave": {
       "base": null,
       "refs": {
@@ -2379,6 +3590,12 @@
       "base": null,
       "refs": {
         "ListWavesResponse$items": "<p>Waves list.</p>"
+      }
+    },
+    "referencedSegmentsList": {
+      "base": null,
+      "refs": {
+        "NetworkMigrationMapperSegment$referencedSegments": "<p>A list of other segments that this segment depends on or references.</p>"
       }
     }
   }

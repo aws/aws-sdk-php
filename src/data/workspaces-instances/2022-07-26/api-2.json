@@ -133,7 +133,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListInstanceTypes":{
       "name":"ListInstanceTypes",
@@ -148,7 +149,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListRegions":{
       "name":"ListRegions",
@@ -163,7 +165,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -179,7 +182,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListWorkspaceInstances":{
       "name":"ListWorkspaceInstances",
@@ -194,7 +198,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -266,8 +271,7 @@
     },
     "AssociateVolumeResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AutoRecoveryEnum":{
       "type":"string",
@@ -278,7 +282,7 @@
     },
     "AvailabilityZone":{
       "type":"string",
-      "pattern":"[a-z]{2}-[a-z]+-\\d[a-z](-[a-z0-9]+)?"
+      "pattern":"[a-z]{2}-[a-z]+-\\d(?:[a-z]|-[a-z]+-\\d[a-z])"
     },
     "BandwidthWeightingEnum":{
       "type":"string",
@@ -286,6 +290,20 @@
         "default",
         "vpc-1",
         "ebs-1"
+      ]
+    },
+    "BillingConfiguration":{
+      "type":"structure",
+      "required":["BillingMode"],
+      "members":{
+        "BillingMode":{"shape":"BillingMode"}
+      }
+    },
+    "BillingMode":{
+      "type":"string",
+      "enum":[
+        "MONTHLY",
+        "HOURLY"
       ]
     },
     "BlockDeviceMappingRequest":{
@@ -404,7 +422,8 @@
           "idempotencyToken":true
         },
         "Tags":{"shape":"TagList"},
-        "ManagedInstance":{"shape":"ManagedInstanceRequest"}
+        "ManagedInstance":{"shape":"ManagedInstanceRequest"},
+        "BillingConfiguration":{"shape":"BillingConfiguration"}
       }
     },
     "CreateWorkspaceInstanceResponse":{
@@ -428,8 +447,7 @@
     },
     "DeleteVolumeResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteWorkspaceInstanceRequest":{
       "type":"structure",
@@ -440,8 +458,7 @@
     },
     "DeleteWorkspaceInstanceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Description":{
       "type":"string",
@@ -476,8 +493,7 @@
     },
     "DisassociateVolumeResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EC2InstanceError":{
       "type":"structure",
@@ -541,7 +557,8 @@
         "EC2InstanceErrors":{"shape":"EC2InstanceErrors"},
         "ProvisionState":{"shape":"ProvisionStateEnum"},
         "WorkspaceInstanceId":{"shape":"WorkspaceInstanceId"},
-        "EC2ManagedInstance":{"shape":"EC2ManagedInstance"}
+        "EC2ManagedInstance":{"shape":"EC2ManagedInstance"},
+        "BillingConfiguration":{"shape":"BillingConfiguration"}
       }
     },
     "HibernationOptionsRequest":{
@@ -598,6 +615,26 @@
     "ImageId":{
       "type":"string",
       "pattern":"ami-[0-9a-zA-Z]{1,63}"
+    },
+    "InstanceConfigurationFilter":{
+      "type":"structure",
+      "required":[
+        "BillingMode",
+        "PlatformType",
+        "Tenancy"
+      ],
+      "members":{
+        "BillingMode":{"shape":"BillingMode"},
+        "PlatformType":{"shape":"PlatformTypeEnum"},
+        "Tenancy":{"shape":"InstanceConfigurationTenancyEnum"}
+      }
+    },
+    "InstanceConfigurationTenancyEnum":{
+      "type":"string",
+      "enum":[
+        "SHARED",
+        "DEDICATED"
+      ]
     },
     "InstanceInterruptionBehaviorEnum":{
       "type":"string",
@@ -682,7 +719,8 @@
     "InstanceTypeInfo":{
       "type":"structure",
       "members":{
-        "InstanceType":{"shape":"InstanceType"}
+        "InstanceType":{"shape":"InstanceType"},
+        "SupportedInstanceConfigurations":{"shape":"SupportedInstanceConfigurations"}
       }
     },
     "InstanceTypes":{
@@ -771,11 +809,18 @@
       "type":"list",
       "member":{"shape":"LicenseConfigurationRequest"}
     },
+    "ListInstanceTypesMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":600,
+      "min":1
+    },
     "ListInstanceTypesRequest":{
       "type":"structure",
       "members":{
-        "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"NextToken"}
+        "MaxResults":{"shape":"ListInstanceTypesMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "InstanceConfigurationFilter":{"shape":"InstanceConfigurationFilter"}
       }
     },
     "ListInstanceTypesResponse":{
@@ -915,6 +960,18 @@
     "PlacementGroupId":{
       "type":"string",
       "pattern":"pg-[0-9a-zA-Z]{1,63}"
+    },
+    "PlatformTypeEnum":{
+      "type":"string",
+      "enum":[
+        "Windows",
+        "Windows BYOL",
+        "Linux/UNIX",
+        "Ubuntu Pro Linux",
+        "Red Hat Enterprise Linux",
+        "Red Hat BYOL Linux",
+        "SUSE Linux"
+      ]
     },
     "PrivateDnsNameOptionsRequest":{
       "type":"structure",
@@ -1063,6 +1120,18 @@
       "type":"string",
       "pattern":"subnet-[0-9a-zA-Z]{1,63}"
     },
+    "SupportedInstanceConfiguration":{
+      "type":"structure",
+      "members":{
+        "BillingMode":{"shape":"BillingMode"},
+        "PlatformType":{"shape":"PlatformTypeEnum"},
+        "Tenancy":{"shape":"InstanceConfigurationTenancyEnum"}
+      }
+    },
+    "SupportedInstanceConfigurations":{
+      "type":"list",
+      "member":{"shape":"SupportedInstanceConfiguration"}
+    },
     "Tag":{
       "type":"structure",
       "members":{
@@ -1079,13 +1148,13 @@
     "TagKeyList":{
       "type":"list",
       "member":{"shape":"TagKey"},
-      "max":30,
+      "max":50,
       "min":1
     },
     "TagList":{
       "type":"list",
       "member":{"shape":"Tag"},
-      "max":30,
+      "max":50,
       "min":0
     },
     "TagResourceRequest":{
@@ -1101,8 +1170,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagSpecification":{
       "type":"structure",
@@ -1157,8 +1225,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UserData":{
       "type":"string",

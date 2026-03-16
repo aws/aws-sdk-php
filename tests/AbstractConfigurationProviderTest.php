@@ -2,24 +2,26 @@
 
 namespace Aws\Test;
 
+use Aws\AbstractConfigurationProvider;
 use Aws\LruArrayCache;
 use Aws\Result;
 use Aws\ResultInterface;
 use GuzzleHttp\Promise;
+use PHPUnit\Framework\MockObject\MockObject;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\AbstractConfigurationProvider
- */
+#[CoversClass(AbstractConfigurationProvider::class)]
 class AbstractConfigurationProviderTest extends TestCase
 {
-    /** @var \PHPUnit_Framework_MockObject_MockObject */
+    /** @var MockObject */
     private $provider;
 
-    public function __construct()
+    protected function setUp(): void
     {
-        parent::__construct();
-        $this->provider = $this->getMockForAbstractClass('\Aws\AbstractConfigurationProvider');
+        $this->provider = $this->getMockForAbstractClass(
+            '\Aws\AbstractConfigurationProvider'
+        );
     }
 
     public function testGetsHomeDirectoryForWindowsUsers()

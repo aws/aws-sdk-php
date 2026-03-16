@@ -283,6 +283,7 @@ class AwsClient implements AwsClientInterface
             $args['with_resolved']($config);
         }
         $this->addUserAgentMiddleware($config);
+        $this->addEventStreamHttpFlagMiddleware();
     }
 
     public function getHandlerList()
@@ -650,6 +651,33 @@ class AwsClient implements AwsClientInterface
     }
 
     /**
+     * Enables streaming the response by using the stream flag.
+     *
+     * @return void
+     */
+    private function addEventStreamHttpFlagMiddleware(): void
+    {
+        $this->getHandlerList()
+            -> appendInit(
+                function (callable $handler) {
+                    return function (CommandInterface $command, $request = null) use ($handler) {
+                        $operation = $this->getApi()->getOperation($command->getName());
+                        $output = $operation->getOutput();
+                        foreach ($output->getMembers() as $memberProps) {
+                            if (!empty($memberProps['eventstream'])) {
+                                $command['@http']['stream'] = true;
+                                break;
+                            }
+                        }
+
+                        return $handler($command, $request);
+                    };
+                },
+                'event-streaming-flag-middleware'
+            );
+    }
+
+    /**
      * Retrieves client context param definition from service model,
      * creates mapping of client context param names with client-provided
      * values.
@@ -735,29 +763,6 @@ class AwsClient implements AwsClientInterface
     protected function isUseEndpointV2()
     {
         return $this->endpointProvider instanceof EndpointProviderV2;
-    }
-
-    public static function emitDeprecationWarning() {
-        trigger_error(
-            "This method is deprecated. It will be removed in an upcoming release."
-            , E_USER_DEPRECATED
-        );
-
-        $phpVersion = PHP_VERSION_ID;
-        if ($phpVersion <  70205) {
-            $phpVersionString = phpversion();
-            @trigger_error(
-                "This installation of the SDK is using PHP version"
-                .  " {$phpVersionString}, which will be deprecated on August"
-                .  " 15th, 2023.  Please upgrade your PHP version to a minimum of"
-                .  " 7.2.5 before then to continue receiving updates to the AWS"
-                .  " SDK for PHP.  To disable this warning, set"
-                .  " suppress_php_deprecation_warning to true on the client constructor"
-                .  " or set the environment variable AWS_SUPPRESS_PHP_DEPRECATION_WARNING"
-                .  " to true.",
-                E_USER_DEPRECATED
-            );
-        }
     }
 
 

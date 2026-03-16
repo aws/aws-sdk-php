@@ -8,10 +8,10 @@ use Aws\Rds\RdsClient;
 use Aws\Result;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\PresignUrlMiddleware
- */
+#[CoversClass(PresignUrlMiddleware::class)]
 class PresignUrlMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
@@ -102,15 +102,7 @@ class PresignUrlMiddlewareTest extends TestCase
         ]);
     }
 
-    /**
-     * @param string $parameter
-     * @param string $value
-     * @param string $expected
-     *
-     * @dataProvider extraQueryParamsProvider
-     *
-     * @return void
-     */
+    #[DataProvider('extraQueryParamsProvider')]
     public function testExtraQueryParametersAreURLEncoded(
         string $parameter,
         string $value,
@@ -132,7 +124,7 @@ class PresignUrlMiddlewareTest extends TestCase
                 return new Result;
             },
         ]);
-        
+
         $ec2->getHandlerList()->prependInit(
             PresignUrlMiddleware::wrap($ec2, $ec2->getEndpointProvider(), [
                 'operations' => ['CopySnapshot'],
@@ -140,7 +132,7 @@ class PresignUrlMiddlewareTest extends TestCase
                 'extra_query_params' => ['CopySnapshot' => [$parameter]]
             ])
         );
-        
+
         $ec2->copySnapshot([
             'SourceRegion' => 'eu-west-1',
             'SourceSnapshotId' => 'foo',
@@ -148,10 +140,7 @@ class PresignUrlMiddlewareTest extends TestCase
         ]);
     }
 
-    /**
-     * @return array[]
-     */
-    public function extraQueryParamsProvider(): array
+    public static function extraQueryParamsProvider(): array
     {
         return [
             'simple_parameter' => [
@@ -187,4 +176,3 @@ class PresignUrlMiddlewareTest extends TestCase
         ];
     }
 }
-

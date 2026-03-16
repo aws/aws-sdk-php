@@ -1202,7 +1202,8 @@
         {"shape":"InternalException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
-        {"shape":"DisabledOperationException"}
+        {"shape":"DisabledOperationException"},
+        {"shape":"LimitExceededException"}
       ]
     },
     "UpdateDomainConfig":{
@@ -1470,6 +1471,7 @@
         "DataSourceType":{"shape":"DirectQueryDataSourceType"},
         "Description":{"shape":"DirectQueryDataSourceDescription"},
         "OpenSearchArns":{"shape":"DirectQueryOpenSearchARNList"},
+        "DataSourceAccessPolicy":{"shape":"PolicyDocument"},
         "TagList":{"shape":"TagList"}
       }
     },
@@ -2111,7 +2113,8 @@
         "AutoTuneOptions":{"shape":"AutoTuneOptionsInput"},
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
         "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"},
-        "AIMLOptions":{"shape":"AIMLOptionsInput"}
+        "AIMLOptions":{"shape":"AIMLOptionsInput"},
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"}
       }
     },
     "CreateDomainResponse":{
@@ -2225,7 +2228,8 @@
       "type":"structure",
       "members":{
         "dataSourceArn":{"shape":"ARN"},
-        "dataSourceDescription":{"shape":"DataSourceDescription"}
+        "dataSourceDescription":{"shape":"DataSourceDescription"},
+        "iamRoleForDataSourceArn":{"shape":"RoleArn"}
       }
     },
     "DataSourceDescription":{
@@ -2450,6 +2454,31 @@
         "ELIGIBLE"
       ]
     },
+    "DeploymentStrategy":{
+      "type":"string",
+      "enum":[
+        "Default",
+        "CapacityOptimized"
+      ]
+    },
+    "DeploymentStrategyOptions":{
+      "type":"structure",
+      "required":["DeploymentStrategy"],
+      "members":{
+        "DeploymentStrategy":{"shape":"DeploymentStrategy"}
+      }
+    },
+    "DeploymentStrategyOptionsStatus":{
+      "type":"structure",
+      "required":[
+        "Options",
+        "Status"
+      ],
+      "members":{
+        "Options":{"shape":"DeploymentStrategyOptions"},
+        "Status":{"shape":"OptionStatus"}
+      }
+    },
     "DeploymentType":{
       "type":"string",
       "max":128,
@@ -2464,8 +2493,16 @@
           "location":"uri",
           "locationName":"DomainName"
         },
-        "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"NextToken"}
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
       }
     },
     "DescribeDomainAutoTunesResponse":{
@@ -2923,7 +2960,8 @@
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptionsStatus"},
         "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptionsStatus"},
         "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
-        "AIMLOptions":{"shape":"AIMLOptionsStatus"}
+        "AIMLOptions":{"shape":"AIMLOptionsStatus"},
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptionsStatus"}
       }
     },
     "DomainEndpointOptions":{
@@ -3120,7 +3158,8 @@
         "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"},
         "DomainProcessingStatus":{"shape":"DomainProcessingStatusType"},
         "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
-        "AIMLOptions":{"shape":"AIMLOptionsOutput"}
+        "AIMLOptions":{"shape":"AIMLOptionsOutput"},
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"}
       }
     },
     "DomainStatusList":{
@@ -3369,6 +3408,7 @@
         "DataSourceType":{"shape":"DirectQueryDataSourceType"},
         "Description":{"shape":"DirectQueryDataSourceDescription"},
         "OpenSearchArns":{"shape":"DirectQueryOpenSearchARNList"},
+        "DataSourceAccessPolicy":{"shape":"PolicyDocument"},
         "DataSourceArn":{"shape":"String"}
       }
     },
@@ -5431,7 +5471,8 @@
         },
         "DataSourceType":{"shape":"DirectQueryDataSourceType"},
         "Description":{"shape":"DirectQueryDataSourceDescription"},
-        "OpenSearchArns":{"shape":"DirectQueryOpenSearchARNList"}
+        "OpenSearchArns":{"shape":"DirectQueryOpenSearchARNList"},
+        "DataSourceAccessPolicy":{"shape":"PolicyDocument"}
       }
     },
     "UpdateDirectQueryDataSourceResponse":{
@@ -5468,7 +5509,8 @@
         "DryRunMode":{"shape":"DryRunMode"},
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
         "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"},
-        "AIMLOptions":{"shape":"AIMLOptionsInput"}
+        "AIMLOptions":{"shape":"AIMLOptionsInput"},
+        "DeploymentStrategyOptions":{"shape":"DeploymentStrategyOptions"}
       }
     },
     "UpdateDomainConfigResponse":{

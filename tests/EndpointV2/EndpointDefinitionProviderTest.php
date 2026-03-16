@@ -3,8 +3,11 @@
 namespace Aws\Test\EndpointV2;
 
 use Aws\EndpointV2\EndpointDefinitionProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
+#[CoversClass(EndpointDefinitionProvider::class)]
 class EndpointDefinitionProviderTest extends TestCase
 {
     public function testProvidesRuleset()
@@ -46,7 +49,7 @@ class EndpointDefinitionProviderTest extends TestCase
         EndpointDefinitionProvider::getEndpointRuleset('s3', '10-22-2022');
     }
 
-    public function getEndpointFileProvider()
+    public static function getEndpointFileProvider(): array
     {
         return [
             ['Ruleset'],
@@ -54,11 +57,7 @@ class EndpointDefinitionProviderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getEndpointFileProvider
-     *
-     * @param $type
-     */
+    #[DataProvider('getEndpointFileProvider')]
     public function testThrowsExceptionOnMissingFiles($type)
     {
         $method = 'getEndpoint' . $type;

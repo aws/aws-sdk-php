@@ -13,6 +13,7 @@
     "CreateIntegrationWorkflow": "<p> Creates an integration workflow. An integration workflow is an async process which ingests historic data and sets up an integration for ongoing updates. The supported Amazon AppFlow sources are Salesforce, ServiceNow, and Marketo. </p>",
     "CreateProfile": "<p>Creates a standard profile.</p> <p>A standard profile represents the following attributes for a customer profile in a domain.</p>",
     "CreateRecommender": "<p>Creates a recommender</p>",
+    "CreateRecommenderFilter": "<p>Creates a recommender filter. A recommender filter specifies which items to include or exclude from recommendations.</p>",
     "CreateSegmentDefinition": "<p>Creates a segment definition associated to the given domain.</p>",
     "CreateSegmentEstimate": "<p>Creates a segment estimate query.</p>",
     "CreateSegmentSnapshot": "<p>Triggers a job to export a segment to a specified destination.</p>",
@@ -29,6 +30,7 @@
     "DeleteProfileObject": "<p>Removes an object associated with a profile of a given ProfileObjectType.</p>",
     "DeleteProfileObjectType": "<p>Removes a ProfileObjectType from a specific domain as well as removes all the ProfileObjects of that type. It also disables integrations from this specific ProfileObjectType. In addition, it scrubs all of the fields of the standard profile that were populated from this ProfileObjectType.</p>",
     "DeleteRecommender": "<p>Deletes a recommender.</p>",
+    "DeleteRecommenderFilter": "<p>Deletes a recommender filter from a domain.</p>",
     "DeleteSegmentDefinition": "<p>Deletes a segment definition from the domain.</p>",
     "DeleteWorkflow": "<p>Deletes the specified workflow and all its corresponding resources. This is an async process.</p>",
     "DetectProfileObjectType": "<p>The process of detecting profile object type mapping by using given objects.</p>",
@@ -49,6 +51,7 @@
     "GetProfileObjectTypeTemplate": "<p>Returns the template information for a specific object type.</p> <p>A template is a predefined ProfileObjectType, such as “Salesforce-Account” or “Salesforce-Contact.” When a user sends a ProfileObject, using the PutProfileObject API, with an ObjectTypeName that matches one of the TemplateIds, it uses the mappings from the template.</p>",
     "GetProfileRecommendations": "<p>Fetches the recommendations for a profile in the input Customer Profiles domain. Fetches all the profile recommendations </p>",
     "GetRecommender": "<p>Retrieves a recommender.</p>",
+    "GetRecommenderFilter": "<p>Retrieves information about a specific recommender filter in a domain.</p>",
     "GetSegmentDefinition": "<p>Gets a segment definition from the domain.</p>",
     "GetSegmentEstimate": "<p>Gets the result of a segment estimate query.</p>",
     "GetSegmentMembership": "<p>Determines if the given profiles are within a segment.</p>",
@@ -75,6 +78,7 @@
     "ListProfileObjectTypeTemplates": "<p>Lists all of the template information for object types.</p>",
     "ListProfileObjectTypes": "<p>Lists all of the templates available within the service.</p>",
     "ListProfileObjects": "<p>Returns a list of objects associated with a profile of a given ProfileObjectType.</p>",
+    "ListRecommenderFilters": "<p>Returns a list of recommender filters in the specified domain.</p>",
     "ListRecommenderRecipes": "<p>Returns a list of available recommender recipes that can be used to create recommenders.</p>",
     "ListRecommenders": "<p>Returns a list of recommenders in the specified domain.</p>",
     "ListRuleBasedMatches": "<p>Returns a set of <code>MatchIds</code> that belong to the given domain.</p>",
@@ -127,6 +131,7 @@
         "CreateEventTriggerResponse$SegmentFilter": "<p>The destination is triggered only for profiles that meet the criteria of a segment definition.</p>",
         "CreateIntegrationWorkflowRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "CreateRecommenderFilterRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateRecommenderRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateRecommenderRequest$RecommenderName": "<p>The name of the recommender.</p>",
         "CreateSegmentDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -152,6 +157,7 @@
         "DeleteProfileObjectRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteProfileObjectTypeRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "DeleteRecommenderFilterRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteRecommenderRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteRecommenderRequest$RecommenderName": "<p>The recommender name.</p>",
         "DeleteSegmentDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -196,6 +202,7 @@
         "GetProfileObjectTypeTemplateResponse$SourceObject": "<p>The source of the object template.</p>",
         "GetProfileRecommendationsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetProfileRecommendationsRequest$RecommenderName": "<p>The unique name of the recommender.</p>",
+        "GetRecommenderFilterRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetRecommenderRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetRecommenderRequest$RecommenderName": "<p>The name of the recommender.</p>",
         "GetRecommenderResponse$RecommenderName": "<p>The name of the recommender.</p>",
@@ -237,6 +244,7 @@
         "ListProfileObjectTypeTemplateItem$SourceObject": "<p>The source of the object template.</p>",
         "ListProfileObjectTypesRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListProfileObjectsRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "ListRecommenderFiltersRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListRecommendersRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListRuleBasedMatchesRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListSegmentDefinitionsRequest$DomainName": "<p>The unique identifier of the domain.</p>",
@@ -253,6 +261,9 @@
         "PutProfileObjectTypeRequest$DomainName": "<p>The unique name of the domain.</p>",
         "PutProfileObjectTypeRequest$TemplateId": "<p>A unique identifier for the object template. For some attributes in the request, the service will use the default value from the object template when TemplateId is present. If these attributes are present in the request, the service may return a <code>BadRequestException</code>. These attributes include: AllowProfileCreation, SourceLastUpdatedTimestampFormat, Fields, and Keys. For example, if AllowProfileCreation is set to true when TemplateId is set, the service may return a <code>BadRequestException</code>.</p>",
         "PutProfileObjectTypeResponse$TemplateId": "<p>A unique identifier for the object template.</p>",
+        "RecommenderFilter$Name": "<p>The name of the recommender filter to apply.</p>",
+        "RecommenderPromotionalFilter$Name": "<p>The name of the recommender filter to use for the promotion.</p>",
+        "RecommenderPromotionalFilter$PromotionName": "<p>The name of the promotion.</p>",
         "RecommenderSummary$RecommenderName": "<p>The name of the recommender.</p>",
         "SearchProfilesRequest$DomainName": "<p>The unique name of the domain.</p>",
         "SearchProfilesRequest$KeyName": "<p>A searchable identifier of a customer profile. The predefined keys you can use to search include: _account, _profileId, _assetId, _caseId, _orderId, _fullName, _phone, _email, _ctrContactId, _marketoLeadId, _salesforceAccountId, _salesforceContactId, _salesforceAssetId, _zendeskUserId, _zendeskExternalId, _zendeskTicketId, _serviceNowSystemId, _serviceNowIncidentId, _segmentUserId, _shopifyCustomerId, _shopifyOrderId.</p>",
@@ -364,6 +375,7 @@
     "Arn": {
       "base": null,
       "refs": {
+        "CreateRecommenderFilterResponse$RecommenderFilterArn": "<p>The Amazon Resource Name (ARN) of the recommender filter.</p>",
         "CreateRecommenderResponse$RecommenderArn": "<p>The ARN of the recommender</p>"
       }
     },
@@ -570,6 +582,12 @@
         "Dimension$CalculatedAttributes": "<p>Object that holds the calculated attributes to segment on.</p>"
       }
     },
+    "CandidateIdList": {
+      "base": null,
+      "refs": {
+        "GetProfileRecommendationsRequest$CandidateIds": "<p>A list of item IDs to rank for the user. Use this when you want to re-rank a specific set of items rather than getting recommendations from the full item catalog. Required for personalized-ranking use cases.</p>"
+      }
+    },
     "CatalogItem": {
       "base": "<p>Represents an item in the catalog with its complete set of attributes and metadata.</p>",
       "refs": {
@@ -713,6 +731,14 @@
       "refs": {}
     },
     "CreateProfileResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRecommenderFilterRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRecommenderFilterResponse": {
       "base": null,
       "refs": {}
     },
@@ -910,6 +936,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteRecommenderFilterRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRecommenderFilterResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteRecommenderRequest": {
       "base": null,
       "refs": {}
@@ -1090,6 +1124,12 @@
       "base": null,
       "refs": {
         "EventParameters$EventType": "<p>The type of event being tracked (e.g., 'click', 'purchase', 'view').</p>"
+      }
+    },
+    "EventParametersEventWeightDouble": {
+      "base": null,
+      "refs": {
+        "EventParameters$EventWeight": "<p>The weight of the event type. A higher weight means higher importance of the event type for the created solution.</p>"
       }
     },
     "EventParametersList": {
@@ -1489,6 +1529,14 @@
       "base": null,
       "refs": {}
     },
+    "GetRecommenderFilterRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRecommenderFilterResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetRecommenderRequest": {
       "base": null,
       "refs": {}
@@ -1637,6 +1685,18 @@
       "base": "<p>Specifies the configuration used when importing incremental records from the source.</p>",
       "refs": {
         "SourceFlowConfig$IncrementalPullConfig": "<p>Defines the configuration for a scheduled incremental data pull. If a valid configuration is provided, the fields specified in the configuration are used when querying for the incremental data pull.</p>"
+      }
+    },
+    "InferenceConfig": {
+      "base": "<p>Configuration settings for inference behavior of the recommender.</p>",
+      "refs": {
+        "RecommenderConfig$InferenceConfig": "<p>Configuration settings for how the recommender handles inference requests.</p>"
+      }
+    },
+    "InferenceConfigMinProvisionedTPSInteger": {
+      "base": null,
+      "refs": {
+        "InferenceConfig$MinProvisionedTPS": "<p>The minimum provisioned transactions per second (TPS) that the recommender supports. The default value is 1. A high MinProvisionedTPS will increase your cost.</p>"
       }
     },
     "IntegrationConfig": {
@@ -1915,6 +1975,14 @@
       "base": null,
       "refs": {}
     },
+    "ListRecommenderFiltersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommenderFiltersResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListRecommenderRecipesRequest": {
       "base": null,
       "refs": {}
@@ -2086,12 +2154,6 @@
         "RuleBasedMatchingResponse$MaxAllowedRuleLevelForMerging": "<p> <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_MatchingRule.html\">MatchingRule</a> </p>"
       }
     },
-    "MaxSize10": {
-      "base": null,
-      "refs": {
-        "GetProfileRecommendationsRequest$MaxResults": "<p>The maximum number of recommendations to return. The default value is 10.</p>"
-      }
-    },
     "MaxSize500": {
       "base": null,
       "refs": {
@@ -2106,6 +2168,24 @@
     "MergeProfilesResponse": {
       "base": null,
       "refs": {}
+    },
+    "MetadataColumnName": {
+      "base": null,
+      "refs": {
+        "MetadataColumnsList$member": null
+      }
+    },
+    "MetadataColumnsList": {
+      "base": null,
+      "refs": {
+        "MetadataConfig$MetadataColumns": "<p>A list of metadata column names from your Items dataset to include in the recommendation response.</p>"
+      }
+    },
+    "MetadataConfig": {
+      "base": "<p>Configuration for metadata to include in recommendation responses.</p>",
+      "refs": {
+        "GetProfileRecommendationsRequest$MetadataConfig": "<p>Configuration for including item metadata in the recommendation response. Use this to specify which metadata columns to return alongside recommended items.</p>"
+      }
     },
     "Metrics": {
       "base": null,
@@ -2197,6 +2277,12 @@
         "CreateProfileRequest$PartyType": "<p>The type of profile used to describe the customer.</p>",
         "Profile$PartyType": "<p>The type of profile used to describe the customer.</p>",
         "UpdateProfileRequest$PartyType": "<p>The type of profile used to describe the customer.</p>"
+      }
+    },
+    "PercentPromotedItems": {
+      "base": null,
+      "refs": {
+        "RecommenderPromotionalFilter$PercentPromotedItems": "<p>The percentage of recommended items to apply the promotion to.</p>"
       }
     },
     "Period": {
@@ -2495,6 +2581,86 @@
       "base": null,
       "refs": {
         "GetProfileRecommendationsRequest$Context": "<p>The contextual metadata used to provide dynamic runtime information to tailor recommendations.</p>"
+      }
+    },
+    "RecommenderFilter": {
+      "base": "<p>A filter that specifies criteria for including or excluding items from recommendations.</p>",
+      "refs": {
+        "RecommenderFilters$member": null
+      }
+    },
+    "RecommenderFilterAttributeName": {
+      "base": null,
+      "refs": {
+        "RecommenderFilterValues$key": null
+      }
+    },
+    "RecommenderFilterAttributeValue": {
+      "base": null,
+      "refs": {
+        "RecommenderFilterValues$value": null
+      }
+    },
+    "RecommenderFilterExpression": {
+      "base": null,
+      "refs": {
+        "CreateRecommenderFilterRequest$RecommenderFilterExpression": "<p>The filter expression that defines which items to include or exclude from recommendations.</p>",
+        "GetRecommenderFilterResponse$RecommenderFilterExpression": "<p>The filter expression that defines which items to include or exclude from recommendations.</p>",
+        "RecommenderFilterSummary$RecommenderFilterExpression": "<p>The filter expression that defines which items to include or exclude from recommendations.</p>"
+      }
+    },
+    "RecommenderFilterName": {
+      "base": null,
+      "refs": {
+        "CreateRecommenderFilterRequest$RecommenderFilterName": "<p>The name of the recommender filter. The name must be unique within the domain.</p>",
+        "DeleteRecommenderFilterRequest$RecommenderFilterName": "<p>The name of the recommender filter to delete.</p>",
+        "GetRecommenderFilterRequest$RecommenderFilterName": "<p>The name of the recommender filter to retrieve.</p>",
+        "GetRecommenderFilterResponse$RecommenderFilterName": "<p>The name of the recommender filter.</p>",
+        "RecommenderFilterSummary$RecommenderFilterName": "<p>The name of the recommender filter.</p>"
+      }
+    },
+    "RecommenderFilterStatus": {
+      "base": null,
+      "refs": {
+        "GetRecommenderFilterResponse$Status": "<p>The status of the recommender filter.</p>",
+        "RecommenderFilterSummary$Status": "<p>The current operational status of the recommender filter.</p>"
+      }
+    },
+    "RecommenderFilterSummary": {
+      "base": "<p>Provides a summary of a recommender filter's configuration and current state.</p>",
+      "refs": {
+        "RecommenderFilterSummaryList$member": null
+      }
+    },
+    "RecommenderFilterSummaryList": {
+      "base": null,
+      "refs": {
+        "ListRecommenderFiltersResponse$RecommenderFilters": "<p>A list of recommender filters and their properties in the specified domain.</p>"
+      }
+    },
+    "RecommenderFilterValues": {
+      "base": null,
+      "refs": {
+        "RecommenderFilter$Values": "<p>The values to use when filtering recommendations. For each placeholder parameter in your filter expression, provide the parameter name (in matching case) as a key and the filter value(s) as the corresponding value. Separate multiple values for one parameter with a comma.</p>",
+        "RecommenderPromotionalFilter$Values": "<p>The values to use when promoting items. For each placeholder parameter in your promotion's filter expression, provide the parameter name (in matching case) as a key and the filter value(s) as the corresponding value. Separate multiple values for one parameter with a comma.</p>"
+      }
+    },
+    "RecommenderFilters": {
+      "base": null,
+      "refs": {
+        "GetProfileRecommendationsRequest$RecommenderFilters": "<p>A list of filters to apply to the returned recommendations. Filters define criteria for including or excluding items from the recommendation results.</p>"
+      }
+    },
+    "RecommenderPromotionalFilter": {
+      "base": "<p>Contains information on a promotion. A promotion defines additional business rules that apply to a configurable subset of recommended items.</p>",
+      "refs": {
+        "RecommenderPromotionalFilters$member": null
+      }
+    },
+    "RecommenderPromotionalFilters": {
+      "base": null,
+      "refs": {
+        "GetProfileRecommendationsRequest$RecommenderPromotionalFilters": "<p>A list of promotional filters to apply to the recommendations. Promotional filters allow you to promote specific items within a configurable subset of recommendation results.</p>"
       }
     },
     "RecommenderRecipe": {
@@ -2854,7 +3020,10 @@
       "base": null,
       "refs": {
         "DateValues$member": null,
+        "DeleteRecommenderFilterResponse$Message": "<p>A message that indicates the delete request is done.</p>",
+        "GetRecommenderFilterResponse$FailureReason": "<p>If the recommender filter failed, provides the reason for the failure.</p>",
         "GetRecommenderResponse$FailureReason": "<p>If the recommender fails, provides the reason for the failure.</p>",
+        "RecommenderFilterSummary$FailureReason": "<p>If the recommender filter is in a failed state, provides the reason for the failure.</p>",
         "RecommenderRecipe$description": "<p>A description of the recommender recipe's purpose and functionality.</p>",
         "RecommenderSummary$FailureReason": "<p>If the recommender is in a failed state, provides the reason for the failure.</p>",
         "RecommenderUpdate$FailureReason": "<p>If the update operation failed, provides the reason for the failure.</p>"
@@ -2902,6 +3071,8 @@
         "CreateEventTriggerRequest$Tags": "<p>An array of key-value pairs to apply to this resource.</p>",
         "CreateEventTriggerResponse$Tags": "<p>An array of key-value pairs to apply to this resource.</p>",
         "CreateIntegrationWorkflowRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "CreateRecommenderFilterRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "CreateRecommenderFilterResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateRecommenderRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateRecommenderResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateSegmentDefinitionRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
@@ -2917,6 +3088,7 @@
         "GetEventTriggerResponse$Tags": "<p>An array of key-value pairs to apply to this resource.</p>",
         "GetIntegrationResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetProfileObjectTypeResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "GetRecommenderFilterResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetRecommenderResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetSegmentDefinitionResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "LayoutItem$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
@@ -2931,6 +3103,7 @@
         "PutIntegrationResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "PutProfileObjectTypeRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "PutProfileObjectTypeResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "RecommenderFilterSummary$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "RecommenderSummary$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "SegmentDefinitionItem$Tags": "<p>The tags belonging to the segment definition.</p>",
         "TagResourceRequest$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
@@ -3374,6 +3547,7 @@
         "ListProfileObjectTypeTemplatesRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListProfileObjectTypesRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListProfileObjectsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
+        "ListRecommenderFiltersRequest$MaxResults": "<p>The maximum number of recommender filters to return in the response. The default value is 100.</p>",
         "ListRuleBasedMatchesRequest$MaxResults": "<p>The maximum number of <code>MatchIds</code> returned per page.</p>",
         "ListWorkflowsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchProfilesRequest$MaxResults": "<p>The maximum number of objects returned per page.</p> <p>The default is 20 if this parameter is not included in the request.</p>"
@@ -3389,6 +3563,12 @@
       "base": null,
       "refs": {
         "Period$Value": "<p>The amount of time of the specified unit.</p>"
+      }
+    },
+    "maxSize500": {
+      "base": null,
+      "refs": {
+        "GetProfileRecommendationsRequest$MaxResults": "<p>The maximum number of recommendations to return. The default value is 10.</p>"
       }
     },
     "message": {
@@ -3422,9 +3602,13 @@
       "base": null,
       "refs": {
         "GetProfileObjectTypeResponse$MaxProfileObjectCount": "<p>The amount of profile object max count assigned to the object type.</p>",
+        "GetProfileObjectTypeResponse$SourcePriority": "<p>An integer that determines the priority of this object type when data from multiple sources is ingested. Lower values take priority. Object types without a specified source priority default to the lowest priority.</p>",
         "ListProfileObjectTypeItem$MaxProfileObjectCount": "<p>The amount of profile object max count assigned to the object type.</p>",
+        "ListProfileObjectTypeItem$SourcePriority": "<p>An integer that determines the priority of this object type when data from multiple sources is ingested. Lower values take priority. Object types without a specified source priority default to the lowest priority.</p>",
         "PutProfileObjectTypeRequest$MaxProfileObjectCount": "<p>The amount of profile object max count assigned to the object type</p>",
-        "PutProfileObjectTypeResponse$MaxProfileObjectCount": "<p>The amount of profile object max count assigned to the object type.</p>"
+        "PutProfileObjectTypeRequest$SourcePriority": "<p>An integer that determines the priority of this object type when data from multiple sources is ingested. Lower values take priority. Object types without a specified source priority default to the lowest priority.</p>",
+        "PutProfileObjectTypeResponse$MaxProfileObjectCount": "<p>The amount of profile object max count assigned to the object type.</p>",
+        "PutProfileObjectTypeResponse$SourcePriority": "<p>An integer that determines the priority of this object type when data from multiple sources is ingested. Lower values take priority. Object types without a specified source priority default to the lowest priority.</p>"
       }
     },
     "optionalBoolean": {
@@ -3619,16 +3803,19 @@
         "CreateDomainLayoutResponse$Description": "<p>The description of the layout</p>",
         "CreateEventTriggerRequest$Description": "<p>The description of the event trigger.</p>",
         "CreateEventTriggerResponse$Description": "<p>The description of the event trigger.</p>",
+        "CreateRecommenderFilterRequest$Description": "<p>A description of the recommender filter.</p>",
         "CreateRecommenderRequest$Description": "<p>The description of the domain object type.</p>",
         "GetCalculatedAttributeDefinitionResponse$Description": "<p>The description of the calculated attribute.</p>",
         "GetDomainLayoutResponse$Description": "<p>The description of the layout</p>",
         "GetEventTriggerResponse$Description": "<p>The description of the event trigger.</p>",
         "GetProfileObjectTypeResponse$Description": "<p>The description of the profile object type.</p>",
+        "GetRecommenderFilterResponse$Description": "<p>The description of the recommender filter.</p>",
         "GetRecommenderResponse$Description": "<p>A detailed description of the recommender providing information about its purpose and functionality.</p>",
         "LayoutItem$Description": "<p>The description of the layout</p>",
         "ListCalculatedAttributeDefinitionItem$Description": "<p>The threshold for the calculated attribute.</p>",
         "PutProfileObjectTypeRequest$Description": "<p>Description of the profile object type.</p>",
         "PutProfileObjectTypeResponse$Description": "<p>Description of the profile object type.</p>",
+        "RecommenderFilterSummary$Description": "<p>A description of the recommender filter's purpose and characteristics.</p>",
         "RecommenderSummary$Description": "<p>A description of the recommender's purpose and characteristics.</p>",
         "UpdateCalculatedAttributeDefinitionRequest$Description": "<p>The description of the calculated attribute.</p>",
         "UpdateCalculatedAttributeDefinitionResponse$Description": "<p>The description of the calculated attribute.</p>",
@@ -3705,6 +3892,7 @@
         "BatchGetProfileError$Code": "<p>Status code for why a specific profile failed.</p>",
         "CalculatedAttributeValue$IsDataPartial": "<p>Indicates whether the calculated attribute's value is based on partial data. If the data is partial, it is set to true.</p>",
         "CalculatedAttributeValue$Value": "<p>The value of the calculated attribute.</p>",
+        "CandidateIdList$member": null,
         "ConflictResolution$SourceName": "<p>The <code>ObjectType</code> name that is used to resolve profile merging conflicts when choosing <code>SOURCE</code> as the <code>ConflictResolvingModel</code>.</p>",
         "ContactPreference$KeyValue": "<p>The key value used to look up profile based off the keyName.</p>",
         "CreateDomainLayoutResponse$Version": "<p>The version used to create layout.</p>",
@@ -3870,6 +4058,7 @@
         "GetProfileHistoryRecordResponse$LastUpdatedAt": "<p>The timestamp of when the profile history record was last updated.</p>",
         "GetProfileObjectTypeResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "GetProfileObjectTypeResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
+        "GetRecommenderFilterResponse$CreatedAt": "<p>The timestamp of when the recommender filter was created.</p>",
         "GetRecommenderResponse$LastUpdatedAt": "<p>The timestamp of when the recommender was edited.</p>",
         "GetRecommenderResponse$CreatedAt": "<p>The timestamp of when the recommender was created.</p>",
         "GetSegmentDefinitionResponse$CreatedAt": "<p>The timestamp of when the segment definition was created.</p>",
@@ -3906,6 +4095,7 @@
         "PutIntegrationResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "PutProfileObjectTypeResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "PutProfileObjectTypeResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
+        "RecommenderFilterSummary$CreatedAt": "<p>The timestamp when the recommender filter was created.</p>",
         "RecommenderSummary$CreatedAt": "<p>The timestamp when the recommender was created.</p>",
         "RecommenderSummary$LastUpdatedAt": "<p>The timestamp of when the recommender was edited.</p>",
         "RecommenderUpdate$CreatedAt": "<p>The timestamp when this recommender update was initiated.</p>",
@@ -3965,6 +4155,8 @@
         "ListProfileObjectTypesResponse$NextToken": "<p>Identifies the next page of results to return.</p>",
         "ListProfileObjectsRequest$NextToken": "<p>The pagination token from the previous call to ListProfileObjects.</p>",
         "ListProfileObjectsResponse$NextToken": "<p>The pagination token from the previous call to ListProfileObjects.</p>",
+        "ListRecommenderFiltersRequest$NextToken": "<p>A token received from a previous ListRecommenderFilters call to retrieve the next page of results.</p>",
+        "ListRecommenderFiltersResponse$NextToken": "<p>A token to retrieve the next page of results. Null if there are no more results to retrieve.</p>",
         "ListRecommenderRecipesRequest$NextToken": "<p>A token received from a previous ListRecommenderRecipes call to retrieve the next page of results.</p>",
         "ListRecommenderRecipesResponse$NextToken": "<p>A token to retrieve the next page of results. Null if there are no more results to retrieve.</p>",
         "ListRecommendersRequest$NextToken": "<p>A token received from a previous ListRecommenders call to retrieve the next page of results.</p>",

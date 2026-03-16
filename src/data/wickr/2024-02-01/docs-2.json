@@ -24,6 +24,7 @@
     "GetNetwork": "<p>Retrieves detailed information about a specific Wickr network, including its configuration, access level, and status.</p>",
     "GetNetworkSettings": "<p>Retrieves all network-level settings for a Wickr network, including client metrics, data retention, and other configuration options.</p>",
     "GetOidcInfo": "<p>Retrieves the OpenID Connect (OIDC) configuration for a Wickr network, including SSO settings and optional token information if access token parameters are provided.</p>",
+    "GetOpentdfConfig": "<p>Retrieves the OpenTDF integration configuration for a Wickr network.</p>",
     "GetSecurityGroup": "<p>Retrieves detailed information about a specific security group in a Wickr network, including its settings, member counts, and configuration.</p>",
     "GetUser": "<p>Retrieves detailed information about a specific user in a Wickr network, including their profile, status, and activity history.</p>",
     "GetUsersCount": "<p>Retrieves the count of users in a Wickr network, categorized by their status (pending, active, rejected) and showing how many users can still be added.</p>",
@@ -37,6 +38,7 @@
     "ListUsers": "<p>Retrieves a paginated list of users in a specified Wickr network. You can filter and sort the results based on various criteria such as name, status, or security group membership.</p>",
     "RegisterOidcConfig": "<p>Registers and saves an OpenID Connect (OIDC) configuration for a Wickr network, enabling Single Sign-On (SSO) authentication through an identity provider.</p>",
     "RegisterOidcConfigTest": "<p>Tests an OpenID Connect (OIDC) configuration for a Wickr network by validating the connection to the identity provider and retrieving its supported capabilities.</p>",
+    "RegisterOpentdfConfig": "<p>Registers and saves OpenTDF configuration for a Wickr network, enabling attribute-based access control for Wickr through an OpenTDF provider.</p>",
     "UpdateBot": "<p>Updates the properties of an existing bot in a Wickr network. This operation allows you to modify the bot's display name, security group, password, or suspension status.</p>",
     "UpdateDataRetention": "<p>Updates the data retention bot settings, allowing you to enable or disable the data retention service, or acknowledge the public key message.</p>",
     "UpdateGuestUser": "<p>Updates the block status of a guest user in a Wickr network. This operation allows you to block or unblock a guest user from accessing the network.</p>",
@@ -242,7 +244,9 @@
         "GetUserResponse$suspended": "<p>Indicates whether the user is currently suspended.</p>",
         "NetworkSettings$enableClientMetrics": "<p>Allows Wickr clients to send anonymized performance and usage metrics to the Wickr backend server for service improvement and troubleshooting.</p>",
         "NetworkSettings$dataRetention": "<p>Indicates whether the data retention feature is enabled for the network. When true, messages are captured by the data retention bot for compliance and archiving purposes.</p>",
+        "NetworkSettings$enableTrustedDataFormat": "<p>Configuration for OpenTDF integration at the network level, enforcing ABAC decision making when operating in TDF enabled rooms.</p>",
         "RegisterOidcConfigTestResponse$microsoftMultiRefreshToken": "<p>Indicates whether the provider supports Microsoft multi-refresh tokens.</p>",
+        "RegisterOpentdfConfigRequest$dryRun": "<p>Perform dry-run test connection of OpenTDF configuration (optional).</p>",
         "SecurityGroup$isDefault": "<p>Indicates whether this is the default security group for the network. Each network has only one default group.</p>",
         "SecurityGroupSettings$alwaysReauthenticate": "<p>Requires users to reauthenticate every time they return to the application, providing an additional layer of security.</p>",
         "SecurityGroupSettings$checkForUpdates": "<p>Enables automatic checking for Wickr client updates to ensure users stay current with the latest version.</p>",
@@ -510,6 +514,9 @@
         "GetOidcInfoRequest$url": "<p>The URL for the OIDC provider (optional).</p>",
         "GetOidcInfoRequest$codeVerifier": "<p>The PKCE code verifier for enhanced security in the OAuth flow (optional).</p>",
         "GetOidcInfoRequest$certificate": "<p>The CA certificate for secure communication with the OIDC provider (optional).</p>",
+        "GetOpentdfConfigResponse$clientId": "<p>The OIDC client ID used for authenticating with the OpenTDF provider.</p>",
+        "GetOpentdfConfigResponse$domain": "<p>The domain of the OpenTDF server.</p>",
+        "GetOpentdfConfigResponse$provider": "<p>The provider of the OpenTDF platform.</p>",
         "GetSecurityGroupRequest$groupId": "<p>The unique identifier of the security group to retrieve.</p>",
         "GetUserResponse$username": "<p>The email address or username of the user.</p>",
         "GuestUser$billingPeriod": "<p>The billing period when this guest user accessed the network (e.g., '2024-01').</p>",
@@ -602,6 +609,12 @@
         "RegisterOidcConfigTestResponse$endSessionEndpoint": "<p>The end session endpoint URL for logging out users from the OIDC provider.</p>",
         "RegisterOidcConfigTestResponse$logoutEndpoint": "<p>The logout endpoint URL for terminating user sessions.</p>",
         "RegisterOidcConfigTestResponse$revocationEndpoint": "<p>The token revocation endpoint URL for invalidating tokens.</p>",
+        "RegisterOpentdfConfigRequest$clientId": "<p>The OIDC client ID used for authenticating with the OpenTDF provider.</p>",
+        "RegisterOpentdfConfigRequest$domain": "<p>The domain of the OpenTDF server.</p>",
+        "RegisterOpentdfConfigRequest$provider": "<p>The provider of the OpenTDF platform.</p> <note> <p>Currently only Virtru is supported as the OpenTDF provider.</p> </note>",
+        "RegisterOpentdfConfigResponse$clientId": "<p>The OIDC client ID used for authenticating with the OpenTDF provider.</p>",
+        "RegisterOpentdfConfigResponse$domain": "<p>The domain of the OpenTDF server.</p>",
+        "RegisterOpentdfConfigResponse$provider": "<p>The provider of the OpenTDF platform.</p>",
         "ResourceNotFoundError$message": "<p>A message identifying which resource was not found.</p>",
         "SecurityGroup$activeDirectoryGuid": "<p>The GUID of the Active Directory group associated with this security group, if synchronized with LDAP.</p>",
         "SecurityGroup$id": "<p>The unique identifier of the security group.</p>",
@@ -635,6 +648,7 @@
         "User$countryCode": "<p>The country code for the user's phone number, used for cloud deployments.</p>",
         "User$inviteCode": "<p>The invitation code for this user, used during registration to join the network.</p>",
         "User$uname": "<p>The unique identifier for the user.</p>",
+        "ValidationError$message": "<p>A message describing the validation error error that occurred.</p>",
         "WickrAwsNetworks$region": "<p>The Amazon Web Services region identifier where the network is hosted (e.g., 'us-east-1').</p>"
       }
     },
@@ -691,6 +705,14 @@
       "refs": {}
     },
     "GetOidcInfoResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOpentdfConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOpentdfConfigResponse": {
       "base": null,
       "refs": {}
     },
@@ -906,6 +928,7 @@
         "GetNetworkResponse$networkId": "<p>The unique identifier of the network.</p>",
         "GetNetworkSettingsRequest$networkId": "<p>The ID of the Wickr network whose settings will be retrieved.</p>",
         "GetOidcInfoRequest$networkId": "<p>The ID of the Wickr network whose OIDC configuration will be retrieved.</p>",
+        "GetOpentdfConfigRequest$networkId": "<p>The ID of the Wickr network for which OpenTDF integration will be retrieved.</p>",
         "GetSecurityGroupRequest$networkId": "<p>The ID of the Wickr network containing the security group.</p>",
         "GetUserRequest$networkId": "<p>The ID of the Wickr network containing the user.</p>",
         "GetUsersCountRequest$networkId": "<p>The ID of the Wickr network for which to retrieve user counts.</p>",
@@ -921,6 +944,7 @@
         "PermittedWickrEnterpriseNetwork$networkId": "<p>The network ID of the permitted Wickr enterprise network.</p>",
         "RegisterOidcConfigRequest$networkId": "<p>The ID of the Wickr network for which OIDC will be configured.</p>",
         "RegisterOidcConfigTestRequest$networkId": "<p>The ID of the Wickr network for which the OIDC configuration will be tested.</p>",
+        "RegisterOpentdfConfigRequest$networkId": "<p>The ID of the Wickr network for which OpenTDF integration will be configured.</p>",
         "UpdateBotRequest$networkId": "<p>The ID of the Wickr network containing the bot to update.</p>",
         "UpdateDataRetentionRequest$networkId": "<p>The ID of the Wickr network containing the data retention bot.</p>",
         "UpdateGuestUserRequest$networkId": "<p>The ID of the Wickr network where the guest user's status will be updated.</p>",
@@ -1020,6 +1044,14 @@
       "base": null,
       "refs": {}
     },
+    "RegisterOpentdfConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RegisterOpentdfConfigResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ResourceNotFoundError": {
       "base": "<p>The requested resource could not be found. This error occurs when you try to access or modify a network, user, bot, security group, or other resource that doesn't exist or has been deleted.</p>",
       "refs": {}
@@ -1083,6 +1115,7 @@
         "CreateBotRequest$challenge": "<p>The password for the bot account.</p>",
         "CreateDataRetentionBotChallengeResponse$challenge": "<p>The newly generated challenge password for the data retention bot.</p>",
         "GetOidcInfoRequest$clientSecret": "<p>The OAuth client secret for retrieving access tokens (optional).</p>",
+        "GetOpentdfConfigResponse$clientSecret": "<p>The OIDC client secret used for authenticating with the OpenTDF provider.</p>",
         "GetUserResponse$firstName": "<p>The first name of the user.</p>",
         "GetUserResponse$lastName": "<p>The last name of the user.</p>",
         "ListUsersRequest$firstName": "<p>Filter results to only include users with first names matching this value.</p>",
@@ -1092,6 +1125,8 @@
         "RegisterOidcConfigRequest$secret": "<p>The client secret for authenticating with the OIDC provider (optional).</p>",
         "RegisterOidcConfigResponse$clientSecret": "<p>The OAuth client secret for the application.</p>",
         "RegisterOidcConfigResponse$secret": "<p>The client secret for authenticating with the OIDC provider.</p>",
+        "RegisterOpentdfConfigRequest$clientSecret": "<p>The OIDC client secret used for authenticating with the OpenTDF provider</p>",
+        "RegisterOpentdfConfigResponse$clientSecret": "<p>The OIDC client secret used for authenticating with the OpenTDF provider.</p>",
         "UpdateBotRequest$challenge": "<p>The new password for the bot account.</p>",
         "UpdateUserDetails$firstName": "<p>The new first name for the user.</p>",
         "UpdateUserDetails$lastName": "<p>The new last name for the user.</p>",

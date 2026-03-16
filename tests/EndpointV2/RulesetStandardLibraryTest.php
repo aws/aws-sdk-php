@@ -5,10 +5,10 @@ use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\EndpointV2\Ruleset\RulesetStandardLibrary;
 use Aws\Exception\UnresolvedEndpointException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\EndpointV2\Ruleset\RulesetStandardLibrary
- */
+#[CoversClass(RulesetStandardLibrary::class)]
 class RulesetStandardLibraryTest extends TestCase
 {
     private $standardLibrary;
@@ -20,7 +20,10 @@ class RulesetStandardLibraryTest extends TestCase
         $this->standardLibrary = new RulesetStandardLibrary($partitions);
     }
 
-    public function isSetProvider()
+    /**
+     * @return array<string, array<int, mixed>>
+     */
+    public static function isSetProvider(): array
     {
         return [
             [null, false],
@@ -33,18 +36,16 @@ class RulesetStandardLibraryTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider isSetProvider
-     *
-     * @param $input
-     * @param $expected
-     */
+    #[DataProvider('isSetProvider')]
     public function testIsSet($input, $expected)
     {
         $this->assertSame($expected, $this->standardLibrary->is_set($input));
     }
 
-    public function notProvider()
+    /**
+     * @return array<string, array<int, mixed>>
+     */
+    public static function notProvider(): array
     {
         return [
             [true, false],
@@ -55,18 +56,16 @@ class RulesetStandardLibraryTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider notProvider
-     *
-     * @param  $input
-     * @param $expected
-     */
+    #[DataProvider('notProvider')]
     public function testNot($input, $expected)
     {
         $this->assertSame($expected, $this->standardLibrary->not($input));
     }
 
-    public function getAttrProvider()
+    /**
+     * @return array<string, array<int, mixed>>
+     */
+    public static function getAttrProvider(): array
     {
         return [
             ['{"Thing1": "foo", "Thing2": ["index0", "index1"], "Thing3": {"SubThing": 42}}', "Thing1", "foo"],
@@ -76,12 +75,7 @@ class RulesetStandardLibraryTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getAttrProvider
-     *
-     * @param $path
-     * @param $expected
-     */
+    #[DataProvider('getAttrProvider')]
     public function testGetAttr($from, $path, $expected)
     {
         $from = json_decode($from, true);
@@ -94,7 +88,10 @@ class RulesetStandardLibraryTest extends TestCase
         $this->assertSame("foo", $this->standardLibrary->getAttr($from, 0));
     }
 
-    public function stringEqualsProvider()
+    /**
+     * @return array<string, array<int, mixed>>
+     */
+    public static function stringEqualsProvider(): array
     {
         return [
             ["abc", "abc", true],
@@ -103,19 +100,16 @@ class RulesetStandardLibraryTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider stringEqualsProvider
-     *
-     * @param $string1
-     * @param $string2
-     * @param $expected
-     */
+    #[DataProvider('stringEqualsProvider')]
     public function testStringEquals($string1, $string2, $expected)
     {
         $this->assertSame($expected, $this->standardLibrary->stringEquals($string1, $string2));
     }
 
-    public function booleanEqualsProvider()
+    /**
+     * @return array<string, array<int, mixed>>
+     */
+    public static function booleanEqualsProvider(): array
     {
         return [
             [true, true, true],
@@ -133,13 +127,7 @@ class RulesetStandardLibraryTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider booleanEqualsProvider
-     *
-     * @param $boolean1
-     * @param $boolean2
-     * @param $expected
-     */
+    #[DataProvider('booleanEqualsProvider')]
     public function testBooleanEquals($boolean1, $boolean2, $expected)
     {
         $this->assertSame($expected, $this->standardLibrary->booleanEquals($boolean1, $boolean2));
@@ -151,7 +139,10 @@ class RulesetStandardLibraryTest extends TestCase
         $this->assertEquals(null, $result);
     }
 
-    public function isValidHostLabelProvider()
+    /**
+     * @return array<string, array<int, mixed>>
+     */
+    public static function isValidHostLabelProvider(): array
     {
         return [
             "valid" => ["exampleHostLabel", false, true],
@@ -162,19 +153,16 @@ class RulesetStandardLibraryTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider isValidHostLabelProvider
-     *
-     * @param $hostLabel
-     * @param $allowSubDomains
-     * @param $expected
-     */
+    #[DataProvider('isValidHostLabelProvider')]
     public function testIsValidHostLabel($hostLabel, $allowSubDomains, $expected)
     {
         $this->assertSame($expected, $this->standardLibrary->isValidHostLabel($hostLabel, $allowSubDomains));
     }
 
-    public function resolveTemplateStringProvider()
+    /**
+     * @return array<string, array<int, mixed>>
+     */
+    public static function resolveTemplateStringProvider(): array
     {
         $params = [
             'ShorthandSyntax' => [
@@ -220,20 +208,17 @@ class RulesetStandardLibraryTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider resolveTemplateStringProvider
-     *
-     * @param $string
-     * @param $inputParams
-     * @param $expected
-     */
+    #[DataProvider('resolveTemplateStringProvider')]
     public function testResolveTemplateString($string, $inputParams, $expected)
     {
         $result = $this->standardLibrary->resolveTemplateString($string, $inputParams);
         $this->assertEquals($expected, $result);
     }
 
-    public function NullParamProvider()
+    /**
+     * @return array<string, array<int, mixed>>
+     */
+    public static function NullParamProvider(): array
     {
         $params = [
             'Region' => 'us-east-1',
@@ -254,12 +239,7 @@ class RulesetStandardLibraryTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider NullParamProvider
-     *
-     * @param $string
-     * @param $inputParams
-     */
+    #[DataProvider('NullParamProvider')]
     public function testResolveTemplateStringThrowsExceptionIfNullParam($string, $inputParams)
     {
         $this->expectException(UnresolvedEndpointException::class);
@@ -326,4 +306,3 @@ class RulesetStandardLibraryTest extends TestCase
         $this->standardLibrary->callFunction($condition, $inputParameters);
     }
 }
-

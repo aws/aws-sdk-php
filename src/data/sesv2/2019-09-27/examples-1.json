@@ -93,6 +93,47 @@
         "title": "Create Message Insights export job"
       }
     ],
+    "GetEmailAddressInsights": [
+      {
+        "input": {
+          "EmailAddress": "hello@example.com"
+        },
+        "output": {
+          "MailboxValidation": {
+            "Evaluations": {
+              "HasValidDnsRecords": {
+                "ConfidenceVerdict": "MEDIUM"
+              },
+              "HasValidSyntax": {
+                "ConfidenceVerdict": "HIGH"
+              },
+              "IsDisposable": {
+                "ConfidenceVerdict": "LOW"
+              },
+              "IsRandomInput": {
+                "ConfidenceVerdict": "LOW"
+              },
+              "IsRoleAddress": {
+                "ConfidenceVerdict": "LOW"
+              },
+              "MailboxExists": {
+                "ConfidenceVerdict": "MEDIUM"
+              }
+            },
+            "IsValid": {
+              "ConfidenceVerdict": "HIGH"
+            }
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "Performs email validation against an email address.",
+        "id": "get-email-address-insights-1766162111000",
+        "title": "Get Email Address Insights"
+      }
+    ],
     "GetExportJob": [
       {
         "input": {

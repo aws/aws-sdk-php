@@ -15,10 +15,10 @@ use Aws\Sts\StsClient;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Uri;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Sts\StsClient
- */
+#[CoversClass(StsClient::class)]
 class StsClientTest extends TestCase
 {
     private $originalEnv = [];
@@ -183,11 +183,7 @@ class StsClientTest extends TestCase
         $this->assertFalse($credentials->isExpired());
     }
 
-    /**
-     * @dataProvider stsAssumeRoleOperationsDataProvider
-     *
-     * @return void
-     */
+    #[DataProvider('stsAssumeRoleOperationsDataProvider')]
     public function testStsAssumeRoleOperationsWithAccountId($response, $expected)
     {
         $operation = 'assumeRole';
@@ -206,7 +202,7 @@ class StsClientTest extends TestCase
         self::assertSame($expected->toArray(), $response->toArray());
     }
 
-    public function stsAssumeRoleOperationsDataProvider(): array
+    public static function stsAssumeRoleOperationsDataProvider(): array
     {
         return [
             'Sts::AssumeRole' => [
@@ -232,9 +228,7 @@ class StsClientTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider stsAssumeRoleWithSAMLOperationsDataProvider
-     */
+    #[DataProvider('stsAssumeRoleWithSAMLOperationsDataProvider')]
     public function testStsAssumeRoleWithSAMLOperationsWithAccountId(
         $response,
         $expected
@@ -266,7 +260,7 @@ class StsClientTest extends TestCase
         self::assertSame($expected->toArray(), $response->toArray());
     }
 
-    public function stsAssumeRoleWithSAMLOperationsDataProvider(): array
+    public static function stsAssumeRoleWithSAMLOperationsDataProvider(): array
     {
         return [
             'Sts::AssumeRoleWithSaml' => [
@@ -291,9 +285,7 @@ class StsClientTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider stsAssumeRoleWithWebIdentityOperationsDataProvider
-     */
+    #[DataProvider('stsAssumeRoleWithWebIdentityOperationsDataProvider')]
     public function testStsAssumeRoleWithWebIdentityOperationsWithAccountId(
         $response,
         $expected
@@ -321,7 +313,7 @@ class StsClientTest extends TestCase
         self::assertSame($expected->toArray(), $response->toArray());
     }
 
-    public function stsAssumeRoleWithWebIdentityOperationsDataProvider(): array
+    public static function stsAssumeRoleWithWebIdentityOperationsDataProvider(): array
     {
         return [
             'Sts::AssumeRoleWithWebIdentity' => [
@@ -347,9 +339,7 @@ class StsClientTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider stsGetFederationTokenOperationsDataProvider
-     */
+    #[DataProvider('stsGetFederationTokenOperationsDataProvider')]
     public function testStsGetFederationTokenOperationsWithAccountId(
         $response,
         $expected
@@ -379,7 +369,7 @@ class StsClientTest extends TestCase
         self::assertSame($expected->toArray(), $response->toArray());
     }
 
-    public function stsGetFederationTokenOperationsDataProvider(): array
+    public static function stsGetFederationTokenOperationsDataProvider(): array
     {
         return [
             'Sts::GetFederationToken' => [
@@ -430,7 +420,7 @@ class StsClientTest extends TestCase
     {
         $stsClient = $this->getMockBuilder(StsClient::class)
             -> disableOriginalConstructor()
-            -> setMethods(['__call'])
+            -> onlyMethods(['__call'])
             -> getMock();
         $stsClient->method('__call')
             -> willReturnCallback(function ($callOperation) use ($operation, $response) {

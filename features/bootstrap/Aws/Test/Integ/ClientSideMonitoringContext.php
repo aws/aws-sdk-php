@@ -19,9 +19,8 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Assert;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class ClientSideMonitoringContext extends TestCase
+class ClientSideMonitoringContext
     implements Context, SnippetAcceptingContext
 {
 
@@ -271,11 +270,11 @@ class ClientSideMonitoringContext extends TestCase
 
     private function compareMonitoringEvents($expected, $actual)
     {
-        $this->assertSame(count($expected), count($actual));
+        Assert::assertSame(count($expected), count($actual));
         foreach ($expected as $index => $expectedEvent) {
             $actualEvent = $actual[$index];
             foreach ($expectedEvent as $key => $value) {
-                $this->assertArrayHasKey($key, $actualEvent);
+                Assert::assertArrayHasKey($key, $actualEvent);
                 $this->validateEventValue($value, $actualEvent[$key]);
             }
             $allowedFields = array_merge(
@@ -283,7 +282,7 @@ class ClientSideMonitoringContext extends TestCase
                 array_keys($this->testData['defaults']['optionalEventFields'][$actualEvent['Type']])
             );
             foreach ($actualEvent as $key => $value) {
-                $this->assertTrue(in_array($key, $allowedFields));
+                Assert::assertTrue(in_array($key, $allowedFields));
                 if (in_array($key, $this->testData['defaults']['optionalEventFields'][$actualEvent['Type']])) {
                     $this->validateEventValue(
                         $this->testData['defaults']['optionalEventFields'][$actualEvent['Type']],
@@ -437,13 +436,13 @@ class ClientSideMonitoringContext extends TestCase
     {
         switch ($expected) {
             case "ANY_INT":
-                $this->assertIsInt($actual);
+                Assert::assertIsInt($actual);
                 break;
             case "ANY_STR":
-                $this->assertIsString('string', $actual);
+                Assert::assertIsString('string', $actual);
                 break;
             default:
-                $this->assertEquals($expected, $actual);
+                Assert::assertEquals($expected, $actual);
         }
     }
 }

@@ -24,11 +24,11 @@
       "output":{"shape":"BatchCreateMemoryRecordsOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottledException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
     },
@@ -43,11 +43,11 @@
       "output":{"shape":"BatchDeleteMemoryRecordsOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottledException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "BatchUpdateMemoryRecords":{
@@ -61,11 +61,11 @@
       "output":{"shape":"BatchUpdateMemoryRecordsOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottledException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "CompleteResourceTokenAuth":{
@@ -97,12 +97,13 @@
       "output":{"shape":"CreateEventOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
+        {"shape":"RetryableConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InvalidInputException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottledException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
     },
@@ -117,12 +118,12 @@
       "output":{"shape":"DeleteEventOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InvalidInputException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottledException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "DeleteMemoryRecord":{
@@ -136,12 +137,12 @@
       "output":{"shape":"DeleteMemoryRecordOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InvalidInputException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottledException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "Evaluate":{
@@ -231,12 +232,12 @@
       "output":{"shape":"GetEventOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InvalidInputException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottledException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ],
       "readonly":true
     },
@@ -251,12 +252,12 @@
       "output":{"shape":"GetMemoryRecordOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InvalidInputException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottledException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ],
       "readonly":true
     },
@@ -401,12 +402,12 @@
       "output":{"shape":"ListActorsOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InvalidInputException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottledException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ],
       "readonly":true
     },
@@ -457,12 +458,12 @@
       "output":{"shape":"ListEventsOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InvalidInputException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottledException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ],
       "readonly":true
     },
@@ -477,11 +478,11 @@
       "output":{"shape":"ListMemoryExtractionJobsOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottledException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListMemoryRecords":{
@@ -495,12 +496,12 @@
       "output":{"shape":"ListMemoryRecordsOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InvalidInputException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottledException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ],
       "readonly":true
     },
@@ -515,12 +516,12 @@
       "output":{"shape":"ListSessionsOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InvalidInputException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottledException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ],
       "readonly":true
     },
@@ -535,13 +536,32 @@
       "output":{"shape":"RetrieveMemoryRecordsOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InvalidInputException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottledException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "SaveBrowserSessionProfile":{
+      "name":"SaveBrowserSessionProfile",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/browser-profiles/{profileIdentifier}/save",
+        "responseCode":200
+      },
+      "input":{"shape":"SaveBrowserSessionProfileRequest"},
+      "output":{"shape":"SaveBrowserSessionProfileResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
     },
     "StartBrowserSession":{
       "name":"StartBrowserSession",
@@ -594,11 +614,11 @@
       "output":{"shape":"StartMemoryExtractionJobOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottledException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
     },
@@ -760,6 +780,13 @@
         "streamStatus":{"shape":"AutomationStreamStatus"}
       }
     },
+    "BasicAuth":{
+      "type":"structure",
+      "required":["secretArn"],
+      "members":{
+        "secretArn":{"shape":"SecretArn"}
+      }
+    },
     "BatchCreateMemoryRecordsInput":{
       "type":"structure",
       "required":[
@@ -874,6 +901,30 @@
       "max":100,
       "min":1,
       "pattern":"[a-zA-Z0-9][a-zA-Z0-9-_]*"
+    },
+    "BrowserExtension":{
+      "type":"structure",
+      "required":["location"],
+      "members":{
+        "location":{"shape":"ResourceLocation"}
+      }
+    },
+    "BrowserExtensions":{
+      "type":"list",
+      "member":{"shape":"BrowserExtension"},
+      "max":10,
+      "min":1
+    },
+    "BrowserProfileConfiguration":{
+      "type":"structure",
+      "required":["profileIdentifier"],
+      "members":{
+        "profileIdentifier":{"shape":"BrowserProfileId"}
+      }
+    },
+    "BrowserProfileId":{
+      "type":"string",
+      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10}"
     },
     "BrowserSessionId":{
       "type":"string",
@@ -1057,7 +1108,7 @@
     },
     "ContentTextString":{
       "type":"string",
-      "max":9000,
+      "max":100000,
       "min":1,
       "sensitive":true
     },
@@ -1208,6 +1259,18 @@
       "members":{},
       "document":true,
       "sensitive":true
+    },
+    "DomainPattern":{
+      "type":"string",
+      "max":253,
+      "min":1,
+      "pattern":"(\\.)?[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?(\\.[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)*"
+    },
+    "DomainPatterns":{
+      "type":"list",
+      "member":{"shape":"DomainPattern"},
+      "max":100,
+      "min":1
     },
     "Double":{
       "type":"double",
@@ -1362,6 +1425,25 @@
       "max":5,
       "min":1
     },
+    "ExternalProxy":{
+      "type":"structure",
+      "required":[
+        "server",
+        "port"
+      ],
+      "members":{
+        "server":{"shape":"HostName"},
+        "port":{"shape":"ExternalProxyPortInteger"},
+        "domainPatterns":{"shape":"DomainPatterns"},
+        "credentials":{"shape":"ProxyCredentials"}
+      }
+    },
+    "ExternalProxyPortInteger":{
+      "type":"integer",
+      "box":true,
+      "max":65535,
+      "min":1
+    },
     "ExtractionJob":{
       "type":"structure",
       "required":["jobId"],
@@ -1487,9 +1569,12 @@
         "name":{"shape":"Name"},
         "createdAt":{"shape":"DateTimestamp"},
         "viewPort":{"shape":"ViewPort"},
+        "extensions":{"shape":"BrowserExtensions"},
+        "profileConfiguration":{"shape":"BrowserProfileConfiguration"},
         "sessionTimeoutSeconds":{"shape":"BrowserSessionTimeout"},
         "status":{"shape":"BrowserSessionStatus"},
         "streams":{"shape":"BrowserSessionStream"},
+        "proxyConfiguration":{"shape":"ProxyConfiguration"},
         "sessionReplayArtifact":{"shape":"String"},
         "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
@@ -1689,6 +1774,12 @@
       "members":{
         "workloadAccessToken":{"shape":"WorkloadIdentityTokenType"}
       }
+    },
+    "HostName":{
+      "type":"string",
+      "max":253,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?(\\.[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)*"
     },
     "HttpResponseCode":{
       "type":"integer",
@@ -2432,6 +2523,40 @@
         "typescript"
       ]
     },
+    "Proxy":{
+      "type":"structure",
+      "members":{
+        "externalProxy":{"shape":"ExternalProxy"}
+      },
+      "union":true
+    },
+    "ProxyBypass":{
+      "type":"structure",
+      "members":{
+        "domainPatterns":{"shape":"DomainPatterns"}
+      }
+    },
+    "ProxyConfiguration":{
+      "type":"structure",
+      "required":["proxies"],
+      "members":{
+        "proxies":{"shape":"ProxyConfigurationProxiesList"},
+        "bypass":{"shape":"ProxyBypass"}
+      }
+    },
+    "ProxyConfigurationProxiesList":{
+      "type":"list",
+      "member":{"shape":"Proxy"},
+      "max":5,
+      "min":1
+    },
+    "ProxyCredentials":{
+      "type":"structure",
+      "members":{
+        "basicAuth":{"shape":"BasicAuth"}
+      },
+      "union":true
+    },
     "RequestIdentifier":{
       "type":"string",
       "max":80,
@@ -2461,6 +2586,13 @@
         "text",
         "blob"
       ]
+    },
+    "ResourceLocation":{
+      "type":"structure",
+      "members":{
+        "s3":{"shape":"S3Location"}
+      },
+      "union":true
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -2511,6 +2643,19 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "RetryableConflictException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true,
+      "retryable":{"throttling":false}
+    },
     "RightExpression":{
       "type":"structure",
       "members":{
@@ -2537,6 +2682,90 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "S3Location":{
+      "type":"structure",
+      "required":[
+        "bucket",
+        "prefix"
+      ],
+      "members":{
+        "bucket":{"shape":"S3LocationBucketString"},
+        "prefix":{"shape":"S3LocationPrefixString"},
+        "versionId":{"shape":"S3LocationVersionIdString"}
+      }
+    },
+    "S3LocationBucketString":{
+      "type":"string",
+      "max":63,
+      "min":3,
+      "pattern":"[a-z0-9][a-z0-9.-]*[a-z0-9]"
+    },
+    "S3LocationPrefixString":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "S3LocationVersionIdString":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "SaveBrowserSessionProfileRequest":{
+      "type":"structure",
+      "required":[
+        "profileIdentifier",
+        "browserIdentifier",
+        "sessionId"
+      ],
+      "members":{
+        "traceId":{
+          "shape":"SaveBrowserSessionProfileRequestTraceIdString",
+          "location":"header",
+          "locationName":"X-Amzn-Trace-Id"
+        },
+        "traceParent":{
+          "shape":"SaveBrowserSessionProfileRequestTraceParentString",
+          "location":"header",
+          "locationName":"traceparent"
+        },
+        "profileIdentifier":{
+          "shape":"BrowserProfileId",
+          "location":"uri",
+          "locationName":"profileIdentifier"
+        },
+        "browserIdentifier":{"shape":"String"},
+        "sessionId":{"shape":"BrowserSessionId"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "SaveBrowserSessionProfileRequestTraceIdString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "SaveBrowserSessionProfileRequestTraceParentString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "SaveBrowserSessionProfileResponse":{
+      "type":"structure",
+      "required":[
+        "profileIdentifier",
+        "browserIdentifier",
+        "sessionId",
+        "lastUpdatedAt"
+      ],
+      "members":{
+        "profileIdentifier":{"shape":"BrowserProfileId"},
+        "browserIdentifier":{"shape":"String"},
+        "sessionId":{"shape":"BrowserSessionId"},
+        "lastUpdatedAt":{"shape":"DateTimestamp"}
+      }
     },
     "ScopeType":{
       "type":"string",
@@ -2568,6 +2797,10 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "SecretArn":{
+      "type":"string",
+      "pattern":"arn:aws:secretsmanager:[a-z0-9-]+:[0-9]{12}:secret:[a-zA-Z0-9/_+=.@-]+"
     },
     "ServiceException":{
       "type":"structure",
@@ -2679,6 +2912,9 @@
         "name":{"shape":"Name"},
         "sessionTimeoutSeconds":{"shape":"BrowserSessionTimeout"},
         "viewPort":{"shape":"ViewPort"},
+        "extensions":{"shape":"BrowserExtensions"},
+        "profileConfiguration":{"shape":"BrowserProfileConfiguration"},
+        "proxyConfiguration":{"shape":"ProxyConfiguration"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true

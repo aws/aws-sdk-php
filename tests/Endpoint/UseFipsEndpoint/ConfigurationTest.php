@@ -3,25 +3,20 @@ namespace Aws\Test\Endpoint\UseFipsEndpoint;
 
 use Aws\Endpoint\UseFipsEndpoint\Configuration;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\Endpoint\UseFipsEndpoint\Configuration
- */
+#[CoversClass(Configuration::class)]
 class ConfigurationTest extends TestCase
 {
-    /**
-     * @dataProvider correctValueCases
-     *
-     * @param $param
-     * @param $expected
-     */
+    #[DataProvider('correctValueCases')]
     public function testGetsCorrectValues($param, $expected)
     {
         $config = new Configuration($param);
         $this->assertEquals($expected, $config->isuseFipsEndpoint());
     }
 
-    public function correctValueCases()
+    public static function correctValueCases(): array
     {
         return [
             [true, true],

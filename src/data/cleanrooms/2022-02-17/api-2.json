@@ -2020,7 +2020,7 @@
       "type":"string",
       "max":200,
       "min":0,
-      "pattern":"arn:aws:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:membership/[\\d\\w-]+/analysistemplate/[\\d\\w-]+"
+      "pattern":"arn:aws[-a-z]*:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:membership/[\\d\\w-]+/analysistemplate/[\\d\\w-]+"
     },
     "AnalysisTemplateArnList":{
       "type":"list",
@@ -2185,6 +2185,12 @@
       "max":50,
       "min":1
     },
+    "AthenaCatalogName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
     "AthenaDatabaseName":{
       "type":"string",
       "max":128,
@@ -2215,7 +2221,8 @@
         "workGroup":{"shape":"AthenaWorkGroup"},
         "outputLocation":{"shape":"AthenaOutputLocation"},
         "databaseName":{"shape":"AthenaDatabaseName"},
-        "tableName":{"shape":"AthenaTableName"}
+        "tableName":{"shape":"AthenaTableName"},
+        "catalogName":{"shape":"AthenaCatalogName"}
       }
     },
     "AthenaWorkGroup":{
@@ -8029,7 +8036,10 @@
       "type":"structure",
       "members":{
         "type":{"shape":"WorkerComputeType"},
-        "number":{"shape":"WorkerComputeConfigurationNumberInteger"},
+        "number":{
+          "shape":"WorkerComputeConfigurationNumberInteger",
+          "box":true
+        },
         "properties":{"shape":"WorkerComputeConfigurationProperties"}
       }
     },

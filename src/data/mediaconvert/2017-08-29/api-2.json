@@ -1300,7 +1300,8 @@
         "CODING_MODE_1_0",
         "CODING_MODE_1_1",
         "CODING_MODE_2_0",
-        "CODING_MODE_5_1"
+        "CODING_MODE_5_1",
+        "CODING_MODE_AUTO"
       ]
     },
     "AacLoudnessMeasurementMode": {
@@ -1412,7 +1413,8 @@
         "CODING_MODE_1_0",
         "CODING_MODE_1_1",
         "CODING_MODE_2_0",
-        "CODING_MODE_3_2_LFE"
+        "CODING_MODE_3_2_LFE",
+        "CODING_MODE_AUTO"
       ]
     },
     "Ac3DynamicRangeCompressionLine": {
@@ -1503,6 +1505,98 @@
         }
       }
     },
+    "Ac4BitstreamMode": {
+      "type": "string",
+      "enum": [
+        "COMPLETE_MAIN",
+        "EMERGENCY"
+      ]
+    },
+    "Ac4CodingMode": {
+      "type": "string",
+      "enum": [
+        "CODING_MODE_2_0",
+        "CODING_MODE_3_2_LFE",
+        "CODING_MODE_5_1_4"
+      ]
+    },
+    "Ac4DynamicRangeCompressionDrcProfile": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "FILM_STANDARD",
+        "FILM_LIGHT",
+        "MUSIC_STANDARD",
+        "MUSIC_LIGHT",
+        "SPEECH"
+      ]
+    },
+    "Ac4Settings": {
+      "type": "structure",
+      "members": {
+        "Bitrate": {
+          "shape": "__integerMin192000Max1024000",
+          "locationName": "bitrate"
+        },
+        "BitstreamMode": {
+          "shape": "Ac4BitstreamMode",
+          "locationName": "bitstreamMode"
+        },
+        "CodingMode": {
+          "shape": "Ac4CodingMode",
+          "locationName": "codingMode"
+        },
+        "DynamicRangeCompressionFlatPanelTv": {
+          "shape": "Ac4DynamicRangeCompressionDrcProfile",
+          "locationName": "dynamicRangeCompressionFlatPanelTv"
+        },
+        "DynamicRangeCompressionHomeTheater": {
+          "shape": "Ac4DynamicRangeCompressionDrcProfile",
+          "locationName": "dynamicRangeCompressionHomeTheater"
+        },
+        "DynamicRangeCompressionPortableHeadphones": {
+          "shape": "Ac4DynamicRangeCompressionDrcProfile",
+          "locationName": "dynamicRangeCompressionPortableHeadphones"
+        },
+        "DynamicRangeCompressionPortableSpeakers": {
+          "shape": "Ac4DynamicRangeCompressionDrcProfile",
+          "locationName": "dynamicRangeCompressionPortableSpeakers"
+        },
+        "LoRoCenterMixLevel": {
+          "shape": "__doubleMinNegative1000Max3",
+          "locationName": "loRoCenterMixLevel"
+        },
+        "LoRoSurroundMixLevel": {
+          "shape": "__doubleMinNegative1000MaxNegative1",
+          "locationName": "loRoSurroundMixLevel"
+        },
+        "LtRtCenterMixLevel": {
+          "shape": "__doubleMinNegative1000Max3",
+          "locationName": "ltRtCenterMixLevel"
+        },
+        "LtRtSurroundMixLevel": {
+          "shape": "__doubleMinNegative1000MaxNegative1",
+          "locationName": "ltRtSurroundMixLevel"
+        },
+        "SampleRate": {
+          "shape": "__integerMin48000Max48000",
+          "locationName": "sampleRate"
+        },
+        "StereoDownmix": {
+          "shape": "Ac4StereoDownmix",
+          "locationName": "stereoDownmix"
+        }
+      }
+    },
+    "Ac4StereoDownmix": {
+      "type": "string",
+      "enum": [
+        "NOT_INDICATED",
+        "LO_RO",
+        "LT_RT",
+        "DPL2"
+      ]
+    },
     "AccelerationMode": {
       "type": "string",
       "enum": [
@@ -1583,7 +1677,7 @@
           "locationName": "bitDepth"
         },
         "Channels": {
-          "shape": "__integerMin1Max64",
+          "shape": "__integerMin0Max64",
           "locationName": "channels"
         },
         "SampleRate": {
@@ -1725,6 +1819,7 @@
         "WAV",
         "AIFF",
         "AC3",
+        "AC4",
         "EAC3",
         "EAC3_ATMOS",
         "VORBIS",
@@ -1743,6 +1838,10 @@
         "Ac3Settings": {
           "shape": "Ac3Settings",
           "locationName": "ac3Settings"
+        },
+        "Ac4Settings": {
+          "shape": "Ac4Settings",
+          "locationName": "ac4Settings"
         },
         "AiffSettings": {
           "shape": "AiffSettings",
@@ -2916,6 +3015,10 @@
     "CmafEncryptionSettings": {
       "type": "structure",
       "members": {
+        "ClearLead": {
+          "shape": "HlsClearLead",
+          "locationName": "clearLead"
+        },
         "ConstantInitializationVector": {
           "shape": "__stringMin32Max32Pattern09aFAF32",
           "locationName": "constantInitializationVector"
@@ -3115,7 +3218,8 @@
       "type": "string",
       "enum": [
         "FOLLOW_IFRAME",
-        "FOLLOW_CUSTOM"
+        "FOLLOW_CUSTOM",
+        "FOLLOW_SEGMENTATION"
       ]
     },
     "CmafKeyProviderType": {
@@ -3390,11 +3494,12 @@
         "MP4V",
         "MPEG2",
         "PRORES",
+        "QTRLE",
         "THEORA",
+        "UNCOMPRESSED",
         "VFW",
         "VP8",
         "VP9",
-        "QTRLE",
         "C608",
         "C708",
         "WEBVTT"
@@ -4099,7 +4204,8 @@
       "type": "string",
       "enum": [
         "FOLLOW_IFRAME",
-        "FOLLOW_CUSTOM"
+        "FOLLOW_CUSTOM",
+        "FOLLOW_SEGMENTATION"
       ]
     },
     "DashIsoMpdManifestBandwidthType": {
@@ -4358,6 +4464,10 @@
     "DolbyVision": {
       "type": "structure",
       "members": {
+        "Compatibility": {
+          "shape": "DolbyVisionCompatibility",
+          "locationName": "compatibility"
+        },
         "L6Metadata": {
           "shape": "DolbyVisionLevel6Metadata",
           "locationName": "l6Metadata"
@@ -4375,6 +4485,13 @@
           "locationName": "profile"
         }
       }
+    },
+    "DolbyVisionCompatibility": {
+      "type": "string",
+      "enum": [
+        "DUPLICATE_STREAM",
+        "SUPPLEMENTAL_CODECS"
+      ]
     },
     "DolbyVisionLevel6Metadata": {
       "type": "structure",
@@ -4914,7 +5031,8 @@
       "enum": [
         "CODING_MODE_1_0",
         "CODING_MODE_2_0",
-        "CODING_MODE_3_2"
+        "CODING_MODE_3_2",
+        "CODING_MODE_AUTO"
       ]
     },
     "Eac3DcFilter": {
@@ -5317,7 +5435,7 @@
           "locationName": "bitDepth"
         },
         "Channels": {
-          "shape": "__integerMin1Max8",
+          "shape": "__integerMin0Max8",
           "locationName": "channels"
         },
         "SampleRate": {
@@ -5367,7 +5485,9 @@
         "quicktime",
         "matroska",
         "webm",
-        "mxf"
+        "mxf",
+        "wave",
+        "avi"
       ]
     },
     "FrameCaptureSettings": {
@@ -6648,6 +6768,13 @@
         "MATCH_VIDEO"
       ]
     },
+    "HlsClearLead": {
+      "type": "string",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "HlsClientCache": {
       "type": "string",
       "enum": [
@@ -6906,7 +7033,8 @@
       "type": "string",
       "enum": [
         "FOLLOW_IFRAME",
-        "FOLLOW_CUSTOM"
+        "FOLLOW_CUSTOM",
+        "FOLLOW_SEGMENTATION"
       ]
     },
     "HlsKeyProviderType": {
@@ -9073,7 +9201,7 @@
           "locationName": "bitrate"
         },
         "Channels": {
-          "shape": "__integerMin1Max2",
+          "shape": "__integerMin0Max2",
           "locationName": "channels"
         },
         "SampleRate": {
@@ -9097,7 +9225,7 @@
           "locationName": "bitrate"
         },
         "Channels": {
-          "shape": "__integerMin1Max2",
+          "shape": "__integerMin0Max2",
           "locationName": "channels"
         },
         "RateControlMode": {
@@ -9710,11 +9838,22 @@
           "shape": "MxfProfile",
           "locationName": "profile"
         },
+        "UncompressedAudioWrapping": {
+          "shape": "MxfUncompressedAudioWrapping",
+          "locationName": "uncompressedAudioWrapping"
+        },
         "XavcProfileSettings": {
           "shape": "MxfXavcProfileSettings",
           "locationName": "xavcProfileSettings"
         }
       }
+    },
+    "MxfUncompressedAudioWrapping": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "AES3"
+      ]
     },
     "MxfXavcDurationMode": {
       "type": "string",
@@ -9963,7 +10102,7 @@
           "locationName": "bitrate"
         },
         "Channels": {
-          "shape": "__integerMin1Max2",
+          "shape": "__integerMin0Max2",
           "locationName": "channels"
         },
         "SampleRate": {
@@ -12208,7 +12347,7 @@
       "type": "structure",
       "members": {
         "Channels": {
-          "shape": "__integerMin1Max2",
+          "shape": "__integerMin0Max2",
           "locationName": "channels"
         },
         "SampleRate": {
@@ -12450,7 +12589,7 @@
           "locationName": "bitDepth"
         },
         "Channels": {
-          "shape": "__integerMin1Max64",
+          "shape": "__integerMin0Max64",
           "locationName": "channels"
         },
         "Format": {
@@ -12866,6 +13005,12 @@
     "__doubleMin1Max10": {
       "type": "double"
     },
+    "__doubleMinNegative1000Max3": {
+      "type": "double"
+    },
+    "__doubleMinNegative1000MaxNegative1": {
+      "type": "double"
+    },
     "__doubleMinNegative59Max0": {
       "type": "double"
     },
@@ -12942,6 +13087,11 @@
       "min": 0,
       "max": 16
     },
+    "__integerMin0Max2": {
+      "type": "integer",
+      "min": 0,
+      "max": 2
+    },
     "__integerMin0Max2147483647": {
       "type": "integer",
       "min": 0,
@@ -13006,6 +13156,11 @@
       "type": "integer",
       "min": 0,
       "max": 50000
+    },
+    "__integerMin0Max64": {
+      "type": "integer",
+      "min": 0,
+      "max": 64
     },
     "__integerMin0Max65534": {
       "type": "integer",
@@ -13102,6 +13257,11 @@
       "min": 16,
       "max": 24
     },
+    "__integerMin192000Max1024000": {
+      "type": "integer",
+      "min": 192000,
+      "max": 1024000
+    },
     "__integerMin1Max1": {
       "type": "integer",
       "min": 1,
@@ -13136,11 +13296,6 @@
       "type": "integer",
       "min": 1,
       "max": 17895697
-    },
-    "__integerMin1Max2": {
-      "type": "integer",
-      "min": 1,
-      "max": 2
     },
     "__integerMin1Max20": {
       "type": "integer",
@@ -13201,11 +13356,6 @@
       "type": "integer",
       "min": 1,
       "max": 64
-    },
-    "__integerMin1Max8": {
-      "type": "integer",
-      "min": 1,
-      "max": 8
     },
     "__integerMin1Max86400000": {
       "type": "integer",

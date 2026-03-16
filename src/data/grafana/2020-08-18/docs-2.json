@@ -20,7 +20,7 @@
     "ListVersions": "<p>Lists available versions of Grafana. These are available when calling <code>CreateWorkspace</code>. Optionally, include a workspace to list the versions to which it can be upgraded.</p>",
     "ListWorkspaceServiceAccountTokens": "<p>Returns a list of tokens for a workspace service account.</p> <note> <p>This does not return the key for each token. You cannot access keys after they are created. To create a new key, delete the token and recreate it.</p> </note> <p>Service accounts are only available for workspaces that are compatible with Grafana version 9 and above.</p>",
     "ListWorkspaceServiceAccounts": "<p>Returns a list of service accounts for a workspace.</p> <p>Service accounts are only available for workspaces that are compatible with Grafana version 9 and above.</p>",
-    "ListWorkspaces": "<p>Returns a list of Amazon Managed Grafana workspaces in the account, with some information about each workspace. For more complete information about one workspace, use <a href=\"https://docs.aws.amazon.com/AAMG/latest/APIReference/API_DescribeWorkspace.html\">DescribeWorkspace</a>.</p>",
+    "ListWorkspaces": "<p>Returns a list of Amazon Managed Grafana workspaces in the account, with some information about each workspace. For more complete information about one workspace, use <a href=\"https://docs.aws.amazon.com/grafana/latest/APIReference/API_DescribeWorkspace.html\">DescribeWorkspace</a>.</p>",
     "TagResource": "<p>The <code>TagResource</code> operation associates tags with an Amazon Managed Grafana resource. Currently, the only resource that can be tagged is workspaces. </p> <p>If you specify a new tag key for the resource, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag.</p>",
     "UntagResource": "<p>The <code>UntagResource</code> operation removes the association of the tag with the Amazon Managed Grafana resource. </p>",
     "UpdatePermissions": "<p>Updates which users in a workspace have the Grafana <code>Admin</code> or <code>Editor</code> roles.</p>",
@@ -31,8 +31,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient permissions to perform this action. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountAccessType": {
       "base": null,
@@ -72,12 +71,12 @@
     "AssertionAttribute": {
       "base": null,
       "refs": {
+        "AssertionAttributes$name": "<p>The name of the attribute within the SAML assertion to use as the user full \"friendly\" names for SAML users.</p>",
+        "AssertionAttributes$login": "<p>The name of the attribute within the SAML assertion to use as the login names for SAML users.</p>",
         "AssertionAttributes$email": "<p>The name of the attribute within the SAML assertion to use as the email names for SAML users.</p>",
         "AssertionAttributes$groups": "<p>The name of the attribute within the SAML assertion to use as the user full \"friendly\" names for user groups.</p>",
-        "AssertionAttributes$login": "<p>The name of the attribute within the SAML assertion to use as the login names for SAML users.</p>",
-        "AssertionAttributes$name": "<p>The name of the attribute within the SAML assertion to use as the user full \"friendly\" names for SAML users.</p>",
-        "AssertionAttributes$org": "<p>The name of the attribute within the SAML assertion to use as the user full \"friendly\" names for the users' organizations.</p>",
-        "AssertionAttributes$role": "<p>The name of the attribute within the SAML assertion to use as the user roles.</p>"
+        "AssertionAttributes$role": "<p>The name of the attribute within the SAML assertion to use as the user roles.</p>",
+        "AssertionAttributes$org": "<p>The name of the attribute within the SAML assertion to use as the user full \"friendly\" names for the users' organizations.</p>"
       }
     },
     "AssertionAttributes": {
@@ -88,13 +87,11 @@
     },
     "AssociateLicenseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateLicenseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AuthenticationDescription": {
       "base": "<p>A structure containing information about the user authentication methods used by the workspace.</p>",
@@ -134,8 +131,8 @@
     "Boolean": {
       "base": null,
       "refs": {
-        "UpdateWorkspaceRequest$removeNetworkAccessConfiguration": "<p>Whether to remove the network access configuration from the workspace.</p> <p>Setting this to <code>true</code> and providing a <code>networkAccessControl</code> to set will return an error.</p> <p>If you remove this configuration by setting this to <code>true</code>, then all IP addresses and VPC endpoints will be allowed. Standard Grafana authentication and authorization will still be required.</p>",
         "UpdateWorkspaceRequest$removeVpcConfiguration": "<p>Whether to remove the VPC configuration from the workspace.</p> <p>Setting this to <code>true</code> and providing a <code>vpcConfiguration</code> to set will return an error.</p>",
+        "UpdateWorkspaceRequest$removeNetworkAccessConfiguration": "<p>Whether to remove the network access configuration from the workspace.</p> <p>Setting this to <code>true</code> and providing a <code>networkAccessControl</code> to set will return an error.</p> <p>If you remove this configuration by setting this to <code>true</code>, then all IP addresses and VPC endpoints will be allowed. Standard Grafana authentication and authorization will still be required.</p>",
         "WorkspaceDescription$freeTrialConsumed": "<p>Specifies whether this workspace has already fully used its free trial for Grafana Enterprise.</p> <note> <p>Amazon Managed Grafana workspaces no longer support Grafana Enterprise free trials.</p> </note>"
       }
     },
@@ -147,13 +144,11 @@
     },
     "ConflictException": {
       "base": "<p>A resource was in an inconsistent state during an update or a deletion.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkspaceApiKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkspaceApiKeyRequestSecondsToLiveInteger": {
       "base": null,
@@ -163,33 +158,27 @@
     },
     "CreateWorkspaceApiKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkspaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkspaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkspaceServiceAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkspaceServiceAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkspaceServiceAccountTokenRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkspaceServiceAccountTokenRequestSecondsToLiveInteger": {
       "base": null,
@@ -199,8 +188,7 @@
     },
     "CreateWorkspaceServiceAccountTokenResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DataSourceType": {
       "base": null,
@@ -218,73 +206,59 @@
     },
     "DeleteWorkspaceApiKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkspaceApiKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkspaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkspaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkspaceServiceAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkspaceServiceAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkspaceServiceAccountTokenRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkspaceServiceAccountTokenResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkspaceAuthenticationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkspaceAuthenticationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkspaceConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkspaceConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkspaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkspaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -297,13 +271,11 @@
     },
     "DisassociateLicenseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateLicenseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Endpoint": {
       "base": null,
@@ -366,7 +338,13 @@
     },
     "InternalServerException": {
       "base": "<p>Unexpected error while processing the request. Retry the request.</p>",
+      "refs": {}
+    },
+    "KmsKeyId": {
+      "base": null,
       "refs": {
+        "CreateWorkspaceRequest$kmsKeyId": "<p>The ID or ARN of the Key Management Service key to use for encrypting workspace data.</p>",
+        "WorkspaceDescription$kmsKeyId": "<p>The ID or ARN of the Key Management Service key used for encrypting workspace data.</p>"
       }
     },
     "LicenseType": {
@@ -380,8 +358,7 @@
     },
     "ListPermissionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPermissionsRequestMaxResultsInteger": {
       "base": null,
@@ -391,23 +368,19 @@
     },
     "ListPermissionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVersionsRequestMaxResultsInteger": {
       "base": null,
@@ -417,13 +390,11 @@
     },
     "ListVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkspaceServiceAccountTokensRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkspaceServiceAccountTokensRequestMaxResultsInteger": {
       "base": null,
@@ -433,13 +404,11 @@
     },
     "ListWorkspaceServiceAccountTokensResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkspaceServiceAccountsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkspaceServiceAccountsRequestMaxResultsInteger": {
       "base": null,
@@ -449,13 +418,11 @@
     },
     "ListWorkspaceServiceAccountsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkspacesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkspacesRequestMaxResultsInteger": {
       "base": null,
@@ -465,8 +432,7 @@
     },
     "ListWorkspacesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LoginValidityDuration": {
       "base": null,
@@ -576,8 +542,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The request references a resource that does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Role": {
       "base": null,
@@ -598,8 +563,8 @@
     "RoleValueList": {
       "base": null,
       "refs": {
-        "RoleValues$admin": "<p>A list of groups from the SAML assertion attribute to grant the Grafana <code>Admin</code> role to.</p>",
-        "RoleValues$editor": "<p>A list of groups from the SAML assertion attribute to grant the Grafana <code>Editor</code> role to.</p>"
+        "RoleValues$editor": "<p>A list of groups from the SAML assertion attribute to grant the Grafana <code>Editor</code> role to.</p>",
+        "RoleValues$admin": "<p>A list of groups from the SAML assertion attribute to grant the Grafana <code>Admin</code> role to.</p>"
       }
     },
     "RoleValues": {
@@ -696,14 +661,13 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The request would cause a service quota to be exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SsoId": {
       "base": null,
       "refs": {
-        "ListPermissionsRequest$groupId": "<p>(Optional) Limits the results to only the group that matches this ID.</p>",
         "ListPermissionsRequest$userId": "<p>(Optional) Limits the results to only the user that matches this ID.</p>",
+        "ListPermissionsRequest$groupId": "<p>(Optional) Limits the results to only the group that matches this ID.</p>",
         "User$id": "<p>The ID of the user or group.</p> <p>Pattern: <code>^([0-9a-fA-F]{10}-|)[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$</code> </p>"
       }
     },
@@ -729,10 +693,10 @@
         "CreateWorkspaceServiceAccountTokenResponse$serviceAccountId": "<p>The ID of the service account where the token was created.</p>",
         "DeleteWorkspaceServiceAccountRequest$serviceAccountId": "<p>The ID of the service account to delete.</p>",
         "DeleteWorkspaceServiceAccountResponse$serviceAccountId": "<p>The ID of the service account deleted.</p>",
-        "DeleteWorkspaceServiceAccountTokenRequest$serviceAccountId": "<p>The ID of the service account from which to delete the token.</p>",
         "DeleteWorkspaceServiceAccountTokenRequest$tokenId": "<p>The ID of the token to delete.</p>",
-        "DeleteWorkspaceServiceAccountTokenResponse$serviceAccountId": "<p>The ID of the service account where the token was deleted.</p>",
+        "DeleteWorkspaceServiceAccountTokenRequest$serviceAccountId": "<p>The ID of the service account from which to delete the token.</p>",
         "DeleteWorkspaceServiceAccountTokenResponse$tokenId": "<p>The ID of the token that was deleted.</p>",
+        "DeleteWorkspaceServiceAccountTokenResponse$serviceAccountId": "<p>The ID of the service account where the token was deleted.</p>",
         "IdpMetadata$xml": "<p>The full IdP metadata, in XML format.</p>",
         "InternalServerException$message": "<p>A description of the error.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>The ARN of the resource the list of tags are associated with.</p>",
@@ -742,26 +706,26 @@
         "ResourceNotFoundException$resourceId": "<p>The ID of the resource that is associated with the error.</p>",
         "ResourceNotFoundException$resourceType": "<p>The type of the resource that is associated with the error.</p>",
         "ServiceAccountSummary$id": "<p>The unique ID of the service account.</p>",
-        "ServiceAccountSummary$isDisabled": "<p>Returns true if the service account is disabled. Service accounts can be disabled and enabled in the Amazon Managed Grafana console.</p>",
         "ServiceAccountSummary$name": "<p>The name of the service account.</p>",
+        "ServiceAccountSummary$isDisabled": "<p>Returns true if the service account is disabled. Service accounts can be disabled and enabled in the Amazon Managed Grafana console.</p>",
         "ServiceAccountTokenSummary$id": "<p>The unique ID of the service account token.</p>",
         "ServiceAccountTokenSummary$name": "<p>The name of the service account token.</p>",
         "ServiceAccountTokenSummaryWithKey$id": "<p>The unique ID of the service account token.</p>",
         "ServiceAccountTokenSummaryWithKey$name": "<p>The name of the service account token.</p>",
         "ServiceQuotaExceededException$message": "<p>A description of the error.</p>",
-        "ServiceQuotaExceededException$quotaCode": "<p>The ID of the service quota that was exceeded.</p>",
         "ServiceQuotaExceededException$resourceId": "<p>The ID of the resource that is associated with the error.</p>",
         "ServiceQuotaExceededException$resourceType": "<p>The type of the resource that is associated with the error.</p>",
         "ServiceQuotaExceededException$serviceCode": "<p>The value of a parameter in the request caused an error.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>The ID of the service quota that was exceeded.</p>",
         "TagResourceRequest$resourceArn": "<p>The ARN of the resource the tag is associated with.</p>",
         "ThrottlingException$message": "<p>A description of the error.</p>",
-        "ThrottlingException$quotaCode": "<p>The ID of the service quota that was exceeded.</p>",
         "ThrottlingException$serviceCode": "<p>The ID of the service that is associated with the error.</p>",
+        "ThrottlingException$quotaCode": "<p>The ID of the service quota that was exceeded.</p>",
         "UntagResourceRequest$resourceArn": "<p>The ARN of the resource the tag association is removed from. </p>",
         "UpdateError$message": "<p>The message for this error.</p>",
         "ValidationException$message": "<p>A description of the error.</p>",
-        "ValidationExceptionField$message": "<p>A message describing why this field couldn't be validated.</p>",
-        "ValidationExceptionField$name": "<p>The name of the field that caused the validation error.</p>"
+        "ValidationExceptionField$name": "<p>The name of the field that caused the validation error.</p>",
+        "ValidationExceptionField$message": "<p>A message describing why this field couldn't be validated.</p>"
       }
     },
     "SubnetId": {
@@ -801,13 +765,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -817,8 +779,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied because of request throttling. Retry the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -827,22 +788,20 @@
         "ServiceAccountTokenSummary$expiresAt": "<p>When the service account token will expire.</p>",
         "ServiceAccountTokenSummary$lastUsedAt": "<p>The last time the token was used to authorize a Grafana HTTP API.</p>",
         "WorkspaceDescription$created": "<p>The date that the workspace was created.</p>",
-        "WorkspaceDescription$freeTrialExpiration": "<p>If this workspace is currently in the free trial period for Grafana Enterprise, this value specifies when that free trial ends.</p> <note> <p>Amazon Managed Grafana workspaces no longer support Grafana Enterprise free trials.</p> </note>",
-        "WorkspaceDescription$licenseExpiration": "<p>If this workspace has a full Grafana Enterprise license purchased through Amazon Web Services Marketplace, this specifies when the license ends and will need to be renewed. Purchasing the Enterprise plugins option through Amazon Managed Grafana does not have an expiration. It is valid until the license is removed.</p>",
         "WorkspaceDescription$modified": "<p>The most recent date that the workspace was modified.</p>",
+        "WorkspaceDescription$licenseExpiration": "<p>If this workspace has a full Grafana Enterprise license purchased through Amazon Web Services Marketplace, this specifies when the license ends and will need to be renewed. Purchasing the Enterprise plugins option through Amazon Managed Grafana does not have an expiration. It is valid until the license is removed.</p>",
+        "WorkspaceDescription$freeTrialExpiration": "<p>If this workspace is currently in the free trial period for Grafana Enterprise, this value specifies when that free trial ends.</p> <note> <p>Amazon Managed Grafana workspaces no longer support Grafana Enterprise free trials.</p> </note>",
         "WorkspaceSummary$created": "<p>The date that the workspace was created.</p>",
         "WorkspaceSummary$modified": "<p>The most recent date that the workspace was modified.</p>"
       }
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAction": {
       "base": null,
@@ -883,43 +842,35 @@
     },
     "UpdatePermissionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePermissionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkspaceAuthenticationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkspaceAuthenticationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkspaceConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkspaceConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkspaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkspaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "User": {
       "base": "<p>A structure that specifies one user or group in the workspace.</p>",
@@ -943,8 +894,7 @@
     },
     "ValidationException": {
       "base": "<p>The value of a parameter in the request caused an error.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>A structure that contains information about a request parameter that caused an error.</p>",

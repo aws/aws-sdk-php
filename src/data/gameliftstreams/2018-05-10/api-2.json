@@ -510,7 +510,8 @@
       "type":"string",
       "enum":[
         "internalError",
-        "accessDenied"
+        "accessDenied",
+        "sourceModified"
       ]
     },
     "ApplicationSummary":{
@@ -982,6 +983,16 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
+    "Ipv4CidrBlock":{
+      "type":"string",
+      "pattern":"(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([0-9]|[1-2][0-9]|3[0-2])"
+    },
+    "Ipv4CidrBlockList":{
+      "type":"list",
+      "member":{"shape":"Ipv4CidrBlock"},
+      "max":5,
+      "min":1
+    },
     "ListApplicationsInput":{
       "type":"structure",
       "members":{
@@ -1126,7 +1137,8 @@
           "deprecatedSince":"2025-12-17"
         },
         "TargetIdleCapacity":{"shape":"TargetIdleCapacity"},
-        "MaximumCapacity":{"shape":"MaximumCapacity"}
+        "MaximumCapacity":{"shape":"MaximumCapacity"},
+        "VpcTransitConfiguration":{"shape":"VpcTransitConfiguration"}
       }
     },
     "LocationConfigurations":{
@@ -1157,7 +1169,9 @@
         "MaximumCapacity":{"shape":"MaximumCapacity"},
         "RequestedCapacity":{"shape":"CapacityValue"},
         "AllocatedCapacity":{"shape":"CapacityValue"},
-        "IdleCapacity":{"shape":"CapacityValue"}
+        "IdleCapacity":{"shape":"CapacityValue"},
+        "InternalVpcIpv4CidrBlock":{"shape":"Ipv4CidrBlock"},
+        "VpcTransitConfiguration":{"shape":"VpcTransitConfigurationResponse"}
       }
     },
     "LocationStates":{
@@ -1375,7 +1389,11 @@
         "gen6n_ultra",
         "gen6n_ultra_win2022",
         "gen6n_pro",
-        "gen6n_pro_win2022"
+        "gen6n_pro_win2022",
+        "gen6n_small_win2022",
+        "gen6n_medium_win2022",
+        "gen6e_pro",
+        "gen6e_pro_win2022"
       ]
     },
     "StreamGroupLocationStatus":{
@@ -1659,6 +1677,31 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "VpcId":{
+      "type":"string",
+      "max":32,
+      "min":1
+    },
+    "VpcTransitConfiguration":{
+      "type":"structure",
+      "required":[
+        "VpcId",
+        "Ipv4CidrBlocks"
+      ],
+      "members":{
+        "VpcId":{"shape":"VpcId"},
+        "Ipv4CidrBlocks":{"shape":"Ipv4CidrBlockList"}
+      }
+    },
+    "VpcTransitConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "VpcId":{"shape":"VpcId"},
+        "Ipv4CidrBlocks":{"shape":"Ipv4CidrBlockList"},
+        "TransitGatewayId":{"shape":"String"},
+        "TransitGatewayResourceShareArn":{"shape":"String"}
+      }
     },
     "WebSdkProtocolUrl":{"type":"string"}
   }

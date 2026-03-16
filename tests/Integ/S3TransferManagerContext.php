@@ -19,7 +19,6 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\Assert;
-use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
 
 class S3TransferManagerContext implements Context, SnippetAcceptingContext
@@ -693,12 +692,20 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         };
 
         // To make sure transferFail is called
-        $testCase = new class extends TestCase {};
-        $transferListener2 = $testCase->getMockBuilder(
-            AbstractTransferListener::class
-        )->getMock();
-        $transferListener2->expects($testCase->once())->method('transferInitiated');
-        $transferListener2->expects($testCase->once())->method('transferFail');
+        $transferListener2 = new class extends AbstractTransferListener {
+            public int $initiatedCount = 0;
+            public int $failCount = 0;
+
+            public function transferInitiated(array $context): void
+            {
+                $this->initiatedCount++;
+            }
+
+            public function transferFail(array $context): void
+            {
+                $this->failCount++;
+            }
+        };
 
         try {
             $s3TransferManager->upload(
@@ -724,6 +731,8 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
                 "Transfer failed at part number {$partNumberFail} failed",
                 $exception->getMessage(),
             );
+            Assert::assertEquals(1, $transferListener2->initiatedCount, "transferInitiated should be called once");
+            Assert::assertEquals(1, $transferListener2->failCount, "transferFail should be called once");
         } catch (\Exception $e) {
             Assert::fail("Unexpected exception type: " . get_class($e) . " - " . $e->getMessage());
         } finally {

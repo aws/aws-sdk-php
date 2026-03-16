@@ -4300,6 +4300,7 @@
         "VpcSecurityGroups":{"shape":"VpcSecurityGroupMembershipList"},
         "HostedZoneId":{"shape":"String"},
         "StorageEncrypted":{"shape":"Boolean"},
+        "StorageEncryptionType":{"shape":"StorageEncryptionType"},
         "KmsKeyId":{"shape":"String"},
         "DbClusterResourceId":{"shape":"String"},
         "DBClusterArn":{"shape":"String"},
@@ -4383,10 +4384,12 @@
         "IAMDatabaseAuthenticationEnabled":{"shape":"Boolean"},
         "ClusterCreateTime":{"shape":"TStamp"},
         "StorageEncrypted":{"shape":"Boolean"},
+        "StorageEncryptionType":{"shape":"StorageEncryptionType"},
         "AllocatedStorage":{"shape":"Integer"},
         "EngineVersion":{"shape":"String"},
         "DBClusterArn":{"shape":"String"},
         "BackupRetentionPeriod":{"shape":"IntegerOptional"},
+        "PreferredBackupWindow":{"shape":"String"},
         "EngineMode":{"shape":"String"},
         "AvailabilityZones":{"shape":"AvailabilityZones"},
         "Port":{"shape":"Integer"},
@@ -4720,6 +4723,9 @@
         "SnapshotType":{"shape":"String"},
         "PercentProgress":{"shape":"Integer"},
         "StorageEncrypted":{"shape":"Boolean"},
+        "StorageEncryptionType":{"shape":"StorageEncryptionType"},
+        "BackupRetentionPeriod":{"shape":"IntegerOptional"},
+        "PreferredBackupWindow":{"shape":"String"},
         "KmsKeyId":{"shape":"String"},
         "DBClusterSnapshotArn":{"shape":"String"},
         "SourceDBClusterSnapshotArn":{"shape":"String"},
@@ -4900,6 +4906,7 @@
         "PubliclyAccessible":{"shape":"Boolean"},
         "StatusInfos":{"shape":"DBInstanceStatusInfoList"},
         "StorageType":{"shape":"String"},
+        "StorageEncryptionType":{"shape":"StorageEncryptionType"},
         "TdeCredentialArn":{"shape":"String"},
         "DbInstancePort":{"shape":"Integer"},
         "DBClusterIdentifier":{"shape":"String"},
@@ -4989,11 +4996,13 @@
         "OptionGroupName":{"shape":"String"},
         "TdeCredentialArn":{"shape":"String"},
         "Encrypted":{"shape":"Boolean"},
+        "StorageEncryptionType":{"shape":"StorageEncryptionType"},
         "StorageType":{"shape":"String"},
         "KmsKeyId":{"shape":"String"},
         "Timezone":{"shape":"String"},
         "IAMDatabaseAuthenticationEnabled":{"shape":"Boolean"},
         "BackupRetentionPeriod":{"shape":"IntegerOptional"},
+        "PreferredBackupWindow":{"shape":"String"},
         "DBInstanceAutomatedBackupsArn":{"shape":"String"},
         "DBInstanceAutomatedBackupsReplications":{"shape":"DBInstanceAutomatedBackupsReplicationList"},
         "BackupTarget":{"shape":"String"},
@@ -5672,6 +5681,9 @@
         "StorageType":{"shape":"String"},
         "TdeCredentialArn":{"shape":"String"},
         "Encrypted":{"shape":"Boolean"},
+        "StorageEncryptionType":{"shape":"StorageEncryptionType"},
+        "BackupRetentionPeriod":{"shape":"IntegerOptional"},
+        "PreferredBackupWindow":{"shape":"String"},
         "KmsKeyId":{"shape":"String"},
         "DBSnapshotArn":{"shape":"String"},
         "Timezone":{"shape":"String"},
@@ -7179,6 +7191,7 @@
         "EngineLifecycleSupport":{"shape":"String"},
         "DatabaseName":{"shape":"String"},
         "StorageEncrypted":{"shape":"BooleanOptional"},
+        "StorageEncryptionType":{"shape":"StorageEncryptionType"},
         "DeletionProtection":{"shape":"BooleanOptional"},
         "GlobalClusterMembers":{"shape":"GlobalClusterMemberList"},
         "Endpoint":{"shape":"String"},
@@ -9395,6 +9408,8 @@
         "EnablePerformanceInsights":{"shape":"BooleanOptional"},
         "PerformanceInsightsKMSKeyId":{"shape":"String"},
         "PerformanceInsightsRetentionPeriod":{"shape":"IntegerOptional"},
+        "BackupRetentionPeriod":{"shape":"IntegerOptional"},
+        "PreferredBackupWindow":{"shape":"String"},
         "EngineLifecycleSupport":{"shape":"String"},
         "TagSpecifications":{"shape":"TagSpecificationList"}
       }
@@ -9443,6 +9458,8 @@
         "EnablePerformanceInsights":{"shape":"BooleanOptional"},
         "PerformanceInsightsKMSKeyId":{"shape":"String"},
         "PerformanceInsightsRetentionPeriod":{"shape":"IntegerOptional"},
+        "BackupRetentionPeriod":{"shape":"IntegerOptional"},
+        "PreferredBackupWindow":{"shape":"String"},
         "EngineLifecycleSupport":{"shape":"String"},
         "TagSpecifications":{"shape":"TagSpecificationList"}
       }
@@ -9496,6 +9513,8 @@
         "CustomIamInstanceProfile":{"shape":"String"},
         "AllocatedStorage":{"shape":"IntegerOptional"},
         "DBClusterSnapshotIdentifier":{"shape":"String"},
+        "BackupRetentionPeriod":{"shape":"IntegerOptional"},
+        "PreferredBackupWindow":{"shape":"String"},
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
         "CACertificateIdentifier":{"shape":"String"},
         "EngineLifecycleSupport":{"shape":"String"},
@@ -9632,6 +9651,8 @@
         "BackupTarget":{"shape":"String"},
         "CustomIamInstanceProfile":{"shape":"String"},
         "AllocatedStorage":{"shape":"IntegerOptional"},
+        "BackupRetentionPeriod":{"shape":"IntegerOptional"},
+        "PreferredBackupWindow":{"shape":"String"},
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
         "CACertificateIdentifier":{"shape":"String"},
         "EngineLifecycleSupport":{"shape":"String"},
@@ -10001,6 +10022,14 @@
       "members":{
         "DBInstance":{"shape":"DBInstance"}
       }
+    },
+    "StorageEncryptionType":{
+      "type":"string",
+      "enum":[
+        "none",
+        "sse-kms",
+        "sse-rds"
+      ]
     },
     "StorageQuotaExceededFault":{
       "type":"structure",

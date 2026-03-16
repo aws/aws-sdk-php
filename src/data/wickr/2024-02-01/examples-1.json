@@ -863,6 +863,34 @@
         "title": "Get OIDC info - not configured"
       }
     ],
+    "GetOpentdfConfig": [
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "clientId": "client123",
+          "clientSecret": "secret456",
+          "domain": "https://api.sample.com",
+          "provider": "virtru"
+        },
+        "id": "example-1",
+        "title": "Get OpenTDF info successfully"
+      },
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "clientId": "",
+          "clientSecret": "",
+          "domain": "",
+          "provider": ""
+        },
+        "id": "example-2",
+        "title": "Get OpenTDF info - not configured"
+      }
+    ],
     "GetSecurityGroup": [
       {
         "input": {
@@ -1560,6 +1588,77 @@
         },
         "id": "example-3",
         "title": "Test OIDC config - invalid endpoint"
+      }
+    ],
+    "RegisterOpentdfConfig": [
+      {
+        "input": {
+          "clientId": "client123",
+          "clientSecret": "secret456",
+          "domain": "https://api.sample.com",
+          "networkId": "12345678",
+          "provider": "virtru"
+        },
+        "output": {
+          "clientId": "client123",
+          "clientSecret": "secret456",
+          "domain": "https://api.sample.com",
+          "provider": "virtru"
+        },
+        "id": "example-1",
+        "title": "Save OpenTDF config successfully"
+      },
+      {
+        "input": {
+          "clientId": "client123",
+          "clientSecret": "secret456",
+          "domain": "https://api.sample.com",
+          "dryRun": true,
+          "networkId": "12345678",
+          "provider": "virtru"
+        },
+        "output": {
+          "clientId": "client123",
+          "clientSecret": "secret456",
+          "domain": "https://api.sample.com",
+          "provider": "virtru"
+        },
+        "id": "example-2",
+        "title": "Dry run saving OpenTDF config"
+      },
+      {
+        "input": {
+          "clientId": "client123",
+          "clientSecret": "secret456",
+          "domain": "https://api.sample.com",
+          "dryRun": true,
+          "networkId": "12345678",
+          "provider": "virtru"
+        },
+        "id": "example-3",
+        "title": "Dry run saving OpenTDF config - failed test"
+      },
+      {
+        "input": {
+          "clientId": "client123",
+          "clientSecret": "secret456",
+          "domain": "https://api.sample.com",
+          "networkId": "12345678",
+          "provider": "invalid provider"
+        },
+        "id": "example-4",
+        "title": "Save OpenTDF config - invalid provider"
+      },
+      {
+        "input": {
+          "clientId": "client123",
+          "clientSecret": "secret456",
+          "domain": "https://api.sample.com",
+          "networkId": "99999999",
+          "provider": "virtru"
+        },
+        "id": "example-5",
+        "title": "Save OpenTDF config - network not found"
       }
     ],
     "UpdateBot": [

@@ -202,6 +202,7 @@
     "DescribeSubscribedWorkteam": "<p>Gets information about a work team provided by a vendor. It returns details about the subscription with a vendor in the Amazon Web Services Marketplace.</p>",
     "DescribeTrainingJob": "<p>Returns information about a training job. </p> <p>Some of the attributes below only appear if the training job successfully starts. If the training job fails, <code>TrainingJobStatus</code> is <code>Failed</code> and, depending on the <code>FailureReason</code>, attributes like <code>TrainingStartTime</code>, <code>TrainingTimeInSeconds</code>, <code>TrainingEndTime</code>, and <code>BillableTimeInSeconds</code> may not be present in the response.</p>",
     "DescribeTrainingPlan": "<p>Retrieves detailed information about a specific training plan.</p>",
+    "DescribeTrainingPlanExtensionHistory": "<p>Retrieves the extension history for a specified training plan. The response includes details about each extension, such as the offering ID, start and end dates, status, payment status, and cost information.</p>",
     "DescribeTransformJob": "<p>Returns information about a transform job.</p>",
     "DescribeTrial": "<p>Provides a list of a trial's properties.</p>",
     "DescribeTrialComponent": "<p>Provides a list of a trials component's properties.</p>",
@@ -212,6 +213,7 @@
     "DisableSagemakerServicecatalogPortfolio": "<p>Disables using Service Catalog in SageMaker. Service Catalog is used to create SageMaker projects.</p>",
     "DisassociateTrialComponent": "<p>Disassociates a trial component from a trial. This doesn't effect other trials the component is associated with. Before you can delete a component, you must disassociate the component from all trials it is associated with. To associate a trial component with a trial, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AssociateTrialComponent.html\">AssociateTrialComponent</a> API.</p> <p>To get a list of the trials a component is associated with, use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API. Specify <code>ExperimentTrialComponent</code> for the <code>Resource</code> parameter. The list appears in the response under <code>Results.TrialComponent.Parents</code>.</p>",
     "EnableSagemakerServicecatalogPortfolio": "<p>Enables using Service Catalog in SageMaker. Service Catalog is used to create SageMaker projects.</p>",
+    "ExtendTrainingPlan": "<p>Extends an existing training plan by purchasing an extension offering. This allows you to add additional compute capacity time to your training plan without creating a new plan or reconfiguring your workloads.</p> <p>To find available extension offerings, use the <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_SearchTrainingPlanOfferings.html\">SearchTrainingPlanOfferings</a> </code> API with the <code>TrainingPlanArn</code> parameter.</p> <p>To view the history of extensions for a training plan, use the <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeTrainingPlanExtensionHistory.html\">DescribeTrainingPlanExtensionHistory</a> </code> API.</p>",
     "GetDeviceFleetReport": "<p>Describes a fleet.</p>",
     "GetLineageGroupPolicy": "<p>The resource policy for the lineage group.</p>",
     "GetModelPackageGroupPolicy": "<p>Gets a resource policy that manages access for a model group. For information about resource policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_identity-vs-resource.html\">Identity-based policies and resource-based policies</a> in the <i>Amazon Web Services Identity and Access Management User Guide.</i>.</p>",
@@ -383,6 +385,12 @@
     "UpdateWorkteam": "<p>Updates an existing work team with new member definitions or description.</p>"
   },
   "shapes": {
+    "AbsoluteBorrowLimitResourceList": {
+      "base": null,
+      "refs": {
+        "ResourceSharingConfig$AbsoluteBorrowLimits": "<p>The absolute limits on compute resources that can be borrowed from idle compute. When specified, these limits define the maximum amount of specific resource types (such as accelerators, vCPU, or memory) that an entity can borrow, regardless of the percentage-based <code>BorrowLimit</code>.</p>"
+      }
+    },
     "AcceleratorPartitionConfig": {
       "base": "<p>Configuration for allocating accelerator partitions.</p>",
       "refs": {
@@ -426,8 +434,11 @@
     "AccountId": {
       "base": null,
       "refs": {
+        "CreateMlflowTrackingServerRequest$S3BucketOwnerAccountId": "<p>Expected Amazon Web Services account ID that owns the Amazon S3 bucket for artifact storage. Defaults to caller's account ID if not provided.</p>",
+        "DescribeMlflowTrackingServerResponse$S3BucketOwnerAccountId": "<p>Expected Amazon Web Services account ID that owns the Amazon S3 bucket for artifact storage.</p>",
         "LabelingJobForWorkteamSummary$WorkRequesterAccountId": "<p>The Amazon Web Services account ID of the account used to start the labeling job.</p>",
         "UnifiedStudioSettings$DomainAccountId": "<p>The ID of the Amazon Web Services account that has the Amazon SageMaker Unified Studio domain. The default value, if you don't specify an ID, is the ID of the account that has the Amazon SageMaker AI domain.</p>",
+        "UpdateMlflowTrackingServerRequest$S3BucketOwnerAccountId": "<p>The new expected Amazon Web Services account ID that owns the Amazon S3 bucket for artifact storage.</p>",
         "VpcOnlyTrustedAccounts$member": null
       }
     },
@@ -1623,6 +1634,12 @@
         "UltraServer$AvailabilityZone": "<p>The name of the Availability Zone where the UltraServer is provisioned.</p>"
       }
     },
+    "AvailabilityZoneId": {
+      "base": null,
+      "refs": {
+        "TrainingPlanExtension$AvailabilityZoneId": "<p>The Availability Zone ID of the extension.</p>"
+      }
+    },
     "AvailableInstanceCount": {
       "base": null,
       "refs": {
@@ -1978,6 +1995,7 @@
         "CreateAppRequest$RecoveryMode": "<p> Indicates whether the application is launched in recovery mode. </p>",
         "CreateEndpointConfigInput$EnableNetworkIsolation": "<p>Sets whether all model containers deployed to the endpoint are isolated. If they are, no inbound or outbound network calls can be made to or from the model containers.</p>",
         "CreateMlflowTrackingServerRequest$AutomaticModelRegistration": "<p>Whether to enable or disable automatic registration of new MLflow models to the SageMaker Model Registry. To enable automatic model registration, set this value to <code>True</code>. To disable automatic model registration, set this value to <code>False</code>. If not specified, <code>AutomaticModelRegistration</code> defaults to <code>False</code>.</p>",
+        "CreateMlflowTrackingServerRequest$S3BucketOwnerVerification": "<p>Enable Amazon S3 Ownership checks when interacting with Amazon S3 buckets from a SageMaker Managed MLflow Tracking Server. Defaults to <code>True</code> if not provided. </p>",
         "CreateModelInput$EnableNetworkIsolation": "<p>Isolates the model container. No inbound or outbound network calls can be made to or from the model container.</p>",
         "CreatePartnerAppRequest$EnableIamSessionBasedIdentity": "<p>When set to <code>TRUE</code>, the SageMaker Partner AI App sets the Amazon Web Services IAM session name or the authenticated IAM user as the identity of the SageMaker Partner AI App user.</p>",
         "CreatePartnerAppRequest$EnableAutoMinorVersionUpgrade": "<p>When set to <code>TRUE</code>, the SageMaker Partner AI App is automatically upgraded to the latest minor version during the next scheduled maintenance window, if one is available. Default is <code>FALSE</code>.</p>",
@@ -1987,6 +2005,7 @@
         "DescribeAppResponse$RecoveryMode": "<p> Indicates whether the application is launched in recovery mode. </p>",
         "DescribeEndpointConfigOutput$EnableNetworkIsolation": "<p>Indicates whether all model containers deployed to the endpoint are isolated. If they are, no inbound or outbound network calls can be made to or from the model containers.</p>",
         "DescribeMlflowTrackingServerResponse$AutomaticModelRegistration": "<p>Whether automatic registration of new MLflow models to the SageMaker Model Registry is enabled.</p>",
+        "DescribeMlflowTrackingServerResponse$S3BucketOwnerVerification": "<p>Whether Amazon S3 Bucket Ownership checks are enabled whenever the tracking server interacts with Amazon Amazon S3.</p>",
         "DescribeModelOutput$EnableNetworkIsolation": "<p>If <code>True</code>, no inbound or outbound network calls can be made to or from the model container.</p>",
         "DescribePartnerAppRequest$IncludeAvailableUpgrade": "<p>When set to <code>TRUE</code>, the response includes available upgrade information for the SageMaker Partner AI App. Default is <code>FALSE</code>.</p>",
         "DescribePartnerAppResponse$EnableIamSessionBasedIdentity": "<p>When set to <code>TRUE</code>, the SageMaker Partner AI App sets the Amazon Web Services IAM session name or the authenticated IAM user as the identity of the SageMaker Partner AI App user.</p>",
@@ -2023,6 +2042,7 @@
         "UpdateEndpointInput$RetainAllVariantProperties": "<p>When updating endpoint resources, enables or disables the retention of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_VariantProperty.html\">variant properties</a>, such as the instance count or the variant weight. To retain the variant properties of an endpoint when updating it, set <code>RetainAllVariantProperties</code> to <code>true</code>. To use the variant properties specified in a new <code>EndpointConfig</code> call when updating an endpoint, set <code>RetainAllVariantProperties</code> to <code>false</code>. The default is <code>false</code>.</p>",
         "UpdateEndpointInput$RetainDeploymentConfig": "<p>Specifies whether to reuse the last deployment configuration. The default value is false (the configuration is not reused).</p>",
         "UpdateMlflowTrackingServerRequest$AutomaticModelRegistration": "<p>Whether to enable or disable automatic registration of new MLflow models to the SageMaker Model Registry. To enable automatic model registration, set this value to <code>True</code>. To disable automatic model registration, set this value to <code>False</code>. If not specified, <code>AutomaticModelRegistration</code> defaults to <code>False</code> </p>",
+        "UpdateMlflowTrackingServerRequest$S3BucketOwnerVerification": "<p>Whether to enable or disable Amazon S3 Bucket Owenrship Verifaction whenever the MLflow Tracking Server interacts with Amazon Amazon S3.</p>",
         "UpdatePartnerAppRequest$EnableIamSessionBasedIdentity": "<p>When set to <code>TRUE</code>, the SageMaker Partner AI App sets the Amazon Web Services IAM session name or the authenticated IAM user as the identity of the SageMaker Partner AI App user.</p>",
         "UpdatePartnerAppRequest$EnableAutoMinorVersionUpgrade": "<p>When set to <code>TRUE</code>, the SageMaker Partner AI App is automatically upgraded to the latest minor version during the next scheduled maintenance window, if one is available.</p>"
       }
@@ -2729,6 +2749,13 @@
         "ClusterTieredStorageConfig$Mode": "<p>Specifies whether managed tier checkpointing is enabled or disabled for the HyperPod cluster. When set to <code>Enable</code>, the system installs a memory management daemon that provides disaggregated memory as a service for checkpoint storage. When set to <code>Disable</code>, the feature is turned off and the memory management daemon is removed from the cluster.</p>"
       }
     },
+    "ClusterDnsName": {
+      "base": null,
+      "refs": {
+        "ClusterFsxLustreConfig$DnsName": "<p>The DNS name of the Amazon FSx for Lustre file system.</p>",
+        "ClusterFsxOpenZfsConfig$DnsName": "<p>The DNS name of the Amazon FSx for OpenZFS file system.</p>"
+      }
+    },
     "ClusterEbsVolumeConfig": {
       "base": "<p>Defines the configuration for attaching an additional Amazon Elastic Block Store (EBS) volume to each instance of the SageMaker HyperPod cluster instance group. To learn more, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-release-notes.html#sagemaker-hyperpod-release-notes-20240620\">SageMaker HyperPod release notes: June 20, 2024</a>.</p>",
       "refs": {
@@ -2771,6 +2798,25 @@
       "base": "<p>A summary of an event in a HyperPod cluster.</p>",
       "refs": {
         "ClusterEventSummaries$member": null
+      }
+    },
+    "ClusterFsxLustreConfig": {
+      "base": "<p>Defines the configuration for attaching an Amazon FSx for Lustre file system to instances in a SageMaker HyperPod cluster instance group.</p>",
+      "refs": {
+        "ClusterInstanceStorageConfig$FsxLustreConfig": "<p>Defines the configuration for attaching an Amazon FSx for Lustre file system to the instances in the SageMaker HyperPod cluster instance group.</p>"
+      }
+    },
+    "ClusterFsxMountPath": {
+      "base": null,
+      "refs": {
+        "ClusterFsxLustreConfig$MountPath": "<p>The local path where the Amazon FSx for Lustre file system is mounted on instances.</p>",
+        "ClusterFsxOpenZfsConfig$MountPath": "<p>The local path where the Amazon FSx for OpenZFS file system is mounted on instances.</p>"
+      }
+    },
+    "ClusterFsxOpenZfsConfig": {
+      "base": "<p>Defines the configuration for attaching an Amazon FSx for OpenZFS file system to instances in a SageMaker HyperPod cluster instance group.</p>",
+      "refs": {
+        "ClusterInstanceStorageConfig$FsxOpenZfsConfig": "<p>Defines the configuration for attaching an Amazon FSx for OpenZFS file system to the instances in the SageMaker HyperPod cluster instance group.</p>"
       }
     },
     "ClusterInstanceCount": {
@@ -2983,6 +3029,12 @@
         "EventMetadata$Cluster": "<p>Metadata specific to cluster-level events.</p>"
       }
     },
+    "ClusterMountName": {
+      "base": null,
+      "refs": {
+        "ClusterFsxLustreConfig$MountName": "<p>The mount name of the Amazon FSx for Lustre file system.</p>"
+      }
+    },
     "ClusterName": {
       "base": null,
       "refs": {
@@ -3110,14 +3162,34 @@
     "ClusterOrchestrator": {
       "base": "<p>The type of orchestrator used for the SageMaker HyperPod cluster.</p>",
       "refs": {
-        "CreateClusterRequest$Orchestrator": "<p>The type of orchestrator to use for the SageMaker HyperPod cluster. Currently, the only supported value is <code>\"eks\"</code>, which is to use an Amazon Elastic Kubernetes Service cluster as the orchestrator.</p>",
-        "DescribeClusterResponse$Orchestrator": "<p>The type of orchestrator used for the SageMaker HyperPod cluster. </p>"
+        "CreateClusterRequest$Orchestrator": "<p>The type of orchestrator to use for the SageMaker HyperPod cluster. Currently, supported values are <code>\"Eks\"</code> and <code>\"Slurm\"</code>, which is to use an Amazon Elastic Kubernetes Service or Slurm cluster as the orchestrator.</p> <note> <p>If you specify the <code>Orchestrator</code> field, you must provide exactly one orchestrator configuration: either <code>Eks</code> or <code>Slurm</code>. Specifying both or providing an empty configuration returns a validation error.</p> </note>",
+        "DescribeClusterResponse$Orchestrator": "<p>The type of orchestrator used for the SageMaker HyperPod cluster. </p>",
+        "UpdateClusterRequest$Orchestrator": null
       }
     },
     "ClusterOrchestratorEksConfig": {
       "base": "<p>The configuration settings for the Amazon EKS cluster used as the orchestrator for the SageMaker HyperPod cluster.</p>",
       "refs": {
         "ClusterOrchestrator$Eks": "<p>The Amazon EKS cluster used as the orchestrator for the SageMaker HyperPod cluster.</p>"
+      }
+    },
+    "ClusterOrchestratorSlurmConfig": {
+      "base": "<p>The configuration settings for the Slurm orchestrator used with the SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "ClusterOrchestrator$Slurm": "<p>The Slurm orchestrator configuration for the SageMaker HyperPod cluster.</p>"
+      }
+    },
+    "ClusterPartitionName": {
+      "base": null,
+      "refs": {
+        "ClusterPartitionNames$member": null
+      }
+    },
+    "ClusterPartitionNames": {
+      "base": null,
+      "refs": {
+        "ClusterSlurmConfig$PartitionNames": "<p>The list of Slurm partition names that the instance group belongs to.</p>",
+        "ClusterSlurmConfigDetails$PartitionNames": "<p>The list of Slurm partition names that the instance group belongs to.</p>"
       }
     },
     "ClusterPrivateDnsHostname": {
@@ -3200,6 +3272,31 @@
       "base": null,
       "refs": {
         "PriorityClass$Name": "<p>Name of the priority class.</p>"
+      }
+    },
+    "ClusterSlurmConfig": {
+      "base": "<p>The Slurm configuration for an instance group in a SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "ClusterInstanceGroupSpecification$SlurmConfig": "<p>Specifies the Slurm configuration for the instance group.</p>"
+      }
+    },
+    "ClusterSlurmConfigDetails": {
+      "base": "<p>The Slurm configuration details for an instance group in a SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "ClusterInstanceGroupDetails$SlurmConfig": "<p>The Slurm configuration for the instance group.</p>"
+      }
+    },
+    "ClusterSlurmConfigStrategy": {
+      "base": null,
+      "refs": {
+        "ClusterOrchestratorSlurmConfig$SlurmConfigStrategy": "<p>The strategy for managing partitions for the Slurm configuration. Valid values are <code>Managed</code>, <code>Overwrite</code>, and <code>Merge</code>.</p>"
+      }
+    },
+    "ClusterSlurmNodeType": {
+      "base": null,
+      "refs": {
+        "ClusterSlurmConfig$NodeType": "<p>The type of Slurm node for the instance group. Valid values are <code>Controller</code>, <code>Worker</code>, and <code>Login</code>.</p>",
+        "ClusterSlurmConfigDetails$NodeType": "<p>The type of Slurm node for the instance group. Valid values are <code>Controller</code>, <code>Worker</code>, and <code>Login</code>.</p>"
       }
     },
     "ClusterSortBy": {
@@ -3488,6 +3585,7 @@
     "ComputeQuotaResourceConfig": {
       "base": "<p>Configuration of the resources used for the compute allocation definition.</p>",
       "refs": {
+        "AbsoluteBorrowLimitResourceList$member": null,
         "ComputeQuotaResourceConfigList$member": null
       }
     },
@@ -4392,6 +4490,8 @@
       "base": null,
       "refs": {
         "DescribeTrainingPlanResponse$CurrencyCode": "<p>The currency code for the upfront fee (e.g., USD).</p>",
+        "TrainingPlanExtension$CurrencyCode": "<p>The currency code for the upfront fee (e.g., USD).</p>",
+        "TrainingPlanExtensionOffering$CurrencyCode": "<p>The currency code for the upfront fee (e.g., USD).</p>",
         "TrainingPlanOffering$CurrencyCode": "<p>The currency code for the upfront fee (e.g., USD).</p>",
         "TrainingPlanSummary$CurrencyCode": "<p>The currency code for the upfront fee (e.g., USD).</p>"
       }
@@ -5585,6 +5685,14 @@
       "refs": {}
     },
     "DescribeTrainingJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTrainingPlanExtensionHistoryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeTrainingPlanExtensionHistoryResponse": {
       "base": null,
       "refs": {}
     },
@@ -7077,6 +7185,14 @@
         "DescribeEndpointOutput$ExplainerConfig": "<p>The configuration parameters for an explainer.</p>"
       }
     },
+    "ExtendTrainingPlanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ExtendTrainingPlanResponse": {
+      "base": null,
+      "refs": {}
+    },
     "FSxLustreConfig": {
       "base": "<p>Configuration settings for an Amazon FSx for Lustre file system to be used with the cluster.</p>",
       "refs": {
@@ -8503,6 +8619,12 @@
       "base": null,
       "refs": {
         "CanvasAppSettings$IdentityProviderOAuthSettings": "<p>The settings for connecting to an external data source with OAuth.</p>"
+      }
+    },
+    "IdleResourceSharing": {
+      "base": null,
+      "refs": {
+        "SchedulerConfig$IdleResourceSharing": "<p>Configuration for sharing idle compute resources across entities in the cluster. When enabled, unallocated resources are automatically calculated and made available for entities to borrow. </p>"
       }
     },
     "IdleSettings": {
@@ -10808,6 +10930,7 @@
       "base": null,
       "refs": {
         "CreateHubContentPresignedUrlsRequest$MaxResults": "<p>The maximum number of presigned URLs to return in the response. Default value is 100. Large models may contain hundreds of files, requiring pagination to retrieve all URLs.</p>",
+        "DescribeTrainingPlanExtensionHistoryRequest$MaxResults": "<p>The maximum number of extensions to return in the response.</p>",
         "ListActionsRequest$MaxResults": "<p>The maximum number of actions to return in the response. The default value is 10.</p>",
         "ListAlgorithmsInput$MaxResults": "<p>The maximum number of algorithms to return in the response.</p>",
         "ListAliasesRequest$MaxResults": "<p>The maximum number of aliases to return.</p>",
@@ -12639,6 +12762,8 @@
         "DescribeEdgeDeploymentPlanResponse$NextToken": "<p>Token to use when calling the next set of stages in the edge deployment plan.</p>",
         "DescribeFeatureGroupRequest$NextToken": "<p>A token to resume pagination of the list of <code>Features</code> (<code>FeatureDefinitions</code>). 2,500 <code>Features</code> are returned by default.</p>",
         "DescribeFeatureGroupResponse$NextToken": "<p>A token to resume pagination of the list of <code>Features</code> (<code>FeatureDefinitions</code>).</p>",
+        "DescribeTrainingPlanExtensionHistoryRequest$NextToken": "<p>A token to continue pagination if more results are available.</p>",
+        "DescribeTrainingPlanExtensionHistoryResponse$NextToken": "<p>A token to continue pagination if more results are available.</p>",
         "ListActionsRequest$NextToken": "<p>If the previous call to <code>ListActions</code> didn't return the full set of actions, the call returns a token for getting the next set of actions.</p>",
         "ListActionsResponse$NextToken": "<p>A token for getting the next set of actions, if there are any.</p>",
         "ListAlgorithmsInput$NextToken": "<p>If the response to a previous <code>ListAlgorithms</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of algorithms, use the token in the next request.</p>",
@@ -14328,7 +14453,7 @@
     "ProductionVariantInferenceAmiVersion": {
       "base": null,
       "refs": {
-        "ProductionVariant$InferenceAmiVersion": "<p>Specifies an option from a collection of preconfigured Amazon Machine Image (AMI) images. Each image is configured by Amazon Web Services with a set of software and driver versions. Amazon Web Services optimizes these configurations for different machine learning workloads.</p> <p>By selecting an AMI version, you can ensure that your inference environment is compatible with specific software requirements, such as CUDA driver versions, Linux kernel versions, or Amazon Web Services Neuron driver versions.</p> <p>The AMI version names, and their configurations, are the following:</p> <dl> <dt>al2-ami-sagemaker-inference-gpu-2</dt> <dd> <ul> <li> <p>Accelerator: GPU</p> </li> <li> <p>NVIDIA driver version: 535</p> </li> <li> <p>CUDA version: 12.2</p> </li> </ul> </dd> <dt>al2-ami-sagemaker-inference-gpu-2-1</dt> <dd> <ul> <li> <p>Accelerator: GPU</p> </li> <li> <p>NVIDIA driver version: 535</p> </li> <li> <p>CUDA version: 12.2</p> </li> <li> <p>NVIDIA Container Toolkit with disabled CUDA-compat mounting</p> </li> </ul> </dd> <dt>al2-ami-sagemaker-inference-gpu-3-1</dt> <dd> <ul> <li> <p>Accelerator: GPU</p> </li> <li> <p>NVIDIA driver version: 550</p> </li> <li> <p>CUDA version: 12.4</p> </li> <li> <p>NVIDIA Container Toolkit with disabled CUDA-compat mounting</p> </li> </ul> </dd> <dt>al2-ami-sagemaker-inference-neuron-2</dt> <dd> <ul> <li> <p>Accelerator: Inferentia2 and Trainium</p> </li> <li> <p>Neuron driver version: 2.19</p> </li> </ul> </dd> </dl>"
+        "ProductionVariant$InferenceAmiVersion": "<p>Specifies an option from a collection of preconfigured Amazon Machine Image (AMI) images. Each image is configured by Amazon Web Services with a set of software and driver versions. Amazon Web Services optimizes these configurations for different machine learning workloads.</p> <p>By selecting an AMI version, you can ensure that your inference environment is compatible with specific software requirements, such as CUDA driver versions, Linux kernel versions, or Amazon Web Services Neuron driver versions.</p> <p>The AMI version names, and their configurations, are the following:</p> <dl> <dt>al2-ami-sagemaker-inference-gpu-2</dt> <dd> <ul> <li> <p>Accelerator: GPU</p> </li> <li> <p>NVIDIA driver version: 535</p> </li> <li> <p>CUDA version: 12.2</p> </li> </ul> </dd> <dt>al2-ami-sagemaker-inference-gpu-2-1</dt> <dd> <ul> <li> <p>Accelerator: GPU</p> </li> <li> <p>NVIDIA driver version: 535</p> </li> <li> <p>CUDA version: 12.2</p> </li> <li> <p>NVIDIA Container Toolkit with disabled CUDA-compat mounting</p> </li> </ul> </dd> <dt>al2-ami-sagemaker-inference-gpu-3-1</dt> <dd> <ul> <li> <p>Accelerator: GPU</p> </li> <li> <p>NVIDIA driver version: 550</p> </li> <li> <p>CUDA version: 12.4</p> </li> <li> <p>NVIDIA Container Toolkit with disabled CUDA-compat mounting</p> </li> </ul> </dd> <dt>al2023-ami-sagemaker-inference-gpu-4-1</dt> <dd> <ul> <li> <p>Accelerator: GPU</p> </li> <li> <p>NVIDIA driver version: 580</p> </li> <li> <p>CUDA version: 13.0</p> </li> <li> <p>NVIDIA Container Toolkit with disabled CUDA-compat mounting</p> </li> </ul> </dd> <dt>al2-ami-sagemaker-inference-neuron-2</dt> <dd> <ul> <li> <p>Accelerator: Inferentia2 and Trainium</p> </li> <li> <p>Neuron driver version: 2.19</p> </li> </ul> </dd> </dl>"
       }
     },
     "ProductionVariantInstanceType": {
@@ -15859,6 +15984,12 @@
         "UpdateClusterSchedulerConfigRequest$SchedulerConfig": "<p>Cluster policy configuration.</p>"
       }
     },
+    "SchedulerConfigComponent": {
+      "base": null,
+      "refs": {
+        "StatusDetailsMap$key": null
+      }
+    },
     "SchedulerResourceStatus": {
       "base": null,
       "refs": {
@@ -15867,7 +15998,8 @@
         "DescribeClusterSchedulerConfigResponse$Status": "<p>Status of the cluster policy.</p>",
         "DescribeComputeQuotaResponse$Status": "<p>Status of the compute allocation definition.</p>",
         "ListClusterSchedulerConfigsRequest$Status": "<p>Filter for status.</p>",
-        "ListComputeQuotasRequest$Status": "<p>Filter for status.</p>"
+        "ListComputeQuotasRequest$Status": "<p>Filter for status.</p>",
+        "StatusDetailsMap$value": null
       }
     },
     "Scope": {
@@ -16607,6 +16739,12 @@
         "ProfilerRuleEvaluationStatus$StatusDetails": "<p>Details from the rule evaluation.</p>"
       }
     },
+    "StatusDetailsMap": {
+      "base": null,
+      "refs": {
+        "DescribeClusterSchedulerConfigResponse$StatusDetails": "<p>Additional details about the status of the cluster policy. This field provides context when the policy is in a non-active state, such as during creation, updates, or if failures occur.</p>"
+      }
+    },
     "StatusMessage": {
       "base": null,
       "refs": {
@@ -16846,6 +16984,7 @@
         "S3ModelDataSource$ManifestEtag": "<p>The ETag associated with Manifest S3 URI.</p>",
         "ScheduleConfig$DataAnalysisStartTime": "<p>Sets the start time for a monitoring job window. Express this time as an offset to the times that you schedule your monitoring jobs to run. You schedule monitoring jobs with the <code>ScheduleExpression</code> parameter. Specify this offset in ISO 8601 duration format. For example, if you want to monitor the five hours of data in your dataset that precede the start of each monitoring job, you would specify: <code>\"-PT5H\"</code>.</p> <p>The start time that you specify must not precede the end time that you specify by more than 24 hours. You specify the end time with the <code>DataAnalysisEndTime</code> parameter.</p> <p>If you set <code>ScheduleExpression</code> to <code>NOW</code>, this parameter is required.</p>",
         "ScheduleConfig$DataAnalysisEndTime": "<p>Sets the end time for a monitoring job window. Express this time as an offset to the times that you schedule your monitoring jobs to run. You schedule monitoring jobs with the <code>ScheduleExpression</code> parameter. Specify this offset in ISO 8601 duration format. For example, if you want to end the window one hour before the start of each monitoring job, you would specify: <code>\"-PT1H\"</code>.</p> <p>The end time that you specify must not follow the start time that you specify by more than 24 hours. You specify the start time with the <code>DataAnalysisStartTime</code> parameter.</p> <p>If you set <code>ScheduleExpression</code> to <code>NOW</code>, this parameter is required.</p>",
+        "SearchTrainingPlanOfferingsRequest$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of an existing training plan to search for extension offerings. When specified, the API returns extension offerings that can be used to extend the specified training plan.</p>",
         "SourceAlgorithm$ModelDataETag": "<p>The ETag associated with Model Data URL.</p>",
         "SubscribedWorkteam$SellerName": "<p>The name of the vendor in the Amazon Marketplace.</p>",
         "SubscribedWorkteam$ListingId": "<p>Marketplace product listing ID.</p>",
@@ -16963,6 +17102,12 @@
         "RegisterModelStepMetadata$Arn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
         "SelectedStep$StepName": "<p>The name of the pipeline step.</p>",
         "SendPipelineExecutionStepFailureRequest$FailureReason": "<p>A message describing why the step failed.</p>",
+        "TrainingPlanExtension$Status": "<p>The current status of the extension (e.g., Pending, Active, Scheduled, Failed, Expired).</p>",
+        "TrainingPlanExtension$PaymentStatus": "<p>The payment processing status of the extension.</p>",
+        "TrainingPlanExtension$AvailabilityZone": "<p>The Availability Zone of the extension.</p>",
+        "TrainingPlanExtension$UpfrontFee": "<p>The upfront fee for the extension.</p>",
+        "TrainingPlanExtensionOffering$AvailabilityZone": "<p>The Availability Zone for this extension offering.</p>",
+        "TrainingPlanExtensionOffering$UpfrontFee": "<p>The upfront fee for this extension offering.</p>",
         "TrainingPlanOffering$UpfrontFee": "<p>The upfront fee for this training plan offering.</p>",
         "TrainingPlanSummary$UpfrontFee": "<p>The upfront fee for the training plan.</p>"
       }
@@ -17966,6 +18111,8 @@
         "QueryFilters$ModifiedAfter": "<p>Filter the lineage entities connected to the <code>StartArn</code>(s) after the last modified date.</p>",
         "ReservedCapacityOffering$StartTime": "<p>The start time of the reserved capacity offering.</p>",
         "ReservedCapacityOffering$EndTime": "<p>The end time of the reserved capacity offering.</p>",
+        "ReservedCapacityOffering$ExtensionStartTime": "<p>The start time of the extension for the reserved capacity offering.</p>",
+        "ReservedCapacityOffering$ExtensionEndTime": "<p>The end time of the extension for the reserved capacity offering.</p>",
         "ReservedCapacitySummary$StartTime": "<p>The start time of the reserved capacity.</p>",
         "ReservedCapacitySummary$EndTime": "<p>The end time of the reserved capacity.</p>",
         "ResourceCatalog$CreationTime": "<p> The time the <code>ResourceCatalog</code> was created. </p>",
@@ -17984,6 +18131,11 @@
         "TrainingJobSummary$CreationTime": "<p>A timestamp that shows when the training job was created.</p>",
         "TrainingJobSummary$TrainingEndTime": "<p>A timestamp that shows when the training job ended. This field is set only if the training job has one of the terminal statuses (<code>Completed</code>, <code>Failed</code>, or <code>Stopped</code>). </p>",
         "TrainingJobSummary$LastModifiedTime": "<p> Timestamp when the training job was last modified. </p>",
+        "TrainingPlanExtension$ExtendedAt": "<p>The timestamp when the extension was created.</p>",
+        "TrainingPlanExtension$StartDate": "<p>The start date of the extension period.</p>",
+        "TrainingPlanExtension$EndDate": "<p>The end date of the extension period.</p>",
+        "TrainingPlanExtensionOffering$StartDate": "<p>The start date of this extension offering.</p>",
+        "TrainingPlanExtensionOffering$EndDate": "<p>The end date of this extension offering.</p>",
         "TrainingPlanOffering$RequestedStartTimeAfter": "<p>The requested start time that the user specified when searching for the training plan offering.</p>",
         "TrainingPlanOffering$RequestedEndTimeBefore": "<p>The requested end time that the user specified when searching for the training plan offering.</p>",
         "TrainingPlanSummary$StartTime": "<p>The start time of the training plan.</p>",
@@ -18355,6 +18507,7 @@
         "ClusterRestrictedInstanceGroupDetails$TrainingPlanArn": "<p>The Amazon Resource Name (ARN) of the training plan to filter clusters by. For more information about reserving GPU capacity for your SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
         "ClusterRestrictedInstanceGroupSpecification$TrainingPlanArn": "<p>The Amazon Resource Name (ARN) of the training plan to filter clusters by. For more information about reserving GPU capacity for your SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
         "CreateTrainingPlanResponse$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the created training plan.</p>",
+        "DescribeTrainingPlanExtensionHistoryRequest$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the training plan to retrieve extension history for.</p>",
         "DescribeTrainingPlanResponse$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the training plan.</p>",
         "ListClustersRequest$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the training plan to filter clusters by. For more information about reserving GPU capacity for your SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
         "ListTrainingJobsRequest$TrainingPlanArnEquals": "<p>The Amazon Resource Name (ARN); of the training plan to filter training jobs by. For more information about reserving GPU capacity for your SageMaker training jobs using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
@@ -18390,6 +18543,46 @@
         "DescribeTrainingPlanResponse$DurationMinutes": "<p>The additional minutes beyond whole hours in the total duration for this training plan.</p>",
         "TrainingPlanOffering$DurationMinutes": "<p>The additional minutes beyond whole hours in the total duration for this training plan offering.</p>",
         "TrainingPlanSummary$DurationMinutes": "<p>The additional minutes beyond whole hours in the total duration for this training plan.</p>"
+      }
+    },
+    "TrainingPlanExtension": {
+      "base": "<p>Details about an extension to a training plan, including the offering ID, dates, status, and cost information.</p>",
+      "refs": {
+        "TrainingPlanExtensions$member": null
+      }
+    },
+    "TrainingPlanExtensionDurationHours": {
+      "base": null,
+      "refs": {
+        "TrainingPlanExtension$DurationHours": "<p>The duration of the extension in hours.</p>",
+        "TrainingPlanExtensionOffering$DurationHours": "<p>The duration of this extension offering in hours.</p>"
+      }
+    },
+    "TrainingPlanExtensionOffering": {
+      "base": "<p>Details about an available extension offering for a training plan. Use the offering ID with the <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ExtendTrainingPlan.html\">ExtendTrainingPlan</a> </code> API to extend a training plan.</p>",
+      "refs": {
+        "TrainingPlanExtensionOfferings$member": null
+      }
+    },
+    "TrainingPlanExtensionOfferingId": {
+      "base": null,
+      "refs": {
+        "ExtendTrainingPlanRequest$TrainingPlanExtensionOfferingId": "<p>The unique identifier of the extension offering to purchase. You can retrieve this ID from the <code>TrainingPlanExtensionOfferings</code> in the response of the <code>SearchTrainingPlanOfferings</code> API.</p>",
+        "TrainingPlanExtension$TrainingPlanExtensionOfferingId": "<p>The unique identifier of the extension offering that was used to create this extension.</p>",
+        "TrainingPlanExtensionOffering$TrainingPlanExtensionOfferingId": "<p>The unique identifier for this extension offering.</p>"
+      }
+    },
+    "TrainingPlanExtensionOfferings": {
+      "base": null,
+      "refs": {
+        "SearchTrainingPlanOfferingsResponse$TrainingPlanExtensionOfferings": "<p>A list of extension offerings available for the specified training plan. These offerings can be used with the <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ExtendTrainingPlan.html\">ExtendTrainingPlan</a> </code> API to extend an existing training plan.</p>"
+      }
+    },
+    "TrainingPlanExtensions": {
+      "base": null,
+      "refs": {
+        "DescribeTrainingPlanExtensionHistoryResponse$TrainingPlanExtensions": "<p>A list of extensions for the specified training plan.</p>",
+        "ExtendTrainingPlanResponse$TrainingPlanExtensions": "<p>The list of extensions for the training plan, including the newly created extension.</p>"
       }
     },
     "TrainingPlanFilter": {

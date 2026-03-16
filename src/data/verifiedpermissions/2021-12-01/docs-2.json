@@ -500,6 +500,37 @@
         "CedarTagValue$duration": "<p>A Cedar tag value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-duration\">duration</a> type.</p> <p>Example: <code>{\"duration\": \"-1d12h\"}</code> </p>"
       }
     },
+    "EncryptionContext": {
+      "base": null,
+      "refs": {
+        "KmsEncryptionSettings$encryptionContext": "<p>User-defined, additional context to be added to encryption processes. </p>",
+        "KmsEncryptionState$encryptionContext": "<p>User-defined, additional context added to encryption processes. </p>"
+      }
+    },
+    "EncryptionContextKey": {
+      "base": null,
+      "refs": {
+        "EncryptionContext$key": null
+      }
+    },
+    "EncryptionContextValue": {
+      "base": null,
+      "refs": {
+        "EncryptionContext$value": null
+      }
+    },
+    "EncryptionSettings": {
+      "base": "<p>A structure that contains the encryption configuration for the policy store and child resources. </p> <p>This data type is used as a request parameter in the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_CreatePolicyStore.html\">CreatePolicyStore</a> operation.</p>",
+      "refs": {
+        "CreatePolicyStoreInput$encryptionSettings": "<p>Specifies the encryption settings used to encrypt the policy store and their child resources. Allows for the ability to use a customer owned KMS key for encryption of data.</p> <p>This is an optional field to be used when providing a customer-managed KMS key for encryption.</p>"
+      }
+    },
+    "EncryptionState": {
+      "base": "<p>A structure that contains the encryption configuration for the policy store and child resources.</p> <p>This data type is used as a response parameter field for the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_GetPolicyStore.html\">GetPolicyStore</a> operation.</p>",
+      "refs": {
+        "GetPolicyStoreOutput$encryptionState": "<p>A structure that contains the encryption configuration for the policy store.</p>"
+      }
+    },
     "EntitiesDefinition": {
       "base": "<p>Contains the list of entities to be considered during an authorization request. This includes all principals, resources, and actions required to successfully evaluate the request.</p> <p>This data type is used as a field in the response parameter for the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html\">IsAuthorized</a> and <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html\">IsAuthorizedWithToken</a> operations.</p>",
       "refs": {
@@ -758,6 +789,25 @@
         "OpenIdConnectConfigurationDetail$issuer": "<p>The issuer URL of an OIDC identity provider. This URL must have an OIDC discovery endpoint at the path <code>.well-known/openid-configuration</code>.</p>",
         "OpenIdConnectConfigurationItem$issuer": "<p>The issuer URL of an OIDC identity provider. This URL must have an OIDC discovery endpoint at the path <code>.well-known/openid-configuration</code>.</p>",
         "UpdateOpenIdConnectConfiguration$issuer": "<p>The issuer URL of an OIDC identity provider. This URL must have an OIDC discovery endpoint at the path <code>.well-known/openid-configuration</code>.</p>"
+      }
+    },
+    "KmsEncryptionSettings": {
+      "base": "<p>A structure that contains the KMS encryption configuration for the policy store. The encryption settings determine what customer-managed KMS key will be used to encrypt all resources within the policy store, and any user-defined context key-value pairs to append during encryption processes.</p> <p>This data type is used as a field that is part of the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_EncryptionSettings.html\">EncryptionSettings</a> type.</p>",
+      "refs": {
+        "EncryptionSettings$kmsEncryptionSettings": "<p>The KMS encryption settings for this policy store to encrypt data with. It will contain the customer-managed KMS key, and a user-defined encryption context. </p>"
+      }
+    },
+    "KmsEncryptionState": {
+      "base": "<p>A structure that contains the KMS encryption configuration for the policy store. The encryption state shows what customer-managed KMS key is being used to encrypt all resources within the policy store, and any user-defined context key-value pairs added during encryption processes.</p> <p>This data type is used as a field that is part of the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_EncryptionState.html\">EncryptionState</a> type.</p>",
+      "refs": {
+        "EncryptionState$kmsEncryptionState": "<p>The KMS encryption settings currently configured for this policy store to encrypt data with. It contains the customer-managed KMS key, and a user-defined encryption context. </p>"
+      }
+    },
+    "KmsKey": {
+      "base": null,
+      "refs": {
+        "KmsEncryptionSettings$key": "<p>The customer-managed KMS key <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a>, alias or ID to be used for encryption processes. </p> <p>Users can provide the full KMS key ARN, a KMS key alias, or a KMS key ID, but it will be mapped to the full KMS key ARN after policy store creation, and referenced when encrypting child resources. </p>",
+        "KmsEncryptionState$key": "<p>The customer-managed KMS key <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> being used for encryption processes. </p>"
       }
     },
     "ListIdentitySourcesInput": {
@@ -1399,6 +1449,13 @@
     "TooManyTagsException": {
       "base": "<p>No more tags be added because the limit (50) has been reached. To add new tags, use <code>UntagResource</code> to remove existing tags.</p>",
       "refs": {}
+    },
+    "Unit": {
+      "base": null,
+      "refs": {
+        "EncryptionSettings$default": "<p>This is the default encryption setting. The policy store uses an Amazon Web Services owned key for encrypting data.</p>",
+        "EncryptionState$default": "<p>This is the default encryption state. The policy store is encrypted using an Amazon Web Services owned key.</p>"
+      }
     },
     "UntagResourceInput": {
       "base": null,

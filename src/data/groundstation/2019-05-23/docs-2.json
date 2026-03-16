@@ -2,10 +2,10 @@
   "version": "2.0",
   "service": "<p>Welcome to the AWS Ground Station API Reference. AWS Ground Station is a fully managed service that enables you to control satellite communications, downlink and process satellite data, and scale your satellite operations efficiently and cost-effectively without having to build or manage your own ground station infrastructure.</p>",
   "operations": {
-    "CancelContact": "<p>Cancels a contact with a specified contact ID.</p>",
+    "CancelContact": "<p>Cancels or stops a contact with a specified contact ID based on its position in the <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/contacts.lifecycle.html\">contact lifecycle</a>.</p> <p>For contacts that:</p> <ul> <li> <p>Have yet to start, the contact will be cancelled.</p> </li> <li> <p>Have started but have yet to finish, the contact will be stopped.</p> </li> </ul>",
     "CreateConfig": "<p>Creates a <code>Config</code> with the specified <code>configData</code> parameters.</p> <p>Only one type of <code>configData</code> can be specified.</p>",
-    "CreateDataflowEndpointGroup": "<p>Creates a <code>DataflowEndpoint</code> group containing the specified list of <code>DataflowEndpoint</code> objects.</p> <p>The <code>name</code> field in each endpoint is used in your mission profile <code>DataflowEndpointConfig</code> to specify which endpoints to use during a contact.</p> <p>When a contact uses multiple <code>DataflowEndpointConfig</code> objects, each <code>Config</code> must match a <code>DataflowEndpoint</code> in the same group.</p>",
-    "CreateDataflowEndpointGroupV2": "<p>Creates a <code>DataflowEndpointGroupV2</code> containing the specified list of <code>DataflowEndpoint</code> objects.</p> <p>The <code>name</code> field in each endpoint is used in your mission profile <code>DataflowEndpointConfig</code> to specify which endpoints to use during a contact.</p> <p>When a contact uses multiple <code>DataflowEndpointConfig</code> objects, each <code>Config</code> must match a <code>DataflowEndpoint</code> in the same group.</p>",
+    "CreateDataflowEndpointGroup": "<p>Creates a <code>DataflowEndpoint</code> group containing the specified list of <code> DataflowEndpoint</code> objects.</p> <p>The <code>name</code> field in each endpoint is used in your mission profile <code> DataflowEndpointConfig</code> to specify which endpoints to use during a contact.</p> <p>When a contact uses multiple <code>DataflowEndpointConfig</code> objects, each <code> Config</code> must match a <code>DataflowEndpoint</code> in the same group.</p>",
+    "CreateDataflowEndpointGroupV2": "<p>Creates a <code>DataflowEndpoint</code> group containing the specified list of Ground Station Agent based endpoints.</p> <p>The <code>name</code> field in each endpoint is used in your mission profile <code> DataflowEndpointConfig</code> to specify which endpoints to use during a contact.</p> <p>When a contact uses multiple <code>DataflowEndpointConfig</code> objects, each <code> Config</code> must match a <code>DataflowEndpoint</code> in the same group.</p>",
     "CreateEphemeris": "<p>Create an ephemeris with your specified <a>EphemerisData</a>.</p>",
     "CreateMissionProfile": "<p>Creates a mission profile.</p> <p> <code>dataflowEdges</code> is a list of lists of strings. Each lower level list of strings has two elements: a <i>from</i> ARN and a <i>to</i> ARN.</p>",
     "DeleteConfig": "<p>Deletes a <code>Config</code>.</p>",
@@ -22,7 +22,7 @@
     "GetMissionProfile": "<p>Returns a mission profile.</p>",
     "GetSatellite": "<p>Returns a satellite.</p>",
     "ListConfigs": "<p>Returns a list of <code>Config</code> objects.</p>",
-    "ListContacts": "<p>Returns a list of contacts.</p> <p>If <code>statusList</code> contains AVAILABLE, the request must include <code>groundStation</code>, <code>missionprofileArn</code>, and <code>satelliteArn</code>. </p>",
+    "ListContacts": "<p>Returns a list of contacts.</p> <p>If <code>statusList</code> contains AVAILABLE, the request must include <code> groundStation</code>, <code>missionprofileArn</code>, and <code>satelliteArn</code>. </p>",
     "ListDataflowEndpointGroups": "<p>Returns a list of <code>DataflowEndpoint</code> groups.</p>",
     "ListEphemerides": "<p>List your existing ephemerides.</p>",
     "ListGroundStations": "<p>Returns a list of ground stations. </p>",
@@ -198,7 +198,7 @@
       }
     },
     "CancelContactRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "CapabilityArn": {
@@ -269,10 +269,13 @@
         "ConfigIdResponse$configArn": "<p>ARN of a <code>Config</code>.</p>",
         "ConfigListItem$configArn": "<p>ARN of a <code>Config</code>.</p>",
         "CreateMissionProfileRequest$trackingConfigArn": "<p>ARN of a tracking <code>Config</code>.</p>",
+        "CreateMissionProfileRequest$telemetrySinkConfigArn": "<p>ARN of a telemetry sink <code>Config</code>.</p>",
         "DataflowEdge$member": null,
         "GetConfigResponse$configArn": "<p>ARN of a <code>Config</code> </p>",
         "GetMissionProfileResponse$trackingConfigArn": "<p>ARN of a tracking <code>Config</code>.</p>",
+        "GetMissionProfileResponse$telemetrySinkConfigArn": "<p>ARN of a telemetry sink <code>Config</code>.</p>",
         "UpdateMissionProfileRequest$trackingConfigArn": "<p>ARN of a tracking <code>Config</code>.</p>",
+        "UpdateMissionProfileRequest$telemetrySinkConfigArn": "<p>ARN of a telemetry sink <code>Config</code>.</p>",
         "UplinkEchoConfig$antennaUplinkConfigArn": "<p>ARN of an uplink <code>Config</code>.</p>"
       }
     },
@@ -297,7 +300,7 @@
       }
     },
     "ConfigIdResponse": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "ConfigList": {
@@ -335,7 +338,7 @@
       }
     },
     "ContactIdResponse": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "ContactList": {
@@ -353,11 +356,11 @@
       }
     },
     "CreateConfigRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "CreateDataflowEndpointGroupRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "CreateDataflowEndpointGroupV2Request": {
@@ -385,7 +388,7 @@
       "refs": {}
     },
     "CreateMissionProfileRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "Criticality": {
@@ -415,9 +418,9 @@
     "DataflowEdgeList": {
       "base": null,
       "refs": {
-        "CreateMissionProfileRequest$dataflowEdges": "<p>A list of lists of ARNs. Each list of ARNs is an edge, with a <i>from</i> <code>Config</code> and a <i>to</i> <code>Config</code>.</p>",
-        "GetMissionProfileResponse$dataflowEdges": "<p>A list of lists of ARNs. Each list of ARNs is an edge, with a <i>from</i> <code>Config</code> and a <i>to</i> <code>Config</code>.</p>",
-        "UpdateMissionProfileRequest$dataflowEdges": "<p>A list of lists of ARNs. Each list of ARNs is an edge, with a <i>from</i> <code>Config</code> and a <i>to</i> <code>Config</code>.</p>"
+        "CreateMissionProfileRequest$dataflowEdges": "<p>A list of lists of ARNs. Each list of ARNs is an edge, with a <i>from</i> <code> Config</code> and a <i>to</i> <code>Config</code>.</p>",
+        "GetMissionProfileResponse$dataflowEdges": "<p>A list of lists of ARNs. Each list of ARNs is an edge, with a <i>from</i> <code> Config</code> and a <i>to</i> <code>Config</code>.</p>",
+        "UpdateMissionProfileRequest$dataflowEdges": "<p>A list of lists of ARNs. Each list of ARNs is an edge, with a <i>from</i> <code> Config</code> and a <i>to</i> <code>Config</code>.</p>"
       }
     },
     "DataflowEndpoint": {
@@ -442,16 +445,16 @@
     "DataflowEndpointGroupDurationInSeconds": {
       "base": null,
       "refs": {
-        "CreateDataflowEndpointGroupRequest$contactPrePassDurationSeconds": "<p>Amount of time, in seconds, before a contact starts that the Ground Station Dataflow Endpoint Group will be in a <code>PREPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>PREPASS</code> state.</p>",
-        "CreateDataflowEndpointGroupRequest$contactPostPassDurationSeconds": "<p>Amount of time, in seconds, after a contact ends that the Ground Station Dataflow Endpoint Group will be in a <code>POSTPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>POSTPASS</code> state.</p>",
-        "CreateDataflowEndpointGroupV2Request$contactPrePassDurationSeconds": "<p>Amount of time, in seconds, before a contact starts that the Ground Station Dataflow Endpoint Group will be in a <code>PREPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>PREPASS</code> state.</p>",
-        "CreateDataflowEndpointGroupV2Request$contactPostPassDurationSeconds": "<p>Amount of time, in seconds, after a contact ends that the Ground Station Dataflow Endpoint Group will be in a <code>POSTPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>POSTPASS</code> state.</p>",
+        "CreateDataflowEndpointGroupRequest$contactPrePassDurationSeconds": "<p> Amount of time, in seconds, before a contact starts that the Ground Station Dataflow Endpoint Group will be in a <code>PREPASS</code> state. A <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/monitoring.automating-events.html\">Ground Station Dataflow Endpoint Group State Change event</a> will be emitted when the Dataflow Endpoint Group enters and exits the <code>PREPASS</code> state. </p>",
+        "CreateDataflowEndpointGroupRequest$contactPostPassDurationSeconds": "<p> Amount of time, in seconds, after a contact ends that the Ground Station Dataflow Endpoint Group will be in a <code>POSTPASS</code> state. A <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/monitoring.automating-events.html\">Ground Station Dataflow Endpoint Group State Change event</a> will be emitted when the Dataflow Endpoint Group enters and exits the <code>POSTPASS</code> state. </p>",
+        "CreateDataflowEndpointGroupV2Request$contactPrePassDurationSeconds": "<p> Amount of time, in seconds, before a contact starts that the Ground Station Dataflow Endpoint Group will be in a <code>PREPASS</code> state. A <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/monitoring.automating-events.html\">Ground Station Dataflow Endpoint Group State Change event</a> will be emitted when the Dataflow Endpoint Group enters and exits the <code>PREPASS</code> state. </p>",
+        "CreateDataflowEndpointGroupV2Request$contactPostPassDurationSeconds": "<p> Amount of time, in seconds, after a contact ends that the Ground Station Dataflow Endpoint Group will be in a <code>POSTPASS</code> state. A <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/monitoring.automating-events.html\">Ground Station Dataflow Endpoint Group State Change event</a> will be emitted when the Dataflow Endpoint Group enters and exits the <code>POSTPASS</code> state. </p>",
         "GetDataflowEndpointGroupResponse$contactPrePassDurationSeconds": "<p>Amount of time, in seconds, before a contact starts that the Ground Station Dataflow Endpoint Group will be in a <code>PREPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>PREPASS</code> state.</p>",
         "GetDataflowEndpointGroupResponse$contactPostPassDurationSeconds": "<p>Amount of time, in seconds, after a contact ends that the Ground Station Dataflow Endpoint Group will be in a <code>POSTPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>POSTPASS</code> state.</p>"
       }
     },
     "DataflowEndpointGroupIdResponse": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "DataflowEndpointGroupList": {
@@ -485,11 +488,11 @@
       }
     },
     "DeleteConfigRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "DeleteDataflowEndpointGroupRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "DeleteEphemerisRequest": {
@@ -497,7 +500,7 @@
       "refs": {}
     },
     "DeleteMissionProfileRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "DemodulationConfig": {
@@ -511,11 +514,11 @@
       "refs": {}
     },
     "DescribeContactRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "DescribeContactResponse": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "DescribeEphemerisRequest": {
@@ -783,19 +786,19 @@
       "refs": {}
     },
     "GetConfigRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "GetConfigResponse": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "GetDataflowEndpointGroupRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "GetDataflowEndpointGroupResponse": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "GetMinuteUsageRequest": {
@@ -807,11 +810,11 @@
       "refs": {}
     },
     "GetMissionProfileRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "GetMissionProfileResponse": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "GetSatelliteRequest": {
@@ -934,6 +937,18 @@
         "KmsKey$kmsKeyArn": "<p>KMS Key Arn.</p>"
       }
     },
+    "KinesisDataStreamArn": {
+      "base": null,
+      "refs": {
+        "KinesisDataStreamData$kinesisDataStreamArn": "<p>ARN of the Kinesis Data Stream to deliver telemetry to.</p>"
+      }
+    },
+    "KinesisDataStreamData": {
+      "base": "<p>Information for telemetry delivery to Kinesis Data Streams.</p>",
+      "refs": {
+        "TelemetrySinkData$kinesisDataStreamData": "<p>Information about a telemetry sink of type <code>KINESIS_DATA_STREAM</code>.</p>"
+      }
+    },
     "KmsKey": {
       "base": "<p>KMS key info.</p>",
       "refs": {
@@ -943,27 +958,27 @@
       }
     },
     "ListConfigsRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "ListConfigsResponse": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "ListContactsRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "ListContactsResponse": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "ListDataflowEndpointGroupsRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "ListDataflowEndpointGroupsResponse": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "ListEphemeridesRequest": {
@@ -983,11 +998,11 @@
       "refs": {}
     },
     "ListMissionProfilesRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "ListMissionProfilesResponse": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "ListSatellitesRequest": {
@@ -1026,7 +1041,7 @@
       }
     },
     "MissionProfileIdResponse": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "MissionProfileList": {
@@ -1048,7 +1063,7 @@
       }
     },
     "OEMEphemeris": {
-      "base": "<p>Ephemeris data in Orbit Ephemeris Message (OEM) format.</p> <p> AWS Ground Station processes OEM ephemerides according to the <a href=\"https://ccsds.org/wp-content/uploads/gravity_forms/5-448e85c647331d9cbaf66c096458bdd5/2025/01//502x0b3e1.pdf\">CCSDS standard</a> with some extra restrictions. OEM files should be in KVN format. For more detail about the OEM format that AWS Ground Station supports, see <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/providing-oem-ephemeris-data.html#oem-ephemeris-format\">OEM ephemeris format</a> in the AWS Ground Station user guide. </p>",
+      "base": "<p>Ephemeris data in Orbit Ephemeris Message (OEM) format.</p> <p> AWS Ground Station processes OEM ephemerides according to the <a href=\"https://ccsds.org/Pubs/502x0b3e1.pdf\">CCSDS standard</a> with some extra restrictions. OEM files should be in KVN format. For more detail about the OEM format that AWS Ground Station supports, see <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/providing-oem-ephemeris-data.html#oem-ephemeris-format\">OEM ephemeris format</a> in the AWS Ground Station user guide. </p>",
       "refs": {
         "EphemerisData$oem": null
       }
@@ -1134,7 +1149,7 @@
       "refs": {}
     },
     "ReserveContactRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "ResourceInUseException": {
@@ -1154,6 +1169,7 @@
       "refs": {
         "CreateMissionProfileRequest$streamsKmsRole": "<p>Role to use for encrypting streams with KMS key.</p>",
         "GetMissionProfileResponse$streamsKmsRole": "<p>Role to use for encrypting streams with KMS key.</p>",
+        "KinesisDataStreamData$kinesisRoleArn": "<p>ARN of the IAM Role used by AWS Ground Station to deliver telemetry.</p>",
         "S3RecordingConfig$roleArn": "<p>ARN of the role Ground Station assumes to write data to the bucket.</p>",
         "SecurityDetails$roleArn": "<p>ARN to a role needed for connecting streams to your instances. </p>",
         "UpdateMissionProfileRequest$streamsKmsRole": "<p>Role to use for encrypting streams with KMS key.</p>"
@@ -1395,6 +1411,24 @@
         "TagResourceRequest$tags": "<p>Tags assigned to a resource.</p>"
       }
     },
+    "TelemetrySinkConfig": {
+      "base": "<p>Information about a telemetry sink <code>Config</code>.</p>",
+      "refs": {
+        "ConfigTypeData$telemetrySinkConfig": "<p>Information about a telemetry sink <code>Config</code>.</p>"
+      }
+    },
+    "TelemetrySinkData": {
+      "base": "<p>Information about a telemetry sink.</p>",
+      "refs": {
+        "TelemetrySinkConfig$telemetrySinkData": "<p>Information about the telemetry sink specified by the <code>telemetrySinkType</code>.</p>"
+      }
+    },
+    "TelemetrySinkType": {
+      "base": null,
+      "refs": {
+        "TelemetrySinkConfig$telemetrySinkType": "<p>The type of telemetry sink.</p>"
+      }
+    },
     "TimeAzEl": {
       "base": "<p>Time-tagged azimuth elevation pointing data.</p> <p>Specifies the antenna pointing direction at a specific time offset from the segment's reference epoch.</p>",
       "refs": {
@@ -1492,7 +1526,7 @@
       "refs": {}
     },
     "UpdateConfigRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "UpdateEphemerisRequest": {
@@ -1500,7 +1534,7 @@
       "refs": {}
     },
     "UpdateMissionProfileRequest": {
-      "base": "<p/>",
+      "base": "<p> </p>",
       "refs": {}
     },
     "UplinkAwsGroundStationAgentEndpoint": {
@@ -1529,9 +1563,9 @@
       }
     },
     "UplinkEchoConfig": {
-      "base": "<p>Information about an uplink echo <code>Config</code>.</p> <p>Parameters from the <code>AntennaUplinkConfig</code>, corresponding to the specified <code>AntennaUplinkConfigArn</code>, are used when this <code>UplinkEchoConfig</code> is used in a contact.</p>",
+      "base": "<p>Information about an uplink echo <code>Config</code>.</p> <p>Parameters from the <code>AntennaUplinkConfig</code>, corresponding to the specified <code> AntennaUplinkConfigArn</code>, are used when this <code>UplinkEchoConfig</code> is used in a contact.</p>",
       "refs": {
-        "ConfigTypeData$uplinkEchoConfig": "<p>Information about an uplink echo <code>Config</code>.</p> <p>Parameters from the <code>AntennaUplinkConfig</code>, corresponding to the specified <code>AntennaUplinkConfigArn</code>, are used when this <code>UplinkEchoConfig</code> is used in a contact.</p>"
+        "ConfigTypeData$uplinkEchoConfig": "<p>Information about an uplink echo <code>Config</code>.</p> <p>Parameters from the <code>AntennaUplinkConfig</code>, corresponding to the specified <code> AntennaUplinkConfigArn</code>, are used when this <code>UplinkEchoConfig</code> is used in a contact.</p>"
       }
     },
     "UplinkSpectrumConfig": {

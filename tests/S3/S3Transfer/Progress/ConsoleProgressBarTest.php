@@ -8,10 +8,10 @@ use Aws\S3\S3Transfer\Progress\PlainProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\AbstractProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\TransferProgressBarFormat;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers \Aws\S3\S3Transfer\Progress\ConsoleProgressBar
- */
+#[CoversClass(ConsoleProgressBar::class)]
 final class ConsoleProgressBarTest extends TestCase
 {
     /**
@@ -95,10 +95,9 @@ final class ConsoleProgressBarTest extends TestCase
      * @param array $progressBarFormatArgs
      * @param string $expectedOutput
      *
-     * @dataProvider progressBarRenderingProvider
-     *
      * @return void
      */
+    #[DataProvider('progressBarRenderingProvider')]
     public function testProgressBarRendering(
         string                    $progressBarChar,
         int                       $progressBarWidth,

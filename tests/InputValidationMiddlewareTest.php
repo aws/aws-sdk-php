@@ -3,17 +3,15 @@ namespace Aws\Test;
 
 use Aws\Api\DateTimeResult;
 use Aws\AwsClient;
-use Aws\EndpointParameterMiddleware;
 use Aws\HandlerList;
 use Aws\Api\Service;
 use Aws\InputValidationMiddleware;
-use Cassandra\Time;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\InputValidationMiddleware
- */
+#[CoversClass(InputValidationMiddleware::class)]
 class InputValidationMiddlewareTest extends TestCase
 {
     /**
@@ -21,7 +19,7 @@ class InputValidationMiddlewareTest extends TestCase
      *
      * @return array
      */
-    public function getInvalidEndpointExceptions()
+    public static function getInvalidEndpointExceptions(): array
     {
         return [
             [''],
@@ -36,7 +34,7 @@ class InputValidationMiddlewareTest extends TestCase
      *
      * @return array
      */
-    public function getValidInputs()
+    public static function getValidInputs(): array
     {
         return [
             ['existing data'],
@@ -48,11 +46,7 @@ class InputValidationMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidEndpointExceptions
-     *
-     * @param $input
-     */
+    #[DataProvider('getInvalidEndpointExceptions')]
     public function testThrowsExceptions($input)
     {
         $service = $this->generateTestService();
@@ -80,11 +74,7 @@ class InputValidationMiddlewareTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider getInvalidEndpointExceptions
-     *
-     * @param $input
-     */
+    #[DataProvider('getInvalidEndpointExceptions')]
     public function testNoValidationWithoutInputList($input)
     {
         $service = $this->generateTestService();
@@ -103,11 +93,7 @@ class InputValidationMiddlewareTest extends TestCase
         self::assertSame($result, "success");
     }
 
-    /**
-     * @dataProvider getValidInputs
-     *
-     * @param $input
-     */
+    #[DataProvider('getValidInputs')]
     public function testPassingValidations($input)
     {
         $service = $this->generateTestService();

@@ -1,0 +1,24 @@
+{
+  "version": "1.0",
+  "examples": {
+    "GetRevocationStatus": [
+      {
+        "input": {
+          "certificateHashes": [
+            "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          ],
+          "jobArn": "arn:aws:signer:us-east-1:123456789012:/signing-jobs/my-job-id",
+          "platformId": "Notation-OCI-SHA384-ECDSA",
+          "profileVersionArn": "arn:aws:signer:us-east-1:123456789012:/signing-profiles/my-profile/v1",
+          "signatureTimestamp": 1700000000
+        },
+        "output": {
+          "revokedEntities": []
+        },
+        "description": "Checks if a signing profile, job, or certificate has been revoked for a given artifact.",
+        "id": "example-1",
+        "title": "Check revocation status for a signed artifact"
+      }
+    ]
+  }
+}

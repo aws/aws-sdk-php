@@ -38,15 +38,15 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 use function Aws\filter;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers \Aws\S3\S3Transfer\S3TransferManager
- */
+#[CoversClass(S3TransferManager::class)]
 final class S3TransferManagerTest extends TestCase
 {
     private const DOWNLOAD_BASE_CASES = __DIR__ . '/test-cases/download-single-object.json';
@@ -206,10 +206,9 @@ EOF
      * @param array $bucketKeyArgs
      * @param string $missingProperty
      *
-     * @dataProvider uploadBucketAndKeyProvider
-     *
      * @return void
      */
+    #[DataProvider('uploadBucketAndKeyProvider')]
     public function testUploadFailsWhenBucketAndKeyAreNotProvided(
         array  $bucketKeyArgs,
         string $missingProperty
@@ -383,10 +382,9 @@ EOF
      * @param int $expectedPartSize
      * @param bool $isMultipartUpload
      *
-     * @dataProvider uploadUsesCustomMupThresholdProvider
-     *
      * @return void
      */
+    #[DataProvider('uploadUsesCustomMupThresholdProvider')]
     public function testUploadUsesCustomMupThreshold(
         int $mupThreshold,
         int $expectedPartCount,
@@ -552,10 +550,9 @@ EOF
     /**
      * @param string $checksumAlgorithm
      *
-     * @dataProvider uploadUsesCustomChecksumAlgorithmProvider
-     *
      * @return void
      */
+    #[DataProvider('uploadUsesCustomChecksumAlgorithmProvider')]
     public function testUploadUsesCustomChecksumAlgorithm(
         string $checksumAlgorithm,
     ): void
@@ -636,10 +633,9 @@ EOF
      * @param string $directory
      * @param bool $isDirectoryValid
      *
-     * @dataProvider uploadDirectoryValidatesProvidedDirectoryProvider
-     *
      * @return void
      */
+    #[DataProvider('uploadDirectoryValidatesProvidedDirectoryProvider')]
     public function testUploadDirectoryValidatesProvidedDirectory(
         string $directory,
         bool $isDirectoryValid
@@ -1562,10 +1558,9 @@ EOF
      * @param array $sourceAsArray
      * @param string $expectedExceptionMessage
      *
-     * @dataProvider downloadFailsWhenSourceAsArrayMissesBucketOrKeyPropertyProvider
-     *
      * @return void
      */
+    #[DataProvider('downloadFailsWhenSourceAsArrayMissesBucketOrKeyPropertyProvider')]
     public function testDownloadFailsWhenSourceAsArrayMissesBucketOrKeyProperty(
         array $sourceAsArray,
         string $expectedExceptionMessage,
@@ -1679,16 +1674,14 @@ EOF
     }
 
     /**
-     *
      * @param array $transferManagerConfig
      * @param array $downloadConfig
      * @param array $downloadArgs
      * @param bool $expectedChecksumMode
      *
-     * @dataProvider downloadAppliesChecksumProvider
-     *
      * @return void
      */
+    #[DataProvider('downloadAppliesChecksumProvider')]
     public function testDownloadAppliesChecksumMode(
         array $transferManagerConfig,
         array $downloadConfig,
@@ -1811,10 +1804,9 @@ EOF
      * @param string $multipartDownloadType
      * @param string $expectedParameter
      *
-     * @dataProvider downloadChoosesMultipartDownloadTypeProvider
-     *
      * @return void
      */
+    #[DataProvider('downloadChoosesMultipartDownloadTypeProvider')]
     public function testDownloadChoosesMultipartDownloadType(
         string $multipartDownloadType,
         string $expectedParameter
@@ -1874,10 +1866,9 @@ EOF
      * @param int $objectSize
      * @param array $expectedRangeSizes
      *
-     * @dataProvider rangeGetMultipartDownloadMinimumPartSizeProvider
-     *
      * @return void
      */
+    #[DataProvider('rangeGetMultipartDownloadMinimumPartSizeProvider')]
     public function testRangeGetMultipartDownloadMinimumPartSize(
         int $minimumPartSize,
         int $objectSize,
@@ -2020,10 +2011,9 @@ EOF
      * @param array $config
      * @param string $expectedS3Prefix
      *
-     * @dataProvider downloadDirectoryAppliesS3PrefixProvider
-     *
      * @return void
      */
+    #[DataProvider('downloadDirectoryAppliesS3PrefixProvider')]
     public function testDownloadDirectoryAppliesS3Prefix(
         array $config,
         string $expectedS3Prefix
@@ -2309,10 +2299,9 @@ EOF
      * @param array $objectList
      * @param array $expectedObjectList
      *
-     * @dataProvider downloadDirectoryAppliesFilter
-     *
      * @return void
      */
+    #[DataProvider('downloadDirectoryAppliesFilterProvider')]
     public function testDownloadDirectoryAppliesFilter(
         Closure $filter,
         array $objectList,
@@ -2413,7 +2402,7 @@ EOF
     /**
      * @return array[]
      */
-    public static function downloadDirectoryAppliesFilter(): array
+    public static function downloadDirectoryAppliesFilterProvider(): array
     {
         return [
             'filter_1' => [
@@ -2626,10 +2615,9 @@ EOF
      * @param array $listObjectsContent
      * @param array $expectedFileKeys
      *
-     * @dataProvider downloadDirectoryCreateFilesProvider
-     *
      * @return void
      */
+    #[DataProvider('downloadDirectoryCreateFilesProvider')]
     public function testDownloadDirectoryCreateFiles(
         array $listObjectsContent,
         array $expectedFileKeys,
@@ -2747,10 +2735,9 @@ EOF
      * @param array $objects
      * @param array $expectedOutput
      *
-     * @dataProvider resolvesOutsideTargetDirectoryProvider
-     *
      * @return void
      */
+    #[DataProvider('resolvesOutsideTargetDirectoryProvider')]
     public function testResolvesOutsideTargetDirectory(
         ?string $prefix,
         array $objects,
@@ -2945,11 +2932,8 @@ EOF
      * @param array $requestArgs
      * @param array $expectations
      * @param array $outcomes
-     *
-     * @dataProvider modeledDownloadCasesProvider
-     *
-     * @return void
      */
+    #[DataProvider('modeledDownloadCasesProvider')]
     public function testModeledCasesForDownload(
         string $testId,
         array $config,
@@ -3119,10 +3103,9 @@ EOF
      * @param array $expectations
      * @param array $outcomes
      *
-     * @dataProvider modeledUploadCasesProvider
-     *
      * @return void
      */
+    #[DataProvider('modeledUploadCasesProvider')]
     public function testModeledCasesForUpload(
         string $testId,
         array $config,
@@ -3266,10 +3249,9 @@ EOF
      * @param array $expectations
      * @param array $outcomes
      *
-     * @dataProvider modeledUploadDirectoryCasesProvider
-     *
      * @return void
      */
+    #[DataProvider('modeledUploadDirectoryCasesProvider')]
     public function testModeledCasesForUploadDirectory(
         string $testId,
         array $config,
@@ -3433,10 +3415,9 @@ EOF
      * @param array $expectedFiles
      * @param array $outcomes
      *
-     * @dataProvider modeledDownloadDirectoryCasesProvider
-     *
      * @return void
      */
+    #[DataProvider('modeledDownloadDirectoryCasesProvider')]
     public function testModeledCasesForDownloadDirectory(
         string $testId,
         array $config,

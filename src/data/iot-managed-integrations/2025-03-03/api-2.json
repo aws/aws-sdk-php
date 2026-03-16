@@ -1336,6 +1336,7 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
@@ -1675,14 +1676,33 @@
     "AuthConfig":{
       "type":"structure",
       "members":{
-        "oAuth":{"shape":"OAuthConfig"}
+        "oAuth":{"shape":"OAuthConfig"},
+        "GeneralAuthorization":{"shape":"AuthMaterials"}
       }
     },
     "AuthConfigUpdate":{
       "type":"structure",
       "members":{
-        "oAuthUpdate":{"shape":"OAuthUpdate"}
+        "oAuthUpdate":{"shape":"OAuthUpdate"},
+        "GeneralAuthorizationUpdate":{"shape":"GeneralAuthorizationUpdate"}
       }
+    },
+    "AuthMaterial":{
+      "type":"structure",
+      "required":[
+        "SecretsManager",
+        "AuthMaterialName"
+      ],
+      "members":{
+        "SecretsManager":{"shape":"SecretsManager"},
+        "AuthMaterialName":{"shape":"AuthMaterialName"}
+      }
+    },
+    "AuthMaterialName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[a-zA-Z0-9=_+/-]+"
     },
     "AuthMaterialString":{
       "type":"string",
@@ -1698,8 +1718,15 @@
         "WIFI_SETUP_QR_BAR_CODE",
         "ZWAVE_QR_BAR_CODE",
         "ZIGBEE_QR_BAR_CODE",
-        "DISCOVERED_DEVICE"
+        "DISCOVERED_DEVICE",
+        "PRE_ONBOARDED_CLOUD"
       ]
+    },
+    "AuthMaterials":{
+      "type":"list",
+      "member":{"shape":"AuthMaterial"},
+      "max":3,
+      "min":0
     },
     "AuthType":{
       "type":"string",
@@ -2073,12 +2100,17 @@
       "pattern":"[a-zA-Z0-9_.,@-]+",
       "sensitive":true
     },
+    "ConnectorDeviceIdList":{
+      "type":"list",
+      "member":{"shape":"ConnectorDeviceId"},
+      "max":100,
+      "min":0
+    },
     "ConnectorDeviceName":{
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"[\\p{L}\\p{N} ._-]+",
-      "sensitive":true
+      "pattern":"[\\p{L}\\p{N} ._-]+"
     },
     "ConnectorEventMessage":{
       "type":"string",
@@ -2100,15 +2132,13 @@
       "type":"string",
       "max":6,
       "min":1,
-      "pattern":"[0-9.]+",
-      "sensitive":true
+      "pattern":"[0-9.]+"
     },
     "ConnectorEventStatusCode":{
       "type":"integer",
       "box":true,
       "max":550,
-      "min":100,
-      "sensitive":true
+      "min":100
     },
     "ConnectorId":{
       "type":"string",
@@ -2155,7 +2185,8 @@
         "ConnectorDestinationId":{"shape":"ConnectorDestinationId"},
         "Name":{"shape":"AccountAssociationName"},
         "Description":{"shape":"AccountAssociationDescription"},
-        "Tags":{"shape":"TagsMap"}
+        "Tags":{"shape":"TagsMap"},
+        "GeneralAuthorization":{"shape":"GeneralAuthorizationName"}
       }
     },
     "CreateAccountAssociationResponse":{
@@ -2166,7 +2197,7 @@
         "AssociationState"
       ],
       "members":{
-        "OAuthAuthorizationUrl":{"shape":"OAuthAuthorizationUrl"},
+        "OAuthAuthorizationUrl":{"shape":"OAuthAuthorizationUrlOutput"},
         "AccountAssociationId":{"shape":"AccountAssociationId"},
         "AssociationState":{"shape":"AssociationState"},
         "Arn":{"shape":"AccountAssociationArn"}
@@ -2199,9 +2230,7 @@
       "type":"structure",
       "required":[
         "CloudConnectorId",
-        "AuthType",
-        "AuthConfig",
-        "SecretsManager"
+        "AuthConfig"
       ],
       "members":{
         "Name":{"shape":"ConnectorDestinationName"},
@@ -2416,6 +2445,7 @@
       "members":{
         "ProvisioningType":{"shape":"ProvisioningType"},
         "CaCertificate":{"shape":"CaCertificate"},
+        "ClaimCertificate":{"shape":"ClaimCertificate"},
         "Name":{"shape":"ProvisioningProfileName"},
         "ClientToken":{
           "shape":"ClientToken",
@@ -2926,6 +2956,19 @@
       "min":1,
       "pattern":"0[xX][0-9a-fA-F]+$|^[0-9]+"
     },
+    "GeneralAuthorizationName":{
+      "type":"structure",
+      "members":{
+        "AuthMaterialName":{"shape":"AuthMaterialName"}
+      }
+    },
+    "GeneralAuthorizationUpdate":{
+      "type":"structure",
+      "members":{
+        "AuthMaterialsToAdd":{"shape":"AuthMaterials"},
+        "AuthMaterialsToUpdate":{"shape":"AuthMaterials"}
+      }
+    },
     "GetAccountAssociationRequest":{
       "type":"structure",
       "required":["AccountAssociationId"],
@@ -2952,8 +2995,9 @@
         "Name":{"shape":"AccountAssociationName"},
         "Description":{"shape":"AccountAssociationDescription"},
         "Arn":{"shape":"AccountAssociationArn"},
-        "OAuthAuthorizationUrl":{"shape":"OAuthAuthorizationUrl"},
-        "Tags":{"shape":"TagsMap"}
+        "OAuthAuthorizationUrl":{"shape":"OAuthAuthorizationUrlOutput"},
+        "Tags":{"shape":"TagsMap"},
+        "GeneralAuthorization":{"shape":"GeneralAuthorizationName"}
       }
     },
     "GetCloudConnectorRequest":{
@@ -4127,12 +4171,20 @@
       "type":"structure",
       "members":{
         "ManagedThingId":{"shape":"ManagedThingId"},
-        "AccountAssociationId":{"shape":"AccountAssociationId"}
+        "AccountAssociationId":{"shape":"AccountAssociationId"},
+        "ManagedThingAssociationStatus":{"shape":"ManagedThingAssociationStatus"}
       }
     },
     "ManagedThingAssociationList":{
       "type":"list",
       "member":{"shape":"ManagedThingAssociation"}
+    },
+    "ManagedThingAssociationStatus":{
+      "type":"string",
+      "enum":[
+        "PRE_ASSOCIATED",
+        "ASSOCIATED"
+      ]
     },
     "ManagedThingId":{
       "type":"string",
@@ -4464,11 +4516,11 @@
       "max":100,
       "min":1
     },
-    "OAuthAuthorizationUrl":{
+    "OAuthAuthorizationUrlOutput":{
       "type":"string",
       "max":1024,
-      "min":1,
-      "pattern":"(https)://.*",
+      "min":0,
+      "pattern":"$|^(https):\\/\\/.*",
       "sensitive":true
     },
     "OAuthCompleteRedirectUrl":{
@@ -5150,7 +5202,7 @@
       "type":"structure",
       "required":["OAuthAuthorizationUrl"],
       "members":{
-        "OAuthAuthorizationUrl":{"shape":"OAuthAuthorizationUrl"}
+        "OAuthAuthorizationUrl":{"shape":"OAuthAuthorizationUrlOutput"}
       }
     },
     "StartDeviceDiscoveryRequest":{
@@ -5176,6 +5228,7 @@
           "deprecatedMessage":"Tags have been deprecated from this api",
           "deprecatedSince":"06-25-2025"
         },
+        "ConnectorDeviceIdList":{"shape":"ConnectorDeviceIdList"},
         "Protocol":{"shape":"ProtocolType"},
         "EndDeviceIdentifier":{"shape":"ManagedThingId"}
       }

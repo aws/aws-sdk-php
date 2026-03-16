@@ -16,6 +16,23 @@
     "uid":"sso-admin-2020-07-20"
   },
   "operations":{
+    "AddRegion":{
+      "name":"AddRegion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AddRegionRequest"},
+      "output":{"shape":"AddRegionResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "AttachCustomerManagedPolicyReferenceToPermissionSet":{
       "name":"AttachCustomerManagedPolicyReferenceToPermissionSet",
       "http":{
@@ -522,6 +539,22 @@
         {"shape":"ValidationException"}
       ]
     },
+    "DescribeRegion":{
+      "name":"DescribeRegion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeRegionRequest"},
+      "output":{"shape":"DescribeRegionResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "DescribeTrustedTokenIssuer":{
       "name":"DescribeTrustedTokenIssuer",
       "http":{
@@ -586,7 +619,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetApplicationAssignmentConfiguration":{
       "name":"GetApplicationAssignmentConfiguration",
@@ -602,7 +636,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetApplicationAuthenticationMethod":{
       "name":"GetApplicationAuthenticationMethod",
@@ -618,7 +653,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetApplicationGrant":{
       "name":"GetApplicationGrant",
@@ -634,7 +670,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetApplicationSessionConfiguration":{
       "name":"GetApplicationSessionConfiguration",
@@ -650,7 +687,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetInlinePolicyForPermissionSet":{
       "name":"GetInlinePolicyForPermissionSet",
@@ -778,7 +816,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListApplicationAssignments":{
       "name":"ListApplicationAssignments",
@@ -794,7 +833,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListApplicationAssignmentsForPrincipal":{
       "name":"ListApplicationAssignmentsForPrincipal",
@@ -810,7 +850,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListApplicationAuthenticationMethods":{
       "name":"ListApplicationAuthenticationMethods",
@@ -826,7 +867,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListApplicationGrants":{
       "name":"ListApplicationGrants",
@@ -842,7 +884,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListApplicationProviders":{
       "name":"ListApplicationProviders",
@@ -965,6 +1008,21 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ]
+    },
+    "ListRegions":{
+      "name":"ListRegions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListRegionsRequest"},
+      "output":{"shape":"ListRegionsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
       ]
@@ -1130,6 +1188,23 @@
       },
       "input":{"shape":"PutPermissionsBoundaryToPermissionSetRequest"},
       "output":{"shape":"PutPermissionsBoundaryToPermissionSetResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "RemoveRegion":{
+      "name":"RemoveRegion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RemoveRegionRequest"},
+      "output":{"shape":"RemoveRegionResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
@@ -1383,6 +1458,23 @@
       "members":{},
       "document":true
     },
+    "AddRegionRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceArn",
+        "RegionName"
+      ],
+      "members":{
+        "InstanceArn":{"shape":"InstanceArn"},
+        "RegionName":{"shape":"RegionName"}
+      }
+    },
+    "AddRegionResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"RegionStatus"}
+      }
+    },
     "Application":{
       "type":"structure",
       "members":{
@@ -1394,14 +1486,15 @@
         "Status":{"shape":"ApplicationStatus"},
         "PortalOptions":{"shape":"PortalOptions"},
         "Description":{"shape":"Description"},
-        "CreatedDate":{"shape":"Date"}
+        "CreatedDate":{"shape":"Date"},
+        "CreatedFrom":{"shape":"RegionName"}
       }
     },
     "ApplicationArn":{
       "type":"string",
       "max":1224,
       "min":10,
-      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16}"
+      "pattern":"arn:aws(-[a-z]{1,5}){0,3}:sso::\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16}"
     },
     "ApplicationAssignment":{
       "type":"structure",
@@ -1458,7 +1551,7 @@
       "type":"string",
       "max":1224,
       "min":10,
-      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::aws:applicationProvider/[a-zA-Z0-9-/]+"
+      "pattern":"arn:aws(-[a-z]{1,5}){0,3}:sso::aws:applicationProvider/[a-zA-Z0-9-/]+"
     },
     "ApplicationProviderList":{
       "type":"list",
@@ -2009,7 +2102,8 @@
         "Status":{"shape":"ApplicationStatus"},
         "PortalOptions":{"shape":"PortalOptions"},
         "Description":{"shape":"Description"},
-        "CreatedDate":{"shape":"Date"}
+        "CreatedDate":{"shape":"Date"},
+        "CreatedFrom":{"shape":"RegionName"}
       }
     },
     "DescribeInstanceAccessControlAttributeConfigurationRequest":{
@@ -2079,6 +2173,26 @@
       "type":"structure",
       "members":{
         "PermissionSet":{"shape":"PermissionSet"}
+      }
+    },
+    "DescribeRegionRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceArn",
+        "RegionName"
+      ],
+      "members":{
+        "InstanceArn":{"shape":"InstanceArn"},
+        "RegionName":{"shape":"RegionName"}
+      }
+    },
+    "DescribeRegionResponse":{
+      "type":"structure",
+      "members":{
+        "RegionName":{"shape":"RegionName"},
+        "Status":{"shape":"RegionStatus"},
+        "AddedDate":{"shape":"Date"},
+        "IsPrimaryRegion":{"shape":"IsPrimaryRegion"}
       }
     },
     "DescribeTrustedTokenIssuerRequest":{
@@ -2362,7 +2476,7 @@
       "type":"string",
       "max":1224,
       "min":10,
-      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso:::instance/(sso)?ins-[a-zA-Z0-9-.]{16}"
+      "pattern":"arn:aws(-[a-z]{1,5}){0,3}:sso:::instance/(sso)?ins-[a-zA-Z0-9-.]{16}"
     },
     "InstanceList":{
       "type":"list",
@@ -2400,6 +2514,7 @@
       "exception":true,
       "fault":true
     },
+    "IsPrimaryRegion":{"type":"boolean"},
     "JMESPath":{
       "type":"string",
       "max":255,
@@ -2420,7 +2535,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-[bcd]):kms:([a-z]{2,}(-[a-z0-9]+)+){1}:[0-9]{12}:key/(mrk-[a-f0-9]{32}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"
+      "pattern":"arn:aws(-[a-z]{1,5}){0,3}:kms:([a-z]{2,}(-[a-z0-9]+)+){1}:[0-9]{12}:key/(mrk-[a-f0-9]{32}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"
     },
     "KmsKeyStatus":{
       "type":"string",
@@ -2788,6 +2903,22 @@
         "NextToken":{"shape":"Token"}
       }
     },
+    "ListRegionsRequest":{
+      "type":"structure",
+      "required":["InstanceArn"],
+      "members":{
+        "InstanceArn":{"shape":"InstanceArn"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListRegionsResponse":{
+      "type":"structure",
+      "members":{
+        "Regions":{"shape":"RegionMetadataList"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -2824,7 +2955,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):iam::aws:policy((/[A-Za-z0-9\\.,\\+@=_-]+)*)/([A-Za-z0-9\\.,\\+=@_-]+)"
+      "pattern":"arn:aws(-[a-z]{1,5}){0,3}:iam::aws:policy((/[A-Za-z0-9\\.,\\+@=_-]+)*)/([A-Za-z0-9\\.,\\+=@_-]+)"
     },
     "ManagedPolicyName":{
       "type":"string",
@@ -2899,7 +3030,7 @@
       "type":"string",
       "max":1224,
       "min":10,
-      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso:::permissionSet/(sso)?ins-[a-zA-Z0-9-.]{16}/ps-[a-zA-Z0-9-./]{16}"
+      "pattern":"arn:aws(-[a-z]{1,5}){0,3}:sso:::permissionSet/(sso)?ins-[a-zA-Z0-9-.]{16}/ps-[a-zA-Z0-9-./]{16}"
     },
     "PermissionSetDescription":{
       "type":"string",
@@ -3120,11 +3251,55 @@
       "type":"structure",
       "members":{}
     },
+    "RegionMetadata":{
+      "type":"structure",
+      "members":{
+        "RegionName":{"shape":"RegionName"},
+        "Status":{"shape":"RegionStatus"},
+        "AddedDate":{"shape":"Date"},
+        "IsPrimaryRegion":{"shape":"IsPrimaryRegion"}
+      }
+    },
+    "RegionMetadataList":{
+      "type":"list",
+      "member":{"shape":"RegionMetadata"}
+    },
+    "RegionName":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"([a-z]+-){2,3}\\d"
+    },
+    "RegionStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "ADDING",
+        "REMOVING"
+      ]
+    },
     "RelayState":{
       "type":"string",
       "max":240,
       "min":1,
       "pattern":"[a-zA-Z0-9&$@#\\\\\\/%?=~\\-_'\"|!:,.;*+\\[\\]\\ \\(\\)\\{\\}]+"
+    },
+    "RemoveRegionRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceArn",
+        "RegionName"
+      ],
+      "members":{
+        "InstanceArn":{"shape":"InstanceArn"},
+        "RegionName":{"shape":"RegionName"}
+      }
+    },
+    "RemoveRegionResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"RegionStatus"}
+      }
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -3179,7 +3354,7 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::(\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16}|:instance/(sso)?ins-[a-zA-Z0-9-.]{16})"
+      "pattern":"arn:aws(-[a-z]{1,5}){0,3}:sso::(\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16}|:instance/(sso)?ins-[a-zA-Z0-9-.]{16})"
     },
     "ScopeTargets":{
       "type":"list",
@@ -3279,7 +3454,7 @@
       "type":"string",
       "max":2048,
       "min":10,
-      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::((:instance/(sso)?ins-[a-zA-Z0-9-.]{16})|(:permissionSet/(sso)?ins-[a-zA-Z0-9-.]{16}/ps-[a-zA-Z0-9-./]{16})|(\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16})|(\\d{12}:trustedTokenIssuer/(sso)?ins-[a-zA-Z0-9-.]{16}/tti-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}))"
+      "pattern":"arn:aws(-[a-z]{1,5}){0,3}:sso::((:instance/(sso)?ins-[a-zA-Z0-9-.]{16})|(:permissionSet/(sso)?ins-[a-zA-Z0-9-.]{16}/ps-[a-zA-Z0-9-./]{16})|(\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16})|(\\d{12}:trustedTokenIssuer/(sso)?ins-[a-zA-Z0-9-.]{16}/tti-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}))"
     },
     "TargetId":{
       "type":"string",
@@ -3329,7 +3504,7 @@
       "type":"string",
       "max":1224,
       "min":10,
-      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::\\d{12}:trustedTokenIssuer/(sso)?ins-[a-zA-Z0-9-.]{16}/tti-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+      "pattern":"arn:aws(-[a-z]{1,5}){0,3}:sso::\\d{12}:trustedTokenIssuer/(sso)?ins-[a-zA-Z0-9-.]{16}/tti-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
     },
     "TrustedTokenIssuerConfiguration":{
       "type":"structure",

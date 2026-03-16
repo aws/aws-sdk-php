@@ -7,15 +7,11 @@ use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Aws\S3\S3Transfer\Progress\TransferListenerNotifier
- */
+#[CoversClass(TransferListenerNotifier::class)]
 final class TransferListenerNotifierTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function testListenerNotifier(): void {
+    public function testListenerNotifier(): void
+    {
         $listeners = [
             $this->getMockBuilder(AbstractTransferListener::class)
                 ->getMock(),

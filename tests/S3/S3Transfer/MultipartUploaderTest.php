@@ -19,13 +19,13 @@ use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 
-/**
- * @covers \Aws\S3\S3Transfer\MultipartUploader
- */
+#[CoversClass(MultipartUploader::class)]
 final class MultipartUploaderTest extends TestCase
 {
     /** @var string */
@@ -49,16 +49,16 @@ final class MultipartUploaderTest extends TestCase
         restore_error_handler();
     }
 
+
     /**
      * @param array $sourceConfig
      * @param array $commandArgs
      * @param array $config
      * @param array $expected
      *
-     * @dataProvider multipartUploadProvider
-     *
      * @return void
      */
+    #[DataProvider('multipartUploadProvider')]
     public function testMultipartUpload(
         array $sourceConfig,
         array $commandArgs,
@@ -251,9 +251,6 @@ final class MultipartUploaderTest extends TestCase
         ];
     }
 
-    /**
-     * @return S3ClientInterface
-     */
     private function getMultipartUploadS3Client(): S3ClientInterface
     {
         return new S3Client([
@@ -284,15 +281,7 @@ EOF;
         ]);
     }
 
-
-    /**
-     * @param int $partSize
-     * @param bool $expectError
-     *
-     * @dataProvider validatePartSizeProvider
-     *
-     * @return void
-     */
+    #[DataProvider('validatePartSizeProvider')]
     public function testValidatePartSize(
         int $partSize,
         bool $expectError
@@ -344,14 +333,7 @@ EOF;
         ];
     }
 
-    /**
-     * @param string|int $source
-     * @param bool $expectError
-     *
-     * @dataProvider invalidSourceStringProvider
-     *
-     * @return void
-     */
+    #[DataProvider('invalidSourceStringProvider')]
     public function testInvalidSourceStringThrowsException(
         string|int $source,
         bool $expectError
@@ -419,9 +401,6 @@ EOF;
         ];
     }
 
-    /**
-     * @return void
-     */
     public function testTransferListenerNotifierNotifiesListenersOnSuccess(): void
     {
         $noOfListeners = 3;
@@ -486,8 +465,6 @@ EOF;
     /**
      * Test to make sure createMultipart, uploadPart, and completeMultipart
      * operations are called.
-     *
-     * @return void
      */
     public function testMultipartOperationsAreCalled(): void {
         $operationsCalled = [
@@ -540,15 +517,7 @@ EOF;
         }
     }
 
-    /**
-     * @param array $sourceConfig
-     * @param array $checksumConfig
-     * @param array $expectedOperationHeaders
-     *
-     * @dataProvider multipartUploadWithCustomChecksumProvider
-     *
-     * @return void
-     */
+    #[DataProvider('multipartUploadWithCustomChecksumProvider')]
     public function testMultipartUploadWithCustomChecksum(
         array $sourceConfig,
         array $checksumConfig,
@@ -676,9 +645,6 @@ EOF;
         ];
     }
 
-    /**
-     * @return void
-     */
     public function testMultipartUploadAbort() {
         $this->expectException(S3TransferException::class);
         $this->expectExceptionMessage('Upload failed');
@@ -735,9 +701,6 @@ EOF;
         }
     }
 
-    /**
-     * @return void
-     */
     public function testTransferListenerNotifierNotifiesListenersOnFailure(): void
     {
         $this->expectException(\Exception::class);
@@ -795,9 +758,6 @@ EOF;
         $multipartUploader->promise()->wait();
     }
 
-    /**
-     * @return void
-     */
     public function testTransferListenerNotifierWithEmptyListeners(): void
     {
         $listenerNotifier = new TransferListenerNotifier([]);
@@ -848,14 +808,8 @@ EOF;
     /**
      * This test makes sure that when full object checksum type is resolved
      * then, if a custom algorithm provide is not CRC family then it should fail.
-     *
-     * @param array $checksumConfig
-     * @param bool $expectsError
-     *
-     * @dataProvider fullObjectChecksumWorksJustWithCRCProvider
-     *
-     * @return void
      */
+    #[DataProvider('fullObjectChecksumWorksJustWithCRCProvider')]
     public function testFullObjectChecksumWorksJustWithCRC(
         array $checksumConfig,
         bool $expectsError
@@ -930,10 +884,9 @@ EOF;
      * @param bool $expectsError
      * @param int|null $errorOnPartNumber
      *
-     * @dataProvider inputArgumentsPerOperationProvider
-     *
      * @return void
      */
+    #[DataProvider('inputArgumentsPerOperationProvider')]
     public function testInputArgumentsPerOperation(
         array $sourceConfig,
         array $requestArgs,

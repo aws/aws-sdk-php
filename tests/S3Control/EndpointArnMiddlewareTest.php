@@ -6,31 +6,20 @@ use Aws\CommandInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Exception\InvalidRegionException;
 use Aws\Middleware;
+use Aws\S3Control\EndpointArnMiddleware;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\S3Control\EndpointArnMiddleware
- */
+#[CoversClass(EndpointArnMiddleware::class)]
 class EndpointArnMiddlewareTest extends TestCase
 {
     use S3ControlTestingTrait;
 
-    /**
-     * @dataProvider providedSuccessCases
-     *
-     * @param $cmdName
-     * @param $cmdParams
-     * @param $options
-     * @param $endpoint
-     * @param $target
-     * @param $headers
-     * @param $signingRegion
-     * @param $signingService
-     * @throws \Exception
-     */
+    #[DataProvider('providedSuccessCases')]
     public function testCorrectlyModifiesRequestAndCommand(
         $cmdName,
         $cmdParams,
@@ -71,7 +60,7 @@ class EndpointArnMiddlewareTest extends TestCase
         $s3control->execute($command);
     }
 
-    public function providedSuccessCases()
+    public static function providedSuccessCases(): array
     {
         return [
             // Outposts accesspoint ARN
@@ -422,15 +411,7 @@ class EndpointArnMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providedFailureCases
-     *
-     * @param $cmdName
-     * @param $cmdParams
-     * @param $options
-     * @param $expectedException
-     * @throws \Exception
-     */
+    #[DataProvider('providedFailureCases')]
     public function testCorrectlyThrowsForBadInputsOrConfig(
         $cmdName,
         $cmdParams,
@@ -455,7 +436,7 @@ class EndpointArnMiddlewareTest extends TestCase
         }
     }
 
-    public function providedFailureCases()
+    public static function providedFailureCases(): array
     {
         return [
             // Outposts accesspoint ARN, different region

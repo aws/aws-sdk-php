@@ -417,6 +417,20 @@
       "base": "<p>The service encountered an internal error and is unable to complete the request.</p>",
       "refs": {}
     },
+    "Ipv4CidrBlock": {
+      "base": null,
+      "refs": {
+        "Ipv4CidrBlockList$member": null,
+        "LocationState$InternalVpcIpv4CidrBlock": "<p>The CIDR block of the service VPC for this location. Add this CIDR block to your VPC route table to enable traffic routing through the Transit Gateway.</p>"
+      }
+    },
+    "Ipv4CidrBlockList": {
+      "base": null,
+      "refs": {
+        "VpcTransitConfiguration$Ipv4CidrBlocks": "<p>A list of IPv4 CIDR blocks in your VPC that you want the stream group to be able to access. You can specify up to 5 CIDR blocks. The CIDR blocks must be valid subsets of the VPC's CIDR blocks and cannot overlap with the service VPC CIDR block.</p>",
+        "VpcTransitConfigurationResponse$Ipv4CidrBlocks": "<p>The IPv4 CIDR blocks in your VPC that the stream group can access.</p>"
+      }
+    },
     "ListApplicationsInput": {
       "base": null,
       "refs": {}
@@ -744,7 +758,9 @@
         "ResourceNotFoundException$Message": "<p>Description of the error.</p>",
         "ServiceQuotaExceededException$Message": "<p>Description of the error.</p>",
         "ThrottlingException$Message": "<p>Description of the error.</p>",
-        "ValidationException$Message": "<p>Description of the error.</p>"
+        "ValidationException$Message": "<p>Description of the error.</p>",
+        "VpcTransitConfigurationResponse$TransitGatewayId": "<p>The ID of the Transit Gateway that Amazon GameLift Streams created for this VPC connection. Use this ID when creating your VPC attachment.</p>",
+        "VpcTransitConfigurationResponse$TransitGatewayResourceShareArn": "<p>The ARN of the AWS Resource Access Manager resource share for the Transit Gateway. You must accept this resource share before you can create a VPC attachment.</p>"
       }
     },
     "TagKey": {
@@ -865,6 +881,25 @@
     "ValidationException": {
       "base": "<p>One or more parameter values in the request fail to satisfy the specified constraints. Correct the invalid parameter values before retrying the request.</p>",
       "refs": {}
+    },
+    "VpcId": {
+      "base": null,
+      "refs": {
+        "VpcTransitConfiguration$VpcId": "<p>The ID of the Amazon VPC that you want to connect to the stream group. The VPC must be in the same Amazon Web Services account as the stream group. This value cannot be changed after the stream group is created.</p>",
+        "VpcTransitConfigurationResponse$VpcId": "<p>The ID of the Amazon VPC that is connected to the stream group.</p>"
+      }
+    },
+    "VpcTransitConfiguration": {
+      "base": "<p>Configuration for connecting a stream group location to resources in your Amazon VPC using AWS Transit Gateway. When you specify a VPC transit configuration, Amazon GameLift Streams creates a Transit Gateway and shares it with your account using AWS Resource Access Manager. After the stream group is active, you must complete the setup by accepting the resource share, creating a VPC attachment, and configuring routing.</p>",
+      "refs": {
+        "LocationConfiguration$VpcTransitConfiguration": "<p>Configuration for connecting the stream group to resources in your Amazon VPC using AWS Transit Gateway. This setting is optional. If specified, Amazon GameLift Streams creates a Transit Gateway to enable private network connectivity between the service VPC and your VPC. The VPC ID cannot be changed after the stream group is created, but you can update the CIDR blocks by calling <a href=\"https://docs.aws.amazon.com/gameliftstreams/latest/apireference/API_UpdateStreamGroup.html\">UpdateStreamGroup</a>.</p>"
+      }
+    },
+    "VpcTransitConfigurationResponse": {
+      "base": "<p>The VPC transit configuration details for a stream group location, including the Transit Gateway information needed to complete the VPC attachment setup.</p>",
+      "refs": {
+        "LocationState$VpcTransitConfiguration": "<p>The VPC transit configuration for this location, including the Transit Gateway details needed to complete the VPC attachment setup.</p>"
+      }
     },
     "WebSdkProtocolUrl": {
       "base": null,

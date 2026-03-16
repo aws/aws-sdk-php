@@ -16,6 +16,10 @@
     "UpdateExport": "<p>Updates an existing data export by overwriting all export parameters. All export parameters must be provided in the UpdateExport request.</p>"
   },
   "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You don't have sufficient access to perform this action.</p>",
+      "refs": {}
+    },
     "Arn": {
       "base": null,
       "refs": {
@@ -54,13 +58,11 @@
     },
     "CreateExportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateExportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DataQuery": {
       "base": "<p>The SQL query of column selections and row filters from the data table you want.</p>",
@@ -70,13 +72,11 @@
     },
     "DeleteExportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteExportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DestinationConfigurations": {
       "base": "<p>The destinations used for data exports.</p>",
@@ -172,9 +172,10 @@
     "GenericString": {
       "base": null,
       "refs": {
-        "Column$Description": "<p>The description for a column.</p>",
+        "AccessDeniedException$Message": null,
         "Column$Name": "<p>The column name.</p>",
         "Column$Type": "<p>The kind of data a column stores.</p>",
+        "Column$Description": "<p>The description for a column.</p>",
         "ExecutionReference$ExecutionId": "<p>The ID for this specific execution.</p>",
         "Export$Description": "<p>The description for this specific data export.</p>",
         "GenericStringList$member": null,
@@ -189,21 +190,20 @@
         "S3Destination$S3Prefix": "<p>The S3 path prefix you want prepended to the name of your data export.</p>",
         "S3Destination$S3Region": "<p>The S3 bucket Region.</p>",
         "ServiceQuotaExceededException$Message": null,
-        "ServiceQuotaExceededException$QuotaCode": "<p>The quota code that was exceeded.</p>",
         "ServiceQuotaExceededException$ResourceId": "<p>The identifier of the resource that exceeded quota.</p>",
         "ServiceQuotaExceededException$ResourceType": "<p>The type of the resource that exceeded quota.</p>",
+        "ServiceQuotaExceededException$QuotaCode": "<p>The quota code that was exceeded.</p>",
         "ServiceQuotaExceededException$ServiceCode": "<p>The service code that exceeded quota. It will always be “AWSBillingAndCostManagementDataExports”.</p>",
         "Table$Description": "<p>The description for the table.</p>",
-        "TableProperties$value": null,
+        "TablePropertyDescription$Name": "<p>The name of the table.</p>",
         "TablePropertyDescription$DefaultValue": "<p>The default value for the table.</p>",
         "TablePropertyDescription$Description": "<p>The description for the table.</p>",
-        "TablePropertyDescription$Name": "<p>The name of the table.</p>",
         "ThrottlingException$Message": null,
         "ThrottlingException$QuotaCode": "<p>The quota code that exceeded the throttling limit.</p>",
         "ThrottlingException$ServiceCode": "<p>The service code that exceeded the throttling limit. It will always be “AWSBillingAndCostManagementDataExports”.</p>",
         "ValidationException$Message": null,
-        "ValidationExceptionField$Message": "<p>A message with the reason for the validation exception error.</p>",
-        "ValidationExceptionField$Name": "<p>The field name where the invalid entry was detected.</p>"
+        "ValidationExceptionField$Name": "<p>The field name where the invalid entry was detected.</p>",
+        "ValidationExceptionField$Message": "<p>A message with the reason for the validation exception error.</p>"
       }
     },
     "GenericStringList": {
@@ -214,78 +214,63 @@
     },
     "GetExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetExecutionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetExportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetExportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTableRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTableResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalServerException": {
       "base": "<p>An error on the server occurred during the processing of your request. Try again later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExecutionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExecutionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExportsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExportsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTablesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTablesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResults": {
       "base": null,
@@ -329,8 +314,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified Amazon Resource Name (ARN) in the request doesn't exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceTag": {
       "base": "<p>The tag structure that contains a tag key and value.</p>",
@@ -385,18 +369,17 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>You've reached the limit on the number of resources you can create, or exceeded the size of an individual resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
-        "ExecutionStatus$CompletedAt": "<p>The time when the execution was completed.</p>",
         "ExecutionStatus$CreatedAt": "<p>The time when the execution was created.</p>",
+        "ExecutionStatus$CompletedAt": "<p>The time when the execution was completed.</p>",
         "ExecutionStatus$LastUpdatedAt": "<p>The time when the execution was last updated.</p>",
         "ExportStatus$CreatedAt": "<p>The timestamp of when the export was created.</p>",
-        "ExportStatus$LastRefreshedAt": "<p>The timestamp of when the export was last generated.</p>",
-        "ExportStatus$LastUpdatedAt": "<p>The timestamp of when the export was updated.</p>"
+        "ExportStatus$LastUpdatedAt": "<p>The timestamp of when the export was updated.</p>",
+        "ExportStatus$LastRefreshedAt": "<p>The timestamp of when the export was last generated.</p>"
       }
     },
     "Table": {
@@ -452,45 +435,43 @@
         "Table$TableProperties": "<p>The properties for the table.</p>"
       }
     },
-    "TagResourceRequest": {
+    "TablePropertyGenericString": {
       "base": null,
       "refs": {
+        "TableProperties$value": null
       }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateExportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateExportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>The input failed to meet the constraints specified by the Amazon Web Services service in a specified field.</p>",
