@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Handles errors that comes in the `error_description` field, specifically how SSO-OIDC service has it modeled.
+* `Aws\BedrockAgentCore` - Provide support to perform deterministic operations on agent runtime through shell command executions via the new InvokeAgentRuntimeCommand API
+* `Aws\Bedrock` - You can now generate policy scenarios on demand using the new GENERATE POLICY SCENARIOS build workflow type. Scenarios will no longer be automatically generated during INGEST CONTENT, REFINE POLICY, and IMPORT POLICY workflows, resulting in faster completion times for these operations.
+* `Aws\BedrockAgentCoreControl` - Supporting hosting of public ECR Container Images in AgentCore Runtime
+* `Aws\ECS` - Amazon ECS now supports configuring whether tags are propagated to the EC2 Instance Metadata Service (IMDS) for instances launched by the Managed Instances capacity provider. This gives customers control over tag visibility in IMDS when using ECS Managed Instances.
+
 ## 3.373.2 - 2026-03-13
 
 * `Aws\ConfigService` - Fix pagination support for DescribeConformancePackCompliance, and update OrganizationConfigRule InputParameters max length to match ConfigRule.

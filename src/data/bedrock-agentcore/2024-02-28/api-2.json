@@ -372,6 +372,25 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "InvokeAgentRuntimeCommand":{
+      "name":"InvokeAgentRuntimeCommand",
+      "http":{
+        "method":"POST",
+        "requestUri":"/runtimes/{agentRuntimeArn}/commands",
+        "responseCode":200
+      },
+      "input":{"shape":"InvokeAgentRuntimeCommandRequest"},
+      "output":{"shape":"InvokeAgentRuntimeCommandResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RuntimeClientError"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "InvokeCodeInterpreter":{
       "name":"InvokeCodeInterpreter",
       "http":{
@@ -1045,6 +1064,13 @@
       },
       "eventstream":true
     },
+    "CommandExecutionStatus":{
+      "type":"string",
+      "enum":[
+        "COMPLETED",
+        "TIMED_OUT"
+      ]
+    },
     "CompleteResourceTokenAuthRequest":{
       "type":"structure",
       "required":[
@@ -1105,6 +1131,28 @@
         "resource",
         "resource_link"
       ]
+    },
+    "ContentDeltaEvent":{
+      "type":"structure",
+      "members":{
+        "stdout":{"shape":"String"},
+        "stderr":{"shape":"String"}
+      }
+    },
+    "ContentStartEvent":{
+      "type":"structure",
+      "members":{}
+    },
+    "ContentStopEvent":{
+      "type":"structure",
+      "required":[
+        "exitCode",
+        "status"
+      ],
+      "members":{
+        "exitCode":{"shape":"Integer"},
+        "status":{"shape":"CommandExecutionStatus"}
+      }
     },
     "ContentTextString":{
       "type":"string",
@@ -1822,6 +1870,164 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "InvokeAgentRuntimeCommandRequest":{
+      "type":"structure",
+      "required":[
+        "agentRuntimeArn",
+        "body"
+      ],
+      "members":{
+        "contentType":{
+          "shape":"MimeType",
+          "location":"header",
+          "locationName":"Content-Type"
+        },
+        "accept":{
+          "shape":"MimeType",
+          "location":"header",
+          "locationName":"Accept"
+        },
+        "runtimeSessionId":{
+          "shape":"SessionType",
+          "idempotencyToken":true,
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Runtime-Session-Id"
+        },
+        "traceId":{
+          "shape":"InvokeAgentRuntimeCommandRequestTraceIdString",
+          "location":"header",
+          "locationName":"X-Amzn-Trace-Id"
+        },
+        "traceParent":{
+          "shape":"InvokeAgentRuntimeCommandRequestTraceParentString",
+          "location":"header",
+          "locationName":"traceparent"
+        },
+        "traceState":{
+          "shape":"InvokeAgentRuntimeCommandRequestTraceStateString",
+          "location":"header",
+          "locationName":"tracestate"
+        },
+        "baggage":{
+          "shape":"InvokeAgentRuntimeCommandRequestBaggageString",
+          "location":"header",
+          "locationName":"baggage"
+        },
+        "agentRuntimeArn":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"agentRuntimeArn"
+        },
+        "qualifier":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"qualifier"
+        },
+        "accountId":{
+          "shape":"InvokeAgentRuntimeCommandRequestAccountIdString",
+          "location":"querystring",
+          "locationName":"accountId"
+        },
+        "body":{"shape":"InvokeAgentRuntimeCommandRequestBody"}
+      },
+      "payload":"body"
+    },
+    "InvokeAgentRuntimeCommandRequestAccountIdString":{
+      "type":"string",
+      "pattern":"[0-9]{12}"
+    },
+    "InvokeAgentRuntimeCommandRequestBaggageString":{
+      "type":"string",
+      "max":8192,
+      "min":0
+    },
+    "InvokeAgentRuntimeCommandRequestBody":{
+      "type":"structure",
+      "required":["command"],
+      "members":{
+        "command":{"shape":"InvokeAgentRuntimeCommandRequestBodyCommandString"},
+        "timeout":{"shape":"Integer"}
+      }
+    },
+    "InvokeAgentRuntimeCommandRequestBodyCommandString":{
+      "type":"string",
+      "max":65536,
+      "min":1
+    },
+    "InvokeAgentRuntimeCommandRequestTraceIdString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "InvokeAgentRuntimeCommandRequestTraceParentString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "InvokeAgentRuntimeCommandRequestTraceStateString":{
+      "type":"string",
+      "max":512,
+      "min":0
+    },
+    "InvokeAgentRuntimeCommandResponse":{
+      "type":"structure",
+      "required":[
+        "contentType",
+        "stream"
+      ],
+      "members":{
+        "runtimeSessionId":{
+          "shape":"SessionId",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Runtime-Session-Id"
+        },
+        "traceId":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Amzn-Trace-Id"
+        },
+        "traceParent":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"traceparent"
+        },
+        "traceState":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"tracestate"
+        },
+        "baggage":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"baggage"
+        },
+        "contentType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Type"
+        },
+        "statusCode":{
+          "shape":"HttpResponseCode",
+          "location":"statusCode"
+        },
+        "stream":{"shape":"InvokeAgentRuntimeCommandStreamOutput"}
+      },
+      "payload":"stream"
+    },
+    "InvokeAgentRuntimeCommandStreamOutput":{
+      "type":"structure",
+      "members":{
+        "chunk":{"shape":"ResponseChunk"},
+        "accessDeniedException":{"shape":"AccessDeniedException"},
+        "internalServerException":{"shape":"InternalServerException"},
+        "resourceNotFoundException":{"shape":"ResourceNotFoundException"},
+        "serviceQuotaExceededException":{"shape":"ServiceQuotaExceededException"},
+        "throttlingException":{"shape":"ThrottlingException"},
+        "validationException":{"shape":"ValidationException"},
+        "runtimeClientError":{"shape":"RuntimeClientError"}
+      },
+      "eventstream":true
     },
     "InvokeAgentRuntimeRequest":{
       "type":"structure",
@@ -2610,6 +2816,15 @@
       "max":2048,
       "min":1,
       "pattern":"\\w+:(\\/?\\/?)[^\\s]+"
+    },
+    "ResponseChunk":{
+      "type":"structure",
+      "members":{
+        "contentStart":{"shape":"ContentStartEvent"},
+        "contentDelta":{"shape":"ContentDeltaEvent"},
+        "contentStop":{"shape":"ContentStopEvent"}
+      },
+      "event":true
     },
     "ResponseStream":{
       "type":"blob",
