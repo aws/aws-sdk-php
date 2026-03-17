@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.373.4 - 2026-03-17
 
 * `Aws\Signature` - Fixes bug in canonicalized query generation when dealing with numeric values
 * `Aws\BedrockAgentCoreControl` - Deprecating namespaces field and adding namespaceTemplates.
