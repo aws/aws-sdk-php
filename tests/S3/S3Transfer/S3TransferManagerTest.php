@@ -2470,7 +2470,7 @@ EOF
                 'expected_object_list' => [
                     "folder_2/key_2.txt",
                     "folder_1/key_1.txt",
-                    "folder_1/key_1.txt",
+                    "folder_1/key_2.txt",
                 ]
             ]
         ];
