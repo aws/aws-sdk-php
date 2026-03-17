@@ -18,7 +18,7 @@ final class DownloadDirectoryResult
     /**
      * @param int $objectsDownloaded
      * @param int $objectsFailed
-     * @param array $reasons
+     * @param Throwable|null $reason
      */
     public function __construct(
         int $objectsDownloaded,

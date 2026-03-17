@@ -49,7 +49,6 @@ final class MultipartUploaderTest extends TestCase
         restore_error_handler();
     }
 
-
     /**
      * @param array $sourceConfig
      * @param array $commandArgs
@@ -150,7 +149,8 @@ final class MultipartUploaderTest extends TestCase
     /**
      * @return array[]
      */
-    public static function multipartUploadProvider(): array {
+    public static function multipartUploadProvider(): array
+    {
         return [
             '5_parts_upload' => [
                 'source_config' => [
@@ -251,6 +251,9 @@ final class MultipartUploaderTest extends TestCase
         ];
     }
 
+    /**
+     * @return S3ClientInterface
+     */
     private function getMultipartUploadS3Client(): S3ClientInterface
     {
         return new S3Client([
@@ -281,6 +284,13 @@ EOF;
         ]);
     }
 
+
+    /**
+     * @param int $partSize
+     * @param bool $expectError
+     *
+     * @return void
+     */
     #[DataProvider('validatePartSizeProvider')]
     public function testValidatePartSize(
         int $partSize,
@@ -312,7 +322,8 @@ EOF;
     /**
      * @return array
      */
-    public static function validatePartSizeProvider(): array {
+    public static function validatePartSizeProvider(): array
+    {
         return [
             'part_size_over_max' => [
                 'part_size' => AbstractMultipartUploader::PART_MAX_SIZE + 1,
@@ -333,6 +344,12 @@ EOF;
         ];
     }
 
+    /**
+     * @param string|int $source
+     * @param bool $expectError
+     *
+     * @return void
+     */
     #[DataProvider('invalidSourceStringProvider')]
     public function testInvalidSourceStringThrowsException(
         string|int $source,
@@ -380,7 +397,8 @@ EOF;
     /**
      * @return array[]
      */
-    public static function invalidSourceStringProvider(): array {
+    public static function invalidSourceStringProvider(): array
+    {
         return [
             'invalid_source_file_path_1' => [
                 'source' => 'invalid',
@@ -401,6 +419,9 @@ EOF;
         ];
     }
 
+    /**
+     * @return void
+     */
     public function testTransferListenerNotifierNotifiesListenersOnSuccess(): void
     {
         $noOfListeners = 3;
@@ -465,8 +486,11 @@ EOF;
     /**
      * Test to make sure createMultipart, uploadPart, and completeMultipart
      * operations are called.
+     *
+     * @return void
      */
-    public function testMultipartOperationsAreCalled(): void {
+    public function testMultipartOperationsAreCalled(): void
+    {
         $operationsCalled = [
             'CreateMultipartUpload' => false,
             'UploadPart' => false,
@@ -517,12 +541,20 @@ EOF;
         }
     }
 
+    /**
+     * @param array $sourceConfig
+     * @param array $checksumConfig
+     * @param array $expectedOperationHeaders
+     *
+     * @return void
+     */
     #[DataProvider('multipartUploadWithCustomChecksumProvider')]
     public function testMultipartUploadWithCustomChecksum(
         array $sourceConfig,
         array $checksumConfig,
         array $expectedOperationHeaders,
-    ): void {
+    ): void
+    {
         // $operationsCalled: To make sure each expected operation is invoked.
         $operationsCalled = [];
         foreach (array_keys($expectedOperationHeaders) as $key) {
@@ -645,7 +677,11 @@ EOF;
         ];
     }
 
-    public function testMultipartUploadAbort() {
+    /**
+     * @return void
+     */
+    public function testMultipartUploadAbort()
+    {
         $this->expectException(S3TransferException::class);
         $this->expectExceptionMessage('Upload failed');
         $abortMultipartCalled = false;
@@ -701,6 +737,9 @@ EOF;
         }
     }
 
+    /**
+     * @return void
+     */
     public function testTransferListenerNotifierNotifiesListenersOnFailure(): void
     {
         $this->expectException(\Exception::class);
@@ -758,6 +797,9 @@ EOF;
         $multipartUploader->promise()->wait();
     }
 
+    /**
+     * @return void
+     */
     public function testTransferListenerNotifierWithEmptyListeners(): void
     {
         $listenerNotifier = new TransferListenerNotifier([]);
@@ -808,6 +850,11 @@ EOF;
     /**
      * This test makes sure that when full object checksum type is resolved
      * then, if a custom algorithm provide is not CRC family then it should fail.
+     *
+     * @param array $checksumConfig
+     * @param bool $expectsError
+     *
+     * @return void
      */
     #[DataProvider('fullObjectChecksumWorksJustWithCRCProvider')]
     public function testFullObjectChecksumWorksJustWithCRC(
@@ -854,7 +901,8 @@ EOF;
     /**
      * @return Generator
      */
-    public static function fullObjectChecksumWorksJustWithCRCProvider(): Generator {
+    public static function fullObjectChecksumWorksJustWithCRCProvider(): Generator
+    {
         yield 'sha_256_should_fail' => [
             'checksum_config' => [
                 'ChecksumSHA256' => '47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='

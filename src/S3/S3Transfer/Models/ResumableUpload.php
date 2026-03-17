@@ -182,30 +182,6 @@ final class ResumableUpload extends AbstractResumableTransfer
     /**
      * @return string
      */
-    public function getResumeFilePath(): string
-    {
-        return $this->resumeFilePath;
-    }
-
-    /**
-     * @return array
-     */
-    public function getRequestArgs(): array
-    {
-        return $this->requestArgs;
-    }
-
-    /**
-     * @return array
-     */
-    public function getConfig(): array
-    {
-        return $this->config;
-    }
-
-    /**
-     * @return string
-     */
     public function getUploadId(): string
     {
         return $this->uploadId;
@@ -217,14 +193,6 @@ final class ResumableUpload extends AbstractResumableTransfer
     public function getPartsCompleted(): array
     {
         return $this->partsCompleted;
-    }
-
-    /**
-     * @return array
-     */
-    public function getCurrentSnapshot(): array
-    {
-        return $this->currentSnapshot;
     }
 
     /**
@@ -257,16 +225,6 @@ final class ResumableUpload extends AbstractResumableTransfer
     public function isFullObjectChecksum(): bool
     {
         return $this->isFullObjectChecksum;
-    }
-
-    /**
-     * Update the current snapshot.
-     *
-     * @param array $snapshot The new snapshot data
-     */
-    public function updateCurrentSnapshot(array $snapshot): void
-    {
-        $this->currentSnapshot = $snapshot;
     }
 
     /**

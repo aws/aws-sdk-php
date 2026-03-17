@@ -20,6 +20,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(AbstractMultipartDownloader::class)]
+#[CoversClass(PartGetMultipartDownloader::class)]
+#[CoversClass(RangeGetMultipartDownloader::class)]
 final class AbstractMultipartDownloaderTest extends TestCase
 {
     /**

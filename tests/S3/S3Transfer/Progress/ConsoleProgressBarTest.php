@@ -7,9 +7,9 @@ use Aws\S3\S3Transfer\Progress\ConsoleProgressBar;
 use Aws\S3\S3Transfer\Progress\PlainProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\AbstractProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\TransferProgressBarFormat;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ConsoleProgressBar::class)]
 final class ConsoleProgressBarTest extends TestCase

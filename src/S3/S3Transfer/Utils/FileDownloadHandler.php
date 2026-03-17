@@ -7,7 +7,8 @@ use Aws\S3\S3Transfer\AbstractMultipartDownloader;
 use Aws\S3\S3Transfer\Exception\FileDownloadException;
 use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 
-final class FileDownloadHandler extends AbstractDownloadHandler implements ResumableDownloadHandler
+final class FileDownloadHandler extends AbstractDownloadHandler
+    implements ResumableDownloadHandlerInterface
 {
     private const IDENTIFIER_LENGTH = 8;
     private const TEMP_INFIX = '.s3tmp.';

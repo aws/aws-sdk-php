@@ -29,13 +29,12 @@ final class TransferProgressSnapshot
      * @param Throwable|string|null $reason
      */
     public function __construct(
-        string                $identifier,
-        int                   $transferredBytes,
-        int                   $totalBytes,
-        ?array                $response = null,
+        string $identifier,
+        int $transferredBytes,
+        int $totalBytes,
+        ?array $response = null,
         Throwable|string|null $reason = null,
-    )
-    {
+    ) {
         $this->identifier = $identifier;
         $this->transferredBytes = $transferredBytes;
         $this->totalBytes = $totalBytes;

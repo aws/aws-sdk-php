@@ -42,9 +42,11 @@ final class DirectoryUploader implements PromisorInterface
     private UploadDirectoryRequest $uploadDirectoryRequest;
 
     /**
-     * @param array $config
      * @param S3ClientInterface $s3Client
-     * @param Closure $uploadObject A closure that receives (S3ClientInterface, UploadRequest) and returns PromiseInterface
+     * @param array $config
+     * @param Closure $uploadObject A closure that receives
+     *  (S3ClientInterface, UploadRequest) and returns PromiseInterface
+     * @param UploadDirectoryRequest $uploadDirectoryRequest
      */
     public function __construct(
         S3ClientInterface $s3Client,
@@ -88,14 +90,10 @@ final class DirectoryUploader implements PromisorInterface
         $failurePolicyCallback = $config['failure_policy'] ?? null;
 
         $sourceDirectory = $this->uploadDirectoryRequest->getSourceDirectory();
-        $filesIteratorFactory = fn() => $this->iterateSourceFiles(
+        $files = $this->iterateSourceFiles(
             $sourceDirectory,
             $config,
             $filter
-        );
-
-        [$totalFiles, $totalBytes] = $this->computeUploadTotals(
-            $filesIteratorFactory()
         );
 
         $baseDir = rtrim($sourceDirectory, '/') . DIRECTORY_SEPARATOR;
@@ -122,8 +120,8 @@ final class DirectoryUploader implements PromisorInterface
                 $targetBucket,
                 $s3Prefix
             ),
-            totalBytes: $totalBytes,
-            totalFiles: $totalFiles,
+            totalBytes: 0,
+            totalFiles: 0,
             directoryListeners: $directoryListeners,
             directoryProgressTracker: $directoryProgressTracker,
         );
@@ -139,7 +137,7 @@ final class DirectoryUploader implements PromisorInterface
 
         return Each::ofLimitAll(
             $this->createUploadPromises(
-                $filesIteratorFactory(),
+                $files,
                 $config,
                 $uploadObjectRequestModifier,
                 $failurePolicyCallback,
@@ -173,7 +171,6 @@ final class DirectoryUploader implements PromisorInterface
 
     /**
      * @param iterable $files
-     * @param UploadDirectoryRequest $uploadDirectoryRequest
      * @param array $config
      * @param callable|null $uploadObjectRequestModifier
      * @param callable|null $failurePolicyCallback
@@ -186,6 +183,7 @@ final class DirectoryUploader implements PromisorInterface
      * @param array $singleObjectListeners
      *
      * @return \Generator
+     * @throws Throwable
      */
     private function createUploadPromises(
         iterable $files,
@@ -202,6 +200,11 @@ final class DirectoryUploader implements PromisorInterface
     ): \Generator
     {
         foreach ($files as $file) {
+            $fileSize = filesize($file);
+            $aggregator->incrementTotals(
+                $fileSize !== false ? $fileSize : 0
+            );
+
             $relativePath = substr($file, strlen($baseDir));
             if (str_contains($relativePath, $delimiter) && $delimiter !== '/') {
                 throw new S3TransferException(
@@ -337,29 +340,6 @@ final class DirectoryUploader implements PromisorInterface
         foreach ($files as $file) {
             yield $file;
         }
-    }
-
-    /**
-     * Compute totals without materializing files in memory.
-     *
-     * @param iterable $files
-     *
-     * @return array{int,int}
-     */
-    private function computeUploadTotals(iterable $files): array
-    {
-        $totalFiles = 0;
-        $totalBytes = 0;
-
-        foreach ($files as $file) {
-            $totalFiles++;
-            $size = filesize($file);
-            if ($size !== false) {
-                $totalBytes += $size;
-            }
-        }
-
-        return [$totalFiles, $totalBytes];
     }
 
     /**

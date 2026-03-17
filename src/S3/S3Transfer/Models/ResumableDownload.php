@@ -225,44 +225,11 @@ final class ResumableDownload extends AbstractResumableTransfer
     }
 
     /**
-     * @return string
-     */
-    public function getResumeFilePath(): string
-    {
-        return $this->resumeFilePath;
-    }
-
-
-    /**
-     * @return array
-     */
-    public function getRequestArgs(): array
-    {
-        return $this->requestArgs;
-    }
-
-    /**
-     * @return array
-     */
-    public function getConfig(): array
-    {
-        return $this->config;
-    }
-
-    /**
      * @return array
      */
     public function getInitialRequestResult(): array
     {
         return $this->initialRequestResult;
-    }
-
-    /**
-     * @return array
-     */
-    public function getCurrentSnapshot(): array
-    {
-        return $this->currentSnapshot;
     }
 
     /**
@@ -319,16 +286,6 @@ final class ResumableDownload extends AbstractResumableTransfer
     public function getDestination(): string
     {
         return $this->destination;
-    }
-
-    /**
-     * Update the current snapshot.
-     *
-     * @param array $snapshot The new snapshot data
-     */
-    public function updateCurrentSnapshot(array $snapshot): void
-    {
-        $this->currentSnapshot = $snapshot;
     }
 
     /**

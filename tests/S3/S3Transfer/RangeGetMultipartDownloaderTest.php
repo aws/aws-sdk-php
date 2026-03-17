@@ -14,9 +14,9 @@ use Generator;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Utils;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
 #[CoversClass(RangeGetMultipartDownloader::class)]
 final class RangeGetMultipartDownloaderTest extends TestCase
@@ -148,6 +148,7 @@ final class RangeGetMultipartDownloaderTest extends TestCase
      * Tests nextCommand method generates correct range headers.
      *
      * @return void
+     * @throws \ReflectionException
      */
     public function testNextCommandGeneratesCorrectRangeHeaders(): void
     {
@@ -187,6 +188,7 @@ final class RangeGetMultipartDownloaderTest extends TestCase
      * Tests computeObjectDimensions method for single part download.
      *
      * @return void
+     * @throws \ReflectionException
      */
     public function testComputeObjectDimensionsForSinglePart(): void
     {

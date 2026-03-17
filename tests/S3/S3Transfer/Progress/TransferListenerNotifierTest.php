@@ -10,8 +10,10 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(TransferListenerNotifier::class)]
 final class TransferListenerNotifierTest extends TestCase
 {
-    public function testListenerNotifier(): void
-    {
+    /**
+     * @return void
+     */
+    public function testListenerNotifier(): void {
         $listeners = [
             $this->getMockBuilder(AbstractTransferListener::class)
                 ->getMock(),

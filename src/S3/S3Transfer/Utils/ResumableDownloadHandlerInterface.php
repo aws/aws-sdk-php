@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Utils;
 
-interface ResumableDownloadHandler
+interface ResumableDownloadHandlerInterface
 {
 
     /**

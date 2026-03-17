@@ -39,12 +39,11 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
-use RuntimeException;
 use function Aws\filter;
-use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(S3TransferManager::class)]
 final class S3TransferManagerTest extends TestCase
@@ -587,7 +586,8 @@ EOF
     private function testUploadResolvedChecksum(
         ?string $checksumAlgorithm,
         string $expectedChecksum
-    ): void {
+    ): void
+    {
         $client = $this->getS3ClientMock([
             'getCommand' => function (
                 string $commandName,
@@ -1063,12 +1063,11 @@ EOF
             );
         }
 
-        try {
-            $s3Client = $this->getS3ClientMock();
+        $s3Client = $this->getS3ClientMock();
             $s3TransferManager = new S3TransferManager(
                 $s3Client,
             );
-            $s3TransferManager->uploadDirectory(
+            $result = $s3TransferManager->uploadDirectory(
                 new UploadDirectoryRequest(
                     $parentDirectory,
                     "Bucket",
@@ -1079,15 +1078,14 @@ EOF
                     ]
                 )
             )->wait();
-            $this->fail(
-                "Upload directory should have been failed!"
+            $this->assertNotNull(
+                $result->getReason(),
+                "Upload directory should have failed with a reason"
             );
-        } catch (RuntimeException $exception) {
             $this->assertStringContainsString(
                 "A circular symbolic link traversal has been detected at",
-                $exception->getMessage()
+                $result->getReason()->getMessage()
             );
-        }
     }
 
     /**
@@ -1674,6 +1672,7 @@ EOF
     }
 
     /**
+     *
      * @param array $transferManagerConfig
      * @param array $downloadConfig
      * @param array $downloadArgs
@@ -2301,7 +2300,7 @@ EOF
      *
      * @return void
      */
-    #[DataProvider('downloadDirectoryAppliesFilterProvider')]
+    #[DataProvider('downloadDirectoryAppliesFilter')]
     public function testDownloadDirectoryAppliesFilter(
         Closure $filter,
         array $objectList,
@@ -2402,7 +2401,7 @@ EOF
     /**
      * @return array[]
      */
-    public static function downloadDirectoryAppliesFilterProvider(): array
+    public static function downloadDirectoryAppliesFilter(): array
     {
         return [
             'filter_1' => [
@@ -2932,6 +2931,8 @@ EOF
      * @param array $requestArgs
      * @param array $expectations
      * @param array $outcomes
+     *
+     * @return void
      */
     #[DataProvider('modeledDownloadCasesProvider')]
     public function testModeledCasesForDownload(

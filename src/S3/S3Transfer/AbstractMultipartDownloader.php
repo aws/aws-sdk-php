@@ -11,7 +11,7 @@ use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
-use Aws\S3\S3Transfer\Utils\ResumableDownloadHandler;
+use Aws\S3\S3Transfer\Utils\ResumableDownloadHandlerInterface;
 use Aws\S3\S3Transfer\Utils\AbstractDownloadHandler;
 use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 use GuzzleHttp\Promise\Coroutine;
@@ -85,14 +85,13 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
         protected readonly S3ClientInterface $s3Client,
         array $downloadRequestArgs,
         array $config = [],
-
         ?AbstractDownloadHandler $downloadHandler = null,
         array $partsCompleted = [],
         int $objectPartsCount = 0,
         int $objectSizeInBytes = 0,
         ?string $eTag = null,
         ?TransferProgressSnapshot $currentSnapshot = null,
-        ?TransferListenerNotifier $listenerNotifier  = null,
+        ?TransferListenerNotifier $listenerNotifier = null,
         ?ResumableDownload $resumableDownload = null
     ) {
         $this->resumableDownload = $resumableDownload;
@@ -554,7 +553,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
     private function persistResumeState(): void
     {
         // Only persist if we have a download handler that supports resume
-        if (!($this->downloadHandler instanceof ResumableDownloadHandler)) {
+        if (!($this->downloadHandler instanceof ResumableDownloadHandlerInterface)) {
             return;
         }
 
@@ -571,8 +570,8 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
                 $resumeFilePath,
                 $this->downloadRequestArgs,
                 $config,
-                $this->initialRequestResult,
                 $snapshotData,
+                $this->initialRequestResult,
                 $this->partsCompleted,
                 $this->objectPartsCount,
                 $this->downloadHandler->getTemporaryFilePath(),

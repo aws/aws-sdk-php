@@ -14,9 +14,9 @@ use Generator;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Utils;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
 #[CoversClass(PartGetMultipartDownloader::class)]
 final class PartGetMultipartDownloaderTest extends TestCase
@@ -82,7 +82,7 @@ final class PartGetMultipartDownloaderTest extends TestCase
                 ]));
             });
         $mockClient->method('getCommand')
-            ->willReturnCallback(function ($commandName, $args) {
+            -> willReturnCallback(function ($commandName, $args) {
                 return new Command($commandName, $args);
             });
 
@@ -218,7 +218,7 @@ final class PartGetMultipartDownloaderTest extends TestCase
                 return new Command($commandName, $args);
             });
         $s3Client->method('executeAsync')
-            ->willReturnCallback(function ($command)
+            -> willReturnCallback(function ($command)
             use (
                 $eTag,
                 $objectSizeInBytes,
