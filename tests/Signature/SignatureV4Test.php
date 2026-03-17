@@ -367,6 +367,20 @@ class SignatureV4Test extends TestCase
         $this->assertSame($expectedSigned, Psr7\Message::toString($signed));
     }
 
+    public function testCanonicalizedQuerySortingParameterMultiOccurrenceNumericValues(): void
+    {
+        $signature = new SignatureV4('service', 'region');
+
+        $canonicalizedQuery = new \ReflectionMethod($signature, 'getCanonicalizedQuery');
+        $parameters = [
+            'parameter1' => ['100', '50'],
+            'parameter2' => 'value',
+        ];
+
+        $query = $canonicalizedQuery->invoke($signature, $parameters);
+        $this->assertSame('parameter1=100&parameter1=50&parameter2=value', $query);
+    }
+
     public function testEnsuresContentSha256CanBeCalculated()
     {
         $this->expectException(\Aws\Exception\CouldNotCreateChecksumException::class);
