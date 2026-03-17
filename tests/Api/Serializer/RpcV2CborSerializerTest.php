@@ -11,6 +11,7 @@ use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use Aws\Exception\AwsException;
 use DateTime;
 use DateTimeImmutable;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -214,9 +215,7 @@ class RpcV2CborSerializerTest extends TestCase
         $this->assertSame($expected, $decoded);
     }
 
-    /**
-     * @dataProvider timestampProvider
-     */
+    #[DataProvider('timestampProvider')]
     public function testSerializesTimestamp($input, $expected): void
     {
         $request = $this->getRequest(
@@ -230,7 +229,7 @@ class RpcV2CborSerializerTest extends TestCase
         $this->assertSame(['createdAt' => $expected], $decoded);
     }
 
-    public function timestampProvider(): array
+    public static function timestampProvider(): array
     {
         $dateTime = new DateTime('2024-01-15 10:30:00 UTC');
         $dateTimeImmutable = new DateTimeImmutable('2024-01-15 10:30:00 UTC');

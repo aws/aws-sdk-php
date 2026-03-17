@@ -7,6 +7,7 @@ use Aws\MonitoringEventsInterface;
 use Aws\Result;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use GuzzleHttp\Promise;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Yoast\PHPUnitPolyfills\Polyfills\AssertIsType;
 
 trait MonitoringMiddlewareTestingTrait
@@ -14,9 +15,7 @@ trait MonitoringMiddlewareTestingTrait
     use AssertIsType;
     use ArraySubsetAsserts;
 
-    /**
-     * @dataProvider getMonitoringDataTests
-     */
+    #[DataProvider('getMonitoringDataTests')]
     public function testPopulatesMonitoringData(
         $middleware,
         $command,

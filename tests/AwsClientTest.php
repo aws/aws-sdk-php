@@ -1014,8 +1014,6 @@ EOT
     }
 
     /**
-     * @dataProvider appendEventStreamFlagMiddlewareProvider
-     *
      * @param array $definition
      * @param bool $isFlagPresent
      *
@@ -1023,6 +1021,7 @@ EOT
      *
      * @throws Exception
      */
+    #[DataProvider('appendEventStreamFlagMiddlewareProvider')]
     public function testAppendEventStreamHttpFlagMiddleware(
         array $definition,
         bool $isFlagPresent
@@ -1061,7 +1060,7 @@ EOT
     /**
      * @return array[]
      */
-    public function appendEventStreamFlagMiddlewareProvider(): array
+    public static function appendEventStreamFlagMiddlewareProvider(): array
     {
         return [
             'service_with_flag_present' => [

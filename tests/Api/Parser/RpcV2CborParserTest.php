@@ -9,6 +9,7 @@ use Aws\Api\Service;
 use Aws\CommandInterface;
 use DateTimeImmutable;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -550,9 +551,7 @@ class RpcV2CborParserTest extends TestCase
         $this->assertSame($utf8String, $result['message']);
     }
 
-    /**
-     * @dataProvider protocolHeaderProvider
-     */
+    #[DataProvider('protocolHeaderProvider')]
     public function testProtocolHeaderValidation(
         array $headers,
         int $statusCode,
@@ -593,7 +592,7 @@ class RpcV2CborParserTest extends TestCase
     /**
      * Data provider for protocol header mismatch test cases
      */
-    public function protocolHeaderProvider(): array
+    public static function protocolHeaderProvider(): array
     {
         return [
             'missing_header' => [
