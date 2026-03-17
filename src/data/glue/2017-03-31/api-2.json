@@ -5441,7 +5441,8 @@
         "CatalogProperties":{"shape":"CatalogProperties"},
         "CreateTableDefaultPermissions":{"shape":"PrincipalPermissionsList"},
         "CreateDatabaseDefaultPermissions":{"shape":"PrincipalPermissionsList"},
-        "AllowFullTableExternalDataAccess":{"shape":"AllowFullTableExternalDataAccessEnum"}
+        "AllowFullTableExternalDataAccess":{"shape":"AllowFullTableExternalDataAccessEnum"},
+        "OverwriteChildResourcePermissionsWithDefault":{"shape":"OverwriteChildResourcePermissionsWithDefaultEnum"}
       }
     },
     "CatalogKafkaSource":{
@@ -13725,6 +13726,13 @@
         "MetadataValue":{"shape":"MetadataValueString"},
         "CreatedTime":{"shape":"CreatedTimestamp"}
       }
+    },
+    "OverwriteChildResourcePermissionsWithDefaultEnum":{
+      "type":"string",
+      "enum":[
+        "Accept",
+        "Deny"
+      ]
     },
     "PIIDetection":{
       "type":"structure",

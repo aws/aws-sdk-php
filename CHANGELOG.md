@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Signature` - Fixes bug in canonicalized query generation when dealing with numeric values
+* `Aws\BedrockAgentCoreControl` - Deprecating namespaces field and adding namespaceTemplates.
+* `Aws\Glue` - Provide approval to overwrite existing Lake Formation permissions on all child resources with the default permissions specified in 'CreateTableDefaultPermissions' and 'CreateDatabaseDefaultPermissions' when updating catalog. Allowed values are ["Accept","Deny"] .
+* `Aws\EMR` - Add S3LoggingConfiguration to Control LogUploads
+
 ## 3.373.3 - 2026-03-16
 
 * `Aws\` - Handles errors that comes in the `error_description` field, specifically how SSO-OIDC service has it modeled.

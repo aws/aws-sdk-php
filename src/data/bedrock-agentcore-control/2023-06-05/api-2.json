@@ -3097,7 +3097,13 @@
       "members":{
         "name":{"shape":"Name"},
         "description":{"shape":"Description"},
-        "namespaces":{"shape":"NamespacesList"},
+        "namespaces":{
+          "shape":"NamespacesList",
+          "deprecated":true,
+          "deprecatedMessage":"Use namespaceTemplates instead",
+          "deprecatedSince":"2026-03-02"
+        },
+        "namespaceTemplates":{"shape":"NamespacesList"},
         "configuration":{"shape":"CustomConfigurationInput"}
       }
     },
@@ -3664,7 +3670,13 @@
       "members":{
         "name":{"shape":"Name"},
         "description":{"shape":"Description"},
-        "namespaces":{"shape":"NamespacesList"},
+        "namespaces":{
+          "shape":"NamespacesList",
+          "deprecated":true,
+          "deprecatedMessage":"Use namespaceTemplates instead",
+          "deprecatedSince":"2026-03-02"
+        },
+        "namespaceTemplates":{"shape":"NamespacesList"},
         "reflectionConfiguration":{"shape":"EpisodicReflectionConfigurationInput"}
       }
     },
@@ -3707,21 +3719,37 @@
       "members":{
         "appendToPrompt":{"shape":"Prompt"},
         "modelId":{"shape":"String"},
-        "namespaces":{"shape":"NamespacesList"}
+        "namespaces":{
+          "shape":"NamespacesList",
+          "deprecated":true,
+          "deprecatedMessage":"Use namespaceTemplates instead",
+          "deprecatedSince":"2026-03-02"
+        },
+        "namespaceTemplates":{"shape":"NamespacesList"}
       }
     },
     "EpisodicReflectionConfiguration":{
       "type":"structure",
-      "required":["namespaces"],
       "members":{
-        "namespaces":{"shape":"NamespacesList"}
+        "namespaces":{
+          "shape":"NamespacesList",
+          "deprecated":true,
+          "deprecatedMessage":"Use namespaceTemplates instead",
+          "deprecatedSince":"2026-03-02"
+        },
+        "namespaceTemplates":{"shape":"NamespacesList"}
       }
     },
     "EpisodicReflectionConfigurationInput":{
       "type":"structure",
-      "required":["namespaces"],
       "members":{
-        "namespaces":{"shape":"NamespacesList"}
+        "namespaces":{
+          "shape":"NamespacesList",
+          "deprecated":true,
+          "deprecatedMessage":"Use namespaceTemplates instead",
+          "deprecatedSince":"2026-03-02"
+        },
+        "namespaceTemplates":{"shape":"NamespacesList"}
       }
     },
     "EpisodicReflectionOverride":{
@@ -3733,7 +3761,13 @@
       "members":{
         "appendToPrompt":{"shape":"Prompt"},
         "modelId":{"shape":"String"},
-        "namespaces":{"shape":"NamespacesList"}
+        "namespaces":{
+          "shape":"NamespacesList",
+          "deprecated":true,
+          "deprecatedMessage":"Use namespaceTemplates instead",
+          "deprecatedSince":"2026-03-02"
+        },
+        "namespaceTemplates":{"shape":"NamespacesList"}
       }
     },
     "EvaluationConfigDescription":{
@@ -5639,7 +5673,8 @@
         "strategyId",
         "name",
         "type",
-        "namespaces"
+        "namespaces",
+        "namespaceTemplates"
       ],
       "members":{
         "strategyId":{"shape":"MemoryStrategyId"},
@@ -5647,7 +5682,13 @@
         "description":{"shape":"Description"},
         "configuration":{"shape":"StrategyConfiguration"},
         "type":{"shape":"MemoryStrategyType"},
-        "namespaces":{"shape":"NamespacesList"},
+        "namespaces":{
+          "shape":"NamespacesList",
+          "deprecated":true,
+          "deprecatedMessage":"Use namespaceTemplates instead",
+          "deprecatedSince":"2026-03-02"
+        },
+        "namespaceTemplates":{"shape":"NamespacesList"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
         "status":{"shape":"MemoryStrategyStatus"}
@@ -5811,7 +5852,13 @@
       "members":{
         "memoryStrategyId":{"shape":"String"},
         "description":{"shape":"Description"},
-        "namespaces":{"shape":"NamespacesList"},
+        "namespaces":{
+          "shape":"NamespacesList",
+          "deprecated":true,
+          "deprecatedMessage":"Use namespaceTemplates instead",
+          "deprecatedSince":"2026-03-02"
+        },
+        "namespaceTemplates":{"shape":"NamespacesList"},
         "configuration":{"shape":"ModifyStrategyConfiguration"}
       }
     },
@@ -5852,13 +5899,14 @@
     },
     "Namespace":{
       "type":"string",
-      "max":1024,
+      "max":512,
       "min":1,
       "pattern":"[a-zA-Z0-9\\-_\\/]*(\\{(actorId|sessionId|memoryStrategyId)\\}[a-zA-Z0-9\\-_\\/]*)*"
     },
     "NamespacesList":{
       "type":"list",
       "member":{"shape":"Namespace"},
+      "max":1,
       "min":1
     },
     "NaturalLanguage":{
@@ -6698,7 +6746,13 @@
       "members":{
         "name":{"shape":"Name"},
         "description":{"shape":"Description"},
-        "namespaces":{"shape":"NamespacesList"}
+        "namespaces":{
+          "shape":"NamespacesList",
+          "deprecated":true,
+          "deprecatedMessage":"Use namespaceTemplates instead",
+          "deprecatedSince":"2026-03-02"
+        },
+        "namespaceTemplates":{"shape":"NamespacesList"}
       }
     },
     "SemanticOverrideConfigurationInput":{
@@ -6942,7 +6996,13 @@
       "members":{
         "name":{"shape":"Name"},
         "description":{"shape":"Description"},
-        "namespaces":{"shape":"NamespacesList"}
+        "namespaces":{
+          "shape":"NamespacesList",
+          "deprecated":true,
+          "deprecatedMessage":"Use namespaceTemplates instead",
+          "deprecatedSince":"2026-03-02"
+        },
+        "namespaceTemplates":{"shape":"NamespacesList"}
       }
     },
     "SummaryOverrideConfigurationInput":{
@@ -7800,7 +7860,13 @@
       "members":{
         "name":{"shape":"Name"},
         "description":{"shape":"Description"},
-        "namespaces":{"shape":"NamespacesList"}
+        "namespaces":{
+          "shape":"NamespacesList",
+          "deprecated":true,
+          "deprecatedMessage":"Use namespaceTemplates instead",
+          "deprecatedSince":"2026-03-02"
+        },
+        "namespaceTemplates":{"shape":"NamespacesList"}
       }
     },
     "UserPreferenceOverrideConfigurationInput":{

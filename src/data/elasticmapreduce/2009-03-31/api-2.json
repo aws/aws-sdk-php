@@ -2475,10 +2475,31 @@
         "Marker":{"shape":"String"}
       }
     },
+    "LogType":{
+      "type":"string",
+      "enum":[
+        "system-logs",
+        "application-logs",
+        "persistent-ui-logs"
+      ]
+    },
+    "LogTypeMap":{
+      "type":"map",
+      "key":{"shape":"LogType"},
+      "value":{"shape":"LogUploadPolicyValue"}
+    },
     "LogTypesMap":{
       "type":"map",
       "key":{"shape":"XmlString"},
       "value":{"shape":"XmlStringList"}
+    },
+    "LogUploadPolicyValue":{
+      "type":"string",
+      "enum":[
+        "emr-managed",
+        "on-customer-s3only",
+        "disabled"
+      ]
     },
     "Long":{"type":"long"},
     "ManagedScalingPolicy":{
@@ -2550,7 +2571,8 @@
     "MonitoringConfiguration":{
       "type":"structure",
       "members":{
-        "CloudWatchLogConfiguration":{"shape":"CloudWatchLogConfiguration"}
+        "CloudWatchLogConfiguration":{"shape":"CloudWatchLogConfiguration"},
+        "S3LoggingConfiguration":{"shape":"S3LoggingConfiguration"}
       }
     },
     "NewSupportedProductsList":{
@@ -2974,6 +2996,12 @@
       "members":{
         "JobFlowId":{"shape":"XmlStringMaxLen256"},
         "ClusterArn":{"shape":"ArnType"}
+      }
+    },
+    "S3LoggingConfiguration":{
+      "type":"structure",
+      "members":{
+        "LogTypeUploadPolicy":{"shape":"LogTypeMap"}
       }
     },
     "S3MonitoringConfiguration":{
