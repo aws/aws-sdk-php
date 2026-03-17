@@ -397,9 +397,9 @@ final class DirectoryUploaderTest extends TestCase
 
     public function testCustomDelimiterInFileNameResultsInFailure(): void
     {
-        // Create a file with | in the name
+        // Create a file with # in the name
         file_put_contents(
-            $this->sourceDir . DIRECTORY_SEPARATOR . 'file|bad.txt',
+            $this->sourceDir . DIRECTORY_SEPARATOR . 'file#bad.txt',
             'test'
         );
 
@@ -408,7 +408,7 @@ final class DirectoryUploaderTest extends TestCase
                 $this->sourceDir,
                 'my-bucket',
                 [],
-                ['s3_delimiter' => '|']
+                ['s3_delimiter' => '#']
             ),
             $this->successUploadClosure()
         );
