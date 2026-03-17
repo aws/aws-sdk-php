@@ -1075,6 +1075,8 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
             self::getSdk()->createS3()
         );
         try {
+            // Disable warning from trigger_error
+            set_error_handler(function ($errno, $errstr) {});
             $s3TransferManager->upload(
                 new UploadRequest(
                     source: $fullFilePath,
@@ -1096,6 +1098,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         } catch (S3TransferException $e) {
             // Expects a failure
             Assert::assertTrue(true);
+            restore_error_handler();
         }
     }
 
