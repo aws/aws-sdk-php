@@ -10,10 +10,10 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
 use Aws\Sts\RegionalEndpoints\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * git\Sts\RegionalEndpoints\ConfigurationProvider
- */
+#[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
     private static $originalEnv;
@@ -216,16 +216,15 @@ EOT;
     public function testEnsuresIniFileIsValid()
     {
         $this->expectExceptionMessage("Invalid config file:");
-        $this->expectException(\Aws\Sts\RegionalEndpoints\Exception\ConfigurationException::class);
+        $this->expectException(ConfigurationException::class);
         $dir = $this->clearEnv();
         file_put_contents($dir . '/config', "wef \n=\nwef");
         putenv('HOME=' . dirname($dir));
 
         try {
-            @call_user_func(ConfigurationProvider::ini())->wait();
-        } catch (\Exception $e) {
+            call_user_func(ConfigurationProvider::ini())->wait();
+        } finally {
             unlink($dir . '/config');
-            throw $e;
         }
     }
 
@@ -338,7 +337,7 @@ EOT;
     {
         $expected = new Configuration('regional');
         $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
-        $cacheBuilder->setMethods(['get', 'set', 'remove']);
+        $cacheBuilder->onlyMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())
             ->method('get')
@@ -352,7 +351,7 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
-    public function getSuccessfulUnwrapData()
+    public static function getSuccessfulUnwrapData(): array
     {
         $expected = new Configuration('regional');
         return [
@@ -383,11 +382,7 @@ EOT;
         ];
     }
 
-    /**
-     * @dataProvider getSuccessfulUnwrapData
-     * @param $toUnwrap
-     * @param ConfigurationInterface $expected
-     */
+    #[DataProvider('getSuccessfulUnwrapData')]
     public function testSuccessfulUnwraps($toUnwrap, ConfigurationInterface $expected)
     {
         $this->assertSame(

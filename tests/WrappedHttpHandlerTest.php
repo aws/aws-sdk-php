@@ -11,15 +11,17 @@ use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\WrappedHttpHandler;
 use GuzzleHttp\Promise\RejectedPromise;
+use GuzzleHttp\Psr7\NoSeekStream;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\WrappedHttpHandler
- */
+#[CoversClass(WrappedHttpHandler::class)]
 class WrappedHttpHandlerTest extends TestCase
 {
     use TestServiceTrait;
@@ -91,24 +93,18 @@ class WrappedHttpHandlerTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider responseAndParserProvider
-     *
-     * @param Response $res
-     * @param $errorParser
-     * @param $expectedCode
-     * @param $expectedId
-     * @param $expectedArray
-     */
+    #[DataProvider('responseAndParserProvider')]
     public function testCanRejectWithAndParseResponse(
         Response $res,
-        Service $service,
-        $errorParser,
-        $expectedCode,
-        $expectedId,
-        $expectedArray
+        string $serviceName,
+        string $errorParserClass,
+        ?string $expectedCode,
+        ?string $expectedId,
+        array $expectedArray
     )
     {
+        $service = $this->generateTestService($serviceName);
+        $errorParser = new $errorParserClass($service);
         $client = $this->generateTestClient($service, []);
         $cmd = $client->getCommand('TestOperation', []);
         $e = new \Exception('a');
@@ -133,69 +129,59 @@ class WrappedHttpHandlerTest extends TestCase
         }
     }
 
-    public function responseAndParserProvider()
+    public static function responseAndParserProvider(): \Generator
     {
-        $services = [
-            'ec2' => $this->generateTestService('ec2'),
-            'json' => $this->generateTestService('json'),
-            'query' => $this->generateTestService('query'),
-            'rest-json' => $this->generateTestService('rest-json'),
-            'rest-xml' => $this->generateTestService('rest-xml'),
-        ];
-
-
-            yield [
-                new Response(
+        $cases = [
+            'json_rpc_error_parser' => [
+                'response' => new Response(
                     400,
                     ['X-Amzn-RequestId' => '123'],
                     json_encode(['__type' => 'foo#bar'])
                 ),
-                $services['json'],
-                new JsonRpcErrorParser($services['json']),
-                'bar',
-                '123',
-                [],
-            ];
-            yield [
-                new Response(
+                'service_name' => 'json',
+                'error_parser' => JsonRpcErrorParser::class,
+                'expected_code' => 'bar',
+                'expected_id' => '123',
+                'expected_array' => []
+            ],
+            'rest_json' => [
+                'response' => new Response(
                     400,
-                    [
-                        'X-Amzn-RequestId' => '123',
-                    ],
+                    ['X-Amzn-RequestId' => '123'],
                     json_encode(['message' => 'sorry!'])
                 ),
-                $services['rest-json'],
-                new RestJsonErrorParser($services['rest-json']),
-                null,
-                '123',
-                [],
-            ];
-            yield [
-                new Response(
+                'service_name' => 'rest-json',
+                'error_parser' => RestJsonErrorParser::class,
+                'expected_code' => null,
+                'expected_id' => '123',
+                'expected_array' => []
+            ],
+            'rest_xml' => [
+                'response' => new Response(
                     400,
                     [],
                     '<?xml version="1.0" encoding="UTF-8"?><Error><Code>InternalError</Code><RequestId>656c76696e6727732072657175657374</RequestId></Error>'
                 ),
-                $services['rest-xml'],
-                new XmlErrorParser($services['rest-xml']),
-                'InternalError',
-                '656c76696e6727732072657175657374',
-                [],
-            ];
-            [
-                new Response(
+                'service_name' => 'rest-xml',
+                'error_parser' => XmlErrorParser::class,
+                'expected_code' => 'InternalError',
+                'expected_id' => '656c76696e6727732072657175657374',
+                'expected_array' => []
+            ],
+            'query' => [
+                'response' => new Response(
                     400,
                     ['X-Amzn-RequestId' => '123'],
                     openssl_random_pseudo_bytes(1024)
                 ),
-                $services['query'],
-                new XmlErrorParser($services['query']),
-                null,
-                null,
-                [],
-            ];
-            yield 'Rest-json with modeled exception from header error type' => [
-                new Response(
+                'service_name' => 'query',
+                'error_parser' => XmlErrorParser::class,
+                'expected_code' => null,
+                'expected_id' => null,
+                'expected_array' => []
+            ],
+            'rest_json_with_modeled_exception_from_header_error_type' => [
+                'response' => new Response(
                     400,
                     [
                         'X-Amzn-RequestId' => '123',
@@ -207,19 +193,19 @@ class WrappedHttpHandlerTest extends TestCase
                         'NotModeled' => 'bar'
                     ])
                 ),
-                $services['rest-json'],
-                new RestJsonErrorParser($services['rest-json']),
-                'TestException',
-                '123',
-                [
+                'service_name' => 'rest-json',
+                'error_parser' => RestJsonErrorParser::class,
+                'expected_code' => 'TestException',
+                'expected_id' => '123',
+                'expected_array' => [
                     'TestString' => 'foo-string',
                     'TestInt' => 456,
                     'TestHeaders' => [],
                     'TestStatus' => 400
-                ],
-            ];
-            yield 'Rest-json with modeled exception from body error code' => [
-                new Response(
+                ]
+            ],
+            'rest_json_with_modeled_exception_from_body_error_code' => [
+                'response' => new Response(
                     400,
                     [
                         'X-Amzn-RequestId' => '123'
@@ -231,19 +217,19 @@ class WrappedHttpHandlerTest extends TestCase
                         'code' => 'TestException'
                     ])
                 ),
-                $services['rest-json'],
-                new RestJsonErrorParser($services['rest-json']),
-                'TestException',
-                '123',
-                [
+                'service_name' => 'rest-json',
+                'error_parser' => RestJsonErrorParser::class,
+                'expected_code' => 'TestException',
+                'expected_id' => '123',
+                'expected_array' => [
                     'TestString' => 'foo-string',
                     'TestInt' => 456,
                     'TestHeaders' => [],
                     'TestStatus' => 400
-                ],
-            ];
-            yield 'Ec2 with modeled exception' => [
-                new Response(
+                ]
+            ],
+            'ec2_with_modeled_exception' => [
+                'response' => new Response(
                     400,
                     [],
                     '<?xml version="1.0" encoding="UTF-8"?>' . "\n" .
@@ -259,19 +245,19 @@ class WrappedHttpHandlerTest extends TestCase
                     '  <RequestId>xyz</RequestId>' .
                     '</Response>'
                 ),
-                $services['ec2'],
-                new XmlErrorParser($services['ec2']),
-                'TestException',
-                'xyz',
-                [
+                'service_name' => 'ec2',
+                'error_parser' => XmlErrorParser::class,
+                'expected_code' => 'TestException',
+                'expected_id' => 'xyz',
+                'expected_array' => [
                     'TestString' => 'SomeString',
                     'TestInt' => 456,
                     'TestHeaders' => [],
                     'TestStatus' => 400,
-                ],
-            ];
-            yield 'Query with modeled exception' => [
-                new Response(
+                ]
+            ],
+            'query_with_modeled_exception' => [
+                'response' => new Response(
                     400,
                     [],
                     '<ErrorResponse xmlns="http://sns.amazonaws.com/doc/2010-03-31/">' .
@@ -285,19 +271,19 @@ class WrappedHttpHandlerTest extends TestCase
                     '  <RequestId>xyz</RequestId>' .
                     '</ErrorResponse>'
                 ),
-                $services['query'],
-                new XmlErrorParser($services['query']),
-                'TestException',
-                'xyz',
-                [
+                'service_name' => 'query',
+                'error_parser' => XmlErrorParser::class,
+                'expected_code' => 'TestException',
+                'expected_id' => 'xyz',
+                'expected_array' => [
                     'TestString' => 'SomeString',
                     'TestInt' => 456,
                     'TestHeaders' => [],
                     'TestStatus' => 400,
-                ],
-            ];
-            yield 'Rest-xml with modeled exception' => [
-                new Response(
+                ]
+            ],
+            'rest_xml_with_modeled_exception' => [
+                'response' => new Response(
                     400,
                     [],
                     '<ErrorResponse xmlns="http://sns.amazonaws.com/doc/2010-03-31/">' .
@@ -311,17 +297,22 @@ class WrappedHttpHandlerTest extends TestCase
                     '  <RequestId>xyz</RequestId>' .
                     '</ErrorResponse>'
                 ),
-                $services['rest-xml'],
-                new XmlErrorParser($services['rest-xml']),
-                'TestException',
-                'xyz',
-                [
+                'service_name' => 'rest-xml',
+                'error_parser' => XmlErrorParser::class,
+                'expected_code' => 'TestException',
+                'expected_id' => 'xyz',
+                'expected_array' => [
                     'TestString' => 'SomeString',
                     'TestInt' => 456,
                     'TestHeaders' => [],
                     'TestStatus' => 400,
-                ],
-            ];
+                ]
+            ]
+        ];
+
+        foreach ($cases as $key => $case) {
+            yield $key => $case;
+        }
     }
 
     public function testCanRejectWithException()
@@ -374,5 +365,85 @@ class WrappedHttpHandlerTest extends TestCase
 
         $wrapped(new Command('a'), new Request('GET', 'http://foo.com'))
             ->wait();
+    }
+
+    /**
+     * @dataProvider errorIsParsedOnNonSeekableResponseBodyProvider
+     *
+     * @return void
+     */
+    public function testErrorIsParsedOnNonSeekableResponseBody(
+        string $protocol,
+        string $body,
+        string $expected
+    )
+    {
+        $service = $this->generateTestService($protocol);
+        $parser = Service::createParser($service);
+        $errorParser = Service::createErrorParser($service->getProtocol(), $service);
+        $client = $this->generateTestClient(
+            $service
+        );
+        $command = $client->getCommand('TestOperation');
+        $exception = new AwsException(
+            'Failed performing test operation',
+            $command,
+        );
+        $uri = 'http://myservice.myregion.foo.com';
+        $request = new Request('GET', $uri);
+        $response = new Response(
+            403,
+            [],
+            new NoSeekStream(
+                Utils::streamFor($body)
+            )
+        );
+        $handler = function () use ($exception, $response) {
+            return new RejectedPromise([
+                'exception' => $exception,
+                'response' => $response,
+            ]);
+        };
+        $wrapped = new WrappedHttpHandler($handler, $parser, $errorParser);
+        try {
+            $wrapped($command, $request)->wait();
+            $this->fail(
+                "Operation should have failed!"
+            );
+        } catch (\Exception $exception) {
+            $this->assertStringContainsString(
+                $expected,
+                $exception->getMessage()
+            );
+        }
+    }
+
+    /**
+     * @return array[]
+     */
+    public function errorIsParsedOnNonSeekableResponseBodyProvider(): array
+    {
+        return [
+            'json' => [
+                'protocol' => 'json',
+                'body' => '{"Message": "Action not allowed!", "__Type": "ListObjects"}',
+                'expected' => 'ListObjects (client): Action not allowed!',
+            ],
+            'query' => [
+                'protocol' => 'query',
+                'body' => '<?xml version="1.0" encoding="UTF-8"?><ErrorResponse><Error><Code>ListObjects</Code><Message>Action not allowed!</Message></Error></ErrorResponse>',
+                'expected' => 'ListObjects (client): Action not allowed!',
+            ],
+            'rest-xml' => [
+                'protocol' => 'rest-xml',
+                'body' => '<?xml version="1.0" encoding="UTF-8"?><Error><Code>ListObjects</Code><Message>Action not allowed!</Message></Error>',
+                'expected' => 'ListObjects (client): Action not allowed!',
+            ],
+            'rest-json' => [
+                'protocol' => 'rest-json',
+                'body' => '{"message": "Action not allowed!", "code": "ListObjects"}',
+                'expected' => 'ListObjects (client): Action not allowed!',
+            ]
+        ];
     }
 }

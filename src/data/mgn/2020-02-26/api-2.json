@@ -142,6 +142,21 @@
         {"shape":"ValidationException"}
       ]
     },
+    "CreateNetworkMigrationDefinition":{
+      "name":"CreateNetworkMigrationDefinition",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/CreateNetworkMigrationDefinition",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateNetworkMigrationDefinitionRequest"},
+      "output":{"shape":"NetworkMigrationDefinition"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
     "CreateReplicationConfigurationTemplate":{
       "name":"CreateReplicationConfigurationTemplate",
       "http":{
@@ -232,6 +247,22 @@
       "errors":[
         {"shape":"UninitializedAccountException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteNetworkMigrationDefinition":{
+      "name":"DeleteNetworkMigrationDefinition",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/DeleteNetworkMigrationDefinition",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteNetworkMigrationDefinitionRequest"},
+      "output":{"shape":"DeleteNetworkMigrationDefinitionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"}
       ],
       "idempotent":true
@@ -470,6 +501,37 @@
       ],
       "readonly":true
     },
+    "GetNetworkMigrationDefinition":{
+      "name":"GetNetworkMigrationDefinition",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/GetNetworkMigrationDefinition",
+        "responseCode":200
+      },
+      "input":{"shape":"GetNetworkMigrationDefinitionRequest"},
+      "output":{"shape":"NetworkMigrationDefinition"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "GetNetworkMigrationMapperSegmentConstruct":{
+      "name":"GetNetworkMigrationMapperSegmentConstruct",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/GetNetworkMigrationMapperSegmentConstruct",
+        "responseCode":200
+      },
+      "input":{"shape":"GetNetworkMigrationMapperSegmentConstructRequest"},
+      "output":{"shape":"GetNetworkMigrationMapperSegmentConstructResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
     "GetReplicationConfiguration":{
       "name":"GetReplicationConfiguration",
       "http":{
@@ -572,6 +634,20 @@
       ],
       "readonly":true
     },
+    "ListImportFileEnrichments":{
+      "name":"ListImportFileEnrichments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/ListImportFileEnrichments",
+        "responseCode":200
+      },
+      "input":{"shape":"ListImportFileEnrichmentsRequest"},
+      "output":{"shape":"ListImportFileEnrichmentsResponse"},
+      "errors":[
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
     "ListImports":{
       "name":"ListImports",
       "http":{
@@ -598,6 +674,205 @@
       "output":{"shape":"ListManagedAccountsResponse"},
       "errors":[
         {"shape":"UninitializedAccountException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListNetworkMigrationAnalyses":{
+      "name":"ListNetworkMigrationAnalyses",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/ListNetworkMigrationAnalyses",
+        "responseCode":200
+      },
+      "input":{"shape":"ListNetworkMigrationAnalysesRequest"},
+      "output":{"shape":"ListNetworkMigrationAnalysesResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListNetworkMigrationAnalysisResults":{
+      "name":"ListNetworkMigrationAnalysisResults",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/ListNetworkMigrationAnalysisResults",
+        "responseCode":200
+      },
+      "input":{"shape":"ListNetworkMigrationAnalysisResultsRequest"},
+      "output":{"shape":"ListNetworkMigrationAnalysisResultsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListNetworkMigrationCodeGenerationSegments":{
+      "name":"ListNetworkMigrationCodeGenerationSegments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/ListNetworkMigrationCodeGenerationSegments",
+        "responseCode":200
+      },
+      "input":{"shape":"ListNetworkMigrationCodeGenerationSegmentsRequest"},
+      "output":{"shape":"ListNetworkMigrationCodeGenerationSegmentsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListNetworkMigrationCodeGenerations":{
+      "name":"ListNetworkMigrationCodeGenerations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/ListNetworkMigrationCodeGenerations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListNetworkMigrationCodeGenerationsRequest"},
+      "output":{"shape":"ListNetworkMigrationCodeGenerationsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListNetworkMigrationDefinitions":{
+      "name":"ListNetworkMigrationDefinitions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/ListNetworkMigrationDefinitions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListNetworkMigrationDefinitionsRequest"},
+      "output":{"shape":"ListNetworkMigrationDefinitionsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListNetworkMigrationDeployedStacks":{
+      "name":"ListNetworkMigrationDeployedStacks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/ListNetworkMigrationDeployedStacks",
+        "responseCode":200
+      },
+      "input":{"shape":"ListNetworkMigrationDeployedStacksRequest"},
+      "output":{"shape":"ListNetworkMigrationDeployedStacksResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListNetworkMigrationDeployments":{
+      "name":"ListNetworkMigrationDeployments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/ListNetworkMigrationDeployments",
+        "responseCode":200
+      },
+      "input":{"shape":"ListNetworkMigrationDeploymentsRequest"},
+      "output":{"shape":"ListNetworkMigrationDeployerJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListNetworkMigrationExecutions":{
+      "name":"ListNetworkMigrationExecutions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/ListNetworkMigrationExecutions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListNetworkMigrationExecutionsRequest"},
+      "output":{"shape":"ListNetworkMigrationExecutionsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListNetworkMigrationMapperSegmentConstructs":{
+      "name":"ListNetworkMigrationMapperSegmentConstructs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/ListNetworkMigrationMapperSegmentConstructs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListNetworkMigrationMapperSegmentConstructsRequest"},
+      "output":{"shape":"ListNetworkMigrationMapperSegmentConstructsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListNetworkMigrationMapperSegments":{
+      "name":"ListNetworkMigrationMapperSegments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/ListNetworkMigrationMapperSegments",
+        "responseCode":200
+      },
+      "input":{"shape":"ListNetworkMigrationMapperSegmentsRequest"},
+      "output":{"shape":"ListNetworkMigrationMapperSegmentsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListNetworkMigrationMappingUpdates":{
+      "name":"ListNetworkMigrationMappingUpdates",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/ListNetworkMigrationMappingUpdates",
+        "responseCode":200
+      },
+      "input":{"shape":"ListNetworkMigrationMappingUpdatesRequest"},
+      "output":{"shape":"ListNetworkMigrationMappingUpdatesResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListNetworkMigrationMappings":{
+      "name":"ListNetworkMigrationMappings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/ListNetworkMigrationMappings",
+        "responseCode":200
+      },
+      "input":{"shape":"ListNetworkMigrationMappingsRequest"},
+      "output":{"shape":"ListNetworkMigrationMappingsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
       ],
       "readonly":true
@@ -837,6 +1112,119 @@
         {"shape":"ConflictException"}
       ]
     },
+    "StartImportFileEnrichment":{
+      "name":"StartImportFileEnrichment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/StartImportFileEnrichment",
+        "responseCode":202
+      },
+      "input":{"shape":"StartImportFileEnrichmentRequest"},
+      "output":{"shape":"StartImportFileEnrichmentResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "StartNetworkMigrationAnalysis":{
+      "name":"StartNetworkMigrationAnalysis",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/StartNetworkMigrationAnalysis",
+        "responseCode":202
+      },
+      "input":{"shape":"StartNetworkMigrationAnalysisRequest"},
+      "output":{"shape":"StartNetworkMigrationAnalysisResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "StartNetworkMigrationCodeGeneration":{
+      "name":"StartNetworkMigrationCodeGeneration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/StartNetworkMigrationCodeGeneration",
+        "responseCode":202
+      },
+      "input":{"shape":"StartNetworkMigrationCodeGenerationRequest"},
+      "output":{"shape":"StartNetworkMigrationCodeGenerationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "StartNetworkMigrationDeployment":{
+      "name":"StartNetworkMigrationDeployment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/StartNetworkMigrationDeployment",
+        "responseCode":202
+      },
+      "input":{"shape":"StartNetworkMigrationDeploymentRequest"},
+      "output":{"shape":"StartNetworkMigrationDeployerJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "StartNetworkMigrationMapping":{
+      "name":"StartNetworkMigrationMapping",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/StartNetworkMigrationMapping",
+        "responseCode":202
+      },
+      "input":{"shape":"StartNetworkMigrationMappingRequest"},
+      "output":{"shape":"StartNetworkMigrationMappingResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "StartNetworkMigrationMappingUpdate":{
+      "name":"StartNetworkMigrationMappingUpdate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/StartNetworkMigrationMappingUpdate",
+        "responseCode":202
+      },
+      "input":{"shape":"StartNetworkMigrationMappingUpdateRequest"},
+      "output":{"shape":"StartNetworkMigrationMappingUpdateResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "StartReplication":{
       "name":"StartReplication",
       "http":{
@@ -1030,6 +1418,38 @@
         {"shape":"ValidationException"}
       ]
     },
+    "UpdateNetworkMigrationDefinition":{
+      "name":"UpdateNetworkMigrationDefinition",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/UpdateNetworkMigrationDefinition",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateNetworkMigrationDefinitionRequest"},
+      "output":{"shape":"NetworkMigrationDefinition"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateNetworkMigrationMapperSegment":{
+      "name":"UpdateNetworkMigrationMapperSegment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/network-migration/UpdateNetworkMigrationMapperSegment",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateNetworkMigrationMapperSegmentRequest"},
+      "output":{"shape":"NetworkMigrationMapperSegment"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "UpdateReplicationConfiguration":{
       "name":"UpdateReplicationConfiguration",
       "http":{
@@ -1176,6 +1596,10 @@
       "max":256,
       "min":1,
       "pattern":"[^\\s\\x00]( *[^\\s\\x00])*"
+    },
+    "AnalyzerType":{
+      "type":"string",
+      "enum":["REACHABILITY_ANALYZER"]
     },
     "Application":{
       "type":"structure",
@@ -1361,6 +1785,19 @@
         "CUTOVER"
       ]
     },
+    "Checksum":{
+      "type":"structure",
+      "members":{
+        "encryptionAlgorithm":{"shape":"EncryptionAlgorithm"},
+        "hash":{"shape":"Hash"}
+      }
+    },
+    "Cidr":{
+      "type":"string",
+      "max":18,
+      "min":9,
+      "pattern":"((25[0-4]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\\/(1[6-9]|2[0-8])"
+    },
     "ClientIdempotencyToken":{
       "type":"string",
       "max":64,
@@ -1371,6 +1808,42 @@
       "max":512,
       "min":1,
       "pattern":"[\\.\\-_/#A-Za-z0-9]+"
+    },
+    "CodeGenerationOutputFormatStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
+    "CodeGenerationOutputFormatStatusDetails":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"CodeGenerationOutputFormatStatus"},
+        "statusDetailList":{"shape":"LargeBoundedString"}
+      }
+    },
+    "CodeGenerationOutputFormatStatusDetailsMap":{
+      "type":"map",
+      "key":{"shape":"CodeGenerationOutputFormatType"},
+      "value":{"shape":"CodeGenerationOutputFormatStatusDetails"},
+      "max":10,
+      "min":0
+    },
+    "CodeGenerationOutputFormatType":{
+      "type":"string",
+      "enum":[
+        "CDK_L1",
+        "CDK_L2",
+        "TERRAFORM",
+        "LZA"
+      ]
+    },
+    "CodeGenerationOutputFormatTypes":{
+      "type":"list",
+      "member":{"shape":"CodeGenerationOutputFormatType"},
+      "max":10,
+      "min":0
     },
     "ConflictException":{
       "type":"structure",
@@ -1443,6 +1916,24 @@
       "type":"list",
       "member":{"shape":"Connector"}
     },
+    "ConstructID":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "ConstructProperties":{
+      "type":"map",
+      "key":{"shape":"ConstructPropertyKey"},
+      "value":{"shape":"MarshalledResourceDefinition"},
+      "max":20,
+      "min":0
+    },
+    "ConstructPropertyKey":{
+      "type":"string",
+      "max":24,
+      "min":0
+    },
     "Cpus":{
       "type":"list",
       "member":{"shape":"CPU"},
@@ -1493,6 +1984,24 @@
         "parametersEncryptionKey":{"shape":"KmsKeyArn"}
       }
     },
+    "CreateNetworkMigrationDefinitionRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "targetS3Configuration",
+        "targetNetwork"
+      ],
+      "members":{
+        "name":{"shape":"NetworkMigrationDefinitionName"},
+        "description":{"shape":"NetworkMigrationDefinitionDescription"},
+        "sourceConfigurations":{"shape":"SourceConfigurationList"},
+        "targetS3Configuration":{"shape":"TargetS3Configuration"},
+        "targetNetwork":{"shape":"TargetNetwork"},
+        "targetDeployment":{"shape":"TargetDeployment"},
+        "tags":{"shape":"TagsMap"},
+        "scopeTags":{"shape":"ScopeTagsMap"}
+      }
+    },
     "CreateReplicationConfigurationTemplateRequest":{
       "type":"structure",
       "required":[
@@ -1523,7 +2032,8 @@
         "stagingAreaTags":{"shape":"TagsMap"},
         "useFipsEndpoint":{"shape":"Boolean"},
         "tags":{"shape":"TagsMap"},
-        "internetProtocol":{"shape":"InternetProtocol"}
+        "internetProtocol":{"shape":"InternetProtocol"},
+        "storeSnapshotOnLocalZone":{"shape":"Boolean"}
       }
     },
     "CreateWaveRequest":{
@@ -1694,6 +2204,17 @@
       }
     },
     "DeleteLaunchConfigurationTemplateResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteNetworkMigrationDefinitionRequest":{
+      "type":"structure",
+      "required":["networkMigrationDefinitionID"],
+      "members":{
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"}
+      }
+    },
+    "DeleteNetworkMigrationDefinitionResponse":{
       "type":"structure",
       "members":{}
     },
@@ -1956,6 +2477,36 @@
       "min":20,
       "pattern":"lt-[0-9a-z]{17}"
     },
+    "EncryptionAlgorithm":{
+      "type":"string",
+      "enum":["SHA256"]
+    },
+    "EnrichmentSourceS3Configuration":{
+      "type":"structure",
+      "required":[
+        "s3Bucket",
+        "s3BucketOwner",
+        "s3Key"
+      ],
+      "members":{
+        "s3Bucket":{"shape":"S3BucketName"},
+        "s3BucketOwner":{"shape":"AccountID"},
+        "s3Key":{"shape":"S3KeyName"}
+      }
+    },
+    "EnrichmentTargetS3Configuration":{
+      "type":"structure",
+      "required":[
+        "s3Bucket",
+        "s3BucketOwner",
+        "s3Key"
+      ],
+      "members":{
+        "s3Bucket":{"shape":"S3BucketName"},
+        "s3BucketOwner":{"shape":"AccountID"},
+        "s3Key":{"shape":"S3KeyName"}
+      }
+    },
     "ErrorDetails":{
       "type":"structure",
       "members":{
@@ -1964,6 +2515,36 @@
         "resourceId":{"shape":"LargeBoundedString"},
         "resourceType":{"shape":"LargeBoundedString"}
       }
+    },
+    "ExecutionStage":{
+      "type":"string",
+      "enum":[
+        "MAPPING",
+        "CODE_GENERATION",
+        "DEPLOY",
+        "DEPLOYED_STACKS_DELETION",
+        "ANALYZE"
+      ]
+    },
+    "ExecutionStageActivity":{
+      "type":"string",
+      "enum":[
+        "MAPPING",
+        "MAPPING_UPDATE",
+        "CODE_GENERATION",
+        "DEPLOY",
+        "DEPLOYED_STACKS_DELETION",
+        "ANALYZE"
+      ]
+    },
+    "ExecutionStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "STARTED",
+        "SUCCEEDED",
+        "FAILED"
+      ]
     },
     "ExportErrorData":{
       "type":"structure",
@@ -2054,6 +2635,34 @@
         "accountID":{"shape":"AccountID"}
       }
     },
+    "GetNetworkMigrationDefinitionRequest":{
+      "type":"structure",
+      "required":["networkMigrationDefinitionID"],
+      "members":{
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"}
+      }
+    },
+    "GetNetworkMigrationMapperSegmentConstructRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationDefinitionID",
+        "networkMigrationExecutionID",
+        "segmentID",
+        "constructID"
+      ],
+      "members":{
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "segmentID":{"shape":"SegmentID"},
+        "constructID":{"shape":"ConstructID"}
+      }
+    },
+    "GetNetworkMigrationMapperSegmentConstructResponse":{
+      "type":"structure",
+      "members":{
+        "construct":{"shape":"NetworkMigrationMapperSegmentConstruct"}
+      }
+    },
     "GetReplicationConfigurationRequest":{
       "type":"structure",
       "required":["sourceServerID"],
@@ -2061,6 +2670,12 @@
         "sourceServerID":{"shape":"SourceServerID"},
         "accountID":{"shape":"AccountID"}
       }
+    },
+    "Hash":{
+      "type":"string",
+      "max":32,
+      "min":32,
+      "pattern":"[A-Za-z0-9+/=]{32}"
     },
     "IPsList":{
       "type":"list",
@@ -2109,6 +2724,44 @@
     "ImportErrors":{
       "type":"list",
       "member":{"shape":"ImportTaskError"}
+    },
+    "ImportFileEnrichment":{
+      "type":"structure",
+      "members":{
+        "jobID":{"shape":"ImportFileEnrichmentJobID"},
+        "createdAt":{"shape":"Timestamp"},
+        "endedAt":{"shape":"Timestamp"},
+        "status":{"shape":"ImportFileEnrichmentStatus"},
+        "statusDetails":{"shape":"LargeBoundedString"},
+        "checksum":{"shape":"Checksum"},
+        "s3BucketTarget":{"shape":"EnrichmentTargetS3Configuration"}
+      }
+    },
+    "ImportFileEnrichmentJobID":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "ImportFileEnrichmentStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "STARTED",
+        "FAILED",
+        "SUCCEEDED",
+        "SUCCEEDED_WITH_WARNINGS"
+      ]
+    },
+    "ImportFileEnrichmentsIDsFilter":{
+      "type":"list",
+      "member":{"shape":"ImportFileEnrichmentJobID"},
+      "max":10,
+      "min":0
+    },
+    "ImportFileEnrichmentsList":{
+      "type":"list",
+      "member":{"shape":"ImportFileEnrichment"}
     },
     "ImportID":{
       "type":"string",
@@ -2230,6 +2883,13 @@
       "box":true,
       "max":64000,
       "min":100
+    },
+    "IpAssignmentStrategy":{
+      "type":"string",
+      "enum":[
+        "STATIC",
+        "DYNAMIC"
+      ]
     },
     "JmesPathString":{
       "type":"string",
@@ -2632,6 +3292,27 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListImportFileEnrichmentsFilters":{
+      "type":"structure",
+      "members":{
+        "jobIDs":{"shape":"ImportFileEnrichmentsIDsFilter"}
+      }
+    },
+    "ListImportFileEnrichmentsRequest":{
+      "type":"structure",
+      "members":{
+        "filters":{"shape":"ListImportFileEnrichmentsFilters"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListImportFileEnrichmentsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"ImportFileEnrichmentsList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListImportsRequest":{
       "type":"structure",
       "members":{
@@ -2665,6 +3346,371 @@
       "required":["items"],
       "members":{
         "items":{"shape":"ManagedAccounts"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationAnalysesFilters":{
+      "type":"structure",
+      "members":{
+        "jobIDs":{"shape":"ListNetworkMigrationAnalysesIDsFilter"}
+      }
+    },
+    "ListNetworkMigrationAnalysesIDsFilter":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationJobID"},
+      "max":10,
+      "min":0
+    },
+    "ListNetworkMigrationAnalysesRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationExecutionID",
+        "networkMigrationDefinitionID"
+      ],
+      "members":{
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "filters":{"shape":"ListNetworkMigrationAnalysesFilters"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationAnalysesResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"NetworkMigrationAnalysesList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationAnalysisResultsFilters":{
+      "type":"structure",
+      "members":{
+        "vpcIDs":{"shape":"VpcIDsFilter"}
+      }
+    },
+    "ListNetworkMigrationAnalysisResultsRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationExecutionID",
+        "networkMigrationDefinitionID"
+      ],
+      "members":{
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "filters":{"shape":"ListNetworkMigrationAnalysisResultsFilters"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationAnalysisResultsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"NetworkMigrationAnalysisResultsList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationCodeGenerationSegmentsFilters":{
+      "type":"structure",
+      "members":{
+        "segmentIDs":{"shape":"ListNetworkMigrationCodeGenerationSegmentsIDsFilter"}
+      }
+    },
+    "ListNetworkMigrationCodeGenerationSegmentsIDsFilter":{
+      "type":"list",
+      "member":{"shape":"SegmentID"},
+      "max":10,
+      "min":0
+    },
+    "ListNetworkMigrationCodeGenerationSegmentsRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationExecutionID",
+        "networkMigrationDefinitionID"
+      ],
+      "members":{
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "filters":{"shape":"ListNetworkMigrationCodeGenerationSegmentsFilters"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationCodeGenerationSegmentsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"NetworkMigrationCodeGenerationSegmentsList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationCodeGenerationsFilters":{
+      "type":"structure",
+      "members":{
+        "jobIDs":{"shape":"ListNetworkMigrationCodeGenerationsIDsFilter"}
+      }
+    },
+    "ListNetworkMigrationCodeGenerationsIDsFilter":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationJobID"},
+      "max":10,
+      "min":0
+    },
+    "ListNetworkMigrationCodeGenerationsRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationExecutionID",
+        "networkMigrationDefinitionID"
+      ],
+      "members":{
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "filters":{"shape":"ListNetworkMigrationCodeGenerationsFilters"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationCodeGenerationsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"NetworkMigrationCodeGenerationsList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationDefinitionsRequest":{
+      "type":"structure",
+      "members":{
+        "filters":{"shape":"ListNetworkMigrationDefinitionsRequestFilters"},
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxResultsType"}
+      }
+    },
+    "ListNetworkMigrationDefinitionsRequestFilters":{
+      "type":"structure",
+      "members":{
+        "networkMigrationDefinitionIDs":{"shape":"NetworkMigrationDefintionsIDsFilter"}
+      }
+    },
+    "ListNetworkMigrationDefinitionsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"NetworkMigrationDefinitionSummariesList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationDeployedStacksRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationExecutionID",
+        "networkMigrationDefinitionID"
+      ],
+      "members":{
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationDeployedStacksResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"NetworkMigrationDeployedStacksList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationDeployerJobFilters":{
+      "type":"structure",
+      "members":{
+        "jobIDs":{"shape":"ListNetworkMigrationDeployerJobIDsFilters"}
+      }
+    },
+    "ListNetworkMigrationDeployerJobIDsFilters":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationJobID"},
+      "max":10,
+      "min":0
+    },
+    "ListNetworkMigrationDeployerJobResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"NetworkMigrationDeployerJobList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationDeploymentsRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationExecutionID",
+        "networkMigrationDefinitionID"
+      ],
+      "members":{
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "filters":{"shape":"ListNetworkMigrationDeployerJobFilters"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationExecutionRequestFilters":{
+      "type":"structure",
+      "members":{
+        "networkMigrationExecutionIDs":{"shape":"NetworkMigrationExecutionIDsFilter"},
+        "networkMigrationExecutionStatuses":{"shape":"NetworkMigrationExecutionStatusesFilter"}
+      }
+    },
+    "ListNetworkMigrationExecutionsRequest":{
+      "type":"structure",
+      "required":["networkMigrationDefinitionID"],
+      "members":{
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "filters":{"shape":"ListNetworkMigrationExecutionRequestFilters"},
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxResultsType"}
+      }
+    },
+    "ListNetworkMigrationExecutionsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"NetworkMigrationExecutionsList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationMapperSegmentConstructTypesFilter":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationMapperSegmentConstructType"},
+      "max":10,
+      "min":0
+    },
+    "ListNetworkMigrationMapperSegmentConstructsFilters":{
+      "type":"structure",
+      "members":{
+        "constructIDs":{"shape":"ListNetworkMigrationMapperSegmentConstructsIDsFilter"},
+        "constructTypes":{"shape":"ListNetworkMigrationMapperSegmentConstructTypesFilter"}
+      }
+    },
+    "ListNetworkMigrationMapperSegmentConstructsIDsFilter":{
+      "type":"list",
+      "member":{"shape":"ConstructID"},
+      "max":10,
+      "min":0
+    },
+    "ListNetworkMigrationMapperSegmentConstructsRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationExecutionID",
+        "networkMigrationDefinitionID",
+        "segmentID"
+      ],
+      "members":{
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "segmentID":{"shape":"SegmentID"},
+        "filters":{"shape":"ListNetworkMigrationMapperSegmentConstructsFilters"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationMapperSegmentConstructsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"NetworkMigrationMapperSegmentConstructs"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationMapperSegmentsFilters":{
+      "type":"structure",
+      "members":{
+        "segmentIDs":{"shape":"ListNetworkMigrationMapperSegmentsIDsFilter"}
+      }
+    },
+    "ListNetworkMigrationMapperSegmentsIDsFilter":{
+      "type":"list",
+      "member":{"shape":"SegmentID"},
+      "max":10,
+      "min":0
+    },
+    "ListNetworkMigrationMapperSegmentsRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationExecutionID",
+        "networkMigrationDefinitionID"
+      ],
+      "members":{
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "filters":{"shape":"ListNetworkMigrationMapperSegmentsFilters"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationMapperSegmentsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"NetworkMigrationMapperSegmentsList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationMappingUpdatesFilters":{
+      "type":"structure",
+      "members":{
+        "jobIDs":{"shape":"ListNetworkMigrationMappingUpdatesIDsFilter"}
+      }
+    },
+    "ListNetworkMigrationMappingUpdatesIDsFilter":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationJobID"},
+      "max":10,
+      "min":0
+    },
+    "ListNetworkMigrationMappingUpdatesRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationExecutionID",
+        "networkMigrationDefinitionID"
+      ],
+      "members":{
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "filters":{"shape":"ListNetworkMigrationMappingUpdatesFilters"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationMappingUpdatesResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"NetworkMigrationMappingUpdatesList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationMappingsFilters":{
+      "type":"structure",
+      "members":{
+        "jobIDs":{"shape":"ListNetworkMigrationMappingsIDsFilter"}
+      }
+    },
+    "ListNetworkMigrationMappingsIDsFilter":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationJobID"},
+      "max":10,
+      "min":0
+    },
+    "ListNetworkMigrationMappingsRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationExecutionID",
+        "networkMigrationDefinitionID"
+      ],
+      "members":{
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "filters":{"shape":"ListNetworkMigrationMappingsFilters"},
+        "maxResults":{"shape":"MaxResultsType"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListNetworkMigrationMappingsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"NetworkMigrationMappingsList"},
         "nextToken":{"shape":"PaginationToken"}
       }
     },
@@ -2743,6 +3789,12 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "LogicalID":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[a-zA-Z][a-zA-Z0-9-]*"
+    },
     "ManagedAccount":{
       "type":"structure",
       "members":{
@@ -2762,6 +3814,11 @@
         "sourceServerID":{"shape":"SourceServerID"},
         "accountID":{"shape":"AccountID"}
       }
+    },
+    "MarshalledResourceDefinition":{
+      "type":"string",
+      "max":65536,
+      "min":0
     },
     "MaxResultsType":{
       "type":"integer",
@@ -2783,6 +3840,420 @@
       "max":32,
       "min":0
     },
+    "NetworkMigrationAnalysesList":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationAnalysisJobDetails"},
+      "max":100,
+      "min":0
+    },
+    "NetworkMigrationAnalysisJobDetails":{
+      "type":"structure",
+      "members":{
+        "jobID":{"shape":"NetworkMigrationJobID"},
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "createdAt":{"shape":"Timestamp"},
+        "endedAt":{"shape":"Timestamp"},
+        "status":{"shape":"NetworkMigrationJobStatus"},
+        "statusDetails":{"shape":"LargeBoundedString"}
+      }
+    },
+    "NetworkMigrationAnalysisResult":{
+      "type":"structure",
+      "members":{
+        "jobID":{"shape":"NetworkMigrationJobID"},
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "analyzerType":{"shape":"AnalyzerType"},
+        "source":{"shape":"NetworkMigrationAnalysisResultSource"},
+        "target":{"shape":"NetworkMigrationAnalysisResultTarget"},
+        "status":{"shape":"NetworkMigrationAnalysisResultStatus"},
+        "analysisResult":{"shape":"String"}
+      }
+    },
+    "NetworkMigrationAnalysisResultSource":{
+      "type":"structure",
+      "members":{
+        "vpcID":{"shape":"VpcID"},
+        "subnetID":{"shape":"SubnetID"}
+      }
+    },
+    "NetworkMigrationAnalysisResultStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "STARTED",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
+    "NetworkMigrationAnalysisResultTarget":{
+      "type":"structure",
+      "members":{
+        "vpcID":{"shape":"VpcID"},
+        "subnetID":{"shape":"SubnetID"}
+      }
+    },
+    "NetworkMigrationAnalysisResultsList":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationAnalysisResult"},
+      "max":100,
+      "min":0
+    },
+    "NetworkMigrationCodeGenerationArtifact":{
+      "type":"structure",
+      "members":{
+        "artifactID":{"shape":"NetworkMigrationCodeGenerationArtifactID"},
+        "artifactType":{"shape":"NetworkMigrationCodeGenerationArtifactType"},
+        "artifactSubType":{"shape":"NetworkMigrationCodeGenerationArtifactSubType"},
+        "logicalID":{"shape":"LogicalID"},
+        "outputS3Configuration":{"shape":"S3Configuration"},
+        "checksum":{"shape":"Checksum"},
+        "createdAt":{"shape":"Timestamp"}
+      }
+    },
+    "NetworkMigrationCodeGenerationArtifactID":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "NetworkMigrationCodeGenerationArtifactSubType":{
+      "type":"string",
+      "enum":[
+        "APPLICATION",
+        "NESTED_STACK",
+        "STACK"
+      ]
+    },
+    "NetworkMigrationCodeGenerationArtifactType":{
+      "type":"string",
+      "enum":[
+        "CDK_TYPESCRIPT",
+        "CLOUDFORMATION_TEMPLATE",
+        "CDKTF_TYPESCRIPT",
+        "TERRAFORM_CONFIGURATION",
+        "CDK_L2_TYPESCRIPT"
+      ]
+    },
+    "NetworkMigrationCodeGenerationArtifacts":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationCodeGenerationArtifact"}
+    },
+    "NetworkMigrationCodeGenerationJobDetails":{
+      "type":"structure",
+      "members":{
+        "jobID":{"shape":"NetworkMigrationJobID"},
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "createdAt":{"shape":"Timestamp"},
+        "endedAt":{"shape":"Timestamp"},
+        "status":{"shape":"NetworkMigrationJobStatus"},
+        "statusDetails":{"shape":"LargeBoundedString"},
+        "codeGenerationOutputFormatStatusDetailsMap":{"shape":"CodeGenerationOutputFormatStatusDetailsMap"}
+      }
+    },
+    "NetworkMigrationCodeGenerationSegment":{
+      "type":"structure",
+      "members":{
+        "jobID":{"shape":"NetworkMigrationJobID"},
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "segmentID":{"shape":"SegmentID"},
+        "segmentType":{"shape":"NetworkMigrationCodeGenerationSegmentType"},
+        "logicalID":{"shape":"LogicalID"},
+        "mapperSegmentID":{"shape":"SegmentID"},
+        "artifacts":{"shape":"NetworkMigrationCodeGenerationArtifacts"},
+        "createdAt":{"shape":"Timestamp"}
+      }
+    },
+    "NetworkMigrationCodeGenerationSegmentType":{
+      "type":"string",
+      "enum":[
+        "WORKLOAD",
+        "APPLIANCE",
+        "NETWORK"
+      ]
+    },
+    "NetworkMigrationCodeGenerationSegmentsList":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationCodeGenerationSegment"},
+      "max":100,
+      "min":0
+    },
+    "NetworkMigrationCodeGenerationsList":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationCodeGenerationJobDetails"},
+      "max":100,
+      "min":0
+    },
+    "NetworkMigrationDefinition":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ARN"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "name":{"shape":"NetworkMigrationDefinitionName"},
+        "description":{"shape":"NetworkMigrationDefinitionDescription"},
+        "sourceConfigurations":{"shape":"SourceConfigurationList"},
+        "targetS3Configuration":{"shape":"TargetS3Configuration"},
+        "targetNetwork":{"shape":"TargetNetwork"},
+        "targetDeployment":{"shape":"TargetDeployment"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "tags":{"shape":"TagsMap"},
+        "scopeTags":{"shape":"ScopeTagsMap"}
+      }
+    },
+    "NetworkMigrationDefinitionDescription":{
+      "type":"string",
+      "max":600,
+      "min":0,
+      "pattern":"[^\\x00]*"
+    },
+    "NetworkMigrationDefinitionID":{
+      "type":"string",
+      "max":21,
+      "min":21,
+      "pattern":"nmd-[0-9a-zA-Z]{17}"
+    },
+    "NetworkMigrationDefinitionName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^\\s\\x00]( *[^\\s\\x00])*"
+    },
+    "NetworkMigrationDefinitionSummariesList":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationDefinitionSummary"}
+    },
+    "NetworkMigrationDefinitionSummary":{
+      "type":"structure",
+      "members":{
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "name":{"shape":"NetworkMigrationDefinitionName"},
+        "sourceEnvironment":{"shape":"SourceEnvironment"},
+        "arn":{"shape":"ARN"},
+        "tags":{"shape":"TagsMap"},
+        "scopeTags":{"shape":"ScopeTagsMap"}
+      }
+    },
+    "NetworkMigrationDefintionsIDsFilter":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationDefinitionID"},
+      "max":20,
+      "min":0
+    },
+    "NetworkMigrationDeployedStackDetails":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"NetworkMigrationDeployedStackStatus"},
+        "stackPhysicalID":{"shape":"PhysicalID"},
+        "stackLogicalID":{"shape":"LogicalID"},
+        "segmentID":{"shape":"SegmentID"},
+        "targetAccount":{"shape":"AccountID"},
+        "failedResources":{"shape":"NetworkMigrationFailedResourcesList"}
+      }
+    },
+    "NetworkMigrationDeployedStackStatus":{
+      "type":"string",
+      "enum":[
+        "CREATE_COMPLETE",
+        "CREATE_FAILED",
+        "CREATE_STARTED",
+        "DELETE_COMPLETE",
+        "DELETE_FAILED",
+        "DELETE_STARTED"
+      ]
+    },
+    "NetworkMigrationDeployedStacksList":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationDeployedStackDetails"},
+      "max":100,
+      "min":0
+    },
+    "NetworkMigrationDeployerJobDetails":{
+      "type":"structure",
+      "members":{
+        "jobID":{"shape":"NetworkMigrationJobID"},
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "createdAt":{"shape":"Timestamp"},
+        "endedAt":{"shape":"Timestamp"},
+        "status":{"shape":"NetworkMigrationJobStatus"},
+        "statusDetails":{"shape":"LargeBoundedString"}
+      }
+    },
+    "NetworkMigrationDeployerJobList":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationDeployerJobDetails"},
+      "max":100,
+      "min":0
+    },
+    "NetworkMigrationExecution":{
+      "type":"structure",
+      "members":{
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "status":{"shape":"ExecutionStatus"},
+        "stage":{"shape":"ExecutionStage"},
+        "activity":{"shape":"ExecutionStageActivity"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "NetworkMigrationExecutionID":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "NetworkMigrationExecutionIDsFilter":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationExecutionID"},
+      "max":20,
+      "min":0
+    },
+    "NetworkMigrationExecutionStatusesFilter":{
+      "type":"list",
+      "member":{"shape":"ExecutionStatus"},
+      "max":20,
+      "min":0
+    },
+    "NetworkMigrationExecutionsList":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationExecution"}
+    },
+    "NetworkMigrationFailedResourceDetails":{
+      "type":"structure",
+      "members":{
+        "logicalID":{"shape":"LogicalID"},
+        "status":{"shape":"NetworkMigrationFailedResourceStatus"},
+        "statusReason":{"shape":"LargeBoundedString"}
+      }
+    },
+    "NetworkMigrationFailedResourceStatus":{
+      "type":"string",
+      "enum":[
+        "CREATE_FAILED",
+        "DELETE_FAILED"
+      ]
+    },
+    "NetworkMigrationFailedResourcesList":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationFailedResourceDetails"},
+      "max":5,
+      "min":0
+    },
+    "NetworkMigrationJobID":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "NetworkMigrationJobStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "STARTED",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
+    "NetworkMigrationMapperSegment":{
+      "type":"structure",
+      "members":{
+        "jobID":{"shape":"NetworkMigrationJobID"},
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "segmentID":{"shape":"SegmentID"},
+        "segmentType":{"shape":"NetworkMigrationMapperSegmentType"},
+        "name":{"shape":"SegmentName"},
+        "description":{"shape":"SegmentDescription"},
+        "logicalID":{"shape":"LogicalID"},
+        "checksum":{"shape":"Checksum"},
+        "outputS3Configuration":{"shape":"S3Configuration"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "scopeTags":{"shape":"ScopeTagsMap"},
+        "targetAccount":{"shape":"AccountID"},
+        "referencedSegments":{"shape":"referencedSegmentsList"}
+      }
+    },
+    "NetworkMigrationMapperSegmentConstruct":{
+      "type":"structure",
+      "members":{
+        "constructID":{"shape":"ConstructID"},
+        "constructType":{"shape":"NetworkMigrationMapperSegmentConstructType"},
+        "name":{"shape":"SegmentConstructName"},
+        "description":{"shape":"SegmentConstructDescription"},
+        "logicalID":{"shape":"LogicalID"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "properties":{"shape":"ConstructProperties"}
+      }
+    },
+    "NetworkMigrationMapperSegmentConstructType":{
+      "type":"string",
+      "max":24,
+      "min":0,
+      "pattern":"AWS::([A-Z\\d]){2,10}::[a-zA-Z\\d]{2,30}"
+    },
+    "NetworkMigrationMapperSegmentConstructs":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationMapperSegmentConstruct"},
+      "max":100,
+      "min":0
+    },
+    "NetworkMigrationMapperSegmentType":{
+      "type":"string",
+      "enum":[
+        "WORKLOAD",
+        "APPLIANCE"
+      ]
+    },
+    "NetworkMigrationMapperSegmentsList":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationMapperSegment"},
+      "max":100,
+      "min":0
+    },
+    "NetworkMigrationMappingJobDetails":{
+      "type":"structure",
+      "members":{
+        "jobID":{"shape":"NetworkMigrationJobID"},
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "createdAt":{"shape":"Timestamp"},
+        "endedAt":{"shape":"Timestamp"},
+        "status":{"shape":"NetworkMigrationJobStatus"},
+        "statusDetails":{"shape":"LargeBoundedString"}
+      }
+    },
+    "NetworkMigrationMappingUpdateJobDetails":{
+      "type":"structure",
+      "members":{
+        "jobID":{"shape":"NetworkMigrationJobID"},
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "createdAt":{"shape":"Timestamp"},
+        "endedAt":{"shape":"Timestamp"},
+        "status":{"shape":"NetworkMigrationJobStatus"},
+        "statusDetails":{"shape":"LargeBoundedString"}
+      }
+    },
+    "NetworkMigrationMappingUpdatesList":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationMappingUpdateJobDetails"},
+      "max":100,
+      "min":0
+    },
+    "NetworkMigrationMappingsList":{
+      "type":"list",
+      "member":{"shape":"NetworkMigrationMappingJobDetails"},
+      "max":100,
+      "min":0
+    },
     "OS":{
       "type":"structure",
       "members":{
@@ -2792,6 +4263,13 @@
     "OperatingSystemString":{
       "type":"string",
       "pattern":"(linux|windows)"
+    },
+    "OperationUnion":{
+      "type":"structure",
+      "members":{
+        "update":{"shape":"UpdateOperation"}
+      },
+      "union":true
     },
     "OrderType":{
       "type":"integer",
@@ -2825,6 +4303,12 @@
         "sourceServerID":{"shape":"SourceServerID"},
         "accountID":{"shape":"AccountID"}
       }
+    },
+    "PhysicalID":{
+      "type":"string",
+      "max":128,
+      "min":86,
+      "pattern":"arn:aws:cloudformation:[a-z0-9-]+:[0-9]{12}:stack/[a-zA-Z0-9-]+/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
     },
     "PositiveInteger":{
       "type":"long",
@@ -2969,7 +4453,8 @@
         "createPublicIP":{"shape":"Boolean"},
         "stagingAreaTags":{"shape":"TagsMap"},
         "useFipsEndpoint":{"shape":"Boolean"},
-        "internetProtocol":{"shape":"InternetProtocol"}
+        "internetProtocol":{"shape":"InternetProtocol"},
+        "storeSnapshotOnLocalZone":{"shape":"Boolean"}
       }
     },
     "ReplicationConfigurationDataPlaneRouting":{
@@ -3043,7 +4528,8 @@
         "stagingAreaTags":{"shape":"TagsMap"},
         "useFipsEndpoint":{"shape":"Boolean"},
         "tags":{"shape":"TagsMap"},
-        "internetProtocol":{"shape":"InternetProtocol"}
+        "internetProtocol":{"shape":"InternetProtocol"},
+        "storeSnapshotOnLocalZone":{"shape":"Boolean"}
       }
     },
     "ReplicationConfigurationTemplateID":{
@@ -3133,14 +4619,46 @@
         "s3BucketOwner":{"shape":"AccountID"}
       }
     },
+    "S3Configuration":{
+      "type":"structure",
+      "members":{
+        "s3Bucket":{"shape":"S3BucketName"},
+        "s3BucketOwner":{"shape":"AccountID"},
+        "s3Key":{"shape":"S3KeyName"}
+      }
+    },
     "S3Key":{
       "type":"string",
       "pattern":"[^\\x00]{1,1020}\\.csv"
+    },
+    "S3KeyName":{
+      "type":"string",
+      "pattern":"[^\\x00]{1,1024}"
     },
     "S3LogBucketName":{
       "type":"string",
       "max":63,
       "min":3
+    },
+    "ScopeTagKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"(?!aws:)[a-zA-Z0-9\\s+\\-=._:/@]*"
+    },
+    "ScopeTagValue":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[a-zA-Z0-9\\s+\\-=._:/@]*"
+    },
+    "ScopeTagsMap":{
+      "type":"map",
+      "key":{"shape":"ScopeTagKey"},
+      "value":{"shape":"ScopeTagValue"},
+      "max":40,
+      "min":0,
+      "sensitive":true
     },
     "SecretArn":{
       "type":"string",
@@ -3153,6 +4671,43 @@
       "max":255,
       "min":0,
       "pattern":"sg-[0-9a-fA-F]{8,}"
+    },
+    "SecurityGroupMappingStrategy":{
+      "type":"string",
+      "enum":[
+        "MAP",
+        "SKIP"
+      ]
+    },
+    "SegmentConstructDescription":{
+      "type":"string",
+      "max":600,
+      "min":0,
+      "pattern":"[^\\x00]*"
+    },
+    "SegmentConstructName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^\\s\\x00]( *[^\\s\\x00])*"
+    },
+    "SegmentDescription":{
+      "type":"string",
+      "max":600,
+      "min":0,
+      "pattern":"[^\\x00]*"
+    },
+    "SegmentID":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "SegmentName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^\\s\\x00]( *[^\\s\\x00])*"
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -3176,6 +4731,35 @@
       "max":128,
       "min":0
     },
+    "SourceConfiguration":{
+      "type":"structure",
+      "required":[
+        "sourceEnvironment",
+        "sourceS3Configuration"
+      ],
+      "members":{
+        "sourceEnvironment":{"shape":"SourceEnvironment"},
+        "sourceS3Configuration":{"shape":"SourceS3Configuration"}
+      }
+    },
+    "SourceConfigurationList":{
+      "type":"list",
+      "member":{"shape":"SourceConfiguration"},
+      "max":2,
+      "min":0
+    },
+    "SourceEnvironment":{
+      "type":"string",
+      "enum":[
+        "NSX",
+        "VSPHERE",
+        "FORTIGATE_FIREWALL",
+        "PALO_ALTO_FIREWALL",
+        "CISCO_ACI",
+        "LOGICAL_MODEL",
+        "MODELIZE_IT"
+      ]
+    },
     "SourceProperties":{
       "type":"structure",
       "members":{
@@ -3187,6 +4771,19 @@
         "cpus":{"shape":"Cpus"},
         "ramBytes":{"shape":"PositiveInteger"},
         "os":{"shape":"OS"}
+      }
+    },
+    "SourceS3Configuration":{
+      "type":"structure",
+      "required":[
+        "s3Bucket",
+        "s3BucketOwner",
+        "s3Key"
+      ],
+      "members":{
+        "s3Bucket":{"shape":"S3BucketName"},
+        "s3BucketOwner":{"shape":"AccountID"},
+        "s3Key":{"shape":"S3KeyName"}
       }
     },
     "SourceServer":{
@@ -3391,6 +4988,28 @@
         "exportTask":{"shape":"ExportTask"}
       }
     },
+    "StartImportFileEnrichmentRequest":{
+      "type":"structure",
+      "required":[
+        "s3BucketSource",
+        "s3BucketTarget"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientIdempotencyToken",
+          "idempotencyToken":true
+        },
+        "s3BucketSource":{"shape":"EnrichmentSourceS3Configuration"},
+        "s3BucketTarget":{"shape":"EnrichmentTargetS3Configuration"},
+        "ipAssignmentStrategy":{"shape":"IpAssignmentStrategy"}
+      }
+    },
+    "StartImportFileEnrichmentResponse":{
+      "type":"structure",
+      "members":{
+        "jobID":{"shape":"ImportFileEnrichmentJobID"}
+      }
+    },
     "StartImportRequest":{
       "type":"structure",
       "required":["s3BucketSource"],
@@ -3408,6 +5027,130 @@
       "members":{
         "importTask":{"shape":"ImportTask"}
       }
+    },
+    "StartNetworkMigrationAnalysisRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationExecutionID",
+        "networkMigrationDefinitionID"
+      ],
+      "members":{
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"}
+      }
+    },
+    "StartNetworkMigrationAnalysisResponse":{
+      "type":"structure",
+      "members":{
+        "jobID":{"shape":"NetworkMigrationJobID"}
+      }
+    },
+    "StartNetworkMigrationCodeGenerationRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationExecutionID",
+        "networkMigrationDefinitionID"
+      ],
+      "members":{
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "codeGenerationOutputFormatTypes":{"shape":"CodeGenerationOutputFormatTypes"}
+      }
+    },
+    "StartNetworkMigrationCodeGenerationResponse":{
+      "type":"structure",
+      "members":{
+        "jobID":{"shape":"NetworkMigrationJobID"}
+      }
+    },
+    "StartNetworkMigrationDeployerJobResponse":{
+      "type":"structure",
+      "members":{
+        "jobID":{"shape":"NetworkMigrationJobID"}
+      }
+    },
+    "StartNetworkMigrationDeploymentRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationExecutionID",
+        "networkMigrationDefinitionID"
+      ],
+      "members":{
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"}
+      }
+    },
+    "StartNetworkMigrationMappingRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationExecutionID",
+        "networkMigrationDefinitionID"
+      ],
+      "members":{
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "securityGroupMappingStrategy":{"shape":"SecurityGroupMappingStrategy"}
+      }
+    },
+    "StartNetworkMigrationMappingResponse":{
+      "type":"structure",
+      "members":{
+        "jobID":{"shape":"NetworkMigrationJobID"}
+      }
+    },
+    "StartNetworkMigrationMappingUpdateConstruct":{
+      "type":"structure",
+      "required":[
+        "segmentID",
+        "constructID",
+        "constructType"
+      ],
+      "members":{
+        "segmentID":{"shape":"SegmentID"},
+        "constructID":{"shape":"ConstructID"},
+        "constructType":{"shape":"NetworkMigrationMapperSegmentConstructType"},
+        "operation":{"shape":"OperationUnion"}
+      }
+    },
+    "StartNetworkMigrationMappingUpdateConstructs":{
+      "type":"list",
+      "member":{"shape":"StartNetworkMigrationMappingUpdateConstruct"},
+      "max":100,
+      "min":0
+    },
+    "StartNetworkMigrationMappingUpdateRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationExecutionID",
+        "networkMigrationDefinitionID"
+      ],
+      "members":{
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "constructs":{"shape":"StartNetworkMigrationMappingUpdateConstructs"},
+        "segments":{"shape":"StartNetworkMigrationMappingUpdateSegments"}
+      }
+    },
+    "StartNetworkMigrationMappingUpdateResponse":{
+      "type":"structure",
+      "members":{
+        "jobID":{"shape":"NetworkMigrationJobID"}
+      }
+    },
+    "StartNetworkMigrationMappingUpdateSegment":{
+      "type":"structure",
+      "required":["segmentID"],
+      "members":{
+        "segmentID":{"shape":"SegmentID"},
+        "targetAccount":{"shape":"AccountID"},
+        "scopeTags":{"shape":"ScopeTagsMap"}
+      }
+    },
+    "StartNetworkMigrationMappingUpdateSegments":{
+      "type":"list",
+      "member":{"shape":"StartNetworkMigrationMappingUpdateSegment"},
+      "max":100,
+      "min":0
     },
     "StartReplicationRequest":{
       "type":"structure",
@@ -3451,6 +5194,7 @@
       "box":true,
       "min":1
     },
+    "String":{"type":"string"},
     "SubnetID":{
       "type":"string",
       "max":255,
@@ -3495,12 +5239,63 @@
       "min":0,
       "sensitive":true
     },
+    "TargetDeployment":{
+      "type":"string",
+      "enum":[
+        "SINGLE_ACCOUNT",
+        "MULTI_ACCOUNT"
+      ]
+    },
     "TargetInstanceTypeRightSizingMethod":{
       "type":"string",
       "enum":[
         "NONE",
         "BASIC"
       ]
+    },
+    "TargetNetwork":{
+      "type":"structure",
+      "required":["topology"],
+      "members":{
+        "topology":{"shape":"TargetNetworkTopology"},
+        "inboundCidr":{"shape":"Cidr"},
+        "outboundCidr":{"shape":"Cidr"},
+        "inspectionCidr":{"shape":"Cidr"}
+      }
+    },
+    "TargetNetworkTopology":{
+      "type":"string",
+      "enum":[
+        "ISOLATED_VPC",
+        "HUB_AND_SPOKE"
+      ]
+    },
+    "TargetNetworkUpdate":{
+      "type":"structure",
+      "members":{
+        "topology":{"shape":"TargetNetworkTopology"},
+        "inboundCidr":{"shape":"Cidr"},
+        "outboundCidr":{"shape":"Cidr"},
+        "inspectionCidr":{"shape":"Cidr"}
+      }
+    },
+    "TargetS3Configuration":{
+      "type":"structure",
+      "required":[
+        "s3Bucket",
+        "s3BucketOwner"
+      ],
+      "members":{
+        "s3Bucket":{"shape":"S3BucketName"},
+        "s3BucketOwner":{"shape":"AccountID"}
+      }
+    },
+    "TargetS3ConfigurationUpdate":{
+      "type":"structure",
+      "members":{
+        "s3Bucket":{"shape":"S3BucketName"},
+        "s3BucketOwner":{"shape":"AccountID"}
+      }
     },
     "TemplateActionDocument":{
       "type":"structure",
@@ -3578,6 +5373,7 @@
       "max":1000,
       "min":125
     },
+    "Timestamp":{"type":"timestamp"},
     "UnarchiveApplicationRequest":{
       "type":"structure",
       "required":["applicationID"],
@@ -3684,6 +5480,40 @@
         "parametersEncryptionKey":{"shape":"ARN"}
       }
     },
+    "UpdateNetworkMigrationDefinitionRequest":{
+      "type":"structure",
+      "required":["networkMigrationDefinitionID"],
+      "members":{
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "name":{"shape":"NetworkMigrationDefinitionName"},
+        "description":{"shape":"NetworkMigrationDefinitionDescription"},
+        "sourceConfigurations":{"shape":"SourceConfigurationList"},
+        "targetS3Configuration":{"shape":"TargetS3ConfigurationUpdate"},
+        "targetNetwork":{"shape":"TargetNetworkUpdate"},
+        "targetDeployment":{"shape":"TargetDeployment"},
+        "scopeTags":{"shape":"ScopeTagsMap"}
+      }
+    },
+    "UpdateNetworkMigrationMapperSegmentRequest":{
+      "type":"structure",
+      "required":[
+        "networkMigrationDefinitionID",
+        "networkMigrationExecutionID",
+        "segmentID"
+      ],
+      "members":{
+        "networkMigrationDefinitionID":{"shape":"NetworkMigrationDefinitionID"},
+        "networkMigrationExecutionID":{"shape":"NetworkMigrationExecutionID"},
+        "segmentID":{"shape":"SegmentID"},
+        "scopeTags":{"shape":"ScopeTagsMap"}
+      }
+    },
+    "UpdateOperation":{
+      "type":"structure",
+      "members":{
+        "properties":{"shape":"ConstructProperties"}
+      }
+    },
     "UpdateReplicationConfigurationRequest":{
       "type":"structure",
       "required":["sourceServerID"],
@@ -3705,7 +5535,8 @@
         "stagingAreaTags":{"shape":"TagsMap"},
         "useFipsEndpoint":{"shape":"Boolean"},
         "accountID":{"shape":"AccountID"},
-        "internetProtocol":{"shape":"InternetProtocol"}
+        "internetProtocol":{"shape":"InternetProtocol"},
+        "storeSnapshotOnLocalZone":{"shape":"Boolean"}
       }
     },
     "UpdateReplicationConfigurationTemplateRequest":{
@@ -3727,7 +5558,8 @@
         "createPublicIP":{"shape":"Boolean"},
         "stagingAreaTags":{"shape":"TagsMap"},
         "useFipsEndpoint":{"shape":"Boolean"},
-        "internetProtocol":{"shape":"InternetProtocol"}
+        "internetProtocol":{"shape":"InternetProtocol"},
+        "storeSnapshotOnLocalZone":{"shape":"Boolean"}
       }
     },
     "UpdateSourceServerReplicationTypeRequest":{
@@ -3836,6 +5668,16 @@
         "standard"
       ]
     },
+    "VpcID":{
+      "type":"string",
+      "pattern":"vpc-([0-9a-f]){8}(([0-9a-f]){9})?"
+    },
+    "VpcIDsFilter":{
+      "type":"list",
+      "member":{"shape":"VpcID"},
+      "max":10,
+      "min":0
+    },
     "Wave":{
       "type":"structure",
       "members":{
@@ -3903,6 +5745,10 @@
     "WavesList":{
       "type":"list",
       "member":{"shape":"Wave"}
+    },
+    "referencedSegmentsList":{
+      "type":"list",
+      "member":{"shape":"SegmentID"}
     }
   }
 }

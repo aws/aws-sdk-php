@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Api\ErrorParser;
 
+use Aws\Api\Parser\AbstractParser;
 use Aws\Api\Parser\JsonParser;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
@@ -26,6 +27,7 @@ class RestJsonErrorParser extends AbstractErrorParser
         ResponseInterface $response,
         ?CommandInterface $command = null
     ) {
+        $response = AbstractParser::getResponseWithCachingStream($response);
         $data = $this->genericHandler($response);
 
         // Merge in error data from the JSON body
@@ -40,7 +42,9 @@ class RestJsonErrorParser extends AbstractErrorParser
 
         // Retrieve error message directly
         $data['message'] = $data['parsed']['message']
-            ?? ($data['parsed']['Message'] ?? null);
+            ?? $data['parsed']['Message']
+            ?? $data['parsed']['error_description']
+            ?? null;
 
         $this->populateShape($data, $response, $command);
 

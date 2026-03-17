@@ -14,9 +14,12 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\RejectedPromise;
-use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use Psr\Http\Message\RequestInterface;
 
+#[CoversClass(S3MultiRegionClient::class)]
 class S3MultiRegionClientTest extends TestCase
 {
     use UsesServiceTrait;
@@ -567,11 +570,7 @@ EOXML;
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
     }
 
-    /**
-     * @dataProvider booleanProvider
-     *
-     * @param bool $regionalized
-     */
+    #[DataProvider('booleanProvider')]
     public function testCallbacksAttachedToCommandHandlerListsAreInvoked($regionalized)
     {
         /** @var S3ClientInterface $client */
@@ -602,7 +601,7 @@ EOXML;
         $this->assertSame('object!object!', (string) $result['Body']);
     }
 
-    public function booleanProvider()
+    public static function booleanProvider(): array
     {
         return [[true], [false]];
     }

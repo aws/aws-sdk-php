@@ -11,7 +11,6 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Aws\Kms\KmsClient;
-use Exception;
 use PHPUnit\Framework\Assert;
 
 class S3EncryptionContextV3 implements Context, SnippetAcceptingContext

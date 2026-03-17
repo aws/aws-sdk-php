@@ -54,7 +54,11 @@
     "DescribeConformancePackCompliance": {
       "input_token": "NextToken",
       "limit_key": "Limit",
-      "output_token": "NextToken"
+      "non_aggregate_keys": [
+        "ConformancePackName"
+      ],
+      "output_token": "NextToken",
+      "result_key": "ConformancePackRuleComplianceList"
     },
     "DescribeConformancePackStatus": {
       "input_token": "NextToken",

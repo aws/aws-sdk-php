@@ -594,6 +594,8 @@
         "GlobalAuroraConfiguration$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "Lambdas$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "Plan$executionRole": "<p>The execution role for a plan.</p>",
+        "RdsCreateCrossRegionReplicaConfiguration$crossAccountRole": "<p>The cross-account role for the configuration.</p>",
+        "RdsPromoteReadReplicaConfiguration$crossAccountRole": "<p>The cross-account role for the configuration.</p>",
         "RegionSwitchPlanConfiguration$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "Route53HealthCheckConfiguration$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "Service$crossAccountRole": "<p>The cross account role for a service.</p>",
@@ -862,12 +864,55 @@
         "GetPlanEvaluationStatusResponse$warnings": "<p>The current evaluation warnings for the plan. </p>"
       }
     },
+    "RdsCreateCrossRegionReplicaConfiguration": {
+      "base": "<p>Configuration for creating an Amazon RDS cross-Region read replica during post-recovery in a Region switch.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$rdsCreateCrossRegionReadReplicaConfig": "<p>An Amazon RDS create cross-Region replica execution block.</p>"
+      }
+    },
+    "RdsCreateCrossRegionReplicaConfigurationTimeoutMinutesInteger": {
+      "base": null,
+      "refs": {
+        "RdsCreateCrossRegionReplicaConfiguration$timeoutMinutes": "<p>The timeout value specified for the configuration.</p>"
+      }
+    },
+    "RdsDbInstanceArn": {
+      "base": null,
+      "refs": {
+        "RdsDbInstanceArnMap$value": null
+      }
+    },
+    "RdsDbInstanceArnMap": {
+      "base": null,
+      "refs": {
+        "RdsCreateCrossRegionReplicaConfiguration$dbInstanceArnMap": "<p>A map of database instance ARNs for each Region in the plan.</p>",
+        "RdsPromoteReadReplicaConfiguration$dbInstanceArnMap": "<p>A map of database instance ARNs for each Region in the plan.</p>"
+      }
+    },
+    "RdsPromoteReadReplicaConfiguration": {
+      "base": "<p>Configuration for promoting an Amazon RDS read replica to a standalone database instance during a Region switch.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$rdsPromoteReadReplicaConfig": "<p>An Amazon RDS promote read replica execution block.</p>"
+      }
+    },
+    "RdsPromoteReadReplicaConfigurationTimeoutMinutesInteger": {
+      "base": null,
+      "refs": {
+        "RdsPromoteReadReplicaConfiguration$timeoutMinutes": "<p>The timeout value specified for the configuration.</p>"
+      }
+    },
     "RecoveryApproach": {
       "base": null,
       "refs": {
         "AbbreviatedPlan$recoveryApproach": "<p>The recovery approach for a Region switch plan, which can be active/active (activeActive) or active/passive (activePassive).</p>",
         "CreatePlanRequest$recoveryApproach": "<p>The recovery approach for a Region switch plan, which can be active/active (activeActive) or active/passive (activePassive).</p>",
         "Plan$recoveryApproach": "<p>The recovery approach for a Region switch plan, which can be active/active (activeActive) or active/passive (activePassive).</p>"
+      }
+    },
+    "RecoveryExecutionId": {
+      "base": null,
+      "refs": {
+        "StartPlanExecutionRequest$recoveryExecutionId": "<p>The execution identifier of the recovery execution that ran in the opposite region post-recovery is ran in. Required when starting a post-recovery execution.</p>"
       }
     },
     "Region": {
@@ -877,6 +922,7 @@
         "CreatePlanRequest$primaryRegion": "<p>The primary Amazon Web Services Region for the application. This is the Region where the application normally runs before any Region switch occurs.</p>",
         "GetPlanEvaluationStatusResponse$region": "<p>The Amazon Web Services Region for the plan.</p>",
         "Plan$primaryRegion": "<p>The primary Region for a plan.</p>",
+        "RdsDbInstanceArnMap$key": null,
         "RegionList$member": null,
         "RegionalScalingResource$key": null,
         "Route53HealthCheck$region": "<p>The Amazon Route 53 Region.</p>",
@@ -908,7 +954,7 @@
     "RegionToRunIn": {
       "base": null,
       "refs": {
-        "CustomActionLambdaConfiguration$regionToRun": "<p>The Amazon Web Services Region for the function to run in.</p>"
+        "CustomActionLambdaConfiguration$regionToRun": "<p>The Amazon Web Services Region for the function to run in. For recovery workflows use <code>activatingRegion</code> or <code>deactivatingRegion</code>. For post-recovery workflows, use <code>activeRegion</code> (the Region with customer traffic) or <code>inactiveRegion</code> (the Region with no customer traffic).</p>"
       }
     },
     "RegionalScalingResource": {
@@ -1148,6 +1194,7 @@
         "AbbreviatedExecution$version": "<p>The version for the plan.</p>",
         "AbbreviatedExecution$comment": "<p>An optional comment about the plan execution.</p>",
         "AbbreviatedExecution$executionRegion": "<p>The Amazon Web Services Region for a plan execution.</p>",
+        "AbbreviatedExecution$recoveryExecutionId": "<p>The unique identifier of the most recent recovery execution. Required when starting a post-recovery execution.</p>",
         "AbbreviatedPlan$version": "<p>The version for the plan.</p>",
         "AbbreviatedPlan$description": "<p>The description of a Region switch plan.</p>",
         "AbbreviatedPlan$executionRole": "<p>The execution role is a way to categorize a Region switch plan. </p>",
@@ -1170,6 +1217,7 @@
         "GetPlanExecutionResponse$version": "<p>The version for the plan.</p>",
         "GetPlanExecutionResponse$comment": "<p>A comment included on the plan execution.</p>",
         "GetPlanExecutionResponse$executionRegion": "<p>The Amazon Web Services Region for a plan execution.</p>",
+        "GetPlanExecutionResponse$recoveryExecutionId": "<p>The unique identifier of the most recent recovery execution. Required when starting a post-recovery execution.</p>",
         "GetPlanExecutionResponse$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
         "GlobalAuroraConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
         "IllegalArgumentException$message": null,
@@ -1188,6 +1236,8 @@
         "MinimalWorkflow$name": "<p>The name for a minimal workflow</p>",
         "Plan$description": "<p>The description for a plan.</p>",
         "Plan$version": "<p>The version for the plan.</p>",
+        "RdsCreateCrossRegionReplicaConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
+        "RdsPromoteReadReplicaConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
         "RegionAndRoutingControls$key": null,
         "RegionSwitchPlanConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
         "ResourceNotFoundException$message": null,

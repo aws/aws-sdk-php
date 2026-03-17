@@ -11,7 +11,7 @@ use PHPUnit\Framework\Assert;
 /**
  * Defines application features from the specific context.
  */
-class CredentialsContext extends Assert implements
+class CredentialsContext implements
     Context,
     SnippetAcceptingContext
 {
@@ -154,7 +154,7 @@ EOT;
      */
     public function theValueAtShouldBeA($key, $value)
     {
-        $this->assertInstanceOf(Result::class, $this->result);
-        $this->assertStringContainsString($value, $this->result->search($key));
+        Assert::assertInstanceOf(Result::class, $this->result);
+        Assert::assertStringContainsString($value, $this->result->search($key));
     }
 }

@@ -8,9 +8,13 @@ use Aws\CommandInterface;
 use Aws\S3\AmbiguousSuccessParser;
 use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Psr\Http\Message\ResponseInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
+#[CoversClass(AmbiguousSuccessParser::class)]
 class AmbiguousSuccessParserTest extends TestCase
 {
     private $instance;
@@ -29,11 +33,7 @@ class AmbiguousSuccessParserTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider opsWithAmbiguousSuccessesProvider
-     *
-     * @param string $operation
-     */
+    #[DataProvider('opsWithAmbiguousSuccessesProvider')]
     public function testConvertsAmbiguousSuccessesToExceptions($operation)
     {
         $this->expectExceptionMessage("Sorry!");
@@ -51,12 +51,9 @@ class AmbiguousSuccessParserTest extends TestCase
         $instance($command, $response);
     }
 
-    /**
-     * @dataProvider opsWithoutAmbiguousSuccessesProvider
-     * @param string $operation
-     * @doesNotPerformAssertions
-     */
-    public function testIgnoresAmbiguousSuccessesOnUnaffectedOperations($operation)
+    #[DataProvider('opsWithoutAmbiguousSuccessesProvider')]
+    #[DoesNotPerformAssertions]
+    public function testIgnoresAmbiguousSuccessesOnUnaffectedOperations(string $operation)
     {
         $command = $this->getMockBuilder(CommandInterface::class)->getMock();
         $command->expects($this->any())
@@ -71,9 +68,7 @@ class AmbiguousSuccessParserTest extends TestCase
         $instance($command, $response);
     }
 
-    /**
-     * @dataProvider opsWithAmbiguousSuccessesProvider
-     */
+    #[DataProvider('opsWithAmbiguousSuccessesProvider')]
     public function testThrowsConnectionErrorForEmptyBody($operation)
     {
         $this->expectExceptionMessage("An error connecting to the service occurred while performing the");
@@ -91,7 +86,7 @@ class AmbiguousSuccessParserTest extends TestCase
         $instance($command, $response);
     }
 
-    public function opsWithAmbiguousSuccessesProvider()
+    public static function opsWithAmbiguousSuccessesProvider(): array
     {
         return [
             ['CopyObject'],
@@ -101,7 +96,7 @@ class AmbiguousSuccessParserTest extends TestCase
         ];
     }
 
-    public function opsWithoutAmbiguousSuccessesProvider()
+    public static function opsWithoutAmbiguousSuccessesProvider(): array
     {
         $provider = ApiProvider::defaultProvider();
         return array_map(
@@ -110,7 +105,7 @@ class AmbiguousSuccessParserTest extends TestCase
                 array_keys($provider('api', 's3', 'latest')['operations']),
                 array_map(
                     function (array $args) { return $args[0]; },
-                    $this->opsWithAmbiguousSuccessesProvider()
+                    self::opsWithAmbiguousSuccessesProvider()
                 )
             )
         );

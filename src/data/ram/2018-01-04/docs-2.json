@@ -104,6 +104,7 @@
         "PromoteResourceShareCreatedFromPolicyResponse$returnValue": "<p>A return value of <code>true</code> indicates that the request succeeded. A value of <code>false</code> indicates that the request failed.</p>",
         "ResourceShare$allowExternalPrincipals": "<p>Indicates whether principals outside your organization in Organizations can be associated with a resource share.</p> <ul> <li> <p> <code>True</code> – the resource share can be shared with any Amazon Web Services account.</p> </li> <li> <p> <code>False</code> – the resource share can be shared with only accounts in the same organization as the account that owns the resource share.</p> </li> </ul>",
         "ResourceShareAssociation$external": "<p>Indicates whether the principal belongs to the same organization in Organizations as the Amazon Web Services account that owns the resource share.</p>",
+        "ResourceShareConfiguration$retainSharingOnAccountLeaveOrganization": "<p>Specifies whether the consumer account retains access to the resource share after leaving the organization.</p>",
         "ResourceSharePermissionDetail$defaultVersion": "<p>Specifies whether the version of the permission represented in this response is the default version for this permission.</p>",
         "ResourceSharePermissionDetail$isResourceTypeDefault": "<p>Specifies whether the version of the permission represented in this response is the default version for all resources of this resource type.</p>",
         "ResourceSharePermissionSummary$defaultVersion": "<p>Specifies whether the version of the managed permission used by this resource share is the default version for this managed permission.</p>",
@@ -651,6 +652,13 @@
       "refs": {
         "GetResourceShareAssociationsRequest$associationType": "<p>Specifies whether you want to retrieve the associations that involve a specified resource or principal.</p> <ul> <li> <p> <code>PRINCIPAL</code> – list the principals whose associations you want to see.</p> </li> <li> <p> <code>RESOURCE</code> – list the resources whose associations you want to see.</p> </li> </ul>",
         "ResourceShareAssociation$associationType": "<p>The type of entity included in this association.</p>"
+      }
+    },
+    "ResourceShareConfiguration": {
+      "base": "<p>The configuration of the resource share</p>",
+      "refs": {
+        "CreateResourceShareRequest$resourceShareConfiguration": "<p>Specifies the configuration of this resource share.</p>",
+        "ResourceShare$resourceShareConfiguration": "<p>The configuration of the resource share</p>"
       }
     },
     "ResourceShareFeatureSet": {

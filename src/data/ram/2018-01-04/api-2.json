@@ -809,7 +809,8 @@
         "allowExternalPrincipals":{"shape":"Boolean"},
         "clientToken":{"shape":"String"},
         "permissionArns":{"shape":"PermissionArnList"},
-        "sources":{"shape":"SourceArnOrAccountList"}
+        "sources":{"shape":"SourceArnOrAccountList"},
+        "resourceShareConfiguration":{"shape":"ResourceShareConfiguration"}
       }
     },
     "CreateResourceShareResponse":{
@@ -1582,7 +1583,8 @@
         "tags":{"shape":"TagList"},
         "creationTime":{"shape":"DateTime"},
         "lastUpdatedTime":{"shape":"DateTime"},
-        "featureSet":{"shape":"ResourceShareFeatureSet"}
+        "featureSet":{"shape":"ResourceShareFeatureSet"},
+        "resourceShareConfiguration":{"shape":"ResourceShareConfiguration"}
       }
     },
     "ResourceShareArnList":{
@@ -1627,6 +1629,12 @@
         "RESOURCE",
         "SOURCE"
       ]
+    },
+    "ResourceShareConfiguration":{
+      "type":"structure",
+      "members":{
+        "retainSharingOnAccountLeaveOrganization":{"shape":"Boolean"}
+      }
     },
     "ResourceShareFeatureSet":{
       "type":"string",

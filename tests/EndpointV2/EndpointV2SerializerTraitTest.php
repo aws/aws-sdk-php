@@ -8,9 +8,6 @@ use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-/**
- * @covers Aws\EndpointV2\EndpointV2SerializerTrait
- */
 class EndpointV2SerializerTraitTest extends TestCase
 {
     use UsesServiceTrait;

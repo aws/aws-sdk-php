@@ -4,13 +4,13 @@ namespace Aws\Test\Api;
 use Aws\Api\TimestampShape;
 use Aws\Api\ShapeMap;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\Api\TimestampShape
- */
+#[CoversClass(TimestampShape::class)]
 class TimestampShapeTest extends TestCase
 {
-    public function formatProvider()
+    public static function formatProvider(): array
     {
         $t = strtotime('january 5, 1999');
 
@@ -25,13 +25,17 @@ class TimestampShapeTest extends TestCase
             [new \DateTime('january 5, 1999'), 'rfc822', 'Tue, 05 Jan 1999 00:00:00 GMT'],
             [new \DateTimeImmutable('january 5, 1999'), 'unixTimestamp', '915494400'],
             [new \DateTimeImmutable('january 5, 1999'), 'iso8601', '1999-01-05T00:00:00Z'],
-            [new \DateTimeImmutable('january 5, 1999'), 'rfc822', 'Tue, 05 Jan 1999 00:00:00 GMT']
+            [new \DateTimeImmutable('january 5, 1999'), 'rfc822', 'Tue, 05 Jan 1999 00:00:00 GMT'],
+            [915494400.0, 'unixTimestamp', 915494400.0],
+            [915494400.0, 'iso8601', '1999-01-05T00:00:00Z'],
+            [915494400.0, 'rfc822', 'Tue, 05 Jan 1999 00:00:00 GMT'],
+            [915494400.123, 'unixTimestamp', 915494400.123],
+            [915494400.999, 'iso8601', '1999-01-05T00:00:00Z'], // Fractional truncated for iso8601
+            [915494400.999, 'rfc822', 'Tue, 05 Jan 1999 00:00:00 GMT']
         ];
     }
 
-    /**
-     * @dataProvider formatProvider
-     */
+    #[DataProvider('formatProvider')]
     public function testFormatsData($value, $format, $result)
     {
         $s = new TimestampShape([], new ShapeMap([]));

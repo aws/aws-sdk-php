@@ -285,6 +285,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putDataExportConfigurationAsync(array $args = [])
  * @method \Aws\Result putEnvironmentBlueprintConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putEnvironmentBlueprintConfigurationAsync(array $args = [])
+ * @method \Aws\Result queryGraph(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise queryGraphAsync(array $args = [])
  * @method \Aws\Result rejectPredictions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise rejectPredictionsAsync(array $args = [])
  * @method \Aws\Result rejectSubscriptionRequest(array $args = [])

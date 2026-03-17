@@ -9,11 +9,10 @@ use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\ResultInterface;
 use GuzzleHttp\Psr7\Response;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Api\Parser\Crc32ValidatingParser
- */
+#[CoversClass(Crc32ValidatingParser::class)]
 class Crc32ValidatingParserTest extends TestCase
 {
     private function getWrapped()

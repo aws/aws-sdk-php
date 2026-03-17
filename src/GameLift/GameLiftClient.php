@@ -150,6 +150,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getGameSessionLogUrlAsync(array $args = [])
  * @method \Aws\Result getInstanceAccess(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getInstanceAccessAsync(array $args = [])
+ * @method \Aws\Result getPlayerConnectionDetails(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getPlayerConnectionDetailsAsync(array $args = [])
  * @method \Aws\Result listAliases(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAliasesAsync(array $args = [])
  * @method \Aws\Result listBuilds(array $args = [])

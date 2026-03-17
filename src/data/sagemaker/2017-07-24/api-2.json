@@ -2348,6 +2348,18 @@
         {"shape":"ResourceNotFound"}
       ]
     },
+    "DescribeTrainingPlanExtensionHistory":{
+      "name":"DescribeTrainingPlanExtensionHistory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeTrainingPlanExtensionHistoryRequest"},
+      "output":{"shape":"DescribeTrainingPlanExtensionHistoryResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
     "DescribeTransformJob":{
       "name":"DescribeTransformJob",
       "http":{
@@ -2456,6 +2468,18 @@
       },
       "input":{"shape":"EnableSagemakerServicecatalogPortfolioInput"},
       "output":{"shape":"EnableSagemakerServicecatalogPortfolioOutput"}
+    },
+    "ExtendTrainingPlan":{
+      "name":"ExtendTrainingPlan",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ExtendTrainingPlanRequest"},
+      "output":{"shape":"ExtendTrainingPlanResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
     },
     "GetDeviceFleetReport":{
       "name":"GetDeviceFleetReport",
@@ -5934,6 +5958,10 @@
       "max":32,
       "min":1,
       "pattern":"[a-z]+\\-[0-9a-z\\-]+"
+    },
+    "AvailabilityZoneId":{
+      "type":"string",
+      "pattern":"[a-z]{3}\\d-az\\d"
     },
     "AvailableInstanceCount":{
       "type":"integer",
@@ -9488,7 +9516,12 @@
           "box":true
         },
         "WeeklyMaintenanceWindowStart":{"shape":"WeeklyMaintenanceWindowStart"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "S3BucketOwnerAccountId":{"shape":"AccountId"},
+        "S3BucketOwnerVerification":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "CreateMlflowTrackingServerResponse":{
@@ -12638,7 +12671,12 @@
         "CreationTime":{"shape":"Timestamp"},
         "CreatedBy":{"shape":"UserContext"},
         "LastModifiedTime":{"shape":"Timestamp"},
-        "LastModifiedBy":{"shape":"UserContext"}
+        "LastModifiedBy":{"shape":"UserContext"},
+        "S3BucketOwnerAccountId":{"shape":"AccountId"},
+        "S3BucketOwnerVerification":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "DescribeModelBiasJobDefinitionRequest":{
@@ -13399,6 +13437,23 @@
         "MlflowDetails":{"shape":"MlflowDetails"},
         "ProgressInfo":{"shape":"TrainingProgressInfo"},
         "OutputModelPackageArn":{"shape":"ModelPackageArn"}
+      }
+    },
+    "DescribeTrainingPlanExtensionHistoryRequest":{
+      "type":"structure",
+      "required":["TrainingPlanArn"],
+      "members":{
+        "TrainingPlanArn":{"shape":"TrainingPlanArn"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "DescribeTrainingPlanExtensionHistoryResponse":{
+      "type":"structure",
+      "required":["TrainingPlanExtensions"],
+      "members":{
+        "TrainingPlanExtensions":{"shape":"TrainingPlanExtensions"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "DescribeTrainingPlanRequest":{
@@ -14891,6 +14946,20 @@
       "type":"structure",
       "members":{
         "ClarifyExplainerConfig":{"shape":"ClarifyExplainerConfig"}
+      }
+    },
+    "ExtendTrainingPlanRequest":{
+      "type":"structure",
+      "required":["TrainingPlanExtensionOfferingId"],
+      "members":{
+        "TrainingPlanExtensionOfferingId":{"shape":"TrainingPlanExtensionOfferingId"}
+      }
+    },
+    "ExtendTrainingPlanResponse":{
+      "type":"structure",
+      "required":["TrainingPlanExtensions"],
+      "members":{
+        "TrainingPlanExtensions":{"shape":"TrainingPlanExtensions"}
       }
     },
     "FSxLustreConfig":{
@@ -23761,7 +23830,8 @@
         "al2-ami-sagemaker-inference-gpu-2",
         "al2-ami-sagemaker-inference-gpu-2-1",
         "al2-ami-sagemaker-inference-gpu-3-1",
-        "al2-ami-sagemaker-inference-neuron-2"
+        "al2-ami-sagemaker-inference-neuron-2",
+        "al2023-ami-sagemaker-inference-gpu-4-1"
       ]
     },
     "ProductionVariantInstanceType":{
@@ -23895,6 +23965,12 @@
         "ml.g6e.16xlarge",
         "ml.g6e.24xlarge",
         "ml.g6e.48xlarge",
+        "ml.g7e.2xlarge",
+        "ml.g7e.4xlarge",
+        "ml.g7e.8xlarge",
+        "ml.g7e.12xlarge",
+        "ml.g7e.24xlarge",
+        "ml.g7e.48xlarge",
         "ml.p4d.24xlarge",
         "ml.c7g.large",
         "ml.c7g.xlarge",
@@ -24029,6 +24105,7 @@
         "ml.c6in.24xlarge",
         "ml.c6in.32xlarge",
         "ml.p6-b200.48xlarge",
+        "ml.p6-b300.48xlarge",
         "ml.p6e-gb200.36xlarge",
         "ml.p5.4xlarge"
       ]
@@ -25064,7 +25141,9 @@
         "DurationHours":{"shape":"ReservedCapacityDurationHours"},
         "DurationMinutes":{"shape":"ReservedCapacityDurationMinutes"},
         "StartTime":{"shape":"Timestamp"},
-        "EndTime":{"shape":"Timestamp"}
+        "EndTime":{"shape":"Timestamp"},
+        "ExtensionStartTime":{"shape":"Timestamp"},
+        "ExtensionEndTime":{"shape":"Timestamp"}
       }
     },
     "ReservedCapacityOfferings":{
@@ -25804,14 +25883,16 @@
         "StartTimeAfter":{"shape":"Timestamp"},
         "EndTimeBefore":{"shape":"Timestamp"},
         "DurationHours":{"shape":"TrainingPlanDurationHoursInput"},
-        "TargetResources":{"shape":"SageMakerResourceNames"}
+        "TargetResources":{"shape":"SageMakerResourceNames"},
+        "TrainingPlanArn":{"shape":"String"}
       }
     },
     "SearchTrainingPlanOfferingsResponse":{
       "type":"structure",
       "required":["TrainingPlanOfferings"],
       "members":{
-        "TrainingPlanOfferings":{"shape":"TrainingPlanOfferings"}
+        "TrainingPlanOfferings":{"shape":"TrainingPlanOfferings"},
+        "TrainingPlanExtensionOfferings":{"shape":"TrainingPlanExtensionOfferings"}
       }
     },
     "SecondaryStatus":{
@@ -27908,6 +27989,53 @@
       "max":59,
       "min":0
     },
+    "TrainingPlanExtension":{
+      "type":"structure",
+      "required":["TrainingPlanExtensionOfferingId"],
+      "members":{
+        "TrainingPlanExtensionOfferingId":{"shape":"TrainingPlanExtensionOfferingId"},
+        "ExtendedAt":{"shape":"Timestamp"},
+        "StartDate":{"shape":"Timestamp"},
+        "EndDate":{"shape":"Timestamp"},
+        "Status":{"shape":"String256"},
+        "PaymentStatus":{"shape":"String256"},
+        "AvailabilityZone":{"shape":"String256"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
+        "DurationHours":{"shape":"TrainingPlanExtensionDurationHours"},
+        "UpfrontFee":{"shape":"String256"},
+        "CurrencyCode":{"shape":"CurrencyCode"}
+      }
+    },
+    "TrainingPlanExtensionDurationHours":{
+      "type":"integer",
+      "box":true,
+      "max":4368,
+      "min":0
+    },
+    "TrainingPlanExtensionOffering":{
+      "type":"structure",
+      "required":["TrainingPlanExtensionOfferingId"],
+      "members":{
+        "TrainingPlanExtensionOfferingId":{"shape":"TrainingPlanExtensionOfferingId"},
+        "AvailabilityZone":{"shape":"String256"},
+        "StartDate":{"shape":"Timestamp"},
+        "EndDate":{"shape":"Timestamp"},
+        "DurationHours":{"shape":"TrainingPlanExtensionDurationHours"},
+        "UpfrontFee":{"shape":"String256"},
+        "CurrencyCode":{"shape":"CurrencyCode"}
+      }
+    },
+    "TrainingPlanExtensionOfferingId":{"type":"string"},
+    "TrainingPlanExtensionOfferings":{
+      "type":"list",
+      "member":{"shape":"TrainingPlanExtensionOffering"},
+      "min":0
+    },
+    "TrainingPlanExtensions":{
+      "type":"list",
+      "member":{"shape":"TrainingPlanExtension"},
+      "min":0
+    },
     "TrainingPlanFilter":{
       "type":"structure",
       "required":[
@@ -29342,7 +29470,12 @@
           "shape":"Boolean",
           "box":true
         },
-        "WeeklyMaintenanceWindowStart":{"shape":"WeeklyMaintenanceWindowStart"}
+        "WeeklyMaintenanceWindowStart":{"shape":"WeeklyMaintenanceWindowStart"},
+        "S3BucketOwnerAccountId":{"shape":"AccountId"},
+        "S3BucketOwnerVerification":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "UpdateMlflowTrackingServerResponse":{

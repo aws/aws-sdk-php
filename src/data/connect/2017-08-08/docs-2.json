@@ -15,6 +15,7 @@
     "AssociateLambdaFunction": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Allows the specified Amazon Connect instance to access the specified Lambda function.</p>",
     "AssociateLexBot": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Allows the specified Amazon Connect instance to access the specified Amazon Lex V1 bot. This API only supports the association of Amazon Lex V1 bots.</p>",
     "AssociatePhoneNumberContactFlow": "<p>Associates a flow with a phone number claimed to your Amazon Connect instance.</p> <important> <p>If the number is claimed to a traffic distribution group, and you are calling this API using an instance in the Amazon Web Services Region where the traffic distribution group was created, you can use either a full phone number ARN or UUID value for the <code>PhoneNumberId</code> URI request parameter. However, if the number is claimed to a traffic distribution group and you are calling this API using an instance in the alternate Amazon Web Services Region associated with the traffic distribution group, you must provide a full phone number ARN. If a UUID is provided in this scenario, you will receive a <code>ResourceNotFoundException</code>.</p> </important>",
+    "AssociateQueueEmailAddresses": "<p>Associates a set of email addresses with a queue to enable agents to select different \"From\" (system) email addresses when replying to inbound email contacts or initiating outbound email contacts. This allows agents to handle email contacts across different brands and business units within the same queue.</p> <p> <b>Important things to know</b> </p> <ul> <li> <p>You can associate up to 49 additional email addresses with a single queue, plus 1 default outbound email address, for a total of 50.</p> </li> <li> <p>The email addresses must already exist in the Amazon Connect instance before they can be associated with a queue.</p> </li> <li> <p>Agents will be able to select from these associated email addresses when handling email contacts in the queue.</p> </li> <li> <p>For inbound email contacts, agents can select from email addresses associated with the queue where the contact was accepted.</p> </li> <li> <p>For outbound email contacts, agents can select from email addresses associated with their default outbound queue configured in their routing profile.</p> </li> </ul>",
     "AssociateQueueQuickConnects": "<p>Associates a set of quick connects with a queue.</p>",
     "AssociateRoutingProfileQueues": "<p>Associates a set of queues with a routing profile.</p>",
     "AssociateSecurityKey": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Associates a security key to the instance.</p>",
@@ -150,6 +151,7 @@
     "DisassociateLambdaFunction": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Remove the Lambda function from the dropdown options available in the relevant flow blocks.</p>",
     "DisassociateLexBot": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Revokes authorization from the specified instance to access the specified Amazon Lex bot.</p>",
     "DisassociatePhoneNumberContactFlow": "<p>Removes the flow association from a phone number claimed to your Amazon Connect instance.</p> <important> <p>If the number is claimed to a traffic distribution group, and you are calling this API using an instance in the Amazon Web Services Region where the traffic distribution group was created, you can use either a full phone number ARN or UUID value for the <code>PhoneNumberId</code> URI request parameter. However, if the number is claimed to a traffic distribution group and you are calling this API using an instance in the alternate Amazon Web Services Region associated with the traffic distribution group, you must provide a full phone number ARN. If a UUID is provided in this scenario, you will receive a <code>ResourceNotFoundException</code>.</p> </important>",
+    "DisassociateQueueEmailAddresses": "<p>Removes the association between a set of email addresses and a queue. After disassociation, agents will no longer be able to select these email addresses as \"From\" addresses when replying to inbound email contacts or initiating outbound email contacts in this queue.</p> <p> <b>Important things to know</b> </p> <ul> <li> <p>Agents will no longer see these email addresses in their \"From\" address selection options for this queue.</p> </li> <li> <p>The email addresses themselves are not deleted from the instance, only their availability for agent selection in this queue is removed.</p> </li> <li> <p>Changes take effect immediately and will affect the agent experience in the Contact Control Panel (CCP).</p> </li> </ul>",
     "DisassociateQueueQuickConnects": "<p>Disassociates a set of quick connects from a queue.</p>",
     "DisassociateRoutingProfileQueues": "<p>Disassociates a set of queues from a routing profile.</p> <p>Up to 10 queue references can be disassociated in a single API call. More than 10 queue references results in a single call results in an InvalidParameterException.</p>",
     "DisassociateSecurityKey": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Deletes the specified security key.</p>",
@@ -212,6 +214,7 @@
     "ListPhoneNumbersV2": "<p>Lists phone numbers claimed to your Amazon Connect instance or traffic distribution group. If the provided <code>TargetArn</code> is a traffic distribution group, you can call this API in both Amazon Web Services Regions associated with traffic distribution group.</p> <p>For more information about phone numbers, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/contact-center-phone-number.html\">Set Up Phone Numbers for Your Contact Center</a> in the <i>Amazon Connect Administrator Guide</i>.</p> <note> <ul> <li> <p>When given an instance ARN, <code>ListPhoneNumbersV2</code> returns only the phone numbers claimed to the instance.</p> </li> <li> <p>When given a traffic distribution group ARN <code>ListPhoneNumbersV2</code> returns only the phone numbers claimed to the traffic distribution group.</p> </li> </ul> </note>",
     "ListPredefinedAttributes": "<p>Lists predefined attributes for the specified Amazon Connect instance. A <i>predefined attribute</i> is made up of a name and a value. You can use predefined attributes for:</p> <ul> <li> <p>Routing proficiency (for example, agent certification) that has predefined values (for example, a list of possible certifications). For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p> </li> <li> <p>Contact information that varies between transfers or conferences, such as the name of the business unit handling the contact. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-contact-segment-attributes.html\">Use contact segment attributes</a>.</p> </li> </ul> <p>For the predefined attributes per instance quota, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#connect-quotas\">Amazon Connect quotas</a>.</p> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "ListPrompts": "<p>Provides information about the prompts for the specified Amazon Connect instance.</p>",
+    "ListQueueEmailAddresses": "<p>Lists all email addresses that are currently associated with a specific queue, providing details about which \"From\" email addresses agents can select when handling email contacts. This helps administrators manage agent email address options and understand the available choices for different brands and business units.</p> <p> <b>Important things to know</b> </p> <ul> <li> <p>The response includes metadata about each email address available for agent selection, including whether it's configured as the default outbound email.</p> </li> <li> <p>Agents can select from these email addresses when replying to inbound contacts or initiating outbound contacts in this queue.</p> </li> <li> <p>The list includes both explicitly associated email addresses and any default outbound email address configured for the queue.</p> </li> <li> <p>Results are paginated to handle queues with many associated email addresses (up to 50 per queue).</p> </li> </ul>",
     "ListQueueQuickConnects": "<p>Lists the quick connects associated with a queue.</p>",
     "ListQueues": "<p>Provides information about the queues for the specified Amazon Connect instance.</p> <p>If you do not specify a <code>QueueTypes</code> parameter, both standard and agent queues are returned. This might cause an unexpected truncation of results if you have more than 1000 agents and you limit the number of results of the API call in code.</p> <p>For more information about queues, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/concepts-queues-standard-and-agent.html\">Queues: Standard and Agent</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
     "ListQuickConnects": "<p>Provides information about the quick connects for the specified Amazon Connect instance. </p>",
@@ -251,7 +254,7 @@
     "ResumeContactRecording": "<p>When a contact is being recorded, and the recording has been suspended using SuspendContactRecording, this API resumes recording whatever recording is selected in the flow configuration: call, screen, or both. If only call recording or only screen recording is enabled, then it would resume.</p> <p>Voice and screen recordings are supported.</p>",
     "SearchAgentStatuses": "<p>Searches AgentStatuses in an Amazon Connect instance, with optional filtering.</p>",
     "SearchAvailablePhoneNumbers": "<p>Searches for available phone numbers that you can claim to your Amazon Connect instance or traffic distribution group. If the provided <code>TargetArn</code> is a traffic distribution group, you can call this API in both Amazon Web Services Regions associated with the traffic distribution group.</p>",
-    "SearchContactEvaluations": "<p>Searches contact evaluations in an Amazon Connect instance, with optional filtering. </p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>Find contact evaluations by using specific search criteria.</p> </li> <li> <p>Find contact evaluations that are tagged with a specific set of tags.</p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>A Search operation, unlike a List operation, takes time to index changes to resource (create, update or delete). If you don't see updated information for recently changed contact evaluations, try calling the API again in a few seconds. Contact Evaluations may not be fully backfilled with historical data in all regions yet, however all recently created Contact Evaluations should be available for search.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
+    "SearchContactEvaluations": "<p>Searches contact evaluations in an Amazon Connect instance, with optional filtering. </p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>Find contact evaluations by using specific search criteria.</p> </li> <li> <p>Find contact evaluations that are tagged with a specific set of tags.</p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>A Search operation, unlike a List operation, takes time to index changes to resource (create, update or delete). If you don't see updated information for recently changed contact evaluations, try calling the API again in a few seconds.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "SearchContactFlowModules": "<p>Searches the flow modules in an Amazon Connect instance, with optional filtering.</p>",
     "SearchContactFlows": "<p>Searches the flows in an Amazon Connect instance, with optional filtering.</p>",
     "SearchContacts": "<p>Searches contacts in an Amazon Connect instance.</p>",
@@ -463,8 +466,9 @@
         "EvaluationFormVersionSummary$CreatedBy": "<p>The Amazon Resource Name (ARN) of the user who created the evaluation form.</p>",
         "EvaluationFormVersionSummary$LastModifiedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the evaluation form.</p>",
         "EvaluationMetadata$EvaluatorArn": "<p>The Amazon Resource Name (ARN) of the user who last updated the evaluation.</p>",
+        "EvaluationReviewMetadata$RequestedBy": "<p>The user who requested the evaluation review.</p>",
         "EvaluationReviewMetadata$CreatedBy": "<p>The user who created the evaluation review.</p>",
-        "EvaluationReviewRequestComment$CreatedBy": "<p>The user who created the review request comment.</p>",
+        "EvaluationReviewRequestComment$CreatedBy": "<p>The user who created the evaluation review request comment.</p>",
         "EvaluationSearchMetadata$EvaluatorArn": "<p>The Amazon Resource Name (ARN) of the person who evaluated the contact.</p>",
         "EvaluationSearchMetadata$AcknowledgedBy": "<p>The agent who acknowledged the evaluation.</p>",
         "EvaluationSearchSummary$EvaluationArn": "<p>The Amazon Resource Name (ARN) for the contact evaluation resource.</p>",
@@ -1215,6 +1219,10 @@
       "base": null,
       "refs": {}
     },
+    "AssociateQueueEmailAddressesRequest": {
+      "base": null,
+      "refs": {}
+    },
     "AssociateQueueQuickConnectsRequest": {
       "base": null,
       "refs": {}
@@ -1774,6 +1782,7 @@
         "DataTableAttribute$Primary": "<p>Boolean indicating whether this attribute is used as a primary key for record identification. Primary attributes must have unique value combinations and cannot contain expressions.</p>",
         "DataTableEvaluatedValue$Found": "<p>The value's found.</p>",
         "DataTableEvaluatedValue$Error": "<p>The value's error.</p>",
+        "EmailAddressSummary$IsDefaultOutboundEmail": "<p>Indicates whether this email address is configured as the default outbound email address for the queue. When set to true, this email address is used as the default sender for outbound email contacts from this queue.</p>",
         "EvaluationAnswerData$NotApplicable": "<p>The flag to mark the question as not applicable.</p>",
         "EvaluationFormAutoEvaluationConfiguration$Enabled": "<p>When automated evaluation is enabled.</p>",
         "EvaluationFormNumericQuestionOption$AutomaticFail": "<p>The flag to mark the option as automatic fail. If an automatic fail answer is provided, the overall evaluation gets a score of 0.</p>",
@@ -1927,6 +1936,12 @@
         "StartOutboundChatContactRequest$ChatDurationInMinutes": "<p>The total duration of the newly started chat session. If not specified, the chat session duration defaults to 25 hour. The minimum configurable time is 60 minutes. The maximum configurable time is 10,080 minutes (7 days).</p>"
       }
     },
+    "ChatEntryPointParameters": {
+      "base": "<p>Parameters for initiating a chat test.</p>",
+      "refs": {
+        "TestCaseEntryPoint$ChatEntryPointParameters": "<p>Parameters for chat entry point.</p>"
+      }
+    },
     "ChatEvent": {
       "base": "<p>Chat integration event containing payload to perform different chat actions such as:</p> <ul> <li> <p>Sending a chat message</p> </li> <li> <p>Sending a chat event, such as typing</p> </li> <li> <p>Disconnecting from a chat</p> </li> </ul>",
       "refs": {
@@ -2000,6 +2015,7 @@
         "AssociateInstanceStorageConfigRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "AssociateLambdaFunctionRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "AssociateLexBotRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
+        "AssociateQueueEmailAddressesRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "AssociateSecurityKeyRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "BatchPutContactRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "ClaimPhoneNumberRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p> <p>Pattern: <code>^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$</code> </p>",
@@ -2023,6 +2039,7 @@
         "DisassociateInstanceStorageConfigRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "DisassociateLambdaFunctionRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "DisassociateLexBotRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
+        "DisassociateQueueEmailAddressesRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "DisassociateSecurityKeyRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "ImportPhoneNumberRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "MonitorContactRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
@@ -2271,6 +2288,7 @@
       "base": null,
       "refs": {
         "AssociatePhoneNumberContactFlowRequest$ContactFlowId": "<p>The identifier of the flow.</p>",
+        "ChatEntryPointParameters$FlowId": "<p>The flow identifier for the test.</p>",
         "ContactFlow$Id": "<p>The identifier of the flow.</p>",
         "ContactFlowSummary$Id": "<p>The identifier of the flow.</p>",
         "CreateContactFlowResponse$ContactFlowId": "<p>The identifier of the flow.</p>",
@@ -4314,6 +4332,10 @@
       "base": null,
       "refs": {}
     },
+    "DisassociateQueueEmailAddressesRequest": {
+      "base": null,
+      "refs": {}
+    },
     "DisassociateQueueQuickConnectsRequest": {
       "base": null,
       "refs": {}
@@ -4499,7 +4521,21 @@
         "CreateEmailAddressResponse$EmailAddressArn": "<p>The Amazon Resource Name (ARN) of the email address.</p>",
         "DescribeEmailAddressResponse$EmailAddressArn": "<p>The Amazon Resource Name (ARN) of the email address.</p>",
         "EmailAddressMetadata$EmailAddressArn": "<p>The Amazon Resource Name (ARN) of the email address.</p>",
+        "EmailAddressSummary$Arn": "<p>The Amazon Resource Name (ARN) of the email address associated with the queue.</p>",
         "UpdateEmailAddressMetadataResponse$EmailAddressArn": "<p>The Amazon Resource Name (ARN) of the email address.</p>"
+      }
+    },
+    "EmailAddressConfig": {
+      "base": "<p>Configuration object that specifies an email address to be associated with a queue. This configuration contains the identifier of the email address that should be linked to the queue for routing email contacts.</p>",
+      "refs": {
+        "EmailAddressConfigList$member": null
+      }
+    },
+    "EmailAddressConfigList": {
+      "base": null,
+      "refs": {
+        "AssociateQueueEmailAddressesRequest$EmailAddressesConfig": "<p>Configuration list containing the email addresses to associate with the queue. Each configuration specifies an email address ID that should be linked to this queue for routing purposes.</p>",
+        "CreateQueueRequest$EmailAddressesConfig": "<p>Configuration list containing the email addresses to associate with the queue during creation. Each configuration specifies an email address ID that agents can select when handling email contacts in this queue.</p>"
       }
     },
     "EmailAddressDisplayName": {
@@ -4522,10 +4558,19 @@
         "DescribeEmailAddressRequest$EmailAddressId": "<p>The identifier of the email address.</p>",
         "DescribeEmailAddressResponse$EmailAddressId": "<p>The identifier of the email address.</p>",
         "DisassociateEmailAddressAliasRequest$EmailAddressId": "<p>The identifier of the email address.</p>",
+        "EmailAddressConfig$EmailAddressId": "<p>The identifier of the email address that should be associated with the queue. This email address must already exist in the Amazon Connect instance and will be used to route incoming email contacts to the specified queue.</p>",
+        "EmailAddressIdList$member": null,
         "EmailAddressMetadata$EmailAddressId": "<p>The identifier of the email address.</p>",
+        "EmailAddressSummary$Id": "<p>The unique identifier of the email address associated with the queue.</p>",
         "OutboundEmailConfig$OutboundEmailAddressId": "<p>The identifier of the email address.</p>",
         "UpdateEmailAddressMetadataRequest$EmailAddressId": "<p>The identifier of the email address.</p>",
         "UpdateEmailAddressMetadataResponse$EmailAddressId": "<p>The identifier of the email address.</p>"
+      }
+    },
+    "EmailAddressIdList": {
+      "base": null,
+      "refs": {
+        "DisassociateQueueEmailAddressesRequest$EmailAddressesId": "<p>List of email address identifiers to disassociate from the queue. These are the unique identifiers of email addresses that should no longer be routed to this queue.</p>"
       }
     },
     "EmailAddressInfo": {
@@ -4549,6 +4594,12 @@
       "base": "<p>Contains information about an email address for a contact center.</p>",
       "refs": {
         "EmailAddressList$member": null
+      }
+    },
+    "EmailAddressMetadataList": {
+      "base": null,
+      "refs": {
+        "ListQueueEmailAddressesResponse$EmailAddressMetadataList": "<p>List of email address summary information for all email addresses associated with the queue. Each item contains the email address identifier, ARN, and configuration details.</p>"
       }
     },
     "EmailAddressRecipientList": {
@@ -4577,6 +4628,12 @@
       "base": "<p>Filters to be applied to search results.</p>",
       "refs": {
         "SearchEmailAddressesRequest$SearchFilter": "<p>Filters to be applied to search results.</p>"
+      }
+    },
+    "EmailAddressSummary": {
+      "base": "<p>Summary information about an email address associated with a queue. Contains the essential details needed to identify and manage the email address routing configuration.</p>",
+      "refs": {
+        "EmailAddressMetadataList$member": null
       }
     },
     "EmailAttachment": {
@@ -6690,6 +6747,7 @@
         "AssociateLambdaFunctionRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateLexBotRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociatePhoneNumberContactFlowRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "AssociateQueueEmailAddressesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateQueueQuickConnectsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateRoutingProfileQueuesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateSecurityKeyRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -6812,6 +6870,7 @@
         "DisassociateLambdaFunctionRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance..</p>",
         "DisassociateLexBotRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DisassociatePhoneNumberContactFlowRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "DisassociateQueueEmailAddressesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DisassociateQueueQuickConnectsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DisassociateRoutingProfileQueuesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DisassociateSecurityKeyRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -6874,6 +6933,7 @@
         "ListPhoneNumbersV2Request$InstanceId": "<p>The identifier of the Amazon Connect instance that phone numbers are claimed to. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance. If both <code>TargetArn</code> and <code>InstanceId</code> are not provided, this API lists numbers claimed to all the Amazon Connect instances belonging to your account in the same Amazon Web Services Region as the request.</p>",
         "ListPredefinedAttributesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListPromptsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
+        "ListQueueEmailAddressesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListQueueQuickConnectsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListQueuesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListQuickConnectsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance. Both Instance ID and Instance ARN are supported input formats. </p>",
@@ -7668,6 +7728,14 @@
       "base": null,
       "refs": {}
     },
+    "ListQueueEmailAddressesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListQueueEmailAddressesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListQueueQuickConnectsRequest": {
       "base": null,
       "refs": {}
@@ -7961,6 +8029,7 @@
         "ListIntegrationAssociationsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListNotificationsRequest$MaxResults": "<p>The maximum number of results to return per page. Valid range is 1-100.</p>",
         "ListPredefinedAttributesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListQueueEmailAddressesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListQueueQuickConnectsRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
         "ListRealtimeContactAnalysisSegmentsV2Request$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListRoutingProfileManualAssignmentQueuesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
@@ -8492,6 +8561,8 @@
         "ListPredefinedAttributesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListPromptsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListPromptsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "ListQueueEmailAddressesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListQueueEmailAddressesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListQueueQuickConnectsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListQueueQuickConnectsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListQueuesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -9792,6 +9863,7 @@
     "QueueId": {
       "base": null,
       "refs": {
+        "AssociateQueueEmailAddressesRequest$QueueId": "<p>The identifier for the queue.</p>",
         "AssociateQueueQuickConnectsRequest$QueueId": "<p>The identifier for the queue.</p>",
         "AssociatedQueueIdList$member": null,
         "ContactDataRequest$QueueId": "<p>The identifier of the queue associated with the Amazon Connect instance in which contacts that are created will be queued.</p>",
@@ -9800,7 +9872,9 @@
         "CreateRoutingProfileRequest$DefaultOutboundQueueId": "<p>The default outbound queue for the routing profile.</p>",
         "DeleteQueueRequest$QueueId": "<p>The identifier for the queue.</p>",
         "DescribeQueueRequest$QueueId": "<p>The identifier for the queue.</p>",
+        "DisassociateQueueEmailAddressesRequest$QueueId": "<p>The identifier for the queue.</p>",
         "DisassociateQueueQuickConnectsRequest$QueueId": "<p>The identifier for the queue.</p>",
+        "ListQueueEmailAddressesRequest$QueueId": "<p>The identifier for the queue.</p>",
         "ListQueueQuickConnectsRequest$QueueId": "<p>The identifier for the queue.</p>",
         "Queue$QueueId": "<p>The identifier for the queue.</p>",
         "QueueIdList$member": null,
@@ -10536,6 +10610,7 @@
         "HoursOfOperationSummary$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListChildHoursOfOperationsResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListHoursOfOperationOverridesResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
+        "ListQueueEmailAddressesResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListQueueQuickConnectsResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListRoutingProfileManualAssignmentQueuesResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListRoutingProfileQueuesResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
@@ -12900,8 +12975,9 @@
         "EvaluationFormSummary$LastActivatedTime": "<p>The timestamp for when the evaluation form was last activated.</p>",
         "EvaluationFormVersionSummary$CreatedTime": "<p>The timestamp for when the evaluation form was created.</p>",
         "EvaluationFormVersionSummary$LastModifiedTime": "<p>The timestamp for when the evaluation form was last updated.</p>",
+        "EvaluationReviewMetadata$RequestedTime": "<p>The timestamp when the evaluation review was requested.</p>",
         "EvaluationReviewMetadata$CreatedTime": "<p>The timestamp when the evaluation review was created.</p>",
-        "EvaluationReviewRequestComment$CreatedTime": "<p>The timestamp when the review request comment was created.</p>",
+        "EvaluationReviewRequestComment$CreatedTime": "<p>The timestamp when the evaluation review request comment was created.</p>",
         "EvaluationSearchMetadata$AcknowledgedTime": "<p>When the evaluation was acknowledged by the agent.</p>",
         "EvaluationSearchSummary$CreatedTime": "<p>The date and time when the evaluation was created, in UTC time.</p>",
         "EvaluationSearchSummary$LastModifiedTime": "<p>The date and time when the evaluation was modified last time, in UTC time.</p>",
@@ -12922,6 +12998,7 @@
         "InstanceSummary$CreatedTime": "<p>When the instance was created.</p>",
         "ListChildHoursOfOperationsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListHoursOfOperationOverridesResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
+        "ListQueueEmailAddressesResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListQueueQuickConnectsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListRoutingProfileManualAssignmentQueuesResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListRoutingProfileQueuesResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",

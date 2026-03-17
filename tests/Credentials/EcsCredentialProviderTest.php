@@ -15,12 +15,13 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Ring\Future\CompletedFutureArray;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\Credentials\EcsCredentialProvider
- */
+#[CoversClass(EcsCredentialProvider::class)]
 class EcsCredentialProviderTest extends TestCase
 {
     private $uripath;
@@ -85,7 +86,7 @@ class EcsCredentialProviderTest extends TestCase
         $this->expectExceptionMessage("Unexpected container metadata credentials value");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $this->getTestCreds(
-            $this->getCredentialArray(null, null, null, null, false)
+            self::getCredentialArray(null, null, null, null, false)
         )->wait();
     }
 
@@ -93,7 +94,7 @@ class EcsCredentialProviderTest extends TestCase
     {
         $t = time() + 1000;
         $c = $this->getTestCreds(
-            $this->getCredentialArray('foo', 'baz', null, "@{$t}")
+            self::getCredentialArray('foo', 'baz', null, "@{$t}")
         )->wait();
         $this->assertSame('foo', $c->getAccessKeyId());
         $this->assertSame('baz', $c->getSecretKey());
@@ -101,7 +102,7 @@ class EcsCredentialProviderTest extends TestCase
         $this->assertSame($t, $c->getExpiration());
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testDoesNotRequireConfig()
     {
         new EcsCredentialProvider();
@@ -144,9 +145,7 @@ class EcsCredentialProviderTest extends TestCase
         putenv("NO_PROXY=$no");
     }
 
-    /**
-     * @dataProvider uriAndTokenResolutionProvider
-     */
+    #[DataProvider('uriAndTokenResolutionProvider')]
     public function testUriAndTokenResolution($case)
     {
         $dir = $this->clearEnv();
@@ -180,7 +179,7 @@ class EcsCredentialProviderTest extends TestCase
         }
 
         $t = time() + 1000;
-        $creds = $this->getCredentialArray(
+        $creds = self::getCredentialArray(
             'foo', 'baz', 'bar', $t, true
         );
         $c = $this->resolveCredentials($creds)->wait();
@@ -193,7 +192,7 @@ class EcsCredentialProviderTest extends TestCase
         }
     }
 
-    public function uriAndTokenResolutionProvider(): \Generator
+    public static function uriAndTokenResolutionProvider(): \Generator
     {
         $cases = json_decode(file_get_contents(
             __DIR__ . '/fixtures/ecs/uri-token-resolution.json')
@@ -205,7 +204,7 @@ class EcsCredentialProviderTest extends TestCase
         }
     }
 
-    private function getCredentialArray(
+    private static function getCredentialArray(
         $key, $secret, $token = null, $time = null, $success = true
     ){
         return [
@@ -261,8 +260,8 @@ class EcsCredentialProviderTest extends TestCase
     private function getProxyCheckGuzzleClient()
     {
         $t = (time() + 1000);
-        $credentials = $this->getCredentialArray('foo', 'baz', null, "@{$t}");
-        return new \Aws\Handler\Guzzle\GuzzleHandler(
+        $credentials = self::getCredentialArray('foo', 'baz', null, "@{$t}");
+        return new GuzzleHandler(
             new Client([
                 'handler' => function (
                     Psr7\Request $request,
@@ -364,17 +363,20 @@ EOF;
     }
 
     /**
-     * @dataProvider successTestCases
-     *
-     * @param callable $client
+     * @param array $clientDef
      * @param CredentialsInterface $expected
+     * @throws GuzzleException
      */
+    #[DataProvider('successDataProvider')]
     public function testHandlesSuccessScenarios(
-        callable $client,
+        array $clientDef,
         CredentialsInterface $expected
     ) {
         $provider = new EcsCredentialProvider([
-            'client' => $client,
+            'client' => $this->getTestClient(
+                $clientDef['responses'],
+                $clientDef['credentials']
+            ),
             'retries' => 5
         ]);
 
@@ -398,7 +400,7 @@ EOF;
         );
     }
 
-    public function successTestCases()
+    public static function successDataProvider(): array
     {
         $expiry = time() + 1000;
         $creds = ['foo_key', 'baz_secret', 'qux_token', "@{$expiry}"];
@@ -415,7 +417,7 @@ EOF;
         $promiseCreds = Promise\Create::promiseFor(
             new Response(200, [], Psr7\Utils::streamFor(
                 json_encode(call_user_func_array(
-                    [$this, 'getCredentialArray'],
+                    [self::class, 'getCredentialArray'],
                     $creds
                 )))
             )
@@ -423,42 +425,50 @@ EOF;
 
         return [
             'Happy path' => [
-                $this->getTestClient([], $creds),
+                [
+                    'responses' => [],
+                    'credentials' => $creds
+                ],
                 $credsObject
             ],
             'With retries for ConnectException (Guzzle 7)' => [
-                $this->getTestClient(
-                    [
+                [
+                    'responses' => [
                         $rejectionConnection,
                         $promiseCreds
                     ],
-                    $creds
-                ),
+                    'credentials' => $creds
+                ],
                 $credsObject
             ],
             'With 4 retries for ConnectException (Guzzle 7)' => [
-                $this->getTestClient(
-                    [
+                [
+                    'responses' => [
                         $rejectionConnection,
                         $rejectionConnection,
                         $rejectionConnection,
                         $promiseCreds
                     ],
-                    $creds
-                ),
+                    'credentials' => $creds
+                ],
                 $credsObject
             ],
         ];
     }
 
     /**
-     * @dataProvider failureTestCases
-     *
      * @param $client
      * @param \Exception $expected
+     *
+     * @throws GuzzleException
      */
-    public function testHandlesFailureScenarios($client, \Exception $expected)
+    #[DataProvider('failureDataProvider')]
+    public function testHandlesFailureScenarios(
+        array $responses,
+        \Exception $expected
+    )
     {
+        $client = $this->getTestClient($responses);
         $provider = new EcsCredentialProvider([
             'client' => $client,
             'retries' => 1,
@@ -473,7 +483,7 @@ EOF;
         }
     }
 
-    public function failureTestCases()
+    public static function failureDataProvider(): array
     {
         $getRequest = new Psr7\Request('GET', '/latest');
 
@@ -494,22 +504,18 @@ EOF;
 
         return [
             'Non-retryable error' => [
-                $this->getTestClient(
-                    [
-                        $rejectionCreds,
-                    ]
-                ),
+                [
+                    $rejectionCreds,
+                ],
                 new CredentialsException(
                     'Error retrieving credentials from container metadata after attempt 0/1 (401 Unathorized)'
                 )
             ],
             'Retryable error' => [
-                $this->getTestClient(
-                    [
-                        $rejectionConnection,
-                        $rejectionConnection,
-                    ]
-                ),
+                [
+                    $rejectionConnection,
+                    $rejectionConnection,
+                ],
                 new CredentialsException(
                     'Error retrieving credentials from container metadata after attempt 1/1 (cURL error 28: Connection timed out after 1000 milliseconds)'
                 )

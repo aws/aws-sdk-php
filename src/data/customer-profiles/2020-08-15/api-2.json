@@ -192,6 +192,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "CreateRecommenderFilter":{
+      "name":"CreateRecommenderFilter",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/recommender-filters/{RecommenderFilterName}",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateRecommenderFilterRequest"},
+      "output":{"shape":"CreateRecommenderFilterResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "CreateSegmentDefinition":{
       "name":"CreateSegmentDefinition",
       "http":{
@@ -445,6 +462,23 @@
       },
       "input":{"shape":"DeleteRecommenderRequest"},
       "output":{"shape":"DeleteRecommenderResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "DeleteRecommenderFilter":{
+      "name":"DeleteRecommenderFilter",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{DomainName}/recommender-filters/{RecommenderFilterName}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteRecommenderFilterRequest"},
+      "output":{"shape":"DeleteRecommenderFilterResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
@@ -768,6 +802,24 @@
       },
       "input":{"shape":"GetRecommenderRequest"},
       "output":{"shape":"GetRecommenderResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "GetRecommenderFilter":{
+      "name":"GetRecommenderFilter",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/recommender-filters/{RecommenderFilterName}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetRecommenderFilterRequest"},
+      "output":{"shape":"GetRecommenderFilterResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
@@ -1200,6 +1252,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "ListRecommenderFilters":{
+      "name":"ListRecommenderFilters",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/recommender-filters",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRecommenderFiltersRequest"},
+      "output":{"shape":"ListRecommenderFiltersResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "ListRecommenderRecipes":{
       "name":"ListRecommenderRecipes",
@@ -2081,6 +2151,11 @@
       "key":{"shape":"typeName"},
       "value":{"shape":"CalculatedAttributeDimension"}
     },
+    "CandidateIdList":{
+      "type":"list",
+      "member":{"shape":"string1To255"},
+      "max":50
+    },
     "CatalogItem":{
       "type":"structure",
       "members":{
@@ -2493,6 +2568,37 @@
       "required":["ProfileId"],
       "members":{
         "ProfileId":{"shape":"uuid"}
+      }
+    },
+    "CreateRecommenderFilterRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "RecommenderFilterName",
+        "RecommenderFilterExpression"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "RecommenderFilterName":{
+          "shape":"RecommenderFilterName",
+          "location":"uri",
+          "locationName":"RecommenderFilterName"
+        },
+        "RecommenderFilterExpression":{"shape":"RecommenderFilterExpression"},
+        "Description":{"shape":"sensitiveText"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateRecommenderFilterResponse":{
+      "type":"structure",
+      "required":["RecommenderFilterArn"],
+      "members":{
+        "RecommenderFilterArn":{"shape":"Arn"},
+        "Tags":{"shape":"TagMap"}
       }
     },
     "CreateRecommenderRequest":{
@@ -2997,6 +3103,32 @@
         "Message":{"shape":"message"}
       }
     },
+    "DeleteRecommenderFilterRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "RecommenderFilterName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "RecommenderFilterName":{
+          "shape":"RecommenderFilterName",
+          "location":"uri",
+          "locationName":"RecommenderFilterName"
+        }
+      }
+    },
+    "DeleteRecommenderFilterResponse":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"String"}
+      }
+    },
     "DeleteRecommenderRequest":{
       "type":"structure",
       "required":[
@@ -3230,13 +3362,20 @@
       "required":["EventType"],
       "members":{
         "EventType":{"shape":"EventParametersEventTypeString"},
-        "EventValueThreshold":{"shape":"Double"}
+        "EventValueThreshold":{"shape":"Double"},
+        "EventWeight":{"shape":"EventParametersEventWeightDouble"}
       }
     },
     "EventParametersEventTypeString":{
       "type":"string",
       "max":256,
       "min":0
+    },
+    "EventParametersEventWeightDouble":{
+      "type":"double",
+      "box":true,
+      "max":1.0,
+      "min":0.0
     },
     "EventParametersList":{
       "type":"list",
@@ -4111,6 +4250,7 @@
         "SourceLastUpdatedTimestampFormat":{"shape":"string1To255"},
         "MaxAvailableProfileObjectCount":{"shape":"minSize0"},
         "MaxProfileObjectCount":{"shape":"minSize1"},
+        "SourcePriority":{"shape":"minSize1"},
         "Fields":{"shape":"FieldMap"},
         "Keys":{"shape":"KeyMap"},
         "CreatedAt":{"shape":"timestamp"},
@@ -4161,13 +4301,55 @@
         },
         "RecommenderName":{"shape":"name"},
         "Context":{"shape":"RecommenderContext"},
-        "MaxResults":{"shape":"MaxSize10"}
+        "RecommenderFilters":{"shape":"RecommenderFilters"},
+        "RecommenderPromotionalFilters":{"shape":"RecommenderPromotionalFilters"},
+        "CandidateIds":{"shape":"CandidateIdList"},
+        "MaxResults":{"shape":"maxSize500"},
+        "MetadataConfig":{"shape":"MetadataConfig"}
       }
     },
     "GetProfileRecommendationsResponse":{
       "type":"structure",
       "members":{
         "Recommendations":{"shape":"Recommendations"}
+      }
+    },
+    "GetRecommenderFilterRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "RecommenderFilterName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "RecommenderFilterName":{
+          "shape":"RecommenderFilterName",
+          "location":"uri",
+          "locationName":"RecommenderFilterName"
+        }
+      }
+    },
+    "GetRecommenderFilterResponse":{
+      "type":"structure",
+      "required":[
+        "RecommenderFilterName",
+        "RecommenderFilterExpression",
+        "CreatedAt",
+        "Status",
+        "Tags"
+      ],
+      "members":{
+        "RecommenderFilterName":{"shape":"RecommenderFilterName"},
+        "RecommenderFilterExpression":{"shape":"RecommenderFilterExpression"},
+        "CreatedAt":{"shape":"timestamp"},
+        "Status":{"shape":"RecommenderFilterStatus"},
+        "Description":{"shape":"sensitiveText"},
+        "FailureReason":{"shape":"String"},
+        "Tags":{"shape":"TagMap"}
       }
     },
     "GetRecommenderRequest":{
@@ -4694,6 +4876,18 @@
       "members":{
         "DatetimeTypeFieldName":{"shape":"DatetimeTypeFieldName"}
       }
+    },
+    "InferenceConfig":{
+      "type":"structure",
+      "members":{
+        "MinProvisionedTPS":{"shape":"InferenceConfigMinProvisionedTPSInteger"}
+      }
+    },
+    "InferenceConfigMinProvisionedTPSInteger":{
+      "type":"integer",
+      "box":true,
+      "max":500,
+      "min":1
     },
     "IntegrationConfig":{
       "type":"structure",
@@ -5296,6 +5490,7 @@
         "LastUpdatedAt":{"shape":"timestamp"},
         "MaxProfileObjectCount":{"shape":"minSize1"},
         "MaxAvailableProfileObjectCount":{"shape":"minSize0"},
+        "SourcePriority":{"shape":"minSize1"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -5398,6 +5593,34 @@
       "members":{
         "Items":{"shape":"ProfileObjectList"},
         "NextToken":{"shape":"token"}
+      }
+    },
+    "ListRecommenderFiltersRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "MaxResults":{
+          "shape":"maxSize100",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListRecommenderFiltersResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"token"},
+        "RecommenderFilters":{"shape":"RecommenderFilterSummaryList"}
       }
     },
     "ListRecommenderRecipesRequest":{
@@ -5737,11 +5960,6 @@
       "max":15,
       "min":1
     },
-    "MaxSize10":{
-      "type":"integer",
-      "max":10,
-      "min":1
-    },
     "MaxSize500":{
       "type":"integer",
       "box":true,
@@ -5770,6 +5988,23 @@
       "type":"structure",
       "members":{
         "Message":{"shape":"message"}
+      }
+    },
+    "MetadataColumnName":{
+      "type":"string",
+      "max":150,
+      "min":1
+    },
+    "MetadataColumnsList":{
+      "type":"list",
+      "member":{"shape":"MetadataColumnName"},
+      "max":10,
+      "min":1
+    },
+    "MetadataConfig":{
+      "type":"structure",
+      "members":{
+        "MetadataColumns":{"shape":"MetadataColumnsList"}
       }
     },
     "Metrics":{
@@ -5884,6 +6119,11 @@
         "OTHER"
       ],
       "sensitive":true
+    },
+    "PercentPromotedItems":{
+      "type":"integer",
+      "max":100,
+      "min":1
     },
     "Period":{
       "type":"structure",
@@ -6368,6 +6608,7 @@
         "AllowProfileCreation":{"shape":"boolean"},
         "SourceLastUpdatedTimestampFormat":{"shape":"string1To255"},
         "MaxProfileObjectCount":{"shape":"minSize1"},
+        "SourcePriority":{"shape":"minSize1"},
         "Fields":{"shape":"FieldMap"},
         "Keys":{"shape":"KeyMap"},
         "Tags":{"shape":"TagMap"}
@@ -6389,6 +6630,7 @@
         "SourceLastUpdatedTimestampFormat":{"shape":"string1To255"},
         "MaxProfileObjectCount":{"shape":"minSize1"},
         "MaxAvailableProfileObjectCount":{"shape":"minSize0"},
+        "SourcePriority":{"shape":"minSize1"},
         "Fields":{"shape":"FieldMap"},
         "Keys":{"shape":"KeyMap"},
         "CreatedAt":{"shape":"timestamp"},
@@ -6459,23 +6701,103 @@
     },
     "RecommenderConfig":{
       "type":"structure",
-      "required":["EventsConfig"],
       "members":{
         "EventsConfig":{"shape":"EventsConfig"},
-        "TrainingFrequency":{"shape":"RecommenderConfigTrainingFrequencyInteger"}
+        "TrainingFrequency":{"shape":"RecommenderConfigTrainingFrequencyInteger"},
+        "InferenceConfig":{"shape":"InferenceConfig"}
       }
     },
     "RecommenderConfigTrainingFrequencyInteger":{
       "type":"integer",
       "box":true,
-      "max":7,
-      "min":7
+      "max":30,
+      "min":1
     },
     "RecommenderContext":{
       "type":"map",
       "key":{"shape":"ContextKey"},
       "value":{"shape":"string1To255"},
       "sensitive":true
+    },
+    "RecommenderFilter":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"name"},
+        "Values":{"shape":"RecommenderFilterValues"}
+      }
+    },
+    "RecommenderFilterAttributeName":{
+      "type":"string",
+      "max":50,
+      "pattern":"[A-Za-z0-9_]+"
+    },
+    "RecommenderFilterAttributeValue":{
+      "type":"string",
+      "max":1000,
+      "sensitive":true
+    },
+    "RecommenderFilterExpression":{
+      "type":"string",
+      "max":2500,
+      "min":1,
+      "sensitive":true
+    },
+    "RecommenderFilterName":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "RecommenderFilterStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "PENDING",
+        "IN_PROGRESS",
+        "FAILED",
+        "DELETING"
+      ]
+    },
+    "RecommenderFilterSummary":{
+      "type":"structure",
+      "members":{
+        "RecommenderFilterName":{"shape":"RecommenderFilterName"},
+        "RecommenderFilterExpression":{"shape":"RecommenderFilterExpression"},
+        "CreatedAt":{"shape":"timestamp"},
+        "Description":{"shape":"sensitiveText"},
+        "Status":{"shape":"RecommenderFilterStatus"},
+        "FailureReason":{"shape":"String"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "RecommenderFilterSummaryList":{
+      "type":"list",
+      "member":{"shape":"RecommenderFilterSummary"}
+    },
+    "RecommenderFilterValues":{
+      "type":"map",
+      "key":{"shape":"RecommenderFilterAttributeName"},
+      "value":{"shape":"RecommenderFilterAttributeValue"},
+      "max":25
+    },
+    "RecommenderFilters":{
+      "type":"list",
+      "member":{"shape":"RecommenderFilter"},
+      "max":1
+    },
+    "RecommenderPromotionalFilter":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"name"},
+        "Values":{"shape":"RecommenderFilterValues"},
+        "PromotionName":{"shape":"name"},
+        "PercentPromotedItems":{"shape":"PercentPromotedItems"}
+      }
+    },
+    "RecommenderPromotionalFilters":{
+      "type":"list",
+      "member":{"shape":"RecommenderPromotionalFilter"},
+      "max":1
     },
     "RecommenderRecipe":{
       "type":"structure",
@@ -6491,7 +6813,8 @@
         "similar-items",
         "frequently-paired-items",
         "popular-items",
-        "trending-now"
+        "trending-now",
+        "personalized-ranking"
       ]
     },
     "RecommenderRecipesList":{
@@ -6932,6 +7255,8 @@
         "PROFILE",
         "ASSET",
         "CASE",
+        "DEVICE",
+        "WEB_ANALYTICS",
         "ORDER",
         "COMMUNICATION_RECORD",
         "AIR_PREFERENCE",
@@ -7727,6 +8052,11 @@
     "maxSize24":{
       "type":"integer",
       "max":24,
+      "min":1
+    },
+    "maxSize500":{
+      "type":"integer",
+      "max":500,
       "min":1
     },
     "message":{"type":"string"},

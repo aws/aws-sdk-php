@@ -337,6 +337,23 @@
       ],
       "idempotent":true
     },
+    "StartApprovalTeamBaseline":{
+      "name":"StartApprovalTeamBaseline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/approval-teams/{Arn}/baseline",
+        "responseCode":200
+      },
+      "input":{"shape":"StartApprovalTeamBaselineRequest"},
+      "output":{"shape":"StartApprovalTeamBaselineResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -500,6 +517,14 @@
         "DELETE_PENDING_APPROVAL",
         "DELETE_FAILED_APPROVAL",
         "DELETE_FAILED_VALIDATION"
+      ]
+    },
+    "ApproverLastActivity":{
+      "type":"string",
+      "enum":[
+        "VOTED",
+        "BASELINED",
+        "RESPONDED_TO_INVITATION"
       ]
     },
     "Boolean":{
@@ -688,6 +713,9 @@
         "PrimaryIdentityId":{"shape":"IdentityId"},
         "PrimaryIdentitySourceArn":{"shape":"String"},
         "PrimaryIdentityStatus":{"shape":"IdentityStatus"},
+        "LastActivity":{"shape":"ApproverLastActivity"},
+        "LastActivityTime":{"shape":"IsoTimestamp"},
+        "PendingBaselineSessionArn":{"shape":"SessionArn"},
         "MfaMethods":{"shape":"MfaMethods"}
       }
     },
@@ -1486,7 +1514,8 @@
       "enum":[
         "REJECTED",
         "EXPIRED",
-        "CONFIGURATION_CHANGED"
+        "CONFIGURATION_CHANGED",
+        "ALL_APPROVERS_IN_SESSION"
       ]
     },
     "SessionValue":{
@@ -1513,6 +1542,30 @@
       "members":{
         "DeletionCompletionTime":{"shape":"IsoTimestamp"},
         "DeletionStartTime":{"shape":"IsoTimestamp"}
+      }
+    },
+    "StartApprovalTeamBaselineApproverIds":{
+      "type":"list",
+      "member":{"shape":"ParticipantId"},
+      "max":20,
+      "min":0
+    },
+    "StartApprovalTeamBaselineRequest":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{
+          "shape":"ApprovalTeamArn",
+          "location":"uri",
+          "locationName":"Arn"
+        },
+        "ApproverIds":{"shape":"StartApprovalTeamBaselineApproverIds"}
+      }
+    },
+    "StartApprovalTeamBaselineResponse":{
+      "type":"structure",
+      "members":{
+        "BaselineSessionArn":{"shape":"SessionArn"}
       }
     },
     "String":{

@@ -3,11 +3,11 @@
 namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\CloudFrontClient;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\CloudFront\CloudFrontClient
- */
+#[CoversClass(CloudFrontClient::class)]
 class CloudFrontClientTest extends TestCase
 {
     protected $key;
@@ -29,7 +29,7 @@ class CloudFrontClientTest extends TestCase
         $c->getSignedUrl([]);
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testCreatesSignedUrl()
     {
         $c = new CloudFrontClient([
@@ -45,7 +45,7 @@ class CloudFrontClientTest extends TestCase
         ]);
     }
 
-    /** @doesNotPerformAssertions */
+    #[DoesNotPerformAssertions]
     public function testCreatesSignedCookie()
     {
         $c = new CloudFrontClient([

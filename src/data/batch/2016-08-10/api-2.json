@@ -772,7 +772,8 @@
         "bidPercentage":{"shape":"Integer"},
         "spotIamFleetRole":{"shape":"String"},
         "launchTemplate":{"shape":"LaunchTemplateSpecification"},
-        "ec2Configuration":{"shape":"Ec2ConfigurationList"}
+        "ec2Configuration":{"shape":"Ec2ConfigurationList"},
+        "scalingPolicy":{"shape":"ComputeScalingPolicy"}
       }
     },
     "ComputeResourceUpdate":{
@@ -794,7 +795,14 @@
         "ec2Configuration":{"shape":"Ec2ConfigurationList"},
         "updateToLatestImageVersion":{"shape":"Boolean"},
         "type":{"shape":"CRType"},
-        "imageId":{"shape":"String"}
+        "imageId":{"shape":"String"},
+        "scalingPolicy":{"shape":"ComputeScalingPolicy"}
+      }
+    },
+    "ComputeScalingPolicy":{
+      "type":"structure",
+      "members":{
+        "minScaleDownDelayMinutes":{"shape":"Integer"}
       }
     },
     "ConsumableResourceList":{

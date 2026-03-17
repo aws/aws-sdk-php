@@ -954,6 +954,27 @@
         "ServiceSoftwareOptions$UpdateStatus": "<p>The status of your service software update.</p>"
       }
     },
+    "DeploymentStrategy": {
+      "base": "<p>Specifies the deployment strategy for the domain. Valid values are <code>Default</code> and <code>CapacityOptimized</code>.</p>",
+      "refs": {
+        "DeploymentStrategyOptions$DeploymentStrategy": "<p>Specifies the deployment strategy for the domain. Valid values are <code>Default</code> and <code>CapacityOptimized</code>.</p>"
+      }
+    },
+    "DeploymentStrategyOptions": {
+      "base": "<p>Specifies the deployment strategy options for the domain.</p>",
+      "refs": {
+        "CreateDomainRequest$DeploymentStrategyOptions": "<p>Specifies the deployment strategy options for the domain.</p>",
+        "DeploymentStrategyOptionsStatus$Options": "<p>Deployment strategy options for the domain.</p>",
+        "DomainStatus$DeploymentStrategyOptions": "<p>The current status of the domain's deployment strategy options.</p>",
+        "UpdateDomainConfigRequest$DeploymentStrategyOptions": "<p>Specifies the deployment strategy options for the domain.</p>"
+      }
+    },
+    "DeploymentStrategyOptionsStatus": {
+      "base": "<p>The status of deployment strategy options for the domain.</p>",
+      "refs": {
+        "DomainConfig$DeploymentStrategyOptions": "<p>Specifies <code>DeploymentStrategyOptions</code> for the domain.</p>"
+      }
+    },
     "DeploymentType": {
       "base": null,
       "refs": {
@@ -2468,6 +2489,7 @@
         "AdvancedSecurityOptionsStatus$Status": "<p>Status of the fine-grained access control settings for a domain.</p>",
         "ClusterConfigStatus$Status": "<p>The status of cluster configuration options for the specified domain.</p>",
         "CognitoOptionsStatus$Status": "<p>The status of the Cognito options for the specified domain.</p>",
+        "DeploymentStrategyOptionsStatus$Status": "<p>The current status of the deployment strategy options for the domain.</p>",
         "DomainEndpointOptionsStatus$Status": "<p>The status of the endpoint options for a domain.</p>",
         "EBSOptionsStatus$Status": "<p>The status of the EBS options for the specified domain.</p>",
         "EncryptionAtRestOptionsStatus$Status": "<p>The status of the encryption at rest options for the specified domain.</p>",
@@ -2731,8 +2753,11 @@
       "base": "<p>Access policy rules for an Amazon OpenSearch Service domain endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html#createdomain-configure-access-policies\">Configuring access policies</a>. The maximum size of a policy document is 100 KB.</p>",
       "refs": {
         "AccessPoliciesStatus$Options": "<p>The access policy configured for the domain. Access policies can be resource-based, IP-based, or IAM-based. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html#createdomain-configure-access-policies\">Configuring access policies</a>.</p>",
+        "AddDirectQueryDataSourceRequest$DataSourceAccessPolicy": "<p> An optional IAM access policy document that defines the permissions for accessing the data source. The policy document must be in valid JSON format and follow IAM policy syntax.</p>",
         "CreateDomainRequest$AccessPolicies": "<p>Identity and Access Management (IAM) policy document specifying the access policies for the new domain.</p>",
         "DomainStatus$AccessPolicies": "<p>Identity and Access Management (IAM) policy document specifying the access policies for the domain.</p>",
+        "GetDirectQueryDataSourceResponse$DataSourceAccessPolicy": "<p> The IAM access policy document that defines the permissions for accessing the direct query data source. Returns the current policy configuration in JSON format, or null if no custom policy is configured. </p>",
+        "UpdateDirectQueryDataSourceRequest$DataSourceAccessPolicy": "<p> An optional IAM access policy document that defines the updated permissions for accessing the direct query data source. The policy document must be in valid JSON format and follow IAM policy syntax. If not specified, the existing access policy if present remains unchanged. </p>",
         "UpdateDomainConfigRequest$AccessPolicies": "<p>Identity and Access Management (IAM) access policy as a JSON-formatted string.</p>"
       }
     },
@@ -2875,6 +2900,7 @@
       "base": null,
       "refs": {
         "CognitoOptions$RoleArn": "<p>The <code>AmazonOpenSearchServiceCognitoAccess</code> role that allows OpenSearch Service to configure your user pool and identity pool.</p>",
+        "DataSource$iamRoleForDataSourceArn": "<p>The ARN of the IAM role to be used for cross account/region data source association.</p>",
         "IamIdentityCenterOptions$iamRoleForIdentityCenterApplicationArn": "<p>The Amazon Resource Name (ARN) of the IAM role assigned to the IAM Identity Center application for the OpenSearch application.</p>",
         "IamIdentityCenterOptionsInput$iamRoleForIdentityCenterApplicationArn": "<p>The ARN of the IAM role associated with the IAM Identity Center application.</p>",
         "KeyStoreAccessOption$KeyAccessRoleArn": "<p>Role ARN to access the KeyStore Key</p>",

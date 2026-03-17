@@ -12,14 +12,15 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(ObjectCopier::class)]
 class ObjectCopierTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @dataProvider getCopyTestCases
-     */
+    #[DataProvider('copyDataProvider')]
     public function testDoesCorrectOperation(
         array $mockedResults,
         array $options
@@ -38,9 +39,7 @@ class ObjectCopierTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @dataProvider getCopyTestCasesWithPathStyle
-     */
+    #[DataProvider('copyWithPathStyleDataProvider')]
     public function testDoesCorrectOperationWithPathStyle(
         array $mockedResults,
         array $options
@@ -61,11 +60,7 @@ class ObjectCopierTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @dataProvider getCopyTestCases
-     * @param array $mockedResults
-     * @param array $options
-     */
+    #[DataProvider('copyDataProvider')]
     public function testDoesCorrectOperationWithAccessPointArn(
         array $mockedResults,
         array $options
@@ -139,9 +134,7 @@ class ObjectCopierTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @dataProvider getCopyTestCases
-     */
+    #[DataProvider('copyDataProvider')]
     public function testDoesCorrectOperationAsynchronously(
         array $mockedResults,
         array $options
@@ -162,9 +155,7 @@ class ObjectCopierTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @dataProvider getCopyTestCasesWithPathStyle
-     */
+    #[DataProvider('copyWithPathStyleDataProvider')]
     public function testDoesCorrectOperationAsynchronouslyWithPathStyle(
         array $mockedResults,
         array $options
@@ -187,7 +178,7 @@ class ObjectCopierTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    private function getSmallPutObjectMockResult()
+    private static function getSmallPutObjectMockResult(): array
     {
         $smallHeadObject = new Result(['ContentLength' => 1024 * 1024 * 6]);
         $putObject = new Result();
@@ -195,7 +186,7 @@ class ObjectCopierTest extends TestCase
         return [$smallHeadObject, $putObject];
     }
 
-    private function getMultipartMockResults($key = 'key')
+    private static function getMultipartMockResults($key = 'key'): array
     {
         $smallHeadObject = new Result(['ContentLength' => 1024 * 1024 * 6]);
         $partCount = ceil($smallHeadObject['ContentLength'] / MultipartUploader::PART_MIN_SIZE);
@@ -210,21 +201,21 @@ class ObjectCopierTest extends TestCase
         );
     }
 
-    public function getCopyTestCases()
+    public static function copyDataProvider(): array
     {
         return [
             [
-                $this->getSmallPutObjectMockResult(),
+                self::getSmallPutObjectMockResult(),
                 []
             ],
             [
-                $this->getMultipartMockResults(),
+                self::getMultipartMockResults(),
                 ['mup_threshold' => MultipartUploader::PART_MIN_SIZE]
             ],
         ];
     }
 
-    private function getPathStyleMultipartMockResults()
+    private static function getPathStyleMultipartMockResults(): array
     {
         $smallHeadObject = new Result(['ContentLength' => 1024 * 1024 * 6]);
         $partCount = ceil($smallHeadObject['ContentLength'] / MultipartUploader::PART_MIN_SIZE);
@@ -239,15 +230,15 @@ class ObjectCopierTest extends TestCase
         );
     }
 
-    public function getCopyTestCasesWithPathStyle()
+    public static function copyWithPathStyleDataProvider(): array
     {
         return [
             [
-                $this->getSmallPutObjectMockResult(),
+                self::getSmallPutObjectMockResult(),
                 []
             ],
             [
-                $this->getPathStyleMultipartMockResults(),
+                self::getPathStyleMultipartMockResults(),
                 ['mup_threshold' => MultipartUploader::PART_MIN_SIZE]
             ],
         ];
@@ -257,7 +248,7 @@ class ObjectCopierTest extends TestCase
     {
         $client = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getCommand', 'executeAsync'])
+            ->onlyMethods(['getCommand', 'executeAsync'])
             ->getMock();
 
         $headObjectCommand = new Command('HeadObject');
@@ -317,7 +308,7 @@ class ObjectCopierTest extends TestCase
 
         $this->addMockResults(
             $client,
-            $this->getSmallPutObjectMockResult()
+            self::getSmallPutObjectMockResult()
         );
 
         $uploader = new ObjectCopier(
@@ -357,7 +348,7 @@ class ObjectCopierTest extends TestCase
 
         $this->addMockResults(
             $client,
-            $this->getMultipartMockResults()
+            self::getMultipartMockResults()
         );
 
         $uploader = new ObjectCopier(
@@ -382,7 +373,7 @@ class ObjectCopierTest extends TestCase
 
         $this->addMockResults(
             $client,
-            $this->getSmallPutObjectMockResult()
+            self::getSmallPutObjectMockResult()
         );
 
         $uploader = new ObjectCopier(
@@ -398,7 +389,8 @@ class ObjectCopierTest extends TestCase
         $this->assertSame($url, $result['ObjectURL']);
     }
 
-    public function MultipartCopierProvider(){
+    public static function MultipartCopierProvider(): array
+    {
         return [
             ["中文", "文件夹/文件"],
             ["文件夹/文件", "中文"],
@@ -406,9 +398,7 @@ class ObjectCopierTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider MultipartCopierProvider
-     */
+    #[DataProvider('MultipartCopierProvider')]
     public function testS3ObjectMultipartCopier($input, $expectedOutput)
     {
         /** @var \Aws\S3\S3Client $client */

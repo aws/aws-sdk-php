@@ -11,17 +11,25 @@ use Aws\Api\Shape;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
+use Aws\Api\Parser\AbstractParser;
+use Aws\Api\Parser\AbstractRestParser;
+use Aws\Api\Parser\JsonRpcParser;
+use Aws\Api\Parser\JsonParser;
+use Aws\Api\Parser\RestJsonParser;
+use Aws\Api\Parser\RestXmlParser;
+use Aws\Api\Parser\QueryParser;
+use Aws\Api\Parser\XmlParser;
 
-/**
- * @covers \Aws\Api\Parser\AbstractParser
- * @covers \Aws\Api\Parser\AbstractRestParser
- * @covers \Aws\Api\Parser\JsonRpcParser
- * @covers \Aws\Api\Parser\JsonParser
- * @covers \Aws\Api\Parser\RestJsonParser
- * @covers \Aws\Api\Parser\RestXmlParser
- * @covers \Aws\Api\Parser\QueryParser
- * @covers \Aws\Api\Parser\XmlParser
- */
+#[CoversClass(AbstractParser::class)]
+#[CoversClass(AbstractRestParser::class)]
+#[CoversClass(JsonRpcParser::class)]
+#[CoversClass(JsonParser::class)]
+#[CoversClass(RestJsonParser::class)]
+#[CoversClass(RestXmlParser::class)]
+#[CoversClass(QueryParser::class)]
+#[CoversClass(XmlParser::class)]
 class ComplianceTest extends TestCase
 {
     use UsesServiceTrait;
@@ -47,8 +55,7 @@ class ComplianceTest extends TestCase
         'legacy query Flattened list with location name' => true
     ];
 
-    /** @doesNotPerformAssertions */
-    public function testCaseProvider(): \Generator
+    public static function caseProvider(): \Generator
     {
         $iterator = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator(
@@ -105,17 +112,7 @@ class ComplianceTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider testCaseProvider
-     *
-     * @param $about
-     * @param Service $service
-     * @param $name
-     * @param array $expectedResult
-     * @param $res
-     * @param string|null $errorCode
-     * @param string|null $errorMessage
-     */
+    #[DataProvider('caseProvider')]
     public function testPassesComplianceTest(
         string $about,
         Service $service,
@@ -127,16 +124,22 @@ class ComplianceTest extends TestCase
     ): void
     {
         $command = new Command($name);
+        $protocol = $service->getProtocol();
+        $responseBody = $res['body'] ?? null;
+        if ($protocol === 'smithy-rpc-v2-cbor' && !is_null($responseBody)) {
+            // converts back to CBOR
+            $responseBody = base64_decode($responseBody);
+        }
 
         // Create a response based on the serialized property of the test.
         $response = new Psr7\Response(
             $res['status_code'] ?? 200,
             $res['headers'] ?? [],
-            isset($res['body']) ? Psr7\Utils::streamFor($res['body']) : null
+            isset($res['body']) ? Psr7\Utils::streamFor($responseBody) : null
         );
 
         if (!is_null($errorCode)) {
-            $parser = Service::createErrorParser($service->getProtocol(), $service);
+            $parser = Service::createErrorParser($protocol, $service);
             $parsed = $parser($response, $command);
             $result = $parsed['body'];
             $this->assertSame($errorCode, $parsed['code']);
@@ -148,19 +151,35 @@ class ComplianceTest extends TestCase
             $result = $parser($command, $response)->toArray();
         }
 
+        if ($protocol === 'smithy-rpc-v2-cbor') {
+            //Handles INF and -INF conversion
+            $this->convertSpecialFloats($expectedResult);
+            // normalizes NAN for comparison
+            array_walk_recursive($result, function (&$value) {
+                if (is_float($value) && is_nan($value)) {
+                    $value = 'NaN';  // Convert to string for comparison
+                }
+            });
+        }
 
-        $this->fixTimestamps($result, $service->getOperation($name)->getOutput());
+        $this->fixTimestamps(
+            $result,
+            $service->getOperation($name)->getOutput(),
+            $protocol
+        );
+
+
         $this->assertEquals($expectedResult, $result);
     }
 
-    private function fixTimestamps(mixed &$data, Shape $shape): void
+    private function fixTimestamps(mixed &$data, Shape $shape, string $protocol): void
     {
         switch (get_class($shape)) {
             case StructureShape::class:
                 if ($data && !$shape['document']) {
                     foreach ($data as $key => &$value) {
                         if ($shape->hasMember($key)) {
-                            $this->fixTimestamps($value, $shape->getMember($key));
+                            $this->fixTimestamps($value, $shape->getMember($key), $protocol);
                         }
                     }
                 }
@@ -173,13 +192,13 @@ class ComplianceTest extends TestCase
 
                 if (is_array($data)) {
                     foreach ($data as &$value) {
-                        $this->fixTimestamps($value, $shape->getMember());
+                        $this->fixTimestamps($value, $shape->getMember(), $protocol);
                     }
                 }
                 break;
             case MapShape::class:
                 foreach ($data as &$value) {
-                    $this->fixTimestamps($value, $shape->getValue());
+                    $this->fixTimestamps($value, $shape->getValue(), $protocol);
                 }
                 break;
             case TimestampShape::class:
@@ -189,8 +208,13 @@ class ComplianceTest extends TestCase
                         $item = TimestampShape::format($item, 'unixTimestamp');
                     }
                 } else {
-                    // Format the DateTimeResult as a Unix timestamp
-                    $data = TimestampShape::format($data, 'unixTimestamp');
+                    if ($protocol === 'smithy-rpc-v2-cbor') {
+                        // CBOR uses Unix with millisecond precision
+                        $micro = $data->format('u');
+                        $data = $data->getTimestamp() + $micro/1e6;
+                    } else {
+                        $data = TimestampShape::format($data, 'unixTimestamp');
+                    }
                 }
                 break;
         }
@@ -284,5 +308,21 @@ class ComplianceTest extends TestCase
         }
 
         return false;
+    }
+
+    private function convertSpecialFloats(&$data): void
+    {
+        array_walk_recursive($data, function(&$value) {
+            if (is_string($value)) {
+                switch ($value) {
+                    case 'Infinity':
+                        $value = INF;
+                        break;
+                    case '-Infinity':
+                        $value = -INF;
+                        break;
+                }
+            }
+        });
     }
 }

@@ -1,16 +1,18 @@
 <?php
 namespace Aws\Test\Token;
 
+use Aws\Token\BearerTokenAuthorization;
 use Aws\Token\Token;
 use GuzzleHttp\Psr7\Request;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
-/**
- * @covers Aws\Token\BearerTokenAuthorization
- */
-class BearerTokenAuthorizationTest extends TestCase {
-
-    public function bearerTestProvider() {
+#[CoversClass(BearerTokenAuthorization::class)]
+class BearerTokenAuthorizationTest extends TestCase
+{
+    public static function bearerTestProvider(): array
+    {
         return [
             "Minimal bearer auth case" =>
                 [
@@ -30,14 +32,13 @@ class BearerTokenAuthorizationTest extends TestCase {
                     "token" => "mF_9.B5f-4.1JqM",
                     "expectedHeaders" => ["Authorization" => "Bearer mF_9.B5f-4.1JqM",],
                 ],
-            ];
+        ];
     }
 
-    /**
-     * @dataProvider bearerTestProvider
-     */
-    public function testBearerSuccessCases($headers, $tokenString, $expectedHeaders) {
-        $authorizer = new \Aws\Token\BearerTokenAuthorization();
+    #[DataProvider('bearerTestProvider')]
+    public function testBearerSuccessCases($headers, $tokenString, $expectedHeaders)
+    {
+        $authorizer = new BearerTokenAuthorization();
         $request = new Request('GET', 'http://foo.com');
         foreach ($headers as $header => $value) {
             $request = $request->withHeader($header, $value);
@@ -49,8 +50,9 @@ class BearerTokenAuthorizationTest extends TestCase {
         }
     }
 
-    public function testBearerNullToken() {
-        $authorizer = new \Aws\Token\BearerTokenAuthorization();
+    public function testBearerNullToken()
+    {
+        $authorizer = new BearerTokenAuthorization();
         $request = new Request('GET', 'http://foo.com');
         $token = new Token(null);
         $this->expectException(\InvalidArgumentException::class);

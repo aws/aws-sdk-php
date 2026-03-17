@@ -10,14 +10,12 @@ use Aws\ClientSideMonitoring\Exception\ConfigurationException;
 use Aws\LruArrayCache;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-
-/**
- * @covers Aws\ClientSideMonitoring\ConfigurationProvider
- */
+#[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
-
     private static $originalEnv;
 
     private $iniFile = <<<EOT
@@ -48,7 +46,7 @@ csm_port = 999
 csm_client_id = CustomAltIniApp
 EOT;
 
- private $portIniFile = <<<EOT
+    private $portIniFile = <<<EOT
 [port-incorrect]
 csm_enabled = true
 csm_port = foo-bar
@@ -301,7 +299,7 @@ EOT;
             throw $e;
         }
     }
-    
+
     public function testUsesClassDefaultOptions()
     {
         $this->clearEnv();
@@ -425,7 +423,7 @@ EOT;
     {
         $expected = new Configuration(true, '123.4.5.6', 555, 'FooApp');
         $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
-        $cacheBuilder->setMethods(['get', 'set', 'remove']);
+        $cacheBuilder->onlyMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())
             ->method('get')
@@ -439,7 +437,7 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
-    public function getSuccessfulUnwrapData()
+    public static function getSuccessfulUnwrapData(): array
     {
         $expected = new Configuration(true, '123.4.5.6', 555, 'FooApp');
         return [
@@ -469,11 +467,7 @@ EOT;
         ];
     }
 
-    /**
-     * @dataProvider getSuccessfulUnwrapData
-     * @param $toUnwrap
-     * @param ConfigurationInterface $expected
-     */
+    #[DataProvider('getSuccessfulUnwrapData')]
     public function testSuccessfulUnwraps($toUnwrap, ConfigurationInterface $expected)
     {
         $this->assertSame(

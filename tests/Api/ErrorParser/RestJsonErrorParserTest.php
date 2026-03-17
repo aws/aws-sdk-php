@@ -2,32 +2,42 @@
 namespace Aws\Test\Api\ErrorParser;
 
 use Aws\Api\ErrorParser\RestJsonErrorParser;
+use Aws\Api\ErrorParser\JsonParserTrait;
 use Aws\Test\TestServiceTrait;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\Api\ErrorParser\RestJsonErrorParser
- * @covers \Aws\Api\ErrorParser\JsonParserTrait
- */
+#[CoversClass(RestJsonErrorParser::class)]
+#[CoversClass(JsonParserTrait::class)]
 class RestJsonErrorParserTest extends TestCase
 {
     use TestServiceTrait;
 
-    /**
-     * @dataProvider errorResponsesProvider
-     *
-     * @param $response
-     * @param $command
-     * @param $parser
-     * @param $expected
-     */
+    #[DataProvider('errorResponsesProvider')]
     public function testParsesClientErrorResponses(
-        $response,
-        $command,
-        $parser,
-        $expected
+        string $response,
+        ?string $commandName,
+        bool $parserWithService,
+        array $expected
     ) {
+        $service = $this->generateTestService('rest-json');
+        $shapes = $service->getErrorShapes();
+        $errorShape = $shapes[0];
+        $client = $this->generateTestClient($service);
+        $command = $commandName === null
+            ? null
+            : $client->getCommand($commandName);
+        $parser = $parserWithService
+            ? new RestJsonErrorParser($service)
+            : new RestJsonErrorParser();
+
+        // If error shape required in the expected
+        if ($expected['error_shape'] ?? false) {
+            $expected['error_shape'] = $errorShape;
+        }
+
         $response = Psr7\Message::parseResponse($response);
         $parsed = $parser($response, $command);
         $this->assertCount(
@@ -46,22 +56,15 @@ class RestJsonErrorParserTest extends TestCase
         }
     }
 
-    public function errorResponsesProvider()
+    public static function errorResponsesProvider(): array
     {
-        $service = $this->generateTestService('rest-json');
-        $shapes = $service->getErrorShapes();
-        $errorShape = $shapes[0];
-        $client = $this->generateTestClient($service);
-        $command = $client->getCommand('TestOperation', []);
-
         return [
-            // Error code in body
-            [
+            'error_code_in_body' => [
                 "HTTP/1.1 400 Bad Request\r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "type": "client", "message": "lorem ipsum", "code": "foo" }',
                 null,
-                new RestJsonErrorParser(),
+                false,
                 [
                     'code'       => 'foo',
                     'message'    => 'lorem ipsum',
@@ -75,14 +78,13 @@ class RestJsonErrorParserTest extends TestCase
                     'body' => [],
                 ]
             ],
-            // Error code in header
-            [
+            'error_code_in_header' => [
                 "HTTP/1.1 400 Bad Request\r\n" .
                 "x-amzn-RequestId: xyz\r\n" .
                 "x-amzn-ErrorType: foo:bar\r\n\r\n" .
                 '{"message": "lorem ipsum"}',
                 null,
-                new RestJsonErrorParser(),
+                false,
                 [
                     'code'       => 'foo',
                     'message'    => 'lorem ipsum',
@@ -94,16 +96,15 @@ class RestJsonErrorParserTest extends TestCase
                     'body' => [],
                 ]
             ],
-            // Error code in body, with service, modeled exception
-            [
+            'error_code_in_body_with_service_modeled_exception' => [
                 "HTTP/1.1 400 Bad Request\r\n" .
                 "TestHeader: foo-header\r\n" .
                 "x-meta-foo: foo-meta\r\n" .
                 "x-meta-bar: bar-meta\r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "TestString": "foo", "TestInt": 123, "NotModeled": "bar", "code": "TestException" }',
-                $command,
-                new RestJsonErrorParser($service),
+                'TestOperation',
+                true,
                 [
                     'code'       => 'TestException',
                     'type'       => 'client',
@@ -128,11 +129,10 @@ class RestJsonErrorParserTest extends TestCase
                         'TestStatus'        => 400,
                     ],
                     'message' => null,
-                    'error_shape' => $errorShape
+                    'error_shape' => true
                 ]
             ],
-            // Error code in header, with service, modeled exception
-            [
+            'error_code_in_header_with_service_modeled_exception' => [
                 "HTTP/1.1 400 Bad Request\r\n" .
                 "TestHeader: foo-header\r\n" .
                 "x-meta-foo: foo-meta\r\n" .
@@ -140,8 +140,8 @@ class RestJsonErrorParserTest extends TestCase
                 "x-amzn-ErrorType: TestException\r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "TestString": "foo", "TestInt": 123, "NotModeled": "bar"}',
-                $command,
-                new RestJsonErrorParser($service),
+                'TestOperation',
+                true,
                 [
                     'code'       => 'TestException',
                     'type'       => 'client',
@@ -165,17 +165,16 @@ class RestJsonErrorParserTest extends TestCase
                         'TestStatus'        => 400,
                     ],
                     'message' => null,
-                    'error_shape' => $errorShape
+                    'error_shape' => true
                 ]
             ],
-            // Error code in header, with service, unmodeled code
-            [
+            'error_code_in_header_with_service_unmodeled_code' => [
                 "HTTP/1.1 400 Bad Request\r\n" .
                 "x-amzn-RequestId: xyz\r\n" .
                 "x-amzn-ErrorType: NonExistentException\r\n\r\n" .
                 '{"message": "lorem ipsum"}',
                 null,
-                new RestJsonErrorParser($service),
+                true,
                 [
                     'code'       => 'NonExistentException',
                     'message'    => 'lorem ipsum',
@@ -187,13 +186,12 @@ class RestJsonErrorParserTest extends TestCase
                     'body' => [],
                 ]
             ],
-            // Error code in body, with service, unmodeled code
-            [
+            'error_code_in_body_with_service_unmodeled_code' => [
                 "HTTP/1.1 400 Bad Request\r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "type": "client", "message": "lorem ipsum", "code": "NonExistentException" }',
                 null,
-                new RestJsonErrorParser($service),
+                true,
                 [
                     'code'       => 'NonExistentException',
                     'message'    => 'lorem ipsum',
@@ -207,13 +205,12 @@ class RestJsonErrorParserTest extends TestCase
                     'body' => [],
                 ]
             ],
-            // Error code in body, with service, unmodeled code, capitalized message
-            [
+            'error_code_in_body_with_service_unmodeled_code_capitalized_message' => [
                 "HTTP/1.1 400 Bad Request\r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "type": "client", "Message": "lorem ipsum", "code": "NonExistentException" }',
                 null,
-                new RestJsonErrorParser($service),
+                true,
                 [
                     'code'       => 'NonExistentException',
                     'message'    => 'lorem ipsum',
@@ -228,14 +225,13 @@ class RestJsonErrorParserTest extends TestCase
                     'body' => [],
                 ]
             ],
-            // Test zero value in header
-            [
+            'test_zero_value_in_header' => [
                 "HTTP/1.1 400 Bad Request\r\n" .
                 "TestHeader: 0\r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "code": "TestException" }',
-                $command,
-                new RestJsonErrorParser($service),
+                'TestOperation',
+                true,
                 [
                     'code'       => 'TestException',
                     'type'       => 'client',
@@ -247,17 +243,16 @@ class RestJsonErrorParserTest extends TestCase
                         'TestStatus'        => 400,
                     ],
                     'message' => null,
-                    'error_shape' => $errorShape
+                    'error_shape' => true
                 ]
             ],
-            // Test false value in header
-            [
+            'test_false_value_in_header' => [
                 "HTTP/1.1 400 Bad Request\r\n" .
                 "TestHeader: false\r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "code": "TestException" }',
-                $command,
-                new RestJsonErrorParser($service),
+                'TestOperation',
+                true,
                 [
                     'code'       => 'TestException',
                     'type'       => 'client',
@@ -269,17 +264,16 @@ class RestJsonErrorParserTest extends TestCase
                         'TestStatus'        => 400,
                     ],
                     'message' => null,
-                    'error_shape' => $errorShape
+                    'error_shape' => true
                 ]
             ],
-            // Test empty string in header (should be skipped)
-            [
+            'test_empty_string_in_header_should_be_skipped' => [
                 "HTTP/1.1 400 Bad Request\r\n" .
                 "TestHeader: \r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "code": "TestException" }',
-                $command,
-                new RestJsonErrorParser($service),
+                'TestOperation',
+                true,
                 [
                     'code'       => 'TestException',
                     'type'       => 'client',
@@ -291,7 +285,67 @@ class RestJsonErrorParserTest extends TestCase
                         'TestStatus'        => 400,
                     ],
                     'message' => null,
-                    'error_shape' => $errorShape
+                    'error_shape' => true
+                ]
+            ],
+            'error_description_as_message' => [
+                "HTTP/1.1 400 Bad Request\r\n" .
+                "x-amzn-requestid: xyz\r\n\r\n" .
+                '{ "code": "foo", "error_description": "error description text" }',
+                null,
+                false,
+                [
+                    'code'       => 'foo',
+                    'message'    => 'error description text', // Expected here
+                    'error_description' => 'error description text',
+                    'type'       => 'client',
+                    'request_id' => 'xyz',
+                    'parsed'     => [
+                        'code' => 'foo',
+                        'error_description' => 'error description text'
+                    ],
+                    'body' => [],
+                ]
+            ],
+            'message_takes_precedence_over_error_description' => [
+                "HTTP/1.1 400 Bad Request\r\n" .
+                "x-amzn-requestid: xyz\r\n\r\n" .
+                '{ "code": "foo", "message": "primary message", "error_description": "fallback description" }',
+                null,
+                false,
+                [
+                    'code'       => 'foo',
+                    'message'    => 'primary message', // Expected here
+                    'error_description' => 'fallback description',
+                    'type'       => 'client',
+                    'request_id' => 'xyz',
+                    'parsed'     => [
+                        'code' => 'foo',
+                        'message' => 'primary message',
+                        'error_description' => 'fallback description'
+                    ],
+                    'body' => [],
+                ]
+            ],
+            'capital_message_takes_precedence_over_error_description' => [
+                "HTTP/1.1 400 Bad Request\r\n" .
+                "x-amzn-requestid: xyz\r\n\r\n" .
+                '{ "code": "foo", "Message": "primary message", "error_description": "fallback description" }',
+                null,
+                false,
+                [
+                    'code'       => 'foo',
+                    'message'    => 'primary message', // Expected here
+                    'Message'    => 'primary message',
+                    'error_description' => 'fallback description',
+                    'type'       => 'client',
+                    'request_id' => 'xyz',
+                    'parsed'     => [
+                        'code' => 'foo',
+                        'Message' => 'primary message',
+                        'error_description' => 'fallback description'
+                    ],
+                    'body' => [],
                 ]
             ]
         ];

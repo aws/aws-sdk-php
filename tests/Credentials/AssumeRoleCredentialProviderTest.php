@@ -12,21 +12,17 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\RejectedPromise;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\Credentials\AssumeRoleCredentialProvider
- */
+#[CoversClass(AssumeRoleCredentialProvider::class)]
 class AssumeRoleCredentialProviderTest extends TestCase
 {
     const SAMPLE_ROLE_ARN = 'arn:aws:iam::012345678910:role/role_name';
 
     use UsesServiceTrait;
 
-    /**
-     * @dataProvider insufficientArguments
-     *
-     * @param array $config
-     */
+    #[DataProvider('insufficientArguments')]
     public function testEnsureSourceProfileProvidedForAssumeRole($config)
     {
         $this->expectExceptionMessage("Missing required 'AssumeRoleCredentialProvider' configuration option:");
@@ -34,10 +30,7 @@ class AssumeRoleCredentialProviderTest extends TestCase
         new AssumeRoleCredentialProvider($config);
     }
 
-    /**
-     * @dataProvider insufficientArguments
-     */
-    public function insufficientArguments()
+    public static function insufficientArguments(): array
     {
         $client = [
             'client' => new StsClient([

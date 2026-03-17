@@ -4,20 +4,15 @@ namespace Aws\Test\Integ;
 
 use Aws\AwsClient;
 use Aws\DynamoDb\Exception\DynamoDbException;
-use Behat\Behat\Hook\Scope\AfterFeatureScope;
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use GuzzleHttp\Promise;
 use PHPUnit\Framework\Assert;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * Defines application features from the specific context.
  */
-class BlockingContext extends TestCase implements Context, SnippetAcceptingContext
+class BlockingContext implements Context, SnippetAcceptingContext
 {
     use IntegUtils;
 
@@ -101,9 +96,9 @@ class BlockingContext extends TestCase implements Context, SnippetAcceptingConte
     {
         try {
             $this->theTableNamedWillExist($table);
-            $this->fail("$table exists but should not.");
+            Assert::fail("$table exists but should not.");
         } catch (DynamoDbException $e) {
-            $this->assertSame('ResourceNotFoundException', $e->getAwsErrorCode());
+            Assert::assertSame('ResourceNotFoundException', $e->getAwsErrorCode());
         }
     }
 
