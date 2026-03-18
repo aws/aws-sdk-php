@@ -21,51 +21,70 @@ class TestPharCommand extends AbstractCommand
 
     protected function doExecute(array $args): int
     {
-        require $this->getBuildDir() . '/artifacts/aws.phar';
+        $pharPath = $this->getBuildDir() . '/artifacts/aws.phar';
 
-        $conf = [
-            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
-            'region'      => 'us-west-2',
-            'version'     => 'latest'
-        ];
-
-        // Ensure that a client can be created.
-        $s3 = new \Aws\S3\S3Client($conf);
-        // Ensure that waiters can be found.
-        $s3->getPaginator('ListObjects');
-
-        // Legacy factory instantiation.
-        \Aws\DynamoDb\DynamoDbClient::factory($conf);
-
-        // JMESPath autoloader
-        \JmesPath\search('foo', ['foo' => 'bar']);
-
-        // Function checks
-        $checks = [
-            'JmesPath\\search',
-            'Aws\\dir_iterator',
-        ];
-
-        foreach ($checks as $check) {
-            if (!function_exists($check)) {
-                $this->error($check . ' not found');
-                return 1;
-            }
+        if (!file_exists($pharPath)) {
+            $this->error("Phar not found: $pharPath");
+            return 1;
         }
 
-        $classMethodChecks = [
-            'GuzzleHttp\\Promise\\Utils' => 'inspect',
-            'GuzzleHttp\\Psr7\\Utils' => 'streamFor',
-        ];
+        $escapedPharPath = addslashes($pharPath);
 
-        foreach ($classMethodChecks as $class => $method) {
-            if (!method_exists($class, $method)) {
-                $this->error($class . '::' . $method . ' not found');
-                return 1;
+        $script = <<<'INLINE_PHP'
+            require '%PHAR_PATH%';
+
+            $conf = [
+                "credentials" => ["key" => "foo", "secret" => "bar"],
+                "region"      => "us-west-2",
+                "version"     => "latest"
+            ];
+
+            $s3 = new \Aws\S3\S3Client($conf);
+            $s3->getPaginator("ListObjects");
+
+            \Aws\DynamoDb\DynamoDbClient::factory($conf);
+
+            \JmesPath\search("foo", ["foo" => "bar"]);
+
+            $functionChecks = [
+                "JmesPath\\search",
+                "Aws\\dir_iterator",
+            ];
+            foreach ($functionChecks as $fn) {
+                if (!function_exists($fn)) {
+                    fwrite(STDERR, $fn . " not found\n");
+                    exit(1);
+                }
             }
+
+            $classMethodChecks = [
+                "GuzzleHttp\\Promise\\Utils" => "inspect",
+                "GuzzleHttp\\Psr7\\Utils" => "streamFor",
+            ];
+            foreach ($classMethodChecks as $class => $method) {
+                if (!method_exists($class, $method)) {
+                    fwrite(STDERR, $class . "::" . $method . " not found\n");
+                    exit(1);
+                }
+            }
+
+            echo "Version=" . \Aws\Sdk::VERSION;
+    INLINE_PHP;
+
+        $script = str_replace('%PHAR_PATH%', $escapedPharPath, $script);
+
+        $output = [];
+        $exitCode = 0;
+        exec('php -r ' . escapeshellarg($script) . ' 2>&1', $output, $exitCode);
+
+        $outputStr = implode("\n", $output);
+
+        if ($exitCode !== 0) {
+            $this->error("Phar test failed (exit code $exitCode):\n$outputStr");
+            return 1;
         }
 
-        $this->output('Version=' . \Aws\Sdk::VERSION);
+        $this->output($outputStr);
         return 0;
     }
 }
