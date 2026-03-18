@@ -19,6 +19,7 @@ use AwsBuild\Command\DocsCommand;
 use AwsBuild\Command\GhReleaseCommand;
 use AwsBuild\Command\NormalizeDocsFilesCommand;
 use AwsBuild\Command\BuildChangelogCommand;
+use AwsBuild\Command\RemoveServiceCommand;
 
 const WORKFLOW_COMMANDS = [
     'list'                       => ListCommand::class,
@@ -38,6 +39,7 @@ const WORKFLOW_COMMANDS = [
     'gh-release'                 => GhReleaseCommand::class,
     'normalize-docs-files'       => NormalizeDocsFilesCommand::class,
     'build-changelog'            => BuildChangelogCommand::class,
+    'remove-service'             => RemoveServiceCommand::class,
 ];
 
 $commandName = $_SERVER['argv'][1] ?? null;
