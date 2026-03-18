@@ -6454,6 +6454,12 @@
         "InstanceEventWindowDisassociationRequest$DedicatedHostIds": "<p>The IDs of the Dedicated Hosts to disassociate from the event window.</p>"
       }
     },
+    "DefaultConnectionTrackingConfiguration": {
+      "base": "<p>Indicates default conntrack information for the instance type. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-connection-tracking.html#connection-tracking-timeouts\"> Connection tracking timeouts </a> in the Amazon EC2 User Guide. </p>",
+      "refs": {
+        "NetworkInfo$ConnectionTrackingConfiguration": "<p>Indicates conntrack information for the instance type</p>"
+      }
+    },
     "DefaultEnaQueueCountPerInterface": {
       "base": null,
       "refs": {
@@ -6505,6 +6511,24 @@
       "refs": {
         "TargetCapacitySpecification$DefaultTargetCapacityType": "<p>The default target capacity type.</p>",
         "TargetCapacitySpecificationRequest$DefaultTargetCapacityType": "<p>The default target capacity type.</p>"
+      }
+    },
+    "DefaultTcpEstablishedTimeout": {
+      "base": null,
+      "refs": {
+        "DefaultConnectionTrackingConfiguration$DefaultTcpEstablishedTimeout": "<p>Default timeout (in seconds) for idle TCP connections in an established state.</p>"
+      }
+    },
+    "DefaultUdpStreamTimeout": {
+      "base": null,
+      "refs": {
+        "DefaultConnectionTrackingConfiguration$DefaultUdpStreamTimeout": "<p>Default timeout (in seconds) for idle UDP flows classified as streams which have seen more than one request-response transaction.</p>"
+      }
+    },
+    "DefaultUdpTimeout": {
+      "base": null,
+      "refs": {
+        "DefaultConnectionTrackingConfiguration$DefaultUdpTimeout": "<p>Default timeout (in seconds) for idle UDP flows that have seen traffic only in a single direction or a single request-response transaction.</p>"
       }
     },
     "DefaultingDhcpOptionsId": {

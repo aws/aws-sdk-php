@@ -16395,6 +16395,23 @@
         "locationName":"item"
       }
     },
+    "DefaultConnectionTrackingConfiguration":{
+      "type":"structure",
+      "members":{
+        "DefaultTcpEstablishedTimeout":{
+          "shape":"DefaultTcpEstablishedTimeout",
+          "locationName":"defaultTcpEstablishedTimeout"
+        },
+        "DefaultUdpTimeout":{
+          "shape":"DefaultUdpTimeout",
+          "locationName":"defaultUdpTimeout"
+        },
+        "DefaultUdpStreamTimeout":{
+          "shape":"DefaultUdpStreamTimeout",
+          "locationName":"defaultUdpStreamTimeout"
+        }
+      }
+    },
     "DefaultEnaQueueCountPerInterface":{"type":"integer"},
     "DefaultHttpTokensEnforcedState":{
       "type":"string",
@@ -16443,6 +16460,9 @@
         "capacity-block"
       ]
     },
+    "DefaultTcpEstablishedTimeout":{"type":"integer"},
+    "DefaultUdpStreamTimeout":{"type":"integer"},
+    "DefaultUdpTimeout":{"type":"integer"},
     "DefaultingDhcpOptionsId":{"type":"string"},
     "DeleteCapacityManagerDataExportRequest":{
       "type":"structure",
@@ -43804,6 +43824,10 @@
         "FlexibleEnaQueuesSupport":{
           "shape":"FlexibleEnaQueuesSupport",
           "locationName":"flexibleEnaQueuesSupport"
+        },
+        "ConnectionTrackingConfiguration":{
+          "shape":"DefaultConnectionTrackingConfiguration",
+          "locationName":"connectionTrackingConfiguration"
         },
         "SecondaryNetworkSupported":{
           "shape":"SecondaryNetworkSupportedFlag",

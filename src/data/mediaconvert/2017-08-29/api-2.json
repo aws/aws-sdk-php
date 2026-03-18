@@ -1535,7 +1535,7 @@
       "type": "structure",
       "members": {
         "Bitrate": {
-          "shape": "__integerMin192000Max1024000",
+          "shape": "__integerMin48000Max768000",
           "locationName": "bitrate"
         },
         "BitstreamMode": {
@@ -5487,7 +5487,8 @@
         "webm",
         "mxf",
         "wave",
-        "avi"
+        "avi",
+        "mpegts"
       ]
     },
     "FrameCaptureSettings": {
@@ -13257,11 +13258,6 @@
       "min": 16,
       "max": 24
     },
-    "__integerMin192000Max1024000": {
-      "type": "integer",
-      "min": 192000,
-      "max": 1024000
-    },
     "__integerMin1Max1": {
       "type": "integer",
       "min": 1,
@@ -13451,6 +13447,11 @@
       "type": "integer",
       "min": 48000,
       "max": 48000
+    },
+    "__integerMin48000Max768000": {
+      "type": "integer",
+      "min": 48000,
+      "max": 768000
     },
     "__integerMin4Max12": {
       "type": "integer",
