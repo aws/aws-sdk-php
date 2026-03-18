@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.373.5 - 2026-03-18
 
 * `Aws\EC2` - The DescribeInstanceTypes API now returns default connection tracking timeout values for TCP, UDP, and UDP stream via the new connectionTrackingConfiguration field on NetworkInfo.
 * `Aws\MediaConvert` - This update adds additional bitrate options for Dolby AC-4 audio outputs.
