@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.373.6 - 2026-03-19
 
 * `Aws\ObservabilityAdmin` - Adding a new field in the CreateCentralizationRuleForOrganization, UpdateCentralizationRuleForOrganization API and updating the GetCentralizationRuleForOrganization API response to include the new field
 * `Aws\EC2` - Amazon EC2 Fleet instant mode now supports launching instances into Interruptible Capacity Reservations, enabling customers to use spare capacity shared by Capacity Reservation owners within their AWS Organization.
