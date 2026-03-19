@@ -2011,6 +2011,27 @@
       "type":"string",
       "pattern":"arn:(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:(aws|[0-9]{12}):browser(-custom)?/(aws\\.browser\\.v1|[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10})"
     },
+    "BrowserEnterprisePolicies":{
+      "type":"list",
+      "member":{"shape":"BrowserEnterprisePolicy"},
+      "max":100,
+      "min":0
+    },
+    "BrowserEnterprisePolicy":{
+      "type":"structure",
+      "required":["location"],
+      "members":{
+        "location":{"shape":"ResourceLocation"},
+        "type":{"shape":"BrowserEnterprisePolicyType"}
+      }
+    },
+    "BrowserEnterprisePolicyType":{
+      "type":"string",
+      "enum":[
+        "MANAGED",
+        "RECOMMENDED"
+      ]
+    },
     "BrowserId":{
       "type":"string",
       "pattern":"(aws\\.browser\\.v1|[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10})"
@@ -2155,6 +2176,26 @@
       "members":{
         "statement":{"shape":"Statement"}
       }
+    },
+    "Certificate":{
+      "type":"structure",
+      "required":["location"],
+      "members":{
+        "location":{"shape":"CertificateLocation"}
+      }
+    },
+    "CertificateLocation":{
+      "type":"structure",
+      "members":{
+        "secretsManager":{"shape":"SecretsManagerLocation"}
+      },
+      "union":true
+    },
+    "Certificates":{
+      "type":"list",
+      "member":{"shape":"Certificate"},
+      "max":200,
+      "min":1
     },
     "ClaimMatchOperatorType":{
       "type":"string",
@@ -2516,6 +2557,8 @@
         "networkConfiguration":{"shape":"BrowserNetworkConfiguration"},
         "recording":{"shape":"RecordingConfig"},
         "browserSigning":{"shape":"BrowserSigningConfigInput"},
+        "enterprisePolicies":{"shape":"BrowserEnterprisePolicies"},
+        "certificates":{"shape":"Certificates"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -2549,6 +2592,7 @@
         "description":{"shape":"Description"},
         "executionRoleArn":{"shape":"RoleArn"},
         "networkConfiguration":{"shape":"CodeInterpreterNetworkConfiguration"},
+        "certificates":{"shape":"Certificates"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -4329,6 +4373,8 @@
         "networkConfiguration":{"shape":"BrowserNetworkConfiguration"},
         "recording":{"shape":"RecordingConfig"},
         "browserSigning":{"shape":"BrowserSigningConfigOutput"},
+        "enterprisePolicies":{"shape":"BrowserEnterprisePolicies"},
+        "certificates":{"shape":"Certificates"},
         "status":{"shape":"BrowserStatus"},
         "failureReason":{"shape":"String"},
         "createdAt":{"shape":"DateTimestamp"},
@@ -4365,6 +4411,7 @@
         "executionRoleArn":{"shape":"RoleArn"},
         "networkConfiguration":{"shape":"CodeInterpreterNetworkConfiguration"},
         "status":{"shape":"CodeInterpreterStatus"},
+        "certificates":{"shape":"Certificates"},
         "failureReason":{"shape":"String"},
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"}
@@ -6483,6 +6530,13 @@
       },
       "exception":true
     },
+    "ResourceLocation":{
+      "type":"structure",
+      "members":{
+        "s3":{"shape":"S3Location"}
+      },
+      "union":true
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -6679,6 +6733,13 @@
     "SecretArn":{
       "type":"string",
       "pattern":"arn:(aws|aws-us-gov):secretsmanager:[A-Za-z0-9-]{1,64}:[0-9]{12}:secret:[a-zA-Z0-9-_/+=.@!]+"
+    },
+    "SecretsManagerLocation":{
+      "type":"structure",
+      "required":["secretArn"],
+      "members":{
+        "secretArn":{"shape":"ToolSecretArn"}
+      }
     },
     "SecurityGroupId":{
       "type":"string",
@@ -7275,6 +7336,10 @@
         "inlinePayload":{"shape":"ToolDefinitions"}
       },
       "union":true
+    },
+    "ToolSecretArn":{
+      "type":"string",
+      "pattern":"arn:aws(-[a-z-]+)?:secretsmanager:[a-z0-9-]+:[0-9]{12}:secret:[a-zA-Z0-9/_+=.@-]+"
     },
     "TriggerCondition":{
       "type":"structure",

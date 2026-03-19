@@ -6,11 +6,13 @@
     "CreateComputeEnvironment": "<p>Creates an Batch compute environment. You can create <code>MANAGED</code> or <code>UNMANAGED</code> compute environments. <code>MANAGED</code> compute environments can use Amazon EC2 or Fargate resources. <code>UNMANAGED</code> compute environments can only use EC2 resources.</p> <p>In a managed compute environment, Batch manages the capacity and instance types of the compute resources within the environment. This is based on the compute resource specification that you define or the <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html\">launch template</a> that you specify when you create the compute environment. Either, you can choose to use EC2 On-Demand Instances and EC2 Spot Instances. Or, you can use Fargate and Fargate Spot capacity in your managed compute environment. You can optionally set a maximum price so that Spot Instances only launch when the Spot Instance price is less than a specified percentage of the On-Demand price.</p> <p>In an unmanaged compute environment, you can manage your own EC2 compute resources and have flexibility with how you configure your compute resources. For example, you can use custom AMIs. However, you must verify that each of your AMIs meet the Amazon ECS container instance AMI specification. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/container_instance_AMIs.html\">container instance AMIs</a> in the <i>Amazon Elastic Container Service Developer Guide</i>. After you created your unmanaged compute environment, you can use the <a>DescribeComputeEnvironments</a> operation to find the Amazon ECS cluster that's associated with it. Then, launch your container instances into that Amazon ECS cluster. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_container_instance.html\">Launching an Amazon ECS container instance</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p> <note> <p>Batch doesn't automatically upgrade the AMIs in a compute environment after it's created. For more information on how to update a compute environment's AMI, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/updating-compute-environments.html\">Updating compute environments</a> in the <i>Batch User Guide</i>.</p> </note>",
     "CreateConsumableResource": "<p>Creates an Batch consumable resource.</p>",
     "CreateJobQueue": "<p>Creates an Batch job queue. When you create a job queue, you associate one or more compute environments to the queue and assign an order of preference for the compute environments.</p> <p>You also set a priority to the job queue that determines the order that the Batch scheduler places jobs onto its associated compute environments. For example, if a compute environment is associated with more than one job queue, the job queue with a higher priority is given preference for scheduling jobs to that compute environment.</p>",
+    "CreateQuotaShare": "<p>Creates an Batch quota share. Each quota share operates as a virtual queue with a configured compute capacity, resource sharing strategy, and borrow limits. </p>",
     "CreateSchedulingPolicy": "<p>Creates an Batch scheduling policy.</p>",
     "CreateServiceEnvironment": "<p>Creates a service environment for running service jobs. Service environments define capacity limits for specific service types such as SageMaker Training jobs.</p>",
     "DeleteComputeEnvironment": "<p>Deletes an Batch compute environment.</p> <p>Before you can delete a compute environment, you must set its state to <code>DISABLED</code> with the <a>UpdateComputeEnvironment</a> API operation and disassociate it from any job queues with the <a>UpdateJobQueue</a> API operation. Compute environments that use Fargate resources must terminate all active jobs on that compute environment before deleting the compute environment. If this isn't done, the compute environment enters an invalid state.</p>",
     "DeleteConsumableResource": "<p>Deletes the specified consumable resource.</p>",
-    "DeleteJobQueue": "<p>Deletes the specified job queue. You must first disable submissions for a queue with the <a>UpdateJobQueue</a> operation. All jobs in the queue are eventually terminated when you delete a job queue. The jobs are terminated at a rate of about 16 jobs each second.</p> <p>It's not necessary to disassociate compute environments from a queue before submitting a <code>DeleteJobQueue</code> request.</p>",
+    "DeleteJobQueue": "<p>Deletes the specified job queue. You must first disable submissions for a queue with the <a>UpdateJobQueue</a> operation. All jobs in the queue are eventually terminated when you delete a job queue.</p> <p>It's not necessary to disassociate compute environments from a queue before submitting a <code>DeleteJobQueue</code> request.</p>",
+    "DeleteQuotaShare": "<p>Deletes the specified quota share. You must first disable submissions for the share by updating the state to <code>DISABLED</code> using the <a>UpdateQuotaShare</a> operation. All jobs in the share are eventually terminated when you delete a quota share.</p>",
     "DeleteSchedulingPolicy": "<p>Deletes the specified scheduling policy.</p> <p>You can't delete a scheduling policy that's used in any job queues.</p>",
     "DeleteServiceEnvironment": "<p>Deletes a Service environment. Before you can delete a service environment, you must first set its state to <code>DISABLED</code> with the <code>UpdateServiceEnvironment</code> API operation and disassociate it from any job queues with the <code>UpdateJobQueue</code> API operation.</p>",
     "DeregisterJobDefinition": "<p>Deregisters an Batch job definition. Job definitions are permanently deleted after 180 days.</p>",
@@ -19,13 +21,15 @@
     "DescribeJobDefinitions": "<p>Describes a list of job definitions. You can specify a <code>status</code> (such as <code>ACTIVE</code>) to only return job definitions that match that status.</p>",
     "DescribeJobQueues": "<p>Describes one or more of your job queues.</p>",
     "DescribeJobs": "<p>Describes a list of Batch jobs.</p>",
+    "DescribeQuotaShare": "<p>Returns a description of the specified quota share.</p>",
     "DescribeSchedulingPolicies": "<p>Describes one or more of your scheduling policies.</p>",
     "DescribeServiceEnvironments": "<p>Describes one or more of your service environments.</p>",
     "DescribeServiceJob": "<p>The details of a service job.</p>",
-    "GetJobQueueSnapshot": "<p>Provides a list of the first 100 <code>RUNNABLE</code> jobs associated to a single job queue and includes capacity utilization, including total usage and breakdown by share for fairshare scheduling job queues. </p>",
+    "GetJobQueueSnapshot": "<p>Provides a snapshot of job queue state, including ordering of <code>RUNNABLE</code> jobs, as well as capacity utilization for already dispatched jobs. The first 100 <code>RUNNABLE</code> jobs in the job queue are listed in order of dispatch. For job queues with an attached quota-share policy, the first <code>RUNNABLE</code> job in each quota share is also listed. Capacity utilization for the job queue is provided, as well as break downs by share for job queues with attached fair-share or quota-share scheduling policies.</p>",
     "ListConsumableResources": "<p>Returns a list of Batch consumable resources.</p>",
     "ListJobs": "<p>Returns a list of Batch jobs.</p> <p>You must specify only one of the following items:</p> <ul> <li> <p>A job queue ID to return a list of jobs in that job queue</p> </li> <li> <p>A multi-node parallel job ID to return a list of nodes for that job</p> </li> <li> <p>An array job ID to return a list of the children for that job</p> </li> </ul>",
     "ListJobsByConsumableResource": "<p>Returns a list of Batch jobs that require a specific consumable resource.</p>",
+    "ListQuotaShares": "<p>Returns a list of Batch quota shares associated with a job queue.</p>",
     "ListSchedulingPolicies": "<p>Returns a list of Batch scheduling policies.</p>",
     "ListServiceJobs": "<p>Returns a list of service jobs for a specified job queue.</p>",
     "ListTagsForResource": "<p>Lists the tags for an Batch resource. Batch resources that support tags are compute environments, jobs, job definitions, job queues, and scheduling policies. ARNs for child jobs of array and multi-node parallel (MNP) jobs aren't supported.</p>",
@@ -39,8 +43,10 @@
     "UpdateComputeEnvironment": "<p>Updates an Batch compute environment.</p>",
     "UpdateConsumableResource": "<p>Updates a consumable resource.</p>",
     "UpdateJobQueue": "<p>Updates a job queue.</p>",
+    "UpdateQuotaShare": "<p>Updates a quota share.</p>",
     "UpdateSchedulingPolicy": "<p>Updates a scheduling policy.</p>",
-    "UpdateServiceEnvironment": "<p>Updates a service environment. You can update the state of a service environment from <code>ENABLED</code> to <code>DISABLED</code> to prevent new service jobs from being placed in the service environment.</p>"
+    "UpdateServiceEnvironment": "<p>Updates a service environment. You can update the state of a service environment from <code>ENABLED</code> to <code>DISABLED</code> to prevent new service jobs from being placed in the service environment.</p>",
+    "UpdateServiceJob": "<p>Updates the priority of a specified service job in an Batch job queue.</p>"
   },
   "shapes": {
     "ArrayJobDependency": {
@@ -202,7 +208,7 @@
       "refs": {}
     },
     "CapacityLimit": {
-      "base": "<p>Defines the capacity limit for a service environment. This structure specifies the maximum amount of resources that can be used by service jobs in the environment.</p>",
+      "base": "<p>Defines the type and maximum quantity of resources that can be allocated to service jobs in a service environment.</p>",
       "refs": {
         "CapacityLimits$member": null
       }
@@ -359,6 +365,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateQuotaShareRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateQuotaShareResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateSchedulingPolicyRequest": {
       "base": "<p>Contains the parameters for <code>CreateSchedulingPolicy</code>.</p>",
       "refs": {}
@@ -396,6 +410,14 @@
       "refs": {}
     },
     "DeleteJobQueueResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteQuotaShareRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteQuotaShareResponse": {
       "base": null,
       "refs": {}
     },
@@ -463,6 +485,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeQuotaShareRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeQuotaShareResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeSchedulingPoliciesRequest": {
       "base": "<p>Contains the parameters for <code>DescribeSchedulingPolicies</code>.</p>",
       "refs": {}
@@ -517,6 +547,7 @@
         "FairshareCapacityUsage$quantity": "<p>The quantity of capacity being used, measured in the units specified by <code>capacityUnit</code>.</p>",
         "JobCapacityUsageSummary$quantity": "<p>The quantity of capacity being used by the job, measured in the units specified by <code>capacityUnit</code>.</p>",
         "QueueSnapshotCapacityUsage$quantity": "<p>The quantity of capacity being used in the queue snapshot, measured in the units specified by <code>capacityUnit</code>.</p>",
+        "QuotaShareCapacityUsage$quantity": "<p>The quantity of capacity being used.</p>",
         "ServiceJobCapacityUsageDetail$quantity": "<p>The quantity of capacity being used by the service job, measured in the units specified by <code>capacityUnit</code>.</p>",
         "ServiceJobCapacityUsageSummary$quantity": "<p>The quantity of capacity being used by the service job, measured in the units specified by <code>capacityUnit</code>.</p>"
       }
@@ -871,9 +902,9 @@
     "FairsharePolicy": {
       "base": "<p>The fair-share scheduling policy details.</p>",
       "refs": {
-        "CreateSchedulingPolicyRequest$fairsharePolicy": "<p>The fair-share scheduling policy details.</p>",
+        "CreateSchedulingPolicyRequest$fairsharePolicy": "<p>The fair-share scheduling policy details. Only one of fairsharePolicy or quotaSharePolicy can be set. Once set, this policy type cannot be removed or changed to a quotaSharePolicy.</p>",
         "SchedulingPolicyDetail$fairsharePolicy": "<p>The fair-share scheduling policy details.</p>",
-        "UpdateSchedulingPolicyRequest$fairsharePolicy": "<p>The fair-share policy scheduling details.</p>"
+        "UpdateSchedulingPolicyRequest$fairsharePolicy": "<p>The fair-share policy scheduling details. Once set during creation, a fairsharePolicy cannot be removed or changed to a quotaSharePolicy.</p>"
       }
     },
     "FairshareUtilizationDetail": {
@@ -917,7 +948,7 @@
     "FrontOfQueueDetail": {
       "base": "<p>Contains a list of the first 100 <code>RUNNABLE</code> jobs associated to a single job queue.</p>",
       "refs": {
-        "GetJobQueueSnapshotResponse$frontOfQueue": "<p>The list of the first 100 <code>RUNNABLE</code> jobs in each job queue. For first-in-first-out (FIFO) job queues, jobs are ordered based on their submission time. For fair-share scheduling (FSS) job queues, jobs are ordered based on their job priority and share usage.</p>"
+        "GetJobQueueSnapshotResponse$frontOfQueue": "<p>The list of the first 100 <code>RUNNABLE</code> jobs in each job queue. For first-in-first-out (FIFO) job queues, jobs are ordered based on their submission time. For job queues with an attached fair-share scheduling (FSS) or quota-share policy, jobs are ordered based on their job priority and share usage.</p>"
       }
     },
     "FrontOfQueueJobSummary": {
@@ -930,6 +961,30 @@
       "base": null,
       "refs": {
         "FrontOfQueueDetail$jobs": "<p>The Amazon Resource Names (ARNs) of the first 100 <code>RUNNABLE</code> jobs in a named job queue. For first-in-first-out (FIFO) job queues, jobs are ordered based on their submission time. For fair-share scheduling (FSS) job queues, jobs are ordered based on their job priority and share usage.</p>"
+      }
+    },
+    "FrontOfQuotaShareJobSummary": {
+      "base": "<p>An object that represents summary details for the first <code>RUNNABLE</code> job in a quota share.</p>",
+      "refs": {
+        "FrontOfQuotaShareJobSummaryList$member": null
+      }
+    },
+    "FrontOfQuotaShareJobSummaryList": {
+      "base": null,
+      "refs": {
+        "FrontOfQuotaSharesJobSummaryMap$value": null
+      }
+    },
+    "FrontOfQuotaSharesDetail": {
+      "base": "<p>An object that represents the details of the first <code>RUNNABLE</code> job in each named quota share associated with a single job queue.</p>",
+      "refs": {
+        "GetJobQueueSnapshotResponse$frontOfQuotaShares": "<p>The first <code>RUNNABLE</code> job in each quota share. Jobs are ordered based on their job priority and share usage.</p>"
+      }
+    },
+    "FrontOfQuotaSharesJobSummaryMap": {
+      "base": null,
+      "refs": {
+        "FrontOfQuotaSharesDetail$quotaShares": "<p>Contains a list of the first <code>RUNNABLE</code> job in each named quota share.</p>"
       }
     },
     "GetJobQueueSnapshotRequest": {
@@ -982,7 +1037,7 @@
         "ArrayPropertiesSummary$index": "<p>The job index within the array that's associated with this job. This parameter is returned for children of array jobs.</p>",
         "AttemptContainerDetail$exitCode": "<p>The exit code for the job attempt. A non-zero exit code is considered failed.</p>",
         "AttemptTaskContainerDetails$exitCode": "<p>The exit code for the container’s attempt. A non-zero exit code is considered failed.</p>",
-        "CapacityLimit$maxCapacity": "<p>The maximum capacity available for the service environment. This value represents the maximum amount of resources that can be allocated to service jobs.</p> <p>For example, <code>maxCapacity=50</code>, <code>capacityUnit=NUM_INSTANCES</code>. This indicates that the maximum number of instances that can be run on this service environment is 50. You could then run 5 SageMaker Training jobs that each use 10 instances. However, if you submit another job that requires 10 instances, it will wait in the queue.</p>",
+        "CapacityLimit$maxCapacity": "<p>The maximum capacity available for the service environment. For a quota management enabled service environment, this value represents the maximum quantity of a particular resource type (specified by <code>capacityUnit</code>) that can be allocated to service jobs. For other service environments, this value represents the maximum quantity of all resources that can be allocated to service jobs.</p> <p>For example, if <code>maxCapacity=50</code> and <code>capacityUnit=NUM_INSTANCES</code>, you can run up to 50 instances concurrently. If you run 5 SageMaker Training jobs that each use 10 instances, a subsequent job requiring 10 instances waits in the queue until capacity is available. In a quota management enabled service environment with <code>capacityUnit=ml.m5.large</code>, only <code>ml.m5.large</code> instances count against this limit, and jobs requiring other instance types wait until a matching capacity limit is configured.</p>",
         "ComputeEnvironmentDetail$unmanagedvCpus": "<p>The maximum number of VCPUs expected to be used for an unmanaged compute environment.</p>",
         "ComputeEnvironmentOrder$order": "<p>The order of the compute environment. Compute environments are tried in ascending order. For example, if two compute environments are associated with a job queue, the compute environment with a lower <code>order</code> integer value is tried for job placement first.</p>",
         "ComputeResource$minvCpus": "<p>The minimum number of vCPUs that a compute environment should maintain (even if the compute environment is <code>DISABLED</code>).</p> <note> <p>This parameter isn't applicable to jobs that are running on Fargate resources. Don't specify it.</p> </note>",
@@ -1027,6 +1082,7 @@
         "ListConsumableResourcesRequest$maxResults": "<p>The maximum number of results returned by <code>ListConsumableResources</code> in paginated output. When this parameter is used, <code>ListConsumableResources</code> only returns <code>maxResults</code> results in a single page and a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>ListConsumableResources</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 100. If this parameter isn't used, then <code>ListConsumableResources</code> returns up to 100 results and a <code>nextToken</code> value if applicable.</p>",
         "ListJobsByConsumableResourceRequest$maxResults": "<p>The maximum number of results returned by <code>ListJobsByConsumableResource</code> in paginated output. When this parameter is used, <code>ListJobsByConsumableResource</code> only returns <code>maxResults</code> results in a single page and a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>ListJobsByConsumableResource</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 100. If this parameter isn't used, then <code>ListJobsByConsumableResource</code> returns up to 100 results and a <code>nextToken</code> value if applicable.</p>",
         "ListJobsRequest$maxResults": "<p>The maximum number of results returned by <code>ListJobs</code> in a paginated output. When this parameter is used, <code>ListJobs</code> returns up to <code>maxResults</code> results in a single page and a <code>nextToken</code> response element, if applicable. The remaining results of the initial request can be seen by sending another <code>ListJobs</code> request with the returned <code>nextToken</code> value.</p> <p>The following outlines key parameters and limitations:</p> <ul> <li> <p>The minimum value is 1. </p> </li> <li> <p>When <code>--job-status</code> is used, Batch returns up to 1000 values. </p> </li> <li> <p>When <code>--filters</code> is used, Batch returns up to 100 values.</p> </li> <li> <p>If neither parameter is used, then <code>ListJobs</code> returns up to 1000 results (jobs that are in the <code>RUNNING</code> status) and a <code>nextToken</code> value, if applicable.</p> </li> </ul>",
+        "ListQuotaSharesRequest$maxResults": "<p>The maximum number of results returned by <code>ListQuotaShares</code> in paginated output. When this parameter is used, <code>ListQuotaShares</code> only returns <code>maxResults</code> results in a single page and a <code>nextToken</code> response element. You can see the remaining results of the initial request by sending another <code>ListQuotaShares</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 100. If this parameter isn't used, <code>ListQuotaShares</code> returns up to 100 results and a <code>nextToken</code> value if applicable.</p>",
         "ListSchedulingPoliciesRequest$maxResults": "<p>The maximum number of results that's returned by <code>ListSchedulingPolicies</code> in paginated output. When this parameter is used, <code>ListSchedulingPolicies</code> only returns <code>maxResults</code> results in a single page and a <code>nextToken</code> response element. You can see the remaining results of the initial request by sending another <code>ListSchedulingPolicies</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 100. If this parameter isn't used, <code>ListSchedulingPolicies</code> returns up to 100 results and a <code>nextToken</code> value if applicable.</p>",
         "ListServiceJobsRequest$maxResults": "<p>The maximum number of results returned by <code>ListServiceJobs</code> in paginated output. When this parameter is used, <code>ListServiceJobs</code> only returns <code>maxResults</code> results in a single page and a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>ListServiceJobs</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 100. If this parameter isn't used, then <code>ListServiceJobs</code> returns up to 100 results and a <code>nextToken</code> value if applicable.</p>",
         "NodeDetails$nodeIndex": "<p>The node index for the node. Node index numbering starts at zero. This index is also available on the node with the <code>AWS_BATCH_JOB_NODE_INDEX</code> environment variable.</p>",
@@ -1035,10 +1091,14 @@
         "NodeProperties$mainNode": "<p>Specifies the node index for the main node of a multi-node parallel job. This node index value must be fewer than the number of nodes.</p>",
         "NodePropertiesSummary$numNodes": "<p>The number of nodes that are associated with a multi-node parallel job.</p>",
         "NodePropertiesSummary$nodeIndex": "<p>The node index for the node. Node index numbering begins at zero. This index is also available on the node with the <code>AWS_BATCH_JOB_NODE_INDEX</code> environment variable.</p>",
+        "QuotaShareCapacityLimit$maxCapacity": "<p>The maximum capacity available for the quota share. This value represents the maximum quantity of a resource that can be allocated to jobs in the quota share without borrowing.</p>",
+        "QuotaShareResourceSharingConfiguration$borrowLimit": "<p>The maximum percentage of additional capacity that the quota share can borrow from other shares. <code>borrowLimit</code> can only be applied to quota shares with a strategy of <code>LEND_AND_BORROW</code>. This value is expressed as a percentage of the quota share's configured <a href=\"https://docs.aws.amazon.com/batch/latest/APIReference/API_QuotaShareCapacityLimit.html\">CapacityLimits</a>.</p> <p>The <code>borrowLimit</code> is applied uniformly across all capacity units. For example, if the <code>borrowLimit</code> is 200, the quota share can borrow up to 200% of its configured <code>maxCapacity</code> for each capacity unit. The default <code>borrowLimit</code> is -1, which indicates unlimited borrowing.</p>",
         "RegisterJobDefinitionRequest$schedulingPriority": "<p>The scheduling priority for jobs that are submitted with this job definition. This only affects jobs in job queues with a fair-share policy. Jobs with a higher scheduling priority are scheduled before jobs with a lower scheduling priority.</p> <p>The minimum supported value is 0 and the maximum supported value is 9999.</p>",
         "RegisterJobDefinitionResponse$revision": "<p>The revision of the job definition.</p>",
         "RetryStrategy$attempts": "<p>The number of times to move a job to the <code>RUNNABLE</code> status. You can specify between 1 and 10 attempts. If the value of <code>attempts</code> is greater than one, the job is retried on failure the same number of attempts as the value.</p>",
         "ServiceEnvironmentOrder$order": "<p>The order of the service environment. Job queues with a higher priority are evaluated first when associated with the same service environment.</p>",
+        "ServiceJobPreemptionConfiguration$preemptionRetriesBeforeTermination": "<p>The number of times a service job can be retried after it is preempted. A job will be terminated when preemption retries have been exhausted. If this field is unset, preempted jobs will be requeued an unlimited number of times. </p>",
+        "ServiceJobPreemptionSummary$preemptedAttemptCount": "<p>The total number of times the service job has been preempted.</p>",
         "ServiceJobRetryStrategy$attempts": "<p>The number of times to move a service job to <code>RUNNABLE</code> status. You can specify between 1 and 10 attempts.</p>",
         "ServiceJobTimeout$attemptDurationSeconds": "<p>The maximum duration in seconds that a service job attempt can run. After this time is reached, Batch terminates the service job attempt.</p>",
         "SubmitJobRequest$schedulingPriorityOverride": "<p>The scheduling priority for the job. This only affects jobs in job queues with a fair-share policy. Jobs with a higher scheduling priority are scheduled before jobs with a lower scheduling priority. This overrides any scheduling priority in the job definition and works only within a single share identifier.</p> <p>The minimum supported value is 0 and the maximum supported value is 9999.</p>",
@@ -1048,7 +1108,8 @@
         "Ulimit$hardLimit": "<p>The hard limit for the <code>ulimit</code> type. </p>",
         "Ulimit$softLimit": "<p>The soft limit for the <code>ulimit</code> type.</p>",
         "UpdateComputeEnvironmentRequest$unmanagedvCpus": "<p>The maximum number of vCPUs expected to be used for an unmanaged compute environment. Don't specify this parameter for a managed compute environment. This parameter is only used for fair-share scheduling to reserve vCPU capacity for new share identifiers. If this parameter isn't provided for a fair-share job queue, no vCPU capacity is reserved.</p>",
-        "UpdateJobQueueRequest$priority": "<p>The priority of the job queue. Job queues with a higher priority (or a higher integer value for the <code>priority</code> parameter) are evaluated first when associated with the same compute environment. Priority is determined in descending order. For example, a job queue with a priority value of <code>10</code> is given scheduling preference over a job queue with a priority value of <code>1</code>. All of the compute environments must be either EC2 (<code>EC2</code> or <code>SPOT</code>) or Fargate (<code>FARGATE</code> or <code>FARGATE_SPOT</code>). EC2 and Fargate compute environments can't be mixed.</p>"
+        "UpdateJobQueueRequest$priority": "<p>The priority of the job queue. Job queues with a higher priority (or a higher integer value for the <code>priority</code> parameter) are evaluated first when associated with the same compute environment. Priority is determined in descending order. For example, a job queue with a priority value of <code>10</code> is given scheduling preference over a job queue with a priority value of <code>1</code>. All of the compute environments must be either EC2 (<code>EC2</code> or <code>SPOT</code>) or Fargate (<code>FARGATE</code> or <code>FARGATE_SPOT</code>). EC2 and Fargate compute environments can't be mixed.</p>",
+        "UpdateServiceJobRequest$schedulingPriority": "<p>The scheduling priority for the job. This only affects jobs in job queues with a quota-share or fair-share scheduling policy. Jobs with a higher scheduling priority are scheduled before jobs with a lower scheduling priority within a share.</p> <p>The minimum supported value is 0 and the maximum supported value is 9999.</p>"
       }
     },
     "JQState": {
@@ -1162,7 +1223,7 @@
     "JobStateTimeLimitActionsAction": {
       "base": null,
       "refs": {
-        "JobStateTimeLimitAction$action": "<p>The action to take when a job is at the head of the job queue in the specified state for the specified period of time. The only supported value is <code>CANCEL</code>, which will cancel the job.</p>"
+        "JobStateTimeLimitAction$action": "<p>The action to take when a job is at the head of the job queue in the specified state for the specified period of time. For job queues connected to a <code>ECS</code>, <code>FARGATE</code> or <code>EKS</code> compute environment, the only supported value is <code>CANCEL</code>, which will cancel the job. For job queues connected to a <code>SAGEMAKER_TRAINING</code> service environment, the only supported value is <code>TERMINATE</code>, which will terminate the job.</p>"
       }
     },
     "JobStateTimeLimitActionsState": {
@@ -1334,6 +1395,14 @@
       "base": null,
       "refs": {}
     },
+    "ListQuotaSharesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListQuotaSharesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListSchedulingPoliciesRequest": {
       "base": "<p>Contains the parameters for <code>ListSchedulingPolicies</code>.</p>",
       "refs": {}
@@ -1429,6 +1498,8 @@
         "FairshareUtilizationDetail$activeShareCount": "<p>The total number of active shares in the fairshare scheduling job queue that are currently utilizing capacity.</p>",
         "FrontOfQueueDetail$lastUpdatedAt": "<p>The Unix timestamp (in milliseconds) for when each of the first 100 <code>RUNNABLE</code> jobs were last updated. </p>",
         "FrontOfQueueJobSummary$earliestTimeAtPosition": "<p>The Unix timestamp (in milliseconds) for when the job transitioned to its current position in the job queue.</p>",
+        "FrontOfQuotaShareJobSummary$earliestTimeAtPosition": "<p>The Unix timestamp (in milliseconds) for when the job transitioned to its current position in the quota share.</p>",
+        "FrontOfQuotaSharesDetail$lastUpdatedAt": "<p>The Unix timestamp (in milliseconds) for when the first <code>RUNNABLE</code> job per quota share were all last updated.</p>",
         "JobDetail$createdAt": "<p>The Unix timestamp (in milliseconds) for when the job was created. For non-array jobs and parent array jobs, this is when the job entered the <code>SUBMITTED</code> state. This is specifically at the time <a href=\"https://docs.aws.amazon.com/batch/latest/APIReference/API_SubmitJob.html\">SubmitJob</a> was called. For array child jobs, this is when the child job was spawned by its parent and entered the <code>PENDING</code> state.</p>",
         "JobDetail$startedAt": "<p>The Unix timestamp (in milliseconds) for when the job was started. More specifically, it's when the job transitioned from the <code>STARTING</code> state to the <code>RUNNING</code> state. </p>",
         "JobDetail$stoppedAt": "<p>The Unix timestamp (in milliseconds) for when the job was stopped. More specifically, it's when the job transitioned from the <code>RUNNING</code> state to a terminal state, such as <code>SUCCEEDED</code> or <code>FAILED</code>.</p>",
@@ -1442,6 +1513,8 @@
         "QueueSnapshotUtilizationDetail$lastUpdatedAt": "<p>The Unix timestamp (in milliseconds) for when the queue utilization information was last updated.</p>",
         "ServiceJobAttemptDetail$startedAt": "<p>The Unix timestamp (in milliseconds) for when the service job attempt was started.</p>",
         "ServiceJobAttemptDetail$stoppedAt": "<p>The Unix timestamp (in milliseconds) for when the service job attempt stopped running.</p>",
+        "ServiceJobPreemptedAttempt$startedAt": "<p>The Unix timestamp (in milliseconds) for when the service job attempt was started.</p>",
+        "ServiceJobPreemptedAttempt$stoppedAt": "<p>The Unix timestamp (in milliseconds) for when the service job attempt stopped running.</p>",
         "ServiceJobSummary$createdAt": "<p>The Unix timestamp (in milliseconds) for when the service job was created.</p>",
         "ServiceJobSummary$scheduledAt": "<p>The Unix timestamp (in milliseconds) for when the service job was scheduled for execution.</p>",
         "ServiceJobSummary$startedAt": "<p>The Unix timestamp (in milliseconds) for when the service job was started.</p>",
@@ -1586,13 +1659,130 @@
     "QueueSnapshotCapacityUsageList": {
       "base": null,
       "refs": {
-        "QueueSnapshotUtilizationDetail$totalCapacityUsage": "<p>The total capacity usage for the entire job queue, for both first-in, first-out (FIFO) and fairshare scheduling job queue.</p>"
+        "QueueSnapshotUtilizationDetail$totalCapacityUsage": "<p>The total capacity usage for the entire job queue.</p>"
       }
     },
     "QueueSnapshotUtilizationDetail": {
-      "base": "<p>The job queue utilization at a specific point in time, including total capacity usage and fairshare utilization breakdown.</p>",
+      "base": "<p>The job queue utilization at a specific point in time, including total capacity usage, and quota share or fairshare utilization breakdown depending on the job queue scheduling policy.</p>",
       "refs": {
-        "GetJobQueueSnapshotResponse$queueUtilization": "<p>The job queue's capacity utilization, including total usage and breakdown by fairshare scheduling queue.</p>"
+        "GetJobQueueSnapshotResponse$queueUtilization": "<p>The job queue's capacity utilization, including total usage and breakdown per given share.</p>"
+      }
+    },
+    "QuotaShareCapacityLimit": {
+      "base": "<p>Defines the capacity limit for a quota share, or the type and maximum quantity of a particular resource that can be allocated to jobs in the quota share without borrowing. </p>",
+      "refs": {
+        "QuotaShareCapacityLimits$member": null
+      }
+    },
+    "QuotaShareCapacityLimits": {
+      "base": null,
+      "refs": {
+        "CreateQuotaShareRequest$capacityLimits": "<p>A list that specifies the quantity and type of compute capacity allocated to the quota share. </p>",
+        "DescribeQuotaShareResponse$capacityLimits": "<p>A list that specifies the quantity and type of compute capacity allocated to the quota share.</p>",
+        "QuotaShareDetail$capacityLimits": "<p>A list that specifies the quantity and type of compute capacity allocated to the quota share.</p>",
+        "UpdateQuotaShareRequest$capacityLimits": "<p>A list that specifies the quantity and type of compute capacity allocated to the quota share.</p>"
+      }
+    },
+    "QuotaShareCapacityUsage": {
+      "base": "<p>The capacity usage for a quota share, including units of compute capacity and quantity of resources being used.</p>",
+      "refs": {
+        "QuotaShareCapacityUsageList$member": null
+      }
+    },
+    "QuotaShareCapacityUsageList": {
+      "base": null,
+      "refs": {
+        "QuotaShareCapacityUtilization$capacityUsage": "<p>The capacity usage information for this quota share, including the units of compute capacity and quantity being used.</p>"
+      }
+    },
+    "QuotaShareCapacityUtilization": {
+      "base": "<p>The capacity utilization for a specific quota share, including the quota share name and its current usage.</p>",
+      "refs": {
+        "QuotaShareCapacityUtilizationList$member": null
+      }
+    },
+    "QuotaShareCapacityUtilizationList": {
+      "base": null,
+      "refs": {
+        "QuotaShareUtilizationDetail$topCapacityUtilization": "<p>A list of the top capacity utilizations across quota shares associated with a job queue.</p>"
+      }
+    },
+    "QuotaShareDetail": {
+      "base": "<p>Detailed information about a quota share, including its configuration, state, and capacity limits.</p>",
+      "refs": {
+        "QuotaShareList$member": null
+      }
+    },
+    "QuotaShareIdleResourceAssignmentStrategy": {
+      "base": null,
+      "refs": {
+        "QuotaSharePolicy$idleResourceAssignmentStrategy": "<p>The strategy that determines how idle resources are assigned to quota shares that are borrowing capacity. Currently, only <code>FIFO</code> is supported.</p>"
+      }
+    },
+    "QuotaShareInSharePreemptionState": {
+      "base": null,
+      "refs": {
+        "QuotaSharePreemptionConfiguration$inSharePreemption": "<p>Specifies whether jobs within a quota share can be preempted by another, higher priority job in the same quota share.</p>"
+      }
+    },
+    "QuotaShareList": {
+      "base": null,
+      "refs": {
+        "ListQuotaSharesResponse$quotaShares": "<p>A list of quota shares that match the request.</p>"
+      }
+    },
+    "QuotaSharePolicy": {
+      "base": "<p>The quota share scheduling policy details for a job queue.</p>",
+      "refs": {
+        "CreateSchedulingPolicyRequest$quotaSharePolicy": "<p>The quota share scheduling policy details. Only one of fairsharePolicy or quotaSharePolicy can be set. Once set, this policy type cannot be removed or changed to a fairSharePolicy.</p>",
+        "SchedulingPolicyDetail$quotaSharePolicy": "<p>The quota share scheduling policy details.</p>",
+        "UpdateSchedulingPolicyRequest$quotaSharePolicy": "<p>The quota share scheduling policy details. Once set during creation, a quotaSharePolicy cannot be removed or changed to a fairsharePolicy.</p>"
+      }
+    },
+    "QuotaSharePreemptionConfiguration": {
+      "base": "<p>Specifies the preemption behavior for jobs in a quota share.</p>",
+      "refs": {
+        "CreateQuotaShareRequest$preemptionConfiguration": "<p>Specifies the preemption behavior for jobs in a quota share.</p>",
+        "DescribeQuotaShareResponse$preemptionConfiguration": "<p>Specifies the preemption behavior for jobs in a quota share.</p>",
+        "QuotaShareDetail$preemptionConfiguration": "<p>Specifies the preemption behavior for jobs in a quota share.</p>",
+        "UpdateQuotaShareRequest$preemptionConfiguration": "<p>Specifies the preemption behavior for jobs in a quota share.</p>"
+      }
+    },
+    "QuotaShareResourceSharingConfiguration": {
+      "base": "<p>Specifies whether a quota share reserves, lends, or both lends and borrows idle compute capacity.</p>",
+      "refs": {
+        "CreateQuotaShareRequest$resourceSharingConfiguration": "<p>Specifies whether a quota share reserves, lends, or both lends and borrows idle compute capacity.</p>",
+        "DescribeQuotaShareResponse$resourceSharingConfiguration": "<p>Specifies whether a quota share reserves, lends, or both lends and borrows idle compute capacity.</p>",
+        "QuotaShareDetail$resourceSharingConfiguration": "<p>Specifies whether a quota share reserves, lends, or both lends and borrows idle compute capacity.</p>",
+        "UpdateQuotaShareRequest$resourceSharingConfiguration": "<p>Specifies whether a quota share reserves, lends, or both lends and borrows idle compute capacity.</p>"
+      }
+    },
+    "QuotaShareResourceSharingStrategy": {
+      "base": null,
+      "refs": {
+        "QuotaShareResourceSharingConfiguration$strategy": "<p>The resource sharing strategy for the quota share. The <code>RESERVE</code> strategy allows a quota share to reserve idle capacity for itself. <code>LEND</code> configures the share to lend its idle capacity to another share in need of capacity. The <code>LEND_AND_BORROW</code> strategy configures the share to borrow idle capacity from an underutilized share, as well as lend to another share.</p>"
+      }
+    },
+    "QuotaShareState": {
+      "base": null,
+      "refs": {
+        "CreateQuotaShareRequest$state": "<p>The state of the quota share. If the quota share is <code>ENABLED</code>, it is able to accept jobs. If the quota share is <code>DISABLED</code>, new jobs won't be accepted but jobs already submitted can finish. The default state is <code>ENABLED</code>.</p>",
+        "DescribeQuotaShareResponse$state": "<p>The state of the quota share.</p>",
+        "QuotaShareDetail$state": "<p>The state of the quota share.</p>",
+        "UpdateQuotaShareRequest$state": "<p>The state of the quota share. If the quota share is <code>ENABLED</code>, it is able to accept jobs. If the quota share is <code>DISABLED</code>, new jobs won't be accepted but jobs already submitted can finish.</p>"
+      }
+    },
+    "QuotaShareStatus": {
+      "base": null,
+      "refs": {
+        "DescribeQuotaShareResponse$status": "<p>The current status of the quota share.</p>",
+        "QuotaShareDetail$status": "<p>The current status of the quota share.</p>"
+      }
+    },
+    "QuotaShareUtilizationDetail": {
+      "base": "<p>An object that represents the capacity utilization details of all quota shares associated with a single job queue.</p>",
+      "refs": {
+        "QueueSnapshotUtilizationDetail$quotaShareUtilization": "<p>The utilization information for a job queue with a quota share scheduling policy.</p>"
       }
     },
     "RegisterJobDefinitionRequest": {
@@ -1798,6 +1988,31 @@
         "ServiceJobRetryStrategy$evaluateOnExit": "<p>Array of <code>ServiceJobEvaluateOnExit</code> objects that specify conditions under which the service job should be retried or failed.</p>"
       }
     },
+    "ServiceJobPreemptedAttempt": {
+      "base": "<p>Detailed information about a preempted attempt of a service job.</p>",
+      "refs": {
+        "ServiceJobRecentPreemptedAttemptList$member": null
+      }
+    },
+    "ServiceJobPreemptionConfiguration": {
+      "base": "<p>Specifies the service job behavior when preempted.</p>",
+      "refs": {
+        "DescribeServiceJobResponse$preemptionConfiguration": "<p>Specifies the service job behavior when preempted.</p>",
+        "SubmitServiceJobRequest$preemptionConfiguration": "<p>Specifies the service job behavior when preempted.</p>"
+      }
+    },
+    "ServiceJobPreemptionSummary": {
+      "base": "<p>Summarizes the preemptions of the service job. This field appears on a service job when it has been preempted.</p>",
+      "refs": {
+        "DescribeServiceJobResponse$preemptionSummary": "<p>Summarizes the preemptions of the service job. This field appears on a service job when it has been preempted.</p>"
+      }
+    },
+    "ServiceJobRecentPreemptedAttemptList": {
+      "base": null,
+      "refs": {
+        "ServiceJobPreemptionSummary$recentPreemptedAttempts": "<p>A list of the most recent preemption attempts for the service job.</p>"
+      }
+    },
     "ServiceJobRetryAction": {
       "base": null,
       "refs": {
@@ -1850,7 +2065,8 @@
       "base": "<p>The Batch unique identifier.</p>",
       "refs": {
         "LatestServiceJobAttempt$serviceResourceId": "<p>The service resource identifier associated with the service job attempt.</p>",
-        "ServiceJobAttemptDetail$serviceResourceId": "<p>The service resource identifier associated with the service job attempt.</p>"
+        "ServiceJobAttemptDetail$serviceResourceId": "<p>The service resource identifier associated with the service job attempt.</p>",
+        "ServiceJobPreemptedAttempt$serviceResourceId": "<p>The service resource identifier associated with the service job attempt.</p>"
       }
     },
     "ServiceResourceIdName": {
@@ -1887,7 +2103,7 @@
         "AttemptTaskContainerDetails$logStreamName": "<p>The name of the Amazon CloudWatch Logs log stream that's associated with the container. The log group for Batch jobs is <code>/aws/batch/job</code>. Each container attempt receives a log stream name when they reach the <code>RUNNING</code> status.</p>",
         "CancelJobRequest$jobId": "<p>The Batch job ID of the job to cancel.</p>",
         "CancelJobRequest$reason": "<p>A message to attach to the job that explains the reason for canceling it. This message is returned by future <a>DescribeJobs</a> operations on the job. It is also recorded in the Batch activity logs.</p> <p>This parameter has as limit of 1024 characters.</p>",
-        "CapacityLimit$capacityUnit": "<p>The unit of measure for the capacity limit. This defines how the maxCapacity value should be interpreted. For <code>SAGEMAKER_TRAINING</code> jobs, use <code>NUM_INSTANCES</code>.</p>",
+        "CapacityLimit$capacityUnit": "<p>The unit of measure for the capacity limit, which defines how <code>maxCapacity</code> is interpreted. For <code>SAGEMAKER_TRAINING</code> jobs in a quota management enabled service environment, specify the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ResourceConfig.html#sagemaker-Type-ResourceConfig-InstanceType\">instance type</a> (for example, <code>ml.m5.large</code>). Otherwise, use <code>NUM_INSTANCES</code>.</p>",
         "ClientException$message": null,
         "ComputeEnvironmentDetail$computeEnvironmentName": "<p>The name of the compute environment. It can be up to 128 characters long. It can contain uppercase and lowercase letters, numbers, hyphens (-), and underscores (_).</p>",
         "ComputeEnvironmentDetail$computeEnvironmentArn": "<p>The Amazon Resource Name (ARN) of the compute environment.</p>",
@@ -1939,6 +2155,10 @@
         "CreateJobQueueRequest$schedulingPolicyArn": "<p>The Amazon Resource Name (ARN) of the fair-share scheduling policy. Job queues that don't have a fair-share scheduling policy are scheduled in a first-in, first-out (FIFO) model. After a job queue has a fair-share scheduling policy, it can be replaced but can't be removed.</p> <p>The format is <code>aws:<i>Partition</i>:batch:<i>Region</i>:<i>Account</i>:scheduling-policy/<i>Name</i> </code>.</p> <p>An example is <code>aws:aws:batch:us-west-2:123456789012:scheduling-policy/MySchedulingPolicy</code>.</p> <p>A job queue without a fair-share scheduling policy is scheduled as a FIFO job queue and can't have a fair-share scheduling policy added. Jobs queues with a fair-share scheduling policy can have a maximum of 500 active share identifiers. When the limit has been reached, submissions of any jobs that add a new share identifier fail.</p>",
         "CreateJobQueueResponse$jobQueueName": "<p>The name of the job queue.</p>",
         "CreateJobQueueResponse$jobQueueArn": "<p>The Amazon Resource Name (ARN) of the job queue.</p>",
+        "CreateQuotaShareRequest$quotaShareName": "<p>The name of the quota share. It can be up to 128 characters long. It can contain uppercase and lowercase letters, numbers, hyphens (-), and underscores (_).</p>",
+        "CreateQuotaShareRequest$jobQueue": "<p>The Batch job queue associated with the quota share. This can be the job queue name or ARN. A job queue must be in the <code>VALID</code> state before you can associate it with a quota share.</p>",
+        "CreateQuotaShareResponse$quotaShareName": "<p>The name of the quota share.</p>",
+        "CreateQuotaShareResponse$quotaShareArn": "<p>The Amazon Resource Name (ARN) of the quota share.</p>",
         "CreateSchedulingPolicyRequest$name": "<p>The name of the fair-share scheduling policy. It can be up to 128 letters long. It can contain uppercase and lowercase letters, numbers, hyphens (-), and underscores (_).</p>",
         "CreateSchedulingPolicyResponse$name": "<p>The name of the scheduling policy.</p>",
         "CreateSchedulingPolicyResponse$arn": "<p>The Amazon Resource Name (ARN) of the scheduling policy. The format is <code>aws:<i>Partition</i>:batch:<i>Region</i>:<i>Account</i>:scheduling-policy/<i>Name</i> </code>. For example, <code>aws:aws:batch:us-west-2:123456789012:scheduling-policy/MySchedulingPolicy</code>.</p>",
@@ -1948,6 +2168,7 @@
         "DeleteComputeEnvironmentRequest$computeEnvironment": "<p>The name or Amazon Resource Name (ARN) of the compute environment to delete.</p>",
         "DeleteConsumableResourceRequest$consumableResource": "<p>The name or ARN of the consumable resource that will be deleted.</p>",
         "DeleteJobQueueRequest$jobQueue": "<p>The short name or full Amazon Resource Name (ARN) of the queue to delete.</p>",
+        "DeleteQuotaShareRequest$quotaShareArn": "<p>The Amazon Resource Name (ARN) of the quota share.</p>",
         "DeleteSchedulingPolicyRequest$arn": "<p>The Amazon Resource Name (ARN) of the scheduling policy to delete.</p>",
         "DeleteServiceEnvironmentRequest$serviceEnvironment": "<p>The name or ARN of the service environment to delete.</p>",
         "DeregisterJobDefinitionRequest$jobDefinition": "<p>The name and revision (<code>name:revision</code>) or full Amazon Resource Name (ARN) of the job definition to deregister.</p>",
@@ -1963,6 +2184,10 @@
         "DescribeJobDefinitionsResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>DescribeJobDefinitions</code> request. When the results of a <code>DescribeJobDefinitions</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeJobQueuesRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated <code>DescribeJobQueues</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is <code>null</code> when there are no more results to return.</p> <note> <p>Treat this token as an opaque identifier that's only used to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
         "DescribeJobQueuesResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>DescribeJobQueues</code> request. When the results of a <code>DescribeJobQueues</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "DescribeQuotaShareRequest$quotaShareArn": "<p>The Amazon Resource Name (ARN) of the quota share.</p>",
+        "DescribeQuotaShareResponse$quotaShareName": "<p>The name of the quota share.</p>",
+        "DescribeQuotaShareResponse$quotaShareArn": "<p>The Amazon Resource Name (ARN) of the quota share.</p>",
+        "DescribeQuotaShareResponse$jobQueueArn": "<p>The ARN of the job queue associated with the quota share.</p>",
         "DescribeServiceEnvironmentsRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated <code>DescribeServiceEnvironments</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is <code>null</code> when there are no more results to return.</p> <note> <p>Treat this token as an opaque identifier that's only used to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
         "DescribeServiceEnvironmentsResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>DescribeServiceEnvironments</code> request. When the results of a <code>DescribeServiceEnvironments</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeServiceJobRequest$jobId": "<p>The job ID for the service job to describe.</p>",
@@ -1972,6 +2197,7 @@
         "DescribeServiceJobResponse$jobQueue": "<p>The ARN of the job queue that the service job is associated with.</p>",
         "DescribeServiceJobResponse$serviceRequestPayload": "<p>The request, in JSON, for the service that the <code>SubmitServiceJob</code> operation is queueing. </p>",
         "DescribeServiceJobResponse$shareIdentifier": "<p>The share identifier for the service job. This is used for fair-share scheduling.</p>",
+        "DescribeServiceJobResponse$quotaShareName": "<p>The name of the quota share that the service job is associated with.</p>",
         "DescribeServiceJobResponse$statusReason": "<p>A short, human-readable string to provide more details for the current status of the service job.</p>",
         "Device$hostPath": "<p>The path for the device on the host container instance.</p>",
         "Device$containerPath": "<p>The path inside the container that's used to expose the host device. By default, the <code>hostPath</code> value is used.</p>",
@@ -2041,6 +2267,8 @@
         "FirelensConfigurationOptionsMap$key": null,
         "FirelensConfigurationOptionsMap$value": null,
         "FrontOfQueueJobSummary$jobArn": "<p>The ARN for a job in a named job queue.</p>",
+        "FrontOfQuotaShareJobSummary$jobArn": "<p>The ARN for a job in a named quota share.</p>",
+        "FrontOfQuotaSharesJobSummaryMap$key": null,
         "GetJobQueueSnapshotRequest$jobQueue": "<p>The job queue’s name or full queue Amazon Resource Name (ARN).</p>",
         "Host$sourcePath": "<p>The path on the host container instance that's presented to the container. If this parameter is empty, then the Docker daemon has assigned a host path for you. If this parameter contains a file location, then the data volume persists at the specified location on the host container instance until you delete it manually. If the source path location doesn't exist on the host container instance, the Docker daemon creates it. If the location does exist, the contents of the source path folder are exported.</p> <note> <p>This parameter isn't applicable to jobs that run on Fargate resources. Don't provide this for these jobs.</p> </note>",
         "ImagePullSecret$name": "<p>Provides a unique identifier for the <code>ImagePullSecret</code>. This object is required when <code>EksPodProperties$imagePullSecrets</code> is used.</p>",
@@ -2094,6 +2322,9 @@
         "ListJobsRequest$multiNodeJobId": "<p>The job ID for a multi-node parallel job. Specifying a multi-node parallel job ID with this parameter lists all nodes that are associated with the specified job.</p>",
         "ListJobsRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated <code>ListJobs</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is <code>null</code> when there are no more results to return.</p> <note> <p>Treat this token as an opaque identifier that's only used to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
         "ListJobsResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>ListJobs</code> request. When the results of a <code>ListJobs</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "ListQuotaSharesRequest$jobQueue": "<p>The name or full Amazon Resource Name (ARN) of the job queue used to list quota shares.</p>",
+        "ListQuotaSharesRequest$nextToken": "<p>The <code>nextToken</code> value that's returned from a previous paginated <code>ListQuotaShares</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is <code>null</code> when there are no more results to return.</p> <note> <p>Treat this token as an opaque identifier that's only used to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
+        "ListQuotaSharesResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>ListQuotaShares</code> request. When the results of a <code>ListQuotaShares</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "ListSchedulingPoliciesRequest$nextToken": "<p>The <code>nextToken</code> value that's returned from a previous paginated <code>ListSchedulingPolicies</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is <code>null</code> when there are no more results to return.</p> <note> <p>Treat this token as an opaque identifier that's only used to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
         "ListSchedulingPoliciesResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>ListSchedulingPolicies</code> request. When the results of a <code>ListSchedulingPolicies</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "ListServiceJobsRequest$jobQueue": "<p>The name or ARN of the job queue with which to list service jobs.</p>",
@@ -2112,6 +2343,12 @@
         "ParametersMap$key": null,
         "ParametersMap$value": null,
         "QueueSnapshotCapacityUsage$capacityUnit": "<p>The unit of measure for the capacity usage. For compute jobs, this is <code>VCPU</code> for Amazon EC2 and <code>cpu</code> for Amazon EKS. For service jobs, this is the instance type.</p>",
+        "QuotaShareCapacityLimit$capacityUnit": "<p>The unit of compute capacity for the capacityLimit. For example, <code>ml.m5.large</code>.</p>",
+        "QuotaShareCapacityUsage$capacityUnit": "<p>The unit of compute capacity for the capacity usage.</p>",
+        "QuotaShareCapacityUtilization$quotaShareName": "<p>The name of the quota share.</p>",
+        "QuotaShareDetail$quotaShareName": "<p>The name of the quota share.</p>",
+        "QuotaShareDetail$quotaShareArn": "<p>The Amazon Resource Name (ARN) of the quota share.</p>",
+        "QuotaShareDetail$jobQueueArn": "<p>The Amazon Resource Name (ARN) of the job queue associated with the quota share.</p>",
         "RegisterJobDefinitionRequest$jobDefinitionName": "<p>The name of the job definition to register. It can be up to 128 letters long. It can contain uppercase and lowercase letters, numbers, hyphens (-), and underscores (_).</p>",
         "RegisterJobDefinitionResponse$jobDefinitionName": "<p>The name of the job definition.</p>",
         "RegisterJobDefinitionResponse$jobDefinitionArn": "<p>The Amazon Resource Name (ARN) of the job definition.</p>",
@@ -2132,10 +2369,12 @@
         "ServiceJobCapacityUsageDetail$capacityUnit": "<p>The unit of measure for the service job capacity usage. For service jobs, this is the instance type.</p>",
         "ServiceJobCapacityUsageSummary$capacityUnit": "<p>The unit of measure for the service job capacity usage. For service jobs, this is the instance type.</p>",
         "ServiceJobEvaluateOnExit$onStatusReason": "<p>Contains a glob pattern to match against the StatusReason returned for a job. The pattern can contain up to 512 characters and can contain all printable characters. It can optionally end with an asterisk (*) so that only the start of the string needs to be an exact match.</p>",
+        "ServiceJobPreemptedAttempt$statusReason": "<p>A string that provides additional details for the current status of the service job attempt.</p>",
         "ServiceJobSummary$jobArn": "<p>The Amazon Resource Name (ARN) of the service job.</p>",
         "ServiceJobSummary$jobId": "<p>The job ID for the service job.</p>",
         "ServiceJobSummary$jobName": "<p>The name of the service job.</p>",
         "ServiceJobSummary$shareIdentifier": "<p>The share identifier for the job.</p>",
+        "ServiceJobSummary$quotaShareName": "<p>The quota share for the service job.</p>",
         "ServiceJobSummary$statusReason": "<p>A short string to provide more details on the current status of the service job.</p>",
         "ServiceResourceId$value": "<p>The value of the resource identifier. </p>",
         "ShareAttributes$shareIdentifier": "<p>A share identifier or share identifier prefix. If the string ends with an asterisk (*), this entry specifies the weight factor to use for share identifiers that start with that prefix. The list of share identifiers in a fair-share policy can't overlap. For example, you can't have one that specifies a <code>shareIdentifier</code> of <code>UserA*</code> and another that specifies a <code>shareIdentifier</code> of <code>UserA1</code>.</p> <p>There can be no more than 500 share identifiers active in a job queue.</p> <p>The string is limited to 255 alphanumeric characters, and can be followed by an asterisk (*).</p>",
@@ -2151,6 +2390,7 @@
         "SubmitServiceJobRequest$jobQueue": "<p>The job queue into which the service job is submitted. You can specify either the name or the ARN of the queue. The job queue must have the type <code>SAGEMAKER_TRAINING</code>.</p>",
         "SubmitServiceJobRequest$serviceRequestPayload": "<p>The request, in JSON, for the service that the SubmitServiceJob operation is queueing. </p>",
         "SubmitServiceJobRequest$shareIdentifier": "<p>The share identifier for the service job. Don't specify this parameter if the job queue doesn't have a fair-share scheduling policy. If the job queue has a fair-share scheduling policy, then this parameter must be specified.</p>",
+        "SubmitServiceJobRequest$quotaShareName": "<p>The quota share for the service job. Don't specify this parameter if the job queue doesn't have a quota share scheduling policy. If the job queue has a quota share scheduling policy, then this parameter must be specified.</p>",
         "SubmitServiceJobResponse$jobArn": "<p>The Amazon Resource Name (ARN) for the service job.</p>",
         "SubmitServiceJobResponse$jobName": "<p>The name of the service job.</p>",
         "SubmitServiceJobResponse$jobId": "<p>The unique identifier for the service job.</p>",
@@ -2188,10 +2428,17 @@
         "UpdateJobQueueRequest$schedulingPolicyArn": "<p>Amazon Resource Name (ARN) of the fair-share scheduling policy. Once a job queue is created, the fair-share scheduling policy can be replaced but not removed. The format is <code>aws:<i>Partition</i>:batch:<i>Region</i>:<i>Account</i>:scheduling-policy/<i>Name</i> </code>. For example, <code>aws:aws:batch:us-west-2:123456789012:scheduling-policy/MySchedulingPolicy</code>.</p>",
         "UpdateJobQueueResponse$jobQueueName": "<p>The name of the job queue.</p>",
         "UpdateJobQueueResponse$jobQueueArn": "<p>The Amazon Resource Name (ARN) of the job queue.</p>",
+        "UpdateQuotaShareRequest$quotaShareArn": "<p>The Amazon Resource Name (ARN) of the quota share to update.</p>",
+        "UpdateQuotaShareResponse$quotaShareName": "<p>The name of the quota share.</p>",
+        "UpdateQuotaShareResponse$quotaShareArn": "<p>The Amazon Resource Name (ARN) of the quota share.</p>",
         "UpdateSchedulingPolicyRequest$arn": "<p>The Amazon Resource Name (ARN) of the scheduling policy to update.</p>",
         "UpdateServiceEnvironmentRequest$serviceEnvironment": "<p>The name or ARN of the service environment to update.</p>",
         "UpdateServiceEnvironmentResponse$serviceEnvironmentName": "<p>The name of the service environment that was updated.</p>",
         "UpdateServiceEnvironmentResponse$serviceEnvironmentArn": "<p>The Amazon Resource Name (ARN) of the service environment that was updated.</p>",
+        "UpdateServiceJobRequest$jobId": "<p>The Batch job ID of the job to update.</p>",
+        "UpdateServiceJobResponse$jobArn": "<p>The Amazon Resource Name (ARN) for the job.</p>",
+        "UpdateServiceJobResponse$jobName": "<p>The name of the job.</p>",
+        "UpdateServiceJobResponse$jobId": "<p>The unique identifier for the job.</p>",
         "Volume$name": "<p>The name of the volume. It can be up to 255 characters long. It can contain uppercase and lowercase letters, numbers, hyphens (-), and underscores (_). This name is referenced in the <code>sourceVolume</code> parameter of container definition <code>mountPoints</code>.</p>"
       }
     },
@@ -2279,9 +2526,11 @@
         "CreateComputeEnvironmentRequest$tags": "<p>The tags that you apply to the compute environment to help you categorize and organize your resources. Each tag consists of a key and an optional value. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a> in <i>Amazon Web Services General Reference</i>.</p> <p>These tags can be updated or removed using the <a href=\"https://docs.aws.amazon.com/batch/latest/APIReference/API_TagResource.html\">TagResource</a> and <a href=\"https://docs.aws.amazon.com/batch/latest/APIReference/API_UntagResource.html\">UntagResource</a> API operations. These tags don't propagate to the underlying compute resources.</p>",
         "CreateConsumableResourceRequest$tags": "<p>The tags that you apply to the consumable resource to help you categorize and organize your resources. Each tag consists of a key and an optional value. For more information, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/using-tags.html\">Tagging your Batch resources</a>.</p>",
         "CreateJobQueueRequest$tags": "<p>The tags that you apply to the job queue to help you categorize and organize your resources. Each tag consists of a key and an optional value. For more information, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/using-tags.html\">Tagging your Batch resources</a> in <i>Batch User Guide</i>.</p>",
+        "CreateQuotaShareRequest$tags": "<p>The tags that you apply to the quota share to help you categorize and organize your resources. Each tag consists of a key and an optional value. For more information, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/using-tags.html\">Tagging your Batch resources</a> in <i>Batch User Guide</i>.</p>",
         "CreateSchedulingPolicyRequest$tags": "<p>The tags that you apply to the scheduling policy to help you categorize and organize your resources. Each tag consists of a key and an optional value. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a> in <i>Amazon Web Services General Reference</i>.</p> <p>These tags can be updated or removed using the <a href=\"https://docs.aws.amazon.com/batch/latest/APIReference/API_TagResource.html\">TagResource</a> and <a href=\"https://docs.aws.amazon.com/batch/latest/APIReference/API_UntagResource.html\">UntagResource</a> API operations.</p>",
         "CreateServiceEnvironmentRequest$tags": "<p>The tags that you apply to the service environment to help you categorize and organize your resources. Each tag consists of a key and an optional value. For more information, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/using-tags.html\">Tagging your Batch resources</a>.</p>",
         "DescribeConsumableResourceResponse$tags": "<p>The tags that you apply to the consumable resource to help you categorize and organize your resources. Each tag consists of a key and an optional value. For more information, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/using-tags.html\">Tagging your Batch resources</a>.</p>",
+        "DescribeQuotaShareResponse$tags": "<p>The tags applied to the quota share.</p>",
         "DescribeServiceJobResponse$tags": "<p>The tags that are associated with the service job. Each tag consists of a key and an optional value. For more information, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/using-tags.html\">Tagging your Batch resources</a>.</p>",
         "JobDefinition$tags": "<p>The tags that are applied to the job definition.</p>",
         "JobDetail$tags": "<p>The tags that are applied to the job.</p>",
@@ -2421,8 +2670,16 @@
         "UpdateComputeEnvironmentRequest$updatePolicy": "<p>Specifies the updated infrastructure update policy for the compute environment. For more information about infrastructure updates, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/updating-compute-environments.html\">Updating compute environments</a> in the <i>Batch User Guide</i>.</p>"
       }
     },
+    "UpdateQuotaShareRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateQuotaShareResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateSchedulingPolicyRequest": {
-      "base": "<p>Contains the parameters for <code>UpdateSchedulingPolicy</code>.</p>",
+      "base": "<p>Contains the parameters for <code>UpdateSchedulingPolicy</code>. </p>",
       "refs": {}
     },
     "UpdateSchedulingPolicyResponse": {
@@ -2434,6 +2691,14 @@
       "refs": {}
     },
     "UpdateServiceEnvironmentResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateServiceJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateServiceJobResponse": {
       "base": null,
       "refs": {}
     },

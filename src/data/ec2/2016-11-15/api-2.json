@@ -13229,6 +13229,7 @@
         },
         "SpotOptions":{"shape":"SpotOptionsRequest"},
         "OnDemandOptions":{"shape":"OnDemandOptionsRequest"},
+        "ReservedCapacityOptions":{"shape":"ReservedCapacityOptionsRequest"},
         "ExcessCapacityTerminationPolicy":{"shape":"FleetExcessCapacityTerminationPolicy"},
         "LaunchTemplateConfigs":{"shape":"FleetLaunchTemplateConfigListRequest"},
         "TargetCapacitySpecification":{"shape":"TargetCapacitySpecificationRequest"},
@@ -16457,7 +16458,8 @@
       "enum":[
         "spot",
         "on-demand",
-        "capacity-block"
+        "capacity-block",
+        "reserved-capacity"
       ]
     },
     "DefaultTcpEstablishedTimeout":{"type":"integer"},
@@ -28230,6 +28232,10 @@
           "shape":"OnDemandOptions",
           "locationName":"onDemandOptions"
         },
+        "ReservedCapacityOptions":{
+          "shape":"ReservedCapacityOptions",
+          "locationName":"reservedCapacityOptions"
+        },
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
@@ -28441,6 +28447,10 @@
         "launch",
         "launch-before-terminate"
       ]
+    },
+    "FleetReservationType":{
+      "type":"string",
+      "enum":["interruptible-capacity-reservation"]
     },
     "FleetSet":{
       "type":"list",
@@ -33699,7 +33709,8 @@
       "type":"string",
       "enum":[
         "spot",
-        "on-demand"
+        "on-demand",
+        "interruptible-capacity-reservation"
       ]
     },
     "InstanceLifecycleType":{
@@ -47934,6 +47945,20 @@
         "odcr"
       ]
     },
+    "ReservationTypeList":{
+      "type":"list",
+      "member":{
+        "shape":"FleetReservationType",
+        "locationName":"item"
+      }
+    },
+    "ReservationTypeListRequest":{
+      "type":"list",
+      "member":{
+        "shape":"FleetReservationType",
+        "locationName":"ReservationType"
+      }
+    },
     "ReservationValue":{
       "type":"structure",
       "members":{
@@ -47948,6 +47973,24 @@
         "RemainingUpfrontValue":{
           "shape":"String",
           "locationName":"remainingUpfrontValue"
+        }
+      }
+    },
+    "ReservedCapacityOptions":{
+      "type":"structure",
+      "members":{
+        "ReservationTypes":{
+          "shape":"ReservationTypeList",
+          "locationName":"reservationTypeSet"
+        }
+      }
+    },
+    "ReservedCapacityOptionsRequest":{
+      "type":"structure",
+      "members":{
+        "ReservationTypes":{
+          "shape":"ReservationTypeListRequest",
+          "locationName":"ReservationType"
         }
       }
     },

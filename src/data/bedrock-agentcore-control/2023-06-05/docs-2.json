@@ -507,6 +507,25 @@
         "GetBrowserResponse$browserArn": "<p>The Amazon Resource Name (ARN) of the browser.</p>"
       }
     },
+    "BrowserEnterprisePolicies": {
+      "base": null,
+      "refs": {
+        "CreateBrowserRequest$enterprisePolicies": "<p>A list of enterprise policy files for the browser.</p>",
+        "GetBrowserResponse$enterprisePolicies": "<p>The list of enterprise policy files configured for the browser.</p>"
+      }
+    },
+    "BrowserEnterprisePolicy": {
+      "base": "<p>Browser enterprise policy configuration.</p>",
+      "refs": {
+        "BrowserEnterprisePolicies$member": null
+      }
+    },
+    "BrowserEnterprisePolicyType": {
+      "base": null,
+      "refs": {
+        "BrowserEnterprisePolicy$type": "<p>The type of browser enterprise policy. Available values are <code>MANAGED</code> and <code>RECOMMENDED</code>.</p>"
+      }
+    },
     "BrowserId": {
       "base": null,
       "refs": {
@@ -644,6 +663,27 @@
       "base": "<p>Represents a Cedar policy statement within the AgentCore Policy system. Cedar is a policy language designed for authorization that provides human-readable, analyzable, and high-performance policy evaluation for controlling agent behavior and access decisions. </p>",
       "refs": {
         "PolicyDefinition$cedar": "<p>The Cedar policy definition within the policy definition structure. This contains the Cedar policy statement that defines the authorization logic using Cedar's human-readable, analyzable policy language. Cedar policies specify principals (who can access), actions (what operations are allowed), resources (what can be accessed), and optional conditions for fine-grained control. Cedar provides a formal policy language designed for authorization with deterministic evaluation, making policies testable, reviewable, and auditable. All Cedar policies follow a default-deny model where actions are denied unless explicitly permitted, and forbid policies always override permit policies.</p>"
+      }
+    },
+    "Certificate": {
+      "base": "<p>A certificate to install in the browser or code interpreter.</p>",
+      "refs": {
+        "Certificates$member": null
+      }
+    },
+    "CertificateLocation": {
+      "base": "<p>The location from which to retrieve a certificate.</p>",
+      "refs": {
+        "Certificate$location": "<p>The location of the certificate.</p>"
+      }
+    },
+    "Certificates": {
+      "base": null,
+      "refs": {
+        "CreateBrowserRequest$certificates": "<p>A list of certificates to install in the browser.</p>",
+        "CreateCodeInterpreterRequest$certificates": "<p>A list of certificates to install in the code interpreter.</p>",
+        "GetBrowserResponse$certificates": "<p>The list of certificates configured for the browser.</p>",
+        "GetCodeInterpreterResponse$certificates": "<p>The list of certificates configured for the code interpreter.</p>"
       }
     },
     "ClaimMatchOperatorType": {
@@ -3427,6 +3467,12 @@
       "base": "<p>Exception thrown when a resource limit is exceeded.</p>",
       "refs": {}
     },
+    "ResourceLocation": {
+      "base": "<p>The location of a resource.</p>",
+      "refs": {
+        "BrowserEnterprisePolicy$location": "<p>The location of the enterprise policy file.</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>This exception is thrown when a resource referenced by the operation does not exist</p>",
       "refs": {}
@@ -3545,7 +3591,8 @@
       "base": "<p>The Amazon S3 location for storing data. This structure defines where in Amazon S3 data is stored.</p>",
       "refs": {
         "Code$s3": "<p>The Amazon Amazon S3 object that contains the source code for the agent runtime.</p>",
-        "RecordingConfig$s3Location": "<p>The Amazon S3 location where browser recordings are stored. This location contains the recorded browser sessions.</p>"
+        "RecordingConfig$s3Location": "<p>The Amazon S3 location where browser recordings are stored. This location contains the recorded browser sessions.</p>",
+        "ResourceLocation$s3": null
       }
     },
     "S3LocationBucketString": {
@@ -3643,6 +3690,12 @@
       "base": null,
       "refs": {
         "Secret$secretArn": "<p>The Amazon Resource Name (ARN) of the secret in AWS Secrets Manager.</p>"
+      }
+    },
+    "SecretsManagerLocation": {
+      "base": "<p>The Amazon Web Services Secrets Manager location configuration.</p>",
+      "refs": {
+        "CertificateLocation$secretsManager": "<p>The Amazon Web Services Secrets Manager location of the certificate.</p>"
       }
     },
     "SecurityGroupId": {
@@ -4227,6 +4280,12 @@
       "base": "<p>A tool schema for a gateway target. This structure defines the schema for a tool that the target exposes through the Model Context Protocol.</p>",
       "refs": {
         "McpLambdaTargetConfiguration$toolSchema": "<p>The tool schema for the Lambda function. This schema defines the structure of the tools that the Lambda function provides.</p>"
+      }
+    },
+    "ToolSecretArn": {
+      "base": null,
+      "refs": {
+        "SecretsManagerLocation$secretArn": "<p>The ARN of the Amazon Web Services Secrets Manager secret containing the certificate.</p>"
       }
     },
     "TriggerCondition": {

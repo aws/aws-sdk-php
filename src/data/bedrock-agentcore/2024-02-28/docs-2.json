@@ -190,6 +190,25 @@
         "BranchFilter$name": "<p>The name of the branch to filter by.</p>"
       }
     },
+    "BrowserEnterprisePolicies": {
+      "base": null,
+      "refs": {
+        "GetBrowserSessionResponse$enterprisePolicies": "<p>A list of files containing enterprise policies for the browser session.</p>",
+        "StartBrowserSessionRequest$enterprisePolicies": "<p>A list of files containing enterprise policies for the browser.</p>"
+      }
+    },
+    "BrowserEnterprisePolicy": {
+      "base": "<p>Browser enterprise policy configuration.</p>",
+      "refs": {
+        "BrowserEnterprisePolicies$member": null
+      }
+    },
+    "BrowserEnterprisePolicyType": {
+      "base": "<p>The type of browser enterprise policy. Available values are <code>MANAGED</code> and <code>RECOMMENDED</code>.</p>",
+      "refs": {
+        "BrowserEnterprisePolicy$type": "<p>The enterprise policy type. See BrowserEnterprisePolicyType.</p>"
+      }
+    },
     "BrowserExtension": {
       "base": "<p>Browser extension configuration.</p>",
       "refs": {
@@ -273,6 +292,27 @@
       "refs": {
         "AutomationStream$streamEndpoint": "<p>The endpoint URL for the automation stream. This URL is used to establish a WebSocket connection to the stream for sending commands and receiving responses.</p>",
         "LiveViewStream$streamEndpoint": "<p>The endpoint URL for the live view stream. This URL is used to establish a connection to receive visual updates from the browser session.</p>"
+      }
+    },
+    "Certificate": {
+      "base": "<p>A certificate to install in the browser or code interpreter session.</p>",
+      "refs": {
+        "Certificates$member": null
+      }
+    },
+    "CertificateLocation": {
+      "base": "<p>The location from which to retrieve a certificate.</p>",
+      "refs": {
+        "Certificate$location": "<p>The location of the certificate.</p>"
+      }
+    },
+    "Certificates": {
+      "base": null,
+      "refs": {
+        "GetBrowserSessionResponse$certificates": "<p>The list of certificates installed in the browser session.</p>",
+        "GetCodeInterpreterSessionResponse$certificates": "<p>The list of certificates installed in the code interpreter session.</p>",
+        "StartBrowserSessionRequest$certificates": "<p>A list of certificates to install in the browser session.</p>",
+        "StartCodeInterpreterSessionRequest$certificates": "<p>A list of certificates to install in the code interpreter session.</p>"
       }
     },
     "ClientToken": {
@@ -1389,6 +1429,7 @@
     "ResourceLocation": {
       "base": "<p>The location of the browser extension.</p>",
       "refs": {
+        "BrowserEnterprisePolicy$location": "<p>The location of the enterprise policy file.</p>",
         "BrowserExtension$location": "<p>The location where the browser extension files are stored. This specifies the source from which the extension will be loaded and installed.</p>"
       }
     },
@@ -1525,7 +1566,14 @@
     "SecretArn": {
       "base": null,
       "refs": {
-        "BasicAuth$secretArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret containing proxy credentials. The secret must be a JSON object with <code>username</code> and <code>password</code> string fields that meet validation requirements. The caller must have <code>secretsmanager:GetSecretValue</code> permission for this ARN. Example secret format: <code>{\"username\": \"proxy_user\", \"password\": \"secure_password\"}</code> </p>"
+        "BasicAuth$secretArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret containing proxy credentials. The secret must be a JSON object with <code>username</code> and <code>password</code> string fields that meet validation requirements. The caller must have <code>secretsmanager:GetSecretValue</code> permission for this ARN. Example secret format: <code>{\"username\": \"proxy_user\", \"password\": \"secure_password\"}</code> </p>",
+        "SecretsManagerLocation$secretArn": "<p>The ARN of the Amazon Web Services Secrets Manager secret containing the certificate.</p>"
+      }
+    },
+    "SecretsManagerLocation": {
+      "base": "<p>The Amazon Web Services Secrets Manager location configuration.</p>",
+      "refs": {
+        "CertificateLocation$secretsManager": "<p>The Amazon Web Services Secrets Manager location of the certificate.</p>"
       }
     },
     "ServiceException": {

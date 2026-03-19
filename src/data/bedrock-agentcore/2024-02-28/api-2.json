@@ -921,6 +921,27 @@
       "min":1,
       "pattern":"[a-zA-Z0-9][a-zA-Z0-9-_]*"
     },
+    "BrowserEnterprisePolicies":{
+      "type":"list",
+      "member":{"shape":"BrowserEnterprisePolicy"},
+      "max":100,
+      "min":0
+    },
+    "BrowserEnterprisePolicy":{
+      "type":"structure",
+      "required":["location"],
+      "members":{
+        "location":{"shape":"ResourceLocation"},
+        "type":{"shape":"BrowserEnterprisePolicyType"}
+      }
+    },
+    "BrowserEnterprisePolicyType":{
+      "type":"string",
+      "enum":[
+        "MANAGED",
+        "RECOMMENDED"
+      ]
+    },
     "BrowserExtension":{
       "type":"structure",
       "required":["location"],
@@ -995,6 +1016,26 @@
       "type":"string",
       "max":512,
       "min":10
+    },
+    "Certificate":{
+      "type":"structure",
+      "required":["location"],
+      "members":{
+        "location":{"shape":"CertificateLocation"}
+      }
+    },
+    "CertificateLocation":{
+      "type":"structure",
+      "members":{
+        "secretsManager":{"shape":"SecretsManagerLocation"}
+      },
+      "union":true
+    },
+    "Certificates":{
+      "type":"list",
+      "member":{"shape":"Certificate"},
+      "max":200,
+      "min":1
     },
     "ClientToken":{
       "type":"string",
@@ -1618,11 +1659,13 @@
         "createdAt":{"shape":"DateTimestamp"},
         "viewPort":{"shape":"ViewPort"},
         "extensions":{"shape":"BrowserExtensions"},
+        "enterprisePolicies":{"shape":"BrowserEnterprisePolicies"},
         "profileConfiguration":{"shape":"BrowserProfileConfiguration"},
         "sessionTimeoutSeconds":{"shape":"BrowserSessionTimeout"},
         "status":{"shape":"BrowserSessionStatus"},
         "streams":{"shape":"BrowserSessionStream"},
         "proxyConfiguration":{"shape":"ProxyConfiguration"},
+        "certificates":{"shape":"Certificates"},
         "sessionReplayArtifact":{"shape":"String"},
         "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
@@ -1659,7 +1702,8 @@
         "name":{"shape":"Name"},
         "createdAt":{"shape":"DateTimestamp"},
         "sessionTimeoutSeconds":{"shape":"CodeInterpreterSessionTimeout"},
-        "status":{"shape":"CodeInterpreterSessionStatus"}
+        "status":{"shape":"CodeInterpreterSessionStatus"},
+        "certificates":{"shape":"Certificates"}
       }
     },
     "GetEventInput":{
@@ -3015,7 +3059,14 @@
     },
     "SecretArn":{
       "type":"string",
-      "pattern":"arn:aws:secretsmanager:[a-z0-9-]+:[0-9]{12}:secret:[a-zA-Z0-9/_+=.@-]+"
+      "pattern":"arn:aws(-[a-z-]+)?:secretsmanager:[a-z0-9-]+:[0-9]{12}:secret:[a-zA-Z0-9/_+=.@-]+"
+    },
+    "SecretsManagerLocation":{
+      "type":"structure",
+      "required":["secretArn"],
+      "members":{
+        "secretArn":{"shape":"SecretArn"}
+      }
     },
     "ServiceException":{
       "type":"structure",
@@ -3130,6 +3181,8 @@
         "extensions":{"shape":"BrowserExtensions"},
         "profileConfiguration":{"shape":"BrowserProfileConfiguration"},
         "proxyConfiguration":{"shape":"ProxyConfiguration"},
+        "enterprisePolicies":{"shape":"BrowserEnterprisePolicies"},
+        "certificates":{"shape":"Certificates"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -3181,6 +3234,7 @@
         },
         "name":{"shape":"Name"},
         "sessionTimeoutSeconds":{"shape":"CodeInterpreterSessionTimeout"},
+        "certificates":{"shape":"Certificates"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true

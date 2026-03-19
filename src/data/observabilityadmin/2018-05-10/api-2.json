@@ -961,6 +961,11 @@
         "Type":{"shape":"String"}
       }
     },
+    "DataSourceFilterString":{
+      "type":"string",
+      "max":2000,
+      "min":1
+    },
     "DataSources":{
       "type":"list",
       "member":{"shape":"DataSource"}
@@ -1704,12 +1709,10 @@
     },
     "SourceLogsConfiguration":{
       "type":"structure",
-      "required":[
-        "LogGroupSelectionCriteria",
-        "EncryptedLogGroupStrategy"
-      ],
+      "required":["EncryptedLogGroupStrategy"],
       "members":{
         "LogGroupSelectionCriteria":{"shape":"LogsFilterString"},
+        "DataSourceSelectionCriteria":{"shape":"DataSourceFilterString"},
         "EncryptedLogGroupStrategy":{"shape":"EncryptedLogGroupStrategy"}
       }
     },
