@@ -29,10 +29,10 @@ abstract class AbstractTransferRequest
      * @param array $config
      */
     public function __construct(
-        array                     $listeners,
+        array $listeners,
         ?AbstractTransferListener $progressTracker,
-        array                     $config,
-        array                     $singleObjectListeners = []
+        array $config,
+        array $singleObjectListeners = []
     ) {
         $this->listeners = $listeners;
         $this->progressTracker = $progressTracker;
