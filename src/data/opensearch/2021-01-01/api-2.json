@@ -1351,6 +1351,10 @@
         "Status":{"shape":"OptionStatus"}
       }
     },
+    "AMPWorkspaceArn":{
+      "type":"string",
+      "pattern":"^arn:aws[a-zA-Z-]*:aps:[a-z0-9-]+:[0-9]{12}:workspace\\/ws-[a-z0-9-]*$"
+    },
     "ARN":{
       "type":"string",
       "max":2048,
@@ -1463,8 +1467,7 @@
       "type":"structure",
       "required":[
         "DataSourceName",
-        "DataSourceType",
-        "OpenSearchArns"
+        "DataSourceType"
       ],
       "members":{
         "DataSourceName":{"shape":"DirectQueryDataSourceName"},
@@ -2874,7 +2877,8 @@
       "type":"structure",
       "members":{
         "CloudWatchLog":{"shape":"CloudWatchDirectQueryDataSource"},
-        "SecurityLake":{"shape":"SecurityLakeDirectQueryDataSource"}
+        "SecurityLake":{"shape":"SecurityLakeDirectQueryDataSource"},
+        "Prometheus":{"shape":"PrometheusDirectQueryDataSource"}
       },
       "union":true
     },
@@ -4841,6 +4845,17 @@
         "AWS_SERVICE"
       ]
     },
+    "PrometheusDirectQueryDataSource":{
+      "type":"structure",
+      "required":[
+        "RoleArn",
+        "WorkspaceArn"
+      ],
+      "members":{
+        "RoleArn":{"shape":"DirectQueryDataSourceRoleArn"},
+        "WorkspaceArn":{"shape":"AMPWorkspaceArn"}
+      }
+    },
     "PropertyValueType":{
       "type":"string",
       "enum":[
@@ -5460,8 +5475,7 @@
       "type":"structure",
       "required":[
         "DataSourceName",
-        "DataSourceType",
-        "OpenSearchArns"
+        "DataSourceType"
       ],
       "members":{
         "DataSourceName":{

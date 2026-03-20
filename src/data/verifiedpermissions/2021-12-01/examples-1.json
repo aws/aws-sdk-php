@@ -23,6 +23,7 @@
           "errors": [],
           "results": [
             {
+              "name": "name/example-policy",
               "createdDate": "2024-10-18T18:53:39.258153Z",
               "definition": {
                 "static": {
@@ -36,6 +37,7 @@
               "policyType": "STATIC"
             },
             {
+              "name": "name/example-policy-2",
               "createdDate": "2024-10-18T18:57:03.305027Z",
               "definition": {
                 "static": {
@@ -66,6 +68,56 @@
         "description": "The following example retrieves information about the specified policy contained in the specified policy store. In this example, the requested policy is a template-linked policy, so it returns the ID of the policy template, and the specific principal and resource used by this policy.",
         "id": "example-1",
         "title": "To retrieve details about a policy"
+      },
+      {
+        "input": {
+          "requests": [
+            {
+              "policyId": "name/example-policy",
+              "policyStoreId": "ERZeDpRc34dkYZeb6FZRVC"
+            },
+            {
+              "policyId": "name/example-policy-2",
+              "policyStoreId": "ERZeDpRc34dkYZeb6FZRVC"
+            }
+          ]
+        },
+        "output": {
+          "errors": [],
+          "results": [
+            {
+              "name": "name/example-policy",
+              "createdDate": "2024-10-18T18:53:39.258153Z",
+              "definition": {
+                "static": {
+                  "description": "Users can manage account resources in any account they own",
+                  "statement": "permit (principal, action in PhotoFlash::Action::\"ManageAccount\",resource) when { resource in principal.Account };"
+                }
+              },
+              "lastUpdatedDate": "2024-10-18T18:53:39.258153Z",
+              "policyId": "PWv5M6d5HePx3gVVLKY1nK",
+              "policyStoreId": "ERZeDpRc34dkYZeb6FZRVC",
+              "policyType": "STATIC"
+            },
+            {
+              "name": "name/example-policy-2",
+              "createdDate": "2024-10-18T18:57:03.305027Z",
+              "definition": {
+                "static": {
+                  "description": "User alice can't delete any photos.",
+                  "statement": "forbid (principal == PhotoFlash::User::\"alice\", action in [PhotoFlash::Action::\"DeletePhoto\"], resource);"
+                }
+              },
+              "lastUpdatedDate": "2024-10-18T18:57:03.305027Z",
+              "policyId": "LzFn6KgLWvv4Mbegus35jn",
+              "policyStoreId": "ERZeDpRc34dkYZeb6FZRVC",
+              "policyType": "STATIC"
+            }
+          ]
+        },
+        "description": "The following example retrieves information about policies using their names instead of their IDs.",
+        "id": "example-2",
+        "title": "To retrieve policies by name"
       }
     ],
     "BatchIsAuthorized": [
@@ -387,6 +439,7 @@
     "CreatePolicy": [
       {
         "input": {
+          "name": "name/example-policy",
           "clientToken": "a1b2c3d4-e5f6-a1b2-c3d4-TOKEN1111111",
           "definition": {
             "static": {
@@ -417,36 +470,7 @@
       },
       {
         "input": {
-          "clientToken": "a1b2c3d4-e5f6-a1b2-c3d4-TOKEN1111111",
-          "definition": {
-            "static": {
-              "description": "Grant members of janeFriends UserGroup access to the vacationFolder Album",
-              "statement": "permit( principal in UserGroup::\"janeFriends\", action, resource in Album::\"vacationFolder\" );"
-            }
-          },
-          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
-        },
-        "output": {
-          "createdDate": "2024-08-12T18:20:50.99Z",
-          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
-          "policyId": "9wYxMpljbbZQb5fcZHyJhY",
-          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
-          "policyType": "STATIC",
-          "principal": {
-            "entityId": "janeFriends",
-            "entityType": "UserGroup"
-          },
-          "resource": {
-            "entityId": "vacationFolder",
-            "entityType": "Album"
-          }
-        },
-        "description": "The following example request creates a static policy with a policy scope that specifies both a principal and a resource. The response includes both the Principal and Resource elements because both were specified in the request policy scope.",
-        "id": "example-2",
-        "title": "To create a static policy"
-      },
-      {
-        "input": {
+          "name": "name/example-template-linked-policy",
           "clientToken": "a1b2c3d4-e5f6-a1b2-c3d4-TOKEN1111111",
           "definition": {
             "templateLinked": {
@@ -475,7 +499,7 @@
           }
         },
         "description": "The following example creates a template-linked policy using the specified policy template and associates the specified principal to use with the new template-linked policy.",
-        "id": "example-3",
+        "id": "example-2",
         "title": "To create a template-linked policy"
       }
     ],
@@ -523,9 +547,27 @@
         "title": "To create an encrypted policy store"
       }
     ],
+    "CreatePolicyStoreAlias": [
+      {
+        "input": {
+          "aliasName": "policy-store-alias/example-policy-store",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "aliasArn": "arn:aws:verifiedpermissions:us-east-1:123456789012:policy-store-alias/example-policy-store",
+          "aliasName": "policy-store-alias/example-policy-store",
+          "createdAt": "2024-01-15T12:30:00.52Z",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "description": "The following example creates a new policy store alias.",
+        "id": "example-1",
+        "title": "CreatePolicyStoreAlias"
+      }
+    ],
     "CreatePolicyTemplate": [
       {
         "input": {
+          "name": "name/example-policy-template",
           "clientToken": "a1b2c3d4-e5f6-a1b2-c3d4-TOKEN1111111",
           "description": "Template for research dept",
           "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
@@ -575,6 +617,17 @@
         "description": "The following example deletes the specified policy store.",
         "id": "example-1",
         "title": "To delete a policy store"
+      }
+    ],
+    "DeletePolicyStoreAlias": [
+      {
+        "input": {
+          "aliasName": "policy-store-alias/example-policy-store"
+        },
+        "output": {},
+        "description": "The following example deletes the policy store alias with name example-policy-store.",
+        "id": "example-1",
+        "title": "DeletePolicyStoreAlias"
       }
     ],
     "DeletePolicyTemplate": [
@@ -641,6 +694,33 @@
         "description": "The following example retrieves information about the specified policy contained in the specified policy store. In this example, the requested policy is a template-linked policy, so it returns the ID of the policy template, and the specific principal and resource used by this policy.",
         "id": "example-1",
         "title": "To retrieve details about a policy"
+      },
+      {
+        "input": {
+          "policyId": "name/example-policy",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "name": "name/example-policy",
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "definition": {
+            "static": {
+              "description": "Grant everyone of janeFriends UserGroup access to the vacationFolder Album",
+              "statement": "permit(principal, action, resource in Album::\"publicFolder\");"
+            }
+          },
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyId": "9wYxMpljbbZQb5fcZHyJhY",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "policyType": "STATIC",
+          "resource": {
+            "entityId": "publicFolder",
+            "entityType": "Album"
+          }
+        },
+        "description": "The following example retrieves information about a policy using its name instead of its ID.",
+        "id": "example-2",
+        "title": "To retrieve a policy by name"
       }
     ],
     "GetPolicyStore": [
@@ -690,6 +770,23 @@
         "title": "GetPolicyStore that is encrypted"
       }
     ],
+    "GetPolicyStoreAlias": [
+      {
+        "input": {
+          "aliasName": "policy-store-alias/example-policy-store"
+        },
+        "output": {
+          "aliasArn": "arn:aws:verifiedpermissions:us-east-1:123456789012:policy-store-alias/example-policy-store",
+          "aliasName": "policy-store-alias/example-policy-store",
+          "createdAt": "2024-01-15T12:30:00.52Z",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "state": "Active"
+        },
+        "description": "The following example retrieves details about the policy store alias with name example-policy-store.",
+        "id": "example-1",
+        "title": "GetPolicyStoreAlias"
+      }
+    ],
     "GetPolicyTemplate": [
       {
         "input": {
@@ -707,6 +804,24 @@
         "description": "The following example displays the details of the specified policy template.",
         "id": "example-1",
         "title": "GetPolicyTemplate"
+      },
+      {
+        "input": {
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "policyTemplateId": "name/example-policy-template"
+        },
+        "output": {
+          "name": "name/example-policy-template",
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "description": "Template for research dept",
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "policyTemplateId": "PTEXAMPLEabcdefg111111",
+          "statement": "permit(\n  principal ?principal,\n  action == Action::\"view\",\n  resource in ?resource\n) when {\n  principal has department && principal.department == \"research\" \n};"
+        },
+        "description": "The following example retrieves the details of a policy template using its name instead of its ID.",
+        "id": "example-2",
+        "title": "To retrieve a policy template by name"
       }
     ],
     "GetSchema": [
@@ -846,6 +961,7 @@
         "output": {
           "policies": [
             {
+              "name": "name/example-policy",
               "createdDate": "2024-08-12T18:20:50.99Z",
               "definition": {
                 "static": {
@@ -866,6 +982,7 @@
               }
             },
             {
+              "name": "name/example-policy-2",
               "createdDate": "2024-08-12T18:20:50.99Z",
               "definition": {
                 "static": {
@@ -989,6 +1106,67 @@
         "title": "ListPolicies - Example 3"
       }
     ],
+    "ListPolicyStoreAliases": [
+      {
+        "input": {},
+        "output": {
+          "policyStoreAliases": [
+            {
+              "aliasArn": "arn:aws:verifiedpermissions:us-east-1:123456789012:policy-store-alias/example-policy-store",
+              "aliasName": "policy-store-alias/example-policy-store",
+              "createdAt": "2024-01-15T12:30:00.52Z",
+              "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+              "state": "Active"
+            },
+            {
+              "aliasArn": "arn:aws:verifiedpermissions:us-east-1:123456789012:policy-store-alias/example-policy-store-2",
+              "aliasName": "policy-store-alias/example-policy-store-2",
+              "createdAt": "2024-01-16T09:15:00.52Z",
+              "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+              "state": "Active"
+            },
+            {
+              "aliasArn": "arn:aws:verifiedpermissions:us-east-1:123456789012:policy-store-alias/example-policy-store-3",
+              "aliasName": "policy-store-alias/example-policy-store-3",
+              "createdAt": "2024-01-17T14:45:00.52Z",
+              "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+              "state": "Active"
+            }
+          ]
+        },
+        "description": "The following example lists all policy store aliases in the AWS account in the AWS Region in which you call the operation.",
+        "id": "example-1",
+        "title": "ListPolicyStoreAliases - Example 1"
+      },
+      {
+        "input": {
+          "filter": {
+            "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+          }
+        },
+        "output": {
+          "policyStoreAliases": [
+            {
+              "aliasArn": "arn:aws:verifiedpermissions:us-east-1:123456789012:policy-store-alias/example-policy-store",
+              "aliasName": "policy-store-alias/example-policy-store",
+              "createdAt": "2024-01-15T12:30:00.52Z",
+              "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+              "state": "Active"
+            },
+            {
+              "aliasArn": "arn:aws:verifiedpermissions:us-east-1:123456789012:policy-store-alias/example-policy-store-2",
+              "aliasName": "policy-store-alias/example-policy-store-2",
+              "createdAt": "2024-01-16T09:15:00.52Z",
+              "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+              "state": "Active"
+            }
+          ]
+        },
+        "description": "The following example lists all policy store aliases associated with the policy store with ID C7v5xMplfFH3i3e4Jrzb1a",
+        "id": "example-2",
+        "title": "ListPolicyStoreAliases - Example 2"
+      }
+    ],
     "ListPolicyStores": [
       {
         "input": {},
@@ -1019,6 +1197,7 @@
         "output": {
           "policyTemplates": [
             {
+              "name": "name/example-policy-template",
               "createdDate": "2024-08-12T18:20:50.99Z",
               "description": "Generic template",
               "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
@@ -1026,6 +1205,7 @@
               "policyTemplateId": "PTEXAMPLEabcdefg111111"
             },
             {
+              "name": "name/example-policy-template-2",
               "createdDate": "2024-08-12T18:20:50.99Z",
               "description": "Template for research dept",
               "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
@@ -1134,6 +1314,7 @@
     "UpdatePolicy": [
       {
         "input": {
+          "name": "name/example-policy-2",
           "definition": {
             "static": {
               "statement": "permit(principal, action, resource in Album::\"public_folder\");"
@@ -1180,6 +1361,7 @@
     "UpdatePolicyTemplate": [
       {
         "input": {
+          "name": "name/example-policy-template-2",
           "description": "My updated template description",
           "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
           "policyTemplateId": "PTEXAMPLEabcdefg111111",

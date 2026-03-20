@@ -106,6 +106,12 @@
         "DomainConfig$AIMLOptions": "<p>Container for parameters required to enable all machine learning features.</p>"
       }
     },
+    "AMPWorkspaceArn": {
+      "base": null,
+      "refs": {
+        "PrometheusDirectQueryDataSource$WorkspaceArn": "<p> The unique identifier of the Amazon Managed Prometheus Workspace that is associated with the specified data source. </p>"
+      }
+    },
     "ARN": {
       "base": "<p>The Amazon Resource Name (ARN) of the domain. See <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/index.html\">Identifiers for IAM Entities </a> in <i>Using Amazon Web Services Identity and Access Management</i> for more information. </p>",
       "refs": {
@@ -1173,6 +1179,7 @@
       "base": null,
       "refs": {
         "CloudWatchDirectQueryDataSource$RoleArn": "<p> The unique identifier of the IAM role that grants OpenSearch Service permission to access the specified data source. </p>",
+        "PrometheusDirectQueryDataSource$RoleArn": "<p> The unique identifier of the IAM role that grants OpenSearch Service permission to access the specified data source. </p>",
         "SecurityLakeDirectQueryDataSource$RoleArn": "<p> The unique identifier of the IAM role that grants OpenSearch Service permission to access the specified data source. </p>"
       }
     },
@@ -1188,10 +1195,10 @@
     "DirectQueryOpenSearchARNList": {
       "base": null,
       "refs": {
-        "AddDirectQueryDataSourceRequest$OpenSearchArns": "<p> A list of Amazon Resource Names (ARNs) for the OpenSearch collections that are associated with the direct query data source. </p>",
+        "AddDirectQueryDataSourceRequest$OpenSearchArns": "<p> An optional list of Amazon Resource Names (ARNs) for the OpenSearch collections that are associated with the direct query data source. This field is required for CloudWatchLogs and SecurityLake datasource types. </p>",
         "DirectQueryDataSource$OpenSearchArns": "<p> A list of Amazon Resource Names (ARNs) for the OpenSearch collections that are associated with the direct query data source. </p>",
         "GetDirectQueryDataSourceResponse$OpenSearchArns": "<p> A list of Amazon Resource Names (ARNs) for the OpenSearch collections that are associated with the direct query data source. </p>",
-        "UpdateDirectQueryDataSourceRequest$OpenSearchArns": "<p> A list of Amazon Resource Names (ARNs) for the OpenSearch collections that are associated with the direct query data source. </p>"
+        "UpdateDirectQueryDataSourceRequest$OpenSearchArns": "<p> An optional list of Amazon Resource Names (ARNs) for the OpenSearch collections that are associated with the direct query data source. This field is required for CloudWatchLogs and SecurityLake datasource types. </p>"
       }
     },
     "DisableTimestamp": {
@@ -2765,6 +2772,12 @@
       "base": null,
       "refs": {
         "AuthorizedPrincipal$PrincipalType": "<p>The type of principal.</p>"
+      }
+    },
+    "PrometheusDirectQueryDataSource": {
+      "base": "<p> Configuration details for a Prometheus data source that can be used for direct queries. </p>",
+      "refs": {
+        "DirectQueryDataSourceType$Prometheus": "<p> Specifies Prometheus as a type of data source for direct queries. </p>"
       }
     },
     "PropertyValueType": {

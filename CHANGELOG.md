@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DynamoDB` - Adding ReplicaArn to ReplicaDescription of a global table replica
+* `Aws\OpenSearchService` - Added support for Amazon Managed Service for Prometheus (AMP) as a connected data source in OpenSearch UI. Now users can analyze Prometheus metrics in OpenSearch UI without data copy.
+* `Aws\VerifiedPermissions` - Adds support for Policy Store Aliases, Policy Names, and Policy Template Names. These are customizable identifiers that can be used in place of Policy Store ids, Policy ids, and Policy Template ids respectively in Amazon Verified Permissions APIs.
+* `Aws\Backup` - Fix Typo for S3Backup Options ( S3BackupACLs to BackupACLs)
+
 ## 3.373.6 - 2026-03-19
 
 * `Aws\ObservabilityAdmin` - Adding a new field in the CreateCentralizationRuleForOrganization, UpdateCentralizationRuleForOrganization API and updating the GetCentralizationRuleForOrganization API response to include the new field
