@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.373.7 - 2026-03-20
 
 * `Aws\DynamoDB` - Adding ReplicaArn to ReplicaDescription of a global table replica
 * `Aws\OpenSearchService` - Added support for Amazon Managed Service for Prometheus (AMP) as a connected data source in OpenSearch UI. Now users can analyze Prometheus metrics in OpenSearch UI without data copy.
