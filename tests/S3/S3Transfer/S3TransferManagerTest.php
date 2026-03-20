@@ -4245,4 +4245,41 @@ EOF
             . "\nThe config parameter is `default_region`.`");
         new S3TransferManager();
     }
+
+    public function testResumeUploadFailsWhenSourceFileSizeChanged(): void
+    {
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage(
+            "Cannot resume upload: source file size has changed since the upload failed. "
+        );
+
+        $sourceFile = $this->tempDir . 'upload.txt';
+        file_put_contents($sourceFile, str_repeat('a', 1000));
+        $resumeFile = $this->tempDir . 'test.resume';
+        $originalSize = 2000;
+
+        $resumable = new ResumableUpload(
+            $resumeFile,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            ['target_part_size_bytes' => 500],
+            ['transferred_bytes' => 500, 'total_bytes' => $originalSize],
+            'upload-id-123',
+            [1 => ['PartNumber' => 1, 'ETag' => 'etag1']],
+            $sourceFile,
+            $originalSize,
+            500,
+            false
+        );
+        $resumable->toFile();
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getHandlerList'])
+            ->getMock();
+        $mockClient->method('getHandlerList')->willReturn(new HandlerList());
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeUploadRequest($resumeFile);
+        $manager->resumeUpload($request)->wait();
+    }
 }

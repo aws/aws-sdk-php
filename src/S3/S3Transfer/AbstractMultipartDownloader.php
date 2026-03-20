@@ -586,7 +586,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
             $this->resumableDownload->toFile();
         } catch (\Exception $e) {
             throw new S3TransferException(
-                "Unable to persists resumable download state due to: " . $e->getMessage(),
+                "Unable to persist resumable download state due to: " . $e->getMessage(),
             );
         }
     }

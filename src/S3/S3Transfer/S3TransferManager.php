@@ -347,6 +347,16 @@ final class S3TransferManager
             );
         }
 
+        // Verify if source still matches the same size
+        $objectSizeAtFailure = $resumableUpload->getObjectSize();
+        $currentObjectSize = filesize($resumableUpload->getSource());
+        if ($objectSizeAtFailure !== $currentObjectSize) {
+            throw new S3TransferException(
+                "Cannot resume upload: source file size has changed since the upload failed. "
+                . "Size at failure: {$objectSizeAtFailure}, current size: {$currentObjectSize}."
+            );
+        }
+
         // Verify upload still exists in S3 by checking uploadId
         $uploads = $this->s3Client->listMultipartUploads([
             'Bucket' => $resumableUpload->getBucket(),

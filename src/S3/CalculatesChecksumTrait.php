@@ -64,13 +64,13 @@ trait CalculatesChecksumTrait
     }
 
     /**
-     * Returns the first checksum available in, if available.
+     * Returns the first checksum available, if available.
      *
      * @param array $parameters
      *
      * @return string|null
      */
-    public static function filterChecksum(array $parameters):?string
+    public static function filterChecksum(array $parameters):? string
     {
         foreach (self::$supportedAlgorithms as $algorithm => $_) {
             $checksumAlgorithm = "Checksum" . strtoupper($algorithm);
