@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.373.8 - 2026-03-23
 
 * `Aws\Omics` - Adds support for batch workflow runs in Amazon Omics, enabling users to submit, manage, and monitor multiple runs as a single batch. Includes APIs to create, cancel, and delete batches, track submission statuses and counts, list runs within a batch, and configure default settings.
 * `Aws\ConnectCases` - You can now use the UpdateRelatedItem API to update the content of comments and custom related items associated with a case.
