@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Omics` - Adds support for batch workflow runs in Amazon Omics, enabling users to submit, manage, and monitor multiple runs as a single batch. Includes APIs to create, cancel, and delete batches, track submission statuses and counts, list runs within a batch, and configure default settings.
+* `Aws\ConnectCases` - You can now use the UpdateRelatedItem API to update the content of comments and custom related items associated with a case.
+* `Aws\Batch` - AWS Batch AMI Visibility feature support. Adds read-only batchImageStatus to Ec2Configuration to provide visibility on the status of Batch-vended AMIs used by Compute Environments.
+* `Aws\Lightsail` - Add support for tagging of ContactMethod resource type
+
 ## 3.373.7 - 2026-03-20
 
 * `Aws\DynamoDB` - Adding ReplicaArn to ReplicaDescription of a global table replica
