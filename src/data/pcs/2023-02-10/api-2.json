@@ -403,6 +403,21 @@
       "min":1,
       "pattern":"[\\S]+"
     },
+    "CgroupCustomSetting":{
+      "type":"structure",
+      "required":[
+        "parameterName",
+        "parameterValue"
+      ],
+      "members":{
+        "parameterName":{"shape":"String"},
+        "parameterValue":{"shape":"String"}
+      }
+    },
+    "CgroupCustomSettings":{
+      "type":"list",
+      "member":{"shape":"CgroupCustomSetting"}
+    },
     "Cluster":{
       "type":"structure",
       "required":[
@@ -450,6 +465,8 @@
       "members":{
         "scaleDownIdleTimeInSeconds":{"shape":"ClusterSlurmConfigurationScaleDownIdleTimeInSecondsInteger"},
         "slurmCustomSettings":{"shape":"SlurmCustomSettings"},
+        "slurmdbdCustomSettings":{"shape":"SlurmdbdCustomSettings"},
+        "cgroupCustomSettings":{"shape":"CgroupCustomSettings"},
         "authKey":{"shape":"SlurmAuthKey"},
         "jwtAuth":{"shape":"JwtAuth"},
         "accounting":{"shape":"Accounting"},
@@ -461,6 +478,8 @@
       "members":{
         "scaleDownIdleTimeInSeconds":{"shape":"ClusterSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger"},
         "slurmCustomSettings":{"shape":"SlurmCustomSettings"},
+        "slurmdbdCustomSettings":{"shape":"SlurmdbdCustomSettings"},
+        "cgroupCustomSettings":{"shape":"CgroupCustomSettings"},
         "accounting":{"shape":"AccountingRequest"},
         "slurmRest":{"shape":"SlurmRestRequest"}
       }
@@ -1306,6 +1325,21 @@
         "mode":{"shape":"SlurmRestMode"}
       }
     },
+    "SlurmdbdCustomSetting":{
+      "type":"structure",
+      "required":[
+        "parameterName",
+        "parameterValue"
+      ],
+      "members":{
+        "parameterName":{"shape":"String"},
+        "parameterValue":{"shape":"String"}
+      }
+    },
+    "SlurmdbdCustomSettings":{
+      "type":"list",
+      "member":{"shape":"SlurmdbdCustomSetting"}
+    },
     "SpotAllocationStrategy":{
       "type":"string",
       "enum":[
@@ -1430,6 +1464,8 @@
       "members":{
         "scaleDownIdleTimeInSeconds":{"shape":"UpdateClusterSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger"},
         "slurmCustomSettings":{"shape":"SlurmCustomSettings"},
+        "slurmdbdCustomSettings":{"shape":"SlurmdbdCustomSettings"},
+        "cgroupCustomSettings":{"shape":"CgroupCustomSettings"},
         "accounting":{"shape":"UpdateAccountingRequest"},
         "slurmRest":{"shape":"UpdateSlurmRestRequest"}
       }

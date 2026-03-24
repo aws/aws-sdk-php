@@ -3748,7 +3748,8 @@
         "CACertificateIdentifier":{"shape":"String"},
         "EngineLifecycleSupport":{"shape":"String"},
         "TagSpecifications":{"shape":"TagSpecificationList"},
-        "MasterUserAuthenticationType":{"shape":"MasterUserAuthenticationType"}
+        "MasterUserAuthenticationType":{"shape":"MasterUserAuthenticationType"},
+        "WithExpressConfiguration":{"shape":"BooleanOptional"}
       }
     },
     "CreateDBClusterParameterGroupMessage":{
@@ -4354,7 +4355,9 @@
         "LimitlessDatabase":{"shape":"LimitlessDatabase"},
         "ClusterScalabilityType":{"shape":"ClusterScalabilityType"},
         "CertificateDetails":{"shape":"CertificateDetails"},
-        "EngineLifecycleSupport":{"shape":"String"}
+        "EngineLifecycleSupport":{"shape":"String"},
+        "VPCNetworkingEnabled":{"shape":"BooleanOptional"},
+        "InternetAccessGatewayEnabled":{"shape":"BooleanOptional"}
       },
       "wrapper":true
     },
@@ -9411,7 +9414,9 @@
         "BackupRetentionPeriod":{"shape":"IntegerOptional"},
         "PreferredBackupWindow":{"shape":"String"},
         "EngineLifecycleSupport":{"shape":"String"},
-        "TagSpecifications":{"shape":"TagSpecificationList"}
+        "TagSpecifications":{"shape":"TagSpecificationList"},
+        "EnableVPCNetworking":{"shape":"BooleanOptional"},
+        "EnableInternetAccessGateway":{"shape":"BooleanOptional"}
       }
     },
     "RestoreDBClusterFromSnapshotResult":{
@@ -9461,7 +9466,9 @@
         "BackupRetentionPeriod":{"shape":"IntegerOptional"},
         "PreferredBackupWindow":{"shape":"String"},
         "EngineLifecycleSupport":{"shape":"String"},
-        "TagSpecifications":{"shape":"TagSpecificationList"}
+        "TagSpecifications":{"shape":"TagSpecificationList"},
+        "EnableVPCNetworking":{"shape":"BooleanOptional"},
+        "EnableInternetAccessGateway":{"shape":"BooleanOptional"}
       }
     },
     "RestoreDBClusterToPointInTimeResult":{

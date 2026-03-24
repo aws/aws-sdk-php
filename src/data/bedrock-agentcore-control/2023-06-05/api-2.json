@@ -2470,6 +2470,7 @@
         "protocolConfiguration":{"shape":"ProtocolConfiguration"},
         "lifecycleConfiguration":{"shape":"LifecycleConfiguration"},
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
+        "filesystemConfigurations":{"shape":"FilesystemConfigurations"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -3939,6 +3940,19 @@
       },
       "union":true
     },
+    "FilesystemConfiguration":{
+      "type":"structure",
+      "members":{
+        "sessionStorage":{"shape":"SessionStorageConfiguration"}
+      },
+      "union":true
+    },
+    "FilesystemConfigurations":{
+      "type":"list",
+      "member":{"shape":"FilesystemConfiguration"},
+      "max":1,
+      "min":0
+    },
     "Filter":{
       "type":"structure",
       "required":[
@@ -4281,7 +4295,8 @@
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
         "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
         "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"},
-        "metadataConfiguration":{"shape":"RuntimeMetadataConfiguration"}
+        "metadataConfiguration":{"shape":"RuntimeMetadataConfiguration"},
+        "filesystemConfigurations":{"shape":"FilesystemConfigurations"}
       }
     },
     "GetApiKeyCredentialProviderRequest":{
@@ -5197,7 +5212,8 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
-        }
+        },
+        "name":{"shape":"BrowserProfileName"}
       }
     },
     "ListBrowserProfilesResponse":{
@@ -5939,6 +5955,12 @@
         "reflection":{"shape":"ModifyReflectionConfiguration"},
         "selfManagedConfiguration":{"shape":"ModifySelfManagedConfiguration"}
       }
+    },
+    "MountPath":{
+      "type":"string",
+      "max":200,
+      "min":6,
+      "pattern":"/mnt/[a-zA-Z0-9._-]+/?"
     },
     "Name":{
       "type":"string",
@@ -6894,6 +6916,13 @@
       "max":1440,
       "min":1
     },
+    "SessionStorageConfiguration":{
+      "type":"structure",
+      "required":["mountPath"],
+      "members":{
+        "mountPath":{"shape":"MountPath"}
+      }
+    },
     "SetTokenVaultCMKRequest":{
       "type":"structure",
       "required":["kmsConfiguration"],
@@ -7471,6 +7500,7 @@
         "lifecycleConfiguration":{"shape":"LifecycleConfiguration"},
         "metadataConfiguration":{"shape":"RuntimeMetadataConfiguration"},
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
+        "filesystemConfigurations":{"shape":"FilesystemConfigurations"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true

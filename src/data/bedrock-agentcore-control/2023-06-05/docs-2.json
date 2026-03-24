@@ -577,7 +577,8 @@
       "refs": {
         "BrowserProfileSummary$name": "<p>The name of the browser profile.</p>",
         "CreateBrowserProfileRequest$name": "<p>The name of the browser profile. The name must be unique within your account and can contain alphanumeric characters and underscores.</p>",
-        "GetBrowserProfileResponse$name": "<p>The name of the browser profile.</p>"
+        "GetBrowserProfileResponse$name": "<p>The name of the browser profile.</p>",
+        "ListBrowserProfilesRequest$name": "<p>The name of the browser profile to filter results by.</p>"
       }
     },
     "BrowserProfileStatus": {
@@ -1739,6 +1740,20 @@
         "StrategyConfiguration$extraction": "<p>The extraction configuration for the memory strategy.</p>"
       }
     },
+    "FilesystemConfiguration": {
+      "base": "<p>Configuration for a filesystem that can be mounted into the AgentCore Runtime.</p>",
+      "refs": {
+        "FilesystemConfigurations$member": null
+      }
+    },
+    "FilesystemConfigurations": {
+      "base": null,
+      "refs": {
+        "CreateAgentRuntimeRequest$filesystemConfigurations": "<p>The filesystem configurations to mount into the AgentCore Runtime. Use filesystem configurations to provide persistent storage to your AgentCore Runtime sessions.</p>",
+        "GetAgentRuntimeResponse$filesystemConfigurations": "<p>The filesystem configurations mounted into the AgentCore Runtime.</p>",
+        "UpdateAgentRuntimeRequest$filesystemConfigurations": "<p>The updated filesystem configurations to mount into the AgentCore Runtime.</p>"
+      }
+    },
     "Filter": {
       "base": "<p> The filter that applies conditions to agent traces during online evaluation to determine which traces should be evaluated. </p>",
       "refs": {
@@ -2849,6 +2864,12 @@
         "ModifyMemoryStrategyInput$configuration": "<p>The updated configuration for the memory strategy.</p>"
       }
     },
+    "MountPath": {
+      "base": null,
+      "refs": {
+        "SessionStorageConfiguration$mountPath": "<p>The mount path for the session storage filesystem inside the AgentCore Runtime. The path must be under <code>/mnt</code> with exactly one subdirectory level (for example, <code>/mnt/data</code>).</p>"
+      }
+    },
     "Name": {
       "base": null,
       "refs": {
@@ -3798,6 +3819,12 @@
         "SessionConfig$sessionTimeoutMinutes": "<p> The number of minutes of inactivity after which an agent session is considered complete and ready for evaluation. Default is 15 minutes. </p>"
       }
     },
+    "SessionStorageConfiguration": {
+      "base": "<p>Configuration for a session storage filesystem mounted into the AgentCore Runtime. Session storage provides persistent storage that is preserved across AgentCore Runtime session invocations.</p>",
+      "refs": {
+        "FilesystemConfiguration$sessionStorage": "<p>Configuration for session storage. Session storage provides persistent storage that is preserved across AgentCore Runtime session invocations.</p>"
+      }
+    },
     "SetTokenVaultCMKRequest": {
       "base": null,
       "refs": {}
@@ -4434,7 +4461,7 @@
       "refs": {}
     },
     "UpdatedDescription": {
-      "base": "<p>Respresents an optional value that can be provided to update the human-readable description of the resource. If the field is omitted from the request, it will leave the current decription value unchanged.</p>",
+      "base": "<p>Wrapper for updating an optional Description field with PATCH semantics. When present in an update request, the description is replaced with optionalValue. When absent, the description is left unchanged. To unset the description, include the wrapper with optionalValue set to null.</p>",
       "refs": {
         "UpdatePolicyEngineRequest$description": "<p>The new description for the policy engine.</p>",
         "UpdatePolicyRequest$description": "<p>The new human-readable description for the policy. This optional field allows updating the policy's documentation while keeping the same policy logic.</p>"
