@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.373.9 - 2026-03-24
 
 * `Aws\RDS` - Adds support in Aurora PostgreSQL serverless databases for express configuration based creation through WithExpressConfiguration in CreateDbCluster API, and for restoring clusters using RestoreDBClusterToPointInTime and RestoreDBClusterFromSnapshot APIs.
 * `Aws\MediaPackageV2` - Reduces the minimum allowed value for startOverWindowSeconds from 60 to 0, allowing customers to effectively disable the start-over window.
