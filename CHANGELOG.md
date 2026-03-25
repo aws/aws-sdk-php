@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApiGatewayV2` - Added DISABLE IN PROGRESS and DISABLE FAILED Portal statuses.
+* `Aws\Uxc` - GA release of AccountCustomizations, used to manage account color, visible services, and visible regions settings in the AWS Management Console.
+* `Aws\ApplicationSignals` - This release adds support for creating SLOs on RUM appMonitors, Synthetics canaries and services.
+* `Aws\Polly` - Add support for Mu-law and A-law codecs for output format
+* `Aws\MarketplaceAgreement` - The Variable Payments APIs enable AWS Marketplace Sellers to perform manage their payment requests (send, get, list, cancel).
+* `Aws\Batch` - Documentation-only update for AWS Batch.
+
 ## 3.373.9 - 2026-03-24
 
 * `Aws\RDS` - Adds support in Aurora PostgreSQL serverless databases for express configuration based creation through WithExpressConfiguration in CreateDbCluster API, and for restoring clusters using RestoreDBClusterToPointInTime and RestoreDBClusterFromSnapshot APIs.

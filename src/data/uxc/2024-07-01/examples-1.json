@@ -1,0 +1,67 @@
+{
+  "version": "1.0",
+  "examples": {
+    "GetAccountCustomizations": [
+      {
+        "input": {},
+        "output": {
+          "accountColor": "green",
+          "visibleRegions": [
+            "us-east-1",
+            "us-west-2"
+          ],
+          "visibleServices": [
+            "s3",
+            "ec2"
+          ]
+        },
+        "description": "Retrieves all account customization settings",
+        "id": "example-1",
+        "title": "Get account customizations"
+      }
+    ],
+    "ListServices": [
+      {
+        "input": {},
+        "output": {
+          "nextToken": "eyJhbGciOiJIUzI1NiJ91W342Gdcs259019",
+          "services": [
+            "s3",
+            "ec2",
+            "lambda"
+          ]
+        },
+        "description": "Retrieves a paginated list of available AWS services",
+        "id": "example-1",
+        "title": "List available services"
+      }
+    ],
+    "UpdateAccountCustomizations": [
+      {
+        "input": {
+          "accountColor": "green",
+          "visibleServices": [
+            "s3",
+            "ec2",
+            "lambda"
+          ]
+        },
+        "output": {
+          "accountColor": "green",
+          "visibleRegions": [
+            "us-east-1",
+            "us-west-2"
+          ],
+          "visibleServices": [
+            "s3",
+            "ec2",
+            "lambda"
+          ]
+        },
+        "description": "Updates account customization settings with new values",
+        "id": "example-1",
+        "title": "Update account customizations"
+      }
+    ]
+  }
+}
