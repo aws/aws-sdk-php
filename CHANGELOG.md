@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.374.0 - 2026-03-25
 
 * `Aws\ApiGatewayV2` - Added DISABLE IN PROGRESS and DISABLE FAILED Portal statuses.
 * `Aws\Uxc` - GA release of AccountCustomizations, used to manage account color, visible services, and visible regions settings in the AWS Management Console.
