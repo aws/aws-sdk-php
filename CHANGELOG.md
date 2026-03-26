@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.374.1 - 2026-03-26
 
 * `Aws\SageMaker` - Release support for ml.r5d.16xlarge instance types for SageMaker HyperPod
 * `Aws\BCMDataExports` - With this release we are providing an option to accounts to have their export delivered to an S3 bucket that is not owned by the account.
