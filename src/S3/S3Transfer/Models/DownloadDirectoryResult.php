@@ -12,7 +12,7 @@ final class DownloadDirectoryResult
     /** @var int */
     private int $objectsFailed;
 
-    /** @var \Throwable|null $reason */
+    /** @var \Throwable|null */
     private ?\Throwable $reason;
 
     /**

@@ -627,7 +627,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
             return 0;
         }
 
-        return $match[1];
+        return (int) $match[1];
     }
 
     /**

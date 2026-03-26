@@ -52,6 +52,8 @@ final class UploadDirectoryRequest extends AbstractTransferRequest
      *   to allow customers to update individual putObjectRequest that the S3 Transfer Manager generates.
      * - failure_policy: (callable, optional) The failure policy to handle failed requests.
      * - max_concurrency: (int, optional) The max number of concurrent uploads.
+     * - max_depth: (int, optional) To indicate the maximum depth of the recursive
+     *   file tree walk. By default, it will use the built-in default value which is -1.
      * @param array $listeners Directory-level listeners that receive directory snapshots.
      * @param AbstractTransferListener|null $progressTracker Directory-level progress tracker.
      * @param array $singleObjectListeners Per-object listeners that receive single-object snapshots.
