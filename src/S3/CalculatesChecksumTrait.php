@@ -70,7 +70,7 @@ trait CalculatesChecksumTrait
      *
      * @return string|null
      */
-    public static function filterChecksum(array $parameters):? string
+    public static function filterChecksum(array $parameters): ?string
     {
         foreach (self::$supportedAlgorithms as $algorithm => $_) {
             $checksumAlgorithm = "Checksum" . strtoupper($algorithm);

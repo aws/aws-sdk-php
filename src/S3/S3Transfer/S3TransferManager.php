@@ -32,6 +32,7 @@ use Throwable;
 
 final class S3TransferManager
 {
+
     /** @var S3Client  */
     private S3ClientInterface $s3Client;
 
@@ -358,13 +359,15 @@ final class S3TransferManager
         }
 
         // Verify upload still exists in S3 by checking uploadId
-        $uploads = $this->s3Client->listMultipartUploads([
-            'Bucket' => $resumableUpload->getBucket(),
-            'Prefix' => $resumableUpload->getKey(),
-        ]);
-
+        $uploads = $this->s3Client->getPaginator(
+            'ListMultipartUploads',
+            [
+                'Bucket' => $resumableUpload->getBucket(),
+                'Prefix' => $resumableUpload->getKey(),
+            ]
+        )->search('Uploads[]');
         $uploadExists = false;
-        foreach ($uploads['Uploads'] ?? [] as $upload) {
+        foreach ($uploads as $upload) {
             if ($upload['UploadId'] === $resumableUpload->getUploadId()
                 && $upload['Key'] === $resumableUpload->getKey()) {
                 $uploadExists = true;

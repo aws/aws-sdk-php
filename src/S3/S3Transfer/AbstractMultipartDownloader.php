@@ -607,7 +607,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
 
         // For extracting the object size from the ContentRange header value.
         if (preg_match(self::OBJECT_SIZE_REGEX, $contentRange, $matches)) {
-            return $matches[1];
+            return (int) $matches[1];
         }
 
         throw new S3TransferException(

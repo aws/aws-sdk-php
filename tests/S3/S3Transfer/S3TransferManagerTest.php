@@ -52,6 +52,8 @@ final class S3TransferManagerTest extends TestCase
     private const UPLOAD_BASE_CASES = __DIR__ . '/test-cases/upload-single-object.json';
     private const UPLOAD_DIRECTORY_BASE_CASES = __DIR__ . '/test-cases/upload-directory.json';
     private const DOWNLOAD_DIRECTORY_BASE_CASES = __DIR__ . '/test-cases/download-directory.json';
+    private const UPLOAD_DIRECTORY_CROSS_PLATFORM_BASE_CASES = __DIR__ . '/test-cases/upload-directory-cross-platform-compatibility.json';
+    private const DOWNLOAD_DIRECTORY_CROSS_PLATFORM_BASE_CASES = __DIR__ . '/test-cases/download-directory-cross-platform-compatibility.json';
     private static array $s3BodyTemplates = [
         'CreateMultipartUpload' => <<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -3725,13 +3727,25 @@ EOF
      */
     public static function modeledUploadDirectoryCasesProvider(): Generator
     {
-        $downloadCases = json_decode(
+        $uploadDirectoryCases = json_decode(
             file_get_contents(
                 self::UPLOAD_DIRECTORY_BASE_CASES
             ),
             true
         );
-        foreach ($downloadCases as $case) {
+        $crossPlatformUploadDirectoryCases = json_decode(
+            file_get_contents(
+                self::UPLOAD_DIRECTORY_CROSS_PLATFORM_BASE_CASES
+            ),
+            true
+        );
+
+        $allUploadDirectoryCases = array_merge(
+            $uploadDirectoryCases,
+            $crossPlatformUploadDirectoryCases
+        );
+
+        foreach ($allUploadDirectoryCases as $case) {
             yield $case['summary'] => [
                 'test_id' => $case['summary'],
                 'config' => $case['config'],
@@ -3748,13 +3762,24 @@ EOF
      */
     public static function modeledDownloadDirectoryCasesProvider(): Generator
     {
-        $downloadCases = json_decode(
+        $downloadDirectoryCases = json_decode(
             file_get_contents(
                 self::DOWNLOAD_DIRECTORY_BASE_CASES
             ),
             true
         );
-        foreach ($downloadCases as $case) {
+        $crossPlatformDownloadDirectoryCases = json_decode(
+            file_get_contents(
+                self::DOWNLOAD_DIRECTORY_CROSS_PLATFORM_BASE_CASES
+            ),
+            true
+        );
+        $allDownloadDirectoryCases = array_merge(
+            $downloadDirectoryCases,
+            $crossPlatformDownloadDirectoryCases
+        );
+
+        foreach ($allDownloadDirectoryCases as $case) {
             yield $case['summary'] => [
                 'test_id' => $case['summary'],
                 'config' => $case['config'],
@@ -3801,7 +3826,8 @@ EOF
                     break;
                 default:
                     if (preg_match('/Checksum[A-Z]+/', $key)) {
-                        $newKey = 'x-amz-checksum-' . str_replace(
+                        $newKey = 'x-amz-checksum-'
+                            . str_replace(
                                 'Checksum',
                                 '',
                                 $key
