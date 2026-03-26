@@ -59,7 +59,7 @@ class DocsCommand extends AbstractCommand
             );
         }
 
-        $options = $this->parseOptions([], ['issue-logging-enabled']);
+        $options = $this->parseOptions($args);
         $issueLoggingEnabled = isset($options['issue-logging-enabled']);
 
         // Generate API docs

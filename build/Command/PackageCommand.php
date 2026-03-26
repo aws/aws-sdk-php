@@ -21,7 +21,7 @@ class PackageCommand extends AbstractCommand
 
     protected function doExecute(array $args): int
     {
-        $options = $this->parseOptions([], ['service:']);
+        $options = $this->parseOptions($args);
 
         $buildDir = $this->getBuildDir();
         $projectRoot = $this->getProjectRoot();

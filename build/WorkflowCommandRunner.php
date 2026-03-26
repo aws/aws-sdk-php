@@ -42,7 +42,8 @@ const WORKFLOW_COMMANDS = [
     'remove-service'             => RemoveServiceCommand::class,
 ];
 
-$commandName = $_SERVER['argv'][1] ?? null;
+$argv = $_SERVER['argv'];
+$commandName = $argv[1] ?? null;
 
 if ($commandName === null) {
     fwrite(STDERR, "Usage: php build/WorkflowCommandRunner.php <command> [options...]\n");
@@ -56,10 +57,9 @@ if (!isset(WORKFLOW_COMMANDS[$commandName])) {
     exit(1);
 }
 
-// Strip the command name from argv so getopt() works inside commands
-$args = array_slice($_SERVER['argv'], 2);
-$_SERVER['argv'] = array_merge([$_SERVER['argv'][0]], $args);
-$_SERVER['argc'] = count($_SERVER['argv']);
+$args = array_slice($argv, 2);
+$_SERVER['argv'] = array_merge([$argv[0]], $args);
+$_SERVER['argc'] = count($argv);
 
 $class = WORKFLOW_COMMANDS[$commandName];
 

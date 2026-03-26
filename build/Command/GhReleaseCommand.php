@@ -26,7 +26,7 @@ class GhReleaseCommand extends AbstractCommand
 
     protected function doExecute(array $args): int
     {
-        $options = $this->parseOptions([], ['tag:']);
+        $options = $this->parseOptions($args);
 
         $token = getenv('OAUTH_TOKEN');
         if (!$token) {
@@ -57,8 +57,8 @@ class GhReleaseCommand extends AbstractCommand
             function ($retries, $request, $response) {
                 $statusCode = $response->getStatusCode();
                 if ($retries < self::MAX_ATTEMPTS && !in_array($statusCode, [200, 201, 202])) {
-                    echo "Attempt failed with status code {$statusCode}: "
-                        . $response->getBody();
+                    $this->output("Attempt failed with status code {$statusCode}: "
+                        . $response->getBody());
                     return true;
                 }
                 return false;
@@ -141,7 +141,7 @@ class GhReleaseCommand extends AbstractCommand
                 $isSuccessful = true;
             } catch (\GuzzleHttp\Exception\ServerException $e) {
                 $this->output("{$filename} failed to upload:");
-                var_dump($e->getMessage());
+                $this->error($e->getMessage());
 
                 // Fetch and inspect assets for failed downloads
                 $response = $client->get("/repos/{$owner}/{$repo}/releases/{$releaseBody['id']}/assets", []);
@@ -163,7 +163,7 @@ class GhReleaseCommand extends AbstractCommand
                                 $this->output("Failed upload of {$asset['name']} at {$asset['browser_download_url']} has successfully been deleted.");
                             } else {
                                 $this->output("Failed upload of {$asset['name']} at {$asset['browser_download_url']} was unable to be deleted.");
-                                var_dump($e);
+                                $this->error($e);
                             }
                         }
                     }

@@ -21,7 +21,7 @@ class AnnotateClientsCommand extends AbstractCommand
 
     protected function doExecute(array $args): int
     {
-        $options = $this->parseOptions([], ['class:', 'tag:', 'all']) + ['class' => [], 'tag' => []];
+        $options = $this->parseOptions($args) + ['class' => [], 'tag' => []];
 
         // make sure all options are arrays
         array_walk($options, function (&$value) {

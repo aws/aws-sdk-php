@@ -45,9 +45,21 @@ abstract class AbstractCommand implements CommandInterface
         }
     }
 
-    protected function parseOptions(array $shortOptions, array $longOptions = []): array
+    protected function parseOptions(array $args): array
     {
-        return getopt(implode('', $shortOptions), $longOptions) ?: [];
+        $options = [];
+        foreach ($args as $arg) {
+            if (strpos($arg, '--') === 0) {
+                $arg = substr($arg, 2);
+                if (strpos($arg, '=') !== false) {
+                    [$key, $value] = explode('=', $arg, 2);
+                    $options[$key] = $value;
+                } else {
+                    $options[$arg] = true;
+                }
+            }
+        }
+        return $options;
     }
 
     protected function getProjectRoot(): string

@@ -21,7 +21,7 @@ class OptionDocsCommand extends AbstractCommand
 
     protected function doExecute(array $args): int
     {
-        $options = $this->parseOptions([], ['class:', 'format:']);
+        $options = $this->parseOptions($args);
 
         $clientName = $options['class'] ?? 'Aws\\AwsClient';
         $type = $options['format'] ?? 'docblock';
@@ -68,7 +68,7 @@ class OptionDocsCommand extends AbstractCommand
             }
 
             $docs = '* - ' . $name . ': ' . $docs;
-            echo wordwrap($docs, 70, "\n*   ") . "\n";
+            $this->output(wordwrap($docs, 70, "\n*   ") . "\n");
         }
     }
 }

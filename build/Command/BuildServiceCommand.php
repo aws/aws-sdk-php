@@ -21,12 +21,7 @@ class BuildServiceCommand extends AbstractCommand
 
     protected function doExecute(array $args): int
     {
-        $options = $this->parseOptions([], [
-            'namespace:',
-            'model:',
-            'clientPath:',
-            'exceptionPath:'
-        ]);
+        $options = $this->parseOptions($args);
 
         if (empty($options['namespace']) || empty($options['model'])) {
             $this->error(

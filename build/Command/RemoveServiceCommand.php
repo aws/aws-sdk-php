@@ -22,7 +22,7 @@ class RemoveServiceCommand extends AbstractCommand
 
     protected function doExecute(array $args): int
     {
-        $options = $this->parseArgs($args);
+        $options = $this->parseOptions($args);
 
         if (empty($options['service-id'])) {
             $this->error('Missing required option --service-id');
@@ -579,29 +579,4 @@ class RemoveServiceCommand extends AbstractCommand
         $this->output(json_encode($changelogEntry, JSON_PRETTY_PRINT));
     }
 
-    /**
-     * Parses CLI arguments from the $args array directly.
-     *
-     * PHP's getopt() reads from the real process argv and ignores
-     * $_SERVER['argv'] modifications, so we parse the args array manually.
-     *
-     * @param array $args The CLI arguments passed to the command
-     * @return array Associative array of option name => value (or true for flags)
-     */
-    private function parseArgs(array $args): array
-    {
-        $options = [];
-        foreach ($args as $arg) {
-            if (strpos($arg, '--') === 0) {
-                $arg = substr($arg, 2);
-                if (strpos($arg, '=') !== false) {
-                    [$key, $value] = explode('=', $arg, 2);
-                    $options[$key] = $value;
-                } else {
-                    $options[$arg] = true;
-                }
-            }
-        }
-        return $options;
-    }
 }
