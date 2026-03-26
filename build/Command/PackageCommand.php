@@ -2,7 +2,7 @@
 
 namespace AwsBuild\Command;
 
-class PackageCommand extends AbstractCommand
+final class PackageCommand extends AbstractCommand
 {
     public function getName(): string
     {

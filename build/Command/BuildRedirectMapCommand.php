@@ -4,7 +4,7 @@ namespace AwsBuild\Command;
 
 use Aws\Build\Docs\RedirectMapBuilder;
 
-class BuildRedirectMapCommand extends AbstractCommand
+final class BuildRedirectMapCommand extends AbstractCommand
 {
     public function getName(): string
     {

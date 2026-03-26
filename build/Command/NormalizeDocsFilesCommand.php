@@ -2,7 +2,7 @@
 
 namespace AwsBuild\Command;
 
-class NormalizeDocsFilesCommand extends AbstractCommand
+final class NormalizeDocsFilesCommand extends AbstractCommand
 {
     public function getName(): string
     {

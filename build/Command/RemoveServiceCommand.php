@@ -2,7 +2,7 @@
 
 namespace AwsBuild\Command;
 
-class RemoveServiceCommand extends AbstractCommand
+final class RemoveServiceCommand extends AbstractCommand
 {
     public function getName(): string
     {

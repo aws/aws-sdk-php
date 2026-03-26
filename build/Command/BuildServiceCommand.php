@@ -2,7 +2,7 @@
 
 namespace AwsBuild\Command;
 
-class BuildServiceCommand extends AbstractCommand
+final class BuildServiceCommand extends AbstractCommand
 {
     public function getName(): string
     {

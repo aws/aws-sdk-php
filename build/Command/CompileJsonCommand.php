@@ -2,7 +2,7 @@
 
 namespace AwsBuild\Command;
 
-class CompileJsonCommand extends AbstractCommand
+final class CompileJsonCommand extends AbstractCommand
 {
     public function getName(): string
     {

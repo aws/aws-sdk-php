@@ -4,7 +4,7 @@ namespace AwsBuild\Command;
 
 use Aws\Build\Docs\DocsBuilder;
 
-class DocsCommand extends AbstractCommand
+final class DocsCommand extends AbstractCommand
 {
     public function getName(): string
     {

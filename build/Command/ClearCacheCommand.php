@@ -2,7 +2,7 @@
 
 namespace AwsBuild\Command;
 
-class ClearCacheCommand extends AbstractCommand
+final class ClearCacheCommand extends AbstractCommand
 {
     public function getName(): string
     {

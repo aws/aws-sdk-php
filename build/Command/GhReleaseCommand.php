@@ -5,7 +5,7 @@ namespace AwsBuild\Command;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Psr7;
 
-class GhReleaseCommand extends AbstractCommand
+final class GhReleaseCommand extends AbstractCommand
 {
     private const MAX_ATTEMPTS = 3;
 

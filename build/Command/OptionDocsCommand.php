@@ -2,7 +2,7 @@
 
 namespace AwsBuild\Command;
 
-class OptionDocsCommand extends AbstractCommand
+final class OptionDocsCommand extends AbstractCommand
 {
     public function getName(): string
     {

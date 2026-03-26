@@ -4,7 +4,7 @@ namespace AwsBuild\Command;
 
 use Aws\Build\Changelog\ChangelogBuilder;
 
-class BuildChangelogCommand extends AbstractCommand
+final class BuildChangelogCommand extends AbstractCommand
 {
     public function getName(): string
     {

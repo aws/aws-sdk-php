@@ -2,7 +2,7 @@
 
 namespace AwsBuild\Command;
 
-class AnnotateClientsCommand extends AbstractCommand
+final class AnnotateClientsCommand extends AbstractCommand
 {
     public function getName(): string
     {

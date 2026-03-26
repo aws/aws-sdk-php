@@ -2,7 +2,7 @@
 
 namespace AwsBuild\Command;
 
-class ListCommand extends AbstractCommand
+final class ListCommand extends AbstractCommand
 {
     private array $commandMap;
 

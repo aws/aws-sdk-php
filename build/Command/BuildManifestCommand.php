@@ -2,7 +2,7 @@
 
 namespace AwsBuild\Command;
 
-class BuildManifestCommand extends AbstractCommand
+final class BuildManifestCommand extends AbstractCommand
 {
     private const COMPATIBLE_API_VERSIONS = [
         'apigateway' => [

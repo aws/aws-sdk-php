@@ -2,7 +2,7 @@
 
 namespace AwsBuild\Command;
 
-class PharTestRunnerCommand extends AbstractCommand
+final class PharTestRunnerCommand extends AbstractCommand
 {
     public function getName(): string
     {

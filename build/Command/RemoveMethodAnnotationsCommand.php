@@ -2,7 +2,7 @@
 
 namespace AwsBuild\Command;
 
-class RemoveMethodAnnotationsCommand extends AbstractCommand
+final class RemoveMethodAnnotationsCommand extends AbstractCommand
 {
     public function getName(): string
     {
