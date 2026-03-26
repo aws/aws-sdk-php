@@ -4057,8 +4057,12 @@ EOF
 
         $mockClient = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getHandlerList', 'executeAsync', 'getCommand'])
-            ->getMock();
+            ->onlyMethods([
+                'getHandlerList',
+                'executeAsync',
+                'getCommand',
+                'getApi'
+            ])->getMock();
         $mockClient->method('getHandlerList')->willReturn(new HandlerList());
         $mockClient->method('executeAsync')
             ->willReturnCallback(function ($command) {
@@ -4067,12 +4071,26 @@ EOF
                 }
                 return Create::promiseFor(new Result([]));
             });
-
         $mockClient->method('getCommand')
             ->willReturnCallback(function ($commandName, $args) {
                 return new Command($commandName, $args);
             });
+        $mockClient->method('getApi')->willReturnCallback(function () {
+            $service = $this->getMockBuilder(Service::class)
+                ->disableOriginalConstructor()
+                ->onlyMethods(["getPaginatorConfig"])
+                ->getMock();
+            $service->method('getPaginatorConfig')
+                ->willReturn([
+                    'input_token'  => null,
+                    'output_token' => null,
+                    'limit_key'    => null,
+                    'result_key'   => null,
+                    'more_results' => null,
+                ]);
 
+            return $service;
+        });
         $manager = new S3TransferManager($mockClient);
         $request = new ResumeUploadRequest($resumeFile);
 
@@ -4225,38 +4243,54 @@ EOF
 
         $mockClient = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['__call', 'getCommand', 'executeAsync', 'getHandlerList'])
-            ->getMock();
+            ->onlyMethods([
+                'getCommand',
+                'executeAsync',
+                'getHandlerList',
+                'getApi'
+            ])->getMock();
 
         $mockClient->method('getHandlerList')->willReturn(new HandlerList());
-        $mockClient->method('__call')
-            ->willReturnCallback(function ($name, $args) {
-                if ($name === 'listMultipartUploads') {
-                    return new Result([
+        $mockClient->method('executeAsync')
+            ->willReturnCallback(function ($command) {
+                if ($command->getName() === 'ListMultipartUploads') {
+                    return Create::promiseFor(new Result([
                         'Uploads' => [
                             ['UploadId' => 'test-upload-id', 'Key' => 'test-key']
                         ]
-                    ]);
+                    ]));
                 }
-                return new Result([]);
-            });
 
-        $mockClient->method('executeAsync')
-            ->willReturnCallback(function ($command) {
                 if ($command->getName() === 'UploadPart') {
                     return Create::promiseFor(new Result(['ETag' => 'etag2']));
                 }
+
                 if ($command->getName() === 'CompleteMultipartUpload') {
                     return Create::promiseFor(new Result(['Location' => 's3://test-bucket/test-key']));
                 }
+
                 return Create::promiseFor(new Result([]));
             });
-
         $mockClient->method('getCommand')
             ->willReturnCallback(function ($commandName, $args) {
                 return new Command($commandName, $args);
             });
+        $mockClient->method('getApi')->willReturnCallback(function () {
+            $service = $this->getMockBuilder(Service::class)
+                ->disableOriginalConstructor()
+                ->onlyMethods(["getPaginatorConfig"])
+                ->getMock();
+            $service->method('getPaginatorConfig')
+                ->willReturn([
+                    'input_token'  => null,
+                    'output_token' => null,
+                    'limit_key'    => null,
+                    'result_key'   => null,
+                    'more_results' => null,
+                ]);
 
+            return $service;
+        });
         $manager = new S3TransferManager($mockClient);
         $request = new ResumeUploadRequest($resumeFile);
 
