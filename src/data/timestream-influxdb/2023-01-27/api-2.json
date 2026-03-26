@@ -361,6 +361,14 @@
       "min":2,
       "pattern":"[^_\"][^\"]*"
     },
+    "ClusterConfiguration":{
+      "type":"structure",
+      "members":{
+        "ingestQueryInstances":{"shape":"Integer"},
+        "queryOnlyInstances":{"shape":"Integer"},
+        "dedicatedCompactor":{"shape":"Boolean"}
+      }
+    },
     "ClusterDeploymentType":{
       "type":"string",
       "enum":["MULTI_NODE_READ_REPLICAS"]
@@ -421,6 +429,7 @@
         "deploymentType":{"shape":"ClusterDeploymentType"},
         "failoverMode":{"shape":"FailoverMode"},
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
         "tags":{"shape":"RequestTagMap"}
       }
     },
@@ -456,6 +465,7 @@
         "dbParameterGroupIdentifier":{"shape":"DbParameterGroupIdentifier"},
         "deploymentType":{"shape":"DeploymentType"},
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
         "tags":{"shape":"RequestTagMap"},
         "port":{"shape":"Port"},
         "networkType":{"shape":"NetworkType"}
@@ -491,7 +501,10 @@
         "influxAuthParametersSecretArn":{"shape":"String"},
         "dbClusterId":{"shape":"DbClusterId"},
         "instanceMode":{"shape":"InstanceMode"},
-        "instanceModes":{"shape":"InstanceModeList"}
+        "instanceModes":{"shape":"InstanceModeList"},
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
+        "lastMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
+        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "CreateDbParameterGroupInput":{
@@ -748,7 +761,10 @@
         "influxAuthParametersSecretArn":{"shape":"String"},
         "dbClusterId":{"shape":"DbClusterId"},
         "instanceMode":{"shape":"InstanceMode"},
-        "instanceModes":{"shape":"InstanceModeList"}
+        "instanceModes":{"shape":"InstanceModeList"},
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
+        "lastMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
+        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "DeploymentType":{
@@ -830,10 +846,14 @@
         "publiclyAccessible":{"shape":"Boolean"},
         "dbParameterGroupIdentifier":{"shape":"DbParameterGroupIdentifier"},
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
+        "lastMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
+        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
         "influxAuthParametersSecretArn":{"shape":"String"},
         "vpcSubnetIds":{"shape":"VpcSubnetIdList"},
         "vpcSecurityGroupIds":{"shape":"VpcSecurityGroupIdList"},
-        "failoverMode":{"shape":"FailoverMode"}
+        "failoverMode":{"shape":"FailoverMode"},
+        "clusterConfiguration":{"shape":"ClusterConfiguration"}
       }
     },
     "GetDbInstanceInput":{
@@ -873,7 +893,10 @@
         "influxAuthParametersSecretArn":{"shape":"String"},
         "dbClusterId":{"shape":"DbClusterId"},
         "instanceMode":{"shape":"InstanceMode"},
-        "instanceModes":{"shape":"InstanceModeList"}
+        "instanceModes":{"shape":"InstanceModeList"},
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
+        "lastMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
+        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "GetDbParameterGroupInput":{
@@ -897,6 +920,12 @@
         "description":{"shape":"String"},
         "parameters":{"shape":"Parameters"}
       }
+    },
+    "IanaTimezone":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"(UTC|[A-Za-z_]+/[A-Za-z0-9_]+(/[A-Za-z0-9_]+)?)"
     },
     "InfluxDBv2Parameters":{
       "type":"structure",
@@ -1085,7 +1114,7 @@
     },
     "InfluxDBv3CoreParametersDataFusionConfigString":{
       "type":"string",
-      "pattern":"[a-zA-Z0-9_]+=[^,\\s]+(?:,[a-zA-Z0-9_]+=[^,\\s]+)*"
+      "pattern":"[a-zA-Z0-9_.]+:[^,\\s]+(?:,[a-zA-Z0-9_.]+:[^,\\s]+)*"
     },
     "InfluxDBv3CoreParametersDataFusionMaxParquetFanoutInteger":{
       "type":"integer",
@@ -1276,7 +1305,7 @@
     },
     "InfluxDBv3EnterpriseParametersDataFusionConfigString":{
       "type":"string",
-      "pattern":"[a-zA-Z0-9_]+=[^,\\s]+(?:,[a-zA-Z0-9_]+=[^,\\s]+)*"
+      "pattern":"[a-zA-Z0-9_.]+:[^,\\s]+(?:,[a-zA-Z0-9_.]+:[^,\\s]+)*"
     },
     "InfluxDBv3EnterpriseParametersDataFusionMaxParquetFanoutInteger":{
       "type":"integer",
@@ -1521,6 +1550,23 @@
         "error"
       ]
     },
+    "MaintenanceSchedule":{
+      "type":"structure",
+      "required":[
+        "timezone",
+        "preferredMaintenanceWindow"
+      ],
+      "members":{
+        "timezone":{"shape":"IanaTimezone"},
+        "preferredMaintenanceWindow":{"shape":"MaintenanceWindow"}
+      }
+    },
+    "MaintenanceWindow":{
+      "type":"string",
+      "max":19,
+      "min":0,
+      "pattern":"$|^(Mon|Tue|Wed|Thu|Fri|Sat|Sun):([01]\\d|2[0-3]):[0-5]\\d-(Mon|Tue|Wed|Thu|Fri|Sat|Sun):([01]\\d|2[0-3]):[0-5]\\d"
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -1642,7 +1688,10 @@
         "influxAuthParametersSecretArn":{"shape":"String"},
         "dbClusterId":{"shape":"DbClusterId"},
         "instanceMode":{"shape":"InstanceMode"},
-        "instanceModes":{"shape":"InstanceModeList"}
+        "instanceModes":{"shape":"InstanceModeList"},
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
+        "lastMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
+        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "RequestTagMap":{
@@ -1716,6 +1765,10 @@
       ]
     },
     "String":{"type":"string"},
+    "SyntheticTimestamp_date_time":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -1781,7 +1834,8 @@
         "dbParameterGroupIdentifier":{"shape":"DbParameterGroupIdentifier"},
         "port":{"shape":"Port"},
         "dbInstanceType":{"shape":"DbInstanceType"},
-        "failoverMode":{"shape":"FailoverMode"}
+        "failoverMode":{"shape":"FailoverMode"},
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"}
       }
     },
     "UpdateDbClusterOutput":{
@@ -1801,7 +1855,8 @@
         "dbInstanceType":{"shape":"DbInstanceType"},
         "deploymentType":{"shape":"DeploymentType"},
         "dbStorageType":{"shape":"DbStorageType"},
-        "allocatedStorage":{"shape":"AllocatedStorage"}
+        "allocatedStorage":{"shape":"AllocatedStorage"},
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"}
       }
     },
     "UpdateDbInstanceOutput":{
@@ -1834,7 +1889,10 @@
         "influxAuthParametersSecretArn":{"shape":"String"},
         "dbClusterId":{"shape":"DbClusterId"},
         "instanceMode":{"shape":"InstanceMode"},
-        "instanceModes":{"shape":"InstanceModeList"}
+        "instanceModes":{"shape":"InstanceModeList"},
+        "maintenanceSchedule":{"shape":"MaintenanceSchedule"},
+        "lastMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"},
+        "nextMaintenanceTime":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "Username":{

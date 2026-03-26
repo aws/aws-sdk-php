@@ -4911,7 +4911,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "parameters":{"shape":"QueryParameterList"}
       }
     },
     "PutQueryDefinitionResponse":{
@@ -5001,7 +5002,8 @@
         "name":{"shape":"QueryDefinitionName"},
         "queryString":{"shape":"QueryDefinitionString"},
         "lastModified":{"shape":"Timestamp"},
-        "logGroupNames":{"shape":"LogGroupNames"}
+        "logGroupNames":{"shape":"LogGroupNames"},
+        "parameters":{"shape":"QueryParameterList"}
       }
     },
     "QueryDefinitionList":{
@@ -5050,6 +5052,34 @@
       "type":"integer",
       "max":1000,
       "min":1
+    },
+    "QueryParameter":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"QueryParameterName"},
+        "defaultValue":{"shape":"QueryParameterDefaultValue"},
+        "description":{"shape":"QueryParameterDescription"}
+      }
+    },
+    "QueryParameterDefaultValue":{
+      "type":"string",
+      "max":1024
+    },
+    "QueryParameterDescription":{
+      "type":"string",
+      "max":512
+    },
+    "QueryParameterList":{
+      "type":"list",
+      "member":{"shape":"QueryParameter"},
+      "max":20
+    },
+    "QueryParameterName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[a-zA-Z_][a-zA-Z0-9_]*"
     },
     "QueryResults":{
       "type":"list",
@@ -5228,7 +5258,9 @@
       ],
       "members":{
         "destinationIdentifier":{"shape":"S3Uri"},
-        "roleArn":{"shape":"RoleArn"}
+        "roleArn":{"shape":"RoleArn"},
+        "ownerAccountId":{"shape":"AccountId"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "S3DeliveryConfiguration":{

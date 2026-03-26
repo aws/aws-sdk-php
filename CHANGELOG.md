@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SageMaker` - Release support for ml.r5d.16xlarge instance types for SageMaker HyperPod
+* `Aws\BCMDataExports` - With this release we are providing an option to accounts to have their export delivered to an S3 bucket that is not owned by the account.
+* `Aws\CloudWatchLogs` - This release adds parameter support to saved queries in CloudWatch Logs Insights. Define reusable query templates with named placeholders, invoke them using start query. Available in Console, CLI and SDK
+* `Aws\TimestreamInfluxDB` - Timestream for InfluxDB adds support for customer defined maintenance windows. This allows customers to define maintenance schedule during resource creation and updates
+* `Aws\EMR` - Add StepExecutionRoleArn to RunJobFlow API
+
 ## 3.374.0 - 2026-03-25
 
 * `Aws\ApiGatewayV2` - Added DISABLE IN PROGRESS and DISABLE FAILED Portal statuses.
