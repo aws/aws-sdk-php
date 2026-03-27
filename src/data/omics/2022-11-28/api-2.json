@@ -214,6 +214,28 @@
       ],
       "endpoint":{"hostPrefix":"analytics-"}
     },
+    "CreateConfiguration":{
+      "name":"CreateConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/configuration",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateConfigurationRequest"},
+      "output":{"shape":"CreateConfigurationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"workflows-"},
+      "idempotent":true
+    },
     "CreateMultipartReadSetUpload":{
       "name":"CreateMultipartReadSetUpload",
       "http":{
@@ -446,6 +468,27 @@
         "responseCode":202
       },
       "input":{"shape":"DeleteBatchRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"workflows-"},
+      "idempotent":true
+    },
+    "DeleteConfiguration":{
+      "name":"DeleteConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/configuration/{name}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteConfigurationRequest"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -780,6 +823,28 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"workflows-"},
+      "readonly":true
+    },
+    "GetConfiguration":{
+      "name":"GetConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/configuration/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetConfigurationRequest"},
+      "output":{"shape":"GetConfigurationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
@@ -1273,6 +1338,28 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"workflows-"},
+      "readonly":true
+    },
+    "ListConfigurations":{
+      "name":"ListConfigurations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/configuration",
+        "responseCode":200
+      },
+      "input":{"shape":"ListConfigurationsRequest"},
+      "output":{"shape":"ListConfigurationsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
@@ -2632,6 +2719,79 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
+    "ConfigurationArn":{
+      "type":"string",
+      "max":190,
+      "min":1,
+      "pattern":"arn:.+"
+    },
+    "ConfigurationDescription":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "ConfigurationDetails":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"ConfigurationName"},
+        "arn":{"shape":"ConfigurationArn"},
+        "uuid":{"shape":"ConfigurationUuid"}
+      }
+    },
+    "ConfigurationList":{
+      "type":"list",
+      "member":{"shape":"ConfigurationListItem"}
+    },
+    "ConfigurationListItem":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ConfigurationArn"},
+        "name":{"shape":"ConfigurationName"},
+        "description":{"shape":"ConfigurationDescription"},
+        "status":{"shape":"ConfigurationStatus"},
+        "creationTime":{"shape":"ConfigurationTimestamp"}
+      }
+    },
+    "ConfigurationListToken":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "ConfigurationName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[A-Za-z0-9][A-Za-z0-9\\-\\._]*"
+    },
+    "ConfigurationRequestId":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "ConfigurationStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING",
+        "DELETED",
+        "FAILED"
+      ]
+    },
+    "ConfigurationTimestamp":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
+    "ConfigurationUuid":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
     "ConflictException":{
       "type":"structure",
       "required":["message"],
@@ -2727,6 +2887,37 @@
         "name":{"shape":"StoreName"},
         "status":{"shape":"VersionStatus"},
         "creationTime":{"shape":"CreationTime"}
+      }
+    },
+    "CreateConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "runConfigurations",
+        "requestId"
+      ],
+      "members":{
+        "name":{"shape":"ConfigurationName"},
+        "description":{"shape":"ConfigurationDescription"},
+        "runConfigurations":{"shape":"RunConfigurations"},
+        "tags":{"shape":"TagMap"},
+        "requestId":{
+          "shape":"ConfigurationRequestId",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ConfigurationArn"},
+        "uuid":{"shape":"ConfigurationUuid"},
+        "name":{"shape":"ConfigurationName"},
+        "description":{"shape":"ConfigurationDescription"},
+        "runConfigurations":{"shape":"RunConfigurationsResponse"},
+        "status":{"shape":"ConfigurationStatus"},
+        "creationTime":{"shape":"ConfigurationTimestamp"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "CreateMultipartReadSetUploadRequest":{
@@ -3206,6 +3397,17 @@
           "shape":"BatchId",
           "location":"uri",
           "locationName":"batchId"
+        }
+      }
+    },
+    "DeleteConfigurationRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{
+          "shape":"ConfigurationName",
+          "location":"uri",
+          "locationName":"name"
         }
       }
     },
@@ -3778,6 +3980,30 @@
         "failureReason":{"shape":"String"}
       }
     },
+    "GetConfigurationRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{
+          "shape":"ConfigurationName",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "GetConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ConfigurationArn"},
+        "uuid":{"shape":"ConfigurationUuid"},
+        "name":{"shape":"ConfigurationName"},
+        "description":{"shape":"ConfigurationDescription"},
+        "runConfigurations":{"shape":"RunConfigurationsResponse"},
+        "status":{"shape":"ConfigurationStatus"},
+        "creationTime":{"shape":"ConfigurationTimestamp"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
     "GetReadSetActivationJobRequest":{
       "type":"structure",
       "required":[
@@ -4275,7 +4501,10 @@
         "storageType":{"shape":"StorageType"},
         "workflowOwnerId":{"shape":"WorkflowOwnerId"},
         "workflowVersionName":{"shape":"WorkflowVersionName"},
-        "workflowUuid":{"shape":"WorkflowUuid"}
+        "workflowUuid":{"shape":"WorkflowUuid"},
+        "networkingMode":{"shape":"NetworkingMode"},
+        "configuration":{"shape":"ConfigurationDetails"},
+        "vpcConfig":{"shape":"VpcConfigResponse"}
       }
     },
     "GetRunResponsePriorityInteger":{
@@ -5006,6 +5235,34 @@
       "members":{
         "items":{"shape":"BatchList"},
         "nextToken":{"shape":"ListToken"}
+      }
+    },
+    "ListConfigurationsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"ListConfigurationsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "startingToken":{
+          "shape":"ConfigurationListToken",
+          "location":"querystring",
+          "locationName":"startingToken"
+        }
+      }
+    },
+    "ListConfigurationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":1
+    },
+    "ListConfigurationsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"ConfigurationList"},
+        "nextToken":{"shape":"ConfigurationListToken"}
       }
     },
     "ListMultipartReadSetUploadsRequest":{
@@ -5823,6 +6080,13 @@
         "creationTime":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
+    "NetworkingMode":{
+      "type":"string",
+      "enum":[
+        "RESTRICTED",
+        "VPC"
+      ]
+    },
     "NextToken":{
       "type":"string",
       "max":6144,
@@ -6494,6 +6758,18 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
+    "RunConfigurations":{
+      "type":"structure",
+      "members":{
+        "vpcConfig":{"shape":"VpcConfig"}
+      }
+    },
+    "RunConfigurationsResponse":{
+      "type":"structure",
+      "members":{
+        "vpcConfig":{"shape":"VpcConfigResponse"}
+      }
+    },
     "RunExport":{
       "type":"string",
       "enum":["DEFINITION"],
@@ -6830,6 +7106,16 @@
         "DOUBLE",
         "BOOLEAN"
       ]
+    },
+    "SecurityGroupId":{
+      "type":"string",
+      "max":128,
+      "min":4,
+      "pattern":"sg-[0-9a-f]+"
+    },
+    "SecurityGroupIds":{
+      "type":"list",
+      "member":{"shape":"SecurityGroupId"}
     },
     "Separator":{
       "type":"string",
@@ -7310,7 +7596,9 @@
         "retentionMode":{"shape":"RunRetentionMode"},
         "storageType":{"shape":"StorageType"},
         "workflowOwnerId":{"shape":"WorkflowOwnerId"},
-        "workflowVersionName":{"shape":"WorkflowVersionName"}
+        "workflowVersionName":{"shape":"WorkflowVersionName"},
+        "networkingMode":{"shape":"NetworkingMode"},
+        "configurationName":{"shape":"ConfigurationName"}
       }
     },
     "StartRunRequestPriorityInteger":{
@@ -7333,7 +7621,9 @@
         "status":{"shape":"RunStatus"},
         "tags":{"shape":"TagMap"},
         "uuid":{"shape":"RunUuid"},
-        "runOutputUri":{"shape":"RunOutputUri"}
+        "runOutputUri":{"shape":"RunOutputUri"},
+        "configuration":{"shape":"ConfigurationDetails"},
+        "networkingMode":{"shape":"String"}
       }
     },
     "StartVariantImportRequest":{
@@ -7463,6 +7753,16 @@
         "successfulDeleteSubmissionCount":{"shape":"Integer"},
         "failedDeleteSubmissionCount":{"shape":"Integer"}
       }
+    },
+    "SubnetId":{
+      "type":"string",
+      "max":128,
+      "min":8,
+      "pattern":"subnet-[0-9a-f]+"
+    },
+    "SubnetIds":{
+      "type":"list",
+      "member":{"shape":"SubnetId"}
     },
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",
@@ -8183,6 +8483,39 @@
         "FAILED"
       ]
     },
+    "VpcConfig":{
+      "type":"structure",
+      "members":{
+        "securityGroupIds":{"shape":"VpcConfigSecurityGroupIdsList"},
+        "subnetIds":{"shape":"VpcConfigSubnetIdsList"}
+      }
+    },
+    "VpcConfigResponse":{
+      "type":"structure",
+      "members":{
+        "securityGroupIds":{"shape":"SecurityGroupIds"},
+        "subnetIds":{"shape":"SubnetIds"},
+        "vpcId":{"shape":"VpcId"}
+      }
+    },
+    "VpcConfigSecurityGroupIdsList":{
+      "type":"list",
+      "member":{"shape":"SecurityGroupId"},
+      "max":5,
+      "min":0
+    },
+    "VpcConfigSubnetIdsList":{
+      "type":"list",
+      "member":{"shape":"SubnetId"},
+      "max":16,
+      "min":0
+    },
+    "VpcId":{
+      "type":"string",
+      "max":128,
+      "min":5,
+      "pattern":"vpc-[0-9a-f]+"
+    },
     "WorkflowArn":{
       "type":"string",
       "max":128,
@@ -8319,7 +8652,7 @@
       "type":"map",
       "key":{"shape":"WorkflowParameterName"},
       "value":{"shape":"WorkflowParameter"},
-      "max":1000,
+      "max":2000,
       "min":1
     },
     "WorkflowRequestId":{

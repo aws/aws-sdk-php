@@ -616,7 +616,7 @@
     "EvaluatorId": {
       "base": null,
       "refs": {
-        "EvaluateRequest$evaluatorId": "<p> The unique identifier of the evaluator to use for scoring. Can be a built-in evaluator (e.g., <code>Builtin.Helpfulness</code>, <code>Builtin.Correctness</code>) or a custom evaluator ARN created through the control plane API. </p>",
+        "EvaluateRequest$evaluatorId": "<p> The unique identifier of the evaluator to use for scoring. Can be a built-in evaluator (e.g., <code>Builtin.Helpfulness</code>, <code>Builtin.Correctness</code>) or a custom evaluator Id created through the control plane API. </p>",
         "EvaluationResultContent$evaluatorId": "<p> The unique identifier of the evaluator that produced this result. This matches the <code>evaluatorId</code> provided in the evaluation request and can be used to identify which evaluator generated specific results. </p>"
       }
     },
@@ -961,6 +961,12 @@
     "InvokeCodeInterpreterResponse": {
       "base": null,
       "refs": {}
+    },
+    "LanguageRuntime": {
+      "base": null,
+      "refs": {
+        "ToolArguments$runtime": "<p>The runtime environment to use for code execution. If not specified, defaults to <code>deno</code> for JavaScript and TypeScript.</p>"
+      }
     },
     "LeftExpression": {
       "base": "<p>Left expression of the event metadata filter.</p>",
@@ -1365,7 +1371,7 @@
     "ProgrammingLanguage": {
       "base": null,
       "refs": {
-        "ToolArguments$language": "<p>The programming language of the code to execute. This tells the code interpreter which language runtime to use for execution. Common values include 'python', 'javascript', and 'r'.</p>"
+        "ToolArguments$language": "<p>The programming language of the code to execute. This tells the code interpreter which language runtime to use for execution.</p>"
       }
     },
     "Proxy": {

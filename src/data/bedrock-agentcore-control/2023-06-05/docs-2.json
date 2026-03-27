@@ -8,7 +8,7 @@
     "CreateBrowser": "<p>Creates a custom browser.</p>",
     "CreateBrowserProfile": "<p>Creates a browser profile in Amazon Bedrock AgentCore. A browser profile stores persistent browser data such as cookies, local storage, session storage, and browsing history that can be saved from browser sessions and reused in subsequent sessions.</p>",
     "CreateCodeInterpreter": "<p>Creates a custom code interpreter.</p>",
-    "CreateEvaluator": "<p> Creates a custom evaluator for agent quality assessment. Custom evaluators use LLM-as-a-Judge configurations with user-defined prompts, rating scales, and model settings to evaluate agent performance at tool call, trace, or session levels. </p>",
+    "CreateEvaluator": "<p> Creates a custom evaluator for agent quality assessment. Custom evaluators can use either LLM-as-a-Judge configurations with user-defined prompts, rating scales, and model settings, or code-based configurations with customer-managed Lambda functions to evaluate agent performance at tool call, trace, or session levels. </p>",
     "CreateGateway": "<p>Creates a gateway for Amazon Bedrock Agent. A gateway serves as an integration point between your agent and external services.</p> <p>If you specify <code>CUSTOM_JWT</code> as the <code>authorizerType</code>, you must provide an <code>authorizerConfiguration</code>.</p>",
     "CreateGatewayTarget": "<p>Creates a target for a gateway. A target defines an endpoint that the gateway can connect to.</p>",
     "CreateMemory": "<p>Creates a new Amazon Bedrock AgentCore Memory resource.</p>",
@@ -792,6 +792,12 @@
         "CodeConfiguration$code": "<p>The source code location and configuration details.</p>"
       }
     },
+    "CodeBasedEvaluatorConfig": {
+      "base": "<p> Configuration for a code-based evaluator. Specify the Lambda function to use for evaluation. </p>",
+      "refs": {
+        "EvaluatorConfig$codeBased": "<p> Configuration for a code-based evaluator that uses a customer-managed Lambda function to programmatically assess agent performance. </p>"
+      }
+    },
     "CodeConfiguration": {
       "base": "<p>The configuration for the source code that defines how the agent runtime code should be executed, including the code location, runtime environment, and entry point.</p>",
       "refs": {
@@ -1474,7 +1480,7 @@
         "UpdateMemoryInput$description": "<p>The updated description of the AgentCore Memory resource.</p>",
         "UpdatePolicyEngineResponse$description": "<p>The updated description of the policy engine.</p>",
         "UpdatePolicyResponse$description": "<p>The updated description of the policy.</p>",
-        "UpdatedDescription$optionalValue": "<p>Represents an optional value that is used to update the human-readable description of the resource. If set to null, it will clear the current description of the resource.</p>",
+        "UpdatedDescription$optionalValue": "<p>Represents an optional value that is used to update the human-readable description of the resource. If not specified, it will clear the current description of the resource.</p>",
         "UserPreferenceMemoryStrategyInput$description": "<p>The description of the user preference memory strategy.</p>"
       }
     },
@@ -1626,9 +1632,9 @@
     "EvaluatorConfig": {
       "base": "<p> The configuration that defines how an evaluator assesses agent performance, including the evaluation method and parameters. </p>",
       "refs": {
-        "CreateEvaluatorRequest$evaluatorConfig": "<p> The configuration for the evaluator, including LLM-as-a-Judge settings with instructions, rating scale, and model configuration. </p>",
-        "GetEvaluatorResponse$evaluatorConfig": "<p> The configuration of the evaluator, including LLM-as-a-Judge settings for custom evaluators. </p>",
-        "UpdateEvaluatorRequest$evaluatorConfig": "<p> The updated configuration for the evaluator, including LLM-as-a-Judge settings with instructions, rating scale, and model configuration. </p>"
+        "CreateEvaluatorRequest$evaluatorConfig": "<p> The configuration for the evaluator. Specify either LLM-as-a-Judge settings with instructions, rating scale, and model configuration, or code-based settings with a customer-managed Lambda function. </p>",
+        "GetEvaluatorResponse$evaluatorConfig": "<p> The configuration of the evaluator, including LLM-as-a-Judge or code-based settings. </p>",
+        "UpdateEvaluatorRequest$evaluatorConfig": "<p> The updated configuration for the evaluator. Specify either LLM-as-a-Judge settings with instructions, rating scale, and model configuration, or code-based settings with a customer-managed Lambda function. </p>"
       }
     },
     "EvaluatorDescription": {
@@ -2331,6 +2337,24 @@
         "UpdateGatewayRequest$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the gateway.</p>",
         "UpdateGatewayResponse$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the gateway.</p>",
         "UpdatePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>"
+      }
+    },
+    "LambdaArn": {
+      "base": null,
+      "refs": {
+        "LambdaEvaluatorConfig$lambdaArn": "<p> The Amazon Resource Name (ARN) of the Lambda function that implements the evaluation logic. </p>"
+      }
+    },
+    "LambdaEvaluatorConfig": {
+      "base": "<p> Configuration for a Lambda function used as a code-based evaluator. </p>",
+      "refs": {
+        "CodeBasedEvaluatorConfig$lambdaConfig": "<p> The Lambda function configuration for code-based evaluation. </p>"
+      }
+    },
+    "LambdaEvaluatorConfigLambdaTimeoutInSecondsInteger": {
+      "base": null,
+      "refs": {
+        "LambdaEvaluatorConfig$lambdaTimeoutInSeconds": "<p> The timeout in seconds for the Lambda function invocation. Defaults to 60. Must be between 1 and 300. </p>"
       }
     },
     "LambdaFunctionArn": {
@@ -4461,7 +4485,7 @@
       "refs": {}
     },
     "UpdatedDescription": {
-      "base": "<p>Wrapper for updating an optional Description field with PATCH semantics. When present in an update request, the description is replaced with optionalValue. When absent, the description is left unchanged. To unset the description, include the wrapper with optionalValue set to null.</p>",
+      "base": "<p>Wrapper for updating an optional Description field with PATCH semantics. When present in an update request, the description is replaced with optionalValue. When absent, the description is left unchanged. To unset the description, include the wrapper with optionalValue not specified.</p>",
       "refs": {
         "UpdatePolicyEngineRequest$description": "<p>The new description for the policy engine.</p>",
         "UpdatePolicyRequest$description": "<p>The new human-readable description for the policy. This optional field allows updating the policy's documentation while keeping the same policy logic.</p>"

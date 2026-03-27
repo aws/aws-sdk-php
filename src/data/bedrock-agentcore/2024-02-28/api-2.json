@@ -2280,6 +2280,14 @@
       },
       "payload":"stream"
     },
+    "LanguageRuntime":{
+      "type":"string",
+      "enum":[
+        "nodejs",
+        "deno",
+        "python"
+      ]
+    },
     "LeftExpression":{
       "type":"structure",
       "members":{
@@ -3520,7 +3528,8 @@
         "paths":{"shape":"StringList"},
         "content":{"shape":"InputContentBlockList"},
         "directoryPath":{"shape":"MaxLenString"},
-        "taskId":{"shape":"MaxLenString"}
+        "taskId":{"shape":"MaxLenString"},
+        "runtime":{"shape":"LanguageRuntime"}
       }
     },
     "ToolName":{
