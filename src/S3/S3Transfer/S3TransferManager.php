@@ -32,7 +32,6 @@ use Throwable;
 
 final class S3TransferManager
 {
-
     /** @var S3Client  */
     private S3ClientInterface $s3Client;
 

@@ -125,7 +125,6 @@ abstract class AbstractResumableTransfer
         return $this->resumeFilePath;
     }
 
-
     /**
      * @return array
      */
