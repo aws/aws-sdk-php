@@ -12,8 +12,8 @@ final class DownloadDirectoryResult
     /** @var int */
     private int $objectsFailed;
 
-    /** @var Throwable|null */
-    private ?Throwable $reason;
+    /** @var \Throwable|null */
+    private ?\Throwable $reason;
 
     /**
      * @param int $objectsDownloaded
@@ -24,8 +24,7 @@ final class DownloadDirectoryResult
         int $objectsDownloaded,
         int $objectsFailed,
         ?Throwable $reason = null
-    )
-    {
+    ) {
         $this->objectsDownloaded = $objectsDownloaded;
         $this->objectsFailed = $objectsFailed;
         $this->reason = $reason;
@@ -47,6 +46,9 @@ final class DownloadDirectoryResult
         return $this->objectsFailed;
     }
 
+    /**
+     * @return Throwable|null
+     */
     public function getReason(): ?Throwable
     {
         return $this->reason;

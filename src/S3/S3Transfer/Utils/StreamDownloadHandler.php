@@ -16,23 +16,24 @@ final class StreamDownloadHandler extends AbstractDownloadHandler
      */
     public function __construct(?StreamInterface $stream = null)
     {
+        if (is_null($stream)) {
+            $stream = Utils::streamFor(
+                fopen('php://temp', 'r+')
+            );
+        } else {
+            // Position at the end
+            $stream->seek($stream->getSize());
+        }
+
         $this->stream = $stream;
     }
 
     /**
-     * @param array $context
-     *
-     * @return void
+     * @return int
      */
-    public function transferInitiated(array $context): void
+    public function priority(): int
     {
-        if (is_null($this->stream)) {
-            $this->stream = Utils::streamFor(
-                fopen('php://temp', 'w+')
-            );
-        } else {
-            $this->stream->seek($this->stream->getSize());
-        }
+        return -1;
     }
 
     /**
@@ -43,6 +44,7 @@ final class StreamDownloadHandler extends AbstractDownloadHandler
         $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $response = $snapshot->getResponse();
         $partBody = $response['Body'];
+
         if ($partBody->isSeekable()) {
             $partBody->rewind();
         }
@@ -84,5 +86,13 @@ final class StreamDownloadHandler extends AbstractDownloadHandler
     public function getHandlerResult(): StreamInterface
     {
         return $this->stream;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isConcurrencySupported(): bool
+    {
+        return false;
     }
 }

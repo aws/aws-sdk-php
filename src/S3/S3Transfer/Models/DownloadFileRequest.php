@@ -36,7 +36,8 @@ final class DownloadFileRequest
             $downloadRequest,
             new FileDownloadHandler(
                 $destination,
-                $failsWhenDestinationExists
+                $failsWhenDestinationExists,
+                $downloadRequest->getConfig()['resume_enabled'] ?? false
             )
         );
     }

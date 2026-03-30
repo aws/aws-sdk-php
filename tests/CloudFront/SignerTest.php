@@ -175,9 +175,7 @@ class SignerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidResourceUrlProvider
-     */
+    #[DataProvider('invalidResourceUrlProvider')]
     public function testValidatesCustomPolicy(string $resourceUrl)
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -190,9 +188,7 @@ class SignerTest extends TestCase
         $this->instance->getSignature(null, null, $policy);
     }
 
-    /**
-     * @dataProvider invalidResourceUrlProvider
-     */
+    #[DataProvider('invalidResourceUrlProvider')]
     public function testValidatesInvalidURLs(string $resourceUrl)
     {
         $this->expectException(\InvalidArgumentException::class);

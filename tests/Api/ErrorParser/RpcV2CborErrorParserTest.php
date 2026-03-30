@@ -5,6 +5,7 @@ use Aws\Api\Cbor\CborEncoder;
 use Aws\Api\ErrorParser\RpcV2CborErrorParser;
 use Aws\Test\TestServiceTrait;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -21,9 +22,7 @@ class RpcV2CborErrorParserTest extends TestCase
         $this->encoder = new CborEncoder();
     }
 
-    /**
-     * @dataProvider errorResponsesProvider
-     */
+    #[DataProvider('errorResponsesProvider')]
     public function testParsesErrorResponses(
         $response,
         $command,
@@ -512,9 +511,7 @@ class RpcV2CborErrorParserTest extends TestCase
         $this->assertSame($expected, $parsed['parsed']);
     }
 
-    /**
-     * @dataProvider errorCodeFormatsProvider
-     */
+    #[DataProvider('errorCodeFormatsProvider')]
     public function testExtractsErrorCodeProperly(string $input, ?string $expected): void
     {
         $parser = new RpcV2CborErrorParser();
@@ -528,7 +525,7 @@ class RpcV2CborErrorParserTest extends TestCase
         $this->assertSame($expected, $parsed['code']);
     }
     
-    public function errorCodeFormatsProvider(): array
+    public static function errorCodeFormatsProvider(): array
     {
         return [
             'Simple exception' => ['SimpleException', 'SimpleException'],
@@ -540,9 +537,7 @@ class RpcV2CborErrorParserTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider errorTypesProvider
-     */
+    #[DataProvider('errorTypesProvider')]
     public function testDeterminesErrorType(
         int $statusCode,
         string $expectedType
@@ -559,7 +554,7 @@ class RpcV2CborErrorParserTest extends TestCase
         $this->assertSame($expectedType, $parsed['type']);
     }
     
-    public function errorTypesProvider(): array
+    public static function errorTypesProvider(): array
     {
         return [
             'Client error 400' => [400, 'client'],
