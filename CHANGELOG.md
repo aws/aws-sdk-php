@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.375.0 - 2026-03-30
 
 * `Aws\S3` - Add new features and improvements to S3 Transfer Manager.
 
