@@ -35,6 +35,7 @@
     "DescribeDomains": "<p>Returns domain configuration information about the specified Amazon OpenSearch Service domains.</p>",
     "DescribeDryRunProgress": "<p>Describes the progress of a pre-update dry run analysis on an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-configuration-changes#dryrun\">Determining whether a change will cause a blue/green deployment</a>.</p>",
     "DescribeInboundConnections": "<p>Lists all the inbound cross-cluster search connections for a destination (remote) Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
+    "DescribeInsightDetails": "<p>Describes the details of an existing insight for an Amazon OpenSearch Service domain. Returns detailed fields associated with the specified insight, such as text descriptions and metric data.</p>",
     "DescribeInstanceTypeLimits": "<p>Describes the instance count, storage, and master node limits for a given OpenSearch or Elasticsearch version and instance type.</p>",
     "DescribeOutboundConnections": "<p>Lists all the outbound cross-cluster connections for a local (source) Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
     "DescribePackages": "<p>Describes all packages available to OpenSearch Service. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
@@ -59,6 +60,7 @@
     "ListDomainMaintenances": "<p>A list of maintenance actions for the domain.</p>",
     "ListDomainNames": "<p>Returns the names of all Amazon OpenSearch Service domains owned by the current user in the active Region.</p>",
     "ListDomainsForPackage": "<p>Lists all Amazon OpenSearch Service domains associated with a given package. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
+    "ListInsights": "<p>Lists insights for an Amazon OpenSearch Service domain or Amazon Web Services account. Returns a paginated list of insights based on the specified entity, filters, time range, and sort order.</p>",
     "ListInstanceTypeDetails": "<p>Lists all instance types and available features for a given OpenSearch or Elasticsearch version.</p>",
     "ListPackagesForDomain": "<p>Lists all packages associated with an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "ListScheduledActions": "<p>Retrieves a list of configuration changes that are scheduled for a domain. These changes can be <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">service software updates</a> or <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html#auto-tune-types\">blue/green Auto-Tune enhancements</a>.</p>",
@@ -508,6 +510,7 @@
         "ColdStorageOptions$Enabled": "<p>Whether to enable or disable cold storage on the domain. You must enable UltraWarm storage to enable cold storage.</p>",
         "DescribeDomainHealthResponse$DedicatedMaster": "<p>A boolean that indicates if dedicated master nodes are activated for the domain.</p>",
         "DescribeDryRunProgressRequest$LoadDryRunConfig": "<p>Whether to include the configuration of the dry run in the response. The configuration specifies the updates that you're planning to make on the domain.</p>",
+        "DescribeInsightDetailsRequest$ShowHtmlContent": "<p>Specifies whether to show response with HTML content in response or not.</p>",
         "DomainEndpointOptions$EnforceHTTPS": "<p>True to require that all traffic to the domain arrive over HTTPS.</p>",
         "DomainEndpointOptions$CustomEndpointEnabled": "<p>Whether to enable a custom endpoint for the domain.</p>",
         "DomainStatus$Created": "<p>Creation status of an OpenSearch Service domain. True if domain creation is complete. False if domain creation is still in progress.</p>",
@@ -522,6 +525,7 @@
         "IamIdentityCenterOptionsInput$enabled": "<p>Specifies whether IAM Identity Center is enabled or disabled.</p>",
         "IdentityCenterOptions$EnabledAPIAccess": "<p>Indicates whether IAM Identity Center is enabled for the application.</p>",
         "IdentityCenterOptionsInput$EnabledAPIAccess": "<p>Indicates whether IAM Identity Center is enabled for API access in Amazon OpenSearch Service.</p>",
+        "Insight$IsExperimental": "<p>Indicates whether the insight is experimental.</p>",
         "InstanceTypeDetails$EncryptionEnabled": "<p>Whether encryption at rest and node-to-node encryption are supported for the instance type.</p>",
         "InstanceTypeDetails$CognitoEnabled": "<p>Whether Amazon Cognito access is supported for the instance type.</p>",
         "InstanceTypeDetails$AppLogsEnabled": "<p>Whether logging is supported for the instance type.</p>",
@@ -1057,6 +1061,14 @@
     },
     "DescribeInboundConnectionsResponse": {
       "base": "<p>Contains a list of connections matching the filter criteria.</p>",
+      "refs": {}
+    },
+    "DescribeInsightDetailsRequest": {
+      "base": "<p>Container for the parameters to the <code>DescribeInsightDetails</code> operation.</p>",
+      "refs": {}
+    },
+    "DescribeInsightDetailsResponse": {
+      "base": "<p>The result of a <code>DescribeInsightDetails</code> request. Contains the detailed fields associated with the specified insight.</p>",
       "refs": {}
     },
     "DescribeInstanceTypeLimitsRequest": {
@@ -1595,10 +1607,12 @@
         "ChangeProgressStatusDetails$ChangeId": "<p>The unique change identifier associated with a specific domain configuration change.</p>",
         "DescribeDomainChangeProgressRequest$ChangeId": "<p>The specific change ID for which you want to get progress information. If omitted, the request returns information about the most recent configuration change.</p>",
         "DescribeDryRunProgressRequest$DryRunId": "<p>The unique identifier of the dry run.</p>",
+        "DescribeInsightDetailsRequest$InsightId": "<p>The unique identifier of the insight to describe.</p>",
         "DescribeReservedInstanceOfferingsRequest$ReservedInstanceOfferingId": "<p>The Reserved Instance identifier filter value. Use this parameter to show only the available instance types that match the specified reservation identifier.</p>",
         "DescribeReservedInstancesRequest$ReservedInstanceId": "<p>The reserved instance identifier filter value. Use this parameter to show only the reservation that matches the specified reserved OpenSearch instance ID.</p>",
         "DryRunProgressStatus$DryRunId": "<p>The unique identifier of the dry run.</p>",
         "GUIDList$member": null,
+        "Insight$InsightId": "<p>The unique identifier of the insight.</p>",
         "PurchaseReservedInstanceOfferingRequest$ReservedInstanceOfferingId": "<p>The ID of the Reserved Instance offering to purchase.</p>",
         "PurchaseReservedInstanceOfferingResponse$ReservedInstanceId": "<p>The ID of the Reserved Instance offering that was purchased.</p>",
         "ReservedInstance$ReservedInstanceId": "<p>The unique identifier for the reservation.</p>",
@@ -1868,6 +1882,91 @@
         "ChangeProgressStatusDetails$InitiatedBy": "<p>The IAM principal who initiated the configuration change.</p>"
       }
     },
+    "Insight": {
+      "base": "<p>Represents an insight returned by the <code>ListInsights</code> operation. An insight is a notification about a domain event or recommendation that helps you optimize your Amazon OpenSearch Service domain.</p>",
+      "refs": {
+        "InsightList$member": null
+      }
+    },
+    "InsightEntity": {
+      "base": "<p>Specifies the entity for which to retrieve insights. An entity can be an Amazon OpenSearch Service domain or an Amazon Web Services account.</p>",
+      "refs": {
+        "DescribeInsightDetailsRequest$Entity": "<p>The entity for which to retrieve insight details. Specifies the type and value of the entity, such as a domain name or Amazon Web Services account ID.</p>",
+        "ListInsightsRequest$Entity": "<p>The entity for which to list insights. Specifies the type and value of the entity, such as a domain name or Amazon Web Services account ID.</p>"
+      }
+    },
+    "InsightEntityType": {
+      "base": "<p>The type of entity for which to retrieve insights. Possible values are <code>Account</code> and <code>DomainName</code>.</p>",
+      "refs": {
+        "InsightEntity$Type": "<p>The type of the entity. Possible values are <code>Account</code> and <code>DomainName</code>.</p>"
+      }
+    },
+    "InsightEntityValue": {
+      "base": "<p>The value of the entity, such as a domain name or Amazon Web Services account ID.</p>",
+      "refs": {
+        "InsightEntity$Value": "<p>The value of the entity. For <code>DomainName</code>, this is the domain name. For <code>Account</code>, this is the Amazon Web Services account ID.</p>"
+      }
+    },
+    "InsightField": {
+      "base": "<p>Represents a field in the detailed view of an insight, returned by the <code>DescribeInsightDetails</code> operation.</p>",
+      "refs": {
+        "InsightFieldList$member": null
+      }
+    },
+    "InsightFieldList": {
+      "base": "<p>A list of insight fields.</p>",
+      "refs": {
+        "DescribeInsightDetailsResponse$Fields": "<p>The list of fields that contain detailed information about the insight.</p>"
+      }
+    },
+    "InsightFieldType": {
+      "base": "<p>The type of an insight field. Possible values are <code>text</code> and <code>metric</code>.</p>",
+      "refs": {
+        "InsightField$Type": "<p>The type of the insight field. Possible values are <code>text</code> and <code>metric</code>.</p>"
+      }
+    },
+    "InsightList": {
+      "base": "<p>A list of insights.</p>",
+      "refs": {
+        "ListInsightsResponse$Insights": "<p>The list of insights returned for the specified entity.</p>"
+      }
+    },
+    "InsightPageSize": {
+      "base": "<p>The maximum number of insights to return per page. Valid values are 1 to 500.</p>",
+      "refs": {
+        "ListInsightsRequest$MaxResults": "<p>An optional parameter that specifies the maximum number of results to return. You can use <code>NextToken</code> to get the next page of results. Valid values are 1 to 500.</p>"
+      }
+    },
+    "InsightPriorityLevel": {
+      "base": "<p>The priority level of an insight. Possible values are <code>CRITICAL</code>, <code>HIGH</code>, <code>MEDIUM</code>, and <code>LOW</code>.</p>",
+      "refs": {
+        "Insight$Priority": "<p>The priority level of the insight. Possible values are <code>CRITICAL</code>, <code>HIGH</code>, <code>MEDIUM</code>, and <code>LOW</code>.</p>"
+      }
+    },
+    "InsightSortOrder": {
+      "base": "<p>The sort order for listing insights. Possible values are <code>ASC</code> (ascending) and <code>DESC</code> (descending).</p>",
+      "refs": {
+        "ListInsightsRequest$SortOrder": "<p>The sort order for the results. Possible values are <code>ASC</code> (ascending) and <code>DESC</code> (descending).</p>"
+      }
+    },
+    "InsightStatus": {
+      "base": "<p>The status of an insight. Possible values are <code>ACTIVE</code>, <code>RESOLVED</code>, and <code>DISMISSED</code>.</p>",
+      "refs": {
+        "Insight$Status": "<p>The current status of the insight. Possible values are <code>ACTIVE</code>, <code>RESOLVED</code>, and <code>DISMISSED</code>.</p>"
+      }
+    },
+    "InsightTimeRange": {
+      "base": "<p>Specifies the time range for filtering insights.</p>",
+      "refs": {
+        "ListInsightsRequest$TimeRange": "<p>The time range for filtering insights, specified as epoch millisecond timestamps.</p>"
+      }
+    },
+    "InsightType": {
+      "base": "<p>The type of an insight. Possible values are <code>EVENT</code> and <code>RECOMMENDATION</code>.</p>",
+      "refs": {
+        "Insight$Type": "<p>The type of the insight. Possible values are <code>EVENT</code> and <code>RECOMMENDATION</code>.</p>"
+      }
+    },
     "InstanceCount": {
       "base": "<p>Number of instances in an OpenSearch Service cluster.</p>",
       "refs": {
@@ -2096,6 +2195,14 @@
       "base": "<p>Container for the response parameters to the <code>ListDomainsForPackage</code> operation.</p>",
       "refs": {}
     },
+    "ListInsightsRequest": {
+      "base": "<p>Container for the parameters to the <code>ListInsights</code> operation.</p>",
+      "refs": {}
+    },
+    "ListInsightsResponse": {
+      "base": "<p>The result of a <code>ListInsights</code> request. Contains the list of insights and a pagination token for retrieving the next page of results.</p>",
+      "refs": {}
+    },
     "ListInstanceTypeDetailsRequest": {
       "base": null,
       "refs": {}
@@ -2190,6 +2297,8 @@
     "Long": {
       "base": null,
       "refs": {
+        "InsightTimeRange$From": "<p>The start of the time range, in epoch milliseconds.</p>",
+        "InsightTimeRange$To": "<p>The end of the time range, in epoch milliseconds.</p>",
         "ReservedInstance$BillingSubscriptionId": "<p>The unique identifier of the billing subscription.</p>",
         "ScheduledAction$ScheduledTime": "<p>The time when the change is scheduled to happen.</p>",
         "SlotList$member": null,
@@ -2332,6 +2441,7 @@
         "ListDomainMaintenancesRequest$NextToken": "<p>If your initial <code>ListDomainMaintenances</code> operation returns a <code>nextToken</code>, include the returned <code>nextToken</code> in subsequent <code>ListDomainMaintenances</code> operations, which returns results in the next page.</p>",
         "ListDomainMaintenancesResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "ListDomainsForPackageRequest$NextToken": "<p>If your initial <code>ListDomainsForPackage</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListDomainsForPackage</code> operations, which returns results in the next page.</p>",
+        "ListInsightsResponse$NextToken": "<p>When <code>NextToken</code> is returned, there are more results available. The value of <code>NextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "ListInstanceTypeDetailsRequest$NextToken": "<p>If your initial <code>ListInstanceTypeDetails</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListInstanceTypeDetails</code> operations, which returns results in the next page.</p>",
         "ListInstanceTypeDetailsResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "ListPackagesForDomainRequest$NextToken": "<p>If your initial <code>ListPackagesForDomain</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListPackagesForDomain</code> operations, which returns results in the next page.</p>",
@@ -3224,11 +3334,15 @@
         "GetDirectQueryDataSourceResponse$DataSourceArn": "<p> The unique, system-generated identifier that represents the data source. </p>",
         "GetPackageVersionHistoryResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "GetUpgradeHistoryResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
+        "Insight$DisplayName": "<p>The display name of the insight.</p>",
+        "InsightField$Name": "<p>The name of the insight field.</p>",
+        "InsightField$Value": "<p>The value of the insight field.</p>",
         "JWTOptionsInput$PublicKey": "<p>Element of the JWT assertion used by the cluster to verify JWT signatures.</p>",
         "JWTOptionsOutput$SubjectKey": "<p>The key used for matching the JWT subject attribute.</p>",
         "JWTOptionsOutput$RolesKey": "<p>The key used for matching the JWT roles attribute.</p>",
         "JWTOptionsOutput$PublicKey": "<p>The key used to verify the signature of incoming JWT requests.</p>",
         "ListDomainsForPackageResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
+        "ListInsightsRequest$NextToken": "<p>If your initial <code>ListInsights</code> operation returns a <code>NextToken</code>, include the returned <code>NextToken</code> in subsequent <code>ListInsights</code> operations to retrieve the next page of results.</p>",
         "ListPackagesForDomainResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "ModifyingProperties$Name": "<p>The name of the property that is currently being modified.</p>",
         "ModifyingProperties$ActiveValue": "<p>The current value of the domain property that is being modified.</p>",
@@ -3439,6 +3553,8 @@
         "DomainMaintenanceDetails$UpdatedAt": "<p>The time at which the action was updated.</p>",
         "GetDomainMaintenanceStatusResponse$CreatedAt": "<p>The time at which the action was created.</p>",
         "GetDomainMaintenanceStatusResponse$UpdatedAt": "<p>The time at which the action was updated.</p>",
+        "Insight$CreationTime": "<p>The timestamp when the insight was created, in epoch milliseconds.</p>",
+        "Insight$UpdateTime": "<p>The timestamp when the insight was last updated, in epoch milliseconds.</p>",
         "OptionStatus$CreationDate": "<p>The timestamp when the entity was created.</p>",
         "OptionStatus$UpdateDate": "<p>The timestamp of the last time the entity was updated.</p>",
         "ReservedInstance$StartTime": "<p>The date and time when the reservation was purchased.</p>"

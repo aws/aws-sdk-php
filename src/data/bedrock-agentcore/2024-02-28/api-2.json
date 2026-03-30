@@ -1389,7 +1389,8 @@
           "locationName":"evaluatorId"
         },
         "evaluationInput":{"shape":"EvaluationInput"},
-        "evaluationTarget":{"shape":"EvaluationTarget"}
+        "evaluationTarget":{"shape":"EvaluationTarget"},
+        "evaluationReferenceInputs":{"shape":"EvaluationReferenceInputs"}
       }
     },
     "EvaluateResponse":{
@@ -1398,6 +1399,24 @@
       "members":{
         "evaluationResults":{"shape":"EvaluationResults"}
       }
+    },
+    "EvaluationContent":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"EvaluationContentTextString"}
+      },
+      "union":true
+    },
+    "EvaluationContentList":{
+      "type":"list",
+      "member":{"shape":"EvaluationContent"},
+      "max":100,
+      "min":1
+    },
+    "EvaluationContentTextString":{
+      "type":"string",
+      "max":100000,
+      "min":1
     },
     "EvaluationErrorCode":{
       "type":"string",
@@ -1408,6 +1427,12 @@
       "type":"string",
       "max":2048,
       "min":0
+    },
+    "EvaluationExpectedTrajectory":{
+      "type":"structure",
+      "members":{
+        "toolNames":{"shape":"EvaluationToolNames"}
+      }
     },
     "EvaluationExplanation":{
       "type":"string",
@@ -1421,6 +1446,23 @@
         "sessionSpans":{"shape":"Spans"}
       },
       "union":true
+    },
+    "EvaluationReferenceInput":{
+      "type":"structure",
+      "required":["context"],
+      "members":{
+        "context":{"shape":"Context"},
+        "expectedResponse":{"shape":"EvaluationContent"},
+        "assertions":{"shape":"EvaluationContentList"},
+        "expectedTrajectory":{"shape":"EvaluationExpectedTrajectory"}
+      }
+    },
+    "EvaluationReferenceInputs":{
+      "type":"list",
+      "member":{"shape":"EvaluationReferenceInput"},
+      "max":1000,
+      "min":1,
+      "sensitive":true
     },
     "EvaluationResultContent":{
       "type":"structure",
@@ -1440,7 +1482,8 @@
         "label":{"shape":"String"},
         "tokenUsage":{"shape":"TokenUsage"},
         "errorMessage":{"shape":"EvaluationErrorMessage"},
-        "errorCode":{"shape":"EvaluationErrorCode"}
+        "errorCode":{"shape":"EvaluationErrorCode"},
+        "ignoredReferenceInputFields":{"shape":"IgnoredReferenceInputFields"}
       }
     },
     "EvaluationResults":{
@@ -1454,6 +1497,17 @@
         "traceIds":{"shape":"TraceIds"}
       },
       "union":true
+    },
+    "EvaluationToolName":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "EvaluationToolNames":{
+      "type":"list",
+      "member":{"shape":"EvaluationToolName"},
+      "max":1000,
+      "min":0
     },
     "EvaluatorArn":{
       "type":"string",
@@ -1876,6 +1930,17 @@
     "HttpResponseCode":{
       "type":"integer",
       "box":true
+    },
+    "IgnoredReferenceInputField":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
+    "IgnoredReferenceInputFields":{
+      "type":"list",
+      "member":{"shape":"IgnoredReferenceInputField"},
+      "max":100,
+      "min":0
     },
     "InputContentBlock":{
       "type":"structure",

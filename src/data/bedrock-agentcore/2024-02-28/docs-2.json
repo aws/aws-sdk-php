@@ -21,7 +21,7 @@
     "GetWorkloadAccessTokenForJWT": "<p>Obtains a workload access token for agentic workloads acting on behalf of a user, using a JWT token.</p>",
     "GetWorkloadAccessTokenForUserId": "<p>Obtains a workload access token for agentic workloads acting on behalf of a user, using the user's ID.</p>",
     "InvokeAgentRuntime": "<p>Sends a request to an agent or tool hosted in an Amazon Bedrock AgentCore Runtime and receives responses in real-time. </p> <p>To invoke an agent, you can specify either the AgentCore Runtime ARN or the agent ID with an account ID, and provide a payload containing your request. When you use the agent ID instead of the full ARN, you don't need to URL-encode the identifier. You can optionally specify a qualifier to target a specific endpoint of the agent.</p> <p>This operation supports streaming responses, allowing you to receive partial responses as they become available. We recommend using pagination to ensure that the operation returns quickly and successfully when processing large responses.</p> <p>For example code, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-invoke-agent.html\">Invoke an AgentCore Runtime agent</a>. </p> <p>If you're integrating your agent with OAuth, you can't use the Amazon Web Services SDK to call <code>InvokeAgentRuntime</code>. Instead, make a HTTPS request to <code>InvokeAgentRuntime</code>. For an example, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-oauth.html\">Authenticate and authorize with Inbound Auth and Outbound Auth</a>.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:InvokeAgentRuntime</code> permission. If you are making a call to <code>InvokeAgentRuntime</code> on behalf of a user ID with the <code>X-Amzn-Bedrock-AgentCore-Runtime-User-Id</code> header, You require permissions to both actions (<code>bedrock-agentcore:InvokeAgentRuntime</code> and <code>bedrock-agentcore:InvokeAgentRuntimeForUser</code>). </p>",
-    "InvokeAgentRuntimeCommand": "<p>Executes a command in a runtime session container. Returns streaming output with contentStart, contentDelta, and contentStop events.</p>",
+    "InvokeAgentRuntimeCommand": "<p>Executes a command in a runtime session container and streams the output back to the caller. This operation allows you to run shell commands within the agent runtime environment and receive real-time streaming responses including standard output and standard error.</p> <p>To invoke a command, you must specify the agent runtime ARN and a runtime session ID. The command execution supports streaming responses, allowing you to receive output as it becomes available through <code>contentStart</code>, <code>contentDelta</code>, and <code>contentStop</code> events.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:InvokeAgentRuntimeCommand</code> permission.</p>",
     "InvokeCodeInterpreter": "<p>Executes code within an active code interpreter session in Amazon Bedrock AgentCore. This operation processes the provided code, runs it in a secure environment, and returns the execution results including output, errors, and generated visualizations.</p> <p>To execute code, you must specify the code interpreter identifier, session ID, and the code to run in the arguments parameter. The operation returns a stream containing the execution results, which can include text output, error messages, and data visualizations.</p> <p>This operation is subject to request rate limiting based on your account's service quotas.</p> <p>The following operations are related to <code>InvokeCodeInterpreter</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
     "ListActors": "<p>Lists all actors in an AgentCore Memory resource. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListActors</code> permission.</p>",
     "ListBrowserSessions": "<p>Retrieves a list of browser sessions in Amazon Bedrock AgentCore that match the specified criteria. This operation returns summary information about each session, including identifiers, status, and timestamps.</p> <p>You can filter the results by browser identifier and session status. The operation supports pagination to handle large result sets efficiently.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully when retrieving large numbers of sessions.</p> <p>The following operations are related to <code>ListBrowserSessions</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> </ul>",
@@ -45,7 +45,7 @@
       "base": "<p>The exception that occurs when you do not have sufficient permissions to perform an action. Verify that your IAM policy includes the necessary permissions for the operation you are trying to perform.</p>",
       "refs": {
         "CodeInterpreterStreamOutput$accessDeniedException": null,
-        "InvokeAgentRuntimeCommandStreamOutput$accessDeniedException": "<p>Exception events for error streaming</p>"
+        "InvokeAgentRuntimeCommandStreamOutput$accessDeniedException": "<p>Exception events for error streaming.</p>"
       }
     },
     "AccessTokenType": {
@@ -382,7 +382,7 @@
     "CommandExecutionStatus": {
       "base": null,
       "refs": {
-        "ContentStopEvent$status": "<p>Execution status</p>"
+        "ContentStopEvent$status": "<p>The final status of the command execution. Valid values are <code>COMPLETED</code> for successful completion or <code>TIMED_OUT</code> if the command exceeded the specified timeout.</p>"
       }
     },
     "CompleteResourceTokenAuthRequest": {
@@ -424,21 +424,21 @@
       }
     },
     "ContentDeltaEvent": {
-      "base": "<p>Content event containing stdout or stderr output</p>",
+      "base": "<p>An event that contains incremental output from a command execution. This event streams standard output and standard error content as it becomes available during command execution.</p>",
       "refs": {
-        "ResponseChunk$contentDelta": "<p>Middle chunks - stdout/stderr output</p>"
+        "ResponseChunk$contentDelta": "<p>An event containing incremental output (stdout or stderr) from the command execution. These are the middle chunks.</p>"
       }
     },
     "ContentStartEvent": {
-      "base": "<p>First event indicating command execution has started</p>",
+      "base": "<p>An event that signals the start of content streaming from a command execution. This event is sent when the command begins producing output.</p>",
       "refs": {
-        "ResponseChunk$contentStart": "<p>First chunk - indicates command execution has started</p>"
+        "ResponseChunk$contentStart": "<p>An event indicating the start of content streaming from the command execution. This is the first chunk received.</p>"
       }
     },
     "ContentStopEvent": {
-      "base": "<p>Final event indicating command execution has completed</p>",
+      "base": "<p>An event that signals the completion of a command execution. This event contains the final status and exit code of the executed command.</p>",
       "refs": {
-        "ResponseChunk$contentStop": "<p>Last chunk - indicates command execution has completed</p>"
+        "ResponseChunk$contentStop": "<p>An event indicating the completion of the command execution, including the exit code and final status. This is the last chunk received.</p>"
       }
     },
     "ContentTextString": {
@@ -450,6 +450,7 @@
     "Context": {
       "base": "<p> The contextual information associated with an evaluation, including span context details that identify the specific traces and sessions being evaluated within the agent's execution flow. </p>",
       "refs": {
+        "EvaluationReferenceInput$context": null,
         "EvaluationResultContent$context": "<p> The contextual information associated with this evaluation result, including span context details that identify the specific traces and sessions that were evaluated. </p>"
       }
     },
@@ -565,6 +566,25 @@
       "base": null,
       "refs": {}
     },
+    "EvaluationContent": {
+      "base": "<p> A content block for ground truth data in evaluation reference inputs. Supports text content for expected responses and assertions. </p>",
+      "refs": {
+        "EvaluationContentList$member": null,
+        "EvaluationReferenceInput$expectedResponse": "<p> The expected response for trace-level evaluation. Built-in evaluators that support this field compare the agent's actual response against this value for assessment. Custom evaluators can access it through the <code>{expected_response}</code> placeholder in their instructions. </p>"
+      }
+    },
+    "EvaluationContentList": {
+      "base": null,
+      "refs": {
+        "EvaluationReferenceInput$assertions": "<p> A list of assertion statements for session-level evaluation. Each assertion describes an expected behavior or outcome the agent should demonstrate during the session. </p>"
+      }
+    },
+    "EvaluationContentTextString": {
+      "base": null,
+      "refs": {
+        "EvaluationContent$text": "<p> The text content of the ground truth data. Used for expected response text and assertion statements. </p>"
+      }
+    },
     "EvaluationErrorCode": {
       "base": null,
       "refs": {
@@ -577,6 +597,12 @@
         "EvaluationResultContent$errorMessage": "<p> The error message describing what went wrong if the evaluation failed. Provides detailed information about evaluation failures to help diagnose and resolve issues with evaluator configuration or input data. </p>"
       }
     },
+    "EvaluationExpectedTrajectory": {
+      "base": "<p> The expected tool call trajectory for trajectory-based evaluation. </p>",
+      "refs": {
+        "EvaluationReferenceInput$expectedTrajectory": "<p> The expected tool call sequence for session-level trajectory evaluation. Contains a list of tool names representing the tools the agent is expected to invoke. </p>"
+      }
+    },
     "EvaluationExplanation": {
       "base": null,
       "refs": {
@@ -587,6 +613,18 @@
       "base": "<p> The input data structure containing agent session spans in OpenTelemetry format. Supports traces from frameworks like Strands (AgentCore Runtime) and LangGraph with OpenInference instrumentation for comprehensive evaluation. </p>",
       "refs": {
         "EvaluateRequest$evaluationInput": "<p> The input data containing agent session spans to be evaluated. Includes a list of spans in OpenTelemetry format from supported frameworks like Strands (AgentCore Runtime) or LangGraph with OpenInference instrumentation. </p>"
+      }
+    },
+    "EvaluationReferenceInput": {
+      "base": "<p> A reference input containing ground truth data for evaluation, scoped to a specific context level (session or trace) through its span context. </p>",
+      "refs": {
+        "EvaluationReferenceInputs$member": null
+      }
+    },
+    "EvaluationReferenceInputs": {
+      "base": null,
+      "refs": {
+        "EvaluateRequest$evaluationReferenceInputs": "<p> Ground truth data to compare against agent responses during evaluation. Allows to provide expected responses, assertions, and expected tool trajectories at different evaluation levels. Session-level reference inputs apply to the entire conversation, while trace-level reference inputs target specific request-response interactions identified by trace ID. </p>"
       }
     },
     "EvaluationResultContent": {
@@ -605,6 +643,18 @@
       "base": "<p> The specification of which trace or span IDs to evaluate within the provided input data. Allows precise targeting of evaluation at different levels: tool calls, traces, or sessions. </p>",
       "refs": {
         "EvaluateRequest$evaluationTarget": "<p> The specific trace or span IDs to evaluate within the provided input. Allows targeting evaluation at different levels: individual tool calls, single request-response interactions (traces), or entire conversation sessions. </p>"
+      }
+    },
+    "EvaluationToolName": {
+      "base": null,
+      "refs": {
+        "EvaluationToolNames$member": null
+      }
+    },
+    "EvaluationToolNames": {
+      "base": null,
+      "refs": {
+        "EvaluationExpectedTrajectory$toolNames": "<p> The list of tool names representing the expected tool call sequence. </p>"
       }
     },
     "EvaluatorArn": {
@@ -812,6 +862,18 @@
         "StopRuntimeSessionResponse$statusCode": "<p>The status code of the request to stop the session.</p>"
       }
     },
+    "IgnoredReferenceInputField": {
+      "base": null,
+      "refs": {
+        "IgnoredReferenceInputFields$member": null
+      }
+    },
+    "IgnoredReferenceInputFields": {
+      "base": null,
+      "refs": {
+        "EvaluationResultContent$ignoredReferenceInputFields": "<p> The list of reference input field names that were provided but not used by the evaluator. Helps identify which ground truth data was not consumed during evaluation. </p>"
+      }
+    },
     "InputContentBlock": {
       "base": "<p>A block of input content.</p>",
       "refs": {
@@ -827,8 +889,8 @@
     "Integer": {
       "base": null,
       "refs": {
-        "ContentStopEvent$exitCode": "<p>Exit code: 0 = success, -1 = platform error, &gt;0 = command error</p>",
-        "InvokeAgentRuntimeCommandRequestBody$timeout": "<p>Command timeout in seconds (default: 300, min:1, max: 3600)</p>",
+        "ContentStopEvent$exitCode": "<p>The exit code returned by the executed command. An exit code of 0 indicates successful execution, -1 indicates a platform error, and values greater than 0 indicate command-specific errors.</p>",
+        "InvokeAgentRuntimeCommandRequestBody$timeout": "<p>The maximum duration in seconds to wait for the command to complete. If the command execution exceeds this timeout, it will be terminated. Default is 300 seconds. Minimum is 1 second. Maximum is 3600 seconds.</p>",
         "MemoryRecordOutput$errorCode": "<p>The error code returned when the memory record operation fails.</p>",
         "MessageMetadata$messageIndex": "<p>The position of this message within that event’s ordered list of messages.</p>",
         "TokenUsage$inputTokens": "<p> The number of tokens consumed for input processing during the evaluation. Includes tokens from the evaluation prompt, agent traces, and any additional context provided to the evaluator model. </p>",
@@ -849,13 +911,13 @@
       "refs": {}
     },
     "InvokeAgentRuntimeCommandRequest": {
-      "base": "<p>Request for InvokeAgentRuntimeCommand operation</p>",
+      "base": "<p>Request for InvokeAgentRuntimeCommand operation.</p>",
       "refs": {}
     },
     "InvokeAgentRuntimeCommandRequestAccountIdString": {
       "base": null,
       "refs": {
-        "InvokeAgentRuntimeCommandRequest$accountId": "<p>Account ID (12 digits)</p>"
+        "InvokeAgentRuntimeCommandRequest$accountId": "<p>The identifier of the Amazon Web Services account for the agent runtime resource. This parameter is required when you specify an agent ID instead of the full ARN for <code>agentRuntimeArn</code>.</p>"
       }
     },
     "InvokeAgentRuntimeCommandRequestBaggageString": {
@@ -865,15 +927,15 @@
       }
     },
     "InvokeAgentRuntimeCommandRequestBody": {
-      "base": "<p>Request body for InvokeAgentRuntimeCommand</p>",
+      "base": "<p>The request body structure for the <code>InvokeAgentRuntimeCommand</code> operation, containing the command to execute and optional configuration parameters.</p>",
       "refs": {
-        "InvokeAgentRuntimeCommandRequest$body": "<p>Request body containing command and timeout</p>"
+        "InvokeAgentRuntimeCommandRequest$body": "<p>The request body containing the command to execute and optional configuration parameters such as timeout settings.</p>"
       }
     },
     "InvokeAgentRuntimeCommandRequestBodyCommandString": {
       "base": null,
       "refs": {
-        "InvokeAgentRuntimeCommandRequestBody$command": "<p>The command to execute in the runtime container</p>"
+        "InvokeAgentRuntimeCommandRequestBody$command": "<p>The shell command to execute on the agent runtime. This command is executed in the runtime environment and its output is streamed back to the caller.</p>"
       }
     },
     "InvokeAgentRuntimeCommandRequestTraceIdString": {
@@ -895,13 +957,13 @@
       }
     },
     "InvokeAgentRuntimeCommandResponse": {
-      "base": "<p>Response for InvokeAgentRuntimeCommand operation</p>",
+      "base": "<p>Response for InvokeAgentRuntimeCommand operation.</p>",
       "refs": {}
     },
     "InvokeAgentRuntimeCommandStreamOutput": {
-      "base": "<p>Streaming output for InvokeAgentRuntimeCommand operation Delivers typed events: contentStart (first), contentDelta (middle), contentStop (last)</p>",
+      "base": "<p>The streaming output union for the <code>InvokeAgentRuntimeCommand</code> operation. This union delivers typed events: <code>contentStart</code> (first), <code>contentDelta</code> (middle), and <code>contentStop</code> (last).</p>",
       "refs": {
-        "InvokeAgentRuntimeCommandResponse$stream": "<p>Streaming output containing command execution events</p>"
+        "InvokeAgentRuntimeCommandResponse$stream": "<p>The streaming output from the command execution. This stream contains events that provide real-time updates including standard output, standard error, and completion status.</p>"
       }
     },
     "InvokeAgentRuntimeRequest": {
@@ -1453,9 +1515,9 @@
       }
     },
     "ResponseChunk": {
-      "base": "<p>Response chunk containing exactly one of: contentStart, contentDelta, or contentStop</p>",
+      "base": "<p>A structure representing a response chunk that contains exactly one of the possible event types: <code>contentStart</code>, <code>contentDelta</code>, or <code>contentStop</code>.</p>",
       "refs": {
-        "InvokeAgentRuntimeCommandStreamOutput$chunk": "<p>Response chunk containing command execution events</p>"
+        "InvokeAgentRuntimeCommandStreamOutput$chunk": "<p>A response chunk containing command execution events such as content start, content delta, or content stop events.</p>"
       }
     },
     "ResponseStream": {
@@ -1601,7 +1663,7 @@
         "Event$sessionId": "<p>The identifier of the session containing the event.</p>",
         "GetAgentCardResponse$runtimeSessionId": "<p>The ID of the session associated with the AgentCore Runtime agent.</p>",
         "GetEventInput$sessionId": "<p>The identifier of the session containing the event.</p>",
-        "InvokeAgentRuntimeCommandResponse$runtimeSessionId": "<p>Runtime session identifier</p>",
+        "InvokeAgentRuntimeCommandResponse$runtimeSessionId": "<p>The unique identifier of the runtime session in which the command was executed.</p>",
         "InvokeAgentRuntimeResponse$runtimeSessionId": "<p>The identifier of the runtime session.</p>",
         "InvokeAgentRuntimeResponse$mcpSessionId": "<p>The identifier of the MCP session.</p>",
         "ListEventsInput$sessionId": "<p>The identifier of the session for which to list events.</p>",
@@ -1631,7 +1693,7 @@
       "base": null,
       "refs": {
         "GetAgentCardRequest$runtimeSessionId": "<p>The session ID that the AgentCore Runtime agent is using. </p>",
-        "InvokeAgentRuntimeCommandRequest$runtimeSessionId": "<p>Runtime session identifier</p>",
+        "InvokeAgentRuntimeCommandRequest$runtimeSessionId": "<p>The unique identifier of the runtime session in which to execute the command. This session ID is used to maintain state and context across multiple command invocations.</p>",
         "InvokeAgentRuntimeRequest$runtimeSessionId": "<p>The identifier of the runtime session.</p>",
         "StopRuntimeSessionRequest$runtimeSessionId": "<p>The ID of the session that you want to stop.</p>"
       }
@@ -1785,8 +1847,8 @@
         "ContentBlock$uri": "<p>The URI of the content.</p>",
         "ContentBlock$name": "<p>The name of the content block.</p>",
         "ContentBlock$description": "<p>The description of the content block.</p>",
-        "ContentDeltaEvent$stdout": "<p>Standard output content</p>",
-        "ContentDeltaEvent$stderr": "<p>Standard error content</p>",
+        "ContentDeltaEvent$stdout": "<p>The standard output content from the command execution. This field contains the incremental output written to stdout by the executing command.</p>",
+        "ContentDeltaEvent$stderr": "<p>The standard error content from the command execution. This field contains the incremental output written to stderr by the executing command.</p>",
         "CreateEventInput$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, AgentCore ignores the request, but does not return an error.</p>",
         "EvaluationResultContent$label": "<p> The categorical label assigned by the evaluator when using a categorical rating scale. This provides a human-readable description of the evaluation result (e.g., \"Excellent\", \"Good\", \"Poor\") corresponding to the numerical value. For numerical scales, this field is optional and provides a natural language explanation of what the value means (e.g., value 0.5 = \"Somewhat Helpful\"). </p>",
         "ExtractionJob$jobId": "<p>The unique identifier of the extraction job.</p>",
@@ -1806,8 +1868,8 @@
         "GetCodeInterpreterSessionRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter associated with the session.</p>",
         "GetCodeInterpreterSessionResponse$codeInterpreterIdentifier": "<p>The identifier of the code interpreter.</p>",
         "InvalidInputException$message": null,
-        "InvokeAgentRuntimeCommandRequest$agentRuntimeArn": "<p>ARN of the agent runtime</p>",
-        "InvokeAgentRuntimeCommandRequest$qualifier": "<p>Version or alias qualifier</p>",
+        "InvokeAgentRuntimeCommandRequest$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime on which to execute the command. This identifies the specific agent runtime environment where the command will run.</p>",
+        "InvokeAgentRuntimeCommandRequest$qualifier": "<p>The qualifier to use for the agent runtime. This is an endpoint name that points to a specific version. If not specified, Amazon Bedrock AgentCore uses the default endpoint of the agent runtime.</p>",
         "InvokeAgentRuntimeCommandResponse$traceId": "<p>The trace identifier for request tracking.</p>",
         "InvokeAgentRuntimeCommandResponse$traceParent": "<p>The parent trace information for distributed tracing.</p>",
         "InvokeAgentRuntimeCommandResponse$traceState": "<p>The trace state information for distributed tracing.</p>",

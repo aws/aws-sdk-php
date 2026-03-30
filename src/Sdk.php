@@ -252,6 +252,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionDeadline(array $args = [])
  * @method \Aws\Detective\DetectiveClient createDetective(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDetective(array $args = [])
+ * @method \Aws\DevOpsAgent\DevOpsAgentClient createDevOpsAgent(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionDevOpsAgent(array $args = [])
  * @method \Aws\DevOpsGuru\DevOpsGuruClient createDevOpsGuru(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDevOpsGuru(array $args = [])
  * @method \Aws\DeviceFarm\DeviceFarmClient createDeviceFarm(array $args = [])

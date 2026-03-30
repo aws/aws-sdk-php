@@ -2954,6 +2954,7 @@
         "ec2InstanceProfileArn":{"shape":"String"},
         "networkConfiguration":{"shape":"ManagedInstancesNetworkConfiguration"},
         "storageConfiguration":{"shape":"ManagedInstancesStorageConfiguration"},
+        "localStorageConfiguration":{"shape":"ManagedInstancesLocalStorageConfiguration"},
         "monitoring":{"shape":"ManagedInstancesMonitoringOptions"},
         "capacityOptionType":{"shape":"CapacityOptionType"},
         "instanceMetadataTagsPropagation":{"shape":"BoxedBoolean"},
@@ -2969,6 +2970,7 @@
         "networkConfiguration":{"shape":"ManagedInstancesNetworkConfiguration"},
         "storageConfiguration":{"shape":"ManagedInstancesStorageConfiguration"},
         "instanceMetadataTagsPropagation":{"shape":"BoxedBoolean"},
+        "localStorageConfiguration":{"shape":"ManagedInstancesLocalStorageConfiguration"},
         "monitoring":{"shape":"ManagedInstancesMonitoringOptions"},
         "instanceRequirements":{"shape":"InstanceRequirementsRequest"},
         "capacityReservations":{"shape":"CapacityReservationRequest"}
@@ -3434,6 +3436,12 @@
     "ManagedIngressPaths":{
       "type":"list",
       "member":{"shape":"ManagedIngressPath"}
+    },
+    "ManagedInstancesLocalStorageConfiguration":{
+      "type":"structure",
+      "members":{
+        "useLocalStorage":{"shape":"Boolean"}
+      }
     },
     "ManagedInstancesMonitoringOptions":{
       "type":"string",

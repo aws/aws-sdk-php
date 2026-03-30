@@ -520,7 +520,8 @@
         "UpdateAppBlockBuilderRequest$EnableDefaultInternetAccess": "<p>Enables or disables default internet access for the app block builder.</p>",
         "UpdateAppBlockBuilderRequest$DisableIMDSV1": "<p>Set to true to disable Instance Metadata Service Version 1 (IMDSv1) and enforce IMDSv2. Set to false to enable both IMDSv1 and IMDSv2.</p>",
         "UpdateFleetRequest$EnableDefaultInternetAccess": "<p>Enables or disables default internet access for the fleet.</p>",
-        "UpdateFleetRequest$DisableIMDSV1": "<p>Set to true to disable Instance Metadata Service Version 1 (IMDSv1) and enforce IMDSv2. Set to false to enable both IMDSv1 and IMDSv2.</p> <note> <p>Before disabling IMDSv1, ensure your WorkSpaces Applications images are running the agent version or managed image update released on or after January 16, 2024 to support IMDSv2 enforcement.</p> </note>"
+        "UpdateFleetRequest$DisableIMDSV1": "<p>Set to true to disable Instance Metadata Service Version 1 (IMDSv1) and enforce IMDSv2. Set to false to enable both IMDSv1 and IMDSv2.</p> <note> <p>Before disabling IMDSv1, ensure your WorkSpaces Applications images are running the agent version or managed image update released on or after January 16, 2024 to support IMDSv2 enforcement.</p> </note>",
+        "UrlRedirectionConfig$Enabled": "<p>Whether URL redirection is enabled for this direction.</p>"
       }
     },
     "CertificateBasedAuthProperties": {
@@ -553,6 +554,13 @@
     "ConcurrentModificationException": {
       "base": "<p>An API error occurred. Wait a few minutes and try again.</p>",
       "refs": {}
+    },
+    "ContentRedirection": {
+      "base": "<p>Configuration for bidirectional URL redirection between the streaming session and the local client. Use HostToClient to redirect URLs from the remote desktop to the local browser.</p>",
+      "refs": {
+        "CreateStackRequest$ContentRedirection": null,
+        "Stack$ContentRedirection": "<p>Configuration for bidirectional URL redirection between the streaming session and the local client. Use HostToClient to redirect URLs from the remote desktop to the local browser.</p>"
+      }
     },
     "CopyImageRequest": {
       "base": null,
@@ -2478,6 +2486,25 @@
     "UpdateThemeForStackResult": {
       "base": null,
       "refs": {}
+    },
+    "UrlPattern": {
+      "base": "<p>A glob pattern using wildcards (* for zero or more characters, ? for exactly one character) to match URLs for redirection rules. Patterns do not include a protocol prefix; HTTPS is enforced automatically. Valid examples: *, *.example.com, github.com/myorg/*, api?.example.com Invalid examples: https://example.com (no protocol), empty string</p>",
+      "refs": {
+        "UrlPatternList$member": null
+      }
+    },
+    "UrlPatternList": {
+      "base": null,
+      "refs": {
+        "UrlRedirectionConfig$AllowedUrls": "<p>List of URL patterns that are allowed to be redirected. URLs matching these patterns will be redirected unless they also match a pattern in the denied list.</p>",
+        "UrlRedirectionConfig$DeniedUrls": "<p>List of URL patterns that are denied from redirection. This list takes precedence over the allowed list.</p>"
+      }
+    },
+    "UrlRedirectionConfig": {
+      "base": "<p>Configuration for URL redirection in a specific direction (host-to-client or client-to-host). When enabled, URLs matching the allowed or denied patterns are redirected accordingly. The denied list takes precedence over the allowed list.</p>",
+      "refs": {
+        "ContentRedirection$HostToClient": "<p>Configuration for redirecting URLs from the remote desktop to the local client browser.</p>"
+      }
     },
     "UsageReportExecutionErrorCode": {
       "base": null,

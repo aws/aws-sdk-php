@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Add new features and improvements to S3 Transfer Manager.
+
+New Features:
+- Resume failed multipart uploads
+- Resume failed multipart downloads
+
+Improvements:
+- FileDownloadHandler now supports concurrent downloads for improved speed
+- Directory operations moved to an independent transfer utility
+- Directory operations now support both single object listeners and directory-level listeners, including a directory progress tracker
+* `Aws\CloudWatchLogs` - Adds Lookup Tables to CloudWatch Logs for log enrichment using CSV key-value data with KMS encryption support.
+* `Aws\AutoScaling` - Adds support for new instance lifecycle states introduced by the instance lifecycle policy and replace root volume features.
+* `Aws\SageMaker` - Added support for placement strategy and consolidation for SageMaker inference component endpoints. Customers can now configure how inference component copies are distributed across instances and availability zones (AZs), and enable automatic consolidation to optimizes resource utilization.
+* `Aws\OpenSearchService` - Added Cluster Insights API's In OpenSearch Service SDK.
+* `Aws\AppStream` - Add support for URL Redirection
+* `Aws\ECS` - Adding Local Storage support for ECS Managed Instances by introducing a new field "localStorageConfiguration" for CreateCapacityProvider and UpdateCapacityProvider APIs.
+* `Aws\PartnerCentralAccount` - KYB Supplemental Form enables partners who fail business verification to submit additional details and supporting documentation through a self-service form, triggering an automated re-verification without requiring manual intervention from support teams.
+* `Aws\Deadline` - AWS Deadline Cloud now supports three new fleet auto scaling settings. With scale out rate, you can configure how quickly workers launch. With worker idle duration, you can set how long workers wait before shutting down. With standby worker count, you can keep idle workers ready for fast job start.
+* `Aws\BedrockAgentCore` - Adds Ground Truth support for AgentCore Evaluations (Evaluate)
+* `Aws\LakeFormation` - Add setSourceIdentity to DataLakeSettings Parameters
+* `Aws\GameLift` - Update CreateScript API documentation.
+* `Aws\DevOpsAgent` - AWS DevOps Agent General Availability.
+
 ## 3.374.2 - 2026-03-27
 
 * `Aws\Neptunedata` - Minor formatting changes to remove unnecessary symbols.

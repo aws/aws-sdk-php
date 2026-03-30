@@ -278,6 +278,7 @@
         "ExecuteCommandRequest$interactive": "<p>Use this flag to run your command in interactive mode.</p>",
         "ExecuteCommandResponse$interactive": "<p>Determines whether the execute command session is running in interactive mode. Amazon ECS only supports initiating interactive sessions, so you must specify <code>true</code> for this value.</p>",
         "ListAccountSettingsRequest$effectiveSettings": "<p>Determines whether to return the effective settings. If <code>true</code>, the account settings for the root user or the default setting for the <code>principalArn</code> are returned. If <code>false</code>, the account settings for the <code>principalArn</code> are returned if they're set. Otherwise, no account settings are returned.</p>",
+        "ManagedInstancesLocalStorageConfiguration$useLocalStorage": "<p>Use instance store volumes for data storage when available. EBS volumes are not provisioned for data storage. If the container instance has multiple instance store volumes, a single data volume is created. Consider defining instance store requirements using the <code>localStorage</code>, <code>localStorageTypes</code> and <code>totalLocalStorageGB</code> properties.</p>",
         "ProtectedTask$protectionEnabled": "<p>The protection status of the task. If scale-in protection is on for a task, the value is <code>true</code>. Otherwise, it is <code>false</code>.</p>",
         "RunTaskRequest$enableECSManagedTags": "<p>Specifies whether to use Amazon ECS managed tags for the task. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-using-tags.html\">Tagging Your Amazon ECS Resources</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p>",
         "RunTaskRequest$enableExecuteCommand": "<p>Determines whether to use the execute command functionality for the containers in this task. If <code>true</code>, this enables execute command functionality on all containers in the task.</p> <p>If <code>true</code>, then the task definition must have a task role, or you must provide one as an override.</p>",
@@ -1947,6 +1948,13 @@
         "ECSManagedResources$ingressPaths": "<p>The ingress paths and endpoints for the Express service.</p>"
       }
     },
+    "ManagedInstancesLocalStorageConfiguration": {
+      "base": "<p>The local storage configuration for Amazon ECS Managed Instances. This defines how ECS uses and configures instance store volumes available on container instance.</p>",
+      "refs": {
+        "InstanceLaunchTemplate$localStorageConfiguration": "<p>The local storage configuration for Amazon ECS Managed Instances. This defines how ECS uses instance store volumes available on the container instance.</p>",
+        "InstanceLaunchTemplateUpdate$localStorageConfiguration": "<p>The updated local storage configuration for Amazon ECS Managed Instances. Changes to local storage settings apply to new instances launched after the update.</p>"
+      }
+    },
     "ManagedInstancesMonitoringOptions": {
       "base": null,
       "refs": {
@@ -1968,9 +1976,9 @@
       }
     },
     "ManagedInstancesStorageConfiguration": {
-      "base": "<p>The storage configuration for Amazon ECS Managed Instances. This defines the root volume configuration for the instances.</p>",
+      "base": "<p>The storage configuration for Amazon ECS Managed Instances. This defines the data volume configuration for the instances.</p>",
       "refs": {
-        "InstanceLaunchTemplate$storageConfiguration": "<p>The storage configuration for Amazon ECS Managed Instances. This defines the root volume size and type for the instances.</p>",
+        "InstanceLaunchTemplate$storageConfiguration": "<p>The storage configuration for Amazon ECS Managed Instances. This defines the data volume properties for the instances.</p>",
         "InstanceLaunchTemplateUpdate$storageConfiguration": "<p>The updated storage configuration for Amazon ECS Managed Instances. Changes to storage settings apply to new instances launched after the update.</p>"
       }
     },
@@ -3723,7 +3731,7 @@
     "TaskVolumeStorageGiB": {
       "base": null,
       "refs": {
-        "ManagedInstancesStorageConfiguration$storageSizeGiB": "<p>The size of the tasks volume.</p>"
+        "ManagedInstancesStorageConfiguration$storageSizeGiB": "<p>The size of the data volume.</p>"
       }
     },
     "Tasks": {

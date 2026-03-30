@@ -12,6 +12,7 @@
     "CreateLogAnomalyDetector": "<p>Creates an <i>anomaly detector</i> that regularly scans one or more log groups and look for patterns and anomalies in the logs.</p> <p>An anomaly detector can help surface issues by automatically discovering anomalies in your log event traffic. An anomaly detector uses machine learning algorithms to scan log events and find <i>patterns</i>. A pattern is a shared text structure that recurs among your log fields. Patterns provide a useful tool for analyzing large sets of logs because a large number of log events can often be compressed into a few patterns.</p> <p>The anomaly detector uses pattern recognition to find <code>anomalies</code>, which are unusual log events. It uses the <code>evaluationFrequency</code> to compare current log events and patterns with trained baselines. </p> <p>Fields within a pattern are called <i>tokens</i>. Fields that vary within a pattern, such as a request ID or timestamp, are referred to as <i>dynamic tokens</i> and represented by <code>&lt;*&gt;</code>. </p> <p>The following is an example of a pattern:</p> <p> <code>[INFO] Request time: &lt;*&gt; ms</code> </p> <p>This pattern represents log events like <code>[INFO] Request time: 327 ms</code> and other similar log events that differ only by the number, in this csse 327. When the pattern is displayed, the different numbers are replaced by <code>&lt;*&gt;</code> </p> <note> <p>Any parts of log events that are masked as sensitive data are not scanned for anomalies. For more information about masking sensitive data, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/mask-sensitive-log-data.html\">Help protect sensitive log data with masking</a>. </p> </note>",
     "CreateLogGroup": "<p>Creates a log group with the specified name. You can create up to 1,000,000 log groups per Region per account.</p> <p>You must use the following guidelines when naming a log group:</p> <ul> <li> <p>Log group names must be unique within a Region for an Amazon Web Services account.</p> </li> <li> <p>Log group names can be between 1 and 512 characters long.</p> </li> <li> <p>Log group names consist of the following characters: a-z, A-Z, 0-9, '_' (underscore), '-' (hyphen), '/' (forward slash), '.' (period), and '#' (number sign)</p> </li> <li> <p>Log group names can't start with the string <code>aws/</code> </p> </li> </ul> <p>When you create a log group, by default the log events in the log group do not expire. To set a retention policy so that events expire and are deleted after a specified time, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutRetentionPolicy.html\">PutRetentionPolicy</a>.</p> <p>If you associate an KMS key with the log group, ingested data is encrypted using the KMS key. This association is stored as long as the data encrypted with the KMS key is still within CloudWatch Logs. This enables CloudWatch Logs to decrypt this data whenever it is requested.</p> <p>If you attempt to associate a KMS key with the log group but the KMS key does not exist or the KMS key is disabled, you receive an <code>InvalidParameterException</code> error. </p> <important> <p>CloudWatch Logs supports only symmetric KMS keys. Do not associate an asymmetric KMS key with your log group. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html\">Using Symmetric and Asymmetric Keys</a>.</p> </important>",
     "CreateLogStream": "<p>Creates a log stream for the specified log group. A log stream is a sequence of log events that originate from a single source, such as an application instance or a resource that is being monitored.</p> <p>There is no limit on the number of log streams that you can create for a log group. There is a limit of 50 TPS on <code>CreateLogStream</code> operations, after which transactions are throttled.</p> <p>You must use the following guidelines when naming a log stream:</p> <ul> <li> <p>Log stream names must be unique within the log group.</p> </li> <li> <p>Log stream names can be between 1 and 512 characters long.</p> </li> <li> <p>Don't use ':' (colon) or '*' (asterisk) characters.</p> </li> </ul>",
+    "CreateLookupTable": "<p>Creates a lookup table by uploading CSV data. You can use lookup tables to enrich log data in CloudWatch Logs Insights queries with reference data such as user details, application names, or error descriptions.</p> <p>The table name must be unique within your account and Region. The CSV content must include a header row with column names, use UTF-8 encoding, and not exceed 10 MB.</p>",
     "CreateScheduledQuery": "<p>Creates a scheduled query that runs CloudWatch Logs Insights queries at regular intervals. Scheduled queries enable proactive monitoring by automatically executing queries to detect patterns and anomalies in your log data. Query results can be delivered to Amazon S3 for analysis or further processing.</p>",
     "DeleteAccountPolicy": "<p>Deletes a CloudWatch Logs account policy. This stops the account-wide policy from applying to log groups or data sources in the account. If you delete a data protection policy or subscription filter policy, any log-group level policies of those types remain in effect. This operation supports deletion of data source-based field index policies, including facet configurations, in addition to log group-based policies.</p> <p>To use this operation, you must be signed on with the correct permissions depending on the type of policy that you are deleting.</p> <ul> <li> <p>To delete a data protection policy, you must have the <code>logs:DeleteDataProtectionPolicy</code> and <code>logs:DeleteAccountPolicy</code> permissions.</p> </li> <li> <p>To delete a subscription filter policy, you must have the <code>logs:DeleteSubscriptionFilter</code> and <code>logs:DeleteAccountPolicy</code> permissions.</p> </li> <li> <p>To delete a transformer policy, you must have the <code>logs:DeleteTransformer</code> and <code>logs:DeleteAccountPolicy</code> permissions.</p> </li> <li> <p>To delete a field index policy, you must have the <code>logs:DeleteIndexPolicy</code> and <code>logs:DeleteAccountPolicy</code> permissions.</p> <p>If you delete a field index policy that included facet configurations, those facets will no longer be available for interactive exploration in the CloudWatch Logs Insights console. However, facet data is retained for up to 30 days.</p> </li> </ul> <p>If you delete a field index policy, the indexing of the log events that happened before you deleted the policy will still be used for up to 30 days to improve CloudWatch Logs Insights queries.</p>",
     "DeleteDataProtectionPolicy": "<p>Deletes the data protection policy from the specified log group. </p> <p>For more information about data protection policies, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDataProtectionPolicy.html\">PutDataProtectionPolicy</a>.</p>",
@@ -25,6 +26,7 @@
     "DeleteLogAnomalyDetector": "<p>Deletes the specified CloudWatch Logs anomaly detector.</p>",
     "DeleteLogGroup": "<p>Deletes the specified log group and permanently deletes all the archived log events associated with the log group.</p>",
     "DeleteLogStream": "<p>Deletes the specified log stream and permanently deletes all the archived log events associated with the log stream.</p>",
+    "DeleteLookupTable": "<p>Deletes a lookup table permanently. This operation cannot be undone.</p> <p>Queries that reference a deleted table will return an error. Before deleting a lookup table, review any saved queries or dashboards that may reference it.</p>",
     "DeleteMetricFilter": "<p>Deletes the specified metric filter.</p>",
     "DeleteQueryDefinition": "<p>Deletes a saved CloudWatch Logs Insights query definition. A query definition contains details about a saved CloudWatch Logs Insights query.</p> <p>Each <code>DeleteQueryDefinition</code> operation can delete one query definition.</p> <p>You must have the <code>logs:DeleteQueryDefinition</code> permission to be able to perform this operation.</p>",
     "DeleteResourcePolicy": "<p>Deletes a resource policy from this account. This revokes the access of the identities in that policy to put log events to this account.</p>",
@@ -45,6 +47,7 @@
     "DescribeIndexPolicies": "<p>Returns the field index policies of the specified log group. For more information about field index policies, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutIndexPolicy.html\">PutIndexPolicy</a>.</p> <p>If a specified log group has a log-group level index policy, that policy is returned by this operation.</p> <p>If a specified log group doesn't have a log-group level index policy, but an account-wide index policy applies to it, that account-wide policy is returned by this operation.</p> <p>To find information about only account-level policies, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeAccountPolicies.html\">DescribeAccountPolicies</a> instead.</p>",
     "DescribeLogGroups": "<p>Returns information about log groups, including data sources that ingest into each log group. You can return all your log groups or filter the results by prefix. The results are ASCII-sorted by log group name.</p> <p>CloudWatch Logs doesn't support IAM policies that control access to the <code>DescribeLogGroups</code> action by using the <code>aws:ResourceTag/<i>key-name</i> </code> condition key. Other CloudWatch Logs actions do support the use of the <code>aws:ResourceTag/<i>key-name</i> </code> condition key to control access. For more information about using tags to control access, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html\">Controlling access to Amazon Web Services resources using tags</a>.</p> <p>If you are using CloudWatch cross-account observability, you can use this operation in a monitoring account and view data from the linked source accounts. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html\">CloudWatch cross-account observability</a>.</p>",
     "DescribeLogStreams": "<p>Lists the log streams for the specified log group. You can list all the log streams or filter the results by prefix. You can also control how the results are ordered.</p> <p>You can specify the log group to search by using either <code>logGroupIdentifier</code> or <code>logGroupName</code>. You must include one of these two parameters, but you can't include both. </p> <p>This operation has a limit of 25 transactions per second, after which transactions are throttled.</p> <p>If you are using CloudWatch cross-account observability, you can use this operation in a monitoring account and view data from the linked source accounts. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html\">CloudWatch cross-account observability</a>.</p>",
+    "DescribeLookupTables": "<p>Retrieves metadata about lookup tables in your account. You can optionally filter the results by table name prefix. Results are sorted by table name in ascending order.</p>",
     "DescribeMetricFilters": "<p>Lists the specified metric filters. You can list all of the metric filters or filter the results by log name, prefix, metric name, or metric namespace. The results are ASCII-sorted by filter name.</p>",
     "DescribeQueries": "<p>Returns a list of CloudWatch Logs Insights queries that are scheduled, running, or have been run recently in this account. You can request all queries or limit it to queries of a specific log group or queries with a certain status.</p> <p>This operation includes both interactive queries started directly by users and automated queries executed by scheduled query configurations. Scheduled query executions appear in the results alongside manually initiated queries, providing visibility into all query activity in your account.</p>",
     "DescribeQueryDefinitions": "<p>This operation returns a paginated list of your saved CloudWatch Logs Insights query definitions. You can retrieve query definitions from the current account or from a source account that is linked to the current account.</p> <p>You can use the <code>queryDefinitionNamePrefix</code> parameter to limit the results to only the query definitions that have names that start with a certain string.</p>",
@@ -65,6 +68,7 @@
     "GetLogGroupFields": "<p>Returns a list of the fields that are included in log events in the specified log group. Includes the percentage of log events that contain each field. The search is limited to a time period that you specify.</p> <p>This operation is used for discovering fields within log group events. For discovering fields across data sources, use the GetLogFields operation.</p> <p>You can specify the log group to search by using either <code>logGroupIdentifier</code> or <code>logGroupName</code>. You must specify one of these parameters, but you can't specify both. </p> <p>In the results, fields that start with <code>@</code> are fields generated by CloudWatch Logs. For example, <code>@timestamp</code> is the timestamp of each log event. For more information about the fields that are generated by CloudWatch logs, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_AnalyzeLogData-discoverable-fields.html\">Supported Logs and Discovered Fields</a>.</p> <p>The response results are sorted by the frequency percentage, starting with the highest percentage.</p> <p>If you are using CloudWatch cross-account observability, you can use this operation in a monitoring account and view data from the linked source accounts. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html\">CloudWatch cross-account observability</a>.</p>",
     "GetLogObject": "<p>Retrieves a large logging object (LLO) and streams it back. This API is used to fetch the content of large portions of log events that have been ingested through the PutOpenTelemetryLogs API. When log events contain fields that would cause the total event size to exceed 1MB, CloudWatch Logs automatically processes up to 10 fields, starting with the largest fields. Each field is truncated as needed to keep the total event size as close to 1MB as possible. The excess portions are stored as Large Log Objects (LLOs) and these fields are processed separately and LLO reference system fields (in the format <code>@ptr.$[path.to.field]</code>) are added. The path in the reference field reflects the original JSON structure where the large field was located. For example, this could be <code>@ptr.$['input']['message']</code>, <code>@ptr.$['AAA']['BBB']['CCC']['DDD']</code>, <code>@ptr.$['AAA']</code>, or any other path matching your log structure.</p> <note> <p>The <code>GetLogObject</code> API routes requests using SDK host prefix injection. SDK versions released before April 1, 2026 route to <code>streaming-logs.<i>Region</i>.amazonaws.com</code>, which does not support VPC endpoints. SDK versions released on or after April 1, 2026 route to <code>stream-logs.<i>Region</i>.amazonaws.com</code>, which supports VPC endpoints. To set up a VPC endpoint for this API, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/cloudwatch-logs-and-interface-VPC.html#create-VPC-endpoint-for-CloudWatchLogs\">Creating a VPC endpoint for CloudWatch Logs </a>.</p> </note>",
     "GetLogRecord": "<p>Retrieves all of the fields and values of a single log event. All fields are retrieved, even if the original query that produced the <code>logRecordPointer</code> retrieved only a subset of fields. Fields are returned as field name/field value pairs.</p> <p>The full unparsed log event is returned within <code>@message</code>.</p>",
+    "GetLookupTable": "<p>Retrieves the full content of a lookup table, including the CSV data.</p>",
     "GetQueryResults": "<p>Returns the results from the specified query.</p> <p>Only the fields requested in the query are returned, along with a <code>@ptr</code> field, which is the identifier for the log record. You can use the value of <code>@ptr</code> in a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogRecord.html\">GetLogRecord</a> operation to get the full log record.</p> <p> <code>GetQueryResults</code> does not start running a query. To run a query, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartQuery.html\">StartQuery</a>. For more information about how long results of previous queries are available, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/cloudwatch_limits_cwl.html\">CloudWatch Logs quotas</a>.</p> <p>If the value of the <code>Status</code> field in the output is <code>Running</code>, this operation returns only partial results. If you see a value of <code>Scheduled</code> or <code>Running</code> for the status, you can retry the operation later to see the final results. </p> <p>This operation is used both for retrieving results from interactive queries and from automated scheduled query executions. Scheduled queries use <code>GetQueryResults</code> internally to retrieve query results for processing and delivery to configured destinations.</p> <p>If you are using CloudWatch cross-account observability, you can use this operation in a monitoring account to start queries in linked source accounts. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html\">CloudWatch cross-account observability</a>.</p>",
     "GetScheduledQuery": "<p>Retrieves details about a specific scheduled query, including its configuration, execution status, and metadata.</p>",
     "GetScheduledQueryHistory": "<p>Retrieves the execution history of a scheduled query within a specified time range, including query results and destination processing status.</p>",
@@ -109,6 +113,7 @@
     "UpdateAnomaly": "<p>Use this operation to <i>suppress</i> anomaly detection for a specified anomaly or pattern. If you suppress an anomaly, CloudWatch Logs won't report new occurrences of that anomaly and won't update that anomaly with new data. If you suppress a pattern, CloudWatch Logs won't report any anomalies related to that pattern.</p> <p>You must specify either <code>anomalyId</code> or <code>patternId</code>, but you can't specify both parameters in the same operation.</p> <p>If you have previously used this operation to suppress detection of a pattern or anomaly, you can use it again to cause CloudWatch Logs to end the suppression. To do this, use this operation and specify the anomaly or pattern to stop suppressing, and omit the <code>suppressionType</code> and <code>suppressionPeriod</code> parameters.</p>",
     "UpdateDeliveryConfiguration": "<p>Use this operation to update the configuration of a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_Delivery.html\">delivery</a> to change either the S3 path pattern or the format of the delivered logs. You can't use this operation to change the source or destination of the delivery.</p>",
     "UpdateLogAnomalyDetector": "<p>Updates an existing log anomaly detector.</p>",
+    "UpdateLookupTable": "<p>Updates an existing lookup table by replacing all of its CSV content. After the update completes, queries that use this table will use the new data.</p> <p>This is a full replacement operation. All existing content is replaced with the new CSV data.</p>",
     "UpdateScheduledQuery": "<p>Updates an existing scheduled query with new configuration. This operation uses PUT semantics, allowing modification of query parameters, schedule, and destinations.</p>"
   },
   "shapes": {
@@ -305,8 +310,10 @@
         "CreateDeliveryRequest$deliveryDestinationArn": "<p>The ARN of the delivery destination to use for this delivery.</p>",
         "CreateImportTaskRequest$importSourceArn": "<p>The ARN of the source to import from.</p>",
         "CreateImportTaskResponse$importDestinationArn": "<p>The ARN of the CloudWatch Logs log group created as the destination for the imported events.</p>",
+        "CreateLookupTableResponse$lookupTableArn": "<p>The ARN of the lookup table that was created.</p>",
         "CreateScheduledQueryResponse$scheduledQueryArn": "<p>The ARN of the created scheduled query.</p>",
         "DashboardViewerPrincipals$member": null,
+        "DeleteLookupTableRequest$lookupTableArn": "<p>The ARN of the lookup table to delete.</p>",
         "DeleteResourcePolicyRequest$resourceArn": "<p>The ARN of the CloudWatch Logs resource for which the resource policy needs to be deleted</p>",
         "Delivery$arn": "<p>The Amazon Resource Name (ARN) that uniquely identifies this delivery.</p>",
         "Delivery$deliveryDestinationArn": "<p>The ARN of the delivery destination that is associated with this delivery.</p>",
@@ -317,6 +324,8 @@
         "DescribeImportTasksRequest$importSourceArn": "<p>Optional filter to list imports from a specific source</p>",
         "DescribeResourcePoliciesRequest$resourceArn": "<p>The ARN of the CloudWatch Logs resource for which to query the resource policy.</p>",
         "Destination$arn": "<p>The ARN of this destination.</p>",
+        "GetLookupTableRequest$lookupTableArn": "<p>The ARN of the lookup table to retrieve.</p>",
+        "GetLookupTableResponse$lookupTableArn": "<p>The ARN of the lookup table.</p>",
         "GetScheduledQueryHistoryResponse$scheduledQueryArn": "<p>The ARN of the scheduled query.</p>",
         "GetScheduledQueryResponse$scheduledQueryArn": "<p>The ARN of the scheduled query.</p>",
         "Import$importSourceArn": "<p>The ARN of the CloudTrail Lake Event Data Store being imported from.</p>",
@@ -326,6 +335,7 @@
         "LogGroup$logGroupArn": "<p>The Amazon Resource Name (ARN) of the log group. This version of the ARN doesn't include a trailing <code>:*</code> after the log group name. </p> <p>Use this version to refer to the ARN in the following situations:</p> <ul> <li> <p>In the <code>logGroupIdentifier</code> input field in many CloudWatch Logs APIs.</p> </li> <li> <p>In the <code>resourceArn</code> field in tagging APIs</p> </li> <li> <p>In IAM policies, when specifying permissions for <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_TagResource.html\">TagResource</a>, <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_UntagResource.html\">UntagResource</a>, and <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_ListTagsForResource.html\">ListTagsForResource</a>.</p> </li> </ul>",
         "LogGroupSummary$logGroupArn": "<p>The Amazon Resource Name (ARN) of the log group.</p>",
         "LogStream$arn": "<p>The Amazon Resource Name (ARN) of the log stream.</p>",
+        "LookupTable$lookupTableArn": "<p>The ARN of the lookup table.</p>",
         "OpenSearchApplication$applicationArn": "<p>The Amazon Resource Name (ARN) of the application.</p>",
         "OpenSearchCollection$collectionArn": "<p>The ARN of the collection.</p>",
         "OpenSearchResourceConfig$kmsKeyArn": "<p>To have the vended dashboard data encrypted with KMS instead of the CloudWatch Logs default encryption method, specify the ARN of the KMS key that you want to use.</p>",
@@ -336,6 +346,8 @@
         "ResourceArns$member": null,
         "ResourcePolicy$resourceArn": "<p>The ARN of the CloudWatch Logs resource to which the resource policy is attached. Only populated for resource-scoped policies.</p>",
         "ScheduledQuerySummary$scheduledQueryArn": "<p>The ARN of the scheduled query.</p>",
+        "UpdateLookupTableRequest$lookupTableArn": "<p>The ARN of the lookup table to update.</p>",
+        "UpdateLookupTableResponse$lookupTableArn": "<p>The ARN of the lookup table that was updated.</p>",
         "UpdateScheduledQueryResponse$scheduledQueryArn": "<p>The ARN of the updated scheduled query.</p>"
       }
     },
@@ -510,6 +522,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateLookupTableRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateLookupTableResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateScheduledQueryRequest": {
       "base": null,
       "refs": {}
@@ -668,6 +688,10 @@
       "refs": {}
     },
     "DeleteLogStreamRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteLookupTableRequest": {
       "base": null,
       "refs": {}
     },
@@ -980,6 +1004,20 @@
       "refs": {}
     },
     "DescribeLogStreamsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeLookupTablesMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeLookupTablesRequest$maxResults": "<p>The maximum number of lookup tables to return in the response. The default value is 50 and the maximum value is 100.</p>"
+      }
+    },
+    "DescribeLookupTablesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeLookupTablesResponse": {
       "base": null,
       "refs": {}
     },
@@ -1628,6 +1666,14 @@
       "base": null,
       "refs": {}
     },
+    "GetLookupTableRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetLookupTableResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetQueryResultsRequest": {
       "base": null,
       "refs": {}
@@ -1973,9 +2019,13 @@
         "AnomalyDetector$kmsKeyId": "<p>The ARN of the KMS key assigned to this anomaly detector, if any.</p>",
         "AssociateKmsKeyRequest$kmsKeyId": "<p>The Amazon Resource Name (ARN) of the KMS key to use when encrypting log data. This must be a symmetric KMS key. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-kms\">Amazon Resource Names</a> and <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html\">Using Symmetric and Asymmetric Keys</a>.</p>",
         "CreateLogGroupRequest$kmsKeyId": "<p>The Amazon Resource Name (ARN) of the KMS key to use when encrypting log data. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-kms\">Amazon Resource Names</a>.</p>",
+        "CreateLookupTableRequest$kmsKeyId": "<p>The ARN of the KMS key to use to encrypt the lookup table data. If you don't specify a key, the data is encrypted with an Amazon Web Services-owned key.</p>",
         "GetLogAnomalyDetectorResponse$kmsKeyId": "<p>The ARN of the KMS key assigned to this anomaly detector, if any.</p>",
+        "GetLookupTableResponse$kmsKeyId": "<p>The ARN of the KMS key used to encrypt the lookup table data, if applicable.</p>",
         "LogGroup$kmsKeyId": "<p>The Amazon Resource Name (ARN) of the KMS key to use when encrypting log data.</p>",
-        "S3Configuration$kmsKeyId": "<p>The Amazon Resource Name (ARN) of the KMS encryption key. Must belong to the same AWS Region as the destination Amazon S3 bucket.</p>"
+        "LookupTable$kmsKeyId": "<p>The ARN of the KMS key used to encrypt the lookup table data, if applicable.</p>",
+        "S3Configuration$kmsKeyId": "<p>The Amazon Resource Name (ARN) of the KMS encryption key. Must belong to the same AWS Region as the destination Amazon S3 bucket.</p>",
+        "UpdateLookupTableRequest$kmsKeyId": "<p>The ARN of the KMS key to use to encrypt the lookup table data. You can use this parameter to add, update, or remove the KMS key. To remove the KMS key and use an Amazon Web Services-owned key instead, specify an empty string.</p>"
       }
     },
     "LimitExceededException": {
@@ -2432,6 +2482,36 @@
         "DescribeConfigurationTemplatesRequest$logTypes": "<p>Use this parameter to filter the response to include only the configuration templates that apply to the log types that you specify here.</p>"
       }
     },
+    "LookupTable": {
+      "base": "<p>Contains metadata about a lookup table returned by <code>DescribeLookupTables</code>.</p>",
+      "refs": {
+        "LookupTables$member": null
+      }
+    },
+    "LookupTableDescription": {
+      "base": null,
+      "refs": {
+        "CreateLookupTableRequest$description": "<p>A description of the lookup table. The description can be up to 1024 characters long.</p>",
+        "GetLookupTableResponse$description": "<p>The description of the lookup table.</p>",
+        "LookupTable$description": "<p>The description of the lookup table.</p>",
+        "UpdateLookupTableRequest$description": "<p>An updated description of the lookup table.</p>"
+      }
+    },
+    "LookupTableName": {
+      "base": null,
+      "refs": {
+        "CreateLookupTableRequest$lookupTableName": "<p>The name of the lookup table. The name must be unique within your account and Region. The name can contain only alphanumeric characters and underscores, and can be up to 256 characters long.</p>",
+        "DescribeLookupTablesRequest$lookupTableNamePrefix": "<p>A prefix to filter lookup tables by name. Only tables whose names start with this prefix are returned. If you don't specify a prefix, all tables in the account and Region are returned.</p>",
+        "GetLookupTableResponse$lookupTableName": "<p>The name of the lookup table.</p>",
+        "LookupTable$lookupTableName": "<p>The name of the lookup table.</p>"
+      }
+    },
+    "LookupTables": {
+      "base": null,
+      "refs": {
+        "DescribeLookupTablesResponse$lookupTables": "<p>An array of structures, where each structure contains metadata about one lookup table.</p>"
+      }
+    },
     "LowerCaseString": {
       "base": "<p>This processor converts a string to lowercase.</p> <p>For more information about this processor including examples, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-lowerCaseString\"> lowerCaseString</a> in the <i>CloudWatch Logs User Guide</i>.</p>",
       "refs": {
@@ -2580,6 +2660,8 @@
         "DescribeLogGroupsResponse$nextToken": null,
         "DescribeLogStreamsRequest$nextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "DescribeLogStreamsResponse$nextToken": null,
+        "DescribeLookupTablesRequest$nextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
+        "DescribeLookupTablesResponse$nextToken": "<p>The token to use when requesting the next set of items.</p>",
         "DescribeMetricFiltersRequest$nextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "DescribeMetricFiltersResponse$nextToken": null,
         "DescribeQueriesRequest$nextToken": null,
@@ -3240,6 +3322,12 @@
         "UpdateDeliveryConfigurationRequest$recordFields": "<p>The list of record fields to be delivered to the destination, in order. If the delivery's log source has mandatory fields, they must be included in this list.</p>"
       }
     },
+    "RecordsCount": {
+      "base": null,
+      "refs": {
+        "LookupTable$recordsCount": "<p>The number of data rows in the lookup table, excluding the header row.</p>"
+      }
+    },
     "RejectedEntityInfo": {
       "base": "<p>If an entity is rejected when a <code>PutLogEvents</code> request was made, this includes details about the reason for the rejection.</p>",
       "refs": {
@@ -3714,9 +3802,11 @@
     "StoredBytes": {
       "base": null,
       "refs": {
+        "GetLookupTableResponse$sizeBytes": "<p>The size of the lookup table in bytes.</p>",
         "ImportStatistics$bytesImported": "<p>The total number of bytes that have been imported to the managed log group.</p>",
         "LogGroup$storedBytes": "<p>The number of bytes stored.</p>",
-        "LogStream$storedBytes": "<p>The number of bytes stored.</p> <p> <b>Important:</b> As of June 17, 2019, this parameter is no longer supported for log streams, and is always reported as zero. This change applies only to log streams. The <code>storedBytes</code> parameter for log groups is not affected.</p>"
+        "LogStream$storedBytes": "<p>The number of bytes stored.</p> <p> <b>Important:</b> As of June 17, 2019, this parameter is no longer supported for log streams, and is always reported as zero. This change applies only to log streams. The <code>storedBytes</code> parameter for log groups is not affected.</p>",
+        "LookupTable$sizeBytes": "<p>The size of the lookup table in bytes.</p>"
       }
     },
     "String": {
@@ -3725,6 +3815,7 @@
         "ScheduledQueryDestination$destinationIdentifier": "<p>The identifier for the destination where results are delivered.</p>",
         "ScheduledQueryDestination$processedIdentifier": "<p>The identifier of the processed result at the destination.</p>",
         "ScheduledQueryDestination$errorMessage": "<p>Error message if destination processing failed.</p>",
+        "TableFields$member": null,
         "TriggerHistoryRecord$errorMessage": "<p>Error message if the query execution failed.</p>"
       }
     },
@@ -3795,6 +3886,20 @@
         "EmitSystemFields$member": null
       }
     },
+    "TableBody": {
+      "base": null,
+      "refs": {
+        "CreateLookupTableRequest$tableBody": "<p>The CSV content of the lookup table. The first row must be a header row with column names. The content must use UTF-8 encoding and not exceed 10 MB.</p>",
+        "GetLookupTableResponse$tableBody": "<p>The full CSV content of the lookup table.</p>",
+        "UpdateLookupTableRequest$tableBody": "<p>The new CSV content to replace the existing data. The first row must be a header row with column names. The content must use UTF-8 encoding and not exceed 10 MB.</p>"
+      }
+    },
+    "TableFields": {
+      "base": null,
+      "refs": {
+        "LookupTable$tableFields": "<p>The column headers from the first row of the CSV file.</p>"
+      }
+    },
     "TagKey": {
       "base": null,
       "refs": {
@@ -3835,6 +3940,7 @@
         "CreateDeliveryRequest$tags": "<p>An optional list of key-value pairs to associate with the resource.</p> <p>For more information about tagging, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services resources</a> </p>",
         "CreateLogAnomalyDetectorRequest$tags": "<p>An optional list of key-value pairs to associate with the resource.</p> <p>For more information about tagging, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services resources</a> </p>",
         "CreateLogGroupRequest$tags": "<p>The key-value pairs to use for the tags.</p> <p>You can grant users access to certain log groups while preventing them from accessing other log groups. To do so, tag your groups and use IAM policies that refer to those tags. To assign tags when you create a log group, you must have either the <code>logs:TagResource</code> or <code>logs:TagLogGroup</code> permission. For more information about tagging, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services resources</a>. For more information about using tags to control access, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html\">Controlling access to Amazon Web Services resources using tags</a>.</p>",
+        "CreateLookupTableRequest$tags": "<p>A list of key-value pairs to associate with the lookup table. You can associate as many as 50 tags with a lookup table. Tags can help you organize and categorize your resources.</p>",
         "CreateScheduledQueryRequest$tags": "<p>Key-value pairs to associate with the scheduled query for resource management and cost allocation.</p>",
         "Delivery$tags": "<p>The tags that have been assigned to this delivery.</p>",
         "DeliveryDestination$tags": "<p>The tags that have been assigned to this delivery destination.</p>",
@@ -3918,6 +4024,7 @@
         "CreateExportTaskRequest$from": "<p>The start time of the range for the request, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>. Events with a timestamp earlier than this time are not exported.</p>",
         "CreateExportTaskRequest$to": "<p>The end time of the range for the request, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>. Events with a timestamp later than this time are not exported.</p> <p>You must specify a time that is not earlier than when this log group was created.</p>",
         "CreateImportTaskResponse$creationTime": "<p>The timestamp when the import task was created, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC.</p>",
+        "CreateLookupTableResponse$createdAt": "<p>The time when the lookup table was created, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>.</p>",
         "CreateScheduledQueryRequest$scheduleStartTime": "<p>The start time for the scheduled query in Unix epoch format. The query will not execute before this time.</p>",
         "CreateScheduledQueryRequest$scheduleEndTime": "<p>The end time for the scheduled query in Unix epoch format. The query will stop executing after this time.</p>",
         "Destination$creationTime": "<p>The creation time of the destination, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC.</p>",
@@ -3936,6 +4043,7 @@
         "GetLogEventsRequest$startTime": "<p>The start of the time range, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>. Events with a timestamp equal to this time or later than this time are included. Events with a timestamp earlier than this time are not included.</p>",
         "GetLogEventsRequest$endTime": "<p>The end of the time range, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>. Events with a timestamp equal to or later than this time are not included.</p>",
         "GetLogGroupFieldsRequest$time": "<p>The time to set as the center of the query. If you specify <code>time</code>, the 8 minutes before and 8 minutes after this time are searched. If you omit <code>time</code>, the most recent 15 minutes up to the current time are searched.</p> <p>The <code>time</code> value is specified as epoch time, which is the number of seconds since <code>January 1, 1970, 00:00:00 UTC</code>.</p>",
+        "GetLookupTableResponse$lastUpdatedTime": "<p>The time when the lookup table was last updated, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>.</p>",
         "GetScheduledQueryHistoryRequest$startTime": "<p>The start time for the history query in Unix epoch format.</p>",
         "GetScheduledQueryHistoryRequest$endTime": "<p>The end time for the history query in Unix epoch format.</p>",
         "GetScheduledQueryResponse$lastTriggeredTime": "<p>The timestamp when the scheduled query was last executed.</p>",
@@ -3959,6 +4067,7 @@
         "LogStream$firstEventTimestamp": "<p>The time of the first event, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>.</p>",
         "LogStream$lastEventTimestamp": "<p>The time of the most recent log event in the log stream in CloudWatch Logs. This number is expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>. The <code>lastEventTime</code> value updates on an eventual consistency basis. It typically updates in less than an hour from ingestion, but in rare situations might take longer.</p>",
         "LogStream$lastIngestionTime": "<p>The ingestion time, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code> The <code>lastIngestionTime</code> value updates on an eventual consistency basis. It typically updates in less than an hour after ingestion, but in rare situations might take longer.</p>",
+        "LookupTable$lastUpdatedTime": "<p>The time when the lookup table was last updated, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>.</p>",
         "MetricFilter$creationTime": "<p>The creation time of the metric filter, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>.</p>",
         "OutputLogEvent$timestamp": "<p>The time the event occurred, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>.</p>",
         "OutputLogEvent$ingestionTime": "<p>The time the event was ingested, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>.</p>",
@@ -3974,6 +4083,7 @@
         "StartQueryRequest$endTime": "<p>The end of the time range to query. The range is inclusive, so the specified end time is included in the query. Specified as epoch time, the number of seconds since <code>January 1, 1970, 00:00:00 UTC</code>.</p>",
         "SubscriptionFilter$creationTime": "<p>The creation time of the subscription filter, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>.</p>",
         "TriggerHistoryRecord$triggeredTimestamp": "<p>The timestamp when the scheduled query execution was triggered.</p>",
+        "UpdateLookupTableResponse$lastUpdatedTime": "<p>The time when the lookup table was last updated, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>.</p>",
         "UpdateScheduledQueryRequest$scheduleStartTime": "<p>The updated start time for the scheduled query in Unix epoch format.</p>",
         "UpdateScheduledQueryRequest$scheduleEndTime": "<p>The updated end time for the scheduled query in Unix epoch format.</p>",
         "UpdateScheduledQueryResponse$lastTriggeredTime": "<p>The timestamp when the updated scheduled query was last executed.</p>",
@@ -4112,6 +4222,14 @@
       "refs": {}
     },
     "UpdateLogAnomalyDetectorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLookupTableRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLookupTableResponse": {
       "base": null,
       "refs": {}
     },
