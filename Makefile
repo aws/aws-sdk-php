@@ -33,7 +33,7 @@ test:
 
 test-phar: package
 	[ -f build/artifacts/behat.phar ] || (cd build/artifacts && \
-	wget https://github.com/Behat/Behat/releases/download/v3.0.15/behat.phar)
+	wget https://github.com/Behat/Behat/releases/download/v3.13.0/behat.phar)
 	[ -f build/artifacts/phpunit.phar ] || (cd build/artifacts && \
 	wget https://phar.phpunit.de/phpunit.phar)
 	php -dopcache.enable_cli=1 build/WorkflowCommandRunner.php phar-test-runner --format=progress
