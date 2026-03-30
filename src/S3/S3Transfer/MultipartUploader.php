@@ -514,6 +514,8 @@ final class MultipartUploader extends AbstractMultipartUploader
                 $resumeFilePath = $this->source . '.resume';
             }
 
+            $sourceSize = $this->body->getSize()
+                ?? $this->calculatedObjectSize;
             $this->resumableUpload = new ResumableUpload(
                 $resumeFilePath,
                 $this->requestArgs,
@@ -522,7 +524,7 @@ final class MultipartUploader extends AbstractMultipartUploader
                 $this->uploadId,
                 $this->partsCompleted,
                 $this->source,
-                $this->getTotalSize(),
+                $sourceSize,
                 $this->calculatePartSize(),
                 $this->isFullObjectChecksum
             );
