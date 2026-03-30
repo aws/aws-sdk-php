@@ -58,15 +58,27 @@ if (!isset(WORKFLOW_COMMANDS[$commandName])) {
 }
 
 $args = array_slice($argv, 2);
+
+$projectRoot = null;
+$filteredArgs = [];
+foreach ($args as $arg) {
+    if (str_starts_with($arg, '--project-root=')) {
+        $projectRoot = substr($arg, strlen('--project-root='));
+    } else {
+        $filteredArgs[] = $arg;
+    }
+}
+$args = $filteredArgs;
+
 $_SERVER['argv'] = array_merge([$argv[0]], $args);
-$_SERVER['argc'] = count($argv);
+$_SERVER['argc'] = count($_SERVER['argv']);
 
 $class = WORKFLOW_COMMANDS[$commandName];
 
 if ($class === ListCommand::class) {
     $command = new ListCommand(WORKFLOW_COMMANDS);
 } else {
-    $command = new $class();
+    $command = new $class($projectRoot);
 }
 
 exit($command->execute($args));

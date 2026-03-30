@@ -21,7 +21,7 @@ final class PharTestRunnerCommand extends AbstractCommand
 
     protected function doExecute(array $args): int
     {
-        $buildDir = $this->getBuildDir();
+        $buildDir = self::getBuildDir();
 
         require $buildDir . '/artifacts/aws.phar';
         require $buildDir . '/artifacts/phpunit.phar';

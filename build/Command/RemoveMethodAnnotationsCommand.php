@@ -21,7 +21,7 @@ final class RemoveMethodAnnotationsCommand extends AbstractCommand
 
     protected function doExecute(array $args): int
     {
-        $directoryPath = $this->getBuildDir() . '/artifacts/staging/Aws';
+        $directoryPath = self::getBuildDir() . '/artifacts/staging/Aws';
         $fileSuffix = 'Client.php';
         $this->removeMethodAnnotations($directoryPath, $fileSuffix);
 

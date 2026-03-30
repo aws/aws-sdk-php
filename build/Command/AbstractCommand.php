@@ -5,6 +5,12 @@ namespace AwsBuild\Command;
 abstract class AbstractCommand implements CommandInterface
 {
     protected bool $verbose = false;
+    private ?string $projectRoot;
+
+    public function __construct(?string $projectRoot = null)
+    {
+        $this->projectRoot = $projectRoot ?? dirname(__DIR__, 2);
+    }
 
     public function execute(array $args): int
     {
@@ -49,9 +55,9 @@ abstract class AbstractCommand implements CommandInterface
     {
         $options = [];
         foreach ($args as $arg) {
-            if (strpos($arg, '--') === 0) {
+            if (str_starts_with($arg, '--')) {
                 $arg = substr($arg, 2);
-                if (strpos($arg, '=') !== false) {
+                if (str_contains($arg, '=')) {
                     [$key, $value] = explode('=', $arg, 2);
                     $options[$key] = $value;
                 } else {
@@ -64,10 +70,10 @@ abstract class AbstractCommand implements CommandInterface
 
     protected function getProjectRoot(): string
     {
-        return dirname(__DIR__, 2);
+        return $this->projectRoot;
     }
 
-    protected function getBuildDir(): string
+    protected static function getBuildDir(): string
     {
         return dirname(__DIR__);
     }

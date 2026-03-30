@@ -445,16 +445,20 @@ final class RemoveServiceCommand extends AbstractCommand
         $escapedPaths = implode(' ', array_map('escapeshellarg', $paths));
         exec('git add ' . $escapedPaths . ' 2>&1', $output, $exitCode);
         if ($exitCode !== 0) {
-            $this->error('git add failed: ' . implode("\n", $output));
-            exit($exitCode);
+            $errorMessage = 'git add failed: ' . implode("\n", $output);
+            $this->error($errorMessage);
+
+            throw new \RuntimeException($errorMessage);
         }
 
         $output = [];
         $message = "Remove {$namespace} service";
         exec('git commit -m ' . escapeshellarg($message) . ' 2>&1', $output, $exitCode);
         if ($exitCode !== 0) {
-            $this->error('git commit failed: ' . implode("\n", $output));
-            exit($exitCode);
+            $errorMessage = 'git commit failed: ' . implode("\n", $output);
+            $this->error($errorMessage);
+
+            throw new \RuntimeException($errorMessage);
         }
     }
 

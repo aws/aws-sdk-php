@@ -128,7 +128,7 @@ final class GhReleaseCommand extends AbstractCommand
         $isSuccessful = false;
         $attempts = 0;
         $filetype = substr($filename, strpos($filename, '.') + 1);
-        $buildDir = $this->getBuildDir();
+        $buildDir = self::getBuildDir();
 
         while (!$isSuccessful && $attempts < self::MAX_ATTEMPTS) {
             try {

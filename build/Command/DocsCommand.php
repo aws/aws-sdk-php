@@ -23,7 +23,7 @@ final class DocsCommand extends AbstractCommand
 
     protected function doExecute(array $args): int
     {
-        $buildDir = $this->getBuildDir();
+        $buildDir = self::getBuildDir();
         $projectRoot = $this->getProjectRoot();
 
         // Setup directories.

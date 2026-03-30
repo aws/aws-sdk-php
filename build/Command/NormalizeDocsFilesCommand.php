@@ -21,7 +21,7 @@ final class NormalizeDocsFilesCommand extends AbstractCommand
 
     protected function doExecute(array $args): int
     {
-        $buildDir = $this->getBuildDir();
+        $buildDir = self::getBuildDir();
         $parentDirectory = $buildDir . '/artifacts/docs';
         $classesDirectory = "$parentDirectory/classes";
         $namespacesDirectory = "$parentDirectory/namespaces";

@@ -8,6 +8,7 @@ final class ListCommand extends AbstractCommand
 
     public function __construct(array $commandMap)
     {
+        parent::__construct();
         $this->commandMap = $commandMap;
     }
 

@@ -21,7 +21,7 @@ final class TestPharCommand extends AbstractCommand
 
     protected function doExecute(array $args): int
     {
-        $pharPath = $this->getBuildDir() . '/artifacts/aws.phar';
+        $pharPath = self::getBuildDir() . '/artifacts/aws.phar';
 
         if (!file_exists($pharPath)) {
             $this->error("Phar not found: $pharPath");

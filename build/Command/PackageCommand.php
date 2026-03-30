@@ -21,9 +21,7 @@ final class PackageCommand extends AbstractCommand
 
     protected function doExecute(array $args): int
     {
-        $options = $this->parseOptions($args);
-
-        $buildDir = $this->getBuildDir();
+        $buildDir = self::getBuildDir();
         $projectRoot = $this->getProjectRoot();
         $stageDirectory = $buildDir . '/artifacts/staging';
         $burgomaster = new \Burgomaster($stageDirectory, $projectRoot . '/');

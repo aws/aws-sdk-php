@@ -23,7 +23,7 @@ final class BuildRedirectMapCommand extends AbstractCommand
 
     protected function doExecute(array $args): int
     {
-        $path = $this->getBuildDir() . '/artifacts/docs/package.redirects.conf';
+        $path = self::getBuildDir() . '/artifacts/docs/package.redirects.conf';
         $apiProvider = \Aws\Api\ApiProvider::defaultProvider();
 
         $builder = new RedirectMapBuilder($apiProvider, $path);
