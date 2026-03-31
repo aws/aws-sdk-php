@@ -54,8 +54,9 @@ final class UploadDirectoryRequest extends AbstractTransferRequest
      * - max_concurrency: (int, optional) The max number of concurrent uploads.
      * - max_depth: (int, optional) To indicate the maximum depth of the recursive
      *   file tree walk. By default, it will use the built-in default value which is -1.
-     * @param array $listeners For listening to transfer events such as transferInitiated.
-     * @param AbstractTransferListener|null $progressTracker For showing progress in transfers.
+     * @param array $listeners Directory-level listeners that receive directory snapshots.
+     * @param AbstractTransferListener|null $progressTracker Directory-level progress tracker.
+     * @param array $singleObjectListeners Per-object listeners that receive single-object snapshots.
      */
     public function __construct(
         string $sourceDirectory,
@@ -63,9 +64,15 @@ final class UploadDirectoryRequest extends AbstractTransferRequest
         array $uploadRequestArgs = [],
         array $config = [],
         array $listeners = [],
-        ?AbstractTransferListener $progressTracker = null
+        ?AbstractTransferListener $progressTracker = null,
+        array $singleObjectListeners = []
     ) {
-        parent::__construct($listeners, $progressTracker, $config);
+        parent::__construct(
+            $listeners,
+            $progressTracker,
+            $config,
+            $singleObjectListeners
+        );
         $this->sourceDirectory = $sourceDirectory;
         if (ArnParser::isArn($targetBucket)) {
             $targetBucket =  ArnParser::parse($targetBucket)->getResource();

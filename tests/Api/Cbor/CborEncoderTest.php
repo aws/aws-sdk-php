@@ -5,6 +5,7 @@ use Aws\Api\Cbor\CborDecoder;
 use Aws\Api\Cbor\CborEncoder;
 use Aws\Api\Cbor\Exception\CborException;
 use DateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -21,9 +22,7 @@ class CborEncoderTest extends TestCase
         $this->decoder = new CborDecoder();
     }
 
-    /**
-     * @dataProvider nullProvider
-     */
+    #[DataProvider('nullProvider')]
     public function testEncodeNull($value, string $expected): void
     {
         $this->assertSame($expected, $this->encoder->encode($value));
@@ -36,9 +35,7 @@ class CborEncoderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider booleanProvider
-     */
+    #[DataProvider('booleanProvider')]
     public function testEncodeBoolean(bool $value, string $expected): void
     {
         $this->assertSame($expected, $this->encoder->encode($value));
@@ -52,9 +49,7 @@ class CborEncoderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider unsignedIntegerProvider
-     */
+    #[DataProvider('unsignedIntegerProvider')]
     public function testEncodeUnsignedInteger(int $value, string $expected): void
     {
         $this->assertSame($expected, $this->encoder->encode($value));
@@ -89,9 +84,7 @@ class CborEncoderTest extends TestCase
         yield 'large' => [9223372036854775807, "\x1B\x7F\xFF\xFF\xFF\xFF\xFF\xFF\xFF"];
     }
 
-    /**
-     * @dataProvider negativeIntegerProvider
-     */
+    #[DataProvider('negativeIntegerProvider')]
     public function testEncodeNegativeInteger(int $value, string $expected): void
     {
         $this->assertSame($expected, $this->encoder->encode($value));
@@ -120,9 +113,7 @@ class CborEncoderTest extends TestCase
         yield '-1000000' => [-1000000, "\x3A\x00\x0F\x42\x3F"];
     }
 
-    /**
-     * @dataProvider floatProvider
-     */
+    #[DataProvider('floatProvider')]
     public function testEncodeFloat(float $value, string $expected): void
     {
         $this->assertSame($expected, $this->encoder->encode($value));
@@ -141,9 +132,7 @@ class CborEncoderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider stringProvider
-     */
+    #[DataProvider('stringProvider')]
     public function testEncodeString(string $value, string $expected): void
     {
         $this->assertSame($expected, $this->encoder->encode($value));
@@ -169,9 +158,7 @@ class CborEncoderTest extends TestCase
         yield 'unicode' => ['Hello 世界', "\x6CHello 世界"];
     }
 
-    /**
-     * @dataProvider arrayProvider
-     */
+    #[DataProvider('arrayProvider')]
     public function testEncodeArray(array $value, string $expected): void
     {
         $this->assertSame($expected, $this->encoder->encode($value));
@@ -196,9 +183,7 @@ class CborEncoderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider mapProvider
-     */
+    #[DataProvider('mapProvider')]
     public function testEncodeMap(array $value, string $expected): void
     {
         $this->assertSame($expected, $this->encoder->encode($value));
@@ -221,9 +206,7 @@ class CborEncoderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider timestampProvider
-     */
+    #[DataProvider('timestampProvider')]
     public function testEncodeTimestamp(array $value, float $expected): void
     {
         $encoded = $this->encoder->encode($value);
@@ -419,9 +402,7 @@ class CborEncoderTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider byteStringProvider
-     */
+    #[DataProvider('byteStringProvider')]
     public function testEncodeByteString(string $bytes, string $expected): void
     {
         $encoded = $this->encoder->encode(['__cbor_bytes' => $bytes]);
@@ -503,9 +484,7 @@ class CborEncoderTest extends TestCase
         $this->assertSame("\x00\x01\x00\x00", substr($encoded, 1, 4));
     }
 
-    /**
-     * @dataProvider integerBoundaryProvider
-     */
+    #[DataProvider('integerBoundaryProvider')]
     public function testIntegerBoundaries(int $value, string $expectedPrefix): void
     {
         $encoded = $this->encoder->encode($value);

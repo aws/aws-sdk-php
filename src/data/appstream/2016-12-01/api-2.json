@@ -1795,6 +1795,12 @@
       },
       "exception":true
     },
+    "ContentRedirection":{
+      "type":"structure",
+      "members":{
+        "HostToClient":{"shape":"UrlRedirectionConfig"}
+      }
+    },
     "CopyImageRequest":{
       "type":"structure",
       "required":[
@@ -2100,7 +2106,8 @@
         "Tags":{"shape":"Tags"},
         "AccessEndpoints":{"shape":"AccessEndpointList"},
         "EmbedHostDomains":{"shape":"EmbedHostDomains"},
-        "StreamingExperienceSettings":{"shape":"StreamingExperienceSettings"}
+        "StreamingExperienceSettings":{"shape":"StreamingExperienceSettings"},
+        "ContentRedirection":{"shape":"ContentRedirection"}
       }
     },
     "CreateStackResult":{
@@ -3747,7 +3754,8 @@
         "ApplicationSettings":{"shape":"ApplicationSettingsResponse"},
         "AccessEndpoints":{"shape":"AccessEndpointList"},
         "EmbedHostDomains":{"shape":"EmbedHostDomains"},
-        "StreamingExperienceSettings":{"shape":"StreamingExperienceSettings"}
+        "StreamingExperienceSettings":{"shape":"StreamingExperienceSettings"},
+        "ContentRedirection":{"shape":"ContentRedirection"}
       }
     },
     "StackAttribute":{
@@ -3764,7 +3772,8 @@
         "EMBED_HOST_DOMAINS",
         "IAM_ROLE_ARN",
         "ACCESS_ENDPOINTS",
-        "STREAMING_EXPERIENCE_SETTINGS"
+        "STREAMING_EXPERIENCE_SETTINGS",
+        "CONTENT_REDIRECTION"
       ]
     },
     "StackAttributes":{
@@ -4239,6 +4248,27 @@
       "type":"structure",
       "members":{
         "Theme":{"shape":"Theme"}
+      }
+    },
+    "UrlPattern":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^(\\*|https?://[^\\s,;]+)$"
+    },
+    "UrlPatternList":{
+      "type":"list",
+      "member":{"shape":"UrlPattern"},
+      "max":100,
+      "min":0
+    },
+    "UrlRedirectionConfig":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"BooleanObject"},
+        "AllowedUrls":{"shape":"UrlPatternList"},
+        "DeniedUrls":{"shape":"UrlPatternList"}
       }
     },
     "UsageReportExecutionErrorCode":{

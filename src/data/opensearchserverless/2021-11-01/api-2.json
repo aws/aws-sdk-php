@@ -1012,9 +1012,11 @@
       "type":"string",
       "enum":[
         "CREATING",
+        "UPDATING",
         "DELETING",
         "ACTIVE",
-        "FAILED"
+        "FAILED",
+        "UPDATE_FAILED"
       ]
     },
     "CollectionSummaries":{
@@ -2258,6 +2260,7 @@
         "status":{"shape":"CollectionStatus"},
         "type":{"shape":"CollectionType"},
         "description":{"shape":"String"},
+        "vectorOptions":{"shape":"VectorOptions"},
         "arn":{"shape":"String"},
         "createdDate":{"shape":"Long"},
         "lastModifiedDate":{"shape":"Long"}
@@ -2305,6 +2308,7 @@
       "members":{
         "id":{"shape":"CollectionId"},
         "description":{"shape":"UpdateCollectionRequestDescriptionString"},
+        "vectorOptions":{"shape":"VectorOptions"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true

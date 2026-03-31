@@ -8,7 +8,7 @@ final class TransferProgressSnapshot
 {
     /** @var string */
     private string $identifier;
-    
+
     /** @var int */
     private int $transferredBytes;
 
@@ -90,5 +90,50 @@ final class TransferProgressSnapshot
     public function getReason(): Throwable|string|null
     {
         return $this->reason;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'identifier' => $this->identifier,
+            'transferredBytes' => $this->transferredBytes,
+            'totalBytes' => $this->totalBytes,
+            'reason' => $this->reason,
+            'response' => $this->response,
+        ];
+    }
+
+    /**
+     * @param array $response
+     *
+     * @return TransferProgressSnapshot
+     */
+    public function withResponse(array $response): TransferProgressSnapshot
+    {
+        return new self(
+            $this->identifier,
+            $this->transferredBytes,
+            $this->totalBytes,
+            $response,
+        );
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return TransferProgressSnapshot
+     */
+    public static function fromArray(array $data): TransferProgressSnapshot
+    {
+        return new self(
+            $data['identifier'] ?? null,
+            $data['transferredBytes'] ?? 0,
+            $data['totalBytes'] ?? 0,
+            $data['response'] ?? null,
+            $data['reason'] ?? null
+        );
     }
 }

@@ -126,6 +126,47 @@
         "title": "To save a lexicon"
       }
     ],
+    "StartSpeechSynthesisStream": [
+      {
+        "input": {
+          "ActionStream": {
+            "CloseStreamEvent": {},
+            "TextEvent": {
+              "Text": "Hello, this is a test of bidirectional streaming synthesis.",
+              "TextType": "text"
+            }
+          },
+          "Engine": "generative",
+          "LanguageCode": "en-US",
+          "OutputFormat": "pcm",
+          "SampleRate": "16000",
+          "VoiceId": "Joanna"
+        },
+        "output": {
+          "EventStream": {
+            "AudioEvent": {
+              "AudioChunk": "AUDIO_DATA"
+            },
+            "StreamClosedEvent": {
+              "RequestCharacters": 58
+            }
+          }
+        },
+        "comments": {
+          "input": {
+            "ActionStream": "The input event stream. Send TextEvent messages with text to synthesize, and a CloseStreamEvent to signal the end of input.",
+            "Engine": "The engine to use for synthesis.",
+            "OutputFormat": "The audio format."
+          },
+          "output": {
+            "EventStream": "The output event stream. AudioEvent messages contain synthesized audio chunks, and StreamClosedEvent signals completion with the total character count."
+          }
+        },
+        "description": "The following example shows how to use the StartSpeechSynthesisStream operation to send text events over an input stream and receive audio events over an output stream.",
+        "id": "to-start-speech-synthesis-stream-1741791835844",
+        "title": "To synthesize speech using a bidirectional stream"
+      }
+    ],
     "SynthesizeSpeech": [
       {
         "input": {

@@ -8,7 +8,7 @@
     "CreateBrowser": "<p>Creates a custom browser.</p>",
     "CreateBrowserProfile": "<p>Creates a browser profile in Amazon Bedrock AgentCore. A browser profile stores persistent browser data such as cookies, local storage, session storage, and browsing history that can be saved from browser sessions and reused in subsequent sessions.</p>",
     "CreateCodeInterpreter": "<p>Creates a custom code interpreter.</p>",
-    "CreateEvaluator": "<p> Creates a custom evaluator for agent quality assessment. Custom evaluators use LLM-as-a-Judge configurations with user-defined prompts, rating scales, and model settings to evaluate agent performance at tool call, trace, or session levels. </p>",
+    "CreateEvaluator": "<p> Creates a custom evaluator for agent quality assessment. Custom evaluators can use either LLM-as-a-Judge configurations with user-defined prompts, rating scales, and model settings, or code-based configurations with customer-managed Lambda functions to evaluate agent performance at tool call, trace, or session levels. </p>",
     "CreateGateway": "<p>Creates a gateway for Amazon Bedrock Agent. A gateway serves as an integration point between your agent and external services.</p> <p>If you specify <code>CUSTOM_JWT</code> as the <code>authorizerType</code>, you must provide an <code>authorizerConfiguration</code>.</p>",
     "CreateGatewayTarget": "<p>Creates a target for a gateway. A target defines an endpoint that the gateway can connect to.</p>",
     "CreateMemory": "<p>Creates a new Amazon Bedrock AgentCore Memory resource.</p>",
@@ -507,6 +507,25 @@
         "GetBrowserResponse$browserArn": "<p>The Amazon Resource Name (ARN) of the browser.</p>"
       }
     },
+    "BrowserEnterprisePolicies": {
+      "base": null,
+      "refs": {
+        "CreateBrowserRequest$enterprisePolicies": "<p>A list of enterprise policy files for the browser.</p>",
+        "GetBrowserResponse$enterprisePolicies": "<p>The list of enterprise policy files configured for the browser.</p>"
+      }
+    },
+    "BrowserEnterprisePolicy": {
+      "base": "<p>Browser enterprise policy configuration.</p>",
+      "refs": {
+        "BrowserEnterprisePolicies$member": null
+      }
+    },
+    "BrowserEnterprisePolicyType": {
+      "base": null,
+      "refs": {
+        "BrowserEnterprisePolicy$type": "<p>The type of browser enterprise policy. Available values are <code>MANAGED</code> and <code>RECOMMENDED</code>.</p>"
+      }
+    },
     "BrowserId": {
       "base": null,
       "refs": {
@@ -558,7 +577,8 @@
       "refs": {
         "BrowserProfileSummary$name": "<p>The name of the browser profile.</p>",
         "CreateBrowserProfileRequest$name": "<p>The name of the browser profile. The name must be unique within your account and can contain alphanumeric characters and underscores.</p>",
-        "GetBrowserProfileResponse$name": "<p>The name of the browser profile.</p>"
+        "GetBrowserProfileResponse$name": "<p>The name of the browser profile.</p>",
+        "ListBrowserProfilesRequest$name": "<p>The name of the browser profile to filter results by.</p>"
       }
     },
     "BrowserProfileStatus": {
@@ -644,6 +664,27 @@
       "base": "<p>Represents a Cedar policy statement within the AgentCore Policy system. Cedar is a policy language designed for authorization that provides human-readable, analyzable, and high-performance policy evaluation for controlling agent behavior and access decisions. </p>",
       "refs": {
         "PolicyDefinition$cedar": "<p>The Cedar policy definition within the policy definition structure. This contains the Cedar policy statement that defines the authorization logic using Cedar's human-readable, analyzable policy language. Cedar policies specify principals (who can access), actions (what operations are allowed), resources (what can be accessed), and optional conditions for fine-grained control. Cedar provides a formal policy language designed for authorization with deterministic evaluation, making policies testable, reviewable, and auditable. All Cedar policies follow a default-deny model where actions are denied unless explicitly permitted, and forbid policies always override permit policies.</p>"
+      }
+    },
+    "Certificate": {
+      "base": "<p>A certificate to install in the browser or code interpreter.</p>",
+      "refs": {
+        "Certificates$member": null
+      }
+    },
+    "CertificateLocation": {
+      "base": "<p>The location from which to retrieve a certificate.</p>",
+      "refs": {
+        "Certificate$location": "<p>The location of the certificate.</p>"
+      }
+    },
+    "Certificates": {
+      "base": null,
+      "refs": {
+        "CreateBrowserRequest$certificates": "<p>A list of certificates to install in the browser.</p>",
+        "CreateCodeInterpreterRequest$certificates": "<p>A list of certificates to install in the code interpreter.</p>",
+        "GetBrowserResponse$certificates": "<p>The list of certificates configured for the browser.</p>",
+        "GetCodeInterpreterResponse$certificates": "<p>The list of certificates configured for the code interpreter.</p>"
       }
     },
     "ClaimMatchOperatorType": {
@@ -749,6 +790,12 @@
       "base": "<p>The source code configuration that specifies the location and details of the code to be executed.</p>",
       "refs": {
         "CodeConfiguration$code": "<p>The source code location and configuration details.</p>"
+      }
+    },
+    "CodeBasedEvaluatorConfig": {
+      "base": "<p> Configuration for a code-based evaluator. Specify the Lambda function to use for evaluation. </p>",
+      "refs": {
+        "EvaluatorConfig$codeBased": "<p> Configuration for a code-based evaluator that uses a customer-managed Lambda function to programmatically assess agent performance. </p>"
       }
     },
     "CodeConfiguration": {
@@ -1433,7 +1480,7 @@
         "UpdateMemoryInput$description": "<p>The updated description of the AgentCore Memory resource.</p>",
         "UpdatePolicyEngineResponse$description": "<p>The updated description of the policy engine.</p>",
         "UpdatePolicyResponse$description": "<p>The updated description of the policy.</p>",
-        "UpdatedDescription$optionalValue": "<p>Represents an optional value that is used to update the human-readable description of the resource. If set to null, it will clear the current description of the resource.</p>",
+        "UpdatedDescription$optionalValue": "<p>Represents an optional value that is used to update the human-readable description of the resource. If not specified, it will clear the current description of the resource.</p>",
         "UserPreferenceMemoryStrategyInput$description": "<p>The description of the user preference memory strategy.</p>"
       }
     },
@@ -1585,9 +1632,9 @@
     "EvaluatorConfig": {
       "base": "<p> The configuration that defines how an evaluator assesses agent performance, including the evaluation method and parameters. </p>",
       "refs": {
-        "CreateEvaluatorRequest$evaluatorConfig": "<p> The configuration for the evaluator, including LLM-as-a-Judge settings with instructions, rating scale, and model configuration. </p>",
-        "GetEvaluatorResponse$evaluatorConfig": "<p> The configuration of the evaluator, including LLM-as-a-Judge settings for custom evaluators. </p>",
-        "UpdateEvaluatorRequest$evaluatorConfig": "<p> The updated configuration for the evaluator, including LLM-as-a-Judge settings with instructions, rating scale, and model configuration. </p>"
+        "CreateEvaluatorRequest$evaluatorConfig": "<p> The configuration for the evaluator. Specify either LLM-as-a-Judge settings with instructions, rating scale, and model configuration, or code-based settings with a customer-managed Lambda function. </p>",
+        "GetEvaluatorResponse$evaluatorConfig": "<p> The configuration of the evaluator, including LLM-as-a-Judge or code-based settings. </p>",
+        "UpdateEvaluatorRequest$evaluatorConfig": "<p> The updated configuration for the evaluator. Specify either LLM-as-a-Judge settings with instructions, rating scale, and model configuration, or code-based settings with a customer-managed Lambda function. </p>"
       }
     },
     "EvaluatorDescription": {
@@ -1697,6 +1744,20 @@
       "base": "<p>Contains extraction configuration information for a memory strategy.</p>",
       "refs": {
         "StrategyConfiguration$extraction": "<p>The extraction configuration for the memory strategy.</p>"
+      }
+    },
+    "FilesystemConfiguration": {
+      "base": "<p>Configuration for a filesystem that can be mounted into the AgentCore Runtime.</p>",
+      "refs": {
+        "FilesystemConfigurations$member": null
+      }
+    },
+    "FilesystemConfigurations": {
+      "base": null,
+      "refs": {
+        "CreateAgentRuntimeRequest$filesystemConfigurations": "<p>The filesystem configurations to mount into the AgentCore Runtime. Use filesystem configurations to provide persistent storage to your AgentCore Runtime sessions.</p>",
+        "GetAgentRuntimeResponse$filesystemConfigurations": "<p>The filesystem configurations mounted into the AgentCore Runtime.</p>",
+        "UpdateAgentRuntimeRequest$filesystemConfigurations": "<p>The updated filesystem configurations to mount into the AgentCore Runtime.</p>"
       }
     },
     "Filter": {
@@ -2278,6 +2339,24 @@
         "UpdatePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>"
       }
     },
+    "LambdaArn": {
+      "base": null,
+      "refs": {
+        "LambdaEvaluatorConfig$lambdaArn": "<p> The Amazon Resource Name (ARN) of the Lambda function that implements the evaluation logic. </p>"
+      }
+    },
+    "LambdaEvaluatorConfig": {
+      "base": "<p> Configuration for a Lambda function used as a code-based evaluator. </p>",
+      "refs": {
+        "CodeBasedEvaluatorConfig$lambdaConfig": "<p> The Lambda function configuration for code-based evaluation. </p>"
+      }
+    },
+    "LambdaEvaluatorConfigLambdaTimeoutInSecondsInteger": {
+      "base": null,
+      "refs": {
+        "LambdaEvaluatorConfig$lambdaTimeoutInSeconds": "<p> The timeout in seconds for the Lambda function invocation. Defaults to 60. Must be between 1 and 300. </p>"
+      }
+    },
     "LambdaFunctionArn": {
       "base": null,
       "refs": {
@@ -2809,6 +2888,12 @@
         "ModifyMemoryStrategyInput$configuration": "<p>The updated configuration for the memory strategy.</p>"
       }
     },
+    "MountPath": {
+      "base": null,
+      "refs": {
+        "SessionStorageConfiguration$mountPath": "<p>The mount path for the session storage filesystem inside the AgentCore Runtime. The path must be under <code>/mnt</code> with exactly one subdirectory level (for example, <code>/mnt/data</code>).</p>"
+      }
+    },
     "Name": {
       "base": null,
       "refs": {
@@ -2832,16 +2917,27 @@
       "base": null,
       "refs": {
         "CustomMemoryStrategyInput$namespaces": "<p>The namespaces associated with the custom memory strategy.</p>",
+        "CustomMemoryStrategyInput$namespaceTemplates": "<p>The namespaceTemplates associated with the custom memory strategy.</p>",
         "EpisodicMemoryStrategyInput$namespaces": "<p>The namespaces for which to create episodes.</p>",
+        "EpisodicMemoryStrategyInput$namespaceTemplates": "<p>The namespaceTemplates for which to create episodes.</p>",
         "EpisodicOverrideReflectionConfigurationInput$namespaces": "<p>The namespaces to use for episodic reflection. Can be less nested than the episodic namespaces.</p>",
+        "EpisodicOverrideReflectionConfigurationInput$namespaceTemplates": "<p>The namespaceTemplates to use for episodic reflection. Can be less nested than the episodic namespaces.</p>",
         "EpisodicReflectionConfiguration$namespaces": "<p>The namespaces for which to create reflections. Can be less nested than the episodic namespaces.</p>",
+        "EpisodicReflectionConfiguration$namespaceTemplates": "<p>The namespaceTemplates for which to create reflections. Can be less nested than the episodic namespaces.</p>",
         "EpisodicReflectionConfigurationInput$namespaces": "<p>The namespaces over which to create reflections. Can be less nested than episode namespaces.</p>",
+        "EpisodicReflectionConfigurationInput$namespaceTemplates": "<p>The namespaceTemplates over which to create reflections. Can be less nested than episode namespaces.</p>",
         "EpisodicReflectionOverride$namespaces": "<p>The namespaces over which reflections were created. Can be less nested than the episodic namespaces.</p>",
+        "EpisodicReflectionOverride$namespaceTemplates": "<p>The namespaceTemplates over which reflections were created. Can be less nested than the episodic namespaces.</p>",
         "MemoryStrategy$namespaces": "<p>The namespaces associated with the memory strategy.</p>",
+        "MemoryStrategy$namespaceTemplates": "<p>The namespaceTemplates associated with the memory strategy.</p>",
         "ModifyMemoryStrategyInput$namespaces": "<p>The updated namespaces for the memory strategy.</p>",
+        "ModifyMemoryStrategyInput$namespaceTemplates": "<p>The updated namespaceTemplates for the memory strategy.</p>",
         "SemanticMemoryStrategyInput$namespaces": "<p>The namespaces associated with the semantic memory strategy.</p>",
+        "SemanticMemoryStrategyInput$namespaceTemplates": "<p>The namespaceTemplates associated with the semantic memory strategy.</p>",
         "SummaryMemoryStrategyInput$namespaces": "<p>The namespaces associated with the summary memory strategy.</p>",
-        "UserPreferenceMemoryStrategyInput$namespaces": "<p>The namespaces associated with the user preference memory strategy.</p>"
+        "SummaryMemoryStrategyInput$namespaceTemplates": "<p>The namespaceTemplates associated with the summary memory strategy.</p>",
+        "UserPreferenceMemoryStrategyInput$namespaces": "<p>The namespaces associated with the user preference memory strategy.</p>",
+        "UserPreferenceMemoryStrategyInput$namespaceTemplates": "<p>The namespaceTemplates associated with the user preference memory strategy.</p>"
       }
     },
     "NaturalLanguage": {
@@ -3416,6 +3512,12 @@
       "base": "<p>Exception thrown when a resource limit is exceeded.</p>",
       "refs": {}
     },
+    "ResourceLocation": {
+      "base": "<p>The location of a resource.</p>",
+      "refs": {
+        "BrowserEnterprisePolicy$location": "<p>The location of the enterprise policy file.</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>This exception is thrown when a resource referenced by the operation does not exist</p>",
       "refs": {}
@@ -3534,7 +3636,8 @@
       "base": "<p>The Amazon S3 location for storing data. This structure defines where in Amazon S3 data is stored.</p>",
       "refs": {
         "Code$s3": "<p>The Amazon Amazon S3 object that contains the source code for the agent runtime.</p>",
-        "RecordingConfig$s3Location": "<p>The Amazon S3 location where browser recordings are stored. This location contains the recorded browser sessions.</p>"
+        "RecordingConfig$s3Location": "<p>The Amazon S3 location where browser recordings are stored. This location contains the recorded browser sessions.</p>",
+        "ResourceLocation$s3": null
       }
     },
     "S3LocationBucketString": {
@@ -3632,6 +3735,12 @@
       "base": null,
       "refs": {
         "Secret$secretArn": "<p>The Amazon Resource Name (ARN) of the secret in AWS Secrets Manager.</p>"
+      }
+    },
+    "SecretsManagerLocation": {
+      "base": "<p>The Amazon Web Services Secrets Manager location configuration.</p>",
+      "refs": {
+        "CertificateLocation$secretsManager": "<p>The Amazon Web Services Secrets Manager location of the certificate.</p>"
       }
     },
     "SecurityGroupId": {
@@ -3732,6 +3841,12 @@
       "base": null,
       "refs": {
         "SessionConfig$sessionTimeoutMinutes": "<p> The number of minutes of inactivity after which an agent session is considered complete and ready for evaluation. Default is 15 minutes. </p>"
+      }
+    },
+    "SessionStorageConfiguration": {
+      "base": "<p>Configuration for a session storage filesystem mounted into the AgentCore Runtime. Session storage provides persistent storage that is preserved across AgentCore Runtime session invocations.</p>",
+      "refs": {
+        "FilesystemConfiguration$sessionStorage": "<p>Configuration for session storage. Session storage provides persistent storage that is preserved across AgentCore Runtime session invocations.</p>"
       }
     },
     "SetTokenVaultCMKRequest": {
@@ -4218,6 +4333,12 @@
         "McpLambdaTargetConfiguration$toolSchema": "<p>The tool schema for the Lambda function. This schema defines the structure of the tools that the Lambda function provides.</p>"
       }
     },
+    "ToolSecretArn": {
+      "base": null,
+      "refs": {
+        "SecretsManagerLocation$secretArn": "<p>The ARN of the Amazon Web Services Secrets Manager secret containing the certificate.</p>"
+      }
+    },
     "TriggerCondition": {
       "base": "<p>Condition that triggers memory processing.</p>",
       "refs": {
@@ -4364,7 +4485,7 @@
       "refs": {}
     },
     "UpdatedDescription": {
-      "base": "<p>Respresents an optional value that can be provided to update the human-readable description of the resource. If the field is omitted from the request, it will leave the current decription value unchanged.</p>",
+      "base": "<p>Wrapper for updating an optional Description field with PATCH semantics. When present in an update request, the description is replaced with optionalValue. When absent, the description is left unchanged. To unset the description, include the wrapper with optionalValue not specified.</p>",
       "refs": {
         "UpdatePolicyEngineRequest$description": "<p>The new description for the policy engine.</p>",
         "UpdatePolicyRequest$description": "<p>The new human-readable description for the policy. This optional field allows updating the policy's documentation while keeping the same policy logic.</p>"

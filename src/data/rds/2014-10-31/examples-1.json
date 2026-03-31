@@ -510,6 +510,71 @@
         "description": "The following example creates a PostgreSQL-compatible Aurora DB cluster.",
         "id": "example-2",
         "title": "To create a PostgreSQL-compatible DB cluster"
+      },
+      {
+        "input": {
+          "DBClusterIdentifier": "sample-cluster",
+          "Engine": "aurora-postgresql",
+          "WithExpressConfiguration": true
+        },
+        "output": {
+          "DBCluster": {
+            "AllocatedStorage": 1,
+            "AssociatedRoles": [],
+            "AutoMinorVersionUpgrade": true,
+            "AvailabilityZones": [
+              "us-east-1c",
+              "us-east-1a",
+              "us-east-1b"
+            ],
+            "BackupRetentionPeriod": 7,
+            "ClusterCreateTime": "2026-01-10T22:14:02Z",
+            "CopyTagsToSnapshot": false,
+            "CrossAccountClone": false,
+            "DBClusterArn": "arn:aws:rds:us-east-1:654654253058:cluster:sample-cluster",
+            "DBClusterIdentifier": "sample-cluster",
+            "DBClusterMembers": [
+              {
+                "DBClusterParameterGroupStatus": "in-sync",
+                "DBInstanceIdentifier": "sample-cluster-instance-1",
+                "IsClusterWriter": false,
+                "PromotionTier": 1
+              }
+            ],
+            "DBClusterParameterGroup": "default.aurora-postgresql17",
+            "DatabaseInsightsMode": "standard",
+            "DbClusterResourceId": "cluster-OWV7DRHS2W7R4LXZRYNXCHZST4",
+            "DeletionProtection": false,
+            "DomainMemberships": [],
+            "Engine": "aurora-postgresql",
+            "EngineLifecycleSupport": "open-source-rds-extended-support",
+            "EngineMode": "provisioned",
+            "EngineVersion": "17.7",
+            "HttpEndpointEnabled": false,
+            "IAMDatabaseAuthenticationEnabled": true,
+            "LocalWriteForwardingStatus": "disabled",
+            "MasterUsername": "postgres",
+            "MultiAZ": false,
+            "PerformanceInsightsEnabled": false,
+            "Port": 5432,
+            "PreferredBackupWindow": "06:15-06:45",
+            "PreferredMaintenanceWindow": "sat:03:44-sat:04:14",
+            "ReadReplicaIdentifiers": [],
+            "ServerlessV2PlatformVersion": "3",
+            "ServerlessV2ScalingConfiguration": {
+              "MaxCapacity": 16.0,
+              "MinCapacity": 0.0,
+              "SecondsUntilAutoPause": 300
+            },
+            "Status": "creating",
+            "StorageEncrypted": false,
+            "TagList": [],
+            "VpcSecurityGroups": []
+          }
+        },
+        "description": "The following example creates a Aurora DB cluster with express configuration.",
+        "id": "example-3",
+        "title": "To create a Aurora DB cluster with express configuration"
       }
     ],
     "CreateDBClusterEndpoint": [
@@ -2068,6 +2133,69 @@
         "description": "The following example retrieves the details of the specified DB cluster.",
         "id": "example-1",
         "title": "To describe a DB cluster"
+      },
+      {
+        "input": {
+          "DBClusterIdentifier": "my-vpcless-cluster"
+        },
+        "output": {
+          "DBClusters": [
+            {
+              "ActivityStreamStatus": "stopped",
+              "AllocatedStorage": 1,
+              "AssociatedRoles": [],
+              "AutoMinorVersionUpgrade": true,
+              "AvailabilityZones": [
+                "us-east-1d",
+                "us-east-1a",
+                "us-east-1c"
+              ],
+              "BackupRetentionPeriod": 1,
+              "ClusterCreateTime": "2026-03-09T20:53:24.054Z",
+              "CopyTagsToSnapshot": false,
+              "CrossAccountClone": false,
+              "DBClusterArn": "arn:aws:rds:us-east-1:123456789012:cluster:my-vpcless-cluster",
+              "DBClusterIdentifier": "my-vpcless-cluster",
+              "DBClusterMembers": [],
+              "DBClusterParameterGroup": "default.aurora-postgresql17",
+              "DatabaseInsightsMode": "standard",
+              "DbClusterResourceId": "cluster-AHX35HFI2YV26F3XVXVVO3MEHU",
+              "DeletionProtection": false,
+              "DomainMemberships": [],
+              "EarliestRestorableTime": "2026-03-09T20:53:39.652Z",
+              "Engine": "aurora-postgresql",
+              "EngineLifecycleSupport": "open-source-rds-extended-support",
+              "EngineMode": "provisioned",
+              "EngineVersion": "17.4",
+              "HttpEndpointEnabled": false,
+              "IAMDatabaseAuthenticationEnabled": true,
+              "InternetAccessGatewayEnabled": true,
+              "LatestRestorableTime": "2026-03-09T20:53:39.652Z",
+              "LocalWriteForwardingStatus": "disabled",
+              "MasterUsername": "postgres",
+              "MultiAZ": false,
+              "Port": 5432,
+              "PreferredBackupWindow": "07:13-07:43",
+              "PreferredMaintenanceWindow": "mon:07:55-mon:08:25",
+              "ReadReplicaIdentifiers": [],
+              "ServerlessV2PlatformVersion": "3",
+              "ServerlessV2ScalingConfiguration": {
+                "MaxCapacity": 128.0,
+                "MinCapacity": 1.0
+              },
+              "Status": "available",
+              "StorageEncrypted": false,
+              "StorageEncryptionType": "sse-rds",
+              "TagList": [],
+              "UpgradeRolloutOrder": "second",
+              "VPCNetworkingEnabled": false,
+              "VpcSecurityGroups": []
+            }
+          ]
+        },
+        "description": "The following example retrieves the details of the specified Aurora PostgreSQL DB cluster configured without VPC networking and with internet access gateway enabled. IAM database authentication is required when VPC networking is disabled and internet access gateway is enabled.",
+        "id": "example-2",
+        "title": "To describe an Aurora DB cluster without VPC networking"
       }
     ],
     "DescribeDBEngineVersions": [
@@ -3916,6 +4044,56 @@
         "description": "The following example restores an Aurora PostgreSQL DB cluster compatible with PostgreSQL version 10.7 from a DB cluster snapshot named test-instance-snapshot.",
         "id": "example-1",
         "title": "To restore a DB cluster from a snapshot"
+      },
+      {
+        "input": {
+          "DBClusterIdentifier": "restored-cluster",
+          "EnableIAMDatabaseAuthentication": true,
+          "EnableInternetAccessGateway": true,
+          "EnableVPCNetworking": false,
+          "Engine": "aurora-postgresql",
+          "SnapshotIdentifier": "sample-cluster-snapshot"
+        },
+        "output": {
+          "DBCluster": {
+            "AllocatedStorage": 1,
+            "AssociatedRoles": [],
+            "AvailabilityZones": [
+              "us-west-2c",
+              "us-west-2a",
+              "us-west-2b"
+            ],
+            "BackupRetentionPeriod": 7,
+            "ClusterCreateTime": "2020-06-05T15:06:58.634Z",
+            "CopyTagsToSnapshot": false,
+            "CrossAccountClone": false,
+            "DBClusterArn": "arn:aws:rds:us-west-2:123456789012:cluster:restored-cluster",
+            "DBClusterIdentifier": "restored-cluster",
+            "DBClusterMembers": [],
+            "DBClusterParameterGroup": "default.aurora-postgresql17",
+            "DatabaseName": "",
+            "DbClusterResourceId": "cluster-5DSB5IFQDDUVAWOUWM1EXAMPLE",
+            "DeletionProtection": false,
+            "DomainMemberships": [],
+            "Engine": "aurora-postgresql",
+            "EngineMode": "provisioned",
+            "EngineVersion": "17.7",
+            "HttpEndpointEnabled": false,
+            "IAMDatabaseAuthenticationEnabled": true,
+            "MasterUsername": "postgres",
+            "MultiAZ": false,
+            "Port": 5432,
+            "PreferredBackupWindow": "09:33-10:03",
+            "PreferredMaintenanceWindow": "sun:12:22-sun:12:52",
+            "ReadReplicaIdentifiers": [],
+            "Status": "creating",
+            "StorageEncrypted": false,
+            "VpcSecurityGroups": []
+          }
+        },
+        "description": "The following example restores an Aurora DB cluster from a DB cluster snapshot named sample-cluster-snapshot without VPC networking and with internet-based connectivity enabled through an internet access gateway. The EnableVPCNetworking and EnableInternetAccessGateway parameters must always be specified together. IAM database authentication is required when both parameters are specified.",
+        "id": "example-2",
+        "title": "To restore a DB cluster from a snapshot without VPC networking"
       }
     ],
     "RestoreDBClusterToPointInTime": [
@@ -3976,6 +4154,56 @@
         "description": "The following example restores the DB cluster named database-4 to the latest possible time. Using copy-on-write as the restore type restores the new DB cluster as a clone of the source DB cluster.",
         "id": "example-1",
         "title": "To restore a DB cluster to a specified time"
+      },
+      {
+        "input": {
+          "DBClusterIdentifier": "sample-cluster-restored",
+          "EnableIAMDatabaseAuthentication": true,
+          "EnableInternetAccessGateway": true,
+          "EnableVPCNetworking": false,
+          "RestoreType": "copy-on-write",
+          "SourceDBClusterIdentifier": "sample-cluster",
+          "UseLatestRestorableTime": true
+        },
+        "output": {
+          "DBCluster": {
+            "AllocatedStorage": 1,
+            "AssociatedRoles": [],
+            "AvailabilityZones": [
+              "us-east-1c",
+              "us-east-1a",
+              "us-east-1b"
+            ],
+            "BackupRetentionPeriod": 7,
+            "ClusterCreateTime": "2026-01-15T22:14:02.000Z",
+            "CopyTagsToSnapshot": false,
+            "CrossAccountClone": false,
+            "DBClusterArn": "arn:aws:rds:us-east-1:654654253058:cluster:sample-cluster-restored",
+            "DBClusterIdentifier": "sample-cluster-restored",
+            "DBClusterMembers": [],
+            "DBClusterParameterGroup": "default.aurora-postgresql17",
+            "DatabaseName": "",
+            "DbClusterResourceId": "cluster-ABCDEFGHIJKLMNOPQRSTUVWXYZ1234",
+            "DeletionProtection": false,
+            "Engine": "aurora-postgresql",
+            "EngineMode": "provisioned",
+            "EngineVersion": "17.7",
+            "HttpEndpointEnabled": false,
+            "IAMDatabaseAuthenticationEnabled": true,
+            "MasterUsername": "postgres",
+            "MultiAZ": false,
+            "Port": 5432,
+            "PreferredBackupWindow": "06:15-06:45",
+            "PreferredMaintenanceWindow": "sat:03:44-sat:04:14",
+            "ReadReplicaIdentifiers": [],
+            "Status": "creating",
+            "StorageEncrypted": false,
+            "VpcSecurityGroups": []
+          }
+        },
+        "description": "The following example restores an Aurora DB cluster to the latest possible time without VPC networking and with internet-based connectivity enabled through an internet access gateway. The EnableVPCNetworking and EnableInternetAccessGateway parameters must always be specified together. IAM database authentication is required when both parameters are specified.",
+        "id": "example-2",
+        "title": "To restore an Aurora DB cluster to a point in time without VPC networking"
       }
     ],
     "RestoreDBInstanceFromDBSnapshot": [

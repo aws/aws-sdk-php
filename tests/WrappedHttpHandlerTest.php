@@ -368,10 +368,9 @@ class WrappedHttpHandlerTest extends TestCase
     }
 
     /**
-     * @dataProvider errorIsParsedOnNonSeekableResponseBodyProvider
-     *
      * @return void
      */
+    #[DataProvider('errorIsParsedOnNonSeekableResponseBodyProvider')]
     public function testErrorIsParsedOnNonSeekableResponseBody(
         string $protocol,
         string $body,
@@ -421,7 +420,7 @@ class WrappedHttpHandlerTest extends TestCase
     /**
      * @return array[]
      */
-    public function errorIsParsedOnNonSeekableResponseBodyProvider(): array
+    public static function errorIsParsedOnNonSeekableResponseBodyProvider(): array
     {
         return [
             'json' => [

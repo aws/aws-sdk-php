@@ -16,6 +16,23 @@
     "uid":"marketplace-agreement-2020-03-01"
   },
   "operations":{
+    "CancelAgreementPaymentRequest":{
+      "name":"CancelAgreementPaymentRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CancelAgreementPaymentRequestInput"},
+      "output":{"shape":"CancelAgreementPaymentRequestOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "DescribeAgreement":{
       "name":"DescribeAgreement",
       "http":{
@@ -24,6 +41,22 @@
       },
       "input":{"shape":"DescribeAgreementInput"},
       "output":{"shape":"DescribeAgreementOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetAgreementPaymentRequest":{
+      "name":"GetAgreementPaymentRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAgreementPaymentRequestInput"},
+      "output":{"shape":"GetAgreementPaymentRequestOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -48,6 +81,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListAgreementPaymentRequests":{
+      "name":"ListAgreementPaymentRequests",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAgreementPaymentRequestsInput"},
+      "output":{"shape":"ListAgreementPaymentRequestsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "SearchAgreements":{
       "name":"SearchAgreements",
       "http":{
@@ -62,13 +110,30 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "SendAgreementPaymentRequest":{
+      "name":"SendAgreementPaymentRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SendAgreementPaymentRequestInput"},
+      "output":{"shape":"SendAgreementPaymentRequestOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ]
     }
   },
   "shapes":{
     "AWSAccountId":{
       "type":"string",
-      "max":32,
-      "min":1,
+      "max":12,
+      "min":12,
       "pattern":"[0-9]+"
     },
     "AcceptedTerm":{
@@ -106,6 +171,12 @@
         "message":{"shape":"ExceptionMessage"}
       },
       "exception":true
+    },
+    "AgreementId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z0-9_/-]+"
     },
     "AgreementResourceType":{
       "type":"string",
@@ -167,11 +238,48 @@
         "type":{"shape":"UnversionedTermType"}
       }
     },
+    "CancelAgreementPaymentRequestInput":{
+      "type":"structure",
+      "required":[
+        "paymentRequestId",
+        "agreementId"
+      ],
+      "members":{
+        "paymentRequestId":{"shape":"PaymentRequestId"},
+        "agreementId":{"shape":"AgreementId"}
+      }
+    },
+    "CancelAgreementPaymentRequestOutput":{
+      "type":"structure",
+      "members":{
+        "paymentRequestId":{"shape":"PaymentRequestId"},
+        "agreementId":{"shape":"AgreementId"},
+        "status":{"shape":"PaymentRequestStatus"},
+        "name":{"shape":"PaymentRequestName"},
+        "description":{"shape":"PaymentRequestDescription"},
+        "chargeAmount":{"shape":"PositiveAmountUpto8Decimals"},
+        "currencyCode":{"shape":"CurrencyCode"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
     "Catalog":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"[a-zA-Z]+"
+      "pattern":"[a-zA-Z0-9.-]+"
+    },
+    "ChargeId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"ch-[a-zA-Z0-9]+"
+    },
+    "ClientToken":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-]+"
     },
     "ConfigurableUpfrontPricingTerm":{
       "type":"structure",
@@ -204,6 +312,16 @@
     "ConfigurableUpfrontRateCardList":{
       "type":"list",
       "member":{"shape":"ConfigurableUpfrontRateCardItem"}
+    },
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "requestId":{"shape":"RequestId"},
+        "message":{"shape":"ExceptionMessage"},
+        "resourceId":{"shape":"ResourceId"},
+        "resourceType":{"shape":"ResourceType"}
+      },
+      "exception":true
     },
     "Constraints":{
       "type":"structure",
@@ -329,6 +447,33 @@
         "grants":{"shape":"GrantList"}
       }
     },
+    "GetAgreementPaymentRequestInput":{
+      "type":"structure",
+      "required":[
+        "paymentRequestId",
+        "agreementId"
+      ],
+      "members":{
+        "paymentRequestId":{"shape":"PaymentRequestId"},
+        "agreementId":{"shape":"AgreementId"}
+      }
+    },
+    "GetAgreementPaymentRequestOutput":{
+      "type":"structure",
+      "members":{
+        "paymentRequestId":{"shape":"PaymentRequestId"},
+        "agreementId":{"shape":"AgreementId"},
+        "status":{"shape":"PaymentRequestStatus"},
+        "statusMessage":{"shape":"PaymentRequestStatusMessage"},
+        "name":{"shape":"PaymentRequestName"},
+        "description":{"shape":"PaymentRequestDescription"},
+        "chargeId":{"shape":"ChargeId"},
+        "chargeAmount":{"shape":"PositiveAmountUpto8Decimals"},
+        "currencyCode":{"shape":"CurrencyCode"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
     "GetAgreementTermsInput":{
       "type":"structure",
       "required":["agreementId"],
@@ -376,6 +521,27 @@
         "documents":{"shape":"DocumentList"}
       }
     },
+    "ListAgreementPaymentRequestsInput":{
+      "type":"structure",
+      "required":["partyType"],
+      "members":{
+        "partyType":{"shape":"PartyType"},
+        "agreementType":{"shape":"AgreementType"},
+        "catalog":{"shape":"Catalog"},
+        "agreementId":{"shape":"AgreementId"},
+        "status":{"shape":"PaymentRequestStatus"},
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAgreementPaymentRequestsOutput":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "items":{"shape":"PaymentRequestSummaryList"}
+      }
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -386,7 +552,7 @@
       "type":"string",
       "max":8192,
       "min":0,
-      "pattern":"[a-zA-Z0-9+/=]+"
+      "pattern":"[a-zA-Z0-9+/=_-]+"
     },
     "OfferId":{
       "type":"string",
@@ -398,12 +564,67 @@
       "type":"string",
       "pattern":"\\S{1,50}"
     },
+    "PartyType":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"[A-Za-z]+"
+    },
     "PaymentRequestApprovalStrategy":{
       "type":"string",
       "enum":[
         "AUTO_APPROVE_ON_EXPIRATION",
         "WAIT_FOR_APPROVAL"
       ]
+    },
+    "PaymentRequestDescription":{
+      "type":"string",
+      "max":2000,
+      "min":1,
+      "pattern":".+",
+      "sensitive":true
+    },
+    "PaymentRequestId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"pr-[a-zA-Z0-9]+"
+    },
+    "PaymentRequestName":{
+      "type":"string",
+      "max":64,
+      "min":5,
+      "pattern":".+"
+    },
+    "PaymentRequestStatus":{
+      "type":"string",
+      "enum":[
+        "VALIDATING",
+        "VALIDATION_FAILED",
+        "PENDING_APPROVAL",
+        "APPROVED",
+        "REJECTED",
+        "CANCELLED"
+      ]
+    },
+    "PaymentRequestStatusMessage":{"type":"string"},
+    "PaymentRequestSummary":{
+      "type":"structure",
+      "members":{
+        "paymentRequestId":{"shape":"PaymentRequestId"},
+        "agreementId":{"shape":"AgreementId"},
+        "status":{"shape":"PaymentRequestStatus"},
+        "name":{"shape":"PaymentRequestName"},
+        "chargeId":{"shape":"ChargeId"},
+        "chargeAmount":{"shape":"PositiveAmountUpto8Decimals"},
+        "currencyCode":{"shape":"CurrencyCode"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "PaymentRequestSummaryList":{
+      "type":"list",
+      "member":{"shape":"PaymentRequestSummary"}
     },
     "PaymentScheduleTerm":{
       "type":"structure",
@@ -412,6 +633,10 @@
         "currencyCode":{"shape":"CurrencyCode"},
         "schedule":{"shape":"ScheduleList"}
       }
+    },
+    "PositiveAmountUpto8Decimals":{
+      "type":"string",
+      "pattern":"[0-9]*(\\.[0-9]{0,8})?"
     },
     "PositiveIntegerWithDefaultValueOne":{
       "type":"integer",
@@ -497,7 +722,11 @@
     },
     "ResourceType":{
       "type":"string",
-      "enum":["Agreement"]
+      "enum":[
+        "Agreement",
+        "Charge",
+        "PaymentRequest"
+      ]
     },
     "Resources":{
       "type":"list",
@@ -538,6 +767,39 @@
         "value":{"shape":"BoundedString"}
       }
     },
+    "SendAgreementPaymentRequestInput":{
+      "type":"structure",
+      "required":[
+        "agreementId",
+        "termId",
+        "name",
+        "chargeAmount"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "agreementId":{"shape":"AgreementId"},
+        "termId":{"shape":"TermId"},
+        "name":{"shape":"PaymentRequestName"},
+        "chargeAmount":{"shape":"PositiveAmountUpto8Decimals"},
+        "description":{"shape":"PaymentRequestDescription"}
+      }
+    },
+    "SendAgreementPaymentRequestOutput":{
+      "type":"structure",
+      "members":{
+        "paymentRequestId":{"shape":"PaymentRequestId"},
+        "agreementId":{"shape":"AgreementId"},
+        "status":{"shape":"PaymentRequestStatus"},
+        "name":{"shape":"PaymentRequestName"},
+        "description":{"shape":"PaymentRequestDescription"},
+        "chargeAmount":{"shape":"PositiveAmountUpto8Decimals"},
+        "currencyCode":{"shape":"CurrencyCode"},
+        "createdAt":{"shape":"Timestamp"}
+      }
+    },
     "Sort":{
       "type":"structure",
       "members":{
@@ -564,6 +826,12 @@
         "type":{"shape":"UnversionedTermType"},
         "refundPolicy":{"shape":"BoundedString"}
       }
+    },
+    "TermId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[A-Za-z0-9+=;,.@\\-_]+"
     },
     "ThrottlingException":{
       "type":"structure",
@@ -635,7 +903,20 @@
         "INVALID_SORT_ORDER",
         "INVALID_NEXT_TOKEN",
         "INVALID_MAX_RESULTS",
+        "INVALID_TERM_ID",
+        "MISSING_TERM_ID",
+        "MISSING_NAME",
+        "INVALID_NAME",
+        "INVALID_DESCRIPTION",
+        "MISSING_CHARGE_AMOUNT",
+        "INVALID_CHARGE_AMOUNT",
+        "MISSING_PAYMENT_REQUEST_ID",
+        "INVALID_PAYMENT_REQUEST_ID",
+        "MISSING_PARTY_TYPE",
+        "INVALID_PARTY_TYPE",
         "UNSUPPORTED_FILTERS",
+        "INVALID_REJECTION_REASON",
+        "INVALID_PAYMENT_REQUEST_STATUS",
         "OTHER"
       ]
     },

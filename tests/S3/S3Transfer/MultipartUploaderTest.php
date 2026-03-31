@@ -16,6 +16,7 @@ use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\Test\TestsUtility;
 use Generator;
 use GuzzleHttp\Promise\Create;
+use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -25,11 +26,18 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 
 #[CoversClass(MultipartUploader::class)]
-class MultipartUploaderTest extends TestCase
+final class MultipartUploaderTest extends TestCase
 {
+    /** @var string */
+    private string $tempDir;
 
     protected function setUp(): void
     {
+        $this->tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'multipart-uploader-resume-test/';
+        if (!is_dir($this->tempDir)) {
+            mkdir($this->tempDir, 0777, true);
+        }
+
         set_error_handler(function ($errno, $errstr) {
             // Ignore trigger_error logging
         });
@@ -37,9 +45,18 @@ class MultipartUploaderTest extends TestCase
 
     protected function tearDown(): void
     {
+        TestsUtility::cleanUpDir($this->tempDir);
         restore_error_handler();
     }
 
+    /**
+     * @param array $sourceConfig
+     * @param array $commandArgs
+     * @param array $config
+     * @param array $expected
+     *
+     * @return void
+     */
     #[DataProvider('multipartUploadProvider')]
     public function testMultipartUpload(
         array $sourceConfig,
@@ -53,7 +70,7 @@ class MultipartUploaderTest extends TestCase
             ->getMock();
         $s3Client->method('executeAsync')
             -> willReturnCallback(function ($command) use ($expected)
-           {
+            {
                 if ($command->getName() === 'CreateMultipartUpload') {
                     return Create::promiseFor(new Result([
                         'UploadId' => 'FooUploadId'
@@ -72,7 +89,7 @@ class MultipartUploaderTest extends TestCase
                     }
                 }
 
-               return Create::promiseFor(new Result([]));
+                return Create::promiseFor(new Result([]));
             });
         $s3Client->method('getCommand')
             -> willReturnCallback(function ($commandName, $args) {
@@ -115,7 +132,7 @@ class MultipartUploaderTest extends TestCase
             $snapshot = $multipartUploader->getCurrentSnapshot();
 
             $this->assertInstanceOf(UploadResult::class, $response);
-            $this->assertCount($expected['parts'], $multipartUploader->getParts());
+            $this->assertCount($expected['parts'], $multipartUploader->getPartsCompleted());
             $this->assertEquals($expected['bytesUploaded'], $snapshot->getTransferredBytes());
             $this->assertEquals($expected['bytesUploaded'], $snapshot->getTotalBytes());
         } finally {
@@ -129,7 +146,11 @@ class MultipartUploaderTest extends TestCase
         }
     }
 
-    public static function multipartUploadProvider(): array {
+    /**
+     * @return array[]
+     */
+    public static function multipartUploadProvider(): array
+    {
         return [
             '5_parts_upload' => [
                 'source_config' => [
@@ -230,6 +251,9 @@ class MultipartUploaderTest extends TestCase
         ];
     }
 
+    /**
+     * @return S3ClientInterface
+     */
     private function getMultipartUploadS3Client(): S3ClientInterface
     {
         return new S3Client([
@@ -260,6 +284,13 @@ EOF;
         ]);
     }
 
+
+    /**
+     * @param int $partSize
+     * @param bool $expectError
+     *
+     * @return void
+     */
     #[DataProvider('validatePartSizeProvider')]
     public function testValidatePartSize(
         int $partSize,
@@ -288,7 +319,11 @@ EOF;
         );
     }
 
-    public static function validatePartSizeProvider(): array {
+    /**
+     * @return array
+     */
+    public static function validatePartSizeProvider(): array
+    {
         return [
             'part_size_over_max' => [
                 'part_size' => AbstractMultipartUploader::PART_MAX_SIZE + 1,
@@ -309,6 +344,12 @@ EOF;
         ];
     }
 
+    /**
+     * @param string|int $source
+     * @param bool $expectError
+     *
+     * @return void
+     */
     #[DataProvider('invalidSourceStringProvider')]
     public function testInvalidSourceStringThrowsException(
         string|int $source,
@@ -353,7 +394,11 @@ EOF;
         }
     }
 
-    public static function invalidSourceStringProvider(): array {
+    /**
+     * @return array[]
+     */
+    public static function invalidSourceStringProvider(): array
+    {
         return [
             'invalid_source_file_path_1' => [
                 'source' => 'invalid',
@@ -374,6 +419,9 @@ EOF;
         ];
     }
 
+    /**
+     * @return void
+     */
     public function testTransferListenerNotifierNotifiesListenersOnSuccess(): void
     {
         $noOfListeners = 3;
@@ -427,10 +475,8 @@ EOF;
                 'concurrency' => 1,
                 'request_checksum_calculation' => 'when_supported'
             ],
+            $listenerNotifier,
             null,
-            [],
-            null,
-            $listenerNotifier
         );
 
         $response = $multipartUploader->promise()->wait();
@@ -440,8 +486,11 @@ EOF;
     /**
      * Test to make sure createMultipart, uploadPart, and completeMultipart
      * operations are called.
+     *
+     * @return void
      */
-    public function testMultipartOperationsAreCalled(): void {
+    public function testMultipartOperationsAreCalled(): void
+    {
         $operationsCalled = [
             'CreateMultipartUpload' => false,
             'UploadPart' => false,
@@ -492,12 +541,20 @@ EOF;
         }
     }
 
+    /**
+     * @param array $sourceConfig
+     * @param array $checksumConfig
+     * @param array $expectedOperationHeaders
+     *
+     * @return void
+     */
     #[DataProvider('multipartUploadWithCustomChecksumProvider')]
     public function testMultipartUploadWithCustomChecksum(
         array $sourceConfig,
         array $checksumConfig,
         array $expectedOperationHeaders,
-    ): void {
+    ): void
+    {
         // $operationsCalled: To make sure each expected operation is invoked.
         $operationsCalled = [];
         foreach (array_keys($expectedOperationHeaders) as $key) {
@@ -581,6 +638,9 @@ EOF;
         }
     }
 
+    /**
+     * @return array
+     */
     public static function multipartUploadWithCustomChecksumProvider(): array {
         return [
             'custom_checksum_crc32_1' => [
@@ -617,7 +677,11 @@ EOF;
         ];
     }
 
-    public function testMultipartUploadAbort() {
+    /**
+     * @return void
+     */
+    public function testMultipartUploadAbort()
+    {
         $this->expectException(S3TransferException::class);
         $this->expectExceptionMessage('Upload failed');
         $abortMultipartCalled = false;
@@ -627,7 +691,7 @@ EOF;
             ->getMock();
         $s3Client->method('executeAsync')
             ->willReturnCallback(function ($command)
-                use (&$abortMultipartCalled, &$abortMultipartCalledTimes) {
+            use (&$abortMultipartCalled, &$abortMultipartCalledTimes) {
                 if ($command->getName() === 'CreateMultipartUpload') {
                     return Create::promiseFor(new Result([
                         'UploadId' => 'TestUploadId'
@@ -673,6 +737,9 @@ EOF;
         }
     }
 
+    /**
+     * @return void
+     */
     public function testTransferListenerNotifierNotifiesListenersOnFailure(): void
     {
         $this->expectException(\Exception::class);
@@ -723,15 +790,16 @@ EOF;
                 'concurrency' => 1,
                 'request_checksum_calculation' => 'when_supported'
             ],
+            $listenerNotifier,
             null,
-            [],
-            null,
-            $listenerNotifier
         );
 
         $multipartUploader->promise()->wait();
     }
 
+    /**
+     * @return void
+     */
     public function testTransferListenerNotifierWithEmptyListeners(): void
     {
         $listenerNotifier = new TransferListenerNotifier([]);
@@ -771,10 +839,8 @@ EOF;
                 'target_part_size_bytes' => 5242880, // 5MB
                 'concurrency' => 1,
             ],
+            $listenerNotifier,
             null,
-            [],
-            null,
-            $listenerNotifier
         );
 
         $response = $multipartUploader->promise()->wait();
@@ -784,6 +850,11 @@ EOF;
     /**
      * This test makes sure that when full object checksum type is resolved
      * then, if a custom algorithm provide is not CRC family then it should fail.
+     *
+     * @param array $checksumConfig
+     * @param bool $expectsError
+     *
+     * @return void
      */
     #[DataProvider('fullObjectChecksumWorksJustWithCRCProvider')]
     public function testFullObjectChecksumWorksJustWithCRC(
@@ -827,7 +898,11 @@ EOF;
         }
     }
 
-    public static function fullObjectChecksumWorksJustWithCRCProvider(): Generator {
+    /**
+     * @return Generator
+     */
+    public static function fullObjectChecksumWorksJustWithCRCProvider(): Generator
+    {
         yield 'sha_256_should_fail' => [
             'checksum_config' => [
                 'ChecksumSHA256' => '47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='
@@ -850,6 +925,15 @@ EOF;
         ];
     }
 
+    /**
+     * @param array $sourceConfig
+     * @param array $requestArgs
+     * @param array $expectedInputArgs
+     * @param bool $expectsError
+     * @param int|null $errorOnPartNumber
+     *
+     * @return void
+     */
     #[DataProvider('inputArgumentsPerOperationProvider')]
     public function testInputArgumentsPerOperation(
         array $sourceConfig,
@@ -875,20 +959,20 @@ EOF;
             )->willReturnCallback(
                 function ($commandName, $args)
                 use (&$calledCommands, $expectedInputArgs) {
-                if (isset($expectedInputArgs[$commandName])) {
-                    $calledCommands[$commandName] = 0;
-                    $expected = $expectedInputArgs[$commandName];
-                    foreach ($expected as $key => $value) {
-                        $this->assertArrayHasKey($key, $args);
-                        $this->assertEquals(
-                            $value,
-                            $args[$key]
-                        );
+                    if (isset($expectedInputArgs[$commandName])) {
+                        $calledCommands[$commandName] = 0;
+                        $expected = $expectedInputArgs[$commandName];
+                        foreach ($expected as $key => $value) {
+                            $this->assertArrayHasKey($key, $args);
+                            $this->assertEquals(
+                                $value,
+                                $args[$key]
+                            );
+                        }
                     }
-                }
 
-                return new Command($commandName, $args);
-            });
+                    return new Command($commandName, $args);
+                });
             $s3Client->method('executeAsync')
                 ->willReturnCallback(function ($command)
                 use ($errorOnPartNumber, $expectsError) {
@@ -943,6 +1027,9 @@ EOF;
         }
     }
 
+    /**
+     * @return Generator
+     */
     public static function inputArgumentsPerOperationProvider(): Generator
     {
         yield 'test_input_fields_are_copied_without_custom_checksums' => [
@@ -1247,6 +1334,150 @@ EOF;
             'expects_error' => true,
             'error_on_part_number' => 2
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testGeneratesResumeFileWhenUploadFailsAndResumeIsEnabled(): void
+    {
+        $sourceFile = $this->tempDir . 'upload.txt';
+        file_put_contents($sourceFile, str_repeat('a', 10485760));
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $callCount = 0;
+        $mockClient->method('executeAsync')
+            ->willReturnCallback(function ($command) use (&$callCount) {
+                $callCount++;
+                if ($command->getName() === 'CreateMultipartUpload') {
+                    return Create::promiseFor(new Result(['UploadId' => 'test-upload-id']));
+                }
+                if ($command->getName() === 'UploadPart' && $callCount <= 2) {
+                    return Create::promiseFor(new Result(['ETag' => 'test-etag-' . $callCount]));
+                }
+                return new RejectedPromise(new \Exception('Upload failed'));
+            });
+
+        $mockClient->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+
+        $uploader = new MultipartUploader(
+            $mockClient,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            $sourceFile,
+            ['target_part_size_bytes' => 5242880, 'resume_enabled' => true]
+        );
+
+        try {
+            $uploader->promise()->wait();
+        } catch (\Exception $e) {
+            // Expected to fail
+        }
+
+        $resumeFile = $sourceFile . '.resume';
+        $this->assertFileExists($resumeFile);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGeneratesResumeFileWithCustomPath(): void
+    {
+        $sourceFile = $this->tempDir . 'upload.txt';
+        $customResumePath = $this->tempDir . 'custom-resume.resume';
+        file_put_contents($sourceFile, str_repeat('a', 10485760));
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $callCount = 0;
+        $mockClient->method('executeAsync')
+            ->willReturnCallback(function ($command) use (&$callCount) {
+                $callCount++;
+                if ($command->getName() === 'CreateMultipartUpload') {
+                    return Create::promiseFor(new Result(['UploadId' => 'test-upload-id']));
+                }
+                if ($command->getName() === 'UploadPart' && $callCount <= 2) {
+                    return Create::promiseFor(new Result(['ETag' => 'test-etag-' . $callCount]));
+                }
+                return new RejectedPromise(new \Exception('Upload failed'));
+            });
+
+        $mockClient->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+
+        $uploader = new MultipartUploader(
+            $mockClient,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            $sourceFile,
+            [
+                'target_part_size_bytes' => 5242880,
+                'resume_enabled' => true,
+                'resume_file_path' => $customResumePath
+            ]
+        );
+
+        try {
+            $uploader->promise()->wait();
+        } catch (\Exception $e) {
+            // Expected to fail
+        }
+
+        $this->assertFileExists($customResumePath);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemovesResumeFileAfterSuccessfulCompletion(): void
+    {
+        $sourceFile = $this->tempDir . 'upload.txt';
+        file_put_contents($sourceFile, str_repeat('a', 10485760));
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockClient->method('executeAsync')
+            ->willReturnCallback(function ($command) {
+                if ($command->getName() === 'CreateMultipartUpload') {
+                    return Create::promiseFor(new Result(['UploadId' => 'test-upload-id']));
+                }
+                if ($command->getName() === 'UploadPart') {
+                    return Create::promiseFor(new Result(['ETag' => 'test-etag']));
+                }
+                if ($command->getName() === 'CompleteMultipartUpload') {
+                    return Create::promiseFor(new Result(['Location' => 's3://test-bucket/test-key']));
+                }
+                return Create::promiseFor(new Result([]));
+            });
+
+        $mockClient->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+
+        $uploader = new MultipartUploader(
+            $mockClient,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            $sourceFile,
+            ['target_part_size_bytes' => 5242880, 'resume_enabled' => true]
+        );
+
+        $resumeFile = $sourceFile . '.resume';
+
+        $uploader->promise()->wait();
+
+        $this->assertFileDoesNotExist($resumeFile);
+
     }
 
     public function testAbortMultipartUploadShowsWarning(): void

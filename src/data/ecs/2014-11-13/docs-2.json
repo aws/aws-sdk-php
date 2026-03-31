@@ -278,6 +278,7 @@
         "ExecuteCommandRequest$interactive": "<p>Use this flag to run your command in interactive mode.</p>",
         "ExecuteCommandResponse$interactive": "<p>Determines whether the execute command session is running in interactive mode. Amazon ECS only supports initiating interactive sessions, so you must specify <code>true</code> for this value.</p>",
         "ListAccountSettingsRequest$effectiveSettings": "<p>Determines whether to return the effective settings. If <code>true</code>, the account settings for the root user or the default setting for the <code>principalArn</code> are returned. If <code>false</code>, the account settings for the <code>principalArn</code> are returned if they're set. Otherwise, no account settings are returned.</p>",
+        "ManagedInstancesLocalStorageConfiguration$useLocalStorage": "<p>Use instance store volumes for data storage when available. EBS volumes are not provisioned for data storage. If the container instance has multiple instance store volumes, a single data volume is created. Consider defining instance store requirements using the <code>localStorage</code>, <code>localStorageTypes</code> and <code>totalLocalStorageGB</code> properties.</p>",
         "ProtectedTask$protectionEnabled": "<p>The protection status of the task. If scale-in protection is on for a task, the value is <code>true</code>. Otherwise, it is <code>false</code>.</p>",
         "RunTaskRequest$enableECSManagedTags": "<p>Specifies whether to use Amazon ECS managed tags for the task. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-using-tags.html\">Tagging Your Amazon ECS Resources</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p>",
         "RunTaskRequest$enableExecuteCommand": "<p>Determines whether to use the execute command functionality for the containers in this task. If <code>true</code>, this enables execute command functionality on all containers in the task.</p> <p>If <code>true</code>, then the task definition must have a task role, or you must provide one as an override.</p>",
@@ -306,7 +307,9 @@
         "DeleteTaskSetRequest$force": "<p>If <code>true</code>, you can delete a task set even if it hasn't been scaled down to zero.</p>",
         "DeregisterContainerInstanceRequest$force": "<p>Forces the container instance to be deregistered. If you have tasks running on the container instance when you deregister it with the <code>force</code> option, these tasks remain running until you terminate the instance or the tasks stop through some other means, but they're orphaned (no longer monitored or accounted for by Amazon ECS). If an orphaned task on your container instance is part of an Amazon ECS service, then the service scheduler starts another copy of that task, on a different container instance if possible. </p> <p>Any containers in orphaned service tasks that are registered with a Classic Load Balancer or an Application Load Balancer target group are deregistered. They begin connection draining according to the settings on the load balancer or target group.</p>",
         "DockerVolumeConfiguration$autoprovision": "<p>If this value is <code>true</code>, the Docker volume is created if it doesn't already exist.</p> <note> <p>This field is only used if the <code>scope</code> is <code>shared</code>.</p> </note>",
+        "InstanceLaunchTemplate$instanceMetadataTagsPropagation": "<p>Determines whether tags are propagated to the instance metadata service (IMDS) for Amazon EC2 instances launched by the Managed Instances capacity provider. When enabled, all tags associated with the instance are available through the instance metadata service. When disabled, tags are not propagated to IMDS.</p> <p>Disable this setting if your tags contain characters that are not compatible with IMDS, such as <code>/</code>. IMDS requires tag keys to match the pattern <code>[0-9a-zA-Z\\-_+=,.@:]{1,255}</code>.</p> <p>The default value is <code>true</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#work-with-tags-in-IMDS\">Work with instance tags in instance metadata</a> in the <i>Amazon EC2 User Guide</i>.</p>",
         "InstanceLaunchTemplate$fipsEnabled": "<p>Determines whether to enable FIPS 140-2 validated cryptographic modules on EC2 instances launched by the capacity provider. If <code>true</code>, instances use FIPS-compliant cryptographic algorithms and modules for enhanced security compliance. If <code>false</code>, instances use standard cryptographic implementations.</p> <p>If not specified, instances are launched with FIPS enabled in AWS GovCloud (US) regions and FIPS disabled in other regions.</p>",
+        "InstanceLaunchTemplateUpdate$instanceMetadataTagsPropagation": "<p>Determines whether tags are propagated to the instance metadata service (IMDS) for Amazon EC2 instances launched by the Managed Instances capacity provider. When enabled, all tags associated with the instance are available through the instance metadata service. When disabled, tags are not propagated to IMDS.</p> <p>Disable this setting if your tags contain characters that are not compatible with IMDS, such as <code>/</code>. IMDS requires tag keys to match the pattern <code>[0-9a-zA-Z\\-_+=,.@:]{1,255}</code>.</p> <p>The default value is <code>true</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#work-with-tags-in-IMDS\">Work with instance tags in instance metadata</a> in the <i>Amazon EC2 User Guide</i>.</p>",
         "InstanceRequirementsRequest$requireHibernateSupport": "<p>Indicates whether the instance types must support hibernation. When set to <code>true</code>, only instance types that support hibernation are selected.</p>",
         "LinuxParameters$initProcessEnabled": "<p>Run an <code>init</code> process inside the container that forwards signals and reaps processes. This parameter maps to the <code>--init</code> option to docker run. This parameter requires version 1.25 of the Docker Remote API or greater on your container instance. To check the Docker Remote API version on your container instance, log in to your container instance and run the following command: <code>sudo docker version --format '{{.Server.APIVersion}}'</code> </p>",
         "MountPoint$readOnly": "<p>If this value is <code>true</code>, the container has read-only access to the volume. If this value is <code>false</code>, then the container can write to the volume. The default value is <code>false</code>.</p>",
@@ -1945,6 +1948,13 @@
         "ECSManagedResources$ingressPaths": "<p>The ingress paths and endpoints for the Express service.</p>"
       }
     },
+    "ManagedInstancesLocalStorageConfiguration": {
+      "base": "<p>The local storage configuration for Amazon ECS Managed Instances. This defines how ECS uses and configures instance store volumes available on container instance.</p>",
+      "refs": {
+        "InstanceLaunchTemplate$localStorageConfiguration": "<p>The local storage configuration for Amazon ECS Managed Instances. This defines how ECS uses instance store volumes available on the container instance.</p>",
+        "InstanceLaunchTemplateUpdate$localStorageConfiguration": "<p>The updated local storage configuration for Amazon ECS Managed Instances. Changes to local storage settings apply to new instances launched after the update.</p>"
+      }
+    },
     "ManagedInstancesMonitoringOptions": {
       "base": null,
       "refs": {
@@ -1966,9 +1976,9 @@
       }
     },
     "ManagedInstancesStorageConfiguration": {
-      "base": "<p>The storage configuration for Amazon ECS Managed Instances. This defines the root volume configuration for the instances.</p>",
+      "base": "<p>The storage configuration for Amazon ECS Managed Instances. This defines the data volume configuration for the instances.</p>",
       "refs": {
-        "InstanceLaunchTemplate$storageConfiguration": "<p>The storage configuration for Amazon ECS Managed Instances. This defines the root volume size and type for the instances.</p>",
+        "InstanceLaunchTemplate$storageConfiguration": "<p>The storage configuration for Amazon ECS Managed Instances. This defines the data volume properties for the instances.</p>",
         "InstanceLaunchTemplateUpdate$storageConfiguration": "<p>The updated storage configuration for Amazon ECS Managed Instances. Changes to storage settings apply to new instances launched after the update.</p>"
       }
     },
@@ -3721,7 +3731,7 @@
     "TaskVolumeStorageGiB": {
       "base": null,
       "refs": {
-        "ManagedInstancesStorageConfiguration$storageSizeGiB": "<p>The size of the tasks volume.</p>"
+        "ManagedInstancesStorageConfiguration$storageSizeGiB": "<p>The size of the data volume.</p>"
       }
     },
     "Tasks": {

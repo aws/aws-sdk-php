@@ -1257,6 +1257,7 @@
           "location":"querystring",
           "locationName":"NextToken"
         },
+        "MetricSourceTypes":{"shape":"MetricSourceTypes"},
         "IncludeLinkedAccounts":{
           "shape":"Boolean",
           "location":"querystring",
@@ -1267,7 +1268,7 @@
           "location":"querystring",
           "locationName":"SloOwnerAwsAccountId"
         },
-        "MetricSourceTypes":{"shape":"MetricSourceTypes"}
+        "MetricSource":{"shape":"MetricSource"}
       }
     },
     "ListServiceLevelObjectivesMaxResults":{
@@ -1517,12 +1518,23 @@
       "type":"list",
       "member":{"shape":"MetricReference"}
     },
+    "MetricSource":{
+      "type":"structure",
+      "required":["MetricSourceKeyAttributes"],
+      "members":{
+        "MetricSourceKeyAttributes":{"shape":"Attributes"},
+        "MetricSourceAttributes":{"shape":"Attributes"}
+      }
+    },
     "MetricSourceType":{
       "type":"string",
       "enum":[
         "ServiceOperation",
         "CloudWatchMetric",
-        "ServiceDependency"
+        "ServiceDependency",
+        "AppMonitor",
+        "Canary",
+        "Service"
       ]
     },
     "MetricSourceTypes":{
@@ -1648,7 +1660,8 @@
         "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
         "TotalRequestCountMetric":{"shape":"MetricDataQueries"},
         "MonitoredRequestCountMetric":{"shape":"MonitoredRequestCountMetricDataQueries"},
-        "DependencyConfig":{"shape":"DependencyConfig"}
+        "DependencyConfig":{"shape":"DependencyConfig"},
+        "MetricSource":{"shape":"MetricSource"}
       }
     },
     "RequestBasedServiceLevelIndicatorMetricConfig":{
@@ -1659,7 +1672,9 @@
         "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
         "TotalRequestCountMetric":{"shape":"MetricDataQueries"},
         "MonitoredRequestCountMetric":{"shape":"MonitoredRequestCountMetricDataQueries"},
-        "DependencyConfig":{"shape":"DependencyConfig"}
+        "DependencyConfig":{"shape":"DependencyConfig"},
+        "MetricSource":{"shape":"MetricSource"},
+        "MetricName":{"shape":"MetricName"}
       }
     },
     "ResourceId":{"type":"string"},
@@ -1834,7 +1849,8 @@
         "OperationName":{"shape":"OperationName"},
         "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
         "MetricDataQueries":{"shape":"MetricDataQueries"},
-        "DependencyConfig":{"shape":"DependencyConfig"}
+        "DependencyConfig":{"shape":"DependencyConfig"},
+        "MetricSource":{"shape":"MetricSource"}
       }
     },
     "ServiceLevelIndicatorMetricConfig":{
@@ -1846,6 +1862,7 @@
         "MetricName":{"shape":"MetricName"},
         "Statistic":{"shape":"ServiceLevelIndicatorStatistic"},
         "PeriodSeconds":{"shape":"SLIPeriodSeconds"},
+        "MetricSource":{"shape":"MetricSource"},
         "MetricDataQueries":{"shape":"MetricDataQueries"},
         "DependencyConfig":{"shape":"DependencyConfig"}
       }
@@ -2000,7 +2017,8 @@
         "DependencyConfig":{"shape":"DependencyConfig"},
         "CreatedTime":{"shape":"Timestamp"},
         "EvaluationType":{"shape":"EvaluationType"},
-        "MetricSourceType":{"shape":"MetricSourceType"}
+        "MetricSourceType":{"shape":"MetricSourceType"},
+        "MetricSource":{"shape":"MetricSource"}
       }
     },
     "ServiceOperation":{

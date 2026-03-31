@@ -9,6 +9,7 @@
     "ListLexicons": "<p>Returns a list of pronunciation lexicons stored in an Amazon Web Services Region. For more information, see <a href=\"https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html\">Managing Lexicons</a>.</p>",
     "ListSpeechSynthesisTasks": "<p>Returns a list of SpeechSynthesisTask objects ordered by their creation date. This operation can filter the tasks by their status, for example, allowing users to list only tasks that are completed.</p>",
     "PutLexicon": "<p>Stores a pronunciation lexicon in an Amazon Web Services Region. If a lexicon with the same name already exists in the region, it is overwritten by the new lexicon. Lexicon operations have eventual consistency, therefore, it might take some time before the lexicon is available to the SynthesizeSpeech operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html\">Managing Lexicons</a>.</p>",
+    "StartSpeechSynthesisStream": "<p>Synthesizes UTF-8 input, plain text, or SSML over a bidirectional streaming connection. Specify synthesis parameters in HTTP/2 headers, send text incrementally as events on the input stream, and receive synthesized audio as it becomes available.</p> <p>This operation serves as a bidirectional counterpart to <code>SynthesizeSpeech</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/polly/latest/API/API_SynthesizeSpeech.html\">SynthesizeSpeech</a> </p> </li> </ul>",
     "StartSpeechSynthesisTask": "<p>Allows the creation of an asynchronous synthesis task, by starting a new <code>SpeechSynthesisTask</code>. This operation requires all the standard information needed for speech synthesis, plus the name of an Amazon S3 bucket for the service to store the output of the synthesis task and two optional parameters (<code>OutputS3KeyPrefix</code> and <code>SnsTopicArn</code>). Once the synthesis task is created, this operation will return a <code>SpeechSynthesisTask</code> object, which will include an identifier of this task as well as the current status. The <code>SpeechSynthesisTask</code> object is available for 72 hours after starting the asynchronous synthesis task.</p>",
     "SynthesizeSpeech": "<p>Synthesizes UTF-8 input, plain text or SSML, to a stream of bytes. SSML input must be valid, well-formed SSML. Some alphabets might not be available with all the voices (for example, Cyrillic might not be read at all by English voices) unless phoneme mapping is used. For more information, see <a href=\"https://docs.aws.amazon.com/polly/latest/dg/how-text-to-speech-works.html\">How it Works</a>.</p>"
   },
@@ -19,16 +20,52 @@
         "LexiconAttributes$Alphabet": "<p>Phonetic alphabet used in the lexicon. Valid values are <code>ipa</code> and <code>x-sampa</code>.</p>"
       }
     },
+    "AudioChunk": {
+      "base": null,
+      "refs": {
+        "AudioEvent$AudioChunk": "<p>A chunk of synthesized audio data encoded in the format specified by the <code>OutputFormat</code> parameter.</p>"
+      }
+    },
+    "AudioEvent": {
+      "base": "<p>Contains a chunk of synthesized audio data.</p>",
+      "refs": {
+        "StartSpeechSynthesisStreamEventStream$AudioEvent": "<p>An audio event containing synthesized speech.</p>"
+      }
+    },
     "AudioStream": {
       "base": null,
       "refs": {
         "SynthesizeSpeechOutput$AudioStream": "<p> Stream containing the synthesized speech. </p>"
       }
     },
+    "AvailabilityErrorMessage": {
+      "base": null,
+      "refs": {
+        "ThrottlingException$message": null
+      }
+    },
+    "CloseStreamEvent": {
+      "base": "<p>Indicates the end of the input stream. After sending this event, the input stream will be closed and all audio will be returned.</p>",
+      "refs": {
+        "StartSpeechSynthesisStreamActionStream$CloseStreamEvent": "<p>An event indicating the end of the input stream.</p>"
+      }
+    },
     "ContentType": {
       "base": null,
       "refs": {
-        "SynthesizeSpeechOutput$ContentType": "<p> Specifies the type audio stream. This should reflect the <code>OutputFormat</code> parameter in your request. </p> <ul> <li> <p> If you request <code>mp3</code> as the <code>OutputFormat</code>, the <code>ContentType</code> returned is audio/mpeg. </p> </li> <li> <p> If you request <code>ogg_vorbis</code> as the <code>OutputFormat</code>, the <code>ContentType</code> returned is audio/ogg. </p> </li> <li> <p> If you request <code>pcm</code> as the <code>OutputFormat</code>, the <code>ContentType</code> returned is audio/pcm in a signed 16-bit, 1 channel (mono), little-endian format. </p> </li> <li> <p>If you request <code>json</code> as the <code>OutputFormat</code>, the <code>ContentType</code> returned is application/x-json-stream.</p> </li> </ul> <p> </p>"
+        "SynthesizeSpeechOutput$ContentType": "<p> Specifies the type audio stream. This should reflect the <code>OutputFormat</code> parameter in your request. </p> <ul> <li> <p> If you request <code>mp3</code> as the <code>OutputFormat</code>, the <code>ContentType</code> returned is audio/mpeg. </p> </li> <li> <p> If you request <code>ogg_vorbis</code> as the <code>OutputFormat</code>, the <code>ContentType</code> returned is audio/ogg. </p> </li> <li> <p> If you request <code>ogg_opus</code> as the <code>OutputFormat</code>, the <code>ContentType</code> returned is audio/ogg. </p> </li> <li> <p> If you request <code>pcm</code> as the <code>OutputFormat</code>, the <code>ContentType</code> returned is audio/pcm in a signed 16-bit, 1 channel (mono), little-endian format. </p> </li> <li> <p> If you request <code>mu-law</code> as the <code>OutputFormat</code>, the <code>ContentType</code> returned is audio/mulaw. </p> </li> <li> <p> If you request <code>a-law</code> as the <code>OutputFormat</code>, the <code>ContentType</code> returned is audio/alaw. </p> </li> <li> <p>If you request <code>json</code> as the <code>OutputFormat</code>, the <code>ContentType</code> returned is application/x-json-stream.</p> </li> </ul> <p> </p>"
+      }
+    },
+    "CoralAvailabilityThrottledResource": {
+      "base": null,
+      "refs": {
+        "ThrottlingReason$resource": "<p>The resource that caused the throttling.</p>"
+      }
+    },
+    "CoralAvailabilityThrottlingReason": {
+      "base": null,
+      "refs": {
+        "ThrottlingReason$reason": "<p>The reason code explaining why the request was throttled.</p>"
       }
     },
     "DateTime": {
@@ -58,6 +95,7 @@
       "refs": {
         "DescribeVoicesInput$Engine": "<p>Specifies the engine (<code>standard</code>, <code>neural</code>, <code>long-form</code> or <code>generative</code>) used by Amazon Polly when processing input text for speech synthesis. </p>",
         "EngineList$member": null,
+        "StartSpeechSynthesisStreamInput$Engine": "<p>Specifies the engine for Amazon Polly to use when processing input text for speech synthesis. Currently, only the <code>generative</code> engine is supported. If you specify a voice that the selected engine doesn't support, Amazon Polly returns an error.</p>",
         "StartSpeechSynthesisTaskInput$Engine": "<p>Specifies the engine (<code>standard</code>, <code>neural</code>, <code>long-form</code> or <code>generative</code>) for Amazon Polly to use when processing input text for speech synthesis. Using a voice that is not supported for the engine selected will result in an error.</p>",
         "SynthesisTask$Engine": "<p>Specifies the engine (<code>standard</code>, <code>neural</code>, <code>long-form</code> or <code>generative</code>) for Amazon Polly to use when processing input text for speech synthesis. Using a voice that is not supported for the engine selected will result in an error.</p>",
         "SynthesizeSpeechInput$Engine": "<p>Specifies the engine (<code>standard</code>, <code>neural</code>, <code>long-form</code>, or <code>generative</code>) for Amazon Polly to use when processing input text for speech synthesis. Provide an engine that is supported by the voice you select. If you don't provide an engine, the standard engine is selected by default. If a chosen voice isn't supported by the standard engine, this will result in an error. For information on Amazon Polly voices and which voices are available for each engine, see <a href=\"https://docs.aws.amazon.com/polly/latest/dg/voicelist.html\">Available Voices</a>.</p>"
@@ -92,11 +130,25 @@
         "MaxLexemeLengthExceededException$message": null,
         "MaxLexiconsNumberExceededException$message": null,
         "ServiceFailureException$message": null,
+        "ServiceQuotaExceededException$message": null,
         "SsmlMarksNotSupportedForTextTypeException$message": null,
         "SynthesisTaskNotFoundException$message": null,
         "TextLengthExceededException$message": null,
         "UnsupportedPlsAlphabetException$message": null,
-        "UnsupportedPlsLanguageException$message": null
+        "UnsupportedPlsLanguageException$message": null,
+        "ValidationException$message": null
+      }
+    },
+    "FlushStreamConfiguration": {
+      "base": "<p>Configuration that controls when synthesized audio data is sent on the output stream.</p>",
+      "refs": {
+        "TextEvent$FlushStreamConfiguration": "<p>Configuration for controlling when synthesized audio flushes to the output stream.</p>"
+      }
+    },
+    "Force": {
+      "base": null,
+      "refs": {
+        "FlushStreamConfiguration$Force": "<p>Specifies whether to force the synthesis engine to immediately write buffered audio data to the output stream.</p>"
       }
     },
     "Gender": {
@@ -165,6 +217,7 @@
         "DescribeVoicesInput$LanguageCode": "<p> The language identification tag (ISO 639 code for the language name-ISO 3166 country code) for filtering the list of voices returned. If you don't specify this optional parameter, all available voices are returned. </p>",
         "LanguageCodeList$member": null,
         "LexiconAttributes$LanguageCode": "<p>Language code that the lexicon applies to. A lexicon with a language code such as \"en\" would be applied to all English languages (en-GB, en-US, en-AUS, en-WLS, and so on.</p>",
+        "StartSpeechSynthesisStreamInput$LanguageCode": "<p>An optional parameter that sets the language code for the speech synthesis request. Specify this parameter only when using a bilingual voice. If a bilingual voice is used and no language code is specified, Amazon Polly uses the default language of the bilingual voice.</p>",
         "StartSpeechSynthesisTaskInput$LanguageCode": "<p>Optional language code for the Speech Synthesis request. This is only necessary if using a bilingual voice, such as Aditi, which can be used for either Indian English (en-IN) or Hindi (hi-IN). </p> <p>If a bilingual voice is used and no language code is specified, Amazon Polly uses the default language of the bilingual voice. The default language for any voice is the one returned by the <a href=\"https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html\">DescribeVoices</a> operation for the <code>LanguageCode</code> parameter. For example, if no language code is specified, Aditi will use Indian English rather than Hindi.</p>",
         "SynthesisTask$LanguageCode": "<p>Optional language code for a synthesis task. This is only necessary if using a bilingual voice, such as Aditi, which can be used for either Indian English (en-IN) or Hindi (hi-IN). </p> <p>If a bilingual voice is used and no language code is specified, Amazon Polly uses the default language of the bilingual voice. The default language for any voice is the one returned by the <a href=\"https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html\">DescribeVoices</a> operation for the <code>LanguageCode</code> parameter. For example, if no language code is specified, Aditi will use Indian English rather than Hindi.</p>",
         "SynthesizeSpeechInput$LanguageCode": "<p>Optional language code for the Synthesize Speech request. This is only necessary if using a bilingual voice, such as Aditi, which can be used for either Indian English (en-IN) or Hindi (hi-IN). </p> <p>If a bilingual voice is used and no language code is specified, Amazon Polly uses the default language of the bilingual voice. The default language for any voice is the one returned by the <a href=\"https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html\">DescribeVoices</a> operation for the <code>LanguageCode</code> parameter. For example, if no language code is specified, Aditi will use Indian English rather than Hindi.</p>",
@@ -251,6 +304,7 @@
     "LexiconNameList": {
       "base": null,
       "refs": {
+        "StartSpeechSynthesisStreamInput$LexiconNames": "<p>The names of one or more pronunciation lexicons for the service to apply during synthesis. Amazon Polly applies lexicons only when the lexicon language matches the voice language.</p>",
         "StartSpeechSynthesisTaskInput$LexiconNames": "<p>List of one or more pronunciation lexicon names you want the service to apply during synthesis. Lexicons are applied only if the language of the lexicon is the same as the language of the voice. </p>",
         "SynthesisTask$LexiconNames": "<p>List of one or more pronunciation lexicon names you want the service to apply during synthesis. Lexicons are applied only if the language of the lexicon is the same as the language of the voice. </p>",
         "SynthesizeSpeechInput$LexiconNames": "<p>List of one or more pronunciation lexicon names you want the service to apply during synthesis. Lexicons are applied only if the language of the lexicon is the same as the language of the voice. For information about storing lexicons, see <a href=\"https://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html\">PutLexicon</a>.</p>"
@@ -312,9 +366,10 @@
     "OutputFormat": {
       "base": null,
       "refs": {
-        "StartSpeechSynthesisTaskInput$OutputFormat": "<p>The format in which the returned output will be encoded. For audio stream, this will be mp3, ogg_vorbis, or pcm. For speech marks, this will be json. </p>",
-        "SynthesisTask$OutputFormat": "<p>The format in which the returned output will be encoded. For audio stream, this will be mp3, ogg_vorbis, or pcm. For speech marks, this will be json. </p>",
-        "SynthesizeSpeechInput$OutputFormat": "<p> The format in which the returned output will be encoded. For audio stream, this will be mp3, ogg_vorbis, or pcm. For speech marks, this will be json. </p> <p>When pcm is used, the content returned is audio/pcm in a signed 16-bit, 1 channel (mono), little-endian format. </p>"
+        "StartSpeechSynthesisStreamInput$OutputFormat": "<p>The audio format for the synthesized speech. Currently, Amazon Polly does not support JSON speech marks.</p>",
+        "StartSpeechSynthesisTaskInput$OutputFormat": "<p>The format in which the returned output will be encoded. For audio stream, this will be mp3, ogg_vorbis, ogg_opus, mu-law, a-law, or pcm. For speech marks, this will be json. </p>",
+        "SynthesisTask$OutputFormat": "<p>The format in which the returned output will be encoded. For audio stream, this will be mp3, ogg_vorbis, ogg_opus, mu-law, a-law, or pcm. For speech marks, this will be json. </p>",
+        "SynthesizeSpeechInput$OutputFormat": "<p> The format in which the returned output will be encoded. For audio stream, this will be mp3, ogg_vorbis, ogg_opus, mu-law, a-law or pcm. For speech marks, this will be json. </p> <p>When pcm is used, the content returned is audio/pcm in a signed 16-bit, 1 channel (mono), little-endian format. </p>"
       }
     },
     "OutputS3BucketName": {
@@ -343,9 +398,16 @@
       "base": null,
       "refs": {}
     },
+    "QuotaCode": {
+      "base": null,
+      "refs": {
+        "ServiceQuotaExceededException$quotaCode": "<p>The quota code identifying the specific quota.</p>"
+      }
+    },
     "RequestCharacters": {
       "base": null,
       "refs": {
+        "StreamClosedEvent$RequestCharacters": "<p>The total number of characters synthesized during the streaming session.</p>",
         "SynthesisTask$RequestCharacters": "<p>Number of billable characters synthesized.</p>",
         "SynthesizeSpeechOutput$RequestCharacters": "<p>Number of characters synthesized.</p>"
       }
@@ -353,14 +415,29 @@
     "SampleRate": {
       "base": null,
       "refs": {
-        "StartSpeechSynthesisTaskInput$SampleRate": "<p>The audio frequency specified in Hz.</p> <p>The valid values for mp3 and ogg_vorbis are \"8000\", \"16000\", \"22050\", and \"24000\". The default value for standard voices is \"22050\". The default value for neural voices is \"24000\". The default value for long-form voices is \"24000\". The default value for generative voices is \"24000\".</p> <p>Valid values for pcm are \"8000\" and \"16000\" The default value is \"16000\". </p>",
-        "SynthesisTask$SampleRate": "<p>The audio frequency specified in Hz.</p> <p>The valid values for mp3 and ogg_vorbis are \"8000\", \"16000\", \"22050\", and \"24000\". The default value for standard voices is \"22050\". The default value for neural voices is \"24000\". The default value for long-form voices is \"24000\". The default value for generative voices is \"24000\".</p> <p>Valid values for pcm are \"8000\" and \"16000\" The default value is \"16000\". </p>",
-        "SynthesizeSpeechInput$SampleRate": "<p>The audio frequency specified in Hz.</p> <p>The valid values for mp3 and ogg_vorbis are \"8000\", \"16000\", \"22050\", \"24000\", \"44100\" and \"48000\". The default value for standard voices is \"22050\". The default value for neural voices is \"24000\". The default value for long-form voices is \"24000\". The default value for generative voices is \"24000\".</p> <p>Valid values for pcm are \"8000\" and \"16000\" The default value is \"16000\". </p>"
+        "StartSpeechSynthesisStreamInput$SampleRate": "<p>The audio frequency, specified in Hz.</p>",
+        "StartSpeechSynthesisTaskInput$SampleRate": "<p>The audio frequency specified in Hz.</p> <p>The valid values for mp3 and ogg_vorbis are \"8000\", \"16000\", \"22050\", and \"24000\". The default value for standard voices is \"22050\". The default value for neural voices is \"24000\". The default value for long-form voices is \"24000\". The default value for generative voices is \"24000\".</p> <p>Valid values for pcm are \"8000\" and \"16000\" The default value is \"16000\". </p> <p>Valid value for ogg_opus is \"48000\". </p> <p>Valid value for mu-law and a-law is \"8000\". </p>",
+        "SynthesisTask$SampleRate": "<p>The audio frequency specified in Hz.</p> <p>The valid values for mp3 and ogg_vorbis are \"8000\", \"16000\", \"22050\", and \"24000\". The default value for standard voices is \"22050\". The default value for neural voices is \"24000\". The default value for long-form voices is \"24000\". The default value for generative voices is \"24000\".</p> <p>Valid values for pcm are \"8000\" and \"16000\" The default value is \"16000\". </p> <p>Valid value for ogg_opus is \"48000\". </p> <p>Valid value for mu-law and a-law is \"8000\". </p>",
+        "SynthesizeSpeechInput$SampleRate": "<p>The audio frequency specified in Hz.</p> <p>The valid values for mp3 and ogg_vorbis are \"8000\", \"16000\", \"22050\", \"24000\", \"44100\" and \"48000\". The default value for standard voices is \"22050\". The default value for neural voices is \"24000\". The default value for long-form voices is \"24000\". The default value for generative voices is \"24000\".</p> <p>Valid values for pcm are \"8000\" and \"16000\" The default value is \"16000\". </p> <p>Valid value for ogg_opus is \"48000\". </p> <p>Valid value for mu-law and a-law is \"8000\". </p>"
+      }
+    },
+    "ServiceCode": {
+      "base": null,
+      "refs": {
+        "ServiceQuotaExceededException$serviceCode": "<p>The service code identifying the originating service.</p>"
       }
     },
     "ServiceFailureException": {
       "base": "<p>An unknown condition has caused a service failure.</p>",
-      "refs": {}
+      "refs": {
+        "StartSpeechSynthesisStreamEventStream$ServiceFailureException": null
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request would cause a service quota to be exceeded.</p>",
+      "refs": {
+        "StartSpeechSynthesisStreamEventStream$ServiceQuotaExceededException": "<p>An exception indicating a service quota would be exceeded.</p>"
+      }
     },
     "Size": {
       "base": null,
@@ -393,6 +470,26 @@
       "base": "<p>SSML speech marks are not supported for plain text-type input.</p>",
       "refs": {}
     },
+    "StartSpeechSynthesisStreamActionStream": {
+      "base": "<p>Inbound event stream for sending input and control events to manage bidirectional speech synthesis.</p>",
+      "refs": {
+        "StartSpeechSynthesisStreamInput$ActionStream": "<p>The input event stream that contains text events and stream control events.</p>"
+      }
+    },
+    "StartSpeechSynthesisStreamEventStream": {
+      "base": "<p>Outbound event stream that contains synthesized audio data and stream status events.</p>",
+      "refs": {
+        "StartSpeechSynthesisStreamOutput$EventStream": "<p>The output event stream that contains synthesized audio events and stream status events.</p>"
+      }
+    },
+    "StartSpeechSynthesisStreamInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartSpeechSynthesisStreamOutput": {
+      "base": null,
+      "refs": {}
+    },
     "StartSpeechSynthesisTaskInput": {
       "base": null,
       "refs": {}
@@ -400,6 +497,12 @@
     "StartSpeechSynthesisTaskOutput": {
       "base": null,
       "refs": {}
+    },
+    "StreamClosedEvent": {
+      "base": "<p>Indicates that the synthesis stream is closed and provides summary information.</p>",
+      "refs": {
+        "StartSpeechSynthesisStreamEventStream$StreamClosedEvent": "<p>An event, with summary information, indicating the stream has closed.</p>"
+      }
     },
     "SynthesisTask": {
       "base": "<p>SynthesisTask object that provides information about a speech synthesis task.</p>",
@@ -451,7 +554,14 @@
       "base": null,
       "refs": {
         "StartSpeechSynthesisTaskInput$Text": "<p>The input text to synthesize. If you specify ssml as the TextType, follow the SSML format for the input text. </p>",
-        "SynthesizeSpeechInput$Text": "<p> Input text to synthesize. If you specify <code>ssml</code> as the <code>TextType</code>, follow the SSML format for the input text. </p>"
+        "SynthesizeSpeechInput$Text": "<p> Input text to synthesize. If you specify <code>ssml</code> as the <code>TextType</code>, follow the SSML format for the input text. </p>",
+        "TextEvent$Text": "<p>The text content to synthesize. If you specify <code>ssml</code> as the <code>TextType</code>, follow the SSML format for the input text.</p>"
+      }
+    },
+    "TextEvent": {
+      "base": "<p>Contains text content to be synthesized into speech.</p>",
+      "refs": {
+        "StartSpeechSynthesisStreamActionStream$TextEvent": "<p>A text event containing content to be synthesized.</p>"
       }
     },
     "TextLengthExceededException": {
@@ -463,7 +573,26 @@
       "refs": {
         "StartSpeechSynthesisTaskInput$TextType": "<p>Specifies whether the input text is plain text or SSML. The default value is plain text. </p>",
         "SynthesisTask$TextType": "<p>Specifies whether the input text is plain text or SSML. The default value is plain text. </p>",
-        "SynthesizeSpeechInput$TextType": "<p> Specifies whether the input text is plain text or SSML. The default value is plain text. For more information, see <a href=\"https://docs.aws.amazon.com/polly/latest/dg/ssml.html\">Using SSML</a>.</p>"
+        "SynthesizeSpeechInput$TextType": "<p> Specifies whether the input text is plain text or SSML. The default value is plain text. For more information, see <a href=\"https://docs.aws.amazon.com/polly/latest/dg/ssml.html\">Using SSML</a>.</p>",
+        "TextEvent$TextType": "<p>Specifies whether the input text is plain text or SSML. Default: plain text.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied because of request throttling.</p>",
+      "refs": {
+        "StartSpeechSynthesisStreamEventStream$ThrottlingException": "<p>An exception indicating the request was throttled.</p>"
+      }
+    },
+    "ThrottlingReason": {
+      "base": "<p>Provides information about a specific throttling reason.</p>",
+      "refs": {
+        "ThrottlingReasonList$member": null
+      }
+    },
+    "ThrottlingReasonList": {
+      "base": null,
+      "refs": {
+        "ThrottlingException$throttlingReasons": "<p>A list of reasons explaining why the request was throttled.</p>"
       }
     },
     "UnsupportedPlsAlphabetException": {
@@ -474,6 +603,42 @@
       "base": "<p>The language specified in the lexicon is unsupported. For a list of supported languages, see <a href=\"https://docs.aws.amazon.com/polly/latest/dg/API_LexiconAttributes.html\">Lexicon Attributes</a>.</p>",
       "refs": {}
     },
+    "ValidationException": {
+      "base": "<p>The input fails to satisfy the constraints specified by the service.</p>",
+      "refs": {
+        "StartSpeechSynthesisStreamEventStream$ValidationException": "<p>An exception indicating the input failed validation.</p>"
+      }
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Information about a field that failed validation.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fields": "<p>The fields that caused the validation error.</p>"
+      }
+    },
+    "ValidationExceptionFieldMessage": {
+      "base": null,
+      "refs": {
+        "ValidationExceptionField$message": "<p>A message describing why the field failed validation.</p>"
+      }
+    },
+    "ValidationExceptionFieldName": {
+      "base": null,
+      "refs": {
+        "ValidationExceptionField$name": "<p>The name of the field that failed validation.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": "<p>The reason the request failed validation.</p>"
+      }
+    },
     "Voice": {
       "base": "<p>Description of the voice.</p>",
       "refs": {
@@ -483,6 +648,7 @@
     "VoiceId": {
       "base": null,
       "refs": {
+        "StartSpeechSynthesisStreamInput$VoiceId": "<p>The voice to use in synthesis. To get a list of available voice IDs, use the <a href=\"https://docs.aws.amazon.com/polly/latest/API/API_DescribeVoices.html\">DescribeVoices</a> operation.</p>",
         "StartSpeechSynthesisTaskInput$VoiceId": "<p>Voice ID to use for the synthesis. </p>",
         "SynthesisTask$VoiceId": "<p>Voice ID to use for the synthesis. </p>",
         "SynthesizeSpeechInput$VoiceId": "<p> Voice ID to use for the synthesis. You can get a list of available voice IDs by calling the <a href=\"https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html\">DescribeVoices</a> operation. </p>",

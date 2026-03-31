@@ -223,6 +223,7 @@
     "CompletionUrl": {
       "base": null,
       "refs": {
+        "BusinessVerificationResponse$CompletionUrl": "<p>A secure URL where the registrant can complete additional verification steps, such as document upload or identity confirmation through a third-party verification service.</p>",
         "RegistrantVerificationResponse$CompletionUrl": "<p>A secure URL where the registrant can complete additional verification steps, such as document upload or identity confirmation through a third-party verification service.</p>"
       }
     },
@@ -413,6 +414,7 @@
     "DateTime": {
       "base": null,
       "refs": {
+        "BusinessVerificationResponse$CompletionUrlExpiresAt": "<p>The timestamp when the completion URL expires and is no longer valid for accessing the verification workflow.</p>",
         "CancelConnectionInvitationResponse$CreatedAt": "<p>The timestamp when the connection invitation was originally created.</p>",
         "CancelConnectionInvitationResponse$UpdatedAt": "<p>The timestamp when the connection invitation was last updated (canceled).</p>",
         "CancelConnectionInvitationResponse$ExpiresAt": "<p>The timestamp when the connection invitation would have expired if not canceled.</p>",
@@ -630,6 +632,12 @@
       "base": null,
       "refs": {}
     },
+    "ListConnectionInvitationsRequestOtherParticipantIdentifiersList": {
+      "base": null,
+      "refs": {
+        "ListConnectionInvitationsRequest$OtherParticipantIdentifiers": "<p>Filter results by specific participant identifiers.</p>"
+      }
+    },
     "ListConnectionInvitationsResponse": {
       "base": null,
       "refs": {}
@@ -637,6 +645,12 @@
     "ListConnectionsRequest": {
       "base": null,
       "refs": {}
+    },
+    "ListConnectionsRequestOtherParticipantIdentifiersList": {
+      "base": null,
+      "refs": {
+        "ListConnectionsRequest$OtherParticipantIdentifiers": "<p>Filter results by specific participant identifiers.</p>"
+      }
     },
     "ListConnectionsResponse": {
       "base": null,
@@ -718,6 +732,8 @@
         "CreateConnectionInvitationRequest$ReceiverIdentifier": "<p>The identifier of the organization or partner to invite for connection.</p>",
         "CreateConnectionInvitationResponse$OtherParticipantIdentifier": "<p>The identifier of the organization or partner being invited.</p>",
         "GetConnectionInvitationResponse$OtherParticipantIdentifier": "<p>The identifier of the other participant in the connection invitation.</p>",
+        "ListConnectionInvitationsRequestOtherParticipantIdentifiersList$member": null,
+        "ListConnectionsRequestOtherParticipantIdentifiersList$member": null,
         "ParticipantIdentifierList$member": null,
         "RejectConnectionInvitationResponse$OtherParticipantIdentifier": "<p>The identifier of the other participant who sent the invitation.</p>",
         "UpdateConnectionPreferencesRequestExcludedParticipantIdentifiersList$member": null
@@ -727,8 +743,6 @@
       "base": null,
       "refs": {
         "GetConnectionPreferencesResponse$ExcludedParticipantIds": "<p>A list of participant IDs that are excluded from connection requests or interactions.</p>",
-        "ListConnectionInvitationsRequest$OtherParticipantIdentifiers": "<p>Filter results by specific participant identifiers.</p>",
-        "ListConnectionsRequest$OtherParticipantIdentifiers": "<p>Filter results by specific participant identifiers.</p>",
         "UpdateConnectionPreferencesResponse$ExcludedParticipantIds": "<p>A list of participant IDs that are excluded from connection requests or interactions.</p>"
       }
     },

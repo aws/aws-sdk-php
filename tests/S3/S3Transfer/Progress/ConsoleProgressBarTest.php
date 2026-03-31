@@ -7,15 +7,12 @@ use Aws\S3\S3Transfer\Progress\ConsoleProgressBar;
 use Aws\S3\S3Transfer\Progress\PlainProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\AbstractProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\TransferProgressBarFormat;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Tests console progress bar.
- */
 #[CoversClass(ConsoleProgressBar::class)]
-class ConsoleProgressBarTest extends TestCase
+final class ConsoleProgressBarTest extends TestCase
 {
     /**
      * Tests each instance of ConsoleProgressBar defaults to the

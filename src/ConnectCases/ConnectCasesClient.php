@@ -87,6 +87,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateFieldAsync(array $args = [])
  * @method \Aws\Result updateLayout(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLayoutAsync(array $args = [])
+ * @method \Aws\Result updateRelatedItem(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateRelatedItemAsync(array $args = [])
  * @method \Aws\Result updateTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTemplateAsync(array $args = [])
  */

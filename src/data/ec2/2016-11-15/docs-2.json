@@ -6454,6 +6454,12 @@
         "InstanceEventWindowDisassociationRequest$DedicatedHostIds": "<p>The IDs of the Dedicated Hosts to disassociate from the event window.</p>"
       }
     },
+    "DefaultConnectionTrackingConfiguration": {
+      "base": "<p>Indicates default conntrack information for the instance type. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-connection-tracking.html#connection-tracking-timeouts\"> Connection tracking timeouts </a> in the Amazon EC2 User Guide. </p>",
+      "refs": {
+        "NetworkInfo$ConnectionTrackingConfiguration": "<p>Indicates conntrack information for the instance type</p>"
+      }
+    },
     "DefaultEnaQueueCountPerInterface": {
       "base": null,
       "refs": {
@@ -6505,6 +6511,24 @@
       "refs": {
         "TargetCapacitySpecification$DefaultTargetCapacityType": "<p>The default target capacity type.</p>",
         "TargetCapacitySpecificationRequest$DefaultTargetCapacityType": "<p>The default target capacity type.</p>"
+      }
+    },
+    "DefaultTcpEstablishedTimeout": {
+      "base": null,
+      "refs": {
+        "DefaultConnectionTrackingConfiguration$DefaultTcpEstablishedTimeout": "<p>Default timeout (in seconds) for idle TCP connections in an established state.</p>"
+      }
+    },
+    "DefaultUdpStreamTimeout": {
+      "base": null,
+      "refs": {
+        "DefaultConnectionTrackingConfiguration$DefaultUdpStreamTimeout": "<p>Default timeout (in seconds) for idle UDP flows classified as streams which have seen more than one request-response transaction.</p>"
+      }
+    },
+    "DefaultUdpTimeout": {
+      "base": null,
+      "refs": {
+        "DefaultConnectionTrackingConfiguration$DefaultUdpTimeout": "<p>Default timeout (in seconds) for idle UDP flows that have seen traffic only in a single direction or a single request-response transaction.</p>"
       }
     },
     "DefaultingDhcpOptionsId": {
@@ -12056,6 +12080,13 @@
         "FleetSpotCapacityRebalanceRequest$ReplacementStrategy": "<p>The replacement strategy to use. Only available for fleets of type <code>maintain</code>.</p> <p> <code>launch</code> - EC2 Fleet launches a replacement Spot Instance when a rebalance notification is emitted for an existing Spot Instance in the fleet. EC2 Fleet does not terminate the instances that receive a rebalance notification. You can terminate the old instances, or you can leave them running. You are charged for all instances while they are running. </p> <p> <code>launch-before-terminate</code> - EC2 Fleet launches a replacement Spot Instance when a rebalance notification is emitted for an existing Spot Instance in the fleet, and then, after a delay that you specify (in <code>TerminationDelay</code>), terminates the instances that received a rebalance notification.</p>"
       }
     },
+    "FleetReservationType": {
+      "base": null,
+      "refs": {
+        "ReservationTypeList$member": null,
+        "ReservationTypeListRequest$member": null
+      }
+    },
     "FleetSet": {
       "base": null,
       "refs": {
@@ -14531,10 +14562,10 @@
     "InstanceLifecycle": {
       "base": null,
       "refs": {
-        "CreateFleetError$Lifecycle": "<p>Indicates if the instance that could not be launched was a Spot Instance or On-Demand Instance.</p>",
-        "CreateFleetInstance$Lifecycle": "<p>Indicates if the instance that was launched is a Spot Instance or On-Demand Instance.</p>",
-        "DescribeFleetError$Lifecycle": "<p>Indicates if the instance that could not be launched was a Spot Instance or On-Demand Instance.</p>",
-        "DescribeFleetsInstances$Lifecycle": "<p>Indicates if the instance that was launched is a Spot Instance or On-Demand Instance.</p>"
+        "CreateFleetError$Lifecycle": "<p>Indicates if the instance that could not be launched was a Spot, On-Demand, Capacity Block, or Interruptible Capacity Reservation instance.</p>",
+        "CreateFleetInstance$Lifecycle": "<p>Indicates if the instance that was launched is a Spot, On-Demand, Capacity Block, or Interruptible Capacity Reservation instance.</p>",
+        "DescribeFleetError$Lifecycle": "<p>Indicates if the instance that could not be launched was a Spot, On-Demand, Capacity Block, or Interruptible Capacity Reservation instance.</p>",
+        "DescribeFleetsInstances$Lifecycle": "<p>Indicates if the instance that was launched is a Spot, On-Demand, Capacity Block, or Interruptible Capacity Reservation instance.</p>"
       }
     },
     "InstanceLifecycleType": {
@@ -21982,6 +22013,18 @@
         "CapacityManagerDimension$ReservationType": "<p> The type of capacity reservation. </p>"
       }
     },
+    "ReservationTypeList": {
+      "base": null,
+      "refs": {
+        "ReservedCapacityOptions$ReservationTypes": "<p>The types of Capacity Reservations used for fulfilling the EC2 Fleet request.</p>"
+      }
+    },
+    "ReservationTypeListRequest": {
+      "base": null,
+      "refs": {
+        "ReservedCapacityOptionsRequest$ReservationTypes": "<p>The types of Capacity Reservations to use for fulfilling the EC2 Fleet request.</p>"
+      }
+    },
     "ReservationValue": {
       "base": "<p>The cost associated with the Reserved Instance.</p>",
       "refs": {
@@ -21989,6 +22032,18 @@
         "GetReservedInstancesExchangeQuoteResult$TargetConfigurationValueRollup": "<p>The cost associated with the Reserved Instance.</p>",
         "ReservedInstanceReservationValue$ReservationValue": "<p>The total value of the Convertible Reserved Instance that you are exchanging.</p>",
         "TargetReservationValue$ReservationValue": "<p>The total value of the Convertible Reserved Instances that make up the exchange. This is the sum of the list value, remaining upfront price, and additional upfront cost of the exchange.</p>"
+      }
+    },
+    "ReservedCapacityOptions": {
+      "base": "<p>Defines EC2 Fleet preferences for utilizing reserved capacity when DefaultTargetCapacityType is set to <code>reserved-capacity</code>.</p>",
+      "refs": {
+        "FleetData$ReservedCapacityOptions": "<p>Defines EC2 Fleet preferences for utilizing reserved capacity when DefaultTargetCapacityType is set to <code>reserved-capacity</code>.</p>"
+      }
+    },
+    "ReservedCapacityOptionsRequest": {
+      "base": "<p>Defines EC2 Fleet preferences for utilizing reserved capacity when DefaultTargetCapacityType is set to <code>reserved-capacity</code>.</p> <note> <p>This configuration can only be used if the EC2 Fleet is of type <code>instant</code>.</p> </note> <p>When you specify <code>ReservedCapacityOptions</code>, you must also set <code>DefaultTargetCapacityType</code> to <code>reserved-capacity</code> in the <code>TargetCapacitySpecification</code>.</p> <p>For more information about Interruptible Capacity Reservations, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet-launch-instances-interruptible-cr-walkthrough.html\">Launch instances into an Interruptible Capacity Reservation</a> in the <i>Amazon EC2 User Guide</i>.</p>",
+      "refs": {
+        "CreateFleetRequest$ReservedCapacityOptions": "<p>Defines EC2 Fleet preferences for utilizing reserved capacity when DefaultTargetCapacityType is set to <code>reserved-capacity</code>.</p> <p>Supported only for fleets of type <code>instant</code>.</p>"
       }
     },
     "ReservedInstanceIdSet": {

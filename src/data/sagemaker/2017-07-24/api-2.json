@@ -5959,6 +5959,16 @@
       "min":1,
       "pattern":"[a-z]+\\-[0-9a-z\\-]+"
     },
+    "AvailabilityZoneBalanceEnforcementMode":{
+      "type":"string",
+      "enum":["PERMISSIVE"]
+    },
+    "AvailabilityZoneBalanceMaxImbalance":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":0
+    },
     "AvailabilityZoneId":{
       "type":"string",
       "pattern":"[a-z]{3}\\d-az\\d"
@@ -7630,6 +7640,7 @@
         "ml.r7i.16xlarge",
         "ml.r7i.24xlarge",
         "ml.r7i.48xlarge",
+        "ml.r5d.16xlarge",
         "ml.p6-b300.48xlarge"
       ]
     },
@@ -9368,8 +9379,7 @@
       "type":"structure",
       "required":[
         "InferenceComponentName",
-        "EndpointName",
-        "Specification"
+        "EndpointName"
       ],
       "members":{
         "InferenceComponentName":{"shape":"InferenceComponentName"},
@@ -15782,7 +15792,7 @@
     },
     "HubContentDocument":{
       "type":"string",
-      "max":170391,
+      "max":327680,
       "min":0,
       "pattern":".*"
     },
@@ -16812,6 +16822,14 @@
       "max":2048,
       "min":20
     },
+    "InferenceComponentAvailabilityZoneBalance":{
+      "type":"structure",
+      "required":["EnforcementMode"],
+      "members":{
+        "EnforcementMode":{"shape":"AvailabilityZoneBalanceEnforcementMode"},
+        "MaxImbalance":{"shape":"AvailabilityZoneBalanceMaxImbalance"}
+      }
+    },
     "InferenceComponentCapacitySize":{
       "type":"structure",
       "required":[
@@ -16907,6 +16925,13 @@
       "min":0,
       "pattern":"[a-zA-Z0-9-]+"
     },
+    "InferenceComponentPlacementStrategy":{
+      "type":"string",
+      "enum":[
+        "SPREAD",
+        "BINPACK"
+      ]
+    },
     "InferenceComponentRollingUpdatePolicy":{
       "type":"structure",
       "required":[
@@ -16934,6 +16959,14 @@
         "CurrentCopyCount":{"shape":"InferenceComponentCopyCount"}
       }
     },
+    "InferenceComponentSchedulingConfig":{
+      "type":"structure",
+      "required":["PlacementStrategy"],
+      "members":{
+        "PlacementStrategy":{"shape":"InferenceComponentPlacementStrategy"},
+        "AvailabilityZoneBalance":{"shape":"InferenceComponentAvailabilityZoneBalance"}
+      }
+    },
     "InferenceComponentSortKey":{
       "type":"string",
       "enum":[
@@ -16950,7 +16983,8 @@
         "StartupParameters":{"shape":"InferenceComponentStartupParameters"},
         "ComputeResourceRequirements":{"shape":"InferenceComponentComputeResourceRequirements"},
         "BaseInferenceComponentName":{"shape":"InferenceComponentName"},
-        "DataCacheConfig":{"shape":"InferenceComponentDataCacheConfig"}
+        "DataCacheConfig":{"shape":"InferenceComponentDataCacheConfig"},
+        "SchedulingConfig":{"shape":"InferenceComponentSchedulingConfig"}
       }
     },
     "InferenceComponentSpecificationSummary":{
@@ -16961,7 +16995,8 @@
         "StartupParameters":{"shape":"InferenceComponentStartupParameters"},
         "ComputeResourceRequirements":{"shape":"InferenceComponentComputeResourceRequirements"},
         "BaseInferenceComponentName":{"shape":"InferenceComponentName"},
-        "DataCacheConfig":{"shape":"InferenceComponentDataCacheConfigSummary"}
+        "DataCacheConfig":{"shape":"InferenceComponentDataCacheConfigSummary"},
+        "SchedulingConfig":{"shape":"InferenceComponentSchedulingConfig"}
       }
     },
     "InferenceComponentStartupParameters":{
@@ -20029,15 +20064,34 @@
       "min":0,
       "pattern":"\\d+\\.\\d+"
     },
+    "ManagedInstanceScalingCooldownInMinutes":{
+      "type":"integer",
+      "box":true,
+      "max":1440,
+      "min":5
+    },
     "ManagedInstanceScalingMaxInstanceCount":{
       "type":"integer",
       "box":true,
+      "min":1
+    },
+    "ManagedInstanceScalingMaximumStepSize":{
+      "type":"integer",
+      "box":true,
+      "max":100,
       "min":1
     },
     "ManagedInstanceScalingMinInstanceCount":{
       "type":"integer",
       "box":true,
       "min":0
+    },
+    "ManagedInstanceScalingScaleInStrategy":{
+      "type":"string",
+      "enum":[
+        "IDLE_RELEASE",
+        "CONSOLIDATION"
+      ]
     },
     "ManagedInstanceScalingStatus":{
       "type":"string",
@@ -24121,7 +24175,17 @@
       "members":{
         "Status":{"shape":"ManagedInstanceScalingStatus"},
         "MinInstanceCount":{"shape":"ManagedInstanceScalingMinInstanceCount"},
-        "MaxInstanceCount":{"shape":"ManagedInstanceScalingMaxInstanceCount"}
+        "MaxInstanceCount":{"shape":"ManagedInstanceScalingMaxInstanceCount"},
+        "ScaleInPolicy":{"shape":"ProductionVariantManagedInstanceScalingScaleInPolicy"}
+      }
+    },
+    "ProductionVariantManagedInstanceScalingScaleInPolicy":{
+      "type":"structure",
+      "required":["Strategy"],
+      "members":{
+        "Strategy":{"shape":"ManagedInstanceScalingScaleInStrategy"},
+        "MaximumStepSize":{"shape":"ManagedInstanceScalingMaximumStepSize"},
+        "CooldownInMinutes":{"shape":"ManagedInstanceScalingCooldownInMinutes"}
       }
     },
     "ProductionVariantModelDataDownloadTimeoutInSeconds":{

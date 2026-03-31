@@ -1634,6 +1634,18 @@
         "UltraServer$AvailabilityZone": "<p>The name of the Availability Zone where the UltraServer is provisioned.</p>"
       }
     },
+    "AvailabilityZoneBalanceEnforcementMode": {
+      "base": null,
+      "refs": {
+        "InferenceComponentAvailabilityZoneBalance$EnforcementMode": "<p>Determines how strictly the Availability Zone balance constraint is enforced.</p> <dl> <dt>PERMISSIVE</dt> <dd> <p>The endpoint attempts to balance copies across Availability Zones but proceeds with scheduling even if balance can't be achieved due to available capacity or instance distribution across Availability Zones.</p> </dd> </dl>"
+      }
+    },
+    "AvailabilityZoneBalanceMaxImbalance": {
+      "base": null,
+      "refs": {
+        "InferenceComponentAvailabilityZoneBalance$MaxImbalance": "<p>The maximum allowed difference in the number of inference component copies between any two Availability Zones. This parameter applies only when the endpoint has instances across two or more Availability Zones. A copy placement is allowed if it reduces imbalance or the resulting imbalance is within this value.</p> <p>Default value: <code>0</code>.</p>"
+      }
+    },
     "AvailabilityZoneId": {
       "base": null,
       "refs": {
@@ -8891,6 +8903,12 @@
         "UpdateInferenceComponentRuntimeConfigOutput$InferenceComponentArn": "<p>The Amazon Resource Name (ARN) of the inference component.</p>"
       }
     },
+    "InferenceComponentAvailabilityZoneBalance": {
+      "base": "<p>Configuration for balancing inference component copies across Availability Zones.</p>",
+      "refs": {
+        "InferenceComponentSchedulingConfig$AvailabilityZoneBalance": "<p>Configuration for balancing inference component copies across Availability Zones.</p>"
+      }
+    },
     "InferenceComponentCapacitySize": {
       "base": "<p>Specifies the type and size of the endpoint capacity to activate for a rolling deployment or a rollback strategy. You can specify your batches as either of the following:</p> <ul> <li> <p>A count of inference component copies </p> </li> <li> <p>The overall percentage or your fleet </p> </li> </ul> <p>For a rollback strategy, if you don't specify the fields in this object, or if you set the <code>Value</code> parameter to 100%, then SageMaker AI uses a blue/green rollback strategy and rolls all traffic back to the blue fleet.</p>",
       "refs": {
@@ -8976,6 +8994,12 @@
         "ListInferenceComponentsInput$NameContains": "<p>Filters the results to only those inference components with a name that contains the specified string.</p>"
       }
     },
+    "InferenceComponentPlacementStrategy": {
+      "base": null,
+      "refs": {
+        "InferenceComponentSchedulingConfig$PlacementStrategy": "<p>The strategy for placing inference component copies across available instances. If you also set <code>AvailabilityZoneBalance</code>, this strategy applies to placement within each Availability Zone.</p> <dl> <dt>SPREAD</dt> <dd> <p>Distributes copies evenly across available instances for better resilience.</p> </dd> <dt>BINPACK</dt> <dd> <p>Packs copies onto fewer instances to optimize resource utilization.</p> </dd> </dl>"
+      }
+    },
     "InferenceComponentRollingUpdatePolicy": {
       "base": "<p>Specifies a rolling deployment strategy for updating a SageMaker AI inference component.</p>",
       "refs": {
@@ -8994,6 +9018,13 @@
       "base": "<p>Details about the runtime settings for the model that is deployed with the inference component.</p>",
       "refs": {
         "DescribeInferenceComponentOutput$RuntimeConfig": "<p>Details about the runtime settings for the model that is deployed with the inference component.</p>"
+      }
+    },
+    "InferenceComponentSchedulingConfig": {
+      "base": "<p>The scheduling configuration that determines how inference component copies are placed across available instances when copies are added or removed.</p>",
+      "refs": {
+        "InferenceComponentSpecification$SchedulingConfig": "<p>The scheduling configuration that determines how inference component copies are placed across available instances when copies are added or removed.</p>",
+        "InferenceComponentSpecificationSummary$SchedulingConfig": "<p>The scheduling configuration that determines how inference component copies are placed across available instances when copies are added or removed.</p>"
       }
     },
     "InferenceComponentSortKey": {
@@ -10804,16 +10835,34 @@
         "UpdatePartnerAppRequest$AppVersion": "<p>The semantic version to upgrade the SageMaker Partner AI App to. Must be the same semantic version returned in the <code>AvailableUpgrade</code> field from <code>DescribePartnerApp</code>. Version skipping and downgrades are not supported.</p>"
       }
     },
+    "ManagedInstanceScalingCooldownInMinutes": {
+      "base": null,
+      "refs": {
+        "ProductionVariantManagedInstanceScalingScaleInPolicy$CooldownInMinutes": "<p>The cooldown period, in minutes, after the last endpoint operation before the endpoint evaluates consolidation scale-in opportunities.</p> <p>Default value: <code>20</code>.</p>"
+      }
+    },
     "ManagedInstanceScalingMaxInstanceCount": {
       "base": null,
       "refs": {
         "ProductionVariantManagedInstanceScaling$MaxInstanceCount": "<p>The maximum number of instances that the endpoint can provision when it scales up to accommodate an increase in traffic.</p>"
       }
     },
+    "ManagedInstanceScalingMaximumStepSize": {
+      "base": null,
+      "refs": {
+        "ProductionVariantManagedInstanceScalingScaleInPolicy$MaximumStepSize": "<p>The maximum number of instances that the endpoint can terminate at a time during a consolidation scale-in operation.</p> <p>Default value: <code>1</code>.</p>"
+      }
+    },
     "ManagedInstanceScalingMinInstanceCount": {
       "base": null,
       "refs": {
         "ProductionVariantManagedInstanceScaling$MinInstanceCount": "<p>The minimum number of instances that the endpoint must retain when it scales down to accommodate a decrease in traffic.</p>"
+      }
+    },
+    "ManagedInstanceScalingScaleInStrategy": {
+      "base": null,
+      "refs": {
+        "ProductionVariantManagedInstanceScalingScaleInPolicy$Strategy": "<p>The strategy for scaling in instances.</p> <dl> <dt>IDLE_RELEASE</dt> <dd> <p>Releases instances that have no hosted inference component copies.</p> </dd> <dt>CONSOLIDATION</dt> <dd> <p>Consolidates inference component copies onto fewer instances to release more instances. Consolidation honors the scheduling configuration of each inference component. For example, if an inference component specifies Availability Zone balance, consolidation only proceeds when the resulting distribution does not increase the imbalance.</p> </dd> </dl>"
       }
     },
     "ManagedInstanceScalingStatus": {
@@ -14482,6 +14531,12 @@
         "PendingProductionVariantSummary$ManagedInstanceScaling": "<p>Settings that control the range in the number of instances that the endpoint provisions as it scales up or down to accommodate traffic. </p>",
         "ProductionVariant$ManagedInstanceScaling": "<p>Settings that control the range in the number of instances that the endpoint provisions as it scales up or down to accommodate traffic. </p>",
         "ProductionVariantSummary$ManagedInstanceScaling": "<p>Settings that control the range in the number of instances that the endpoint provisions as it scales up or down to accommodate traffic. </p>"
+      }
+    },
+    "ProductionVariantManagedInstanceScalingScaleInPolicy": {
+      "base": "<p>Configures the scale-in behavior for managed instance scaling.</p>",
+      "refs": {
+        "ProductionVariantManagedInstanceScaling$ScaleInPolicy": "<p>Configures the scale-in behavior for managed instance scaling.</p>"
       }
     },
     "ProductionVariantModelDataDownloadTimeoutInSeconds": {

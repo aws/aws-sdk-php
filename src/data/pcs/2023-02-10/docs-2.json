@@ -81,6 +81,20 @@
         "RegisterComputeNodeGroupInstanceRequest$bootstrapId": "<p>The client-generated token to allow for retries.</p>"
       }
     },
+    "CgroupCustomSetting": {
+      "base": "<p>Additional settings that directly map to Cgroup settings.</p> <important> <p>PCS supports a subset of Cgroup settings. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/cgroup-custom-settings.html\">Configuring custom Cgroup settings in PCS</a> in the <i>PCS User Guide</i>.</p> </important>",
+      "refs": {
+        "CgroupCustomSettings$member": null
+      }
+    },
+    "CgroupCustomSettings": {
+      "base": null,
+      "refs": {
+        "ClusterSlurmConfiguration$cgroupCustomSettings": "<p>Additional Cgroup-specific configuration that directly maps to Cgroup settings.</p>",
+        "ClusterSlurmConfigurationRequest$cgroupCustomSettings": "<p>Additional Cgroup-specific configuration that directly maps to Cgroup settings.</p>",
+        "UpdateClusterSlurmConfigurationRequest$cgroupCustomSettings": "<p>Additional Cgroup-specific configuration that directly maps to Cgroup settings.</p>"
+      }
+    },
     "Cluster": {
       "base": "<p>The cluster resource and configuration.</p>",
       "refs": {
@@ -681,6 +695,20 @@
         "ClusterSlurmConfigurationRequest$slurmRest": "<p>The Slurm REST API configuration for the cluster.</p>"
       }
     },
+    "SlurmdbdCustomSetting": {
+      "base": "<p>Additional settings that directly map to SlurmDBD settings.</p> <important> <p>PCS supports a subset of SlurmDBD settings. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurmdbd-custom-settings.html\">Configuring custom SlurmDBD settings in PCS</a> in the <i>PCS User Guide</i>.</p> </important>",
+      "refs": {
+        "SlurmdbdCustomSettings$member": null
+      }
+    },
+    "SlurmdbdCustomSettings": {
+      "base": null,
+      "refs": {
+        "ClusterSlurmConfiguration$slurmdbdCustomSettings": "<p>Additional SlurmDBD-specific configuration that directly maps to SlurmDBD settings.</p>",
+        "ClusterSlurmConfigurationRequest$slurmdbdCustomSettings": "<p>Additional SlurmDBD-specific configuration that directly maps to SlurmDBD settings.</p>",
+        "UpdateClusterSlurmConfigurationRequest$slurmdbdCustomSettings": "<p>Additional SlurmDBD-specific configuration that directly maps to SlurmDBD settings.</p>"
+      }
+    },
     "SpotAllocationStrategy": {
       "base": null,
       "refs": {
@@ -699,6 +727,8 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
+        "CgroupCustomSetting$parameterName": "<p>PCS supports custom Cgroup settings for clusters. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/cgroup-custom-settings.html\">Configuring custom Cgroup settings in PCS</a> in the <i>PCS User Guide</i>.</p>",
+        "CgroupCustomSetting$parameterValue": "<p>The values for the configured Cgroup settings.</p>",
         "Cluster$name": "<p>The name that identifies the cluster.</p>",
         "Cluster$id": "<p>The generated unique ID of the cluster.</p>",
         "Cluster$arn": "<p>The unique Amazon Resource Name (ARN) of the cluster.</p>",
@@ -743,8 +773,8 @@
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$resourceId": "<p> The unique identifier of the resource that was not found. </p>",
         "ResourceNotFoundException$resourceType": "<p> The type or category of the resource that was not found. </p>",
-        "Scheduler$version": "<p>The version of the specified scheduling software that PCS uses to manage cluster scaling and job scheduling. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurm-versions.html\">Slurm versions in PCS</a> in the <i>PCS User Guide</i>.</p> <p>Valid Values: <code>23.11 | 24.05 | 24.11</code> </p>",
-        "SchedulerRequest$version": "<p>The version of the specified scheduling software that PCS uses to manage cluster scaling and job scheduling. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurm-versions.html\">Slurm versions in PCS</a> in the <i>PCS User Guide</i>.</p> <p>Valid Values: <code>23.11 | 24.05 | 24.11</code> </p>",
+        "Scheduler$version": "<p>The version of the specified scheduling software that PCS uses to manage cluster scaling and job scheduling. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurm-versions.html\">Slurm versions in PCS</a> in the <i>PCS User Guide</i>.</p> <p>Valid Values: <code>23.11 | 24.05 | 24.11 | 25.05</code> </p>",
+        "SchedulerRequest$version": "<p>The version of the specified scheduling software that PCS uses to manage cluster scaling and job scheduling. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurm-versions.html\">Slurm versions in PCS</a> in the <i>PCS User Guide</i>.</p> <p>Valid Values: <code>24.11 | 25.05</code> </p>",
         "ServiceQuotaExceededException$message": null,
         "ServiceQuotaExceededException$serviceCode": "<p> The service code associated with the quota that was exceeded. </p>",
         "ServiceQuotaExceededException$resourceId": "<p> The unique identifier of the resource that caused the quota to be exceeded. </p>",
@@ -754,6 +784,8 @@
         "SlurmAuthKey$secretVersion": "<p>The version of the shared Slurm key.</p>",
         "SlurmCustomSetting$parameterName": "<p>PCS supports custom Slurm settings for clusters, compute node groups, and queues. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurm-custom-settings.html\">Configuring custom Slurm settings in PCS</a> in the <i>PCS User Guide</i>.</p>",
         "SlurmCustomSetting$parameterValue": "<p>The values for the configured Slurm settings.</p>",
+        "SlurmdbdCustomSetting$parameterName": "<p>PCS supports custom SlurmDBD settings for clusters. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurmdbd-custom-settings.html\">Configuring custom SlurmDBD settings in PCS</a> in the <i>PCS User Guide</i>.</p>",
+        "SlurmdbdCustomSetting$parameterValue": "<p>The values for the configured SlurmDBD settings.</p>",
         "StringList$member": null,
         "ThrottlingException$message": null,
         "ValidationException$message": null,

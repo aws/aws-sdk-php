@@ -3,6 +3,7 @@ namespace Aws\Test\Api\Cbor;
 
 use Aws\Api\Cbor\CborDecoder;
 use Aws\Api\Cbor\Exception\CborException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -48,9 +49,7 @@ class CborDecoderTest extends TestCase
         return $cbor;
     }
 
-    /**
-     * @dataProvider simpleValuesProvider
-     */
+    #[DataProvider('simpleValuesProvider')]
     public function testDecodeSimpleValues(string $cbor, mixed $expected): void
     {
         $this->assertSame($expected, $this->decoder->decode($cbor));
@@ -66,9 +65,7 @@ class CborDecoderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider unsignedIntegerProvider
-     */
+    #[DataProvider('unsignedIntegerProvider')]
     public function testDecodeUnsignedInteger(string $cbor, int $expected): void
     {
         $this->assertSame($expected, $this->decoder->decode($cbor));
@@ -92,9 +89,7 @@ class CborDecoderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider negativeIntegerProvider
-     */
+    #[DataProvider('negativeIntegerProvider')]
     public function testDecodeNegativeInteger(string $cbor, int $expected): void
     {
         $this->assertSame($expected, $this->decoder->decode($cbor));
@@ -116,9 +111,7 @@ class CborDecoderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider floatProvider
-     */
+    #[DataProvider('floatProvider')]
     public function testDecodeFloat(string $cbor, float $expected): void
     {
         $result = $this->decoder->decode($cbor);
@@ -148,9 +141,7 @@ class CborDecoderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider stringProvider
-     */
+    #[DataProvider('stringProvider')]
     public function testDecodeString(string $cbor, string $expected): void
     {
         $this->assertSame($expected, $this->decoder->decode($cbor));
@@ -172,9 +163,7 @@ class CborDecoderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider byteStringProvider
-     */
+    #[DataProvider('byteStringProvider')]
     public function testDecodeByteString(string $cbor, string $expected): void
     {
         $this->assertSame($expected, $this->decoder->decode($cbor));
@@ -196,9 +185,7 @@ class CborDecoderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider arrayProvider
-     */
+    #[DataProvider('arrayProvider')]
     public function testDecodeArray(string $cbor, array $expected): void
     {
         $this->assertSame($expected, $this->decoder->decode($cbor));
@@ -218,9 +205,7 @@ class CborDecoderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider mapProvider
-     */
+    #[DataProvider('mapProvider')]
     public function testDecodeMap(string $cbor, array $expected): void
     {
         $this->assertEquals($expected, $this->decoder->decode($cbor));
@@ -247,9 +232,7 @@ class CborDecoderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider indefiniteProvider
-     */
+    #[DataProvider('indefiniteProvider')]
     public function testDecodeIndefinite(string $cbor, mixed $expected): void
     {
         $this->assertEquals($expected, $this->decoder->decode($cbor));
@@ -391,9 +374,7 @@ class CborDecoderTest extends TestCase
         $this->assertSame(1, $current);
     }
 
-    /**
-     * @dataProvider errorProvider
-     */
+    #[DataProvider('errorProvider')]
     public function testDecodeErrors(string $cbor, string $expectedMessage): void
     {
         $this->expectException(CborException::class);
@@ -539,9 +520,7 @@ class CborDecoderTest extends TestCase
         $this->assertCount(10000, $result);
     }
 
-    /**
-     * @dataProvider decodeSuccessFixtureProvider
-     */
+    #[DataProvider("decodeSuccessFixtureProvider")]
     public function testDecodeSuccessFromFixture(string $hex, mixed $expected): void
     {
         $cbor = hex2bin($hex);
@@ -578,9 +557,7 @@ class CborDecoderTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider decodeErrorFixtureProvider
-     */
+    #[DataProvider("decodeErrorFixtureProvider")]
     public function testDecodeErrorFromFixture(string $hex): void
     {
         $this->expectException(CborException::class);

@@ -43,6 +43,7 @@
     "UpdateCaseRule": "<p>Updates a case rule. In the Amazon Connect admin website, case rules are known as <i>case field conditions</i>. For more information about case field conditions, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/case-field-conditions.html\">Add case field conditions to a case template</a>.</p>",
     "UpdateField": "<p>Updates the properties of an existing field. </p>",
     "UpdateLayout": "<p>Updates the attributes of an existing layout.</p> <p>If the action is successful, the service sends back an HTTP 200 response with an empty HTTP body.</p> <p>A <code>ValidationException</code> is returned when you add non-existent <code>fieldIds</code> to a layout.</p> <note> <p>Title and Status fields cannot be part of layouts because they are not configurable.</p> </note>",
+    "UpdateRelatedItem": "<p>Updates the content of a related item associated with a case. The following related item types are supported:</p> <ul> <li> <p> <b>Comment</b> - Update the text content of an existing comment</p> </li> <li> <p> <b>Custom</b> - Update the fields of a custom related item. You can add, modify, and remove fields from a custom related item. There's a quota for the number of fields allowed in a Custom type related item. See <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#cases-quotas\">Amazon Connect Cases quotas</a>.</p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>When updating a Custom related item, all existing and new fields, and their associated values should be included in the request. Fields not included as part of this request will be removed.</p> </li> <li> <p>If you provide a value for <code>performedBy.userArn</code> you must also have <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribeUser.html\">DescribeUser</a> permission on the ARN of the user that you provide.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/case-fields.html#system-case-fields\">System case fields</a> cannot be used in a custom related item.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "UpdateTemplate": "<p>Updates the attributes of an existing template. The template attributes that can be modified include <code>name</code>, <code>description</code>, <code>layoutConfiguration</code>, <code>requiredFields</code>, and <code>status</code>. At least one of these attributes must not be null. If a null value is provided for a given attribute, that attribute is ignored and its current value is preserved.</p> <p>Other template APIs are:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateTemplate.html\">CreateTemplate</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_DeleteTemplate.html\">DeleteTemplate</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_GetTemplate.html\">GetTemplate</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_ListTemplates.html\">ListTemplates</a> </p> </li> </ul>"
   },
   "shapes": {
@@ -62,7 +63,8 @@
       "base": null,
       "refs": {
         "SearchAllRelatedItemsResponseItem$associationTime": "<p>Time at which a related item was associated with a case.</p>",
-        "SearchRelatedItemsResponseItem$associationTime": "<p>Time at which a related item was associated with a case.</p>"
+        "SearchRelatedItemsResponseItem$associationTime": "<p>Time at which a related item was associated with a case.</p>",
+        "UpdateRelatedItemResponse$associationTime": "<p>Time at which the related item was associated with the case.</p>"
       }
     },
     "AuditEvent": {
@@ -123,7 +125,7 @@
     "AuditEventType": {
       "base": null,
       "refs": {
-        "AuditEvent$type": "<p>The Type of an audit history event.</p>"
+        "AuditEvent$type": "<p>The type of audit history event.</p> <p>Valid Values: <code>Case.Created</code> | <code>Case.Updated</code> | <code>RelatedItem.Created</code> | <code>RelatedItem.Updated</code> | <code>RelatedItem.Deleted</code> </p>"
       }
     },
     "BasicLayout": {
@@ -295,7 +297,8 @@
         "SearchAllRelatedItemsResponseItem$caseId": "<p>A unique identifier of the case.</p>",
         "SearchCasesResponseItem$caseId": "<p>A unique identifier of the case.</p>",
         "SearchRelatedItemsRequest$caseId": "<p>A unique identifier of the case.</p>",
-        "UpdateCaseRequest$caseId": "<p>A unique identifier of the case.</p>"
+        "UpdateCaseRequest$caseId": "<p>A unique identifier of the case.</p>",
+        "UpdateRelatedItemRequest$caseId": "<p>A unique identifier of the case.</p>"
       }
     },
     "CaseRuleArn": {
@@ -386,13 +389,15 @@
     "CommentBody": {
       "base": null,
       "refs": {
-        "CommentContent$body": "<p>Text in the body of a <code>Comment</code> on a case.</p>"
+        "CommentContent$body": "<p>Text in the body of a <code>Comment</code> on a case.</p>",
+        "CommentUpdateContent$body": "<p>Updated text in the body of a <code>Comment</code> on a case.</p>"
       }
     },
     "CommentBodyTextType": {
       "base": null,
       "refs": {
-        "CommentContent$contentType": "<p>Type of the text in the box of a <code>Comment</code> on a case.</p>"
+        "CommentContent$contentType": "<p>Type of the text in the box of a <code>Comment</code> on a case.</p>",
+        "CommentUpdateContent$contentType": "<p>Type of the text in the box of a <code>Comment</code> on a case.</p>"
       }
     },
     "CommentContent": {
@@ -406,6 +411,12 @@
       "base": "<p>A filter for related items of type <code>Comment</code>.</p>",
       "refs": {
         "RelatedItemTypeFilter$comment": "<p>A filter for related items of type <code>Comment</code>.</p>"
+      }
+    },
+    "CommentUpdateContent": {
+      "base": "<p>Represents the updated content of a <code>Comment</code> related item.</p>",
+      "refs": {
+        "RelatedItemUpdateContent$comment": null
       }
     },
     "CompoundCondition": {
@@ -605,6 +616,18 @@
         "CustomInputContent$fields": "<p>List of field values for the <code>Custom</code> related item.</p>"
       }
     },
+    "CustomUpdateContent": {
+      "base": "<p>Represents the updated content of a <code>Custom</code> related item.</p>",
+      "refs": {
+        "RelatedItemUpdateContent$custom": null
+      }
+    },
+    "CustomUpdateContentFieldsList": {
+      "base": null,
+      "refs": {
+        "CustomUpdateContent$fields": "<p>List of updated field values for the <code>Custom</code> related item. All existing and new fields, and their associated values should be included. Fields not included as part of this request will be removed.</p>"
+      }
+    },
     "DeleteCaseRequest": {
       "base": null,
       "refs": {}
@@ -720,6 +743,7 @@
         "UpdateCaseRuleRequest$domainId": "<p>Unique identifier of a Cases domain.</p>",
         "UpdateFieldRequest$domainId": "<p>The unique identifier of the Cases domain. </p>",
         "UpdateLayoutRequest$domainId": "<p>The unique identifier of the Cases domain. </p>",
+        "UpdateRelatedItemRequest$domainId": "<p>The unique identifier of the Cases domain. </p>",
         "UpdateTemplateRequest$domainId": "<p>The unique identifier of the Cases domain. </p>"
       }
     },
@@ -952,6 +976,7 @@
       "refs": {
         "CreateCaseRequestFieldsList$member": null,
         "CustomInputContentFieldsList$member": null,
+        "CustomUpdateContentFieldsList$member": null,
         "FieldFilter$equalTo": "<p>Object containing field identifier and value information.</p>",
         "FieldFilter$contains": "<p>Object containing field identifier and value information.</p>",
         "FieldFilter$greaterThan": "<p>Object containing field identifier and value information.</p>",
@@ -1395,14 +1420,16 @@
     "RelatedItemArn": {
       "base": null,
       "refs": {
-        "CreateRelatedItemResponse$relatedItemArn": "<p>The Amazon Resource Name (ARN) of the related item.</p>"
+        "CreateRelatedItemResponse$relatedItemArn": "<p>The Amazon Resource Name (ARN) of the related item.</p>",
+        "UpdateRelatedItemResponse$relatedItemArn": "<p>The Amazon Resource Name (ARN) of the updated related item.</p>"
       }
     },
     "RelatedItemContent": {
       "base": "<p>Represents the content of a particular type of related item.</p>",
       "refs": {
         "SearchAllRelatedItemsResponseItem$content": null,
-        "SearchRelatedItemsResponseItem$content": "<p>Represents the content of a particular type of related item.</p>"
+        "SearchRelatedItemsResponseItem$content": "<p>Represents the content of a particular type of related item.</p>",
+        "UpdateRelatedItemResponse$content": "<p>Represents the content of the updated related item.</p>"
       }
     },
     "RelatedItemEventIncludedData": {
@@ -1417,7 +1444,9 @@
         "CreateRelatedItemResponse$relatedItemId": "<p>The unique identifier of the related item.</p>",
         "DeleteRelatedItemRequest$relatedItemId": "<p>A unique identifier of a related item.</p>",
         "SearchAllRelatedItemsResponseItem$relatedItemId": "<p>Unique identifier of a related item.</p>",
-        "SearchRelatedItemsResponseItem$relatedItemId": "<p>Unique identifier of a related item.</p>"
+        "SearchRelatedItemsResponseItem$relatedItemId": "<p>Unique identifier of a related item.</p>",
+        "UpdateRelatedItemRequest$relatedItemId": "<p>Unique identifier of a related item.</p>",
+        "UpdateRelatedItemResponse$relatedItemId": "<p>The unique identifier of the updated related item.</p>"
       }
     },
     "RelatedItemInputContent": {
@@ -1432,7 +1461,8 @@
         "AuditEvent$relatedItemType": "<p>The Type of the related item.</p>",
         "CreateRelatedItemRequest$type": "<p>The type of a related item.</p>",
         "SearchAllRelatedItemsResponseItem$type": "<p>Type of a related item.</p>",
-        "SearchRelatedItemsResponseItem$type": "<p>Type of a related item.</p>"
+        "SearchRelatedItemsResponseItem$type": "<p>Type of a related item.</p>",
+        "UpdateRelatedItemResponse$type": "<p>Type of the updated related item.</p>"
       }
     },
     "RelatedItemTypeFilter": {
@@ -1440,6 +1470,12 @@
       "refs": {
         "SearchAllRelatedItemsRequestFiltersList$member": null,
         "SearchRelatedItemsRequestFiltersList$member": null
+      }
+    },
+    "RelatedItemUpdateContent": {
+      "base": "<p>Represents the content of a related item to be updated. This is a union type that can contain either comment content or custom content.</p>",
+      "refs": {
+        "UpdateRelatedItemRequest$content": "<p>The content of a related item to be updated.</p>"
       }
     },
     "RequiredCaseRule": {
@@ -1803,7 +1839,8 @@
         "SearchAllRelatedItemsResponseItem$tags": "<p>A map of of key-value pairs that represent tags on a resource. Tags are used to organize, track, or control access for this resource.</p>",
         "SearchCasesResponseItem$tags": "<p>A map of of key-value pairs that represent tags on a resource. Tags are used to organize, track, or control access for this resource.</p>",
         "SearchRelatedItemsResponseItem$tags": "<p>A map of of key-value pairs that represent tags on a resource. Tags are used to organize, track, or control access for this resource.</p>",
-        "TagResourceRequest$tags": "<p>A map of of key-value pairs that represent tags on a resource. Tags are used to organize, track, or control access for this resource.</p>"
+        "TagResourceRequest$tags": "<p>A map of of key-value pairs that represent tags on a resource. Tags are used to organize, track, or control access for this resource.</p>",
+        "UpdateRelatedItemResponse$tags": "<p>A map of of key-value pairs that represent tags on a resource. Tags are used to organize, track, or control access for this resource.</p>"
       }
     },
     "TargetSlaMinutes": {
@@ -1946,6 +1983,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateRelatedItemRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRelatedItemResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateTemplateRequest": {
       "base": null,
       "refs": {}
@@ -1968,7 +2013,10 @@
         "CreateRelatedItemRequest$performedBy": "<p>Represents the creator of the related item.</p>",
         "SearchAllRelatedItemsResponseItem$performedBy": null,
         "SearchRelatedItemsResponseItem$performedBy": "<p>Represents the creator of the related item.</p>",
-        "UpdateCaseRequest$performedBy": null
+        "UpdateCaseRequest$performedBy": null,
+        "UpdateRelatedItemRequest$performedBy": "<p>Represents the user who performed the update of the related item.</p>",
+        "UpdateRelatedItemResponse$lastUpdatedUser": "<p>Represents the last user that updated the related item.</p>",
+        "UpdateRelatedItemResponse$createdBy": "<p>Represents the creator of the related item.</p>"
       }
     },
     "ValidationException": {

@@ -252,6 +252,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionDeadline(array $args = [])
  * @method \Aws\Detective\DetectiveClient createDetective(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDetective(array $args = [])
+ * @method \Aws\DevOpsAgent\DevOpsAgentClient createDevOpsAgent(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionDevOpsAgent(array $args = [])
  * @method \Aws\DevOpsGuru\DevOpsGuruClient createDevOpsGuru(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDevOpsGuru(array $args = [])
  * @method \Aws\DeviceFarm\DeviceFarmClient createDeviceFarm(array $args = [])
@@ -790,6 +792,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionTranslate(array $args = [])
  * @method \Aws\TrustedAdvisor\TrustedAdvisorClient createTrustedAdvisor(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTrustedAdvisor(array $args = [])
+ * @method \Aws\Uxc\UxcClient createUxc(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionUxc(array $args = [])
  * @method \Aws\VPCLattice\VPCLatticeClient createVPCLattice(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionVPCLattice(array $args = [])
  * @method \Aws\VerifiedPermissions\VerifiedPermissionsClient createVerifiedPermissions(array $args = [])
@@ -839,7 +843,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.373.2';
+    const VERSION = '3.375.0';
 
     /** @var array Arguments for creating clients */
     private $args;

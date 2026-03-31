@@ -172,6 +172,23 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "CreateLookupTable":{
+      "name":"CreateLookupTable",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateLookupTableRequest"},
+      "output":{"shape":"CreateLookupTableResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "CreateScheduledQuery":{
       "name":"CreateScheduledQuery",
       "http":{
@@ -367,6 +384,20 @@
         {"shape":"OperationAbortedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "DeleteLookupTable":{
+      "name":"DeleteLookupTable",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteLookupTableRequest"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceUnavailableException"}
       ]
     },
     "DeleteMetricFilter":{
@@ -662,6 +693,21 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "DescribeLookupTables":{
+      "name":"DescribeLookupTables",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeLookupTablesRequest"},
+      "output":{"shape":"DescribeLookupTablesResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "DescribeMetricFilters":{
       "name":"DescribeMetricFilters",
       "http":{
@@ -953,6 +999,21 @@
         {"shape":"InvalidParameterException"},
         {"shape":"LimitExceededException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "GetLookupTable":{
+      "name":"GetLookupTable",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetLookupTableRequest"},
+      "output":{"shape":"GetLookupTableResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ServiceUnavailableException"}
       ]
     },
@@ -1615,6 +1676,22 @@
         {"shape":"OperationAbortedException"}
       ]
     },
+    "UpdateLookupTable":{
+      "name":"UpdateLookupTable",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateLookupTableRequest"},
+      "output":{"shape":"UpdateLookupTableResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "UpdateScheduledQuery":{
       "name":"UpdateScheduledQuery",
       "http":{
@@ -2078,6 +2155,27 @@
         "logStreamName":{"shape":"LogStreamName"}
       }
     },
+    "CreateLookupTableRequest":{
+      "type":"structure",
+      "required":[
+        "lookupTableName",
+        "tableBody"
+      ],
+      "members":{
+        "lookupTableName":{"shape":"LookupTableName"},
+        "description":{"shape":"LookupTableDescription"},
+        "tableBody":{"shape":"TableBody"},
+        "kmsKeyId":{"shape":"KmsKeyId"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "CreateLookupTableResponse":{
+      "type":"structure",
+      "members":{
+        "lookupTableArn":{"shape":"Arn"},
+        "createdAt":{"shape":"Timestamp"}
+      }
+    },
     "CreateScheduledQueryRequest":{
       "type":"structure",
       "required":[
@@ -2283,6 +2381,13 @@
       "members":{
         "logGroupName":{"shape":"LogGroupName"},
         "logStreamName":{"shape":"LogStreamName"}
+      }
+    },
+    "DeleteLookupTableRequest":{
+      "type":"structure",
+      "required":["lookupTableArn"],
+      "members":{
+        "lookupTableArn":{"shape":"Arn"}
       }
     },
     "DeleteMetricFilterRequest":{
@@ -2697,6 +2802,25 @@
       "type":"structure",
       "members":{
         "logStreams":{"shape":"LogStreams"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeLookupTablesMaxResults":{
+      "type":"integer",
+      "max":100
+    },
+    "DescribeLookupTablesRequest":{
+      "type":"structure",
+      "members":{
+        "lookupTableNamePrefix":{"shape":"LookupTableName"},
+        "maxResults":{"shape":"DescribeLookupTablesMaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeLookupTablesResponse":{
+      "type":"structure",
+      "members":{
+        "lookupTables":{"shape":"LookupTables"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -3377,6 +3501,25 @@
       "type":"structure",
       "members":{
         "logRecord":{"shape":"LogRecord"}
+      }
+    },
+    "GetLookupTableRequest":{
+      "type":"structure",
+      "required":["lookupTableArn"],
+      "members":{
+        "lookupTableArn":{"shape":"Arn"}
+      }
+    },
+    "GetLookupTableResponse":{
+      "type":"structure",
+      "members":{
+        "lookupTableArn":{"shape":"Arn"},
+        "lookupTableName":{"shape":"LookupTableName"},
+        "description":{"shape":"LookupTableDescription"},
+        "tableBody":{"shape":"TableBody"},
+        "sizeBytes":{"shape":"StoredBytes"},
+        "lastUpdatedTime":{"shape":"Timestamp"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "GetQueryResultsRequest":{
@@ -4184,6 +4327,34 @@
       "max":10,
       "min":1
     },
+    "LookupTable":{
+      "type":"structure",
+      "members":{
+        "lookupTableArn":{"shape":"Arn"},
+        "lookupTableName":{"shape":"LookupTableName"},
+        "description":{"shape":"LookupTableDescription"},
+        "tableFields":{"shape":"TableFields"},
+        "recordsCount":{"shape":"RecordsCount"},
+        "sizeBytes":{"shape":"StoredBytes"},
+        "lastUpdatedTime":{"shape":"Timestamp"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
+      }
+    },
+    "LookupTableDescription":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "LookupTableName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_]+$"
+    },
+    "LookupTables":{
+      "type":"list",
+      "member":{"shape":"LookupTable"}
+    },
     "LowerCaseString":{
       "type":"structure",
       "required":["withKeys"],
@@ -4911,7 +5082,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "parameters":{"shape":"QueryParameterList"}
       }
     },
     "PutQueryDefinitionResponse":{
@@ -5001,7 +5173,8 @@
         "name":{"shape":"QueryDefinitionName"},
         "queryString":{"shape":"QueryDefinitionString"},
         "lastModified":{"shape":"Timestamp"},
-        "logGroupNames":{"shape":"LogGroupNames"}
+        "logGroupNames":{"shape":"LogGroupNames"},
+        "parameters":{"shape":"QueryParameterList"}
       }
     },
     "QueryDefinitionList":{
@@ -5051,6 +5224,34 @@
       "max":1000,
       "min":1
     },
+    "QueryParameter":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"QueryParameterName"},
+        "defaultValue":{"shape":"QueryParameterDefaultValue"},
+        "description":{"shape":"QueryParameterDescription"}
+      }
+    },
+    "QueryParameterDefaultValue":{
+      "type":"string",
+      "max":1024
+    },
+    "QueryParameterDescription":{
+      "type":"string",
+      "max":512
+    },
+    "QueryParameterList":{
+      "type":"list",
+      "member":{"shape":"QueryParameter"},
+      "max":20
+    },
+    "QueryParameterName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[a-zA-Z_][a-zA-Z0-9_]*"
+    },
     "QueryResults":{
       "type":"list",
       "member":{"shape":"ResultRows"}
@@ -5099,6 +5300,10 @@
       "type":"list",
       "member":{"shape":"FieldHeader"},
       "max":128,
+      "min":0
+    },
+    "RecordsCount":{
+      "type":"long",
       "min":0
     },
     "RejectedEntityInfo":{
@@ -5228,7 +5433,9 @@
       ],
       "members":{
         "destinationIdentifier":{"shape":"S3Uri"},
-        "roleArn":{"shape":"RoleArn"}
+        "roleArn":{"shape":"RoleArn"},
+        "ownerAccountId":{"shape":"AccountId"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "S3DeliveryConfiguration":{
@@ -5637,6 +5844,15 @@
       ]
     },
     "SystemField":{"type":"string"},
+    "TableBody":{
+      "type":"string",
+      "max":10485760,
+      "min":1
+    },
+    "TableFields":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -5924,6 +6140,26 @@
         "filterPattern":{"shape":"FilterPattern"},
         "anomalyVisibilityTime":{"shape":"AnomalyVisibilityTime"},
         "enabled":{"shape":"Boolean"}
+      }
+    },
+    "UpdateLookupTableRequest":{
+      "type":"structure",
+      "required":[
+        "lookupTableArn",
+        "tableBody"
+      ],
+      "members":{
+        "lookupTableArn":{"shape":"Arn"},
+        "description":{"shape":"LookupTableDescription"},
+        "tableBody":{"shape":"TableBody"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
+      }
+    },
+    "UpdateLookupTableResponse":{
+      "type":"structure",
+      "members":{
+        "lookupTableArn":{"shape":"Arn"},
+        "lastUpdatedTime":{"shape":"Timestamp"}
       }
     },
     "UpdateScheduledQueryRequest":{

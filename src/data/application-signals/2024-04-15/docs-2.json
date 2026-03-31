@@ -114,6 +114,8 @@
         "ListServiceLevelObjectivesInput$KeyAttributes": "<p>You can use this optional field to specify which services you want to retrieve SLO information for.</p> <p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
         "ListServiceOperationsInput$KeyAttributes": "<p>Use this field to specify which service you want to retrieve information for. You must specify at least the <code>Type</code>, <code>Name</code>, and <code>Environment</code> attributes.</p> <p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
         "LogGroupReferences$member": null,
+        "MetricSource$MetricSourceKeyAttributes": "<p>Key attributes that identify the metric source.</p>",
+        "MetricSource$MetricSourceAttributes": "<p>Additional attributes for the metric source.</p>",
         "Node$KeyAttributes": "<p>The key attributes that identify this node, including Type, Name, and Environment information.</p>",
         "RequestBasedServiceLevelIndicatorMetric$KeyAttributes": "<p>This is a string-to-string map that contains information about the type of object that this SLO is related to. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object that this SLO is related to.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
         "RequestBasedServiceLevelIndicatorMetricConfig$KeyAttributes": "<p>If this SLO is related to a metric collected by Application Signals, you must use this field to specify which service the SLO metric is related to. To do so, you must specify at least the <code>Type</code>, <code>Name</code>, and <code>Environment</code> attributes.</p> <p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
@@ -776,6 +778,7 @@
       "refs": {
         "Metric$MetricName": "<p>The name of the metric to use.</p>",
         "MetricReference$MetricName": "<p>The name of the metric.</p>",
+        "RequestBasedServiceLevelIndicatorMetricConfig$MetricName": "<p>The name of the metric for SLOs on resources other than Application Signals services.</p>",
         "ServiceLevelIndicatorMetricConfig$MetricName": "<p>The name of the CloudWatch metric to use for the SLO, when using a custom metric rather than Application Signals standard metrics.</p>"
       }
     },
@@ -795,18 +798,29 @@
         "ServiceSummary$MetricReferences": "<p>An array of structures that each contain information about one metric associated with this service.</p>"
       }
     },
+    "MetricSource": {
+      "base": "<p>Identifies the metric source for SLOs on resources other than Application Signals services.</p>",
+      "refs": {
+        "ListServiceLevelObjectivesInput$MetricSource": "<p>Identifies the metric source to filter SLOs by.</p>",
+        "RequestBasedServiceLevelIndicatorMetric$MetricSource": "<p>Identifies the metric source for SLOs on resources other than Application Signals services.</p>",
+        "RequestBasedServiceLevelIndicatorMetricConfig$MetricSource": "<p>Identifies the metric source for SLOs on resources other than Application Signals services.</p>",
+        "ServiceLevelIndicatorMetric$MetricSource": "<p>Identifies the metric source for SLOs on resources other than Application Signals services.</p>",
+        "ServiceLevelIndicatorMetricConfig$MetricSource": "<p>Identifies the metric source for SLOs on resources other than Application Signals services.</p>",
+        "ServiceLevelObjectiveSummary$MetricSource": "<p>Identifies the metric source for SLOs on resources other than Application Signals services.</p>"
+      }
+    },
     "MetricSourceType": {
       "base": null,
       "refs": {
         "MetricSourceTypes$member": null,
-        "ServiceLevelObjective$MetricSourceType": "<p>Displays the SLI metric source type for this SLO. Supported types are:</p> <ul> <li> <p>Service operation</p> </li> <li> <p>Service dependency</p> </li> <li> <p>CloudWatch metric</p> </li> </ul>",
-        "ServiceLevelObjectiveSummary$MetricSourceType": "<p>Displays the SLI metric source type for this SLO. Supported types are:</p> <ul> <li> <p>Service operation</p> </li> <li> <p>Service dependency</p> </li> <li> <p>CloudWatch metric</p> </li> </ul>"
+        "ServiceLevelObjective$MetricSourceType": "<p>Displays the SLI metric source type for this SLO. Supported types are:</p> <ul> <li> <p>Service operation</p> </li> <li> <p>Service dependency</p> </li> <li> <p>Service</p> </li> <li> <p>CloudWatch metric</p> </li> <li> <p>AppMonitor</p> </li> <li> <p>Canary</p> </li> </ul>",
+        "ServiceLevelObjectiveSummary$MetricSourceType": "<p>Displays the SLI metric source type for this SLO. Supported types are:</p> <ul> <li> <p>Service operation</p> </li> <li> <p>Service dependency</p> </li> <li> <p>Service</p> </li> <li> <p>CloudWatch metric</p> </li> <li> <p>AppMonitor</p> </li> <li> <p>Canary</p> </li> </ul>"
       }
     },
     "MetricSourceTypes": {
       "base": null,
       "refs": {
-        "ListServiceLevelObjectivesInput$MetricSourceTypes": "<p>Use this optional field to only include SLOs with the specified metric source types in the output. Supported types are:</p> <ul> <li> <p>Service operation</p> </li> <li> <p>Service dependency</p> </li> <li> <p>CloudWatch metric</p> </li> </ul>"
+        "ListServiceLevelObjectivesInput$MetricSourceTypes": "<p>Use this optional field to only include SLOs with the specified metric source types in the output. Supported types are:</p> <ul> <li> <p>Service operation</p> </li> <li> <p>Service dependency</p> </li> <li> <p>Service</p> </li> <li> <p>CloudWatch metric</p> </li> <li> <p>AppMonitor</p> </li> <li> <p>Canary</p> </li> </ul>"
       }
     },
     "MetricStat": {

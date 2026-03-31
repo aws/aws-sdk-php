@@ -356,7 +356,7 @@ class SignatureV4 implements SignatureInterface
             if (!is_array($v)) {
                 $qs .= rawurlencode($k) . '=' . rawurlencode($v !== null ? $v : '') . '&';
             } else {
-                sort($v);
+                sort($v, SORT_STRING);
                 foreach ($v as $value) {
                     $qs .= rawurlencode($k) . '=' . rawurlencode($value !== null ? $value : '') . '&';
                 }

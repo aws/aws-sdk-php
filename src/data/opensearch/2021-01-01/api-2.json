@@ -540,6 +540,23 @@
         {"shape":"DisabledOperationException"}
       ]
     },
+    "DescribeInsightDetails":{
+      "name":"DescribeInsightDetails",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/insight-details"
+      },
+      "input":{"shape":"DescribeInsightDetailsRequest"},
+      "output":{"shape":"DescribeInsightDetailsResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "DescribeInstanceTypeLimits":{
       "name":"DescribeInstanceTypeLimits",
       "http":{
@@ -924,6 +941,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "ListInsights":{
+      "name":"ListInsights",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/insights"
+      },
+      "input":{"shape":"ListInsightsRequest"},
+      "output":{"shape":"ListInsightsResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"LimitExceededException"}
       ]
     },
     "ListInstanceTypeDetails":{
@@ -1351,6 +1385,10 @@
         "Status":{"shape":"OptionStatus"}
       }
     },
+    "AMPWorkspaceArn":{
+      "type":"string",
+      "pattern":"^arn:aws[a-zA-Z-]*:aps:[a-z0-9-]+:[0-9]{12}:workspace\\/ws-[a-z0-9-]*$"
+    },
     "ARN":{
       "type":"string",
       "max":2048,
@@ -1463,8 +1501,7 @@
       "type":"structure",
       "required":[
         "DataSourceName",
-        "DataSourceType",
-        "OpenSearchArns"
+        "DataSourceType"
       ],
       "members":{
         "DataSourceName":{"shape":"DirectQueryDataSourceName"},
@@ -2674,6 +2711,25 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "DescribeInsightDetailsRequest":{
+      "type":"structure",
+      "required":[
+        "Entity",
+        "InsightId"
+      ],
+      "members":{
+        "Entity":{"shape":"InsightEntity"},
+        "InsightId":{"shape":"GUID"},
+        "ShowHtmlContent":{"shape":"Boolean"}
+      }
+    },
+    "DescribeInsightDetailsResponse":{
+      "type":"structure",
+      "required":["Fields"],
+      "members":{
+        "Fields":{"shape":"InsightFieldList"}
+      }
+    },
     "DescribeInstanceTypeLimitsRequest":{
       "type":"structure",
       "required":[
@@ -2874,7 +2930,8 @@
       "type":"structure",
       "members":{
         "CloudWatchLog":{"shape":"CloudWatchDirectQueryDataSource"},
-        "SecurityLake":{"shape":"SecurityLakeDirectQueryDataSource"}
+        "SecurityLake":{"shape":"SecurityLakeDirectQueryDataSource"},
+        "Prometheus":{"shape":"PrometheusDirectQueryDataSource"}
       },
       "union":true
     },
@@ -3727,6 +3784,115 @@
         "SERVICE"
       ]
     },
+    "Insight":{
+      "type":"structure",
+      "members":{
+        "InsightId":{"shape":"GUID"},
+        "DisplayName":{"shape":"String"},
+        "Type":{"shape":"InsightType"},
+        "Priority":{"shape":"InsightPriorityLevel"},
+        "Status":{"shape":"InsightStatus"},
+        "CreationTime":{"shape":"UpdateTimestamp"},
+        "UpdateTime":{"shape":"UpdateTimestamp"},
+        "IsExperimental":{"shape":"Boolean"}
+      }
+    },
+    "InsightEntity":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"InsightEntityType"},
+        "Value":{"shape":"InsightEntityValue"}
+      }
+    },
+    "InsightEntityType":{
+      "type":"string",
+      "enum":[
+        "Account",
+        "DomainName"
+      ]
+    },
+    "InsightEntityValue":{
+      "type":"string",
+      "max":28,
+      "min":3,
+      "pattern":"([a-z][a-z0-9\\-]+|\\d{12})"
+    },
+    "InsightField":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Type",
+        "Value"
+      ],
+      "members":{
+        "Name":{"shape":"String"},
+        "Type":{"shape":"InsightFieldType"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "InsightFieldList":{
+      "type":"list",
+      "member":{"shape":"InsightField"}
+    },
+    "InsightFieldType":{
+      "type":"string",
+      "enum":[
+        "text",
+        "metric"
+      ]
+    },
+    "InsightList":{
+      "type":"list",
+      "member":{"shape":"Insight"}
+    },
+    "InsightPageSize":{
+      "type":"integer",
+      "max":500,
+      "min":1
+    },
+    "InsightPriorityLevel":{
+      "type":"string",
+      "enum":[
+        "CRITICAL",
+        "HIGH",
+        "MEDIUM",
+        "LOW"
+      ]
+    },
+    "InsightSortOrder":{
+      "type":"string",
+      "enum":[
+        "ASC",
+        "DESC"
+      ]
+    },
+    "InsightStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "RESOLVED",
+        "DISMISSED"
+      ]
+    },
+    "InsightTimeRange":{
+      "type":"structure",
+      "required":[
+        "From",
+        "To"
+      ],
+      "members":{
+        "From":{"shape":"Long"},
+        "To":{"shape":"Long"}
+      }
+    },
+    "InsightType":{
+      "type":"string",
+      "enum":[
+        "EVENT",
+        "RECOMMENDATION"
+      ]
+    },
     "InstanceCount":{
       "type":"integer",
       "min":1
@@ -4007,6 +4173,24 @@
       "members":{
         "DomainPackageDetailsList":{"shape":"DomainPackageDetailsList"},
         "NextToken":{"shape":"String"}
+      }
+    },
+    "ListInsightsRequest":{
+      "type":"structure",
+      "required":["Entity"],
+      "members":{
+        "Entity":{"shape":"InsightEntity"},
+        "TimeRange":{"shape":"InsightTimeRange"},
+        "SortOrder":{"shape":"InsightSortOrder"},
+        "MaxResults":{"shape":"InsightPageSize"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListInsightsResponse":{
+      "type":"structure",
+      "members":{
+        "Insights":{"shape":"InsightList"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "ListInstanceTypeDetailsRequest":{
@@ -4841,6 +5025,17 @@
         "AWS_SERVICE"
       ]
     },
+    "PrometheusDirectQueryDataSource":{
+      "type":"structure",
+      "required":[
+        "RoleArn",
+        "WorkspaceArn"
+      ],
+      "members":{
+        "RoleArn":{"shape":"DirectQueryDataSourceRoleArn"},
+        "WorkspaceArn":{"shape":"AMPWorkspaceArn"}
+      }
+    },
     "PropertyValueType":{
       "type":"string",
       "enum":[
@@ -5460,8 +5655,7 @@
       "type":"structure",
       "required":[
         "DataSourceName",
-        "DataSourceType",
-        "OpenSearchArns"
+        "DataSourceType"
       ],
       "members":{
         "DataSourceName":{

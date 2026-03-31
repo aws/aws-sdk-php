@@ -42,7 +42,7 @@ Jump To:
    is to read the [User Guide][docs-guide]. The
    [Getting Started Guide][docs-quickstart] will help you become familiar with
    the basic concepts.
-5. **Beta: Removing unused services** — To date, there are over 300 AWS services available for use with this SDK.
+5. **Removing unused services** — To date, there are over 400 AWS services available for use with this SDK.
    You will likely not need them all. If you use Composer and would like to learn more about this feature,
     please read the [linked documentation][docs-script-composer].
 

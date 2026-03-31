@@ -121,6 +121,25 @@
       ],
       "idempotent":true
     },
+    "CreatePolicyStoreAlias":{
+      "name":"CreatePolicyStoreAlias",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreatePolicyStoreAliasInput"},
+      "output":{"shape":"CreatePolicyStoreAliasOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "CreatePolicyTemplate":{
       "name":"CreatePolicyTemplate",
       "http":{
@@ -193,6 +212,23 @@
       ],
       "idempotent":true
     },
+    "DeletePolicyStoreAlias":{
+      "name":"DeletePolicyStoreAlias",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeletePolicyStoreAliasInput"},
+      "output":{"shape":"DeletePolicyStoreAliasOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InvalidStateException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "DeletePolicyTemplate":{
       "name":"DeletePolicyTemplate",
       "http":{
@@ -253,6 +289,23 @@
       },
       "input":{"shape":"GetPolicyStoreInput"},
       "output":{"shape":"GetPolicyStoreOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetPolicyStoreAlias":{
+      "name":"GetPolicyStoreAlias",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetPolicyStoreAliasInput"},
+      "output":{"shape":"GetPolicyStoreAliasOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -359,6 +412,22 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListPolicyStoreAliases":{
+      "name":"ListPolicyStoreAliases",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListPolicyStoreAliasesInput"},
+      "output":{"shape":"ListPolicyStoreAliasesOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ],
@@ -578,6 +647,19 @@
       "pattern":"Action$|^.+::Action",
       "sensitive":true
     },
+    "Alias":{
+      "type":"string",
+      "max":150,
+      "min":0,
+      "pattern":"[a-zA-Z0-9-/_]*"
+    },
+    "AliasState":{
+      "type":"string",
+      "enum":[
+        "Active",
+        "PendingDeletion"
+      ]
+    },
     "AmazonResourceName":{
       "type":"string",
       "max":2048,
@@ -614,7 +696,8 @@
       "type":"string",
       "enum":[
         "POLICY_STORE_NOT_FOUND",
-        "POLICY_NOT_FOUND"
+        "POLICY_NOT_FOUND",
+        "POLICY_STORE_ALIAS_NOT_FOUND"
       ]
     },
     "BatchGetPolicyErrorItem":{
@@ -687,7 +770,8 @@
         "policyType":{"shape":"PolicyType"},
         "definition":{"shape":"PolicyDefinitionDetail"},
         "createdDate":{"shape":"TimestampFormat"},
-        "lastUpdatedDate":{"shape":"TimestampFormat"}
+        "lastUpdatedDate":{"shape":"TimestampFormat"},
+        "name":{"shape":"PolicyName"}
       }
     },
     "BatchGetPolicyOutputList":{
@@ -1012,7 +1096,8 @@
           "idempotencyToken":true
         },
         "policyStoreId":{"shape":"PolicyStoreId"},
-        "definition":{"shape":"PolicyDefinition"}
+        "definition":{"shape":"PolicyDefinition"},
+        "name":{"shape":"PolicyName"}
       }
     },
     "CreatePolicyOutput":{
@@ -1034,6 +1119,32 @@
         "createdDate":{"shape":"TimestampFormat"},
         "lastUpdatedDate":{"shape":"TimestampFormat"},
         "effect":{"shape":"PolicyEffect"}
+      }
+    },
+    "CreatePolicyStoreAliasInput":{
+      "type":"structure",
+      "required":[
+        "aliasName",
+        "policyStoreId"
+      ],
+      "members":{
+        "aliasName":{"shape":"Alias"},
+        "policyStoreId":{"shape":"PolicyStoreId"}
+      }
+    },
+    "CreatePolicyStoreAliasOutput":{
+      "type":"structure",
+      "required":[
+        "aliasName",
+        "policyStoreId",
+        "aliasArn",
+        "createdAt"
+      ],
+      "members":{
+        "aliasName":{"shape":"Alias"},
+        "policyStoreId":{"shape":"PolicyStoreId"},
+        "aliasArn":{"shape":"ResourceArn"},
+        "createdAt":{"shape":"TimestampFormat"}
       }
     },
     "CreatePolicyStoreInput":{
@@ -1079,7 +1190,8 @@
         },
         "policyStoreId":{"shape":"PolicyStoreId"},
         "description":{"shape":"PolicyTemplateDescription"},
-        "statement":{"shape":"PolicyStatement"}
+        "statement":{"shape":"PolicyStatement"},
+        "name":{"shape":"PolicyTemplateName"}
       }
     },
     "CreatePolicyTemplateOutput":{
@@ -1145,6 +1257,17 @@
       }
     },
     "DeletePolicyOutput":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeletePolicyStoreAliasInput":{
+      "type":"structure",
+      "required":["aliasName"],
+      "members":{
+        "aliasName":{"shape":"Alias"}
+      }
+    },
+    "DeletePolicyStoreAliasOutput":{
       "type":"structure",
       "members":{}
     },
@@ -1384,7 +1507,32 @@
         "definition":{"shape":"PolicyDefinitionDetail"},
         "createdDate":{"shape":"TimestampFormat"},
         "lastUpdatedDate":{"shape":"TimestampFormat"},
-        "effect":{"shape":"PolicyEffect"}
+        "effect":{"shape":"PolicyEffect"},
+        "name":{"shape":"PolicyName"}
+      }
+    },
+    "GetPolicyStoreAliasInput":{
+      "type":"structure",
+      "required":["aliasName"],
+      "members":{
+        "aliasName":{"shape":"Alias"}
+      }
+    },
+    "GetPolicyStoreAliasOutput":{
+      "type":"structure",
+      "required":[
+        "aliasName",
+        "policyStoreId",
+        "aliasArn",
+        "createdAt",
+        "state"
+      ],
+      "members":{
+        "aliasName":{"shape":"Alias"},
+        "policyStoreId":{"shape":"PolicyStoreId"},
+        "aliasArn":{"shape":"ResourceArn"},
+        "createdAt":{"shape":"TimestampFormat"},
+        "state":{"shape":"AliasState"}
       }
     },
     "GetPolicyStoreInput":{
@@ -1443,7 +1591,8 @@
         "description":{"shape":"PolicyTemplateDescription"},
         "statement":{"shape":"PolicyStatement"},
         "createdDate":{"shape":"TimestampFormat"},
-        "lastUpdatedDate":{"shape":"TimestampFormat"}
+        "lastUpdatedDate":{"shape":"TimestampFormat"},
+        "name":{"shape":"PolicyTemplateName"}
       }
     },
     "GetSchemaInput":{
@@ -1726,6 +1875,22 @@
       "members":{
         "nextToken":{"shape":"NextToken"},
         "policies":{"shape":"PolicyList"}
+      }
+    },
+    "ListPolicyStoreAliasesInput":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"MaxResults"},
+        "filter":{"shape":"PolicyStoreAliasFilter"}
+      }
+    },
+    "ListPolicyStoreAliasesOutput":{
+      "type":"structure",
+      "required":["policyStoreAliases"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "policyStoreAliases":{"shape":"PolicyStoreAliasList"}
       }
     },
     "ListPolicyStoresInput":{
@@ -2012,18 +2177,51 @@
         "definition":{"shape":"PolicyDefinitionItem"},
         "createdDate":{"shape":"TimestampFormat"},
         "lastUpdatedDate":{"shape":"TimestampFormat"},
-        "effect":{"shape":"PolicyEffect"}
+        "effect":{"shape":"PolicyEffect"},
+        "name":{"shape":"PolicyName"}
       }
     },
     "PolicyList":{
       "type":"list",
       "member":{"shape":"PolicyItem"}
     },
+    "PolicyName":{
+      "type":"string",
+      "max":150,
+      "min":0,
+      "pattern":"[a-zA-Z0-9-/_]*"
+    },
     "PolicyStatement":{
       "type":"string",
-      "max":10000,
       "min":1,
       "sensitive":true
+    },
+    "PolicyStoreAliasFilter":{
+      "type":"structure",
+      "members":{
+        "policyStoreId":{"shape":"PolicyStoreId"}
+      }
+    },
+    "PolicyStoreAliasItem":{
+      "type":"structure",
+      "required":[
+        "aliasName",
+        "policyStoreId",
+        "aliasArn",
+        "createdAt",
+        "state"
+      ],
+      "members":{
+        "aliasName":{"shape":"Alias"},
+        "policyStoreId":{"shape":"PolicyStoreId"},
+        "aliasArn":{"shape":"ResourceArn"},
+        "createdAt":{"shape":"TimestampFormat"},
+        "state":{"shape":"AliasState"}
+      }
+    },
+    "PolicyStoreAliasList":{
+      "type":"list",
+      "member":{"shape":"PolicyStoreAliasItem"}
     },
     "PolicyStoreDescription":{
       "type":"string",
@@ -2081,8 +2279,15 @@
         "policyTemplateId":{"shape":"PolicyTemplateId"},
         "description":{"shape":"PolicyTemplateDescription"},
         "createdDate":{"shape":"TimestampFormat"},
-        "lastUpdatedDate":{"shape":"TimestampFormat"}
+        "lastUpdatedDate":{"shape":"TimestampFormat"},
+        "name":{"shape":"PolicyTemplateName"}
       }
+    },
+    "PolicyTemplateName":{
+      "type":"string",
+      "max":150,
+      "min":0,
+      "pattern":"[a-zA-Z0-9-/_]*"
     },
     "PolicyTemplatesList":{
       "type":"list",
@@ -2175,7 +2380,8 @@
         "POLICY_STORE",
         "POLICY",
         "POLICY_TEMPLATE",
-        "SCHEMA"
+        "SCHEMA",
+        "POLICY_STORE_ALIAS"
       ]
     },
     "SchemaDefinition":{
@@ -2471,7 +2677,8 @@
       "members":{
         "policyStoreId":{"shape":"PolicyStoreId"},
         "policyId":{"shape":"PolicyId"},
-        "definition":{"shape":"UpdatePolicyDefinition"}
+        "definition":{"shape":"UpdatePolicyDefinition"},
+        "name":{"shape":"PolicyName"}
       }
     },
     "UpdatePolicyOutput":{
@@ -2534,7 +2741,8 @@
         "policyStoreId":{"shape":"PolicyStoreId"},
         "policyTemplateId":{"shape":"PolicyTemplateId"},
         "description":{"shape":"PolicyTemplateDescription"},
-        "statement":{"shape":"PolicyStatement"}
+        "statement":{"shape":"PolicyStatement"},
+        "name":{"shape":"PolicyTemplateName"}
       }
     },
     "UpdatePolicyTemplateOutput":{

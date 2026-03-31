@@ -1,0 +1,124 @@
+{
+  "version": "2.0",
+  "service": "<p>This is the Amazon Web Services User Experience Customization (UXC) API Reference. Amazon Web Services User Experience Customization (UXC) is a utility that provides programmatic access to enable account administrators to customize the visual appearance of the Amazon Web Services Management Console and manage these settings at the account level.</p> <note> <p>The <code>visibleServices</code> and <code>visibleRegions</code> settings control only the appearance of services and Regions in the Amazon Web Services Management Console. They do not restrict access through the CLI, SDKs, or other APIs.</p> </note> <p>For more information about UXC features and console procedures, see <a href=\"https://docs.aws.amazon.com/awsconsolehelpdocs/latest/gsg/getting-started-uxc.html\">Getting started with Amazon Web Services User Experience Customization</a>. For information about required permissions, see <a href=\"https://docs.aws.amazon.com/awsconsolehelpdocs/latest/gsg/security_iam.html\">Identity and access management for Amazon Web Services Management Console</a>.</p>",
+  "operations": {
+    "GetAccountCustomizations": "<p>Returns the current account customization settings, including account color, visible services, and visible Regions. Settings that you have not configured return their default values: visible Regions and visible services return `null`, and account color returns `none`.</p> <note> <p>The <code>visibleServices</code> and <code>visibleRegions</code> settings control only the appearance of services and Regions in the Amazon Web Services Management Console. They do not restrict access through the CLI, SDKs, or other APIs.</p> </note>",
+    "ListServices": "<p>Returns a paginated list of Amazon Web Services service identifiers that you can use as values for the <code>visibleServices</code> setting in <a href=\"https://docs.aws.amazon.com/awsconsolehelpdocs/latest/APIReference/API_UpdateAccountCustomizations.html\">UpdateAccountCustomizations</a>. The available services vary by Amazon Web Services partition. Use pagination to retrieve all results.</p> <note> <p>The <code>visibleServices</code> setting controls only the appearance of services in the Amazon Web Services Management Console. It does not restrict access through the CLI, SDKs, or other APIs.</p> </note>",
+    "UpdateAccountCustomizations": "<p>Updates one or more account customization settings. You can update account color, visible services, and visible Regions in a single request. Only the settings that you include in the request body are modified. Omitted settings remain unchanged. To reset a setting to its default behavior, set the value to <code>null</code> for visible Regions and visible services, or <code>none</code> for account color. This operation is idempotent.</p> <note> <p>The <code>visibleServices</code> and <code>visibleRegions</code> settings control only the appearance of services and Regions in the Amazon Web Services Management Console. They do not restrict access through the CLI, SDKs, or other APIs.</p> </note>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You don't have sufficient access to perform this operation. Verify that your IAM policy includes the required <code>uxc:</code> permissions for the operation that you are calling. For more information on IAM permissions, see <a href=\"https://docs.aws.amazon.com/awsconsolehelpdocs/latest/gsg/security-iam-awsmanpol.html\">Amazon Web Services managed policies for Amazon Web Services Management Console</a>.</p>",
+      "refs": {}
+    },
+    "AccountColor": {
+      "base": null,
+      "refs": {
+        "GetAccountCustomizationsOutput$accountColor": "<p>The account color preference. A value of <code>none</code> indicates that you have not set a color.</p>",
+        "UpdateAccountCustomizationsInput$accountColor": "<p>The account color preference to set. Set to <code>none</code> to reset to the default (no color).</p>",
+        "UpdateAccountCustomizationsOutput$accountColor": "<p>The current account color preference after the update.</p>"
+      }
+    },
+    "GetAccountCustomizationsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAccountCustomizationsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "InternalServerException": {
+      "base": "<p>The service encountered an internal error. Try your request again later.</p>",
+      "refs": {}
+    },
+    "ListServicesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListServicesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListServicesInput$maxResults": "<p>The maximum number of results to return per page.</p>"
+      }
+    },
+    "NextToken": {
+      "base": null,
+      "refs": {
+        "ListServicesInput$nextToken": "<p>The token for retrieving the next page of results. Use the <code>nextToken</code> value from a previous response.</p>",
+        "ListServicesOutput$nextToken": "<p>The token for retrieving the next page of results. This value is <code>null</code> when no more results are available.</p>"
+      }
+    },
+    "Region": {
+      "base": null,
+      "refs": {
+        "RegionsList$member": null
+      }
+    },
+    "RegionsList": {
+      "base": null,
+      "refs": {
+        "GetAccountCustomizationsOutput$visibleRegions": "<p>The list of Amazon Web Services Region codes that are visible to the account in the Amazon Web Services Management Console. A value of <code>null</code> indicates that you have not configured this feature and all Regions are visible. For a list of valid Region codes, see <a href=\"https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-regions.html\">Amazon Web Services Regions</a>.</p>",
+        "UpdateAccountCustomizationsInput$visibleRegions": "<p>The list of Amazon Web Services Region codes to make visible in the Amazon Web Services Management Console. Set to <code>null</code> to reset to the default, which makes all Regions visible. For a list of valid Region codes, see <a href=\"https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-regions.html\">Amazon Web Services Regions</a>.</p>",
+        "UpdateAccountCustomizationsOutput$visibleRegions": "<p>The current list of visible Region codes after the update.</p>"
+      }
+    },
+    "Service": {
+      "base": null,
+      "refs": {
+        "ServiceList$member": null
+      }
+    },
+    "ServiceList": {
+      "base": null,
+      "refs": {
+        "GetAccountCustomizationsOutput$visibleServices": "<p>The list of Amazon Web Services service identifiers that are visible to the account in the Amazon Web Services Management Console. A value of <code>null</code> indicates that you have not configured this feature and all services are visible. For valid service identifiers, call <a href=\"https://docs.aws.amazon.com/awsconsolehelpdocs/latest/APIReference/API_ListServices.html\">ListServices</a>.</p>",
+        "ListServicesOutput$services": "<p>The list of available Amazon Web Services service identifiers.</p>",
+        "UpdateAccountCustomizationsInput$visibleServices": "<p>The list of Amazon Web Services service identifiers to make visible in the Amazon Web Services Management Console. Set to <code>null</code> to reset to the default, which makes all services visible. For valid service identifiers, call <a href=\"https://docs.aws.amazon.com/awsconsolehelpdocs/latest/APIReference/API_ListServices.html\">ListServices</a>.</p>",
+        "UpdateAccountCustomizationsOutput$visibleServices": "<p>The current list of visible service identifiers after the update.</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "InternalServerException$message": null,
+        "ThrottlingException$message": null,
+        "ValidationException$message": null,
+        "ValidationExceptionField$path": "<p>The field name with the validation exception.</p>",
+        "ValidationExceptionField$message": "<p>A message describing the validation exception.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied because of request throttling. Reduce the frequency of your requests.</p>",
+      "refs": {}
+    },
+    "UpdateAccountCustomizationsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAccountCustomizationsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ValidationException": {
+      "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Describes a validation exception for a specific field.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": "<p>The list of fields that are invalid.</p>"
+      }
+    }
+  }
+}

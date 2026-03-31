@@ -13229,6 +13229,7 @@
         },
         "SpotOptions":{"shape":"SpotOptionsRequest"},
         "OnDemandOptions":{"shape":"OnDemandOptionsRequest"},
+        "ReservedCapacityOptions":{"shape":"ReservedCapacityOptionsRequest"},
         "ExcessCapacityTerminationPolicy":{"shape":"FleetExcessCapacityTerminationPolicy"},
         "LaunchTemplateConfigs":{"shape":"FleetLaunchTemplateConfigListRequest"},
         "TargetCapacitySpecification":{"shape":"TargetCapacitySpecificationRequest"},
@@ -16395,6 +16396,23 @@
         "locationName":"item"
       }
     },
+    "DefaultConnectionTrackingConfiguration":{
+      "type":"structure",
+      "members":{
+        "DefaultTcpEstablishedTimeout":{
+          "shape":"DefaultTcpEstablishedTimeout",
+          "locationName":"defaultTcpEstablishedTimeout"
+        },
+        "DefaultUdpTimeout":{
+          "shape":"DefaultUdpTimeout",
+          "locationName":"defaultUdpTimeout"
+        },
+        "DefaultUdpStreamTimeout":{
+          "shape":"DefaultUdpStreamTimeout",
+          "locationName":"defaultUdpStreamTimeout"
+        }
+      }
+    },
     "DefaultEnaQueueCountPerInterface":{"type":"integer"},
     "DefaultHttpTokensEnforcedState":{
       "type":"string",
@@ -16440,9 +16458,13 @@
       "enum":[
         "spot",
         "on-demand",
-        "capacity-block"
+        "capacity-block",
+        "reserved-capacity"
       ]
     },
+    "DefaultTcpEstablishedTimeout":{"type":"integer"},
+    "DefaultUdpStreamTimeout":{"type":"integer"},
+    "DefaultUdpTimeout":{"type":"integer"},
     "DefaultingDhcpOptionsId":{"type":"string"},
     "DeleteCapacityManagerDataExportRequest":{
       "type":"structure",
@@ -28210,6 +28232,10 @@
           "shape":"OnDemandOptions",
           "locationName":"onDemandOptions"
         },
+        "ReservedCapacityOptions":{
+          "shape":"ReservedCapacityOptions",
+          "locationName":"reservedCapacityOptions"
+        },
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
@@ -28421,6 +28447,10 @@
         "launch",
         "launch-before-terminate"
       ]
+    },
+    "FleetReservationType":{
+      "type":"string",
+      "enum":["interruptible-capacity-reservation"]
     },
     "FleetSet":{
       "type":"list",
@@ -33679,7 +33709,8 @@
       "type":"string",
       "enum":[
         "spot",
-        "on-demand"
+        "on-demand",
+        "interruptible-capacity-reservation"
       ]
     },
     "InstanceLifecycleType":{
@@ -43805,6 +43836,10 @@
           "shape":"FlexibleEnaQueuesSupport",
           "locationName":"flexibleEnaQueuesSupport"
         },
+        "ConnectionTrackingConfiguration":{
+          "shape":"DefaultConnectionTrackingConfiguration",
+          "locationName":"connectionTrackingConfiguration"
+        },
         "SecondaryNetworkSupported":{
           "shape":"SecondaryNetworkSupportedFlag",
           "locationName":"secondaryNetworkSupported"
@@ -47910,6 +47945,20 @@
         "odcr"
       ]
     },
+    "ReservationTypeList":{
+      "type":"list",
+      "member":{
+        "shape":"FleetReservationType",
+        "locationName":"item"
+      }
+    },
+    "ReservationTypeListRequest":{
+      "type":"list",
+      "member":{
+        "shape":"FleetReservationType",
+        "locationName":"ReservationType"
+      }
+    },
     "ReservationValue":{
       "type":"structure",
       "members":{
@@ -47924,6 +47973,24 @@
         "RemainingUpfrontValue":{
           "shape":"String",
           "locationName":"remainingUpfrontValue"
+        }
+      }
+    },
+    "ReservedCapacityOptions":{
+      "type":"structure",
+      "members":{
+        "ReservationTypes":{
+          "shape":"ReservationTypeList",
+          "locationName":"reservationTypeSet"
+        }
+      }
+    },
+    "ReservedCapacityOptionsRequest":{
+      "type":"structure",
+      "members":{
+        "ReservationTypes":{
+          "shape":"ReservationTypeListRequest",
+          "locationName":"ReservationType"
         }
       }
     },

@@ -68,6 +68,7 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "ClusterConfiguration$dedicatedCompactor": "<p>Indicates if the compactor instance is a standalone instance or not.</p>",
         "CreateDbClusterInput$publiclyAccessible": "<p>Configures the Timestream for InfluxDB cluster with a public IP to facilitate access from outside the VPC.</p>",
         "CreateDbInstanceInput$publiclyAccessible": "<p>Configures the DB instance with a public IP to facilitate access.</p>",
         "CreateDbInstanceOutput$publiclyAccessible": "<p>Indicates if the DB instance has a public IP to facilitate access.</p>",
@@ -102,6 +103,12 @@
       "refs": {
         "CreateDbClusterInput$bucket": "<p>The name of the initial InfluxDB bucket. All InfluxDB data is stored in a bucket. A bucket combines the concept of a database and a retention period (the duration of time that each data point persists). A bucket belongs to an organization.</p>",
         "CreateDbInstanceInput$bucket": "<p>The name of the initial InfluxDB bucket. All InfluxDB data is stored in a bucket. A bucket combines the concept of a database and a retention period (the duration of time that each data point persists). A bucket belongs to an organization.</p>"
+      }
+    },
+    "ClusterConfiguration": {
+      "base": "<p>Configuration for node modes in the DbCluster.</p>",
+      "refs": {
+        "GetDbClusterOutput$clusterConfiguration": "<p>Configuration for node modes in the DbCluster.</p>"
       }
     },
     "ClusterDeploymentType": {
@@ -477,6 +484,12 @@
     "GetDbParameterGroupOutput": {
       "base": null,
       "refs": {
+      }
+    },
+    "IanaTimezone": {
+      "base": "<p>IANA timezone identifier.</p> <p>Format: Region/City or UTC See: https://www.iana.org/time-zones</p>",
+      "refs": {
+        "MaintenanceSchedule$timezone": "<p>The IANA timezone identifier for the maintenance window. Format: Region/City or UTC. For example, America/New_York or UTC.</p>"
       }
     },
     "InfluxDBv2Parameters": {
@@ -883,6 +896,8 @@
     "Integer": {
       "base": null,
       "refs": {
+        "ClusterConfiguration$ingestQueryInstances": "<p>The number of instances in the DbCluster which can both ingest and query.</p>",
+        "ClusterConfiguration$queryOnlyInstances": "<p>The number of instances in the DbCluster which can only query.</p>",
         "ThrottlingException$retryAfterSeconds": "<p>The number of seconds the caller should wait before retrying.</p>"
       }
     },
@@ -967,6 +982,27 @@
       "base": null,
       "refs": {
         "InfluxDBv2Parameters$logLevel": "<p>Log output level. InfluxDB outputs log entries with severity levels greater than or equal to the level specified.</p> <p>Default: info</p>"
+      }
+    },
+    "MaintenanceSchedule": {
+      "base": "<p>Specifies the maintenance schedule for a DB instance or cluster, defining when maintenance operations such as patching can be performed.</p>",
+      "refs": {
+        "CreateDbClusterInput$maintenanceSchedule": "<p>Specifies the maintenance schedule for the DB cluster, including the preferred maintenance window and timezone.</p>",
+        "CreateDbInstanceInput$maintenanceSchedule": "<p>Specifies the maintenance schedule for the DB instance, including the preferred maintenance window and timezone.</p>",
+        "CreateDbInstanceOutput$maintenanceSchedule": "<p>The maintenance schedule for the DB instance.</p>",
+        "DeleteDbInstanceOutput$maintenanceSchedule": "<p>The maintenance schedule for the DB instance.</p>",
+        "GetDbClusterOutput$maintenanceSchedule": "<p>The maintenance schedule for the DB cluster.</p>",
+        "GetDbInstanceOutput$maintenanceSchedule": "<p>The maintenance schedule for the DB instance.</p>",
+        "RebootDbInstanceOutput$maintenanceSchedule": "<p>The maintenance schedule for the DB instance.</p>",
+        "UpdateDbClusterInput$maintenanceSchedule": "<p>Specifies the maintenance schedule for the DB cluster, including the preferred maintenance window and timezone.</p>",
+        "UpdateDbInstanceInput$maintenanceSchedule": "<p>Specifies the maintenance schedule for the DB instance, including the preferred maintenance window and timezone.</p>",
+        "UpdateDbInstanceOutput$maintenanceSchedule": "<p>The maintenance schedule for the DB instance.</p>"
+      }
+    },
+    "MaintenanceWindow": {
+      "base": "<p>Preferred maintenance window in format &quot;ddd:HH:MM-ddd:HH:MM&quot;</p> <p>Format requirements:</p> <ul> <li>Day: Mon, Tue, Wed, Thu, Fri, Sat, Sun</li> <li>Hour: 00-23 (24-hour format, 2 digits)</li> <li>Minute: 00-59 (2 digits)</li> </ul> <p>Provide empty string to let the system choose a window.</p> <p>Examples:</p> <ul> <li>&quot;Sun:02:00-Sun:06:00&quot; (4-hour window Sunday morning)</li> <li>&quot;Sat:23:00-Sun:03:00&quot; (cross-midnight window)</li> <li>&quot;&quot; or (system chooses)</li> </ul>",
+      "refs": {
+        "MaintenanceSchedule$preferredMaintenanceWindow": "<p>The preferred maintenance window in the format ddd:HH:MM-ddd:HH:MM (UTC). Day must be one of: Mon, Tue, Wed, Thu, Fri, Sat, Sun. For example, Sun:02:00-Sun:06:00. Provide an empty string to let the system choose a window.</p>"
       }
     },
     "MaxResults": {
@@ -1189,6 +1225,23 @@
         "UpdateDbInstanceOutput$secondaryAvailabilityZone": "<p>The Availability Zone in which the standby instance is located when deploying with a MultiAZ standby instance.</p>",
         "UpdateDbInstanceOutput$influxAuthParametersSecretArn": "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret containing the initial InfluxDB authorization parameters. The secret value is a JSON formatted key-value pair holding InfluxDB authorization values: organization, bucket, username, and password.</p>",
         "ValidationException$message": null
+      }
+    },
+    "SyntheticTimestamp_date_time": {
+      "base": null,
+      "refs": {
+        "CreateDbInstanceOutput$lastMaintenanceTime": "<p>The timestamp of the last completed maintenance operation on the DB instance.</p>",
+        "CreateDbInstanceOutput$nextMaintenanceTime": "<p>The timestamp of the next scheduled maintenance operation on the DB instance.</p>",
+        "DeleteDbInstanceOutput$lastMaintenanceTime": "<p>The timestamp of the last completed maintenance operation on the DB instance.</p>",
+        "DeleteDbInstanceOutput$nextMaintenanceTime": "<p>The timestamp of the next scheduled maintenance operation on the DB instance.</p>",
+        "GetDbClusterOutput$lastMaintenanceTime": "<p>The timestamp of the last completed maintenance operation on the DB cluster.</p>",
+        "GetDbClusterOutput$nextMaintenanceTime": "<p>The timestamp of the next scheduled maintenance operation on the DB cluster.</p>",
+        "GetDbInstanceOutput$lastMaintenanceTime": "<p>The timestamp of the last completed maintenance operation on the DB instance.</p>",
+        "GetDbInstanceOutput$nextMaintenanceTime": "<p>The timestamp of the next scheduled maintenance operation on the DB instance.</p>",
+        "RebootDbInstanceOutput$lastMaintenanceTime": "<p>The timestamp of the last completed maintenance operation on the DB instance.</p>",
+        "RebootDbInstanceOutput$nextMaintenanceTime": "<p>The timestamp of the next scheduled maintenance operation on the DB instance.</p>",
+        "UpdateDbInstanceOutput$lastMaintenanceTime": "<p>The timestamp of the last completed maintenance operation on the DB instance.</p>",
+        "UpdateDbInstanceOutput$nextMaintenanceTime": "<p>The timestamp of the next scheduled maintenance operation on the DB instance.</p>"
       }
     },
     "TagKey": {

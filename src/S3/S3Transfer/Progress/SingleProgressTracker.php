@@ -194,7 +194,10 @@ final class SingleProgressTracker extends AbstractTransferListener
         }
 
         $this->progressBar->getProgressBarFormat()->setArgs([
-            'transferred' => $this->currentSnapshot->getTransferredBytes(),
+            'transferred' => min(
+                $this->currentSnapshot->getTransferredBytes(),
+                $this->currentSnapshot->getTotalBytes()
+            ),
             'to_be_transferred' => $this->currentSnapshot->getTotalBytes(),
             'unit' => 'B',
         ]);
