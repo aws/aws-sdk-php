@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.376.0 - 2026-03-31
 
 * `Aws\OpenSearchService` - Support RegisterCapability, GetCapability, DeregisterCapability API for AI Assistant feature management for OpenSearch UI Applications
 * `Aws\SecurityAgent` - AWS Security Agent is a service that proactively secures applications throughout the development lifecycle with automated security reviews and on-demand penetration testing.
