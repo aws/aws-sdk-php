@@ -2623,7 +2623,8 @@
         "ociDnsForwardingConfigs":{"shape":"OciDnsForwardingConfigList"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "percentProgress":{"shape":"Float"},
-        "managedServices":{"shape":"ManagedServices"}
+        "managedServices":{"shape":"ManagedServices"},
+        "ec2PlacementGroupIds":{"shape":"ResourceIdList"}
       }
     },
     "OdbNetworkAvailabilityZoneIdString":{
@@ -2694,7 +2695,8 @@
         "ociDnsForwardingConfigs":{"shape":"OciDnsForwardingConfigList"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "percentProgress":{"shape":"Float"},
-        "managedServices":{"shape":"ManagedServices"}
+        "managedServices":{"shape":"ManagedServices"},
+        "ec2PlacementGroupIds":{"shape":"ResourceIdList"}
       }
     },
     "OdbNetworkSummaryAvailabilityZoneIdString":{
@@ -2858,6 +2860,10 @@
       "max":64,
       "min":6,
       "pattern":"[a-zA-Z0-9_~.-]+"
+    },
+    "ResourceIdList":{
+      "type":"list",
+      "member":{"shape":"ResourceId"}
     },
     "ResourceIdOrArn":{
       "type":"string",

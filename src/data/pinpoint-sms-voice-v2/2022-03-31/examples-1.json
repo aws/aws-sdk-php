@@ -20,6 +20,344 @@
         "id": "example-1",
         "title": "Use CarrierLookup"
       }
+    ],
+    "CreateNotifyConfiguration": [
+      {
+        "input": {
+          "DeletionProtectionEnabled": false,
+          "DisplayName": "MyOTPConfig",
+          "EnabledChannels": [
+            "SMS"
+          ],
+          "EnabledCountries": [
+            "US",
+            "CA"
+          ],
+          "Tags": [
+            {
+              "Key": "Environment",
+              "Value": "Production"
+            }
+          ],
+          "UseCase": "CODE_VERIFICATION"
+        },
+        "output": {
+          "CreatedTimestamp": 1704067200,
+          "DeletionProtectionEnabled": false,
+          "DisplayName": "MyOTPConfig",
+          "EnabledChannels": [
+            "SMS"
+          ],
+          "EnabledCountries": [
+            "US",
+            "CA"
+          ],
+          "NotifyConfigurationArn": "arn:aws:sms-voice:us-east-1:111122223333:notify-configuration/nc-1234567890abcdef0",
+          "NotifyConfigurationId": "nc-1234567890abcdef0",
+          "Status": "ACTIVE",
+          "Tags": [
+            {
+              "Key": "Environment",
+              "Value": "Production"
+            }
+          ],
+          "Tier": "BASIC",
+          "TierUpgradeStatus": "BASIC",
+          "UseCase": "CODE_VERIFICATION"
+        },
+        "description": "Create a notify configuration for OTP code verification over SMS.",
+        "id": "example-1",
+        "title": "CreateNotifyConfiguration"
+      }
+    ],
+    "DeleteNotifyConfiguration": [
+      {
+        "input": {
+          "NotifyConfigurationId": "nc-1234567890abcdef0"
+        },
+        "output": {
+          "CreatedTimestamp": 1704067200,
+          "DeletionProtectionEnabled": false,
+          "DisplayName": "MyOTPConfig",
+          "EnabledChannels": [
+            "SMS"
+          ],
+          "EnabledCountries": [
+            "US",
+            "CA"
+          ],
+          "NotifyConfigurationArn": "arn:aws:sms-voice:us-east-1:111122223333:notify-configuration/nc-1234567890abcdef0",
+          "NotifyConfigurationId": "nc-1234567890abcdef0",
+          "Status": "ACTIVE",
+          "Tier": "BASIC",
+          "TierUpgradeStatus": "BASIC",
+          "UseCase": "CODE_VERIFICATION"
+        },
+        "description": "Delete an existing notify configuration.",
+        "id": "example-1",
+        "title": "DeleteNotifyConfiguration"
+      }
+    ],
+    "DeleteNotifyMessageSpendLimitOverride": [
+      {
+        "input": {},
+        "output": {
+          "MonthlyLimit": 1000
+        },
+        "description": "Delete the monthly spend limit override for notify messages, reverting to the default limit.",
+        "id": "example-1",
+        "title": "DeleteNotifyMessageSpendLimitOverride"
+      }
+    ],
+    "DescribeNotifyConfigurations": [
+      {
+        "input": {
+          "Filters": [
+            {
+              "Name": "status",
+              "Values": [
+                "ACTIVE"
+              ]
+            }
+          ],
+          "MaxResults": 10
+        },
+        "output": {
+          "NotifyConfigurations": [
+            {
+              "CreatedTimestamp": 1704067200,
+              "DeletionProtectionEnabled": false,
+              "DisplayName": "MyOTPConfig",
+              "EnabledChannels": [
+                "SMS"
+              ],
+              "EnabledCountries": [
+                "US",
+                "CA"
+              ],
+              "NotifyConfigurationArn": "arn:aws:sms-voice:us-east-1:111122223333:notify-configuration/nc-1234567890abcdef0",
+              "NotifyConfigurationId": "nc-1234567890abcdef0",
+              "Status": "ACTIVE",
+              "Tier": "BASIC",
+              "TierUpgradeStatus": "BASIC",
+              "UseCase": "CODE_VERIFICATION"
+            }
+          ]
+        },
+        "description": "Describe notify configurations filtered by status.",
+        "id": "example-1",
+        "title": "DescribeNotifyConfigurations"
+      }
+    ],
+    "DescribeNotifyTemplates": [
+      {
+        "input": {
+          "Filters": [
+            {
+              "Name": "template-type",
+              "Values": [
+                "OTP_VERIFICATION"
+              ]
+            },
+            {
+              "Name": "channels",
+              "Values": [
+                "SMS"
+              ]
+            }
+          ],
+          "MaxResults": 10
+        },
+        "output": {
+          "NotifyTemplates": [
+            {
+              "Channels": [
+                "SMS"
+              ],
+              "Content": "Your verification code is {{code}}. It expires in {{expiry}} minutes.",
+              "CreatedTimestamp": 1704067200,
+              "LanguageCode": "en",
+              "Status": "ACTIVE",
+              "SupportedCountries": [
+                "US",
+                "CA",
+                "GB"
+              ],
+              "TemplateId": "nt-1234567890abcdef0",
+              "TemplateType": "OTP_VERIFICATION",
+              "TierAccess": [
+                "BASIC",
+                "ADVANCED"
+              ],
+              "Variables": {
+                "code": {
+                  "Description": "The verification code",
+                  "MaxLength": 10,
+                  "Required": true,
+                  "Sample": "123456",
+                  "Source": "CUSTOMER",
+                  "Type": "STRING"
+                },
+                "expiry": {
+                  "DefaultValue": "10",
+                  "Description": "Expiry time in minutes",
+                  "MaxValue": 60,
+                  "MinValue": 1,
+                  "Required": false,
+                  "Sample": "10",
+                  "Source": "CUSTOMER",
+                  "Type": "INTEGER"
+                }
+              },
+              "Version": 1
+            }
+          ]
+        },
+        "description": "Describe available notify templates for OTP verification over SMS.",
+        "id": "example-1",
+        "title": "DescribeNotifyTemplates"
+      }
+    ],
+    "ListNotifyCountries": [
+      {
+        "input": {
+          "Channels": [
+            "SMS"
+          ],
+          "MaxResults": 10
+        },
+        "output": {
+          "NotifyCountries": [
+            {
+              "CountryName": "United States",
+              "CustomerOwnedIdentityRequired": false,
+              "IsoCountryCode": "US",
+              "SupportedChannels": [
+                "SMS",
+                "VOICE"
+              ],
+              "SupportedTiers": [
+                "BASIC",
+                "ADVANCED"
+              ],
+              "SupportedUseCases": [
+                "CODE_VERIFICATION"
+              ]
+            },
+            {
+              "CountryName": "Canada",
+              "CustomerOwnedIdentityRequired": false,
+              "IsoCountryCode": "CA",
+              "SupportedChannels": [
+                "SMS"
+              ],
+              "SupportedTiers": [
+                "BASIC"
+              ],
+              "SupportedUseCases": [
+                "CODE_VERIFICATION"
+              ]
+            }
+          ]
+        },
+        "description": "List countries that support notify messaging over SMS.",
+        "id": "example-1",
+        "title": "ListNotifyCountries"
+      }
+    ],
+    "SendNotifyTextMessage": [
+      {
+        "input": {
+          "DestinationPhoneNumber": "+12065550100",
+          "NotifyConfigurationId": "nc-1234567890abcdef0",
+          "TemplateVariables": {
+            "code": "123456",
+            "expiry": "10"
+          }
+        },
+        "output": {
+          "MessageId": "msg-1234567890abcdef0",
+          "ResolvedMessageBody": "Your verification code is 123456. It expires in 10 minutes.",
+          "TemplateId": "nt-1234567890abcdef0"
+        },
+        "description": "Send an OTP verification code via SMS using a notify configuration.",
+        "id": "example-1",
+        "title": "SendNotifyTextMessage"
+      }
+    ],
+    "SendNotifyVoiceMessage": [
+      {
+        "input": {
+          "DestinationPhoneNumber": "+12065550100",
+          "NotifyConfigurationId": "nc-1234567890abcdef0",
+          "TemplateVariables": {
+            "code": "123456",
+            "expiry": "10"
+          },
+          "VoiceId": "JOANNA"
+        },
+        "output": {
+          "MessageId": "msg-0987654321fedcba0",
+          "ResolvedMessageBody": "Your verification code is 123456. It expires in 10 minutes.",
+          "TemplateId": "nt-1234567890abcdef0"
+        },
+        "description": "Send an OTP verification code via voice call using a notify configuration.",
+        "id": "example-1",
+        "title": "SendNotifyVoiceMessage"
+      }
+    ],
+    "SetNotifyMessageSpendLimitOverride": [
+      {
+        "input": {
+          "MonthlyLimit": 1000
+        },
+        "output": {
+          "MonthlyLimit": 1000
+        },
+        "description": "Set a monthly spend limit override for notify messages.",
+        "id": "example-1",
+        "title": "SetNotifyMessageSpendLimitOverride"
+      }
+    ],
+    "UpdateNotifyConfiguration": [
+      {
+        "input": {
+          "DeletionProtectionEnabled": true,
+          "EnabledChannels": [
+            "SMS",
+            "VOICE"
+          ],
+          "EnabledCountries": [
+            "US",
+            "CA",
+            "GB"
+          ],
+          "NotifyConfigurationId": "nc-1234567890abcdef0"
+        },
+        "output": {
+          "CreatedTimestamp": 1704067200,
+          "DeletionProtectionEnabled": true,
+          "DisplayName": "MyOTPConfig",
+          "EnabledChannels": [
+            "SMS",
+            "VOICE"
+          ],
+          "EnabledCountries": [
+            "US",
+            "CA",
+            "GB"
+          ],
+          "NotifyConfigurationArn": "arn:aws:sms-voice:us-east-1:111122223333:notify-configuration/nc-1234567890abcdef0",
+          "NotifyConfigurationId": "nc-1234567890abcdef0",
+          "Status": "ACTIVE",
+          "Tier": "BASIC",
+          "TierUpgradeStatus": "BASIC",
+          "UseCase": "CODE_VERIFICATION"
+        },
+        "description": "Update a notify configuration to add voice channel and additional countries.",
+        "id": "example-1",
+        "title": "UpdateNotifyConfiguration"
+      }
     ]
   }
 }

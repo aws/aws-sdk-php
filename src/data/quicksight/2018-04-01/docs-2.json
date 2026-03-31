@@ -74,6 +74,7 @@
     "DescribeAnalysisPermissions": "<p>Provides the read and write permissions for an analysis.</p>",
     "DescribeAssetBundleExportJob": "<p>Describes an existing export job.</p> <p>Poll job descriptions after a job starts to know the status of the job. When a job succeeds, a URL is provided to download the exported assets' data from. Download URLs are valid for five minutes after they are generated. You can call the <code>DescribeAssetBundleExportJob</code> API for a new download URL as needed.</p> <p>Job descriptions are available for 14 days after the job starts.</p>",
     "DescribeAssetBundleImportJob": "<p>Describes an existing import job.</p> <p>Poll job descriptions after starting a job to know when it has succeeded or failed. Job descriptions are available for 14 days after job starts.</p>",
+    "DescribeAutomationJob": "<p>Retrieves the status and details of a specified automation job, including its status and outputs.</p>",
     "DescribeBrand": "<p>Describes a brand.</p>",
     "DescribeBrandAssignment": "<p>Describes a brand assignment.</p>",
     "DescribeBrandPublishedVersion": "<p>Describes the published version of the brand.</p>",
@@ -178,6 +179,7 @@
     "SearchTopics": "<p>Searches for any Q topic that exists in an Quick account.</p>",
     "StartAssetBundleExportJob": "<p>Starts an Asset Bundle export job.</p> <p>An Asset Bundle export job exports specified Amazon Quick Sight assets. You can also choose to export any asset dependencies in the same job. Export jobs run asynchronously and can be polled with a <code>DescribeAssetBundleExportJob</code> API call. When a job is successfully completed, a download URL that contains the exported assets is returned. The URL is valid for 5 minutes and can be refreshed with a <code>DescribeAssetBundleExportJob</code> API call. Each Amazon Quick Sight account can run up to 5 export jobs concurrently.</p> <p>The API caller must have the necessary permissions in their IAM role to access each resource before the resources can be exported.</p>",
     "StartAssetBundleImportJob": "<p>Starts an Asset Bundle import job.</p> <p>An Asset Bundle import job imports specified Amazon Quick Sight assets into an Amazon Quick Sight account. You can also choose to import a naming prefix and specified configuration overrides. The assets that are contained in the bundle file that you provide are used to create or update a new or existing asset in your Amazon Quick Sight account. Each Amazon Quick Sight account can run up to 5 import jobs concurrently.</p> <p>The API caller must have the necessary <code>\"create\"</code>, <code>\"describe\"</code>, and <code>\"update\"</code> permissions in their IAM role to access each resource type that is contained in the bundle file before the resources can be imported.</p>",
+    "StartAutomationJob": "<p>Starts a new job for a specified automation. The job runs the automation with the provided input payload.</p>",
     "StartDashboardSnapshotJob": "<p>Starts an asynchronous job that generates a snapshot of a dashboard's output. You can request one or several of the following format configurations in each API call.</p> <ul> <li> <p>1 PDF</p> </li> <li> <p>1 Excel workbook that includes up to 5 table or pivot table visuals</p> </li> <li> <p>5 CSVs from table or pivot table visuals</p> </li> </ul> <note> <p>Exporting CSV, Excel, or Pixel Perfect PDF reports requires Pixel Perfect Report Add-on.</p> </note> <p>The status of a submitted job can be polled with the <code>DescribeDashboardSnapshotJob</code> API. When you call the <code>DescribeDashboardSnapshotJob</code> API, check the <code>JobStatus</code> field in the response. Once the job reaches a <code>COMPLETED</code> or <code>FAILED</code> status, use the <code>DescribeDashboardSnapshotJobResult</code> API to obtain the URLs for the generated files. If the job fails, the <code>DescribeDashboardSnapshotJobResult</code> API returns detailed information about the error that occurred.</p> <p> <b>StartDashboardSnapshotJob API throttling</b> </p> <p>Quick Sight utilizes API throttling to create a more consistent user experience within a time span for customers when they call the <code>StartDashboardSnapshotJob</code>. By default, 12 jobs can run simlutaneously in one Amazon Web Services account and users can submit up 10 API requests per second before an account is throttled. If an overwhelming number of API requests are made by the same user in a short period of time, Quick Sight throttles the API calls to maintin an optimal experience and reliability for all Quick Sight users.</p> <p> <b>Common throttling scenarios</b> </p> <p>The following list provides information about the most commin throttling scenarios that can occur.</p> <ul> <li> <p> <b>A large number of <code>SnapshotExport</code> API jobs are running simultaneously on an Amazon Web Services account.</b> When a new <code>StartDashboardSnapshotJob</code> is created and there are already 12 jobs with the <code>RUNNING</code> status, the new job request fails and returns a <code>LimitExceededException</code> error. Wait for a current job to comlpete before you resubmit the new job.</p> </li> <li> <p> <b>A large number of API requests are submitted on an Amazon Web Services account.</b> When a user makes more than 10 API calls to the Quick Sight API in one second, a <code>ThrottlingException</code> is returned.</p> </li> </ul> <p>If your use case requires a higher throttling limit, contact your account admin or <a href=\"http://aws.amazon.com/contact-us/\">Amazon Web ServicesSupport</a> to explore options to tailor a more optimal expereince for your account.</p> <p> <b>Best practices to handle throttling</b> </p> <p>If your use case projects high levels of API traffic, try to reduce the degree of frequency and parallelism of API calls as much as you can to avoid throttling. You can also perform a timing test to calculate an estimate for the total processing time of your projected load that stays within the throttling limits of the Quick Sight APIs. For example, if your projected traffic is 100 snapshot jobs before 12:00 PM per day, start 12 jobs in parallel and measure the amount of time it takes to proccess all 12 jobs. Once you obtain the result, multiply the duration by 9, for example <code>(12 minutes * 9 = 108 minutes)</code>. Use the new result to determine the latest time at which the jobs need to be started to meet your target deadline.</p> <p>The time that it takes to process a job can be impacted by the following factors:</p> <ul> <li> <p>The dataset type (Direct Query or SPICE).</p> </li> <li> <p>The size of the dataset.</p> </li> <li> <p>The complexity of the calculated fields that are used in the dashboard.</p> </li> <li> <p>The number of visuals that are on a sheet.</p> </li> <li> <p>The types of visuals that are on the sheet.</p> </li> <li> <p>The number of formats and snapshots that are requested in the job configuration.</p> </li> <li> <p>The size of the generated snapshots.</p> </li> </ul> <p> <b>Registered user support</b> </p> <p>You can generate snapshots for registered Quick Sight users by using the Snapshot Job APIs with <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-identity-enhanced-iam-role-sessions.html\">identity-enhanced IAM role session credentials</a>. This approach allows you to create snapshots on behalf of specific Quick Sight users while respecting their row-level security (RLS), column-level security (CLS), dynamic default parameters and dashboard parameter/filter settings.</p> <p>To generate snapshots for registered Quick Sight users, you need to:</p> <ul> <li> <p>Obtain identity-enhanced IAM role session credentials from Amazon Web Services Security Token Service (STS).</p> </li> <li> <p>Use these credentials to call the Snapshot Job APIs.</p> </li> </ul> <p>Identity-enhanced credentials are credentials that contain information about the end user (e.g., registered Quick Sight user).</p> <p>If your Quick Sight users are backed by <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html\">Amazon Web Services Identity Center</a>, then you need to set up a <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/setuptrustedtokenissuer.html\">trusted token issuer</a>. Then, getting identity-enhanced IAM credentials for a Quick Sight user will look like the following:</p> <ul> <li> <p>Authenticate user with your OIDC compliant Identity Provider. You should get auth tokens back.</p> </li> <li> <p>Use the OIDC API, <a href=\"https://docs.aws.amazon.com/singlesignon/latest/OIDCAPIReference/API_CreateTokenWithIAM.html\">CreateTokenWithIAM</a>, to exchange auth tokens to IAM tokens. One of the resulted tokens will be identity token.</p> </li> <li> <p>Call STS AssumeRole API as you normally would, but provide an extra <code>ProvidedContexts</code> parameter in the API request. The list of contexts must have a single trusted context assertion. The <code>ProviderArn</code> should be <code>arn:aws:iam::aws:contextProvider/IdentityCenter</code> while <code>ContextAssertion</code> will be the identity token you received in response from CreateTokenWithIAM</p> </li> </ul> <p>For more details, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-identity-enhanced-iam-role-sessions.html\">IdC documentation on Identity-enhanced IAM role sessions</a>.</p> <p>To obtain Identity-enhanced credentials for Quick Sight native users, IAM federated users, or Active Directory users, follow the steps below:</p> <ul> <li> <p>Call Quick Sight <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_GetIdentityContext.html\">GetIdentityContext API</a> to get identity token.</p> </li> <li> <p>Call STS AssumeRole API as you normally would, but provide extra <code>ProvidedContexts</code> parameter in the API request. The list of contexts must have a single trusted context assertion. The <code>ProviderArn</code> should be <code>arn:aws:iam::aws:contextProvider/QuickSight</code> while <code>ContextAssertion</code> will be the identity token you received in response from GetIdentityContext</p> </li> </ul> <p>After obtaining the identity-enhanced IAM role session credentials, you can use them to start a job, describe the job and describe job result. You can use the same credentials as long as they haven't expired. All API requests made with these credentials are considered to be made by the impersonated Quick Sight user.</p> <important> <p>When using identity-enhanced session credentials, set the UserConfiguration request attribute to null. Otherwise, the request will be invalid.</p> </important> <p> <b>Possible error scenarios</b> </p> <p>The request fails with an Access Denied error in the following scenarios:</p> <ul> <li> <p>The credentials have expired.</p> </li> <li> <p>The impersonated Quick Sight user doesn't have access to the specified dashboard.</p> </li> <li> <p>The impersonated Quick Sight user is restricted from exporting data in the selected formats. For more information about export restrictions, see <a href=\"https://docs.aws.amazon.com/quicksuite/latest/userguide/create-custom-permisions-profile.html\">Customizing access to Amazon Quick Sight capabilities</a>.</p> </li> </ul>",
     "StartDashboardSnapshotJobSchedule": "<p>Starts an asynchronous job that runs an existing dashboard schedule and sends the dashboard snapshot through email. </p> <p>Only one job can run simultaneously in a given schedule. Repeated requests are skipped with a <code>202</code> HTTP status code.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/sending-reports.html\">Scheduling and sending Amazon Quick Sight reports by email</a> and <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/email-reports-from-dashboard.html\">Configuring email report settings for a Amazon Quick Sight dashboard</a> in the <i>Amazon Quick Sight User Guide</i>.</p>",
     "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified Amazon Quick Sight resource. </p> <p>Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only resources with certain tag values. You can use the <code>TagResource</code> operation with a resource that already has tags. If you specify a new tag key for the resource, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag.</p> <p>You can associate as many as 50 tags with a resource. Amazon Quick Sight supports tagging on data set, data source, dashboard, template, topic, and user. </p> <p>Tagging for Amazon Quick Sight works in a similar way to tagging for other Amazon Web Services services, except for the following:</p> <ul> <li> <p>Tags are used to track costs for users in Amazon Quick Sight. You can't tag other resources that Amazon Quick Sight costs are based on, such as storage capacoty (SPICE), session usage, alert consumption, or reporting units.</p> </li> <li> <p>Amazon Quick Sight doesn't currently support the tag editor for Resource Groups.</p> </li> </ul>",
@@ -959,6 +961,7 @@
         "DescribeAnalysisPermissionsResponse$AnalysisArn": "<p>The Amazon Resource Name (ARN) of the analysis whose permissions you're describing.</p>",
         "DescribeAssetBundleExportJobResponse$Arn": "<p>The Amazon Resource Name (ARN) for the export job.</p>",
         "DescribeAssetBundleImportJobResponse$Arn": "<p>The Amazon Resource Name (ARN) for the import job.</p>",
+        "DescribeAutomationJobResponse$Arn": "<p>The Amazon Resource Name (ARN) of the automation job.</p>",
         "DescribeBrandAssignmentResponse$BrandArn": "<p>The Amazon Resource Name (ARN) of the brand.</p>",
         "DescribeDashboardDefinitionResponse$ThemeArn": "<p>The ARN of the theme of the dashboard.</p>",
         "DescribeDashboardPermissionsResponse$DashboardArn": "<p>The Amazon Resource Name (ARN) of the dashboard.</p>",
@@ -1007,6 +1010,7 @@
         "SaaSTable$DataSourceArn": "<p>The Amazon Resource Name (ARN) of the SaaS data source.</p>",
         "StartAssetBundleExportJobResponse$Arn": "<p>The Amazon Resource Name (ARN) for the export job.</p>",
         "StartAssetBundleImportJobResponse$Arn": "<p>The Amazon Resource Name (ARN) for the import job.</p>",
+        "StartAutomationJobResponse$Arn": "<p>The Amazon Resource Name (ARN) of the automation job.</p>",
         "StartDashboardSnapshotJobResponse$Arn": "<p>The Amazon Resource Name (ARN) for the dashboard snapshot job.</p>",
         "TagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to tag.</p>",
         "Template$Arn": "<p>The Amazon Resource Name (ARN) of the template.</p>",
@@ -1893,6 +1897,23 @@
         "UpdateIdentityPropagationConfigRequest$AuthorizedTargets": "<p>Specifies a list of application ARNs that represent the authorized targets for a service.</p>"
       }
     },
+    "AutomateId": {
+      "base": null,
+      "refs": {
+        "DescribeAutomationJobRequest$AutomationGroupId": "<p>The ID of the automation group that contains the automation.</p>",
+        "DescribeAutomationJobRequest$AutomationId": "<p>The ID of the automation that the job belongs to.</p>",
+        "DescribeAutomationJobRequest$JobId": "<p>The ID of the automation job to describe.</p>",
+        "StartAutomationJobRequest$AutomationGroupId": "<p>The ID of the automation group that contains the automation to run.</p>",
+        "StartAutomationJobRequest$AutomationId": "<p>The ID of the automation to run.</p>",
+        "StartAutomationJobResponse$JobId": "<p>The ID of the automation job that was started.</p>"
+      }
+    },
+    "AutomationJobStatus": {
+      "base": null,
+      "refs": {
+        "DescribeAutomationJobResponse$JobStatus": "<p>The current status of the automation job.</p>"
+      }
+    },
     "AwsAccountId": {
       "base": null,
       "refs": {
@@ -1972,6 +1993,7 @@
         "DescribeAssetBundleExportJobResponse$AwsAccountId": "<p>The ID of the Amazon Web Services account that the export job was executed in. </p>",
         "DescribeAssetBundleImportJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account the import job was executed in. </p>",
         "DescribeAssetBundleImportJobResponse$AwsAccountId": "<p>The ID of the Amazon Web Services account the import job was executed in. </p>",
+        "DescribeAutomationJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the automation job.</p>",
         "DescribeBrandAssignmentRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand assignment.</p>",
         "DescribeBrandPublishedVersionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand.</p>",
         "DescribeBrandRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand.</p>",
@@ -2074,6 +2096,7 @@
         "SearchTopicsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want to find.</p>",
         "StartAssetBundleExportJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account to export assets from.</p>",
         "StartAssetBundleImportJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account to import assets into. </p>",
+        "StartAutomationJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the automation.</p>",
         "StartDashboardSnapshotJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that the dashboard snapshot job is executed in.</p>",
         "StartDashboardSnapshotJobScheduleRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that the dashboard snapshot job is executed in.</p>",
         "UpdateAccountCustomPermissionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account for which you want to apply a custom permissions profile.</p>",
@@ -2476,6 +2499,8 @@
         "DescribeAssetBundleExportJobResponse$IncludePermissions": "<p>The include permissions flag.</p>",
         "DescribeAssetBundleExportJobResponse$IncludeTags": "<p>The include tags flag.</p>",
         "DescribeAssetBundleExportJobResponse$IncludeFolderMemberships": "<p>The include folder memberships flag.</p>",
+        "DescribeAutomationJobRequest$IncludeInputPayload": "<p>A Boolean value that indicates whether to include the input payload in the response. If set to <code>true</code>, the input payload will be included. If set to <code>false</code>, the input payload will be returned as <code>null</code>.</p>",
+        "DescribeAutomationJobRequest$IncludeOutputPayload": "<p>A Boolean value that indicates whether to include the output payload in the response. If set to <code>true</code>, the output payload will be included. If set to <code>false</code>, the output payload will be returned as <code>null</code>.</p>",
         "DescribeKeyRegistrationRequest$DefaultKeyOnly": "<p>Determines whether the request returns the default key only.</p>",
         "DisplayFormatOptions$UseBlankCellFormat": "<p>A Boolean value that indicates whether to use blank cell format.</p>",
         "DisplayFormatOptions$UseGrouping": "<p>A Boolean value that indicates whether to use grouping.</p>",
@@ -2953,8 +2978,11 @@
         "Capabilities$BuildCalculatedFieldWithQ": "<p>The ability to Build Calculation with AI</p>",
         "Capabilities$CreateDashboardExecutiveSummaryWithQ": "<p>The ability to Create Executive Summary</p>",
         "Capabilities$Space": "<p>The ability to perform space-related actions.</p>",
+        "Capabilities$CreateSpaces": "<p>The ability to create spaces.</p>",
+        "Capabilities$ShareSpaces": "<p>The ability to share spaces with other users and groups.</p>",
         "Capabilities$ChatAgent": "<p>The ability to perform chat-related actions.</p>",
         "Capabilities$CreateChatAgents": "<p>The ability to create chat agents.</p>",
+        "Capabilities$ShareChatAgents": "<p>The ability to share chat agents with other users and groups.</p>",
         "Capabilities$Research": "<p>The ability to perform research-related actions.</p>",
         "Capabilities$SelfUpgradeUserRole": "<p>The ability to enable users to upgrade their user role.</p>",
         "Capabilities$Extension": "<p>The ability to perform Extension-related actions.</p>",
@@ -5915,6 +5943,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeAutomationJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAutomationJobResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeBrandAssignmentRequest": {
       "base": null,
       "refs": {}
@@ -6329,6 +6365,7 @@
         "RadarChartCategoryFieldList$member": null,
         "RadarChartColorFieldList$member": null,
         "SmallMultiplesDimensionFieldList$member": null,
+        "SparklinesOptions$XAxisField": null,
         "TopBottomMoversComputation$Time": "<p>The time field that is used in a computation.</p>",
         "TopBottomMoversComputation$Category": "<p>The category field that is used in a computation.</p>",
         "TopBottomRankedComputation$Category": "<p>The category field that is used in a computation.</p>",
@@ -6756,6 +6793,7 @@
         "PivotTableFieldOption$FieldId": "<p>The field ID of the pivot table field.</p>",
         "PivotTableFieldSubtotalOptions$FieldId": "<p>The field ID of the subtotal options.</p>",
         "SelectedFieldList$member": null,
+        "SparklinesOptions$FieldId": "<p>The field ID of the value column that the sparkline is applied to.</p>",
         "TableCellConditionalFormatting$FieldId": "<p>The field ID of the cell for conditional formatting.</p>",
         "TableFieldOption$FieldId": "<p>The field ID for a table field.</p>",
         "TableFieldOrderList$member": null,
@@ -8289,6 +8327,7 @@
         "ReferenceLineStyleConfiguration$Color": "<p>The hex color of the reference line.</p>",
         "RowAlternateColorList$member": null,
         "SimpleClusterMarker$Color": "<p>The color of the simple cluster marker.</p>",
+        "SparklinesOptions$LineColor": "<p>The color of the sparkline line.</p>",
         "TableBorderOptions$Color": "<p>The color of a table border.</p>",
         "TableCellStyle$BackgroundColor": "<p>The background color for the table cells.</p>",
         "UIColorPalette$PrimaryForeground": "<p>The color of text and other foreground elements that appear over the primary background regions, such as grid lines, borders, table banding, icons, and so on.</p>",
@@ -9183,7 +9222,8 @@
     "LayoutList": {
       "base": null,
       "refs": {
-        "SheetDefinition$Layouts": "<p>Layouts define how the components of a sheet are arranged.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/types-of-layout.html\">Types of layout</a> in the <i>Amazon Quick Suite User Guide</i>.</p>"
+        "SheetDefinition$Layouts": "<p>Layouts define how the components of a sheet are arranged.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/types-of-layout.html\">Types of layout</a> in the <i>Amazon Quick Suite User Guide</i>.</p>",
+        "TooltipSheetDefinition$Layouts": "<p>Layouts define how the components of a tooltip sheet are arranged.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/types-of-layout.html\">Types of layout</a> in the <i>Amazon Quick Suite User Guide</i>.</p>"
       }
     },
     "LegendOptions": {
@@ -9334,7 +9374,10 @@
         "ComboChartDefaultSeriesSettings$MarkerStyleSettings": "<p>Marker styles options for all line series in the visual.</p>",
         "ComboChartSeriesSettings$MarkerStyleSettings": "<p>Marker styles options for the line series in the visual.</p>",
         "LineChartDefaultSeriesSettings$MarkerStyleSettings": "<p>Marker styles options for all line series in the visual.</p>",
-        "LineChartSeriesSettings$MarkerStyleSettings": "<p>Marker styles options for a line series in <code>LineChartVisual</code>.</p>"
+        "LineChartSeriesSettings$MarkerStyleSettings": "<p>Marker styles options for a line series in <code>LineChartVisual</code>.</p>",
+        "SparklinesOptions$AllPointsMarker": null,
+        "SparklinesOptions$MaxValueMarker": null,
+        "SparklinesOptions$MinValueMarker": null
       }
     },
     "LineChartSeriesSettings": {
@@ -9365,7 +9408,8 @@
     "LineInterpolation": {
       "base": null,
       "refs": {
-        "LineChartLineStyleSettings$LineInterpolation": "<p>Interpolation style for line series.</p> <ul> <li> <p> <code>LINEAR</code>: Show as default, linear style.</p> </li> <li> <p> <code>SMOOTH</code>: Show as a smooth curve.</p> </li> <li> <p> <code>STEPPED</code>: Show steps in line.</p> </li> </ul>"
+        "LineChartLineStyleSettings$LineInterpolation": "<p>Interpolation style for line series.</p> <ul> <li> <p> <code>LINEAR</code>: Show as default, linear style.</p> </li> <li> <p> <code>SMOOTH</code>: Show as a smooth curve.</p> </li> <li> <p> <code>STEPPED</code>: Show steps in line.</p> </li> </ul>",
+        "SparklinesOptions$LineInterpolation": "<p>The interpolation style for the sparkline line.</p>"
       }
     },
     "LineSeriesAxisDisplayOptions": {
@@ -10501,6 +10545,24 @@
         "MeasureField$NumericalMeasureField": "<p>The measure type field with numerical type columns.</p>"
       }
     },
+    "OAuthClientCredentials": {
+      "base": "<p>The OAuth 2.0 client credentials used for authenticating a data source connection. Use this structure to provide a client ID, client secret, and username directly instead of referencing a secret stored in Amazon Secrets Manager. This structure supports data sources that use two-legged OAuth (2LO) authentication, such as Snowflake.</p>",
+      "refs": {
+        "DataSourceCredentials$OAuthClientCredentials": "<p>The OAuth client credentials for connecting to a data source using OAuth 2.0 client credentials (2LO) authentication. For more information, see <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_OAuthClientCredentials.html\">OAuthClientCredentials</a> </code>.</p>"
+      }
+    },
+    "OAuthClientId": {
+      "base": null,
+      "refs": {
+        "OAuthClientCredentials$ClientId": "<p>The client ID of the OAuth 2.0 application that is registered with the data source provider.</p>"
+      }
+    },
+    "OAuthClientSecret": {
+      "base": null,
+      "refs": {
+        "OAuthClientCredentials$ClientSecret": "<p>The client secret of the OAuth 2.0 application that is registered with the data source provider.</p>"
+      }
+    },
     "OAuthParameters": {
       "base": "<p>An object that contains information needed to create a data source connection that uses OAuth client credentials. This option is available for data source connections that are made with Snowflake and Starburst.</p>",
       "refs": {
@@ -10512,6 +10574,12 @@
       "base": null,
       "refs": {
         "OAuthParameters$OAuthScope": "<p>The OAuth scope.</p>"
+      }
+    },
+    "OAuthUsername": {
+      "base": null,
+      "refs": {
+        "OAuthClientCredentials$Username": "<p>The username of the account that is used for OAuth 2.0 client credentials authentication with the data source provider.</p>"
       }
     },
     "OnClause": {
@@ -12861,6 +12929,14 @@
         "DecimalDefaultValueList$member": null
       }
     },
+    "SensitiveIOPayload": {
+      "base": null,
+      "refs": {
+        "DescribeAutomationJobResponse$InputPayload": "<p>The input payload that was provided when the automation job was started. This field is only included when <code>IncludeInputPayload</code> is set to <code>true</code> in the request.</p>",
+        "DescribeAutomationJobResponse$OutputPayload": "<p>The output payload that was generated by the automation job. This field is only included when <code>IncludeOutputPayload</code> is set to <code>true</code> in the request.</p>",
+        "StartAutomationJobRequest$InputPayload": "<p>The input payload for the automation job, provided as a JSON string.</p>"
+      }
+    },
     "SensitiveLong": {
       "base": null,
       "refs": {
@@ -13192,7 +13268,8 @@
     "SheetImage": {
       "base": "<p>An image that is located on a sheet.</p>",
       "refs": {
-        "SheetImageList$member": null
+        "SheetImageList$member": null,
+        "TooltipSheetImageList$member": null
       }
     },
     "SheetImageList": {
@@ -13287,7 +13364,8 @@
       "refs": {
         "DashboardVisualResult$SheetName": "<p>The name of the sheet.</p>",
         "Sheet$Name": "<p>The name of a sheet. This name is displayed on the sheet's tab in the Quick Sight console.</p>",
-        "SheetDefinition$Name": "<p>The name of the sheet. This name is displayed on the sheet's tab in the Quick console.</p>"
+        "SheetDefinition$Name": "<p>The name of the sheet. This name is displayed on the sheet's tab in the Quick console.</p>",
+        "TooltipSheetDefinition$Name": "<p>The name of the tooltip sheet. This name is displayed on the sheet's tab in the Quick console.</p>"
       }
     },
     "SheetStyle": {
@@ -13299,7 +13377,8 @@
     "SheetTextBox": {
       "base": "<p>A text box.</p>",
       "refs": {
-        "SheetTextBoxList$member": null
+        "SheetTextBoxList$member": null,
+        "TooltipSheetTextBoxList$member": null
       }
     },
     "SheetTextBoxContent": {
@@ -13318,6 +13397,12 @@
       "base": null,
       "refs": {
         "SheetDefinition$Title": "<p>The title of the sheet.</p>"
+      }
+    },
+    "SheetTooltip": {
+      "base": "<p>The configuration of the sheet tooltip.</p>",
+      "refs": {
+        "TooltipOptions$SheetTooltip": null
       }
     },
     "SheetVisualScopingConfiguration": {
@@ -13512,6 +13597,7 @@
         "SheetLayoutGroup$Id": "<p>A unique identifier for the group.</p>",
         "SheetLayoutGroupMember$Id": "<p>The unique identifier of the group member.</p>",
         "SheetTextBox$SheetTextBoxId": "<p>The unique identifier for a text box. This identifier must be unique within the context of a dashboard, template, or analysis. Two dashboards, analyses, or templates can have text boxes that share identifiers.</p>",
+        "SheetTooltip$SheetId": "<p>The sheet ID of the tooltip sheet that is used by the tooltip.</p>",
         "SheetVisualScopingConfiguration$SheetId": "<p>The selected sheet that the filter is applied to.</p>",
         "SnapshotFileSheetSelection$SheetId": "<p>The sheet ID of the dashboard to generate the snapshot artifact from. This value is required for CSV, Excel, and PDF format types.</p>",
         "SnapshotFileSheetSelectionVisualIdList$member": null,
@@ -13534,6 +13620,7 @@
         "ThemeVersion$BaseThemeId": "<p>The Quick Sight-defined ID of the theme that a custom theme inherits from. All themes initially inherit from a default Quick Sight theme.</p>",
         "TimeEqualityFilter$FilterId": "<p>An identifier that uniquely identifies a filter within a dashboard, analysis, or template.</p>",
         "TimeRangeFilter$FilterId": "<p>An identifier that uniquely identifies a filter within a dashboard, analysis, or template.</p>",
+        "TooltipSheetDefinition$SheetId": "<p>The unique identifier of a tooltip sheet.</p>",
         "TopBottomFilter$FilterId": "<p>An identifier that uniquely identifies a filter within a dashboard, analysis, or template.</p>",
         "TopBottomMoversComputation$ComputationId": "<p>The ID for a computation.</p>",
         "TopBottomRankedComputation$ComputationId": "<p>The ID for a computation.</p>",
@@ -13901,6 +13988,24 @@
         "DataSourceParameters$SparkParameters": "<p>The parameters for Spark.</p>"
       }
     },
+    "SparklineAxisBehavior": {
+      "base": null,
+      "refs": {
+        "SparklinesOptions$YAxisBehavior": "<p>Determines whether the Y axis is shared across all sparklines or independent for each sparkline.</p>"
+      }
+    },
+    "SparklineVisualType": {
+      "base": null,
+      "refs": {
+        "SparklinesOptions$VisualType": "<p>The type of the sparkline. Valid values are <code>LINE</code> and <code>AREA_LINE</code>.</p>"
+      }
+    },
+    "SparklinesOptions": {
+      "base": "<p>The options for sparklines in a table.</p>",
+      "refs": {
+        "TableInlineVisualization$Sparklines": "<p>The configuration of the inline visualization of the sparklines within a chart.</p>"
+      }
+    },
     "SpatialStaticFile": {
       "base": "<p>A static file that contains the geospatial data.</p>",
       "refs": {
@@ -13966,6 +14071,14 @@
       "refs": {}
     },
     "StartAssetBundleImportJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartAutomationJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartAutomationJobResponse": {
       "base": null,
       "refs": {}
     },
@@ -14204,6 +14317,7 @@
         "SearchTopicsResponse$Status": "<p>The HTTP status of the request.</p>",
         "StartAssetBundleExportJobResponse$Status": "<p>The HTTP status of the response.</p>",
         "StartAssetBundleImportJobResponse$Status": "<p>The HTTP status of the response.</p>",
+        "StartAutomationJobResponse$Status": "<p>The HTTP status of the request.</p>",
         "StartDashboardSnapshotJobResponse$Status": "<p>The HTTP status of the request</p>",
         "StartDashboardSnapshotJobScheduleResponse$Status": "<p>The HTTP status of the request</p>",
         "SuccessfulKeyRegistrationEntry$StatusCode": "<p>The HTTP status of a <code>SuccessfulKeyRegistrationEntry</code> entry.</p>",
@@ -14390,6 +14504,7 @@
         "DescribeAnalysisDefinitionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeAnalysisPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeAnalysisResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeAutomationJobResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeBrandAssignmentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeBrandPublishedVersionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeBrandResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -14684,6 +14799,7 @@
         "SnapshotJobErrorInfo$ErrorType": "<p>The error type.</p>",
         "SnapshotJobResultErrorInfo$ErrorMessage": "<p>The error message.</p>",
         "SnapshotJobResultErrorInfo$ErrorType": "<p>The error type.</p>",
+        "StartAutomationJobResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "StaticFileS3SourceOptions$BucketName": "<p>The name of the Amazon S3 bucket.</p>",
         "StaticFileS3SourceOptions$ObjectKey": "<p>The identifier of the static file in the Amazon S3 bucket.</p>",
         "StaticFileS3SourceOptions$Region": "<p>The Region of the Amazon S3 account that contains the bucket.</p>",
@@ -15694,6 +15810,9 @@
         "DeleteAnalysisResponse$DeletionTime": "<p>The date and time that the analysis is scheduled to be deleted.</p>",
         "DescribeAssetBundleExportJobResponse$CreatedTime": "<p>The time that the export job was created.</p>",
         "DescribeAssetBundleImportJobResponse$CreatedTime": "<p>The time that the import job was created.</p>",
+        "DescribeAutomationJobResponse$CreatedAt": "<p>The time that the automation job was created.</p>",
+        "DescribeAutomationJobResponse$StartedAt": "<p>The time that the automation job started running.</p>",
+        "DescribeAutomationJobResponse$EndedAt": "<p>The time that the automation job finished running.</p>",
         "DescribeDashboardSnapshotJobResponse$CreatedTime": "<p> The time that the snapshot job was created. </p>",
         "DescribeDashboardSnapshotJobResponse$LastUpdatedTime": "<p> The time that the snapshot job status was last updated. </p>",
         "DescribeDashboardSnapshotJobResultResponse$CreatedTime": "<p>The time that a snapshot job was created.</p>",
@@ -15776,8 +15895,42 @@
         "HistogramConfiguration$Tooltip": "<p>The tooltip configuration of a histogram.</p>",
         "LineChartConfiguration$Tooltip": "<p>The tooltip configuration of a line chart.</p>",
         "PieChartConfiguration$Tooltip": "<p>The tooltip display setup of the visual.</p>",
+        "PivotTableConfiguration$Tooltip": null,
         "ScatterPlotConfiguration$Tooltip": "<p>The legend display setup of the visual.</p>",
+        "TableConfiguration$Tooltip": null,
         "TreeMapConfiguration$Tooltip": "<p>The tooltip display setup of the visual.</p>"
+      }
+    },
+    "TooltipSheetDefinition": {
+      "base": "<p>A tooltip sheet is an object that contains a set of visuals that are used as a tooltip. Every analysis and dashboard must contain at least one non-tooltip sheet.</p>",
+      "refs": {
+        "TooltipSheetDefinitionList$member": null
+      }
+    },
+    "TooltipSheetDefinitionList": {
+      "base": null,
+      "refs": {
+        "AnalysisDefinition$TooltipSheets": "<p>An array of tooltip sheet definitions for an analysis. Each <code>TooltipSheetDefinition</code> provides detailed information about a tooltip sheet within this analysis.</p>",
+        "DashboardVersionDefinition$TooltipSheets": "<p>An array of tooltip sheet definitions for a dashboard.</p>",
+        "TemplateVersionDefinition$TooltipSheets": "<p>An array of tooltip sheet definitions for a template.</p>"
+      }
+    },
+    "TooltipSheetImageList": {
+      "base": null,
+      "refs": {
+        "TooltipSheetDefinition$Images": "<p>A list of images on a tooltip sheet.</p>"
+      }
+    },
+    "TooltipSheetTextBoxList": {
+      "base": null,
+      "refs": {
+        "TooltipSheetDefinition$TextBoxes": "<p>The text boxes that are on a tooltip sheet.</p>"
+      }
+    },
+    "TooltipSheetVisualList": {
+      "base": null,
+      "refs": {
+        "TooltipSheetDefinition$Visuals": "<p>A list of the visuals that are on a tooltip sheet.</p>"
       }
     },
     "TooltipTarget": {
@@ -17267,6 +17420,7 @@
     "Visual": {
       "base": "<p>A visual displayed on a sheet in an analysis, dashboard, or template.</p> <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>",
       "refs": {
+        "TooltipSheetVisualList$member": null,
         "VisualList$member": null
       }
     },

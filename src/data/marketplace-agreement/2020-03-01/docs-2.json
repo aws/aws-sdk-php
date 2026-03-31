@@ -2,12 +2,20 @@
   "version": "2.0",
   "service": "<p>AWS Marketplace is a curated digital catalog that customers can use to find, buy, deploy, and manage third-party software, data, and services to build solutions and run their businesses. The AWS Marketplace Agreement Service provides an API interface that helps AWS Marketplace sellers manage their product-related agreements, including listing, searching, and filtering agreements.</p> <p>To manage agreements in AWS Marketplace, you must ensure that your AWS Identity and Access Management (IAM) policies and roles are set up. The user must have the required policies/permissions that allow them to carry out the actions in AWS:</p> <ul> <li> <p> <code>DescribeAgreement</code> – Grants permission to users to obtain detailed meta data about any of their agreements.</p> </li> <li> <p> <code>GetAgreementTerms</code> – Grants permission to users to obtain details about the terms of an agreement.</p> </li> <li> <p> <code>SearchAgreements</code> – Grants permission to users to search through all their agreements.</p> </li> </ul>",
   "operations": {
+    "BatchCreateBillingAdjustmentRequest": "<p>Allows sellers (proposers) to submit billing adjustment requests for one or more invoices within an agreement. Each entry in the batch specifies an invoice and the adjustment amount. The operation returns successfully created adjustment request IDs and any errors for entries that failed validation.</p> <note> <p>Each entry requires a unique <code>clientToken</code> for idempotency. A <code>ValidationException</code> is returned if the adjustment amount exceeds the maximum refundable amount for the invoice.</p> </note>",
+    "CancelAgreementCancellationRequest": "<p>Allows sellers (proposers) to withdraw an existing agreement cancellation request that is in a pending state. Once cancelled, the cancellation request transitions to <code>CANCELLED</code> status and can no longer be approved or rejected by the buyer.</p> <note> <p>Only cancellation requests in <code>PENDING_APPROVAL</code> status can be cancelled. A <code>ConflictException</code> is thrown if the cancellation request is in any other status.</p> </note>",
     "CancelAgreementPaymentRequest": "<p>Allows sellers (proposers) to cancel a payment request that is in <code>PENDING_APPROVAL</code> status. Once cancelled, the payment request transitions to <code>CANCELLED</code> status and can no longer be accepted or rejected by the buyer.</p> <note> <p>Only payment requests in <code>PENDING_APPROVAL</code> status can be cancelled. A <code>ConflictException</code> is thrown if the payment request is in any other status.</p> </note>",
     "DescribeAgreement": "<p>Provides details about an agreement, such as the proposer, acceptor, start date, and end date.</p>",
+    "GetAgreementCancellationRequest": "<p>Retrieves detailed information about a specific agreement cancellation request. Both sellers (proposers) and buyers (acceptors) can use this operation to view cancellation requests associated with their agreements.</p> <note> <p>The calling identity must be either the acceptor or proposer of the agreement. A <code>ResourceNotFoundException</code> is returned if the cancellation request does not exist.</p> </note>",
     "GetAgreementPaymentRequest": "<p>Retrieves detailed information about a specific payment request. Both sellers (proposers) and buyers (acceptors) can use this operation to view payment requests associated with their agreements. The response includes the current status, charge details, timestamps, and the charge ID if the request has been approved.</p> <note> <p>The calling identity must be either the acceptor or proposer of the payment request. A <code>ResourceNotFoundException</code> is returned if the payment request does not exist.</p> </note>",
     "GetAgreementTerms": "<p>Obtains details about the terms in an agreement that you participated in as proposer or acceptor.</p> <p>The details include:</p> <ul> <li> <p> <code>TermType</code> – The type of term, such as <code>LegalTerm</code>, <code>RenewalTerm</code>, or <code>ConfigurableUpfrontPricingTerm</code>.</p> </li> <li> <p> <code>TermID</code> – The ID of the particular term, which is common between offer and agreement.</p> </li> <li> <p> <code>TermPayload</code> – The key information contained in the term, such as the EULA for <code>LegalTerm</code> or pricing and dimensions for various pricing terms, such as <code>ConfigurableUpfrontPricingTerm</code> or <code>UsageBasedPricingTerm</code>.</p> </li> </ul> <ul> <li> <p> <code>Configuration</code> – The buyer/acceptor's selection at the time of agreement creation, such as the number of units purchased for a dimension or setting the <code>EnableAutoRenew</code> flag.</p> </li> </ul>",
+    "GetBillingAdjustmentRequest": "<p>Retrieves detailed information about a specific billing adjustment request. Sellers (proposers) can use this operation to view the status and details of a billing adjustment request they submitted.</p> <note> <p>A <code>ResourceNotFoundException</code> is returned if the billing adjustment request does not exist or the caller does not have permission to access it.</p> </note>",
+    "ListAgreementCancellationRequests": "<p>Lists agreement cancellation requests available to you as a seller or buyer. Both sellers (proposers) and buyers (acceptors) can use this operation to find cancellation requests by specifying their party type and applying optional filters.</p> <note> <p> <code>PartyType</code> is a required parameter. A <code>ValidationException</code> is returned if <code>PartyType</code> is not provided. Pagination is supported through <code>maxResults</code> (1-50, default 20) and <code>nextToken</code> parameters.</p> </note>",
+    "ListAgreementInvoiceLineItems": "<p>Allows sellers (proposers) to retrieve aggregated billing data from AWS Marketplace agreements using flexible grouping. Supports invoice-level aggregation with filtering by billing period, invoice type, and issued date.</p> <note> <p>The <code>groupBy</code> parameter is required and currently supports only <code>INVOICE_ID</code> as a value. The <code>agreementId</code> parameter is required.</p> </note>",
     "ListAgreementPaymentRequests": "<p>Lists payment requests available to you as a seller or buyer. Both sellers (proposers) and buyers (acceptors) can use this operation to find payment requests by specifying their party type and applying optional parameters.</p> <note> <p> <code>PartyType</code> is a required parameter. A <code>ValidationException</code> is returned if <code>PartyType</code> is not provided. Pagination is supported through <code>maxResults</code> (1-50, default 50) and <code>nextToken</code> parameters.</p> </note>",
+    "ListBillingAdjustmentRequests": "<p>Lists billing adjustment requests for a specific agreement. Sellers (proposers) can use this operation to view all billing adjustment requests associated with an agreement.</p> <note> <p>Pagination is supported through <code>maxResults</code> and <code>nextToken</code> parameters.</p> </note>",
     "SearchAgreements": "<p>Searches across all agreements that a proposer has in AWS Marketplace. The search returns a list of agreements with basic agreement information.</p> <p>The following filter combinations are supported when the <code>PartyType</code> is <code>Proposer</code>:</p> <ul> <li> <p> <code>AgreementType</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>ResourceType</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>ResourceType</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>ResourceType</code> + <code>Status</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>ResourceType</code> + <code>Status</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>ResourceId</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>ResourceId</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>ResourceId</code> + <code>Status</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>ResourceId</code> + <code>Status</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> + <code>Status</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> + <code>Status</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> + <code>OfferId</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> + <code>OfferId</code> + <code>Status</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> + <code>OfferId</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> + <code>OfferId</code> + <code>Status</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> + <code>ResourceId</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> + <code>ResourceId</code> + <code>Status</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> + <code>ResourceId</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> + <code>ResourceId</code> + <code>Status</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> + <code>ResourceType</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> + <code>ResourceType</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> + <code>ResourceType</code> + <code>Status</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>AcceptorAccountId</code> + <code>ResourceType</code> + <code>Status</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>Status</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>Status</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>OfferId</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>OfferId</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>OfferId</code> + <code>Status</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>OfferId</code> + <code>Status</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>OfferSetId</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>OfferSetId</code> + <code>EndTime</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>OfferSetId</code> + <code>Status</code> </p> </li> <li> <p> <code>AgreementType</code> + <code>OfferSetId</code> + <code>Status</code> + <code>EndTime</code> </p> </li> </ul> <note> <p> To filter by <code>EndTime</code>, you can use either <code>BeforeEndTime</code> or <code>AfterEndTime</code>. Only <code>EndTime</code> is supported for sorting.</p> </note>",
+    "SendAgreementCancellationRequest": "<p>Allows sellers (proposers) to submit a cancellation request for an active agreement. The cancellation request is created in <code>PENDING_APPROVAL</code> status, at which point the buyer can review it.</p>",
     "SendAgreementPaymentRequest": "<p>Allows sellers (proposers) to submit a payment request to buyers (acceptors) for a specific charge amount for an agreement that includes a <code>VariablePaymentTerm</code>. The payment request is created in <code>PENDING_APPROVAL</code> status, at which point the buyer can accept or reject it.</p> <note> <p>The agreement must be active and have a <code>VariablePaymentTerm</code> to support payment requests. The <code>chargeAmount</code> must not exceed the remaining available balance under the <code>VariablePaymentTerm</code> <code>maxTotalChargeAmount</code>.</p> </note>"
   },
   "shapes": {
@@ -41,17 +49,107 @@
       "base": "<p>User does not have sufficient access to perform this action.</p>",
       "refs": {}
     },
+    "AgreementCancellationRequestCancellationReason": {
+      "base": null,
+      "refs": {
+        "CancelAgreementCancellationRequestInput$cancellationReason": "<p>A required message explaining why the cancellation request is being withdrawn (1-2000 characters).</p>"
+      }
+    },
+    "AgreementCancellationRequestDescription": {
+      "base": null,
+      "refs": {
+        "CancelAgreementCancellationRequestOutput$description": "<p>The detailed description of the original cancellation reason, if provided.</p>",
+        "GetAgreementCancellationRequestOutput$description": "<p>The detailed description of the cancellation reason, if provided.</p>",
+        "SendAgreementCancellationRequestInput$description": "<p>An optional detailed description of the cancellation reason (1-2000 characters).</p>",
+        "SendAgreementCancellationRequestOutput$description": "<p>The detailed description of the cancellation reason, if provided.</p>"
+      }
+    },
+    "AgreementCancellationRequestId": {
+      "base": null,
+      "refs": {
+        "AgreementCancellationRequestSummary$agreementCancellationRequestId": "<p>The unique identifier of the cancellation request.</p>",
+        "CancelAgreementCancellationRequestInput$agreementCancellationRequestId": "<p>The unique identifier of the cancellation request to cancel.</p>",
+        "CancelAgreementCancellationRequestOutput$agreementCancellationRequestId": "<p>The unique identifier of the cancelled cancellation request.</p>",
+        "GetAgreementCancellationRequestInput$agreementCancellationRequestId": "<p>The unique identifier of the cancellation request.</p>",
+        "GetAgreementCancellationRequestOutput$agreementCancellationRequestId": "<p>The unique identifier of the cancellation request.</p>",
+        "SendAgreementCancellationRequestOutput$agreementCancellationRequestId": "<p>The unique identifier for the created cancellation request.</p>"
+      }
+    },
+    "AgreementCancellationRequestReasonCode": {
+      "base": null,
+      "refs": {
+        "AgreementCancellationRequestSummary$reasonCode": "<p>The reason code provided for the cancellation.</p>",
+        "CancelAgreementCancellationRequestOutput$reasonCode": "<p>The original reason code provided when the cancellation request was created.</p>",
+        "GetAgreementCancellationRequestOutput$reasonCode": "<p>The reason code provided for the cancellation.</p>",
+        "SendAgreementCancellationRequestInput$reasonCode": "<p>The reason code for the cancellation request. Valid values include <code>INCORRECT_TERMS_ACCEPTED</code>, <code>REPLACING_AGREEMENT</code>, <code>TEST_AGREEMENT</code>, <code>ALTERNATIVE_PROCUREMENT_CHANNEL</code>, <code>PRODUCT_DISCONTINUED</code>, <code>UNINTENDED_RENEWAL</code>, <code>BUYER_DISSATISFACTION</code>, and <code>OTHER</code>.</p>",
+        "SendAgreementCancellationRequestOutput$reasonCode": "<p>The reason code provided for the cancellation.</p>"
+      }
+    },
+    "AgreementCancellationRequestStatus": {
+      "base": null,
+      "refs": {
+        "AgreementCancellationRequestSummary$status": "<p>The current status of the cancellation request. Possible values include <code>PENDING_APPROVAL</code>, <code>APPROVED</code>, <code>REJECTED</code>, <code>CANCELLED</code>, and <code>VALIDATION_FAILED</code>.</p>",
+        "CancelAgreementCancellationRequestOutput$status": "<p>The updated status of the cancellation request, which is <code>CANCELLED</code>.</p>",
+        "GetAgreementCancellationRequestOutput$status": "<p>The current status of the cancellation request. Possible values include <code>PENDING_APPROVAL</code>, <code>APPROVED</code>, <code>REJECTED</code>, <code>CANCELLED</code>, and <code>VALIDATION_FAILED</code>.</p>",
+        "ListAgreementCancellationRequestsInput$status": "<p>An optional parameter to filter cancellation requests by status. Valid values include <code>PENDING_APPROVAL</code>, <code>APPROVED</code>, <code>REJECTED</code>, <code>CANCELLED</code>, and <code>VALIDATION_FAILED</code>.</p>",
+        "SendAgreementCancellationRequestOutput$status": "<p>The current status of the cancellation request. The initial status is <code>PENDING_APPROVAL</code>.</p>"
+      }
+    },
+    "AgreementCancellationRequestStatusMessage": {
+      "base": null,
+      "refs": {
+        "CancelAgreementCancellationRequestOutput$statusMessage": "<p>A message providing additional context about the cancellation request status.</p>",
+        "GetAgreementCancellationRequestOutput$statusMessage": "<p>A message providing additional context about the cancellation request status.</p>"
+      }
+    },
+    "AgreementCancellationRequestSummary": {
+      "base": "<p>Summary view of an agreement cancellation request.</p>",
+      "refs": {
+        "AgreementCancellationRequestSummaryList$member": null
+      }
+    },
+    "AgreementCancellationRequestSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAgreementCancellationRequestsOutput$items": "<p>An array of <code>AgreementCancellationRequestSummary</code> objects containing summary information about each cancellation request.</p>"
+      }
+    },
     "AgreementId": {
       "base": null,
       "refs": {
+        "AgreementCancellationRequestSummary$agreementId": "<p>The unique identifier of the agreement associated with this cancellation request.</p>",
+        "BatchCreateBillingAdjustmentRequestEntry$agreementId": "<p>The unique identifier of the agreement associated with the invoice.</p>",
+        "BillingAdjustmentSummary$agreementId": "<p>The unique identifier of the agreement associated with this billing adjustment request.</p>",
+        "CancelAgreementCancellationRequestInput$agreementId": "<p>The unique identifier of the agreement associated with the cancellation request.</p>",
+        "CancelAgreementCancellationRequestOutput$agreementId": "<p>The unique identifier of the agreement associated with this cancellation request.</p>",
         "CancelAgreementPaymentRequestInput$agreementId": "<p>The unique identifier of the agreement associated with the payment request.</p>",
         "CancelAgreementPaymentRequestOutput$agreementId": "<p>The unique identifier of the agreement associated with this payment request.</p>",
+        "GetAgreementCancellationRequestInput$agreementId": "<p>The unique identifier of the agreement associated with the cancellation request.</p>",
+        "GetAgreementCancellationRequestOutput$agreementId": "<p>The unique identifier of the agreement associated with this cancellation request. Use <code>DescribeAgreement</code> to retrieve full agreement details.</p>",
         "GetAgreementPaymentRequestInput$agreementId": "<p>The unique identifier of the agreement associated with the payment request.</p>",
         "GetAgreementPaymentRequestOutput$agreementId": "<p>The unique identifier of the agreement associated with this payment request. Use <code>DescribeAgreement</code> to retrieve full agreement details.</p>",
+        "GetBillingAdjustmentRequestInput$agreementId": "<p>The unique identifier of the agreement associated with the billing adjustment request.</p>",
+        "GetBillingAdjustmentRequestOutput$agreementId": "<p>The unique identifier of the agreement associated with this billing adjustment request.</p>",
+        "ListAgreementCancellationRequestsInput$agreementId": "<p>An optional parameter to filter cancellation requests for a specific agreement.</p>",
         "ListAgreementPaymentRequestsInput$agreementId": "<p>An optional parameter to list payment requests for a specific agreement.</p>",
+        "ListBillingAdjustmentRequestsInput$agreementId": "<p>The unique identifier of the agreement to list billing adjustment requests for.</p>",
         "PaymentRequestSummary$agreementId": "<p>The unique identifier of the agreement associated with this payment request.</p>",
+        "SendAgreementCancellationRequestInput$agreementId": "<p>The unique identifier of the agreement for which the cancellation request is being submitted.</p>",
+        "SendAgreementCancellationRequestOutput$agreementId": "<p>The unique identifier of the agreement.</p>",
         "SendAgreementPaymentRequestInput$agreementId": "<p>The unique identifier of the agreement for which the payment request is being submitted. Use <code>GetAgreementTerms</code> to retrieve agreement term details.</p>",
         "SendAgreementPaymentRequestOutput$agreementId": "<p>The agreement identifier for this payment request.</p>"
+      }
+    },
+    "AgreementInvoiceLineItemGroupSummaries": {
+      "base": null,
+      "refs": {
+        "ListAgreementInvoiceLineItemsOutput$agreementInvoiceLineItemGroupSummaries": "<p>A list of grouped billing data objects.</p>"
+      }
+    },
+    "AgreementInvoiceLineItemGroupSummary": {
+      "base": "<p>A summary of grouped billing data for an agreement invoice line item.</p>",
+      "refs": {
+        "AgreementInvoiceLineItemGroupSummaries$member": null
       }
     },
     "AgreementResourceType": {
@@ -70,9 +168,13 @@
     "AgreementType": {
       "base": null,
       "refs": {
-        "AgreementViewSummary$agreementType": "<p>The type of agreement. Value is <code>PurchaseAgreement</code>.</p>",
+        "AgreementCancellationRequestSummary$agreementType": "<p>The type of agreement.</p>",
+        "AgreementViewSummary$agreementType": "<p>The type of agreement.</p>",
+        "BillingAdjustmentSummary$agreementType": "<p>The type of agreement.</p>",
         "DescribeAgreementOutput$agreementType": "<p>The type of agreement. Values are <code>PurchaseAgreement</code> or <code>VendorInsightsAgreement</code>.</p>",
-        "ListAgreementPaymentRequestsInput$agreementType": "<p>An optional parameter to list payment requests by agreement type (e.g., <code>PurchaseAgreement</code>).</p>"
+        "ListAgreementCancellationRequestsInput$agreementType": "<p>An optional parameter to filter cancellation requests by agreement type (e.g., <code>PurchaseAgreement</code>).</p>",
+        "ListAgreementPaymentRequestsInput$agreementType": "<p>An optional parameter to list payment requests by agreement type (e.g., <code>PurchaseAgreement</code>).</p>",
+        "ListBillingAdjustmentRequestsInput$agreementType": "<p>An optional filter to return billing adjustment requests by agreement type (e.g., <code>PurchaseAgreement</code>).</p>"
       }
     },
     "AgreementViewSummary": {
@@ -85,6 +187,104 @@
       "base": null,
       "refs": {
         "SearchAgreementsOutput$agreementViewSummaries": "<p>A summary of the agreement, including top-level attributes (for example, the agreement ID, proposer, and acceptor).</p>"
+      }
+    },
+    "BatchCreateBillingAdjustmentError": {
+      "base": "<p>An error for a billing adjustment request entry that failed validation.</p>",
+      "refs": {
+        "BatchCreateBillingAdjustmentErrorList$member": null
+      }
+    },
+    "BatchCreateBillingAdjustmentErrorList": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillingAdjustmentRequestOutput$errors": "<p>A list of errors for entries that failed validation, each containing the <code>clientToken</code>, error <code>code</code>, and <code>message</code>.</p>"
+      }
+    },
+    "BatchCreateBillingAdjustmentItem": {
+      "base": "<p>A successfully created billing adjustment request item.</p>",
+      "refs": {
+        "BatchCreateBillingAdjustmentItemList$member": null
+      }
+    },
+    "BatchCreateBillingAdjustmentItemList": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillingAdjustmentRequestOutput$items": "<p>A list of successfully created billing adjustment items, each containing the <code>billingAdjustmentRequestId</code> and <code>clientToken</code>.</p>"
+      }
+    },
+    "BatchCreateBillingAdjustmentRequestEntry": {
+      "base": "<p>An individual entry in a batch billing adjustment request, specifying the invoice and adjustment details.</p>",
+      "refs": {
+        "BatchCreateBillingAdjustmentRequestEntryList$member": null
+      }
+    },
+    "BatchCreateBillingAdjustmentRequestEntryList": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillingAdjustmentRequestInput$billingAdjustmentRequestEntries": "<p>A list of billing adjustment request entries. Each entry specifies the invoice and adjustment details.</p>"
+      }
+    },
+    "BatchCreateBillingAdjustmentRequestInput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchCreateBillingAdjustmentRequestOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "BillingAdjustmentDescription": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillingAdjustmentRequestEntry$description": "<p>An optional detailed description of the adjustment reason.</p>"
+      }
+    },
+    "BillingAdjustmentErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillingAdjustmentError$code": "<p>The error code indicating the reason for failure.</p>"
+      }
+    },
+    "BillingAdjustmentReasonCode": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillingAdjustmentRequestEntry$adjustmentReasonCode": "<p>The reason code for the billing adjustment. Valid values include <code>INCORRECT_TERMS_ACCEPTED</code>, <code>INCORRECT_METERING</code>, <code>TEST_ENVIRONMENT_CHARGES</code>, <code>ALTERNATIVE_PROCUREMENT_CHANNEL</code>, <code>UNINTENDED_RENEWAL</code>, <code>BUYER_DISSATISFACTION</code>, and <code>OTHER</code>.</p>",
+        "GetBillingAdjustmentRequestOutput$adjustmentReasonCode": "<p>The reason code for the billing adjustment.</p>"
+      }
+    },
+    "BillingAdjustmentRequestId": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillingAdjustmentItem$billingAdjustmentRequestId": "<p>The unique identifier of the created billing adjustment request.</p>",
+        "BillingAdjustmentSummary$billingAdjustmentRequestId": "<p>The unique identifier of the billing adjustment request.</p>",
+        "GetBillingAdjustmentRequestInput$billingAdjustmentRequestId": "<p>The unique identifier of the billing adjustment request.</p>",
+        "GetBillingAdjustmentRequestOutput$billingAdjustmentRequestId": "<p>The unique identifier of the billing adjustment request.</p>"
+      }
+    },
+    "BillingAdjustmentStatus": {
+      "base": null,
+      "refs": {
+        "BillingAdjustmentSummary$status": "<p>The current status of the billing adjustment request.</p>",
+        "GetBillingAdjustmentRequestOutput$status": "<p>The current status of the billing adjustment request.</p>",
+        "ListBillingAdjustmentRequestsInput$status": "<p>An optional filter to return billing adjustment requests with the specified status.</p>"
+      }
+    },
+    "BillingAdjustmentStatusMessage": {
+      "base": null,
+      "refs": {
+        "GetBillingAdjustmentRequestOutput$statusMessage": "<p>A message providing additional context about the billing adjustment request status. This field is populated only when the status is <code>VALIDATION_FAILED</code>.</p>"
+      }
+    },
+    "BillingAdjustmentSummary": {
+      "base": "<p>Summary view of a billing adjustment request.</p>",
+      "refs": {
+        "BillingAdjustmentSummaryList$member": null
+      }
+    },
+    "BillingAdjustmentSummaryList": {
+      "base": null,
+      "refs": {
+        "ListBillingAdjustmentRequestsOutput$items": "<p>An array of <code>BillingAdjustmentSummary</code> objects containing summary information about each billing adjustment request.</p>"
       }
     },
     "Boolean": {
@@ -108,6 +308,10 @@
         "FixedUpfrontPricingTerm$price": "<p>Fixed amount to be charged to the customer when this term is accepted.</p>",
         "FreeTrialPricingTerm$duration": "<p>Duration of the free trial period (5–31 days). </p>",
         "GrantItem$dimensionKey": "<p>Unique dimension key defined in the product document. Dimensions represent categories of capacity in a product and are specified when the product is listed in AWS Marketplace. </p>",
+        "InvoicingEntity$legalName": "<p>The legal name of the invoicing entity.</p>",
+        "InvoicingEntity$branchName": "<p>The branch name of the invoicing entity.</p>",
+        "PricingCurrencyAmount$amount": "<p>The monetary amount before tax.</p>",
+        "PricingCurrencyAmount$maxAdjustmentAmount": "<p>The maximum refundable amount as a string representation of a decimal number.</p>",
         "RateCardItem$dimensionKey": "<p>Dimension for which the given entitlement applies. Dimensions represent categories of capacity in a product and are specified when the product is listed in AWS Marketplace.</p>",
         "RateCardItem$price": "<p>Per unit price for the product dimension that’s used for calculating the amount to be charged.</p>",
         "RecurringPaymentTerm$billingPeriod": "<p>Defines the recurrence at which buyers are charged.</p>",
@@ -128,6 +332,14 @@
         "AcceptedTerm$byolPricingTerm": "<p>Enables you and your customers to move your existing agreements to AWS Marketplace. The customer won't be charged for product usage in AWS Marketplace because they already paid for the product outside of AWS Marketplace.</p>"
       }
     },
+    "CancelAgreementCancellationRequestInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelAgreementCancellationRequestOutput": {
+      "base": null,
+      "refs": {}
+    },
     "CancelAgreementPaymentRequestInput": {
       "base": null,
       "refs": {}
@@ -139,7 +351,11 @@
     "Catalog": {
       "base": null,
       "refs": {
+        "AgreementCancellationRequestSummary$catalog": "<p>The catalog in which the agreement was created.</p>",
+        "BillingAdjustmentSummary$catalog": "<p>The catalog in which the agreement was created.</p>",
+        "ListAgreementCancellationRequestsInput$catalog": "<p>An optional parameter to filter cancellation requests by catalog (e.g., <code>AWSMarketplace</code>).</p>",
         "ListAgreementPaymentRequestsInput$catalog": "<p>An optional parameter to list payment requests by catalog (e.g., <code>AWSMarketplace</code>).</p>",
+        "ListBillingAdjustmentRequestsInput$catalog": "<p>An optional filter to return billing adjustment requests by catalog (e.g., <code>AWSMarketplace</code>).</p>",
         "SearchAgreementsInput$catalog": "<p>The catalog in which the agreement was created.</p>"
       }
     },
@@ -153,6 +369,10 @@
     "ClientToken": {
       "base": null,
       "refs": {
+        "BatchCreateBillingAdjustmentError$clientToken": "<p>The client token of the request entry that failed.</p>",
+        "BatchCreateBillingAdjustmentItem$clientToken": "<p>The client token provided in the corresponding request entry.</p>",
+        "BatchCreateBillingAdjustmentRequestEntry$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "SendAgreementCancellationRequestInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "SendAgreementPaymentRequestInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
       }
     },
@@ -193,13 +413,17 @@
     "CurrencyCode": {
       "base": null,
       "refs": {
+        "BatchCreateBillingAdjustmentRequestEntry$currencyCode": "<p>The 3-letter ISO 4217 currency code for the adjustment amount (e.g., <code>USD</code>).</p>",
+        "BillingAdjustmentSummary$currencyCode": "<p>The currency code for the adjustment amount.</p>",
         "CancelAgreementPaymentRequestOutput$currencyCode": "<p>The currency code for the charge amount.</p>",
         "ConfigurableUpfrontPricingTerm$currencyCode": "<p>Defines the currency for the prices mentioned in the term.</p>",
         "EstimatedCharges$currencyCode": "<p>Defines the currency code for the charge.</p>",
         "FixedUpfrontPricingTerm$currencyCode": "<p>Defines the currency for the prices mentioned in this term. </p>",
         "GetAgreementPaymentRequestOutput$currencyCode": "<p>The currency code for the charge amount.</p>",
+        "GetBillingAdjustmentRequestOutput$currencyCode": "<p>The currency code for the adjustment amount (e.g., <code>USD</code>).</p>",
         "PaymentRequestSummary$currencyCode": "<p>The currency code for the charge amount.</p>",
         "PaymentScheduleTerm$currencyCode": "<p>Defines the currency for the prices mentioned in the term. </p>",
+        "PricingCurrencyAmount$currencyCode": "<p>The 3-letter ISO 4217 currency code (e.g., <code>USD</code>, <code>EUR</code>, <code>JPY</code>).</p>",
         "RecurringPaymentTerm$currencyCode": "<p>Defines the currency for the prices mentioned in this term. </p>",
         "SendAgreementPaymentRequestOutput$currencyCode": "<p>The currency code for the charge amount (e.g., <code>USD</code>).</p>",
         "UsageBasedPricingTerm$currencyCode": "<p>Defines the currency for the prices mentioned in the term. </p>",
@@ -297,6 +521,14 @@
         "AcceptedTerm$freeTrialPricingTerm": "<p>Defines a short-term free pricing model where the buyers aren’t charged anything within a specified limit.</p>"
       }
     },
+    "GetAgreementCancellationRequestInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgreementCancellationRequestOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GetAgreementPaymentRequestInput": {
       "base": null,
       "refs": {}
@@ -310,6 +542,14 @@
       "refs": {}
     },
     "GetAgreementTermsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBillingAdjustmentRequestInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBillingAdjustmentRequestOutput": {
       "base": null,
       "refs": {}
     },
@@ -336,11 +576,73 @@
       "base": "<p>Unexpected error during processing of request.</p>",
       "refs": {}
     },
+    "InvoiceBillingPeriod": {
+      "base": "<p>The billing period for an invoice, specified by month and year.</p>",
+      "refs": {
+        "AgreementInvoiceLineItemGroupSummary$invoiceBillingPeriod": "<p>The billing period associated with this group.</p>",
+        "ListAgreementInvoiceLineItemsInput$invoiceBillingPeriod": "<p>An optional filter for the billing period associated with the invoice.</p>"
+      }
+    },
+    "InvoiceBillingPeriodMonthInteger": {
+      "base": null,
+      "refs": {
+        "InvoiceBillingPeriod$month": "<p>The billing period month. Valid range: 1-12.</p>"
+      }
+    },
+    "InvoiceBillingPeriodYearInteger": {
+      "base": null,
+      "refs": {
+        "InvoiceBillingPeriod$year": "<p>The billing period year.</p>"
+      }
+    },
+    "InvoiceId": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillingAdjustmentRequestEntry$originalInvoiceId": "<p>The identifier of the original invoice to adjust.</p>",
+        "BillingAdjustmentSummary$originalInvoiceId": "<p>The identifier of the original invoice being adjusted.</p>",
+        "GetBillingAdjustmentRequestOutput$originalInvoiceId": "<p>The identifier of the original invoice being adjusted.</p>"
+      }
+    },
+    "InvoiceType": {
+      "base": null,
+      "refs": {
+        "AgreementInvoiceLineItemGroupSummary$invoiceType": "<p>The type of invoice. Valid values are <code>INVOICE</code> and <code>CREDIT_MEMO</code>.</p>",
+        "ListAgreementInvoiceLineItemsInput$invoiceType": "<p>An optional filter for the type of invoice. Valid values are <code>INVOICE</code> and <code>CREDIT_MEMO</code>.</p>"
+      }
+    },
+    "InvoicingEntity": {
+      "base": "<p>The entity that issues the AWS invoice.</p>",
+      "refs": {
+        "AgreementInvoiceLineItemGroupSummary$invoicingEntity": "<p>The entity that issues the invoice.</p>"
+      }
+    },
     "LegalTerm": {
       "base": "<p>Defines the list of text agreements proposed to the acceptors. An example is the end user license agreement (EULA).</p>",
       "refs": {
         "AcceptedTerm$legalTerm": "<p>Defines the list of text agreements proposed to the acceptors. An example is the end user license agreement (EULA).</p>"
       }
+    },
+    "LineItemGroupBy": {
+      "base": null,
+      "refs": {
+        "ListAgreementInvoiceLineItemsInput$groupBy": "<p>Specifies a grouping strategy for line items. Currently supports <code>INVOICE_ID</code>.</p>"
+      }
+    },
+    "ListAgreementCancellationRequestsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgreementCancellationRequestsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgreementInvoiceLineItemsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgreementInvoiceLineItemsOutput": {
+      "base": null,
+      "refs": {}
     },
     "ListAgreementPaymentRequestsInput": {
       "base": null,
@@ -350,11 +652,22 @@
       "base": null,
       "refs": {}
     },
+    "ListBillingAdjustmentRequestsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBillingAdjustmentRequestsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "MaxResults": {
       "base": null,
       "refs": {
         "GetAgreementTermsInput$maxResults": "<p>The maximum number of agreements to return in the response.</p>",
+        "ListAgreementCancellationRequestsInput$maxResults": "<p>The maximum number of cancellation requests to return in the response.</p>",
+        "ListAgreementInvoiceLineItemsInput$maxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListAgreementPaymentRequestsInput$maxResults": "<p>The maximum number of payment requests to return in a single response (1-50). Default is 50.</p>",
+        "ListBillingAdjustmentRequestsInput$maxResults": "<p>The maximum number of billing adjustment requests to return in the response.</p>",
         "SearchAgreementsInput$maxResults": "<p>The maximum number of agreements to return in the response.</p>"
       }
     },
@@ -363,8 +676,14 @@
       "refs": {
         "GetAgreementTermsInput$nextToken": "<p>A token to specify where to start pagination</p>",
         "GetAgreementTermsOutput$nextToken": "<p>A token to specify where to start pagination</p>",
+        "ListAgreementCancellationRequestsInput$nextToken": "<p>A token to specify where to start pagination. Use the <code>nextToken</code> value from a previous response to retrieve the next page of results.</p>",
+        "ListAgreementCancellationRequestsOutput$nextToken": "<p>A token to retrieve the next page of results. If <code>null</code>, there are no more results to retrieve.</p>",
+        "ListAgreementInvoiceLineItemsInput$nextToken": "<p>A token to specify where to start pagination.</p>",
+        "ListAgreementInvoiceLineItemsOutput$nextToken": "<p>A token to retrieve the next page of results. If not present, there are no more results available.</p>",
         "ListAgreementPaymentRequestsInput$nextToken": "<p>A token to specify where to start pagination. Use the <code>nextToken</code> value from a previous response to retrieve the next page of results.</p>",
         "ListAgreementPaymentRequestsOutput$nextToken": "<p>A token to retrieve the next page of results. If <code>null</code>, there are no more results to retrieve.</p>",
+        "ListBillingAdjustmentRequestsInput$nextToken": "<p>A token to specify where to start pagination. Use the <code>nextToken</code> value from a previous response to retrieve the next page of results.</p>",
+        "ListBillingAdjustmentRequestsOutput$nextToken": "<p>A token to retrieve the next page of results. If <code>null</code>, there are no more results to retrieve.</p>",
         "SearchAgreementsInput$nextToken": "<p>A token to specify where to start pagination.</p>",
         "SearchAgreementsOutput$nextToken": "<p>The token used for pagination. The field is <code>null</code> if there are no more results.</p>"
       }
@@ -384,6 +703,7 @@
     "PartyType": {
       "base": null,
       "refs": {
+        "ListAgreementCancellationRequestsInput$partyType": "<p>The party type for the cancellation requests. Required parameter. Use <code>Proposer</code> to list cancellation requests where you are the seller, or <code>Acceptor</code> to list cancellation requests where you are the buyer.</p>",
         "ListAgreementPaymentRequestsInput$partyType": "<p>The party type for the payment requests. Required parameter. Use <code>Proposer</code> to list payment requests where you are the seller, or <code>Acceptor</code> to list payment requests where you are the buyer.</p>"
       }
     },
@@ -460,8 +780,11 @@
     "PositiveAmountUpto8Decimals": {
       "base": null,
       "refs": {
+        "BatchCreateBillingAdjustmentRequestEntry$adjustmentAmount": "<p>The adjustment amount as a string representation of a decimal number in the currency of the invoice.</p>",
+        "BillingAdjustmentSummary$adjustmentAmount": "<p>The adjustment amount as a string representation of a decimal number.</p>",
         "CancelAgreementPaymentRequestOutput$chargeAmount": "<p>The amount that was requested to be charged.</p>",
         "GetAgreementPaymentRequestOutput$chargeAmount": "<p>The amount charged or to be charged to the buyer.</p>",
+        "GetBillingAdjustmentRequestOutput$adjustmentAmount": "<p>The adjustment amount as a string representation of a decimal number.</p>",
         "PaymentRequestSummary$chargeAmount": "<p>The amount charged or to be charged to the buyer.</p>",
         "SendAgreementPaymentRequestInput$chargeAmount": "<p>The amount requested to be charged to the buyer, positive decimal value in the currency of the accepted term.</p> <note> <p>A <code>ValidationException</code> is returned if the <code>chargeAmount</code> exceeds the available balance, if the agreement doesn't have an active <code>VariablePaymentTerm</code>, or if the <code>termId</code> is invalid.</p> </note>",
         "SendAgreementPaymentRequestOutput$chargeAmount": "<p>The amount being charged to the buyer.</p>"
@@ -471,6 +794,12 @@
       "base": null,
       "refs": {
         "GrantItem$maxQuantity": "<p>Maximum amount of capacity that the buyer can be entitled to the given dimension of the product. If <code>MaxQuantity</code> is not provided, the buyer will be able to use an unlimited amount of the given dimension. </p>"
+      }
+    },
+    "PricingCurrencyAmount": {
+      "base": "<p>Monetary amounts associated with an invoice line item group.</p>",
+      "refs": {
+        "AgreementInvoiceLineItemGroupSummary$pricingCurrencyAmount": "<p>Monetary amounts for this invoice group.</p>"
       }
     },
     "ProposalSummary": {
@@ -538,11 +867,15 @@
     "ResourceId": {
       "base": null,
       "refs": {
+        "AgreementInvoiceLineItemGroupSummary$agreementId": "<p>The unique identifier of the agreement.</p>",
+        "AgreementInvoiceLineItemGroupSummary$invoiceId": "<p>The identifier of the invoice for this group.</p>",
         "AgreementViewSummary$agreementId": "<p>The unique identifier of the agreement.</p>",
         "ConflictException$resourceId": "<p>The unique identifier for the resource.</p>",
         "DescribeAgreementInput$agreementId": "<p>The unique identifier of the agreement.</p>",
         "DescribeAgreementOutput$agreementId": "<p>The unique identifier of the agreement.</p>",
         "GetAgreementTermsInput$agreementId": "<p>The unique identifier of the agreement.</p>",
+        "ListAgreementInvoiceLineItemsInput$agreementId": "<p>The unique identifier of the agreement.</p>",
+        "ListAgreementInvoiceLineItemsInput$invoiceId": "<p>An optional filter to retrieve invoice information for a specific invoice.</p>",
         "Resource$id": "<p>The unique identifier of the resource.</p> <note> <p>We mention the term resource, which is most commonly a product, so a <code>resourceId</code> is also a <code>productId</code>.</p> </note>",
         "ResourceNotFoundException$resourceId": "<p>The unique identifier for the resource.</p>"
       }
@@ -590,6 +923,14 @@
         "ConfigurableUpfrontRateCardItem$selector": "<p>Differentiates between the mutually exclusive rate cards in the same pricing term to be selected by the buyer.</p>"
       }
     },
+    "SendAgreementCancellationRequestInput": {
+      "base": null,
+      "refs": {}
+    },
+    "SendAgreementCancellationRequestOutput": {
+      "base": null,
+      "refs": {}
+    },
     "SendAgreementPaymentRequestInput": {
       "base": null,
       "refs": {}
@@ -616,6 +957,13 @@
         "Sort$sortOrder": "<p>The sorting order, which can be <code>ASCENDING</code> or <code>DESCENDING</code>. The default value is <code>DESCENDING</code>.</p>"
       }
     },
+    "String": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillingAdjustmentError$message": "<p>A human-readable message describing the error.</p>",
+        "GetBillingAdjustmentRequestOutput$description": "<p>The detailed description of the billing adjustment reason, if provided.</p>"
+      }
+    },
     "SupportTerm": {
       "base": "<p>Defines the customer support available for the acceptors when they purchase the software.</p>",
       "refs": {
@@ -635,19 +983,36 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "AgreementCancellationRequestSummary$createdAt": "<p>The date and time when the cancellation request was created, as a POSIX timestamp (Unix epoch seconds).</p>",
+        "AgreementCancellationRequestSummary$updatedAt": "<p>The date and time when the cancellation request was last updated, as a POSIX timestamp (Unix epoch seconds).</p>",
+        "AgreementInvoiceLineItemGroupSummary$issuedTime": "<p>The timestamp when the invoice containing this group was created.</p>",
         "AgreementViewSummary$acceptanceTime": "<p>The date and time that the agreement was accepted.</p>",
         "AgreementViewSummary$startTime": "<p>The date and time when the agreement starts.</p>",
         "AgreementViewSummary$endTime": "<p>The date and time when the agreement ends. The field is <code>null</code> for pay-as-you-go agreements, which don’t have end dates.</p>",
+        "BillingAdjustmentSummary$createdAt": "<p>The date and time when the billing adjustment request was created, as a POSIX timestamp (Unix epoch seconds).</p>",
+        "BillingAdjustmentSummary$updatedAt": "<p>The date and time when the billing adjustment request was last updated, as a POSIX timestamp (Unix epoch seconds).</p>",
+        "CancelAgreementCancellationRequestOutput$createdAt": "<p>The date and time when the cancellation request was originally created, as a POSIX timestamp (Unix epoch seconds).</p>",
+        "CancelAgreementCancellationRequestOutput$updatedAt": "<p>The date and time when the cancellation request was cancelled, as a POSIX timestamp (Unix epoch seconds).</p>",
         "CancelAgreementPaymentRequestOutput$createdAt": "<p>The date and time when the payment request was originally created, in ISO 8601 format.</p>",
         "CancelAgreementPaymentRequestOutput$updatedAt": "<p>The date and time when the payment request was cancelled, in ISO 8601 format.</p>",
         "DescribeAgreementOutput$startTime": "<p>The date and time when the agreement starts.</p>",
         "DescribeAgreementOutput$endTime": "<p>The date and time when the agreement ends. The field is <code>null</code> for pay-as-you-go agreements, which don’t have end dates.</p>",
         "DescribeAgreementOutput$acceptanceTime": "<p>The date and time the offer was accepted or the agreement was created.</p> <note> <p> <code>AcceptanceTime</code> and <code>StartTime</code> can differ for future dated agreements (FDAs).</p> </note>",
+        "GetAgreementCancellationRequestOutput$createdAt": "<p>The date and time when the cancellation request was created, as a POSIX timestamp (Unix epoch seconds).</p>",
+        "GetAgreementCancellationRequestOutput$updatedAt": "<p>The date and time when the cancellation request was last updated, as a POSIX timestamp (Unix epoch seconds).</p>",
         "GetAgreementPaymentRequestOutput$createdAt": "<p>The date and time when the payment request was created, in ISO 8601 format.</p>",
         "GetAgreementPaymentRequestOutput$updatedAt": "<p>The date and time when the payment request was last updated, in ISO 8601 format.</p>",
+        "GetBillingAdjustmentRequestOutput$createdAt": "<p>The date and time when the billing adjustment request was created, as a POSIX timestamp (Unix epoch seconds).</p>",
+        "GetBillingAdjustmentRequestOutput$updatedAt": "<p>The date and time when the billing adjustment request was last updated, as a POSIX timestamp (Unix epoch seconds).</p>",
+        "ListAgreementInvoiceLineItemsInput$beforeIssuedTime": "<p>An optional filter for invoices issued before the specified timestamp.</p>",
+        "ListAgreementInvoiceLineItemsInput$afterIssuedTime": "<p>An optional filter for invoices issued after the specified timestamp.</p>",
+        "ListBillingAdjustmentRequestsInput$createdAfter": "<p>An optional filter to return billing adjustment requests created after the specified POSIX timestamp (Unix epoch seconds).</p>",
+        "ListBillingAdjustmentRequestsInput$createdBefore": "<p>An optional filter to return billing adjustment requests created before the specified POSIX timestamp (Unix epoch seconds).</p>",
         "PaymentRequestSummary$createdAt": "<p>The date and time when the payment request was created, in ISO 8601 format.</p>",
         "PaymentRequestSummary$updatedAt": "<p>The date and time when the payment request was last updated, in ISO 8601 format.</p>",
         "ScheduleItem$chargeDate": "<p>The date that the customer would pay the price defined in this payment schedule term. Invoices are generated on the date provided.</p>",
+        "SendAgreementCancellationRequestOutput$createdAt": "<p>The time when the cancellation request was created, as a POSIX timestamp (Unix epoch seconds).</p>",
+        "SendAgreementCancellationRequestOutput$updatedAt": "<p>The time when the cancellation request was last updated, as a POSIX timestamp (Unix epoch seconds).</p>",
         "SendAgreementPaymentRequestOutput$createdAt": "<p>The time when the payment request was created, in ISO 8601 format.</p>",
         "ValidityTerm$agreementStartDate": "<p>Defines the date when agreement starts. The agreement starts at 00:00:00.000 UTC on the date provided. If <code>AgreementStartDate</code> isn’t provided, the agreement start date is determined based on agreement signature time.</p>",
         "ValidityTerm$agreementEndDate": "<p>Defines the date when the agreement ends. The agreement ends at 23:59:59.999 UTC on the date provided. If <code>AgreementEndDate</code> isn’t provided, the agreement end date is determined by the validity of individual terms.</p>"

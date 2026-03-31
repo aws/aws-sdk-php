@@ -1,0 +1,123 @@
+{
+  "version": "1.0",
+  "examples": {
+    "GetEstimatedCarbonEmissions": [
+      {
+        "input": {
+          "EmissionsTypes": [
+            "TOTAL_LBM_CARBON_EMISSIONS",
+            "TOTAL_MBM_CARBON_EMISSIONS",
+            "TOTAL_SCOPE_1_CARBON_EMISSIONS",
+            "TOTAL_SCOPE_2_LBM_CARBON_EMISSIONS",
+            "TOTAL_SCOPE_2_MBM_CARBON_EMISSIONS",
+            "TOTAL_SCOPE_3_LBM_CARBON_EMISSIONS",
+            "TOTAL_SCOPE_3_MBM_CARBON_EMISSIONS"
+          ],
+          "Granularity": "MONTHLY",
+          "GroupBy": [
+            "SERVICE"
+          ],
+          "TimePeriod": {
+            "End": "2025-12-31T23:59:59.999Z",
+            "Start": "2025-01-01T00:00:00.000Z"
+          }
+        },
+        "output": {
+          "Results": [
+            {
+              "DimensionsValues": {
+                "SERVICE": "AmazonEC2"
+              },
+              "EmissionsValues": {
+                "TOTAL_LBM_CARBON_EMISSIONS": {
+                  "Unit": "MTCO2e",
+                  "Value": 1
+                },
+                "TOTAL_MBM_CARBON_EMISSIONS": {
+                  "Unit": "MTCO2e",
+                  "Value": 1
+                },
+                "TOTAL_SCOPE_1_CARBON_EMISSIONS": {
+                  "Unit": "MTCO2e",
+                  "Value": 1
+                },
+                "TOTAL_SCOPE_2_LBM_CARBON_EMISSIONS": {
+                  "Unit": "MTCO2e",
+                  "Value": 1
+                },
+                "TOTAL_SCOPE_2_MBM_CARBON_EMISSIONS": {
+                  "Unit": "MTCO2e",
+                  "Value": 1
+                },
+                "TOTAL_SCOPE_3_LBM_CARBON_EMISSIONS": {
+                  "Unit": "MTCO2e",
+                  "Value": 1
+                },
+                "TOTAL_SCOPE_3_MBM_CARBON_EMISSIONS": {
+                  "Unit": "MTCO2e",
+                  "Value": 1
+                }
+              },
+              "ModelVersion": "v3.0.0",
+              "TimePeriod": {
+                "End": "2025-02-01T00:00:00Z",
+                "Start": "2025-01-01T00:00:00Z"
+              }
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "GetEstimatedCarbonEmissionsSuccess"
+      }
+    ],
+    "GetEstimatedCarbonEmissionsDimensionValues": [
+      {
+        "input": {
+          "Dimensions": [
+            "REGION",
+            "SERVICE",
+            "USAGE_ACCOUNT_ID"
+          ],
+          "TimePeriod": {
+            "End": "2025-12-31T23:59:59.999Z",
+            "Start": "2025-01-01T00:00:00.000Z"
+          }
+        },
+        "output": {
+          "Results": [
+            {
+              "Dimension": "SERVICE",
+              "Value": "AmazonEC2"
+            },
+            {
+              "Dimension": "SERVICE",
+              "Value": "AmazonS3"
+            },
+            {
+              "Dimension": "SERVICE",
+              "Value": "AmazonCloudFront"
+            },
+            {
+              "Dimension": "REGION",
+              "Value": "global"
+            },
+            {
+              "Dimension": "REGION",
+              "Value": "us-east-1"
+            },
+            {
+              "Dimension": "REGION",
+              "Value": "us-west-2"
+            },
+            {
+              "Dimension": "USAGE_ACCOUNT_ID",
+              "Value": "111222333444"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "GetEstimatedCarbonEmissionsDimensionValuesSuccess"
+      }
+    ]
+  }
+}

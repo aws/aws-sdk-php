@@ -818,7 +818,10 @@
         "requestUri":"/{Bucket}?metrics"
       },
       "input":{"shape":"ListBucketMetricsConfigurationsRequest"},
-      "output":{"shape":"ListBucketMetricsConfigurationsOutput"}
+      "output":{"shape":"ListBucketMetricsConfigurationsOutput"},
+      "staticContextParams":{
+        "UseS3ExpressControlEndpoint":{"value":true}
+      }
     },
     "ListBuckets":{
       "name":"ListBuckets",

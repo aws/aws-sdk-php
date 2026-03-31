@@ -16,6 +16,39 @@
     "uid":"marketplace-agreement-2020-03-01"
   },
   "operations":{
+    "BatchCreateBillingAdjustmentRequest":{
+      "name":"BatchCreateBillingAdjustmentRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchCreateBillingAdjustmentRequestInput"},
+      "output":{"shape":"BatchCreateBillingAdjustmentRequestOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "CancelAgreementCancellationRequest":{
+      "name":"CancelAgreementCancellationRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CancelAgreementCancellationRequestInput"},
+      "output":{"shape":"CancelAgreementCancellationRequestOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "CancelAgreementPaymentRequest":{
       "name":"CancelAgreementPaymentRequest",
       "http":{
@@ -41,6 +74,22 @@
       },
       "input":{"shape":"DescribeAgreementInput"},
       "output":{"shape":"DescribeAgreementOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetAgreementCancellationRequest":{
+      "name":"GetAgreementCancellationRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAgreementCancellationRequestInput"},
+      "output":{"shape":"GetAgreementCancellationRequestOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -81,6 +130,53 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetBillingAdjustmentRequest":{
+      "name":"GetBillingAdjustmentRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetBillingAdjustmentRequestInput"},
+      "output":{"shape":"GetBillingAdjustmentRequestOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListAgreementCancellationRequests":{
+      "name":"ListAgreementCancellationRequests",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAgreementCancellationRequestsInput"},
+      "output":{"shape":"ListAgreementCancellationRequestsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListAgreementInvoiceLineItems":{
+      "name":"ListAgreementInvoiceLineItems",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAgreementInvoiceLineItemsInput"},
+      "output":{"shape":"ListAgreementInvoiceLineItemsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListAgreementPaymentRequests":{
       "name":"ListAgreementPaymentRequests",
       "http":{
@@ -89,6 +185,21 @@
       },
       "input":{"shape":"ListAgreementPaymentRequestsInput"},
       "output":{"shape":"ListAgreementPaymentRequestsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListBillingAdjustmentRequests":{
+      "name":"ListBillingAdjustmentRequests",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListBillingAdjustmentRequestsInput"},
+      "output":{"shape":"ListBillingAdjustmentRequestsOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -109,6 +220,23 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
+      ]
+    },
+    "SendAgreementCancellationRequest":{
+      "name":"SendAgreementCancellationRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SendAgreementCancellationRequestInput"},
+      "output":{"shape":"SendAgreementCancellationRequestOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
       ]
     },
     "SendAgreementPaymentRequest":{
@@ -172,11 +300,92 @@
       },
       "exception":true
     },
+    "AgreementCancellationRequestCancellationReason":{
+      "type":"string",
+      "max":2000,
+      "min":1,
+      "pattern":".+",
+      "sensitive":true
+    },
+    "AgreementCancellationRequestDescription":{
+      "type":"string",
+      "max":2000,
+      "min":1,
+      "pattern":".+",
+      "sensitive":true
+    },
+    "AgreementCancellationRequestId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"acr-[a-zA-Z0-9]+"
+    },
+    "AgreementCancellationRequestReasonCode":{
+      "type":"string",
+      "enum":[
+        "INCORRECT_TERMS_ACCEPTED",
+        "REPLACING_AGREEMENT",
+        "TEST_AGREEMENT",
+        "ALTERNATIVE_PROCUREMENT_CHANNEL",
+        "PRODUCT_DISCONTINUED",
+        "UNINTENDED_RENEWAL",
+        "BUYER_DISSATISFACTION",
+        "OTHER"
+      ]
+    },
+    "AgreementCancellationRequestStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING_APPROVAL",
+        "APPROVED",
+        "REJECTED",
+        "CANCELLED",
+        "VALIDATION_FAILED"
+      ]
+    },
+    "AgreementCancellationRequestStatusMessage":{
+      "type":"string",
+      "max":2000,
+      "min":1
+    },
+    "AgreementCancellationRequestSummary":{
+      "type":"structure",
+      "members":{
+        "agreementCancellationRequestId":{"shape":"AgreementCancellationRequestId"},
+        "agreementId":{"shape":"AgreementId"},
+        "status":{"shape":"AgreementCancellationRequestStatus"},
+        "reasonCode":{"shape":"AgreementCancellationRequestReasonCode"},
+        "agreementType":{"shape":"AgreementType"},
+        "catalog":{"shape":"Catalog"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "AgreementCancellationRequestSummaryList":{
+      "type":"list",
+      "member":{"shape":"AgreementCancellationRequestSummary"}
+    },
     "AgreementId":{
       "type":"string",
       "max":64,
       "min":1,
       "pattern":"[A-Za-z0-9_/-]+"
+    },
+    "AgreementInvoiceLineItemGroupSummaries":{
+      "type":"list",
+      "member":{"shape":"AgreementInvoiceLineItemGroupSummary"}
+    },
+    "AgreementInvoiceLineItemGroupSummary":{
+      "type":"structure",
+      "members":{
+        "agreementId":{"shape":"ResourceId"},
+        "invoiceId":{"shape":"ResourceId"},
+        "pricingCurrencyAmount":{"shape":"PricingCurrencyAmount"},
+        "invoiceBillingPeriod":{"shape":"InvoiceBillingPeriod"},
+        "issuedTime":{"shape":"Timestamp"},
+        "invoiceType":{"shape":"InvoiceType"},
+        "invoicingEntity":{"shape":"InvoicingEntity"}
+      }
     },
     "AgreementResourceType":{
       "type":"string",
@@ -222,6 +431,158 @@
       "type":"list",
       "member":{"shape":"AgreementViewSummary"}
     },
+    "BatchCreateBillingAdjustmentError":{
+      "type":"structure",
+      "required":[
+        "code",
+        "message",
+        "clientToken"
+      ],
+      "members":{
+        "code":{"shape":"BillingAdjustmentErrorCode"},
+        "message":{"shape":"String"},
+        "clientToken":{"shape":"ClientToken"}
+      }
+    },
+    "BatchCreateBillingAdjustmentErrorList":{
+      "type":"list",
+      "member":{"shape":"BatchCreateBillingAdjustmentError"}
+    },
+    "BatchCreateBillingAdjustmentItem":{
+      "type":"structure",
+      "required":[
+        "billingAdjustmentRequestId",
+        "clientToken"
+      ],
+      "members":{
+        "billingAdjustmentRequestId":{"shape":"BillingAdjustmentRequestId"},
+        "clientToken":{"shape":"ClientToken"}
+      }
+    },
+    "BatchCreateBillingAdjustmentItemList":{
+      "type":"list",
+      "member":{"shape":"BatchCreateBillingAdjustmentItem"}
+    },
+    "BatchCreateBillingAdjustmentRequestEntry":{
+      "type":"structure",
+      "required":[
+        "agreementId",
+        "originalInvoiceId",
+        "adjustmentAmount",
+        "currencyCode",
+        "adjustmentReasonCode",
+        "clientToken"
+      ],
+      "members":{
+        "agreementId":{"shape":"AgreementId"},
+        "originalInvoiceId":{"shape":"InvoiceId"},
+        "adjustmentAmount":{"shape":"PositiveAmountUpto8Decimals"},
+        "currencyCode":{"shape":"CurrencyCode"},
+        "adjustmentReasonCode":{"shape":"BillingAdjustmentReasonCode"},
+        "description":{"shape":"BillingAdjustmentDescription"},
+        "clientToken":{"shape":"ClientToken"}
+      }
+    },
+    "BatchCreateBillingAdjustmentRequestEntryList":{
+      "type":"list",
+      "member":{"shape":"BatchCreateBillingAdjustmentRequestEntry"}
+    },
+    "BatchCreateBillingAdjustmentRequestInput":{
+      "type":"structure",
+      "required":["billingAdjustmentRequestEntries"],
+      "members":{
+        "billingAdjustmentRequestEntries":{"shape":"BatchCreateBillingAdjustmentRequestEntryList"}
+      }
+    },
+    "BatchCreateBillingAdjustmentRequestOutput":{
+      "type":"structure",
+      "required":[
+        "items",
+        "errors"
+      ],
+      "members":{
+        "items":{"shape":"BatchCreateBillingAdjustmentItemList"},
+        "errors":{"shape":"BatchCreateBillingAdjustmentErrorList"}
+      }
+    },
+    "BillingAdjustmentDescription":{
+      "type":"string",
+      "max":500,
+      "min":0,
+      "pattern":".+",
+      "sensitive":true
+    },
+    "BillingAdjustmentErrorCode":{
+      "type":"string",
+      "enum":[
+        "CONFLICT_EXCEPTION",
+        "VALIDATION_EXCEPTION",
+        "RESOURCE_NOT_FOUND_EXCEPTION",
+        "INTERNAL_FAILURE"
+      ]
+    },
+    "BillingAdjustmentReasonCode":{
+      "type":"string",
+      "enum":[
+        "INCORRECT_TERMS_ACCEPTED",
+        "INCORRECT_METERING",
+        "TEST_ENVIRONMENT_CHARGES",
+        "ALTERNATIVE_PROCUREMENT_CHANNEL",
+        "UNINTENDED_RENEWAL",
+        "BUYER_DISSATISFACTION",
+        "OTHER"
+      ]
+    },
+    "BillingAdjustmentRequestId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"ba-[a-zA-Z0-9]+"
+    },
+    "BillingAdjustmentStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "VALIDATION_FAILED",
+        "COMPLETED"
+      ]
+    },
+    "BillingAdjustmentStatusMessage":{
+      "type":"string",
+      "max":500,
+      "min":0
+    },
+    "BillingAdjustmentSummary":{
+      "type":"structure",
+      "required":[
+        "billingAdjustmentRequestId",
+        "originalInvoiceId",
+        "adjustmentAmount",
+        "currencyCode",
+        "status",
+        "agreementId",
+        "createdAt",
+        "updatedAt",
+        "agreementType",
+        "catalog"
+      ],
+      "members":{
+        "billingAdjustmentRequestId":{"shape":"BillingAdjustmentRequestId"},
+        "originalInvoiceId":{"shape":"InvoiceId"},
+        "adjustmentAmount":{"shape":"PositiveAmountUpto8Decimals"},
+        "currencyCode":{"shape":"CurrencyCode"},
+        "status":{"shape":"BillingAdjustmentStatus"},
+        "agreementId":{"shape":"AgreementId"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "agreementType":{"shape":"AgreementType"},
+        "catalog":{"shape":"Catalog"}
+      }
+    },
+    "BillingAdjustmentSummaryList":{
+      "type":"list",
+      "member":{"shape":"BillingAdjustmentSummary"}
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -236,6 +597,32 @@
       "type":"structure",
       "members":{
         "type":{"shape":"UnversionedTermType"}
+      }
+    },
+    "CancelAgreementCancellationRequestInput":{
+      "type":"structure",
+      "required":[
+        "agreementId",
+        "agreementCancellationRequestId",
+        "cancellationReason"
+      ],
+      "members":{
+        "agreementId":{"shape":"AgreementId"},
+        "agreementCancellationRequestId":{"shape":"AgreementCancellationRequestId"},
+        "cancellationReason":{"shape":"AgreementCancellationRequestCancellationReason"}
+      }
+    },
+    "CancelAgreementCancellationRequestOutput":{
+      "type":"structure",
+      "members":{
+        "agreementCancellationRequestId":{"shape":"AgreementCancellationRequestId"},
+        "agreementId":{"shape":"AgreementId"},
+        "reasonCode":{"shape":"AgreementCancellationRequestReasonCode"},
+        "description":{"shape":"AgreementCancellationRequestDescription"},
+        "status":{"shape":"AgreementCancellationRequestStatus"},
+        "statusMessage":{"shape":"AgreementCancellationRequestStatusMessage"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
       }
     },
     "CancelAgreementPaymentRequestInput":{
@@ -447,6 +834,30 @@
         "grants":{"shape":"GrantList"}
       }
     },
+    "GetAgreementCancellationRequestInput":{
+      "type":"structure",
+      "required":[
+        "agreementCancellationRequestId",
+        "agreementId"
+      ],
+      "members":{
+        "agreementCancellationRequestId":{"shape":"AgreementCancellationRequestId"},
+        "agreementId":{"shape":"AgreementId"}
+      }
+    },
+    "GetAgreementCancellationRequestOutput":{
+      "type":"structure",
+      "members":{
+        "agreementCancellationRequestId":{"shape":"AgreementCancellationRequestId"},
+        "agreementId":{"shape":"AgreementId"},
+        "reasonCode":{"shape":"AgreementCancellationRequestReasonCode"},
+        "description":{"shape":"AgreementCancellationRequestDescription"},
+        "status":{"shape":"AgreementCancellationRequestStatus"},
+        "statusMessage":{"shape":"AgreementCancellationRequestStatusMessage"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
     "GetAgreementPaymentRequestInput":{
       "type":"structure",
       "required":[
@@ -490,6 +901,44 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "GetBillingAdjustmentRequestInput":{
+      "type":"structure",
+      "required":[
+        "agreementId",
+        "billingAdjustmentRequestId"
+      ],
+      "members":{
+        "agreementId":{"shape":"AgreementId"},
+        "billingAdjustmentRequestId":{"shape":"BillingAdjustmentRequestId"}
+      }
+    },
+    "GetBillingAdjustmentRequestOutput":{
+      "type":"structure",
+      "required":[
+        "billingAdjustmentRequestId",
+        "agreementId",
+        "adjustmentReasonCode",
+        "originalInvoiceId",
+        "adjustmentAmount",
+        "currencyCode",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "billingAdjustmentRequestId":{"shape":"BillingAdjustmentRequestId"},
+        "agreementId":{"shape":"AgreementId"},
+        "adjustmentReasonCode":{"shape":"BillingAdjustmentReasonCode"},
+        "description":{"shape":"String"},
+        "originalInvoiceId":{"shape":"InvoiceId"},
+        "adjustmentAmount":{"shape":"PositiveAmountUpto8Decimals"},
+        "currencyCode":{"shape":"CurrencyCode"},
+        "status":{"shape":"BillingAdjustmentStatus"},
+        "statusMessage":{"shape":"BillingAdjustmentStatusMessage"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
     "GrantItem":{
       "type":"structure",
       "members":{
@@ -514,11 +963,102 @@
       "exception":true,
       "fault":true
     },
+    "InvoiceBillingPeriod":{
+      "type":"structure",
+      "required":[
+        "month",
+        "year"
+      ],
+      "members":{
+        "month":{"shape":"InvoiceBillingPeriodMonthInteger"},
+        "year":{"shape":"InvoiceBillingPeriodYearInteger"}
+      }
+    },
+    "InvoiceBillingPeriodMonthInteger":{
+      "type":"integer",
+      "box":true,
+      "max":12,
+      "min":1
+    },
+    "InvoiceBillingPeriodYearInteger":{
+      "type":"integer",
+      "box":true,
+      "max":2050,
+      "min":2023
+    },
+    "InvoiceId":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "InvoiceType":{
+      "type":"string",
+      "enum":[
+        "INVOICE",
+        "CREDIT_MEMO"
+      ]
+    },
+    "InvoicingEntity":{
+      "type":"structure",
+      "members":{
+        "legalName":{"shape":"BoundedString"},
+        "branchName":{"shape":"BoundedString"}
+      }
+    },
     "LegalTerm":{
       "type":"structure",
       "members":{
         "type":{"shape":"UnversionedTermType"},
         "documents":{"shape":"DocumentList"}
+      }
+    },
+    "LineItemGroupBy":{
+      "type":"string",
+      "enum":["INVOICE_ID"]
+    },
+    "ListAgreementCancellationRequestsInput":{
+      "type":"structure",
+      "required":["partyType"],
+      "members":{
+        "partyType":{"shape":"PartyType"},
+        "agreementId":{"shape":"AgreementId"},
+        "status":{"shape":"AgreementCancellationRequestStatus"},
+        "agreementType":{"shape":"AgreementType"},
+        "catalog":{"shape":"Catalog"},
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAgreementCancellationRequestsOutput":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "items":{"shape":"AgreementCancellationRequestSummaryList"}
+      }
+    },
+    "ListAgreementInvoiceLineItemsInput":{
+      "type":"structure",
+      "required":[
+        "agreementId",
+        "groupBy"
+      ],
+      "members":{
+        "agreementId":{"shape":"ResourceId"},
+        "groupBy":{"shape":"LineItemGroupBy"},
+        "invoiceId":{"shape":"ResourceId"},
+        "invoiceType":{"shape":"InvoiceType"},
+        "invoiceBillingPeriod":{"shape":"InvoiceBillingPeriod"},
+        "beforeIssuedTime":{"shape":"Timestamp"},
+        "afterIssuedTime":{"shape":"Timestamp"},
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAgreementInvoiceLineItemsOutput":{
+      "type":"structure",
+      "members":{
+        "agreementInvoiceLineItemGroupSummaries":{"shape":"AgreementInvoiceLineItemGroupSummaries"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListAgreementPaymentRequestsInput":{
@@ -540,6 +1080,27 @@
       "members":{
         "nextToken":{"shape":"NextToken"},
         "items":{"shape":"PaymentRequestSummaryList"}
+      }
+    },
+    "ListBillingAdjustmentRequestsInput":{
+      "type":"structure",
+      "members":{
+        "agreementId":{"shape":"AgreementId"},
+        "status":{"shape":"BillingAdjustmentStatus"},
+        "createdAfter":{"shape":"Timestamp"},
+        "createdBefore":{"shape":"Timestamp"},
+        "maxResults":{"shape":"MaxResults"},
+        "catalog":{"shape":"Catalog"},
+        "agreementType":{"shape":"AgreementType"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListBillingAdjustmentRequestsOutput":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "items":{"shape":"BillingAdjustmentSummaryList"}
       }
     },
     "MaxResults":{
@@ -642,6 +1203,14 @@
       "type":"integer",
       "box":true,
       "min":1
+    },
+    "PricingCurrencyAmount":{
+      "type":"structure",
+      "members":{
+        "amount":{"shape":"BoundedString"},
+        "maxAdjustmentAmount":{"shape":"BoundedString"},
+        "currencyCode":{"shape":"CurrencyCode"}
+      }
     },
     "ProposalSummary":{
       "type":"structure",
@@ -767,6 +1336,34 @@
         "value":{"shape":"BoundedString"}
       }
     },
+    "SendAgreementCancellationRequestInput":{
+      "type":"structure",
+      "required":[
+        "agreementId",
+        "reasonCode"
+      ],
+      "members":{
+        "agreementId":{"shape":"AgreementId"},
+        "reasonCode":{"shape":"AgreementCancellationRequestReasonCode"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "description":{"shape":"AgreementCancellationRequestDescription"}
+      }
+    },
+    "SendAgreementCancellationRequestOutput":{
+      "type":"structure",
+      "members":{
+        "agreementId":{"shape":"AgreementId"},
+        "agreementCancellationRequestId":{"shape":"AgreementCancellationRequestId"},
+        "status":{"shape":"AgreementCancellationRequestStatus"},
+        "reasonCode":{"shape":"AgreementCancellationRequestReasonCode"},
+        "description":{"shape":"AgreementCancellationRequestDescription"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
     "SendAgreementPaymentRequestInput":{
       "type":"structure",
       "required":[
@@ -820,6 +1417,7 @@
         "DESCENDING"
       ]
     },
+    "String":{"type":"string"},
     "SupportTerm":{
       "type":"structure",
       "members":{

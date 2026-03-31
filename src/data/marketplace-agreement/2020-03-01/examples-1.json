@@ -1,4 +1,198 @@
 {
   "version": "1.0",
-  "examples": {}
+  "examples": {
+    "BatchCreateBillingAdjustmentRequest": [
+      {
+        "input": {
+          "billingAdjustmentRequestEntries": [
+            {
+              "adjustmentAmount": "500.00",
+              "adjustmentReasonCode": "OTHER",
+              "agreementId": "agmt-SvIzsqYMyQwI3GWgJAe17URx",
+              "clientToken": "71a5e82e-a49b-4075-8c7f-52df1d294379",
+              "currencyCode": "USD",
+              "description": "Customer requested adjustment due to service outage during critical business period.",
+              "originalInvoiceId": "E2E20230929a108cfae"
+            }
+          ]
+        },
+        "output": {
+          "errors": [],
+          "items": [
+            {
+              "billingAdjustmentRequestId": "ba-1a2b3c4d5e6f7g",
+              "clientToken": "71a5e82e-a49b-4075-8c7f-52df1d294379"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Create billing adjustment requests"
+      }
+    ],
+    "CancelAgreementCancellationRequest": [
+      {
+        "input": {
+          "agreementCancellationRequestId": "acr-752jqvg74yo7k4h56cakk6396",
+          "agreementId": "agmt-752jqvg74yo7k4h56cakk6396",
+          "cancellationReason": "Requested agreement cancellation by mistake"
+        },
+        "output": {
+          "agreementCancellationRequestId": "acr-752jqvg74yo7k4h56cakk6396",
+          "agreementId": "agmt-752jqvg74yo7k4h56cakk6396",
+          "createdAt": "2025-01-15T10:30:00Z",
+          "description": "Product is being discontinued and no longer supported",
+          "reasonCode": "PRODUCT_DISCONTINUED",
+          "status": "CANCELLED",
+          "statusMessage": "Cancellation requested by seller",
+          "updatedAt": "2025-01-16T10:30:00Z"
+        },
+        "id": "example-1",
+        "title": "Cancel a cancellation request"
+      }
+    ],
+    "GetAgreementCancellationRequest": [
+      {
+        "input": {
+          "agreementCancellationRequestId": "acr-sgew33rhsds",
+          "agreementId": "agmt-752jqvg74yo7k"
+        },
+        "output": {
+          "agreementCancellationRequestId": "acr-sgew33rhsds",
+          "agreementId": "agmt-752jqvg74yo7k",
+          "createdAt": "2025-01-15T10:30:00Z",
+          "description": "Product is being discontinued and no longer supported",
+          "reasonCode": "PRODUCT_DISCONTINUED",
+          "status": "VALIDATION_FAILED",
+          "statusMessage": "Agreement is not in an active state",
+          "updatedAt": "2025-01-16T10:30:00Z"
+        },
+        "id": "example-1",
+        "title": "Get a cancellation request"
+      }
+    ],
+    "GetBillingAdjustmentRequest": [
+      {
+        "input": {
+          "agreementId": "agmt-SvIzsqYMyQwI3GWgJAe17URx",
+          "billingAdjustmentRequestId": "ba-1a2b3c4d5e6f7g"
+        },
+        "output": {
+          "adjustmentAmount": "500.00",
+          "adjustmentReasonCode": "OTHER",
+          "agreementId": "agmt-SvIzsqYMyQwI3GWgJAe17URx",
+          "billingAdjustmentRequestId": "ba-1a2b3c4d5e6f7g",
+          "createdAt": "2025-06-24T19:30:00Z",
+          "currencyCode": "USD",
+          "description": "Customer requested adjustment",
+          "originalInvoiceId": "E2E20230929a108cfae",
+          "status": "PENDING",
+          "updatedAt": "2025-06-24T19:30:00Z"
+        },
+        "id": "example-1",
+        "title": "Get a billing adjustment request"
+      }
+    ],
+    "ListAgreementCancellationRequests": [
+      {
+        "input": {
+          "maxResults": 10,
+          "partyType": "Proposer"
+        },
+        "output": {
+          "items": [
+            {
+              "agreementCancellationRequestId": "acr-sgew33rhsds",
+              "agreementId": "agmt-752jqvg74yo7k",
+              "agreementType": "PurchaseAgreement",
+              "catalog": "AWSMarketplace",
+              "createdAt": "2025-01-15T10:30:00Z",
+              "reasonCode": "OTHER",
+              "status": "PENDING_APPROVAL",
+              "updatedAt": "2025-01-16T10:30:00Z"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List cancellation requests"
+      }
+    ],
+    "ListAgreementInvoiceLineItems": [
+      {
+        "input": {
+          "agreementId": "agmt-EXAMPLESvIzsqYMyQwI3",
+          "groupBy": "INVOICE_ID"
+        },
+        "output": {
+          "agreementInvoiceLineItemGroupSummaries": [
+            {
+              "agreementId": "agmt-EXAMPLESvIzsqYMyQwI3",
+              "invoiceBillingPeriod": {
+                "month": 1,
+                "year": 2025
+              },
+              "invoiceId": "E2E20250105a108cfae",
+              "invoiceType": "INVOICE",
+              "invoicingEntity": {
+                "legalName": "Amazon Web Services, Inc."
+              },
+              "issuedTime": "2025-01-05T18:59:09Z",
+              "pricingCurrencyAmount": {
+                "amount": "1080.00",
+                "currencyCode": "USD",
+                "maxAdjustmentAmount": "1000.00"
+              }
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List agreement invoice line items"
+      }
+    ],
+    "ListBillingAdjustmentRequests": [
+      {
+        "input": {
+          "agreementId": "agmt-SvIzsqYMyQwI3GWgJAe17URx"
+        },
+        "output": {
+          "items": [
+            {
+              "adjustmentAmount": "500.00",
+              "agreementId": "agmt-SvIzsqYMyQwI3GWgJAe17URx",
+              "agreementType": "PurchaseAgreement",
+              "billingAdjustmentRequestId": "ba-1a2b3c4d5e6f7g",
+              "catalog": "AWSMarketplace",
+              "createdAt": "2025-06-24T19:30:00Z",
+              "currencyCode": "USD",
+              "originalInvoiceId": "E2E20230929a108cfae",
+              "status": "PENDING",
+              "updatedAt": "2025-06-24T19:30:00Z"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List billing adjustment requests"
+      }
+    ],
+    "SendAgreementCancellationRequest": [
+      {
+        "input": {
+          "agreementId": "agmt-752jqvg74yo7k4h56cakk6396",
+          "clientToken": "53nQSKWt6AjrsiZPhzQyZT",
+          "description": "Due to budget constraints, we are unable to continue with our current subscription",
+          "reasonCode": "OTHER"
+        },
+        "output": {
+          "agreementCancellationRequestId": "acr-752jqvg74yo7k4h56cakk6396",
+          "agreementId": "agmt-752jqvg74yo7k4h56cakk6396",
+          "createdAt": "2025-01-15T10:30:00Z",
+          "description": "Due to budget constraints, we are unable to continue with our current subscription",
+          "reasonCode": "OTHER",
+          "status": "PENDING_APPROVAL",
+          "updatedAt": "2025-01-15T10:30:00Z"
+        },
+        "id": "example-1",
+        "title": "Send a cancellation request"
+      }
+    ]
+  }
 }

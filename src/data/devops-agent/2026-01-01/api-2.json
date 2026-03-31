@@ -239,29 +239,6 @@
       "endpoint":{"hostPrefix":"cp."},
       "readonly":true
     },
-    "DescribeSupportLevel":{
-      "name":"DescribeSupportLevel",
-      "http":{
-        "method":"POST",
-        "requestUri":"/support/agent-space/{agentSpaceId}/tasks/{taskId}/supportLevel",
-        "responseCode":201
-      },
-      "input":{"shape":"DescribeSupportLevelRequest"},
-      "output":{"shape":"DescribeSupportLevelResponse"},
-      "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ContentSizeExceededException"},
-        {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"InvalidParameterException"}
-      ],
-      "endpoint":{"hostPrefix":"dp."},
-      "idempotent":true
-    },
     "DisableOperatorApp":{
       "name":"DisableOperatorApp",
       "http":{
@@ -330,29 +307,6 @@
         {"shape":"InvalidParameterException"}
       ],
       "endpoint":{"hostPrefix":"cp."}
-    },
-    "EndChatForCase":{
-      "name":"EndChatForCase",
-      "http":{
-        "method":"POST",
-        "requestUri":"/support/agent-space/{agentSpaceId}/tasks/{taskId}/end-chat-for-case",
-        "responseCode":200
-      },
-      "input":{"shape":"EndChatForCaseRequest"},
-      "output":{"shape":"EndChatForCaseResponse"},
-      "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ContentSizeExceededException"},
-        {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"InvalidParameterException"}
-      ],
-      "endpoint":{"hostPrefix":"dp."},
-      "idempotent":true
     },
     "GetAccountUsage":{
       "name":"GetAccountUsage",
@@ -514,29 +468,6 @@
       ],
       "endpoint":{"hostPrefix":"cp."},
       "readonly":true
-    },
-    "InitiateChatForCase":{
-      "name":"InitiateChatForCase",
-      "http":{
-        "method":"POST",
-        "requestUri":"/support/agent-space/{agentSpaceId}/tasks/{taskId}/chats",
-        "responseCode":201
-      },
-      "input":{"shape":"InitiateChatForCaseRequest"},
-      "output":{"shape":"InitiateChatForCaseResponse"},
-      "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ContentSizeExceededException"},
-        {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"InvalidParameterException"}
-      ],
-      "endpoint":{"hostPrefix":"dp."},
-      "idempotent":true
     },
     "ListAgentSpaces":{
       "name":"ListAgentSpaces",
@@ -1142,8 +1073,7 @@
         "azuredevops":{"shape":"RegisteredAzureDevOpsServiceDetails"},
         "azureidentity":{"shape":"RegisteredAzureIdentityDetails"},
         "mcpservergrafana":{"shape":"RegisteredGrafanaServerDetails"},
-        "pagerduty":{"shape":"RegisteredPagerDutyDetails"},
-        "mcpserversigv4":{"shape":"RegisteredMCPServerSigV4Details"}
+        "pagerduty":{"shape":"RegisteredPagerDutyDetails"}
       },
       "union":true
     },
@@ -1288,12 +1218,6 @@
         "idp"
       ]
     },
-    "AwsRegion":{
-      "type":"string",
-      "max":50,
-      "min":1,
-      "pattern":"[a-z]{2,4}(-[a-z]+)+-\\d+"
-    },
     "AzureConfiguration":{
       "type":"structure",
       "required":["subscriptionId"],
@@ -1353,19 +1277,6 @@
     "ChatExecutionList":{
       "type":"list",
       "member":{"shape":"ChatExecution"}
-    },
-    "ChatParticipantConnection":{
-      "type":"structure",
-      "required":[
-        "initialContactId",
-        "participantId",
-        "participantToken"
-      ],
-      "members":{
-        "initialContactId":{"shape":"String"},
-        "participantId":{"shape":"String"},
-        "participantToken":{"shape":"String"}
-      }
     },
     "ClientId":{
       "type":"string",
@@ -1654,34 +1565,6 @@
         "tags":{"shape":"Tags"}
       }
     },
-    "DescribeSupportLevelRequest":{
-      "type":"structure",
-      "required":[
-        "agentSpaceId",
-        "taskId"
-      ],
-      "members":{
-        "agentSpaceId":{
-          "shape":"AgentSpaceId",
-          "location":"uri",
-          "locationName":"agentSpaceId"
-        },
-        "taskId":{
-          "shape":"String",
-          "location":"uri",
-          "locationName":"taskId"
-        }
-      }
-    },
-    "DescribeSupportLevelResponse":{
-      "type":"structure",
-      "required":["supportLevel"],
-      "members":{
-        "supportLevel":{"shape":"SupportLevel"},
-        "mosaicSupportLevel":{"shape":"SupportLevel"},
-        "activeSubscription":{"shape":"Boolean"}
-      }
-    },
     "Description":{
       "type":"string",
       "max":1000,
@@ -1831,40 +1714,6 @@
         "idp":{"shape":"IdpAuthConfiguration"}
       }
     },
-    "EndChatForCaseRequest":{
-      "type":"structure",
-      "required":[
-        "agentSpaceId",
-        "taskId"
-      ],
-      "members":{
-        "agentSpaceId":{
-          "shape":"AgentSpaceId",
-          "location":"uri",
-          "locationName":"agentSpaceId"
-        },
-        "taskId":{
-          "shape":"String",
-          "location":"uri",
-          "locationName":"taskId"
-        },
-        "reason":{"shape":"String"},
-        "requester":{"shape":"String"},
-        "clientToken":{
-          "shape":"String",
-          "idempotencyToken":true
-        }
-      }
-    },
-    "EndChatForCaseResponse":{
-      "type":"structure",
-      "required":["isDisconnected"],
-      "members":{
-        "isDisconnected":{"shape":"Boolean"},
-        "executionId":{"shape":"String"},
-        "errorMessage":{"shape":"String"}
-      }
-    },
     "EventChannelConfiguration":{
       "type":"structure",
       "members":{}
@@ -1948,6 +1797,7 @@
         "monthlyAccountInvestigationHours":{"shape":"UsageMetric"},
         "monthlyAccountEvaluationHours":{"shape":"UsageMetric"},
         "monthlyAccountSystemLearningHours":{"shape":"UsageMetric"},
+        "monthlyAccountOnDemandHours":{"shape":"UsageMetric"},
         "usagePeriodStartTime":{"shape":"DateTime"},
         "usagePeriodEndTime":{"shape":"DateTime"}
       }
@@ -2334,36 +2184,6 @@
       "max":1024,
       "min":1,
       "sensitive":true
-    },
-    "InitiateChatForCaseRequest":{
-      "type":"structure",
-      "required":[
-        "agentSpaceId",
-        "taskId"
-      ],
-      "members":{
-        "agentSpaceId":{
-          "shape":"AgentSpaceId",
-          "location":"uri",
-          "locationName":"agentSpaceId"
-        },
-        "taskId":{
-          "shape":"String",
-          "location":"uri",
-          "locationName":"taskId"
-        },
-        "clientToken":{
-          "shape":"String",
-          "idempotencyToken":true
-        }
-      }
-    },
-    "InitiateChatForCaseResponse":{
-      "type":"structure",
-      "required":["chatParticipantConnection"],
-      "members":{
-        "chatParticipantConnection":{"shape":"ChatParticipantConnection"}
-      }
     },
     "Integer":{
       "type":"integer",
@@ -3058,53 +2878,6 @@
       "type":"string",
       "pattern":"https://[a-zA-Z0-9.-]+(?::[0-9]+)?(?:/.*)?"
     },
-    "MCPServerSigV4AuthorizationConfig":{
-      "type":"structure",
-      "required":[
-        "region",
-        "service",
-        "roleArn"
-      ],
-      "members":{
-        "region":{"shape":"AwsRegion"},
-        "service":{"shape":"MCPServerSigV4AuthorizationConfigServiceString"},
-        "roleArn":{"shape":"RoleArn"}
-      }
-    },
-    "MCPServerSigV4AuthorizationConfigServiceString":{
-      "type":"string",
-      "max":100,
-      "min":1
-    },
-    "MCPServerSigV4ServiceDetails":{
-      "type":"structure",
-      "required":[
-        "name",
-        "endpoint",
-        "authorizationConfig"
-      ],
-      "members":{
-        "name":{"shape":"MCPServerSigV4ServiceDetailsNameString"},
-        "endpoint":{"shape":"MCPServerSigV4ServiceDetailsEndpointString"},
-        "description":{"shape":"MCPServerSigV4ServiceDetailsDescriptionString"},
-        "authorizationConfig":{"shape":"MCPServerSigV4AuthorizationConfig"}
-      }
-    },
-    "MCPServerSigV4ServiceDetailsDescriptionString":{
-      "type":"string",
-      "max":500,
-      "min":0,
-      "pattern":"[\\p{L}\\p{N}\\p{P}\\p{S}\\p{Z}]+",
-      "sensitive":true
-    },
-    "MCPServerSigV4ServiceDetailsEndpointString":{
-      "type":"string",
-      "pattern":"https://[a-zA-Z0-9.-]+(?::[0-9]+)?(?:/.*)?"
-    },
-    "MCPServerSigV4ServiceDetailsNameString":{
-      "type":"string",
-      "pattern":"[a-zA-Z0-9_-]+"
-    },
     "MCPToolsList":{
       "type":"list",
       "member":{"shape":"MCPToolsListMemberString"}
@@ -3112,37 +2885,6 @@
     "MCPToolsListMemberString":{
       "type":"string",
       "pattern":"[a-zA-Z0-9_-]+"
-    },
-    "MSTeamsChannel":{
-      "type":"structure",
-      "required":[
-        "channelName",
-        "channelId"
-      ],
-      "members":{
-        "channelName":{"shape":"String"},
-        "channelId":{"shape":"Guid"}
-      }
-    },
-    "MSTeamsConfiguration":{
-      "type":"structure",
-      "required":[
-        "teamId",
-        "teamName",
-        "transmissionTarget"
-      ],
-      "members":{
-        "teamId":{"shape":"Guid"},
-        "teamName":{"shape":"String"},
-        "transmissionTarget":{"shape":"MSTeamsTransmissionTarget"}
-      }
-    },
-    "MSTeamsTransmissionTarget":{
-      "type":"structure",
-      "members":{
-        "opsOncallTarget":{"shape":"MSTeamsChannel"},
-        "opsSRETarget":{"shape":"MSTeamsChannel"}
-      }
     },
     "MaxIpv4AddressesPerEni":{
       "type":"integer",
@@ -3356,8 +3098,7 @@
         "mcpserverdatadog",
         "mcpserver",
         "mcpserversplunk",
-        "azureidentity",
-        "mcpserversigv4"
+        "azureidentity"
       ]
     },
     "Priority":{
@@ -3639,44 +3380,6 @@
         "description":{"shape":"Description"},
         "apiKeyHeader":{"shape":"String"}
       }
-    },
-    "RegisteredMCPServerSigV4Details":{
-      "type":"structure",
-      "required":[
-        "name",
-        "endpoint",
-        "region",
-        "service",
-        "roleArn"
-      ],
-      "members":{
-        "name":{"shape":"RegisteredMCPServerSigV4DetailsNameString"},
-        "endpoint":{"shape":"RegisteredMCPServerSigV4DetailsEndpointString"},
-        "description":{"shape":"RegisteredMCPServerSigV4DetailsDescriptionString"},
-        "region":{"shape":"AwsRegion"},
-        "service":{"shape":"RegisteredMCPServerSigV4DetailsServiceString"},
-        "roleArn":{"shape":"RoleArn"}
-      }
-    },
-    "RegisteredMCPServerSigV4DetailsDescriptionString":{
-      "type":"string",
-      "max":500,
-      "min":0,
-      "pattern":"[\\p{L}\\p{N}\\p{P}\\p{S}\\p{Z}]+",
-      "sensitive":true
-    },
-    "RegisteredMCPServerSigV4DetailsEndpointString":{
-      "type":"string",
-      "pattern":"https://[a-zA-Z0-9.-]+(?::[0-9]+)?(?:/.*)?"
-    },
-    "RegisteredMCPServerSigV4DetailsNameString":{
-      "type":"string",
-      "pattern":"[a-zA-Z0-9_-]+"
-    },
-    "RegisteredMCPServerSigV4DetailsServiceString":{
-      "type":"string",
-      "max":100,
-      "min":1
     },
     "RegisteredNewRelicDetails":{
       "type":"structure",
@@ -3960,7 +3663,6 @@
         "slack",
         "azure",
         "azuredevops",
-        "msteams",
         "dynatrace",
         "servicenow",
         "pagerduty",
@@ -3971,8 +3673,7 @@
         "mcpserverdatadog",
         "mcpserver",
         "mcpserversplunk",
-        "azureidentity",
-        "mcpserversigv4"
+        "azureidentity"
       ]
     },
     "ServiceConfiguration":{
@@ -3990,8 +3691,7 @@
         "azure":{"shape":"AzureConfiguration"},
         "azuredevops":{"shape":"AzureDevOpsConfiguration"},
         "mcpservergrafana":{"shape":"MCPServerGrafanaConfiguration"},
-        "pagerduty":{"shape":"PagerDutyConfiguration"},
-        "msteams":{"shape":"MSTeamsConfiguration"}
+        "pagerduty":{"shape":"PagerDutyConfiguration"}
       },
       "union":true
     },
@@ -4008,8 +3708,7 @@
         "eventChannel":{"shape":"EventChannelDetails"},
         "mcpservergrafana":{"shape":"GrafanaServiceDetails"},
         "pagerduty":{"shape":"PagerDutyDetails"},
-        "azureidentity":{"shape":"RegisteredAzureIdentityDetails"},
-        "mcpserversigv4":{"shape":"MCPServerSigV4ServiceDetails"}
+        "azureidentity":{"shape":"RegisteredAzureIdentityDetails"}
       },
       "union":true
     },
@@ -4173,17 +3872,6 @@
       "max":24,
       "min":15,
       "pattern":"subnet-(([0-9a-z]{8})|([0-9a-z]{17}))"
-    },
-    "SupportLevel":{
-      "type":"structure",
-      "required":[
-        "code",
-        "name"
-      ],
-      "members":{
-        "code":{"shape":"String"},
-        "name":{"shape":"String"}
-      }
     },
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",

@@ -1311,6 +1311,24 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "DescribeAutomationJob":{
+      "name":"DescribeAutomationJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/automation-groups/{AutomationGroupId}/automations/{AutomationId}/jobs/{JobId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeAutomationJobRequest"},
+      "output":{"shape":"DescribeAutomationJobResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "DescribeBrand":{
       "name":"DescribeBrand",
       "http":{
@@ -3133,6 +3151,24 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "StartAutomationJob":{
+      "name":"StartAutomationJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/automation-groups/{AutomationGroupId}/automations/{AutomationId}/jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"StartAutomationJobRequest"},
+      "output":{"shape":"StartAutomationJobResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "StartDashboardSnapshotJob":{
       "name":"StartDashboardSnapshotJob",
       "http":{
@@ -4562,6 +4598,7 @@
       "members":{
         "DataSetIdentifierDeclarations":{"shape":"DataSetIdentifierDeclarationList"},
         "Sheets":{"shape":"SheetDefinitionList"},
+        "TooltipSheets":{"shape":"TooltipSheetDefinitionList"},
         "CalculatedFields":{"shape":"CalculatedFields"},
         "ParameterDeclarations":{"shape":"ParameterDeclarationList"},
         "FilterGroups":{"shape":"FilterGroupList"},
@@ -5817,6 +5854,7 @@
       "type":"string",
       "enum":[
         "PASSWORD",
+        "KEYPAIR",
         "TOKEN",
         "X509"
       ]
@@ -5895,6 +5933,20 @@
     "AuthorizedTargetsList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "AutomateId":{
+      "type":"string",
+      "pattern":"[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}"
+    },
+    "AutomationJobStatus":{
+      "type":"string",
+      "enum":[
+        "FAILED",
+        "RUNNING",
+        "SUCCEEDED",
+        "QUEUED",
+        "STOPPED"
+      ]
     },
     "AwsAccountId":{
       "type":"string",
@@ -6845,8 +6897,11 @@
         "BuildCalculatedFieldWithQ":{"shape":"CapabilityState"},
         "CreateDashboardExecutiveSummaryWithQ":{"shape":"CapabilityState"},
         "Space":{"shape":"CapabilityState"},
+        "CreateSpaces":{"shape":"CapabilityState"},
+        "ShareSpaces":{"shape":"CapabilityState"},
         "ChatAgent":{"shape":"CapabilityState"},
         "CreateChatAgents":{"shape":"CapabilityState"},
+        "ShareChatAgents":{"shape":"CapabilityState"},
         "Research":{"shape":"CapabilityState"},
         "SelfUpgradeUserRole":{"shape":"CapabilityState"},
         "Extension":{"shape":"CapabilityState"},
@@ -9233,6 +9288,7 @@
       "members":{
         "DataSetIdentifierDeclarations":{"shape":"DataSetIdentifierDeclarationList"},
         "Sheets":{"shape":"SheetDefinitionList"},
+        "TooltipSheets":{"shape":"TooltipSheetDefinitionList"},
         "CalculatedFields":{"shape":"CalculatedFields"},
         "ParameterDeclarations":{"shape":"ParameterDeclarationList"},
         "FilterGroups":{"shape":"FilterGroupList"},
@@ -9943,7 +9999,8 @@
         "CopySourceArn":{"shape":"CopySourceArn"},
         "SecretArn":{"shape":"SecretArn"},
         "KeyPairCredentials":{"shape":"KeyPairCredentials"},
-        "WebProxyCredentials":{"shape":"WebProxyCredentials"}
+        "WebProxyCredentials":{"shape":"WebProxyCredentials"},
+        "OAuthClientCredentials":{"shape":"OAuthClientCredentials"}
       },
       "sensitive":true
     },
@@ -12092,6 +12149,64 @@
         "OverrideTags":{"shape":"AssetBundleImportJobOverrideTags"},
         "OverrideValidationStrategy":{"shape":"AssetBundleImportJobOverrideValidationStrategy"},
         "Warnings":{"shape":"AssetBundleImportJobWarningList"}
+      }
+    },
+    "DescribeAutomationJobRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "AutomationGroupId",
+        "AutomationId",
+        "JobId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "AutomationGroupId":{
+          "shape":"AutomateId",
+          "location":"uri",
+          "locationName":"AutomationGroupId"
+        },
+        "AutomationId":{
+          "shape":"AutomateId",
+          "location":"uri",
+          "locationName":"AutomationId"
+        },
+        "IncludeInputPayload":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"includeInputPayload"
+        },
+        "IncludeOutputPayload":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"includeOutputPayload"
+        },
+        "JobId":{
+          "shape":"AutomateId",
+          "location":"uri",
+          "locationName":"JobId"
+        }
+      }
+    },
+    "DescribeAutomationJobResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "JobStatus"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "StartedAt":{"shape":"Timestamp"},
+        "EndedAt":{"shape":"Timestamp"},
+        "JobStatus":{"shape":"AutomationJobStatus"},
+        "InputPayload":{"shape":"SensitiveIOPayload"},
+        "OutputPayload":{"shape":"SensitiveIOPayload"},
+        "RequestId":{"shape":"String"}
       }
     },
     "DescribeBrandAssignmentRequest":{
@@ -19527,6 +19642,26 @@
         "FormatConfiguration":{"shape":"NumberFormatConfiguration"}
       }
     },
+    "OAuthClientCredentials":{
+      "type":"structure",
+      "members":{
+        "ClientId":{"shape":"OAuthClientId"},
+        "ClientSecret":{"shape":"OAuthClientSecret"},
+        "Username":{"shape":"OAuthUsername"}
+      }
+    },
+    "OAuthClientId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "sensitive":true
+    },
+    "OAuthClientSecret":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "sensitive":true
+    },
     "OAuthParameters":{
       "type":"structure",
       "required":["TokenProviderUrl"],
@@ -19541,6 +19676,12 @@
       "type":"string",
       "max":128,
       "min":1
+    },
+    "OAuthUsername":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "sensitive":true
     },
     "OnClause":{
       "type":"string",
@@ -20179,6 +20320,7 @@
         "TotalOptions":{"shape":"PivotTableTotalOptions"},
         "FieldOptions":{"shape":"PivotTableFieldOptions"},
         "PaginatedReportOptions":{"shape":"PivotTablePaginatedReportOptions"},
+        "Tooltip":{"shape":"TooltipOptions"},
         "DashboardCustomizationVisualOptions":{"shape":"DashboardCustomizationVisualOptions"},
         "Interactions":{"shape":"VisualInteractionOptions"}
       }
@@ -22454,7 +22596,8 @@
       "type":"string",
       "enum":[
         "BASIC",
-        "DETAILED"
+        "DETAILED",
+        "SHEET"
       ]
     },
     "SelfUpgradeAdminAction":{
@@ -22566,6 +22709,13 @@
     },
     "SensitiveDoubleObject":{
       "type":"double",
+      "sensitive":true
+    },
+    "SensitiveIOPayload":{
+      "type":"string",
+      "max":7000000,
+      "min":1,
+      "pattern":"[\\s\\S]*[{\\[].*[}\\]]\\s*",
       "sensitive":true
     },
     "SensitiveLong":{
@@ -23005,6 +23155,12 @@
       "max":1024,
       "min":1
     },
+    "SheetTooltip":{
+      "type":"structure",
+      "members":{
+        "SheetId":{"shape":"ShortRestrictiveResourceId"}
+      }
+    },
     "SheetVisualScopingConfiguration":{
       "type":"structure",
       "required":[
@@ -23407,6 +23563,38 @@
         "Port":{"shape":"Port"}
       }
     },
+    "SparklineAxisBehavior":{
+      "type":"string",
+      "enum":[
+        "SHARED",
+        "INDEPENDENT"
+      ]
+    },
+    "SparklineVisualType":{
+      "type":"string",
+      "enum":[
+        "LINE",
+        "AREA_LINE"
+      ]
+    },
+    "SparklinesOptions":{
+      "type":"structure",
+      "required":[
+        "FieldId",
+        "XAxisField"
+      ],
+      "members":{
+        "FieldId":{"shape":"FieldId"},
+        "XAxisField":{"shape":"DimensionField"},
+        "YAxisBehavior":{"shape":"SparklineAxisBehavior"},
+        "VisualType":{"shape":"SparklineVisualType"},
+        "LineColor":{"shape":"HexColor"},
+        "LineInterpolation":{"shape":"LineInterpolation"},
+        "AllPointsMarker":{"shape":"LineChartMarkerStyleSettings"},
+        "MaxValueMarker":{"shape":"LineChartMarkerStyleSettings"},
+        "MinValueMarker":{"shape":"LineChartMarkerStyleSettings"}
+      }
+    },
     "SpatialStaticFile":{
       "type":"structure",
       "required":["StaticFileId"],
@@ -23547,6 +23735,48 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "StartAutomationJobRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "AutomationGroupId",
+        "AutomationId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "AutomationGroupId":{
+          "shape":"AutomateId",
+          "location":"uri",
+          "locationName":"AutomationGroupId"
+        },
+        "AutomationId":{
+          "shape":"AutomateId",
+          "location":"uri",
+          "locationName":"AutomationId"
+        },
+        "InputPayload":{"shape":"SensitiveIOPayload"}
+      }
+    },
+    "StartAutomationJobResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "JobId"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "JobId":{"shape":"AutomateId"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
       }
     },
     "StartDashboardSnapshotJobRequest":{
@@ -23925,6 +24155,7 @@
         "FieldOptions":{"shape":"TableFieldOptions"},
         "PaginatedReportOptions":{"shape":"TablePaginatedReportOptions"},
         "TableInlineVisualizations":{"shape":"TableInlineVisualizationList"},
+        "Tooltip":{"shape":"TooltipOptions"},
         "DashboardCustomizationVisualOptions":{"shape":"DashboardCustomizationVisualOptions"},
         "Interactions":{"shape":"VisualInteractionOptions"}
       }
@@ -24023,7 +24254,8 @@
     "TableInlineVisualization":{
       "type":"structure",
       "members":{
-        "DataBars":{"shape":"DataBarsOptions"}
+        "DataBars":{"shape":"DataBarsOptions"},
+        "Sparklines":{"shape":"SparklinesOptions"}
       }
     },
     "TableInlineVisualizationList":{
@@ -24350,6 +24582,7 @@
       "members":{
         "DataSetConfigurations":{"shape":"DataSetConfigurationList"},
         "Sheets":{"shape":"SheetDefinitionList"},
+        "TooltipSheets":{"shape":"TooltipSheetDefinitionList"},
         "CalculatedFields":{"shape":"CalculatedFields"},
         "ParameterDeclarations":{"shape":"ParameterDeclarationList"},
         "FilterGroups":{"shape":"FilterGroupList"},
@@ -24736,8 +24969,41 @@
       "members":{
         "TooltipVisibility":{"shape":"Visibility"},
         "SelectedTooltipType":{"shape":"SelectedTooltipType"},
-        "FieldBasedTooltip":{"shape":"FieldBasedTooltip"}
+        "FieldBasedTooltip":{"shape":"FieldBasedTooltip"},
+        "SheetTooltip":{"shape":"SheetTooltip"}
       }
+    },
+    "TooltipSheetDefinition":{
+      "type":"structure",
+      "required":["SheetId"],
+      "members":{
+        "SheetId":{"shape":"ShortRestrictiveResourceId"},
+        "Name":{"shape":"SheetName"},
+        "Visuals":{"shape":"TooltipSheetVisualList"},
+        "TextBoxes":{"shape":"TooltipSheetTextBoxList"},
+        "Images":{"shape":"TooltipSheetImageList"},
+        "Layouts":{"shape":"LayoutList"}
+      }
+    },
+    "TooltipSheetDefinitionList":{
+      "type":"list",
+      "member":{"shape":"TooltipSheetDefinition"},
+      "max":50
+    },
+    "TooltipSheetImageList":{
+      "type":"list",
+      "member":{"shape":"SheetImage"},
+      "max":5
+    },
+    "TooltipSheetTextBoxList":{
+      "type":"list",
+      "member":{"shape":"SheetTextBox"},
+      "max":5
+    },
+    "TooltipSheetVisualList":{
+      "type":"list",
+      "member":{"shape":"Visual"},
+      "max":5
     },
     "TooltipTarget":{
       "type":"string",

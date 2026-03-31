@@ -1,0 +1,210 @@
+{
+  "version": "2.0",
+  "service": "<p>The AWS Sustainability service provides programmatic access to estimated carbon emissions data for your Amazon Web Services usage. Use the AWS Sustainability service to retrieve, analyze, and track the carbon footprint of your cloud infrastructure over time. </p> <p>With the AWS Sustainability service, you can:</p> <ul> <li> <p>Retrieve estimated carbon emissions for your Amazon Web Services usage across different time periods </p> </li> <li> <p>Group emissions data by dimensions such as account, region, and service</p> </li> <li> <p>Filter emissions data to focus on specific accounts, regions, or services</p> </li> <li> <p>Access multiple emissions calculation methodologies including Location-based Method (LBM) and Market-based Method (MBM) </p> </li> <li> <p>Aggregate emissions data at various time granularities including monthly, quarterly, and yearly periods </p> </li> </ul> <p> The API supports pagination for efficient data retrieval and provides dimension values to help you understand the available grouping and filtering options for your account. </p> <p> All emissions values are calculated using methodologies aligned with the Greenhouse Gas (GHG) Protocol and are provided in metric tons of carbon dioxide-equivalent (MTCO2e). </p>",
+  "operations": {
+    "GetEstimatedCarbonEmissions": "<p>Returns estimated carbon emission values based on customer grouping and filtering parameters. We recommend using pagination to ensure that the operation returns quickly and successfully. </p>",
+    "GetEstimatedCarbonEmissionsDimensionValues": "<p>Returns the possible dimension values available for a customer's account. We recommend using pagination to ensure that the operation returns quickly and successfully. </p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You do not have sufficient access to perform this action.</p>",
+      "refs": {}
+    },
+    "Dimension": {
+      "base": "<p>Specifies the dimensions available for grouping and filtering emissions data.</p>",
+      "refs": {
+        "DimensionEntry$Dimension": "<p>The dimension type that categorizes this entry.</p>",
+        "DimensionList$member": null,
+        "DimensionListMap$key": null,
+        "DimensionsMap$key": null
+      }
+    },
+    "DimensionEntry": {
+      "base": "<p>Represents a dimension and its corresponding value.</p>",
+      "refs": {
+        "DimensionEntryList$member": null
+      }
+    },
+    "DimensionEntryList": {
+      "base": null,
+      "refs": {
+        "GetEstimatedCarbonEmissionsDimensionValuesResponse$Results": "<p>The list of possible dimensions over which the emissions data is aggregated.</p>"
+      }
+    },
+    "DimensionList": {
+      "base": null,
+      "refs": {
+        "GetEstimatedCarbonEmissionsDimensionValuesRequest$Dimensions": "<p>The dimensions available for grouping estimated carbon emissions.</p>",
+        "GetEstimatedCarbonEmissionsRequest$GroupBy": "<p>The dimensions available for grouping estimated carbon emissions.</p>"
+      }
+    },
+    "DimensionListMap": {
+      "base": null,
+      "refs": {
+        "FilterExpression$Dimensions": "<p>Filters emission values by specific dimension values.</p>"
+      }
+    },
+    "DimensionValueList": {
+      "base": null,
+      "refs": {
+        "DimensionListMap$value": null
+      }
+    },
+    "DimensionsMap": {
+      "base": null,
+      "refs": {
+        "EstimatedCarbonEmissions$DimensionsValues": "<p>The dimensions used to group emissions values.</p>"
+      }
+    },
+    "Double": {
+      "base": null,
+      "refs": {
+        "Emissions$Value": "<p>The numeric value of the emissions quantity.</p>"
+      }
+    },
+    "Emissions": {
+      "base": "<p>Represents a carbon emissions quantity with its value and unit of measurement.</p>",
+      "refs": {
+        "EmissionsMap$value": null
+      }
+    },
+    "EmissionsMap": {
+      "base": null,
+      "refs": {
+        "EstimatedCarbonEmissions$EmissionsValues": "<p>The emissions values for the requested emissions types.</p>"
+      }
+    },
+    "EmissionsType": {
+      "base": "<p>Specifies the types of carbon emissions calculations available.</p>",
+      "refs": {
+        "EmissionsMap$key": null,
+        "EmissionsTypeList$member": null
+      }
+    },
+    "EmissionsTypeList": {
+      "base": null,
+      "refs": {
+        "GetEstimatedCarbonEmissionsRequest$EmissionsTypes": "<p>The emission types to include in the results. If absent, returns <code>TOTAL_LBM_CARBON_EMISSIONS</code> and <code>TOTAL_MBM_CARBON_EMISSIONS</code> emissions types. </p>"
+      }
+    },
+    "EmissionsUnit": {
+      "base": "<p>Specifies the unit of measurement for emissions.</p>",
+      "refs": {
+        "Emissions$Unit": "<p>The unit of measurement for the emissions value.</p>"
+      }
+    },
+    "EstimatedCarbonEmissions": {
+      "base": "<p>Contains estimated carbon emissions data for a specific time period and dimension grouping.</p>",
+      "refs": {
+        "EstimatedCarbonEmissionsList$member": null
+      }
+    },
+    "EstimatedCarbonEmissionsList": {
+      "base": null,
+      "refs": {
+        "GetEstimatedCarbonEmissionsResponse$Results": "<p>The result of the requested inputs.</p>"
+      }
+    },
+    "FilterExpression": {
+      "base": "<p>Filters emission values by specific dimension values.</p>",
+      "refs": {
+        "GetEstimatedCarbonEmissionsRequest$FilterBy": "<p>The criteria for filtering estimated carbon emissions.</p>"
+      }
+    },
+    "GetEstimatedCarbonEmissionsDimensionValuesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetEstimatedCarbonEmissionsDimensionValuesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetEstimatedCarbonEmissionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetEstimatedCarbonEmissionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GranularityConfiguration": {
+      "base": "<p> Contains configuration for the fiscal year granularities (e.g., <code>YEARLY_FISCAL</code>, <code>QUARTERLY_FISCAL</code>. </p>",
+      "refs": {
+        "GetEstimatedCarbonEmissionsRequest$GranularityConfiguration": "<p>Configuration for fiscal year calculations when using <code>YEARLY_FISCAL</code> or <code>QUARTERLY_FISCAL</code> granularity. </p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>The request processing has failed because of an unknown error, exception, or failure.</p>",
+      "refs": {}
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "GetEstimatedCarbonEmissionsDimensionValuesRequest$MaxResults": "<p>The maximum number of results to return in a single call. Default is 40.</p>",
+        "GetEstimatedCarbonEmissionsRequest$MaxResults": "<p>The maximum number of results to return in a single call. Default is 40.</p>"
+      }
+    },
+    "ModelVersion": {
+      "base": null,
+      "refs": {
+        "EstimatedCarbonEmissions$ModelVersion": "<p>The semantic version-formatted string that indicates the methodology version used to calculate the emission values. </p> <note> <p> The AWS Sustainability service reflects the most recent model version for every month. You will not see two entries for the same month with different <code>ModelVersion</code> values. To track the evolution of the methodology and compare emission values from previous versions, we recommend creating a <a href=\"https://docs.aws.amazon.com/cur/latest/userguide/what-is-data-exports.html\">Data Export</a>. </p> </note>"
+      }
+    },
+    "Month": {
+      "base": null,
+      "refs": {
+        "GranularityConfiguration$FiscalYearStartMonth": "<p> The month (1-12) when the fiscal year begins. Used for <code>YEARLY_FISCAL</code> and <code>QUARTERLY_FISCAL</code> granularity. Defaults to 1 (January). </p>"
+      }
+    },
+    "NextToken": {
+      "base": null,
+      "refs": {
+        "GetEstimatedCarbonEmissionsDimensionValuesRequest$NextToken": "<p>The pagination token specifying which page of results to return in the response. If no token is provided, the default page is the first page. </p>",
+        "GetEstimatedCarbonEmissionsDimensionValuesResponse$NextToken": "<p>The pagination token indicating there are additional pages available. You can use the token in a following request to fetch the next set of results. </p>",
+        "GetEstimatedCarbonEmissionsRequest$NextToken": "<p>The pagination token specifying which page of results to return in the response. If no token is provided, the default page is the first page. </p>",
+        "GetEstimatedCarbonEmissionsResponse$NextToken": "<p>The pagination token indicating there are additional pages available. You can use the token in a following request to fetch the next set of results. </p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$Message": null,
+        "DimensionEntry$Value": "<p> The value for the specified dimension. Valid values vary based on the dimension type (e.g., <code>us-east-1</code> for the <code>REGION</code> dimension, <code>AmazonEC2</code> for the <code>SERVICE</code> dimension). </p>",
+        "DimensionValueList$member": null,
+        "DimensionsMap$value": null,
+        "InternalServerException$Message": null,
+        "ThrottlingException$Message": null,
+        "ValidationException$Message": null
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling.</p>",
+      "refs": {}
+    },
+    "TimeGranularity": {
+      "base": "<p>Specifies the time period over which emissions data is aggregated.</p>",
+      "refs": {
+        "GetEstimatedCarbonEmissionsRequest$Granularity": "<p>The time granularity for the results. If absent, uses <code>MONTHLY</code> time granularity.</p>"
+      }
+    },
+    "TimePeriod": {
+      "base": "<p>Represents a duration of time defined by start and end timestamps.</p>",
+      "refs": {
+        "EstimatedCarbonEmissions$TimePeriod": "<p>The reporting period for emission values.</p>",
+        "GetEstimatedCarbonEmissionsDimensionValuesRequest$TimePeriod": "<p>The date range for fetching the dimension values.</p>",
+        "GetEstimatedCarbonEmissionsRequest$TimePeriod": "<p>The date range for fetching estimated carbon emissions.</p>"
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "TimePeriod$Start": "<p>The start (inclusive) of the time period. ISO-8601 formatted timestamp, for example: <code>YYYY-MM-DDThh:mm:ss.sssZ</code> </p>",
+        "TimePeriod$End": "<p>The end (exclusive) of the time period. ISO-8601 formatted timestamp, for example: <code>YYYY-MM-DDThh:mm:ss.sssZ</code> </p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>",
+      "refs": {}
+    }
+  }
+}

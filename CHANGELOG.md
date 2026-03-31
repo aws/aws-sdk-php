@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\OpenSearchService` - Support RegisterCapability, GetCapability, DeregisterCapability API for AI Assistant feature management for OpenSearch UI Applications
+* `Aws\SecurityAgent` - AWS Security Agent is a service that proactively secures applications throughout the development lifecycle with automated security reviews and on-demand penetration testing.
+* `Aws\EC2` - This release updates the examples in the documentation for DescribeRegions and DescribeAvailabilityZones.
+* `Aws\ACM` - Adds support for searching for ACM certificates using the new SearchCertificates API.
+* `Aws\DataExchange` - Support Tags for AWS Data Exchange resource Assets
+* `Aws\DataZone` - Adds environmentConfigurationName field to CreateEnvironmentInput and UpdateEnvironmentInput, so that Domain Owners can now recover orphaned environments by recreating deleted configurations with the same name, and will auto-recover orphaned environments
+* `Aws\Organizations` - Added Path field to Account and OrganizationalUnit objects in AWS Organizations API responses.
+* `Aws\MailManager` - Amazon SES Mail Manager now supports optional TLS policy for accepting unencrypted connections and mTLS authentication for ingress endpoints with configurable trust stores. Two new rule actions are available, Bounce for sending non-delivery reports and Lambda invocation for custom email processing.
+* `Aws\GeoMaps` - This release expands map customization options with adjustable contour line density, dark mode support for Hybrid and Satellite views, enhanced traffic information across multiple map styles, and transit and truck travel modes for Monochrome and Hybrid map styles.
+* `Aws\DevOpsAgent` - AWS DevOps Agent service General Availability release.
+* `Aws\MarketplaceAgreement` - This release adds 8 new APIs for AWS Marketplace sellers. 4 APIs for Cancellations (Send, List, Get, Cancel action on AgreementCancellationRequest), 3 APIs for Billing Adjustments (BatchCreate, List, Get action on BillingAdjustmentRequest), and 1 API to List Invoices (ListAgreementInvoiceLineItems)
+* `Aws\Odb` - Adds support for EC2 Placement Group integration with ODB Network. The GetOdbNetwork and ListOdbNetworks API responses now include the ec2PlacementGroupIds field.
+* `Aws\PinpointSMSVoiceV2` - This release adds RCS for Business messaging and Notify support. RCS lets you create and manage agents, send and receive messages in the US and Canada via SendTextMessage API, and configure SMS fallback. Notify lets you send templated OTP messages globally in minutes with no phone number required.
+* `Aws\CloudFront` - This release adds bring your own IP (BYOIP) IPv6 support to CloudFront's CreateAnycastIpList and UpdateAnycastIpList API through the IpamCidrConfigs field.
+* `Aws\S3Tables` - S3 Tables now supports nested types when creating tables. Users can define complex column schemas using struct, list, and map types. These types can be composed together to model complex, hierarchical data structures within table schemas.
+* `Aws\DatabaseMigrationService` - To successfully connect to the IBM DB2 LUW database server, you may need to specify additional security parameters that are passed to the JDBC driver. These parameters are EncryptionAlgorithm and SecurityMechanism. Both parameters accept integer values.
+* `Aws\Sustainability` - This is the first release of the AWS Sustainability SDK, which enables customers to access their sustainability impact data via API.
+* `Aws\S3Control` - Adding an optional auditContext parameter to S3 Access Grants credential vending API GetDataAccess to enable job-level audit correlation in S3 CloudTrail logs
+* `Aws\QuickSight` - Adds StartAutomationJob and DescribeAutomationJob APIs for automation jobs. Adds three custom permission capabilities that allow admins to control whether users can manage Spaces and chat agents. Adds an OAuthClientCredentials structure to provide OAuth 2.0 client credentials inline to data sources.
+* `Aws\S3` - Add Bucket Metrics configuration support to directory buckets
+* `Aws\PartnerCentralSelling` - Adding EURO Currency for MRR Amount
+* `Aws\ObservabilityAdmin` - This release adds the Bedrock and Security Hub resource types for Omnia Enablement launch for March 31.
+* `Aws\KinesisAnalyticsV2` - Support for Flink 2.2 in Managed Service for Apache Flink
+
 ## 3.375.0 - 2026-03-30
 
 * `Aws\S3` - Add new features and improvements to S3 Transfer Manager.

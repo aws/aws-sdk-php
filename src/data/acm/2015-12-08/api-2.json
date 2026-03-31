@@ -72,6 +72,7 @@
       "output":{"shape":"ExportCertificateResponse"},
       "errors":[
         {"shape":"InvalidArnException"},
+        {"shape":"ThrottlingException"},
         {"shape":"RequestInProgressException"},
         {"shape":"ResourceNotFoundException"}
       ]
@@ -116,6 +117,7 @@
         {"shape":"TooManyTagsException"},
         {"shape":"InvalidArnException"},
         {"shape":"InvalidTagException"},
+        {"shape":"ConflictException"},
         {"shape":"LimitExceededException"},
         {"shape":"ResourceNotFoundException"}
       ]
@@ -238,6 +240,20 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "SearchCertificates":{
+      "name":"SearchCertificates",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SearchCertificatesRequest"},
+      "output":{"shape":"SearchCertificatesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "UpdateCertificateOptions":{
       "name":"UpdateCertificateOptions",
       "http":{
@@ -260,6 +276,38 @@
         "Message":{"shape":"ServiceErrorMessage"}
       },
       "exception":true
+    },
+    "AcmCertificateMetadata":{
+      "type":"structure",
+      "members":{
+        "CreatedAt":{"shape":"TStamp"},
+        "Exported":{"shape":"NullableBoolean"},
+        "ImportedAt":{"shape":"TStamp"},
+        "InUse":{"shape":"NullableBoolean"},
+        "IssuedAt":{"shape":"TStamp"},
+        "RenewalEligibility":{"shape":"RenewalEligibility"},
+        "RevokedAt":{"shape":"TStamp"},
+        "Status":{"shape":"CertificateStatus"},
+        "RenewalStatus":{"shape":"RenewalStatus"},
+        "Type":{"shape":"CertificateType"},
+        "ExportOption":{"shape":"CertificateExport"},
+        "ManagedBy":{"shape":"CertificateManagedBy"},
+        "ValidationMethod":{"shape":"ValidationMethod"}
+      }
+    },
+    "AcmCertificateMetadataFilter":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"CertificateStatus"},
+        "RenewalStatus":{"shape":"RenewalStatus"},
+        "Type":{"shape":"CertificateType"},
+        "InUse":{"shape":"NullableBoolean"},
+        "Exported":{"shape":"NullableBoolean"},
+        "ExportOption":{"shape":"CertificateExport"},
+        "ManagedBy":{"shape":"CertificateManagedBy"},
+        "ValidationMethod":{"shape":"ValidationMethod"}
+      },
+      "union":true
     },
     "AddTagsToCertificateRequest":{
       "type":"structure",
@@ -340,9 +388,41 @@
         "DISABLED"
       ]
     },
+    "CertificateFilter":{
+      "type":"structure",
+      "members":{
+        "CertificateArn":{"shape":"Arn"},
+        "X509AttributeFilter":{"shape":"X509AttributeFilter"},
+        "AcmCertificateMetadataFilter":{"shape":"AcmCertificateMetadataFilter"}
+      },
+      "union":true
+    },
+    "CertificateFilterStatement":{
+      "type":"structure",
+      "members":{
+        "And":{"shape":"CertificateFilterStatementList"},
+        "Or":{"shape":"CertificateFilterStatementList"},
+        "Not":{"shape":"CertificateFilterStatement"},
+        "Filter":{"shape":"CertificateFilter"}
+      },
+      "union":true
+    },
+    "CertificateFilterStatementList":{
+      "type":"list",
+      "member":{"shape":"CertificateFilterStatement"},
+      "max":15,
+      "min":1
+    },
     "CertificateManagedBy":{
       "type":"string",
       "enum":["CLOUDFRONT"]
+    },
+    "CertificateMetadata":{
+      "type":"structure",
+      "members":{
+        "AcmCertificateMetadata":{"shape":"AcmCertificateMetadata"}
+      },
+      "union":true
     },
     "CertificateOptions":{
       "type":"structure",
@@ -350,6 +430,18 @@
         "CertificateTransparencyLoggingPreference":{"shape":"CertificateTransparencyLoggingPreference"},
         "Export":{"shape":"CertificateExport"}
       }
+    },
+    "CertificateSearchResult":{
+      "type":"structure",
+      "members":{
+        "CertificateArn":{"shape":"Arn"},
+        "X509Attributes":{"shape":"X509Attributes"},
+        "CertificateMetadata":{"shape":"CertificateMetadata"}
+      }
+    },
+    "CertificateSearchResultList":{
+      "type":"list",
+      "member":{"shape":"CertificateSearchResult"}
     },
     "CertificateStatus":{
       "type":"string",
@@ -411,12 +503,43 @@
         "PRIVATE"
       ]
     },
+    "CommonNameFilter":{
+      "type":"structure",
+      "required":[
+        "Value",
+        "ComparisonOperator"
+      ],
+      "members":{
+        "Value":{"shape":"FilterString"},
+        "ComparisonOperator":{"shape":"ComparisonOperator"}
+      }
+    },
+    "ComparisonOperator":{
+      "type":"string",
+      "enum":[
+        "CONTAINS",
+        "EQUALS"
+      ]
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
         "message":{"shape":"String"}
       },
       "exception":true
+    },
+    "CoralAvailabilityThrottledResource":{"type":"string"},
+    "CoralAvailabilityThrottlingReason":{"type":"string"},
+    "CustomAttribute":{
+      "type":"structure",
+      "members":{
+        "ObjectIdentifier":{"shape":"String"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "CustomAttributeList":{
+      "type":"list",
+      "member":{"shape":"CustomAttribute"}
     },
     "DeleteCertificateRequest":{
       "type":"structure",
@@ -437,6 +560,42 @@
       "members":{
         "Certificate":{"shape":"CertificateDetail"}
       }
+    },
+    "DistinguishedName":{
+      "type":"structure",
+      "members":{
+        "CommonName":{"shape":"String"},
+        "DomainComponents":{"shape":"DomainComponentList"},
+        "Country":{"shape":"String"},
+        "CustomAttributes":{"shape":"CustomAttributeList"},
+        "DistinguishedNameQualifier":{"shape":"String"},
+        "GenerationQualifier":{"shape":"String"},
+        "GivenName":{"shape":"String"},
+        "Initials":{"shape":"String"},
+        "Locality":{"shape":"String"},
+        "Organization":{"shape":"String"},
+        "OrganizationalUnit":{"shape":"String"},
+        "Pseudonym":{"shape":"String"},
+        "SerialNumber":{"shape":"String"},
+        "State":{"shape":"String"},
+        "Surname":{"shape":"String"},
+        "Title":{"shape":"String"}
+      }
+    },
+    "DnsNameFilter":{
+      "type":"structure",
+      "required":[
+        "Value",
+        "ComparisonOperator"
+      ],
+      "members":{
+        "Value":{"shape":"FilterString"},
+        "ComparisonOperator":{"shape":"ComparisonOperator"}
+      }
+    },
+    "DomainComponentList":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "DomainList":{
       "type":"list",
@@ -577,6 +736,11 @@
         "OTHER"
       ]
     },
+    "FilterString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "Filters":{
       "type":"structure",
       "members":{
@@ -586,6 +750,23 @@
         "exportOption":{"shape":"CertificateExport"},
         "managedBy":{"shape":"CertificateManagedBy"}
       }
+    },
+    "GeneralName":{
+      "type":"structure",
+      "members":{
+        "DirectoryName":{"shape":"DistinguishedName"},
+        "DnsName":{"shape":"String"},
+        "IpAddress":{"shape":"String"},
+        "OtherName":{"shape":"OtherName"},
+        "RegisteredId":{"shape":"String"},
+        "Rfc822Name":{"shape":"String"},
+        "UniformResourceIdentifier":{"shape":"String"}
+      },
+      "union":true
+    },
+    "GeneralNameList":{
+      "type":"list",
+      "member":{"shape":"GeneralName"}
     },
     "GetAccountConfigurationResponse":{
       "type":"structure",
@@ -790,6 +971,13 @@
       "type":"boolean",
       "box":true
     },
+    "OtherName":{
+      "type":"structure",
+      "members":{
+        "ObjectIdentifier":{"shape":"String"},
+        "Value":{"shape":"String"}
+      }
+    },
     "PassphraseBlob":{
       "type":"blob",
       "max":128,
@@ -982,6 +1170,65 @@
         "CertificateArn":{"shape":"Arn"}
       }
     },
+    "SearchCertificatesRequest":{
+      "type":"structure",
+      "members":{
+        "FilterStatement":{"shape":"CertificateFilterStatement"},
+        "MaxResults":{"shape":"SearchMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "SortBy":{"shape":"SearchCertificatesSortBy"},
+        "SortOrder":{"shape":"SearchCertificatesSortOrder"}
+      }
+    },
+    "SearchCertificatesResponse":{
+      "type":"structure",
+      "members":{
+        "Results":{"shape":"CertificateSearchResultList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "SearchCertificatesSortBy":{
+      "type":"string",
+      "enum":[
+        "CREATED_AT",
+        "NOT_AFTER",
+        "STATUS",
+        "RENEWAL_STATUS",
+        "EXPORTED",
+        "IN_USE",
+        "NOT_BEFORE",
+        "KEY_ALGORITHM",
+        "TYPE",
+        "CERTIFICATE_ARN",
+        "COMMON_NAME",
+        "REVOKED_AT",
+        "RENEWAL_ELIGIBILITY",
+        "ISSUED_AT",
+        "MANAGED_BY",
+        "EXPORT_OPTION",
+        "VALIDATION_METHOD",
+        "IMPORTED_AT"
+      ]
+    },
+    "SearchCertificatesSortOrder":{
+      "type":"string",
+      "enum":[
+        "ASCENDING",
+        "DESCENDING"
+      ]
+    },
+    "SearchMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":500,
+      "min":1
+    },
+    "SerialNumber":{
+      "type":"string",
+      "max":59,
+      "min":2,
+      "pattern":"[0-9a-f]{2}(:[0-9a-f]{2}){1,19}"
+    },
     "ServiceErrorMessage":{"type":"string"},
     "SortBy":{
       "type":"string",
@@ -995,6 +1242,20 @@
       ]
     },
     "String":{"type":"string"},
+    "SubjectAlternativeNameFilter":{
+      "type":"structure",
+      "members":{
+        "DnsName":{"shape":"DnsNameFilter"}
+      },
+      "union":true
+    },
+    "SubjectFilter":{
+      "type":"structure",
+      "members":{
+        "CommonName":{"shape":"CommonNameFilter"}
+      },
+      "union":true
+    },
     "TStamp":{"type":"timestamp"},
     "Tag":{
       "type":"structure",
@@ -1032,9 +1293,28 @@
     "ThrottlingException":{
       "type":"structure",
       "members":{
-        "message":{"shape":"AvailabilityErrorMessage"}
+        "message":{"shape":"AvailabilityErrorMessage"},
+        "throttlingReasons":{"shape":"ThrottlingReasonList"}
       },
       "exception":true
+    },
+    "ThrottlingReason":{
+      "type":"structure",
+      "members":{
+        "reason":{"shape":"CoralAvailabilityThrottlingReason"},
+        "resource":{"shape":"CoralAvailabilityThrottledResource"}
+      }
+    },
+    "ThrottlingReasonList":{
+      "type":"list",
+      "member":{"shape":"ThrottlingReason"}
+    },
+    "TimestampRange":{
+      "type":"structure",
+      "members":{
+        "Start":{"shape":"TStamp"},
+        "End":{"shape":"TStamp"}
+      }
     },
     "TooManyTagsException":{
       "type":"structure",
@@ -1073,6 +1353,34 @@
         "DNS",
         "HTTP"
       ]
+    },
+    "X509AttributeFilter":{
+      "type":"structure",
+      "members":{
+        "Subject":{"shape":"SubjectFilter"},
+        "SubjectAlternativeName":{"shape":"SubjectAlternativeNameFilter"},
+        "ExtendedKeyUsage":{"shape":"ExtendedKeyUsageName"},
+        "KeyUsage":{"shape":"KeyUsageName"},
+        "KeyAlgorithm":{"shape":"KeyAlgorithm"},
+        "SerialNumber":{"shape":"SerialNumber"},
+        "NotAfter":{"shape":"TimestampRange"},
+        "NotBefore":{"shape":"TimestampRange"}
+      },
+      "union":true
+    },
+    "X509Attributes":{
+      "type":"structure",
+      "members":{
+        "Issuer":{"shape":"DistinguishedName"},
+        "Subject":{"shape":"DistinguishedName"},
+        "SubjectAlternativeNames":{"shape":"GeneralNameList"},
+        "ExtendedKeyUsages":{"shape":"ExtendedKeyUsageNames"},
+        "KeyAlgorithm":{"shape":"KeyAlgorithm"},
+        "KeyUsages":{"shape":"KeyUsageNames"},
+        "SerialNumber":{"shape":"SerialNumber"},
+        "NotAfter":{"shape":"TStamp"},
+        "NotBefore":{"shape":"TStamp"}
+      }
     }
   }
 }

@@ -82,8 +82,10 @@
       "base": null,
       "refs": {
         "ArchiveAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the specified archive has been deleted.</p>",
+        "BounceAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the caller does not have the permissions to call the SendBounce API.</p>",
         "DeliverToMailboxAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the mailbox ARN is no longer valid.</p>",
         "DeliverToQBusinessAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the specified application has been deleted or the role lacks necessary permissions to call the <code>qbusiness:BatchPutDocument</code> API.</p>",
+        "InvokeLambdaAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the Amazon Web Services Lambda function no longer exists.</p>",
         "RelayAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the specified relay has been deleted.</p>",
         "S3Action$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the specified the bucket has been deleted.</p>",
         "SendAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the caller does not have the permissions to call the sendRawEmail API.</p>",
@@ -411,6 +413,24 @@
         "StartArchiveExportRequest$IncludeMetadata": "<p>Whether to include message metadata as JSON files in the export.</p>"
       }
     },
+    "BounceAction": {
+      "base": "<p>The action to send a bounce response for the email. When executed, this action generates a non-delivery report (bounce) back to the sender.</p>",
+      "refs": {
+        "RuleAction$Bounce": "<p>This action sends a bounce response for the email.</p>"
+      }
+    },
+    "BounceMessage": {
+      "base": null,
+      "refs": {
+        "BounceAction$Message": "<p>The human-readable text to include in the bounce message.</p>"
+      }
+    },
+    "CAContent": {
+      "base": null,
+      "refs": {
+        "TrustStore$CAContent": "<p>The PEM-encoded certificate authority (CA) certificates bundle for the trust store.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>The request configuration has conflicts. For details, see the accompanying error message.</p>",
       "refs": {}
@@ -486,6 +506,12 @@
     "CreateTrafficPolicyResponse": {
       "base": null,
       "refs": {}
+    },
+    "CrlContent": {
+      "base": null,
+      "refs": {
+        "TrustStore$CrlContent": "<p>The PEM-encoded certificate revocation lists (CRLs) for the trust store. There can be one CRL per certificate authority (CA) in the trust store.</p>"
+      }
     },
     "DeleteAddonInstanceRequest": {
       "base": null,
@@ -571,6 +597,12 @@
       "base": null,
       "refs": {}
     },
+    "DiagnosticMessage": {
+      "base": null,
+      "refs": {
+        "BounceAction$DiagnosticMessage": "<p>The diagnostic message included in the Diagnostic-Code header of the bounce.</p>"
+      }
+    },
     "Double": {
       "base": null,
       "refs": {
@@ -586,6 +618,7 @@
     "EmailAddress": {
       "base": null,
       "refs": {
+        "BounceAction$Sender": "<p>The sender email address of the bounce message.</p>",
         "Recipients$member": null
       }
     },
@@ -800,8 +833,10 @@
     "IamRoleArn": {
       "base": null,
       "refs": {
+        "BounceAction$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role to use to send the bounce message.</p>",
         "DeliverToMailboxAction$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role to use to execute this action. The role must have access to the workmail:DeliverToMailbox API.</p>",
         "DeliverToQBusinessAction$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM Role to use while delivering to Amazon Q Business. This role must have access to the <code>qbusiness:BatchPutDocument</code> API for the given application and index.</p>",
+        "InvokeLambdaAction$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role to use to invoke the Lambda function.</p>",
         "S3Action$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM Role to use while writing to S3. This role must have access to the s3:PutObject, kms:Encrypt, and kms:GenerateDataKey APIs for the given bucket.</p>",
         "SendAction$RoleArn": "<p>The Amazon Resource Name (ARN) of the role to use for this action. This role must have access to the ses:SendRawEmail API.</p>",
         "SnsAction$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM Role to use while writing to Amazon SNS. This role must have access to the <code>sns:Publish</code> API for the given topic.</p>"
@@ -1093,6 +1128,12 @@
         "ListRelaysRequest$PageSize": "<p>The number of relays to be returned in one request.</p>"
       }
     },
+    "InvokeLambdaAction": {
+      "base": "<p>The action to invoke an Amazon Web Services Lambda function for processing the email.</p>",
+      "refs": {
+        "RuleAction$InvokeLambda": "<p>This action invokes an Amazon Web Services Lambda function to process the email.</p>"
+      }
+    },
     "IpType": {
       "base": null,
       "refs": {
@@ -1155,13 +1196,32 @@
       "base": null,
       "refs": {
         "CreateArchiveRequest$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key for encrypting emails in the archive.</p>",
-        "GetArchiveResponse$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the archive.</p>"
+        "GetArchiveResponse$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the archive.</p>",
+        "TrustStore$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the trust store contents.</p>"
       }
     },
     "KmsKeyId": {
       "base": null,
       "refs": {
         "S3Action$S3SseKmsKeyId": "<p>The KMS Key ID to use to encrypt the message in S3.</p>"
+      }
+    },
+    "LambdaFunctionArn": {
+      "base": null,
+      "refs": {
+        "InvokeLambdaAction$FunctionArn": "<p>The Amazon Resource Name (ARN) of the Lambda function to invoke.</p>"
+      }
+    },
+    "LambdaInvocationType": {
+      "base": null,
+      "refs": {
+        "InvokeLambdaAction$InvocationType": "<p>The invocation type of the Lambda function. Use EVENT for asynchronous invocation or REQUEST_RESPONSE for synchronous invocation.</p>"
+      }
+    },
+    "LambdaRetryTimeMinutes": {
+      "base": null,
+      "refs": {
+        "InvokeLambdaAction$RetryTimeMinutes": "<p>The maximum time in minutes that the email processing can be retried if the Lambda invocation fails. The maximum value is 2160 minutes (36 hours).</p>"
       }
     },
     "ListAddonInstancesRequest": {
@@ -1593,6 +1653,12 @@
         "RuleBooleanExpression$Evaluate": "<p>The operand on which to perform a boolean condition operation.</p>"
       }
     },
+    "RuleClientCertificateAttribute": {
+      "base": "<p>The client certificate attribute to evaluate in a rule condition. These attributes are extracted from the client certificate presented during mutual TLS authentication.</p>",
+      "refs": {
+        "RuleStringToEvaluate$ClientCertificateAttribute": "<p>The client certificate attribute to evaluate in a string condition expression.</p>"
+      }
+    },
     "RuleCondition": {
       "base": "<p>The conditional expression used to evaluate an email for determining if a rule action should be taken.</p>",
       "refs": {
@@ -1945,6 +2011,12 @@
         "IngressPointConfiguration$SmtpPassword": "<p>The password of the ingress endpoint resource.</p>"
       }
     },
+    "SmtpReplyCode": {
+      "base": null,
+      "refs": {
+        "BounceAction$SmtpReplyCode": "<p>The SMTP reply code for the bounce, as defined by RFC 5321.</p>"
+      }
+    },
     "SnsAction": {
       "base": "<p>The action to publish the email content to an Amazon SNS topic. When executed, this action will send the email as a notification to the specified SNS topic.</p>",
       "refs": {
@@ -1992,6 +2064,12 @@
     "StartArchiveSearchResponse": {
       "base": "<p>The response from initiating an archive search.</p>",
       "refs": {}
+    },
+    "StatusCode": {
+      "base": null,
+      "refs": {
+        "BounceAction$StatusCode": "<p>The enhanced status code for the bounce, in the format of x.y.z (e.g. 5.1.1).</p>"
+      }
     },
     "StopAddressListImportJobRequest": {
       "base": null,
@@ -2178,6 +2256,21 @@
         "StartArchiveSearchRequest$ToTimestamp": "<p>The end timestamp of the range to search emails from.</p>"
       }
     },
+    "TlsAuthConfiguration": {
+      "base": "<p>The mutual TLS authentication configuration for an ingress endpoint.</p>",
+      "refs": {
+        "IngressPointAuthConfiguration$TlsAuthConfiguration": "<p>The mutual TLS authentication configuration for the ingress endpoint resource.</p>",
+        "IngressPointConfiguration$TlsAuthConfiguration": "<p>The mutual TLS authentication configuration of the ingress endpoint resource.</p>"
+      }
+    },
+    "TlsPolicy": {
+      "base": null,
+      "refs": {
+        "CreateIngressPointRequest$TlsPolicy": "<p>The Transport Layer Security (TLS) policy for the ingress point. The FIPS value is only valid in US and Canada regions.</p>",
+        "GetIngressPointResponse$TlsPolicy": "<p>The selected Transport Layer Security (TLS) policy of the ingress point.</p>",
+        "UpdateIngressPointRequest$TlsPolicy": "<p>The Transport Layer Security (TLS) policy for the ingress point. Valid values are REQUIRED, OPTIONAL. Only ingress endpoints using REQUIRED or OPTIONAL as TlsPolicy can be updated.</p>"
+      }
+    },
     "TrafficPolicy": {
       "base": "<p>The structure of a traffic policy resource which is a container for policy statements.</p>",
       "refs": {
@@ -2218,6 +2311,18 @@
         "GetTrafficPolicyResponse$TrafficPolicyName": "<p>A user-friendly name for the traffic policy resource.</p>",
         "TrafficPolicy$TrafficPolicyName": "<p>A user-friendly name of the traffic policy resource.</p>",
         "UpdateTrafficPolicyRequest$TrafficPolicyName": "<p>A user-friendly name for the traffic policy resource.</p>"
+      }
+    },
+    "TrustStore": {
+      "base": "<p>The trust store used for mutual TLS authentication. It contains the certificate authority (CA) certificates and optional certificate revocation list (CRL).</p>",
+      "refs": {
+        "TlsAuthConfiguration$TrustStore": "<p>The trust store configuration for mutual TLS authentication.</p>"
+      }
+    },
+    "TrustStoreResponseOption": {
+      "base": "<p>Specifies whether to include trust store contents in the GetIngressPoint response.</p>",
+      "refs": {
+        "GetIngressPointRequest$IncludeTrustStoreContents": "<p>Whether to include the trust store contents in the response. Use INCLUDE to retrieve trust store certificate and CRL contents.</p>"
       }
     },
     "UntagResourceRequest": {

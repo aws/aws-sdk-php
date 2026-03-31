@@ -2,7 +2,7 @@
   "version": "2.0",
   "service": "<p>AWS DevOps Agent is a frontier agent that resolves and proactively prevents incidents, continuously improving reliability and performance. AWS DevOps Agent investigates incidents and identifies operational improvements as an experienced DevOps engineer.</p> <p>The agent works by:</p> <ul> <li>Learning your resources and their relationships.</li> <li>Working with your observability tools, runbooks, code repositories, and CI/CD pipelines.</li> <li>Correlating telemetry, code, and deployment data to understand relationships between your application resources.</li> <li>Supporting applications in multicloud and hybrid environments.</li> </ul>",
   "operations": {
-    "AllowVendedLogDeliveryForResource": "<p>Authorize Ingestion Hub subscription operation. Looks to see if the derived accountId from FAS has an AgentSpace.</p>",
+    "AllowVendedLogDeliveryForResource": "<p>Authorize Ingestion Hub subscription operation.</p>",
     "AssociateService": "<p>Adds a specific service association to an AgentSpace. It overwrites the existing association of the same service. Returns 201 Created on success.</p>",
     "CreateAgentSpace": "<p>Creates a new AgentSpace with the specified name and description. Duplicate space names are allowed.</p>",
     "CreateBacklogTask": "<p>Creates a new backlog task in the specified agent space</p>",
@@ -12,11 +12,9 @@
     "DeletePrivateConnection": "<p>Deletes a Private Connection. The deletion is asynchronous and returns DELETE_IN_PROGRESS status.</p>",
     "DeregisterService": "<p>Deregister a service</p>",
     "DescribePrivateConnection": "<p>Retrieves details of an existing Private Connection.</p>",
-    "DescribeSupportLevel": "<p>Describe the support level of a CloudSmith customer account.</p>",
     "DisableOperatorApp": "<p>Disable the Operator App for the specified AgentSpace</p>",
     "DisassociateService": "<p>Deletes a specific service association from an AgentSpace. This operation is idempotent and returns a 204 No Content response on success.</p>",
     "EnableOperatorApp": "<p>Enable the Operator App to access the given AgentSpace</p>",
-    "EndChatForCase": "<p>End a chat session for a support case in the specified agent space</p>",
     "GetAccountUsage": "<p>Retrieves monthly account usage metrics and limits for the AWS account.</p>",
     "GetAgentSpace": "<p>Retrieves detailed information about a specific AgentSpace.</p>",
     "GetAssociation": "<p>Retrieves given associations configured for a specific AgentSpace.</p>",
@@ -24,7 +22,6 @@
     "GetOperatorApp": "<p>Get the full auth configuration of operator including any enabled auth flow</p>",
     "GetRecommendation": "<p>Retrieves a specific recommendation by its ID</p>",
     "GetService": "<p>Retrieves given service by it's unique identifier</p>",
-    "InitiateChatForCase": "<p>Initiate a chat for support case in the specified agent space</p>",
     "ListAgentSpaces": "<p>Lists all AgentSpaces with optional pagination.</p>",
     "ListAssociations": "<p>List all associations for given AgentSpace</p>",
     "ListBacklogTasks": "<p>Lists backlog tasks in the specified agent space with optional filtering and sorting</p>",
@@ -98,18 +95,15 @@
         "CreateBacklogTaskRequest$agentSpaceId": "<p>The unique identifier for the agent space where the task will be created</p>",
         "CreateChatRequest$agentSpaceId": null,
         "DeleteAgentSpaceInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
-        "DescribeSupportLevelRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the task</p>",
         "DisableOperatorAppInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "DisassociateServiceInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "EnableOperatorAppInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "EnableOperatorAppOutput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
-        "EndChatForCaseRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the task</p>",
         "GetAgentSpaceInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "GetAssociationInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "GetBacklogTaskRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the task</p>",
         "GetOperatorAppInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "GetRecommendationRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the recommendation</p>",
-        "InitiateChatForCaseRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the task</p>",
         "ListAssociationsInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "ListBacklogTasksRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the tasks</p>",
         "ListChatsRequest$agentSpaceId": null,
@@ -217,13 +211,6 @@
         "EnableOperatorAppInput$authFlow": "<p>The authentication flow configured for the operator App. e.g. iam or idc</p>"
       }
     },
-    "AwsRegion": {
-      "base": "<p>AWS region identifier.</p>",
-      "refs": {
-        "MCPServerSigV4AuthorizationConfig$region": "<p>AWS region for SigV4 signing.</p>",
-        "RegisteredMCPServerSigV4Details$region": "<p>AWS region for SigV4 signing.</p>"
-      }
-    },
     "AzureConfiguration": {
       "base": "<p>Configuration for Azure subscription integration.</p>",
       "refs": {
@@ -265,8 +252,6 @@
     "Boolean": {
       "base": null,
       "refs": {
-        "DescribeSupportLevelResponse$activeSubscription": "<p>Whether or not the account's subscription is active</p>",
-        "EndChatForCaseResponse$isDisconnected": "<p>Whether the chat session was successfully ended</p>",
         "MCPServerOAuth3LOConfig$supportCodeChallenge": "<p>Whether the service supports PKCE (Proof Key for Code Exchange) for enhanced security during the OAuth flow.</p>",
         "SendMessageContentBlockStopEvent$last": "<p>Whether this is the final content block in the response</p>",
         "Task$hasLinkedTasks": "<p>Indicates if this task has other tasks linked to it</p>"
@@ -290,12 +275,6 @@
       "base": null,
       "refs": {
         "ListChatsResponse$executions": "<p>List of recent chat executions</p>"
-      }
-    },
-    "ChatParticipantConnection": {
-      "base": "<p>Represents a chat participant connection with all its properties and metadata</p>",
-      "refs": {
-        "InitiateChatForCaseResponse$chatParticipantConnection": "<p>The newly created chat participant connection</p>"
       }
     },
     "ClientId": {
@@ -433,14 +412,6 @@
       "base": "<p>Output containing the Private Connection details.</p>",
       "refs": {}
     },
-    "DescribeSupportLevelRequest": {
-      "base": "<p>Request structure for desribing support level for an account</p>",
-      "refs": {}
-    },
-    "DescribeSupportLevelResponse": {
-      "base": "<p>Response structure containing detailed support level for an account</p>",
-      "refs": {}
-    },
     "Description": {
       "base": "<p>Description field</p>",
       "refs": {
@@ -540,14 +511,6 @@
     },
     "EnableOperatorAppOutput": {
       "base": "<p>Output containing the enabled Operator App configuration.</p>",
-      "refs": {}
-    },
-    "EndChatForCaseRequest": {
-      "base": "<p>Request structure for ending a chat session</p>",
-      "refs": {}
-    },
-    "EndChatForCaseResponse": {
-      "base": "<p>Response structure for end chat operation</p>",
       "refs": {}
     },
     "EventChannelConfiguration": {
@@ -781,8 +744,6 @@
     "Guid": {
       "base": "<p>Globally Unique Identifier (GUID) in standard format.</p>",
       "refs": {
-        "MSTeamsChannel$channelId": "<p>MS Teams Channel ID</p>",
-        "MSTeamsConfiguration$teamId": "<p>Associated MS Teams teams ID</p>",
         "RegisteredAzureIdentityDetails$tenantId": "<p>The Azure Active Directory tenant ID for the identity.</p>",
         "RegisteredAzureIdentityDetails$clientId": "<p>The client ID of the service principal or managed identity used for authentication.</p>"
       }
@@ -825,14 +786,6 @@
         "EnableOperatorAppInput$idpClientSecret": "<p>The OIDC client secret for the IdP application</p>",
         "UpdateOperatorAppIdpConfigInput$idpClientSecret": "<p>The OIDC client secret for the IdP application</p>"
       }
-    },
-    "InitiateChatForCaseRequest": {
-      "base": "<p>Request structure for initiating a chat for support case</p>",
-      "refs": {}
-    },
-    "InitiateChatForCaseResponse": {
-      "base": "<p>Response structure containing the chat participant connection</p>",
-      "refs": {}
     },
     "Integer": {
       "base": null,
@@ -1287,42 +1240,6 @@
         "MCPServerOAuthClientCredentialsConfig$exchangeUrl": "<p>OAuth token exchange URL.</p>"
       }
     },
-    "MCPServerSigV4AuthorizationConfig": {
-      "base": "<p>Authorization configuration for SigV4-authenticated MCP server.</p>",
-      "refs": {
-        "MCPServerSigV4ServiceDetails$authorizationConfig": "<p>MCP Server SigV4 authorization configuration.</p>"
-      }
-    },
-    "MCPServerSigV4AuthorizationConfigServiceString": {
-      "base": null,
-      "refs": {
-        "MCPServerSigV4AuthorizationConfig$service": "<p>AWS service name for SigV4 signing.</p>"
-      }
-    },
-    "MCPServerSigV4ServiceDetails": {
-      "base": "<p>Complete service details for SigV4-authenticated MCP server integration.</p>",
-      "refs": {
-        "ServiceDetails$mcpserversigv4": "<p>SigV4-authenticated MCP server-specific service details.</p>"
-      }
-    },
-    "MCPServerSigV4ServiceDetailsDescriptionString": {
-      "base": "<p>Description field</p>",
-      "refs": {
-        "MCPServerSigV4ServiceDetails$description": "<p>Optional description for the MCP server.</p>"
-      }
-    },
-    "MCPServerSigV4ServiceDetailsEndpointString": {
-      "base": null,
-      "refs": {
-        "MCPServerSigV4ServiceDetails$endpoint": "<p>MCP server endpoint URL.</p>"
-      }
-    },
-    "MCPServerSigV4ServiceDetailsNameString": {
-      "base": null,
-      "refs": {
-        "MCPServerSigV4ServiceDetails$name": "<p>MCP server name.</p>"
-      }
-    },
     "MCPToolsList": {
       "base": "<p>List of MCP tool names available for the association.</p>",
       "refs": {
@@ -1333,25 +1250,6 @@
       "base": null,
       "refs": {
         "MCPToolsList$member": null
-      }
-    },
-    "MSTeamsChannel": {
-      "base": "<p>Represents a Teams channel with its ID and name.</p>",
-      "refs": {
-        "MSTeamsTransmissionTarget$opsOncallTarget": "<p>Destination for On-call Agent(Ops1)</p>",
-        "MSTeamsTransmissionTarget$opsSRETarget": "<p>Destination for SRE Agent (Ops1.5)</p>"
-      }
-    },
-    "MSTeamsConfiguration": {
-      "base": "<p>Configuration for MS Teams workspace integration.</p>",
-      "refs": {
-        "ServiceConfiguration$msteams": "<p>MS Teams integration configuration</p>"
-      }
-    },
-    "MSTeamsTransmissionTarget": {
-      "base": "<p>Defines MS Teams channels for different types of agent notifications.</p>",
-      "refs": {
-        "MSTeamsConfiguration$transmissionTarget": "<p>Transmission targets for agent notification</p>"
       }
     },
     "MaxIpv4AddressesPerEni": {
@@ -1540,7 +1438,7 @@
       }
     },
     "PortRange": {
-      "base": "<p>TCP port range expression (single port or range e.g. '443' or '8080-8090'). Valid port values are 0-65535, enforced at runtime.</p>",
+      "base": "<p>TCP port range expression (single port or range e.g. '443' or '8080-8090'). Valid port values are 1-65535, enforced at runtime.</p>",
       "refs": {
         "PortRanges$member": null
       }
@@ -1742,36 +1640,6 @@
         "AdditionalServiceDetails$mcpserversplunk": "<p>Splunk MCP server-specific service details.</p>"
       }
     },
-    "RegisteredMCPServerSigV4Details": {
-      "base": "<p>Details specific to a registered SigV4-authenticated MCP server.</p>",
-      "refs": {
-        "AdditionalServiceDetails$mcpserversigv4": "<p>SigV4-authenticated MCP server-specific service details.</p>"
-      }
-    },
-    "RegisteredMCPServerSigV4DetailsDescriptionString": {
-      "base": "<p>Description field</p>",
-      "refs": {
-        "RegisteredMCPServerSigV4Details$description": "<p>Optional description for the MCP server.</p>"
-      }
-    },
-    "RegisteredMCPServerSigV4DetailsEndpointString": {
-      "base": null,
-      "refs": {
-        "RegisteredMCPServerSigV4Details$endpoint": "<p>MCP server endpoint URL.</p>"
-      }
-    },
-    "RegisteredMCPServerSigV4DetailsNameString": {
-      "base": null,
-      "refs": {
-        "RegisteredMCPServerSigV4Details$name": "<p>MCP server name.</p>"
-      }
-    },
-    "RegisteredMCPServerSigV4DetailsServiceString": {
-      "base": null,
-      "refs": {
-        "RegisteredMCPServerSigV4Details$service": "<p>AWS service name for SigV4 signing.</p>"
-      }
-    },
     "RegisteredNewRelicDetails": {
       "base": "<p>Details specific to a registered NewRelic instance.</p>",
       "refs": {
@@ -1860,9 +1728,7 @@
       "refs": {
         "AWSConfiguration$assumableRoleArn": "<p>Role ARN to be assumed by AIDevOps to operate on behalf of customer.</p>",
         "EnableOperatorAppInput$operatorAppRoleArn": "<p>The IAM role end users assume to access AIDevOps APIs</p>",
-        "MCPServerSigV4AuthorizationConfig$roleArn": "<p>IAM role ARN to assume for SigV4 signing.</p>",
         "RegisteredAzureIdentityDetails$webIdentityRoleArn": "<p>The role ARN to be assumed by DevOps Agent for requesting Web Identity Token.</p>",
-        "RegisteredMCPServerSigV4Details$roleArn": "<p>IAM role ARN to assume for SigV4 signing.</p>",
         "SourceAwsConfiguration$assumableRoleArn": "<p>Role ARN to be assumed by AIDevOps to operate on behalf of customer.</p>"
       }
     },
@@ -2144,24 +2010,14 @@
         "AzureDevOpsConfiguration$projectId": "<p>Azure DevOps project ID.</p>",
         "AzureDevOpsConfiguration$projectName": "<p>Azure DevOps project name.</p>",
         "ChatExecution$summary": "<p>Summary or title of the chat</p>",
-        "ChatParticipantConnection$initialContactId": "<p>The identifier of the contact in this instance of Amazon Connect</p>",
-        "ChatParticipantConnection$participantId": "<p>The identifier for a chat participant</p>",
-        "ChatParticipantConnection$participantToken": "<p>The token used by the chat participant to call CreateParticipantConnection</p>",
         "ConflictException$message": "<p>Detailed error message describing the conflict.</p>",
         "ContentSizeExceededException$message": null,
         "CreateBacklogTaskRequest$clientToken": "<p>Client-provided token for idempotent operations</p>",
-        "DescribeSupportLevelRequest$taskId": "<p>The unique identifier for this task</p>",
         "DynatraceConfiguration$envId": "<p>Dynatrace environment id</p>",
         "DynatraceResourceList$member": null,
         "EnableOperatorAppInput$idcInstanceArn": "<p>The IdC instance Arn used to create an IdC auth application</p>",
         "EnableOperatorAppInput$issuerUrl": "<p>The OIDC issuer URL of the external Identity Provider</p>",
         "EnableOperatorAppInput$provider": "<p>The Identity Provider name (e.g., Entra, Okta, Google)</p>",
-        "EndChatForCaseRequest$taskId": "<p>The unique identifier for the task execution to end</p>",
-        "EndChatForCaseRequest$reason": "<p>Reason for ending the chat session (optional, defaults to 'Chat Ended by CloudSmith')</p>",
-        "EndChatForCaseRequest$requester": "<p>Who initiated the chat end request (optional, defaults to 'CloudSmith')</p>",
-        "EndChatForCaseRequest$clientToken": "<p>Client-provided token for idempotent operations</p>",
-        "EndChatForCaseResponse$executionId": "<p>The execution ID that was ended</p>",
-        "EndChatForCaseResponse$errorMessage": "<p>Error message if the disconnect failed</p>",
         "ExchangeParameters$key": null,
         "Execution$agentSpaceId": "<p>The unique identifier for the agent space containing this execution</p>",
         "Execution$executionId": "<p>The unique identifier for this execution</p>",
@@ -2197,8 +2053,6 @@
         "IdpAuthConfiguration$clientId": "<p>The OIDC client ID for the IdP application</p>",
         "IdpAuthConfiguration$operatorAppRoleArn": "<p>The IAM role end users assume to access AIDevOps APIs</p>",
         "IdpAuthConfiguration$provider": "<p>The Identity Provider name (e.g., Entra, Okta, Google)</p>",
-        "InitiateChatForCaseRequest$taskId": "<p>The unique identifier for this task</p>",
-        "InitiateChatForCaseRequest$clientToken": "<p>Client-provided token for idempotent operations</p>",
         "InternalServerException$message": null,
         "InvalidParameterException$message": "<p>Detailed error message describing which parameter is invalid and why.</p>",
         "JournalRecord$agentSpaceId": "<p>The unique identifier for the agent space containing this record</p>",
@@ -2214,8 +2068,6 @@
         "ListJournalRecordsResponse$nextToken": "<p>Token for retrieving the next page of results, if more results are available</p>",
         "ListPendingMessagesResponse$executionId": "<p>The unique identifier for the execution.</p>",
         "ListRecommendationsResponse$nextToken": "<p>Token for retrieving the next page of results, if more results are available</p>",
-        "MSTeamsChannel$channelName": "<p>MS Teams channel name</p>",
-        "MSTeamsConfiguration$teamName": "<p>Associated MS Teams team name</p>",
         "OAuthAdditionalStepDetails$authorizationUrl": "<p>The URL to redirect the user to for OAuth authorization.</p>",
         "PagerDutyScopes$member": null,
         "PagerDutyScopesList$member": null,
@@ -2269,8 +2121,6 @@
         "SlackChannel$channelName": "<p>Slack channel name</p>",
         "SlackConfiguration$workspaceName": "<p>Associated Slack workspace name</p>",
         "SourceAwsConfiguration$externalId": "<p>External ID for additional security when assuming the role. Used to prevent the confused deputy problem.</p>",
-        "SupportLevel$code": "<p>The support level code</p>",
-        "SupportLevel$name": "<p>The support level name</p>",
         "Task$agentSpaceId": "<p>The unique identifier for the agent space containing this task</p>",
         "Task$taskId": "<p>The unique identifier for this task</p>",
         "Task$executionId": "<p>The execution ID associated with this task, if any</p>",
@@ -2296,13 +2146,6 @@
       "base": "<p>Subnet identifier.</p>",
       "refs": {
         "ListOfSubnetIds$member": null
-      }
-    },
-    "SupportLevel": {
-      "base": "<p>Represents a support level with all its properties and metadata</p>",
-      "refs": {
-        "DescribeSupportLevelResponse$supportLevel": "<p>The account's support level</p>",
-        "DescribeSupportLevelResponse$mosaicSupportLevel": "<p>The account's Mosaic equivalent support level</p>"
       }
     },
     "SyntheticTimestamp_date_time": {
@@ -2528,7 +2371,8 @@
       "refs": {
         "GetAccountUsageOutput$monthlyAccountInvestigationHours": "<p>Monthly investigation hours usage and limit for an account</p>",
         "GetAccountUsageOutput$monthlyAccountEvaluationHours": "<p>Monthly evaluation hours usage and limit for an account</p>",
-        "GetAccountUsageOutput$monthlyAccountSystemLearningHours": "<p>Monthly system learning hours usage and limit for an account</p>"
+        "GetAccountUsageOutput$monthlyAccountSystemLearningHours": "<p>Monthly system learning hours usage and limit for an account</p>",
+        "GetAccountUsageOutput$monthlyAccountOnDemandHours": "<p>Monthly on-demand hours usage and limit for an account</p>"
       }
     },
     "UserMessage": {

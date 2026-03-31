@@ -42,7 +42,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -193,6 +194,7 @@
       "input":{"shape":"DeleteAddressListRequest"},
       "output":{"shape":"DeleteAddressListResponse"},
       "errors":[
+        {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
         {"shape":"ThrottlingException"}
@@ -285,6 +287,7 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ],
@@ -710,6 +713,7 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ],
@@ -1214,6 +1218,39 @@
       "type":"boolean",
       "box":true
     },
+    "BounceAction":{
+      "type":"structure",
+      "required":[
+        "RoleArn",
+        "Sender",
+        "StatusCode",
+        "SmtpReplyCode",
+        "DiagnosticMessage"
+      ],
+      "members":{
+        "ActionFailurePolicy":{"shape":"ActionFailurePolicy"},
+        "RoleArn":{"shape":"IamRoleArn"},
+        "Sender":{"shape":"EmailAddress"},
+        "StatusCode":{"shape":"StatusCode"},
+        "SmtpReplyCode":{"shape":"SmtpReplyCode"},
+        "DiagnosticMessage":{"shape":"DiagnosticMessage"},
+        "Message":{"shape":"BounceMessage"}
+      }
+    },
+    "BounceMessage":{
+      "type":"string",
+      "max":500,
+      "min":1,
+      "pattern":"[\\r\\n\\x20-\\x7e]+",
+      "sensitive":true
+    },
+    "CAContent":{
+      "type":"string",
+      "max":500000,
+      "min":1,
+      "pattern":"[\\P{C}\\s]*",
+      "sensitive":true
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -1346,6 +1383,7 @@
         "TrafficPolicyId":{"shape":"TrafficPolicyId"},
         "IngressPointConfiguration":{"shape":"IngressPointConfiguration"},
         "NetworkConfiguration":{"shape":"NetworkConfiguration"},
+        "TlsPolicy":{"shape":"TlsPolicy"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -1431,6 +1469,13 @@
       "members":{
         "TrafficPolicyId":{"shape":"TrafficPolicyId"}
       }
+    },
+    "CrlContent":{
+      "type":"string",
+      "max":500000,
+      "min":1,
+      "pattern":"[\\P{C}\\s]*",
+      "sensitive":true
     },
     "DeleteAddonInstanceRequest":{
       "type":"structure",
@@ -1560,6 +1605,13 @@
     "DeregisterMemberFromAddressListResponse":{
       "type":"structure",
       "members":{}
+    },
+    "DiagnosticMessage":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\x20-\\x7e]+",
+      "sensitive":true
     },
     "Double":{
       "type":"double",
@@ -1833,7 +1885,8 @@
       "type":"structure",
       "required":["IngressPointId"],
       "members":{
-        "IngressPointId":{"shape":"IngressPointId"}
+        "IngressPointId":{"shape":"IngressPointId"},
+        "IncludeTrustStoreContents":{"shape":"TrustStoreResponseOption"}
       }
     },
     "GetIngressPointResponse":{
@@ -1853,6 +1906,7 @@
         "TrafficPolicyId":{"shape":"TrafficPolicyId"},
         "IngressPointAuthConfiguration":{"shape":"IngressPointAuthConfiguration"},
         "NetworkConfiguration":{"shape":"NetworkConfiguration"},
+        "TlsPolicy":{"shape":"TlsPolicy"},
         "CreatedTimestamp":{"shape":"Timestamp"},
         "LastUpdatedTimestamp":{"shape":"Timestamp"}
       }
@@ -2167,14 +2221,16 @@
       "type":"structure",
       "members":{
         "IngressPointPasswordConfiguration":{"shape":"IngressPointPasswordConfiguration"},
-        "SecretArn":{"shape":"SecretArn"}
+        "SecretArn":{"shape":"SecretArn"},
+        "TlsAuthConfiguration":{"shape":"TlsAuthConfiguration"}
       }
     },
     "IngressPointConfiguration":{
       "type":"structure",
       "members":{
         "SmtpPassword":{"shape":"SmtpPassword"},
-        "SecretArn":{"shape":"SecretArn"}
+        "SecretArn":{"shape":"SecretArn"},
+        "TlsAuthConfiguration":{"shape":"TlsAuthConfiguration"}
       },
       "union":true
     },
@@ -2205,7 +2261,8 @@
         "UPDATING",
         "ACTIVE",
         "CLOSED",
-        "FAILED"
+        "FAILED",
+        "ASSOCIATED_VPC_ENDPOINT_DOES_NOT_EXIST"
       ]
     },
     "IngressPointStatusToUpdate":{
@@ -2219,7 +2276,8 @@
       "type":"string",
       "enum":[
         "OPEN",
-        "AUTH"
+        "AUTH",
+        "MTLS"
       ]
     },
     "IngressPointsList":{
@@ -2303,6 +2361,21 @@
       "type":"integer",
       "box":true
     },
+    "InvokeLambdaAction":{
+      "type":"structure",
+      "required":[
+        "FunctionArn",
+        "InvocationType",
+        "RoleArn"
+      ],
+      "members":{
+        "ActionFailurePolicy":{"shape":"ActionFailurePolicy"},
+        "FunctionArn":{"shape":"LambdaFunctionArn"},
+        "InvocationType":{"shape":"LambdaInvocationType"},
+        "RoleArn":{"shape":"IamRoleArn"},
+        "RetryTimeMinutes":{"shape":"LambdaRetryTimeMinutes"}
+      }
+    },
     "IpType":{
       "type":"string",
       "enum":[
@@ -2353,6 +2426,25 @@
       "max":2048,
       "min":20,
       "pattern":"[a-zA-Z0-9-:/]+"
+    },
+    "LambdaFunctionArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"[a-zA-Z0-9:_/+=,@.#-]+"
+    },
+    "LambdaInvocationType":{
+      "type":"string",
+      "enum":[
+        "EVENT",
+        "REQUEST_RESPONSE"
+      ]
+    },
+    "LambdaRetryTimeMinutes":{
+      "type":"integer",
+      "box":true,
+      "max":2160,
+      "min":0
     },
     "ListAddonInstancesRequest":{
       "type":"structure",
@@ -2848,7 +2940,9 @@
         "ReplaceRecipient":{"shape":"ReplaceRecipientAction"},
         "DeliverToMailbox":{"shape":"DeliverToMailboxAction"},
         "DeliverToQBusiness":{"shape":"DeliverToQBusinessAction"},
-        "PublishToSns":{"shape":"SnsAction"}
+        "PublishToSns":{"shape":"SnsAction"},
+        "Bounce":{"shape":"BounceAction"},
+        "InvokeLambda":{"shape":"InvokeLambdaAction"}
       },
       "union":true
     },
@@ -2909,6 +3003,19 @@
         "IsInAddressList":{"shape":"RuleIsInAddressList"}
       },
       "union":true
+    },
+    "RuleClientCertificateAttribute":{
+      "type":"string",
+      "enum":[
+        "CN",
+        "SAN_RFC822_NAME",
+        "SAN_DNS_NAME",
+        "SAN_DIRECTORY_NAME",
+        "SAN_UNIFORM_RESOURCE_IDENTIFIER",
+        "SAN_IP_ADDRESS",
+        "SAN_REGISTERED_ID",
+        "SERIAL_NUMBER"
+      ]
     },
     "RuleCondition":{
       "type":"structure",
@@ -3126,14 +3233,16 @@
       "members":{
         "Attribute":{"shape":"RuleStringEmailAttribute"},
         "MimeHeaderAttribute":{"shape":"MimeHeaderAttribute"},
-        "Analysis":{"shape":"Analysis"}
+        "Analysis":{"shape":"Analysis"},
+        "ClientCertificateAttribute":{"shape":"RuleClientCertificateAttribute"}
       },
       "union":true
     },
     "RuleStringValue":{
       "type":"string",
       "max":4096,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "RuleVerdict":{
       "type":"string",
@@ -3314,6 +3423,12 @@
       "pattern":"[A-Za-z0-9!@#$%^&*()_+\\-=\\[\\]{}|.,?]+",
       "sensitive":true
     },
+    "SmtpReplyCode":{
+      "type":"string",
+      "max":3,
+      "min":3,
+      "pattern":"[45][0-9][0-9]"
+    },
     "SnsAction":{
       "type":"structure",
       "required":[
@@ -3404,6 +3519,12 @@
       "members":{
         "SearchId":{"shape":"SearchId"}
       }
+    },
+    "StatusCode":{
+      "type":"string",
+      "max":9,
+      "min":5,
+      "pattern":"[45]\\.[0-9]{1,3}\\.[0-9]{1,3}"
     },
     "StopAddressListImportJobRequest":{
       "type":"structure",
@@ -3518,6 +3639,20 @@
       "exception":true
     },
     "Timestamp":{"type":"timestamp"},
+    "TlsAuthConfiguration":{
+      "type":"structure",
+      "members":{
+        "TrustStore":{"shape":"TrustStore"}
+      }
+    },
+    "TlsPolicy":{
+      "type":"string",
+      "enum":[
+        "REQUIRED",
+        "OPTIONAL",
+        "FIPS"
+      ]
+    },
     "TrafficPolicy":{
       "type":"structure",
       "required":[
@@ -3546,6 +3681,22 @@
       "max":63,
       "min":3,
       "pattern":"[A-Za-z0-9_\\-]+"
+    },
+    "TrustStore":{
+      "type":"structure",
+      "required":["CAContent"],
+      "members":{
+        "CAContent":{"shape":"CAContent"},
+        "CrlContent":{"shape":"CrlContent"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
+    "TrustStoreResponseOption":{
+      "type":"string",
+      "enum":[
+        "EXCLUDE",
+        "INCLUDE"
+      ]
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -3584,7 +3735,8 @@
         "StatusToUpdate":{"shape":"IngressPointStatusToUpdate"},
         "RuleSetId":{"shape":"RuleSetId"},
         "TrafficPolicyId":{"shape":"TrafficPolicyId"},
-        "IngressPointConfiguration":{"shape":"IngressPointConfiguration"}
+        "IngressPointConfiguration":{"shape":"IngressPointConfiguration"},
+        "TlsPolicy":{"shape":"TlsPolicy"}
       }
     },
     "UpdateIngressPointResponse":{

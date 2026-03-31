@@ -397,12 +397,6 @@
         "AwsProductsSpendInsightsBySource$AWS": "<p>AI-generated insights including recommended products from AWS.</p>"
       }
     },
-    "AwsProductInsightsCurrencyCodeEnum": {
-      "base": null,
-      "refs": {
-        "AwsProductInsights$CurrencyCode": "<p>ISO 4217 currency code.</p>"
-      }
-    },
     "AwsProductOptimization": {
       "base": "<p>Specific optimization strategies partners can implement to reduce costs.</p>",
       "refs": {
@@ -671,7 +665,9 @@
     "CurrencyCode": {
       "base": null,
       "refs": {
-        "MonetaryValue$CurrencyCode": "<p>Specifies the payment currency.</p>"
+        "AwsProductInsights$CurrencyCode": "<p>ISO 4217 currency code. Supported values are <code>USD</code> and <code>EUR</code>. Returns <code>EUR</code> when the opportunity is in the <code>aws-eusc</code> (AWS European Sovereign Cloud) partition.</p>",
+        "ExpectedCustomerSpend$CurrencyCode": "<p>Currency code for the expected customer spend. Supported currencies: USD, EUR</p>",
+        "MonetaryValue$CurrencyCode": "<p>Specifies the payment currency. Accepted values are <code>USD</code> (US Dollars) and <code>EUR</code> (Euros). If the AWS Partition is <code>aws-eusc</code> (AWS European Sovereign Cloud), the currency code must be <code>EUR</code>.</p>"
       }
     },
     "Customer": {
@@ -1116,12 +1112,6 @@
       "base": "<p>Provides an estimate of the revenue that the partner is expected to generate from the opportunity. This information helps partners assess the financial value of the project.</p>",
       "refs": {
         "ExpectedCustomerSpendList$member": null
-      }
-    },
-    "ExpectedCustomerSpendCurrencyCodeEnum": {
-      "base": null,
-      "refs": {
-        "ExpectedCustomerSpend$CurrencyCode": "<p>Indicates the currency in which the revenue estimate is provided. This helps in understanding the financial impact across different markets.</p>"
       }
     },
     "ExpectedCustomerSpendList": {

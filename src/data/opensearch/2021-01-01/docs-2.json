@@ -26,6 +26,7 @@
     "DeleteOutboundConnection": "<p>Allows the source Amazon OpenSearch Service domain owner to delete an existing outbound cross-cluster search connection. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
     "DeletePackage": "<p>Deletes an Amazon OpenSearch Service package. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "DeleteVpcEndpoint": "<p>Deletes an Amazon OpenSearch Service-managed interface VPC endpoint.</p>",
+    "DeregisterCapability": "<p>Deregisters a capability from an OpenSearch UI application. This operation removes the capability and its associated configuration.</p>",
     "DescribeDomain": "<p>Describes the domain configuration for the specified Amazon OpenSearch Service domain, including the domain ID, domain service endpoint, and domain ARN.</p>",
     "DescribeDomainAutoTunes": "<p>Returns the list of optimizations that Auto-Tune has made to an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html\">Auto-Tune for Amazon OpenSearch Service</a>.</p>",
     "DescribeDomainChangeProgress": "<p>Returns information about the current blue/green deployment happening on an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-configuration-changes.html\">Making configuration changes in Amazon OpenSearch Service</a>.</p>",
@@ -45,6 +46,7 @@
     "DissociatePackage": "<p>Removes a package from the specified Amazon OpenSearch Service domain. The package can't be in use with any OpenSearch index for the dissociation to succeed. The package is still available in OpenSearch Service for association later. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "DissociatePackages": "<p>Dissociates multiple packages from a domain simultaneously.</p>",
     "GetApplication": "<p>Retrieves the configuration and status of an existing OpenSearch application.</p>",
+    "GetCapability": "<p>Retrieves information about a registered capability for an OpenSearch UI application, including its configuration and current status.</p>",
     "GetCompatibleVersions": "<p>Returns a map of OpenSearch or Elasticsearch versions and the versions you can upgrade them to.</p>",
     "GetDataSource": "<p>Retrieves information about a direct query data source.</p>",
     "GetDefaultApplicationSetting": "<p>Gets the ARN of the current default application.</p> <p> If the default application isn't set, the operation returns a resource not found error.</p>",
@@ -71,6 +73,7 @@
     "ListVpcEndpointsForDomain": "<p>Retrieves all Amazon OpenSearch Service-managed VPC endpoints associated with a particular domain.</p>",
     "PurchaseReservedInstanceOffering": "<p>Allows you to purchase Amazon OpenSearch Service Reserved Instances.</p>",
     "PutDefaultApplicationSetting": "<p>Sets the default application to the application with the specified ARN.</p> <p> To remove the default application, use the <code>GetDefaultApplicationSetting</code> operation to get the current default and then call the <code>PutDefaultApplicationSetting</code> with the current applications ARN and the <code>setAsDefault</code> parameter set to <code>false</code>.</p>",
+    "RegisterCapability": "<p>Registers a capability for an OpenSearch UI application. Use this operation to enable specific capabilities, such as AI features, for a given application. The capability configuration defines the type and settings of the capability to register. For more information about the AI features, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/application-ai-assistant.html\">Agentic AI for OpenSearch UI</a>.</p>",
     "RejectInboundConnection": "<p>Allows the remote Amazon OpenSearch Service domain owner to reject an inbound cross-cluster connection request.</p>",
     "RemoveTags": "<p>Removes the specified set of tags from an Amazon OpenSearch Service domain, data source, or application. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains.html#managedomains-awsresorcetagging\"> Tagging Amazon OpenSearch Service resources</a>.</p>",
     "RevokeVpcEndpointAccess": "<p>Revokes access to an Amazon OpenSearch Service domain that was provided through an interface VPC endpoint.</p>",
@@ -88,6 +91,14 @@
     "UpgradeDomain": "<p>Allows you to either upgrade your Amazon OpenSearch Service domain or perform an upgrade eligibility check to a compatible version of OpenSearch or Elasticsearch.</p>"
   },
   "shapes": {
+    "AIConfig": {
+      "base": "<p>Configuration settings for AI-powered capabilities of an OpenSearch UI application.</p>",
+      "refs": {
+        "CapabilityBaseRequestConfig$aiConfig": "<p>Configuration settings for AI-powered capabilities.</p>",
+        "CapabilityBaseResponseConfig$aiConfig": "<p>Configuration settings for AI-powered capabilities.</p>",
+        "CapabilityExtendedResponseConfig$aiConfig": "<p>Configuration settings for AI-powered capabilities.</p>"
+      }
+    },
     "AIMLOptionsInput": {
       "base": "<p>Container for parameters required to enable all machine learning features.</p>",
       "refs": {
@@ -290,6 +301,16 @@
         "GetApplicationResponse$appConfigs": "<p>The configuration settings of the OpenSearch application.</p>",
         "UpdateApplicationRequest$appConfigs": "<p>The configuration settings to modify for the OpenSearch application.</p>",
         "UpdateApplicationResponse$appConfigs": "<p>The configuration settings for the updated OpenSearch application.</p>"
+      }
+    },
+    "ApplicationId": {
+      "base": null,
+      "refs": {
+        "DeregisterCapabilityRequest$applicationId": "<p>The unique identifier of the OpenSearch UI application to deregister the capability from.</p>",
+        "GetCapabilityRequest$applicationId": "<p>The unique identifier of the OpenSearch UI application.</p>",
+        "GetCapabilityResponse$applicationId": "<p>The unique identifier of the OpenSearch UI application.</p>",
+        "RegisterCapabilityRequest$applicationId": "<p>The unique identifier of the OpenSearch UI application to register the capability for.</p>",
+        "RegisterCapabilityResponse$applicationId": "<p>The unique identifier of the OpenSearch UI application.</p>"
       }
     },
     "ApplicationName": {
@@ -584,6 +605,66 @@
       "base": null,
       "refs": {
         "CancelDomainConfigChangeResponse$CancelledChangeProperties": "<p>The domain change properties that were cancelled.</p>"
+      }
+    },
+    "CapabilityBaseRequestConfig": {
+      "base": "<p>The base configuration for registering a capability. Contains capability-specific configuration such as AI settings.</p>",
+      "refs": {
+        "RegisterCapabilityRequest$capabilityConfig": "<p>The configuration settings for the capability being registered. This includes capability-specific settings such as AI configuration.</p>"
+      }
+    },
+    "CapabilityBaseResponseConfig": {
+      "base": "<p>The base configuration returned for a registered capability.</p>",
+      "refs": {
+        "RegisterCapabilityResponse$capabilityConfig": "<p>The configuration settings for the registered capability.</p>"
+      }
+    },
+    "CapabilityExtendedResponseConfig": {
+      "base": "<p>The extended configuration returned for a registered capability, including additional details beyond the base configuration.</p>",
+      "refs": {
+        "GetCapabilityResponse$capabilityConfig": "<p>The configuration settings for the capability, including capability-specific settings such as AI configuration.</p>"
+      }
+    },
+    "CapabilityFailure": {
+      "base": "<p>Information about a capability failure.</p>",
+      "refs": {
+        "CapabilityFailures$member": null
+      }
+    },
+    "CapabilityFailureDetails": {
+      "base": null,
+      "refs": {
+        "CapabilityFailure$details": "<p>Additional details about the capability failure.</p>"
+      }
+    },
+    "CapabilityFailureReason": {
+      "base": null,
+      "refs": {
+        "CapabilityFailure$reason": "<p>The reason for the capability failure. Possible values: <code>KMS_KEY_INSUFFICIENT_PERMISSION</code>.</p>"
+      }
+    },
+    "CapabilityFailures": {
+      "base": "<p>A list of failures associated with a capability.</p>",
+      "refs": {
+        "GetCapabilityResponse$failures": "<p>A list of failures associated with the capability, if any. Each failure includes a reason and details about what went wrong.</p>"
+      }
+    },
+    "CapabilityName": {
+      "base": "<p>The name of a capability. Must be between 3 and 30 characters and contain only alphanumeric characters and hyphens.</p>",
+      "refs": {
+        "DeregisterCapabilityRequest$capabilityName": "<p>The name of the capability to deregister.</p>",
+        "GetCapabilityRequest$capabilityName": "<p>The name of the capability to retrieve information about.</p>",
+        "GetCapabilityResponse$capabilityName": "<p>The name of the capability.</p>",
+        "RegisterCapabilityRequest$capabilityName": "<p>The name of the capability to register. Must be between 3 and 30 characters and contain only alphanumeric characters and hyphens. This identifies the type of capability being enabled for the application. For registering AI Assistant capability, use <code>ai-capability</code> </p>",
+        "RegisterCapabilityResponse$capabilityName": "<p>The name of the registered capability.</p>"
+      }
+    },
+    "CapabilityStatus": {
+      "base": "<p>The status of a capability. Possible values: <code>creating</code>, <code>create_failed</code>, <code>active</code>, <code>updating</code>, <code>update_failed</code>, <code>deleting</code>, <code>delete_failed</code>.</p>",
+      "refs": {
+        "DeregisterCapabilityResponse$status": "<p>The status of the deregistration operation. Returns <code>deleting</code> when the capability is being removed.</p>",
+        "GetCapabilityResponse$status": "<p>The current status of the capability. Possible values: <code>creating</code>, <code>create_failed</code>, <code>active</code>, <code>updating</code>, <code>update_failed</code>, <code>deleting</code>, <code>delete_failed</code>.</p>",
+        "RegisterCapabilityResponse$status": "<p>The current status of the capability. Possible values: <code>creating</code>, <code>create_failed</code>, <code>active</code>, <code>updating</code>, <code>update_failed</code>, <code>deleting</code>, <code>delete_failed</code>.</p>"
       }
     },
     "ChangeProgressDetails": {
@@ -990,6 +1071,14 @@
       "refs": {
         "DryRunResults$DeploymentType": "<p> Specifies the way in which OpenSearch Service will apply an update. Possible values are:</p> <ul> <li> <p> <b>Blue/Green</b> - The update requires a blue/green deployment.</p> </li> <li> <p> <b>DynamicUpdate</b> - No blue/green deployment required</p> </li> <li> <p> <b>Undetermined</b> - The domain is in the middle of an update and can't predict the deployment type. Try again after the update is complete.</p> </li> <li> <p> <b>None</b> - The request doesn't include any configuration changes.</p> </li> </ul>"
       }
+    },
+    "DeregisterCapabilityRequest": {
+      "base": "<p>Container for the parameters to the <code>DeregisterCapability</code> operation.</p>",
+      "refs": {}
+    },
+    "DeregisterCapabilityResponse": {
+      "base": "<p>The result of a <code>DeregisterCapability</code> request.</p>",
+      "refs": {}
     },
     "DescribeDomainAutoTunesRequest": {
       "base": "<p>Container for the parameters to the <code>DescribeDomainAutoTunes</code> operation.</p>",
@@ -1631,6 +1720,14 @@
     },
     "GetApplicationResponse": {
       "base": null,
+      "refs": {}
+    },
+    "GetCapabilityRequest": {
+      "base": "<p>Container for the parameters to the <code>GetCapability</code> operation.</p>",
+      "refs": {}
+    },
+    "GetCapabilityResponse": {
+      "base": "<p>The result of a <code>GetCapability</code> request. Contains details about the capability.</p>",
       "refs": {}
     },
     "GetCompatibleVersionsRequest": {
@@ -2937,6 +3034,14 @@
         "AWSDomainInformation$Region": "<p>The Amazon Web Services Region in which the domain is located.</p>"
       }
     },
+    "RegisterCapabilityRequest": {
+      "base": "<p>Container for the parameters to the <code>RegisterCapability</code> operation.</p>",
+      "refs": {}
+    },
+    "RegisterCapabilityResponse": {
+      "base": "<p>The result of a <code>RegisterCapability</code> request. Contains details about the registered capability.</p>",
+      "refs": {}
+    },
     "RejectInboundConnectionRequest": {
       "base": "<p>Container for the request parameters to the <code>RejectInboundConnection</code> operation.</p>",
       "refs": {}
@@ -3167,6 +3272,10 @@
         "AIMLOptionsInput$ServerlessVectorAcceleration": "<p>Specifies whether to enable serverless vector acceleration for the domain. When enabled, provides <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/gpu-acceleration-vector-index.html\">GPU-accelerated</a> vector search capabilities for improved performance on vector workloads.</p>",
         "AIMLOptionsOutput$ServerlessVectorAcceleration": "<p>The current serverless vector acceleration configuration for the domain.</p>"
       }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>An exception for when a request would cause a service quota to be exceeded.</p>",
+      "refs": {}
     },
     "ServiceSoftwareOptions": {
       "base": "<p>The current status of the service software for an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",

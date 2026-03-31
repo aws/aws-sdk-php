@@ -1215,6 +1215,11 @@
         }
       }
     },
+    "Document":{
+      "type":"structure",
+      "members":{},
+      "document":true
+    },
     "EncryptionConfiguration":{
       "type":"structure",
       "required":["sseAlgorithm"],
@@ -1795,9 +1800,9 @@
     },
     "IcebergMetadata":{
       "type":"structure",
-      "required":["schema"],
       "members":{
         "schema":{"shape":"IcebergSchema"},
+        "schemaV2":{"shape":"IcebergSchemaV2"},
         "partitionSpec":{"shape":"IcebergPartitionSpec"},
         "writeOrder":{"shape":"IcebergSortOrder"},
         "properties":{"shape":"TableProperties"}
@@ -1850,6 +1855,25 @@
       "required":["fields"],
       "members":{
         "fields":{"shape":"SchemaFieldList"}
+      }
+    },
+    "IcebergSchemaV2":{
+      "type":"structure",
+      "required":[
+        "type",
+        "fields"
+      ],
+      "members":{
+        "type":{"shape":"SchemaV2FieldType"},
+        "fields":{"shape":"SchemaV2FieldList"},
+        "schemaId":{
+          "shape":"Integer",
+          "locationName":"schema-id"
+        },
+        "identifierFieldIds":{
+          "shape":"IntegerList",
+          "locationName":"identifier-field-ids"
+        }
       }
     },
     "IcebergSnapshotManagementSettings":{
@@ -1915,6 +1939,10 @@
     "Integer":{
       "type":"integer",
       "box":true
+    },
+    "IntegerList":{
+      "type":"list",
+      "member":{"shape":"Integer"}
     },
     "InternalServerErrorException":{
       "type":"structure",
@@ -2516,6 +2544,30 @@
     "SchemaFieldList":{
       "type":"list",
       "member":{"shape":"SchemaField"}
+    },
+    "SchemaV2Field":{
+      "type":"structure",
+      "required":[
+        "id",
+        "name",
+        "type",
+        "required"
+      ],
+      "members":{
+        "id":{"shape":"Integer"},
+        "name":{"shape":"String"},
+        "type":{"shape":"Document"},
+        "required":{"shape":"Boolean"},
+        "doc":{"shape":"String"}
+      }
+    },
+    "SchemaV2FieldList":{
+      "type":"list",
+      "member":{"shape":"SchemaV2Field"}
+    },
+    "SchemaV2FieldType":{
+      "type":"string",
+      "enum":["struct"]
     },
     "StorageClass":{
       "type":"string",

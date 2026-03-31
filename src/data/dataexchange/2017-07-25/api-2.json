@@ -230,7 +230,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDataGrant":{
       "name":"GetDataGrant",
@@ -247,7 +248,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDataSet":{
       "name":"GetDataSet",
@@ -263,7 +265,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetEventAction":{
       "name":"GetEventAction",
@@ -279,7 +282,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetJob":{
       "name":"GetJob",
@@ -295,7 +299,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetReceivedDataGrant":{
       "name":"GetReceivedDataGrant",
@@ -312,7 +317,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetRevision":{
       "name":"GetRevision",
@@ -328,7 +334,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDataGrants":{
       "name":"ListDataGrants",
@@ -345,7 +352,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDataSetRevisions":{
       "name":"ListDataSetRevisions",
@@ -361,7 +369,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDataSets":{
       "name":"ListDataSets",
@@ -377,7 +386,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListEventActions":{
       "name":"ListEventActions",
@@ -393,7 +403,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListJobs":{
       "name":"ListJobs",
@@ -409,7 +420,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListReceivedDataGrants":{
       "name":"ListReceivedDataGrants",
@@ -426,7 +438,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListRevisionAssets":{
       "name":"ListRevisionAssets",
@@ -442,7 +455,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -452,7 +466,8 @@
         "responseCode":200
       },
       "input":{"shape":"ListTagsForResourceRequest"},
-      "output":{"shape":"ListTagsForResourceResponse"}
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "readonly":true
     },
     "RevokeRevision":{
       "name":"RevokeRevision",
@@ -702,6 +717,12 @@
       }
     },
     "Arn":{"type":"string"},
+    "AssetConfiguration":{
+      "type":"structure",
+      "members":{
+        "Tags":{"shape":"ListOfTag"}
+      }
+    },
     "AssetDestinationEntry":{
       "type":"structure",
       "required":[
@@ -949,6 +970,7 @@
         "Type"
       ],
       "members":{
+        "AssetConfiguration":{"shape":"AssetConfiguration"},
         "Details":{"shape":"RequestDetails"},
         "Type":{"shape":"Type"}
       }
@@ -957,6 +979,7 @@
       "type":"structure",
       "members":{
         "Arn":{"shape":"Arn"},
+        "AssetConfiguration":{"shape":"AssetConfiguration"},
         "CreatedAt":{"shape":"Timestamp"},
         "Details":{"shape":"ResponseDetails"},
         "Errors":{"shape":"ListOfJobError"},
@@ -1379,6 +1402,7 @@
         "Name":{"shape":"AssetName"},
         "RevisionId":{"shape":"Id"},
         "SourceId":{"shape":"Id"},
+        "Tags":{"shape":"MapOf__string"},
         "UpdatedAt":{"shape":"Timestamp"}
       }
     },
@@ -1491,6 +1515,7 @@
       "type":"structure",
       "members":{
         "Arn":{"shape":"Arn"},
+        "AssetConfiguration":{"shape":"AssetConfiguration"},
         "CreatedAt":{"shape":"Timestamp"},
         "Details":{"shape":"ResponseDetails"},
         "Errors":{"shape":"ListOfJobError"},
@@ -1784,6 +1809,7 @@
       ],
       "members":{
         "Arn":{"shape":"Arn"},
+        "AssetConfiguration":{"shape":"AssetConfiguration"},
         "CreatedAt":{"shape":"Timestamp"},
         "Details":{"shape":"ResponseDetails"},
         "Errors":{"shape":"ListOfJobError"},
@@ -2176,6 +2202,12 @@
     "ListOfTableTagPolicyLFPermissions":{
       "type":"list",
       "member":{"shape":"TableTagPolicyLFPermission"}
+    },
+    "ListOfTag":{
+      "type":"list",
+      "member":{"shape":"Tag"},
+      "max":50,
+      "min":0
     },
     "ListOf__string":{
       "type":"list",
@@ -2662,8 +2694,7 @@
     },
     "SendDataSetNotificationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "SenderPrincipal":{
       "type":"string",
@@ -2703,8 +2734,7 @@
     },
     "StartJobResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "State":{
       "type":"string",
@@ -2742,6 +2772,17 @@
         "DESCRIBE",
         "SELECT"
       ]
+    },
+    "Tag":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Value"
+      ],
+      "members":{
+        "Key":{"shape":"__string"},
+        "Value":{"shape":"__string"}
+      }
     },
     "TagResourceRequest":{
       "type":"structure",

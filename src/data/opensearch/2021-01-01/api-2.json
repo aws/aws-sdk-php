@@ -404,6 +404,24 @@
         {"shape":"BaseException"}
       ]
     },
+    "DeregisterCapability":{
+      "name":"DeregisterCapability",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2021-01-01/opensearch/application/{ApplicationId}/capability/deregister/{CapabilityName}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeregisterCapabilityRequest"},
+      "output":{"shape":"DeregisterCapabilityResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "DescribeDomain":{
       "name":"DescribeDomain",
       "http":{
@@ -697,6 +715,23 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
+    "GetCapability":{
+      "name":"GetCapability",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/application/{ApplicationId}/capability/{CapabilityName}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetCapabilityRequest"},
+      "output":{"shape":"GetCapabilityResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"DisabledOperationException"}
       ]
     },
@@ -1114,6 +1149,25 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "RegisterCapability":{
+      "name":"RegisterCapability",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/application/{ApplicationId}/capability/register",
+        "responseCode":200
+      },
+      "input":{"shape":"RegisterCapabilityRequest"},
+      "output":{"shape":"RegisterCapabilityResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "RejectInboundConnection":{
       "name":"RejectInboundConnection",
       "http":{
@@ -1362,6 +1416,10 @@
     }
   },
   "shapes":{
+    "AIConfig":{
+      "type":"structure",
+      "members":{}
+    },
     "AIMLOptionsInput":{
       "type":"structure",
       "members":{
@@ -1614,6 +1672,10 @@
       "type":"list",
       "member":{"shape":"AppConfig"},
       "max":200
+    },
+    "ApplicationId":{
+      "type":"string",
+      "pattern":"[a-z0-9]{3,30}"
     },
     "ApplicationName":{
       "type":"string",
@@ -1911,6 +1973,61 @@
     "CancelledChangePropertyList":{
       "type":"list",
       "member":{"shape":"CancelledChangeProperty"}
+    },
+    "CapabilityBaseRequestConfig":{
+      "type":"structure",
+      "members":{
+        "aiConfig":{"shape":"AIConfig"}
+      },
+      "union":true
+    },
+    "CapabilityBaseResponseConfig":{
+      "type":"structure",
+      "members":{
+        "aiConfig":{"shape":"AIConfig"}
+      },
+      "union":true
+    },
+    "CapabilityExtendedResponseConfig":{
+      "type":"structure",
+      "members":{
+        "aiConfig":{"shape":"AIConfig"}
+      },
+      "union":true
+    },
+    "CapabilityFailure":{
+      "type":"structure",
+      "members":{
+        "reason":{"shape":"CapabilityFailureReason"},
+        "details":{"shape":"CapabilityFailureDetails"}
+      }
+    },
+    "CapabilityFailureDetails":{"type":"string"},
+    "CapabilityFailureReason":{
+      "type":"string",
+      "enum":["KMS_KEY_INSUFFICIENT_PERMISSION"]
+    },
+    "CapabilityFailures":{
+      "type":"list",
+      "member":{"shape":"CapabilityFailure"}
+    },
+    "CapabilityName":{
+      "type":"string",
+      "max":30,
+      "min":3,
+      "pattern":"^[a-zA-Z0-9-]+$"
+    },
+    "CapabilityStatus":{
+      "type":"string",
+      "enum":[
+        "creating",
+        "create_failed",
+        "active",
+        "updating",
+        "update_failed",
+        "deleting",
+        "delete_failed"
+      ]
     },
     "ChangeProgressDetails":{
       "type":"structure",
@@ -2520,6 +2637,31 @@
       "type":"string",
       "max":128,
       "min":2
+    },
+    "DeregisterCapabilityRequest":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "capabilityName"
+      ],
+      "members":{
+        "applicationId":{
+          "shape":"ApplicationId",
+          "location":"uri",
+          "locationName":"ApplicationId"
+        },
+        "capabilityName":{
+          "shape":"CapabilityName",
+          "location":"uri",
+          "locationName":"CapabilityName"
+        }
+      }
+    },
+    "DeregisterCapabilityResponse":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"CapabilityStatus"}
+      }
     },
     "DescribeDomainAutoTunesRequest":{
       "type":"structure",
@@ -3391,6 +3533,35 @@
         "createdAt":{"shape":"Timestamp"},
         "lastUpdatedAt":{"shape":"Timestamp"},
         "kmsKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
+    "GetCapabilityRequest":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "capabilityName"
+      ],
+      "members":{
+        "applicationId":{
+          "shape":"ApplicationId",
+          "location":"uri",
+          "locationName":"ApplicationId"
+        },
+        "capabilityName":{
+          "shape":"CapabilityName",
+          "location":"uri",
+          "locationName":"CapabilityName"
+        }
+      }
+    },
+    "GetCapabilityResponse":{
+      "type":"structure",
+      "members":{
+        "capabilityName":{"shape":"CapabilityName"},
+        "applicationId":{"shape":"ApplicationId"},
+        "status":{"shape":"CapabilityStatus"},
+        "capabilityConfig":{"shape":"CapabilityExtendedResponseConfig"},
+        "failures":{"shape":"CapabilityFailures"}
       }
     },
     "GetCompatibleVersionsRequest":{
@@ -5097,6 +5268,32 @@
       "min":5,
       "pattern":"[a-z][a-z0-9\\-]+"
     },
+    "RegisterCapabilityRequest":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "capabilityName",
+        "capabilityConfig"
+      ],
+      "members":{
+        "applicationId":{
+          "shape":"ApplicationId",
+          "location":"uri",
+          "locationName":"ApplicationId"
+        },
+        "capabilityName":{"shape":"CapabilityName"},
+        "capabilityConfig":{"shape":"CapabilityBaseRequestConfig"}
+      }
+    },
+    "RegisterCapabilityResponse":{
+      "type":"structure",
+      "members":{
+        "capabilityName":{"shape":"CapabilityName"},
+        "applicationId":{"shape":"ApplicationId"},
+        "status":{"shape":"CapabilityStatus"},
+        "capabilityConfig":{"shape":"CapabilityBaseResponseConfig"}
+      }
+    },
     "RejectInboundConnectionRequest":{
       "type":"structure",
       "required":["ConnectionId"],
@@ -5388,6 +5585,12 @@
       "members":{
         "Enabled":{"shape":"Boolean"}
       }
+    },
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "members":{},
+      "error":{"httpStatusCode":402},
+      "exception":true
     },
     "ServiceSoftwareOptions":{
       "type":"structure",

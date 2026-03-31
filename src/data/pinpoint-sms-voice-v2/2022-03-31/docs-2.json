@@ -7,9 +7,11 @@
     "CarrierLookup": "<p>Returns information about a destination phone number, including whether the number type and whether it is valid, the carrier, and more.</p>",
     "CreateConfigurationSet": "<p>Creates a new configuration set. After you create the configuration set, you can add one or more event destinations to it.</p> <p>A configuration set is a set of rules that you apply to the SMS and voice messages that you send.</p> <p>When you send a message, you can optionally specify a single configuration set.</p>",
     "CreateEventDestination": "<p>Creates a new event destination in a configuration set.</p> <p>An event destination is a location where you send message events. The event options are Amazon CloudWatch, Amazon Data Firehose, or Amazon SNS. For example, when a message is delivered successfully, you can send information about that event to an event destination, or send notifications to endpoints that are subscribed to an Amazon SNS topic. </p> <p>You can only create one event destination at a time. You must provide a value for a single event destination using either <code>CloudWatchLogsDestination</code>, <code>KinesisFirehoseDestination</code> or <code>SnsDestination</code>. If an event destination isn't provided then an exception is returned.</p> <p>Each configuration set can contain between 0 and 5 event destinations. Each event destination can contain a reference to a single destination, such as a CloudWatch or Firehose destination.</p>",
+    "CreateNotifyConfiguration": "<p>Creates a new notify configuration for managed messaging. A notify configuration defines the settings for sending templated messages, including the display name, use case, enabled channels, and enabled countries.</p>",
     "CreateOptOutList": "<p>Creates a new opt-out list.</p> <p>If the opt-out list name already exists, an error is returned.</p> <p>An opt-out list is a list of phone numbers that are opted out, meaning you can't send SMS or voice messages to them. If end user replies with the keyword \"STOP,\" an entry for the phone number is added to the opt-out list. In addition to STOP, your recipients can use any supported opt-out keyword, such as CANCEL or OPTOUT. For a list of supported opt-out keywords, see <a href=\"https://docs.aws.amazon.com/pinpoint/latest/userguide/channels-sms-manage.html#channels-sms-manage-optout\"> SMS opt out </a> in the End User Messaging SMS User Guide.</p>",
     "CreatePool": "<p>Creates a new pool and associates the specified origination identity to the pool. A pool can include one or more phone numbers and SenderIds that are associated with your Amazon Web Services account.</p> <p>The new pool inherits its configuration from the specified origination identity. This includes keywords, message type, opt-out list, two-way configuration, and self-managed opt-out configuration. Deletion protection isn't inherited from the origination identity and defaults to false.</p> <p>If the origination identity is a phone number and is already associated with another pool, an error is returned. A sender ID can be associated with multiple pools.</p>",
     "CreateProtectConfiguration": "<p>Create a new protect configuration. By default all country rule sets for each capability are set to <code>ALLOW</code>. Update the country rule sets using <code>UpdateProtectConfigurationCountryRuleSet</code>. A protect configurations name is stored as a Tag with the key set to <code>Name</code> and value as the name of the protect configuration.</p>",
+    "CreateRcsAgent": "<p>Creates a new RCS agent for sending rich messages through the RCS channel. The RCS agent serves as an origination identity for sending RCS messages to your recipients.</p>",
     "CreateRegistration": "<p>Creates a new registration based on the <b>RegistrationType</b> field. </p>",
     "CreateRegistrationAssociation": "<p>Associate the registration with an origination identity such as a phone number or sender ID.</p>",
     "CreateRegistrationAttachment": "<p>Create a new registration attachment to use for uploading a file or a URL to a file. The maximum file size is 500KB and valid file extensions are PDF, JPEG and PNG. For example, many sender ID registrations require a signed “letter of authorization” (LOA) to be submitted.</p> <p>Use either <code>AttachmentUrl</code> or <code>AttachmentBody</code> to upload your attachment. If both are specified then an exception is returned.</p>",
@@ -22,11 +24,14 @@
     "DeleteEventDestination": "<p>Deletes an existing event destination.</p> <p>An event destination is a location where you send response information about the messages that you send. For example, when a message is delivered successfully, you can send information about that event to an Amazon CloudWatch destination, or send notifications to endpoints that are subscribed to an Amazon SNS topic.</p>",
     "DeleteKeyword": "<p>Deletes an existing keyword from an origination phone number or pool.</p> <p>A keyword is a word that you can search for on a particular phone number or pool. It is also a specific word or phrase that an end user can send to your number to elicit a response, such as an informational message or a special offer. When your number receives a message that begins with a keyword, End User Messaging SMS responds with a customizable message.</p> <p>Keywords \"HELP\" and \"STOP\" can't be deleted or modified.</p>",
     "DeleteMediaMessageSpendLimitOverride": "<p>Deletes an account-level monthly spending limit override for sending multimedia messages (MMS). Deleting a spend limit override will set the <code>EnforcedLimit</code> to equal the <code>MaxLimit</code>, which is controlled by Amazon Web Services. For more information on spend limits (quotas) see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/quotas.html\">Quotas for Server Migration Service</a> in the <i>Server Migration Service User Guide</i>.</p>",
+    "DeleteNotifyConfiguration": "<p>Deletes an existing notify configuration.</p> <p>If deletion protection is enabled, an error is returned.</p>",
+    "DeleteNotifyMessageSpendLimitOverride": "<p>Deletes an account-level monthly spending limit override for sending notify messages. Deleting a spend limit override will set the <code>EnforcedLimit</code> to equal the <code>MaxLimit</code>, which is controlled by Amazon Web Services. For more information on spend limits (quotas) see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/quotas.html\">Quotas </a> in the <i>End User Messaging SMS User Guide</i>.</p>",
     "DeleteOptOutList": "<p>Deletes an existing opt-out list. All opted out phone numbers in the opt-out list are deleted.</p> <p>If the specified opt-out list name doesn't exist or is in-use by an origination phone number or pool, an error is returned.</p>",
     "DeleteOptedOutNumber": "<p>Deletes an existing opted out destination phone number from the specified opt-out list.</p> <p>Each destination phone number can only be deleted once every 30 days.</p> <p>If the specified destination phone number doesn't exist or if the opt-out list doesn't exist, an error is returned.</p>",
     "DeletePool": "<p>Deletes an existing pool. Deleting a pool disassociates all origination identities from that pool.</p> <p>If the pool status isn't active or if deletion protection is enabled, an error is returned.</p> <p>A pool is a collection of phone numbers and SenderIds. A pool can include one or more phone numbers and SenderIds that are associated with your Amazon Web Services account.</p>",
     "DeleteProtectConfiguration": "<p>Permanently delete the protect configuration. The protect configuration must have deletion protection disabled and must not be associated as the account default protect configuration or associated with a configuration set.</p>",
     "DeleteProtectConfigurationRuleSetNumberOverride": "<p>Permanently delete the protect configuration rule set number override.</p>",
+    "DeleteRcsAgent": "<p>Deletes an existing RCS agent. If deletion protection is enabled, an error is returned.</p>",
     "DeleteRegistration": "<p>Permanently delete an existing registration from your account.</p>",
     "DeleteRegistrationAttachment": "<p>Permanently delete the specified registration attachment.</p>",
     "DeleteRegistrationFieldValue": "<p>Delete the value in a registration form field.</p>",
@@ -38,11 +43,15 @@
     "DescribeAccountLimits": "<p>Describes the current End User Messaging SMS SMS Voice V2 resource quotas for your account. The description for a quota includes the quota name, current usage toward that quota, and the quota's maximum value.</p> <p>When you establish an Amazon Web Services account, the account has initial quotas on the maximum number of configuration sets, opt-out lists, phone numbers, and pools that you can create in a given Region. For more information see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/quotas.html\">Quotas </a> in the <i>End User Messaging SMS User Guide</i>.</p>",
     "DescribeConfigurationSets": "<p>Describes the specified configuration sets or all in your account.</p> <p>If you specify configuration set names, the output includes information for only the specified configuration sets. If you specify filters, the output includes information for only those configuration sets that meet the filter criteria. If you don't specify configuration set names or filters, the output includes information for all configuration sets.</p> <p>If you specify a configuration set name that isn't valid, an error is returned.</p>",
     "DescribeKeywords": "<p>Describes the specified keywords or all keywords on your origination phone number or pool.</p> <p>A keyword is a word that you can search for on a particular phone number or pool. It is also a specific word or phrase that an end user can send to your number to elicit a response, such as an informational message or a special offer. When your number receives a message that begins with a keyword, End User Messaging SMS responds with a customizable message.</p> <p>If you specify a keyword that isn't valid, an error is returned.</p>",
+    "DescribeNotifyConfigurations": "<p>Describes the specified notify configurations or all notify configurations in your account.</p> <p>If you specify notify configuration IDs, the output includes information for only the specified notify configurations. If you specify filters, the output includes information for only those notify configurations that meet the filter criteria. If you don't specify notify configuration IDs or filters, the output includes information for all notify configurations.</p> <p>If you specify a notify configuration ID that isn't valid, an error is returned.</p>",
+    "DescribeNotifyTemplates": "<p>Describes the specified notify templates or all notify templates in your account.</p> <p>If you specify template IDs, the output includes information for only the specified notify templates. If you specify filters, the output includes information for only those notify templates that meet the filter criteria. If you don't specify template IDs or filters, the output includes information for all notify templates.</p> <p>If you specify a template ID that isn't valid, an error is returned.</p>",
     "DescribeOptOutLists": "<p>Describes the specified opt-out list or all opt-out lists in your account.</p> <p>If you specify opt-out list names, the output includes information for only the specified opt-out lists. Opt-out lists include only those that meet the filter criteria. If you don't specify opt-out list names or filters, the output includes information for all opt-out lists.</p> <p>If you specify an opt-out list name that isn't valid, an error is returned.</p>",
     "DescribeOptedOutNumbers": "<p>Describes the specified opted out destination numbers or all opted out destination numbers in an opt-out list.</p> <p>If you specify opted out numbers, the output includes information for only the specified opted out numbers. If you specify filters, the output includes information for only those opted out numbers that meet the filter criteria. If you don't specify opted out numbers or filters, the output includes information for all opted out destination numbers in your opt-out list.</p> <p>If you specify an opted out number that isn't valid, an exception is returned.</p>",
     "DescribePhoneNumbers": "<p>Describes the specified origination phone number, or all the phone numbers in your account.</p> <p>If you specify phone number IDs, the output includes information for only the specified phone numbers. If you specify filters, the output includes information for only those phone numbers that meet the filter criteria. If you don't specify phone number IDs or filters, the output includes information for all phone numbers.</p> <p>If you specify a phone number ID that isn't valid, an error is returned.</p>",
     "DescribePools": "<p>Retrieves the specified pools or all pools associated with your Amazon Web Services account.</p> <p>If you specify pool IDs, the output includes information for only the specified pools. If you specify filters, the output includes information for only those pools that meet the filter criteria. If you don't specify pool IDs or filters, the output includes information for all pools.</p> <p>If you specify a pool ID that isn't valid, an error is returned.</p> <p>A pool is a collection of phone numbers and SenderIds. A pool can include one or more phone numbers and SenderIds that are associated with your Amazon Web Services account.</p>",
     "DescribeProtectConfigurations": "<p>Retrieves the protect configurations that match any of filters. If a filter isn’t provided then all protect configurations are returned.</p>",
+    "DescribeRcsAgentCountryLaunchStatus": "<p>Retrieves the per-country launch status of an RCS agent, including carrier-level details for each country.</p>",
+    "DescribeRcsAgents": "<p>Retrieves the specified RCS agents or all RCS agents associated with your Amazon Web Services account.</p> <p>If you specify RCS agent IDs, the output includes information for only the specified RCS agents. If you specify filters, the output includes information for only those RCS agents that meet the filter criteria. If you don't specify RCS agent IDs or filters, the output includes information for all RCS agents.</p>",
     "DescribeRegistrationAttachments": "<p>Retrieves the specified registration attachments or all registration attachments associated with your Amazon Web Services account.</p>",
     "DescribeRegistrationFieldDefinitions": "<p>Retrieves the specified registration type field definitions. You can use DescribeRegistrationFieldDefinitions to view the requirements for creating, filling out, and submitting each registration type.</p>",
     "DescribeRegistrationFieldValues": "<p>Retrieves the specified registration field values.</p>",
@@ -58,6 +67,7 @@
     "DiscardRegistrationVersion": "<p>Discard the current version of the registration.</p>",
     "GetProtectConfigurationCountryRuleSet": "<p>Retrieve the CountryRuleSet for the specified NumberCapability from a protect configuration.</p>",
     "GetResourcePolicy": "<p>Retrieves the JSON text of the resource-based policy document attached to the End User Messaging SMS resource. A shared resource can be a Pool, Opt-out list, Sender Id, or Phone number.</p>",
+    "ListNotifyCountries": "<p>Lists countries that support notify messaging. You can optionally filter by channel, use case, or tier.</p>",
     "ListPoolOriginationIdentities": "<p>Lists all associated origination identities in your pool.</p> <p>If you specify filters, the output includes information for only those origination identities that meet the filter criteria.</p>",
     "ListProtectConfigurationRuleSetNumberOverrides": "<p>Retrieve all of the protect configuration rule set number overrides that match the filters.</p>",
     "ListRegistrationAssociations": "<p>Retrieve all of the origination identities that are associated with a registration.</p>",
@@ -74,6 +84,8 @@
     "RequestSenderId": "<p>Request a new sender ID that doesn't require registration. </p>",
     "SendDestinationNumberVerificationCode": "<p>Before you can send test messages to a verified destination phone number you need to opt-in the verified destination phone number. Creates a new text message with a verification code and send it to a verified destination phone number. Once you have the verification code use <a>VerifyDestinationNumber</a> to opt-in the verified destination phone number to receive messages.</p>",
     "SendMediaMessage": "<p>Creates a new multimedia message (MMS) and sends it to a recipient's phone number. </p>",
+    "SendNotifyTextMessage": "<p>Sends a templated text message through a notify configuration to a recipient's phone number.</p>",
+    "SendNotifyVoiceMessage": "<p>Sends a templated voice message through a notify configuration to a recipient's phone number.</p>",
     "SendTextMessage": "<p>Creates a new text message and sends it to a recipient's phone number. SendTextMessage only sends an SMS message to one recipient each time it is invoked.</p> <p>SMS throughput limits are measured in Message Parts per Second (MPS). Your MPS limit depends on the destination country of your messages, as well as the type of phone number (origination number) that you use to send the message. For more information about MPS, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/sms-limitations-mps.html\">Message Parts per Second (MPS) limits</a> in the <i>End User Messaging SMS User Guide</i>.</p>",
     "SendVoiceMessage": "<p>Allows you to send a request that sends a voice message. This operation uses <a href=\"http://aws.amazon.com/polly/\">Amazon Polly</a> to convert a text script into a voice message.</p>",
     "SetAccountDefaultProtectConfiguration": "<p>Set a protect configuration as your account default. You can only have one account default protect configuration at a time. The current account default protect configuration is replaced with the provided protect configuration.</p>",
@@ -81,16 +93,19 @@
     "SetDefaultMessageType": "<p>Sets the default message type on a configuration set.</p> <p>Choose the category of SMS messages that you plan to send from this account. If you send account-related messages or time-sensitive messages such as one-time passcodes, choose <b>Transactional</b>. If you plan to send messages that contain marketing material or other promotional content, choose <b>Promotional</b>. This setting applies to your entire Amazon Web Services account.</p>",
     "SetDefaultSenderId": "<p>Sets default sender ID on a configuration set.</p> <p>When sending a text message to a destination country that supports sender IDs, the default sender ID on the configuration set specified will be used if no dedicated origination phone numbers or registered sender IDs are available in your account.</p>",
     "SetMediaMessageSpendLimitOverride": "<p>Sets an account level monthly spend limit override for sending MMS messages. The requested spend limit must be less than or equal to the <code>MaxLimit</code>, which is set by Amazon Web Services. </p>",
+    "SetNotifyMessageSpendLimitOverride": "<p>Sets an account level monthly spend limit override for sending notify messages. The requested spend limit must be less than or equal to the <code>MaxLimit</code>, which is set by Amazon Web Services. </p>",
     "SetTextMessageSpendLimitOverride": "<p>Sets an account level monthly spend limit override for sending text messages. The requested spend limit must be less than or equal to the <code>MaxLimit</code>, which is set by Amazon Web Services. </p>",
     "SetVoiceMessageSpendLimitOverride": "<p>Sets an account level monthly spend limit override for sending voice messages. The requested spend limit must be less than or equal to the <code>MaxLimit</code>, which is set by Amazon Web Services. </p>",
     "SubmitRegistrationVersion": "<p>Submit the specified registration for review and approval.</p>",
     "TagResource": "<p>Adds or overwrites only the specified tags for the specified resource. When you specify an existing tag key, the value is overwritten with the new value. Each tag consists of a key and an optional value. Tag keys must be unique per resource. For more information about tags, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/phone-numbers-tags.html\">Tags </a> in the <i>End User Messaging SMS User Guide</i>.</p>",
     "UntagResource": "<p>Removes the association of the specified tags from a resource. For more information on tags see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/phone-numbers-tags.html\">Tags </a> in the <i>End User Messaging SMS User Guide</i>.</p>",
     "UpdateEventDestination": "<p>Updates an existing event destination in a configuration set. You can update the IAM role ARN for CloudWatch Logs and Firehose. You can also enable or disable the event destination.</p> <p>You may want to update an event destination to change its matching event types or updating the destination resource ARN. You can't change an event destination's type between CloudWatch Logs, Firehose, and Amazon SNS.</p>",
+    "UpdateNotifyConfiguration": "<p>Updates an existing notify configuration. You can update the default template, pool association, enabled channels, enabled countries, and deletion protection settings.</p>",
     "UpdatePhoneNumber": "<p>Updates the configuration of an existing origination phone number. You can update the opt-out list, enable or disable two-way messaging, change the TwoWayChannelArn, enable or disable self-managed opt-outs, and enable or disable deletion protection.</p> <p>If the origination phone number is associated with a pool, an error is returned.</p>",
     "UpdatePool": "<p>Updates the configuration of an existing pool. You can update the opt-out list, enable or disable two-way messaging, change the <code>TwoWayChannelArn</code>, enable or disable self-managed opt-outs, enable or disable deletion protection, and enable or disable shared routes.</p>",
     "UpdateProtectConfiguration": "<p>Update the setting for an existing protect configuration.</p>",
     "UpdateProtectConfigurationCountryRuleSet": "<p>Update a country rule set to <code>ALLOW</code>, <code>BLOCK</code>, <code>MONITOR</code>, or <code>FILTER</code> messages to be sent to the specified destination counties. You can update one or multiple countries at a time. The updates are only applied to the specified NumberCapability type.</p>",
+    "UpdateRcsAgent": "<p>Updates the configuration of an existing RCS agent. You can update the opt-out list, deletion protection, two-way messaging settings, and self-managed opt-outs configuration.</p>",
     "UpdateSenderId": "<p>Updates the configuration of an existing sender ID.</p>",
     "VerifyDestinationNumber": "<p>Use the verification code that was received by the verified destination phone number to opt-in the verified destination phone number to receive more messages.</p>"
   },
@@ -203,19 +218,24 @@
       "base": null,
       "refs": {
         "ConfigurationSetInformation$DefaultMessageFeedbackEnabled": "<p>True if message feedback is enabled.</p>",
+        "CreateNotifyConfigurationRequest$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the notify configuration can't be deleted. You can change this value using the <a>UpdateNotifyConfiguration</a> action.</p>",
         "CreatePoolRequest$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the pool can't be deleted. You can change this value using the <a href=\"https://docs.aws.amazon.com/pinpoint/latest/apireference_smsvoicev2/API_UpdatePool.html\">UpdatePool</a> action.</p>",
         "CreateProtectConfigurationRequest$DeletionProtectionEnabled": "<p>When set to true deletion protection is enabled. By default this is set to false. </p>",
+        "CreateRcsAgentRequest$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the RCS agent can't be deleted. You can change this value using the <a>UpdateRcsAgent</a> action.</p>",
         "DeleteConfigurationSetResult$DefaultMessageFeedbackEnabled": "<p>True if the configuration set has message feedback enabled. By default this is set to false. </p>",
         "EventDestination$Enabled": "<p>When set to true events will be logged.</p>",
         "RequestPhoneNumberRequest$InternationalSendingEnabled": "<p>By default this is set to false. When set to true the international sending of phone number is Enabled. </p>",
         "RequestPhoneNumberRequest$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the phone number can't be deleted.</p>",
         "RequestSenderIdRequest$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the sender ID can't be deleted.</p>",
         "SendMediaMessageRequest$MessageFeedbackEnabled": "<p>Set to true to enable message feedback for the message. When a user receives the message you need to update the message status using <a>PutMessageFeedback</a>.</p>",
+        "SendNotifyTextMessageRequest$MessageFeedbackEnabled": "<p>Set to true to enable message feedback for the message. When a user receives the message you need to update the message status using <a>PutMessageFeedback</a>.</p>",
+        "SendNotifyVoiceMessageRequest$MessageFeedbackEnabled": "<p>Set to true to enable message feedback for the message. When a user receives the message you need to update the message status using <a>PutMessageFeedback</a>.</p>",
         "SendTextMessageRequest$MessageFeedbackEnabled": "<p>Set to true to enable message feedback for the message. When a user receives the message you need to update the message status using <a>PutMessageFeedback</a>.</p>",
         "SendVoiceMessageRequest$MessageFeedbackEnabled": "<p>Set to true to enable message feedback for the message. When a user receives the message you need to update the message status using <a>PutMessageFeedback</a>.</p>",
         "SetDefaultMessageFeedbackEnabledRequest$MessageFeedbackEnabled": "<p>Set to true to enable message feedback.</p>",
         "SetDefaultMessageFeedbackEnabledResult$MessageFeedbackEnabled": "<p>True if message feedback is enabled.</p>",
         "UpdateEventDestinationRequest$Enabled": "<p>When set to true logging is enabled.</p>",
+        "UpdateNotifyConfigurationRequest$DeletionProtectionEnabled": "<p>When set to true the notify configuration can't be deleted.</p>",
         "UpdatePhoneNumberRequest$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
         "UpdatePhoneNumberRequest$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When set to false and an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, End User Messaging SMS automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
         "UpdatePhoneNumberRequest$InternationalSendingEnabled": "<p>By default this is set to false. When set to true the international sending of phone number is Enabled. </p>",
@@ -225,6 +245,9 @@
         "UpdatePoolRequest$SharedRoutesEnabled": "<p>Indicates whether shared routes are enabled for the pool.</p>",
         "UpdatePoolRequest$DeletionProtectionEnabled": "<p>When set to true the pool can't be deleted.</p>",
         "UpdateProtectConfigurationRequest$DeletionProtectionEnabled": "<p>When set to true deletion protection is enabled. By default this is set to false. </p>",
+        "UpdateRcsAgentRequest$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the RCS agent can't be deleted.</p>",
+        "UpdateRcsAgentRequest$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
+        "UpdateRcsAgentRequest$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
         "UpdateSenderIdRequest$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the sender ID can't be deleted.</p>"
       }
     },
@@ -242,15 +265,35 @@
       "base": null,
       "refs": {}
     },
+    "CarrierStatus": {
+      "base": "<p>The carrier-level launch status.</p> <ul> <li> <p> <code>PENDING</code>: The carrier launch is pending.</p> </li> <li> <p> <code>ACTIVE</code>: The carrier launch is active.</p> </li> <li> <p> <code>REJECTED</code>: The carrier launch was rejected.</p> </li> </ul>",
+      "refs": {
+        "CarrierStatusInformation$Status": "<p>The launch status for this carrier.</p>"
+      }
+    },
+    "CarrierStatusInformation": {
+      "base": "<p>Contains carrier-level launch status details for an RCS agent within a country.</p>",
+      "refs": {
+        "CarrierStatusInformationList$member": null
+      }
+    },
+    "CarrierStatusInformationList": {
+      "base": null,
+      "refs": {
+        "CountryLaunchStatusInformation$CarrierStatus": "<p>An array of CarrierStatusInformation objects containing carrier-level launch status details.</p>"
+      }
+    },
     "ClientToken": {
       "base": null,
       "refs": {
         "AssociateOriginationIdentityRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, a randomly generated token is used for the request to ensure idempotency.</p>",
         "CreateConfigurationSetRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, a randomly generated token is used for the request to ensure idempotency.</p>",
         "CreateEventDestinationRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, a randomly generated token is used for the request to ensure idempotency.</p>",
+        "CreateNotifyConfigurationRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, a randomly generated token is used for the request to ensure idempotency.</p>",
         "CreateOptOutListRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, a randomly generated token is used for the request to ensure idempotency.</p>",
         "CreatePoolRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, a randomly generated token is used for the request to ensure idempotency.</p>",
         "CreateProtectConfigurationRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, a randomly generated token is used for the request to ensure idempotency.</p>",
+        "CreateRcsAgentRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, a randomly generated token is used for the request to ensure idempotency.</p>",
         "CreateRegistrationAttachmentRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, a randomly generated token is used for the request to ensure idempotency.</p>",
         "CreateRegistrationRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, a randomly generated token is used for the request to ensure idempotency.</p>",
         "CreateVerifiedDestinationNumberRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, a randomly generated token is used for the request to ensure idempotency.</p>",
@@ -336,6 +379,8 @@
         "DisassociateProtectConfigurationRequest$ConfigurationSetName": "<p>The name of the ConfigurationSet.</p>",
         "SendDestinationNumberVerificationCodeRequest$ConfigurationSetName": "<p>The name of the configuration set to use. This can be either the ConfigurationSetName or ConfigurationSetArn.</p>",
         "SendMediaMessageRequest$ConfigurationSetName": "<p>The name of the configuration set to use. This can be either the ConfigurationSetName or ConfigurationSetArn.</p>",
+        "SendNotifyTextMessageRequest$ConfigurationSetName": "<p>The name of the configuration set to use. This can be either the ConfigurationSetName or ConfigurationSetArn.</p>",
+        "SendNotifyVoiceMessageRequest$ConfigurationSetName": "<p>The name of the configuration set to use. This can be either the ConfigurationSetName or ConfigurationSetArn.</p>",
         "SendTextMessageRequest$ConfigurationSetName": "<p>The name of the configuration set to use. This can be either the ConfigurationSetName or ConfigurationSetArn.</p>",
         "SendVoiceMessageRequest$ConfigurationSetName": "<p>The name of the configuration set to use. This can be either the ConfigurationSetName or ConfigurationSetArn.</p>",
         "SetDefaultMessageFeedbackEnabledRequest$ConfigurationSetName": "<p>The name of the configuration set to use. This can be either the ConfigurationSetName or ConfigurationSetArn.</p>",
@@ -365,6 +410,8 @@
       "refs": {
         "SendDestinationNumberVerificationCodeRequest$Context": "<p>You can specify custom data in this field. If you do, that data is logged to the event destination.</p>",
         "SendMediaMessageRequest$Context": "<p>You can specify custom data in this field. If you do, that data is logged to the event destination.</p>",
+        "SendNotifyTextMessageRequest$Context": "<p>You can specify custom data in this field. If you do, that data is logged to the event destination.</p>",
+        "SendNotifyVoiceMessageRequest$Context": "<p>You can specify custom data in this field. If you do, that data is logged to the event destination.</p>",
         "SendTextMessageRequest$Context": "<p>You can specify custom data in this field. If you do, that data is logged to the event destination.</p>",
         "SendVoiceMessageRequest$Context": "<p>You can specify custom data in this field. If you do, that data is logged to the event destination.</p>"
       }
@@ -373,6 +420,42 @@
       "base": null,
       "refs": {
         "ContextMap$value": null
+      }
+    },
+    "CountryLaunchStatus": {
+      "base": "<p>The per-country launch status of an RCS agent.</p> <ul> <li> <p> <code>CREATED</code>: The country launch has been created.</p> </li> <li> <p> <code>PENDING</code>: The country launch is pending.</p> </li> <li> <p> <code>PARTIAL</code>: The country launch is partially active.</p> </li> <li> <p> <code>ACTIVE</code>: The country launch is active.</p> </li> <li> <p> <code>REJECTED</code>: The country launch was rejected.</p> </li> </ul>",
+      "refs": {
+        "CountryLaunchStatusInformation$Status": "<p>The launch status for this country.</p>"
+      }
+    },
+    "CountryLaunchStatusFilter": {
+      "base": "<p>The information for a country launch status that meets a specified criteria.</p>",
+      "refs": {
+        "CountryLaunchStatusFilterList$member": null
+      }
+    },
+    "CountryLaunchStatusFilterList": {
+      "base": null,
+      "refs": {
+        "DescribeRcsAgentCountryLaunchStatusRequest$Filters": "<p>An array of CountryLaunchStatusFilter objects to filter the results.</p>"
+      }
+    },
+    "CountryLaunchStatusFilterName": {
+      "base": "<p>The filter name for filtering country launch statuses. The available filter names are:</p> <ul> <li> <p> <code>country-launch-status</code>: Filter by country launch status.</p> </li> </ul>",
+      "refs": {
+        "CountryLaunchStatusFilter$Name": "<p>The name of the attribute to filter on.</p>"
+      }
+    },
+    "CountryLaunchStatusInformation": {
+      "base": "<p>Contains per-country launch status details for an RCS agent.</p>",
+      "refs": {
+        "CountryLaunchStatusInformationList$member": null
+      }
+    },
+    "CountryLaunchStatusInformationList": {
+      "base": null,
+      "refs": {
+        "DescribeRcsAgentCountryLaunchStatusResult$CountryLaunchStatus": "<p>An array of CountryLaunchStatusInformation objects that contain the per-country launch status details.</p>"
       }
     },
     "CreateConfigurationSetRequest": {
@@ -388,6 +471,14 @@
       "refs": {}
     },
     "CreateEventDestinationResult": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateNotifyConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateNotifyConfigurationResult": {
       "base": null,
       "refs": {}
     },
@@ -412,6 +503,14 @@
       "refs": {}
     },
     "CreateProtectConfigurationResult": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRcsAgentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRcsAgentResult": {
       "base": null,
       "refs": {}
     },
@@ -511,6 +610,22 @@
       "base": null,
       "refs": {}
     },
+    "DeleteNotifyConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteNotifyConfigurationResult": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteNotifyMessageSpendLimitOverrideRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteNotifyMessageSpendLimitOverrideResult": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteOptOutListRequest": {
       "base": null,
       "refs": {}
@@ -548,6 +663,14 @@
       "refs": {}
     },
     "DeleteProtectConfigurationRuleSetNumberOverrideResult": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRcsAgentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRcsAgentResult": {
       "base": null,
       "refs": {}
     },
@@ -645,6 +768,22 @@
       "base": null,
       "refs": {}
     },
+    "DescribeNotifyConfigurationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeNotifyConfigurationsResult": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeNotifyTemplatesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeNotifyTemplatesResult": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeOptOutListsRequest": {
       "base": null,
       "refs": {}
@@ -682,6 +821,22 @@
       "refs": {}
     },
     "DescribeProtectConfigurationsResult": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeRcsAgentCountryLaunchStatusRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeRcsAgentCountryLaunchStatusResult": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeRcsAgentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeRcsAgentsResult": {
       "base": null,
       "refs": {}
     },
@@ -906,13 +1061,17 @@
       "base": null,
       "refs": {
         "ConfigurationSetFilter$Values": "<p>An array values to filter for.</p>",
+        "CountryLaunchStatusFilter$Values": "<p>An array values to filter for.</p>",
         "KeywordFilter$Values": "<p>An array values to filter for.</p>",
+        "NotifyConfigurationFilter$Values": "<p>An array values to filter for.</p>",
+        "NotifyTemplateFilter$Values": "<p>An array values to filter for.</p>",
         "OptedOutFilter$Values": "<p>An array of values to filter for.</p>",
         "PhoneNumberFilter$Values": "<p>An array values to filter for.</p>",
         "PoolFilter$Values": "<p>An array values to filter for.</p>",
         "PoolOriginationIdentitiesFilter$Values": "<p>An array values to filter for.</p>",
         "ProtectConfigurationFilter$Values": "<p>An array of values to filter for.</p>",
         "ProtectConfigurationRuleSetNumberOverrideFilterItem$Values": "<p>An array values to filter for.</p>",
+        "RcsAgentFilter$Values": "<p>An array values to filter for.</p>",
         "RegistrationAssociationFilter$Values": "<p>An array of values to filter for.</p>",
         "RegistrationAttachmentFilter$Values": "<p>An array of values to filter on.</p>",
         "RegistrationFilter$Values": "<p>An array of values to filter on.</p>",
@@ -943,16 +1102,21 @@
       "refs": {
         "CloudWatchLogsDestination$IamRoleArn": "<p>The Amazon Resource Name (ARN) of an Identity and Access Management role that is able to write event data to an Amazon CloudWatch destination.</p>",
         "CreatePoolResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
+        "CreateRcsAgentResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "DeletePoolResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
+        "DeleteRcsAgentResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "KinesisFirehoseDestination$IamRoleArn": "<p>The ARN of an Identity and Access Management role that is able to write event data to an Amazon Data Firehose destination.</p>",
         "PhoneNumberInformation$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "PoolInformation$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
+        "RcsAgentInformation$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "ReleasePhoneNumberResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "RequestPhoneNumberResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "UpdatePhoneNumberRequest$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "UpdatePhoneNumberResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
         "UpdatePoolRequest$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
-        "UpdatePoolResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>"
+        "UpdatePoolResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
+        "UpdateRcsAgentRequest$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>",
+        "UpdateRcsAgentResult$TwoWayChannelRole": "<p>An optional IAM Role Arn for a service to assume, to be able to post inbound SMS messages.</p>"
       }
     },
     "Integer": {
@@ -960,6 +1124,9 @@
       "refs": {
         "SelectValidation$MinChoices": "<p>The minimum number of choices for the select.</p>",
         "SelectValidation$MaxChoices": "<p>The maximum number of choices for the select.</p>",
+        "TemplateVariableMetadata$MaxLength": "<p>The maximum length for string variables.</p>",
+        "TemplateVariableMetadata$MinValue": "<p>The minimum value for numeric variables.</p>",
+        "TemplateVariableMetadata$MaxValue": "<p>The maximum value for numeric variables.</p>",
         "TextValidation$MinLength": "<p>The minimum number of characters for the text field.</p>",
         "TextValidation$MaxLength": "<p>The maximum number of characters for the text field.</p>"
       }
@@ -971,15 +1138,18 @@
     "IsoCountryCode": {
       "base": null,
       "refs": {
-        "AssociateOriginationIdentityRequest$IsoCountryCode": "<p>The new two-character code, in ISO 3166-1 alpha-2 format, for the country or region of the origination identity.</p>",
+        "AssociateOriginationIdentityRequest$IsoCountryCode": "<p>The new two-character code, in ISO 3166-1 alpha-2 format, for the country or region of the origination identity. This field is optional and is not required for origination identity types that are not country-specific, such as RCS agents.</p>",
         "AssociateOriginationIdentityResult$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region. </p>",
         "CarrierLookupResult$IsoCountryCode": "<p>The two-character country or region code, in ISO 3166-1 alpha-2 format, for the phone number.</p>",
-        "CreatePoolRequest$IsoCountryCode": "<p>The new two-character code, in ISO 3166-1 alpha-2 format, for the country or region of the new pool.</p>",
+        "CountryLaunchStatusInformation$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region.</p>",
+        "CreatePoolRequest$IsoCountryCode": "<p>The new two-character code, in ISO 3166-1 alpha-2 format, for the country or region of the new pool. This field is optional and is not required for origination identity types that are not country-specific, such as RCS agents.</p>",
         "CreateRegistrationAssociationResult$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region.</p>",
         "DeleteProtectConfigurationRuleSetNumberOverrideResult$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region.</p>",
-        "DisassociateOriginationIdentityRequest$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region. </p>",
+        "DisassociateOriginationIdentityRequest$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region. This field is optional and is not required for origination identity types that are not country-specific, such as RCS agents.</p>",
         "DisassociateOriginationIdentityResult$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region.</p>",
-        "OriginationIdentityMetadata$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region. </p>",
+        "IsoCountryCodeList$member": null,
+        "NotifyCountryInformation$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region.</p>",
+        "OriginationIdentityMetadata$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region. This field is optional and may not be present for origination identity types that are not country-specific, such as RCS agents.</p>",
         "PhoneNumberInformation$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region. </p>",
         "ProtectConfigurationCountryRuleSet$key": null,
         "ProtectConfigurationRuleSetNumberOverride$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region.</p>",
@@ -998,6 +1168,19 @@
         "UpdatePhoneNumberResult$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region. </p>",
         "UpdateSenderIdRequest$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region.</p>",
         "UpdateSenderIdResult$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region.</p>"
+      }
+    },
+    "IsoCountryCodeList": {
+      "base": null,
+      "refs": {
+        "CreateNotifyConfigurationRequest$EnabledCountries": "<p>An array of two-character ISO country codes, in ISO 3166-1 alpha-2 format, that are enabled for the notify configuration.</p>",
+        "CreateNotifyConfigurationResult$EnabledCountries": "<p>An array of two-character ISO country codes, in ISO 3166-1 alpha-2 format, that are enabled for the notify configuration.</p>",
+        "DeleteNotifyConfigurationResult$EnabledCountries": "<p>An array of two-character ISO country codes, in ISO 3166-1 alpha-2 format, that are enabled for the notify configuration.</p>",
+        "DescribeRcsAgentCountryLaunchStatusRequest$IsoCountryCodes": "<p>An array of two-character ISO country codes, in ISO 3166-1 alpha-2 format, to filter the results.</p>",
+        "NotifyConfigurationInformation$EnabledCountries": "<p>An array of two-character ISO country codes, in ISO 3166-1 alpha-2 format, that are enabled for the notify configuration.</p>",
+        "NotifyTemplateInformation$SupportedCountries": "<p>An array of supported country codes for the template.</p>",
+        "UpdateNotifyConfigurationRequest$EnabledCountries": "<p>An array of two-character ISO country codes, in ISO 3166-1 alpha-2 format, that are enabled for the notify configuration.</p>",
+        "UpdateNotifyConfigurationResult$EnabledCountries": "<p>An array of two-character ISO country codes, in ISO 3166-1 alpha-2 format, that are enabled for the notify configuration.</p>"
       }
     },
     "Keyword": {
@@ -1080,6 +1263,14 @@
         "SendDestinationNumberVerificationCodeRequest$LanguageCode": "<p>Choose the language to use for the message.</p>"
       }
     },
+    "ListNotifyCountriesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNotifyCountriesResult": {
+      "base": null,
+      "refs": {}
+    },
     "ListPoolOriginationIdentitiesRequest": {
       "base": null,
       "refs": {}
@@ -1151,11 +1342,15 @@
         "DescribeAccountLimitsRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
         "DescribeConfigurationSetsRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
         "DescribeKeywordsRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
+        "DescribeNotifyConfigurationsRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
+        "DescribeNotifyTemplatesRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
         "DescribeOptOutListsRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
         "DescribeOptedOutNumbersRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
         "DescribePhoneNumbersRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
         "DescribePoolsRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
         "DescribeProtectConfigurationsRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
+        "DescribeRcsAgentCountryLaunchStatusRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
+        "DescribeRcsAgentsRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
         "DescribeRegistrationAttachmentsRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
         "DescribeRegistrationFieldDefinitionsRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
         "DescribeRegistrationFieldValuesRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
@@ -1166,6 +1361,7 @@
         "DescribeSenderIdsRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
         "DescribeSpendLimitsRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
         "DescribeVerifiedDestinationNumbersRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
+        "ListNotifyCountriesRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
         "ListPoolOriginationIdentitiesRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
         "ListProtectConfigurationRuleSetNumberOverridesRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>",
         "ListRegistrationAssociationsRequest$MaxResults": "<p>The maximum number of results to return per each request.</p>"
@@ -1239,10 +1435,13 @@
       "base": null,
       "refs": {
         "DeleteMediaMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit, in US dollars.</p>",
+        "DeleteNotifyMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit, in US dollars.</p>",
         "DeleteTextMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit, in US dollars.</p>",
         "DeleteVoiceMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit, in US dollars.</p>",
         "SetMediaMessageSpendLimitOverrideRequest$MonthlyLimit": "<p>The new monthly limit to enforce on text messages.</p>",
         "SetMediaMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit to enforce on sending text messages.</p>",
+        "SetNotifyMessageSpendLimitOverrideRequest$MonthlyLimit": "<p>The new monthly limit to enforce on notify messages.</p>",
+        "SetNotifyMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit, in US dollars.</p>",
         "SetTextMessageSpendLimitOverrideRequest$MonthlyLimit": "<p>The new monthly limit to enforce on text messages.</p>",
         "SetTextMessageSpendLimitOverrideResult$MonthlyLimit": "<p>The current monthly limit to enforce on sending text messages.</p>",
         "SetVoiceMessageSpendLimitOverrideRequest$MonthlyLimit": "<p>The new monthly limit to enforce on voice messages.</p>",
@@ -1260,6 +1459,10 @@
         "DescribeConfigurationSetsResult$NextToken": "<p>The token to be used for the next set of paginated results. If this field is empty then there are no more results.</p>",
         "DescribeKeywordsRequest$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
         "DescribeKeywordsResult$NextToken": "<p>The token to be used for the next set of paginated results. If this field is empty then there are no more results.</p>",
+        "DescribeNotifyConfigurationsRequest$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
+        "DescribeNotifyConfigurationsResult$NextToken": "<p>The token to be used for the next set of paginated results. If this field is empty then there are no more results.</p>",
+        "DescribeNotifyTemplatesRequest$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
+        "DescribeNotifyTemplatesResult$NextToken": "<p>The token to be used for the next set of paginated results. If this field is empty then there are no more results.</p>",
         "DescribeOptOutListsRequest$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
         "DescribeOptOutListsResult$NextToken": "<p>The token to be used for the next set of paginated results. If this field is empty then there are no more results.</p>",
         "DescribeOptedOutNumbersRequest$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
@@ -1270,6 +1473,10 @@
         "DescribePoolsResult$NextToken": "<p>The token to be used for the next set of paginated results. If this field is empty then there are no more results.</p>",
         "DescribeProtectConfigurationsRequest$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
         "DescribeProtectConfigurationsResult$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
+        "DescribeRcsAgentCountryLaunchStatusRequest$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
+        "DescribeRcsAgentCountryLaunchStatusResult$NextToken": "<p>The token to be used for the next set of paginated results. If this field is empty then there are no more results.</p>",
+        "DescribeRcsAgentsRequest$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
+        "DescribeRcsAgentsResult$NextToken": "<p>The token to be used for the next set of paginated results. If this field is empty then there are no more results.</p>",
         "DescribeRegistrationAttachmentsRequest$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
         "DescribeRegistrationAttachmentsResult$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
         "DescribeRegistrationFieldDefinitionsRequest$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
@@ -1290,6 +1497,8 @@
         "DescribeSpendLimitsResult$NextToken": "<p>The token to be used for the next set of paginated results. If this field is empty then there are no more results.</p>",
         "DescribeVerifiedDestinationNumbersRequest$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
         "DescribeVerifiedDestinationNumbersResult$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
+        "ListNotifyCountriesRequest$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
+        "ListNotifyCountriesResult$NextToken": "<p>The token to be used for the next set of paginated results. If this field is empty then there are no more results.</p>",
         "ListPoolOriginationIdentitiesRequest$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
         "ListPoolOriginationIdentitiesResult$NextToken": "<p>The token to be used for the next set of paginated results. If this field is empty then there are no more results.</p>",
         "ListProtectConfigurationRuleSetNumberOverridesRequest$NextToken": "<p>The token to be used for the next set of paginated results. You don't need to supply a value for this field in the initial request.</p>",
@@ -1304,11 +1513,245 @@
         "TagResourceRequest$Tags": "<p>An array of key and value pair tags that are associated with the resource.</p>"
       }
     },
+    "NotifyConfigurationArn": {
+      "base": null,
+      "refs": {
+        "CreateNotifyConfigurationResult$NotifyConfigurationArn": "<p>The Amazon Resource Name (ARN) for the notify configuration.</p>",
+        "DeleteNotifyConfigurationResult$NotifyConfigurationArn": "<p>The Amazon Resource Name (ARN) for the notify configuration.</p>",
+        "NotifyConfigurationInformation$NotifyConfigurationArn": "<p>The Amazon Resource Name (ARN) for the notify configuration.</p>",
+        "UpdateNotifyConfigurationResult$NotifyConfigurationArn": "<p>The Amazon Resource Name (ARN) for the notify configuration.</p>"
+      }
+    },
+    "NotifyConfigurationDisplayName": {
+      "base": null,
+      "refs": {
+        "CreateNotifyConfigurationRequest$DisplayName": "<p>The display name to associate with the notify configuration.</p>",
+        "CreateNotifyConfigurationResult$DisplayName": "<p>The display name associated with the notify configuration.</p>",
+        "DeleteNotifyConfigurationResult$DisplayName": "<p>The display name associated with the notify configuration.</p>",
+        "NotifyConfigurationInformation$DisplayName": "<p>The display name associated with the notify configuration.</p>",
+        "UpdateNotifyConfigurationResult$DisplayName": "<p>The display name associated with the notify configuration.</p>"
+      }
+    },
+    "NotifyConfigurationFilter": {
+      "base": "<p>The information for notify configurations that meet a specified criteria.</p>",
+      "refs": {
+        "NotifyConfigurationFilterList$member": null
+      }
+    },
+    "NotifyConfigurationFilterList": {
+      "base": null,
+      "refs": {
+        "DescribeNotifyConfigurationsRequest$Filters": "<p>An array of NotifyConfigurationFilter objects to filter the results on.</p>"
+      }
+    },
+    "NotifyConfigurationFilterName": {
+      "base": "<p>The filter name for filtering notify configurations. The available filter names are:</p> <ul> <li> <p> <code>default-pool</code>: Filter by the default pool.</p> </li> <li> <p> <code>default-template</code>: Filter by the default template.</p> </li> <li> <p> <code>deletion-protection-enabled</code>: Filter by deletion protection status.</p> </li> <li> <p> <code>display-name</code>: Filter by display name.</p> </li> <li> <p> <code>enabled-channels</code>: Filter by enabled channels.</p> </li> <li> <p> <code>enabled-countries</code>: Filter by enabled countries.</p> </li> <li> <p> <code>status</code>: Filter by status.</p> </li> <li> <p> <code>tier-upgrade-status</code>: Filter by tier upgrade status.</p> </li> <li> <p> <code>use-case</code>: Filter by use case.</p> </li> </ul>",
+      "refs": {
+        "NotifyConfigurationFilter$Name": "<p>The name of the attribute to filter on.</p>"
+      }
+    },
+    "NotifyConfigurationId": {
+      "base": null,
+      "refs": {
+        "CreateNotifyConfigurationResult$NotifyConfigurationId": "<p>The unique identifier for the notify configuration.</p>",
+        "DeleteNotifyConfigurationResult$NotifyConfigurationId": "<p>The unique identifier for the notify configuration.</p>",
+        "NotifyConfigurationInformation$NotifyConfigurationId": "<p>The unique identifier for the notify configuration.</p>",
+        "UpdateNotifyConfigurationResult$NotifyConfigurationId": "<p>The unique identifier for the notify configuration.</p>"
+      }
+    },
+    "NotifyConfigurationIdList": {
+      "base": null,
+      "refs": {
+        "DescribeNotifyConfigurationsRequest$NotifyConfigurationIds": "<p>An array of notify configuration IDs to describe.</p>"
+      }
+    },
+    "NotifyConfigurationIdOrArn": {
+      "base": null,
+      "refs": {
+        "DeleteNotifyConfigurationRequest$NotifyConfigurationId": "<p>The identifier of the notify configuration to delete. The NotifyConfigurationId can be found using the <a>DescribeNotifyConfigurations</a> operation.</p>",
+        "NotifyConfigurationIdList$member": null,
+        "SendNotifyTextMessageRequest$NotifyConfigurationId": "<p>The unique identifier of the notify configuration to use for sending the message. This can be either the NotifyConfigurationId or NotifyConfigurationArn.</p>",
+        "SendNotifyVoiceMessageRequest$NotifyConfigurationId": "<p>The unique identifier of the notify configuration to use for sending the message. This can be either the NotifyConfigurationId or NotifyConfigurationArn.</p>",
+        "UpdateNotifyConfigurationRequest$NotifyConfigurationId": "<p>The identifier of the notify configuration to update. The NotifyConfigurationId can be found using the <a>DescribeNotifyConfigurations</a> operation.</p>"
+      }
+    },
+    "NotifyConfigurationInformation": {
+      "base": "<p>The information for a notify configuration in an Amazon Web Services account.</p>",
+      "refs": {
+        "NotifyConfigurationInformationList$member": null
+      }
+    },
+    "NotifyConfigurationInformationList": {
+      "base": null,
+      "refs": {
+        "DescribeNotifyConfigurationsResult$NotifyConfigurations": "<p>An array of NotifyConfigurationInformation objects that contain the results.</p>"
+      }
+    },
+    "NotifyConfigurationStatus": {
+      "base": "<p>The status of a notify configuration.</p> <ul> <li> <p> <code>PENDING</code> - The notify configuration is pending review.</p> </li> <li> <p> <code>ACTIVE</code> - The notify configuration is active and can be used.</p> </li> <li> <p> <code>REJECTED</code> - The notify configuration was rejected.</p> </li> <li> <p> <code>REQUIRES_VERIFICATION</code> - The notify configuration requires verification.</p> </li> </ul>",
+      "refs": {
+        "CreateNotifyConfigurationResult$Status": "<p>The current status of the notify configuration.</p>",
+        "DeleteNotifyConfigurationResult$Status": "<p>The current status of the notify configuration.</p>",
+        "NotifyConfigurationInformation$Status": "<p>The current status of the notify configuration.</p>",
+        "UpdateNotifyConfigurationResult$Status": "<p>The current status of the notify configuration.</p>"
+      }
+    },
+    "NotifyConfigurationTier": {
+      "base": "<p>The tier of a notify configuration.</p> <ul> <li> <p> <code>BASIC</code> - Basic tier.</p> </li> <li> <p> <code>ADVANCED</code> - Advanced tier.</p> </li> </ul>",
+      "refs": {
+        "CreateNotifyConfigurationResult$Tier": "<p>The tier of the notify configuration.</p>",
+        "DeleteNotifyConfigurationResult$Tier": "<p>The tier of the notify configuration.</p>",
+        "ListNotifyCountriesRequest$Tier": "<p>The tier to filter the results by.</p>",
+        "NotifyConfigurationInformation$Tier": "<p>The tier of the notify configuration.</p>",
+        "NotifyConfigurationTierList$member": null,
+        "NotifyTierList$member": null,
+        "UpdateNotifyConfigurationResult$Tier": "<p>The tier of the notify configuration.</p>"
+      }
+    },
+    "NotifyConfigurationTierList": {
+      "base": null,
+      "refs": {
+        "NotifyTemplateInformation$TierAccess": "<p>The tier access level for the template.</p>"
+      }
+    },
+    "NotifyConfigurationUseCase": {
+      "base": "<p>The use case for a notify configuration.</p> <ul> <li> <p> <code>CODE_VERIFICATION</code> - Code verification use case.</p> </li> </ul>",
+      "refs": {
+        "CreateNotifyConfigurationRequest$UseCase": "<p>The use case for the notify configuration.</p>",
+        "CreateNotifyConfigurationResult$UseCase": "<p>The use case for the notify configuration.</p>",
+        "DeleteNotifyConfigurationResult$UseCase": "<p>The use case for the notify configuration.</p>",
+        "NotifyConfigurationInformation$UseCase": "<p>The use case for the notify configuration.</p>",
+        "NotifyUseCaseList$member": null,
+        "UpdateNotifyConfigurationResult$UseCase": "<p>The use case for the notify configuration.</p>"
+      }
+    },
+    "NotifyCountryInformation": {
+      "base": "<p>The information for a country that supports notify messaging.</p>",
+      "refs": {
+        "NotifyCountryInformationList$member": null
+      }
+    },
+    "NotifyCountryInformationList": {
+      "base": null,
+      "refs": {
+        "ListNotifyCountriesResult$NotifyCountries": "<p>An array of NotifyCountryInformation objects that contain the results.</p>"
+      }
+    },
+    "NotifyEnabledChannelsList": {
+      "base": null,
+      "refs": {
+        "CreateNotifyConfigurationRequest$EnabledChannels": "<p>An array of channels to enable for the notify configuration. Supported values include <code>SMS</code> and <code>VOICE</code>.</p>",
+        "CreateNotifyConfigurationResult$EnabledChannels": "<p>An array of channels enabled for the notify configuration. Supported values include <code>SMS</code> and <code>VOICE</code>.</p>",
+        "DeleteNotifyConfigurationResult$EnabledChannels": "<p>An array of channels enabled for the notify configuration. Supported values include <code>SMS</code> and <code>VOICE</code>.</p>",
+        "ListNotifyCountriesRequest$Channels": "<p>An array of channels to filter the results by.</p>",
+        "NotifyConfigurationInformation$EnabledChannels": "<p>An array of channels enabled for the notify configuration. Supported values include <code>SMS</code> and <code>VOICE</code>.</p>",
+        "NotifyCountryInformation$SupportedChannels": "<p>An array of supported channels for the country. Supported values include <code>SMS</code> and <code>VOICE</code>.</p>",
+        "UpdateNotifyConfigurationRequest$EnabledChannels": "<p>An array of channels to enable for the notify configuration. Supported values include <code>SMS</code> and <code>VOICE</code>.</p>",
+        "UpdateNotifyConfigurationResult$EnabledChannels": "<p>An array of channels enabled for the notify configuration. Supported values include <code>SMS</code> and <code>VOICE</code>.</p>"
+      }
+    },
+    "NotifyLanguageCode": {
+      "base": null,
+      "refs": {
+        "NotifyTemplateInformation$LanguageCode": "<p>The language code for the template.</p>"
+      }
+    },
+    "NotifyPoolIdOrUnset": {
+      "base": "<p>A pool identifier (ID or ARN) or the special value UNSET_DEFAULT_POOL_FOR_NOTIFY. Pass UNSET_DEFAULT_POOL_FOR_NOTIFY to clear the default pool from a NotifyConfiguration. This shape is used exclusively in UpdateNotifyConfigurationRequest.</p>",
+      "refs": {
+        "UpdateNotifyConfigurationRequest$PoolId": "<p>The pool ID or ARN to associate, or the special value UNSET_DEFAULT_POOL_FOR_NOTIFY to clear the current default pool.</p>"
+      }
+    },
+    "NotifyTemplateFilter": {
+      "base": "<p>The information for notify templates that meet a specified criteria.</p>",
+      "refs": {
+        "NotifyTemplateFilterList$member": null
+      }
+    },
+    "NotifyTemplateFilterList": {
+      "base": null,
+      "refs": {
+        "DescribeNotifyTemplatesRequest$Filters": "<p>An array of NotifyTemplateFilter objects to filter the results on.</p>"
+      }
+    },
+    "NotifyTemplateFilterName": {
+      "base": "<p>The filter name for filtering notify templates. The available filter names are:</p> <ul> <li> <p> <code>channels</code>: Filter by channels.</p> </li> <li> <p> <code>language-code</code>: Filter by language code.</p> </li> <li> <p> <code>supported-countries</code>: Filter by supported countries.</p> </li> <li> <p> <code>supported-voice-ids</code>: Filter by supported voice IDs.</p> </li> <li> <p> <code>template-type</code>: Filter by template type.</p> </li> <li> <p> <code>tier-access</code>: Filter by tier access.</p> </li> </ul>",
+      "refs": {
+        "NotifyTemplateFilter$Name": "<p>The name of the attribute to filter on.</p>"
+      }
+    },
+    "NotifyTemplateId": {
+      "base": "<p>Template identifier for notify templates. In UpdateNotifyConfiguration, pass UNSET_DEFAULT_TEMPLATE to clear the default template. The UNSET_DEFAULT_TEMPLATE value is only accepted by UpdateNotifyConfiguration.</p>",
+      "refs": {
+        "CreateNotifyConfigurationRequest$DefaultTemplateId": "<p>The default template identifier to associate with the notify configuration. If specified, this template is used when sending messages without an explicit template identifier.</p>",
+        "CreateNotifyConfigurationResult$DefaultTemplateId": "<p>The default template identifier associated with the notify configuration.</p>",
+        "DeleteNotifyConfigurationResult$DefaultTemplateId": "<p>The default template identifier associated with the notify configuration.</p>",
+        "NotifyConfigurationInformation$DefaultTemplateId": "<p>The default template identifier associated with the notify configuration.</p>",
+        "NotifyTemplateIdList$member": null,
+        "NotifyTemplateInformation$TemplateId": "<p>The unique identifier for the template.</p>",
+        "SendNotifyTextMessageRequest$TemplateId": "<p>The unique identifier of the template to use for the message.</p>",
+        "SendNotifyTextMessageResult$TemplateId": "<p>The unique identifier of the template used for the message.</p>",
+        "SendNotifyVoiceMessageRequest$TemplateId": "<p>The unique identifier of the template to use for the message.</p>",
+        "SendNotifyVoiceMessageResult$TemplateId": "<p>The unique identifier of the template used for the message.</p>",
+        "UpdateNotifyConfigurationRequest$DefaultTemplateId": "<p>The template ID to set as the default, or the special value UNSET_DEFAULT_TEMPLATE to clear the current default template.</p>",
+        "UpdateNotifyConfigurationResult$DefaultTemplateId": "<p>The default template identifier associated with the notify configuration.</p>"
+      }
+    },
+    "NotifyTemplateIdList": {
+      "base": null,
+      "refs": {
+        "DescribeNotifyTemplatesRequest$TemplateIds": "<p>An array of template IDs to describe.</p>"
+      }
+    },
+    "NotifyTemplateInformation": {
+      "base": "<p>The information for a system-managed notify template in an Amazon Web Services account.</p>",
+      "refs": {
+        "NotifyTemplateInformationList$member": null
+      }
+    },
+    "NotifyTemplateInformationList": {
+      "base": null,
+      "refs": {
+        "DescribeNotifyTemplatesResult$NotifyTemplates": "<p>An array of NotifyTemplateInformation objects that contain the results.</p>"
+      }
+    },
+    "NotifyTemplateStatus": {
+      "base": "<p>The status of a notify template.</p> <ul> <li> <p> <code>ACTIVE</code> - The template is active and available for use.</p> </li> <li> <p> <code>INACTIVE</code> - The template is inactive.</p> </li> </ul>",
+      "refs": {
+        "NotifyTemplateInformation$Status": "<p>The current status of the template.</p>"
+      }
+    },
+    "NotifyTemplateType": {
+      "base": "<p>The type of a notify template.</p> <ul> <li> <p> <code>OTP_VERIFICATION</code> - OTP verification template type.</p> </li> </ul>",
+      "refs": {
+        "NotifyTemplateInformation$TemplateType": "<p>The type of the template.</p>"
+      }
+    },
+    "NotifyTemplateVersion": {
+      "base": null,
+      "refs": {
+        "NotifyTemplateInformation$Version": "<p>The version of the template.</p>"
+      }
+    },
+    "NotifyTierList": {
+      "base": null,
+      "refs": {
+        "NotifyCountryInformation$SupportedTiers": "<p>An array of supported tiers for the country.</p>"
+      }
+    },
+    "NotifyUseCaseList": {
+      "base": null,
+      "refs": {
+        "ListNotifyCountriesRequest$UseCases": "<p>An array of use cases to filter the results by.</p>",
+        "NotifyCountryInformation$SupportedUseCases": "<p>An array of supported use cases for the country.</p>"
+      }
+    },
     "NumberCapability": {
       "base": null,
       "refs": {
         "GetProtectConfigurationCountryRuleSetRequest$NumberCapability": "<p>The capability type to return the CountryRuleSet for. Valid values are <code>SMS</code>, <code>VOICE</code>, or <code>MMS</code>.</p>",
         "GetProtectConfigurationCountryRuleSetResult$NumberCapability": "<p>The capability type associated with the returned ProtectConfigurationCountryRuleSetInformation objects.</p>",
+        "NotifyEnabledChannelsList$member": null,
         "NumberCapabilityList$member": null,
         "UpdateProtectConfigurationCountryRuleSetRequest$NumberCapability": "<p>The number capability to apply the CountryRuleSetUpdates updates to.</p>",
         "UpdateProtectConfigurationCountryRuleSetResult$NumberCapability": "<p>The number capability that was updated</p>"
@@ -1317,6 +1760,7 @@
     "NumberCapabilityList": {
       "base": null,
       "refs": {
+        "NotifyTemplateInformation$Channels": "<p>The channels for the template. Supported values are <code>SMS</code> and <code>VOICE</code>.</p>",
         "OriginationIdentityMetadata$NumberCapabilities": "<p>Describes if the origination identity can be used for text messages, voice calls or both.</p>",
         "PhoneNumberInformation$NumberCapabilities": "<p>Describes if the origination identity can be used for text messages, voice calls or both.</p>",
         "ReleasePhoneNumberResult$NumberCapabilities": "<p>Specifies if the number could be used for text messages, voice, or both.</p>",
@@ -1360,18 +1804,22 @@
         "CreateOptOutListRequest$OptOutListName": "<p>The name of the new OptOutList.</p>",
         "CreateOptOutListResult$OptOutListName": "<p>The name of the new OptOutList.</p>",
         "CreatePoolResult$OptOutListName": "<p>The name of the OptOutList associated with the pool.</p>",
+        "CreateRcsAgentResult$OptOutListName": "<p>The name of the OptOutList associated with the RCS agent.</p>",
         "DeleteOptOutListResult$OptOutListName": "<p>The name of the OptOutList that was removed.</p>",
         "DeleteOptedOutNumberResult$OptOutListName": "<p>The OptOutListName that the phone number was removed from.</p>",
         "DeletePoolResult$OptOutListName": "<p>The name of the OptOutList that was associated with the deleted pool.</p>",
+        "DeleteRcsAgentResult$OptOutListName": "<p>The name of the OptOutList that was associated with the deleted RCS agent.</p>",
         "DescribeOptedOutNumbersResult$OptOutListName": "<p>The name of the OptOutList.</p>",
         "OptOutListInformation$OptOutListName": "<p>The name of the OptOutList.</p>",
         "PhoneNumberInformation$OptOutListName": "<p>The name of the OptOutList associated with the phone number.</p>",
         "PoolInformation$OptOutListName": "<p>The name of the OptOutList associated with the pool.</p>",
         "PutOptedOutNumberResult$OptOutListName": "<p>The OptOutListName that the phone number was removed from.</p>",
+        "RcsAgentInformation$OptOutListName": "<p>The name of the OptOutList associated with the RCS agent.</p>",
         "ReleasePhoneNumberResult$OptOutListName": "<p>The name of the OptOutList that was associated with the phone number.</p>",
         "RequestPhoneNumberResult$OptOutListName": "<p>The name of the OptOutList that is associated with the requested phone number.</p>",
         "UpdatePhoneNumberResult$OptOutListName": "<p>The name of the OptOutList associated with the phone number.</p>",
-        "UpdatePoolResult$OptOutListName": "<p>The name of the OptOutList associated with the pool.</p>"
+        "UpdatePoolResult$OptOutListName": "<p>The name of the OptOutList associated with the pool.</p>",
+        "UpdateRcsAgentResult$OptOutListName": "<p>The name of the OptOutList associated with the RCS agent.</p>"
       }
     },
     "OptOutListNameList": {
@@ -1383,6 +1831,7 @@
     "OptOutListNameOrArn": {
       "base": null,
       "refs": {
+        "CreateRcsAgentRequest$OptOutListName": "<p>The OptOutList to associate with the RCS agent. Valid values are either OptOutListName or OptOutListArn.</p>",
         "DeleteOptOutListRequest$OptOutListName": "<p>The OptOutListName or OptOutListArn of the OptOutList to delete. You can use <a>DescribeOptOutLists</a> to find the values for OptOutListName and OptOutListArn.</p> <important> <p>If you are using a shared End User Messaging SMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
         "DeleteOptedOutNumberRequest$OptOutListName": "<p>The OptOutListName or OptOutListArn to remove the phone number from.</p> <important> <p>If you are using a shared End User Messaging SMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
         "DescribeOptedOutNumbersRequest$OptOutListName": "<p>The OptOutListName or OptOutListArn of the OptOutList. You can use <a>DescribeOptOutLists</a> to find the values for OptOutListName and OptOutListArn.</p> <important> <p>If you are using a shared End User Messaging SMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
@@ -1390,7 +1839,8 @@
         "PutOptedOutNumberRequest$OptOutListName": "<p>The OptOutListName or OptOutListArn to add the phone number to.</p> <important> <p>If you are using a shared End User Messaging SMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
         "RequestPhoneNumberRequest$OptOutListName": "<p>The name of the OptOutList to associate with the phone number. You can use the OptOutListName or OptOutListArn.</p> <important> <p>If you are using a shared End User Messaging SMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
         "UpdatePhoneNumberRequest$OptOutListName": "<p>The OptOutList to add the phone number to. You can use either the opt out list name or the opt out list ARN.</p>",
-        "UpdatePoolRequest$OptOutListName": "<p>The OptOutList to associate with the pool. Valid values are either OptOutListName or OptOutListArn.</p> <important> <p>If you are using a shared End User Messaging SMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
+        "UpdatePoolRequest$OptOutListName": "<p>The OptOutList to associate with the pool. Valid values are either OptOutListName or OptOutListArn.</p> <important> <p>If you are using a shared End User Messaging SMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "UpdateRcsAgentRequest$OptOutListName": "<p>The OptOutList to associate with the RCS agent. Valid values are either OptOutListName or OptOutListArn.</p>"
       }
     },
     "OptedOutFilter": {
@@ -1447,6 +1897,7 @@
         "DescribeOptOutListsRequest$Owner": "<p>Use <code>SELF</code> to filter the list of Opt-Out List to ones your account owns or use <code>SHARED</code> to filter on Opt-Out List shared with your account. The <code>Owner</code> and <code>OptOutListNames</code> parameters can't be used at the same time.</p>",
         "DescribePhoneNumbersRequest$Owner": "<p>Use <code>SELF</code> to filter the list of phone numbers to ones your account owns or use <code>SHARED</code> to filter on phone numbers shared with your account. The <code>Owner</code> and <code>PhoneNumberIds</code> parameters can't be used at the same time.</p>",
         "DescribePoolsRequest$Owner": "<p>Use <code>SELF</code> to filter the list of Pools to ones your account owns or use <code>SHARED</code> to filter on Pools shared with your account. The <code>Owner</code> and <code>PoolIds</code> parameters can't be used at the same time.</p>",
+        "DescribeRcsAgentsRequest$Owner": "<p>Use <code>SELF</code> to filter the list of RCS agents to ones your account owns or use <code>SHARED</code> to filter on RCS agents shared with your account. The <code>Owner</code> and <code>RcsAgentIds</code> parameters can't be used at the same time.</p>",
         "DescribeSenderIdsRequest$Owner": "<p>Use <code>SELF</code> to filter the list of Sender Ids to ones your account owns or use <code>SHARED</code> to filter on Sender Ids shared with your account. The <code>Owner</code> and <code>SenderIds</code> parameters can't be used at the same time. </p>"
       }
     },
@@ -1475,6 +1926,8 @@
         "ReleasePhoneNumberResult$PhoneNumber": "<p>The phone number that was released.</p>",
         "RequestPhoneNumberResult$PhoneNumber": "<p>The new phone number that was requested.</p>",
         "SendMediaMessageRequest$DestinationPhoneNumber": "<p>The destination phone number in E.164 format.</p>",
+        "SendNotifyTextMessageRequest$DestinationPhoneNumber": "<p>The destination phone number in E.164 format.</p>",
+        "SendNotifyVoiceMessageRequest$DestinationPhoneNumber": "<p>The destination phone number in E.164 format.</p>",
         "SendTextMessageRequest$DestinationPhoneNumber": "<p>The destination phone number in E.164 format.</p>",
         "SendVoiceMessageRequest$DestinationPhoneNumber": "<p>The destination phone number in E.164 format.</p>",
         "UpdatePhoneNumberResult$PhoneNumber": "<p>The phone number that was updated.</p>",
@@ -1576,6 +2029,7 @@
       "base": null,
       "refs": {
         "AssociateOriginationIdentityRequest$PoolId": "<p>The pool to update with the new Identity. This value can be either the PoolId or PoolArn, and you can find these values using <a href=\"https://docs.aws.amazon.com/pinpoint/latest/apireference_smsvoicev2/API_DescribePools.html\">DescribePools</a>.</p> <important> <p>If you are using a shared End User Messaging SMS; resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "CreateNotifyConfigurationRequest$PoolId": "<p>The identifier of the pool to associate with the notify configuration.</p>",
         "DeletePoolRequest$PoolId": "<p>The PoolId or PoolArn of the pool to delete. You can use <a>DescribePools</a> to find the values for PoolId and PoolArn .</p> <important> <p>If you are using a shared End User Messaging SMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
         "DisassociateOriginationIdentityRequest$PoolId": "<p>The unique identifier for the pool to disassociate with the origination identity. This value can be either the PoolId or PoolArn.</p> <important> <p>If you are using a shared End User Messaging SMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
         "ListPoolOriginationIdentitiesRequest$PoolId": "<p>The unique identifier for the pool. This value can be either the PoolId or PoolArn.</p> <important> <p>If you are using a shared End User Messaging SMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
@@ -1626,18 +2080,28 @@
     "PrimitiveBoolean": {
       "base": null,
       "refs": {
+        "CreateNotifyConfigurationResult$DeletionProtectionEnabled": "<p>When set to true deletion protection is enabled. By default this is set to false. </p>",
         "CreatePoolResult$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
         "CreatePoolResult$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When set to false, and an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, End User Messaging SMS automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
         "CreatePoolResult$SharedRoutesEnabled": "<p>Indicates whether shared routes are enabled for the pool. Set to false and only origination identities in this pool are used to send messages. </p>",
         "CreatePoolResult$DeletionProtectionEnabled": "<p>When set to true deletion protection is enabled. By default this is set to false. </p>",
         "CreateProtectConfigurationResult$AccountDefault": "<p>This is true if the protect configuration is set as your account default protect configuration.</p>",
         "CreateProtectConfigurationResult$DeletionProtectionEnabled": "<p>When set to true deletion protection is enabled. By default this is set to false. </p>",
+        "CreateRcsAgentResult$DeletionProtectionEnabled": "<p>When set to true deletion protection is enabled. By default this is set to false.</p>",
+        "CreateRcsAgentResult$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
+        "CreateRcsAgentResult$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
+        "DeleteNotifyConfigurationResult$DeletionProtectionEnabled": "<p>When set to true deletion protection is enabled. By default this is set to false. </p>",
         "DeleteOptedOutNumberResult$EndUserOptedOut": "<p>This is true if it was the end user who requested their phone number be removed. </p>",
         "DeletePoolResult$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
         "DeletePoolResult$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When set to false and an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, End User Messaging SMS automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
         "DeletePoolResult$SharedRoutesEnabled": "<p>Indicates whether shared routes are enabled for the pool.</p>",
         "DeleteProtectConfigurationResult$AccountDefault": "<p>This is true if the protect configuration is set as your account default protect configuration.</p>",
         "DeleteProtectConfigurationResult$DeletionProtectionEnabled": "<p>The status of deletion protection for the protect configuration. When set to true deletion protection is enabled. By default this is set to false. </p>",
+        "DeleteRcsAgentResult$DeletionProtectionEnabled": "<p>When set to true deletion protection is enabled. By default this is set to false.</p>",
+        "DeleteRcsAgentResult$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
+        "DeleteRcsAgentResult$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
+        "NotifyConfigurationInformation$DeletionProtectionEnabled": "<p>When set to true deletion protection is enabled. By default this is set to false. </p>",
+        "NotifyCountryInformation$CustomerOwnedIdentityRequired": "<p>Whether a customer-owned identity is required to send notify messages to this country.</p>",
         "OptedOutNumberInformation$EndUserOptedOut": "<p>This is set to true if it was the end recipient that opted out.</p>",
         "PhoneNumberInformation$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients using the TwoWayChannelArn.</p>",
         "PhoneNumberInformation$SelfManagedOptOutsEnabled": "<p>When set to false and an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, End User Messaging SMS automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out request. For more information see <a href=\"https://docs.aws.amazon.com/pinpoint/latest/userguide/settings-sms-managing.html#settings-account-sms-self-managed-opt-out\">Self-managed opt-outs</a> </p>",
@@ -1650,6 +2114,9 @@
         "ProtectConfigurationInformation$AccountDefault": "<p>This is true if the protect configuration is set as your account default protect configuration.</p>",
         "ProtectConfigurationInformation$DeletionProtectionEnabled": "<p>The status of deletion protection for the protect configuration. When set to true deletion protection is enabled. By default this is set to false. </p>",
         "PutOptedOutNumberResult$EndUserOptedOut": "<p>This is true if it was the end user who requested their phone number be removed. </p>",
+        "RcsAgentInformation$DeletionProtectionEnabled": "<p>When set to true the RCS agent can't be deleted.</p>",
+        "RcsAgentInformation$SelfManagedOptOutsEnabled": "<p>When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
+        "RcsAgentInformation$TwoWayEnabled": "<p>When set to true you can receive incoming text messages from your end recipients using the TwoWayChannelArn.</p>",
         "ReleasePhoneNumberResult$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
         "ReleasePhoneNumberResult$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When set to false and an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, End User Messaging SMS automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
         "ReleaseSenderIdResult$Registered": "<p>True if the sender ID is registered.</p>",
@@ -1660,6 +2127,8 @@
         "RequestSenderIdResult$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the sender ID can't be deleted.</p>",
         "RequestSenderIdResult$Registered": "<p>True if the sender ID is registered.</p>",
         "SendMediaMessageRequest$DryRun": "<p>When set to true, the message is checked and validated, but isn't sent to the end recipient.</p>",
+        "SendNotifyTextMessageRequest$DryRun": "<p>When set to true, the message is checked and validated, but isn't sent to the end recipient.</p>",
+        "SendNotifyVoiceMessageRequest$DryRun": "<p>When set to true, the message is checked and validated, but isn't sent to the end recipient.</p>",
         "SendTextMessageRequest$DryRun": "<p>When set to true, the message is checked and validated, but isn't sent to the end recipient. You are not charged for using <code>DryRun</code>.</p> <p>The Message Parts per Second (MPS) limit when using <code>DryRun</code> is five. If your origination identity has a lower MPS limit then the lower MPS limit is used. For more information about MPS limits, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/sms-limitations-mps.html\">Message Parts per Second (MPS) limits</a> in the <i>End User Messaging SMS User Guide</i>..</p>",
         "SendVoiceMessageRequest$DryRun": "<p>When set to true, the message is checked and validated, but isn't sent to the end recipient.</p>",
         "SenderIdInformation$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the sender ID can't be deleted.</p>",
@@ -1667,6 +2136,8 @@
         "SpendLimit$Overridden": "<p>When set to <code>True</code>, the value that has been specified in the <code>EnforcedLimit</code> is used to determine the maximum amount in US dollars that can be spent to send messages each month, in US dollars.</p>",
         "SubmitRegistrationVersionRequest$AwsReview": "<p>Set to true to request AWS review of the registration. When enabled, AWS will perform additional validation and review of the registration submission before processing.</p>",
         "SubmitRegistrationVersionResult$AwsReview": "<p>Indicates whether AWS review was requested for this registration submission.</p>",
+        "TemplateVariableMetadata$Required": "<p>Whether the variable is required.</p>",
+        "UpdateNotifyConfigurationResult$DeletionProtectionEnabled": "<p>When set to true deletion protection is enabled. By default this is set to false. </p>",
         "UpdatePhoneNumberResult$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
         "UpdatePhoneNumberResult$SelfManagedOptOutsEnabled": "<p>This is true if self managed opt-out are enabled.</p>",
         "UpdatePhoneNumberResult$InternationalSendingEnabled": "<p>When set to true the international sending of phone number is Enabled.</p>",
@@ -1677,6 +2148,9 @@
         "UpdatePoolResult$DeletionProtectionEnabled": "<p>When set to true the pool can't be deleted.</p>",
         "UpdateProtectConfigurationResult$AccountDefault": "<p>This is true if the protect configuration is set as your account default protect configuration.</p>",
         "UpdateProtectConfigurationResult$DeletionProtectionEnabled": "<p>The status of deletion protection for the protect configuration. When set to true deletion protection is enabled. By default this is set to false. </p>",
+        "UpdateRcsAgentResult$DeletionProtectionEnabled": "<p>When set to true deletion protection is enabled. By default this is set to false.</p>",
+        "UpdateRcsAgentResult$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
+        "UpdateRcsAgentResult$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
         "UpdateSenderIdResult$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the sender ID can't be deleted.</p>",
         "UpdateSenderIdResult$Registered": "<p>True if the sender ID is registered..</p>"
       }
@@ -1882,6 +2356,61 @@
     "PutResourcePolicyResult": {
       "base": null,
       "refs": {}
+    },
+    "RcsAgentFilter": {
+      "base": "<p>The information for an RCS agent that meets a specified criteria.</p>",
+      "refs": {
+        "RcsAgentFilterList$member": null
+      }
+    },
+    "RcsAgentFilterList": {
+      "base": null,
+      "refs": {
+        "DescribeRcsAgentsRequest$Filters": "<p>An array of RcsAgentFilter objects to filter the results.</p>"
+      }
+    },
+    "RcsAgentFilterName": {
+      "base": "<p>The filter name for filtering RCS agents. The available filter names are:</p> <ul> <li> <p> <code>deletion-protection-enabled</code>: Filter by deletion protection status.</p> </li> <li> <p> <code>opt-out-list-name</code>: Filter by the opt-out list name.</p> </li> <li> <p> <code>self-managed-opt-outs-enabled</code>: Filter by self-managed opt-outs status.</p> </li> <li> <p> <code>status</code>: Filter by RCS agent status.</p> </li> <li> <p> <code>two-way-channel-arn</code>: Filter by the two-way channel ARN.</p> </li> <li> <p> <code>two-way-enabled</code>: Filter by two-way enabled status.</p> </li> </ul>",
+      "refs": {
+        "RcsAgentFilter$Name": "<p>The name of the attribute to filter on.</p>"
+      }
+    },
+    "RcsAgentIdList": {
+      "base": null,
+      "refs": {
+        "DescribeRcsAgentsRequest$RcsAgentIds": "<p>An array of unique identifiers for the RCS agents. This is an array of strings that can be either the RcsAgentId or RcsAgentArn.</p>"
+      }
+    },
+    "RcsAgentIdOrArn": {
+      "base": null,
+      "refs": {
+        "CreateVerifiedDestinationNumberRequest$RcsAgentId": "<p>The unique identifier of the RCS agent to associate with the verified destination number. You can use either the RcsAgentId or RcsAgentArn.</p>",
+        "DeleteRcsAgentRequest$RcsAgentId": "<p>The unique identifier of the RCS agent to delete. You can use either the RcsAgentId or RcsAgentArn.</p>",
+        "DescribeRcsAgentCountryLaunchStatusRequest$RcsAgentId": "<p>The unique identifier of the RCS agent. You can use either the RcsAgentId or RcsAgentArn.</p>",
+        "RcsAgentIdList$member": null,
+        "UpdateRcsAgentRequest$RcsAgentId": "<p>The unique identifier of the RCS agent to update. You can use either the RcsAgentId or RcsAgentArn.</p>"
+      }
+    },
+    "RcsAgentInformation": {
+      "base": "<p>The information for an RCS agent in an Amazon Web Services account.</p>",
+      "refs": {
+        "RcsAgentInformationList$member": null
+      }
+    },
+    "RcsAgentInformationList": {
+      "base": null,
+      "refs": {
+        "DescribeRcsAgentsResult$RcsAgents": "<p>An array of RcsAgentInformation objects that contain the details for the requested RCS agents.</p>"
+      }
+    },
+    "RcsAgentStatus": {
+      "base": "<p>The current status of the RCS agent.</p> <ul> <li> <p> <code>CREATED</code>: The RCS agent has been created.</p> </li> <li> <p> <code>PENDING</code>: The RCS agent is pending review.</p> </li> <li> <p> <code>TESTING</code>: The RCS agent is in testing.</p> </li> <li> <p> <code>PARTIAL</code>: The RCS agent is partially active.</p> </li> <li> <p> <code>ACTIVE</code>: The RCS agent is active and available for use.</p> </li> <li> <p> <code>DELETED</code>: The RCS agent has been deleted.</p> </li> </ul>",
+      "refs": {
+        "CreateRcsAgentResult$Status": "<p>The current status of the RCS agent.</p>",
+        "DeleteRcsAgentResult$Status": "<p>The current status of the RCS agent.</p>",
+        "RcsAgentInformation$Status": "<p>The current status of the RCS agent.</p>",
+        "UpdateRcsAgentResult$Status": "<p>The current status of the RCS agent.</p>"
+      }
     },
     "RegistrationAssociationBehavior": {
       "base": null,
@@ -2284,7 +2813,7 @@
       }
     },
     "ResourceType": {
-      "base": null,
+      "base": "<p>The type of resource.</p> <ul> <li> <p> <code>phone-number</code>: A phone number resource.</p> </li> <li> <p> <code>sender-id</code>: A sender ID resource.</p> </li> <li> <p> <code>rcs-agent</code>: An RCS agent resource.</p> </li> </ul>",
       "refs": {
         "ConflictException$ResourceType": "<p>The type of resource that caused the exception.</p>",
         "ResourceNotFoundException$ResourceType": "<p>The type of resource that caused the exception.</p>"
@@ -2352,6 +2881,22 @@
       "refs": {}
     },
     "SendMediaMessageResult": {
+      "base": null,
+      "refs": {}
+    },
+    "SendNotifyTextMessageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SendNotifyTextMessageResult": {
+      "base": null,
+      "refs": {}
+    },
+    "SendNotifyVoiceMessageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SendNotifyVoiceMessageResult": {
       "base": null,
       "refs": {}
     },
@@ -2486,6 +3031,14 @@
       "base": null,
       "refs": {}
     },
+    "SetNotifyMessageSpendLimitOverrideRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SetNotifyMessageSpendLimitOverrideResult": {
+      "base": null,
+      "refs": {}
+    },
     "SetTextMessageSpendLimitOverrideRequest": {
       "base": null,
       "refs": {}
@@ -2546,14 +3099,21 @@
         "AssociateProtectConfigurationResult$ConfigurationSetArn": "<p>The Amazon Resource Name (ARN) of the configuration set.</p>",
         "CarrierLookupResult$Country": "<p>The name of the country or region for the phone number.</p>",
         "CarrierLookupResult$Carrier": "<p>The carrier or service provider that the phone number is currently registered with. In some countries and regions, this value may be the carrier or service provider that the phone number was originally registered with.</p>",
+        "CarrierStatusInformation$CarrierName": "<p>The name of the carrier.</p>",
         "ConfigurationSetInformation$ConfigurationSetArn": "<p>The Resource Name (ARN) of the ConfigurationSet.</p>",
         "ConflictException$Message": null,
         "ConflictException$ResourceId": "<p>The unique identifier of the request.</p>",
+        "CountryLaunchStatusInformation$RcsPlatformId": "<p>The RCS platform identifier for this country.</p>",
+        "CountryLaunchStatusInformation$RegistrationId": "<p>The unique identifier of the registration associated with this country launch.</p>",
         "CreateConfigurationSetResult$ConfigurationSetArn": "<p>The Amazon Resource Name (ARN) of the newly created configuration set.</p>",
         "CreateEventDestinationResult$ConfigurationSetArn": "<p>The ARN of the configuration set.</p>",
+        "CreateNotifyConfigurationResult$PoolId": "<p>The identifier of the pool associated with the notify configuration.</p>",
+        "CreateNotifyConfigurationResult$RejectionReason": "<p>The reason the notify configuration was rejected, if applicable.</p>",
         "CreateOptOutListResult$OptOutListArn": "<p>The Amazon Resource Name (ARN) for the OptOutList.</p>",
         "CreatePoolResult$PoolArn": "<p>The Amazon Resource Name (ARN) for the pool.</p>",
         "CreatePoolResult$PoolId": "<p>The unique identifier for the pool.</p>",
+        "CreateRcsAgentResult$RcsAgentArn": "<p>The Amazon Resource Name (ARN) of the newly created RCS agent.</p>",
+        "CreateRcsAgentResult$RcsAgentId": "<p>The unique identifier for the RCS agent.</p>",
         "CreateRegistrationAssociationResult$RegistrationArn": "<p>The Amazon Resource Name (ARN) for the registration.</p>",
         "CreateRegistrationAssociationResult$RegistrationId": "<p>The unique identifier for the registration.</p>",
         "CreateRegistrationAssociationResult$ResourceArn": "<p>The Amazon Resource Name (ARN) of the origination identity that is associated with the registration. </p>",
@@ -2567,16 +3127,21 @@
         "CreateRegistrationVersionResult$RegistrationId": "<p>The unique identifier for the registration.</p>",
         "CreateVerifiedDestinationNumberResult$VerifiedDestinationNumberArn": "<p>The Amazon Resource Name (ARN) for the verified destination phone number.</p>",
         "CreateVerifiedDestinationNumberResult$VerifiedDestinationNumberId": "<p>The unique identifier for the verified destination phone number.</p>",
+        "CreateVerifiedDestinationNumberResult$RcsAgentId": "<p>The unique identifier of the RCS agent associated with the verified destination number.</p>",
         "DeleteConfigurationSetResult$ConfigurationSetArn": "<p>The Amazon Resource Name (ARN) of the deleted configuration set.</p>",
         "DeleteDefaultMessageTypeResult$ConfigurationSetArn": "<p>The Amazon Resource Name (ARN) of the configuration set.</p>",
         "DeleteDefaultSenderIdResult$ConfigurationSetArn": "<p>The Amazon Resource Name (ARN) of the configuration set.</p>",
         "DeleteEventDestinationResult$ConfigurationSetArn": "<p>The Amazon Resource Name (ARN) of the configuration set.</p>",
         "DeleteKeywordResult$OriginationIdentityArn": "<p>The PhoneNumberArn or PoolArn that the keyword was associated with.</p>",
         "DeleteKeywordResult$OriginationIdentity": "<p>The PhoneNumberId or PoolId that the keyword was associated with.</p>",
+        "DeleteNotifyConfigurationResult$PoolId": "<p>The identifier of the pool associated with the notify configuration.</p>",
+        "DeleteNotifyConfigurationResult$RejectionReason": "<p>The reason the notify configuration was rejected, if applicable.</p>",
         "DeleteOptOutListResult$OptOutListArn": "<p>The Amazon Resource Name (ARN) of the OptOutList that was removed.</p>",
         "DeleteOptedOutNumberResult$OptOutListArn": "<p>The OptOutListArn that the phone number was removed from.</p>",
         "DeletePoolResult$PoolArn": "<p>The Amazon Resource Name (ARN) of the pool that was deleted.</p>",
         "DeletePoolResult$PoolId": "<p>The PoolId of the pool that was deleted.</p>",
+        "DeleteRcsAgentResult$RcsAgentArn": "<p>The Amazon Resource Name (ARN) of the deleted RCS agent.</p>",
+        "DeleteRcsAgentResult$RcsAgentId": "<p>The unique identifier for the deleted RCS agent.</p>",
         "DeleteRegistrationAttachmentResult$RegistrationAttachmentArn": "<p>The Amazon Resource Name (ARN) for the registration attachment.</p>",
         "DeleteRegistrationAttachmentResult$RegistrationAttachmentId": "<p>The unique identifier for the registration attachment.</p>",
         "DeleteRegistrationFieldValueResult$RegistrationArn": "<p>The Amazon Resource Name (ARN) for the registration.</p>",
@@ -2589,6 +3154,8 @@
         "DescribeKeywordsResult$OriginationIdentityArn": "<p>The PhoneNumberArn or PoolArn that is associated with the OriginationIdentity. </p>",
         "DescribeKeywordsResult$OriginationIdentity": "<p>The PhoneNumberId or PoolId that is associated with the OriginationIdentity.</p>",
         "DescribeOptedOutNumbersResult$OptOutListArn": "<p>The Amazon Resource Name (ARN) of the OptOutList.</p>",
+        "DescribeRcsAgentCountryLaunchStatusResult$RcsAgentId": "<p>The unique identifier for the RCS agent.</p>",
+        "DescribeRcsAgentCountryLaunchStatusResult$RcsAgentArn": "<p>The Amazon Resource Name (ARN) of the RCS agent.</p>",
         "DescribeRegistrationFieldValuesResult$RegistrationArn": "<p>The Amazon Resource Name (ARN) for the registration.</p>",
         "DescribeRegistrationFieldValuesResult$RegistrationId": "<p>The unique identifier for the registration.</p>",
         "DescribeRegistrationVersionsResult$RegistrationArn": "<p>The Amazon Resource Name (ARN) for the registration.</p>",
@@ -2606,6 +3173,9 @@
         "ListPoolOriginationIdentitiesResult$PoolId": "<p>The unique PoolId of the pool.</p>",
         "ListRegistrationAssociationsResult$RegistrationArn": "<p>The Amazon Resource Name (ARN) for the registration.</p>",
         "ListRegistrationAssociationsResult$RegistrationId": "<p>The unique identifier for the registration.</p>",
+        "NotifyConfigurationInformation$PoolId": "<p>The identifier of the pool associated with the notify configuration.</p>",
+        "NotifyConfigurationInformation$RejectionReason": "<p>The reason the notify configuration was rejected, if applicable.</p>",
+        "NotifyCountryInformation$CountryName": "<p>The name of the country.</p>",
         "OptOutListInformation$OptOutListArn": "<p>The Amazon Resource Name (ARN) of the OptOutList.</p>",
         "OriginationIdentityMetadata$OriginationIdentityArn": "<p>The Amazon Resource Name (ARN) associated with the origination identity.</p>",
         "OriginationIdentityMetadata$OriginationIdentity": "<p>The unique identifier of the origination identity.</p>",
@@ -2622,11 +3192,15 @@
         "PutRegistrationFieldValueResult$RegistrationArn": "<p>The Amazon Resource Name (ARN) for the registration.</p>",
         "PutRegistrationFieldValueResult$RegistrationId": "<p>The unique identifier for the registration.</p>",
         "PutRegistrationFieldValueResult$RegistrationAttachmentId": "<p>The unique identifier for the registration attachment.</p>",
+        "RcsAgentInformation$RcsAgentArn": "<p>The Amazon Resource Name (ARN) of the RCS agent.</p>",
+        "RcsAgentInformation$RcsAgentId": "<p>The unique identifier for the RCS agent.</p>",
+        "RcsAgentInformation$PoolId": "<p>The unique identifier of the pool associated with the RCS agent.</p>",
         "RegistrationAssociationMetadata$ResourceArn": "<p>The Amazon Resource Name (ARN) of the origination identity that is associated with the registration. </p>",
         "RegistrationAssociationMetadata$ResourceId": "<p>The unique identifier for the origination identity. For example this could be a <b>PhoneNumberId</b> or <b>SenderId</b>.</p>",
         "RegistrationAssociationMetadata$ResourceType": "<p>The origination identity type.</p>",
         "RegistrationAttachmentsInformation$RegistrationAttachmentArn": "<p>The Amazon Resource Name (ARN) for the registration attachment.</p>",
         "RegistrationAttachmentsInformation$RegistrationAttachmentId": "<p>The unique identifier for the registration attachment.</p>",
+        "RegistrationAttachmentsInformation$AttachmentUrl": "<p>The URL to the document that's associated with the registration attachment.</p>",
         "RegistrationDeniedReasonInformation$Reason": "<p>The reason a registration was rejected.</p>",
         "RegistrationDeniedReasonInformation$ShortDescription": "<p>A short description of the rejection reason.</p>",
         "RegistrationDeniedReasonInformation$LongDescription": "<p>A long description of the rejection reason.</p>",
@@ -2640,7 +3214,7 @@
         "RegistrationFieldDisplayHints$TextValidationDescription": "<p>The validation rules for the text field.</p>",
         "RegistrationFieldDisplayHints$ExampleTextValue": "<p>Example text of what the value of a field should contain.</p>",
         "RegistrationFieldValueInformation$DeniedReason": "<p>A description of why the registration was denied.</p>",
-        "RegistrationFieldValueInformation$Feedback": "<p>Feedback provided for this specific field during the registration review process. This may include validation errors, suggestions for improvement, or additional requirements.</p>",
+        "RegistrationFieldValueInformation$Feedback": "<p>Generative AI feedback information provided for this specific field during the registration review process. This may include validation errors, suggestions for improvement, or additional requirements.</p>",
         "RegistrationInformation$RegistrationArn": "<p>The Amazon Resource Name (ARN) for the registration.</p>",
         "RegistrationInformation$RegistrationId": "<p>The unique identifier for the registration.</p>",
         "RegistrationSectionDisplayHints$Title": "<p>The title of the display hint.</p>",
@@ -2653,7 +3227,7 @@
         "RegistrationTypeDisplayHints$LongDescription": "<p>A full description of the display hint.</p>",
         "RegistrationTypeDisplayHints$DocumentationTitle": "<p>The title of the document the display hint is associated with.</p>",
         "RegistrationTypeDisplayHints$DocumentationLink": "<p>The link to the document the display hint is associated with.</p>",
-        "RegistrationVersionInformation$Feedback": "<p>Feedback information provided during the registration review process. This includes comments, suggestions, or additional requirements.</p>",
+        "RegistrationVersionInformation$Feedback": "<p>Generative AI feedback information provided during the registration review process. This includes comments, suggestions, or additional requirements.</p>",
         "ReleasePhoneNumberResult$PhoneNumberArn": "<p>The PhoneNumberArn of the phone number that was released.</p>",
         "ReleasePhoneNumberResult$PhoneNumberId": "<p>The PhoneNumberId of the phone number that was released.</p>",
         "ReleasePhoneNumberResult$MonthlyLeasingPrice": "<p>The monthly price of the phone number, in US dollars.</p>",
@@ -2675,6 +3249,10 @@
         "SelectOptionDescription$Description": "<p>A description of the option meaning.</p>",
         "SendDestinationNumberVerificationCodeResult$MessageId": "<p>The unique identifier for the message.</p>",
         "SendMediaMessageResult$MessageId": "<p>The unique identifier for the message.</p>",
+        "SendNotifyTextMessageResult$MessageId": "<p>The unique identifier for the message.</p>",
+        "SendNotifyTextMessageResult$ResolvedMessageBody": "<p>The message body after template variable substitution has been applied.</p>",
+        "SendNotifyVoiceMessageResult$MessageId": "<p>The unique identifier for the message.</p>",
+        "SendNotifyVoiceMessageResult$ResolvedMessageBody": "<p>The message body after template variable substitution has been applied.</p>",
         "SendTextMessageResult$MessageId": "<p>The unique identifier for the message.</p>",
         "SendVoiceMessageResult$MessageId": "<p>The unique identifier for the message.</p>",
         "SenderIdInformation$SenderIdArn": "<p>The Amazon Resource Name (ARN) associated with the SenderId.</p>",
@@ -2690,15 +3268,26 @@
         "SubmitRegistrationVersionResult$RegistrationArn": "<p>The Amazon Resource Name (ARN) for the registration.</p>",
         "SubmitRegistrationVersionResult$RegistrationId": "<p>The unique identifier for the registration.</p>",
         "SupportedAssociation$ResourceType": "<p>Defines the behavior of when an origination identity and registration can be associated with each other.</p>",
+        "TemplateVariableMetadata$Description": "<p>A description of the variable.</p>",
+        "TemplateVariableMetadata$DefaultValue": "<p>The default value for the variable.</p>",
+        "TemplateVariableMetadata$Pattern": "<p>The regex pattern the variable value must match.</p>",
+        "TemplateVariableMetadata$Sample": "<p>A sample value for the variable.</p>",
+        "TemplateVariablesMap$key": null,
+        "TestingAgentInformation$TestingAgentId": "<p>The unique identifier for the testing agent.</p>",
+        "TestingAgentInformation$RegistrationId": "<p>The unique identifier of the registration associated with the testing agent.</p>",
         "TextValidation$Pattern": "<p>The regular expression used to validate the text field.</p>",
         "ThrottlingException$Message": null,
         "UpdateEventDestinationResult$ConfigurationSetArn": "<p>The Amazon Resource Name (ARN) for the ConfigurationSet that was updated.</p>",
+        "UpdateNotifyConfigurationResult$PoolId": "<p>The identifier of the pool associated with the notify configuration.</p>",
+        "UpdateNotifyConfigurationResult$RejectionReason": "<p>The reason the notify configuration was rejected, if applicable.</p>",
         "UpdatePhoneNumberResult$PhoneNumberArn": "<p>The Amazon Resource Name (ARN) of the updated phone number.</p>",
         "UpdatePhoneNumberResult$PhoneNumberId": "<p>The unique identifier of the phone number.</p>",
         "UpdatePhoneNumberResult$MonthlyLeasingPrice": "<p>The monthly leasing price of the phone number, in US dollars.</p>",
         "UpdatePhoneNumberResult$RegistrationId": "<p>The unique identifier for the registration.</p>",
         "UpdatePoolResult$PoolArn": "<p>The ARN of the pool.</p>",
         "UpdatePoolResult$PoolId": "<p>The unique identifier of the pool.</p>",
+        "UpdateRcsAgentResult$RcsAgentArn": "<p>The Amazon Resource Name (ARN) of the updated RCS agent.</p>",
+        "UpdateRcsAgentResult$RcsAgentId": "<p>The unique identifier for the RCS agent.</p>",
         "UpdateSenderIdResult$SenderIdArn": "<p>The Amazon Resource Name (ARN) associated with the SenderId.</p>",
         "UpdateSenderIdResult$MonthlyLeasingPrice": "<p>The monthly price, in US dollars, to lease the sender ID.</p>",
         "UpdateSenderIdResult$RegistrationId": "<p>The unique identifier for the registration.</p>",
@@ -2707,6 +3296,7 @@
         "ValidationExceptionField$Message": "<p>The message associated with the validation exception with information to help determine its cause.</p>",
         "VerifiedDestinationNumberInformation$VerifiedDestinationNumberArn": "<p>The Amazon Resource Name (ARN) for the verified destination phone number.</p>",
         "VerifiedDestinationNumberInformation$VerifiedDestinationNumberId": "<p>The unique identifier for the verified destination phone number.</p>",
+        "VerifiedDestinationNumberInformation$RcsAgentId": "<p>The unique identifier of the RCS agent associated with the verified destination number.</p>",
         "VerifyDestinationNumberResult$VerifiedDestinationNumberArn": "<p>The Amazon Resource Name (ARN) for the verified destination phone number.</p>",
         "VerifyDestinationNumberResult$VerifiedDestinationNumberId": "<p>The unique identifier for the verified destination phone number.</p>"
       }
@@ -2770,12 +3360,16 @@
       "refs": {
         "CreateConfigurationSetRequest$Tags": "<p>An array of key and value pair tags that's associated with the new configuration set. </p>",
         "CreateConfigurationSetResult$Tags": "<p>An array of key and value pair tags that's associated with the configuration set.</p>",
+        "CreateNotifyConfigurationRequest$Tags": "<p>An array of tags (key and value pairs) associated with the notify configuration.</p>",
+        "CreateNotifyConfigurationResult$Tags": "<p>An array of tags (key and value pairs) associated with the notify configuration.</p>",
         "CreateOptOutListRequest$Tags": "<p>An array of tags (key and value pairs) to associate with the new OptOutList.</p>",
         "CreateOptOutListResult$Tags": "<p>An array of tags (key and value pairs) associated with the new OptOutList.</p>",
         "CreatePoolRequest$Tags": "<p>An array of tags (key and value pairs) associated with the pool.</p>",
         "CreatePoolResult$Tags": "<p>An array of tags (key and value pairs) associated with the pool.</p>",
         "CreateProtectConfigurationRequest$Tags": "<p>An array of key and value pair tags that are associated with the resource.</p>",
         "CreateProtectConfigurationResult$Tags": "<p>An array of key and value pair tags that are associated with the resource.</p>",
+        "CreateRcsAgentRequest$Tags": "<p>An array of tags (key and value pairs) associated with the RCS agent.</p>",
+        "CreateRcsAgentResult$Tags": "<p>An array of tags (key and value pairs) associated with the RCS agent.</p>",
         "CreateRegistrationAttachmentRequest$Tags": "<p>An array of tags (key and value pairs) to associate with the registration attachment.</p>",
         "CreateRegistrationAttachmentResult$Tags": "<p>An array of tags (key and value pairs) to associate with the registration attachment.</p>",
         "CreateRegistrationRequest$Tags": "<p>An array of tags (key and value pairs) to associate with the registration.</p>",
@@ -2801,6 +3395,67 @@
       "base": null,
       "refs": {
         "Tag$Value": "<p>The string value associated with the key of the tag.</p>"
+      }
+    },
+    "TemplateContent": {
+      "base": null,
+      "refs": {
+        "NotifyTemplateInformation$Content": "<p>The content of the template.</p>"
+      }
+    },
+    "TemplateVariableMetadata": {
+      "base": "<p>Contains metadata about a template variable.</p>",
+      "refs": {
+        "TemplateVariablesMap$value": null
+      }
+    },
+    "TemplateVariableName": {
+      "base": null,
+      "refs": {
+        "TemplateVariableSubstitutionMap$key": null
+      }
+    },
+    "TemplateVariableSource": {
+      "base": "<p>The source of a template variable value.</p> <ul> <li> <p> <code>CUSTOMER</code> - The variable value is provided by the customer.</p> </li> <li> <p> <code>SYSTEM</code> - The variable value is provided by the system.</p> </li> </ul>",
+      "refs": {
+        "TemplateVariableMetadata$Source": "<p>The source of the variable, either <code>CUSTOMER</code> or <code>SYSTEM</code>.</p>"
+      }
+    },
+    "TemplateVariableSubstitutionMap": {
+      "base": null,
+      "refs": {
+        "SendNotifyTextMessageRequest$TemplateVariables": "<p>A map of template variable names and their values. All variable values are passed as strings regardless of the declared variable type. For example, pass <code>INTEGER</code> values as <code>\"42\"</code> and <code>BOOLEAN</code> values as <code>\"true\"</code> or <code>\"false\"</code>.</p>",
+        "SendNotifyVoiceMessageRequest$TemplateVariables": "<p>A map of template variable names and their values. All variable values are passed as strings regardless of the declared variable type. For example, pass <code>INTEGER</code> values as <code>\"42\"</code> and <code>BOOLEAN</code> values as <code>\"true\"</code> or <code>\"false\"</code>.</p>"
+      }
+    },
+    "TemplateVariableType": {
+      "base": "<p>The type of a template variable.</p> <ul> <li> <p> <code>STRING</code> - String variable type.</p> </li> <li> <p> <code>INTEGER</code> - Integer variable type.</p> </li> <li> <p> <code>BOOLEAN</code> - Boolean variable type.</p> </li> </ul>",
+      "refs": {
+        "TemplateVariableMetadata$Type": "<p>The type of the variable.</p>"
+      }
+    },
+    "TemplateVariableValue": {
+      "base": null,
+      "refs": {
+        "TemplateVariableSubstitutionMap$value": null
+      }
+    },
+    "TemplateVariablesMap": {
+      "base": null,
+      "refs": {
+        "NotifyTemplateInformation$Variables": "<p>An array of template variable metadata for the template.</p>"
+      }
+    },
+    "TestingAgentInformation": {
+      "base": "<p>Contains details about the testing agent associated with an RCS agent.</p>",
+      "refs": {
+        "RcsAgentInformation$TestingAgent": "<p>The testing agent information associated with the RCS agent.</p>"
+      }
+    },
+    "TestingAgentStatus": {
+      "base": "<p>The current status of the testing agent.</p> <ul> <li> <p> <code>CREATED</code>: The testing agent has been created.</p> </li> <li> <p> <code>PENDING</code>: The testing agent is pending activation.</p> </li> <li> <p> <code>ACTIVE</code>: The testing agent is active and available for use.</p> </li> </ul>",
+      "refs": {
+        "TestingAgentInformation$Status": "<p>The current status of the testing agent.</p>"
       }
     },
     "TextMessageBody": {
@@ -2835,10 +3490,21 @@
       "base": "<p>An error that occurred because too many requests were sent during a certain amount of time.</p>",
       "refs": {}
     },
+    "TierUpgradeStatus": {
+      "base": "<p>The tier upgrade status of a notify configuration.</p> <ul> <li> <p> <code>BASIC</code> - Currently at basic tier.</p> </li> <li> <p> <code>PENDING_UPGRADE</code> - Upgrade to advanced tier is pending.</p> </li> <li> <p> <code>ADVANCED</code> - Currently at advanced tier.</p> </li> <li> <p> <code>REJECTED</code> - Tier upgrade was rejected.</p> </li> </ul>",
+      "refs": {
+        "CreateNotifyConfigurationResult$TierUpgradeStatus": "<p>The tier upgrade status of the notify configuration.</p>",
+        "DeleteNotifyConfigurationResult$TierUpgradeStatus": "<p>The tier upgrade status of the notify configuration.</p>",
+        "NotifyConfigurationInformation$TierUpgradeStatus": "<p>The tier upgrade status of the notify configuration.</p>",
+        "UpdateNotifyConfigurationResult$TierUpgradeStatus": "<p>The tier upgrade status of the notify configuration.</p>"
+      }
+    },
     "TimeToLive": {
       "base": null,
       "refs": {
         "SendMediaMessageRequest$TimeToLive": "<p>How long the media message is valid for. By default this is 72 hours.</p>",
+        "SendNotifyTextMessageRequest$TimeToLive": "<p>How long the text message is valid for, in seconds. By default this is 72 hours.</p>",
+        "SendNotifyVoiceMessageRequest$TimeToLive": "<p>How long the voice message is valid for, in seconds. By default this is 72 hours.</p>",
         "SendTextMessageRequest$TimeToLive": "<p>How long the text message is valid for, in seconds. By default this is 72 hours. If the messages isn't handed off before the TTL expires we stop attempting to hand off the message and return <code>TTL_EXPIRED</code> event.</p>",
         "SendVoiceMessageRequest$TimeToLive": "<p>How long the voice message is valid for. By default this is 72 hours.</p>"
       }
@@ -2848,24 +3514,30 @@
       "refs": {
         "ConfigurationSetInformation$CreatedTimestamp": "<p>The time when the ConfigurationSet was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "CreateConfigurationSetResult$CreatedTimestamp": "<p>The time when the configuration set was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
+        "CreateNotifyConfigurationResult$CreatedTimestamp": "<p>The time when the notify configuration was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "CreateOptOutListResult$CreatedTimestamp": "<p>The time when the pool was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "CreatePoolResult$CreatedTimestamp": "<p>The time when the pool was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "CreateProtectConfigurationResult$CreatedTimestamp": "<p>The time when the protect configuration was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
+        "CreateRcsAgentResult$CreatedTimestamp": "<p>The time when the RCS agent was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "CreateRegistrationAttachmentResult$CreatedTimestamp": "<p>The time when the registration attachment was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "CreateRegistrationResult$CreatedTimestamp": "<p>The time when the registration was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "CreateVerifiedDestinationNumberResult$CreatedTimestamp": "<p>The time when the verified phone number was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "DeleteConfigurationSetResult$CreatedTimestamp": "<p>The time that the deleted configuration set was created in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
+        "DeleteNotifyConfigurationResult$CreatedTimestamp": "<p>The time when the notify configuration was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "DeleteOptOutListResult$CreatedTimestamp": "<p>The time when the OptOutList was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "DeleteOptedOutNumberResult$OptedOutTimestamp": "<p>The time that the number was removed at, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "DeletePoolResult$CreatedTimestamp": "<p>The time when the pool was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "DeleteProtectConfigurationResult$CreatedTimestamp": "<p>The time when the protect configuration was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "DeleteProtectConfigurationRuleSetNumberOverrideResult$CreatedTimestamp": "<p>The time when the rule was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "DeleteProtectConfigurationRuleSetNumberOverrideResult$ExpirationTimestamp": "<p>The time when the resource-based policy was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
+        "DeleteRcsAgentResult$CreatedTimestamp": "<p>The time when the RCS agent was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "DeleteRegistrationAttachmentResult$CreatedTimestamp": "<p>The time when the registration attachment was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "DeleteRegistrationResult$CreatedTimestamp": "<p>The time when the registration was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "DeleteResourcePolicyResult$CreatedTimestamp": "<p>The time when the resource-based policy was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "DeleteVerifiedDestinationNumberResult$CreatedTimestamp": "<p>The time when the destination phone number was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "GetResourcePolicyResult$CreatedTimestamp": "<p>The time when the resource-based policy was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
+        "NotifyConfigurationInformation$CreatedTimestamp": "<p>The time when the notify configuration was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
+        "NotifyTemplateInformation$CreatedTimestamp": "<p>The time when the notify template was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "OptOutListInformation$CreatedTimestamp": "<p>The time when the OutOutList was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "OptedOutNumberInformation$OptedOutTimestamp": "<p>The time that the op tout occurred, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "PhoneNumberInformation$CreatedTimestamp": "<p>The time when the phone number was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
@@ -2878,6 +3550,7 @@
         "PutProtectConfigurationRuleSetNumberOverrideResult$CreatedTimestamp": "<p>The time when the rule was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "PutProtectConfigurationRuleSetNumberOverrideResult$ExpirationTimestamp": "<p>The time the rule will expire at.</p>",
         "PutResourcePolicyResult$CreatedTimestamp": "<p>The time when the resource-based policy was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
+        "RcsAgentInformation$CreatedTimestamp": "<p>The time when the RCS agent was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "RegistrationAttachmentsInformation$CreatedTimestamp": "<p>The time when the registration attachment was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "RegistrationInformation$CreatedTimestamp": "<p>The time when the registration was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "RegistrationVersionStatusHistory$DraftTimestamp": "<p>The time when the registration was in the draft state, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
@@ -2892,9 +3565,11 @@
         "RegistrationVersionStatusHistory$ArchivedTimestamp": "<p>The time when the registration was in the archived state, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "ReleasePhoneNumberResult$CreatedTimestamp": "<p>The time when the phone number was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "RequestPhoneNumberResult$CreatedTimestamp": "<p>The time when the phone number was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
+        "UpdateNotifyConfigurationResult$CreatedTimestamp": "<p>The time when the notify configuration was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "UpdatePhoneNumberResult$CreatedTimestamp": "<p>The time when the phone number was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "UpdatePoolResult$CreatedTimestamp": "<p>The time when the pool was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "UpdateProtectConfigurationResult$CreatedTimestamp": "<p>The time when the protect configuration was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
+        "UpdateRcsAgentResult$CreatedTimestamp": "<p>The time when the RCS agent was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "VerifiedDestinationNumberInformation$CreatedTimestamp": "<p>The time when the destination phone number was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>",
         "VerifyDestinationNumberResult$CreatedTimestamp": "<p>The time when the destination phone number was created, in <a href=\"https://www.epochconverter.com/\">UNIX epoch time</a> format.</p>"
       }
@@ -2903,15 +3578,20 @@
       "base": null,
       "refs": {
         "CreatePoolResult$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>",
+        "CreateRcsAgentResult$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>",
         "DeletePoolResult$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the TwoWayChannel.</p>",
+        "DeleteRcsAgentResult$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>",
         "PhoneNumberInformation$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>",
         "PoolInformation$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>",
+        "RcsAgentInformation$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>",
         "ReleasePhoneNumberResult$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the TwoWayChannel.</p>",
         "RequestPhoneNumberResult$TwoWayChannelArn": "<p>The ARN used to identify the two way channel.</p>",
         "UpdatePhoneNumberRequest$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>",
         "UpdatePhoneNumberResult$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>",
         "UpdatePoolRequest$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>",
-        "UpdatePoolResult$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>"
+        "UpdatePoolResult$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>",
+        "UpdateRcsAgentRequest$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>",
+        "UpdateRcsAgentResult$TwoWayChannelArn": "<p>The Amazon Resource Name (ARN) of the two way channel.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -2927,6 +3607,14 @@
       "refs": {}
     },
     "UpdateEventDestinationResult": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateNotifyConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateNotifyConfigurationResult": {
       "base": null,
       "refs": {}
     },
@@ -2959,6 +3647,14 @@
       "refs": {}
     },
     "UpdateProtectConfigurationResult": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRcsAgentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRcsAgentResult": {
       "base": null,
       "refs": {}
     },
@@ -3031,7 +3727,7 @@
       }
     },
     "VerifiedDestinationNumberFilterName": {
-      "base": null,
+      "base": "<p>The filter name for filtering verified destination numbers. The available filter names are:</p> <ul> <li> <p> <code>status</code>: Filter by verification status.</p> </li> <li> <p> <code>rcs-agent-id</code>: Filter by the RCS agent identifier.</p> </li> </ul>",
       "refs": {
         "VerifiedDestinationNumberFilter$Name": "<p>The name of the attribute to filter on.</p>"
       }
@@ -3074,7 +3770,15 @@
     "VoiceId": {
       "base": null,
       "refs": {
-        "SendVoiceMessageRequest$VoiceId": "<p>The voice for the <a href=\"https://docs.aws.amazon.com/polly/latest/dg/what-is.html\">Amazon Polly</a> service to use. By default this is set to \"MATTHEW\".</p>"
+        "SendNotifyVoiceMessageRequest$VoiceId": "<p>The voice ID to use for the voice message.</p>",
+        "SendVoiceMessageRequest$VoiceId": "<p>The voice for the <a href=\"https://docs.aws.amazon.com/polly/latest/dg/what-is.html\">Amazon Polly</a> service to use. By default this is set to \"MATTHEW\".</p>",
+        "VoiceIdList$member": null
+      }
+    },
+    "VoiceIdList": {
+      "base": null,
+      "refs": {
+        "NotifyTemplateInformation$SupportedVoiceIds": "<p>An array of supported voice IDs for voice templates.</p>"
       }
     },
     "VoiceMessageBody": {

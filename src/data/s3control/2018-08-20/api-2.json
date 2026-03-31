@@ -1846,6 +1846,12 @@
         "ErrorDetails":{"shape":"AsyncErrorDetails"}
       }
     },
+    "AuditContext":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
+    },
     "AwsLambdaTransformation":{
       "type":"structure",
       "required":["FunctionArn"],
@@ -3560,6 +3566,11 @@
           "shape":"S3PrefixType",
           "location":"querystring",
           "locationName":"targetType"
+        },
+        "AuditContext":{
+          "shape":"AuditContext",
+          "location":"querystring",
+          "locationName":"auditContext"
         }
       }
     },

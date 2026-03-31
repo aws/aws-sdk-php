@@ -1,0 +1,1957 @@
+{
+  "version": "2.0",
+  "service": "<p>AWS Security Agent service documentation.</p>",
+  "operations": {
+    "AddArtifact": "<p>Adds an Artifact for the given agent space</p>",
+    "BatchDeletePentests": "<p>Deletes multiple pentests in a single request</p>",
+    "BatchGetAgentSpaces": "<p>Retrieves multiple agent spaces in a single request</p>",
+    "BatchGetArtifactMetadata": "<p>Retrieve the list of artifact metadata for the given agent space</p>",
+    "BatchGetFindings": "<p>Retrieves multiple findings in a single request</p>",
+    "BatchGetPentestJobTasks": "<p>Retrieves multiple tasks for a pentest job in a single request</p>",
+    "BatchGetPentestJobs": "<p>Retrieves multiple pentest jobs in a single request</p>",
+    "BatchGetPentests": "<p>Retrieves multiple pentests in a single request</p>",
+    "BatchGetTargetDomains": "<p>Retrieves multiple target domains in a single request</p>",
+    "CreateAgentSpace": "<p>Creates an agent space record</p>",
+    "CreateApplication": "<p>Creates a new application</p>",
+    "CreateIntegration": "<p>Creates the Integration of the Security Agent App with an external Provider</p>",
+    "CreateMembership": "<p>Adds a single member to an agent space with specified role</p>",
+    "CreatePentest": "<p>Creates a new pentest configuration</p>",
+    "CreateTargetDomain": "<p>Creates a target domain record</p>",
+    "DeleteAgentSpace": "<p>Deletes an agent space record</p>",
+    "DeleteApplication": "<p>Deletes an application</p>",
+    "DeleteArtifact": "<p>Delete an Artifact from the given agent space</p>",
+    "DeleteIntegration": "<p>Deletes the Integration of the Security Agent App with an external Provider</p>",
+    "DeleteMembership": "<p>Removes a single member associated to an agent space</p>",
+    "DeleteTargetDomain": "<p>Deletes a target domain record</p>",
+    "GetApplication": "<p>Retrieves application details by application ID</p>",
+    "GetArtifact": "<p>Retrieve an Artifact for the given agent space</p>",
+    "GetIntegration": "<p>Gets Integration metadata from the provided id</p>",
+    "InitiateProviderRegistration": "<p>Initiates the registration of Security Agent App for an external Provider</p>",
+    "ListAgentSpaces": "<p>Lists agent spaces</p>",
+    "ListApplications": "<p>Lists all applications in the account</p>",
+    "ListArtifacts": "<p>Lists the artifacts for the associated agent space</p>",
+    "ListDiscoveredEndpoints": "<p>Lists discovered endpoints associated with a pentest job with optional URI prefix filtering</p>",
+    "ListFindings": "<p>Lists findings with filtering and pagination support. When filters are applied, the actual number of results returned may be less than the specified limit</p>",
+    "ListIntegratedResources": "<p>Lists the integrated resources for an agent space</p>",
+    "ListIntegrations": "<p>Retrieves the Integrations associated with the user's account</p>",
+    "ListMemberships": "<p>Lists all members associated to an agent space with pagination support</p>",
+    "ListPentestJobTasks": "<p>Lists tasks associated with a specific pentest job</p>",
+    "ListPentestJobsForPentest": "<p>Lists pentest jobs associated with a pentest</p>",
+    "ListPentests": "<p>Lists pentests with optional filtering by status</p>",
+    "ListTagsForResource": "<p>Lists tags for a Security Agent resource</p>",
+    "ListTargetDomains": "<p>Lists target domains</p>",
+    "StartCodeRemediation": "<p>Starts code remediation for the specified findings</p>",
+    "StartPentestJob": "<p>Initiates the execution of a pentest</p>",
+    "StopPentestJob": "<p>Stops the execution of a running pentest</p>",
+    "TagResource": "<p>Adds tags to a Security Agent resource</p>",
+    "UntagResource": "<p>Removes tags from a Security Agent resource</p>",
+    "UpdateAgentSpace": "<p>Updates an agent space record</p>",
+    "UpdateApplication": "<p>Updates application configuration</p>",
+    "UpdateFinding": "<p>Updates an existing security finding with new details or status</p>",
+    "UpdateIntegratedResources": "<p>Updates the integrated resources for an agent space</p>",
+    "UpdatePentest": "<p>Updates an existing pentest with new configuration or settings</p>",
+    "UpdateTargetDomain": "<p>Updates a target domain record</p>",
+    "VerifyTargetDomain": "<p>Verifies ownership for a registered target domain</p>"
+  },
+  "shapes": {
+    "AWSResources": {
+      "base": "<p>AWS resource configurations associated with the agent space</p>",
+      "refs": {
+        "AgentSpace$awsResources": "<p>AWS resource configurations</p>",
+        "CreateAgentSpaceInput$awsResources": "<p>AWS resource configurations associated with the agent space</p>",
+        "CreateAgentSpaceOutput$awsResources": "<p>AWS resource configurations associated with the agent space</p>",
+        "UpdateAgentSpaceInput$awsResources": "<p>AWS resource configurations associated with the agent space</p>",
+        "UpdateAgentSpaceOutput$awsResources": "<p>AWS resource configurations associated with the agent space</p>"
+      }
+    },
+    "AccessDeniedException": {
+      "base": "<p>Request denied due to insufficient permissions</p>",
+      "refs": {}
+    },
+    "AccessType": {
+      "base": "<p>Defines the visibility level of provider resources. PRIVATE indicates restricted access (e.g: private GitHub repositories), while PUBLIC indicates open access (e.g: public GitHub repositories)</p>",
+      "refs": {
+        "GitHubRepositoryMetadata$accessType": "<p>Access / Visibility Type of the integrated resource</p>"
+      }
+    },
+    "Actor": {
+      "base": "<p>Represents an entity that interacts with the system during security testing</p>",
+      "refs": {
+        "ActorList$member": null
+      }
+    },
+    "ActorList": {
+      "base": null,
+      "refs": {
+        "Assets$actors": "<p>List of actors that interact with the system</p>",
+        "PentestJob$actors": "<p>List of actors that interact with the system</p>"
+      }
+    },
+    "AddArtifactInput": {
+      "base": null,
+      "refs": {}
+    },
+    "AddArtifactOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "AgentName": {
+      "base": "<p>Name of an agent space</p>",
+      "refs": {
+        "CreateAgentSpaceInput$name": "<p>Name of the agent space</p>",
+        "CreateAgentSpaceOutput$name": "<p>Name of the created agent space</p>",
+        "UpdateAgentSpaceInput$name": "<p>Name of the agent space</p>",
+        "UpdateAgentSpaceOutput$name": "<p>Name of the agent space</p>"
+      }
+    },
+    "AgentSpace": {
+      "base": "<p>Agent space structure</p>",
+      "refs": {
+        "AgentSpaceList$member": null
+      }
+    },
+    "AgentSpaceId": {
+      "base": "<p>Unique identifier of the agent space</p>",
+      "refs": {
+        "AddArtifactInput$agentSpaceId": "<p>Unique identifier of the agent space</p>",
+        "AgentSpace$agentSpaceId": "<p>Unique identifier of the agent space</p>",
+        "AgentSpaceIdList$member": null,
+        "AgentSpaceSummary$agentSpaceId": "<p>Unique identifier of the agent space</p>",
+        "ArtifactMetadataItem$agentSpaceId": "<p>Unique identifier of the agent space</p>",
+        "BatchGetArtifactMetadataInput$agentSpaceId": "<p>Unique identifier of the agent space</p>",
+        "CreateAgentSpaceOutput$agentSpaceId": "<p>Unique identifier of the created agent space</p>",
+        "CreateMembershipRequest$agentSpaceId": "<p>Agent space identifier</p>",
+        "DeleteAgentSpaceInput$agentSpaceId": "<p>Unique identifier of the agent space to delete</p>",
+        "DeleteAgentSpaceOutput$agentSpaceId": "<p>Unique identifier of the deleted agent space</p>",
+        "DeleteArtifactInput$agentSpaceId": "<p>Unique identifier of the agent space</p>",
+        "DeleteMembershipRequest$agentSpaceId": "<p>Agent space identifier</p>",
+        "GetArtifactInput$agentSpaceId": "<p>Unique identifier of the agent space</p>",
+        "GetArtifactOutput$agentSpaceId": "<p>Unique identifier of the agent space</p>",
+        "ListArtifactsInput$agentSpaceId": "<p>Unique identifier of the agent space</p>",
+        "ListIntegratedResourcesInput$agentSpaceId": "<p>Unique identifier of the agent space</p>",
+        "ListMembershipsRequest$agentSpaceId": "<p>Agent space identifier</p>",
+        "MembershipSummary$agentSpaceId": "<p>Agent space identifier</p>",
+        "UpdateAgentSpaceInput$agentSpaceId": "<p>ID of the agent space to update</p>",
+        "UpdateAgentSpaceOutput$agentSpaceId": "<p>Unique identifier of the agent space</p>",
+        "UpdateIntegratedResourcesInput$agentSpaceId": "<p>Unique identifier of the agent space</p>"
+      }
+    },
+    "AgentSpaceIdList": {
+      "base": null,
+      "refs": {
+        "BatchGetAgentSpacesInput$agentSpaceIds": "<p>List of agent space IDs to retrieve</p>",
+        "BatchGetAgentSpacesOutput$notFound": "<p>List of agent space IDs that could not be found</p>"
+      }
+    },
+    "AgentSpaceList": {
+      "base": null,
+      "refs": {
+        "BatchGetAgentSpacesOutput$agentSpaces": "<p>List of agent spaces that were successfully retrieved</p>"
+      }
+    },
+    "AgentSpaceSummary": {
+      "base": "<p>Summary information for an agent space</p>",
+      "refs": {
+        "AgentSpaceSummaryList$member": null
+      }
+    },
+    "AgentSpaceSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAgentSpacesOutput$agentSpaceSummaries": "<p>List of agent space summaries</p>"
+      }
+    },
+    "ApplicationDomain": {
+      "base": "<p>Domain where the application is available</p>",
+      "refs": {
+        "ApplicationSummary$domain": "<p>Domain where the application is available</p>",
+        "GetApplicationResponse$domain": "<p>Domain where the application is available</p>"
+      }
+    },
+    "ApplicationId": {
+      "base": "<p>Application identifier</p>",
+      "refs": {
+        "ApplicationSummary$applicationId": "<p>Unique identifier of the application</p>",
+        "CreateApplicationResponse$applicationId": "<p>Application ID</p>",
+        "CreateMembershipRequest$applicationId": "<p>Application identifier</p>",
+        "DeleteApplicationRequest$applicationId": "<p>Application ID</p>",
+        "DeleteMembershipRequest$applicationId": "<p>Application identifier</p>",
+        "GetApplicationRequest$applicationId": "<p>Application ID</p>",
+        "GetApplicationResponse$applicationId": "<p>Application ID</p>",
+        "ListMembershipsRequest$applicationId": "<p>Application identifier</p>",
+        "MembershipSummary$applicationId": "<p>Application identifier</p>",
+        "UpdateApplicationRequest$applicationId": "<p>Application ID</p>",
+        "UpdateApplicationResponse$applicationId": "<p>Application ID</p>"
+      }
+    },
+    "ApplicationSummary": {
+      "base": "<p>Application summary for list operations</p>",
+      "refs": {
+        "ApplicationSummaryList$member": null
+      }
+    },
+    "ApplicationSummaryList": {
+      "base": "<p>List of application summaries</p>",
+      "refs": {
+        "ListApplicationsResponse$applicationSummaries": "<p>List of application summaries</p>"
+      }
+    },
+    "Artifact": {
+      "base": "<p>Files containing relevant data for review</p>",
+      "refs": {
+        "GetArtifactOutput$artifact": "<p>Artifact details</p>"
+      }
+    },
+    "ArtifactId": {
+      "base": "<p>The id of the artifact</p>",
+      "refs": {
+        "AddArtifactOutput$artifactId": "<p>Unique identifier of the created artifact</p>",
+        "ArtifactIds$member": null,
+        "ArtifactMetadataItem$artifactId": "<p>Unique identifier of the artifact</p>",
+        "ArtifactSummary$artifactId": "<p>Unique identifier of the artifact</p>",
+        "DeleteArtifactInput$artifactId": "<p>Unique identifier of the artifact</p>",
+        "GetArtifactInput$artifactId": "<p>Unique identifier of the artifact</p>",
+        "GetArtifactOutput$artifactId": "<p>Unique identifier of the artifact</p>"
+      }
+    },
+    "ArtifactIds": {
+      "base": null,
+      "refs": {
+        "BatchGetArtifactMetadataInput$artifactIds": "<p>List of artifact identifiers</p>"
+      }
+    },
+    "ArtifactMetadataItem": {
+      "base": "<p>Metadata in relation to the artifact</p>",
+      "refs": {
+        "ArtifactMetadataList$member": null
+      }
+    },
+    "ArtifactMetadataList": {
+      "base": "<p>List of metadata objects containing artifacts details</p>",
+      "refs": {
+        "BatchGetArtifactMetadataOutput$artifactMetadataList": "<p>List of artifact metadata</p>"
+      }
+    },
+    "ArtifactSummary": {
+      "base": "<p>Summary information about an artifact</p>",
+      "refs": {
+        "ArtifactSummaryList$member": null
+      }
+    },
+    "ArtifactSummaryList": {
+      "base": "<p>List of artifact summaries</p>",
+      "refs": {
+        "ListArtifactsOutput$artifactSummaries": "<p>List of artifact summaries</p>"
+      }
+    },
+    "ArtifactType": {
+      "base": "<p>Supported file extension types for artifacts</p>",
+      "refs": {
+        "AddArtifactInput$artifactType": "<p>Type of the artifact file</p>",
+        "Artifact$type": "<p>The file type of the artifact</p>",
+        "ArtifactSummary$artifactType": "<p>Type of the artifact file</p>"
+      }
+    },
+    "Assets": {
+      "base": "<p>Collection of assets to be tested or used during a pentest</p>",
+      "refs": {
+        "CreatePentestInput$assets": "<p>Assets to be tested during the pentest</p>",
+        "CreatePentestOutput$assets": "<p>Assets to be tested in the created pentest</p>",
+        "Pentest$assets": "<p>Collection of assets to be tested or used during the pentest</p>",
+        "UpdatePentestInput$assets": "<p>Updated assets to be tested</p>",
+        "UpdatePentestOutput$assets": "<p>Assets to be tested in the updated pentest</p>"
+      }
+    },
+    "AuthCode": {
+      "base": "<p>Authorization code from OAuth flow</p>",
+      "refs": {
+        "GitHubIntegrationInput$code": "<p>Authorization code from OAuth flow</p>"
+      }
+    },
+    "Authentication": {
+      "base": "<p>Authentication information used to access protected resources</p>",
+      "refs": {
+        "Actor$authentication": "<p>Authentication information used by the actor to access resources</p>"
+      }
+    },
+    "AuthenticationProviderType": {
+      "base": "<p>Type of authentication provider</p>",
+      "refs": {
+        "Authentication$providerType": "<p>Provider type for the authentication credentials</p>"
+      }
+    },
+    "BatchDeletePentestsInput": {
+      "base": "<p>Input for deleting multiple pentests</p>",
+      "refs": {}
+    },
+    "BatchDeletePentestsOutput": {
+      "base": "<p>Output for the BatchDeletePentests operation</p>",
+      "refs": {}
+    },
+    "BatchGetAgentSpacesInput": {
+      "base": "<p>Input for batch retrieving agent spaces</p>",
+      "refs": {}
+    },
+    "BatchGetAgentSpacesOutput": {
+      "base": "<p>Output for the BatchGetAgentSpaces operation</p>",
+      "refs": {}
+    },
+    "BatchGetArtifactMetadataInput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetArtifactMetadataOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetFindingsInput": {
+      "base": "<p>Input for BatchGetFindings operation</p>",
+      "refs": {}
+    },
+    "BatchGetFindingsOutput": {
+      "base": "<p>Output for the BatchGetFindings operation</p>",
+      "refs": {}
+    },
+    "BatchGetPentestJobTasksInput": {
+      "base": "<p>Input for retrieving multiple tasks by their IDs for a pentest job</p>",
+      "refs": {}
+    },
+    "BatchGetPentestJobTasksOutput": {
+      "base": "<p>Output for the BatchGetPentestJobTasks operation</p>",
+      "refs": {}
+    },
+    "BatchGetPentestJobsInput": {
+      "base": "<p>Input for BatchGetPentestJobs operation</p>",
+      "refs": {}
+    },
+    "BatchGetPentestJobsOutput": {
+      "base": "<p>Output for the BatchGetPentestJobs operation</p>",
+      "refs": {}
+    },
+    "BatchGetPentestsInput": {
+      "base": "<p>Input for retrieving multiple pentests by their IDs</p>",
+      "refs": {}
+    },
+    "BatchGetPentestsOutput": {
+      "base": "<p>Output for the BatchGetPentests operation</p>",
+      "refs": {}
+    },
+    "BatchGetTargetDomainsInput": {
+      "base": "<p>Input for batch retrieving target domains</p>",
+      "refs": {}
+    },
+    "BatchGetTargetDomainsOutput": {
+      "base": "<p>Output for the BatchGetTargetDomains operation</p>",
+      "refs": {}
+    },
+    "Blob": {
+      "base": null,
+      "refs": {
+        "AddArtifactInput$artifactContent": "<p>Binary content of the artifact</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "Category$isPrimary": "<p>Whether this is the primary category for the task</p>",
+        "CodeReviewSettings$controlsScanning": "<p>Whether Controls are utilized for code review analysis</p>",
+        "CodeReviewSettings$generalPurposeScanning": "<p>Whether general purpose analysis is performed for code review</p>",
+        "GitHubResourceCapabilities$leaveComments": "<p>Post code review comments on pull requests</p>",
+        "GitHubResourceCapabilities$remediateCode": "<p>Create pull requests with automated fixes</p>"
+      }
+    },
+    "Category": {
+      "base": "<p>Represents a category classification for tasks</p>",
+      "refs": {
+        "CategoryList$member": null
+      }
+    },
+    "CategoryList": {
+      "base": null,
+      "refs": {
+        "Task$categories": "<p>List of categories associated with this task</p>"
+      }
+    },
+    "CloudWatchLog": {
+      "base": "<p>Reference to logs stored in CloudWatch</p>",
+      "refs": {
+        "CreatePentestInput$logConfig": "<p>CloudWatch log group and stream prefix where pentest execution logs are stored</p>",
+        "CreatePentestOutput$logConfig": "<p>CloudWatch log group and stream prefix where pentest execution logs are stored</p>",
+        "LogLocation$cloudWatchLog": "<p>CloudWatch log information if logs are stored in CloudWatch</p>",
+        "Pentest$logConfig": "<p>CloudWatch log group and stream prefix where pentest execution logs are stored</p>",
+        "PentestJob$logConfig": "<p>CloudWatch log group and stream prefix where pentest job logs are stored</p>",
+        "UpdatePentestInput$logConfig": "<p>CloudWatch log group and stream prefix where pentest execution logs are stored</p>",
+        "UpdatePentestOutput$logConfig": "<p>CloudWatch log group and stream prefix where pentest execution logs are stored</p>"
+      }
+    },
+    "CodeRemediationStrategy": {
+      "base": "<p>Strategy for automated code remediation</p>",
+      "refs": {
+        "CreatePentestInput$codeRemediationStrategy": "<p>Strategy for code remediation on findings</p>",
+        "Pentest$codeRemediationStrategy": "<p>Strategy for code remediation on findings</p>",
+        "PentestJob$codeRemediationStrategy": "<p>Strategy for code remediation on findings</p>",
+        "UpdatePentestInput$codeRemediationStrategy": "<p>Strategy for code remediation on findings</p>"
+      }
+    },
+    "CodeRemediationTask": {
+      "base": "<p>Information about task for code remediation</p>",
+      "refs": {
+        "Finding$codeRemediationTask": "<p>Code remediation task associated with this finding</p>"
+      }
+    },
+    "CodeRemediationTaskDetails": {
+      "base": "<p>Code remediation details for a single repository</p>",
+      "refs": {
+        "CodeRemediationTaskDetailsList$member": null
+      }
+    },
+    "CodeRemediationTaskDetailsList": {
+      "base": null,
+      "refs": {
+        "CodeRemediationTask$taskDetails": "<p>Details of the code remediation for each repository</p>"
+      }
+    },
+    "CodeRemediationTaskStatus": {
+      "base": "<p>Code remediation task status</p>",
+      "refs": {
+        "CodeRemediationTask$status": "<p>Current status of the code remediation task</p>"
+      }
+    },
+    "CodeReviewSettings": {
+      "base": "<p>Details of code review settings</p>",
+      "refs": {
+        "AgentSpace$codeReviewSettings": "<p>Configuration for code review analysis, including controls scanning and general purpose scanning settings</p>",
+        "CreateAgentSpaceInput$codeReviewSettings": "<p>Configuration for code review analysis, including controls scanning and general purpose scanning settings</p>",
+        "CreateAgentSpaceOutput$codeReviewSettings": "<p>Configuration for code review analysis, including controls scanning and general purpose scanning settings</p>",
+        "UpdateAgentSpaceInput$codeReviewSettings": "<p>Configuration for code review analysis, including controls scanning and general purpose scanning settings</p>",
+        "UpdateAgentSpaceOutput$codeReviewSettings": "<p>Configuration for code review analysis, including controls scanning and general purpose scanning settings</p>"
+      }
+    },
+    "ConfidenceLevel": {
+      "base": "<p>Finding confidence level</p>",
+      "refs": {
+        "Finding$confidence": "<p>Confidence level of the finding</p>",
+        "FindingSummary$confidence": "<p>Confidence level of the finding</p>",
+        "ListFindingsInput$confidence": "<p>Filter findings by confidence level</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>Request conflicts with current resource state</p>",
+      "refs": {}
+    },
+    "ContextType": {
+      "base": "<p>Category of execution context</p>",
+      "refs": {
+        "ExecutionContext$contextType": "<p>The category of context</p>"
+      }
+    },
+    "CreateAgentSpaceInput": {
+      "base": "<p>Input for creating a new agent space</p>",
+      "refs": {}
+    },
+    "CreateAgentSpaceOutput": {
+      "base": "<p>Output for the CreateAgentSpace operation</p>",
+      "refs": {}
+    },
+    "CreateApplicationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateApplicationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateIntegrationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateIntegrationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateMembershipRequest": {
+      "base": "<p>Request structure for adding a single member to an agent space</p>",
+      "refs": {}
+    },
+    "CreateMembershipResponse": {
+      "base": "<p>Response structure for adding a single member to an agent space</p>",
+      "refs": {}
+    },
+    "CreatePentestInput": {
+      "base": "<p>Input for creating a new pentest</p>",
+      "refs": {}
+    },
+    "CreatePentestOutput": {
+      "base": "<p>Output for the CreatePentest operation</p>",
+      "refs": {}
+    },
+    "CreateTargetDomainInput": {
+      "base": "<p>Input for creating a new target domain</p>",
+      "refs": {}
+    },
+    "CreateTargetDomainOutput": {
+      "base": "<p>Output for the CreateTargetDomain operation</p>",
+      "refs": {}
+    },
+    "CsrfState": {
+      "base": "<p>CSRF state token for OAuth security</p>",
+      "refs": {
+        "GitHubIntegrationInput$state": "<p>CSRF state token for OAuth security</p>",
+        "InitiateProviderRegistrationOutput$csrfState": "<p>CSRF state token for OAuth security</p>"
+      }
+    },
+    "CustomHeader": {
+      "base": "<p>Custom headers to be set for network requests</p>",
+      "refs": {
+        "CustomHeaderList$member": null
+      }
+    },
+    "CustomHeaderList": {
+      "base": "<p>List of custom headers</p>",
+      "refs": {
+        "NetworkTrafficConfig$customHeaders": "<p>Custom headers for requests</p>"
+      }
+    },
+    "DNSRecordType": {
+      "base": "<p>Type of DNS record</p>",
+      "refs": {
+        "DnsVerification$dnsRecordType": "<p>Type of record to be added in DNS for target domain</p>"
+      }
+    },
+    "DefaultKmsKeyId": {
+      "base": "<p>Identifier of a KMS key. Can be a key ID, key ARN, alias name, or alias ARN.</p>",
+      "refs": {
+        "ApplicationSummary$defaultKmsKeyId": "<p>Default KMS key identifier used to encrypt application data</p>",
+        "CreateApplicationRequest$defaultKmsKeyId": "<p>Default KMS key identifier used to encrypt application data</p>",
+        "GetApplicationResponse$defaultKmsKeyId": "<p>Default KMS key identifier used to encrypt application data</p>",
+        "UpdateApplicationRequest$defaultKmsKeyId": "<p>Default KMS key identifier. Use an empty string to remove the default KMS key.</p>"
+      }
+    },
+    "DeleteAgentSpaceInput": {
+      "base": "<p>Input for deleting an agent space</p>",
+      "refs": {}
+    },
+    "DeleteAgentSpaceOutput": {
+      "base": "<p>Output for the DeleteAgentSpace operation</p>",
+      "refs": {}
+    },
+    "DeleteApplicationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteArtifactInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteArtifactOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteIntegrationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteIntegrationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteMembershipRequest": {
+      "base": "<p>Request structure for removing a single member from an agent space</p>",
+      "refs": {}
+    },
+    "DeleteMembershipResponse": {
+      "base": "<p>Response structure for removing a single member from an agent space</p>",
+      "refs": {}
+    },
+    "DeletePentestFailure": {
+      "base": "<p>Information about a failed pentest deletion attempt</p>",
+      "refs": {
+        "DeletePentestFailureList$member": null
+      }
+    },
+    "DeletePentestFailureList": {
+      "base": null,
+      "refs": {
+        "BatchDeletePentestsOutput$failed": "<p>List of pentests that could not be deleted and the reasons for failure</p>"
+      }
+    },
+    "DeleteTargetDomainInput": {
+      "base": "<p>Input for deleting a target domain</p>",
+      "refs": {}
+    },
+    "DeleteTargetDomainOutput": {
+      "base": "<p>Output for the DeleteTargetDomain operation</p>",
+      "refs": {}
+    },
+    "DiscoveredEndpoint": {
+      "base": "<p>Represents a discovered endpoint during pentest execution</p>",
+      "refs": {
+        "DiscoveredEndpointList$member": null
+      }
+    },
+    "DiscoveredEndpointList": {
+      "base": null,
+      "refs": {
+        "ListDiscoveredEndpointsOutput$discoveredEndpoints": "<p>List of discovered endpoints for the pentest job</p>"
+      }
+    },
+    "DnsVerification": {
+      "base": "<p>Represents dns txt verification details</p>",
+      "refs": {
+        "VerificationDetails$dnsTxt": "<p>Represents dns txt verification details</p>"
+      }
+    },
+    "DocumentInfo": {
+      "base": "<p>Information about a document relevant to security testing</p>",
+      "refs": {
+        "DocumentList$member": null
+      }
+    },
+    "DocumentList": {
+      "base": null,
+      "refs": {
+        "Assets$documents": "<p>List of documents providing context for testing</p>",
+        "PentestJob$documents": "<p>List of documents providing context for testing</p>"
+      }
+    },
+    "DomainVerificationMethod": {
+      "base": "<p>Method used to verify domain ownership</p>",
+      "refs": {
+        "CreateTargetDomainInput$verificationMethod": "<p>Verification method for the target domain</p>",
+        "UpdateTargetDomainInput$verificationMethod": "<p>Verification method for the target domain</p>",
+        "VerificationDetails$method": "<p>Type of domain ownership verification method</p>"
+      }
+    },
+    "Endpoint": {
+      "base": "<p>Represents a web application endpoint to be tested</p>",
+      "refs": {
+        "EndpointList$member": null,
+        "Task$targetEndpoint": "<p>Target endpoint for this security test</p>"
+      }
+    },
+    "EndpointList": {
+      "base": null,
+      "refs": {
+        "Assets$endpoints": "<p>List of web application endpoints to test</p>",
+        "PentestJob$endpoints": "<p>List of web application endpoints to test</p>",
+        "PentestJob$excludePaths": "<p>List of URL paths to exclude from testing</p>",
+        "PentestJob$allowedDomains": "<p>List of allowed domains for network access</p>"
+      }
+    },
+    "ErrorCode": {
+      "base": "<p>Error code for pentest job failure</p>",
+      "refs": {
+        "ErrorInformation$code": "<p>Pentest job failure error code</p>"
+      }
+    },
+    "ErrorInformation": {
+      "base": "<p>Error information regarding the pentest job</p>",
+      "refs": {
+        "PentestJob$errorInformation": "<p>Error information regarding the pentest job</p>"
+      }
+    },
+    "ExecutionContext": {
+      "base": "<p>Additional context about a pentest or task execution</p>",
+      "refs": {
+        "ExecutionContextList$member": null
+      }
+    },
+    "ExecutionContextList": {
+      "base": null,
+      "refs": {
+        "PentestJob$executionContext": "<p>A list of execution context messages associated with the pentest job</p>"
+      }
+    },
+    "Finding": {
+      "base": "<p>Represents a security vulnerability or issue discovered during testing</p>",
+      "refs": {
+        "FindingList$member": null
+      }
+    },
+    "FindingIdList": {
+      "base": null,
+      "refs": {
+        "BatchGetFindingsInput$findingIds": "<p>List of finding IDs to retrieve</p>",
+        "BatchGetFindingsOutput$notFound": "<p>List of finding IDs that could not be found</p>",
+        "StartCodeRemediationInput$findingIds": "<p>Identifiers of the findings to start code remediation for</p>"
+      }
+    },
+    "FindingList": {
+      "base": "<p>List of findings</p>",
+      "refs": {
+        "BatchGetFindingsOutput$findings": "<p>List of successfully retrieved findings</p>"
+      }
+    },
+    "FindingStatus": {
+      "base": "<p>Finding status</p>",
+      "refs": {
+        "Finding$status": "<p>Current status of the finding</p>",
+        "FindingSummary$status": "<p>Current status of the finding</p>",
+        "ListFindingsInput$status": "<p>Filter findings by status</p>",
+        "UpdateFindingInput$status": "<p>Updated status of the finding</p>"
+      }
+    },
+    "FindingSummary": {
+      "base": "<p>Summary information for a security finding</p>",
+      "refs": {
+        "FindingSummaryList$member": null
+      }
+    },
+    "FindingSummaryList": {
+      "base": "<p>List of finding summaries</p>",
+      "refs": {
+        "ListFindingsOutput$findingsSummaries": "<p>List of finding summaries matching the filter criteria</p>"
+      }
+    },
+    "GetApplicationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetApplicationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetArtifactInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetArtifactOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIntegrationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIntegrationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GitHubIntegrationInput": {
+      "base": "<p>Input parameters for GitHub integration</p>",
+      "refs": {
+        "ProviderInput$github": "<p>GitHub integration input</p>"
+      }
+    },
+    "GitHubOwner": {
+      "base": "<p>Name of the GitHub Account or Organization</p>",
+      "refs": {
+        "GitHubRepositoryMetadata$owner": "<p>Owner of the repository</p>",
+        "GitHubRepositoryResource$owner": "<p>Owner of the repository</p>"
+      }
+    },
+    "GitHubRepositoryMetadata": {
+      "base": "<p>Metadata specific to a GitHub repository integrated resource</p>",
+      "refs": {
+        "IntegratedResourceMetadata$githubRepository": "<p>Metadata for a GitHub repository resource</p>"
+      }
+    },
+    "GitHubRepositoryResource": {
+      "base": "<p>GitHub repository resource details</p>",
+      "refs": {
+        "IntegratedResource$githubRepository": "<p>GitHub repository resource</p>"
+      }
+    },
+    "GitHubResourceCapabilities": {
+      "base": "<p>Capabilities for GitHub repositories</p>",
+      "refs": {
+        "ProviderResourceCapabilities$github": null
+      }
+    },
+    "HttpVerification": {
+      "base": "<p>Represents http route verification details</p>",
+      "refs": {
+        "VerificationDetails$httpRoute": "<p>Represents http route verification details</p>"
+      }
+    },
+    "IamRoles": {
+      "base": null,
+      "refs": {
+        "AWSResources$iamRoles": "<p>IAM role ARNs that the Security Agent can assume to access customer resources</p>"
+      }
+    },
+    "IdCApplicationArn": {
+      "base": "<p>ARN of the IAM Identity Center application associated with this application</p>",
+      "refs": {
+        "IdCConfiguration$idcApplicationArn": "<p>ARN of the IAM Identity Center application associated with this application</p>"
+      }
+    },
+    "IdCConfiguration": {
+      "base": "<p>IdC configuration containing application and instance ARNs</p>",
+      "refs": {
+        "GetApplicationResponse$idcConfiguration": "<p>IAM Identity Center configuration for the application</p>"
+      }
+    },
+    "IdCInstanceArn": {
+      "base": "<p>ARN of the IAM Identity Center instance used for user authentication</p>",
+      "refs": {
+        "CreateApplicationRequest$idcInstanceArn": "<p>ARN of the IAM Identity Center instance used for user authentication. Optional for non-IdC applications</p>",
+        "IdCConfiguration$idcInstanceArn": "<p>ARN of the IAM Identity Center instance used for user authentication</p>"
+      }
+    },
+    "InitiateProviderRegistrationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "InitiateProviderRegistrationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "IntegratedRepository": {
+      "base": "<p>Information about an integrated repository</p>",
+      "refs": {
+        "IntegratedRepositoryList$member": null
+      }
+    },
+    "IntegratedRepositoryList": {
+      "base": null,
+      "refs": {
+        "Assets$integratedRepositories": "<p>List of integrated code repositories</p>",
+        "PentestJob$integratedRepositories": "<p>List of integrated code repositories</p>"
+      }
+    },
+    "IntegratedResource": {
+      "base": "<p>Integrated resource details from a provider</p>",
+      "refs": {
+        "IntegratedResourceInputItem$resource": "<p>Configuration of the resource</p>"
+      }
+    },
+    "IntegratedResourceInputItem": {
+      "base": "<p>Input item for updating an integrated resource</p>",
+      "refs": {
+        "IntegratedResourceInputItemList$member": null
+      }
+    },
+    "IntegratedResourceInputItemList": {
+      "base": "<p>List of integrated resources</p>",
+      "refs": {
+        "UpdateIntegratedResourcesInput$items": "<p>List of integrated resources to update</p>"
+      }
+    },
+    "IntegratedResourceMetadata": {
+      "base": "<p>Metadata about an integrated resource</p>",
+      "refs": {
+        "IntegratedResourceSummary$resource": "<p>The integrated resource details</p>"
+      }
+    },
+    "IntegratedResourceSummary": {
+      "base": "<p>Summary information about an integrated resource</p>",
+      "refs": {
+        "IntegratedResourceSummaryList$member": null
+      }
+    },
+    "IntegratedResourceSummaryList": {
+      "base": "<p>List of integrated resource items</p>",
+      "refs": {
+        "ListIntegratedResourcesOutput$integratedResourceSummaries": "<p>List of integrated resources</p>"
+      }
+    },
+    "IntegrationFilter": {
+      "base": "<p>Filter criteria for integrations</p>",
+      "refs": {
+        "ListIntegrationsInput$filter": "<p>Filter criteria for integrations</p>"
+      }
+    },
+    "IntegrationId": {
+      "base": "<p>Unique identifier for an integration</p>",
+      "refs": {
+        "CreateIntegrationOutput$integrationId": "<p>Unique identifier of the created integration</p>",
+        "DeleteIntegrationInput$integrationId": "<p>Unique identifier of the integration</p>",
+        "GetIntegrationInput$integrationId": "<p>Unique identifier of the integration</p>",
+        "GetIntegrationOutput$integrationId": "<p>Unique identifier of the integration</p>",
+        "IntegratedResourceSummary$integrationId": "<p>Unique identifier of the integration</p>",
+        "ListIntegratedResourcesInput$integrationId": "<p>Filter integrated resources by a specific integration</p>",
+        "UpdateIntegratedResourcesInput$integrationId": "<p>Unique identifier of the integration</p>"
+      }
+    },
+    "IntegrationSummary": {
+      "base": "<p>Summary information about an integration</p>",
+      "refs": {
+        "IntegrationSummaryList$member": null
+      }
+    },
+    "IntegrationSummaryList": {
+      "base": "<p>List of integration summaries</p>",
+      "refs": {
+        "ListIntegrationsOutput$integrationSummaries": "<p>List of integration summaries</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>Unexpected server error occurred</p>",
+      "refs": {}
+    },
+    "JobStatus": {
+      "base": "<p>Status of a pentest job</p>",
+      "refs": {
+        "PentestJob$status": "<p>Current status of the pentest job</p>",
+        "PentestJobSummary$status": "<p>Current status of the pentest job</p>",
+        "StartPentestJobOutput$status": "<p>Current status of the pentest job</p>"
+      }
+    },
+    "KmsKeyId": {
+      "base": "<p>Identifier of a KMS key. Can be a key ID, key ARN, alias name, or alias ARN.</p>",
+      "refs": {
+        "AgentSpace$kmsKeyId": "<p>Identifier of the KMS key used to encrypt data. Can be a key ID, key ARN, alias name, or alias ARN. If not specified, an AWS managed key is used.</p>",
+        "CreateAgentSpaceInput$kmsKeyId": "<p>Identifier of the KMS key used to encrypt data. Can be a key ID, key ARN, alias name, or alias ARN. If not specified, an AWS managed key is used.</p>",
+        "CreateAgentSpaceOutput$kmsKeyId": "<p>Identifier of the KMS key used to encrypt data. Can be a key ID, key ARN, alias name, or alias ARN. If not specified, an AWS managed key is used.</p>",
+        "CreateIntegrationInput$kmsKeyId": "<p>KMS key ID for encrypting integration details</p>",
+        "GetIntegrationOutput$kmsKeyId": "<p>KMS key ID for encrypting integration details</p>"
+      }
+    },
+    "LambdaFunctionArn": {
+      "base": "<p>Lambda function ARN or name for agent space AWS resources</p>",
+      "refs": {
+        "LambdaFunctionArns$member": null
+      }
+    },
+    "LambdaFunctionArns": {
+      "base": null,
+      "refs": {
+        "AWSResources$lambdaFunctionArns": "<p>Lambda function ARNs or names used to retrieve tester credentials for pentests</p>"
+      }
+    },
+    "ListAgentSpacesInput": {
+      "base": "<p>Input for listing agent spaces</p>",
+      "refs": {}
+    },
+    "ListAgentSpacesOutput": {
+      "base": "<p>Output for the ListAgentSpaces operation</p>",
+      "refs": {}
+    },
+    "ListApplicationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListApplicationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListArtifactsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListArtifactsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDiscoveredEndpointsInput": {
+      "base": "<p>Input for ListDiscoveredEndpoints operation</p>",
+      "refs": {}
+    },
+    "ListDiscoveredEndpointsOutput": {
+      "base": "<p>Output for the ListDiscoveredEndpoints operation</p>",
+      "refs": {}
+    },
+    "ListFindingsInput": {
+      "base": "<p>Input for ListFindings operation with filtering support</p>",
+      "refs": {}
+    },
+    "ListFindingsOutput": {
+      "base": "<p>Output for the ListFindings operation</p>",
+      "refs": {}
+    },
+    "ListIntegratedResourcesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIntegratedResourcesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIntegrationsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIntegrationsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListMembershipsRequest": {
+      "base": "<p>Request structure for listing agent space members</p>",
+      "refs": {}
+    },
+    "ListMembershipsResponse": {
+      "base": "<p>Response structure for listing members associated to an agent space</p>",
+      "refs": {}
+    },
+    "ListPentestJobTasksInput": {
+      "base": "<p>Input for listing tasks associated with a specific pentest job</p>",
+      "refs": {}
+    },
+    "ListPentestJobTasksOutput": {
+      "base": "<p>Output for the ListPentestJobTasks operation</p>",
+      "refs": {}
+    },
+    "ListPentestJobsForPentestInput": {
+      "base": "<p>Input for ListPentestJobsForPentest operation</p>",
+      "refs": {}
+    },
+    "ListPentestJobsForPentestOutput": {
+      "base": "<p>Output for the ListPentestJobsForPentest operation</p>",
+      "refs": {}
+    },
+    "ListPentestsInput": {
+      "base": "<p>Input for listing pentests with optional filtering</p>",
+      "refs": {}
+    },
+    "ListPentestsOutput": {
+      "base": "<p>Output for the ListPentests operation</p>",
+      "refs": {}
+    },
+    "ListTagsForResourceInput": {
+      "base": "<p>Input for ListTagsForResource operation</p>",
+      "refs": {}
+    },
+    "ListTagsForResourceOutput": {
+      "base": "<p>Output for ListTagsForResource operation</p>",
+      "refs": {}
+    },
+    "ListTargetDomainsInput": {
+      "base": "<p>Input for listing target domains</p>",
+      "refs": {}
+    },
+    "ListTargetDomainsOutput": {
+      "base": "<p>Output for the ListTargetDomains operation</p>",
+      "refs": {}
+    },
+    "Location": {
+      "base": "<p>Location URL for OAuth redirect</p>",
+      "refs": {
+        "InitiateProviderRegistrationOutput$redirectTo": "<p>OAuth redirect URL</p>"
+      }
+    },
+    "LogGroupArn": {
+      "base": "<p>Log group ARN or name for agent space AWS resources</p>",
+      "refs": {
+        "LogGroupArns$member": null
+      }
+    },
+    "LogGroupArns": {
+      "base": null,
+      "refs": {
+        "AWSResources$logGroups": "<p>CloudWatch log group ARNs or names used to store Security Agent logs</p>"
+      }
+    },
+    "LogLocation": {
+      "base": "<p>Location information for execution logs</p>",
+      "refs": {
+        "Task$logsLocation": "<p>Location of execution logs for auditing and review</p>"
+      }
+    },
+    "LogType": {
+      "base": "<p>Type of log storage</p>",
+      "refs": {
+        "LogLocation$logType": "<p>Type of log storage</p>"
+      }
+    },
+    "MaxResults": {
+      "base": "<p>Maximum results for pagination</p>",
+      "refs": {
+        "ListAgentSpacesInput$maxResults": "<p>Maximum number of agent spaces to return</p>",
+        "ListApplicationsRequest$maxResults": "<p>Maximum number of results to return</p>",
+        "ListArtifactsInput$maxResults": "<p>Maximum number of results to return</p>",
+        "ListDiscoveredEndpointsInput$maxResults": "<p>Maximum number of discovered endpoints to return in a single request (default: 50)</p>",
+        "ListFindingsInput$maxResults": "<p>Maximum number of findings to return in a single request (default: 50)</p>",
+        "ListIntegratedResourcesInput$maxResults": "<p>Maximum number of results to return</p>",
+        "ListIntegrationsInput$maxResults": "<p>Maximum number of results to return</p>",
+        "ListMembershipsRequest$maxResults": "<p>Maximum number of results to return</p>",
+        "ListPentestJobTasksInput$maxResults": "<p>Maximum number of tasks to return in a single request</p>",
+        "ListPentestJobsForPentestInput$maxResults": "<p>Maximum number of pentest jobs to return in a single request</p>",
+        "ListPentestsInput$maxResults": "<p>Maximum number of pentests to return in a single request</p>",
+        "ListTargetDomainsInput$maxResults": "<p>Maximum number of target domains to return</p>"
+      }
+    },
+    "MemberMetadata": {
+      "base": "<p>Metadata associated with the member</p>",
+      "refs": {
+        "MembershipSummary$metadata": "<p>Member-specific metadata</p>"
+      }
+    },
+    "MembershipConfig": {
+      "base": "<p>Member-specific configuration</p>",
+      "refs": {
+        "CreateMembershipRequest$config": "<p>Membership details (user or agent specific)</p>",
+        "MembershipSummary$config": "<p>Configuration specific to the member type</p>"
+      }
+    },
+    "MembershipId": {
+      "base": "<p>Member identifier</p>",
+      "refs": {
+        "CreateMembershipRequest$membershipId": "<p>Member identifier (userId or agentSpaceId)</p>",
+        "DeleteMembershipRequest$membershipId": "<p>Member identifier (userId or agentSpaceId)</p>",
+        "MembershipSummary$membershipId": "<p>Member identifier (userId or agentSpaceId)</p>"
+      }
+    },
+    "MembershipSummary": {
+      "base": "<p>Membership summary for list operations</p>",
+      "refs": {
+        "MembershipSummaryList$member": null
+      }
+    },
+    "MembershipSummaryList": {
+      "base": "<p>List of membership summaries</p>",
+      "refs": {
+        "ListMembershipsResponse$membershipSummaries": "<p>List of membership summaries</p>"
+      }
+    },
+    "MembershipType": {
+      "base": "<p>Type of membership</p>",
+      "refs": {
+        "CreateMembershipRequest$memberType": "<p>Type of member (USER or AGENT_SPACE)</p>",
+        "DeleteMembershipRequest$memberType": "<p>Type of member (USER or AGENT_SPACE)</p>",
+        "MembershipSummary$memberType": "<p>Type of member</p>"
+      }
+    },
+    "MembershipTypeFilter": {
+      "base": "<p>Filter for member type in list operations</p>",
+      "refs": {
+        "ListMembershipsRequest$memberType": "<p>Filter by member type</p>"
+      }
+    },
+    "NetworkTrafficConfig": {
+      "base": "<p>Configuration for network traffic filtering</p>",
+      "refs": {
+        "CreatePentestInput$networkTrafficConfig": "<p>Configuration for network traffic filtering</p>",
+        "Pentest$networkTrafficConfig": "<p>Configuration for network traffic filtering</p>",
+        "PentestJob$networkTrafficConfig": "<p>Configuration for network traffic filtering</p>",
+        "UpdatePentestInput$networkTrafficConfig": "<p>Configuration for network traffic filtering</p>"
+      }
+    },
+    "NetworkTrafficRule": {
+      "base": "<p>Network traffic filtering rule</p>",
+      "refs": {
+        "NetworkTrafficRuleList$member": null
+      }
+    },
+    "NetworkTrafficRuleEffect": {
+      "base": "<p>Effect of a network traffic rule</p>",
+      "refs": {
+        "NetworkTrafficRule$effect": "<p>Action to take when the rule matches</p>"
+      }
+    },
+    "NetworkTrafficRuleList": {
+      "base": "<p>List of network traffic rules</p>",
+      "refs": {
+        "NetworkTrafficConfig$rules": "<p>Traffic filtering rules</p>"
+      }
+    },
+    "NetworkTrafficRuleType": {
+      "base": "<p>Type of network traffic rule</p>",
+      "refs": {
+        "NetworkTrafficRule$networkTrafficRuleType": "<p>Type of network traffic rule</p>"
+      }
+    },
+    "NextToken": {
+      "base": "<p>Pagination token</p>",
+      "refs": {
+        "ListAgentSpacesInput$nextToken": "<p>Token for pagination</p>",
+        "ListAgentSpacesOutput$nextToken": "<p>Token for next page of results</p>",
+        "ListApplicationsRequest$nextToken": "<p>Token for pagination</p>",
+        "ListApplicationsResponse$nextToken": "<p>Token for next page of results</p>",
+        "ListArtifactsInput$nextToken": "<p>Token for pagination</p>",
+        "ListArtifactsOutput$nextToken": "<p>Token for pagination to retrieve the next set of results</p>",
+        "ListDiscoveredEndpointsInput$nextToken": "<p>Token for pagination</p>",
+        "ListDiscoveredEndpointsOutput$nextToken": "<p>Token for pagination to retrieve the next set of results</p>",
+        "ListFindingsInput$nextToken": "<p>Token for pagination</p>",
+        "ListFindingsOutput$nextToken": "<p>Token for pagination to retrieve the next set of results</p>",
+        "ListIntegratedResourcesInput$nextToken": "<p>Token for pagination</p>",
+        "ListIntegratedResourcesOutput$nextToken": "<p>Token for pagination to retrieve the next set of results</p>",
+        "ListIntegrationsInput$nextToken": "<p>Token for pagination</p>",
+        "ListIntegrationsOutput$nextToken": "<p>Token for pagination to retrieve the next set of results</p>",
+        "ListMembershipsRequest$nextToken": "<p>Token for pagination</p>",
+        "ListMembershipsResponse$nextToken": "<p>Token for next page of results</p>",
+        "ListPentestJobTasksInput$nextToken": "<p>Token for pagination to retrieve the next set of results</p>",
+        "ListPentestJobTasksOutput$nextToken": "<p>Token for pagination to retrieve the next set of results</p>",
+        "ListPentestJobsForPentestInput$nextToken": "<p>Token for pagination</p>",
+        "ListPentestJobsForPentestOutput$nextToken": "<p>Token for pagination to retrieve the next set of results</p>",
+        "ListPentestsInput$nextToken": "<p>Token for pagination</p>",
+        "ListPentestsOutput$nextToken": "<p>Token for pagination to retrieve the next set of results</p>",
+        "ListTargetDomainsInput$nextToken": "<p>Token for pagination</p>",
+        "ListTargetDomainsOutput$nextToken": "<p>Token for next page of results</p>"
+      }
+    },
+    "Pentest": {
+      "base": "<p>Represents a pentest configuration and execution details</p>",
+      "refs": {
+        "PentestList$member": null
+      }
+    },
+    "PentestIdList": {
+      "base": null,
+      "refs": {
+        "BatchDeletePentestsInput$pentestIds": "<p>List of pentest IDs to delete</p>",
+        "BatchGetPentestsInput$pentestIds": "<p>List of pentest IDs to retrieve</p>",
+        "BatchGetPentestsOutput$notFound": "<p>List of pentest IDs that could not be found</p>"
+      }
+    },
+    "PentestJob": {
+      "base": "<p>Represents a pentest job</p>",
+      "refs": {
+        "PentestJobList$member": null
+      }
+    },
+    "PentestJobIdList": {
+      "base": null,
+      "refs": {
+        "BatchGetPentestJobsInput$pentestJobIds": "<p>List of pentest job IDs to retrieve</p>",
+        "BatchGetPentestJobsOutput$notFound": "<p>List of pentest job IDs that could not be found</p>"
+      }
+    },
+    "PentestJobList": {
+      "base": null,
+      "refs": {
+        "BatchGetPentestJobsOutput$pentestJobs": "<p>List of successfully retrieved pentest jobs</p>"
+      }
+    },
+    "PentestJobSummary": {
+      "base": "<p>Summary information for a pentest job</p>",
+      "refs": {
+        "PentestJobSummaryList$member": null
+      }
+    },
+    "PentestJobSummaryList": {
+      "base": null,
+      "refs": {
+        "ListPentestJobsForPentestOutput$pentestJobSummaries": "<p>List of pentest job summaries associated with the pentest</p>"
+      }
+    },
+    "PentestList": {
+      "base": null,
+      "refs": {
+        "BatchDeletePentestsOutput$deleted": "<p>List of successfully deleted pentests</p>",
+        "BatchGetPentestsOutput$pentests": "<p>List of successfully retrieved pentests</p>"
+      }
+    },
+    "PentestSummary": {
+      "base": "<p>Summary information for a pentest</p>",
+      "refs": {
+        "PentestSummaryList$member": null
+      }
+    },
+    "PentestSummaryList": {
+      "base": null,
+      "refs": {
+        "ListPentestsOutput$pentestSummaries": "<p>List of pentest summaries matching the filter criteria</p>"
+      }
+    },
+    "Provider": {
+      "base": "<p>Third-party provider type</p>",
+      "refs": {
+        "CreateIntegrationInput$provider": "<p>Provider to integrate with</p>",
+        "GetIntegrationOutput$provider": "<p>Provider type</p>",
+        "InitiateProviderRegistrationInput$provider": "<p>Provider to register with</p>",
+        "IntegrationFilter$provider": "<p>Filter by provider</p>",
+        "IntegrationSummary$provider": "<p>Provider type</p>"
+      }
+    },
+    "ProviderInput": {
+      "base": "<p>Provider-specific input parameters for integration</p>",
+      "refs": {
+        "CreateIntegrationInput$input": "<p>Provider-specific input parameters</p>"
+      }
+    },
+    "ProviderResourceCapabilities": {
+      "base": "<p>Provider-specific capabilities for integrated resources</p>",
+      "refs": {
+        "IntegratedResourceInputItem$capabilities": "<p>Provider-specific capabilities for the resource</p>",
+        "IntegratedResourceSummary$capabilities": "<p>Capabilities of the integrated resource</p>"
+      }
+    },
+    "ProviderResourceId": {
+      "base": "<p>Provider Id of the resource e.g. GitHub repository id, etc</p>",
+      "refs": {
+        "GitHubRepositoryMetadata$providerResourceId": "<p>Unique resource identifier from the vendor</p>"
+      }
+    },
+    "ProviderResourceName": {
+      "base": "<p>Name of the resource e.g. repository name, etc</p>",
+      "refs": {
+        "GitHubRepositoryMetadata$name": "<p>Name of the resource e.g. repository name, etc</p>",
+        "GitHubRepositoryResource$name": "<p>Name of the resource e.g. repository name, etc</p>"
+      }
+    },
+    "ProviderType": {
+      "base": "<p>Type of provider integration</p>",
+      "refs": {
+        "GetIntegrationOutput$providerType": "<p>Type of provider integration</p>",
+        "IntegrationFilter$providerType": "<p>Filter by provider type</p>",
+        "IntegrationSummary$providerType": "<p>Type of provider integration</p>"
+      }
+    },
+    "ResourceArn": {
+      "base": "<p>ARN of a taggable resource</p>",
+      "refs": {
+        "ListTagsForResourceInput$resourceArn": "<p>ARN of the resource to list tags for</p>",
+        "TagResourceInput$resourceArn": "<p>ARN of the resource to tag</p>",
+        "UntagResourceInput$resourceArn": "<p>ARN of the resource to untag</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>Specified resource was not found</p>",
+      "refs": {}
+    },
+    "ResourceType": {
+      "base": "<p>Type of resource</p>",
+      "refs": {
+        "ListIntegratedResourcesInput$resourceType": "<p>Filter integrated resources by resource type</p>"
+      }
+    },
+    "RiskLevel": {
+      "base": "<p>Risk severity level</p>",
+      "refs": {
+        "Finding$riskLevel": "<p>Severity level of the identified risk</p>",
+        "FindingSummary$riskLevel": "<p>Severity level of the identified risk</p>",
+        "ListFindingsInput$riskLevel": "<p>Filter findings by risk level</p>",
+        "UpdateFindingInput$riskLevel": "<p>Updated severity level of the identified risk</p>"
+      }
+    },
+    "RiskType": {
+      "base": "<p>Type of security risk</p>",
+      "refs": {
+        "RiskTypeList$member": null,
+        "Task$riskType": "<p>Type of security risk this task is designed to test</p>",
+        "TaskSummary$riskType": "<p>Type of security risk this task is designed to test</p>"
+      }
+    },
+    "RiskTypeList": {
+      "base": null,
+      "refs": {
+        "CreatePentestInput$excludeRiskTypes": "<p>A list of risk types excluded from the pentest execution</p>",
+        "CreatePentestOutput$excludeRiskTypes": "<p>A list of risk types excluded from the pentest execution</p>",
+        "Pentest$excludeRiskTypes": "<p>A list of risk types excluded from the pentest execution</p>",
+        "PentestJob$excludeRiskTypes": "<p>A list of risk types excluded from the pentest job</p>",
+        "UpdatePentestInput$excludeRiskTypes": "<p>A list of risk types excluded from the pentest execution</p>",
+        "UpdatePentestOutput$excludeRiskTypes": "<p>A list of risk types excluded from the pentest execution</p>"
+      }
+    },
+    "RoleArn": {
+      "base": "<p>ARN of the IAM role that the application uses to access AWS resources on your behalf</p>",
+      "refs": {
+        "CreateApplicationRequest$roleArn": "<p>ARN of the IAM role that the application uses to access AWS resources on your behalf</p>",
+        "GetApplicationResponse$roleArn": "<p>ARN of the IAM role that the application uses to access AWS resources on your behalf</p>",
+        "UpdateApplicationRequest$roleArn": "<p>ARN of the IAM role that the application uses to access AWS resources on your behalf</p>"
+      }
+    },
+    "S3BucketArn": {
+      "base": "<p>S3 bucket ARN or name for agent space AWS resources</p>",
+      "refs": {
+        "S3BucketArns$member": null
+      }
+    },
+    "S3BucketArns": {
+      "base": null,
+      "refs": {
+        "AWSResources$s3Buckets": "<p>S3 bucket ARNs or names used to store Security Agent artifacts</p>"
+      }
+    },
+    "SecretArn": {
+      "base": "<p>Secret ARN or name for agent space AWS resources</p>",
+      "refs": {
+        "SecretArns$member": null
+      }
+    },
+    "SecretArns": {
+      "base": null,
+      "refs": {
+        "AWSResources$secretArns": "<p>SecretsManager secret ARNs or names used to store tester credentials for pentests</p>"
+      }
+    },
+    "SecurityGroupArn": {
+      "base": "<p>ARN or ID of a security group</p>",
+      "refs": {
+        "SecurityGroupArns$member": null
+      }
+    },
+    "SecurityGroupArns": {
+      "base": "<p>A list of one or more security group ARNs or IDs in the customer VPC</p>",
+      "refs": {
+        "VpcConfig$securityGroupArns": "<p>List of security group ARNs or IDs in the customer VPC</p>"
+      }
+    },
+    "SensitiveEmail": {
+      "base": "<p>Sensitive email address</p>",
+      "refs": {
+        "UserMetadata$email": "<p>User email address</p>"
+      }
+    },
+    "ServiceRole": {
+      "base": "<p>ARN of an IAM role that the service can assume to access customer resources</p>",
+      "refs": {
+        "CreatePentestInput$serviceRole": "<p>Service role ARN for accessing customer resources</p>",
+        "CreatePentestOutput$serviceRole": "<p>Service role ARN for accessing customer resources</p>",
+        "IamRoles$member": null,
+        "Pentest$serviceRole": "<p>Service role ARN for accessing customer resources</p>",
+        "PentestJob$serviceRole": "<p>Service role ARN for accessing customer resources</p>",
+        "UpdatePentestInput$serviceRole": "<p>Updated service role ARN for accessing customer resources</p>",
+        "UpdatePentestOutput$serviceRole": "<p>Service role ARN for accessing customer resources</p>"
+      }
+    },
+    "SourceCodeRepository": {
+      "base": "<p>Information about a source code repository for static analysis</p>",
+      "refs": {
+        "SourceCodeRepositoryList$member": null
+      }
+    },
+    "SourceCodeRepositoryList": {
+      "base": null,
+      "refs": {
+        "Assets$sourceCode": "<p>List of source code repositories for static analysis</p>",
+        "PentestJob$sourceCode": "<p>List of source code repositories for static analysis</p>"
+      }
+    },
+    "StartCodeRemediationInput": {
+      "base": "<p>Input for the StartCodeRemediation operation</p>",
+      "refs": {}
+    },
+    "StartCodeRemediationOutput": {
+      "base": "<p>Output for the StartCodeRemediation operation</p>",
+      "refs": {}
+    },
+    "StartPentestJobInput": {
+      "base": "<p>Input for starting the execution of a pentest</p>",
+      "refs": {}
+    },
+    "StartPentestJobOutput": {
+      "base": "<p>Output for the StartPentestJob operation</p>",
+      "refs": {}
+    },
+    "Step": {
+      "base": "<p>Represents a single step in pentest job execution</p>",
+      "refs": {
+        "StepList$member": null
+      }
+    },
+    "StepList": {
+      "base": "<p>List of pentest job steps</p>",
+      "refs": {
+        "PentestJob$steps": "<p>List of execution steps for the pentest job</p>"
+      }
+    },
+    "StepName": {
+      "base": "<p>Pentest job step names</p>",
+      "refs": {
+        "ListPentestJobTasksInput$stepName": "<p>Filter tasks by step name</p>",
+        "Step$name": "<p>Name of the execution step</p>"
+      }
+    },
+    "StepStatus": {
+      "base": "<p>Pentest job step status</p>",
+      "refs": {
+        "Step$status": "<p>Current status of the step</p>"
+      }
+    },
+    "StopPentestJobInput": {
+      "base": "<p>Input for stopping the execution of a pentest</p>",
+      "refs": {}
+    },
+    "StopPentestJobOutput": {
+      "base": "<p>Output for the StopPentestJob operation</p>",
+      "refs": {}
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": "<p>Error description</p>",
+        "Actor$identifier": "<p>Unique identifier for the actor (case-insensitive)</p>",
+        "Actor$description": "<p>Additional description or details about the actor</p>",
+        "AddArtifactInput$fileName": "<p>Name of the artifact file</p>",
+        "AgentSpace$name": "<p>Name of the agent space</p>",
+        "AgentSpace$description": "<p>Description of the agent space</p>",
+        "AgentSpaceSummary$name": "<p>Name of the agent space</p>",
+        "ApplicationSummary$applicationName": "<p>Name of the application, automatically assigned by the service</p>",
+        "Artifact$contents": "<p>The content of the artifact</p>",
+        "ArtifactMetadataItem$fileName": "<p>Name of the artifact file</p>",
+        "ArtifactSummary$fileName": "<p>Name of the artifact file</p>",
+        "Authentication$value": "<p>Authentication credential value or reference</p>",
+        "BatchDeletePentestsInput$agentSpaceId": "<p>ID of the agent space where the pentests exist</p>",
+        "BatchGetFindingsInput$agentSpaceId": "<p>ID of the agent space where the findings exist</p>",
+        "BatchGetPentestJobTasksInput$agentSpaceId": "<p>ID of the agent space where the pentest exists</p>",
+        "BatchGetPentestJobsInput$agentSpaceId": "<p>ID of the agent space where the pentest exists</p>",
+        "BatchGetPentestsInput$agentSpaceId": "<p>ID of the agent space where the pentest exists</p>",
+        "Category$name": "<p>Name of the category</p>",
+        "CloudWatchLog$logGroup": "<p>Name of the CloudWatch log group</p>",
+        "CloudWatchLog$logStream": "<p>Name of the CloudWatch log stream</p>",
+        "CodeRemediationTask$statusReason": "<p>Reason for the current code remediation task status</p>",
+        "CodeRemediationTaskDetails$repoName": "<p>Name of the repository</p>",
+        "CodeRemediationTaskDetails$codeDiffLink": "<p>Link to the code diff for the remediation</p>",
+        "CodeRemediationTaskDetails$pullRequestLink": "<p>Link to the pull request for the remediation</p>",
+        "ConflictException$message": "<p>Error description</p>",
+        "CreateAgentSpaceInput$description": "<p>Description of the agent space</p>",
+        "CreateAgentSpaceOutput$description": "<p>Description of the created agent space</p>",
+        "CreateIntegrationInput$integrationDisplayName": "<p>Display name for the integration</p>",
+        "CreatePentestInput$title": "<p>Title of the pentest</p>",
+        "CreatePentestInput$agentSpaceId": "<p>ID of the agent space where the pentest should be created</p>",
+        "CreatePentestOutput$pentestId": "<p>Unique identifier of the created pentest</p>",
+        "CreatePentestOutput$title": "<p>Title of the created pentest</p>",
+        "CreatePentestOutput$agentSpaceId": "<p>ID of the agent space where the pentest was created</p>",
+        "CreateTargetDomainInput$targetDomainName": "<p>Domain name of the target domain</p>",
+        "CreateTargetDomainOutput$domainName": "<p>Name of the created target domain</p>",
+        "CustomHeader$name": "<p>Name of header to set value for</p>",
+        "CustomHeader$value": "<p>Value to set for header</p>",
+        "DeletePentestFailure$pentestId": "<p>Identifier of the pentest that failed to delete</p>",
+        "DeletePentestFailure$reason": "<p>Reason for the deletion failure</p>",
+        "DiscoveredEndpoint$uri": "<p>The URI of the discovered endpoint</p>",
+        "DiscoveredEndpoint$pentestJobId": "<p>Identifier of the pentest job that discovered this endpoint</p>",
+        "DiscoveredEndpoint$taskId": "<p>Identifier of the task that discovered this endpoint</p>",
+        "DiscoveredEndpoint$agentSpaceId": "<p>Identifier of the agent space where the endpoint was discovered</p>",
+        "DiscoveredEndpoint$evidence": "<p>Optional evidence or additional information about the endpoint</p>",
+        "DiscoveredEndpoint$operation": "<p>Operation or action associated with the endpoint</p>",
+        "DiscoveredEndpoint$description": "<p>Additional description of the endpoint</p>",
+        "DnsVerification$token": "<p>Token used to verify domain ownership</p>",
+        "DnsVerification$dnsRecordName": "<p>Record name to be added in DNS for target domain</p>",
+        "DocumentInfo$s3Location": "<p>S3 storage location of the document</p>",
+        "DocumentInfo$artifactId": "<p>Artifact ID of the document</p>",
+        "Endpoint$uri": "<p>URI of the endpoint to test</p>",
+        "ErrorInformation$message": "<p>Pentest job failure error message</p>",
+        "ExecutionContext$context": "<p>Context associated with a pentest or task execution</p>",
+        "Finding$findingId": "<p>Unique identifier for the finding</p>",
+        "Finding$agentSpaceId": "<p>Identifier of the agent space that created this finding</p>",
+        "Finding$pentestId": "<p>Identifier of the parent pentest</p>",
+        "Finding$pentestJobId": "<p>Identifier of the pentest job</p>",
+        "Finding$taskId": "<p>Identifier of the associated task</p>",
+        "Finding$name": "<p>Name or title of the finding</p>",
+        "Finding$description": "<p>Detailed description of the security vulnerability</p>",
+        "Finding$riskType": "<p>Type of security risk identified</p>",
+        "Finding$riskScore": "<p>Risk score associated with the finding</p>",
+        "Finding$reasoning": "<p>Justification for the assigned risk score</p>",
+        "Finding$attackScript": "<p>Proof-of-concept code demonstrating the vulnerability</p>",
+        "Finding$lastUpdatedBy": "<p>Identifier of the task or agent that last updated this finding</p>",
+        "FindingIdList$member": null,
+        "FindingSummary$findingId": "<p>Unique identifier for the finding</p>",
+        "FindingSummary$agentSpaceId": "<p>Identifier of the agent space that created this finding</p>",
+        "FindingSummary$pentestId": "<p>Identifier of the parent pentest</p>",
+        "FindingSummary$pentestJobId": "<p>Identifier of the pentest job</p>",
+        "FindingSummary$name": "<p>Name or title of the finding</p>",
+        "FindingSummary$riskType": "<p>Type of security risk identified</p>",
+        "GetApplicationResponse$applicationName": "<p>Name of the application, automatically assigned by the service</p>",
+        "GetArtifactOutput$fileName": "<p>Name of the artifact file</p>",
+        "GetIntegrationOutput$installationId": "<p>Installation identifier from the provider</p>",
+        "GetIntegrationOutput$displayName": "<p>Display name for the integration</p>",
+        "GitHubIntegrationInput$organizationName": "<p>Name of the GitHub organization</p>",
+        "HttpVerification$token": "<p>Token used to verify domain ownership</p>",
+        "HttpVerification$routePath": "<p>Route path where verification token should be placed</p>",
+        "IntegratedRepository$integrationId": "<p>Integration identifier</p>",
+        "IntegratedRepository$providerResourceId": "<p>External provider resource identifier, e.g., Github repository identifier</p>",
+        "IntegrationSummary$integrationId": "<p>Unique identifier of the integration</p>",
+        "IntegrationSummary$installationId": "<p>Installation identifier from the provider</p>",
+        "IntegrationSummary$displayName": "<p>Display name for the integration</p>",
+        "InternalServerException$message": "<p>Error description</p>",
+        "ListDiscoveredEndpointsInput$pentestJobId": "<p>Identifier of the pentest job for which to retrieve discovered endpoints</p>",
+        "ListDiscoveredEndpointsInput$agentSpaceId": "<p>ID of the agent space where the pentest job exists</p>",
+        "ListDiscoveredEndpointsInput$prefix": "<p>Optional URI prefix filter to narrow down results</p>",
+        "ListFindingsInput$pentestJobId": "<p>Identifier of the pentest job for which to retrieve associated findings</p>",
+        "ListFindingsInput$agentSpaceId": "<p>ID of the agent space where the pentest job exists</p>",
+        "ListFindingsInput$riskType": "<p>Filter findings by risk type</p>",
+        "ListFindingsInput$name": "<p>Filter findings by name (case-insensitive substring search)</p>",
+        "ListPentestJobTasksInput$agentSpaceId": "<p>ID of the agent space where the pentest exists</p>",
+        "ListPentestJobTasksInput$pentestJobId": "<p>Identifier of the pentest job whose tasks to list</p>",
+        "ListPentestJobTasksInput$categoryName": "<p>Filter tasks by category name.</p>",
+        "ListPentestJobsForPentestInput$pentestId": "<p>Identifier of the pentest for which to retrieve associated jobs</p>",
+        "ListPentestJobsForPentestInput$agentSpaceId": "<p>ID of the agent space where the pentest exists</p>",
+        "ListPentestsInput$agentSpaceId": "<p>ID of the agent space where the pentest exists</p>",
+        "MembershipSummary$createdBy": "<p>User ID who created the membership</p>",
+        "MembershipSummary$updatedBy": "<p>User ID who last updated the membership</p>",
+        "NetworkTrafficRule$pattern": "<p>Pattern to match against</p>",
+        "Pentest$pentestId": "<p>Unique identifier for the pentest</p>",
+        "Pentest$agentSpaceId": "<p>ID of the agent space where the pentest exists</p>",
+        "Pentest$title": "<p>Title or name of the pentest</p>",
+        "PentestIdList$member": null,
+        "PentestJob$pentestJobId": "<p>Unique identifier of the pentest job</p>",
+        "PentestJob$pentestId": "<p>Identifier of the parent pentest</p>",
+        "PentestJob$title": "<p>Title or name of the pentest</p>",
+        "PentestJob$overview": "<p>Overview or description of the pentest job</p>",
+        "PentestJobIdList$member": null,
+        "PentestJobSummary$pentestJobId": "<p>Unique identifier of the pentest job</p>",
+        "PentestJobSummary$pentestId": "<p>Identifier of the parent pentest</p>",
+        "PentestJobSummary$title": "<p>Title or name of the pentest</p>",
+        "PentestSummary$pentestId": "<p>Unique identifier for the pentest</p>",
+        "PentestSummary$agentSpaceId": "<p>ID of the agent space where the pentest exists</p>",
+        "PentestSummary$title": "<p>Title or name of the pentest</p>",
+        "ResourceNotFoundException$message": "<p>Error description</p>",
+        "SourceCodeRepository$s3Location": "<p>S3 storage location of the repository</p>",
+        "StartCodeRemediationInput$agentSpaceId": "<p>ID of the agent space where the pentest job exists</p>",
+        "StartCodeRemediationInput$pentestJobId": "<p>Identifier of the pentest job to start code remediation for</p>",
+        "StartPentestJobInput$agentSpaceId": "<p>ID of the agent space where the pentest exists</p>",
+        "StartPentestJobInput$pentestId": "<p>Identifier of the pentest to execute</p>",
+        "StartPentestJobOutput$title": "<p>Title of the pentest job</p>",
+        "StartPentestJobOutput$pentestId": "<p>Unique identifier of the pentest</p>",
+        "StartPentestJobOutput$pentestJobId": "<p>Unique identifier of the pentest job</p>",
+        "StartPentestJobOutput$agentSpaceId": "<p>ID of the agent space where the pentest exists</p>",
+        "StopPentestJobInput$agentSpaceId": "<p>ID of the agent space where the pentest exists</p>",
+        "StopPentestJobInput$pentestJobId": "<p>Identifier of the pentest job to stop</p>",
+        "TargetDomain$domainName": "<p>Name of the registered target domain</p>",
+        "TargetDomainIdList$member": null,
+        "TargetDomainSummary$domainName": "<p>Name of the registered target domain</p>",
+        "Task$taskId": "<p>Unique identifier for the task</p>",
+        "Task$pentestId": "<p>Identifier of the parent pentest</p>",
+        "Task$pentestJobId": "<p>Identifier of the pentest job this task belongs to</p>",
+        "Task$agentSpaceId": "<p>Identifier of the agent space this task belongs to</p>",
+        "Task$title": "<p>Title or name of the task</p>",
+        "Task$description": "<p>Detailed description of the task's purpose and scope</p>",
+        "TaskIdList$member": null,
+        "TaskSummary$taskId": "<p>Unique identifier for the task</p>",
+        "TaskSummary$pentestId": "<p>Identifier of the parent pentest</p>",
+        "TaskSummary$pentestJobId": "<p>Identifier of the pentest job this task belongs to</p>",
+        "TaskSummary$agentSpaceId": "<p>Identifier of the agent space this task belongs to</p>",
+        "TaskSummary$title": "<p>Title or name of the task</p>",
+        "ThrottlingException$message": "<p>Error description</p>",
+        "ThrottlingException$serviceCode": "<p>Service code for throttling limit</p>",
+        "ThrottlingException$quotaCode": "<p>Quota code for throttling limit</p>",
+        "UpdateAgentSpaceInput$description": "<p>Description of the agent space</p>",
+        "UpdateAgentSpaceOutput$description": "<p>Description of the agent space</p>",
+        "UpdateFindingInput$findingId": "<p>Identifier of the finding to update</p>",
+        "UpdateFindingInput$agentSpaceId": "<p>ID of the agent space where the finding exists</p>",
+        "UpdatePentestInput$pentestId": "<p>Identifier of the pentest to update</p>",
+        "UpdatePentestInput$agentSpaceId": "<p>ID of the agent space where the pentest exists</p>",
+        "UpdatePentestInput$title": "<p>New title for the pentest</p>",
+        "UpdatePentestOutput$pentestId": "<p>Unique identifier of the updated pentest</p>",
+        "UpdatePentestOutput$title": "<p>Title of the updated pentest</p>",
+        "UpdatePentestOutput$agentSpaceId": "<p>ID of the agent space where the pentest exists</p>",
+        "UpdateTargetDomainOutput$domainName": "<p>Name of the target domain</p>",
+        "UriList$member": null,
+        "UserMetadata$username": "<p>User name/display name</p>",
+        "ValidationException$message": "<p>A summary of the validation failure.</p>",
+        "ValidationExceptionField$path": "<p>A JSONPointer expression to the structure member whose value failed to satisfy the modeled constraints.</p>",
+        "ValidationExceptionField$message": "<p>A detailed description of the validation failure.</p>",
+        "VerifyTargetDomainOutput$domainName": "<p>Name of the registered target domain</p>"
+      }
+    },
+    "SubnetArn": {
+      "base": "<p>ARN or ID of a subnet</p>",
+      "refs": {
+        "SubnetArns$member": null
+      }
+    },
+    "SubnetArns": {
+      "base": "<p>A list of one or more subnet ARNs or IDs in the customer VPC</p>",
+      "refs": {
+        "VpcConfig$subnetArns": "<p>List of subnet ARNs or IDs in the customer VPC</p>"
+      }
+    },
+    "SyntheticTimestamp_date_time": {
+      "base": null,
+      "refs": {
+        "AgentSpace$createdAt": "<p>Timestamp when the agent space was created</p>",
+        "AgentSpace$updatedAt": "<p>Timestamp when the agent space was last updated</p>",
+        "AgentSpaceSummary$createdAt": "<p>Timestamp when the agent space was created</p>",
+        "AgentSpaceSummary$updatedAt": "<p>Timestamp when the agent space was last updated</p>",
+        "ArtifactMetadataItem$updatedAt": "<p>Timestamp when the artifact was last updated</p>",
+        "CreateAgentSpaceOutput$createdAt": "<p>Timestamp when the agent space was created</p>",
+        "CreateAgentSpaceOutput$updatedAt": "<p>Timestamp when the agent space was last updated</p>",
+        "CreatePentestOutput$createdAt": "<p>Timestamp when the pentest was created</p>",
+        "CreatePentestOutput$updatedAt": "<p>Timestamp when the pentest was last updated</p>",
+        "CreateTargetDomainOutput$createdAt": "<p>Timestamp when the target domain was registered</p>",
+        "CreateTargetDomainOutput$verifiedAt": "<p>Timestamp when the target domain was last successfully verified</p>",
+        "ExecutionContext$timestamp": "<p>Timestamp associated with a pentest or task execution</p>",
+        "Finding$createdAt": "<p>Timestamp when the finding was created</p>",
+        "Finding$updatedAt": "<p>Timestamp when the finding was last updated</p>",
+        "FindingSummary$createdAt": "<p>Timestamp when the finding was created</p>",
+        "FindingSummary$updatedAt": "<p>Timestamp when the finding was last updated</p>",
+        "GetArtifactOutput$updatedAt": "<p>Timestamp when the artifact was last updated</p>",
+        "MembershipSummary$createdAt": "<p>Timestamp when the membership was created (ISO 8601)</p>",
+        "MembershipSummary$updatedAt": "<p>Timestamp when the membership was last updated (ISO 8601)</p>",
+        "Pentest$createdAt": "<p>Timestamp when the pentest was created</p>",
+        "Pentest$updatedAt": "<p>Timestamp when the pentest was last updated</p>",
+        "PentestJob$createdAt": "<p>Timestamp when the pentest job was created</p>",
+        "PentestJob$updatedAt": "<p>Timestamp when the pentest job was last updated</p>",
+        "PentestJobSummary$createdAt": "<p>Timestamp when the pentest job was created</p>",
+        "PentestJobSummary$updatedAt": "<p>Timestamp when the pentest job was last updated</p>",
+        "PentestSummary$createdAt": "<p>Timestamp when the pentest was created</p>",
+        "PentestSummary$updatedAt": "<p>Timestamp when the pentest was last updated</p>",
+        "StartPentestJobOutput$createdAt": "<p>Timestamp when the pentest job was created</p>",
+        "StartPentestJobOutput$updatedAt": "<p>Timestamp when the pentest job was last updated</p>",
+        "Step$createdAt": "<p>Timestamp when the step was created</p>",
+        "Step$updatedAt": "<p>Timestamp when the step was last updated</p>",
+        "TargetDomain$createdAt": "<p>Timestamp when the target domain was registered</p>",
+        "TargetDomain$verifiedAt": "<p>Timestamp when the target domain was last successfully verified</p>",
+        "Task$createdAt": "<p>Timestamp when the task was created</p>",
+        "Task$updatedAt": "<p>Timestamp when the task was last updated</p>",
+        "TaskSummary$createdAt": "<p>Timestamp when the task was created</p>",
+        "TaskSummary$updatedAt": "<p>Timestamp when the task was last updated</p>",
+        "UpdateAgentSpaceOutput$createdAt": "<p>Timestamp when the agent space was created</p>",
+        "UpdateAgentSpaceOutput$updatedAt": "<p>Timestamp when the agent space was last updated</p>",
+        "UpdatePentestOutput$createdAt": "<p>Timestamp when the pentest was created</p>",
+        "UpdatePentestOutput$updatedAt": "<p>Timestamp when the pentest was last updated</p>",
+        "UpdateTargetDomainOutput$createdAt": "<p>Timestamp when the target domain was registered</p>",
+        "UpdateTargetDomainOutput$verifiedAt": "<p>Timestamp when the target domain was last successfully verified</p>",
+        "VerifyTargetDomainOutput$createdAt": "<p>Timestamp when the target domain was registered</p>",
+        "VerifyTargetDomainOutput$updatedAt": "<p>Timestamp when the target domain was last updated</p>",
+        "VerifyTargetDomainOutput$verifiedAt": "<p>Timestamp when the target domain was last successfully verified</p>"
+      }
+    },
+    "TagKey": {
+      "base": "<p>Key for a resource tag</p>",
+      "refs": {
+        "TagKeyList$member": null,
+        "TagMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": "<p>List of tag keys</p>",
+      "refs": {
+        "UntagResourceInput$tagKeys": "<p>List of tag keys to remove from the resource</p>"
+      }
+    },
+    "TagMap": {
+      "base": "<p>Map of tags for a resource</p>",
+      "refs": {
+        "CreateAgentSpaceInput$tags": "<p>Tags to associate with the agent space</p>",
+        "CreateApplicationRequest$tags": "<p>Tags to associate with the application</p>",
+        "CreateIntegrationInput$tags": "<p>Tags to associate with the integration</p>",
+        "CreateTargetDomainInput$tags": "<p>Tags to associate with the target domain</p>",
+        "ListTagsForResourceOutput$tags": "<p>Tags associated with the resource</p>",
+        "TagResourceInput$tags": "<p>Tags to add to the resource</p>"
+      }
+    },
+    "TagResourceInput": {
+      "base": "<p>Input for TagResource operation</p>",
+      "refs": {}
+    },
+    "TagResourceOutput": {
+      "base": "<p>Output for TagResource operation</p>",
+      "refs": {}
+    },
+    "TagValue": {
+      "base": "<p>Value for a resource tag</p>",
+      "refs": {
+        "TagMap$value": null
+      }
+    },
+    "TargetDomain": {
+      "base": "<p>Represents a target domain</p>",
+      "refs": {
+        "TargetDomainList$member": null
+      }
+    },
+    "TargetDomainId": {
+      "base": "<p>Unique identifier of the target domain</p>",
+      "refs": {
+        "CreateTargetDomainOutput$targetDomainId": "<p>Unique identifier of the created target domain</p>",
+        "DeleteTargetDomainInput$targetDomainId": "<p>Unique identifier of the target domain to delete</p>",
+        "DeleteTargetDomainOutput$targetDomainId": "<p>Unique identifier of the deleted target domain</p>",
+        "TargetDomain$targetDomainId": "<p>Unique identifier of the target domain</p>",
+        "TargetDomainSummary$targetDomainId": "<p>Unique identifier of the target domain</p>",
+        "UpdateTargetDomainInput$targetDomainId": "<p>Unique identifier of the target domain to update</p>",
+        "UpdateTargetDomainOutput$targetDomainId": "<p>Unique identifier of the target domain</p>",
+        "VerifyTargetDomainInput$targetDomainId": "<p>Unique identifier of the target domain</p>",
+        "VerifyTargetDomainOutput$targetDomainId": "<p>Unique identifier of the target domain</p>"
+      }
+    },
+    "TargetDomainIdList": {
+      "base": "<p>List of target domain IDs</p>",
+      "refs": {
+        "AgentSpace$targetDomainIds": "<p>List of target domain IDs registered with the agent space</p>",
+        "BatchGetTargetDomainsInput$targetDomainIds": "<p>List of target domain IDs to retrieve</p>",
+        "BatchGetTargetDomainsOutput$notFound": "<p>List of target domain IDs that could not be found</p>",
+        "CreateAgentSpaceInput$targetDomainIds": "<p>Target domain IDs to associate with the agent space</p>",
+        "CreateAgentSpaceOutput$targetDomainIds": "<p>List of target domain IDs registered with the agent space</p>",
+        "UpdateAgentSpaceInput$targetDomainIds": "<p>Target domain IDs to associate with the agent space</p>",
+        "UpdateAgentSpaceOutput$targetDomainIds": "<p>List of target domain IDs registered with the agent space</p>"
+      }
+    },
+    "TargetDomainList": {
+      "base": "<p>List of target domains</p>",
+      "refs": {
+        "BatchGetTargetDomainsOutput$targetDomains": "<p>List of target domains that were successfully retrieved</p>"
+      }
+    },
+    "TargetDomainStatus": {
+      "base": "<p>Verification status of a target domain</p>",
+      "refs": {
+        "CreateTargetDomainOutput$verificationStatus": "<p>Current verification status of the registered target domain</p>",
+        "TargetDomain$verificationStatus": "<p>Current verification status of the registered target domain</p>",
+        "TargetDomainSummary$verificationStatus": "<p>Current verification status of the registered target domain</p>",
+        "UpdateTargetDomainOutput$verificationStatus": "<p>Current verification status of the registered target domain</p>",
+        "VerifyTargetDomainOutput$status": "<p>Current verification status of the registered target domain</p>"
+      }
+    },
+    "TargetDomainSummary": {
+      "base": "<p>Summary information for a target domain</p>",
+      "refs": {
+        "TargetDomainSummaryList$member": null
+      }
+    },
+    "TargetDomainSummaryList": {
+      "base": null,
+      "refs": {
+        "ListTargetDomainsOutput$targetDomainSummaries": "<p>List of target domain summaries</p>"
+      }
+    },
+    "Task": {
+      "base": "<p>Represents a task within a pentest job</p>",
+      "refs": {
+        "TaskList$member": null
+      }
+    },
+    "TaskExecutionStatus": {
+      "base": "<p>Execution status of a task</p>",
+      "refs": {
+        "Task$executionStatus": "<p>Current status of the task execution</p>",
+        "TaskSummary$executionStatus": "<p>Current status of the task execution</p>"
+      }
+    },
+    "TaskIdList": {
+      "base": null,
+      "refs": {
+        "BatchGetPentestJobTasksInput$taskIds": "<p>List of task IDs to retrieve</p>",
+        "BatchGetPentestJobTasksOutput$notFound": "<p>List of task IDs that could not be found</p>"
+      }
+    },
+    "TaskList": {
+      "base": null,
+      "refs": {
+        "BatchGetPentestJobTasksOutput$tasks": "<p>List of successfully retrieved tasks</p>"
+      }
+    },
+    "TaskSummary": {
+      "base": "<p>Summary information for a task</p>",
+      "refs": {
+        "TaskSummaryList$member": null
+      }
+    },
+    "TaskSummaryList": {
+      "base": null,
+      "refs": {
+        "ListPentestJobTasksOutput$taskSummaries": "<p>List of task summaries associated with the specified pentest job</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>Request denied due to throttling</p>",
+      "refs": {}
+    },
+    "UntagResourceInput": {
+      "base": "<p>Input for UntagResource operation</p>",
+      "refs": {}
+    },
+    "UntagResourceOutput": {
+      "base": "<p>Output for UntagResource operation</p>",
+      "refs": {}
+    },
+    "UpdateAgentSpaceInput": {
+      "base": "<p>Input for updating an agent space</p>",
+      "refs": {}
+    },
+    "UpdateAgentSpaceOutput": {
+      "base": "<p>Output for the UpdateAgentSpace operation</p>",
+      "refs": {}
+    },
+    "UpdateApplicationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateApplicationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateFindingInput": {
+      "base": "<p>Input for updating an existing security finding</p>",
+      "refs": {}
+    },
+    "UpdateFindingOutput": {
+      "base": "<p>Output for the UpdateFinding operation</p>",
+      "refs": {}
+    },
+    "UpdateIntegratedResourcesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateIntegratedResourcesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePentestInput": {
+      "base": "<p>Input for updating an existing pentest</p>",
+      "refs": {}
+    },
+    "UpdatePentestOutput": {
+      "base": "<p>Output for the UpdatePentest operation</p>",
+      "refs": {}
+    },
+    "UpdateTargetDomainInput": {
+      "base": "<p>Input for updating a target domain</p>",
+      "refs": {}
+    },
+    "UpdateTargetDomainOutput": {
+      "base": "<p>Output for the UpdateTargetDomain operation</p>",
+      "refs": {}
+    },
+    "UriList": {
+      "base": null,
+      "refs": {
+        "Actor$uris": "<p>List of URIs accessible with the actor's credentials</p>"
+      }
+    },
+    "UserConfig": {
+      "base": "<p>User membership configuration</p>",
+      "refs": {
+        "MembershipConfig$user": "<p>Configuration for user members</p>"
+      }
+    },
+    "UserMetadata": {
+      "base": "<p>User-specific metadata</p>",
+      "refs": {
+        "MemberMetadata$user": "<p>User metadata for USER members</p>"
+      }
+    },
+    "UserRole": {
+      "base": "<p>Role of a user member associated to an agent space</p>",
+      "refs": {
+        "UserConfig$role": "<p>Role of the user associated to the agent space</p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>A standard error for input validation failures. This should be thrown by services when a member of the input structure falls outside of the modeled or documented constraints.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Describes one specific validation failure for an input member.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": "<p>A list of specific failures encountered while validating the input. A member can appear in this list more than once if it failed to satisfy multiple constraints.</p>"
+      }
+    },
+    "VerificationDetails": {
+      "base": "<p>Verification details to verify registered target domain</p>",
+      "refs": {
+        "CreateTargetDomainOutput$verificationDetails": "<p>Verification details to verify registered target domain</p>",
+        "TargetDomain$verificationDetails": "<p>Verification details to verify registered target domain</p>",
+        "UpdateTargetDomainOutput$verificationDetails": "<p>Verification details to verify registered target domain</p>"
+      }
+    },
+    "VerifyTargetDomainInput": {
+      "base": "<p>Input for verifying ownership for a registered target domain in an agent space</p>",
+      "refs": {}
+    },
+    "VerifyTargetDomainOutput": {
+      "base": "<p>Output for verifying ownership for a registered target domain in an agent space</p>",
+      "refs": {}
+    },
+    "VpcArn": {
+      "base": "<p>ARN or ID of a VPC</p>",
+      "refs": {
+        "VpcConfig$vpcArn": "<p>ARN or ID of the customer VPC</p>"
+      }
+    },
+    "VpcConfig": {
+      "base": "<p>Customer VPC configuration that the Security Agent accesses</p>",
+      "refs": {
+        "CreatePentestInput$vpcConfig": "<p>VPC configuration that the Security Agent accesses</p>",
+        "Pentest$vpcConfig": "<p>VPC configuration that the Security Agent accesses</p>",
+        "PentestJob$vpcConfig": "<p>VPC configuration that the Security Agent accesses</p>",
+        "UpdatePentestInput$vpcConfig": "<p>VPC configuration that the Security Agent accesses</p>",
+        "VpcConfigs$member": null
+      }
+    },
+    "VpcConfigs": {
+      "base": null,
+      "refs": {
+        "AWSResources$vpcs": "<p>VPC configurations that the Security Agent accesses in the customer environment</p>"
+      }
+    }
+  }
+}

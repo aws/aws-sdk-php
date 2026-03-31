@@ -1252,6 +1252,7 @@
         "Name":{"shape":"AccountName"},
         "Status":{"shape":"AccountStatus"},
         "State":{"shape":"AccountState"},
+        "Paths":{"shape":"Paths"},
         "JoinedMethod":{"shape":"AccountJoinedMethod"},
         "JoinedTimestamp":{"shape":"Timestamp"}
       }
@@ -2679,7 +2680,8 @@
       "members":{
         "Id":{"shape":"OrganizationalUnitId"},
         "Arn":{"shape":"OrganizationalUnitArn"},
-        "Name":{"shape":"OrganizationalUnitName"}
+        "Name":{"shape":"OrganizationalUnitName"},
+        "Path":{"shape":"Path"}
       }
     },
     "OrganizationalUnitArn":{
@@ -2750,6 +2752,10 @@
       "pattern":"^(o-[a-z0-9]{10,32}\\/r-[0-9a-z]{4,32}(\\/ou\\-[0-9a-z]{4,32}-[a-z0-9]{8,32})*(\\/\\d{12})*)\\/"
     },
     "PathToError":{"type":"string"},
+    "Paths":{
+      "type":"list",
+      "member":{"shape":"Path"}
+    },
     "Policies":{
       "type":"list",
       "member":{"shape":"PolicySummary"}
