@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.376.1 - 2026-04-01
 
 * `Aws\GeoRoutes` - This release makes RoutingBoundary optional in CalculateRouteMatrix, set StopDuration with a maximum value of 49999 for CalculateRoutes, set TrailerCount with a maximum value of 4, and introduces region restrictions for Grab Maps users.
 * `Aws\Bedrock` - Adds support for Bedrock Batch Inference Job Progress Monitoring
