@@ -2739,7 +2739,8 @@
         },
         "targetConfiguration":{"shape":"TargetConfiguration"},
         "credentialProviderConfigurations":{"shape":"CredentialProviderConfigurations"},
-        "metadataConfiguration":{"shape":"MetadataConfiguration"}
+        "metadataConfiguration":{"shape":"MetadataConfiguration"},
+        "privateEndpoint":{"shape":"PrivateEndpoint"}
       }
     },
     "CreateGatewayTargetResponse":{
@@ -2766,7 +2767,9 @@
         "targetConfiguration":{"shape":"TargetConfiguration"},
         "credentialProviderConfigurations":{"shape":"CredentialProviderConfigurations"},
         "lastSynchronizedAt":{"shape":"DateTimestamp"},
-        "metadataConfiguration":{"shape":"MetadataConfiguration"}
+        "metadataConfiguration":{"shape":"MetadataConfiguration"},
+        "privateEndpoint":{"shape":"PrivateEndpoint"},
+        "privateEndpointManagedResources":{"shape":"PrivateEndpointManagedResources"}
       }
     },
     "CreateMemoryInput":{
@@ -2991,7 +2994,8 @@
       "type":"structure",
       "members":{
         "oauthCredentialProvider":{"shape":"OAuthCredentialProvider"},
-        "apiKeyCredentialProvider":{"shape":"ApiKeyCredentialProvider"}
+        "apiKeyCredentialProvider":{"shape":"ApiKeyCredentialProvider"},
+        "iamCredentialProvider":{"shape":"IamCredentialProvider"}
       },
       "union":true
     },
@@ -3655,6 +3659,7 @@
       "type":"string",
       "pattern":".+/\\.well-known/openid-configuration"
     },
+    "DomainName":{"type":"string"},
     "Double":{
       "type":"double",
       "box":true
@@ -3670,6 +3675,13 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "EndpointIpAddressType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "IPV6"
+      ]
     },
     "EndpointName":{
       "type":"string",
@@ -4199,7 +4211,9 @@
         "targetConfiguration":{"shape":"TargetConfiguration"},
         "credentialProviderConfigurations":{"shape":"CredentialProviderConfigurations"},
         "lastSynchronizedAt":{"shape":"DateTimestamp"},
-        "metadataConfiguration":{"shape":"MetadataConfiguration"}
+        "metadataConfiguration":{"shape":"MetadataConfiguration"},
+        "privateEndpoint":{"shape":"PrivateEndpoint"},
+        "privateEndpointManagedResources":{"shape":"PrivateEndpointManagedResources"}
       }
     },
     "GatewayTargetList":{
@@ -4565,7 +4579,9 @@
         "targetConfiguration":{"shape":"TargetConfiguration"},
         "credentialProviderConfigurations":{"shape":"CredentialProviderConfigurations"},
         "lastSynchronizedAt":{"shape":"DateTimestamp"},
-        "metadataConfiguration":{"shape":"MetadataConfiguration"}
+        "metadataConfiguration":{"shape":"MetadataConfiguration"},
+        "privateEndpoint":{"shape":"PrivateEndpoint"},
+        "privateEndpointManagedResources":{"shape":"PrivateEndpointManagedResources"}
       }
     },
     "GetMemoryInput":{
@@ -4898,6 +4914,26 @@
       "type":"string",
       "max":40,
       "min":1
+    },
+    "IamCredentialProvider":{
+      "type":"structure",
+      "required":["service"],
+      "members":{
+        "service":{"shape":"IamCredentialProviderServiceString"},
+        "region":{"shape":"IamCredentialProviderRegionString"}
+      }
+    },
+    "IamCredentialProviderRegionString":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-]+"
+    },
+    "IamCredentialProviderServiceString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9._-]+"
     },
     "InboundTokenClaimNameType":{
       "type":"string",
@@ -5644,6 +5680,30 @@
         "supportedVersions":{"shape":"McpSupportedVersions"},
         "instructions":{"shape":"McpInstructions"},
         "searchType":{"shape":"SearchType"}
+      }
+    },
+    "ManagedLatticeResource":{
+      "type":"structure",
+      "required":[
+        "vpcIdentifier",
+        "subnetIds",
+        "endpointIpAddressType"
+      ],
+      "members":{
+        "vpcIdentifier":{"shape":"VpcIdentifier"},
+        "subnetIds":{"shape":"SubnetIds"},
+        "endpointIpAddressType":{"shape":"EndpointIpAddressType"},
+        "securityGroupIds":{"shape":"SecurityGroupIds"},
+        "tags":{"shape":"TagsMap"},
+        "routingDomain":{"shape":"RoutingDomain"}
+      }
+    },
+    "ManagedResourceDetails":{
+      "type":"structure",
+      "members":{
+        "domain":{"shape":"DomainName"},
+        "resourceGatewayArn":{"shape":"ResourceGatewayArn"},
+        "resourceAssociationArn":{"shape":"ResourceAssociationArn"}
       }
     },
     "MatchValueString":{
@@ -6480,6 +6540,18 @@
         "IGNORE_ALL_FINDINGS"
       ]
     },
+    "PrivateEndpoint":{
+      "type":"structure",
+      "members":{
+        "selfManagedLatticeResource":{"shape":"SelfManagedLatticeResource"},
+        "managedLatticeResource":{"shape":"ManagedLatticeResource"}
+      },
+      "union":true
+    },
+    "PrivateEndpointManagedResources":{
+      "type":"list",
+      "member":{"shape":"ManagedResourceDetails"}
+    },
     "Prompt":{
       "type":"string",
       "max":30000,
@@ -6561,6 +6633,20 @@
         "arn":{"shape":"BedrockAgentcoreResourceArn"}
       },
       "union":true
+    },
+    "ResourceAssociationArn":{
+      "type":"string",
+      "pattern":"arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:servicenetworkresourceassociation/snra-[0-9a-f]{17}"
+    },
+    "ResourceConfigurationIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"((rcfg-[0-9a-z]{17})|(arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:resourceconfiguration/rcfg-[0-9a-z]{17}))"
+    },
+    "ResourceGatewayArn":{
+      "type":"string",
+      "pattern":"arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:resourcegateway/rgw-[0-9a-z]{17}"
     },
     "ResourceId":{
       "type":"string",
@@ -6645,6 +6731,11 @@
       "max":2048,
       "min":1,
       "pattern":"arn:aws(-[^:]+)?:iam::([0-9]{12})?:role/.+"
+    },
+    "RoutingDomain":{
+      "type":"string",
+      "max":255,
+      "min":3
     },
     "Rule":{
       "type":"structure",
@@ -6794,6 +6885,16 @@
       "type":"string",
       "pattern":"sg-[0-9a-zA-Z]{8,17}"
     },
+    "SecurityGroupIdentifier":{
+      "type":"string",
+      "pattern":"sg-(([0-9a-z]{8})|([0-9a-z]{17}))"
+    },
+    "SecurityGroupIds":{
+      "type":"list",
+      "member":{"shape":"SecurityGroupIdentifier"},
+      "max":5,
+      "min":0
+    },
     "SecurityGroups":{
       "type":"list",
       "member":{"shape":"SecurityGroupId"},
@@ -6827,6 +6928,13 @@
       "box":true,
       "max":50,
       "min":0
+    },
+    "SelfManagedLatticeResource":{
+      "type":"structure",
+      "members":{
+        "resourceConfigurationIdentifier":{"shape":"ResourceConfigurationIdentifier"}
+      },
+      "union":true
     },
     "SemanticConsolidationOverride":{
       "type":"structure",
@@ -7089,6 +7197,10 @@
     "SubnetId":{
       "type":"string",
       "pattern":"subnet-[0-9a-zA-Z]{8,17}"
+    },
+    "SubnetIds":{
+      "type":"list",
+      "member":{"shape":"SubnetId"}
     },
     "Subnets":{
       "type":"list",
@@ -7700,7 +7812,8 @@
         "description":{"shape":"TargetDescription"},
         "targetConfiguration":{"shape":"TargetConfiguration"},
         "credentialProviderConfigurations":{"shape":"CredentialProviderConfigurations"},
-        "metadataConfiguration":{"shape":"MetadataConfiguration"}
+        "metadataConfiguration":{"shape":"MetadataConfiguration"},
+        "privateEndpoint":{"shape":"PrivateEndpoint"}
       }
     },
     "UpdateGatewayTargetResponse":{
@@ -7727,7 +7840,9 @@
         "targetConfiguration":{"shape":"TargetConfiguration"},
         "credentialProviderConfigurations":{"shape":"CredentialProviderConfigurations"},
         "lastSynchronizedAt":{"shape":"DateTimestamp"},
-        "metadataConfiguration":{"shape":"MetadataConfiguration"}
+        "metadataConfiguration":{"shape":"MetadataConfiguration"},
+        "privateEndpoint":{"shape":"PrivateEndpoint"},
+        "privateEndpointManagedResources":{"shape":"PrivateEndpointManagedResources"}
       }
     },
     "UpdateMemoryInput":{
@@ -8072,6 +8187,10 @@
         "securityGroups":{"shape":"SecurityGroups"},
         "subnets":{"shape":"Subnets"}
       }
+    },
+    "VpcIdentifier":{
+      "type":"string",
+      "pattern":"vpc-(([0-9a-z]{8})|([0-9a-z]{17}))"
     },
     "WorkloadIdentityArn":{
       "type":"string",

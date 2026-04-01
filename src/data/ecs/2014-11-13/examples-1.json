@@ -59,6 +59,31 @@
         "title": "To create a new cluster"
       }
     ],
+    "CreateDaemon": [
+      {
+        "input": {
+          "capacityProviderArns": [
+            "arn:aws:ecs:us-east-1:123456789012:capacity-provider/my-capacity-provider"
+          ],
+          "clusterArn": "arn:aws:ecs:us-east-1:123456789012:cluster/my-cluster",
+          "daemonName": "my-monitoring-daemon",
+          "daemonTaskDefinitionArn": "arn:aws:ecs:us-east-1:123456789012:daemon-task-definition/monitoring-agent:1",
+          "deploymentConfiguration": {
+            "bakeTimeInMinutes": 5,
+            "drainPercent": 10.0
+          }
+        },
+        "output": {
+          "createdAt": "2025-03-15T12:00:00.000Z",
+          "daemonArn": "arn:aws:ecs:us-east-1:123456789012:daemon/my-cluster/my-monitoring-daemon",
+          "deploymentArn": "arn:aws:ecs:us-east-1:123456789012:daemon-deployment/my-cluster/my-monitoring-daemon/aB1cD2eF3gH4iJ5k",
+          "status": "ACTIVE"
+        },
+        "description": "This example creates a daemon named my-monitoring-daemon in the specified cluster that uses the monitoring-agent daemon task definition and deploys to the specified capacity provider.",
+        "id": "example-1",
+        "title": "To create a daemon"
+      }
+    ],
     "CreateService": [
       {
         "input": {
@@ -328,6 +353,36 @@
         "description": "This example deletes an empty cluster in your default region.",
         "id": "example-1",
         "title": "To delete an empty cluster"
+      }
+    ],
+    "DeleteDaemon": [
+      {
+        "input": {
+          "daemonArn": "arn:aws:ecs:us-east-1:123456789012:daemon/my-cluster/my-monitoring-daemon"
+        },
+        "output": {
+          "createdAt": "2025-03-15T12:00:00.000Z",
+          "daemonArn": "arn:aws:ecs:us-east-1:123456789012:daemon/my-cluster/my-monitoring-daemon",
+          "deploymentArn": "arn:aws:ecs:us-east-1:123456789012:daemon-deployment/my-cluster/my-monitoring-daemon/mN3oP4qR5sT6uV7w",
+          "status": "DELETE_IN_PROGRESS",
+          "updatedAt": "2025-03-25T09:00:00.000Z"
+        },
+        "description": "This example deletes the my-monitoring-daemon daemon.",
+        "id": "example-1",
+        "title": "To delete a daemon"
+      }
+    ],
+    "DeleteDaemonTaskDefinition": [
+      {
+        "input": {
+          "daemonTaskDefinition": "monitoring-agent:1"
+        },
+        "output": {
+          "daemonTaskDefinitionArn": "arn:aws:ecs:us-east-1:123456789012:daemon-task-definition/monitoring-agent:1"
+        },
+        "description": "This example deletes the first revision of the monitoring-agent daemon task definition.",
+        "id": "example-1",
+        "title": "To delete a daemon task definition"
       }
     ],
     "DeleteService": [
@@ -661,6 +716,179 @@
         "description": "This example provides a description of the specified container instance in your default region, using the container instance UUID as an identifier.",
         "id": "example-1",
         "title": "To describe container instance"
+      }
+    ],
+    "DescribeDaemon": [
+      {
+        "input": {
+          "daemonArn": "arn:aws:ecs:us-east-1:123456789012:daemon/my-cluster/my-monitoring-daemon"
+        },
+        "output": {
+          "daemon": {
+            "clusterArn": "arn:aws:ecs:us-east-1:123456789012:cluster/my-cluster",
+            "createdAt": "2025-03-15T12:00:00.000Z",
+            "currentRevisions": [
+              {
+                "arn": "arn:aws:ecs:us-east-1:123456789012:daemon-revision/my-cluster/my-monitoring-daemon/4980306466373577095",
+                "capacityProviders": [
+                  {
+                    "arn": "arn:aws:ecs:us-east-1:123456789012:capacity-provider/my-capacity-provider",
+                    "runningCount": 3
+                  }
+                ],
+                "totalRunningCount": 3
+              }
+            ],
+            "daemonArn": "arn:aws:ecs:us-east-1:123456789012:daemon/my-cluster/my-monitoring-daemon",
+            "deploymentArn": "arn:aws:ecs:us-east-1:123456789012:daemon-deployment/my-cluster/my-monitoring-daemon/aB1cD2eF3gH4iJ5k",
+            "status": "ACTIVE",
+            "updatedAt": "2025-03-20T15:30:00.000Z"
+          }
+        },
+        "description": "This example describes the my-monitoring-daemon daemon.",
+        "id": "example-1",
+        "title": "To describe a daemon"
+      }
+    ],
+    "DescribeDaemonDeployments": [
+      {
+        "input": {
+          "daemonDeploymentArns": [
+            "arn:aws:ecs:us-east-1:123456789012:daemon-deployment/my-cluster/my-monitoring-daemon/aB1cD2eF3gH4iJ5k"
+          ]
+        },
+        "output": {
+          "daemonDeployments": [
+            {
+              "alarms": {
+                "alarmNames": [],
+                "status": "DISABLED",
+                "triggeredAlarmNames": []
+              },
+              "circuitBreaker": {
+                "failureCount": 0,
+                "status": "MONITORING_COMPLETE",
+                "threshold": 10
+              },
+              "clusterArn": "arn:aws:ecs:us-east-1:123456789012:cluster/my-cluster",
+              "createdAt": "2025-03-15T12:00:00.000Z",
+              "daemonDeploymentArn": "arn:aws:ecs:us-east-1:123456789012:daemon-deployment/my-cluster/my-monitoring-daemon/aB1cD2eF3gH4iJ5k",
+              "deploymentConfiguration": {
+                "alarms": {
+                  "alarmNames": [],
+                  "enable": false
+                },
+                "bakeTimeInMinutes": 5,
+                "drainPercent": 10.0
+              },
+              "finishedAt": "2025-03-15T12:15:00.000Z",
+              "sourceDaemonRevisions": [],
+              "startedAt": "2025-03-15T12:00:05.000Z",
+              "status": "SUCCESSFUL",
+              "statusReason": "Deployment completed successfully.",
+              "targetDaemonRevision": {
+                "arn": "arn:aws:ecs:us-east-1:123456789012:daemon-revision/my-cluster/my-monitoring-daemon/4980306466373577095",
+                "capacityProviders": [
+                  {
+                    "arn": "arn:aws:ecs:us-east-1:123456789012:capacity-provider/my-capacity-provider",
+                    "drainingInstanceCount": 0,
+                    "runningInstanceCount": 3
+                  }
+                ],
+                "totalDrainingInstanceCount": 0,
+                "totalRunningInstanceCount": 3
+              }
+            }
+          ],
+          "failures": []
+        },
+        "description": "This example describes a daemon deployment for the my-monitoring-daemon daemon.",
+        "id": "example-1",
+        "title": "To describe daemon deployments"
+      }
+    ],
+    "DescribeDaemonRevisions": [
+      {
+        "input": {
+          "daemonRevisionArns": [
+            "arn:aws:ecs:us-east-1:123456789012:daemon-revision/my-cluster/my-monitoring-daemon/4980306466373577095"
+          ]
+        },
+        "output": {
+          "daemonRevisions": [
+            {
+              "clusterArn": "arn:aws:ecs:us-east-1:123456789012:cluster/my-cluster",
+              "containerImages": [
+                {
+                  "containerName": "cloudwatch-agent",
+                  "image": "public.ecr.aws/cloudwatch-agent/cloudwatch-agent:latest",
+                  "imageDigest": "sha256:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2"
+                }
+              ],
+              "createdAt": "2025-03-15T12:00:00.000Z",
+              "daemonArn": "arn:aws:ecs:us-east-1:123456789012:daemon/my-cluster/my-monitoring-daemon",
+              "daemonRevisionArn": "arn:aws:ecs:us-east-1:123456789012:daemon-revision/my-cluster/my-monitoring-daemon/4980306466373577095",
+              "daemonTaskDefinitionArn": "arn:aws:ecs:us-east-1:123456789012:daemon-task-definition/monitoring-agent:1",
+              "enableECSManagedTags": false,
+              "enableExecuteCommand": false,
+              "propagateTags": "NONE"
+            }
+          ],
+          "failures": []
+        },
+        "description": "This example describes a daemon revision for the my-monitoring-daemon daemon.",
+        "id": "example-1",
+        "title": "To describe daemon revisions"
+      }
+    ],
+    "DescribeDaemonTaskDefinition": [
+      {
+        "input": {
+          "daemonTaskDefinition": "monitoring-agent:1"
+        },
+        "output": {
+          "daemonTaskDefinition": {
+            "containerDefinitions": [
+              {
+                "name": "cloudwatch-agent",
+                "cpu": 128,
+                "environment": [
+                  {
+                    "name": "USE_DEFAULT_CONFIG",
+                    "value": "true"
+                  }
+                ],
+                "essential": true,
+                "image": "public.ecr.aws/cloudwatch-agent/cloudwatch-agent:latest",
+                "logConfiguration": {
+                  "logDriver": "awslogs",
+                  "options": {
+                    "awslogs-group": "/ecs/daemon/monitoring-agent",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                  }
+                },
+                "memory": 256,
+                "mountPoints": [],
+                "secrets": []
+              }
+            ],
+            "cpu": "128",
+            "daemonTaskDefinitionArn": "arn:aws:ecs:us-east-1:123456789012:daemon-task-definition/monitoring-agent:1",
+            "executionRoleArn": "arn:aws:iam::123456789012:role/ecsTaskExecutionRole",
+            "family": "monitoring-agent",
+            "memory": "256",
+            "registeredAt": "2025-03-15T10:30:00.000Z",
+            "registeredBy": "arn:aws:iam::123456789012:user/admin",
+            "revision": 1,
+            "status": "ACTIVE",
+            "taskRoleArn": "arn:aws:iam::123456789012:role/ecsDaemonTaskRole",
+            "volumes": []
+          }
+        },
+        "description": "This example describes the first revision of the monitoring-agent daemon task definition.",
+        "id": "example-1",
+        "title": "To describe a daemon task definition"
       }
     ],
     "DescribeServiceDeployments": [
@@ -1100,6 +1328,86 @@
         "description": "This example lists all of your available container instances in the specified cluster in your default region.",
         "id": "example-1",
         "title": "To list your available container instances in a cluster"
+      }
+    ],
+    "ListDaemonDeployments": [
+      {
+        "input": {
+          "daemonArn": "arn:aws:ecs:us-east-1:123456789012:daemon/my-cluster/my-monitoring-daemon",
+          "status": [
+            "SUCCESSFUL"
+          ]
+        },
+        "output": {
+          "daemonDeployments": [
+            {
+              "clusterArn": "arn:aws:ecs:us-east-1:123456789012:cluster/my-cluster",
+              "createdAt": "2025-03-15T12:00:00.000Z",
+              "daemonArn": "arn:aws:ecs:us-east-1:123456789012:daemon/my-cluster/my-monitoring-daemon",
+              "daemonDeploymentArn": "arn:aws:ecs:us-east-1:123456789012:daemon-deployment/my-cluster/my-monitoring-daemon/aB1cD2eF3gH4iJ5k",
+              "finishedAt": "2025-03-15T12:15:00.000Z",
+              "startedAt": "2025-03-15T12:00:05.000Z",
+              "status": "SUCCESSFUL",
+              "statusReason": "Deployment completed successfully.",
+              "targetDaemonRevisionArn": "arn:aws:ecs:us-east-1:123456789012:daemon-revision/my-cluster/my-monitoring-daemon/4980306466373577095"
+            }
+          ]
+        },
+        "description": "This example lists all successful daemon deployments for the my-monitoring-daemon daemon.",
+        "id": "example-1",
+        "title": "To list daemon deployments"
+      }
+    ],
+    "ListDaemonTaskDefinitions": [
+      {
+        "input": {
+          "familyPrefix": "monitoring"
+        },
+        "output": {
+          "daemonTaskDefinitions": [
+            {
+              "arn": "arn:aws:ecs:us-east-1:123456789012:daemon-task-definition/monitoring-agent:2",
+              "registeredAt": "2025-03-20T14:00:00.000Z",
+              "registeredBy": "arn:aws:iam::123456789012:user/admin",
+              "status": "ACTIVE"
+            },
+            {
+              "arn": "arn:aws:ecs:us-east-1:123456789012:daemon-task-definition/monitoring-agent:1",
+              "registeredAt": "2025-03-15T10:30:00.000Z",
+              "registeredBy": "arn:aws:iam::123456789012:user/admin",
+              "status": "ACTIVE"
+            }
+          ]
+        },
+        "description": "This example lists all daemon task definitions in your account that start with the monitoring prefix.",
+        "id": "example-1",
+        "title": "To list daemon task definitions"
+      }
+    ],
+    "ListDaemons": [
+      {
+        "input": {
+          "clusterArn": "arn:aws:ecs:us-east-1:123456789012:cluster/my-cluster"
+        },
+        "output": {
+          "daemonSummariesList": [
+            {
+              "createdAt": "2025-03-15T12:00:00.000Z",
+              "daemonArn": "arn:aws:ecs:us-east-1:123456789012:daemon/my-cluster/my-monitoring-daemon",
+              "status": "ACTIVE",
+              "updatedAt": "2025-03-20T15:30:00.000Z"
+            },
+            {
+              "createdAt": "2025-03-16T09:00:00.000Z",
+              "daemonArn": "arn:aws:ecs:us-east-1:123456789012:daemon/my-cluster/my-logging-daemon",
+              "status": "ACTIVE",
+              "updatedAt": "2025-03-16T09:00:00.000Z"
+            }
+          ]
+        },
+        "description": "This example lists all daemons in the specified cluster.",
+        "id": "example-1",
+        "title": "To list daemons in a cluster"
       }
     ],
     "ListServiceDeployments": [
@@ -1565,6 +1873,46 @@
         "description": "This example removes all capacity providers associated with a cluster. ",
         "id": "example-3",
         "title": "To remove all capacity providers from a cluster"
+      }
+    ],
+    "RegisterDaemonTaskDefinition": [
+      {
+        "input": {
+          "containerDefinitions": [
+            {
+              "name": "cloudwatch-agent",
+              "cpu": 128,
+              "environment": [
+                {
+                  "name": "USE_DEFAULT_CONFIG",
+                  "value": "true"
+                }
+              ],
+              "essential": true,
+              "image": "public.ecr.aws/cloudwatch-agent/cloudwatch-agent:latest",
+              "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                  "awslogs-group": "/ecs/daemon/monitoring-agent",
+                  "awslogs-region": "us-east-1",
+                  "awslogs-stream-prefix": "ecs"
+                }
+              },
+              "memory": 256
+            }
+          ],
+          "cpu": "128",
+          "executionRoleArn": "arn:aws:iam::123456789012:role/ecsTaskExecutionRole",
+          "family": "monitoring-agent",
+          "memory": "256",
+          "taskRoleArn": "arn:aws:iam::123456789012:role/ecsDaemonTaskRole"
+        },
+        "output": {
+          "daemonTaskDefinitionArn": "arn:aws:ecs:us-east-1:123456789012:daemon-task-definition/monitoring-agent:1"
+        },
+        "description": "This example registers a daemon task definition in the monitoring-agent family with a single container that runs a CloudWatch agent.",
+        "id": "example-1",
+        "title": "To register a daemon task definition"
       }
     ],
     "RegisterTaskDefinition": [
@@ -2254,6 +2602,31 @@
         "description": "This example updates the state of the specified container instance in the default cluster to DRAINING. ",
         "id": "example-1",
         "title": "To update the state of a container instance"
+      }
+    ],
+    "UpdateDaemon": [
+      {
+        "input": {
+          "capacityProviderArns": [
+            "arn:aws:ecs:us-east-1:123456789012:capacity-provider/my-capacity-provider"
+          ],
+          "daemonArn": "arn:aws:ecs:us-east-1:123456789012:daemon/my-cluster/my-monitoring-daemon",
+          "daemonTaskDefinitionArn": "arn:aws:ecs:us-east-1:123456789012:daemon-task-definition/monitoring-agent:2",
+          "deploymentConfiguration": {
+            "bakeTimeInMinutes": 5,
+            "drainPercent": 10.0
+          }
+        },
+        "output": {
+          "createdAt": "2025-03-15T12:00:00.000Z",
+          "daemonArn": "arn:aws:ecs:us-east-1:123456789012:daemon/my-cluster/my-monitoring-daemon",
+          "deploymentArn": "arn:aws:ecs:us-east-1:123456789012:daemon-deployment/my-cluster/my-monitoring-daemon/xY9zA8bC7dE6fG5h",
+          "status": "ACTIVE",
+          "updatedAt": "2025-03-20T15:30:00.000Z"
+        },
+        "description": "This example updates the my-monitoring-daemon daemon to use a new daemon task definition revision.",
+        "id": "example-1",
+        "title": "To update a daemon"
       }
     ],
     "UpdateService": [

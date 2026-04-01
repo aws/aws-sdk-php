@@ -1542,6 +1542,10 @@
         "metadata":{"shape":"MetadataMap"}
       }
     },
+    "EventFilterCondition":{
+      "type":"string",
+      "enum":["HAS_EVENTS"]
+    },
     "EventId":{
       "type":"string",
       "pattern":"[0-9]+#[a-fA-F0-9]+"
@@ -2534,7 +2538,8 @@
           "locationName":"actorId"
         },
         "maxResults":{"shape":"MaxResults"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "filter":{"shape":"SessionFilter"}
       }
     },
     "ListSessionsOutput":{
@@ -3161,6 +3166,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "SessionFilter":{
+      "type":"structure",
+      "members":{
+        "eventFilter":{"shape":"EventFilterCondition"}
+      }
     },
     "SessionId":{
       "type":"string",

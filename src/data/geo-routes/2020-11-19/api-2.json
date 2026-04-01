@@ -27,7 +27,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "CalculateRouteMatrix":{
       "name":"CalculateRouteMatrix",
@@ -43,7 +44,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "CalculateRoutes":{
       "name":"CalculateRoutes",
@@ -59,7 +61,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "OptimizeWaypoints":{
       "name":"OptimizeWaypoints",
@@ -75,7 +78,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "SnapToRoads":{
       "name":"SnapToRoads",
@@ -91,7 +95,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     }
   },
   "shapes":{
@@ -180,8 +185,7 @@
       "type":"structure",
       "required":[
         "Destinations",
-        "Origins",
-        "RoutingBoundary"
+        "Origins"
       ],
       "members":{
         "Allow":{"shape":"RouteMatrixAllowOptions"},
@@ -1119,7 +1123,7 @@
     "RoadSnapTrailerOptionsTrailerCountInteger":{
       "type":"integer",
       "box":true,
-      "max":255,
+      "max":4,
       "min":0,
       "sensitive":true
     },
@@ -2439,12 +2443,8 @@
         "RoundaboutEnter",
         "RoundaboutExit",
         "RoundaboutPass",
-        "Turn",
-        "Exit",
-        "Ramp",
-        "UTurn"
-      ],
-      "sensitive":true
+        "Turn"
+      ]
     },
     "RouteRampStepDetails":{
       "type":"structure",
@@ -3515,7 +3515,7 @@
         "PassThrough":{"shape":"SensitiveBoolean"},
         "Position":{"shape":"Position"},
         "SideOfStreet":{"shape":"RouteSideOfStreetOptions"},
-        "StopDuration":{"shape":"DurationSeconds"}
+        "StopDuration":{"shape":"RouteWaypointStopDurationLong"}
       }
     },
     "RouteWaypointAvoidActionsForDistanceLong":{
@@ -3526,6 +3526,11 @@
     "RouteWaypointList":{
       "type":"list",
       "member":{"shape":"RouteWaypoint"}
+    },
+    "RouteWaypointStopDurationLong":{
+      "type":"long",
+      "max":49999,
+      "sensitive":true
     },
     "RouteWeightConstraint":{
       "type":"structure",
@@ -3778,7 +3783,8 @@
     "WaypointId":{
       "type":"string",
       "max":100,
-      "min":1
+      "min":1,
+      "pattern":"[^,;!]+"
     },
     "WaypointIndex":{"type":"integer"},
     "WaypointOptimizationAccessHours":{

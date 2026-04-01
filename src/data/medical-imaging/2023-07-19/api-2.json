@@ -144,7 +144,9 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"NotAcceptableException"},
+        {"shape":"BadRequestException"}
       ],
       "endpoint":{"hostPrefix":"runtime-"},
       "readonly":true
@@ -382,6 +384,18 @@
       "min":12,
       "pattern":"\\d+"
     },
+    "BadRequestException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -542,13 +556,13 @@
     },
     "DICOMAccessionNumber":{
       "type":"string",
-      "max":256,
+      "max":512,
       "min":0,
       "sensitive":true
     },
     "DICOMAttribute":{
       "type":"blob",
-      "max":10000,
+      "max":30000,
       "min":1,
       "sensitive":true
     },
@@ -611,19 +625,19 @@
     },
     "DICOMPatientBirthDate":{
       "type":"string",
-      "max":18,
+      "max":36,
       "min":0,
       "sensitive":true
     },
     "DICOMPatientId":{
       "type":"string",
-      "max":256,
+      "max":512,
       "min":0,
       "sensitive":true
     },
     "DICOMPatientName":{
       "type":"string",
-      "max":256,
+      "max":512,
       "min":0,
       "sensitive":true
     },
@@ -635,20 +649,20 @@
     },
     "DICOMSeriesBodyPart":{
       "type":"string",
-      "max":64,
+      "max":128,
       "min":0,
       "sensitive":true
     },
     "DICOMSeriesInstanceUID":{
       "type":"string",
-      "max":256,
+      "max":512,
       "min":0,
-      "pattern":"(?:[0-9][0-9]*|0)(\\.(?:[0-9][0-9]*|0))*",
+      "pattern":"[0-9.]+",
       "sensitive":true
     },
     "DICOMSeriesModality":{
       "type":"string",
-      "max":16,
+      "max":32,
       "min":0,
       "sensitive":true
     },
@@ -661,7 +675,7 @@
     },
     "DICOMStudyDate":{
       "type":"string",
-      "max":18,
+      "max":36,
       "min":0,
       "sensitive":true
     },
@@ -675,26 +689,26 @@
     },
     "DICOMStudyDescription":{
       "type":"string",
-      "max":256,
+      "max":512,
       "min":0,
       "sensitive":true
     },
     "DICOMStudyId":{
       "type":"string",
-      "max":256,
+      "max":512,
       "min":0,
       "sensitive":true
     },
     "DICOMStudyInstanceUID":{
       "type":"string",
-      "max":256,
+      "max":512,
       "min":0,
-      "pattern":"(?:[0-9][0-9]*|0)(\\.(?:[0-9][0-9]*|0))*",
+      "pattern":"[0-9.]+",
       "sensitive":true
     },
     "DICOMStudyTime":{
       "type":"string",
-      "max":28,
+      "max":56,
       "min":0,
       "sensitive":true
     },
@@ -1076,6 +1090,7 @@
         "COPYING_WITH_READ_ONLY_ACCESS",
         "COPY_FAILED",
         "UPDATING",
+        "UPDATING_FOR_STUDY_CONSISTENCY",
         "UPDATED",
         "UPDATE_FAILED",
         "DELETING",
@@ -1293,7 +1308,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"[\\w -:]+"
+      "pattern":"[\\w -:`]+"
     },
     "MetadataCopies":{
       "type":"structure",
@@ -1315,6 +1330,18 @@
       "max":8192,
       "min":1,
       "pattern":"\\p{ASCII}{0,8192}"
+    },
+    "NotAcceptableException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":406,
+        "senderFault":true
+      },
+      "exception":true
     },
     "Operator":{
       "type":"string",
@@ -1632,6 +1659,11 @@
           "shape":"Boolean",
           "location":"querystring",
           "locationName":"force"
+        },
+        "includeStudyImageSets":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"includeStudyImageSets"
         },
         "updateImageSetMetadataUpdates":{"shape":"MetadataUpdates"}
       },

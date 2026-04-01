@@ -5771,7 +5771,11 @@
         "vpcConfig":{"shape":"VpcConfig"},
         "timeoutDurationInHours":{"shape":"ModelInvocationJobTimeoutDurationInHours"},
         "jobExpirationTime":{"shape":"Timestamp"},
-        "modelInvocationType":{"shape":"ModelInvocationType"}
+        "modelInvocationType":{"shape":"ModelInvocationType"},
+        "totalRecordCount":{"shape":"NonNegativeLong"},
+        "processedRecordCount":{"shape":"NonNegativeLong"},
+        "successRecordCount":{"shape":"NonNegativeLong"},
+        "errorRecordCount":{"shape":"NonNegativeLong"}
       }
     },
     "GetModelInvocationLoggingConfigurationRequest":{
@@ -8302,7 +8306,11 @@
         "vpcConfig":{"shape":"VpcConfig"},
         "timeoutDurationInHours":{"shape":"ModelInvocationJobTimeoutDurationInHours"},
         "jobExpirationTime":{"shape":"Timestamp"},
-        "modelInvocationType":{"shape":"ModelInvocationType"}
+        "modelInvocationType":{"shape":"ModelInvocationType"},
+        "totalRecordCount":{"shape":"NonNegativeLong"},
+        "processedRecordCount":{"shape":"NonNegativeLong"},
+        "successRecordCount":{"shape":"NonNegativeLong"},
+        "errorRecordCount":{"shape":"NonNegativeLong"}
       }
     },
     "ModelInvocationJobTimeoutDurationInHours":{
@@ -8353,6 +8361,11 @@
     "NonBlankString":{
       "type":"string",
       "pattern":"[\\s\\S]*"
+    },
+    "NonNegativeLong":{
+      "type":"long",
+      "box":true,
+      "min":0
     },
     "Offer":{
       "type":"structure",
