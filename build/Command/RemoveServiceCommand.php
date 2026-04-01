@@ -87,15 +87,6 @@ final class RemoveServiceCommand extends AbstractCommand
         }
 
         try {
-            $this->verbose("Removing {$namespace} from grandfathered-services.json.php...");
-            $this->removeFromGrandfatheredPhp($namespace);
-            $this->verbose("Removing {$namespace} from grandfathered-services.json.php... done");
-        } catch (\Exception $e) {
-            $this->error("Failed to remove from grandfathered-services.json.php: " . $e->getMessage());
-            return 1;
-        }
-
-        try {
             $this->verbose("Removing {$serviceKey} from manifest.json...");
             $this->removeFromManifest($serviceKey);
             $this->verbose("Removing {$serviceKey} from manifest.json... done");
@@ -318,41 +309,10 @@ final class RemoveServiceCommand extends AbstractCommand
         $data['grandfathered-services'] = $services;
 
         file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT) . "\n");
-    }
 
-    /**
-     * Removes the namespace from the grandfathered-services.json.php file.
-     *
-     * Loads the PHP file via include, removes the exact-match namespace from the
-     * "grandfathered-services" array, and regenerates the PHP file content.
-     * Logs a warning if the namespace is not present.
-     *
-     * @param string $namespace The PHP namespace segment (e.g., "S3", "ACMPCA")
-     */
-    private function removeFromGrandfatheredPhp(string $namespace): void
-    {
-        $path = $this->getProjectRoot() . '/src/data/grandfathered-services.json.php';
-        $data = include $path;
-
-        $services = $data['grandfathered-services'];
-        $index = array_search($namespace, $services, true);
-
-        if ($index === false) {
-            $this->output("[WARNING] Namespace \"{$namespace}\" not found in grandfathered-services.json.php");
-            return;
-        }
-
-        array_splice($services, $index, 1);
-
-        $items = implode(', ', array_map(function ($s) {
-            return "'" . $s . "'";
-        }, $services));
-
-        $content = "<?php\n"
-            . "// This file was auto-generated from sdk-root/src/data/grandfathered-services.json\n"
-            . "return [ 'grandfathered-services' => [ " . $items . ", ],];\n";
-
-        file_put_contents($path, $content);
+        // Now generate the PHP version of this file
+        $jsonCompiler = new \JsonCompiler($path);
+        $jsonCompiler->compile("$path.php");
     }
 
     /**
@@ -367,7 +327,6 @@ final class RemoveServiceCommand extends AbstractCommand
     {
         $root = $this->getProjectRoot();
         $jsonPath = $root . '/src/data/manifest.json';
-        $phpPath = $root . '/src/data/manifest.json.php';
 
         $manifest = json_decode(file_get_contents($jsonPath), true);
         unset($manifest[$serviceKey]);
@@ -378,11 +337,9 @@ final class RemoveServiceCommand extends AbstractCommand
             json_encode($manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n"
         );
 
-        // Regenerate manifest.json.php
-        $phpContent = "<?php\n"
-            . "// This file was auto-generated from sdk-root/src/data/manifest.json\n"
-            . "return " . var_export($manifest, true) . ";\n";
-        file_put_contents($phpPath, $phpContent);
+        // Generate the PHP version of this file
+        $jsonCompiler = new \JsonCompiler($jsonPath);
+        $jsonCompiler->compile("$jsonPath.php");
     }
 
     /**

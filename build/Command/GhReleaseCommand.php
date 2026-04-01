@@ -163,7 +163,7 @@ final class GhReleaseCommand extends AbstractCommand
                                 $this->output("Failed upload of {$asset['name']} at {$asset['browser_download_url']} has successfully been deleted.");
                             } else {
                                 $this->output("Failed upload of {$asset['name']} at {$asset['browser_download_url']} was unable to be deleted.");
-                                $this->error($e);
+                                $this->error($e->getMessage());
                             }
                         }
                     }
