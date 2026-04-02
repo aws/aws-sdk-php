@@ -131,6 +131,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise disassociateFleetAsync(array $args = [])
  * @method \Aws\Result disassociateSoftwareFromImageBuilder(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateSoftwareFromImageBuilderAsync(array $args = [])
+ * @method \Aws\Result drainSessionInstance(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise drainSessionInstanceAsync(array $args = [])
  * @method \Aws\Result enableUser(array $args = [])
  * @method \GuzzleHttp\Promise\Promise enableUserAsync(array $args = [])
  * @method \Aws\Result expireSession(array $args = [])

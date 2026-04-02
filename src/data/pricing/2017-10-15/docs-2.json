@@ -11,8 +11,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>General authentication failure. The request wasn't signed correctly.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AttributeNameList": {
       "base": null,
@@ -32,14 +31,6 @@
         "GetAttributeValuesResponse$AttributeValues": "<p>The list of values for an attribute. For example, <code>Throughput Optimized HDD</code> and <code>Provisioned IOPS</code> are two available values for the <code>AmazonEC2</code> <code>volumeType</code>.</p>"
       }
     },
-    "BoxedInteger": {
-      "base": null,
-      "refs": {
-        "DescribeServicesRequest$MaxResults": "<p>The maximum number of results that you want returned in the response.</p>",
-        "GetAttributeValuesRequest$MaxResults": "<p>The maximum number of results to return in response.</p>",
-        "GetProductsRequest$MaxResults": "<p>The maximum number of results to return in the response.</p>"
-      }
-    },
     "CurrencyCode": {
       "base": null,
       "refs": {
@@ -47,15 +38,19 @@
         "PriceList$CurrencyCode": "<p>The three alphabetical character ISO-4217 currency code the Price List files are denominated in. </p>"
       }
     },
-    "DescribeServicesRequest": {
+    "DescribeServicesMaxResults": {
       "base": null,
       "refs": {
+        "DescribeServicesRequest$MaxResults": "<p>The maximum number of results that you want returned in the response.</p>"
       }
+    },
+    "DescribeServicesRequest": {
+      "base": null,
+      "refs": {}
     },
     "DescribeServicesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EffectiveDate": {
       "base": null,
@@ -65,8 +60,7 @@
     },
     "ExpiredNextTokenException": {
       "base": "<p>The pagination token expired. Try again without a pagination token.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Field": {
       "base": null,
@@ -114,60 +108,61 @@
         "GetProductsResponse$FormatVersion": "<p>The format version of the response. For example, aws_v1.</p>"
       }
     },
-    "GetAttributeValuesRequest": {
+    "GetAttributeValuesMaxResults": {
       "base": null,
       "refs": {
+        "GetAttributeValuesRequest$MaxResults": "<p>The maximum number of results to return in response.</p>"
       }
+    },
+    "GetAttributeValuesRequest": {
+      "base": null,
+      "refs": {}
     },
     "GetAttributeValuesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPriceListFileUrlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPriceListFileUrlResponse": {
       "base": null,
+      "refs": {}
+    },
+    "GetProductsMaxResults": {
+      "base": null,
       "refs": {
+        "GetProductsRequest$MaxResults": "<p>The maximum number of results to return in the response.</p>"
       }
     },
     "GetProductsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProductsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalErrorException": {
       "base": "<p>An error on the server occurred during the processing of your request. Try again later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidNextTokenException": {
       "base": "<p>The pagination token is invalid. Try again without a pagination token.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidParameterException": {
       "base": "<p>One or more parameters had an invalid value.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPriceListsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPriceListsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResults": {
       "base": null,
@@ -177,8 +172,7 @@
     },
     "NotFoundException": {
       "base": "<p>The requested resource can't be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PriceList": {
       "base": "<p> <i> <b>This feature is in preview release and is subject to change. Your use of Amazon Web Services Price List API is subject to the Beta Service Participation terms of the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a> (Section 1.10).</b> </i> </p> <p>This is the type of price list references that match your request. </p>",
@@ -214,8 +208,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The requested resource can't be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Service": {
       "base": "<p>The metadata for a service, such as the service code and available attribute names.</p>",
@@ -226,7 +219,7 @@
     "ServiceCode": {
       "base": null,
       "refs": {
-        "ListPriceListsRequest$ServiceCode": "<p>The service code or the Savings Plan service code for the attributes that you want to retrieve. For example, to get the list of applicable Amazon EC2 price lists, use <code>AmazonEC2</code>. For a full list of service codes containing On-Demand and Reserved Instance (RI) pricing, use the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_pricing_DescribeServices.html#awscostmanagement-pricing_DescribeServices-request-FormatVersion\">DescribeServices</a> API.</p> <p>To retrieve the Reserved Instance and Compute Savings Plan price lists, use <code>ComputeSavingsPlans</code>. </p> <p>To retrieve Machine Learning Savings Plans price lists, use <code>MachineLearningSavingsPlans</code>. </p>"
+        "ListPriceListsRequest$ServiceCode": "<p>The service code or the Savings Plans service code for the attributes that you want to retrieve. For example, to get the list of applicable Amazon EC2 price lists, use <code>AmazonEC2</code>. For a full list of service codes containing On-Demand and Reserved Instance (RI) pricing, use the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_pricing_DescribeServices.html#awscostmanagement-pricing_DescribeServices-request-FormatVersion\">DescribeServices</a> API.</p> <p>To retrieve the Reserved Instance and Compute Savings Plans price lists, use <code>ComputeSavingsPlans</code>. </p> <p>To retrieve Machine Learning Savings Plans price lists, use <code>MachineLearningSavingsPlans</code>. </p>"
       }
     },
     "ServiceList": {
@@ -264,13 +257,12 @@
     },
     "ThrottlingException": {
       "base": "<p>You've made too many requests exceeding service quotas. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Value": {
       "base": null,
       "refs": {
-        "Filter$Value": "<p>The service code or attribute value that you want to filter by. If you're filtering by service code this is the actual service code, such as <code>AmazonEC2</code>. If you're filtering by attribute name, this is the attribute value that you want the returned products to match, such as a <code>Provisioned IOPS</code> volume.</p> <p>For <code>ANY_OF</code> and <code>NONE_OF</code> filter types, you can provide multiple values as a comma-separated string. For example, <code>t2.micro,t2.small,t2.medium</code> or <code>Compute optimized, GPU instance, Micro instances</code>.</p>"
+        "Filter$Value": "<p>The service code or attribute value that you want to filter by. If you're filtering by service code this is the actual service code, such as <code>AmazonEC2</code>. If you're filtering by attribute name, this is the attribute value that you want the returned products to match, such as a <code>Provisioned IOPS</code> volume.</p>"
       }
     },
     "errorMessage": {

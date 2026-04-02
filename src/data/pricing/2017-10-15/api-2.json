@@ -28,9 +28,10 @@
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidNextTokenException"},
         {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalErrorException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ExpiredNextTokenException"}
+        {"shape":"ExpiredNextTokenException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetAttributeValues":{
@@ -45,9 +46,10 @@
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidNextTokenException"},
         {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalErrorException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ExpiredNextTokenException"}
+        {"shape":"ExpiredNextTokenException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetPriceListFileUrl":{
@@ -79,9 +81,10 @@
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidNextTokenException"},
         {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalErrorException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ExpiredNextTokenException"}
+        {"shape":"ExpiredNextTokenException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListPriceLists":{
@@ -98,9 +101,9 @@
         {"shape":"NotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalErrorException"},
+        {"shape":"ExpiredNextTokenException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ExpiredNextTokenException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     }
   },
@@ -126,15 +129,15 @@
       "type":"list",
       "member":{"shape":"AttributeValue"}
     },
-    "BoxedInteger":{
+    "CurrencyCode":{
+      "type":"string",
+      "pattern":"[A-Z]{3}"
+    },
+    "DescribeServicesMaxResults":{
       "type":"integer",
       "box":true,
       "max":100,
       "min":1
-    },
-    "CurrencyCode":{
-      "type":"string",
-      "pattern":"[A-Z]{3}"
     },
     "DescribeServicesRequest":{
       "type":"structure",
@@ -142,7 +145,7 @@
         "ServiceCode":{"shape":"String"},
         "FormatVersion":{"shape":"FormatVersion"},
         "NextToken":{"shape":"String"},
-        "MaxResults":{"shape":"BoxedInteger"}
+        "MaxResults":{"shape":"DescribeServicesMaxResults"}
       }
     },
     "DescribeServicesResponse":{
@@ -209,6 +212,12 @@
       "max":32,
       "min":1
     },
+    "GetAttributeValuesMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":1
+    },
     "GetAttributeValuesRequest":{
       "type":"structure",
       "required":[
@@ -219,7 +228,7 @@
         "ServiceCode":{"shape":"String"},
         "AttributeName":{"shape":"String"},
         "NextToken":{"shape":"String"},
-        "MaxResults":{"shape":"BoxedInteger"}
+        "MaxResults":{"shape":"GetAttributeValuesMaxResults"}
       }
     },
     "GetAttributeValuesResponse":{
@@ -246,6 +255,12 @@
         "Url":{"shape":"String"}
       }
     },
+    "GetProductsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
     "GetProductsRequest":{
       "type":"structure",
       "required":["ServiceCode"],
@@ -254,7 +269,7 @@
         "Filters":{"shape":"Filters"},
         "FormatVersion":{"shape":"FormatVersion"},
         "NextToken":{"shape":"String"},
-        "MaxResults":{"shape":"BoxedInteger"}
+        "MaxResults":{"shape":"GetProductsMaxResults"}
       }
     },
     "GetProductsResponse":{

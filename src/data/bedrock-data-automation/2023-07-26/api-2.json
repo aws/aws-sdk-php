@@ -69,6 +69,25 @@
       ],
       "idempotent":true
     },
+    "CreateDataAutomationLibrary":{
+      "name":"CreateDataAutomationLibrary",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/data-automation-libraries/",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateDataAutomationLibraryRequest"},
+      "output":{"shape":"CreateDataAutomationLibraryResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "CreateDataAutomationProject":{
       "name":"CreateDataAutomationProject",
       "http":{
@@ -99,6 +118,25 @@
       "output":{"shape":"DeleteBlueprintResponse"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteDataAutomationLibrary":{
+      "name":"DeleteDataAutomationLibrary",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/data-automation-libraries/{libraryArn}/",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteDataAutomationLibraryRequest"},
+      "output":{"shape":"DeleteDataAutomationLibraryResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -160,6 +198,60 @@
       ],
       "readonly":true
     },
+    "GetDataAutomationLibrary":{
+      "name":"GetDataAutomationLibrary",
+      "http":{
+        "method":"POST",
+        "requestUri":"/data-automation-libraries/{libraryArn}/",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDataAutomationLibraryRequest"},
+      "output":{"shape":"GetDataAutomationLibraryResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "GetDataAutomationLibraryEntity":{
+      "name":"GetDataAutomationLibraryEntity",
+      "http":{
+        "method":"POST",
+        "requestUri":"/data-automation-libraries/{libraryArn}/entityType/{entityType}/entities/{entityId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDataAutomationLibraryEntityRequest"},
+      "output":{"shape":"GetDataAutomationLibraryEntityResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "GetDataAutomationLibraryIngestionJob":{
+      "name":"GetDataAutomationLibraryIngestionJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/data-automation-libraries/{libraryArn}/library-ingestion-jobs/{jobArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDataAutomationLibraryIngestionJobRequest"},
+      "output":{"shape":"GetDataAutomationLibraryIngestionJobResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "GetDataAutomationProject":{
       "name":"GetDataAutomationProject",
       "http":{
@@ -197,6 +289,26 @@
       ],
       "idempotent":true
     },
+    "InvokeDataAutomationLibraryIngestionJob":{
+      "name":"InvokeDataAutomationLibraryIngestionJob",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/data-automation-libraries/{libraryArn}/library-ingestion-jobs/",
+        "responseCode":201
+      },
+      "input":{"shape":"InvokeDataAutomationLibraryIngestionJobRequest"},
+      "output":{"shape":"InvokeDataAutomationLibraryIngestionJobResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "ListBlueprints":{
       "name":"ListBlueprints",
       "http":{
@@ -206,6 +318,59 @@
       },
       "input":{"shape":"ListBlueprintsRequest"},
       "output":{"shape":"ListBlueprintsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListDataAutomationLibraries":{
+      "name":"ListDataAutomationLibraries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/data-automation-libraries/",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDataAutomationLibrariesRequest"},
+      "output":{"shape":"ListDataAutomationLibrariesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListDataAutomationLibraryEntities":{
+      "name":"ListDataAutomationLibraryEntities",
+      "http":{
+        "method":"POST",
+        "requestUri":"/data-automation-libraries/{libraryArn}/entityType/{entityType}/entities/",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDataAutomationLibraryEntitiesRequest"},
+      "output":{"shape":"ListDataAutomationLibraryEntitiesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListDataAutomationLibraryIngestionJobs":{
+      "name":"ListDataAutomationLibraryIngestionJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/data-automation-libraries/{libraryArn}/library-ingestion-jobs/",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDataAutomationLibraryIngestionJobsRequest"},
+      "output":{"shape":"ListDataAutomationLibraryIngestionJobsResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
@@ -297,6 +462,25 @@
       "errors":[
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateDataAutomationLibrary":{
+      "name":"UpdateDataAutomationLibrary",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/data-automation-libraries/{libraryArn}/",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateDataAutomationLibraryRequest"},
+      "output":{"shape":"UpdateDataAutomationLibraryResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -679,6 +863,27 @@
         "blueprint":{"shape":"Blueprint"}
       }
     },
+    "CreateDataAutomationLibraryRequest":{
+      "type":"structure",
+      "required":["libraryName"],
+      "members":{
+        "libraryName":{"shape":"DataAutomationLibraryName"},
+        "libraryDescription":{"shape":"DataAutomationLibraryDescription"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "CreateDataAutomationLibraryResponse":{
+      "type":"structure",
+      "members":{
+        "libraryArn":{"shape":"DataAutomationLibraryArn"},
+        "status":{"shape":"DataAutomationLibraryStatus"}
+      }
+    },
     "CreateDataAutomationProjectRequest":{
       "type":"structure",
       "required":[
@@ -693,6 +898,7 @@
         "standardOutputConfiguration":{"shape":"StandardOutputConfiguration"},
         "customOutputConfiguration":{"shape":"CustomOutputConfiguration"},
         "overrideConfiguration":{"shape":"OverrideConfiguration"},
+        "dataAutomationLibraryConfiguration":{"shape":"DataAutomationLibraryConfiguration"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -714,6 +920,155 @@
       "type":"structure",
       "members":{
         "blueprints":{"shape":"BlueprintItems"}
+      }
+    },
+    "DataAutomationLibrary":{
+      "type":"structure",
+      "required":[
+        "libraryArn",
+        "creationTime",
+        "libraryName",
+        "status"
+      ],
+      "members":{
+        "libraryArn":{"shape":"DataAutomationLibraryArn"},
+        "creationTime":{"shape":"DateTimestamp"},
+        "libraryName":{"shape":"DataAutomationLibraryName"},
+        "libraryDescription":{"shape":"DataAutomationLibraryDescription"},
+        "status":{"shape":"DataAutomationLibraryStatus"},
+        "entityTypes":{"shape":"EntityTypeInfoList"},
+        "kmsKeyId":{"shape":"KmsKeyId"},
+        "kmsEncryptionContext":{"shape":"KmsEncryptionContext"}
+      }
+    },
+    "DataAutomationLibraryArn":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"arn:aws(|-cn|-iso|-iso-[a-z]|-us-gov):bedrock:[a-zA-Z0-9-]*:[0-9]{12}:data-automation-library/[a-zA-Z0-9-]{12,36}"
+    },
+    "DataAutomationLibraryConfiguration":{
+      "type":"structure",
+      "members":{
+        "libraries":{"shape":"DataAutomationLibraryItems"}
+      }
+    },
+    "DataAutomationLibraryDescription":{
+      "type":"string",
+      "max":300,
+      "min":0,
+      "pattern":"[a-zA-Z0-9\\s!\"\\#\\$%'&\\(\\)\\*\\+\\,\\-\\./:;=\\?@\\[\\\\\\]\\^_`\\{\\|\\}~><À-ÖØ-Üßà-öø-üẞ¿¡Œ-œ°£¥₹€§©ª®™¹±-µ✓⑆-⑉฿₽₱₦₣₩₫₺]*",
+      "sensitive":true
+    },
+    "DataAutomationLibraryEntitySummaries":{
+      "type":"list",
+      "member":{"shape":"DataAutomationLibraryEntitySummary"}
+    },
+    "DataAutomationLibraryEntitySummary":{
+      "type":"structure",
+      "members":{
+        "vocabulary":{"shape":"VocabularyEntitySummary"}
+      },
+      "union":true
+    },
+    "DataAutomationLibraryFilter":{
+      "type":"structure",
+      "required":["libraryArn"],
+      "members":{
+        "libraryArn":{"shape":"DataAutomationLibraryArn"}
+      }
+    },
+    "DataAutomationLibraryIngestionJob":{
+      "type":"structure",
+      "required":[
+        "jobArn",
+        "creationTime",
+        "entityType",
+        "operationType",
+        "jobStatus",
+        "outputConfiguration"
+      ],
+      "members":{
+        "jobArn":{"shape":"DataAutomationLibraryIngestionJobArn"},
+        "creationTime":{"shape":"DateTimestamp"},
+        "entityType":{"shape":"EntityType"},
+        "operationType":{"shape":"LibraryIngestionJobOperationType"},
+        "jobStatus":{"shape":"LibraryIngestionJobStatus"},
+        "outputConfiguration":{"shape":"OutputConfiguration"},
+        "completionTime":{"shape":"DateTimestamp"},
+        "errorMessage":{"shape":"String"},
+        "errorType":{"shape":"String"}
+      }
+    },
+    "DataAutomationLibraryIngestionJobArn":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"arn:aws(|-cn|-iso|-iso-[a-z]|-us-gov):bedrock:[a-zA-Z0-9-]*:[0-9]{12}:data-automation-library-ingestion-job/[a-zA-Z0-9-]{12,36}"
+    },
+    "DataAutomationLibraryIngestionJobSummaries":{
+      "type":"list",
+      "member":{"shape":"DataAutomationLibraryIngestionJobSummary"}
+    },
+    "DataAutomationLibraryIngestionJobSummary":{
+      "type":"structure",
+      "required":[
+        "jobArn",
+        "jobStatus",
+        "entityType",
+        "operationType",
+        "creationTime"
+      ],
+      "members":{
+        "jobArn":{"shape":"DataAutomationLibraryIngestionJobArn"},
+        "jobStatus":{"shape":"LibraryIngestionJobStatus"},
+        "entityType":{"shape":"EntityType"},
+        "operationType":{"shape":"LibraryIngestionJobOperationType"},
+        "creationTime":{"shape":"DateTimestamp"},
+        "completionTime":{"shape":"DateTimestamp"}
+      }
+    },
+    "DataAutomationLibraryItem":{
+      "type":"structure",
+      "required":["libraryArn"],
+      "members":{
+        "libraryArn":{"shape":"DataAutomationLibraryArn"}
+      }
+    },
+    "DataAutomationLibraryItems":{
+      "type":"list",
+      "member":{"shape":"DataAutomationLibraryItem"},
+      "max":1,
+      "min":0
+    },
+    "DataAutomationLibraryName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-_]+",
+      "sensitive":true
+    },
+    "DataAutomationLibraryStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "DELETING"
+      ]
+    },
+    "DataAutomationLibrarySummaries":{
+      "type":"list",
+      "member":{"shape":"DataAutomationLibrarySummary"}
+    },
+    "DataAutomationLibrarySummary":{
+      "type":"structure",
+      "required":[
+        "libraryArn",
+        "creationTime"
+      ],
+      "members":{
+        "libraryArn":{"shape":"DataAutomationLibraryArn"},
+        "libraryName":{"shape":"DataAutomationLibraryName"},
+        "creationTime":{"shape":"DateTimestamp"}
       }
     },
     "DataAutomationProfileArn":{
@@ -742,6 +1097,7 @@
         "standardOutputConfiguration":{"shape":"StandardOutputConfiguration"},
         "customOutputConfiguration":{"shape":"CustomOutputConfiguration"},
         "overrideConfiguration":{"shape":"OverrideConfiguration"},
+        "dataAutomationLibraryConfiguration":{"shape":"DataAutomationLibraryConfiguration"},
         "status":{"shape":"DataAutomationProjectStatus"},
         "kmsKeyId":{"shape":"KmsKeyId"},
         "kmsEncryptionContext":{"shape":"KmsEncryptionContext"}
@@ -846,6 +1202,24 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteDataAutomationLibraryRequest":{
+      "type":"structure",
+      "required":["libraryArn"],
+      "members":{
+        "libraryArn":{
+          "shape":"DataAutomationLibraryArn",
+          "location":"uri",
+          "locationName":"libraryArn"
+        }
+      }
+    },
+    "DeleteDataAutomationLibraryResponse":{
+      "type":"structure",
+      "members":{
+        "libraryArn":{"shape":"DataAutomationLibraryArn"},
+        "status":{"shape":"DataAutomationLibraryStatus"}
+      }
+    },
     "DeleteDataAutomationProjectRequest":{
       "type":"structure",
       "required":["projectArn"],
@@ -863,6 +1237,13 @@
       "members":{
         "projectArn":{"shape":"DataAutomationProjectArn"},
         "status":{"shape":"DataAutomationProjectStatus"}
+      }
+    },
+    "DeleteEntitiesInfo":{
+      "type":"structure",
+      "required":["entityIds"],
+      "members":{
+        "entityIds":{"shape":"EntityIdList"}
       }
     },
     "DesiredModality":{
@@ -992,6 +1373,56 @@
       "min":1,
       "pattern":".*\\S.*"
     },
+    "EntityDescription":{
+      "type":"string",
+      "max":300,
+      "min":0,
+      "pattern":"[a-zA-Z0-9\\s!\"\\#\\$%'&\\(\\)\\*\\+\\,\\-\\./:;=\\?@\\[\\\\\\]\\^_`\\{\\|\\}~><À-ÖØ-Üßà-öø-üẞ¿¡Œ-œ°£¥₹€§©ª®™¹±-µ✓⑆-⑉฿₽₱₦₣₩₫₺]*",
+      "sensitive":true
+    },
+    "EntityDetails":{
+      "type":"structure",
+      "members":{
+        "vocabulary":{"shape":"VocabularyEntity"}
+      },
+      "union":true
+    },
+    "EntityId":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-_]+"
+    },
+    "EntityIdList":{
+      "type":"list",
+      "member":{"shape":"EntityId"},
+      "max":1000,
+      "min":1
+    },
+    "EntityMetadata":{"type":"string"},
+    "EntityType":{
+      "type":"string",
+      "enum":["VOCABULARY"]
+    },
+    "EntityTypeInfo":{
+      "type":"structure",
+      "required":["entityType"],
+      "members":{
+        "entityType":{"shape":"EntityType"},
+        "entityMetadata":{"shape":"EntityMetadata"}
+      }
+    },
+    "EntityTypeInfoList":{
+      "type":"list",
+      "member":{"shape":"EntityTypeInfo"}
+    },
+    "EventBridgeConfiguration":{
+      "type":"structure",
+      "required":["eventBridgeEnabled"],
+      "members":{
+        "eventBridgeEnabled":{"shape":"Boolean"}
+      }
+    },
     "GetBlueprintOptimizationStatusRequest":{
       "type":"structure",
       "required":["invocationArn"],
@@ -1030,6 +1461,79 @@
       "required":["blueprint"],
       "members":{
         "blueprint":{"shape":"Blueprint"}
+      }
+    },
+    "GetDataAutomationLibraryEntityRequest":{
+      "type":"structure",
+      "required":[
+        "libraryArn",
+        "entityType",
+        "entityId"
+      ],
+      "members":{
+        "libraryArn":{
+          "shape":"DataAutomationLibraryArn",
+          "location":"uri",
+          "locationName":"libraryArn"
+        },
+        "entityType":{
+          "shape":"EntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        },
+        "entityId":{
+          "shape":"EntityId",
+          "location":"uri",
+          "locationName":"entityId"
+        }
+      }
+    },
+    "GetDataAutomationLibraryEntityResponse":{
+      "type":"structure",
+      "members":{
+        "entity":{"shape":"EntityDetails"}
+      }
+    },
+    "GetDataAutomationLibraryIngestionJobRequest":{
+      "type":"structure",
+      "required":[
+        "libraryArn",
+        "jobArn"
+      ],
+      "members":{
+        "libraryArn":{
+          "shape":"DataAutomationLibraryArn",
+          "location":"uri",
+          "locationName":"libraryArn"
+        },
+        "jobArn":{
+          "shape":"DataAutomationLibraryIngestionJobArn",
+          "location":"uri",
+          "locationName":"jobArn"
+        }
+      }
+    },
+    "GetDataAutomationLibraryIngestionJobResponse":{
+      "type":"structure",
+      "members":{
+        "job":{"shape":"DataAutomationLibraryIngestionJob"}
+      }
+    },
+    "GetDataAutomationLibraryRequest":{
+      "type":"structure",
+      "required":["libraryArn"],
+      "members":{
+        "libraryArn":{
+          "shape":"DataAutomationLibraryArn",
+          "location":"uri",
+          "locationName":"libraryArn"
+        }
+      }
+    },
+    "GetDataAutomationLibraryResponse":{
+      "type":"structure",
+      "members":{
+        "library":{"shape":"DataAutomationLibrary"}
       }
     },
     "GetDataAutomationProjectRequest":{
@@ -1122,6 +1626,21 @@
         "generativeField":{"shape":"ImageStandardGenerativeField"}
       }
     },
+    "InlinePayload":{
+      "type":"structure",
+      "members":{
+        "upsertEntitiesInfo":{"shape":"UpsertEntitiesInfo"},
+        "deleteEntitiesInfo":{"shape":"DeleteEntitiesInfo"}
+      },
+      "union":true
+    },
+    "InputConfiguration":{
+      "type":"structure",
+      "members":{
+        "s3Object":{"shape":"S3Object"},
+        "inlinePayload":{"shape":"InlinePayload"}
+      }
+    },
     "InternalServerException":{
       "type":"structure",
       "members":{
@@ -1155,6 +1674,39 @@
         "invocationArn":{"shape":"BlueprintOptimizationInvocationArn"}
       }
     },
+    "InvokeDataAutomationLibraryIngestionJobRequest":{
+      "type":"structure",
+      "required":[
+        "libraryArn",
+        "inputConfiguration",
+        "entityType",
+        "operationType",
+        "outputConfiguration"
+      ],
+      "members":{
+        "libraryArn":{
+          "shape":"DataAutomationLibraryArn",
+          "location":"uri",
+          "locationName":"libraryArn"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "inputConfiguration":{"shape":"InputConfiguration"},
+        "entityType":{"shape":"EntityType"},
+        "operationType":{"shape":"LibraryIngestionJobOperationType"},
+        "outputConfiguration":{"shape":"OutputConfiguration"},
+        "notificationConfiguration":{"shape":"NotificationConfiguration"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "InvokeDataAutomationLibraryIngestionJobResponse":{
+      "type":"structure",
+      "members":{
+        "jobArn":{"shape":"DataAutomationLibraryIngestionJobArn"}
+      }
+    },
     "KmsEncryptionContext":{
       "type":"map",
       "key":{"shape":"EncryptionContextKey"},
@@ -1183,6 +1735,22 @@
         "HK"
       ]
     },
+    "LibraryIngestionJobOperationType":{
+      "type":"string",
+      "enum":[
+        "UPSERT",
+        "DELETE"
+      ]
+    },
+    "LibraryIngestionJobStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "COMPLETED",
+        "COMPLETED_WITH_ERRORS",
+        "FAILED"
+      ]
+    },
     "ListBlueprintsRequest":{
       "type":"structure",
       "members":{
@@ -1202,6 +1770,69 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListDataAutomationLibrariesRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"},
+        "projectFilter":{"shape":"DataAutomationProjectFilter"}
+      }
+    },
+    "ListDataAutomationLibrariesResponse":{
+      "type":"structure",
+      "members":{
+        "libraries":{"shape":"DataAutomationLibrarySummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDataAutomationLibraryEntitiesRequest":{
+      "type":"structure",
+      "required":[
+        "libraryArn",
+        "entityType"
+      ],
+      "members":{
+        "libraryArn":{
+          "shape":"DataAutomationLibraryArn",
+          "location":"uri",
+          "locationName":"libraryArn"
+        },
+        "entityType":{
+          "shape":"EntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        },
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDataAutomationLibraryEntitiesResponse":{
+      "type":"structure",
+      "members":{
+        "entities":{"shape":"DataAutomationLibraryEntitySummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDataAutomationLibraryIngestionJobsRequest":{
+      "type":"structure",
+      "required":["libraryArn"],
+      "members":{
+        "libraryArn":{
+          "shape":"DataAutomationLibraryArn",
+          "location":"uri",
+          "locationName":"libraryArn"
+        },
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDataAutomationLibraryIngestionJobsResponse":{
+      "type":"structure",
+      "members":{
+        "jobs":{"shape":"DataAutomationLibraryIngestionJobSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListDataAutomationProjectsRequest":{
       "type":"structure",
       "members":{
@@ -1209,7 +1840,8 @@
         "nextToken":{"shape":"NextToken"},
         "projectStageFilter":{"shape":"DataAutomationProjectStageFilter"},
         "blueprintFilter":{"shape":"BlueprintFilter"},
-        "resourceOwner":{"shape":"ResourceOwner"}
+        "resourceOwner":{"shape":"ResourceOwner"},
+        "libraryFilter":{"shape":"DataAutomationLibraryFilter"}
       }
     },
     "ListDataAutomationProjectsResponse":{
@@ -1263,6 +1895,20 @@
     "NonBlankString":{
       "type":"string",
       "pattern":"[\\s\\S]+"
+    },
+    "NotificationConfiguration":{
+      "type":"structure",
+      "required":["eventBridgeConfiguration"],
+      "members":{
+        "eventBridgeConfiguration":{"shape":"EventBridgeConfiguration"}
+      }
+    },
+    "OutputConfiguration":{
+      "type":"structure",
+      "required":["s3Uri"],
+      "members":{
+        "s3Uri":{"shape":"S3Uri"}
+      }
     },
     "OverrideConfiguration":{
       "type":"structure",
@@ -1330,6 +1976,33 @@
         "PII",
         "ENTITY_TYPE"
       ]
+    },
+    "Phrase":{
+      "type":"structure",
+      "required":["text"],
+      "members":{
+        "text":{"shape":"PhraseText"},
+        "displayAsText":{"shape":"PhraseDisplayAsText"}
+      }
+    },
+    "PhraseDisplayAsText":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":".*.+.*",
+      "sensitive":true
+    },
+    "PhraseList":{
+      "type":"list",
+      "member":{"shape":"Phrase"},
+      "min":1
+    },
+    "PhraseText":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":".*.+.*",
+      "sensitive":true
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1490,7 +2163,7 @@
       "type":"string",
       "max":1011,
       "min":20,
-      "pattern":"arn:aws(|-cn|-iso|-iso-[a-z]|-us-gov):bedrock:[a-z0-9-]*:[0-9]{12}:(blueprint|data-automation-project|blueprint-optimization-invocation)/[a-zA-Z0-9-]{12,36}"
+      "pattern":"arn:aws(|-cn|-iso|-iso-[a-z]|-us-gov):bedrock:[a-z0-9-]*:[0-9]{12}:(blueprint|data-automation-project|blueprint-optimization-invocation|data-automation-library|data-automation-library-ingestion-job)/[a-zA-Z0-9-]{12,36}"
     },
     "ThrottlingException":{
       "type":"structure",
@@ -1558,6 +2231,29 @@
         "blueprint":{"shape":"Blueprint"}
       }
     },
+    "UpdateDataAutomationLibraryRequest":{
+      "type":"structure",
+      "required":["libraryArn"],
+      "members":{
+        "libraryArn":{
+          "shape":"DataAutomationLibraryArn",
+          "location":"uri",
+          "locationName":"libraryArn"
+        },
+        "libraryDescription":{"shape":"DataAutomationLibraryDescription"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateDataAutomationLibraryResponse":{
+      "type":"structure",
+      "members":{
+        "libraryArn":{"shape":"DataAutomationLibraryArn"},
+        "status":{"shape":"DataAutomationLibraryStatus"}
+      }
+    },
     "UpdateDataAutomationProjectRequest":{
       "type":"structure",
       "required":[
@@ -1575,6 +2271,7 @@
         "standardOutputConfiguration":{"shape":"StandardOutputConfiguration"},
         "customOutputConfiguration":{"shape":"CustomOutputConfiguration"},
         "overrideConfiguration":{"shape":"OverrideConfiguration"},
+        "dataAutomationLibraryConfiguration":{"shape":"DataAutomationLibraryConfiguration"},
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
@@ -1586,6 +2283,19 @@
         "projectStage":{"shape":"DataAutomationProjectStage"},
         "status":{"shape":"DataAutomationProjectStatus"}
       }
+    },
+    "UpsertEntitiesInfo":{
+      "type":"list",
+      "member":{"shape":"UpsertEntityInfo"},
+      "max":10,
+      "min":1
+    },
+    "UpsertEntityInfo":{
+      "type":"structure",
+      "members":{
+        "vocabulary":{"shape":"VocabularyEntityInfo"}
+      },
+      "union":true
     },
     "ValidationException":{
       "type":"structure",
@@ -1686,6 +2396,44 @@
         "extraction":{"shape":"VideoStandardExtraction"},
         "generativeField":{"shape":"VideoStandardGenerativeField"}
       }
+    },
+    "VocabularyEntity":{
+      "type":"structure",
+      "members":{
+        "entityId":{"shape":"EntityId"},
+        "description":{"shape":"EntityDescription"},
+        "language":{"shape":"Language"},
+        "phrases":{"shape":"PhraseList"},
+        "lastModifiedTime":{"shape":"DateTimestamp"}
+      }
+    },
+    "VocabularyEntityInfo":{
+      "type":"structure",
+      "required":[
+        "language",
+        "phrases"
+      ],
+      "members":{
+        "entityId":{"shape":"EntityId"},
+        "description":{"shape":"EntityDescription"},
+        "language":{"shape":"Language"},
+        "phrases":{"shape":"PhraseList"}
+      }
+    },
+    "VocabularyEntitySummary":{
+      "type":"structure",
+      "members":{
+        "entityId":{"shape":"EntityId"},
+        "description":{"shape":"EntityDescription"},
+        "language":{"shape":"Language"},
+        "numOfPhrases":{"shape":"VocabularyEntitySummaryNumOfPhrasesInteger"},
+        "lastModifiedTime":{"shape":"DateTimestamp"}
+      }
+    },
+    "VocabularyEntitySummaryNumOfPhrasesInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
     }
   }
 }

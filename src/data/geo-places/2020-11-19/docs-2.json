@@ -25,13 +25,13 @@
       "base": null,
       "refs": {
         "GeocodeResultItem$AccessPoints": "<p>Position of the access point in World Geodetic System (WGS 84) format: [longitude, latitude].</p>",
-        "GetPlaceResponse$AccessPoints": "<p>Position of the access point in World Geodetic System (WGS 84) format: [longitude, latitude].</p>",
+        "GetPlaceResponse$AccessPoints": "<p> Position of the access point in World Geodetic System (WGS 84) format: [longitude, latitude]. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
         "Intersection$AccessPoints": "<p>Position of the access point in World Geodetic System (WGS 84) format: [longitude, latitude].</p>",
         "RelatedPlace$AccessPoints": "<p>Position of the access point in World Geodetic System (WGS 84) format: [longitude, latitude].</p>",
-        "ReverseGeocodeResultItem$AccessPoints": "<p>Position of the access point in World Geodetic System (WGS 84) format: [longitude, latitude].</p>",
+        "ReverseGeocodeResultItem$AccessPoints": "<p> Position of the access point in World Geodetic System (WGS 84) format: [longitude, latitude]. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
         "SearchNearbyResultItem$AccessPoints": "<p>Position of the access point in World Geodetic System (WGS 84) format: [longitude, latitude].</p>",
         "SearchTextResultItem$AccessPoints": "<p>Position of the access point in World Geodetic System (WGS 84) format: [longitude, latitude].</p>",
-        "SuggestPlaceResult$AccessPoints": "<p>Position of the access point in World Geodetic System (WGS 84) format: [longitude, latitude].</p>"
+        "SuggestPlaceResult$AccessPoints": "<p> Position of the access point in World Geodetic System (WGS 84) format: [longitude, latitude]. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
       }
     },
     "AccessRestriction": {
@@ -43,10 +43,10 @@
     "AccessRestrictionList": {
       "base": null,
       "refs": {
-        "GetPlaceResponse$AccessRestrictions": "<p>Indicates known access restrictions on a vehicle access point. The index correlates to an access point and indicates if access through this point has some form of restriction.</p>",
+        "GetPlaceResponse$AccessRestrictions": "<p> Indicates known access restrictions on a vehicle access point. The index correlates to an access point and indicates if access through this point has some form of restriction. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
         "SearchNearbyResultItem$AccessRestrictions": "<p>Indicates known access restrictions on a vehicle access point. The index correlates to an access point and indicates if access through this point has some form of restriction.</p>",
         "SearchTextResultItem$AccessRestrictions": "<p>Indicates known access restrictions on a vehicle access point. The index correlates to an access point and indicates if access through this point has some form of restriction.</p>",
-        "SuggestPlaceResult$AccessRestrictions": "<p>Indicates known access restrictions on a vehicle access point. The index correlates to an access point and indicates if access through this point has some form of restriction.</p>"
+        "SuggestPlaceResult$AccessRestrictions": "<p> Indicates known access restrictions on a vehicle access point. The index correlates to an access point and indicates if access through this point has some form of restriction. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
       }
     },
     "Address": {
@@ -72,13 +72,13 @@
     "AddressBlockString": {
       "base": null,
       "refs": {
-        "Address$Block": "<p>Name of the block. </p> <p>Example: <code>Sunny Mansion 203 block: 2 Chome</code> </p>"
+        "Address$Block": "<p> Name of the block. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p> <p>Example: <code>Sunny Mansion 203 block: 2 Chome</code> </p>"
       }
     },
     "AddressBuildingString": {
       "base": null,
       "refs": {
-        "Address$Building": "<p>The name of the building at the address.</p>"
+        "Address$Building": "<p> The name of the building at the address. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
       }
     },
     "AddressComponentMatchScores": {
@@ -132,7 +132,7 @@
     "AddressSubBlockString": {
       "base": null,
       "refs": {
-        "Address$SubBlock": "<p>Name of sub-block. </p> <p>Example: <code>Sunny Mansion 203 sub-block: 4</code> </p>"
+        "Address$SubBlock": "<p> Name of sub-block. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p> <p>Example: <code>Sunny Mansion 203 sub-block: 4</code> </p>"
       }
     },
     "AddressSubDistrictString": {
@@ -198,7 +198,7 @@
     "AutocompleteIntendedUse": {
       "base": null,
       "refs": {
-        "AutocompleteRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p>"
+        "AutocompleteRequest$IntendedUse": "<p> Indicates if the query results will be persisted in customer infrastructure. Defaults to <code>SingleUse</code> (not stored). Currently, <code>Autocomplete</code> does not support storage of results. </p>"
       }
     },
     "AutocompleteRequest": {
@@ -279,7 +279,7 @@
         "GetPlaceResponse$BusinessChains": "<p>The Business Chains associated with the place.</p>",
         "SearchNearbyResultItem$BusinessChains": "<p>The Business Chains associated with the place.</p>",
         "SearchTextResultItem$BusinessChains": "<p>The Business Chains associated with the place.</p>",
-        "SuggestPlaceResult$BusinessChains": "<p>The Business Chains associated with the place.</p>"
+        "SuggestPlaceResult$BusinessChains": "<p> The Business Chains associated with the place. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
       }
     },
     "BusinessChainNameString": {
@@ -362,7 +362,7 @@
     "Contacts": {
       "base": "<p>A list of potential contact methods for the result/place.</p>",
       "refs": {
-        "GetPlaceResponse$Contacts": "<p>List of potential contact methods for the result/place.</p>",
+        "GetPlaceResponse$Contacts": "<p> List of potential contact methods for the result/place. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
         "SearchNearbyResultItem$Contacts": "<p>List of potential contact methods for the result/place.</p>",
         "SearchTextResultItem$Contacts": "<p>List of potential contact methods for the result/place.</p>"
       }
@@ -379,11 +379,11 @@
         "AutocompleteRequest$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p> <p>The following political views are currently supported:</p> <ul> <li> <p> <code>ARG</code>: Argentina's view on the Southern Patagonian Ice Field and Tierra Del Fuego, including the Falkland Islands, South Georgia, and South Sandwich Islands</p> </li> <li> <p> <code>EGY</code>: Egypt's view on Bir Tawil</p> </li> <li> <p> <code>IND</code>: India's view on Gilgit-Baltistan</p> </li> <li> <p> <code>KEN</code>: Kenya's view on the Ilemi Triangle</p> </li> <li> <p> <code>MAR</code>: Morocco's view on Western Sahara</p> </li> <li> <p> <code>RUS</code>: Russia's view on Crimea</p> </li> <li> <p> <code>SDN</code>: Sudan's view on the Halaib Triangle</p> </li> <li> <p> <code>SRB</code>: Serbia's view on Kosovo, Vukovar, and Sarengrad Islands</p> </li> <li> <p> <code>SUR</code>: Suriname's view on the Courantyne Headwaters and Lawa Headwaters</p> </li> <li> <p> <code>SYR</code>: Syria's view on the Golan Heights</p> </li> <li> <p> <code>TUR</code>: Turkey's view on Cyprus and Northern Cyprus</p> </li> <li> <p> <code>TZA</code>: Tanzania's view on Lake Malawi</p> </li> <li> <p> <code>URY</code>: Uruguay's view on Rincon de Artigas</p> </li> <li> <p> <code>VNM</code>: Vietnam's view on the Paracel Islands and Spratly Islands</p> </li> </ul>",
         "CountryCodeList$member": null,
         "GeocodeRequest$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>",
-        "GetPlaceRequest$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>",
-        "ReverseGeocodeRequest$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>",
+        "GetPlaceRequest$PoliticalView": "<p> The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country. Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
+        "ReverseGeocodeRequest$PoliticalView": "<p> The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country. Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
         "SearchNearbyRequest$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>",
-        "SearchTextRequest$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>",
-        "SuggestRequest$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>"
+        "SearchTextRequest$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers.</p>",
+        "SuggestRequest$PoliticalView": "<p> The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country. Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
       }
     },
     "CountryCode2": {
@@ -398,11 +398,11 @@
         "AutocompleteResultItem$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>",
         "Country$Code3": "<p>Country, represented by its alpha t-character code. </p>",
         "GeocodeResultItem$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>",
-        "GetPlaceResponse$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>",
-        "ReverseGeocodeResultItem$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>",
+        "GetPlaceResponse$PoliticalView": "<p> The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
+        "ReverseGeocodeResultItem$PoliticalView": "<p> The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
         "SearchNearbyResultItem$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>",
         "SearchTextResultItem$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>",
-        "SuggestPlaceResult$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>"
+        "SuggestPlaceResult$PoliticalView": "<p> The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
       }
     },
     "CountryCodeList": {
@@ -484,7 +484,7 @@
     "FilterCircleRadiusLong": {
       "base": null,
       "refs": {
-        "FilterCircle$Radius": "<p>The radius, in meters, of the <code>FilterCircle</code>.</p>"
+        "FilterCircle$Radius": "<p> The radius, in meters, of the <code>FilterCircle</code>. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers,<code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only up to a maximum value of 300,000. </p>"
       }
     },
     "FilterFoodTypeList": {
@@ -516,11 +516,11 @@
       "base": null,
       "refs": {
         "GeocodeResultItem$FoodTypes": "<p>List of food types offered by this result.</p>",
-        "GetPlaceResponse$FoodTypes": "<p>List of food types offered by this result.</p>",
-        "ReverseGeocodeResultItem$FoodTypes": "<p>List of food types offered by this result.</p>",
+        "GetPlaceResponse$FoodTypes": "<p> List of food types offered by this result. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
+        "ReverseGeocodeResultItem$FoodTypes": "<p> List of food types offered by this result. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
         "SearchNearbyResultItem$FoodTypes": "<p>List of food types offered by this result.</p>",
         "SearchTextResultItem$FoodTypes": "<p>List of food types offered by this result.</p>",
-        "SuggestPlaceResult$FoodTypes": "<p>List of food types offered by this result.</p>"
+        "SuggestPlaceResult$FoodTypes": "<p> List of food types offered by this result. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
       }
     },
     "FoodTypeLocalizedNameString": {
@@ -562,7 +562,7 @@
     "GeocodeIntendedUse": {
       "base": null,
       "refs": {
-        "GeocodeRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p> <note> <p>Storing the response of an Geocode query is required to comply with service terms, but charged at a higher cost per request. Please review the <a href=\"https://aws.amazon.com/location/sla/\">user agreement</a> and <a href=\"https://aws.amazon.com/location/pricing/\">service pricing structure</a> to determine the correct setting for your use case.</p> </note>"
+        "GeocodeRequest$IntendedUse": "<p> Indicates if the query results will be persisted in customer infrastructure. Defaults to <code>SingleUse</code> (not stored). Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p> <note> <p>When storing <code>Geocode</code> responses, you <i>must</i> set this field to <code>Storage</code> to comply with the terms of service. These requests will be charged at a higher rate. Please review the <a href=\"https://aws.amazon.com/location/sla/\">user agreement</a> and <a href=\"https://aws.amazon.com/location/pricing/\">service pricing structure</a> to determine the correct setting for your use case.</p> </note>"
       }
     },
     "GeocodeParsedQuery": {
@@ -684,13 +684,13 @@
     "GetPlaceAdditionalFeatureList": {
       "base": null,
       "refs": {
-        "GetPlaceRequest$AdditionalFeatures": "<p>A list of optional additional parameters such as time zone that can be requested for each result.</p>"
+        "GetPlaceRequest$AdditionalFeatures": "<p> A list of optional additional parameters such as time zone that can be requested for each result. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the <code>TimeZone</code> value. </p>"
       }
     },
     "GetPlaceIntendedUse": {
       "base": null,
       "refs": {
-        "GetPlaceRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p> <note> <p>Storing the response of an GetPlace query is required to comply with service terms, but charged at a higher cost per request. Please review the <a href=\"https://aws.amazon.com/location/sla/\">user agreement</a> and <a href=\"https://aws.amazon.com/location/pricing/\">service pricing structure</a> to determine the correct setting for your use case.</p> </note>"
+        "GetPlaceRequest$IntendedUse": "<p> Indicates if the query results will be persisted in customer infrastructure. Defaults to <code>SingleUse</code> (not stored). Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p> <note> <p>When storing <code>GetPlace</code> responses, you <i>must</i> set this field to <code>Storage</code> to comply with the terms of service. These requests will be charged at a higher rate. Please review the <a href=\"https://aws.amazon.com/location/sla/\">user agreement</a> and <a href=\"https://aws.amazon.com/location/pricing/\">service pricing structure</a> to determine the correct setting for your use case.</p> </note>"
       }
     },
     "GetPlaceRequest": {
@@ -794,7 +794,7 @@
       "base": null,
       "refs": {
         "GeocodeResultItem$Intersections": "<p>All Intersections that are near the provided address.</p>",
-        "ReverseGeocodeResultItem$Intersections": "<p>All Intersections that are near the provided address.</p>"
+        "ReverseGeocodeResultItem$Intersections": "<p> All Intersections that are near the provided address. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
       }
     },
     "IntersectionPlaceIdString": {
@@ -812,7 +812,7 @@
     "IntersectionStreetList": {
       "base": null,
       "refs": {
-        "Address$Intersection": "<p>Name of the streets in the intersection. </p> <p>Example: <code>[\"Friedrichstraße\",\"Unter den Linden\"]</code> </p>"
+        "Address$Intersection": "<p> Name of the streets in the intersection. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p> <p>Example: <code>[\"Friedrichstraße\",\"Unter den Linden\"]</code> </p>"
       }
     },
     "IntersectionTitleString": {
@@ -827,13 +827,13 @@
         "AutocompleteRequest$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
         "AutocompleteResultItem$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
         "GeocodeRequest$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
-        "GetPlaceRequest$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
+        "GetPlaceRequest$Language": "<p> A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the following codes: <code>en, id, km, lo, ms, my, pt, th, tl, vi, zh</code> </p>",
         "PhonemeTranscription$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
-        "ReverseGeocodeRequest$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
+        "ReverseGeocodeRequest$Language": "<p> A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the following codes: <code>en, id, km, lo, ms, my, pt, th, tl, vi, zh</code> </p>",
         "SearchNearbyRequest$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
-        "SearchTextRequest$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
+        "SearchTextRequest$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the following codes: <code>en, id, km, lo, ms, my, pt, th, tl, vi, zh</code> </p>",
         "StreetComponents$Language": "<p>A <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>",
-        "SuggestRequest$Language": "<p>A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry.</p>"
+        "SuggestRequest$Language": "<p> A list of <a href=\"https://en.wikipedia.org/wiki/IETF_language_tag\">BCP 47</a> compliant language codes for the results to be rendered in. If there is no data for the result in the requested language, data will be returned in the default language for the entry. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the following codes: <code>en, id, km, lo, ms, my, pt, th, tl, vi, zh</code> </p>"
       }
     },
     "MatchScore": {
@@ -913,7 +913,7 @@
     "OpeningHoursList": {
       "base": null,
       "refs": {
-        "GetPlaceResponse$OpeningHours": "<p>List of opening hours objects.</p>",
+        "GetPlaceResponse$OpeningHours": "<p> List of opening hours objects. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
         "SearchNearbyResultItem$OpeningHours": "<p>List of opening hours objects.</p>",
         "SearchTextResultItem$OpeningHours": "<p>List of opening hours objects.</p>"
       }
@@ -1011,10 +1011,10 @@
     "PhonemeDetails": {
       "base": "<p>The phoneme details.</p>",
       "refs": {
-        "GetPlaceResponse$Phonemes": "<p>How the various components of the result's address are pronounced in various languages.</p>",
+        "GetPlaceResponse$Phonemes": "<p> How the various components of the result's address are pronounced in various languages. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
         "SearchNearbyResultItem$Phonemes": "<p>How the various components of the result's address are pronounced in various languages.</p>",
         "SearchTextResultItem$Phonemes": "<p>How the various components of the result's address are pronounced in various languages.</p>",
-        "SuggestPlaceResult$Phonemes": "<p>How the various components of the result's address are pronounced in various languages.</p>"
+        "SuggestPlaceResult$Phonemes": "<p> How the various components of the result's address are pronounced in various languages. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
       }
     },
     "PhonemeTranscription": {
@@ -1094,8 +1094,8 @@
       "base": null,
       "refs": {
         "GeocodeResultItem$PostalCodeDetails": "<p>Contains details about the postal code of the place/result. </p>",
-        "GetPlaceResponse$PostalCodeDetails": "<p>Contains details about the postal code of the place/result. </p>",
-        "ReverseGeocodeResultItem$PostalCodeDetails": "<p>Contains details about the postal code of the place/result. </p>"
+        "GetPlaceResponse$PostalCodeDetails": "<p> Contains details about the postal code of the place/result. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
+        "ReverseGeocodeResultItem$PostalCodeDetails": "<p> Contains details about the postal code of the place/result. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
       }
     },
     "PostalCodeDetailsPostalCodeString": {
@@ -1131,7 +1131,7 @@
     "QueryRefinementList": {
       "base": null,
       "refs": {
-        "SuggestResponse$QueryRefinements": "<p>Maximum number of query terms to be returned for use with a search text query.</p>"
+        "SuggestResponse$QueryRefinements": "<p> Maximum number of query terms to be returned for use with a search text query. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
       }
     },
     "QueryRefinementOriginalTermString": {
@@ -1155,7 +1155,7 @@
     "QueryType": {
       "base": null,
       "refs": {
-        "SuggestQueryResult$QueryType": "<p>The query type. Category queries will search for places which have an entry matching the given category, for example \"doctor office\". BusinessChain queries will search for instances of a given business.</p>"
+        "SuggestQueryResult$QueryType": "<p> The query type. Category queries will search for places which have an entry matching the given category, for example \"doctor office\". BusinessChain queries will search for instances of a given business. Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
       }
     },
     "RecordTypeCode": {
@@ -1173,7 +1173,7 @@
     "RegionCodeString": {
       "base": null,
       "refs": {
-        "Region$Code": "<p>Abbreviated code for a the state, province or region of the country. </p> <p>Example: <code>BC</code>.</p>"
+        "Region$Code": "<p> Abbreviated code for a the state, province or region of the country. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p> <p>Example: <code>BC</code>.</p>"
       }
     },
     "RegionHighlights": {
@@ -1192,7 +1192,7 @@
       "base": "<p>Place that is related to the result item.</p>",
       "refs": {
         "GeocodeResultItem$MainAddress": "<p>The main address corresponding to a place of type Secondary Address.</p>",
-        "GetPlaceResponse$MainAddress": "<p>The main address corresponding to a place of type Secondary Address.</p>",
+        "GetPlaceResponse$MainAddress": "<p> The main address corresponding to a place of type Secondary Address. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
         "RelatedPlaceList$member": null
       }
     },
@@ -1200,7 +1200,7 @@
       "base": null,
       "refs": {
         "GeocodeResultItem$SecondaryAddresses": "<p>All secondary addresses that are associated with a main address. A secondary address is one that includes secondary designators, such as a Suite or Unit Number, Building, or Floor information.</p> <note> <p>Coverage for this functionality is available in the following countries: AUS, CAN, NZL, USA, PRI.</p> </note>",
-        "GetPlaceResponse$SecondaryAddresses": "<p>All secondary addresses that are associated with a main address. A secondary address is one that includes secondary designators, such as a Suite or Unit Number, Building, or Floor information.</p> <note> <p>Coverage for this functionality is available in the following countries: AUS, CAN, NZL, USA, PRI.</p> </note>"
+        "GetPlaceResponse$SecondaryAddresses": "<p> All secondary addresses that are associated with a main address. A secondary address is one that includes secondary designators, such as a Suite or Unit Number, Building, or Floor information. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p> <note> <p>Coverage for this functionality is available in the following countries: AUS, CAN, NZL, USA, PRI.</p> </note>"
       }
     },
     "RelatedPlacePlaceIdString": {
@@ -1224,7 +1224,7 @@
     "ReverseGeocodeAdditionalFeatureList": {
       "base": null,
       "refs": {
-        "ReverseGeocodeRequest$AdditionalFeatures": "<p>A list of optional additional parameters, such as time zone that can be requested for each result.</p>"
+        "ReverseGeocodeRequest$AdditionalFeatures": "<p> A list of optional additional parameters, such as time zone that can be requested for each result. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the <code>TimeZone</code> value. </p>"
       }
     },
     "ReverseGeocodeFilter": {
@@ -1242,13 +1242,13 @@
     "ReverseGeocodeFilterPlaceTypeList": {
       "base": null,
       "refs": {
-        "ReverseGeocodeFilter$IncludePlaceTypes": "<p>The included place types.</p>"
+        "ReverseGeocodeFilter$IncludePlaceTypes": "<p> The included place types. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only <code>Street</code> and <code>PointAddress</code> values. </p>"
       }
     },
     "ReverseGeocodeIntendedUse": {
       "base": null,
       "refs": {
-        "ReverseGeocodeRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p> <note> <p>Storing the response of an ReverseGeocode query is required to comply with service terms, but charged at a higher cost per request. Please review the <a href=\"https://aws.amazon.com/location/sla/\">user agreement</a> and <a href=\"https://aws.amazon.com/location/pricing/\">service pricing structure</a> to determine the correct setting for your use case.</p> </note>"
+        "ReverseGeocodeRequest$IntendedUse": "<p> Indicates if the query results will be persisted in customer infrastructure. Defaults to <code>SingleUse</code> (not stored). </p> <note> <p>When storing <code>ReverseGeocode</code> responses, you <i>must</i> set this field to <code>Storage</code> to comply with the terms of service. These requests will be charged at a higher rate. Please review the <a href=\"https://aws.amazon.com/location/sla/\">user agreement</a> and <a href=\"https://aws.amazon.com/location/pricing/\">service pricing structure</a> to determine the correct setting for your use case.</p> </note>"
       }
     },
     "ReverseGeocodeRequest": {
@@ -1258,13 +1258,13 @@
     "ReverseGeocodeRequestMaxResultsInteger": {
       "base": null,
       "refs": {
-        "ReverseGeocodeRequest$MaxResults": "<p>An optional limit for the number of results returned in a single call.</p> <p>Default value: 1</p>"
+        "ReverseGeocodeRequest$MaxResults": "<p> An optional limit for the number of results returned in a single call.</p> <p>Default value: 1</p>"
       }
     },
     "ReverseGeocodeRequestQueryRadiusLong": {
       "base": null,
       "refs": {
-        "ReverseGeocodeRequest$QueryRadius": "<p>The maximum distance in meters from the QueryPosition from which a result will be returned.</p>"
+        "ReverseGeocodeRequest$QueryRadius": "<p> The maximum distance in meters from the QueryPosition from which a result will be returned. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only up to a maximum value of 100,000. </p>"
       }
     },
     "ReverseGeocodeResponse": {
@@ -1316,7 +1316,7 @@
     "SearchNearbyIntendedUse": {
       "base": null,
       "refs": {
-        "SearchNearbyRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p> <note> <p>Storing the response of an SearchNearby query is required to comply with service terms, but charged at a higher cost per request. Please review the <a href=\"https://aws.amazon.com/location/sla/\">user agreement</a> and <a href=\"https://aws.amazon.com/location/pricing/\">service pricing structure</a> to determine the correct setting for your use case.</p> </note>"
+        "SearchNearbyRequest$IntendedUse": "<p> Indicates if the query results will be persisted in customer infrastructure. Defaults to <code>SingleUse</code> (not stored). Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p> <note> <p>When storing <code>SearchNearby</code> responses, you <i>must</i> set this field to <code>Storage</code> to comply with the terms of service. These requests will be charged at a higher rate. Please review the <a href=\"https://aws.amazon.com/location/sla/\">user agreement</a> and <a href=\"https://aws.amazon.com/location/pricing/\">service pricing structure</a> to determine the correct setting for your use case.</p> </note>"
       }
     },
     "SearchNearbyRequest": {
@@ -1372,7 +1372,7 @@
     "SearchTextAdditionalFeatureList": {
       "base": null,
       "refs": {
-        "SearchTextRequest$AdditionalFeatures": "<p>A list of optional additional parameters, such as time zone, that can be requested for each result.</p>"
+        "SearchTextRequest$AdditionalFeatures": "<p>A list of optional additional parameters, such as time zone, that can be requested for each result. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the <code>TimeZone</code> value.</p>"
       }
     },
     "SearchTextFilter": {
@@ -1384,7 +1384,7 @@
     "SearchTextIntendedUse": {
       "base": null,
       "refs": {
-        "SearchTextRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p> <note> <p>Storing the response of an SearchText query is required to comply with service terms, but charged at a higher cost per request. Please review the <a href=\"https://aws.amazon.com/location/sla/\">user agreement</a> and <a href=\"https://aws.amazon.com/location/pricing/\">service pricing structure</a> to determine the correct setting for your use case.</p> </note>"
+        "SearchTextRequest$IntendedUse": "<p> Indicates if the query results will be persisted in customer infrastructure. Defaults to <code>SingleUse</code> (not stored). </p> <note> <p>When storing <code>SearchText</code> responses, you <i>must</i> set this field to <code>Storage</code> to comply with the terms of service. These requests will be charged at a higher rate. Please review the <a href=\"https://aws.amazon.com/location/sla/\">user agreement</a> and <a href=\"https://aws.amazon.com/location/pricing/\">service pricing structure</a> to determine the correct setting for your use case.</p> </note>"
       }
     },
     "SearchTextRequest": {
@@ -1400,7 +1400,7 @@
     "SearchTextRequestQueryIdString": {
       "base": null,
       "refs": {
-        "SearchTextRequest$QueryId": "<p>The query Id returned by the suggest API. If passed in the request, the SearchText API will preform a SearchText query with the improved query terms for the original query made to the suggest API.</p> <note> <p>Exactly one of the following fields must be set: <code>QueryText</code> or <code>QueryId</code>.</p> </note>"
+        "SearchTextRequest$QueryId": "<p>The query Id returned by the suggest API. If passed in the request, the SearchText API will preform a SearchText query with the improved query terms for the original query made to the suggest API. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers.</p> <note> <p>Exactly one of the following fields must be set: <code>QueryText</code> or <code>QueryId</code>.</p> </note>"
       }
     },
     "SearchTextRequestQueryTextString": {
@@ -1452,7 +1452,7 @@
     "SecondaryAddressComponentList": {
       "base": null,
       "refs": {
-        "Address$SecondaryAddressComponents": "<p>Components that correspond to secondary identifiers on an Address. Secondary address components include information such as Suite or Unit Number, Building, or Floor.</p> <note> <p>Coverage for <code>Address.SecondaryAddressComponents</code> is available in the following countries:</p> <p>AUS, CAN, NZL, USA, PRI</p> </note>"
+        "Address$SecondaryAddressComponents": "<p> Components that correspond to secondary identifiers on an Address. Secondary address components include information such as Suite or Unit Number, Building, or Floor. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p> <note> <p>Coverage for <code>Address.SecondaryAddressComponents</code> is available in the following countries:</p> <p>AUS, CAN, NZL, USA, PRI</p> </note>"
       }
     },
     "SecondaryAddressComponentMatchScore": {
@@ -1480,10 +1480,10 @@
         "Category$Primary": "<p>Boolean which indicates if this category is the primary offered by the place.</p>",
         "FoodType$Primary": "<p>Boolean which indicates if this food type is the primary offered by the place. For example, if a location serves fast food, but also dessert, he primary would likely be fast food.</p>",
         "GeocodeResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>",
-        "GetPlaceResponse$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>",
+        "GetPlaceResponse$AddressNumberCorrected": "<p> Boolean indicating if the address provided has been corrected. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
         "OpeningHours$OpenNow": "<p>Boolean which indicates if the result/place is currently open. </p>",
         "PhonemeTranscription$Preferred": "<p>Boolean which indicates if it the preferred pronunciation.</p>",
-        "ReverseGeocodeResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>",
+        "ReverseGeocodeResultItem$AddressNumberCorrected": "<p> Boolean indicating if the address provided has been corrected. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>",
         "SearchNearbyResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>",
         "SearchTextResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>"
       }
@@ -1509,7 +1509,7 @@
     "StreetComponentsList": {
       "base": null,
       "refs": {
-        "Address$StreetComponents": "<p>Components of the street. </p> <p>Example: Younge from the \"Younge street\".</p>"
+        "Address$StreetComponents": "<p> Components of the street. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p> <p>Example: Yonge from \"Yonge street\".</p>"
       }
     },
     "StreetComponentsPrefixString": {
@@ -1557,7 +1557,7 @@
     "SubRegionCodeString": {
       "base": null,
       "refs": {
-        "SubRegion$Code": "<p>Abbreviated code for the county or sub-region.</p>"
+        "SubRegion$Code": "<p> Abbreviated code for the county or sub-region. Not available in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
       }
     },
     "SubRegionHighlights": {
@@ -1581,7 +1581,7 @@
     "SuggestAdditionalFeatureList": {
       "base": null,
       "refs": {
-        "SuggestRequest$AdditionalFeatures": "<p>A list of optional additional parameters, such as time zone, that can be requested for each result.</p>"
+        "SuggestRequest$AdditionalFeatures": "<p> A list of optional additional parameters, such as time zone, that can be requested for each result. For <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers, <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions support only the <code>Core</code> and <code>TimeZone</code> values. </p>"
       }
     },
     "SuggestAddressHighlights": {
@@ -1605,7 +1605,7 @@
     "SuggestIntendedUse": {
       "base": null,
       "refs": {
-        "SuggestRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p>"
+        "SuggestRequest$IntendedUse": "<p> Indicates if the query results will be persisted in customer infrastructure. Defaults to <code>SingleUse</code> (not stored). Currently, <code>Suggest</code> does not support storage of results. </p>"
       }
     },
     "SuggestPlaceResult": {
@@ -1629,7 +1629,7 @@
     "SuggestQueryResultQueryIdString": {
       "base": null,
       "refs": {
-        "SuggestQueryResult$QueryId": "<p>QueryId can be used to complete a follow up query through the SearchText API. The QueryId retains context from the original Suggest request such as filters, political view and language. See the SearchText API documentation for more details <a href=\"https://docs.aws.amazon.com/location/latest/APIReference/API_geoplaces_SearchText.html\">SearchText API docs</a>.</p> <note> <p>The fields <code>QueryText</code>, and <code>QueryID</code> are mutually exclusive.</p> </note>"
+        "SuggestQueryResult$QueryId": "<p>QueryId can be used to complete a follow up query through the SearchText API. The QueryId retains context from the original Suggest request such as filters, political view and language. See the SearchText API documentation for more details <a href=\"https://docs.aws.amazon.com/location/latest/APIReference/API_geoplaces_SearchText.html\">SearchText API docs</a>. Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p> <note> <p>The fields <code>QueryText</code>, and <code>QueryID</code> are mutually exclusive.</p> </note>"
       }
     },
     "SuggestRequest": {
@@ -1639,13 +1639,13 @@
     "SuggestRequestMaxQueryRefinementsInteger": {
       "base": null,
       "refs": {
-        "SuggestRequest$MaxQueryRefinements": "<p>Maximum number of query terms to be returned for use with a search text query.</p>"
+        "SuggestRequest$MaxQueryRefinements": "<p> Maximum number of query terms to be returned for use with a search text query. Not supported in <code>ap-southeast-1</code> and <code>ap-southeast-5</code> regions for <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/GrabMaps.html\">GrabMaps</a> customers. </p>"
       }
     },
     "SuggestRequestMaxResultsInteger": {
       "base": null,
       "refs": {
-        "SuggestRequest$MaxResults": "<p>An optional limit for the number of results returned in a single call.</p> <p>Default value: 20</p>"
+        "SuggestRequest$MaxResults": "<p> An optional limit for the number of results returned in a single call. </p> <p>Default value: 20</p>"
       }
     },
     "SuggestRequestQueryTextString": {

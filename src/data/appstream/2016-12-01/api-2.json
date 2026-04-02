@@ -942,6 +942,20 @@
         {"shape":"ConcurrentModificationException"}
       ]
     },
+    "DrainSessionInstance":{
+      "name":"DrainSessionInstance",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DrainSessionInstanceRequest"},
+      "output":{"shape":"DrainSessionInstanceResult"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"OperationNotPermittedException"}
+      ]
+    },
     "EnableUser":{
       "name":"EnableUser",
       "http":{
@@ -1785,7 +1799,10 @@
         "DesiredUserSessions":{"shape":"Integer"},
         "AvailableUserSessions":{"shape":"Integer"},
         "ActiveUserSessions":{"shape":"Integer"},
-        "ActualUserSessions":{"shape":"Integer"}
+        "ActualUserSessions":{"shape":"Integer"},
+        "Draining":{"shape":"Integer"},
+        "DrainModeActiveUserSessions":{"shape":"Integer"},
+        "DrainModeUnusedUserSessions":{"shape":"Integer"}
       }
     },
     "ConcurrentModificationException":{
@@ -2816,6 +2833,17 @@
       "member":{"shape":"Domain"},
       "max":50
     },
+    "DrainSessionInstanceRequest":{
+      "type":"structure",
+      "required":["SessionId"],
+      "members":{
+        "SessionId":{"shape":"String"}
+      }
+    },
+    "DrainSessionInstanceResult":{
+      "type":"structure",
+      "members":{}
+    },
     "DryRunOperationException":{
       "type":"structure",
       "members":{
@@ -3311,6 +3339,14 @@
       },
       "exception":true
     },
+    "InstanceDrainStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "DRAINING",
+        "NOT_APPLICABLE"
+      ]
+    },
     "InstanceType":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9-]+(\\.[a-z0-9-]+)+\\.(small|medium|large|xlarge|\\d+xlarge|metal)$"
@@ -3672,7 +3708,8 @@
         "MaxExpirationTime":{"shape":"Timestamp"},
         "AuthenticationType":{"shape":"AuthenticationType"},
         "NetworkAccessConfiguration":{"shape":"NetworkAccessConfiguration"},
-        "InstanceId":{"shape":"String"}
+        "InstanceId":{"shape":"String"},
+        "InstanceDrainStatus":{"shape":"InstanceDrainStatus"}
       }
     },
     "SessionConnectionState":{

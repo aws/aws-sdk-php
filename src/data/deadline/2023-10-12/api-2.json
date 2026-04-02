@@ -3355,7 +3355,8 @@
         "jobRunAsUser":{"shape":"JobRunAsUser"},
         "requiredFileSystemLocationNames":{"shape":"RequiredFileSystemLocationNames"},
         "allowedStorageProfileIds":{"shape":"AllowedStorageProfileIds"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "schedulingConfiguration":{"shape":"SchedulingConfiguration"}
       }
     },
     "CreateQueueResponse":{
@@ -4873,7 +4874,8 @@
         "roleArn":{"shape":"IamRoleArn"},
         "requiredFileSystemLocationNames":{"shape":"RequiredFileSystemLocationNames"},
         "allowedStorageProfileIds":{"shape":"AllowedStorageProfileIds"},
-        "jobRunAsUser":{"shape":"JobRunAsUser"}
+        "jobRunAsUser":{"shape":"JobRunAsUser"},
+        "schedulingConfiguration":{"shape":"SchedulingConfiguration"}
       }
     },
     "GetSessionActionRequest":{
@@ -7214,6 +7216,16 @@
       "max":10000,
       "min":0
     },
+    "PriorityBalancedSchedulingConfiguration":{
+      "type":"structure",
+      "members":{
+        "renderingTaskBuffer":{"shape":"SchedulingRenderingTaskBuffer"}
+      }
+    },
+    "PriorityFifoSchedulingConfiguration":{
+      "type":"structure",
+      "members":{}
+    },
     "ProcessExitCode":{
       "type":"integer",
       "box":true,
@@ -7486,6 +7498,67 @@
       "max":63,
       "min":1,
       "pattern":"[a-zA-Z0-9-_/]+"
+    },
+    "SchedulingConfiguration":{
+      "type":"structure",
+      "members":{
+        "priorityFifo":{"shape":"PriorityFifoSchedulingConfiguration"},
+        "priorityBalanced":{"shape":"PriorityBalancedSchedulingConfiguration"},
+        "weightedBalanced":{"shape":"WeightedBalancedSchedulingConfiguration"}
+      },
+      "union":true
+    },
+    "SchedulingErrorWeight":{
+      "type":"double",
+      "box":true,
+      "max":10000,
+      "min":-10000
+    },
+    "SchedulingMaxPriorityOverride":{
+      "type":"structure",
+      "members":{
+        "alwaysScheduleFirst":{"shape":"SchedulingMaxPriorityOverrideAlwaysScheduleFirst"}
+      },
+      "union":true
+    },
+    "SchedulingMaxPriorityOverrideAlwaysScheduleFirst":{
+      "type":"structure",
+      "members":{}
+    },
+    "SchedulingMinPriorityOverride":{
+      "type":"structure",
+      "members":{
+        "alwaysScheduleLast":{"shape":"SchedulingMinPriorityOverrideAlwaysScheduleLast"}
+      },
+      "union":true
+    },
+    "SchedulingMinPriorityOverrideAlwaysScheduleLast":{
+      "type":"structure",
+      "members":{}
+    },
+    "SchedulingPriorityWeight":{
+      "type":"double",
+      "box":true,
+      "max":10000,
+      "min":0
+    },
+    "SchedulingRenderingTaskBuffer":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":0
+    },
+    "SchedulingRenderingTaskWeight":{
+      "type":"double",
+      "box":true,
+      "max":10000,
+      "min":-10000
+    },
+    "SchedulingSubmissionTimeWeight":{
+      "type":"double",
+      "box":true,
+      "max":10000,
+      "min":0
     },
     "SearchFilterExpression":{
       "type":"structure",
@@ -9049,7 +9122,8 @@
         "requiredFileSystemLocationNamesToAdd":{"shape":"RequiredFileSystemLocationNames"},
         "requiredFileSystemLocationNamesToRemove":{"shape":"RequiredFileSystemLocationNames"},
         "allowedStorageProfileIdsToAdd":{"shape":"AllowedStorageProfileIds"},
-        "allowedStorageProfileIdsToRemove":{"shape":"AllowedStorageProfileIds"}
+        "allowedStorageProfileIdsToRemove":{"shape":"AllowedStorageProfileIds"},
+        "schedulingConfiguration":{"shape":"SchedulingConfiguration"}
       }
     },
     "UpdateQueueResponse":{
@@ -9463,6 +9537,18 @@
       "member":{"shape":"VpcResourceConfigurationArn"},
       "max":10,
       "min":0
+    },
+    "WeightedBalancedSchedulingConfiguration":{
+      "type":"structure",
+      "members":{
+        "priorityWeight":{"shape":"SchedulingPriorityWeight"},
+        "errorWeight":{"shape":"SchedulingErrorWeight"},
+        "submissionTimeWeight":{"shape":"SchedulingSubmissionTimeWeight"},
+        "renderingTaskWeight":{"shape":"SchedulingRenderingTaskWeight"},
+        "renderingTaskBuffer":{"shape":"SchedulingRenderingTaskBuffer"},
+        "maxPriorityOverride":{"shape":"SchedulingMaxPriorityOverride"},
+        "minPriorityOverride":{"shape":"SchedulingMinPriorityOverride"}
+      }
     },
     "WindowsUser":{
       "type":"structure",

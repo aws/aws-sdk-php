@@ -65,6 +65,7 @@
     "DisassociateApplicationFromEntitlement": "<p>Deletes the specified application from the specified entitlement.</p>",
     "DisassociateFleet": "<p>Disassociates the specified fleet from the specified stack.</p>",
     "DisassociateSoftwareFromImageBuilder": "<p>Removes license included application(s) association(s) from an image builder instance.</p>",
+    "DrainSessionInstance": "<p>Drains the instance hosting the specified streaming session. The instance stops accepting new sessions while existing sessions continue uninterrupted. Once all sessions end, the instance is reclaimed and replaced. This only applies to multi-session fleets.</p>",
     "EnableUser": "<p>Enables a user in the user pool. After being enabled, users can sign in to WorkSpaces Applications and open applications from the stacks to which they are assigned.</p>",
     "ExpireSession": "<p>Immediately stops the specified streaming session.</p>",
     "GetExportImageTask": "<p>Retrieves information about an export image task, including its current state, progress, and any error details.</p>",
@@ -1108,6 +1109,14 @@
         "StorageConnector$DomainsRequireAdminConsent": "<p>The OneDrive for Business domains where you require admin consent when users try to link their OneDrive account to WorkSpaces Applications. The attribute can only be specified when ConnectorType=ONE_DRIVE.</p>"
       }
     },
+    "DrainSessionInstanceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DrainSessionInstanceResult": {
+      "base": null,
+      "refs": {}
+    },
     "DryRunOperationException": {
       "base": "<p>The exception that is thrown when a dry run operation is requested. This indicates that the validation checks have been performed successfully, but no actual resources were created or modified.</p>",
       "refs": {}
@@ -1466,6 +1475,12 @@
       "base": "<p>The image can't be updated because it's not compatible for updates.</p>",
       "refs": {}
     },
+    "InstanceDrainStatus": {
+      "base": "<p>Possible values for the drain status of a streaming instance.</p>",
+      "refs": {
+        "Session$InstanceDrainStatus": "<p>The drain status of the instance hosting the streaming session. This only applies to multi-session fleets.</p>"
+      }
+    },
     "InstanceType": {
       "base": null,
       "refs": {
@@ -1485,6 +1500,9 @@
         "ComputeCapacityStatus$AvailableUserSessions": "<p>The number of idle session slots currently available for user sessions.</p> <p>AvailableUserSessionCapacity = ActualUserSessionCapacity - ActiveUserSessions</p> <p>This only applies to multi-session fleets.</p>",
         "ComputeCapacityStatus$ActiveUserSessions": "<p>The number of user sessions currently being used for streaming sessions. This only applies to multi-session fleets.</p>",
         "ComputeCapacityStatus$ActualUserSessions": "<p>The total number of session slots that are available for streaming or are currently streaming.</p> <p>ActualUserSessionCapacity = AvailableUserSessionCapacity + ActiveUserSessions</p> <p>This only applies to multi-session fleets.</p>",
+        "ComputeCapacityStatus$Draining": "<p>The number of instances in drain mode. This only applies to multi-session fleets.</p>",
+        "ComputeCapacityStatus$DrainModeActiveUserSessions": "<p>The number of active user sessions on instances in drain mode. This only applies to multi-session fleets.</p>",
+        "ComputeCapacityStatus$DrainModeUnusedUserSessions": "<p>The number of unused session slots on instances in drain mode that cannot be used for user session provisioning. This only applies to multi-session fleets.</p>",
         "CreateFleetRequest$MaxUserDurationInSeconds": "<p>The maximum amount of time that a streaming session can remain active, in seconds. If users are still connected to a streaming instance five minutes before this limit is reached, they are prompted to save any open documents before being disconnected. After this time elapses, the instance is terminated and replaced by a new instance.</p> <p>Specify a value between 600 and 432000.</p>",
         "CreateFleetRequest$DisconnectTimeoutInSeconds": "<p>The amount of time that a streaming session remains active after users disconnect. If users try to reconnect to the streaming session after a disconnection or network interruption within this time interval, they are connected to their previous session. Otherwise, they are connected to a new session with a new streaming instance. </p> <p>Specify a value between 60 and 36000.</p>",
         "CreateFleetRequest$IdleDisconnectTimeoutInSeconds": "<p>The amount of time that users can be idle (inactive) before they are disconnected from their streaming session and the <code>DisconnectTimeoutInSeconds</code> time interval begins. Users are notified before they are disconnected due to inactivity. If they try to reconnect to the streaming session before the time interval specified in <code>DisconnectTimeoutInSeconds</code> elapses, they are connected to their previous session. Users are considered idle when they stop providing keyboard or mouse input during their streaming session. File uploads and downloads, audio in, audio out, and pixels changing do not qualify as user activity. If users continue to be idle after the time interval in <code>IdleDisconnectTimeoutInSeconds</code> elapses, they are disconnected.</p> <p>To prevent users from being disconnected due to inactivity, specify a value of 0. Otherwise, specify a value between 60 and 36000. The default value is 0.</p> <note> <p>If you enable this feature, we recommend that you specify a value that corresponds exactly to a whole number of minutes (for example, 60, 120, and 180). If you don't do this, the value is rounded to the nearest minute. For example, if you specify a value of 70, users are disconnected after 1 minute of inactivity. If you specify a value that is at the midpoint between two different minutes, the value is rounded up. For example, if you specify a value of 90, users are disconnected after 2 minutes of inactivity. </p> </note>",
@@ -2170,6 +2188,7 @@
         "DisassociateApplicationFromEntitlementRequest$ApplicationIdentifier": "<p>The identifier of the application to remove from the entitlement.</p>",
         "DisassociateFleetRequest$FleetName": "<p>The name of the fleet.</p>",
         "DisassociateFleetRequest$StackName": "<p>The name of the stack.</p>",
+        "DrainSessionInstanceRequest$SessionId": "<p>The identifier of the streaming session.</p>",
         "EntitledApplication$ApplicationIdentifier": "<p>The identifier of the application.</p>",
         "EntitlementAttribute$Name": "<p>A supported AWS IAM SAML <code>PrincipalTag</code> attribute that is matched to the associated value when a user identity federates into a WorkSpaces Applications SAML application.</p> <p>The following are valid values:</p> <ul> <li> <p>roles</p> </li> <li> <p>department </p> </li> <li> <p>organization </p> </li> <li> <p>groups </p> </li> <li> <p>title </p> </li> <li> <p>costCenter </p> </li> <li> <p>userType</p> </li> </ul> <p> </p>",
         "EntitlementAttribute$Value": "<p>A value that is matched to a supported SAML attribute name when a user identity federates into a WorkSpaces Applications SAML application. </p>",

@@ -812,9 +812,9 @@
       }
     },
     "CustomerManagedAutoScalingConfiguration": {
-      "base": "<p>The auto scaling configuration options for a customer managed fleet.</p>",
+      "base": "<p>The auto scaling configuration settings for a customer managed fleet.</p>",
       "refs": {
-        "CustomerManagedFleetConfiguration$autoScalingConfiguration": "<p>The auto scaling configuration options for the customer managed fleet.</p>"
+        "CustomerManagedFleetConfiguration$autoScalingConfiguration": "<p>The auto scaling configuration settings for the customer managed fleet.</p>"
       }
     },
     "CustomerManagedFleetConfiguration": {
@@ -2672,8 +2672,8 @@
       "base": null,
       "refs": {
         "AcquiredLimit$count": "<p>The number of limit resources used.</p>",
-        "CustomerManagedAutoScalingConfiguration$scaleOutWorkersPerMinute": "<p>The number of workers that can be scaled out per minute.</p>",
-        "ServiceManagedEc2AutoScalingConfiguration$scaleOutWorkersPerMinute": "<p>The number of workers that can be scaled out per minute.</p>"
+        "CustomerManagedAutoScalingConfiguration$scaleOutWorkersPerMinute": "<p>The number of workers that can be added per minute to the fleet. The default is a service-defined value that balances efficiency with cost.</p>",
+        "ServiceManagedEc2AutoScalingConfiguration$scaleOutWorkersPerMinute": "<p>The number of workers that can be added per minute to the fleet. The default is a service-defined value that balances efficiency with cost.</p>"
       }
     },
     "MinOneMaxTenThousand": {
@@ -2692,15 +2692,15 @@
         "AcceleratorTotalMemoryMiBRange$max": "<p>The maximum amount of memory to use for the accelerator, measured in MiB.</p>",
         "CreateFleetRequest$minWorkerCount": "<p>The minimum number of workers for the fleet.</p>",
         "CreateFleetRequest$maxWorkerCount": "<p>The maximum number of workers for the fleet.</p> <p>Deadline Cloud limits the number of workers to less than or equal to the fleet's maximum worker count. The service maintains eventual consistency for the worker count. If you make multiple rapid calls to <code>CreateWorker</code> before the field updates, you might exceed your fleet's maximum worker count. For example, if your <code>maxWorkerCount</code> is 10 and you currently have 9 workers, making two quick <code>CreateWorker</code> calls might successfully create 2 workers instead of 1, resulting in 11 total workers.</p>",
-        "CustomerManagedAutoScalingConfiguration$standbyWorkerCount": "<p>The number of standby workers to maintain for the fleet.</p>",
-        "CustomerManagedAutoScalingConfiguration$workerIdleDurationSeconds": "<p>The duration in seconds that a worker can be idle before it is scaled down.</p>",
+        "CustomerManagedAutoScalingConfiguration$standbyWorkerCount": "<p>The number of idle workers maintained and ready to process incoming tasks. The default is 0.</p>",
+        "CustomerManagedAutoScalingConfiguration$workerIdleDurationSeconds": "<p>The number of seconds that a worker can remain idle before it is shut down. The default is 300 seconds (5 minutes).</p>",
         "FleetSummary$minWorkerCount": "<p>The minimum number of workers in the fleet.</p>",
         "FleetSummary$maxWorkerCount": "<p>The maximum number of workers specified in the fleet.</p>",
         "GetFleetResponse$minWorkerCount": "<p>The minimum number of workers specified in the fleet.</p>",
         "GetFleetResponse$maxWorkerCount": "<p>The maximum number of workers specified in the fleet.</p>",
         "GetLimitResponse$currentCount": "<p>The number of resources from the limit that are being used by jobs. The result is delayed and may not be the count at the time that you called the operation.</p>",
         "LimitSummary$currentCount": "<p>The number of resources from the limit that are being used by jobs. The result is delayed and may not be the count at the time that you called the operation.</p>",
-        "ServiceManagedEc2AutoScalingConfiguration$standbyWorkerCount": "<p>The number of standby workers to maintain for the fleet.</p>",
+        "ServiceManagedEc2AutoScalingConfiguration$standbyWorkerCount": "<p>The number of idle workers maintained and ready to process incoming tasks. The default is 0.</p>",
         "UpdateFleetRequest$minWorkerCount": "<p>The minimum number of workers in the fleet.</p>",
         "UpdateFleetRequest$maxWorkerCount": "<p>The maximum number of workers in the fleet.</p> <p>Deadline Cloud limits the number of workers to less than or equal to the fleet's maximum worker count. The service maintains eventual consistency for the worker count. If you make multiple rapid calls to <code>CreateWorker</code> before the field updates, you might exceed your fleet's maximum worker count. For example, if your <code>maxWorkerCount</code> is 10 and you currently have 9 workers, making two quick <code>CreateWorker</code> calls might successfully create 2 workers instead of 1, resulting in 11 total workers.</p>"
       }
@@ -2921,6 +2921,18 @@
         "GetQueueEnvironmentResponse$priority": "<p>The priority of the queue environment.</p>",
         "QueueEnvironmentSummary$priority": "<p>The queue environment's priority.</p>",
         "UpdateQueueEnvironmentRequest$priority": "<p>The priority to update.</p>"
+      }
+    },
+    "PriorityBalancedSchedulingConfiguration": {
+      "base": "<p>Configuration for priority balanced scheduling. Workers are distributed evenly across all jobs at the highest priority level.</p>",
+      "refs": {
+        "SchedulingConfiguration$priorityBalanced": "<p>Workers are distributed evenly across all jobs at the highest priority level. When workers cannot be evenly divided, the extra workers are assigned to the jobs submitted earliest. If a job has fewer remaining tasks than its share of workers, the surplus workers are redistributed to other jobs at the same priority level.</p>"
+      }
+    },
+    "PriorityFifoSchedulingConfiguration": {
+      "base": "<p>Configuration for priority first-in, first-out (FIFO) scheduling. Workers are assigned to the highest-priority job first. When multiple jobs share the same priority, the job submitted earliest receives workers first.</p>",
+      "refs": {
+        "SchedulingConfiguration$priorityFifo": "<p>Workers are assigned to the highest-priority job first. When multiple jobs share the same priority, the job submitted earliest receives workers first. This is the default scheduling configuration for new queues.</p>"
       }
     },
     "ProcessExitCode": {
@@ -3208,6 +3220,69 @@
         "JobAttachmentSettings$rootPrefix": "<p>The root prefix.</p>"
       }
     },
+    "SchedulingConfiguration": {
+      "base": "<p>The scheduling configuration for a queue. Defines the strategy used to assign workers to jobs.</p>",
+      "refs": {
+        "CreateQueueRequest$schedulingConfiguration": "<p>The scheduling configuration for the queue. This configuration determines how workers are assigned to jobs in the queue.</p> <p>If not specified, the queue defaults to the <code>priorityFifo</code> scheduling configuration.</p>",
+        "GetQueueResponse$schedulingConfiguration": "<p>The scheduling configuration for the queue. This configuration determines how workers are assigned to jobs in the queue.</p>",
+        "UpdateQueueRequest$schedulingConfiguration": "<p>The scheduling configuration for the queue. This configuration determines how workers are assigned to jobs in the queue.</p> <p>When updating the scheduling configuration, the entire configuration is replaced.</p> <p>In-progress tasks run to completion before the new scheduling configuration takes effect.</p>"
+      }
+    },
+    "SchedulingErrorWeight": {
+      "base": "<p>The weight applied to the number of errors on a job in the weighted balanced scheduling formula.</p>",
+      "refs": {
+        "WeightedBalancedSchedulingConfiguration$errorWeight": "<p>The weight applied to the number of errors on a job. A negative value means jobs without errors are scheduled first. A value of <code>0</code> means errors are ignored. The default value is <code>-10.0</code>.</p>"
+      }
+    },
+    "SchedulingMaxPriorityOverride": {
+      "base": "<p>Defines the override behavior for jobs at the maximum priority (100) in weighted balanced scheduling.</p>",
+      "refs": {
+        "WeightedBalancedSchedulingConfiguration$maxPriorityOverride": "<p>Overrides the weighted scheduling formula for jobs at the maximum priority (100). When set, jobs with priority 100 are always scheduled first regardless of their calculated weight. When absent, maximum priority jobs use the standard weighted formula.</p>"
+      }
+    },
+    "SchedulingMaxPriorityOverrideAlwaysScheduleFirst": {
+      "base": "<p>Specifies that jobs at the maximum priority (100) are always scheduled first.</p>",
+      "refs": {
+        "SchedulingMaxPriorityOverride$alwaysScheduleFirst": "<p>Jobs at the maximum priority (100) are always scheduled before other jobs, regardless of the weighted scheduling formula. If multiple jobs have priority 100, ties are broken using the standard weighted formula.</p>"
+      }
+    },
+    "SchedulingMinPriorityOverride": {
+      "base": "<p>Defines the override behavior for jobs at the minimum priority (0) in weighted balanced scheduling.</p>",
+      "refs": {
+        "WeightedBalancedSchedulingConfiguration$minPriorityOverride": "<p>Overrides the weighted scheduling formula for jobs at the minimum priority (0). When set, jobs with priority 0 are always scheduled last regardless of their calculated weight. When absent, minimum priority jobs use the standard weighted formula.</p>"
+      }
+    },
+    "SchedulingMinPriorityOverrideAlwaysScheduleLast": {
+      "base": "<p>Specifies that jobs at the minimum priority (0) are always scheduled last.</p>",
+      "refs": {
+        "SchedulingMinPriorityOverride$alwaysScheduleLast": "<p>Jobs at the minimum priority (0) are always scheduled after all other jobs, regardless of the weighted scheduling formula. If multiple jobs have priority 0, ties are broken using the standard weighted formula.</p>"
+      }
+    },
+    "SchedulingPriorityWeight": {
+      "base": "<p>The weight applied to job priority in the weighted balanced scheduling formula.</p>",
+      "refs": {
+        "WeightedBalancedSchedulingConfiguration$priorityWeight": "<p>The weight applied to job priority in the scheduling formula. Higher values give more influence to job priority. A value of <code>0</code> means priority is ignored. The default value is <code>100.0</code>.</p>"
+      }
+    },
+    "SchedulingRenderingTaskBuffer": {
+      "base": "<p>The rendering task buffer used in balanced scheduling.</p>",
+      "refs": {
+        "PriorityBalancedSchedulingConfiguration$renderingTaskBuffer": "<p>The rendering task buffer controls worker stickiness. A worker only switches from its current job to another job at the same priority if the other job has fewer rendering tasks by more than this buffer value. Higher values make workers stickier to their current jobs. The default value is <code>1</code>.</p>",
+        "WeightedBalancedSchedulingConfiguration$renderingTaskBuffer": "<p>The rendering task buffer is subtracted from the number of rendering tasks before applying the rendering task weight. This creates a stickiness effect where workers prefer to stay with their current job. Higher values make workers stickier. The default value is <code>1</code>. The buffer is only applied in the weight calculation for a job if the worker is currently assigned to that job.</p>"
+      }
+    },
+    "SchedulingRenderingTaskWeight": {
+      "base": "<p>The weight applied to the number of rendering tasks in the weighted balanced scheduling formula.</p>",
+      "refs": {
+        "WeightedBalancedSchedulingConfiguration$renderingTaskWeight": "<p>The weight applied to the number of tasks currently rendering on a job. A negative value means jobs that are not already rendering are scheduled next. A value of <code>0</code> means the rendering state is ignored. The default value is <code>-100.0</code>.</p>"
+      }
+    },
+    "SchedulingSubmissionTimeWeight": {
+      "base": "<p>The weight applied to job submission time in the weighted balanced scheduling formula.</p>",
+      "refs": {
+        "WeightedBalancedSchedulingConfiguration$submissionTimeWeight": "<p>The weight applied to job submission time. A positive value means earlier jobs are scheduled first. A value of <code>0</code> means submission time is ignored. The default value is <code>3.0</code>.</p>"
+      }
+    },
     "SearchFilterExpression": {
       "base": "<p>The type of search filter to apply.</p>",
       "refs": {
@@ -3381,9 +3456,9 @@
       }
     },
     "ServiceManagedEc2AutoScalingConfiguration": {
-      "base": "<p>The auto scaling configuration options for a service managed EC2 fleet.</p>",
+      "base": "<p>The auto scaling configuration settings for a service managed EC2 fleet.</p>",
       "refs": {
-        "ServiceManagedEc2FleetConfiguration$autoScalingConfiguration": "<p>The auto scaling configuration options for the service managed EC2 fleet.</p>"
+        "ServiceManagedEc2FleetConfiguration$autoScalingConfiguration": "<p>The auto scaling configuration settings for the service managed EC2 fleet.</p>"
       }
     },
     "ServiceManagedEc2FleetConfiguration": {
@@ -3407,7 +3482,7 @@
     "ServiceManagedEc2WorkerIdleDurationSeconds": {
       "base": "<p>The duration in seconds that a service managed EC2 worker can be idle before it is scaled down.</p>",
       "refs": {
-        "ServiceManagedEc2AutoScalingConfiguration$workerIdleDurationSeconds": "<p>The duration in seconds that a worker can be idle before it is scaled down.</p>"
+        "ServiceManagedEc2AutoScalingConfiguration$workerIdleDurationSeconds": "<p>The number of seconds that a worker can remain idle before it is shut down. The default is 300 seconds (5 minutes).</p>"
       }
     },
     "ServiceManagedFleetOperatingSystemFamily": {
@@ -4587,6 +4662,12 @@
       "base": null,
       "refs": {
         "VpcConfiguration$resourceConfigurationArns": "<p>The ARNs of the VPC Lattice resource configurations attached to the fleet.</p>"
+      }
+    },
+    "WeightedBalancedSchedulingConfiguration": {
+      "base": "<p>Configuration for weighted balanced scheduling. Workers are assigned to jobs based on a weighted formula:</p> <p> <code>weight = (priority * priorityWeight) + (errors * errorWeight) + ((currentTime - submissionTime) * submissionTimeWeight) + ((renderingTasks - renderingTaskBuffer) * renderingTaskWeight)</code> </p> <p>The job with the highest calculated weight is scheduled first. Workers are distributed evenly amongst jobs with the same weight.</p>",
+      "refs": {
+        "SchedulingConfiguration$weightedBalanced": "<p>Workers are assigned to jobs based on a weighted formula that considers job priority, error count, submission time, and the number of tasks currently rendering. Each factor has a configurable weight that determines its influence on scheduling decisions.</p>"
       }
     },
     "WindowsUser": {

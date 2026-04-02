@@ -25,7 +25,7 @@
     "DeleteCodeInterpreter": "<p>Deletes a custom code interpreter.</p>",
     "DeleteEvaluator": "<p> Deletes a custom evaluator. Builtin evaluators cannot be deleted. The evaluator must not be referenced by any active online evaluation configurations. </p>",
     "DeleteGateway": "<p>Deletes a gateway.</p>",
-    "DeleteGatewayTarget": "<p>Deletes a gateway target.</p>",
+    "DeleteGatewayTarget": "<p>Deletes a gateway target.</p> <p>You cannot delete a target that is in a pending authorization state (<code>CREATE_PENDING_AUTH</code>, <code>UPDATE_PENDING_AUTH</code>, or <code>SYNCHRONIZE_PENDING_AUTH</code>). Wait for the authorization to complete or fail before deleting the target.</p>",
     "DeleteMemory": "<p>Deletes an Amazon Bedrock AgentCore Memory resource.</p>",
     "DeleteOauth2CredentialProvider": "<p>Deletes an OAuth2 credential provider.</p>",
     "DeleteOnlineEvaluationConfig": "<p> Deletes an online evaluation configuration and stops any ongoing evaluation processes associated with it. </p>",
@@ -73,7 +73,7 @@
     "PutResourcePolicy": "<p>Creates or updates a resource-based policy for a resource with the specified resourceArn.</p> <note> <p>This feature is currently available only for AgentCore Runtime and Gateway.</p> </note>",
     "SetTokenVaultCMK": "<p>Sets the customer master key (CMK) for a token vault.</p>",
     "StartPolicyGeneration": "<p>Initiates the AI-powered generation of Cedar policies from natural language descriptions within the AgentCore Policy system. This feature enables both technical and non-technical users to create policies by describing their authorization requirements in plain English, which is then automatically translated into formal Cedar policy statements. The generation process analyzes the natural language input along with the Gateway's tool context to produce validated policy options. Generated policy assets are automatically deleted after 7 days, so you should review and create policies from the generated assets within this timeframe. Once created, policies are permanent and not subject to this expiration. Generated policies should be reviewed and tested in log-only mode before deploying to production. Use this when you want to describe policy intent naturally rather than learning Cedar syntax, though generated policies may require refinement for complex scenarios.</p>",
-    "SynchronizeGatewayTargets": "<p>The gateway targets.</p>",
+    "SynchronizeGatewayTargets": "<p>Synchronizes the gateway targets by fetching the latest tool definitions from the target endpoints.</p> <p>You cannot synchronize a target that is in a pending authorization state (<code>CREATE_PENDING_AUTH</code>, <code>UPDATE_PENDING_AUTH</code>, or <code>SYNCHRONIZE_PENDING_AUTH</code>). Wait for the authorization to complete or fail before synchronizing.</p> <p>You cannot synchronize a target that has a static tool schema (<code>mcpToolSchema</code>) configured. Remove the static schema through an <code>UpdateGatewayTarget</code> call to enable dynamic tool synchronization.</p>",
     "TagResource": "<p>Associates the specified tags to a resource with the specified resourceArn. If existing tags on a resource are not specified in the request parameters, they are not changed. When a resource is deleted, the tags associated with that resource are also deleted.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Browser Profile, Code Interpreter tool, and Gateway.</p> </note>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Browser Profile, Code Interpreter tool, and Gateway.</p> </note>",
     "UpdateAgentRuntime": "<p>Updates an existing Amazon Secure Agent.</p>",
@@ -81,7 +81,7 @@
     "UpdateApiKeyCredentialProvider": "<p>Updates an existing API key credential provider.</p>",
     "UpdateEvaluator": "<p> Updates a custom evaluator's configuration, description, or evaluation level. Built-in evaluators cannot be updated. The evaluator must not be locked for modification. </p>",
     "UpdateGateway": "<p>Updates an existing gateway.</p>",
-    "UpdateGatewayTarget": "<p>Updates an existing gateway target.</p>",
+    "UpdateGatewayTarget": "<p>Updates an existing gateway target.</p> <p>You cannot update a target that is in a pending authorization state (<code>CREATE_PENDING_AUTH</code>, <code>UPDATE_PENDING_AUTH</code>, or <code>SYNCHRONIZE_PENDING_AUTH</code>). Wait for the authorization to complete or fail before updating the target.</p>",
     "UpdateMemory": "<p>Update an Amazon Bedrock AgentCore Memory resource memory.</p>",
     "UpdateOauth2CredentialProvider": "<p>Updates an existing OAuth2 credential provider.</p>",
     "UpdateOnlineEvaluationConfig": "<p> Updates an online evaluation configuration's settings, including rules, data sources, evaluators, and execution status. Changes take effect immediately for ongoing evaluations. </p>",
@@ -424,6 +424,15 @@
       "base": "<p>The configuration details returned for an Atlassian OAuth2 provider, including the client ID and OAuth2 discovery information.</p>",
       "refs": {
         "Oauth2ProviderConfigOutput$atlassianOauth2ProviderConfig": "<p>The configuration details for the Atlassian OAuth2 provider.</p>"
+      }
+    },
+    "AuthorizationData": {
+      "base": "<p>Contains the authorization data that is returned when a gateway target requires user authorization through an authorization code grant type.</p>",
+      "refs": {
+        "CreateGatewayTargetResponse$authorizationData": "<p>OAuth2 authorization data for the created gateway target. This data is returned when the target requires user authorization through an authorization code grant type.</p>",
+        "GatewayTarget$authorizationData": "<p>OAuth2 authorization data for the gateway target. This data is returned when a target is configured with a credential provider with authorization code grant type and requires user federation.</p>",
+        "GetGatewayTargetResponse$authorizationData": "<p>OAuth2 authorization data for the gateway target. This data is returned when the target requires user authorization through an authorization code grant type.</p>",
+        "UpdateGatewayTargetResponse$authorizationData": "<p>OAuth2 authorization data for the updated gateway target. This data is returned when the target requires user authorization through an authorization code grant type.</p>"
       }
     },
     "AuthorizationEndpointType": {
@@ -2273,7 +2282,8 @@
     "InlinePayload": {
       "base": null,
       "refs": {
-        "ApiSchemaConfiguration$inlinePayload": "<p>The inline payload containing the API schema definition.</p>"
+        "ApiSchemaConfiguration$inlinePayload": "<p>The inline payload containing the API schema definition.</p>",
+        "McpToolSchemaConfiguration$inlinePayload": "<p>The inline payload containing the MCP tool schema definition.</p>"
       }
     },
     "Integer": {
@@ -2710,6 +2720,12 @@
         "TargetConfiguration$mcp": "<p>The Model Context Protocol (MCP) configuration for the target. This configuration defines how the gateway uses MCP to communicate with the target.</p>"
       }
     },
+    "McpToolSchemaConfiguration": {
+      "base": "<p>The MCP tool schema configuration for an MCP server target. The tool schema must be aligned with the MCP specification.</p>",
+      "refs": {
+        "McpServerTargetConfiguration$mcpToolSchema": "<p>The tool schema configuration for the MCP server target. Supported only when the credential provider is configured with an authorization code grant type. Dynamic tool discovery/synchronization will be disabled when target is configured with mcpToolSchema.</p>"
+      }
+    },
     "McpVersion": {
       "base": null,
       "refs": {
@@ -3068,6 +3084,24 @@
       "base": null,
       "refs": {
         "RatingScale$numerical": "<p> The numerical rating scale with defined score values and descriptions for quantitative evaluation. </p>"
+      }
+    },
+    "OAuth2AuthorizationData": {
+      "base": "<p>OAuth2-specific authorization data, including the authorization URL and user identifier for the authorization session.</p>",
+      "refs": {
+        "AuthorizationData$oauth2": "<p>OAuth2 authorization data for the gateway target.</p>"
+      }
+    },
+    "OAuth2AuthorizationDataAuthorizationUrlString": {
+      "base": null,
+      "refs": {
+        "OAuth2AuthorizationData$authorizationUrl": "<p>The URL to initiate the authorization process. This URL is provided when the OAuth2 access token requires user authorization.</p>"
+      }
+    },
+    "OAuth2AuthorizationDataUserIdString": {
+      "base": null,
+      "refs": {
+        "OAuth2AuthorizationData$userId": "<p>The user identifier associated with the OAuth2 authorization session that is defined by AgentCore Gateway.</p>"
       }
     },
     "OAuthCredentialProvider": {
@@ -3715,6 +3749,7 @@
       "base": "<p>The Amazon S3 configuration for a gateway. This structure defines how the gateway accesses files in Amazon S3.</p>",
       "refs": {
         "ApiSchemaConfiguration$s3": null,
+        "McpToolSchemaConfiguration$s3": "<p>The Amazon S3 location of the tool schema. This location contains the schema definition file.</p>",
         "ToolSchema$s3": "<p>The Amazon S3 location of the tool schema. This location contains the schema definition file.</p>"
       }
     },

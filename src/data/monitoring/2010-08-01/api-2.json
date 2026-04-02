@@ -363,6 +363,18 @@
         "resultWrapper":"GetMetricWidgetImageResult"
       }
     },
+    "GetOTelEnrichment":{
+      "name":"GetOTelEnrichment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetOTelEnrichmentInput"},
+      "output":{
+        "shape":"GetOTelEnrichmentOutput",
+        "resultWrapper":"GetOTelEnrichmentResult"
+      }
+    },
     "ListAlarmMuteRules":{
       "name":"ListAlarmMuteRules",
       "http":{
@@ -628,6 +640,18 @@
         {"shape":"MissingRequiredParameterException"}
       ]
     },
+    "StartOTelEnrichment":{
+      "name":"StartOTelEnrichment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartOTelEnrichmentInput"},
+      "output":{
+        "shape":"StartOTelEnrichmentOutput",
+        "resultWrapper":"StartOTelEnrichmentResult"
+      }
+    },
     "StopMetricStreams":{
       "name":"StopMetricStreams",
       "http":{
@@ -644,6 +668,18 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"MissingRequiredParameterException"}
       ]
+    },
+    "StopOTelEnrichment":{
+      "name":"StopOTelEnrichment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopOTelEnrichmentInput"},
+      "output":{
+        "shape":"StopOTelEnrichmentOutput",
+        "resultWrapper":"StopOTelEnrichmentResult"
+      }
     },
     "TagResource":{
       "name":"TagResource",
@@ -800,6 +836,15 @@
       "type":"list",
       "member":{"shape":"AlarmName"},
       "max":100
+    },
+    "AlarmPromQLCriteria":{
+      "type":"structure",
+      "required":["Query"],
+      "members":{
+        "Query":{"shape":"Query"},
+        "PendingPeriod":{"shape":"PendingPeriod"},
+        "RecoveryPeriod":{"shape":"RecoveryPeriod"}
+      }
     },
     "AlarmRule":{
       "type":"string",
@@ -1454,6 +1499,18 @@
       "max":255,
       "min":1
     },
+    "EvaluationCriteria":{
+      "type":"structure",
+      "members":{
+        "PromQLCriteria":{"shape":"AlarmPromQLCriteria"}
+      },
+      "union":true
+    },
+    "EvaluationInterval":{
+      "type":"integer",
+      "max":3600,
+      "min":10
+    },
     "EvaluationPeriods":{
       "type":"integer",
       "min":1
@@ -1640,6 +1697,17 @@
       "type":"structure",
       "members":{
         "MetricWidgetImage":{"shape":"MetricWidgetImage"}
+      }
+    },
+    "GetOTelEnrichmentInput":{
+      "type":"structure",
+      "members":{}
+    },
+    "GetOTelEnrichmentOutput":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Status":{"shape":"OTelEnrichmentStatus"}
       }
     },
     "HistoryData":{
@@ -2091,7 +2159,9 @@
         "Metrics":{"shape":"MetricDataQueries"},
         "ThresholdMetricId":{"shape":"MetricId"},
         "EvaluationState":{"shape":"EvaluationState"},
-        "StateTransitionedTimestamp":{"shape":"Timestamp"}
+        "StateTransitionedTimestamp":{"shape":"Timestamp"},
+        "EvaluationCriteria":{"shape":"EvaluationCriteria"},
+        "EvaluationInterval":{"shape":"EvaluationInterval"}
       },
       "xmlOrder":[
         "AlarmName",
@@ -2122,7 +2192,9 @@
         "Metrics",
         "ThresholdMetricId",
         "EvaluationState",
-        "StateTransitionedTimestamp"
+        "StateTransitionedTimestamp",
+        "EvaluationCriteria",
+        "EvaluationInterval"
       ]
     },
     "MetricAlarms":{
@@ -2356,6 +2428,13 @@
       "pattern":"[^:].*"
     },
     "NextToken":{"type":"string"},
+    "OTelEnrichmentStatus":{
+      "type":"string",
+      "enum":[
+        "Running",
+        "Stopped"
+      ]
+    },
     "OutputFormat":{"type":"string"},
     "OwningAccounts":{
       "type":"list",
@@ -2369,6 +2448,11 @@
         "FailureCode":{"shape":"FailureCode"},
         "FailureDescription":{"shape":"FailureDescription"}
       }
+    },
+    "PendingPeriod":{
+      "type":"integer",
+      "max":86400,
+      "min":0
     },
     "Period":{
       "type":"integer",
@@ -2494,11 +2578,7 @@
     },
     "PutMetricAlarmInput":{
       "type":"structure",
-      "required":[
-        "AlarmName",
-        "EvaluationPeriods",
-        "ComparisonOperator"
-      ],
+      "required":["AlarmName"],
       "members":{
         "AlarmName":{"shape":"AlarmName"},
         "AlarmDescription":{"shape":"AlarmDescription"},
@@ -2521,7 +2601,9 @@
         "EvaluateLowSampleCountPercentile":{"shape":"EvaluateLowSampleCountPercentile"},
         "Metrics":{"shape":"MetricDataQueries"},
         "Tags":{"shape":"TagList"},
-        "ThresholdMetricId":{"shape":"MetricId"}
+        "ThresholdMetricId":{"shape":"MetricId"},
+        "EvaluationCriteria":{"shape":"EvaluationCriteria"},
+        "EvaluationInterval":{"shape":"EvaluationInterval"}
       }
     },
     "PutMetricDataInput":{
@@ -2563,6 +2645,11 @@
         "Arn":{"shape":"AmazonResourceName"}
       }
     },
+    "Query":{
+      "type":"string",
+      "max":10000,
+      "min":1
+    },
     "Range":{
       "type":"structure",
       "required":[
@@ -2581,6 +2668,11 @@
     "RecentlyActive":{
       "type":"string",
       "enum":["PT3H"]
+    },
+    "RecoveryPeriod":{
+      "type":"integer",
+      "max":86400,
+      "min":0
     },
     "ResourceId":{"type":"string"},
     "ResourceList":{
@@ -2714,6 +2806,14 @@
       "type":"structure",
       "members":{}
     },
+    "StartOTelEnrichmentInput":{
+      "type":"structure",
+      "members":{}
+    },
+    "StartOTelEnrichmentOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "Stat":{"type":"string"},
     "StateReason":{
       "type":"string",
@@ -2781,6 +2881,14 @@
       }
     },
     "StopMetricStreamsOutput":{
+      "type":"structure",
+      "members":{}
+    },
+    "StopOTelEnrichmentInput":{
+      "type":"structure",
+      "members":{}
+    },
+    "StopOTelEnrichmentOutput":{
       "type":"structure",
       "members":{}
     },

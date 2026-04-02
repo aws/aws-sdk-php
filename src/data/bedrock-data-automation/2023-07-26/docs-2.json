@@ -5,19 +5,29 @@
     "CopyBlueprintStage": "<p>Copies a Blueprint from one stage to another</p>",
     "CreateBlueprint": "<p>Creates an Amazon Bedrock Data Automation Blueprint</p>",
     "CreateBlueprintVersion": "<p>Creates a new version of an existing Amazon Bedrock Data Automation Blueprint</p>",
+    "CreateDataAutomationLibrary": "<p>Creates an Amazon Bedrock Data Automation Library</p>",
     "CreateDataAutomationProject": "<p>Creates an Amazon Bedrock Data Automation Project</p>",
     "DeleteBlueprint": "<p>Deletes an existing Amazon Bedrock Data Automation Blueprint</p>",
+    "DeleteDataAutomationLibrary": "<p>Deletes an existing Amazon Bedrock Data Automation Library</p>",
     "DeleteDataAutomationProject": "<p>Deletes an existing Amazon Bedrock Data Automation Project</p>",
     "GetBlueprint": "<p>Gets an existing Amazon Bedrock Data Automation Blueprint</p>",
     "GetBlueprintOptimizationStatus": "<p>API used to get blueprint optimization status.</p>",
+    "GetDataAutomationLibrary": "<p>Gets an existing Amazon Bedrock Data Automation Library</p>",
+    "GetDataAutomationLibraryEntity": "<p>Gets an existing entity based on entity type from the library</p>",
+    "GetDataAutomationLibraryIngestionJob": "<p>API used to get status of data automation library ingestion job</p>",
     "GetDataAutomationProject": "<p>Gets an existing Amazon Bedrock Data Automation Project</p>",
     "InvokeBlueprintOptimizationAsync": "<p>Invoke an async job to perform Blueprint Optimization</p>",
+    "InvokeDataAutomationLibraryIngestionJob": "<p>Async API: Invoke data automation library ingestion job</p>",
     "ListBlueprints": "<p>Lists all existing Amazon Bedrock Data Automation Blueprints</p>",
+    "ListDataAutomationLibraries": "<p>Lists all existing Amazon Bedrock Data Automation Libraries</p>",
+    "ListDataAutomationLibraryEntities": "<p>Lists all stored entities in the library</p>",
+    "ListDataAutomationLibraryIngestionJobs": "<p>Lists all data automation library ingestion jobs</p>",
     "ListDataAutomationProjects": "<p>Lists all existing Amazon Bedrock Data Automation Projects</p>",
     "ListTagsForResource": "<p>List tags for an Amazon Bedrock Data Automation resource</p>",
     "TagResource": "<p>Tag an Amazon Bedrock Data Automation resource</p>",
     "UntagResource": "<p>Untag an Amazon Bedrock Data Automation resource</p>",
     "UpdateBlueprint": "<p>Updates an existing Amazon Bedrock Data Automation Blueprint</p>",
+    "UpdateDataAutomationLibrary": "<p>Updates an existing Amazon Bedrock Data Automation Library</p>",
     "UpdateDataAutomationProject": "<p>Updates an existing Amazon Bedrock Data Automation Project</p>"
   },
   "shapes": {
@@ -248,7 +258,8 @@
     "Boolean": {
       "base": null,
       "refs": {
-        "AudioLanguageConfiguration$identifyMultipleLanguages": "<p>Enable multiple language identification in audio</p>"
+        "AudioLanguageConfiguration$identifyMultipleLanguages": "<p>Enable multiple language identification in audio</p>",
+        "EventBridgeConfiguration$eventBridgeEnabled": "<p>Event bridge flag.</p>"
       }
     },
     "ChannelLabelingConfiguration": {
@@ -263,7 +274,10 @@
         "CopyBlueprintStageRequest$clientToken": "<p>Client token for idempotency</p>",
         "CreateBlueprintRequest$clientToken": null,
         "CreateBlueprintVersionRequest$clientToken": null,
-        "CreateDataAutomationProjectRequest$clientToken": null
+        "CreateDataAutomationLibraryRequest$clientToken": null,
+        "CreateDataAutomationProjectRequest$clientToken": null,
+        "InvokeDataAutomationLibraryIngestionJobRequest$clientToken": "<p>Idempotency token</p>",
+        "UpdateDataAutomationLibraryRequest$clientToken": null
       }
     },
     "ConflictException": {
@@ -294,6 +308,14 @@
       "base": "<p>Create Blueprint Version Response</p>",
       "refs": {}
     },
+    "CreateDataAutomationLibraryRequest": {
+      "base": "<p>Create DataAutomationLibrary Request</p>",
+      "refs": {}
+    },
+    "CreateDataAutomationLibraryResponse": {
+      "base": "<p>Create DataAutomationLibrary Response</p>",
+      "refs": {}
+    },
     "CreateDataAutomationProjectRequest": {
       "base": "<p>Create DataAutomationProject Request</p>",
       "refs": {}
@@ -308,6 +330,134 @@
         "CreateDataAutomationProjectRequest$customOutputConfiguration": null,
         "DataAutomationProject$customOutputConfiguration": null,
         "UpdateDataAutomationProjectRequest$customOutputConfiguration": null
+      }
+    },
+    "DataAutomationLibrary": {
+      "base": "<p>Contains the information of a DataAutomationLibrary.</p>",
+      "refs": {
+        "GetDataAutomationLibraryResponse$library": null
+      }
+    },
+    "DataAutomationLibraryArn": {
+      "base": "<p>ARN generated at the server side when a DataAutomationLibrary is created</p>",
+      "refs": {
+        "CreateDataAutomationLibraryResponse$libraryArn": null,
+        "DataAutomationLibrary$libraryArn": null,
+        "DataAutomationLibraryFilter$libraryArn": null,
+        "DataAutomationLibraryItem$libraryArn": null,
+        "DataAutomationLibrarySummary$libraryArn": null,
+        "DeleteDataAutomationLibraryRequest$libraryArn": "<p>ARN generated at the server side when a DataAutomationLibrary is created</p>",
+        "DeleteDataAutomationLibraryResponse$libraryArn": null,
+        "GetDataAutomationLibraryEntityRequest$libraryArn": "<p>ARN generated at the server side when a DataAutomationLibrary is created</p>",
+        "GetDataAutomationLibraryIngestionJobRequest$libraryArn": "<p>ARN generated at the server side when a DataAutomationLibrary is created</p>",
+        "GetDataAutomationLibraryRequest$libraryArn": "<p>ARN generated at the server side when a DataAutomationLibrary is created</p>",
+        "InvokeDataAutomationLibraryIngestionJobRequest$libraryArn": "<p>ARN generated at the server side when a DataAutomationLibrary is created</p>",
+        "ListDataAutomationLibraryEntitiesRequest$libraryArn": "<p>ARN generated at the server side when a DataAutomationLibrary is created</p>",
+        "ListDataAutomationLibraryIngestionJobsRequest$libraryArn": "<p>ARN generated at the server side when a DataAutomationLibrary is created</p>",
+        "UpdateDataAutomationLibraryRequest$libraryArn": "<p>ARN generated at the server side when a DataAutomationLibrary is created</p>",
+        "UpdateDataAutomationLibraryResponse$libraryArn": null
+      }
+    },
+    "DataAutomationLibraryConfiguration": {
+      "base": "<p>DataAutomation Library configuration</p>",
+      "refs": {
+        "CreateDataAutomationProjectRequest$dataAutomationLibraryConfiguration": null,
+        "DataAutomationProject$dataAutomationLibraryConfiguration": null,
+        "UpdateDataAutomationProjectRequest$dataAutomationLibraryConfiguration": null
+      }
+    },
+    "DataAutomationLibraryDescription": {
+      "base": "<p>Description of the DataAutomationLibrary</p>",
+      "refs": {
+        "CreateDataAutomationLibraryRequest$libraryDescription": null,
+        "DataAutomationLibrary$libraryDescription": null,
+        "UpdateDataAutomationLibraryRequest$libraryDescription": null
+      }
+    },
+    "DataAutomationLibraryEntitySummaries": {
+      "base": "<p>List of entity summary object</p>",
+      "refs": {
+        "ListDataAutomationLibraryEntitiesResponse$entities": "<p>List of entities</p>"
+      }
+    },
+    "DataAutomationLibraryEntitySummary": {
+      "base": "<p>Summarized information about an entity</p>",
+      "refs": {
+        "DataAutomationLibraryEntitySummaries$member": null
+      }
+    },
+    "DataAutomationLibraryFilter": {
+      "base": "<p>Data Automation Library Filter</p>",
+      "refs": {
+        "ListDataAutomationProjectsRequest$libraryFilter": null
+      }
+    },
+    "DataAutomationLibraryIngestionJob": {
+      "base": "<p>Contains the information of a DataAutomationLibraryIngestionJob</p>",
+      "refs": {
+        "GetDataAutomationLibraryIngestionJobResponse$job": "<p>Contains the information of a library ingestion job</p>"
+      }
+    },
+    "DataAutomationLibraryIngestionJobArn": {
+      "base": "<p>ARN of the DataAutomationLibraryIngestionJob</p>",
+      "refs": {
+        "DataAutomationLibraryIngestionJob$jobArn": "<p>ARN of the DataAutomationLibraryIngestionJob</p>",
+        "DataAutomationLibraryIngestionJobSummary$jobArn": null,
+        "GetDataAutomationLibraryIngestionJobRequest$jobArn": "<p>ARN of the DataAutomationLibraryIngestionJob</p>",
+        "InvokeDataAutomationLibraryIngestionJobResponse$jobArn": "<p>ARN of the DataAutomationLibraryIngestionJob</p>"
+      }
+    },
+    "DataAutomationLibraryIngestionJobSummaries": {
+      "base": "<p>List of DataAutomationLibraryIngestionJobSummary objects</p>",
+      "refs": {
+        "ListDataAutomationLibraryIngestionJobsResponse$jobs": "<p>List of data automation library ingestion jobs</p>"
+      }
+    },
+    "DataAutomationLibraryIngestionJobSummary": {
+      "base": "<p>Summary of a DataAutomationLibraryIngestionJob</p>",
+      "refs": {
+        "DataAutomationLibraryIngestionJobSummaries$member": null
+      }
+    },
+    "DataAutomationLibraryItem": {
+      "base": "<p>DataAutomationLibrary Item</p>",
+      "refs": {
+        "DataAutomationLibraryItems$member": null
+      }
+    },
+    "DataAutomationLibraryItems": {
+      "base": "<p>List of DataAutomationLibrary Items</p>",
+      "refs": {
+        "DataAutomationLibraryConfiguration$libraries": null
+      }
+    },
+    "DataAutomationLibraryName": {
+      "base": "<p>Name of the DataAutomationLibrary</p>",
+      "refs": {
+        "CreateDataAutomationLibraryRequest$libraryName": null,
+        "DataAutomationLibrary$libraryName": null,
+        "DataAutomationLibrarySummary$libraryName": null
+      }
+    },
+    "DataAutomationLibraryStatus": {
+      "base": "<p>Status of DataAutomationLibrary</p>",
+      "refs": {
+        "CreateDataAutomationLibraryResponse$status": null,
+        "DataAutomationLibrary$status": null,
+        "DeleteDataAutomationLibraryResponse$status": null,
+        "UpdateDataAutomationLibraryResponse$status": null
+      }
+    },
+    "DataAutomationLibrarySummaries": {
+      "base": "<p>List of DataAutomationLibrarySummary objects</p>",
+      "refs": {
+        "ListDataAutomationLibrariesResponse$libraries": null
+      }
+    },
+    "DataAutomationLibrarySummary": {
+      "base": "<p>Summary of a DataAutomationLibrary</p>",
+      "refs": {
+        "DataAutomationLibrarySummaries$member": null
       }
     },
     "DataAutomationProfileArn": {
@@ -347,7 +497,8 @@
     "DataAutomationProjectFilter": {
       "base": "<p>Data Automation Project Filter</p>",
       "refs": {
-        "ListBlueprintsRequest$projectFilter": null
+        "ListBlueprintsRequest$projectFilter": null,
+        "ListDataAutomationLibrariesRequest$projectFilter": null
       }
     },
     "DataAutomationProjectName": {
@@ -414,9 +565,17 @@
         "Blueprint$optimizationTime": null,
         "BlueprintSummary$creationTime": null,
         "BlueprintSummary$lastModifiedTime": null,
+        "DataAutomationLibrary$creationTime": null,
+        "DataAutomationLibraryIngestionJob$creationTime": "<p>Timestamp when the DataAutomationLibraryIngestionJob was created</p>",
+        "DataAutomationLibraryIngestionJob$completionTime": "<p>Timestamp when the DataAutomationLibraryIngestionJob was completed</p>",
+        "DataAutomationLibraryIngestionJobSummary$creationTime": null,
+        "DataAutomationLibraryIngestionJobSummary$completionTime": null,
+        "DataAutomationLibrarySummary$creationTime": null,
         "DataAutomationProject$creationTime": null,
         "DataAutomationProject$lastModifiedTime": null,
-        "DataAutomationProjectSummary$creationTime": null
+        "DataAutomationProjectSummary$creationTime": null,
+        "VocabularyEntity$lastModifiedTime": null,
+        "VocabularyEntitySummary$lastModifiedTime": null
       }
     },
     "DeleteBlueprintRequest": {
@@ -427,6 +586,14 @@
       "base": "<p>Delete Blueprint Response</p>",
       "refs": {}
     },
+    "DeleteDataAutomationLibraryRequest": {
+      "base": "<p>Delete DataAutomationLibrary Request</p>",
+      "refs": {}
+    },
+    "DeleteDataAutomationLibraryResponse": {
+      "base": "<p>Delete DataAutomationLibrary Response</p>",
+      "refs": {}
+    },
     "DeleteDataAutomationProjectRequest": {
       "base": "<p>Delete DataAutomationProject Request</p>",
       "refs": {}
@@ -434,6 +601,12 @@
     "DeleteDataAutomationProjectResponse": {
       "base": "<p>Delete DataAutomationProject Response</p>",
       "refs": {}
+    },
+    "DeleteEntitiesInfo": {
+      "base": "<p>Input for entities needed to be deleted</p>",
+      "refs": {
+        "InlinePayload$deleteEntitiesInfo": null
+      }
     },
     "DesiredModality": {
       "base": "<p>Desired Modality types</p>",
@@ -526,6 +699,7 @@
       "base": "<p>KMS Encryption Configuration</p>",
       "refs": {
         "CreateBlueprintRequest$encryptionConfiguration": null,
+        "CreateDataAutomationLibraryRequest$encryptionConfiguration": null,
         "CreateDataAutomationProjectRequest$encryptionConfiguration": null,
         "InvokeBlueprintOptimizationAsyncRequest$encryptionConfiguration": "<p>Encryption configuration.</p>",
         "UpdateBlueprintRequest$encryptionConfiguration": null,
@@ -544,6 +718,71 @@
         "KmsEncryptionContext$value": null
       }
     },
+    "EntityDescription": {
+      "base": "<p>Description of the entity</p>",
+      "refs": {
+        "VocabularyEntity$description": null,
+        "VocabularyEntityInfo$description": null,
+        "VocabularyEntitySummary$description": null
+      }
+    },
+    "EntityDetails": {
+      "base": "<p>Detailed information about an entity</p>",
+      "refs": {
+        "GetDataAutomationLibraryEntityResponse$entity": "<p>Detailed information about the entity</p>"
+      }
+    },
+    "EntityId": {
+      "base": "<p>Unique identifier for the entity</p>",
+      "refs": {
+        "EntityIdList$member": null,
+        "GetDataAutomationLibraryEntityRequest$entityId": "<p>Unique identifier for the entity</p>",
+        "VocabularyEntity$entityId": null,
+        "VocabularyEntityInfo$entityId": null,
+        "VocabularyEntitySummary$entityId": null
+      }
+    },
+    "EntityIdList": {
+      "base": "<p>List of EntityId</p>",
+      "refs": {
+        "DeleteEntitiesInfo$entityIds": null
+      }
+    },
+    "EntityMetadata": {
+      "base": "<p>JSON string representing relevant metadata for the entity type</p>",
+      "refs": {
+        "EntityTypeInfo$entityMetadata": null
+      }
+    },
+    "EntityType": {
+      "base": "<p>Entity types supported in DataAutomationLibraries</p>",
+      "refs": {
+        "DataAutomationLibraryIngestionJob$entityType": "<p>The entity type associated with DataAutomationLibraryIngestionJob</p>",
+        "DataAutomationLibraryIngestionJobSummary$entityType": null,
+        "EntityTypeInfo$entityType": null,
+        "GetDataAutomationLibraryEntityRequest$entityType": "<p>The entity type for which the entity is requested</p>",
+        "InvokeDataAutomationLibraryIngestionJobRequest$entityType": "<p>The entity type for which DataAutomationLibraryIngestionJob is being run</p>",
+        "ListDataAutomationLibraryEntitiesRequest$entityType": "<p>The entity type for which the entity list is requested</p>"
+      }
+    },
+    "EntityTypeInfo": {
+      "base": "<p>Information about an entity type in the DataAutomationLibrary</p>",
+      "refs": {
+        "EntityTypeInfoList$member": null
+      }
+    },
+    "EntityTypeInfoList": {
+      "base": "<p>List of info for each entity type in the DataAutomationLibrary</p>",
+      "refs": {
+        "DataAutomationLibrary$entityTypes": null
+      }
+    },
+    "EventBridgeConfiguration": {
+      "base": "<p>Event bridge configuration.</p>",
+      "refs": {
+        "NotificationConfiguration$eventBridgeConfiguration": "<p>Event bridge configuration.</p>"
+      }
+    },
     "GetBlueprintOptimizationStatusRequest": {
       "base": "<p>Structure for request of GetBlueprintOptimizationStatus API.</p>",
       "refs": {}
@@ -558,6 +797,30 @@
     },
     "GetBlueprintResponse": {
       "base": "<p>Get Blueprint Response</p>",
+      "refs": {}
+    },
+    "GetDataAutomationLibraryEntityRequest": {
+      "base": "<p>Get DataAutomationLibraryEntity Request</p>",
+      "refs": {}
+    },
+    "GetDataAutomationLibraryEntityResponse": {
+      "base": "<p>Get DataAutomationLibraryEntity Response</p>",
+      "refs": {}
+    },
+    "GetDataAutomationLibraryIngestionJobRequest": {
+      "base": "<p>Get DataAutomationLibraryIngestionJob Request</p>",
+      "refs": {}
+    },
+    "GetDataAutomationLibraryIngestionJobResponse": {
+      "base": "<p>Get DataAutomationLibraryIngestionJob Response</p>",
+      "refs": {}
+    },
+    "GetDataAutomationLibraryRequest": {
+      "base": "<p>Get DataAutomationLibrary Request</p>",
+      "refs": {}
+    },
+    "GetDataAutomationLibraryResponse": {
+      "base": "<p>Get DataAutomationLibrary Response</p>",
       "refs": {}
     },
     "GetDataAutomationProjectRequest": {
@@ -628,6 +891,18 @@
         "StandardOutputConfiguration$image": null
       }
     },
+    "InlinePayload": {
+      "base": "<p>Input payload structure definition</p>",
+      "refs": {
+        "InputConfiguration$inlinePayload": "<p>Input Payload</p>"
+      }
+    },
+    "InputConfiguration": {
+      "base": "<p>Input configuration for DataAutomationLibraryIngestionJob</p>",
+      "refs": {
+        "InvokeDataAutomationLibraryIngestionJobRequest$inputConfiguration": "<p>Input configuration of DataAutomationLibraryIngestionJob request</p>"
+      }
+    },
     "InternalServerException": {
       "base": "<p>This exception is thrown if there was an unexpected error during processing of request</p>",
       "refs": {}
@@ -640,10 +915,19 @@
       "base": "<p>Invoke Blueprint Optimization Async Response</p>",
       "refs": {}
     },
+    "InvokeDataAutomationLibraryIngestionJobRequest": {
+      "base": "<p>Invoke DataAutomationLibraryIngestionJob Request</p>",
+      "refs": {}
+    },
+    "InvokeDataAutomationLibraryIngestionJobResponse": {
+      "base": "<p>Invoke DataAutomationLibraryIngestionJob Response</p>",
+      "refs": {}
+    },
     "KmsEncryptionContext": {
       "base": "<p>KMS Encryption Context</p>",
       "refs": {
         "Blueprint$kmsEncryptionContext": null,
+        "DataAutomationLibrary$kmsEncryptionContext": null,
         "DataAutomationProject$kmsEncryptionContext": null,
         "EncryptionConfiguration$kmsEncryptionContext": null
       }
@@ -652,6 +936,7 @@
       "base": "<p>KMS Key Identifier</p>",
       "refs": {
         "Blueprint$kmsKeyId": null,
+        "DataAutomationLibrary$kmsKeyId": null,
         "DataAutomationProject$kmsKeyId": null,
         "EncryptionConfiguration$kmsKeyId": null
       }
@@ -659,7 +944,25 @@
     "Language": {
       "base": "<p>Supported input languages</p>",
       "refs": {
-        "AudioInputLanguages$member": null
+        "AudioInputLanguages$member": null,
+        "VocabularyEntity$language": null,
+        "VocabularyEntityInfo$language": null,
+        "VocabularyEntitySummary$language": null
+      }
+    },
+    "LibraryIngestionJobOperationType": {
+      "base": "<p>DataAutomationLibraryIngestionJob operation type</p>",
+      "refs": {
+        "DataAutomationLibraryIngestionJob$operationType": "<p>The operation associated with DataAutomationLibraryIngestionJob</p>",
+        "DataAutomationLibraryIngestionJobSummary$operationType": null,
+        "InvokeDataAutomationLibraryIngestionJobRequest$operationType": "<p>The operation to be performed by DataAutomationLibraryIngestionJob</p>"
+      }
+    },
+    "LibraryIngestionJobStatus": {
+      "base": "<p>Status of DataAutomationLibraryIngestionJob</p>",
+      "refs": {
+        "DataAutomationLibraryIngestionJob$jobStatus": "<p>The status of the DataAutomationLibraryIngestionJob</p>",
+        "DataAutomationLibraryIngestionJobSummary$jobStatus": null
       }
     },
     "ListBlueprintsRequest": {
@@ -668,6 +971,30 @@
     },
     "ListBlueprintsResponse": {
       "base": "<p>List Blueprint Response</p>",
+      "refs": {}
+    },
+    "ListDataAutomationLibrariesRequest": {
+      "base": "<p>List DataAutomationLibraries Request</p>",
+      "refs": {}
+    },
+    "ListDataAutomationLibrariesResponse": {
+      "base": "<p>List DataAutomationLibraries Response</p>",
+      "refs": {}
+    },
+    "ListDataAutomationLibraryEntitiesRequest": {
+      "base": "<p>List DataAutomationLibraryEntities Request</p>",
+      "refs": {}
+    },
+    "ListDataAutomationLibraryEntitiesResponse": {
+      "base": "<p>List DataAutomationLibraryEntities Response</p>",
+      "refs": {}
+    },
+    "ListDataAutomationLibraryIngestionJobsRequest": {
+      "base": "<p>List DataAutomationLibraryIngestionJobs Request</p>",
+      "refs": {}
+    },
+    "ListDataAutomationLibraryIngestionJobsResponse": {
+      "base": "<p>List DataAutomationLibraryIngestionJobs Response</p>",
       "refs": {}
     },
     "ListDataAutomationProjectsRequest": {
@@ -690,6 +1017,9 @@
       "base": "<p>Max Results</p>",
       "refs": {
         "ListBlueprintsRequest$maxResults": null,
+        "ListDataAutomationLibrariesRequest$maxResults": null,
+        "ListDataAutomationLibraryEntitiesRequest$maxResults": null,
+        "ListDataAutomationLibraryIngestionJobsRequest$maxResults": null,
         "ListDataAutomationProjectsRequest$maxResults": null
       }
     },
@@ -713,6 +1043,12 @@
       "refs": {
         "ListBlueprintsRequest$nextToken": null,
         "ListBlueprintsResponse$nextToken": null,
+        "ListDataAutomationLibrariesRequest$nextToken": null,
+        "ListDataAutomationLibrariesResponse$nextToken": null,
+        "ListDataAutomationLibraryEntitiesRequest$nextToken": "<p>Pagination token for retrieving the next set of results</p>",
+        "ListDataAutomationLibraryEntitiesResponse$nextToken": "<p>Pagination token for retrieving the next set of results</p>",
+        "ListDataAutomationLibraryIngestionJobsRequest$nextToken": "<p>Pagination token for retrieving the next set of results</p>",
+        "ListDataAutomationLibraryIngestionJobsResponse$nextToken": "<p>Pagination token for retrieving the next set of results</p>",
         "ListDataAutomationProjectsRequest$nextToken": null,
         "ListDataAutomationProjectsResponse$nextToken": null
       }
@@ -729,6 +1065,19 @@
         "ValidationException$message": null,
         "ValidationExceptionField$name": null,
         "ValidationExceptionField$message": null
+      }
+    },
+    "NotificationConfiguration": {
+      "base": "<p>Notification configuration.</p>",
+      "refs": {
+        "InvokeDataAutomationLibraryIngestionJobRequest$notificationConfiguration": "<p>Notification configuration.</p>"
+      }
+    },
+    "OutputConfiguration": {
+      "base": "<p>Output configuration for DataAutomationLibraryIngestionJob</p>",
+      "refs": {
+        "DataAutomationLibraryIngestionJob$outputConfiguration": "<p>Output configuration of DataAutomationLibraryIngestionJob</p>",
+        "InvokeDataAutomationLibraryIngestionJobRequest$outputConfiguration": "<p>Output configuration of DataAutomationLibraryIngestionJob</p>"
       }
     },
     "OverrideConfiguration": {
@@ -763,6 +1112,31 @@
         "PIIEntitiesConfiguration$redactionMaskMode": "<p>Mode for redacting detected PII</p>"
       }
     },
+    "Phrase": {
+      "base": "<p>Phrase structure for vocabulary</p>",
+      "refs": {
+        "PhraseList$member": null
+      }
+    },
+    "PhraseDisplayAsText": {
+      "base": "<p>Text to configure how phrase is displayed in Transcript</p>",
+      "refs": {
+        "Phrase$displayAsText": null
+      }
+    },
+    "PhraseList": {
+      "base": "<p>List of phrases</p>",
+      "refs": {
+        "VocabularyEntity$phrases": null,
+        "VocabularyEntityInfo$phrases": null
+      }
+    },
+    "PhraseText": {
+      "base": "<p>Text content of the phrase</p>",
+      "refs": {
+        "Phrase$text": null
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>This exception is thrown when a resource referenced by the operation does not exist</p>",
       "refs": {}
@@ -779,7 +1153,8 @@
       "refs": {
         "BlueprintOptimizationOutputConfiguration$s3Object": "<p>S3 object.</p>",
         "BlueprintOptimizationSample$assetS3Object": "<p>S3 Object of the asset</p>",
-        "BlueprintOptimizationSample$groundTruthS3Object": "<p>Ground truth for the Blueprint and Asset combination</p>"
+        "BlueprintOptimizationSample$groundTruthS3Object": "<p>Ground truth for the Blueprint and Asset combination</p>",
+        "InputConfiguration$s3Object": "<p>S3 object</p>"
       }
     },
     "S3ObjectVersion": {
@@ -791,6 +1166,7 @@
     "S3Uri": {
       "base": "<p>A path in S3</p>",
       "refs": {
+        "OutputConfiguration$s3Uri": "<p>S3 Uri</p>",
         "S3Object$s3Uri": "<p>S3 uri.</p>"
       }
     },
@@ -868,6 +1244,8 @@
     "String": {
       "base": null,
       "refs": {
+        "DataAutomationLibraryIngestionJob$errorMessage": "<p>Error message</p>",
+        "DataAutomationLibraryIngestionJob$errorType": "<p>Error type</p>",
         "GetBlueprintOptimizationStatusResponse$errorType": "<p>Error Type.</p>",
         "GetBlueprintOptimizationStatusResponse$errorMessage": "<p>Error Message.</p>"
       }
@@ -895,8 +1273,10 @@
       "base": "<p>List of tags</p>",
       "refs": {
         "CreateBlueprintRequest$tags": null,
+        "CreateDataAutomationLibraryRequest$tags": null,
         "CreateDataAutomationProjectRequest$tags": null,
         "InvokeBlueprintOptimizationAsyncRequest$tags": "<p>List of tags.</p>",
+        "InvokeDataAutomationLibraryIngestionJobRequest$tags": "<p>List of tags</p>",
         "ListTagsForResourceResponse$tags": null,
         "TagResourceRequest$tags": null
       }
@@ -956,6 +1336,14 @@
       "base": "<p>Update Blueprint Response</p>",
       "refs": {}
     },
+    "UpdateDataAutomationLibraryRequest": {
+      "base": "<p>Update DataAutomationLibrary Request</p>",
+      "refs": {}
+    },
+    "UpdateDataAutomationLibraryResponse": {
+      "base": "<p>Update DataAutomationLibrary Response</p>",
+      "refs": {}
+    },
     "UpdateDataAutomationProjectRequest": {
       "base": "<p>Update DataAutomationProject Request</p>",
       "refs": {}
@@ -963,6 +1351,18 @@
     "UpdateDataAutomationProjectResponse": {
       "base": "<p>Update DataAutomationProject Response</p>",
       "refs": {}
+    },
+    "UpsertEntitiesInfo": {
+      "base": "<p>List of UpsertEntityInfo for upserting data in a DataAutomationLibraryIngestionJob</p>",
+      "refs": {
+        "InlinePayload$upsertEntitiesInfo": null
+      }
+    },
+    "UpsertEntityInfo": {
+      "base": "<p>Input configuration for upserting data in a DataAutomationLibraryIngestionJob</p>",
+      "refs": {
+        "UpsertEntitiesInfo$member": null
+      }
     },
     "ValidationException": {
       "base": "<p>This exception is thrown when the request's input validation fails</p>",
@@ -1038,6 +1438,30 @@
       "base": "<p>Standard Output Configuration of Video</p>",
       "refs": {
         "StandardOutputConfiguration$video": null
+      }
+    },
+    "VocabularyEntity": {
+      "base": "<p>Vocabulary entity with detailed information</p>",
+      "refs": {
+        "EntityDetails$vocabulary": null
+      }
+    },
+    "VocabularyEntityInfo": {
+      "base": "<p>Vocabulary entity info with detailed information</p>",
+      "refs": {
+        "UpsertEntityInfo$vocabulary": null
+      }
+    },
+    "VocabularyEntitySummary": {
+      "base": "<p>Summary of a Vocabulary entity</p>",
+      "refs": {
+        "DataAutomationLibraryEntitySummary$vocabulary": null
+      }
+    },
+    "VocabularyEntitySummaryNumOfPhrasesInteger": {
+      "base": null,
+      "refs": {
+        "VocabularyEntitySummary$numOfPhrases": "<p>num of phrases in the entity</p>"
       }
     }
   }
