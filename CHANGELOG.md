@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.376.2 - 2026-04-02
 
 * `Aws\Deadline` - AWS Deadline Cloud now supports configurable scheduling on each queue. The scheduling configuration controls how workers are distributed across jobs.
 * `Aws\CloudWatchLogs` - We are pleased to announce that our logs transformation csv processor now has a destination field, allowing you to specify under which parent node parsed columns be placed under.
