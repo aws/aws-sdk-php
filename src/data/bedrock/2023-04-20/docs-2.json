@@ -35,6 +35,7 @@
     "DeleteModelInvocationLoggingConfiguration": "<p>Delete the invocation logging. </p>",
     "DeletePromptRouter": "<p>Deletes a specified prompt router. This action cannot be undone.</p>",
     "DeleteProvisionedModelThroughput": "<p>Deletes a Provisioned Throughput. You can't delete a Provisioned Throughput before the commitment term is over. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "DeleteResourcePolicy": "<p>Deletes a previously created Bedrock resource policy.</p>",
     "DeregisterMarketplaceModelEndpoint": "<p>Deregisters an endpoint for a model from Amazon Bedrock Marketplace. This operation removes the endpoint's association with Amazon Bedrock but does not delete the underlying Amazon SageMaker endpoint.</p>",
     "ExportAutomatedReasoningPolicyVersion": "<p>Exports the policy definition for an Automated Reasoning policy version. Returns the complete policy definition including rules, variables, and custom variable types in a structured format.</p>",
     "GetAutomatedReasoningPolicy": "<p>Retrieves details about an Automated Reasoning policy or policy version. Returns information including the policy definition, metadata, and timestamps.</p>",
@@ -60,6 +61,7 @@
     "GetModelInvocationLoggingConfiguration": "<p>Get the current configuration values for model invocation logging.</p>",
     "GetPromptRouter": "<p>Retrieves details about a prompt router.</p>",
     "GetProvisionedModelThroughput": "<p>Returns details for a Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "GetResourcePolicy": "<p>Gets the resource policy document for a Bedrock resource</p>",
     "GetUseCaseForModelAccess": "<p>Get usecase for model access.</p>",
     "ListAutomatedReasoningPolicies": "<p>Lists all Automated Reasoning policies in your account, with optional filtering by policy ARN. This helps you manage and discover existing policies.</p>",
     "ListAutomatedReasoningPolicyBuildWorkflows": "<p>Lists all build workflows for an Automated Reasoning policy, showing the history of policy creation and modification attempts.</p>",
@@ -84,6 +86,7 @@
     "ListTagsForResource": "<p>List the tags associated with the specified resource.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "PutEnforcedGuardrailConfiguration": "<p>Sets the account-level enforced guardrail configuration.</p>",
     "PutModelInvocationLoggingConfiguration": "<p>Set the configuration values for model invocation logging.</p>",
+    "PutResourcePolicy": "<p>Adds a resource policy for a Bedrock resource.</p>",
     "PutUseCaseForModelAccess": "<p>Put usecase for model access.</p>",
     "RegisterMarketplaceModelEndpoint": "<p>Registers an existing Amazon SageMaker endpoint with Amazon Bedrock Marketplace, allowing it to be used with Amazon Bedrock APIs.</p>",
     "StartAutomatedReasoningPolicyBuildWorkflow": "<p>Starts a new build workflow for an Automated Reasoning policy. This initiates the process of analyzing source documents and generating policy rules, variables, and types.</p>",
@@ -2125,6 +2128,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteResourcePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteResourcePolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeregisterMarketplaceModelEndpointRequest": {
       "base": null,
       "refs": {}
@@ -2829,6 +2840,14 @@
       "refs": {}
     },
     "GetProvisionedModelThroughputResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetResourcePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetResourcePolicyResponse": {
       "base": null,
       "refs": {}
     },
@@ -3749,7 +3768,6 @@
     "InputTags": {
       "base": null,
       "refs": {
-        "AccountEnforcedGuardrailInferenceInputConfiguration$inputTags": "<p>Whether to honor or ignore input tags at runtime.</p>",
         "AccountEnforcedGuardrailOutputConfiguration$inputTags": "<p>Whether to honor or ignore input tags at runtime.</p>"
       }
     },
@@ -4823,6 +4841,14 @@
       "base": null,
       "refs": {}
     },
+    "PutResourcePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutResourcePolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "PutUseCaseForModelAccessRequest": {
       "base": null,
       "refs": {}
@@ -5031,6 +5057,22 @@
       "base": "<p>The specified resource Amazon Resource Name (ARN) was not found. Check the Amazon Resource Name (ARN) and try your request again.</p>",
       "refs": {}
     },
+    "ResourcePolicyDocument": {
+      "base": null,
+      "refs": {
+        "GetResourcePolicyResponse$resourcePolicy": "<p>The JSON string representing the Bedrock resource policy.</p>",
+        "PutResourcePolicyRequest$resourcePolicy": "<p>The JSON string representing the Bedrock resource policy.</p>"
+      }
+    },
+    "ResourcePolicyResourceArn": {
+      "base": null,
+      "refs": {
+        "DeleteResourcePolicyRequest$resourceArn": "<p>The ARN of the Bedrock resource to which this resource policy applies.</p>",
+        "GetResourcePolicyRequest$resourceArn": "<p>The ARN of the Bedrock resource to which this resource policy applies.</p>",
+        "PutResourcePolicyRequest$resourceArn": "<p>The ARN of the Bedrock resource to which this resource policy applies.</p>",
+        "PutResourcePolicyResponse$resourceArn": "<p>The ARN of the Bedrock resource to which this resource policy applies.</p>"
+      }
+    },
     "RetrievalFilter": {
       "base": "<p>Specifies the filters to use on the metadata attributes/fields in the knowledge base data sources before returning results.</p>",
       "refs": {
@@ -5161,6 +5203,20 @@
       "base": null,
       "refs": {
         "VpcConfig$securityGroupIds": "<p>An array of IDs for each security group in the VPC to use.</p>"
+      }
+    },
+    "SelectiveContentGuarding": {
+      "base": "<p>Selective content guarding controls for enforced guardrails.</p>",
+      "refs": {
+        "AccountEnforcedGuardrailInferenceInputConfiguration$selectiveContentGuarding": "<p>Selective content guarding controls for enforced guardrails.</p>",
+        "AccountEnforcedGuardrailOutputConfiguration$selectiveContentGuarding": "<p>Selective content guarding controls for enforced guardrails.</p>"
+      }
+    },
+    "SelectiveGuardingMode": {
+      "base": null,
+      "refs": {
+        "SelectiveContentGuarding$system": "<p>Selective guarding mode for system prompts.\"</p>",
+        "SelectiveContentGuarding$messages": "<p>Selective guarding mode for user messages.</p>"
       }
     },
     "ServiceQuotaExceededException": {

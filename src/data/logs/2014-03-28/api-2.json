@@ -1937,6 +1937,7 @@
     },
     "BearerTokenAuthenticationEnabled":{"type":"boolean"},
     "Boolean":{"type":"boolean"},
+    "BytesScannedValue":{"type":"double"},
     "CSV":{
       "type":"structure",
       "members":{
@@ -5192,6 +5193,7 @@
       "max":10000,
       "min":1
     },
+    "QueryDuration":{"type":"long"},
     "QueryId":{
       "type":"string",
       "max":256,
@@ -5205,7 +5207,10 @@
         "queryString":{"shape":"QueryString"},
         "status":{"shape":"QueryStatus"},
         "createTime":{"shape":"Timestamp"},
-        "logGroupName":{"shape":"LogGroupName"}
+        "logGroupName":{"shape":"LogGroupName"},
+        "queryDuration":{"shape":"QueryDuration"},
+        "bytesScanned":{"shape":"BytesScannedValue"},
+        "userIdentity":{"shape":"UserIdentity"}
       }
     },
     "QueryInfoList":{
@@ -6222,6 +6227,11 @@
       "type":"list",
       "member":{"shape":"WithKey"},
       "max":10,
+      "min":1
+    },
+    "UserIdentity":{
+      "type":"string",
+      "max":2048,
       "min":1
     },
     "ValidationException":{

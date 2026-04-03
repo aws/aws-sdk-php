@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Lightsail` - Add support for tagging of Alarm resource type
+* `Aws\Bedrock` - Amazon Bedrock Guardrails enforcement configuration APIs now support selective guarding controls for system prompts as well as user and assistant messages, along with SDK support for Amazon Bedrock resource policy APIs.
+* `Aws\PaymentCryptography` - Adds optional support to retrieve previously generated import and export tokens to simplify import and export functions
+* `Aws\BedrockAgentCoreControl` - Documentation Update for Adds support for three-legged (Authorization Code grant type) OAuth along with predefined MCP tool schema configuration for Amazon Bedrock AgentCore gateway MCP server targets.
+* `Aws\CloudWatchLogs` - Added queryDuration, bytesScanned, and userIdentity fields to the QueryInfo response object returned by DescribeQueries. Customers can now view detailed query cost information including who ran the query, how long it took, and the volume of data scanned.
+* `Aws\imagebuilder` - Updated pagination token validation for ListContainerRecipes API to support maximum size of 65K characters
+* `Aws\MediaLive` - AWS Elemental MediaLive released a new features that allows customers to use HLG 2020 as a color space for AV1 video codec.
+* `Aws\BedrockAgent` - Added strict parameter to ToolSpecification to allow users to enforce strict JSON schema adherence for tool input schemas.
+* `Aws\Organizations` - Updates close Account quota for member accounts in an Organization.
+
 ## 3.376.2 - 2026-04-02
 
 * `Aws\Deadline` - AWS Deadline Cloud now supports configurable scheduling on each queue. The scheduling configuration controls how workers are distributed across jobs.

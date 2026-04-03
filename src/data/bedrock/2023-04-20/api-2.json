@@ -655,6 +655,24 @@
       ],
       "idempotent":true
     },
+    "DeleteResourcePolicy":{
+      "name":"DeleteResourcePolicy",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/resource-policy/{resourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteResourcePolicyRequest"},
+      "output":{"shape":"DeleteResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "DeregisterMarketplaceModelEndpoint":{
       "name":"DeregisterMarketplaceModelEndpoint",
       "http":{
@@ -1103,6 +1121,24 @@
       ],
       "readonly":true
     },
+    "GetResourcePolicy":{
+      "name":"GetResourcePolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/resource-policy/{resourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetResourcePolicyRequest"},
+      "output":{"shape":"GetResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
+    },
     "GetUseCaseForModelAccess":{
       "name":"GetUseCaseForModelAccess",
       "http":{
@@ -1523,6 +1559,24 @@
       ],
       "idempotent":true
     },
+    "PutResourcePolicy":{
+      "name":"PutResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/resource-policy",
+        "responseCode":201
+      },
+      "input":{"shape":"PutResourcePolicyRequest"},
+      "output":{"shape":"PutResourcePolicyResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "PutUseCaseForModelAccess":{
       "name":"PutUseCaseForModelAccess",
       "http":{
@@ -1840,13 +1894,12 @@
       "type":"structure",
       "required":[
         "guardrailIdentifier",
-        "guardrailVersion",
-        "inputTags"
+        "guardrailVersion"
       ],
       "members":{
         "guardrailIdentifier":{"shape":"GuardrailIdentifier"},
         "guardrailVersion":{"shape":"GuardrailNumericalVersion"},
-        "inputTags":{"shape":"InputTags"},
+        "selectiveContentGuarding":{"shape":"SelectiveContentGuarding"},
         "modelEnforcement":{"shape":"ModelEnforcement"}
       }
     },
@@ -1856,7 +1909,13 @@
         "configId":{"shape":"AccountEnforcedGuardrailConfigurationId"},
         "guardrailArn":{"shape":"GuardrailArn"},
         "guardrailId":{"shape":"GuardrailId"},
-        "inputTags":{"shape":"InputTags"},
+        "inputTags":{
+          "shape":"InputTags",
+          "deprecated":true,
+          "deprecatedMessage":"This field is being deprecated and will be removed once customers transition their existing policies to the new schema.",
+          "deprecatedSince":"2026-04-03"
+        },
+        "selectiveContentGuarding":{"shape":"SelectiveContentGuarding"},
         "guardrailVersion":{"shape":"GuardrailNumericalVersion"},
         "createdAt":{"shape":"Timestamp"},
         "createdBy":{"shape":"String"},
@@ -4482,6 +4541,21 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteResourcePolicyRequest":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{
+          "shape":"ResourcePolicyResourceArn",
+          "location":"uri",
+          "locationName":"resourceArn"
+        }
+      }
+    },
+    "DeleteResourcePolicyResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DeregisterMarketplaceModelEndpointRequest":{
       "type":"structure",
       "required":["endpointArn"],
@@ -5862,6 +5936,23 @@
         "failureMessage":{"shape":"ErrorMessage"},
         "commitmentDuration":{"shape":"CommitmentDuration"},
         "commitmentExpirationTime":{"shape":"Timestamp"}
+      }
+    },
+    "GetResourcePolicyRequest":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{
+          "shape":"ResourcePolicyResourceArn",
+          "location":"uri",
+          "locationName":"resourceArn"
+        }
+      }
+    },
+    "GetResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "resourcePolicy":{"shape":"ResourcePolicyDocument"}
       }
     },
     "GetUseCaseForModelAccessRequest":{
@@ -8605,6 +8696,23 @@
       "type":"structure",
       "members":{}
     },
+    "PutResourcePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "resourcePolicy"
+      ],
+      "members":{
+        "resourceArn":{"shape":"ResourcePolicyResourceArn"},
+        "resourcePolicy":{"shape":"ResourcePolicyDocument"}
+      }
+    },
+    "PutResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "resourceArn":{"shape":"ResourcePolicyResourceArn"}
+      }
+    },
     "PutUseCaseForModelAccessRequest":{
       "type":"structure",
       "required":["formData"],
@@ -8860,6 +8968,17 @@
       },
       "exception":true
     },
+    "ResourcePolicyDocument":{
+      "type":"string",
+      "max":20480,
+      "min":1,
+      "pattern":"[    -ÿ]+"
+    },
+    "ResourcePolicyResourceArn":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
     "RetrievalFilter":{
       "type":"structure",
       "members":{
@@ -9002,6 +9121,20 @@
       "member":{"shape":"SecurityGroupId"},
       "max":5,
       "min":1
+    },
+    "SelectiveContentGuarding":{
+      "type":"structure",
+      "members":{
+        "system":{"shape":"SelectiveGuardingMode"},
+        "messages":{"shape":"SelectiveGuardingMode"}
+      }
+    },
+    "SelectiveGuardingMode":{
+      "type":"string",
+      "enum":[
+        "SELECTIVE",
+        "COMPREHENSIVE"
+      ]
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
