@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.376.3 - 2026-04-03
 
 * `Aws\Lightsail` - Add support for tagging of Alarm resource type
 * `Aws\Bedrock` - Amazon Bedrock Guardrails enforcement configuration APIs now support selective guarding controls for system prompts as well as user and assistant messages, along with SDK support for Amazon Bedrock resource policy APIs.
