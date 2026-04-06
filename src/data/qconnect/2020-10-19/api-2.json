@@ -7164,8 +7164,14 @@
           "idempotencyToken":true
         },
         "orchestratorUseCase":{"shape":"NonEmptyString"},
-        "metadata":{"shape":"MessageMetadata"}
+        "metadata":{"shape":"MessageMetadata"},
+        "originRequestId":{"shape":"SendMessageRequestOriginRequestIdString"}
       }
+    },
+    "SendMessageRequestOriginRequestIdString":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "SendMessageResponse":{
       "type":"structure",
@@ -7307,6 +7313,7 @@
         "endTimestamp":{"shape":"Timestamp"},
         "status":{"shape":"SpanStatus"},
         "requestId":{"shape":"Uuid"},
+        "originRequestId":{"shape":"SpanOriginRequestIdString"},
         "attributes":{"shape":"SpanAttributes"}
       }
     },
@@ -7420,6 +7427,11 @@
       "type":"list",
       "member":{"shape":"SpanMessageValue"},
       "max":10,
+      "min":1
+    },
+    "SpanOriginRequestIdString":{
+      "type":"string",
+      "max":256,
       "min":1
     },
     "SpanStatus":{

@@ -1386,6 +1386,13 @@
         "PortNumber":{"shape":"SftpPort"}
       }
     },
+    "ConnectorsIpAddressType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "DUALSTACK"
+      ]
+    },
     "CopyStepDetails":{
       "type":"structure",
       "members":{
@@ -1464,7 +1471,8 @@
         "Tags":{"shape":"Tags"},
         "SftpConfig":{"shape":"SftpConnectorConfig"},
         "SecurityPolicyName":{"shape":"ConnectorSecurityPolicyName"},
-        "EgressConfig":{"shape":"ConnectorEgressConfig"}
+        "EgressConfig":{"shape":"ConnectorEgressConfig"},
+        "IpAddressType":{"shape":"ConnectorsIpAddressType"}
       }
     },
     "CreateConnectorResponse":{
@@ -2082,7 +2090,8 @@
         "EgressConfig":{"shape":"DescribedConnectorEgressConfig"},
         "EgressType":{"shape":"ConnectorEgressType"},
         "ErrorMessage":{"shape":"ConnectorErrorMessage"},
-        "Status":{"shape":"ConnectorStatus"}
+        "Status":{"shape":"ConnectorStatus"},
+        "IpAddressType":{"shape":"ConnectorsIpAddressType"}
       }
     },
     "DescribedConnectorEgressConfig":{
@@ -3975,7 +3984,8 @@
         "LoggingRole":{"shape":"Role"},
         "SftpConfig":{"shape":"SftpConnectorConfig"},
         "SecurityPolicyName":{"shape":"ConnectorSecurityPolicyName"},
-        "EgressConfig":{"shape":"UpdateConnectorEgressConfig"}
+        "EgressConfig":{"shape":"UpdateConnectorEgressConfig"},
+        "IpAddressType":{"shape":"ConnectorsIpAddressType"}
       }
     },
     "UpdateConnectorResponse":{

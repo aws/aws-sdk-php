@@ -938,7 +938,11 @@
         "Retrieval":{"shape":"PrefetchRetrieval"},
         "RecurringPrefetchConfiguration":{"shape":"RecurringPrefetchConfiguration"},
         "ScheduleType":{"shape":"PrefetchScheduleType"},
-        "StreamId":{"shape":"__string"}
+        "StreamId":{"shape":"__string"},
+        "Tags":{
+          "shape":"__mapOf__string",
+          "locationName":"tags"
+        }
       }
     },
     "CreatePrefetchScheduleResponse":{
@@ -951,7 +955,11 @@
         "Retrieval":{"shape":"PrefetchRetrieval"},
         "RecurringPrefetchConfiguration":{"shape":"RecurringPrefetchConfiguration"},
         "ScheduleType":{"shape":"PrefetchScheduleType"},
-        "StreamId":{"shape":"__string"}
+        "StreamId":{"shape":"__string"},
+        "Tags":{
+          "shape":"__mapOf__string",
+          "locationName":"tags"
+        }
       }
     },
     "CreateProgramRequest":{
@@ -978,7 +986,11 @@
         "ScheduleConfiguration":{"shape":"ScheduleConfiguration"},
         "SourceLocationName":{"shape":"__string"},
         "VodSourceName":{"shape":"__string"},
-        "AudienceMedia":{"shape":"__listOfAudienceMedia"}
+        "AudienceMedia":{"shape":"__listOfAudienceMedia"},
+        "Tags":{
+          "shape":"__mapOf__string",
+          "locationName":"tags"
+        }
       }
     },
     "CreateProgramResponse":{
@@ -995,7 +1007,11 @@
         "VodSourceName":{"shape":"__string"},
         "ClipRange":{"shape":"ClipRange"},
         "DurationMillis":{"shape":"__long"},
-        "AudienceMedia":{"shape":"__listOfAudienceMedia"}
+        "AudienceMedia":{"shape":"__listOfAudienceMedia"},
+        "Tags":{
+          "shape":"__mapOf__string",
+          "locationName":"tags"
+        }
       }
     },
     "CreateSourceLocationRequest":{
@@ -1359,7 +1375,11 @@
         "VodSourceName":{"shape":"__string"},
         "ClipRange":{"shape":"ClipRange"},
         "DurationMillis":{"shape":"Long"},
-        "AudienceMedia":{"shape":"__listOfAudienceMedia"}
+        "AudienceMedia":{"shape":"__listOfAudienceMedia"},
+        "Tags":{
+          "shape":"__mapOf__string",
+          "locationName":"tags"
+        }
       }
     },
     "DescribeSourceLocationRequest":{
@@ -1557,7 +1577,11 @@
         "Retrieval":{"shape":"PrefetchRetrieval"},
         "ScheduleType":{"shape":"PrefetchScheduleType"},
         "RecurringPrefetchConfiguration":{"shape":"RecurringPrefetchConfiguration"},
-        "StreamId":{"shape":"__string"}
+        "StreamId":{"shape":"__string"},
+        "Tags":{
+          "shape":"__mapOf__string",
+          "locationName":"tags"
+        }
       }
     },
     "HlsConfiguration":{
@@ -2055,7 +2079,11 @@
         "Retrieval":{"shape":"PrefetchRetrieval"},
         "ScheduleType":{"shape":"PrefetchScheduleType"},
         "RecurringPrefetchConfiguration":{"shape":"RecurringPrefetchConfiguration"},
-        "StreamId":{"shape":"__string"}
+        "StreamId":{"shape":"__string"},
+        "Tags":{
+          "shape":"__mapOf__string",
+          "locationName":"tags"
+        }
       }
     },
     "PrefetchScheduleType":{
@@ -2583,7 +2611,11 @@
         "ClipRange":{"shape":"ClipRange"},
         "DurationMillis":{"shape":"__long"},
         "ScheduledStartTime":{"shape":"__timestampUnix"},
-        "AudienceMedia":{"shape":"__listOfAudienceMedia"}
+        "AudienceMedia":{"shape":"__listOfAudienceMedia"},
+        "Tags":{
+          "shape":"__mapOf__string",
+          "locationName":"tags"
+        }
       }
     },
     "UpdateProgramScheduleConfiguration":{

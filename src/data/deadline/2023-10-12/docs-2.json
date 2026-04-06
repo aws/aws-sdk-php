@@ -11,7 +11,15 @@
     "AssumeQueueRoleForRead": "<p>Gets Amazon Web Services credentials from the queue role. The IAM permissions of the credentials are scoped down to have read-only access.</p>",
     "AssumeQueueRoleForUser": "<p>Allows a user to assume a role for a queue.</p>",
     "AssumeQueueRoleForWorker": "<p>Allows a worker to assume a queue role.</p>",
+    "BatchGetJob": "<p>Retrieves multiple jobs in a single request. This is a batch version of the <code>GetJob</code> API.</p> <p>The result of getting each job is reported individually in the response. Because the batch request can result in a combination of successful and unsuccessful actions, you should check for batch errors even when the call returns an HTTP status code of 200.</p>",
     "BatchGetJobEntity": "<p>Get batched job details for a worker.</p>",
+    "BatchGetSession": "<p>Retrieves multiple sessions in a single request. This is a batch version of the <code>GetSession</code> API.</p> <p>The result of getting each session is reported individually in the response. Because the batch request can result in a combination of successful and unsuccessful actions, you should check for batch errors even when the call returns an HTTP status code of 200.</p>",
+    "BatchGetSessionAction": "<p>Retrieves multiple session actions in a single request. This is a batch version of the <code>GetSessionAction</code> API.</p> <p>The result of getting each session action is reported individually in the response. Because the batch request can result in a combination of successful and unsuccessful actions, you should check for batch errors even when the call returns an HTTP status code of 200.</p>",
+    "BatchGetStep": "<p>Retrieves multiple steps in a single request. This is a batch version of the <code>GetStep</code> API.</p> <p>The result of getting each step is reported individually in the response. Because the batch request can result in a combination of successful and unsuccessful actions, you should check for batch errors even when the call returns an HTTP status code of 200.</p>",
+    "BatchGetTask": "<p>Retrieves multiple tasks in a single request. This is a batch version of the <code>GetTask</code> API.</p> <p>The result of getting each task is reported individually in the response. Because the batch request can result in a combination of successful and unsuccessful actions, you should check for batch errors even when the call returns an HTTP status code of 200.</p>",
+    "BatchGetWorker": "<p>Retrieves multiple workers in a single request. This is a batch version of the <code>GetWorker</code> API.</p> <p>The result of getting each worker is reported individually in the response. Because the batch request can result in a combination of successful and unsuccessful actions, you should check for batch errors even when the call returns an HTTP status code of 200.</p>",
+    "BatchUpdateJob": "<p>Updates multiple jobs in a single request. This is a batch version of the <code>UpdateJob</code> API.</p> <p>The result of updating each job is reported individually in the response. Because the batch request can result in a combination of successful and unsuccessful actions, you should check for batch errors even when the call returns an HTTP status code of 200.</p> <p>When you change the status of a job to <code>ARCHIVED</code>, the job can't be scheduled or archived.</p> <important> <p>An archived job and its steps and tasks are deleted after 120 days. The job can't be recovered.</p> </important>",
+    "BatchUpdateTask": "<p>Updates multiple tasks in a single request. This is a batch version of the <code>UpdateTask</code> API.</p> <p>The result of updating each task is reported individually in the response. Because the batch request can result in a combination of successful and unsuccessful actions, you should check for batch errors even when the call returns an HTTP status code of 200.</p>",
     "CopyJobTemplate": "<p>Copies a job template to an Amazon S3 bucket.</p>",
     "CreateBudget": "<p>Creates a budget to set spending thresholds for your rendering activity.</p>",
     "CreateFarm": "<p>Creates a farm to allow space for queues and fleets. Farms are the space where the components of your renders gather and are pieced together in the cloud. Farms contain budgets and allow you to enforce permissions. Deadline Cloud farms are a useful container for large projects.</p>",
@@ -191,6 +199,7 @@
     "AcquiredLimits": {
       "base": null,
       "refs": {
+        "BatchGetSessionActionItem$acquiredLimits": "<p>The limits that were acquired for the session action.</p>",
         "GetSessionActionResponse$acquiredLimits": "<p>The limits and their amounts acquired during a session action. If no limits were acquired during the session, this field isn't returned.</p>"
       }
     },
@@ -355,6 +364,7 @@
     "Attachments": {
       "base": "<p>The job attachments.</p>",
       "refs": {
+        "BatchGetJobItem$attachments": "<p>The attachments for the job.</p>",
         "CreateJobRequest$attachments": "<p>The attachments for the job. Attach files required for the job to run to a render job.</p>",
         "GetJobResponse$attachments": "<p>The attachments for the job.</p>",
         "JobAttachmentDetailsEntity$attachments": "<p>The job attachments.</p>"
@@ -422,6 +432,382 @@
       "refs": {}
     },
     "BatchGetJobEntityResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetJobError": {
+      "base": "<p>The error details for a job that could not be retrieved in a batch get operation.</p>",
+      "refs": {
+        "BatchGetJobErrors$member": null
+      }
+    },
+    "BatchGetJobErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchGetJobError$code": "<p>The error code.</p>"
+      }
+    },
+    "BatchGetJobErrors": {
+      "base": null,
+      "refs": {
+        "BatchGetJobResponse$errors": "<p>A list of errors for jobs that could not be retrieved.</p>"
+      }
+    },
+    "BatchGetJobIdentifier": {
+      "base": "<p>The identifiers for a job.</p>",
+      "refs": {
+        "BatchGetJobIdentifiers$member": null
+      }
+    },
+    "BatchGetJobIdentifiers": {
+      "base": null,
+      "refs": {
+        "BatchGetJobRequest$identifiers": "<p>The list of job identifiers to retrieve. You can specify up to 100 identifiers per request.</p>"
+      }
+    },
+    "BatchGetJobItem": {
+      "base": "<p>The details of a job returned in a batch get operation.</p>",
+      "refs": {
+        "BatchGetJobItems$member": null
+      }
+    },
+    "BatchGetJobItems": {
+      "base": null,
+      "refs": {
+        "BatchGetJobResponse$jobs": "<p>A list of jobs that were successfully retrieved.</p>"
+      }
+    },
+    "BatchGetJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetSessionActionError": {
+      "base": "<p>The error details for a session action that could not be retrieved in a batch get operation.</p>",
+      "refs": {
+        "BatchGetSessionActionErrors$member": null
+      }
+    },
+    "BatchGetSessionActionErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchGetSessionActionError$code": "<p>The error code.</p>"
+      }
+    },
+    "BatchGetSessionActionErrors": {
+      "base": null,
+      "refs": {
+        "BatchGetSessionActionResponse$errors": "<p>A list of errors for session actions that could not be retrieved.</p>"
+      }
+    },
+    "BatchGetSessionActionIdentifier": {
+      "base": "<p>The identifiers for a session action.</p>",
+      "refs": {
+        "BatchGetSessionActionIdentifiers$member": null
+      }
+    },
+    "BatchGetSessionActionIdentifiers": {
+      "base": null,
+      "refs": {
+        "BatchGetSessionActionRequest$identifiers": "<p>The list of session action identifiers to retrieve. You can specify up to 100 identifiers per request.</p>"
+      }
+    },
+    "BatchGetSessionActionItem": {
+      "base": "<p>The details of a session action returned in a batch get operation.</p>",
+      "refs": {
+        "BatchGetSessionActionItems$member": null
+      }
+    },
+    "BatchGetSessionActionItems": {
+      "base": null,
+      "refs": {
+        "BatchGetSessionActionResponse$sessionActions": "<p>A list of session actions that were successfully retrieved.</p>"
+      }
+    },
+    "BatchGetSessionActionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetSessionActionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetSessionError": {
+      "base": "<p>The error details for a session that could not be retrieved in a batch get operation.</p>",
+      "refs": {
+        "BatchGetSessionErrors$member": null
+      }
+    },
+    "BatchGetSessionErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchGetSessionError$code": "<p>The error code.</p>"
+      }
+    },
+    "BatchGetSessionErrors": {
+      "base": null,
+      "refs": {
+        "BatchGetSessionResponse$errors": "<p>A list of errors for sessions that could not be retrieved.</p>"
+      }
+    },
+    "BatchGetSessionIdentifier": {
+      "base": "<p>The identifiers for a session.</p>",
+      "refs": {
+        "BatchGetSessionIdentifiers$member": null
+      }
+    },
+    "BatchGetSessionIdentifiers": {
+      "base": null,
+      "refs": {
+        "BatchGetSessionRequest$identifiers": "<p>The list of session identifiers to retrieve. You can specify up to 100 identifiers per request.</p>"
+      }
+    },
+    "BatchGetSessionItem": {
+      "base": "<p>The details of a session returned in a batch get operation.</p>",
+      "refs": {
+        "BatchGetSessionItems$member": null
+      }
+    },
+    "BatchGetSessionItems": {
+      "base": null,
+      "refs": {
+        "BatchGetSessionResponse$sessions": "<p>A list of sessions that were successfully retrieved.</p>"
+      }
+    },
+    "BatchGetSessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetSessionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetStepError": {
+      "base": "<p>The error details for a step that could not be retrieved in a batch get operation.</p>",
+      "refs": {
+        "BatchGetStepErrors$member": null
+      }
+    },
+    "BatchGetStepErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchGetStepError$code": "<p>The error code.</p>"
+      }
+    },
+    "BatchGetStepErrors": {
+      "base": null,
+      "refs": {
+        "BatchGetStepResponse$errors": "<p>A list of errors for steps that could not be retrieved.</p>"
+      }
+    },
+    "BatchGetStepIdentifier": {
+      "base": "<p>The identifiers for a step.</p>",
+      "refs": {
+        "BatchGetStepIdentifiers$member": null
+      }
+    },
+    "BatchGetStepIdentifiers": {
+      "base": null,
+      "refs": {
+        "BatchGetStepRequest$identifiers": "<p>The list of step identifiers to retrieve. You can specify up to 100 identifiers per request.</p>"
+      }
+    },
+    "BatchGetStepItem": {
+      "base": "<p>The details of a step returned in a batch get operation.</p>",
+      "refs": {
+        "BatchGetStepItems$member": null
+      }
+    },
+    "BatchGetStepItems": {
+      "base": null,
+      "refs": {
+        "BatchGetStepResponse$steps": "<p>A list of steps that were successfully retrieved.</p>"
+      }
+    },
+    "BatchGetStepRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetStepResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetTaskError": {
+      "base": "<p>The error details for a task that could not be retrieved in a batch get operation.</p>",
+      "refs": {
+        "BatchGetTaskErrors$member": null
+      }
+    },
+    "BatchGetTaskErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchGetTaskError$code": "<p>The error code.</p>"
+      }
+    },
+    "BatchGetTaskErrors": {
+      "base": null,
+      "refs": {
+        "BatchGetTaskResponse$errors": "<p>A list of errors for tasks that could not be retrieved.</p>"
+      }
+    },
+    "BatchGetTaskIdentifier": {
+      "base": "<p>The identifiers for a task.</p>",
+      "refs": {
+        "BatchGetTaskIdentifiers$member": null
+      }
+    },
+    "BatchGetTaskIdentifiers": {
+      "base": null,
+      "refs": {
+        "BatchGetTaskRequest$identifiers": "<p>The list of task identifiers to retrieve. You can specify up to 100 identifiers per request.</p>"
+      }
+    },
+    "BatchGetTaskItem": {
+      "base": "<p>The details of a task returned in a batch get operation.</p>",
+      "refs": {
+        "BatchGetTaskItems$member": null
+      }
+    },
+    "BatchGetTaskItems": {
+      "base": null,
+      "refs": {
+        "BatchGetTaskResponse$tasks": "<p>A list of tasks that were successfully retrieved.</p>"
+      }
+    },
+    "BatchGetTaskRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetTaskResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetWorkerError": {
+      "base": "<p>The error details for a worker that could not be retrieved in a batch get operation.</p>",
+      "refs": {
+        "BatchGetWorkerErrors$member": null
+      }
+    },
+    "BatchGetWorkerErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchGetWorkerError$code": "<p>The error code.</p>"
+      }
+    },
+    "BatchGetWorkerErrors": {
+      "base": null,
+      "refs": {
+        "BatchGetWorkerResponse$errors": "<p>A list of errors for workers that could not be retrieved.</p>"
+      }
+    },
+    "BatchGetWorkerIdentifier": {
+      "base": "<p>The identifiers for a worker.</p>",
+      "refs": {
+        "BatchGetWorkerIdentifiers$member": null
+      }
+    },
+    "BatchGetWorkerIdentifiers": {
+      "base": null,
+      "refs": {
+        "BatchGetWorkerRequest$identifiers": "<p>The list of worker identifiers to retrieve. You can specify up to 100 identifiers per request.</p>"
+      }
+    },
+    "BatchGetWorkerItem": {
+      "base": "<p>The details of a worker returned in a batch get operation.</p>",
+      "refs": {
+        "BatchGetWorkerItems$member": null
+      }
+    },
+    "BatchGetWorkerItems": {
+      "base": null,
+      "refs": {
+        "BatchGetWorkerResponse$workers": "<p>A list of workers that were successfully retrieved.</p>"
+      }
+    },
+    "BatchGetWorkerRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetWorkerResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchUpdateJobError": {
+      "base": "<p>The error details for a job that could not be updated in a batch update operation.</p>",
+      "refs": {
+        "BatchUpdateJobErrors$member": null
+      }
+    },
+    "BatchUpdateJobErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchUpdateJobError$code": "<p>The error code.</p>"
+      }
+    },
+    "BatchUpdateJobErrors": {
+      "base": null,
+      "refs": {
+        "BatchUpdateJobResponse$errors": "<p>A list of errors for jobs that could not be updated.</p>"
+      }
+    },
+    "BatchUpdateJobItem": {
+      "base": "<p>The details of a job to update in a batch update operation.</p>",
+      "refs": {
+        "BatchUpdateJobItems$member": null
+      }
+    },
+    "BatchUpdateJobItems": {
+      "base": null,
+      "refs": {
+        "BatchUpdateJobRequest$jobs": "<p>The list of jobs to update. You can specify up to 100 jobs per request.</p>"
+      }
+    },
+    "BatchUpdateJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchUpdateJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchUpdateTaskError": {
+      "base": "<p>The error details for a task that could not be updated in a batch update operation.</p>",
+      "refs": {
+        "BatchUpdateTaskErrors$member": null
+      }
+    },
+    "BatchUpdateTaskErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchUpdateTaskError$code": "<p>The error code.</p>"
+      }
+    },
+    "BatchUpdateTaskErrors": {
+      "base": null,
+      "refs": {
+        "BatchUpdateTaskResponse$errors": "<p>A list of errors for tasks that could not be updated.</p>"
+      }
+    },
+    "BatchUpdateTaskItem": {
+      "base": "<p>The details of a task to update in a batch update operation.</p>",
+      "refs": {
+        "BatchUpdateTaskItems$member": null
+      }
+    },
+    "BatchUpdateTaskItems": {
+      "base": null,
+      "refs": {
+        "BatchUpdateTaskRequest$tasks": "<p>The list of tasks to update. You can specify up to 100 tasks per request.</p>"
+      }
+    },
+    "BatchUpdateTaskRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchUpdateTaskResponse": {
       "base": null,
       "refs": {}
     },
@@ -514,6 +900,8 @@
     "ClientToken": {
       "base": null,
       "refs": {
+        "BatchUpdateJobRequest$clientToken": "<p>The unique token which the server uses to recognize retries of the same request.</p>",
+        "BatchUpdateTaskRequest$clientToken": "<p>The unique token which the server uses to recognize retries of the same request.</p>",
         "CreateBudgetRequest$clientToken": "<p>The unique token which the server uses to recognize retries of the same request.</p>",
         "CreateFarmRequest$clientToken": "<p>The unique token which the server uses to recognize retries of the same request.</p>",
         "CreateFleetRequest$clientToken": "<p>The unique token which the server uses to recognize retries of the same request.</p>",
@@ -732,6 +1120,10 @@
     "CreatedAt": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$createdAt": "<p>The date and time the resource was created.</p>",
+        "BatchGetStepItem$createdAt": "<p>The date and time the resource was created.</p>",
+        "BatchGetTaskItem$createdAt": "<p>The date and time the resource was created.</p>",
+        "BatchGetWorkerItem$createdAt": "<p>The date and time the resource was created.</p>",
         "BudgetSummary$createdAt": "<p>The date and time the resource was created.</p>",
         "FarmSummary$createdAt": "<p>The date and time the resource was created.</p>",
         "FleetSummary$createdAt": "<p>The date and time the resource was created.</p>",
@@ -766,6 +1158,10 @@
     "CreatedBy": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$createdBy": "<p>The user or system that created this resource.</p>",
+        "BatchGetStepItem$createdBy": "<p>The user or system that created this resource.</p>",
+        "BatchGetTaskItem$createdBy": "<p>The user or system that created this resource.</p>",
+        "BatchGetWorkerItem$createdBy": "<p>The user or system that created this resource.</p>",
         "BudgetSummary$createdBy": "<p>The user or system that created this resource.</p>",
         "FarmSummary$createdBy": "<p>The user or system that created this resource.</p>",
         "FleetSummary$createdBy": "<p>The user or system that created this resource.</p>",
@@ -976,6 +1372,7 @@
     "DependencyCounts": {
       "base": "<p>The number of dependencies for the consumer.</p>",
       "refs": {
+        "BatchGetStepItem$dependencyCounts": "<p>The number of dependencies for the step.</p>",
         "GetStepResponse$dependencyCounts": "<p>The number of dependencies in the step.</p>",
         "StepSummary$dependencyCounts": "<p>The number of dependencies for the step.</p>"
       }
@@ -1093,6 +1490,11 @@
     "EndedAt": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$endedAt": "<p>The date and time the resource ended running.</p>",
+        "BatchGetSessionActionItem$endedAt": "<p>The date and time the resource ended running.</p>",
+        "BatchGetSessionItem$endedAt": "<p>The date and time the resource ended running.</p>",
+        "BatchGetStepItem$endedAt": "<p>The date and time the resource ended running.</p>",
+        "BatchGetTaskItem$endedAt": "<p>The date and time the resource ended running.</p>",
         "GetJobResponse$endedAt": "<p>The date and time the resource ended running.</p>",
         "GetSessionActionResponse$endedAt": "<p>The date and time the resource ended running.</p>",
         "GetSessionResponse$endedAt": "<p>The date and time the resource ended running.</p>",
@@ -1218,6 +1620,28 @@
         "AssumeQueueRoleForUserRequest$farmId": "<p>The farm ID of the queue that the user assumes the role for.</p>",
         "AssumeQueueRoleForWorkerRequest$farmId": "<p>The farm ID of the worker assuming the queue role.</p>",
         "BatchGetJobEntityRequest$farmId": "<p>The farm ID of the worker that's fetching job details. The worker must have an assignment on a job to fetch job details.</p>",
+        "BatchGetJobError$farmId": "<p>The farm ID of the job that could not be retrieved.</p>",
+        "BatchGetJobIdentifier$farmId": "<p>The farm ID of the job.</p>",
+        "BatchGetJobItem$farmId": "<p>The farm ID of the job.</p>",
+        "BatchGetSessionActionError$farmId": "<p>The farm ID of the session action that could not be retrieved.</p>",
+        "BatchGetSessionActionIdentifier$farmId": "<p>The farm ID of the session action.</p>",
+        "BatchGetSessionActionItem$farmId": "<p>The farm ID of the session action.</p>",
+        "BatchGetSessionError$farmId": "<p>The farm ID of the session that could not be retrieved.</p>",
+        "BatchGetSessionIdentifier$farmId": "<p>The farm ID of the session.</p>",
+        "BatchGetSessionItem$farmId": "<p>The farm ID of the session.</p>",
+        "BatchGetStepError$farmId": "<p>The farm ID of the step that could not be retrieved.</p>",
+        "BatchGetStepIdentifier$farmId": "<p>The farm ID of the step.</p>",
+        "BatchGetStepItem$farmId": "<p>The farm ID of the step.</p>",
+        "BatchGetTaskError$farmId": "<p>The farm ID of the task that could not be retrieved.</p>",
+        "BatchGetTaskIdentifier$farmId": "<p>The farm ID of the task.</p>",
+        "BatchGetTaskItem$farmId": "<p>The farm ID of the task.</p>",
+        "BatchGetWorkerError$farmId": "<p>The farm ID of the worker that could not be retrieved.</p>",
+        "BatchGetWorkerIdentifier$farmId": "<p>The farm ID of the worker.</p>",
+        "BatchGetWorkerItem$farmId": "<p>The farm ID of the worker.</p>",
+        "BatchUpdateJobError$farmId": "<p>The farm ID of the job that could not be updated.</p>",
+        "BatchUpdateJobItem$farmId": "<p>The farm ID of the job to update.</p>",
+        "BatchUpdateTaskError$farmId": "<p>The farm ID of the task that could not be updated.</p>",
+        "BatchUpdateTaskItem$farmId": "<p>The farm ID of the task to update.</p>",
         "CopyJobTemplateRequest$farmId": "<p>The farm ID to copy.</p>",
         "CreateBudgetRequest$farmId": "<p>The farm ID to include in this budget.</p>",
         "CreateFarmResponse$farmId": "<p>The farm ID.</p>",
@@ -1435,6 +1859,10 @@
         "AssumeFleetRoleForWorkerRequest$fleetId": "<p>The fleet ID that contains the worker.</p>",
         "AssumeQueueRoleForWorkerRequest$fleetId": "<p>The fleet ID of the worker assuming the queue role.</p>",
         "BatchGetJobEntityRequest$fleetId": "<p>The fleet ID of the worker that's fetching job details. The worker must have an assignment on a job to fetch job details.</p>",
+        "BatchGetSessionItem$fleetId": "<p>The fleet ID of the session.</p>",
+        "BatchGetWorkerError$fleetId": "<p>The fleet ID of the worker that could not be retrieved.</p>",
+        "BatchGetWorkerIdentifier$fleetId": "<p>The fleet ID of the worker.</p>",
+        "BatchGetWorkerItem$fleetId": "<p>The fleet ID of the worker.</p>",
         "CreateFleetResponse$fleetId": "<p>The fleet ID.</p>",
         "CreateQueueFleetAssociationRequest$fleetId": "<p>The fleet ID.</p>",
         "CreateWorkerRequest$fleetId": "<p>The fleet ID to connect to the worker.</p>",
@@ -1724,6 +2152,8 @@
     "HostPropertiesResponse": {
       "base": "<p>The host property details.</p>",
       "refs": {
+        "BatchGetSessionItem$hostProperties": "<p>The host properties for the session.</p>",
+        "BatchGetWorkerItem$hostProperties": "<p>The host properties for the worker.</p>",
         "GetSessionResponse$hostProperties": "<p>Provides the Amazon EC2 properties of the host.</p>",
         "GetWorkerResponse$hostProperties": "<p>The host properties for the worker.</p>",
         "WorkerSearchSummary$hostProperties": "<p>Provides the Amazon EC2 instance properties of the worker host.</p>",
@@ -1907,12 +2337,14 @@
     "JobDescription": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$description": "<p>The description of the job.</p>",
         "GetJobResponse$description": "<p>The description of the job.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>"
       }
     },
     "JobDescriptionOverride": {
       "base": "<p>The input description for the job. Passing in an empty string removes any existing description.</p>",
       "refs": {
+        "BatchUpdateJobItem$description": "<p>The description of the job to update.</p>",
         "CreateJobRequest$descriptionOverride": "<p>A custom description to override the job description derived from the job template.</p>",
         "UpdateJobRequest$description": "<p>The updated job description.</p>"
       }
@@ -1967,6 +2399,26 @@
       "refs": {
         "AssignedSession$jobId": "<p>The job ID for the assigned session.</p>",
         "AssociateMemberToJobRequest$jobId": "<p>The job ID to associate with the member.</p>",
+        "BatchGetJobError$jobId": "<p>The job ID of the job that could not be retrieved.</p>",
+        "BatchGetJobIdentifier$jobId": "<p>The job ID.</p>",
+        "BatchGetJobItem$jobId": "<p>The job ID.</p>",
+        "BatchGetJobItem$sourceJobId": "<p>The job ID for the source job.</p>",
+        "BatchGetSessionActionError$jobId": "<p>The job ID of the session action that could not be retrieved.</p>",
+        "BatchGetSessionActionIdentifier$jobId": "<p>The job ID of the session action.</p>",
+        "BatchGetSessionActionItem$jobId": "<p>The job ID of the session action.</p>",
+        "BatchGetSessionError$jobId": "<p>The job ID of the session that could not be retrieved.</p>",
+        "BatchGetSessionIdentifier$jobId": "<p>The job ID of the session.</p>",
+        "BatchGetSessionItem$jobId": "<p>The job ID of the session.</p>",
+        "BatchGetStepError$jobId": "<p>The job ID of the step that could not be retrieved.</p>",
+        "BatchGetStepIdentifier$jobId": "<p>The job ID of the step.</p>",
+        "BatchGetStepItem$jobId": "<p>The job ID of the step.</p>",
+        "BatchGetTaskError$jobId": "<p>The job ID of the task that could not be retrieved.</p>",
+        "BatchGetTaskIdentifier$jobId": "<p>The job ID of the task.</p>",
+        "BatchGetTaskItem$jobId": "<p>The job ID of the task.</p>",
+        "BatchUpdateJobError$jobId": "<p>The job ID of the job that could not be updated.</p>",
+        "BatchUpdateJobItem$jobId": "<p>The job ID of the job to update.</p>",
+        "BatchUpdateTaskError$jobId": "<p>The job ID of the task that could not be updated.</p>",
+        "BatchUpdateTaskItem$jobId": "<p>The job ID of the task to update.</p>",
         "CopyJobTemplateRequest$jobId": "<p>The job ID to copy.</p>",
         "CreateJobRequest$sourceJobId": "<p>The job ID for the source job.</p>",
         "CreateJobResponse$jobId": "<p>The job ID.</p>",
@@ -2018,6 +2470,7 @@
     "JobLifecycleStatus": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$lifecycleStatus": "<p>The life cycle status of the job.</p>",
         "GetJobResponse$lifecycleStatus": "<p>The life cycle status for the job. </p>",
         "JobSearchSummary$lifecycleStatus": "<p>The life cycle status.</p>",
         "JobSummary$lifecycleStatus": "<p>The life cycle status.</p>"
@@ -2038,6 +2491,8 @@
     "JobName": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$name": "<p>The name of the job.</p>",
+        "BatchUpdateJobItem$name": "<p>The name of the job to update.</p>",
         "CreateJobRequest$nameOverride": "<p>A custom name to override the job name derived from the job template.</p>",
         "GetJobResponse$name": "<p>The name of the job.</p>",
         "JobSearchSummary$name": "<p>The job name.</p>",
@@ -2067,6 +2522,7 @@
     "JobParameters": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$parameters": "<p>The parameters for the job.</p>",
         "CreateJobRequest$parameters": "<p>The parameters for the job.</p>",
         "GetJobResponse$parameters": "<p>The parameters for the job.</p>",
         "JobDetailsEntity$parameters": "<p>The parameters.</p>",
@@ -2082,6 +2538,8 @@
     "JobPriority": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$priority": "<p>The job priority.</p>",
+        "BatchUpdateJobItem$priority": "<p>The job priority to update.</p>",
         "CreateJobRequest$priority": "<p>The priority of the job. The highest priority (first scheduled) is 100. When two jobs have the same priority, the oldest job is scheduled first.</p>",
         "GetJobResponse$priority": "<p>The job priority.</p>",
         "JobSearchSummary$priority": "<p>The job priority.</p>",
@@ -2125,6 +2583,8 @@
     "JobTargetTaskRunStatus": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$targetTaskRunStatus": "<p>The task status to start with on the job.</p>",
+        "BatchUpdateJobItem$targetTaskRunStatus": "<p>The task status to update the job's tasks to.</p>",
         "GetJobResponse$targetTaskRunStatus": "<p>The task status with which the job started.</p>",
         "JobSearchSummary$targetTaskRunStatus": "<p>The task status to update the job's tasks to.</p>",
         "JobSummary$targetTaskRunStatus": "<p>The task status to update the job's tasks to.</p>",
@@ -2482,6 +2942,9 @@
       "base": "<p>Log configuration details.</p>",
       "refs": {
         "AssignedSession$logConfiguration": "<p>The log configuration for the worker's assigned session.</p>",
+        "BatchGetSessionItem$log": "<p>The session log.</p>",
+        "BatchGetSessionItem$workerLog": "<p>The worker log for the session.</p>",
+        "BatchGetWorkerItem$log": "<p>The log configuration for the worker.</p>",
         "GetSessionResponse$log": "<p>The session log.</p>",
         "GetSessionResponse$workerLog": "<p>The worker log for the session.</p>",
         "GetWorkerResponse$log": "<p>The logs for the associated worker.</p>",
@@ -2561,6 +3024,8 @@
     "MaxFailedTasksCount": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$maxFailedTasksCount": "<p>The number of task failures before the job stops running and is marked as <code>FAILED</code>.</p>",
+        "BatchUpdateJobItem$maxFailedTasksCount": "<p>The number of task failures before the job stops running and is marked as <code>FAILED</code>.</p>",
         "CreateJobRequest$maxFailedTasksCount": "<p>The number of task failures before the job stops running and is marked as <code>FAILED</code>.</p>",
         "GetJobResponse$maxFailedTasksCount": "<p>The number of task failures before the job stops running and is marked as <code>FAILED</code>.</p>",
         "JobSearchSummary$maxFailedTasksCount": "<p>The number of task failures before the job stops running and is marked as <code>FAILED</code>.</p>",
@@ -2603,6 +3068,8 @@
     "MaxRetriesPerTask": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$maxRetriesPerTask": "<p>The maximum number of retries per failed tasks.</p>",
+        "BatchUpdateJobItem$maxRetriesPerTask": "<p>The maximum number of retries per failed tasks.</p>",
         "CreateJobRequest$maxRetriesPerTask": "<p>The maximum number of retries for each task.</p>",
         "GetJobResponse$maxRetriesPerTask": "<p>The maximum number of retries per failed tasks.</p>",
         "JobSearchSummary$maxRetriesPerTask": "<p>The maximum number of retries for a job.</p>",
@@ -2613,6 +3080,8 @@
     "MaxWorkerCount": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$maxWorkerCount": "<p>The maximum number of worker hosts that can concurrently process a job.</p>",
+        "BatchUpdateJobItem$maxWorkerCount": "<p>The maximum number of worker hosts that can concurrently process a job.</p>",
         "CreateJobRequest$maxWorkerCount": "<p>The maximum number of worker hosts that can concurrently process a job. When the <code>maxWorkerCount</code> is reached, no more workers will be assigned to process the job, even if the fleets assigned to the job's queue has available workers.</p> <p>You can't set the <code>maxWorkerCount</code> to 0. If you set it to -1, there is no maximum number of workers.</p> <p>If you don't specify the <code>maxWorkerCount</code>, Deadline Cloud won't throttle the number of workers used to process the job.</p>",
         "GetJobResponse$maxWorkerCount": "<p>The maximum number of worker hosts that can concurrently process a job. When the <code>maxWorkerCount</code> is reached, no more workers will be assigned to process the job, even if the fleets assigned to the job's queue has available workers.</p> <p>If you don't set the <code>maxWorkerCount</code> when you create a job, this value is not returned in the response.</p>",
         "JobSearchSummary$maxWorkerCount": "<p>The maximum number of worker hosts that can concurrently process a job. When the <code>maxWorkerCount</code> is reached, no more workers will be assigned to process the job, even if the fleets assigned to the job's queue has available workers.</p> <p>You can't set the <code>maxWorkerCount</code> to 0. If you set it to -1, there is no maximum number of workers.</p> <p>If you don't specify the <code>maxWorkerCount</code>, the default is -1.</p>",
@@ -2827,6 +3296,7 @@
     "ParameterSpace": {
       "base": "<p>The details of a search for two or more step parameters.</p>",
       "refs": {
+        "BatchGetStepItem$parameterSpace": "<p>The parameter space for the step.</p>",
         "GetStepResponse$parameterSpace": "<p>A list of step parameters and the combination expression for the step.</p>",
         "StepSearchSummary$parameterSpace": "<p>The parameters and combination expressions for the search.</p>"
       }
@@ -2938,6 +3408,7 @@
     "ProcessExitCode": {
       "base": null,
       "refs": {
+        "BatchGetSessionActionItem$processExitCode": "<p>The exit code to apply to the session action.</p>",
         "GetSessionActionResponse$processExitCode": "<p>The process exit code. The default Deadline Cloud worker agent converts unsigned 32-bit exit codes to signed 32-bit exit codes.</p>",
         "UpdatedSessionActionInfo$processExitCode": "<p>The process exit code. The default Deadline Cloud worker agent converts unsigned 32-bit exit codes to signed 32-bit exit codes.</p>"
       }
@@ -3008,6 +3479,25 @@
         "AssumeQueueRoleForReadRequest$queueId": "<p>The queue ID.</p>",
         "AssumeQueueRoleForUserRequest$queueId": "<p>The queue ID of the queue that the user assumes the role for.</p>",
         "AssumeQueueRoleForWorkerRequest$queueId": "<p>The queue ID of the worker assuming the queue role.</p>",
+        "BatchGetJobError$queueId": "<p>The queue ID of the job that could not be retrieved.</p>",
+        "BatchGetJobIdentifier$queueId": "<p>The queue ID of the job.</p>",
+        "BatchGetJobItem$queueId": "<p>The queue ID of the job.</p>",
+        "BatchGetSessionActionError$queueId": "<p>The queue ID of the session action that could not be retrieved.</p>",
+        "BatchGetSessionActionIdentifier$queueId": "<p>The queue ID of the session action.</p>",
+        "BatchGetSessionActionItem$queueId": "<p>The queue ID of the session action.</p>",
+        "BatchGetSessionError$queueId": "<p>The queue ID of the session that could not be retrieved.</p>",
+        "BatchGetSessionIdentifier$queueId": "<p>The queue ID of the session.</p>",
+        "BatchGetSessionItem$queueId": "<p>The queue ID of the session.</p>",
+        "BatchGetStepError$queueId": "<p>The queue ID of the step that could not be retrieved.</p>",
+        "BatchGetStepIdentifier$queueId": "<p>The queue ID of the step.</p>",
+        "BatchGetStepItem$queueId": "<p>The queue ID of the step.</p>",
+        "BatchGetTaskError$queueId": "<p>The queue ID of the task that could not be retrieved.</p>",
+        "BatchGetTaskIdentifier$queueId": "<p>The queue ID of the task.</p>",
+        "BatchGetTaskItem$queueId": "<p>The queue ID of the task.</p>",
+        "BatchUpdateJobError$queueId": "<p>The queue ID of the job that could not be updated.</p>",
+        "BatchUpdateJobItem$queueId": "<p>The queue ID of the job to update.</p>",
+        "BatchUpdateTaskError$queueId": "<p>The queue ID of the task that could not be updated.</p>",
+        "BatchUpdateTaskItem$queueId": "<p>The queue ID of the task to update.</p>",
         "CopyJobTemplateRequest$queueId": "<p>The queue ID to copy.</p>",
         "CreateJobRequest$queueId": "<p>The ID of the queue that the job is submitted to.</p>",
         "CreateQueueEnvironmentRequest$queueId": "<p>The queue ID to connect the queue and environment.</p>",
@@ -3127,6 +3617,14 @@
       "base": null,
       "refs": {
         "StepParameterChunks$rangeConstraint": "<p>Specifies whether the chunked ranges must be contiguous or can have gaps between them.</p>"
+      }
+    },
+    "Region": {
+      "base": null,
+      "refs": {
+        "CreateMonitorRequest$identityCenterRegion": "<p>The AWS region where IAM Identity Center is enabled. Required when Identity Center is in a different region than the monitor.</p>",
+        "GetMonitorResponse$identityCenterRegion": "<p>The AWS region where IAM Identity Center is enabled.</p>",
+        "MonitorSummary$identityCenterRegion": "<p>The AWS region where IAM Identity Center is enabled.</p>"
       }
     },
     "RequiredFileSystemLocationNames": {
@@ -3504,6 +4002,7 @@
     "SessionActionDefinition": {
       "base": "<p>The definition of the session action.</p>",
       "refs": {
+        "BatchGetSessionActionItem$definition": "<p>The session action definition.</p>",
         "GetSessionActionResponse$definition": "<p>The session action definition.</p>"
       }
     },
@@ -3517,6 +4016,10 @@
       "base": null,
       "refs": {
         "AssignedSessionAction$sessionActionId": "<p>The session action ID for the assigned session.</p>",
+        "BatchGetSessionActionError$sessionActionId": "<p>The session action ID of the session action that could not be retrieved.</p>",
+        "BatchGetSessionActionIdentifier$sessionActionId": "<p>The session action ID.</p>",
+        "BatchGetSessionActionItem$sessionActionId": "<p>The session action ID.</p>",
+        "BatchGetTaskItem$latestSessionActionId": "<p>The latest session action for the task.</p>",
         "GetSessionActionRequest$sessionActionId": "<p>The session action ID for the session.</p>",
         "GetSessionActionResponse$sessionActionId": "<p>The session action ID.</p>",
         "GetTaskResponse$latestSessionActionId": "<p>The latest session action ID for the task.</p>",
@@ -3536,6 +4039,7 @@
     "SessionActionProgressMessage": {
       "base": null,
       "refs": {
+        "BatchGetSessionActionItem$progressMessage": "<p>The message that communicates the progress of the session action.</p>",
         "GetSessionActionResponse$progressMessage": "<p>The message that communicates the progress of the session action.</p>",
         "UpdatedSessionActionInfo$progressMessage": "<p>A message to indicate the progress of the updated session action.</p>"
       }
@@ -3543,6 +4047,7 @@
     "SessionActionProgressPercent": {
       "base": null,
       "refs": {
+        "BatchGetSessionActionItem$progressPercent": "<p>The completion percentage for the session action.</p>",
         "GetSessionActionResponse$progressPercent": "<p>The percentage completed for a session action.</p>",
         "SessionActionSummary$progressPercent": "<p>The completion percentage for the session action.</p>",
         "UpdatedSessionActionInfo$progressPercent": "<p>The percentage completed.</p>"
@@ -3551,6 +4056,7 @@
     "SessionActionStatus": {
       "base": null,
       "refs": {
+        "BatchGetSessionActionItem$status": "<p>The status of the session action.</p>",
         "GetSessionActionResponse$status": "<p>The status of the session action.</p>",
         "SessionActionSummary$status": "<p>The status of the session action.</p>"
       }
@@ -3571,6 +4077,10 @@
       "base": null,
       "refs": {
         "AssignedSessions$key": null,
+        "BatchGetSessionActionItem$sessionId": "<p>The session ID for the session action.</p>",
+        "BatchGetSessionError$sessionId": "<p>The session ID of the session that could not be retrieved.</p>",
+        "BatchGetSessionIdentifier$sessionId": "<p>The session ID.</p>",
+        "BatchGetSessionItem$sessionId": "<p>The session ID.</p>",
         "CancelSessionActions$key": null,
         "GetSessionActionResponse$sessionId": "<p>The session ID for the session action.</p>",
         "GetSessionRequest$sessionId": "<p>The session ID.</p>",
@@ -3584,6 +4094,7 @@
     "SessionLifecycleStatus": {
       "base": null,
       "refs": {
+        "BatchGetSessionItem$lifecycleStatus": "<p>The life cycle status of the session.</p>",
         "GetSessionResponse$lifecycleStatus": "<p>The life cycle status of the session.</p>",
         "SessionSummary$lifecycleStatus": "<p>The life cycle status for the session.</p>",
         "WorkerSessionSummary$lifecycleStatus": "<p>The life cycle status for the worker's session.</p>"
@@ -3592,6 +4103,7 @@
     "SessionLifecycleTargetStatus": {
       "base": null,
       "refs": {
+        "BatchGetSessionItem$targetLifecycleStatus": "<p>The target life cycle status for the session.</p>",
         "GetSessionResponse$targetLifecycleStatus": "<p>The life cycle status with which the session started.</p>",
         "SessionSummary$targetLifecycleStatus": "<p>The target life cycle status for the session.</p>",
         "UpdateSessionRequest$targetLifecycleStatus": "<p>The life cycle status to update in the session.</p>",
@@ -3658,6 +4170,11 @@
     "StartedAt": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$startedAt": "<p>The date and time the resource started running.</p>",
+        "BatchGetSessionActionItem$startedAt": "<p>The date and time the resource started running.</p>",
+        "BatchGetSessionItem$startedAt": "<p>The date and time the resource started running.</p>",
+        "BatchGetStepItem$startedAt": "<p>The date and time the resource started running.</p>",
+        "BatchGetTaskItem$startedAt": "<p>The date and time the resource started running.</p>",
         "GetJobResponse$startedAt": "<p>The date and time the resource started running.</p>",
         "GetSessionActionResponse$startedAt": "<p>The date and time the resource started running.</p>",
         "GetSessionResponse$startedAt": "<p>The date and time the resource started running.</p>",
@@ -3757,6 +4274,7 @@
     "StepDescription": {
       "base": null,
       "refs": {
+        "BatchGetStepItem$description": "<p>The description of the step.</p>",
         "GetStepResponse$description": "<p>The description of the step.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>"
       }
     },
@@ -3783,6 +4301,14 @@
       "refs": {
         "AssignedSyncInputJobAttachmentsSessionActionDefinition$stepId": "<p>The step ID for the assigned sync input job attachments session action.</p>",
         "AssignedTaskRunSessionActionDefinition$stepId": "<p>The step ID.</p>",
+        "BatchGetStepError$stepId": "<p>The step ID of the step that could not be retrieved.</p>",
+        "BatchGetStepIdentifier$stepId": "<p>The step ID.</p>",
+        "BatchGetStepItem$stepId": "<p>The step ID.</p>",
+        "BatchGetTaskError$stepId": "<p>The step ID of the task that could not be retrieved.</p>",
+        "BatchGetTaskIdentifier$stepId": "<p>The step ID of the task.</p>",
+        "BatchGetTaskItem$stepId": "<p>The step ID of the task.</p>",
+        "BatchUpdateTaskError$stepId": "<p>The step ID of the task that could not be updated.</p>",
+        "BatchUpdateTaskItem$stepId": "<p>The step ID of the task to update.</p>",
         "DependenciesList$member": null,
         "GetStepRequest$stepId": "<p>The step ID.</p>",
         "GetStepResponse$stepId": "<p>The step ID.</p>",
@@ -3809,6 +4335,7 @@
     "StepLifecycleStatus": {
       "base": null,
       "refs": {
+        "BatchGetStepItem$lifecycleStatus": "<p>The life cycle status of the step.</p>",
         "GetStepResponse$lifecycleStatus": "<p>The life cycle status of the step.</p>",
         "StepSearchSummary$lifecycleStatus": "<p>The life cycle status.</p>",
         "StepSummary$lifecycleStatus": "<p>The life cycle status.</p>"
@@ -3817,6 +4344,7 @@
     "StepName": {
       "base": null,
       "refs": {
+        "BatchGetStepItem$name": "<p>The name of the step.</p>",
         "GetStepResponse$name": "<p>The name of the step.</p>",
         "StepSearchSummary$name": "<p>The step name.</p>",
         "StepSummary$name": "<p>The name of the step.</p>"
@@ -3855,6 +4383,7 @@
     "StepRequiredCapabilities": {
       "base": "<p>The details of required step capabilities.</p>",
       "refs": {
+        "BatchGetStepItem$requiredCapabilities": "<p>The required capabilities for the step.</p>",
         "GetStepResponse$requiredCapabilities": "<p>The required capabilities of the step.</p>"
       }
     },
@@ -3885,6 +4414,7 @@
     "StepTargetTaskRunStatus": {
       "base": null,
       "refs": {
+        "BatchGetStepItem$targetTaskRunStatus": "<p>The task status to start with on the step.</p>",
         "GetStepResponse$targetTaskRunStatus": "<p>The task status with which the job started.</p>",
         "StepSearchSummary$targetTaskRunStatus": "<p>The task status to update the job's tasks to.</p>",
         "StepSummary$targetTaskRunStatus": "<p>The task status to update the job's tasks to.</p>",
@@ -3895,6 +4425,7 @@
       "base": null,
       "refs": {
         "AllowedStorageProfileIds$member": null,
+        "BatchGetJobItem$storageProfileId": "<p>The storage profile ID associated with the job.</p>",
         "CreateJobRequest$storageProfileId": "<p>The storage profile ID for the storage profile to connect to the job.</p>",
         "CreateStorageProfileResponse$storageProfileId": "<p>The storage profile ID.</p>",
         "CustomerManagedFleetConfiguration$storageProfileId": "<p>The storage profile ID for the customer managed fleet.</p>",
@@ -3936,6 +4467,16 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
+        "BatchGetJobError$message": "<p>The error message.</p>",
+        "BatchGetJobItem$lifecycleStatusMessage": "<p>A message that communicates the status of the life cycle.</p>",
+        "BatchGetSessionActionError$message": "<p>The error message.</p>",
+        "BatchGetSessionError$message": "<p>The error message.</p>",
+        "BatchGetStepError$message": "<p>The error message.</p>",
+        "BatchGetStepItem$lifecycleStatusMessage": "<p>A message that communicates the status of the life cycle.</p>",
+        "BatchGetTaskError$message": "<p>The error message.</p>",
+        "BatchGetWorkerError$message": "<p>The error message.</p>",
+        "BatchUpdateJobError$message": "<p>The error message.</p>",
+        "BatchUpdateTaskError$message": "<p>The error message.</p>",
         "ConflictException$message": null,
         "ConflictException$resourceId": "<p>The identifier of the resource in use.</p>",
         "ConflictException$resourceType": "<p>The type of the resource in use.</p>",
@@ -4110,6 +4651,8 @@
     "TaskFailureRetryCount": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$taskFailureRetryCount": "<p>The number of times that tasks failed and were retried.</p>",
+        "BatchGetStepItem$taskFailureRetryCount": "<p>The number of times that tasks failed and were retried.</p>",
         "GetJobResponse$taskFailureRetryCount": "<p>The total number of times tasks from the job failed and were retried.</p>",
         "GetStepResponse$taskFailureRetryCount": "<p>The total number of times tasks from the step failed and were retried.</p>",
         "JobSearchSummary$taskFailureRetryCount": "<p>The total number of times tasks from the job failed and were retried.</p>",
@@ -4122,6 +4665,11 @@
       "base": null,
       "refs": {
         "AssignedTaskRunSessionActionDefinition$taskId": "<p>The task ID.</p>",
+        "BatchGetTaskError$taskId": "<p>The task ID of the task that could not be retrieved.</p>",
+        "BatchGetTaskIdentifier$taskId": "<p>The task ID.</p>",
+        "BatchGetTaskItem$taskId": "<p>The task ID.</p>",
+        "BatchUpdateTaskError$taskId": "<p>The task ID of the task that could not be updated.</p>",
+        "BatchUpdateTaskItem$taskId": "<p>The task ID of the task to update.</p>",
         "GetTaskRequest$taskId": "<p>The task ID.</p>",
         "GetTaskResponse$taskId": "<p>The task ID.</p>",
         "ListSessionActionsRequest$taskId": "<p>The task ID for the session actions list.</p>",
@@ -4142,6 +4690,7 @@
       "base": null,
       "refs": {
         "AssignedTaskRunSessionActionDefinition$parameters": "<p>The parameters to include.</p>",
+        "BatchGetTaskItem$parameters": "<p>The parameters for the task.</p>",
         "GetTaskResponse$parameters": "<p>The parameters for the task.</p>",
         "TaskRunSessionActionDefinition$parameters": "<p>The task parameters.</p>",
         "TaskRunSessionActionDefinitionSummary$parameters": "<p>The parameters of a task run in a session action.</p>",
@@ -4152,6 +4701,7 @@
     "TaskRetryCount": {
       "base": null,
       "refs": {
+        "BatchGetTaskItem$failureRetryCount": "<p>The number of times the task failed and was retried.</p>",
         "GetTaskResponse$failureRetryCount": "<p>The number of times that the task failed and was retried.</p>",
         "TaskSearchSummary$failureRetryCount": "<p>The number of times that the task failed and was retried.</p>",
         "TaskSummary$failureRetryCount": "<p>The number of times that the task failed and was retried.</p>"
@@ -4166,6 +4716,7 @@
     "TaskRunManifestPropertiesListResponse": {
       "base": null,
       "refs": {
+        "BatchGetSessionActionItem$manifests": "<p>The manifests for the session action.</p>",
         "GetSessionActionResponse$manifests": "<p>The list of manifest properties that describe file attachments for the task run.</p>",
         "SessionActionSummary$manifests": "<p>The list of manifest properties that describe file attachments for the task run.</p>"
       }
@@ -4209,6 +4760,9 @@
     "TaskRunStatus": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$taskRunStatus": "<p>The task run status for the job.</p>",
+        "BatchGetStepItem$taskRunStatus": "<p>The task run status for the step.</p>",
+        "BatchGetTaskItem$runStatus": "<p>The run status of the task.</p>",
         "GetJobResponse$taskRunStatus": "<p>The task run status for the job.</p>",
         "GetStepResponse$taskRunStatus": "<p>The task run status for the job.</p>",
         "GetTaskResponse$runStatus": "<p>The run status for the task.</p>",
@@ -4224,6 +4778,8 @@
     "TaskRunStatusCounts": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$taskRunStatusCounts": "<p>The number of tasks for each run status for the job.</p>",
+        "BatchGetStepItem$taskRunStatusCounts": "<p>The number of tasks for each run status for the step.</p>",
         "GetJobResponse$taskRunStatusCounts": "<p>The number of tasks running on the job.</p>",
         "GetStepResponse$taskRunStatusCounts": "<p>The number of tasks running on the job.</p>",
         "JobSearchSummary$taskRunStatusCounts": "<p>The number of tasks running on the job.</p>",
@@ -4259,6 +4815,8 @@
     "TaskTargetRunStatus": {
       "base": null,
       "refs": {
+        "BatchGetTaskItem$targetRunStatus": "<p>The run status with which to start the task.</p>",
+        "BatchUpdateTaskItem$targetRunStatus": "<p>The run status with which to start the task.</p>",
         "GetTaskResponse$targetRunStatus": "<p>The run status with which to start the task.</p>",
         "TaskSearchSummary$targetRunStatus": "<p>The run status that the task is being updated to.</p>",
         "TaskSummary$targetRunStatus": "<p>The run status on which the started.</p>",
@@ -4280,6 +4838,7 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "BatchGetSessionActionItem$workerUpdatedAt": "<p>The date and time the resource was updated by a worker.</p>",
         "GetSessionActionResponse$workerUpdatedAt": "<p>The Linux timestamp of the date and time the session action was last updated.</p>",
         "SessionActionSummary$workerUpdatedAt": "<p>The Linux timestamp of the last date and time that the session action was updated.</p>"
       }
@@ -4334,6 +4893,7 @@
     "UpdateJobLifecycleStatus": {
       "base": null,
       "refs": {
+        "BatchUpdateJobItem$lifecycleStatus": "<p>The status of a job in its lifecycle. When you change the status of the job to <code>ARCHIVED</code>, the job can't be scheduled or archived.</p> <important> <p>An archived job and its steps and tasks are deleted after 120 days. The job can't be recovered.</p> </important>",
         "UpdateJobRequest$lifecycleStatus": "<p>The status of a job in its lifecycle. When you change the status of the job to <code>ARCHIVED</code>, the job can't be scheduled or archived.</p> <important> <p>An archived jobs and its steps and tasks are deleted after 120 days. The job can't be recovered.</p> </important>"
       }
     },
@@ -4462,6 +5022,11 @@
     "UpdatedAt": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$updatedAt": "<p>The date and time the resource was updated.</p>",
+        "BatchGetSessionItem$updatedAt": "<p>The date and time the resource was updated.</p>",
+        "BatchGetStepItem$updatedAt": "<p>The date and time the resource was updated.</p>",
+        "BatchGetTaskItem$updatedAt": "<p>The date and time the resource was updated.</p>",
+        "BatchGetWorkerItem$updatedAt": "<p>The date and time the resource was updated.</p>",
         "BudgetSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
         "FarmSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
         "FleetSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
@@ -4500,6 +5065,11 @@
     "UpdatedBy": {
       "base": null,
       "refs": {
+        "BatchGetJobItem$updatedBy": "<p>The user or system that updated this resource.</p>",
+        "BatchGetSessionItem$updatedBy": "<p>The user or system that updated this resource.</p>",
+        "BatchGetStepItem$updatedBy": "<p>The user or system that updated this resource.</p>",
+        "BatchGetTaskItem$updatedBy": "<p>The user or system that updated this resource.</p>",
+        "BatchGetWorkerItem$updatedBy": "<p>The user or system that updated this resource.</p>",
         "BudgetSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
         "FarmSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
         "FleetSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
@@ -4724,6 +5294,10 @@
         "AssumeFleetRoleForWorkerRequest$workerId": "<p>The ID of the worker assuming the fleet role.</p>",
         "AssumeQueueRoleForWorkerRequest$workerId": "<p>The worker ID of the worker assuming the queue role.</p>",
         "BatchGetJobEntityRequest$workerId": "<p>The worker ID of the worker containing the job details to get.</p>",
+        "BatchGetSessionItem$workerId": "<p>The worker ID of the session.</p>",
+        "BatchGetWorkerError$workerId": "<p>The worker ID of the worker that could not be retrieved.</p>",
+        "BatchGetWorkerIdentifier$workerId": "<p>The worker ID.</p>",
+        "BatchGetWorkerItem$workerId": "<p>The worker ID.</p>",
         "CreateWorkerResponse$workerId": "<p>The worker ID.</p>",
         "DeleteWorkerRequest$workerId": "<p>The worker ID of the worker to delete.</p>",
         "GetSessionResponse$workerId": "<p>The worker ID for the session.</p>",
@@ -4758,6 +5332,7 @@
     "WorkerStatus": {
       "base": null,
       "refs": {
+        "BatchGetWorkerItem$status": "<p>The status of the worker.</p>",
         "GetWorkerResponse$status": "<p>The status of the worker.</p>",
         "WorkerSearchSummary$status": "<p>The status of the worker search.</p>",
         "WorkerSummary$status": "<p>The status of the worker.</p>"
