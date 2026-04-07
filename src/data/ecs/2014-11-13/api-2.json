@@ -4963,6 +4963,16 @@
         "operatingSystemFamily":{"shape":"OSFamily"}
       }
     },
+    "S3FilesVolumeConfiguration":{
+      "type":"structure",
+      "required":["fileSystemArn"],
+      "members":{
+        "fileSystemArn":{"shape":"String"},
+        "rootDirectory":{"shape":"String"},
+        "transitEncryptionPort":{"shape":"BoxedInteger"},
+        "accessPointArn":{"shape":"String"}
+      }
+    },
     "Scale":{
       "type":"structure",
       "members":{
@@ -6334,6 +6344,7 @@
         "host":{"shape":"HostVolumeProperties"},
         "dockerVolumeConfiguration":{"shape":"DockerVolumeConfiguration"},
         "efsVolumeConfiguration":{"shape":"EFSVolumeConfiguration"},
+        "s3filesVolumeConfiguration":{"shape":"S3FilesVolumeConfiguration"},
         "fsxWindowsFileServerVolumeConfiguration":{"shape":"FSxWindowsFileServerVolumeConfiguration"},
         "configuredAtLaunch":{"shape":"BoxedBoolean"}
       }

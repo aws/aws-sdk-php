@@ -749,6 +749,7 @@
         {"shape":"RequestTooLargeException"},
         {"shape":"KMSDisabledException"},
         {"shape":"UnsupportedMediaTypeException"},
+        {"shape":"S3FilesMountConnectivityException"},
         {"shape":"SerializedRequestEntityTooLargeException"},
         {"shape":"InvalidRuntimeException"},
         {"shape":"NoPublishedVersionException"},
@@ -765,7 +766,9 @@
         {"shape":"ServiceException"},
         {"shape":"SnapStartException"},
         {"shape":"RecursiveInvocationException"},
+        {"shape":"S3FilesMountFailureException"},
         {"shape":"EFSMountTimeoutException"},
+        {"shape":"S3FilesMountTimeoutException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidRequestContentException"},
         {"shape":"DurableExecutionAlreadyStartedException"},
@@ -812,6 +815,7 @@
         {"shape":"RequestTooLargeException"},
         {"shape":"KMSDisabledException"},
         {"shape":"UnsupportedMediaTypeException"},
+        {"shape":"S3FilesMountConnectivityException"},
         {"shape":"SerializedRequestEntityTooLargeException"},
         {"shape":"InvalidRuntimeException"},
         {"shape":"NoPublishedVersionException"},
@@ -828,7 +832,9 @@
         {"shape":"ServiceException"},
         {"shape":"SnapStartException"},
         {"shape":"RecursiveInvocationException"},
+        {"shape":"S3FilesMountFailureException"},
         {"shape":"EFSMountTimeoutException"},
+        {"shape":"S3FilesMountTimeoutException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidRequestContentException"},
         {"shape":"InvalidZipFileException"},
@@ -3075,9 +3081,9 @@
     "ExecutionTimestamp":{"type":"timestamp"},
     "FileSystemArn":{
       "type":"string",
-      "max":200,
+      "max":256,
       "min":0,
-      "pattern":"arn:aws[a-zA-Z-]*:elasticfilesystem:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:access-point/fsap-[a-f0-9]{17}"
+      "pattern":"arn:aws[a-zA-Z-]*:elasticfilesystem:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:access-point/fsap-[a-f0-9]{17}$|^arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}/access-point/fsap-[0-9a-f]{17,40}"
     },
     "FileSystemConfig":{
       "type":"structure",
@@ -5885,6 +5891,42 @@
       "max":63,
       "min":3,
       "pattern":"[0-9A-Za-z\\.\\-_]*(?<!\\.)"
+    },
+    "S3FilesMountConnectivityException":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"String"},
+        "Message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":408,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "S3FilesMountFailureException":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"String"},
+        "Message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":403,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "S3FilesMountTimeoutException":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"String"},
+        "Message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":408,
+        "senderFault":true
+      },
+      "exception":true
     },
     "S3Key":{
       "type":"string",

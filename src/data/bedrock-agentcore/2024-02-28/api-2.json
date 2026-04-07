@@ -391,6 +391,24 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "InvokeBrowser":{
+      "name":"InvokeBrowser",
+      "http":{
+        "method":"POST",
+        "requestUri":"/browsers/{browserIdentifier}/sessions/invoke",
+        "responseCode":200
+      },
+      "input":{"shape":"InvokeBrowserRequest"},
+      "output":{"shape":"InvokeBrowserResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "InvokeCodeInterpreter":{
       "name":"InvokeCodeInterpreter",
       "http":{
@@ -920,6 +938,41 @@
       "max":100,
       "min":1,
       "pattern":"[a-zA-Z0-9][a-zA-Z0-9-_]*"
+    },
+    "BrowserAction":{
+      "type":"structure",
+      "members":{
+        "mouseClick":{"shape":"MouseClickArguments"},
+        "mouseMove":{"shape":"MouseMoveArguments"},
+        "mouseDrag":{"shape":"MouseDragArguments"},
+        "mouseScroll":{"shape":"MouseScrollArguments"},
+        "keyType":{"shape":"KeyTypeArguments"},
+        "keyPress":{"shape":"KeyPressArguments"},
+        "keyShortcut":{"shape":"KeyShortcutArguments"},
+        "screenshot":{"shape":"ScreenshotArguments"}
+      },
+      "union":true
+    },
+    "BrowserActionResult":{
+      "type":"structure",
+      "members":{
+        "mouseClick":{"shape":"MouseClickResult"},
+        "mouseMove":{"shape":"MouseMoveResult"},
+        "mouseDrag":{"shape":"MouseDragResult"},
+        "mouseScroll":{"shape":"MouseScrollResult"},
+        "keyType":{"shape":"KeyTypeResult"},
+        "keyPress":{"shape":"KeyPressResult"},
+        "keyShortcut":{"shape":"KeyShortcutResult"},
+        "screenshot":{"shape":"ScreenshotResult"}
+      },
+      "union":true
+    },
+    "BrowserActionStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCESS",
+        "FAILED"
+      ]
     },
     "BrowserEnterprisePolicies":{
       "type":"list",
@@ -2295,6 +2348,42 @@
       },
       "payload":"response"
     },
+    "InvokeBrowserRequest":{
+      "type":"structure",
+      "required":[
+        "browserIdentifier",
+        "sessionId",
+        "action"
+      ],
+      "members":{
+        "browserIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"browserIdentifier"
+        },
+        "sessionId":{
+          "shape":"BrowserSessionId",
+          "location":"header",
+          "locationName":"x-amzn-browser-session-id"
+        },
+        "action":{"shape":"BrowserAction"}
+      }
+    },
+    "InvokeBrowserResponse":{
+      "type":"structure",
+      "required":[
+        "result",
+        "sessionId"
+      ],
+      "members":{
+        "result":{"shape":"BrowserActionResult"},
+        "sessionId":{
+          "shape":"BrowserSessionId",
+          "location":"header",
+          "locationName":"x-amzn-browser-session-id"
+        }
+      }
+    },
     "InvokeCodeInterpreterRequest":{
       "type":"structure",
       "required":[
@@ -2348,6 +2437,69 @@
         "stream":{"shape":"CodeInterpreterStreamOutput"}
       },
       "payload":"stream"
+    },
+    "KeyList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":5,
+      "min":1
+    },
+    "KeyPressArguments":{
+      "type":"structure",
+      "required":["key"],
+      "members":{
+        "key":{"shape":"String"},
+        "presses":{"shape":"KeyPressArgumentsPressesInteger"}
+      }
+    },
+    "KeyPressArgumentsPressesInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "KeyPressResult":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"BrowserActionStatus"},
+        "error":{"shape":"String"}
+      }
+    },
+    "KeyShortcutArguments":{
+      "type":"structure",
+      "required":["keys"],
+      "members":{
+        "keys":{"shape":"KeyList"}
+      }
+    },
+    "KeyShortcutResult":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"BrowserActionStatus"},
+        "error":{"shape":"String"}
+      }
+    },
+    "KeyTypeArguments":{
+      "type":"structure",
+      "required":["text"],
+      "members":{
+        "text":{"shape":"KeyTypeArgumentsTextString"}
+      }
+    },
+    "KeyTypeArgumentsTextString":{
+      "type":"string",
+      "max":10000,
+      "min":0
+    },
+    "KeyTypeResult":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"BrowserActionStatus"},
+        "error":{"shape":"String"}
+      }
     },
     "LanguageRuntime":{
       "type":"string",
@@ -2786,6 +2938,117 @@
       "max":256,
       "min":1
     },
+    "MouseButton":{
+      "type":"string",
+      "enum":[
+        "LEFT",
+        "RIGHT",
+        "MIDDLE"
+      ]
+    },
+    "MouseClickArguments":{
+      "type":"structure",
+      "required":[
+        "x",
+        "y"
+      ],
+      "members":{
+        "x":{"shape":"Integer"},
+        "y":{"shape":"Integer"},
+        "button":{"shape":"MouseButton"},
+        "clickCount":{"shape":"MouseClickArgumentsClickCountInteger"}
+      }
+    },
+    "MouseClickArgumentsClickCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":1
+    },
+    "MouseClickResult":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"BrowserActionStatus"},
+        "error":{"shape":"String"}
+      }
+    },
+    "MouseDragArguments":{
+      "type":"structure",
+      "required":[
+        "endX",
+        "endY",
+        "startX",
+        "startY"
+      ],
+      "members":{
+        "endX":{"shape":"Integer"},
+        "endY":{"shape":"Integer"},
+        "startX":{"shape":"Integer"},
+        "startY":{"shape":"Integer"},
+        "button":{"shape":"MouseButton"}
+      }
+    },
+    "MouseDragResult":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"BrowserActionStatus"},
+        "error":{"shape":"String"}
+      }
+    },
+    "MouseMoveArguments":{
+      "type":"structure",
+      "required":[
+        "x",
+        "y"
+      ],
+      "members":{
+        "x":{"shape":"Integer"},
+        "y":{"shape":"Integer"}
+      }
+    },
+    "MouseMoveResult":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"BrowserActionStatus"},
+        "error":{"shape":"String"}
+      }
+    },
+    "MouseScrollArguments":{
+      "type":"structure",
+      "required":[
+        "x",
+        "y"
+      ],
+      "members":{
+        "x":{"shape":"Integer"},
+        "y":{"shape":"Integer"},
+        "deltaX":{"shape":"MouseScrollArgumentsDeltaXInteger"},
+        "deltaY":{"shape":"MouseScrollArgumentsDeltaYInteger"}
+      }
+    },
+    "MouseScrollArgumentsDeltaXInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":-1000
+    },
+    "MouseScrollArgumentsDeltaYInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":-1000
+    },
+    "MouseScrollResult":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"BrowserActionStatus"},
+        "error":{"shape":"String"}
+      }
+    },
     "Name":{
       "type":"string",
       "max":100,
@@ -3112,6 +3375,25 @@
     "ScopesListType":{
       "type":"list",
       "member":{"shape":"ScopeType"}
+    },
+    "ScreenshotArguments":{
+      "type":"structure",
+      "members":{
+        "format":{"shape":"ScreenshotFormat"}
+      }
+    },
+    "ScreenshotFormat":{
+      "type":"string",
+      "enum":["PNG"]
+    },
+    "ScreenshotResult":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"BrowserActionStatus"},
+        "error":{"shape":"String"},
+        "data":{"shape":"Blob"}
+      }
     },
     "SearchCriteria":{
       "type":"structure",

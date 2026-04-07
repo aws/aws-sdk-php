@@ -4760,6 +4760,15 @@
       "input":{"shape":"GetCapacityManagerMetricDimensionsRequest"},
       "output":{"shape":"GetCapacityManagerMetricDimensionsResult"}
     },
+    "GetCapacityManagerMonitoredTagKeys":{
+      "name":"GetCapacityManagerMonitoredTagKeys",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetCapacityManagerMonitoredTagKeysRequest"},
+      "output":{"shape":"GetCapacityManagerMonitoredTagKeysResult"}
+    },
     "GetCapacityReservationUsage":{
       "name":"GetCapacityReservationUsage",
       "http":{
@@ -6719,6 +6728,15 @@
       },
       "input":{"shape":"UnmonitorInstancesRequest"},
       "output":{"shape":"UnmonitorInstancesResult"}
+    },
+    "UpdateCapacityManagerMonitoredTagKeys":{
+      "name":"UpdateCapacityManagerMonitoredTagKeys",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateCapacityManagerMonitoredTagKeysRequest"},
+      "output":{"shape":"UpdateCapacityManagerMonitoredTagKeysResult"}
     },
     "UpdateCapacityManagerOrganizationsAccess":{
       "name":"UpdateCapacityManagerOrganizationsAccess",
@@ -10758,6 +10776,10 @@
           "shape":"String",
           "locationName":"accountId"
         },
+        "AccountName":{
+          "shape":"String",
+          "locationName":"accountName"
+        },
         "InstanceFamily":{
           "shape":"String",
           "locationName":"instanceFamily"
@@ -10813,8 +10835,53 @@
         "ReservationUnusedFinancialOwner":{
           "shape":"String",
           "locationName":"reservationUnusedFinancialOwner"
+        },
+        "Tags":{
+          "shape":"CapacityManagerTagDimensionSet",
+          "locationName":"tagSet"
         }
       }
+    },
+    "CapacityManagerMonitoredTagKey":{
+      "type":"structure",
+      "members":{
+        "TagKey":{
+          "shape":"String",
+          "locationName":"tagKey"
+        },
+        "Status":{
+          "shape":"CapacityManagerMonitoredTagKeyStatus",
+          "locationName":"status"
+        },
+        "StatusMessage":{
+          "shape":"String",
+          "locationName":"statusMessage"
+        },
+        "CapacityManagerProvided":{
+          "shape":"Boolean",
+          "locationName":"capacityManagerProvided"
+        },
+        "EarliestDatapointTimestamp":{
+          "shape":"MillisecondDateTime",
+          "locationName":"earliestDatapointTimestamp"
+        }
+      }
+    },
+    "CapacityManagerMonitoredTagKeyList":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityManagerMonitoredTagKey",
+        "locationName":"item"
+      }
+    },
+    "CapacityManagerMonitoredTagKeyStatus":{
+      "type":"string",
+      "enum":[
+        "activating",
+        "activated",
+        "deactivating",
+        "suspended"
+      ]
     },
     "CapacityManagerStatus":{
       "type":"string",
@@ -10822,6 +10889,26 @@
         "enabled",
         "disabled"
       ]
+    },
+    "CapacityManagerTagDimension":{
+      "type":"structure",
+      "members":{
+        "Key":{
+          "shape":"String",
+          "locationName":"key"
+        },
+        "Value":{
+          "shape":"String",
+          "locationName":"value"
+        }
+      }
+    },
+    "CapacityManagerTagDimensionSet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityManagerTagDimension",
+        "locationName":"item"
+      }
     },
     "CapacityReservation":{
       "type":"structure",
@@ -12193,10 +12280,15 @@
       "type":"string",
       "pattern":"[a-z]{2}-[a-z]+-[1-9]+"
     },
+    "ConditionValue":{
+      "type":"string",
+      "max":300,
+      "min":0
+    },
     "ConditionValueList":{
       "type":"list",
       "member":{
-        "shape":"String",
+        "shape":"ConditionValue",
         "locationName":"item"
       },
       "max":10,
@@ -27954,6 +28046,7 @@
         "resource-region",
         "availability-zone-id",
         "account-id",
+        "account-name",
         "instance-family",
         "instance-type",
         "instance-platform",
@@ -27968,7 +28061,9 @@
         "reservation-state",
         "reservation-instance-match-criteria",
         "reservation-unused-financial-owner"
-      ]
+      ],
+      "max":300,
+      "min":0
     },
     "FilterList":{
       "type":"list",
@@ -29054,6 +29149,32 @@
         },
         "NextToken":{
           "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetCapacityManagerMonitoredTagKeysRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"GetCapacityManagerMonitoredTagKeysRequestMaxResults"},
+        "NextToken":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetCapacityManagerMonitoredTagKeysRequestMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "GetCapacityManagerMonitoredTagKeysResult":{
+      "type":"structure",
+      "members":{
+        "CapacityManagerTagKeys":{
+          "shape":"CapacityManagerMonitoredTagKeyList",
+          "locationName":"capacityManagerTagKeySet"
+        },
+        "NextToken":{
+          "shape":"String",
           "locationName":"nextToken"
         }
       }
@@ -30796,6 +30917,7 @@
         "resource-region",
         "availability-zone-id",
         "account-id",
+        "account-name",
         "instance-family",
         "instance-type",
         "instance-platform",
@@ -30810,7 +30932,9 @@
         "reservation-state",
         "reservation-instance-match-criteria",
         "reservation-unused-financial-owner"
-      ]
+      ],
+      "max":300,
+      "min":0
     },
     "GroupBySet":{
       "type":"list",
@@ -56229,6 +56353,33 @@
       "member":{
         "shape":"UnsuccessfulItem",
         "locationName":"item"
+      }
+    },
+    "UpdateCapacityManagerMonitoredTagKeysRequest":{
+      "type":"structure",
+      "members":{
+        "ActivateTagKeys":{
+          "shape":"ValueStringList",
+          "locationName":"ActivateTagKey"
+        },
+        "DeactivateTagKeys":{
+          "shape":"ValueStringList",
+          "locationName":"DeactivateTagKey"
+        },
+        "DryRun":{"shape":"Boolean"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateCapacityManagerMonitoredTagKeysResult":{
+      "type":"structure",
+      "members":{
+        "CapacityManagerTagKeys":{
+          "shape":"CapacityManagerMonitoredTagKeyList",
+          "locationName":"capacityManagerTagKeySet"
+        }
       }
     },
     "UpdateCapacityManagerOrganizationsAccessRequest":{

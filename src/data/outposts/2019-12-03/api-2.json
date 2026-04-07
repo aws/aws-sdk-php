@@ -708,12 +708,25 @@
       "enum":[
         "ACTIVE",
         "RETIRING",
-        "ISOLATED"
+        "ISOLATED",
+        "INSTALLING"
       ]
     },
     "AssetType":{
       "type":"string",
-      "enum":["COMPUTE"]
+      "enum":[
+        "COMPUTE",
+        "STORAGE",
+        "POWERSHELF",
+        "SWITCH",
+        "NETWORKING"
+      ]
+    },
+    "AssetTypeList":{
+      "type":"list",
+      "member":{"shape":"AssetType"},
+      "max":5,
+      "min":1
     },
     "AvailabilityZone":{
       "type":"string",
@@ -933,7 +946,8 @@
       "enum":[
         "ACTIVE",
         "ISOLATED",
-        "RETIRING"
+        "RETIRING",
+        "INSTALLING"
       ]
     },
     "ComputeAttributes":{
@@ -1625,6 +1639,11 @@
           "shape":"StatusList",
           "location":"querystring",
           "locationName":"StatusFilter"
+        },
+        "AssetTypeFilter":{
+          "shape":"AssetTypeList",
+          "location":"querystring",
+          "locationName":"AssetTypeFilter"
         }
       }
     },
@@ -2322,7 +2341,7 @@
     "StatusList":{
       "type":"list",
       "member":{"shape":"AssetState"},
-      "max":3,
+      "max":5,
       "min":1
     },
     "String":{

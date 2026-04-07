@@ -533,6 +533,7 @@
     "GetCapacityManagerAttributes": "<p> Retrieves the current configuration and status of EC2 Capacity Manager for your account, including enablement status, Organizations access settings, and data ingestion status. </p>",
     "GetCapacityManagerMetricData": "<p> Retrieves capacity usage metrics for your EC2 resources. Returns time-series data for metrics like unused capacity, utilization rates, and costs across On-Demand, Spot, and Capacity Reservations. Data can be grouped and filtered by various dimensions such as region, account, and instance family. </p>",
     "GetCapacityManagerMetricDimensions": "<p> Retrieves the available dimension values for capacity metrics within a specified time range. This is useful for discovering what accounts, regions, instance families, and other dimensions have data available for filtering and grouping. </p>",
+    "GetCapacityManagerMonitoredTagKeys": "<p> Retrieves the tag keys that are currently being monitored by EC2 Capacity Manager. Monitored tag keys are included as dimensions in capacity metric data, enabling you to group and filter metrics by tag values. </p>",
     "GetCapacityReservationUsage": "<p>Gets usage information about a Capacity Reservation. If the Capacity Reservation is shared, it shows usage information for the Capacity Reservation owner and each Amazon Web Services account that is currently using the shared capacity. If the Capacity Reservation is not shared, it shows only the Capacity Reservation owner's usage.</p>",
     "GetCoipPoolUsage": "<p>Describes the allocations from the specified customer-owned address pool.</p>",
     "GetConsoleOutput": "<p>Gets the console output for the specified instance. For Linux instances, the instance console output displays the exact console output that would normally be displayed on a physical monitor attached to a computer. For Windows instances, the instance console output includes the last three system event log errors.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-console.html#instance-console-console-output\">Instance console output</a> in the <i>Amazon EC2 User Guide</i>.</p>",
@@ -753,6 +754,7 @@
     "UnassignPrivateNatGatewayAddress": "<p>Unassigns secondary private IPv4 addresses from a private NAT gateway. You cannot unassign your primary private IP. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html#nat-gateway-edit-secondary\">Edit secondary IP address associations</a> in the <i>Amazon VPC User Guide</i>.</p> <p>While unassigning is in progress, you cannot assign/unassign additional IP addresses while the connections are being drained. You are, however, allowed to delete the NAT gateway.</p> <p>A private IP address will only be released at the end of MaxDrainDurationSeconds. The private IP addresses stay associated and support the existing connections, but do not support any new connections (new connections are distributed across the remaining assigned private IP address). After the existing connections drain out, the private IP addresses are released.</p> <p/> <p/>",
     "UnlockSnapshot": "<p>Unlocks a snapshot that is locked in governance mode or that is locked in compliance mode but still in the cooling-off period. You can't unlock a snapshot that is locked in compliance mode after the cooling-off period has expired.</p>",
     "UnmonitorInstances": "<p>Disables detailed monitoring for a running instance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch.html\">Monitoring your instances and volumes</a> in the <i>Amazon EC2 User Guide</i>.</p>",
+    "UpdateCapacityManagerMonitoredTagKeys": "<p> Activates or deactivates tag keys for monitoring by EC2 Capacity Manager. Activated tag keys are included as dimensions in capacity metric data, enabling you to group and filter metrics by tag values. </p>",
     "UpdateCapacityManagerOrganizationsAccess": "<p> Updates the Organizations access setting for EC2 Capacity Manager. This controls whether Capacity Manager can aggregate data from all accounts in your Amazon Web Services Organization or only from the current account. </p>",
     "UpdateInterruptibleCapacityReservationAllocation": "<p> Modifies the number of instances allocated to an interruptible reservation, allowing you to add more capacity or reclaim capacity to your source Capacity Reservation. </p>",
     "UpdateSecurityGroupRuleDescriptionsEgress": "<p>Updates the description of an egress (outbound) security group rule. You can replace an existing description, or add a description to a rule that did not have one previously. You can remove a description for a security group rule by omitting the description parameter in the request.</p>",
@@ -2435,6 +2437,7 @@
         "CancelSpotFleetRequestsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CancelSpotFleetRequestsRequest$TerminateInstances": "<p>Indicates whether to terminate the associated instances when the Spot Fleet request is canceled. The default is to terminate the instances.</p> <p>To let the instances continue to run after the Spot Fleet request is canceled, specify <code>no-terminate-instances</code>.</p>",
         "CancelSpotInstanceRequestsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CapacityManagerMonitoredTagKey$CapacityManagerProvided": "<p> Indicates whether this tag key is provided by Capacity Manager by default, rather than being user-activated. </p>",
         "CapacityReservation$EbsOptimized": "<p>Indicates whether the Capacity Reservation supports EBS-optimized instances. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS- optimized instance.</p>",
         "CapacityReservation$EphemeralStorage": "<p> <i>Deprecated.</i> </p>",
         "ClassicLinkDnsSupport$ClassicLinkDnsSupported": "<p>Indicates whether ClassicLink DNS support is enabled for the VPC.</p>",
@@ -3025,6 +3028,7 @@
         "GetCapacityManagerAttributesResult$OrganizationsAccess": "<p> Indicates whether Organizations access is enabled for cross-account data aggregation. </p>",
         "GetCapacityManagerMetricDataRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "GetCapacityManagerMetricDimensionsRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
+        "GetCapacityManagerMonitoredTagKeysRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "GetCapacityReservationUsageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetCoipPoolUsageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetConsoleOutputRequest$Latest": "<p>When enabled, retrieves the latest console output for the instance.</p> <p>Default: disabled (<code>false</code>)</p>",
@@ -3483,6 +3487,7 @@
         "UnassignPrivateNatGatewayAddressRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "UnlockSnapshotRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "UnmonitorInstancesRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "UpdateCapacityManagerMonitoredTagKeysRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "UpdateCapacityManagerOrganizationsAccessRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
         "UpdateCapacityManagerOrganizationsAccessResult$OrganizationsAccess": "<p> The updated Organizations access setting indicating whether cross-account data aggregation is enabled. </p>",
         "UpdateInterruptibleCapacityReservationAllocationRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. </p>",
@@ -4035,6 +4040,25 @@
         "MetricDimensionResultSet$member": null
       }
     },
+    "CapacityManagerMonitoredTagKey": {
+      "base": "<p> Describes a tag key that is being monitored by Capacity Manager, including its activation status and the earliest available data point. </p>",
+      "refs": {
+        "CapacityManagerMonitoredTagKeyList$member": null
+      }
+    },
+    "CapacityManagerMonitoredTagKeyList": {
+      "base": null,
+      "refs": {
+        "GetCapacityManagerMonitoredTagKeysResult$CapacityManagerTagKeys": "<p> The list of tag keys being monitored by Capacity Manager, including their current status and metadata. </p>",
+        "UpdateCapacityManagerMonitoredTagKeysResult$CapacityManagerTagKeys": "<p> The list of tag keys affected by the update, including their current status and metadata. </p>"
+      }
+    },
+    "CapacityManagerMonitoredTagKeyStatus": {
+      "base": null,
+      "refs": {
+        "CapacityManagerMonitoredTagKey$Status": "<p> The current status of the monitored tag key. Valid values are <code>activating</code>, <code>activated</code>, <code>deactivating</code>, and <code>suspended</code>. </p>"
+      }
+    },
     "CapacityManagerStatus": {
       "base": null,
       "refs": {
@@ -4042,6 +4066,18 @@
         "EnableCapacityManagerResult$CapacityManagerStatus": "<p> The current status of Capacity Manager after the enable operation. </p>",
         "GetCapacityManagerAttributesResult$CapacityManagerStatus": "<p> The current status of Capacity Manager. </p>",
         "UpdateCapacityManagerOrganizationsAccessResult$CapacityManagerStatus": "<p> The current status of Capacity Manager after the update operation. </p>"
+      }
+    },
+    "CapacityManagerTagDimension": {
+      "base": "<p> A key-value pair representing a tag associated with a capacity resource in Capacity Manager. </p>",
+      "refs": {
+        "CapacityManagerTagDimensionSet$member": null
+      }
+    },
+    "CapacityManagerTagDimensionSet": {
+      "base": null,
+      "refs": {
+        "CapacityManagerDimension$Tags": "<p> The tags associated with the capacity resource, represented as key-value pairs. Only tags that have been activated for monitoring via <code>UpdateCapacityManagerMonitoredTagKeys</code> are included. </p>"
       }
     },
     "CapacityReservation": {
@@ -4772,6 +4808,12 @@
       "base": null,
       "refs": {
         "Explanation$ComponentRegion": "<p>The Region for the component.</p>"
+      }
+    },
+    "ConditionValue": {
+      "base": null,
+      "refs": {
+        "ConditionValueList$member": null
       }
     },
     "ConditionValueList": {
@@ -12396,6 +12438,22 @@
       "refs": {
       }
     },
+    "GetCapacityManagerMonitoredTagKeysRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCapacityManagerMonitoredTagKeysRequestMaxResults": {
+      "base": null,
+      "refs": {
+        "GetCapacityManagerMonitoredTagKeysRequest$MaxResults": "<p> The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value. If not specified, up to 1000 results are returned. </p>"
+      }
+    },
+    "GetCapacityManagerMonitoredTagKeysResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetCapacityReservationUsageRequest": {
       "base": null,
       "refs": {
@@ -18407,6 +18465,7 @@
         "CapacityManagerDimension$ReservationCreateTimestamp": "<p> The timestamp when the capacity reservation was originally created, in milliseconds since epoch. This differs from the start timestamp as reservations can be created before they become active. </p>",
         "CapacityManagerDimension$ReservationStartTimestamp": "<p> The timestamp when the capacity reservation becomes active and available for use, in milliseconds since epoch. This is when the reservation begins providing capacity. </p>",
         "CapacityManagerDimension$ReservationEndTimestamp": "<p> The timestamp when the capacity reservation expires and is no longer available, in milliseconds since epoch. After this time, the reservation will not provide any capacity. </p>",
+        "CapacityManagerMonitoredTagKey$EarliestDatapointTimestamp": "<p> The earliest timestamp from which tag data is available for queries, in UTC ISO 8601 format. </p>",
         "CapacityReservation$StartDate": "<p>The date and time the Capacity Reservation was started.</p>",
         "CapacityReservationBillingRequest$LastUpdateTime": "<p>The date and time, in UTC time format, at which the request was initiated.</p>",
         "CapacityReservationCommitmentInfo$CommitmentEndDate": "<p>The date and time at which the commitment duration expires, in the ISO8601 format in the UTC time zone (<code>YYYY-MM-DDThh:mm:ss.sssZ</code>). You can't decrease the instance count or cancel the Capacity Reservation before this date and time.</p>",
@@ -24598,6 +24657,7 @@
         "CapacityManagerDimension$ResourceRegion": "<p> The Amazon Web Services Region where the capacity resource is located. </p>",
         "CapacityManagerDimension$AvailabilityZoneId": "<p> The unique identifier of the Availability Zone where the capacity resource is located. </p>",
         "CapacityManagerDimension$AccountId": "<p> The Amazon Web Services account ID that owns the capacity resource. </p>",
+        "CapacityManagerDimension$AccountName": "<p> The name of the Amazon Web Services account that owns the capacity resource. This dimension is only available when Organizations access is enabled for Capacity Manager. </p>",
         "CapacityManagerDimension$InstanceFamily": "<p> The EC2 instance family of the capacity resource. </p>",
         "CapacityManagerDimension$InstanceType": "<p> The specific EC2 instance type of the capacity resource. </p>",
         "CapacityManagerDimension$InstancePlatform": "<p> The platform or operating system of the instance. </p>",
@@ -24605,6 +24665,10 @@
         "CapacityManagerDimension$ReservationId": "<p> The unique identifier of the capacity reservation. </p>",
         "CapacityManagerDimension$ReservationInstanceMatchCriteria": "<p> The instance matching criteria for the capacity reservation, determining how instances are matched to the reservation. </p>",
         "CapacityManagerDimension$ReservationUnusedFinancialOwner": "<p> The Amazon Web Services account ID that is financially responsible for unused capacity reservation costs. </p>",
+        "CapacityManagerMonitoredTagKey$TagKey": "<p> The tag key being monitored. </p>",
+        "CapacityManagerMonitoredTagKey$StatusMessage": "<p> A message providing additional details about the current status of the monitored tag key. </p>",
+        "CapacityManagerTagDimension$Key": "<p> The tag key. </p>",
+        "CapacityManagerTagDimension$Value": "<p> The tag value. </p>",
         "CapacityReservation$CapacityReservationId": "<p>The ID of the Capacity Reservation.</p>",
         "CapacityReservation$OwnerId": "<p>The ID of the Amazon Web Services account that owns the Capacity Reservation.</p>",
         "CapacityReservation$CapacityReservationArn": "<p>The Amazon Resource Name (ARN) of the Capacity Reservation.</p>",
@@ -24690,7 +24754,6 @@
         "CoipAddressUsage$CoIp": "<p>The customer-owned IP address.</p>",
         "CoipCidr$Cidr": "<p> An address range in a customer-owned IP address space. </p>",
         "CoipCidr$LocalGatewayRouteTableId": "<p> The ID of the local gateway route table. </p>",
-        "ConditionValueList$member": null,
         "ConfirmProductInstanceRequest$ProductCode": "<p>The product code. This must be a product code that you own.</p>",
         "ConfirmProductInstanceResult$OwnerId": "<p>The Amazon Web Services account ID of the instance owner. This is only present if the product code is attached to the instance.</p>",
         "ConnectionLogOptions$CloudwatchLogGroup": "<p>The name of the CloudWatch Logs log group. Required if connection logging is enabled.</p>",
@@ -25445,6 +25508,8 @@
         "GetAwsNetworkPerformanceDataRequest$NextToken": "<p>The token for the next page of results.</p>",
         "GetAwsNetworkPerformanceDataResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "GetCapacityManagerAttributesResult$IngestionStatusMessage": "<p> A descriptive message providing additional details about the current ingestion status. This may include error information if ingestion has failed or progress details during initial setup. </p>",
+        "GetCapacityManagerMonitoredTagKeysRequest$NextToken": "<p> The token for the next page of results. Use the value returned from a previous call to retrieve additional results. </p>",
+        "GetCapacityManagerMonitoredTagKeysResult$NextToken": "<p> The token to use to retrieve the next page of results. This value is null when there are no more results to return. </p>",
         "GetCapacityReservationUsageRequest$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
         "GetCapacityReservationUsageResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "GetCapacityReservationUsageResult$CapacityReservationId": "<p>The ID of the Capacity Reservation.</p>",
@@ -26752,6 +26817,7 @@
         "UnsuccessfulItem$ResourceId": "<p>The ID of the resource.</p>",
         "UnsuccessfulItemError$Code": "<p>The error code.</p>",
         "UnsuccessfulItemError$Message": "<p>The error message accompanying the error code.</p>",
+        "UpdateCapacityManagerMonitoredTagKeysRequest$ClientToken": "<p> Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. </p>",
         "UpdateCapacityManagerOrganizationsAccessRequest$ClientToken": "<p> Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. </p>",
         "UserBucket$S3Bucket": "<p>The name of the Amazon S3 bucket where the disk image is located.</p>",
         "UserBucket$S3Key": "<p>The file name of the disk image.</p>",
@@ -28978,6 +29044,16 @@
         "RejectVpcEndpointConnectionsResult$Unsuccessful": "<p>Information about the endpoints that were not rejected, if applicable.</p>"
       }
     },
+    "UpdateCapacityManagerMonitoredTagKeysRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateCapacityManagerMonitoredTagKeysResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateCapacityManagerOrganizationsAccessRequest": {
       "base": null,
       "refs": {
@@ -29229,6 +29305,8 @@
         "TransitGatewayMulticastRegisteredGroupSources$RegisteredNetworkInterfaceIds": "<p>The IDs of the network interfaces members registered with the transit gateway multicast group.</p>",
         "TransitGatewayOptions$TransitGatewayCidrBlocks": "<p>The transit gateway CIDR blocks.</p>",
         "TransitGatewayVpcAttachment$SubnetIds": "<p>The IDs of the subnets.</p>",
+        "UpdateCapacityManagerMonitoredTagKeysRequest$ActivateTagKeys": "<p> The tag keys to activate for monitoring. Once activated, these tag keys will be included as dimensions in capacity metric data. </p>",
+        "UpdateCapacityManagerMonitoredTagKeysRequest$DeactivateTagKeys": "<p> The tag keys to deactivate. Deactivated tag keys will no longer be included as dimensions in capacity metric data. </p>",
         "VerifiedAccessInstanceCustomSubDomain$Nameservers": "<p>The name servers.</p>",
         "VpcEndpoint$RouteTableIds": "<p>(Gateway endpoint) The IDs of the route tables associated with the endpoint.</p>",
         "VpcEndpoint$SubnetIds": "<p>(Interface endpoint) The subnets for the endpoint.</p>",

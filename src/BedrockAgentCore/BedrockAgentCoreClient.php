@@ -45,6 +45,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise invokeAgentRuntimeAsync(array $args = [])
  * @method \Aws\Result invokeAgentRuntimeCommand(array $args = [])
  * @method \GuzzleHttp\Promise\Promise invokeAgentRuntimeCommandAsync(array $args = [])
+ * @method \Aws\Result invokeBrowser(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise invokeBrowserAsync(array $args = [])
  * @method \Aws\Result invokeCodeInterpreter(array $args = [])
  * @method \GuzzleHttp\Promise\Promise invokeCodeInterpreterAsync(array $args = [])
  * @method \Aws\Result listActors(array $args = [])

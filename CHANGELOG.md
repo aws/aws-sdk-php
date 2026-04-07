@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3Files` - Support for S3 Files, a new shared file system that connects any AWS compute directly with your data in Amazon S3. It provides fast, direct access to all of your S3 data as files with full file system semantics and low-latency performance, without your data ever leaving S3.
+* `Aws\Braket` - Added support for t3, g6, and g6e instance types for Hybrid Jobs.
+* `Aws\DataZone` - Update Configurations and registerS3AccessGrantLocation as public attributes for cfn
+* `Aws\Connect` - The voice enhancement mode used by the agent can now be viewed on the contact record via the DescribeContact api.
+* `Aws\EKS` - EKS MNG WarmPool feature to support ASG WarmPool feature.
+* `Aws\EC2` - EC2 Capacity Manager adds new dimensions for grouping and filtering capacity metrics, including tag-based dimensions and Account Name.
+* `Aws\Lambda` - Launching Lambda integration with S3 Files as a new file system configuration.
+* `Aws\DataSync` - Allow IAM role ARNs with IAM Paths for "SecretAccessRoleArn" field in "CustomSecretConfig"
+* `Aws\ECS` - This release provides the functionality of mounting Amazon S3 Files to Amazon ECS tasks by adding support for the new S3FilesVolumeConfiguration parameter in ECS RegisterTaskDefinition API.
+* `Aws\S3` - Updated list of the valid AWS Region values for the LocationConstraint parameter for general purpose buckets.
+* `Aws\Outposts` - This change allows listAssets to surface pending and non-compute asset information. Adds the INSTALLING asset state enum and the STORAGE, POWERSHELF, SWITCH, and NETWORKING AssetTypes.
+* `Aws\AccessAnalyzer` - Revert previous additions of API changes.
+* `Aws\BedrockAgentCore` - This release includes support for 1) InvokeBrowser API, enabling OS-level control of AgentCore Browser Tool sessions through mouse actions, keyboard input, and screenshots. 2) Added documentation noting that empty sessions are automatically deleted after one day in the ListSessions API.
+* `Aws\RTBFabric` - AWS RTB Fabric External Responder gateways now support HTTP in addition to HTTPS for inbound external links. Gateways can accept bid requests on port 80 or serve both protocols simultaneously via listener configuration, giving customers flexible transport options for their bidding infrastructure
+
 ## 3.376.4 - 2026-04-06
 
 * `Aws\Deadline` - Added 8 batch APIs (BatchGetJob, BatchGetStep, BatchGetTask, BatchGetSession, BatchGetSessionAction, BatchGetWorker, BatchUpdateJob, BatchUpdateTask) for bulk operations. Monitors can now use an Identity Center instance in a different region via the identityCenterRegion parameter.

@@ -67,6 +67,12 @@
         "ManagedEndpointConfiguration$autoScalingGroups": "<p>Describes the configuration of an auto scaling group.</p>"
       }
     },
+    "AutoScalingGroupsConfigurationRoleArnString": {
+      "base": null,
+      "refs": {
+        "AutoScalingGroupsConfiguration$roleArn": "<p>The role ARN of the auto scaling group.</p>"
+      }
+    },
     "Base64EncodedCertificateChain": {
       "base": null,
       "refs": {
@@ -77,7 +83,8 @@
     "Boolean": {
       "base": null,
       "refs": {
-        "CreateLinkRequest$httpResponderAllowed": "<p>Boolean to specify if an HTTP responder is allowed.</p>"
+        "CreateLinkRequest$httpResponderAllowed": "<p>Boolean to specify if an HTTP responder is allowed.</p>",
+        "GetLinkResponse$httpResponderAllowed": "<p>Boolean to specify if an HTTP responder is allowed.</p>"
       }
     },
     "CertificateAuthorityCertificates": {
@@ -89,6 +96,18 @@
     "ConflictException": {
       "base": "<p>The request could not be completed because of a conflict in the current state of the resource.</p>",
       "refs": {}
+    },
+    "ConnectivityType": {
+      "base": "<p>The connectivity type for a link or gateway.</p>",
+      "refs": {
+        "AcceptLinkResponse$connectivityType": "<p>The connectivity type of the link.</p>",
+        "CreateLinkResponse$connectivityType": "<p>The connectivity type of the link.</p>",
+        "GetInboundExternalLinkResponse$connectivityType": "<p>The connectivity type of the link.</p>",
+        "GetLinkResponse$connectivityType": "<p>The connectivity type of the link.</p>",
+        "GetOutboundExternalLinkResponse$connectivityType": "<p>The connectivity type of the link.</p>",
+        "ListLinksResponseStructure$connectivityType": "<p>The connectivity type of the link.</p>",
+        "RejectLinkResponse$connectivityType": "<p>The connectivity type of the link.</p>"
+      }
     },
     "CreateInboundExternalLinkRequest": {
       "base": null,
@@ -230,9 +249,11 @@
         "CreateInboundExternalLinkResponse$domainName": "<p>The domain name.</p>",
         "CreateRequesterGatewayResponse$domainName": "<p>The domain name of the requester gateway.</p>",
         "CreateResponderGatewayRequest$domainName": "<p>The domain name for the responder gateway.</p>",
+        "CreateResponderGatewayResponse$externalInboundEndpoint": "<p>The external inbound endpoint for the responder gateway.</p>",
         "GetInboundExternalLinkResponse$domainName": "<p>The domain name.</p>",
         "GetRequesterGatewayResponse$domainName": "<p>The domain name of the requester gateway.</p>",
         "GetResponderGatewayResponse$domainName": "<p>The domain name of the responder gateway.</p>",
+        "GetResponderGatewayResponse$externalInboundEndpoint": "<p>The external inbound endpoint for the responder gateway.</p>",
         "UpdateResponderGatewayRequest$domainName": "<p>The domain name for the responder gateway.</p>"
       }
     },
@@ -240,6 +261,12 @@
       "base": "<p>Describes the configuration of an Amazon Elastic Kubernetes Service endpoint.</p>",
       "refs": {
         "ManagedEndpointConfiguration$eksEndpoints": "<p>Describes the configuration of an Amazon Elastic Kubernetes Service endpoint.</p>"
+      }
+    },
+    "EksEndpointsConfigurationRoleArnString": {
+      "base": null,
+      "refs": {
+        "EksEndpointsConfiguration$roleArn": "<p>The role ARN for the cluster.</p>"
       }
     },
     "Filter": {
@@ -352,6 +379,13 @@
       "refs": {
         "ListRequesterGatewaysResponse$gatewayIds": "<p>The unique identifier of the gateways.</p>",
         "ListResponderGatewaysResponse$gatewayIds": "<p>The unique identifier of the gateways.</p>"
+      }
+    },
+    "GatewayType": {
+      "base": "<p>The type of gateway.</p>",
+      "refs": {
+        "CreateResponderGatewayRequest$gatewayType": "<p>The type of gateway. Valid values are <code>EXTERNAL</code> or <code>INTERNAL</code>.</p>",
+        "GetResponderGatewayResponse$gatewayType": "<p>The type of gateway. Valid values are <code>EXTERNAL</code> or <code>INTERNAL</code>.</p>"
       }
     },
     "GetInboundExternalLinkRequest": {
@@ -507,9 +541,10 @@
         "CreateInboundExternalLinkRequest$attributes": "<p>Attributes of the link.</p>",
         "CreateLinkRequest$attributes": "<p>Attributes of the link.</p>",
         "CreateLinkResponse$attributes": "<p>Attributes of the link.</p>",
-        "CreateOutboundExternalLinkRequest$attributes": null,
+        "CreateOutboundExternalLinkRequest$attributes": "<p>Attributes of the link.</p>",
         "GetInboundExternalLinkResponse$attributes": "<p>Attributes of the link.</p>",
         "GetLinkResponse$attributes": "<p>Attributes of the link.</p>",
+        "GetOutboundExternalLinkResponse$attributes": null,
         "ListLinksResponseStructure$attributes": "<p>Describes attributes of a link.</p>",
         "RejectLinkResponse$attributes": "<p>Attributes of the link.</p>"
       }
@@ -563,12 +598,16 @@
       "base": "<p>Describes the settings for a link log.</p>",
       "refs": {
         "AcceptLinkRequest$logSettings": "<p>Settings for the application logs.</p>",
-        "CreateInboundExternalLinkRequest$logSettings": null,
+        "AcceptLinkResponse$logSettings": null,
+        "CreateInboundExternalLinkRequest$logSettings": "<p>Settings for the application logs.</p>",
         "CreateLinkRequest$logSettings": "<p>Settings for the application logs.</p>",
-        "CreateOutboundExternalLinkRequest$logSettings": null,
-        "GetInboundExternalLinkResponse$logSettings": null,
+        "CreateLinkResponse$logSettings": null,
+        "CreateOutboundExternalLinkRequest$logSettings": "<p>Settings for the application logs.</p>",
+        "GetInboundExternalLinkResponse$logSettings": "<p>Settings for the application logs.</p>",
         "GetLinkResponse$logSettings": "<p>Settings for the application logs.</p>",
-        "GetOutboundExternalLinkResponse$logSettings": null,
+        "GetOutboundExternalLinkResponse$logSettings": "<p>Settings for the application logs.</p>",
+        "ListLinksResponseStructure$logSettings": null,
+        "RejectLinkResponse$logSettings": null,
         "UpdateLinkRequest$logSettings": "<p>Settings for the application logs.</p>"
       }
     },
@@ -589,6 +628,15 @@
         "RejectLinkResponse$status": "<p>The status of the link.</p>",
         "UpdateLinkModuleFlowResponse$status": "<p>The status of the request.</p>",
         "UpdateLinkResponse$status": "<p>The status of the request.</p>"
+      }
+    },
+    "LinkTimeoutInMillis": {
+      "base": null,
+      "refs": {
+        "AcceptLinkRequest$timeoutInMillis": "<p>The timeout value in milliseconds.</p>",
+        "CreateLinkRequest$timeoutInMillis": "<p>The timeout value in milliseconds.</p>",
+        "GetLinkResponse$timeoutInMillis": "<p>The timeout value in milliseconds.</p>",
+        "UpdateLinkRequest$timeoutInMillis": "<p>The timeout value in milliseconds.</p>"
       }
     },
     "ListLinksRequest": {
@@ -641,6 +689,15 @@
       "base": null,
       "refs": {}
     },
+    "ListenerConfig": {
+      "base": "<p>Listener configuration for the protocols (HTTP, HTTPS, or both) accepted by the gateway.</p>",
+      "refs": {
+        "CreateResponderGatewayRequest$listenerConfig": null,
+        "CreateResponderGatewayResponse$listenerConfig": "<p>The listener configuration for the responder gateway.</p>",
+        "GetResponderGatewayResponse$listenerConfig": "<p>The listener configuration for the responder gateway.</p>",
+        "UpdateResponderGatewayRequest$listenerConfig": "<p>The listener configuration for the responder gateway.</p>"
+      }
+    },
     "ManagedEndpointConfiguration": {
       "base": "<p>Describes the configuration of a managed endpoint.</p>",
       "refs": {
@@ -666,6 +723,8 @@
         "GetInboundExternalLinkResponse$pendingFlowModules": "<p>The configuration of pending flow modules.</p>",
         "GetLinkResponse$flowModules": "<p>The configuration of flow modules.</p>",
         "GetLinkResponse$pendingFlowModules": "<p>The configuration of pending flow modules.</p>",
+        "GetOutboundExternalLinkResponse$flowModules": "<p>The configuration of flow modules.</p>",
+        "GetOutboundExternalLinkResponse$pendingFlowModules": "<p>The configuration of pending flow modules.</p>",
         "ListLinksResponseStructure$flowModules": "<p>Describes the configuration of flow modules.</p>",
         "ListLinksResponseStructure$pendingFlowModules": "<p>Describes the configuration of pending flow modules.</p>",
         "RejectLinkResponse$flowModules": "<p>The configuration of flow modules.</p>",
@@ -732,7 +791,14 @@
       "refs": {
         "CreateResponderGatewayRequest$protocol": "<p>The networking protocol to use.</p>",
         "GetResponderGatewayResponse$protocol": "<p>The networking protocol.</p>",
+        "ProtocolList$member": null,
         "UpdateResponderGatewayRequest$protocol": "<p>The networking protocol to use.</p>"
+      }
+    },
+    "ProtocolList": {
+      "base": null,
+      "refs": {
+        "ListenerConfig$protocols": "<p>The protocol for connections from clients to the gateway</p>"
       }
     },
     "RateLimiterModuleParameters": {
@@ -838,13 +904,11 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
-        "AutoScalingGroupsConfiguration$roleArn": "<p>The role ARN of the auto scaling group.</p>",
         "ConflictException$message": null,
         "CreateInboundExternalLinkRequest$clientToken": "<p>The unique client token.</p>",
         "CreateOutboundExternalLinkRequest$clientToken": "<p>The unique client token.</p>",
         "CreateRequesterGatewayRequest$clientToken": "<p>The unique client token.</p>",
         "CreateResponderGatewayRequest$clientToken": "<p>The unique client token.</p>",
-        "EksEndpointsConfiguration$roleArn": "<p>The role ARN for the cluster.</p>",
         "FilterCriterion$path": "<p>The path to filter.</p>",
         "FilterCriterionValuesList$member": null,
         "HeaderTagAction$name": "<p>The name of the bid action.</p>",
@@ -964,7 +1028,8 @@
       "base": null,
       "refs": {
         "CreateOutboundExternalLinkRequest$publicEndpoint": "<p>The public endpoint of the link.</p>",
-        "GetOutboundExternalLinkResponse$publicEndpoint": "<p>The public endpoint for the link.</p>"
+        "GetOutboundExternalLinkResponse$publicEndpoint": "<p>The public endpoint for the link.</p>",
+        "ListLinksResponseStructure$publicEndpoint": "<p>The public endpoint of the outbound link.</p>"
       }
     },
     "UntagResourceRequest": {

@@ -4692,12 +4692,29 @@
         "parameters":{"shape":"ConfigurableActionParameterList"}
       }
     },
+    "Configuration":{
+      "type":"structure",
+      "members":{
+        "classification":{"shape":"ConfigurationClassificationString"},
+        "properties":{"shape":"PropertyMap"}
+      }
+    },
+    "ConfigurationClassificationString":{
+      "type":"string",
+      "max":64,
+      "min":0,
+      "pattern":"[\\w][\\w\\.\\-\\_]*"
+    },
     "ConfigurationStatus":{
       "type":"string",
       "enum":[
         "COMPLETED",
         "FAILED"
       ]
+    },
+    "Configurations":{
+      "type":"list",
+      "member":{"shape":"Configuration"}
     },
     "ConflictException":{
       "type":"structure",
@@ -4826,6 +4843,7 @@
         "type"
       ],
       "members":{
+        "configurations":{"shape":"Configurations"},
         "connectionId":{"shape":"ConnectionId"},
         "domainId":{"shape":"DomainId"},
         "domainUnitId":{"shape":"DomainUnitId"},
@@ -5158,6 +5176,7 @@
           "shape":"String",
           "idempotencyToken":true
         },
+        "configurations":{"shape":"Configurations"},
         "description":{"shape":"CreateConnectionInputDescriptionString"},
         "domainIdentifier":{
           "shape":"DomainId",
@@ -5189,6 +5208,7 @@
       ],
       "members":{
         "connectionId":{"shape":"ConnectionId"},
+        "configurations":{"shape":"Configurations"},
         "description":{"shape":"Description"},
         "domainId":{"shape":"DomainId"},
         "domainUnitId":{"shape":"DomainUnitId"},
@@ -8568,6 +8588,7 @@
       ],
       "members":{
         "connectionCredentials":{"shape":"ConnectionCredentials"},
+        "configurations":{"shape":"Configurations"},
         "connectionId":{"shape":"ConnectionId"},
         "description":{"shape":"Description"},
         "domainId":{"shape":"DomainId"},
@@ -10130,6 +10151,17 @@
     "GlueConnectionInputNameString":{
       "type":"string",
       "max":255,
+      "min":1
+    },
+    "GlueConnectionName":{
+      "type":"string",
+      "max":64,
+      "min":0
+    },
+    "GlueConnectionNames":{
+      "type":"list",
+      "member":{"shape":"GlueConnectionName"},
+      "max":16,
       "min":1
     },
     "GlueConnectionPatch":{
@@ -13080,6 +13112,7 @@
       "members":{
         "awsLocation":{"shape":"AwsLocation"},
         "glueConnectionName":{"shape":"String"},
+        "glueConnectionNames":{"shape":"GlueConnectionNames"},
         "glueConnection":{"shape":"GlueConnection"},
         "enableTrustedIdentityPropagation":{"shape":"Boolean"},
         "host":{"shape":"String"},
@@ -14335,7 +14368,8 @@
       "required":["s3Uri"],
       "members":{
         "s3Uri":{"shape":"S3Uri"},
-        "s3AccessGrantLocationId":{"shape":"S3AccessGrantLocationId"}
+        "s3AccessGrantLocationId":{"shape":"S3AccessGrantLocationId"},
+        "registerS3AccessGrantLocation":{"shape":"Boolean"}
       }
     },
     "S3PropertiesOutput":{
@@ -14344,6 +14378,7 @@
       "members":{
         "s3Uri":{"shape":"S3Uri"},
         "s3AccessGrantLocationId":{"shape":"S3AccessGrantLocationId"},
+        "registerS3AccessGrantLocation":{"shape":"Boolean"},
         "status":{"shape":"ConnectionStatus"},
         "errorMessage":{"shape":"String"}
       }
@@ -14353,7 +14388,8 @@
       "required":["s3Uri"],
       "members":{
         "s3Uri":{"shape":"S3Uri"},
-        "s3AccessGrantLocationId":{"shape":"S3AccessGrantLocationId"}
+        "s3AccessGrantLocationId":{"shape":"S3AccessGrantLocationId"},
+        "registerS3AccessGrantLocation":{"shape":"Boolean"}
       }
     },
     "S3Uri":{
@@ -14889,6 +14925,7 @@
       "members":{
         "additionalArgs":{"shape":"SparkGlueArgs"},
         "glueConnectionName":{"shape":"SparkGluePropertiesInputGlueConnectionNameString"},
+        "glueConnectionNames":{"shape":"GlueConnectionNames"},
         "glueVersion":{"shape":"SparkGluePropertiesInputGlueVersionString"},
         "idleTimeout":{"shape":"Integer"},
         "javaVirtualEnv":{"shape":"SparkGluePropertiesInputJavaVirtualEnvString"},
@@ -14927,6 +14964,7 @@
       "members":{
         "additionalArgs":{"shape":"SparkGlueArgs"},
         "glueConnectionName":{"shape":"String"},
+        "glueConnectionNames":{"shape":"GlueConnectionNames"},
         "glueVersion":{"shape":"String"},
         "idleTimeout":{"shape":"Integer"},
         "javaVirtualEnv":{"shape":"String"},
@@ -15935,6 +15973,7 @@
         "identifier"
       ],
       "members":{
+        "configurations":{"shape":"Configurations"},
         "domainIdentifier":{
           "shape":"DomainId",
           "location":"uri",
@@ -15967,6 +16006,7 @@
         "type"
       ],
       "members":{
+        "configurations":{"shape":"Configurations"},
         "connectionId":{"shape":"ConnectionId"},
         "description":{"shape":"Description"},
         "domainId":{"shape":"DomainId"},

@@ -2037,7 +2037,8 @@
         "nodeRepairConfig":{"shape":"NodeRepairConfig"},
         "capacityType":{"shape":"CapacityTypes"},
         "version":{"shape":"String"},
-        "releaseVersion":{"shape":"String"}
+        "releaseVersion":{"shape":"String"},
+        "warmPoolConfig":{"shape":"WarmPoolConfig"}
       }
     },
     "CreateNodegroupResponse":{
@@ -3743,7 +3744,8 @@
         "updateConfig":{"shape":"NodegroupUpdateConfig"},
         "nodeRepairConfig":{"shape":"NodeRepairConfig"},
         "launchTemplate":{"shape":"LaunchTemplateSpecification"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "warmPoolConfig":{"shape":"WarmPoolConfig"}
       }
     },
     "NodegroupHealth":{
@@ -4524,6 +4526,7 @@
         "scalingConfig":{"shape":"NodegroupScalingConfig"},
         "updateConfig":{"shape":"NodegroupUpdateConfig"},
         "nodeRepairConfig":{"shape":"NodeRepairConfig"},
+        "warmPoolConfig":{"shape":"WarmPoolConfig"},
         "clientRequestToken":{
           "shape":"String",
           "idempotencyToken":true
@@ -4618,7 +4621,12 @@
         "DeletionProtection",
         "NodeRepairConfig",
         "UpdatedTier",
-        "PreviousTier"
+        "PreviousTier",
+        "WarmPoolEnabled",
+        "WarmPoolMaxGroupPreparedCapacity",
+        "WarmPoolMinSize",
+        "WarmPoolState",
+        "WarmPoolReuseOnScaleIn"
       ]
     },
     "UpdateParams":{
@@ -4744,6 +4752,24 @@
         "endpointPrivateAccess":{"shape":"Boolean"},
         "publicAccessCidrs":{"shape":"StringList"}
       }
+    },
+    "WarmPoolConfig":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"BoxedBoolean"},
+        "minSize":{"shape":"ZeroCapacity"},
+        "maxGroupPreparedCapacity":{"shape":"BoxedInteger"},
+        "poolState":{"shape":"WarmPoolState"},
+        "reuseOnScaleIn":{"shape":"BoxedBoolean"}
+      }
+    },
+    "WarmPoolState":{
+      "type":"string",
+      "enum":[
+        "STOPPED",
+        "RUNNING",
+        "HIBERNATED"
+      ]
     },
     "ZeroCapacity":{
       "type":"integer",

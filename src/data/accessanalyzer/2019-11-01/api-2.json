@@ -47,24 +47,6 @@
       ],
       "idempotent":true
     },
-    "CancelPolicyPreviewJob":{
-      "name":"CancelPolicyPreviewJob",
-      "http":{
-        "method":"PUT",
-        "requestUri":"/policy/preview/{jobId}",
-        "responseCode":200
-      },
-      "input":{"shape":"CancelPolicyPreviewJobRequest"},
-      "output":{"shape":"CancelPolicyPreviewJobResponse"},
-      "errors":[
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServerException"},
-        {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
-      ],
-      "idempotent":true
-    },
     "CheckAccessNotGranted":{
       "name":"CheckAccessNotGranted",
       "http":{
@@ -180,25 +162,6 @@
       ],
       "idempotent":true
     },
-    "CreatePolicyPreviewConfiguration":{
-      "name":"CreatePolicyPreviewConfiguration",
-      "http":{
-        "method":"PUT",
-        "requestUri":"/policy/preview-configuration",
-        "responseCode":200
-      },
-      "input":{"shape":"CreatePolicyPreviewConfigurationRequest"},
-      "output":{"shape":"CreatePolicyPreviewConfigurationResponse"},
-      "errors":[
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
-        {"shape":"ValidationException"},
-        {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
-      ],
-      "idempotent":true
-    },
     "DeleteAnalyzer":{
       "name":"DeleteAnalyzer",
       "http":{
@@ -228,24 +191,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
-      ],
-      "idempotent":true
-    },
-    "DeletePolicyPreviewConfiguration":{
-      "name":"DeletePolicyPreviewConfiguration",
-      "http":{
-        "method":"DELETE",
-        "requestUri":"/policy/preview-configuration",
-        "responseCode":200
-      },
-      "input":{"shape":"DeletePolicyPreviewConfigurationRequest"},
-      "output":{"shape":"DeletePolicyPreviewConfigurationResponse"},
-      "errors":[
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServerException"},
-        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ],
@@ -427,42 +372,6 @@
       ],
       "readonly":true
     },
-    "GetPolicyPreviewConfiguration":{
-      "name":"GetPolicyPreviewConfiguration",
-      "http":{
-        "method":"GET",
-        "requestUri":"/policy/preview-configuration",
-        "responseCode":200
-      },
-      "input":{"shape":"GetPolicyPreviewConfigurationRequest"},
-      "output":{"shape":"GetPolicyPreviewConfigurationResponse"},
-      "errors":[
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServerException"},
-        {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
-      ],
-      "readonly":true
-    },
-    "GetPolicyPreviewJob":{
-      "name":"GetPolicyPreviewJob",
-      "http":{
-        "method":"GET",
-        "requestUri":"/policy/preview/{jobId}",
-        "responseCode":200
-      },
-      "input":{"shape":"GetPolicyPreviewJobRequest"},
-      "output":{"shape":"GetPolicyPreviewJobResponse"},
-      "errors":[
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServerException"},
-        {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
-      ],
-      "readonly":true
-    },
     "ListAccessPreviewFindings":{
       "name":"ListAccessPreviewFindings",
       "http":{
@@ -605,23 +514,6 @@
       ],
       "readonly":true
     },
-    "ListPolicyPreviewJobs":{
-      "name":"ListPolicyPreviewJobs",
-      "http":{
-        "method":"GET",
-        "requestUri":"/policy/preview",
-        "responseCode":200
-      },
-      "input":{"shape":"ListPolicyPreviewJobsRequest"},
-      "output":{"shape":"ListPolicyPreviewJobsResponse"},
-      "errors":[
-        {"shape":"InternalServerException"},
-        {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
-      ],
-      "readonly":true
-    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -649,25 +541,6 @@
       },
       "input":{"shape":"StartPolicyGenerationRequest"},
       "output":{"shape":"StartPolicyGenerationResponse"},
-      "errors":[
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
-        {"shape":"ValidationException"},
-        {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
-      ],
-      "idempotent":true
-    },
-    "StartPolicyPreviewJob":{
-      "name":"StartPolicyPreviewJob",
-      "http":{
-        "method":"PUT",
-        "requestUri":"/policy/preview",
-        "responseCode":200
-      },
-      "input":{"shape":"StartPolicyPreviewJobRequest"},
-      "output":{"shape":"StartPolicyPreviewJobResponse"},
       "errors":[
         {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
@@ -1172,21 +1045,6 @@
       "type":"structure",
       "members":{}
     },
-    "CancelPolicyPreviewJobRequest":{
-      "type":"structure",
-      "required":["jobId"],
-      "members":{
-        "jobId":{
-          "shape":"PolicyPreviewJobId",
-          "location":"uri",
-          "locationName":"jobId"
-        }
-      }
-    },
-    "CancelPolicyPreviewJobResponse":{
-      "type":"structure",
-      "members":{}
-    },
     "CheckAccessNotGrantedRequest":{
       "type":"structure",
       "required":[
@@ -1422,23 +1280,6 @@
         }
       }
     },
-    "CreatePolicyPreviewConfigurationRequest":{
-      "type":"structure",
-      "members":{
-        "clientToken":{
-          "shape":"String",
-          "idempotencyToken":true
-        },
-        "scope":{"shape":"PolicyPreviewScope"}
-      }
-    },
-    "CreatePolicyPreviewConfigurationResponse":{
-      "type":"structure",
-      "required":["status"],
-      "members":{
-        "status":{"shape":"PolicyPreviewStatus"}
-      }
-    },
     "Criterion":{
       "type":"structure",
       "members":{
@@ -1489,21 +1330,6 @@
           "locationName":"clientToken"
         }
       }
-    },
-    "DeletePolicyPreviewConfigurationRequest":{
-      "type":"structure",
-      "members":{
-        "clientToken":{
-          "shape":"String",
-          "idempotencyToken":true,
-          "location":"querystring",
-          "locationName":"clientToken"
-        }
-      }
-    },
-    "DeletePolicyPreviewConfigurationResponse":{
-      "type":"structure",
-      "members":{}
     },
     "DynamodbStreamConfiguration":{
       "type":"structure",
@@ -2112,40 +1938,6 @@
         "generatedPolicyResult":{"shape":"GeneratedPolicyResult"}
       }
     },
-    "GetPolicyPreviewConfigurationRequest":{
-      "type":"structure",
-      "members":{}
-    },
-    "GetPolicyPreviewConfigurationResponse":{
-      "type":"structure",
-      "members":{
-        "policyPreviewConfigurations":{"shape":"PolicyPreviewConfigurationList"}
-      }
-    },
-    "GetPolicyPreviewJobRequest":{
-      "type":"structure",
-      "required":["jobId"],
-      "members":{
-        "jobId":{
-          "shape":"PolicyPreviewJobId",
-          "location":"uri",
-          "locationName":"jobId"
-        }
-      }
-    },
-    "GetPolicyPreviewJobResponse":{
-      "type":"structure",
-      "required":[
-        "jobId",
-        "outputS3Uri"
-      ],
-      "members":{
-        "jobId":{"shape":"PolicyPreviewJobId"},
-        "jobParameters":{"shape":"PolicyPreviewJobParameters"},
-        "jobDetails":{"shape":"PolicyPreviewJobDetails"},
-        "outputS3Uri":{"shape":"S3Uri"}
-      }
-    },
     "GranteePrincipal":{"type":"string"},
     "IamRoleConfiguration":{
       "type":"structure",
@@ -2154,20 +1946,6 @@
       }
     },
     "IamTrustPolicy":{"type":"string"},
-    "ImpactAnalysisJobStatus":{
-      "type":"string",
-      "enum":[
-        "SUBMITTED",
-        "IN_PROGRESS",
-        "COMPLETED",
-        "FAILED",
-        "CANCELED"
-      ]
-    },
-    "ImpactAnalysisJobType":{
-      "type":"string",
-      "enum":["SCP"]
-    },
     "InlineArchiveRule":{
       "type":"structure",
       "required":[
@@ -2320,16 +2098,7 @@
         "AUTHORIZATION_ERROR",
         "RESOURCE_NOT_FOUND_ERROR",
         "SERVICE_QUOTA_EXCEEDED_ERROR",
-        "SERVICE_ERROR",
-        "CANCELED_JOB_ERROR",
-        "INVALID_SERVICE_LINKED_ROLE",
-        "INSUFFICIENT_PERMISSIONS_ERROR",
-        "ORGANIZATION_ACCESS_DENIED_ERROR",
-        "INVALID_TARGET_ERROR",
-        "INVALID_POLICY_PREVIEW_CONFIGURATION",
-        "INVALID_ORGANIZATION_CONFIGURATION",
-        "S3_BUCKET_NOT_FOUND_ERROR",
-        "S3_BUCKET_PERMISSION_ERROR"
+        "SERVICE_ERROR"
       ]
     },
     "JobId":{"type":"string"},
@@ -2613,38 +2382,6 @@
         "nextToken":{"shape":"Token"}
       }
     },
-    "ListPolicyPreviewJobsRequest":{
-      "type":"structure",
-      "members":{
-        "filters":{
-          "shape":"PolicyPreviewJobFiltersMap",
-          "location":"querystring"
-        },
-        "maxResults":{
-          "shape":"ListPolicyPreviewJobsRequestMaxResultsInteger",
-          "location":"querystring",
-          "locationName":"maxResults"
-        },
-        "nextToken":{
-          "shape":"Token",
-          "location":"querystring",
-          "locationName":"nextToken"
-        }
-      }
-    },
-    "ListPolicyPreviewJobsRequestMaxResultsInteger":{
-      "type":"integer",
-      "box":true,
-      "min":1
-    },
-    "ListPolicyPreviewJobsResponse":{
-      "type":"structure",
-      "required":["analysisReports"],
-      "members":{
-        "analysisReports":{"shape":"PolicyPreviewAnalysisReports"},
-        "nextToken":{"shape":"Token"}
-      }
-    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -2727,28 +2464,7 @@
       "type":"list",
       "member":{"shape":"PathElement"}
     },
-    "PolicyConfiguration":{
-      "type":"structure",
-      "required":[
-        "jobType",
-        "targetId",
-        "policyDocumentsList"
-      ],
-      "members":{
-        "jobType":{"shape":"ImpactAnalysisJobType"},
-        "targetId":{"shape":"PolicyPreviewTargetId"},
-        "policyDocumentsList":{"shape":"PolicyDocumentList"}
-      }
-    },
-    "PolicyConfigurationsList":{
-      "type":"list",
-      "member":{"shape":"PolicyConfiguration"}
-    },
     "PolicyDocument":{"type":"string"},
-    "PolicyDocumentList":{
-      "type":"list",
-      "member":{"shape":"String"}
-    },
     "PolicyGeneration":{
       "type":"structure",
       "required":[
@@ -2777,106 +2493,6 @@
       "member":{"shape":"PolicyGeneration"}
     },
     "PolicyName":{"type":"string"},
-    "PolicyPreviewAnalysisReport":{
-      "type":"structure",
-      "required":[
-        "jobId",
-        "status",
-        "submittedAt",
-        "outputS3Uri"
-      ],
-      "members":{
-        "jobId":{"shape":"PolicyPreviewJobId"},
-        "status":{"shape":"ImpactAnalysisJobStatus"},
-        "submittedAt":{"shape":"Timestamp"},
-        "startedAt":{"shape":"Timestamp"},
-        "completedAt":{"shape":"Timestamp"},
-        "outputS3Uri":{"shape":"S3Uri"}
-      }
-    },
-    "PolicyPreviewAnalysisReports":{
-      "type":"list",
-      "member":{"shape":"PolicyPreviewAnalysisReport"}
-    },
-    "PolicyPreviewConfiguration":{
-      "type":"structure",
-      "required":[
-        "scope",
-        "status",
-        "createdAt"
-      ],
-      "members":{
-        "scope":{"shape":"PolicyPreviewScope"},
-        "status":{"shape":"PolicyPreviewStatus"},
-        "createdAt":{"shape":"Timestamp"},
-        "updatedAt":{"shape":"Timestamp"}
-      }
-    },
-    "PolicyPreviewConfigurationList":{
-      "type":"list",
-      "member":{"shape":"PolicyPreviewConfiguration"}
-    },
-    "PolicyPreviewJobDetails":{
-      "type":"structure",
-      "required":[
-        "jobStatus",
-        "submittedAt"
-      ],
-      "members":{
-        "jobStatus":{"shape":"ImpactAnalysisJobStatus"},
-        "submittedAt":{"shape":"Timestamp"},
-        "startedAt":{"shape":"Timestamp"},
-        "completedAt":{"shape":"Timestamp"},
-        "jobError":{"shape":"JobError"}
-      }
-    },
-    "PolicyPreviewJobFilterName":{
-      "type":"string",
-      "enum":[
-        "jobStatus",
-        "targetId"
-      ]
-    },
-    "PolicyPreviewJobFiltersMap":{
-      "type":"map",
-      "key":{"shape":"PolicyPreviewJobFilterName"},
-      "value":{"shape":"String"},
-      "max":1,
-      "min":0
-    },
-    "PolicyPreviewJobId":{
-      "type":"string",
-      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
-    },
-    "PolicyPreviewJobParameters":{
-      "type":"structure",
-      "required":[
-        "startTime",
-        "endTime",
-        "policyConfigurations"
-      ],
-      "members":{
-        "startTime":{"shape":"Timestamp"},
-        "endTime":{"shape":"Timestamp"},
-        "policyConfigurations":{"shape":"PolicyConfigurationsList"}
-      }
-    },
-    "PolicyPreviewScope":{
-      "type":"string",
-      "enum":["GLOBAL"]
-    },
-    "PolicyPreviewStatus":{
-      "type":"string",
-      "enum":[
-        "ACTIVE",
-        "PENDING_CREATION",
-        "FAILED"
-      ]
-    },
-    "PolicyPreviewTargetId":{
-      "type":"string",
-      "pattern":"(r-[0-9a-z]{4,32})|([0-9]{12})|(ou-[0-9a-z]{4,32}-[a-z0-9]{8,32})"
-    },
     "PolicyType":{
       "type":"string",
       "enum":[
@@ -3182,10 +2798,6 @@
         "restrictPublicBuckets":{"shape":"Boolean"}
       }
     },
-    "S3Uri":{
-      "type":"string",
-      "pattern":"s3://[a-z0-9][-.a-z0-9]{1,61}[a-z0-9](/.*)?"
-    },
     "SecretsManagerSecretConfiguration":{
       "type":"structure",
       "members":{
@@ -3279,31 +2891,6 @@
       "required":["jobId"],
       "members":{
         "jobId":{"shape":"JobId"}
-      }
-    },
-    "StartPolicyPreviewJobRequest":{
-      "type":"structure",
-      "required":[
-        "policyConfigurations",
-        "startTime",
-        "outputS3Uri"
-      ],
-      "members":{
-        "policyConfigurations":{"shape":"PolicyConfigurationsList"},
-        "startTime":{"shape":"Timestamp"},
-        "endTime":{"shape":"Timestamp"},
-        "outputS3Uri":{"shape":"S3Uri"},
-        "clientToken":{
-          "shape":"String",
-          "idempotencyToken":true
-        }
-      }
-    },
-    "StartPolicyPreviewJobResponse":{
-      "type":"structure",
-      "required":["jobId"],
-      "members":{
-        "jobId":{"shape":"PolicyPreviewJobId"}
       }
     },
     "StartResourceScanRequest":{

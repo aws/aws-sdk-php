@@ -848,7 +848,7 @@
         "Execution$DurableExecutionName": "<p>The unique name of the durable execution, if one was provided when the execution was started.</p>",
         "GetDurableExecutionResponse$DurableExecutionName": "<p>The name of the durable execution. This is either the name you provided when invoking the function, or a system-generated unique identifier if no name was provided.</p>",
         "InvocationRequest$DurableExecutionName": "<p>Optional unique name for the durable execution. When you start your special function, you can give it a unique name to identify this specific execution. It's like giving a nickname to a task.</p>",
-        "ListDurableExecutionsByFunctionRequest$DurableExecutionName": "<p>Filter executions by name. Only executions with names that contain this string are returned.</p>"
+        "ListDurableExecutionsByFunctionRequest$DurableExecutionName": "<p>Filter executions by name. Only executions with names that matches this string are returned.</p>"
       }
     },
     "DurableExecutions": {
@@ -1231,11 +1231,11 @@
     "FileSystemArn": {
       "base": null,
       "refs": {
-        "FileSystemConfig$Arn": "<p>The Amazon Resource Name (ARN) of the Amazon EFS access point that provides access to the file system.</p>"
+        "FileSystemConfig$Arn": "<p>The Amazon Resource Name (ARN) of the Amazon EFS or Amazon S3 Files access point that provides access to the file system.</p>"
       }
     },
     "FileSystemConfig": {
-      "base": "<p>Details about the connection between a Lambda function and an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html\">Amazon EFS file system</a>.</p>",
+      "base": "<p>Details about the connection between a Lambda function and an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html\">Amazon EFS file system</a> or an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html\">Amazon S3 Files file system</a>.</p>",
       "refs": {
         "FileSystemConfigList$member": null
       }
@@ -1243,9 +1243,9 @@
     "FileSystemConfigList": {
       "base": null,
       "refs": {
-        "CreateFunctionRequest$FileSystemConfigs": "<p>Connection settings for an Amazon EFS file system.</p>",
-        "FunctionConfiguration$FileSystemConfigs": "<p>Connection settings for an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html\">Amazon EFS file system</a>.</p>",
-        "UpdateFunctionConfigurationRequest$FileSystemConfigs": "<p>Connection settings for an Amazon EFS file system.</p>"
+        "CreateFunctionRequest$FileSystemConfigs": "<p>Connection settings for an Amazon EFS file system or an Amazon S3 Files file system.</p>",
+        "FunctionConfiguration$FileSystemConfigs": "<p>Connection settings for an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html\">Amazon EFS file system</a> or an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html\">Amazon S3 Files file system</a>.</p>",
+        "UpdateFunctionConfigurationRequest$FileSystemConfigs": "<p>Connection settings for an Amazon EFS file system or an Amazon S3 Files file system.</p>"
       }
     },
     "Filter": {
@@ -2880,6 +2880,18 @@
         "UpdateFunctionCodeRequest$S3Bucket": "<p>An Amazon S3 bucket in the same Amazon Web Services Region as your function. The bucket can be in a different Amazon Web Services account. Use only with a function defined with a .zip file archive deployment package.</p>"
       }
     },
+    "S3FilesMountConnectivityException": {
+      "base": "<p>The Lambda function couldn't make a network connection to the configured S3 Files access point.</p>",
+      "refs": {}
+    },
+    "S3FilesMountFailureException": {
+      "base": "<p>The Lambda function couldn't mount the configured S3 Files access point due to a permission or configuration issue.</p>",
+      "refs": {}
+    },
+    "S3FilesMountTimeoutException": {
+      "base": "<p>The Lambda function made a network connection to the configured S3 Files access point, but the mount operation timed out.</p>",
+      "refs": {}
+    },
     "S3Key": {
       "base": null,
       "refs": {
@@ -3296,6 +3308,12 @@
         "ResourceNotReadyException$Type": "<p>The exception type.</p>",
         "ResourceNotReadyException$message": "<p>The exception message.</p>",
         "RuntimeVersionError$ErrorCode": "<p>The error code.</p>",
+        "S3FilesMountConnectivityException$Type": "<p>The exception type.</p>",
+        "S3FilesMountConnectivityException$Message": "<p>The exception message.</p>",
+        "S3FilesMountFailureException$Type": "<p>The exception type.</p>",
+        "S3FilesMountFailureException$Message": "<p>The exception message.</p>",
+        "S3FilesMountTimeoutException$Type": "<p>The exception type.</p>",
+        "S3FilesMountTimeoutException$Message": "<p>The exception message.</p>",
         "SerializedRequestEntityTooLargeException$Type": "<p>The error type.</p>",
         "SerializedRequestEntityTooLargeException$message": null,
         "ServiceException$Type": null,
