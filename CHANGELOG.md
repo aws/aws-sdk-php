@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.377.0 - 2026-04-07
 
 * `Aws\S3Files` - Support for S3 Files, a new shared file system that connects any AWS compute directly with your data in Amazon S3. It provides fast, direct access to all of your S3 data as files with full file system semantics and low-latency performance, without your data ever leaving S3.
 * `Aws\Braket` - Added support for t3, g6, and g6e instance types for Hybrid Jobs.
