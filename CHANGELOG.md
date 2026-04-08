@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.378.0 - 2026-04-08
 
 * `Aws\drs` - This changes adds support for modifying the replication configuration to support data replication using IPv6.
 * `Aws\MediaLive` - MediaLive is adding support for MediaConnect Router by supporting a new output type called MEDIACONNECT ROUTER. This new output type will provide seamless encrypted transport between your MediaLive channel and MediaConnect Router.
