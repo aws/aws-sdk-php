@@ -13662,6 +13662,10 @@
         "LogicalInterfaceNames": {
           "shape": "__listOf__string",
           "locationName": "logicalInterfaceNames"
+        },
+        "MediaConnectRouterSettings": {
+          "shape": "__listOfMediaConnectRouterOutputDestinationSettings",
+          "locationName": "mediaConnectRouterSettings"
         }
       }
     },
@@ -13749,6 +13753,10 @@
         "SrtGroupSettings": {
           "shape": "SrtGroupSettings",
           "locationName": "srtGroupSettings"
+        },
+        "MediaConnectRouterGroupSettings": {
+          "shape": "MediaConnectRouterGroupSettings",
+          "locationName": "mediaConnectRouterGroupSettings"
         }
       }
     },
@@ -13820,6 +13828,10 @@
         "SrtOutputSettings": {
           "shape": "SrtOutputSettings",
           "locationName": "srtOutputSettings"
+        },
+        "MediaConnectRouterOutputSettings": {
+          "shape": "MediaConnectRouterOutputSettings",
+          "locationName": "mediaConnectRouterOutputSettings"
         }
       }
     },
@@ -15993,6 +16005,10 @@
         "InferenceSettings": {
           "shape": "InferenceSettings",
           "locationName": "inferenceSettings"
+        },
+        "SpecialRouterSettings": {
+          "shape": "SpecialRouterSettings",
+          "locationName": "specialRouterSettings"
         }
       }
     },
@@ -16110,6 +16126,10 @@
         "InferenceSettings": {
           "shape": "InferenceSettings",
           "locationName": "inferenceSettings"
+        },
+        "SpecialRouterSettings": {
+          "shape": "SpecialRouterSettings",
+          "locationName": "specialRouterSettings"
         }
       },
       "required": [
@@ -25581,6 +25601,84 @@
           "shape": "__string",
           "locationName": "feedArn"
         }
+      }
+    },
+    "MediaConnectRouterContainerSettings": {
+      "type": "structure",
+      "members": {
+        "M2tsSettings": {
+          "shape": "M2tsSettings",
+          "locationName": "m2tsSettings"
+        }
+      }
+    },
+    "MediaConnectRouterGroupSettings": {
+      "type": "structure",
+      "members": {
+        "AvailabilityZones": {
+          "shape": "__listOf__string",
+          "locationName": "availabilityZones"
+        }
+      }
+    },
+    "MediaConnectRouterOutputConnectionMap": {
+      "type": "structure",
+      "members": {
+        "Pipeline0": {
+          "shape": "__string",
+          "locationName": "pipeline0"
+        },
+        "Pipeline1": {
+          "shape": "__string",
+          "locationName": "pipeline1"
+        }
+      }
+    },
+    "MediaConnectRouterOutputDestinationSettings": {
+      "type": "structure",
+      "members": {
+        "EncryptionType": {
+          "shape": "MediaConnectRouterOutputEncryptionType",
+          "locationName": "encryptionType"
+        },
+        "SecretArn": {
+          "shape": "__string",
+          "locationName": "secretArn"
+        }
+      }
+    },
+    "MediaConnectRouterOutputEncryptionType": {
+      "type": "string",
+      "enum": [
+        "AUTOMATIC",
+        "SECRETS_MANAGER"
+      ]
+    },
+    "MediaConnectRouterOutputSettings": {
+      "type": "structure",
+      "members": {
+        "ConnectedRouterInputs": {
+          "shape": "MediaConnectRouterOutputConnectionMap",
+          "locationName": "connectedRouterInputs"
+        },
+        "ContainerSettings": {
+          "shape": "MediaConnectRouterContainerSettings",
+          "locationName": "containerSettings"
+        },
+        "Destination": {
+          "shape": "OutputLocationRef",
+          "locationName": "destination"
+        }
+      },
+      "required": [
+        "Destination",
+        "ContainerSettings"
+      ]
+    },
+    "__listOfMediaConnectRouterOutputDestinationSettings": {
+      "type": "list",
+      "member": {
+        "shape": "MediaConnectRouterOutputDestinationSettings"
       }
     }
   }

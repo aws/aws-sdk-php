@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-02-26",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"drs",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"drs",
     "serviceFullName":"Elastic Disaster Recovery Service",
     "serviceId":"drs",
@@ -243,7 +244,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeJobs":{
       "name":"DescribeJobs",
@@ -259,7 +261,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeLaunchConfigurationTemplates":{
       "name":"DescribeLaunchConfigurationTemplates",
@@ -276,7 +279,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeRecoveryInstances":{
       "name":"DescribeRecoveryInstances",
@@ -292,7 +296,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeRecoverySnapshots":{
       "name":"DescribeRecoverySnapshots",
@@ -309,7 +314,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeReplicationConfigurationTemplates":{
       "name":"DescribeReplicationConfigurationTemplates",
@@ -326,7 +332,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeSourceNetworks":{
       "name":"DescribeSourceNetworks",
@@ -342,7 +349,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeSourceServers":{
       "name":"DescribeSourceServers",
@@ -358,7 +366,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "DisconnectRecoveryInstance":{
       "name":"DisconnectRecoveryInstance",
@@ -426,7 +435,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetLaunchConfiguration":{
       "name":"GetLaunchConfiguration",
@@ -442,7 +452,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetReplicationConfiguration":{
       "name":"GetReplicationConfiguration",
@@ -459,7 +470,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "InitializeService":{
       "name":"InitializeService",
@@ -492,7 +504,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListLaunchActions":{
       "name":"ListLaunchActions",
@@ -509,7 +522,8 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListStagingAccounts":{
       "name":"ListStagingAccounts",
@@ -526,7 +540,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"UninitializedAccountException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -543,7 +558,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutLaunchAction":{
       "name":"PutLaunchAction",
@@ -886,13 +902,13 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:.{16,2044}$"
+      "pattern":"arn:.{16,2044}"
     },
     "AccessDeniedException":{
       "type":"structure",
       "members":{
-        "code":{"shape":"LargeBoundedString"},
-        "message":{"shape":"LargeBoundedString"}
+        "message":{"shape":"LargeBoundedString"},
+        "code":{"shape":"LargeBoundedString"}
       },
       "error":{
         "httpStatusCode":403,
@@ -910,7 +926,7 @@
       "type":"string",
       "max":12,
       "min":12,
-      "pattern":"[0-9]{12,}"
+      "pattern":".*[0-9]{12,}.*"
     },
     "AccountIDs":{
       "type":"list",
@@ -926,17 +942,17 @@
     },
     "AgentVersion":{
       "type":"string",
-      "pattern":"^[0-9]{1,5}.[0-9]{1,5}.[0-9]{1,5}(.[0-9]{4}.[0-9]{3}.[0-9]{4})?$"
+      "pattern":"[0-9]{1,5}.[0-9]{1,5}.[0-9]{1,5}(.[0-9]{4}.[0-9]{3}.[0-9]{4})?"
     },
     "AssociateSourceNetworkStackRequest":{
       "type":"structure",
       "required":[
-        "cfnStackName",
-        "sourceNetworkID"
+        "sourceNetworkID",
+        "cfnStackName"
       ],
       "members":{
-        "cfnStackName":{"shape":"CfnStackName"},
-        "sourceNetworkID":{"shape":"SourceNetworkID"}
+        "sourceNetworkID":{"shape":"SourceNetworkID"},
+        "cfnStackName":{"shape":"CfnStackName"}
       }
     },
     "AssociateSourceNetworkStackResponse":{
@@ -949,13 +965,13 @@
       "type":"string",
       "max":255,
       "min":0,
-      "pattern":"^(us(-gov)?|ap|ca|cn|eu|sa|af|me|il)-(central|north|(north(?:east|west))|south|south(?:east|west)|east|west)-[0-9][a-z]$"
+      "pattern":"(us(-gov)?|ap|ca|cn|eu|sa|af|me|il)-(central|north|(north(?:east|west))|south|south(?:east|west)|east|west)-[0-9][a-z]"
     },
     "AwsRegion":{
       "type":"string",
       "max":255,
       "min":0,
-      "pattern":"^(us(-gov)?|ap|ca|cn|eu|sa|af|me|il)-(central|north|(north(?:east|west))|south|south(?:east|west)|east|west)-[0-9]$"
+      "pattern":"(us(-gov)?|ap|ca|cn|eu|sa|af|me|il)-(central|north|(north(?:east|west))|south|south(?:east|west)|east|west)-[0-9]"
     },
     "Boolean":{
       "type":"boolean",
@@ -977,14 +993,14 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[a-zA-Z][-a-zA-Z0-9]*$",
+      "pattern":"[a-zA-Z][-a-zA-Z0-9]*",
       "sensitive":true
     },
     "ConflictException":{
       "type":"structure",
       "members":{
-        "code":{"shape":"LargeBoundedString"},
         "message":{"shape":"LargeBoundedString"},
+        "code":{"shape":"LargeBoundedString"},
         "resourceId":{"shape":"LargeBoundedString"},
         "resourceType":{"shape":"LargeBoundedString"}
       },
@@ -1002,12 +1018,12 @@
     "ConversionProperties":{
       "type":"structure",
       "members":{
-        "dataTimestamp":{"shape":"LargeBoundedString"},
-        "forceUefi":{"shape":"Boolean"},
-        "rootVolumeName":{"shape":"LargeBoundedString"},
         "volumeToConversionMap":{"shape":"VolumeToConversionMap"},
-        "volumeToProductCodes":{"shape":"VolumeToProductCodes"},
-        "volumeToVolumeSize":{"shape":"VolumeToSizeMap"}
+        "rootVolumeName":{"shape":"LargeBoundedString"},
+        "forceUefi":{"shape":"Boolean"},
+        "dataTimestamp":{"shape":"LargeBoundedString"},
+        "volumeToVolumeSize":{"shape":"VolumeToSizeMap"},
+        "volumeToProductCodes":{"shape":"VolumeToProductCodes"}
       }
     },
     "Cpus":{
@@ -1033,15 +1049,15 @@
     "CreateLaunchConfigurationTemplateRequest":{
       "type":"structure",
       "members":{
+        "tags":{"shape":"TagsMap"},
+        "launchDisposition":{"shape":"LaunchDisposition"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"},
         "copyPrivateIp":{"shape":"Boolean"},
         "copyTags":{"shape":"Boolean"},
-        "exportBucketArn":{"shape":"ARN"},
-        "launchDisposition":{"shape":"LaunchDisposition"},
-        "launchIntoSourceInstance":{"shape":"Boolean"},
         "licensing":{"shape":"Licensing"},
+        "exportBucketArn":{"shape":"ARN"},
         "postLaunchEnabled":{"shape":"Boolean"},
-        "tags":{"shape":"TagsMap"},
-        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+        "launchIntoSourceInstance":{"shape":"Boolean"}
       }
     },
     "CreateLaunchConfigurationTemplateResponse":{
@@ -1053,49 +1069,44 @@
     "CreateReplicationConfigurationTemplateRequest":{
       "type":"structure",
       "required":[
-        "associateDefaultSecurityGroup",
-        "bandwidthThrottling",
-        "createPublicIP",
-        "dataPlaneRouting",
-        "defaultLargeStagingDiskType",
-        "ebsEncryption",
-        "pitPolicy",
-        "replicationServerInstanceType",
-        "replicationServersSecurityGroupsIDs",
         "stagingAreaSubnetId",
+        "replicationServersSecurityGroupsIDs",
+        "ebsEncryption",
+        "bandwidthThrottling",
         "stagingAreaTags",
-        "useDedicatedReplicationServer"
+        "pitPolicy"
       ],
       "members":{
+        "stagingAreaSubnetId":{"shape":"SubnetID"},
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
-        "autoReplicateNewDisks":{"shape":"Boolean"},
-        "bandwidthThrottling":{"shape":"PositiveInteger"},
-        "createPublicIP":{"shape":"Boolean"},
-        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
+        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
+        "useDedicatedReplicationServer":{"shape":"Boolean"},
         "defaultLargeStagingDiskType":{"shape":"ReplicationConfigurationDefaultLargeStagingDiskType"},
         "ebsEncryption":{"shape":"ReplicationConfigurationEbsEncryption"},
         "ebsEncryptionKeyArn":{"shape":"ARN"},
-        "pitPolicy":{"shape":"PITPolicy"},
-        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
-        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
-        "stagingAreaSubnetId":{"shape":"SubnetID"},
+        "bandwidthThrottling":{"shape":"PositiveInteger"},
+        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "createPublicIP":{"shape":"Boolean"},
         "stagingAreaTags":{"shape":"TagsMap"},
+        "pitPolicy":{"shape":"PITPolicy"},
         "tags":{"shape":"TagsMap"},
-        "useDedicatedReplicationServer":{"shape":"Boolean"}
+        "autoReplicateNewDisks":{"shape":"Boolean"},
+        "internetProtocol":{"shape":"InternetProtocol"}
       }
     },
     "CreateSourceNetworkRequest":{
       "type":"structure",
       "required":[
+        "vpcID",
         "originAccountID",
-        "originRegion",
-        "vpcID"
+        "originRegion"
       ],
       "members":{
+        "vpcID":{"shape":"VpcID"},
         "originAccountID":{"shape":"AccountID"},
         "originRegion":{"shape":"AwsRegion"},
-        "tags":{"shape":"TagsMap"},
-        "vpcID":{"shape":"VpcID"}
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreateSourceNetworkResponse":{
@@ -1133,12 +1144,12 @@
     "DataReplicationInfo":{
       "type":"structure",
       "members":{
-        "dataReplicationError":{"shape":"DataReplicationError"},
-        "dataReplicationInitiation":{"shape":"DataReplicationInitiation"},
-        "dataReplicationState":{"shape":"DataReplicationState"},
-        "etaDateTime":{"shape":"ISO8601DatetimeString"},
         "lagDuration":{"shape":"ISO8601DurationString"},
+        "etaDateTime":{"shape":"ISO8601DatetimeString"},
         "replicatedDisks":{"shape":"DataReplicationInfoReplicatedDisks"},
+        "dataReplicationState":{"shape":"DataReplicationState"},
+        "dataReplicationInitiation":{"shape":"DataReplicationInitiation"},
+        "dataReplicationError":{"shape":"DataReplicationError"},
         "stagingAvailabilityZone":{"shape":"AwsAvailabilityZone"},
         "stagingOutpostArn":{"shape":"OutpostARN"}
       }
@@ -1146,11 +1157,11 @@
     "DataReplicationInfoReplicatedDisk":{
       "type":"structure",
       "members":{
-        "backloggedStorageBytes":{"shape":"PositiveInteger"},
         "deviceName":{"shape":"BoundedString"},
+        "totalStorageBytes":{"shape":"PositiveInteger"},
         "replicatedStorageBytes":{"shape":"PositiveInteger"},
         "rescannedStorageBytes":{"shape":"PositiveInteger"},
-        "totalStorageBytes":{"shape":"PositiveInteger"},
+        "backloggedStorageBytes":{"shape":"PositiveInteger"},
         "volumeStatus":{"shape":"VolumeStatus"}
       }
     },
@@ -1163,8 +1174,8 @@
     "DataReplicationInitiation":{
       "type":"structure",
       "members":{
-        "nextAttemptDateTime":{"shape":"ISO8601DatetimeString"},
         "startDateTime":{"shape":"ISO8601DatetimeString"},
+        "nextAttemptDateTime":{"shape":"ISO8601DatetimeString"},
         "steps":{"shape":"DataReplicationInitiationSteps"}
       }
     },
@@ -1229,24 +1240,22 @@
     },
     "DeleteJobResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteLaunchActionRequest":{
       "type":"structure",
       "required":[
-        "actionId",
-        "resourceId"
+        "resourceId",
+        "actionId"
       ],
       "members":{
-        "actionId":{"shape":"LaunchActionId"},
-        "resourceId":{"shape":"LaunchActionResourceId"}
+        "resourceId":{"shape":"LaunchActionResourceId"},
+        "actionId":{"shape":"LaunchActionId"}
       }
     },
     "DeleteLaunchActionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteLaunchConfigurationTemplateRequest":{
       "type":"structure",
@@ -1257,8 +1266,7 @@
     },
     "DeleteLaunchConfigurationTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRecoveryInstanceRequest":{
       "type":"structure",
@@ -1276,8 +1284,7 @@
     },
     "DeleteReplicationConfigurationTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteSourceNetworkRequest":{
       "type":"structure",
@@ -1288,8 +1295,7 @@
     },
     "DeleteSourceNetworkResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteSourceServerRequest":{
       "type":"structure",
@@ -1300,8 +1306,7 @@
     },
     "DeleteSourceServerResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeJobLogItemsRequest":{
       "type":"structure",
@@ -1330,8 +1335,8 @@
     "DescribeJobsRequestFilters":{
       "type":"structure",
       "members":{
-        "fromDate":{"shape":"ISO8601DatetimeString"},
         "jobIDs":{"shape":"DescribeJobsRequestFiltersJobIDs"},
+        "fromDate":{"shape":"ISO8601DatetimeString"},
         "toDate":{"shape":"ISO8601DatetimeString"}
       }
     },
@@ -1385,19 +1390,19 @@
     "DescribeRecoveryInstancesResponse":{
       "type":"structure",
       "members":{
-        "items":{"shape":"DescribeRecoveryInstancesItems"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "items":{"shape":"DescribeRecoveryInstancesItems"}
       }
     },
     "DescribeRecoverySnapshotsRequest":{
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
+        "sourceServerID":{"shape":"SourceServerID"},
         "filters":{"shape":"DescribeRecoverySnapshotsRequestFilters"},
-        "maxResults":{"shape":"StrictlyPositiveInteger"},
-        "nextToken":{"shape":"PaginationToken"},
         "order":{"shape":"RecoverySnapshotsOrder"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "maxResults":{"shape":"StrictlyPositiveInteger"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "DescribeRecoverySnapshotsRequestFilters":{
@@ -1417,9 +1422,9 @@
     "DescribeReplicationConfigurationTemplatesRequest":{
       "type":"structure",
       "members":{
+        "replicationConfigurationTemplateIDs":{"shape":"ReplicationConfigurationTemplateIDs"},
         "maxResults":{"shape":"StrictlyPositiveInteger"},
-        "nextToken":{"shape":"PaginationToken"},
-        "replicationConfigurationTemplateIDs":{"shape":"ReplicationConfigurationTemplateIDs"}
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "DescribeReplicationConfigurationTemplatesResponse":{
@@ -1440,9 +1445,9 @@
     "DescribeSourceNetworksRequestFilters":{
       "type":"structure",
       "members":{
+        "sourceNetworkIDs":{"shape":"DescribeSourceNetworksRequestFiltersIDs"},
         "originAccountID":{"shape":"AccountID"},
-        "originRegion":{"shape":"AwsRegion"},
-        "sourceNetworkIDs":{"shape":"DescribeSourceNetworksRequestFiltersIDs"}
+        "originRegion":{"shape":"AwsRegion"}
       }
     },
     "DescribeSourceNetworksRequestFiltersIDs":{
@@ -1469,8 +1474,8 @@
     "DescribeSourceServersRequestFilters":{
       "type":"structure",
       "members":{
-        "hardwareId":{"shape":"BoundedString"},
         "sourceServerIDs":{"shape":"DescribeSourceServersRequestFiltersIDs"},
+        "hardwareId":{"shape":"BoundedString"},
         "stagingAccountIDs":{"shape":"AccountIDs"}
       }
     },
@@ -1504,8 +1509,8 @@
     "Disk":{
       "type":"structure",
       "members":{
-        "bytes":{"shape":"PositiveInteger"},
-        "deviceName":{"shape":"BoundedString"}
+        "deviceName":{"shape":"BoundedString"},
+        "bytes":{"shape":"PositiveInteger"}
       }
     },
     "Disks":{
@@ -1518,7 +1523,7 @@
       "type":"string",
       "max":255,
       "min":0,
-      "pattern":"^i-[0-9a-fA-F]{8,}$"
+      "pattern":"i-[0-9a-fA-F]{8,}"
     },
     "EC2InstanceState":{
       "type":"string",
@@ -1539,7 +1544,7 @@
     },
     "EbsSnapshot":{
       "type":"string",
-      "pattern":"^snap-[0-9a-zA-Z]{17}$"
+      "pattern":"snap-[0-9a-zA-Z]{17}"
     },
     "EbsSnapshotsList":{
       "type":"list",
@@ -1549,7 +1554,7 @@
       "type":"string",
       "max":19,
       "min":10,
-      "pattern":"^vol-([0-9a-fA-F]{8}|[0-9a-fA-F]{17})$"
+      "pattern":"vol-([0-9a-fA-F]{8}|[0-9a-fA-F]{17})"
     },
     "EventResourceData":{
       "type":"structure",
@@ -1628,7 +1633,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^[0-9a-zA-Z ():/.,'-_#*;]*$"
+      "pattern":"[0-9a-zA-Z ():/.,'-_#*;]*"
     },
     "GetFailbackReplicationConfigurationRequest":{
       "type":"structure",
@@ -1641,10 +1646,11 @@
       "type":"structure",
       "required":["recoveryInstanceID"],
       "members":{
-        "bandwidthThrottling":{"shape":"PositiveInteger"},
-        "name":{"shape":"BoundedString"},
         "recoveryInstanceID":{"shape":"RecoveryInstanceID"},
-        "usePrivateIP":{"shape":"Boolean"}
+        "name":{"shape":"BoundedString"},
+        "bandwidthThrottling":{"shape":"PositiveInteger"},
+        "usePrivateIP":{"shape":"Boolean"},
+        "internetProtocol":{"shape":"InternetProtocol"}
       }
     },
     "GetLaunchConfigurationRequest":{
@@ -1669,7 +1675,7 @@
       "type":"string",
       "max":32,
       "min":19,
-      "pattern":"^[1-9][0-9]*-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?Z$"
+      "pattern":"[1-9][0-9]*-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?Z"
     },
     "ISO8601DurationString":{
       "type":"string",
@@ -1679,21 +1685,19 @@
     "IdentificationHints":{
       "type":"structure",
       "members":{
-        "awsInstanceID":{"shape":"EC2InstanceID"},
         "fqdn":{"shape":"BoundedString"},
         "hostname":{"shape":"BoundedString"},
-        "vmWareUuid":{"shape":"BoundedString"}
+        "vmWareUuid":{"shape":"BoundedString"},
+        "awsInstanceID":{"shape":"EC2InstanceID"}
       }
     },
     "InitializeServiceRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "InitializeServiceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "InitiatedBy":{
       "type":"string",
@@ -1724,34 +1728,46 @@
       "exception":true,
       "fault":true
     },
+    "InternetProtocol":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "IPV6"
+      ]
+    },
     "Job":{
       "type":"structure",
       "required":["jobID"],
       "members":{
+        "jobID":{"shape":"JobID"},
         "arn":{"shape":"ARN"},
+        "type":{"shape":"JobType"},
+        "initiatedBy":{"shape":"InitiatedBy"},
         "creationDateTime":{"shape":"ISO8601DatetimeString"},
         "endDateTime":{"shape":"ISO8601DatetimeString"},
-        "initiatedBy":{"shape":"InitiatedBy"},
-        "jobID":{"shape":"JobID"},
-        "participatingResources":{"shape":"ParticipatingResources"},
-        "participatingServers":{"shape":"ParticipatingServers"},
         "status":{"shape":"JobStatus"},
+        "participatingServers":{"shape":"ParticipatingServers"},
         "tags":{"shape":"TagsMap"},
-        "type":{"shape":"JobType"}
+        "participatingResources":{"shape":"ParticipatingResources"}
       }
+    },
+    "JobEventAttemptCount":{
+      "type":"long",
+      "max":9,
+      "min":0
     },
     "JobID":{
       "type":"string",
       "max":24,
       "min":24,
-      "pattern":"^drsjob-[0-9a-zA-Z]{17}$"
+      "pattern":"drsjob-[0-9a-zA-Z]{17}"
     },
     "JobLog":{
       "type":"structure",
       "members":{
+        "logDateTime":{"shape":"ISO8601DatetimeString"},
         "event":{"shape":"JobLogEvent"},
-        "eventData":{"shape":"JobLogEventData"},
-        "logDateTime":{"shape":"ISO8601DatetimeString"}
+        "eventData":{"shape":"JobLogEventData"}
       }
     },
     "JobLogEvent":{
@@ -1789,12 +1805,14 @@
     "JobLogEventData":{
       "type":"structure",
       "members":{
-        "conversionProperties":{"shape":"ConversionProperties"},
-        "conversionServerID":{"shape":"EC2InstanceID"},
-        "eventResourceData":{"shape":"EventResourceData"},
-        "rawError":{"shape":"LargeBoundedString"},
         "sourceServerID":{"shape":"SourceServerID"},
-        "targetInstanceID":{"shape":"EC2InstanceID"}
+        "conversionServerID":{"shape":"EC2InstanceID"},
+        "targetInstanceID":{"shape":"EC2InstanceID"},
+        "rawError":{"shape":"LargeBoundedString"},
+        "conversionProperties":{"shape":"ConversionProperties"},
+        "eventResourceData":{"shape":"EventResourceData"},
+        "attemptCount":{"shape":"JobEventAttemptCount"},
+        "maxAttemptsCount":{"shape":"JobEventAttemptCount"}
       }
     },
     "JobLogs":{
@@ -1845,17 +1863,17 @@
     "LaunchAction":{
       "type":"structure",
       "members":{
-        "actionCode":{"shape":"SsmDocumentName"},
         "actionId":{"shape":"LaunchActionId"},
-        "actionVersion":{"shape":"LaunchActionVersion"},
-        "active":{"shape":"Boolean"},
-        "category":{"shape":"LaunchActionCategory"},
-        "description":{"shape":"LaunchActionDescription"},
+        "actionCode":{"shape":"SsmDocumentName"},
+        "type":{"shape":"LaunchActionType"},
         "name":{"shape":"LaunchActionName"},
-        "optional":{"shape":"Boolean"},
+        "active":{"shape":"Boolean"},
         "order":{"shape":"LaunchActionOrder"},
+        "actionVersion":{"shape":"LaunchActionVersion"},
+        "optional":{"shape":"Boolean"},
         "parameters":{"shape":"LaunchActionParameters"},
-        "type":{"shape":"LaunchActionType"}
+        "description":{"shape":"LaunchActionDescription"},
+        "category":{"shape":"LaunchActionCategory"}
       }
     },
     "LaunchActionCategory":{
@@ -1872,13 +1890,13 @@
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"^[0-9a-zA-Z ():/.,'-_#*; ]*$"
+      "pattern":"[0-9a-zA-Z ():/.,'-_#*; ]*"
     },
     "LaunchActionId":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      "pattern":"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
     },
     "LaunchActionIds":{
       "type":"list",
@@ -1890,7 +1908,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[A-Za-z0-9][A-Za-z0-9 /_-]*$"
+      "pattern":"[A-Za-z0-9][A-Za-z0-9 /_-]*"
     },
     "LaunchActionOrder":{
       "type":"integer",
@@ -1901,15 +1919,15 @@
     "LaunchActionParameter":{
       "type":"structure",
       "members":{
-        "type":{"shape":"LaunchActionParameterType"},
-        "value":{"shape":"LaunchActionParameterValue"}
+        "value":{"shape":"LaunchActionParameterValue"},
+        "type":{"shape":"LaunchActionParameterType"}
       }
     },
     "LaunchActionParameterName":{
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"^([A-Za-z0-9])+$"
+      "pattern":"([A-Za-z0-9])+"
     },
     "LaunchActionParameterType":{
       "type":"string",
@@ -1922,7 +1940,7 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"^[A-Za-z0-9.-]+$"
+      "pattern":"[A-Za-z0-9.-]+"
     },
     "LaunchActionParameters":{
       "type":"map",
@@ -1933,22 +1951,22 @@
     },
     "LaunchActionResourceId":{
       "type":"string",
-      "pattern":"^(s-[0-9a-zA-Z]{17}$|lct-[0-9a-zA-Z]{17})$"
+      "pattern":"(s-[0-9a-zA-Z]{17}$|lct-[0-9a-zA-Z]{17})"
     },
     "LaunchActionRun":{
       "type":"structure",
       "members":{
         "action":{"shape":"LaunchAction"},
-        "failureReason":{"shape":"FailureReason"},
         "runId":{"shape":"LaunchActionRunId"},
-        "status":{"shape":"LaunchActionRunStatus"}
+        "status":{"shape":"LaunchActionRunStatus"},
+        "failureReason":{"shape":"FailureReason"}
       }
     },
     "LaunchActionRunId":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      "pattern":"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
     },
     "LaunchActionRunStatus":{
       "type":"string",
@@ -1973,7 +1991,7 @@
       "type":"string",
       "max":10,
       "min":1,
-      "pattern":"^(\\$DEFAULT|\\$LATEST|[0-9]+)$"
+      "pattern":"(\\$DEFAULT|\\$LATEST|[0-9]+)"
     },
     "LaunchActions":{
       "type":"list",
@@ -1990,46 +2008,46 @@
     "LaunchActionsStatus":{
       "type":"structure",
       "members":{
-        "runs":{"shape":"LaunchActionRuns"},
-        "ssmAgentDiscoveryDatetime":{"shape":"ISO8601DatetimeString"}
+        "ssmAgentDiscoveryDatetime":{"shape":"ISO8601DatetimeString"},
+        "runs":{"shape":"LaunchActionRuns"}
       }
     },
     "LaunchConfiguration":{
       "type":"structure",
       "members":{
-        "copyPrivateIp":{"shape":"Boolean"},
-        "copyTags":{"shape":"Boolean"},
+        "sourceServerID":{"shape":"SourceServerID"},
+        "name":{"shape":"SmallBoundedString"},
         "ec2LaunchTemplateID":{"shape":"BoundedString"},
         "launchDisposition":{"shape":"LaunchDisposition"},
-        "launchIntoInstanceProperties":{"shape":"LaunchIntoInstanceProperties"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"},
+        "copyPrivateIp":{"shape":"Boolean"},
+        "copyTags":{"shape":"Boolean"},
         "licensing":{"shape":"Licensing"},
-        "name":{"shape":"SmallBoundedString"},
         "postLaunchEnabled":{"shape":"Boolean"},
-        "sourceServerID":{"shape":"SourceServerID"},
-        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+        "launchIntoInstanceProperties":{"shape":"LaunchIntoInstanceProperties"}
       }
     },
     "LaunchConfigurationTemplate":{
       "type":"structure",
       "members":{
+        "launchConfigurationTemplateID":{"shape":"LaunchConfigurationTemplateID"},
         "arn":{"shape":"ARN"},
+        "tags":{"shape":"TagsMap"},
+        "launchDisposition":{"shape":"LaunchDisposition"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"},
         "copyPrivateIp":{"shape":"Boolean"},
         "copyTags":{"shape":"Boolean"},
-        "exportBucketArn":{"shape":"ARN"},
-        "launchConfigurationTemplateID":{"shape":"LaunchConfigurationTemplateID"},
-        "launchDisposition":{"shape":"LaunchDisposition"},
-        "launchIntoSourceInstance":{"shape":"Boolean"},
         "licensing":{"shape":"Licensing"},
+        "exportBucketArn":{"shape":"ARN"},
         "postLaunchEnabled":{"shape":"Boolean"},
-        "tags":{"shape":"TagsMap"},
-        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+        "launchIntoSourceInstance":{"shape":"Boolean"}
       }
     },
     "LaunchConfigurationTemplateID":{
       "type":"string",
       "max":21,
       "min":21,
-      "pattern":"^lct-[0-9a-zA-Z]{17}$"
+      "pattern":"lct-[0-9a-zA-Z]{17}"
     },
     "LaunchConfigurationTemplateIDs":{
       "type":"list",
@@ -2076,10 +2094,10 @@
       "type":"structure",
       "members":{
         "addedToServiceDateTime":{"shape":"ISO8601DatetimeString"},
-        "elapsedReplicationDuration":{"shape":"ISO8601DurationString"},
         "firstByteDateTime":{"shape":"ISO8601DatetimeString"},
-        "lastLaunch":{"shape":"LifeCycleLastLaunch"},
-        "lastSeenByServiceDateTime":{"shape":"ISO8601DatetimeString"}
+        "elapsedReplicationDuration":{"shape":"ISO8601DurationString"},
+        "lastSeenByServiceDateTime":{"shape":"ISO8601DatetimeString"},
+        "lastLaunch":{"shape":"LifeCycleLastLaunch"}
       }
     },
     "LifeCycleLastLaunch":{
@@ -2101,9 +2119,9 @@
       "type":"structure",
       "required":["stagingAccountID"],
       "members":{
+        "stagingAccountID":{"shape":"AccountID"},
         "maxResults":{"shape":"MaxResultsReplicatingSourceServers"},
-        "nextToken":{"shape":"PaginationToken"},
-        "stagingAccountID":{"shape":"AccountID"}
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListExtensibleSourceServersResponse":{
@@ -2117,10 +2135,10 @@
       "type":"structure",
       "required":["resourceId"],
       "members":{
+        "resourceId":{"shape":"LaunchActionResourceId"},
         "filters":{"shape":"LaunchActionsRequestFilters"},
         "maxResults":{"shape":"MaxResultsType"},
-        "nextToken":{"shape":"PaginationToken"},
-        "resourceId":{"shape":"LaunchActionResourceId"}
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListLaunchActionsResponse":{
@@ -2190,9 +2208,9 @@
     "NetworkInterface":{
       "type":"structure",
       "members":{
+        "macAddress":{"shape":"BoundedString"},
         "ips":{"shape":"IPsList"},
-        "isPrimary":{"shape":"Boolean"},
-        "macAddress":{"shape":"BoundedString"}
+        "isPrimary":{"shape":"Boolean"}
       }
     },
     "NetworkInterfaces":{
@@ -2218,7 +2236,7 @@
       "type":"string",
       "max":255,
       "min":20,
-      "pattern":"^arn:aws([a-z-]+)?:outposts:[a-z\\d-]+:\\d{12}:outpost/op-[a-f0-9]{17}$"
+      "pattern":"arn:aws([a-z-]+)?:outposts:[a-z\\d-]+:\\d{12}:outpost/op-[a-f0-9]{17}"
     },
     "PITPolicy":{
       "type":"list",
@@ -2229,16 +2247,16 @@
     "PITPolicyRule":{
       "type":"structure",
       "required":[
+        "units",
         "interval",
-        "retentionDuration",
-        "units"
+        "retentionDuration"
       ],
       "members":{
-        "enabled":{"shape":"Boolean"},
+        "ruleID":{"shape":"PositiveInteger"},
+        "units":{"shape":"PITPolicyRuleUnits"},
         "interval":{"shape":"StrictlyPositiveInteger"},
         "retentionDuration":{"shape":"StrictlyPositiveInteger"},
-        "ruleID":{"shape":"PositiveInteger"},
-        "units":{"shape":"PITPolicyRuleUnits"}
+        "enabled":{"shape":"Boolean"}
       }
     },
     "PITPolicyRuleUnits":{
@@ -2257,8 +2275,8 @@
     "ParticipatingResource":{
       "type":"structure",
       "members":{
-        "launchStatus":{"shape":"LaunchStatus"},
-        "participatingResourceID":{"shape":"ParticipatingResourceID"}
+        "participatingResourceID":{"shape":"ParticipatingResourceID"},
+        "launchStatus":{"shape":"LaunchStatus"}
       }
     },
     "ParticipatingResourceID":{
@@ -2275,10 +2293,10 @@
     "ParticipatingServer":{
       "type":"structure",
       "members":{
-        "launchActionsStatus":{"shape":"LaunchActionsStatus"},
-        "launchStatus":{"shape":"LaunchStatus"},
+        "sourceServerID":{"shape":"SourceServerID"},
         "recoveryInstanceID":{"shape":"RecoveryInstanceID"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "launchStatus":{"shape":"LaunchStatus"},
+        "launchActionsStatus":{"shape":"LaunchActionsStatus"}
       }
     },
     "ParticipatingServers":{
@@ -2300,7 +2318,7 @@
       "type":"string",
       "max":25,
       "min":25,
-      "pattern":"^([A-Za-z0-9])+$"
+      "pattern":"([A-Za-z0-9])+"
     },
     "ProductCodeMode":{
       "type":"string",
@@ -2316,67 +2334,67 @@
     "PutLaunchActionRequest":{
       "type":"structure",
       "required":[
+        "resourceId",
         "actionCode",
-        "actionId",
-        "actionVersion",
-        "active",
-        "category",
-        "description",
-        "name",
-        "optional",
         "order",
-        "resourceId"
+        "actionId",
+        "optional",
+        "active",
+        "name",
+        "actionVersion",
+        "category",
+        "description"
       ],
       "members":{
+        "resourceId":{"shape":"LaunchActionResourceId"},
         "actionCode":{"shape":"SsmDocumentName"},
-        "actionId":{"shape":"LaunchActionId"},
-        "actionVersion":{"shape":"LaunchActionVersion"},
-        "active":{"shape":"Boolean"},
-        "category":{"shape":"LaunchActionCategory"},
-        "description":{"shape":"LaunchActionDescription"},
-        "name":{"shape":"LaunchActionName"},
-        "optional":{"shape":"Boolean"},
         "order":{"shape":"LaunchActionOrder"},
+        "actionId":{"shape":"LaunchActionId"},
+        "optional":{"shape":"Boolean"},
+        "active":{"shape":"Boolean"},
+        "name":{"shape":"LaunchActionName"},
+        "actionVersion":{"shape":"LaunchActionVersion"},
+        "category":{"shape":"LaunchActionCategory"},
         "parameters":{"shape":"LaunchActionParameters"},
-        "resourceId":{"shape":"LaunchActionResourceId"}
+        "description":{"shape":"LaunchActionDescription"}
       }
     },
     "PutLaunchActionResponse":{
       "type":"structure",
       "members":{
-        "actionCode":{"shape":"SsmDocumentName"},
-        "actionId":{"shape":"LaunchActionId"},
-        "actionVersion":{"shape":"LaunchActionVersion"},
-        "active":{"shape":"Boolean"},
-        "category":{"shape":"LaunchActionCategory"},
-        "description":{"shape":"LaunchActionDescription"},
-        "name":{"shape":"LaunchActionName"},
-        "optional":{"shape":"Boolean"},
-        "order":{"shape":"LaunchActionOrder"},
-        "parameters":{"shape":"LaunchActionParameters"},
         "resourceId":{"shape":"LaunchActionResourceId"},
-        "type":{"shape":"LaunchActionType"}
+        "actionId":{"shape":"LaunchActionId"},
+        "actionCode":{"shape":"SsmDocumentName"},
+        "type":{"shape":"LaunchActionType"},
+        "name":{"shape":"LaunchActionName"},
+        "active":{"shape":"Boolean"},
+        "order":{"shape":"LaunchActionOrder"},
+        "actionVersion":{"shape":"LaunchActionVersion"},
+        "optional":{"shape":"Boolean"},
+        "parameters":{"shape":"LaunchActionParameters"},
+        "description":{"shape":"LaunchActionDescription"},
+        "category":{"shape":"LaunchActionCategory"}
       }
     },
     "RecoveryInstance":{
       "type":"structure",
       "members":{
-        "agentVersion":{"shape":"AgentVersion"},
-        "arn":{"shape":"ARN"},
-        "dataReplicationInfo":{"shape":"RecoveryInstanceDataReplicationInfo"},
         "ec2InstanceID":{"shape":"EC2InstanceID"},
         "ec2InstanceState":{"shape":"EC2InstanceState"},
-        "failback":{"shape":"RecoveryInstanceFailback"},
-        "isDrill":{"shape":"Boolean"},
         "jobID":{"shape":"JobID"},
-        "originAvailabilityZone":{"shape":"AwsAvailabilityZone"},
-        "originEnvironment":{"shape":"OriginEnvironment"},
-        "pointInTimeSnapshotDateTime":{"shape":"ISO8601DatetimeString"},
         "recoveryInstanceID":{"shape":"RecoveryInstanceID"},
-        "recoveryInstanceProperties":{"shape":"RecoveryInstanceProperties"},
-        "sourceOutpostArn":{"shape":"OutpostARN"},
         "sourceServerID":{"shape":"SourceServerID"},
-        "tags":{"shape":"TagsMap"}
+        "arn":{"shape":"ARN"},
+        "tags":{"shape":"TagsMap"},
+        "failback":{"shape":"RecoveryInstanceFailback"},
+        "dataReplicationInfo":{"shape":"RecoveryInstanceDataReplicationInfo"},
+        "recoveryInstanceProperties":{"shape":"RecoveryInstanceProperties"},
+        "pointInTimeSnapshotDateTime":{"shape":"ISO8601DatetimeString"},
+        "isDrill":{"shape":"Boolean"},
+        "originEnvironment":{"shape":"OriginEnvironment"},
+        "originAvailabilityZone":{"shape":"AwsAvailabilityZone"},
+        "agentVersion":{"shape":"AgentVersion"},
+        "sourceOutpostArn":{"shape":"OutpostARN"}
       }
     },
     "RecoveryInstanceDataReplicationError":{
@@ -2389,12 +2407,12 @@
     "RecoveryInstanceDataReplicationInfo":{
       "type":"structure",
       "members":{
-        "dataReplicationError":{"shape":"RecoveryInstanceDataReplicationError"},
-        "dataReplicationInitiation":{"shape":"RecoveryInstanceDataReplicationInitiation"},
-        "dataReplicationState":{"shape":"RecoveryInstanceDataReplicationState"},
-        "etaDateTime":{"shape":"ISO8601DatetimeString"},
         "lagDuration":{"shape":"ISO8601DatetimeString"},
+        "etaDateTime":{"shape":"ISO8601DatetimeString"},
         "replicatedDisks":{"shape":"RecoveryInstanceDataReplicationInfoReplicatedDisks"},
+        "dataReplicationState":{"shape":"RecoveryInstanceDataReplicationState"},
+        "dataReplicationInitiation":{"shape":"RecoveryInstanceDataReplicationInitiation"},
+        "dataReplicationError":{"shape":"RecoveryInstanceDataReplicationError"},
         "stagingAvailabilityZone":{"shape":"AwsAvailabilityZone"},
         "stagingOutpostArn":{"shape":"OutpostARN"}
       }
@@ -2402,11 +2420,11 @@
     "RecoveryInstanceDataReplicationInfoReplicatedDisk":{
       "type":"structure",
       "members":{
-        "backloggedStorageBytes":{"shape":"PositiveInteger"},
         "deviceName":{"shape":"BoundedString"},
+        "totalStorageBytes":{"shape":"PositiveInteger"},
         "replicatedStorageBytes":{"shape":"PositiveInteger"},
         "rescannedStorageBytes":{"shape":"PositiveInteger"},
-        "totalStorageBytes":{"shape":"PositiveInteger"}
+        "backloggedStorageBytes":{"shape":"PositiveInteger"}
       }
     },
     "RecoveryInstanceDataReplicationInfoReplicatedDisks":{
@@ -2486,9 +2504,9 @@
     "RecoveryInstanceDisk":{
       "type":"structure",
       "members":{
+        "internalDeviceName":{"shape":"BoundedString"},
         "bytes":{"shape":"PositiveInteger"},
-        "ebsVolumeID":{"shape":"EbsVolumeID"},
-        "internalDeviceName":{"shape":"BoundedString"}
+        "ebsVolumeID":{"shape":"EbsVolumeID"}
       }
     },
     "RecoveryInstanceDisks":{
@@ -2500,23 +2518,23 @@
     "RecoveryInstanceFailback":{
       "type":"structure",
       "members":{
-        "agentLastSeenByServiceDateTime":{"shape":"ISO8601DatetimeString"},
-        "elapsedReplicationDuration":{"shape":"ISO8601DatetimeString"},
         "failbackClientID":{"shape":"BoundedString"},
-        "failbackClientLastSeenByServiceDateTime":{"shape":"ISO8601DatetimeString"},
-        "failbackInitiationTime":{"shape":"ISO8601DatetimeString"},
         "failbackJobID":{"shape":"JobID"},
-        "failbackLaunchType":{"shape":"FailbackLaunchType"},
+        "failbackInitiationTime":{"shape":"ISO8601DatetimeString"},
+        "state":{"shape":"FailbackState"},
+        "agentLastSeenByServiceDateTime":{"shape":"ISO8601DatetimeString"},
+        "failbackClientLastSeenByServiceDateTime":{"shape":"ISO8601DatetimeString"},
         "failbackToOriginalServer":{"shape":"Boolean"},
         "firstByteDateTime":{"shape":"ISO8601DatetimeString"},
-        "state":{"shape":"FailbackState"}
+        "elapsedReplicationDuration":{"shape":"ISO8601DatetimeString"},
+        "failbackLaunchType":{"shape":"FailbackLaunchType"}
       }
     },
     "RecoveryInstanceID":{
       "type":"string",
       "max":19,
       "min":10,
-      "pattern":"^i-[0-9a-fA-F]{8,}$"
+      "pattern":"i-[0-9a-fA-F]{8,}"
     },
     "RecoveryInstanceIDs":{
       "type":"list",
@@ -2527,13 +2545,13 @@
     "RecoveryInstanceProperties":{
       "type":"structure",
       "members":{
-        "cpus":{"shape":"Cpus"},
-        "disks":{"shape":"RecoveryInstanceDisks"},
-        "identificationHints":{"shape":"IdentificationHints"},
         "lastUpdatedDateTime":{"shape":"ISO8601DatetimeString"},
+        "identificationHints":{"shape":"IdentificationHints"},
         "networkInterfaces":{"shape":"NetworkInterfaces"},
-        "os":{"shape":"OS"},
-        "ramBytes":{"shape":"PositiveInteger"}
+        "disks":{"shape":"RecoveryInstanceDisks"},
+        "cpus":{"shape":"Cpus"},
+        "ramBytes":{"shape":"PositiveInteger"},
+        "os":{"shape":"OS"}
       }
     },
     "RecoveryInstancesForTerminationRequest":{
@@ -2565,23 +2583,23 @@
     "RecoverySnapshot":{
       "type":"structure",
       "required":[
-        "expectedTimestamp",
         "snapshotID",
-        "sourceServerID"
+        "sourceServerID",
+        "expectedTimestamp"
       ],
       "members":{
-        "ebsSnapshots":{"shape":"EbsSnapshotsList"},
-        "expectedTimestamp":{"shape":"ISO8601DatetimeString"},
         "snapshotID":{"shape":"RecoverySnapshotID"},
         "sourceServerID":{"shape":"SourceServerID"},
-        "timestamp":{"shape":"ISO8601DatetimeString"}
+        "expectedTimestamp":{"shape":"ISO8601DatetimeString"},
+        "timestamp":{"shape":"ISO8601DatetimeString"},
+        "ebsSnapshots":{"shape":"EbsSnapshotsList"}
       }
     },
     "RecoverySnapshotID":{
       "type":"string",
       "max":21,
       "min":21,
-      "pattern":"^pit-[0-9a-zA-Z]{17}$"
+      "pattern":"pit-[0-9a-zA-Z]{17}"
     },
     "RecoverySnapshotsList":{
       "type":"list",
@@ -2597,23 +2615,24 @@
     "ReplicationConfiguration":{
       "type":"structure",
       "members":{
+        "sourceServerID":{"shape":"SourceServerID"},
+        "name":{"shape":"SmallBoundedString"},
+        "stagingAreaSubnetId":{"shape":"SubnetID"},
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
-        "autoReplicateNewDisks":{"shape":"Boolean"},
-        "bandwidthThrottling":{"shape":"PositiveInteger"},
-        "createPublicIP":{"shape":"Boolean"},
-        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
+        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
+        "useDedicatedReplicationServer":{"shape":"Boolean"},
         "defaultLargeStagingDiskType":{"shape":"ReplicationConfigurationDefaultLargeStagingDiskType"},
+        "replicatedDisks":{"shape":"ReplicationConfigurationReplicatedDisks"},
         "ebsEncryption":{"shape":"ReplicationConfigurationEbsEncryption"},
         "ebsEncryptionKeyArn":{"shape":"ARN"},
-        "name":{"shape":"SmallBoundedString"},
-        "pitPolicy":{"shape":"PITPolicy"},
-        "replicatedDisks":{"shape":"ReplicationConfigurationReplicatedDisks"},
-        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
-        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
-        "sourceServerID":{"shape":"SourceServerID"},
-        "stagingAreaSubnetId":{"shape":"SubnetID"},
+        "bandwidthThrottling":{"shape":"PositiveInteger"},
+        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "createPublicIP":{"shape":"Boolean"},
         "stagingAreaTags":{"shape":"TagsMap"},
-        "useDedicatedReplicationServer":{"shape":"Boolean"}
+        "pitPolicy":{"shape":"PITPolicy"},
+        "autoReplicateNewDisks":{"shape":"Boolean"},
+        "internetProtocol":{"shape":"InternetProtocol"}
       }
     },
     "ReplicationConfigurationDataPlaneRouting":{
@@ -2644,11 +2663,11 @@
       "type":"structure",
       "members":{
         "deviceName":{"shape":"BoundedString"},
-        "iops":{"shape":"PositiveInteger"},
         "isBootDisk":{"shape":"Boolean"},
-        "optimizedStagingDiskType":{"shape":"ReplicationConfigurationReplicatedDiskStagingDiskType"},
         "stagingDiskType":{"shape":"ReplicationConfigurationReplicatedDiskStagingDiskType"},
-        "throughput":{"shape":"PositiveInteger"}
+        "iops":{"shape":"PositiveInteger"},
+        "throughput":{"shape":"PositiveInteger"},
+        "optimizedStagingDiskType":{"shape":"ReplicationConfigurationReplicatedDiskStagingDiskType"}
       }
     },
     "ReplicationConfigurationReplicatedDiskStagingDiskType":{
@@ -2673,30 +2692,31 @@
       "type":"structure",
       "required":["replicationConfigurationTemplateID"],
       "members":{
+        "replicationConfigurationTemplateID":{"shape":"ReplicationConfigurationTemplateID"},
         "arn":{"shape":"ARN"},
+        "stagingAreaSubnetId":{"shape":"SubnetID"},
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
-        "autoReplicateNewDisks":{"shape":"Boolean"},
-        "bandwidthThrottling":{"shape":"PositiveInteger"},
-        "createPublicIP":{"shape":"Boolean"},
-        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
+        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
+        "useDedicatedReplicationServer":{"shape":"Boolean"},
         "defaultLargeStagingDiskType":{"shape":"ReplicationConfigurationDefaultLargeStagingDiskType"},
         "ebsEncryption":{"shape":"ReplicationConfigurationEbsEncryption"},
         "ebsEncryptionKeyArn":{"shape":"ARN"},
-        "pitPolicy":{"shape":"PITPolicy"},
-        "replicationConfigurationTemplateID":{"shape":"ReplicationConfigurationTemplateID"},
-        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
-        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
-        "stagingAreaSubnetId":{"shape":"SubnetID"},
+        "bandwidthThrottling":{"shape":"PositiveInteger"},
+        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "createPublicIP":{"shape":"Boolean"},
         "stagingAreaTags":{"shape":"TagsMap"},
         "tags":{"shape":"TagsMap"},
-        "useDedicatedReplicationServer":{"shape":"Boolean"}
+        "pitPolicy":{"shape":"PITPolicy"},
+        "autoReplicateNewDisks":{"shape":"Boolean"},
+        "internetProtocol":{"shape":"InternetProtocol"}
       }
     },
     "ReplicationConfigurationTemplateID":{
       "type":"string",
       "max":21,
       "min":21,
-      "pattern":"^rct-[0-9a-zA-Z]{17}$"
+      "pattern":"rct-[0-9a-zA-Z]{17}"
     },
     "ReplicationConfigurationTemplateIDs":{
       "type":"list",
@@ -2733,8 +2753,8 @@
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
-        "code":{"shape":"LargeBoundedString"},
         "message":{"shape":"LargeBoundedString"},
+        "code":{"shape":"LargeBoundedString"},
         "resourceId":{"shape":"LargeBoundedString"},
         "resourceType":{"shape":"LargeBoundedString"}
       },
@@ -2770,7 +2790,7 @@
       "type":"string",
       "max":255,
       "min":0,
-      "pattern":"^sg-[0-9a-fA-F]{8,}$"
+      "pattern":"sg-[0-9a-fA-F]{8,}"
     },
     "SensitiveBoundedString":{
       "type":"string",
@@ -2781,12 +2801,12 @@
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
-        "code":{"shape":"LargeBoundedString"},
         "message":{"shape":"LargeBoundedString"},
-        "quotaCode":{"shape":"LargeBoundedString"},
+        "code":{"shape":"LargeBoundedString"},
         "resourceId":{"shape":"LargeBoundedString"},
         "resourceType":{"shape":"LargeBoundedString"},
-        "serviceCode":{"shape":"LargeBoundedString"}
+        "serviceCode":{"shape":"LargeBoundedString"},
+        "quotaCode":{"shape":"LargeBoundedString"}
       },
       "error":{
         "httpStatusCode":402,
@@ -2803,25 +2823,25 @@
       "type":"structure",
       "members":{
         "originAccountID":{"shape":"AccountID"},
-        "originAvailabilityZone":{"shape":"AwsAvailabilityZone"},
         "originRegion":{"shape":"AwsRegion"},
+        "originAvailabilityZone":{"shape":"AwsAvailabilityZone"},
         "sourceOutpostArn":{"shape":"OutpostARN"}
       }
     },
     "SourceNetwork":{
       "type":"structure",
       "members":{
+        "sourceNetworkID":{"shape":"SourceNetworkID"},
+        "sourceVpcID":{"shape":"VpcID"},
         "arn":{"shape":"ARN"},
-        "cfnStackName":{"shape":"CfnStackName"},
-        "lastRecovery":{"shape":"RecoveryLifeCycle"},
-        "launchedVpcID":{"shape":"VpcID"},
+        "tags":{"shape":"TagsMap"},
         "replicationStatus":{"shape":"ReplicationStatus"},
         "replicationStatusDetails":{"shape":"SensitiveBoundedString"},
-        "sourceAccountID":{"shape":"AccountID"},
-        "sourceNetworkID":{"shape":"SourceNetworkID"},
+        "cfnStackName":{"shape":"CfnStackName"},
         "sourceRegion":{"shape":"AwsRegion"},
-        "sourceVpcID":{"shape":"VpcID"},
-        "tags":{"shape":"TagsMap"}
+        "sourceAccountID":{"shape":"AccountID"},
+        "lastRecovery":{"shape":"RecoveryLifeCycle"},
+        "launchedVpcID":{"shape":"VpcID"}
       }
     },
     "SourceNetworkData":{
@@ -2829,15 +2849,15 @@
       "members":{
         "sourceNetworkID":{"shape":"SourceNetworkID"},
         "sourceVpc":{"shape":"VpcID"},
-        "stackName":{"shape":"LargeBoundedString"},
-        "targetVpc":{"shape":"VpcID"}
+        "targetVpc":{"shape":"VpcID"},
+        "stackName":{"shape":"LargeBoundedString"}
       }
     },
     "SourceNetworkID":{
       "type":"string",
       "max":20,
       "min":20,
-      "pattern":"^sn-[0-9a-zA-Z]{17}$"
+      "pattern":"sn-[0-9a-zA-Z]{17}"
     },
     "SourceNetworksList":{
       "type":"list",
@@ -2846,47 +2866,47 @@
     "SourceProperties":{
       "type":"structure",
       "members":{
-        "cpus":{"shape":"Cpus"},
-        "disks":{"shape":"Disks"},
-        "identificationHints":{"shape":"IdentificationHints"},
         "lastUpdatedDateTime":{"shape":"ISO8601DatetimeString"},
-        "networkInterfaces":{"shape":"NetworkInterfaces"},
-        "os":{"shape":"OS"},
-        "ramBytes":{"shape":"PositiveInteger"},
         "recommendedInstanceType":{"shape":"EC2InstanceType"},
+        "identificationHints":{"shape":"IdentificationHints"},
+        "networkInterfaces":{"shape":"NetworkInterfaces"},
+        "disks":{"shape":"Disks"},
+        "cpus":{"shape":"Cpus"},
+        "ramBytes":{"shape":"PositiveInteger"},
+        "os":{"shape":"OS"},
         "supportsNitroInstances":{"shape":"Boolean"}
       }
     },
     "SourceServer":{
       "type":"structure",
       "members":{
-        "agentVersion":{"shape":"AgentVersion"},
+        "sourceServerID":{"shape":"SourceServerID"},
         "arn":{"shape":"ARN"},
-        "dataReplicationInfo":{"shape":"DataReplicationInfo"},
-        "lastLaunchResult":{"shape":"LastLaunchResult"},
-        "lifeCycle":{"shape":"LifeCycle"},
+        "tags":{"shape":"TagsMap"},
         "recoveryInstanceId":{"shape":"RecoveryInstanceID"},
+        "lastLaunchResult":{"shape":"LastLaunchResult"},
+        "dataReplicationInfo":{"shape":"DataReplicationInfo"},
+        "lifeCycle":{"shape":"LifeCycle"},
+        "sourceProperties":{"shape":"SourceProperties"},
+        "stagingArea":{"shape":"StagingArea"},
+        "sourceCloudProperties":{"shape":"SourceCloudProperties"},
         "replicationDirection":{"shape":"ReplicationDirection"},
         "reversedDirectionSourceServerArn":{"shape":"SourceServerARN"},
-        "sourceCloudProperties":{"shape":"SourceCloudProperties"},
         "sourceNetworkID":{"shape":"SourceNetworkID"},
-        "sourceProperties":{"shape":"SourceProperties"},
-        "sourceServerID":{"shape":"SourceServerID"},
-        "stagingArea":{"shape":"StagingArea"},
-        "tags":{"shape":"TagsMap"}
+        "agentVersion":{"shape":"AgentVersion"}
       }
     },
     "SourceServerARN":{
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:(?:[0-9a-zA-Z_-]+:){3}([0-9]{12,}):source-server/(s-[0-9a-zA-Z]{17})$"
+      "pattern":"arn:(?:[0-9a-zA-Z_-]+:){3}([0-9]{12,}):source-server/(s-[0-9a-zA-Z]{17})"
     },
     "SourceServerID":{
       "type":"string",
       "max":19,
       "min":19,
-      "pattern":"^s-[0-9a-zA-Z]{17}$"
+      "pattern":"s-[0-9a-zA-Z]{17}"
     },
     "SourceServerIDs":{
       "type":"list",
@@ -2900,22 +2920,22 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"^([A-Za-z0-9-/:])+$"
+      "pattern":"([A-Za-z0-9-/:])+"
     },
     "StagingArea":{
       "type":"structure",
       "members":{
-        "errorMessage":{"shape":"LargeBoundedString"},
+        "status":{"shape":"ExtensionStatus"},
         "stagingAccountID":{"shape":"AccountID"},
         "stagingSourceServerArn":{"shape":"ARN"},
-        "status":{"shape":"ExtensionStatus"}
+        "errorMessage":{"shape":"LargeBoundedString"}
       }
     },
     "StagingSourceServer":{
       "type":"structure",
       "members":{
-        "arn":{"shape":"SourceServerARN"},
         "hostname":{"shape":"BoundedString"},
+        "arn":{"shape":"SourceServerARN"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -2947,8 +2967,8 @@
       "type":"structure",
       "required":["sourceServers"],
       "members":{
-        "isDrill":{"shape":"Boolean"},
         "sourceServers":{"shape":"StartRecoveryRequestSourceServers"},
+        "isDrill":{"shape":"Boolean"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -2956,8 +2976,8 @@
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
-        "recoverySnapshotID":{"shape":"RecoverySnapshotID"},
-        "sourceServerID":{"shape":"SourceServerID"}
+        "sourceServerID":{"shape":"SourceServerID"},
+        "recoverySnapshotID":{"shape":"RecoverySnapshotID"}
       }
     },
     "StartRecoveryRequestSourceServers":{
@@ -2989,8 +3009,8 @@
       "type":"structure",
       "required":["sourceNetworks"],
       "members":{
-        "deployAsNew":{"shape":"Boolean"},
         "sourceNetworks":{"shape":"StartSourceNetworkRecoveryRequestNetworkEntries"},
+        "deployAsNew":{"shape":"Boolean"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -3004,8 +3024,8 @@
       "type":"structure",
       "required":["sourceNetworkID"],
       "members":{
-        "cfnStackName":{"shape":"CfnStackName"},
-        "sourceNetworkID":{"shape":"SourceNetworkID"}
+        "sourceNetworkID":{"shape":"SourceNetworkID"},
+        "cfnStackName":{"shape":"CfnStackName"}
       }
     },
     "StartSourceNetworkRecoveryResponse":{
@@ -3069,7 +3089,7 @@
       "type":"string",
       "max":255,
       "min":0,
-      "pattern":"^subnet-[0-9a-fA-F]{8,}$"
+      "pattern":"subnet-[0-9a-fA-F]{8,}"
     },
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",
@@ -3137,13 +3157,13 @@
       "required":["message"],
       "members":{
         "message":{"shape":"LargeBoundedString"},
+        "serviceCode":{"shape":"LargeBoundedString"},
         "quotaCode":{"shape":"LargeBoundedString"},
         "retryAfterSeconds":{
           "shape":"LargeBoundedString",
           "location":"header",
           "locationName":"Retry-After"
-        },
-        "serviceCode":{"shape":"LargeBoundedString"}
+        }
       },
       "error":{
         "httpStatusCode":429,
@@ -3154,8 +3174,8 @@
     "UninitializedAccountException":{
       "type":"structure",
       "members":{
-        "code":{"shape":"LargeBoundedString"},
-        "message":{"shape":"LargeBoundedString"}
+        "message":{"shape":"LargeBoundedString"},
+        "code":{"shape":"LargeBoundedString"}
       },
       "error":{
         "httpStatusCode":400,
@@ -3186,40 +3206,41 @@
       "type":"structure",
       "required":["recoveryInstanceID"],
       "members":{
-        "bandwidthThrottling":{"shape":"PositiveInteger"},
-        "name":{"shape":"BoundedString"},
         "recoveryInstanceID":{"shape":"RecoveryInstanceID"},
-        "usePrivateIP":{"shape":"Boolean"}
+        "name":{"shape":"BoundedString"},
+        "bandwidthThrottling":{"shape":"PositiveInteger"},
+        "usePrivateIP":{"shape":"Boolean"},
+        "internetProtocol":{"shape":"InternetProtocol"}
       }
     },
     "UpdateLaunchConfigurationRequest":{
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
+        "sourceServerID":{"shape":"SourceServerID"},
+        "name":{"shape":"SmallBoundedString"},
+        "launchDisposition":{"shape":"LaunchDisposition"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"},
         "copyPrivateIp":{"shape":"Boolean"},
         "copyTags":{"shape":"Boolean"},
-        "launchDisposition":{"shape":"LaunchDisposition"},
-        "launchIntoInstanceProperties":{"shape":"LaunchIntoInstanceProperties"},
         "licensing":{"shape":"Licensing"},
-        "name":{"shape":"SmallBoundedString"},
         "postLaunchEnabled":{"shape":"Boolean"},
-        "sourceServerID":{"shape":"SourceServerID"},
-        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+        "launchIntoInstanceProperties":{"shape":"LaunchIntoInstanceProperties"}
       }
     },
     "UpdateLaunchConfigurationTemplateRequest":{
       "type":"structure",
       "required":["launchConfigurationTemplateID"],
       "members":{
-        "copyPrivateIp":{"shape":"Boolean"},
-        "copyTags":{"shape":"Boolean"},
-        "exportBucketArn":{"shape":"ARN"},
         "launchConfigurationTemplateID":{"shape":"LaunchConfigurationTemplateID"},
         "launchDisposition":{"shape":"LaunchDisposition"},
-        "launchIntoSourceInstance":{"shape":"Boolean"},
+        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"},
+        "copyPrivateIp":{"shape":"Boolean"},
+        "copyTags":{"shape":"Boolean"},
         "licensing":{"shape":"Licensing"},
+        "exportBucketArn":{"shape":"ARN"},
         "postLaunchEnabled":{"shape":"Boolean"},
-        "targetInstanceTypeRightSizingMethod":{"shape":"TargetInstanceTypeRightSizingMethod"}
+        "launchIntoSourceInstance":{"shape":"Boolean"}
       }
     },
     "UpdateLaunchConfigurationTemplateResponse":{
@@ -3232,54 +3253,56 @@
       "type":"structure",
       "required":["sourceServerID"],
       "members":{
+        "sourceServerID":{"shape":"SourceServerID"},
+        "name":{"shape":"SmallBoundedString"},
+        "stagingAreaSubnetId":{"shape":"SubnetID"},
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
-        "autoReplicateNewDisks":{"shape":"Boolean"},
-        "bandwidthThrottling":{"shape":"PositiveInteger"},
-        "createPublicIP":{"shape":"Boolean"},
-        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
+        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
+        "useDedicatedReplicationServer":{"shape":"Boolean"},
         "defaultLargeStagingDiskType":{"shape":"ReplicationConfigurationDefaultLargeStagingDiskType"},
+        "replicatedDisks":{"shape":"ReplicationConfigurationReplicatedDisks"},
         "ebsEncryption":{"shape":"ReplicationConfigurationEbsEncryption"},
         "ebsEncryptionKeyArn":{"shape":"ARN"},
-        "name":{"shape":"SmallBoundedString"},
-        "pitPolicy":{"shape":"PITPolicy"},
-        "replicatedDisks":{"shape":"ReplicationConfigurationReplicatedDisks"},
-        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
-        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
-        "sourceServerID":{"shape":"SourceServerID"},
-        "stagingAreaSubnetId":{"shape":"SubnetID"},
+        "bandwidthThrottling":{"shape":"PositiveInteger"},
+        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "createPublicIP":{"shape":"Boolean"},
         "stagingAreaTags":{"shape":"TagsMap"},
-        "useDedicatedReplicationServer":{"shape":"Boolean"}
+        "pitPolicy":{"shape":"PITPolicy"},
+        "autoReplicateNewDisks":{"shape":"Boolean"},
+        "internetProtocol":{"shape":"InternetProtocol"}
       }
     },
     "UpdateReplicationConfigurationTemplateRequest":{
       "type":"structure",
       "required":["replicationConfigurationTemplateID"],
       "members":{
+        "replicationConfigurationTemplateID":{"shape":"ReplicationConfigurationTemplateID"},
         "arn":{"shape":"ARN"},
+        "stagingAreaSubnetId":{"shape":"SubnetID"},
         "associateDefaultSecurityGroup":{"shape":"Boolean"},
-        "autoReplicateNewDisks":{"shape":"Boolean"},
-        "bandwidthThrottling":{"shape":"PositiveInteger"},
-        "createPublicIP":{"shape":"Boolean"},
-        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
+        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
+        "useDedicatedReplicationServer":{"shape":"Boolean"},
         "defaultLargeStagingDiskType":{"shape":"ReplicationConfigurationDefaultLargeStagingDiskType"},
         "ebsEncryption":{"shape":"ReplicationConfigurationEbsEncryption"},
         "ebsEncryptionKeyArn":{"shape":"ARN"},
-        "pitPolicy":{"shape":"PITPolicy"},
-        "replicationConfigurationTemplateID":{"shape":"ReplicationConfigurationTemplateID"},
-        "replicationServerInstanceType":{"shape":"EC2InstanceType"},
-        "replicationServersSecurityGroupsIDs":{"shape":"ReplicationServersSecurityGroupsIDs"},
-        "stagingAreaSubnetId":{"shape":"SubnetID"},
+        "bandwidthThrottling":{"shape":"PositiveInteger"},
+        "dataPlaneRouting":{"shape":"ReplicationConfigurationDataPlaneRouting"},
+        "createPublicIP":{"shape":"Boolean"},
         "stagingAreaTags":{"shape":"TagsMap"},
-        "useDedicatedReplicationServer":{"shape":"Boolean"}
+        "pitPolicy":{"shape":"PITPolicy"},
+        "autoReplicateNewDisks":{"shape":"Boolean"},
+        "internetProtocol":{"shape":"InternetProtocol"}
       }
     },
     "ValidationException":{
       "type":"structure",
       "members":{
-        "code":{"shape":"LargeBoundedString"},
-        "fieldList":{"shape":"ValidationExceptionFieldList"},
         "message":{"shape":"LargeBoundedString"},
-        "reason":{"shape":"ValidationExceptionReason"}
+        "code":{"shape":"LargeBoundedString"},
+        "reason":{"shape":"ValidationExceptionReason"},
+        "fieldList":{"shape":"ValidationExceptionFieldList"}
       },
       "error":{
         "httpStatusCode":400,
@@ -3290,8 +3313,8 @@
     "ValidationExceptionField":{
       "type":"structure",
       "members":{
-        "message":{"shape":"LargeBoundedString"},
-        "name":{"shape":"LargeBoundedString"}
+        "name":{"shape":"LargeBoundedString"},
+        "message":{"shape":"LargeBoundedString"}
       }
     },
     "ValidationExceptionFieldList":{
@@ -3336,7 +3359,7 @@
       "type":"string",
       "max":21,
       "min":12,
-      "pattern":"^vpc-[0-9a-fA-F]{8,}$"
+      "pattern":"vpc-[0-9a-fA-F]{8,}"
     }
   }
 }

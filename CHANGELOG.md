@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\drs` - This changes adds support for modifying the replication configuration to support data replication using IPv6.
+* `Aws\MediaLive` - MediaLive is adding support for MediaConnect Router by supporting a new output type called MEDIACONNECT ROUTER. This new output type will provide seamless encrypted transport between your MediaLive channel and MediaConnect Router.
+* `Aws\IVSRealTime` - Adds support for Amazon IVS real-time streaming redundant ingest.
+* `Aws\MarketplaceDiscovery` - AWS Marketplace Discovery API provides an interface that enables programmatic access to the AWS Marketplace catalog, including searching and browsing listings, retrieving product details and fulfillment options, and accessing public and private offer pricing and terms.
+* `Aws\Backup` - Adding EKS specific backup vault notification types for AWS Backup.
+* `Aws\ECR` - Add UnableToListUpstreamImageReferrersException in ListImageReferrers
+* `Aws\Outposts` - Add AWS Outposts APIs to view renewal pricing options and submit renewal requests for Outpost contracts
+
 ## 3.377.0 - 2026-04-07
 
 * `Aws\S3Files` - Support for S3 Files, a new shared file system that connects any AWS compute directly with your data in Amazon S3. It provides fast, direct access to all of your S3 data as files with full file system semantics and low-latency performance, without your data ever leaving S3.

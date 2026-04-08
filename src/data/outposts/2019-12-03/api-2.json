@@ -81,6 +81,21 @@
         {"shape":"ServiceQuotaExceededException"}
       ]
     },
+    "CreateRenewal":{
+      "name":"CreateRenewal",
+      "http":{
+        "method":"POST",
+        "requestUri":"/renewals"
+      },
+      "input":{"shape":"CreateRenewalInput"},
+      "output":{"shape":"CreateRenewalOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "CreateSite":{
       "name":"CreateSite",
       "http":{
@@ -245,6 +260,21 @@
         {"shape":"AccessDeniedException"},
         {"shape":"NotFoundException"},
         {"shape":"InternalServerException"}
+      ]
+    },
+    "GetRenewalPricing":{
+      "name":"GetRenewalPricing",
+      "http":{
+        "method":"GET",
+        "requestUri":"/outpost/{OutpostIdentifier}/renewal-pricing"
+      },
+      "input":{"shape":"GetRenewalPricingInput"},
+      "output":{"shape":"GetRenewalPricingOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ValidationException"}
       ]
     },
     "GetSite":{
@@ -728,6 +758,12 @@
       "max":5,
       "min":1
     },
+    "AutoFillIdempotencyToken":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^.*$"
+    },
     "AvailabilityZone":{
       "type":"string",
       "max":1000,
@@ -1050,6 +1086,33 @@
         "Outpost":{"shape":"Outpost"}
       }
     },
+    "CreateRenewalInput":{
+      "type":"structure",
+      "required":[
+        "PaymentOption",
+        "PaymentTerm",
+        "OutpostIdentifier"
+      ],
+      "members":{
+        "PaymentOption":{"shape":"PaymentOption"},
+        "PaymentTerm":{"shape":"PaymentTerm"},
+        "OutpostIdentifier":{"shape":"OutpostIdentifier"},
+        "ClientToken":{
+          "shape":"AutoFillIdempotencyToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateRenewalOutput":{
+      "type":"structure",
+      "members":{
+        "PaymentOption":{"shape":"PaymentOption"},
+        "PaymentTerm":{"shape":"PaymentTerm"},
+        "OutpostId":{"shape":"OutpostIdOnly"},
+        "UpfrontPrice":{"shape":"NullableFloat"},
+        "MonthlyRecurringPrice":{"shape":"NullableFloat"}
+      }
+    },
     "CreateSiteInput":{
       "type":"structure",
       "required":["Name"],
@@ -1146,7 +1209,7 @@
       "type":"string",
       "max":10,
       "min":1,
-      "pattern":"[a-z0-9]+"
+      "pattern":"^[a-z0-9]+$"
     },
     "FiberOpticCableType":{
       "type":"string",
@@ -1270,7 +1333,9 @@
       "members":{
         "NextToken":{"shape":"Token"},
         "Subscriptions":{"shape":"SubscriptionList"},
-        "ContractEndDate":{"shape":"String"}
+        "ContractEndDate":{"shape":"String"},
+        "PaymentTerm":{"shape":"PaymentTerm"},
+        "PaymentOption":{"shape":"PaymentOption"}
       }
     },
     "GetOutpostInput":{
@@ -1356,6 +1421,24 @@
       "members":{
         "InstanceTypes":{"shape":"InstanceTypeListDefinition"},
         "NextToken":{"shape":"Token"}
+      }
+    },
+    "GetRenewalPricingInput":{
+      "type":"structure",
+      "required":["OutpostIdentifier"],
+      "members":{
+        "OutpostIdentifier":{
+          "shape":"OutpostIdentifier",
+          "location":"uri",
+          "locationName":"OutpostIdentifier"
+        }
+      }
+    },
+    "GetRenewalPricingOutput":{
+      "type":"structure",
+      "members":{
+        "PricingResult":{"shape":"PricingResult"},
+        "PricingOptions":{"shape":"PricingOptionList"}
       }
     },
     "GetSiteAddressInput":{
@@ -1924,6 +2007,10 @@
       "exception":true
     },
     "NullableDouble":{"type":"double"},
+    "NullableFloat":{
+      "type":"float",
+      "box":true
+    },
     "OpticalStandard":{
       "type":"string",
       "enum":[
@@ -2129,7 +2216,29 @@
         "THREE_PHASE"
       ]
     },
+    "PricingOption":{
+      "type":"structure",
+      "members":{
+        "PricingType":{"shape":"QuotePricingType"},
+        "SubscriptionPricingDetails":{"shape":"SubscriptionPricingDetails"}
+      }
+    },
+    "PricingOptionList":{
+      "type":"list",
+      "member":{"shape":"PricingOption"}
+    },
+    "PricingResult":{
+      "type":"string",
+      "enum":[
+        "PRICED",
+        "UNABLE_TO_PRICE"
+      ]
+    },
     "Quantity":{"type":"string"},
+    "QuotePricingType":{
+      "type":"string",
+      "enum":["SUBSCRIPTION"]
+    },
     "RackElevation":{
       "type":"float",
       "box":true,
@@ -2367,10 +2476,20 @@
       "type":"list",
       "member":{"shape":"Subscription"}
     },
+    "SubscriptionPricingDetails":{
+      "type":"structure",
+      "members":{
+        "PaymentOption":{"shape":"PaymentOption"},
+        "PaymentTerm":{"shape":"PaymentTerm"},
+        "UpfrontPrice":{"shape":"NullableFloat"},
+        "MonthlyRecurringPrice":{"shape":"NullableFloat"}
+      }
+    },
     "SubscriptionStatus":{
       "type":"string",
       "enum":[
         "ACTIVE",
+        "PENDING",
         "INACTIVE",
         "CANCELLED"
       ]

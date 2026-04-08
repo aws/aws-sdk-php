@@ -544,6 +544,8 @@
         "GetIngestConfigurationRequest$arn": "<p>ARN of the ingest for which the information is to be retrieved.</p>",
         "IngestConfiguration$arn": "<p>Ingest configuration ARN.</p>",
         "IngestConfigurationSummary$arn": "<p>Ingest configuration ARN.</p>",
+        "Participant$ingestConfigurationArn": "<p>The participant’s ingest configuration.</p>",
+        "ParticipantSummary$ingestConfigurationArn": "<p>The participant’s ingest configuration.</p>",
         "UpdateIngestConfigurationRequest$arn": "<p>ARN of the IngestConfiguration, for which the related stage ARN needs to be updated.</p>"
       }
     },
@@ -851,6 +853,7 @@
         "Participant$participantId": "<p>Unique identifier for this participant, assigned by IVS.</p>",
         "ParticipantReplica$participantId": "<p>Participant ID of the publisher that will be replicated. This is assigned by IVS and returned by <a>CreateParticipantToken</a> or the <code>jti</code> (JWT ID) used to <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/getting-started-distribute-tokens.html#getting-started-distribute-tokens-self-signed\"> create a self signed token</a>.</p>",
         "ParticipantSummary$participantId": "<p>Unique identifier for this participant, assigned by IVS.</p>",
+        "RedundantIngestCredential$participantId": "<p>ID of the participant within the stage.</p>",
         "StartParticipantReplicationRequest$participantId": "<p>Participant ID of the publisher that will be replicated. This is assigned by IVS and returned by <a>CreateParticipantToken</a> or the <code>jti</code> (JWT ID) used to <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/getting-started-distribute-tokens.html#getting-started-distribute-tokens-self-signed\">create a self signed token</a>. </p>",
         "StopParticipantReplicationRequest$participantId": "<p>Participant ID of the publisher that has been replicated. This is assigned by IVS and returned by <a>CreateParticipantToken</a> or the <code>jti</code> (JWT ID) used to <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/getting-started-distribute-tokens.html#getting-started-distribute-tokens-self-signed\"> create a self signed token</a>.</p>"
       }
@@ -1162,6 +1165,29 @@
         "RecordingConfiguration$format": "<p>The recording format for storing a recording in Amazon S3.</p>"
       }
     },
+    "RedundantIngest": {
+      "base": null,
+      "refs": {
+        "CreateIngestConfigurationRequest$redundantIngest": "<p>Indicates whether redundant ingest is enabled for the ingest configuration. Default: <code>false</code>.</p>",
+        "IngestConfiguration$redundantIngest": "<p>Indicates whether redundant ingest is enabled for the ingest configuration.</p>",
+        "IngestConfigurationSummary$redundantIngest": "<p>Indicates whether redundant ingest is enabled for the ingest configuration.</p>",
+        "Participant$redundantIngest": "<p>Indicates whether redundant ingest is enabled for the participant.</p>",
+        "ParticipantSummary$redundantIngest": "<p>Indicates whether redundant ingest is enabled for the participant.</p>",
+        "UpdateIngestConfigurationRequest$redundantIngest": "<p>Indicates whether redundant ingest is enabled for the ingest configuration. Default: <code>false</code>.</p>"
+      }
+    },
+    "RedundantIngestCredential": {
+      "base": "<p>An object representing a redundant ingest credential.</p>",
+      "refs": {
+        "RedundantIngestCredentials$member": null
+      }
+    },
+    "RedundantIngestCredentials": {
+      "base": null,
+      "refs": {
+        "IngestConfiguration$redundantIngestCredentials": "<p>A list of redundant ingest credentials, present only when <code>redundantIngest</code> is set to <code>true</code>. See <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/rt-rtmp-publishing.html#redundant-ingest\">Redundant Ingest</a> in <i>IVS RTMP Publishing</i> for details.</p>"
+      }
+    },
     "Replica": {
       "base": null,
       "refs": {
@@ -1419,7 +1445,8 @@
     "StreamKey": {
       "base": null,
       "refs": {
-        "IngestConfiguration$streamKey": "<p>Ingest-key value for the RTMP(S) protocol.</p>"
+        "IngestConfiguration$streamKey": "<p>Ingest-key value for the RTMP(S) protocol.</p>",
+        "RedundantIngestCredential$streamKey": "<p>Ingest-key value.</p>"
       }
     },
     "String": {
@@ -1480,20 +1507,20 @@
         "ServiceQuotaExceededException$xContentTypeOptions": "<p/>",
         "ServiceQuotaExceededException$xFrameOptions": "<p/>",
         "ServiceQuotaExceededException$xAmznErrorType": "<p/>",
-        "StartParticipantReplicationResponse$accessControlAllowOrigin": "<p/>",
-        "StartParticipantReplicationResponse$accessControlExposeHeaders": "<p/>",
-        "StartParticipantReplicationResponse$cacheControl": "<p/>",
-        "StartParticipantReplicationResponse$contentSecurityPolicy": "<p/>",
-        "StartParticipantReplicationResponse$strictTransportSecurity": "<p/>",
-        "StartParticipantReplicationResponse$xContentTypeOptions": "<p/>",
-        "StartParticipantReplicationResponse$xFrameOptions": "<p/>",
-        "StopParticipantReplicationResponse$accessControlAllowOrigin": "<p/>",
-        "StopParticipantReplicationResponse$accessControlExposeHeaders": "<p/>",
-        "StopParticipantReplicationResponse$cacheControl": "<p/>",
-        "StopParticipantReplicationResponse$contentSecurityPolicy": "<p/>",
-        "StopParticipantReplicationResponse$strictTransportSecurity": "<p/>",
-        "StopParticipantReplicationResponse$xContentTypeOptions": "<p/>",
-        "StopParticipantReplicationResponse$xFrameOptions": "<p/>",
+        "StartParticipantReplicationResponse$accessControlAllowOrigin": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Allow-Origin\">Access-Control-Allow-Origin</a> in the MDN Web Docs.</p>",
+        "StartParticipantReplicationResponse$accessControlExposeHeaders": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Expose-Headers\">Access-Control-Expose-Headers</a> in the MDN Web Docs.</p>",
+        "StartParticipantReplicationResponse$cacheControl": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control\">Cache-Control</a> in the MDN Web Docs.</p>",
+        "StartParticipantReplicationResponse$contentSecurityPolicy": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy\">Content-Security-Policy</a> in the MDN Web Docs.</p>",
+        "StartParticipantReplicationResponse$strictTransportSecurity": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security\">Strict-Transport-Security</a> in the MDN Web Docs.</p>",
+        "StartParticipantReplicationResponse$xContentTypeOptions": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options\">X-Content-Type-Options</a> in the MDN Web Docs.</p>",
+        "StartParticipantReplicationResponse$xFrameOptions": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options\">X-Frame-Options</a> in the MDN Web Docs.</p>",
+        "StopParticipantReplicationResponse$accessControlAllowOrigin": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Allow-Origin\">Access-Control-Allow-Origin</a> in the MDN Web Docs.</p>",
+        "StopParticipantReplicationResponse$accessControlExposeHeaders": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Expose-Headers\">Access-Control-Expose-Headers</a> in the MDN Web Docs.</p>",
+        "StopParticipantReplicationResponse$cacheControl": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control\">Cache-Control</a> in the MDN Web Docs.</p>",
+        "StopParticipantReplicationResponse$contentSecurityPolicy": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy\">Content-Security-Policy</a> in the MDN Web Docs.</p>",
+        "StopParticipantReplicationResponse$strictTransportSecurity": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security\">Strict-Transport-Security</a> in the MDN Web Docs.</p>",
+        "StopParticipantReplicationResponse$xContentTypeOptions": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options\">X-Content-Type-Options</a> in the MDN Web Docs.</p>",
+        "StopParticipantReplicationResponse$xFrameOptions": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options\">X-Frame-Options</a> in the MDN Web Docs.</p>",
         "ValidationException$accessControlAllowOrigin": "<p/>",
         "ValidationException$accessControlExposeHeaders": "<p/>",
         "ValidationException$cacheControl": "<p/>",

@@ -554,7 +554,8 @@
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
         {"shape":"RepositoryNotFoundException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"UnableToListUpstreamImageReferrersException"}
       ]
     },
     "ListImages":{
@@ -3336,6 +3337,13 @@
       "exception":true
     },
     "UnableToGetUpstreamLayerException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
+    "UnableToListUpstreamImageReferrersException":{
       "type":"structure",
       "members":{
         "message":{"shape":"ExceptionMessage"}

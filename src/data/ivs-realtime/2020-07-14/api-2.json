@@ -915,6 +915,7 @@
         "attributes":{"shape":"ParticipantAttributes"},
         "ingestProtocol":{"shape":"IngestProtocol"},
         "insecureIngest":{"shape":"InsecureIngest"},
+        "redundantIngest":{"shape":"RedundantIngest"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -1413,6 +1414,8 @@
         "participantId":{"shape":"ParticipantId"},
         "state":{"shape":"IngestConfigurationState"},
         "userId":{"shape":"UserId"},
+        "redundantIngest":{"shape":"RedundantIngest"},
+        "redundantIngestCredentials":{"shape":"RedundantIngestCredentials"},
         "attributes":{"shape":"ParticipantAttributes"},
         "tags":{"shape":"Tags"}
       }
@@ -1462,7 +1465,8 @@
         "stageArn":{"shape":"IngestConfigurationStageArn"},
         "participantId":{"shape":"ParticipantId"},
         "state":{"shape":"IngestConfigurationState"},
-        "userId":{"shape":"UserId"}
+        "userId":{"shape":"UserId"},
+        "redundantIngest":{"shape":"RedundantIngest"}
       }
     },
     "IngestProtocol":{
@@ -1816,7 +1820,9 @@
         "replicationType":{"shape":"ReplicationType"},
         "replicationState":{"shape":"ReplicationState"},
         "sourceStageArn":{"shape":"StageArn"},
-        "sourceSessionId":{"shape":"StageSessionId"}
+        "sourceSessionId":{"shape":"StageSessionId"},
+        "redundantIngest":{"shape":"RedundantIngest"},
+        "ingestConfigurationArn":{"shape":"IngestConfigurationArn"}
       }
     },
     "ParticipantAttributes":{
@@ -1955,7 +1961,9 @@
         "replicationType":{"shape":"ReplicationType"},
         "replicationState":{"shape":"ReplicationState"},
         "sourceStageArn":{"shape":"StageArn"},
-        "sourceSessionId":{"shape":"StageSessionId"}
+        "sourceSessionId":{"shape":"StageSessionId"},
+        "redundantIngest":{"shape":"RedundantIngest"},
+        "ingestConfigurationArn":{"shape":"IngestConfigurationArn"}
       }
     },
     "ParticipantThumbnailConfiguration":{
@@ -2194,6 +2202,18 @@
     "RecordingConfigurationFormat":{
       "type":"string",
       "enum":["HLS"]
+    },
+    "RedundantIngest":{"type":"boolean"},
+    "RedundantIngestCredential":{
+      "type":"structure",
+      "members":{
+        "participantId":{"shape":"ParticipantId"},
+        "streamKey":{"shape":"StreamKey"}
+      }
+    },
+    "RedundantIngestCredentials":{
+      "type":"list",
+      "member":{"shape":"RedundantIngestCredential"}
     },
     "Replica":{"type":"boolean"},
     "ReplicationState":{
@@ -2717,7 +2737,8 @@
       "required":["arn"],
       "members":{
         "arn":{"shape":"IngestConfigurationArn"},
-        "stageArn":{"shape":"IngestConfigurationStageArn"}
+        "stageArn":{"shape":"IngestConfigurationStageArn"},
+        "redundantIngest":{"shape":"RedundantIngest"}
       }
     },
     "UpdateIngestConfigurationResponse":{

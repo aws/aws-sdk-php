@@ -6,6 +6,7 @@
     "CancelOrder": "<p>Cancels the specified order for an Outpost.</p>",
     "CreateOrder": "<p>Creates an order for an Outpost.</p>",
     "CreateOutpost": "<p>Creates an Outpost.</p> <p>You can specify either an Availability one or an AZ ID.</p>",
+    "CreateRenewal": "<p>Creates a renewal contract for the specified Outpost.</p>",
     "CreateSite": "<p> Creates a site for an Outpost. </p>",
     "DeleteOutpost": "<p>Deletes the specified Outpost.</p>",
     "DeleteSite": "<p>Deletes the specified site.</p>",
@@ -17,6 +18,7 @@
     "GetOutpostBillingInformation": "<p>Gets current and historical billing information about the specified Outpost.</p>",
     "GetOutpostInstanceTypes": "<p>Gets the instance types for the specified Outpost.</p>",
     "GetOutpostSupportedInstanceTypes": "<p>Gets the instance types that an Outpost can support in <code>InstanceTypeCapacity</code>. This will generally include instance types that are not currently configured and therefore cannot be launched with the current Outpost capacity configuration.</p>",
+    "GetRenewalPricing": "<p>Gets all available renewal pricing options for the specified Outpost.</p>",
     "GetSite": "<p>Gets information about the specified Outpost site.</p>",
     "GetSiteAddress": "<p> Gets the site address of the specified site. </p>",
     "ListAssetInstances": "<p>A list of Amazon EC2 instances, belonging to all accounts, running on the specified Outpost. Does not include Amazon EBS or Amazon S3 instances.</p>",
@@ -204,6 +206,12 @@
       "base": null,
       "refs": {
         "ListAssetsInput$AssetTypeFilter": "<p>Filters the results by asset type.</p> <ul> <li> <p>COMPUTE - Server asset used for customer compute </p> </li> <li> <p>STORAGE - Server asset used by storage services </p> </li> <li> <p>POWERSHELF - Powershelf assets </p> </li> <li> <p>SWITCH - Switch assets </p> </li> <li> <p>NETWORKING - Asset managed by Amazon Web Services for networking purposes </p> </li> </ul>"
+      }
+    },
+    "AutoFillIdempotencyToken": {
+      "base": null,
+      "refs": {
+        "CreateRenewalInput$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
       }
     },
     "AvailabilityZone": {
@@ -474,6 +482,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateRenewalInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRenewalOutput": {
+      "base": null,
+      "refs": {}
+    },
     "CreateSiteInput": {
       "base": null,
       "refs": {}
@@ -628,6 +644,14 @@
       "refs": {}
     },
     "GetOutpostSupportedInstanceTypesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRenewalPricingInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRenewalPricingOutput": {
       "base": null,
       "refs": {}
     },
@@ -970,6 +994,15 @@
         "Subscription$UpfrontPrice": "<p>The amount billed when the subscription is created. This is a one-time charge.</p>"
       }
     },
+    "NullableFloat": {
+      "base": null,
+      "refs": {
+        "CreateRenewalOutput$UpfrontPrice": "<p>The upfront price of the renewal.</p>",
+        "CreateRenewalOutput$MonthlyRecurringPrice": "<p>The monthly recurring price of the renewal.</p>",
+        "SubscriptionPricingDetails$UpfrontPrice": "<p>The upfront price.</p>",
+        "SubscriptionPricingDetails$MonthlyRecurringPrice": "<p>The monthly recurring price.</p>"
+      }
+    },
     "OpticalStandard": {
       "base": null,
       "refs": {
@@ -1072,6 +1105,7 @@
     "OutpostIdOnly": {
       "base": null,
       "refs": {
+        "CreateRenewalOutput$OutpostId": "<p>The ID of the Outpost.</p>",
         "Order$OutpostId": "<p> The ID of the Outpost in the order. </p>",
         "OrderSummary$OutpostId": "<p> The ID of the Outpost. </p>"
       }
@@ -1081,9 +1115,11 @@
       "refs": {
         "CancelCapacityTaskInput$OutpostIdentifier": "<p>ID or ARN of the Outpost associated with the capacity task that you want to cancel.</p>",
         "CreateOrderInput$OutpostIdentifier": "<p> The ID or the Amazon Resource Name (ARN) of the Outpost. </p>",
+        "CreateRenewalInput$OutpostIdentifier": "<p>The ID or ARN of the Outpost.</p>",
         "GetCapacityTaskInput$OutpostIdentifier": "<p>ID or ARN of the Outpost associated with the specified capacity task.</p>",
         "GetOutpostBillingInformationInput$OutpostIdentifier": "<p>The ID or ARN of the Outpost.</p>",
         "GetOutpostSupportedInstanceTypesInput$OutpostIdentifier": "<p>The ID or ARN of the Outpost.</p>",
+        "GetRenewalPricingInput$OutpostIdentifier": "<p>The ID or ARN of the Outpost.</p>",
         "ListAssetInstancesInput$OutpostIdentifier": "<p>The ID of the Outpost.</p>",
         "ListAssetsInput$OutpostIdentifier": "<p> The ID or the Amazon Resource Name (ARN) of the Outpost. </p>",
         "ListBlockingInstancesForCapacityTaskInput$OutpostIdentifier": "<p>The ID or ARN of the Outpost associated with the specified capacity task.</p>",
@@ -1124,14 +1160,22 @@
       "base": null,
       "refs": {
         "CreateOrderInput$PaymentOption": "<p>The payment option.</p>",
-        "Order$PaymentOption": "<p>The payment option for the order.</p>"
+        "CreateRenewalInput$PaymentOption": "<p>The payment option.</p>",
+        "CreateRenewalOutput$PaymentOption": "<p>The payment option.</p>",
+        "GetOutpostBillingInformationOutput$PaymentOption": "<p>The payment option.</p>",
+        "Order$PaymentOption": "<p>The payment option for the order.</p>",
+        "SubscriptionPricingDetails$PaymentOption": "<p>The payment option.</p>"
       }
     },
     "PaymentTerm": {
       "base": null,
       "refs": {
         "CreateOrderInput$PaymentTerm": "<p>The payment terms.</p>",
-        "Order$PaymentTerm": "<p>The payment term.</p>"
+        "CreateRenewalInput$PaymentTerm": "<p>The payment term.</p>",
+        "CreateRenewalOutput$PaymentTerm": "<p>The payment term.</p>",
+        "GetOutpostBillingInformationOutput$PaymentTerm": "<p>The payment term.</p>",
+        "Order$PaymentTerm": "<p>The payment term.</p>",
+        "SubscriptionPricingDetails$PaymentTerm": "<p>The payment term.</p>"
       }
     },
     "PostalCode": {
@@ -1168,10 +1212,34 @@
         "UpdateSiteRackPhysicalPropertiesInput$PowerPhase": "<p>The power option that you can provide for hardware. </p> <ul> <li> <p>Single-phase AC feed: 200 V to 277 V, 50 Hz or 60 Hz</p> </li> <li> <p>Three-phase AC feed: 346 V to 480 V, 50 Hz or 60 Hz</p> </li> </ul>"
       }
     },
+    "PricingOption": {
+      "base": "<p>A pricing option for the specified Outpost.</p>",
+      "refs": {
+        "PricingOptionList$member": null
+      }
+    },
+    "PricingOptionList": {
+      "base": null,
+      "refs": {
+        "GetRenewalPricingOutput$PricingOptions": "<p>The pricing options for the specified Outpost.</p>"
+      }
+    },
+    "PricingResult": {
+      "base": null,
+      "refs": {
+        "GetRenewalPricingOutput$PricingResult": "<p>The result of the pricing request.</p>"
+      }
+    },
     "Quantity": {
       "base": null,
       "refs": {
         "EC2Capacity$Quantity": "<p> The quantity of the EC2 capacity. </p>"
+      }
+    },
+    "QuotePricingType": {
+      "base": null,
+      "refs": {
+        "PricingOption$PricingType": "<p>The type of pricing model.</p>"
       }
     },
     "RackElevation": {
@@ -1359,10 +1427,16 @@
         "GetOutpostBillingInformationOutput$Subscriptions": "<p>The subscription details for the specified Outpost.</p>"
       }
     },
+    "SubscriptionPricingDetails": {
+      "base": "<p>The pricing details for a subscription.</p>",
+      "refs": {
+        "PricingOption$SubscriptionPricingDetails": "<p>The subscription pricing details for this pricing option.</p>"
+      }
+    },
     "SubscriptionStatus": {
       "base": null,
       "refs": {
-        "Subscription$SubscriptionStatus": "<p>The status of subscription which can be one of the following:</p> <ul> <li> <p> <b>INACTIVE</b> - Subscription requests that are inactive.</p> </li> <li> <p> <b>ACTIVE</b> - Subscription requests that are in progress and have an end date in the future.</p> </li> <li> <p> <b>CANCELLED</b> - Subscription requests that are cancelled.</p> </li> </ul>"
+        "Subscription$SubscriptionStatus": "<p>The status of subscription which can be one of the following:</p> <ul> <li> <p> <b>INACTIVE</b> - Subscription requests that are inactive.</p> </li> <li> <p> <b>ACTIVE</b> - Subscription requests that are in progress and have an end date in the future.</p> </li> <li> <p> <b>PENDING</b> - Subscription has been created but billing has not yet commenced because the subscription begin date has not been reached.</p> </li> <li> <p> <b>CANCELLED</b> - Subscription requests that are cancelled.</p> </li> </ul>"
       }
     },
     "SubscriptionType": {

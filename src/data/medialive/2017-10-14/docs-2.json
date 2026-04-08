@@ -2397,7 +2397,8 @@
       "base": "M2ts Settings",
       "refs": {
         "ArchiveContainerSettings$M2tsSettings": null,
-        "UdpContainerSettings$M2tsSettings": null
+        "UdpContainerSettings$M2tsSettings": null,
+        "MediaConnectRouterContainerSettings$M2tsSettings": null
       }
     },
     "M2tsTimedMetadataBehavior": {
@@ -2869,7 +2870,8 @@
         "CmafIngestGroupSettings$Destination": "A HTTP destination for the tracks",
         "SrtOutputSettings$Destination": null,
         "AdditionalDestinations$Destination": "The destination location",
-        "MediaPackageAdditionalDestinations$Destination": "The destination location"
+        "MediaPackageAdditionalDestinations$Destination": "The destination location",
+        "MediaConnectRouterOutputSettings$Destination": "Destination for this MediaConnect Router Output. The referenced OutputDestination must have MediaConnect Router settings configured."
       }
     },
     "OutputLockingSettings": {
@@ -4829,7 +4831,8 @@
         "CreateChannel$ChannelSecurityGroups": "A list of IDs for all the Input Security Groups attached to the channel.",
         "InputSecurityGroup$Channels": "The list of channels currently using this Input Security Group as their channel security group.",
         "NodeInterfaceMapping$PhysicalInterfaceIpAddresses": "The IP addresses associated with the physical interface on the node hardware.",
-        "UpdateChannel$ChannelSecurityGroups": "A list of IDs for all the Input Security Groups attached to the channel."
+        "UpdateChannel$ChannelSecurityGroups": "A list of IDs for all the Input Security Groups attached to the channel.",
+        "MediaConnectRouterGroupSettings$AvailabilityZones": "The names of the Availability Zones in which to write output to MediaConnect Router."
       }
     },
     "__longMin0Max1099511627775": {
@@ -5307,7 +5310,10 @@
         "SrtListenerSettings$StreamId": "The stream ID, if the upstream system uses this identifier.",
         "SrtListenerSettingsRequest$StreamId": "Optional. The stream ID if the upstream system uses this identifier.",
         "DescribeInferenceSettings$FeedArn": "The ARN of the feed resource that is associated with this channel. The feed is a resource in the Elemental Inference service.",
-        "InferenceSettings$FeedArn": "The ARN of the feed resource that is associated with this channel. The feed is a resource in the Elemental Inference service."
+        "InferenceSettings$FeedArn": "The ARN of the feed resource that is associated with this channel. The feed is a resource in the Elemental Inference service.",
+        "MediaConnectRouterOutputConnectionMap$Pipeline0": "The ARN of the MediaConnect Router Input connected to pipeline 0.",
+        "MediaConnectRouterOutputConnectionMap$Pipeline1": "The ARN of the MediaConnect Router Input connected to pipeline 1.",
+        "MediaConnectRouterOutputDestinationSettings$SecretArn": "ARN of the secret used to encrypt this input. Used only with the SECRETS_MANAGER encryption type."
       }
     },
     "__stringMax1000": {
@@ -7431,7 +7437,8 @@
     "SpecialRouterSettings": {
       "base": "When using MediaConnect Router as the source of a MediaLive input there's a special handoff that occurs when a router output\nis created. This group of settings is set on your behalf by the MediaConnect Router service using this set of settings. This\nsetting object can only by used by that service.",
       "refs": {
-        "UpdateInput$SpecialRouterSettings": "When using MediaConnect Router as the source of a MediaLive input there's a special handoff that occurs when a router output\nis created. This group of settings is set on your behalf by the MediaConnect Router service using this set of settings. This\nsetting object can only by used by that service."
+        "UpdateInput$SpecialRouterSettings": "When using MediaConnect Router as the source of a MediaLive input there's a special handoff that occurs when a router output\nis created. This group of settings is set on your behalf by the MediaConnect Router service using this set of settings. This\nsetting object can only by used by that service.",
+        "UpdateChannel$SpecialRouterSettings": "When using MediaConnect Router as the source of a MediaLive input there's a special handoff that occurs when a router output\nis created. This group of settings is set on your behalf by the MediaConnect Router service using this set of settings. This\nsetting object can only by used by that service."
       }
     },
     "__listOfRouterDestination": {
@@ -7577,6 +7584,48 @@
       "refs": {
         "CreateChannel$InferenceSettings": "Include this setting to include Elemental Inference features in this channel.",
         "UpdateChannel$InferenceSettings": "Include this setting to include Elemental Inference features in this channel."
+      }
+    },
+    "MediaConnectRouterContainerSettings": {
+      "base": "Media Connect Router Container Settings",
+      "refs": {
+        "MediaConnectRouterOutputSettings$ContainerSettings": null
+      }
+    },
+    "MediaConnectRouterGroupSettings": {
+      "base": "Media Connect Router Group Settings",
+      "refs": {
+        "OutputGroupSettings$MediaConnectRouterGroupSettings": null
+      }
+    },
+    "MediaConnectRouterOutputConnectionMap": {
+      "base": "Map of MediaLive pipeline IDs to the ARNs of the MediaConnect Router Inputs to which this Output is connected.",
+      "refs": {
+        "MediaConnectRouterOutputSettings$ConnectedRouterInputs": "Shows the MediaConnect Router Inputs that are connected to this output. This parameter is purely informative, and editing it will have no effect. To connect or disconnect MediaConnect Router Inputs, go to MediaConnect."
+      }
+    },
+    "MediaConnectRouterOutputDestinationSettings": {
+      "base": "MediaConnect Router Output Destination Settings",
+      "refs": {
+        "__listOfMediaConnectRouterOutputDestinationSettings$member": null
+      }
+    },
+    "MediaConnectRouterOutputEncryptionType": {
+      "base": "Encryption configuration for MediaConnect router. When using SECRETS_MANAGER encryption, you must provide the ARN of the secret used to encrypt data in transit. When using AUTOMATIC encryption, a service-managed secret will be used instead.",
+      "refs": {
+        "MediaConnectRouterOutputDestinationSettings$EncryptionType": "Encryption configuration for MediaConnect router. When using SECRETS_MANAGER encryption, you must provide the ARN of the secret used to encrypt data in transit. When using AUTOMATIC encryption, a service-managed secret will be used instead."
+      }
+    },
+    "MediaConnectRouterOutputSettings": {
+      "base": "Media Connect Router Output Settings",
+      "refs": {
+        "OutputSettings$MediaConnectRouterOutputSettings": null
+      }
+    },
+    "__listOfMediaConnectRouterOutputDestinationSettings": {
+      "base": null,
+      "refs": {
+        "OutputDestination$MediaConnectRouterSettings": "Destination settings for a MediaConnect Router output; one destination for each redundant encoder."
       }
     }
   },
