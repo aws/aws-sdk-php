@@ -3682,10 +3682,6 @@
     "FailoverRouterInputProtocolConfiguration":{
       "type":"structure",
       "members":{
-        "Rtp":{
-          "shape":"RtpRouterInputConfiguration",
-          "locationName":"rtp"
-        },
         "Rist":{
           "shape":"RistRouterInputConfiguration",
           "locationName":"rist"
@@ -3697,6 +3693,10 @@
         "SrtCaller":{
           "shape":"SrtCallerRouterInputConfiguration",
           "locationName":"srtCaller"
+        },
+        "Rtp":{
+          "shape":"RtpRouterInputConfiguration",
+          "locationName":"rtp"
         }
       },
       "union":true
@@ -5302,6 +5302,43 @@
       "type":"structure",
       "members":{}
     },
+    "MediaLiveChannelArn":{
+      "type":"string",
+      "pattern":"arn:(aws[a-zA-Z-]*):medialive:[a-z0-9-]+:[0-9]{12}:channel:[a-zA-Z0-9]+"
+    },
+    "MediaLiveChannelPipelineId":{
+      "type":"string",
+      "enum":[
+        "PIPELINE_0",
+        "PIPELINE_1"
+      ]
+    },
+    "MediaLiveChannelRouterInputConfiguration":{
+      "type":"structure",
+      "required":["SourceTransitDecryption"],
+      "members":{
+        "MediaLiveChannelArn":{
+          "shape":"MediaLiveChannelArn",
+          "locationName":"mediaLiveChannelArn"
+        },
+        "MediaLivePipelineId":{
+          "shape":"MediaLiveChannelPipelineId",
+          "locationName":"mediaLivePipelineId"
+        },
+        "MediaLiveChannelOutputName":{
+          "shape":"String",
+          "locationName":"mediaLiveChannelOutputName"
+        },
+        "SourceTransitDecryption":{
+          "shape":"MediaLiveTransitEncryption",
+          "locationName":"sourceTransitDecryption"
+        }
+      }
+    },
+    "MediaLiveChannelRouterInputStreamDetails":{
+      "type":"structure",
+      "members":{}
+    },
     "MediaLiveInputArn":{
       "type":"string",
       "pattern":"arn:(aws[a-zA-Z-]*):medialive:[a-z0-9-]+:[0-9]{12}:input:[a-zA-Z0-9]+"
@@ -6568,7 +6605,7 @@
       "type":"integer",
       "box":true,
       "max":65535,
-      "min":0
+      "min":1024
     },
     "RoleArn":{
       "type":"string",
@@ -6712,17 +6749,21 @@
           "shape":"StandardRouterInputConfiguration",
           "locationName":"standard"
         },
+        "MediaLiveChannel":{
+          "shape":"MediaLiveChannelRouterInputConfiguration",
+          "locationName":"mediaLiveChannel"
+        },
         "Failover":{
           "shape":"FailoverRouterInputConfiguration",
           "locationName":"failover"
         },
-        "Merge":{
-          "shape":"MergeRouterInputConfiguration",
-          "locationName":"merge"
-        },
         "MediaConnectFlow":{
           "shape":"MediaConnectFlowRouterInputConfiguration",
           "locationName":"mediaConnectFlow"
+        },
+        "Merge":{
+          "shape":"MergeRouterInputConfiguration",
+          "locationName":"merge"
         }
       },
       "union":true
@@ -6730,17 +6771,13 @@
     "RouterInputFilter":{
       "type":"structure",
       "members":{
-        "RegionNames":{
-          "shape":"StringList",
-          "locationName":"regionNames"
-        },
-        "InputTypes":{
-          "shape":"RouterInputTypeList",
-          "locationName":"inputTypes"
-        },
         "NameContains":{
           "shape":"StringList",
           "locationName":"nameContains"
+        },
+        "RegionNames":{
+          "shape":"StringList",
+          "locationName":"regionNames"
         },
         "NetworkInterfaceArns":{
           "shape":"RouterNetworkInterfaceArnList",
@@ -6749,6 +6786,10 @@
         "RoutingScopes":{
           "shape":"RoutingScopeList",
           "locationName":"routingScopes"
+        },
+        "InputTypes":{
+          "shape":"RouterInputTypeList",
+          "locationName":"inputTypes"
         }
       },
       "union":true
@@ -6804,10 +6845,6 @@
     "RouterInputProtocolConfiguration":{
       "type":"structure",
       "members":{
-        "Rtp":{
-          "shape":"RtpRouterInputConfiguration",
-          "locationName":"rtp"
-        },
         "Rist":{
           "shape":"RistRouterInputConfiguration",
           "locationName":"rist"
@@ -6819,6 +6856,10 @@
         "SrtCaller":{
           "shape":"SrtCallerRouterInputConfiguration",
           "locationName":"srtCaller"
+        },
+        "Rtp":{
+          "shape":"RtpRouterInputConfiguration",
+          "locationName":"rtp"
         }
       },
       "union":true
@@ -6881,17 +6922,21 @@
           "shape":"StandardRouterInputStreamDetails",
           "locationName":"standard"
         },
+        "MediaLiveChannel":{
+          "shape":"MediaLiveChannelRouterInputStreamDetails",
+          "locationName":"mediaLiveChannel"
+        },
         "Failover":{
           "shape":"FailoverRouterInputStreamDetails",
           "locationName":"failover"
         },
-        "Merge":{
-          "shape":"MergeRouterInputStreamDetails",
-          "locationName":"merge"
-        },
         "MediaConnectFlow":{
           "shape":"MediaConnectFlowRouterInputStreamDetails",
           "locationName":"mediaConnectFlow"
+        },
+        "Merge":{
+          "shape":"MergeRouterInputStreamDetails",
+          "locationName":"merge"
         }
       },
       "union":true
@@ -6967,7 +7012,8 @@
         "STANDARD",
         "FAILOVER",
         "MERGE",
-        "MEDIACONNECT_FLOW"
+        "MEDIACONNECT_FLOW",
+        "MEDIALIVE_CHANNEL"
       ]
     },
     "RouterInputTypeList":{
@@ -7273,25 +7319,25 @@
           "shape":"StringList",
           "locationName":"regionNames"
         },
-        "OutputTypes":{
-          "shape":"RouterOutputTypeList",
-          "locationName":"outputTypes"
-        },
-        "NameContains":{
-          "shape":"StringList",
-          "locationName":"nameContains"
-        },
         "NetworkInterfaceArns":{
           "shape":"RouterNetworkInterfaceArnList",
           "locationName":"networkInterfaceArns"
+        },
+        "RoutingScopes":{
+          "shape":"RoutingScopeList",
+          "locationName":"routingScopes"
+        },
+        "OutputTypes":{
+          "shape":"RouterOutputTypeList",
+          "locationName":"outputTypes"
         },
         "RoutedInputArns":{
           "shape":"RouterInputArnList",
           "locationName":"routedInputArns"
         },
-        "RoutingScopes":{
-          "shape":"RoutingScopeList",
-          "locationName":"routingScopes"
+        "NameContains":{
+          "shape":"StringList",
+          "locationName":"nameContains"
         }
       },
       "union":true
@@ -7337,10 +7383,6 @@
     "RouterOutputProtocolConfiguration":{
       "type":"structure",
       "members":{
-        "Rtp":{
-          "shape":"RtpRouterOutputConfiguration",
-          "locationName":"rtp"
-        },
         "Rist":{
           "shape":"RistRouterOutputConfiguration",
           "locationName":"rist"
@@ -7352,6 +7394,10 @@
         "SrtCaller":{
           "shape":"SrtCallerRouterOutputConfiguration",
           "locationName":"srtCaller"
+        },
+        "Rtp":{
+          "shape":"RtpRouterOutputConfiguration",
+          "locationName":"rtp"
         }
       },
       "union":true
@@ -7488,7 +7534,7 @@
       "type":"integer",
       "box":true,
       "max":65531,
-      "min":0
+      "min":1024
     },
     "ScanMode":{
       "type":"string",
@@ -7806,7 +7852,7 @@
       "type":"integer",
       "box":true,
       "max":65535,
-      "min":0
+      "min":1024
     },
     "SrtCallerRouterOutputConfiguration":{
       "type":"structure",
@@ -7842,7 +7888,7 @@
       "type":"integer",
       "box":true,
       "max":65535,
-      "min":0
+      "min":1024
     },
     "SrtCallerRouterOutputConfigurationMinimumLatencyMillisecondsLong":{
       "type":"long",

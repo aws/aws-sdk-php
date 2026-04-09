@@ -1509,6 +1509,30 @@
         "RouterOutputStreamDetails$MediaConnectFlow": null
       }
     },
+    "MediaLiveChannelArn": {
+      "base": null,
+      "refs": {
+        "MediaLiveChannelRouterInputConfiguration$MediaLiveChannelArn": "<p>The ARN of the MediaLive channel to connect to this router input.</p>"
+      }
+    },
+    "MediaLiveChannelPipelineId": {
+      "base": null,
+      "refs": {
+        "MediaLiveChannelRouterInputConfiguration$MediaLivePipelineId": "<p>The index of the MediaLive pipeline to connect to this router input.</p>"
+      }
+    },
+    "MediaLiveChannelRouterInputConfiguration": {
+      "base": "<p>Configuration settings for connecting a router input to a MediaLive channel output.</p>",
+      "refs": {
+        "RouterInputConfiguration$MediaLiveChannel": null
+      }
+    },
+    "MediaLiveChannelRouterInputStreamDetails": {
+      "base": "<p>Configuration details for a MediaLive channel when used as a router input source.</p>",
+      "refs": {
+        "RouterInputStreamDetails$MediaLiveChannel": null
+      }
+    },
     "MediaLiveInputArn": {
       "base": null,
       "refs": {
@@ -1536,6 +1560,7 @@
     "MediaLiveTransitEncryption": {
       "base": "<p>The encryption configuration that defines how content is encrypted during transit between MediaConnect Router and MediaLive. This configuration determines whether encryption keys are automatically managed by the service or manually managed through Secrets Manager.</p>",
       "refs": {
+        "MediaLiveChannelRouterInputConfiguration$SourceTransitDecryption": null,
         "MediaLiveInputRouterOutputConfiguration$DestinationTransitEncryption": "<p>The encryption configuration for the MediaLive input when connected to this router output.</p>"
       }
     },
@@ -2912,6 +2937,7 @@
         "Maintenance$MaintenanceDeadline": "<p> The Maintenance has to be performed before this deadline in ISO UTC format. Example: 2021-01-30T08:30:00Z.</p>",
         "Maintenance$MaintenanceScheduledDate": "<p> A scheduled date in ISO UTC format when the maintenance will happen. Use YYYY-MM-DD format. Example: 2021-01-30.</p>",
         "Maintenance$MaintenanceStartHour": "<p> UTC time when the maintenance will happen. Use 24-hour HH:MM format. Minutes must be 00. Example: 13:00. The default value is 02:00.</p>",
+        "MediaLiveChannelRouterInputConfiguration$MediaLiveChannelOutputName": "<p>The name of the MediaLive channel output to connect to this router input.</p>",
         "MediaStream$Description": "<p> A description that can help you quickly identify what your media stream is used for.</p>",
         "MediaStream$MediaStreamName": "<p> A name that helps you distinguish one media stream from another. </p>",
         "MediaStream$VideoFormat": "<p> The resolution of the video. </p>",
@@ -3112,8 +3138,8 @@
     "StringList": {
       "base": null,
       "refs": {
-        "RouterInputFilter$RegionNames": "<p>The AWS Regions of the router inputs to include in the filter.</p>",
         "RouterInputFilter$NameContains": "<p>The names of the router inputs to include in the filter.</p>",
+        "RouterInputFilter$RegionNames": "<p>The AWS Regions of the router inputs to include in the filter.</p>",
         "RouterNetworkInterfaceFilter$RegionNames": "<p>The AWS Regions of the router network interfaces to include in the filter.</p>",
         "RouterNetworkInterfaceFilter$NameContains": "<p>The names of the router network interfaces to include in the filter.</p>",
         "RouterOutputFilter$RegionNames": "<p>The AWS Regions of the router outputs to include in the filter.</p>",

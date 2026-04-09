@@ -31,6 +31,23 @@
         {"shape":"ServiceQuotaExceededException"}
       ]
     },
+    "CreateScheduledReport":{
+      "name":"CreateScheduledReport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateScheduledReportRequest"},
+      "output":{"shape":"CreateScheduledReportResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "DeleteDashboard":{
       "name":"DeleteDashboard",
       "http":{
@@ -44,6 +61,39 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "DeleteScheduledReport":{
+      "name":"DeleteScheduledReport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteScheduledReportRequest"},
+      "output":{"shape":"DeleteScheduledReportResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "ExecuteScheduledReport":{
+      "name":"ExecuteScheduledReport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ExecuteScheduledReportRequest"},
+      "output":{"shape":"ExecuteScheduledReportResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetDashboard":{
@@ -80,6 +130,23 @@
       ],
       "readonly":true
     },
+    "GetScheduledReport":{
+      "name":"GetScheduledReport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetScheduledReportRequest"},
+      "output":{"shape":"GetScheduledReportResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "ListDashboards":{
       "name":"ListDashboards",
       "http":{
@@ -88,6 +155,22 @@
       },
       "input":{"shape":"ListDashboardsRequest"},
       "output":{"shape":"ListDashboardsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListScheduledReports":{
+      "name":"ListScheduledReports",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListScheduledReportsRequest"},
+      "output":{"shape":"ListScheduledReportsResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -157,10 +240,45 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "UpdateScheduledReport":{
+      "name":"UpdateScheduledReport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateScheduledReportRequest"},
+      "output":{"shape":"UpdateScheduledReportResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
     }
   },
   "shapes":{
     "AccessDeniedException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"GenericString"}
+      },
+      "exception":true
+    },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
+    },
+    "ClientToken":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\u0021-\\u007E]+"
+    },
+    "ConflictException":{
       "type":"structure",
       "required":["message"],
       "members":{
@@ -209,6 +327,25 @@
       "required":["arn"],
       "members":{
         "arn":{"shape":"DashboardArn"}
+      }
+    },
+    "CreateScheduledReportRequest":{
+      "type":"structure",
+      "required":["scheduledReport"],
+      "members":{
+        "scheduledReport":{"shape":"ScheduledReportInput"},
+        "resourceTags":{"shape":"ResourceTagList"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateScheduledReportResponse":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"ScheduledReportArn"}
       }
     },
     "DashboardArn":{
@@ -292,6 +429,20 @@
         "arn":{"shape":"DashboardArn"}
       }
     },
+    "DeleteScheduledReportRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"ScheduledReportArn"}
+      }
+    },
+    "DeleteScheduledReportResponse":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"ScheduledReportArn"}
+      }
+    },
     "Description":{
       "type":"string",
       "max":200,
@@ -348,6 +499,25 @@
         "table":{"shape":"TableDisplayConfigStruct"}
       },
       "union":true
+    },
+    "ExecuteScheduledReportRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"ScheduledReportArn"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "dryRun":{"shape":"Boolean"}
+      }
+    },
+    "ExecuteScheduledReportResponse":{
+      "type":"structure",
+      "members":{
+        "healthStatus":{"shape":"HealthStatus"},
+        "executionTriggered":{"shape":"Boolean"}
+      }
     },
     "Expression":{
       "type":"structure",
@@ -416,6 +586,20 @@
         "policyDocument":{"shape":"GenericString"}
       }
     },
+    "GetScheduledReportRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"ScheduledReportArn"}
+      }
+    },
+    "GetScheduledReportResponse":{
+      "type":"structure",
+      "required":["scheduledReport"],
+      "members":{
+        "scheduledReport":{"shape":"ScheduledReport"}
+      }
+    },
     "Granularity":{
       "type":"string",
       "enum":[
@@ -462,6 +646,22 @@
       "type":"list",
       "member":{"shape":"GroupDefinition"}
     },
+    "HealthStatus":{
+      "type":"structure",
+      "required":["statusCode"],
+      "members":{
+        "statusCode":{"shape":"HealthStatusCode"},
+        "lastRefreshedAt":{"shape":"GenericTimeStamp"},
+        "statusReasons":{"shape":"StatusReasonList"}
+      }
+    },
+    "HealthStatusCode":{
+      "type":"string",
+      "enum":[
+        "HEALTHY",
+        "UNHEALTHY"
+      ]
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -490,11 +690,26 @@
         "nextToken":{"shape":"NextPageToken"}
       }
     },
+    "ListScheduledReportsRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"NextPageToken"},
+        "maxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListScheduledReportsResponse":{
+      "type":"structure",
+      "required":["scheduledReports"],
+      "members":{
+        "scheduledReports":{"shape":"ScheduledReportSummaryList"},
+        "nextToken":{"shape":"NextPageToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
       "members":{
-        "resourceArn":{"shape":"DashboardArn"}
+        "resourceArn":{"shape":"ResourceArn"}
       }
     },
     "ListTagsForResourceResponse":{
@@ -584,6 +799,12 @@
         "filter":{"shape":"Expression"}
       }
     },
+    "ResourceArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[-a-z0-9]*:bcm-dashboards::[0-9]{12}:(dashboard|scheduled-report)/(\\*|[-a-z0-9]+)"
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "required":["message"],
@@ -647,6 +868,107 @@
         "filter":{"shape":"Expression"}
       }
     },
+    "ScheduleConfig":{
+      "type":"structure",
+      "members":{
+        "scheduleExpression":{"shape":"GenericString"},
+        "scheduleExpressionTimeZone":{"shape":"GenericString"},
+        "schedulePeriod":{"shape":"SchedulePeriod"},
+        "state":{"shape":"ScheduleState"}
+      }
+    },
+    "SchedulePeriod":{
+      "type":"structure",
+      "members":{
+        "startTime":{"shape":"GenericTimeStamp"},
+        "endTime":{"shape":"GenericTimeStamp"}
+      }
+    },
+    "ScheduleState":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "ScheduledReport":{
+      "type":"structure",
+      "required":[
+        "name",
+        "dashboardArn",
+        "scheduledReportExecutionRoleArn",
+        "scheduleConfig"
+      ],
+      "members":{
+        "arn":{"shape":"ScheduledReportArn"},
+        "name":{"shape":"ScheduledReportName"},
+        "dashboardArn":{"shape":"DashboardArn"},
+        "scheduledReportExecutionRoleArn":{"shape":"ServiceRoleArn"},
+        "scheduleConfig":{"shape":"ScheduleConfig"},
+        "description":{"shape":"Description"},
+        "widgetIds":{"shape":"WidgetIdList"},
+        "widgetDateRangeOverride":{"shape":"DateTimeRange"},
+        "createdAt":{"shape":"GenericTimeStamp"},
+        "updatedAt":{"shape":"GenericTimeStamp"},
+        "lastExecutionAt":{"shape":"GenericTimeStamp"},
+        "healthStatus":{"shape":"HealthStatus"}
+      }
+    },
+    "ScheduledReportArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[-a-z0-9]*:bcm-dashboards::[0-9]{12}:scheduled-report/(\\*|[-a-z0-9]+)"
+    },
+    "ScheduledReportInput":{
+      "type":"structure",
+      "required":[
+        "name",
+        "dashboardArn",
+        "scheduledReportExecutionRoleArn",
+        "scheduleConfig"
+      ],
+      "members":{
+        "name":{"shape":"ScheduledReportName"},
+        "dashboardArn":{"shape":"DashboardArn"},
+        "scheduledReportExecutionRoleArn":{"shape":"ServiceRoleArn"},
+        "scheduleConfig":{"shape":"ScheduleConfig"},
+        "description":{"shape":"Description"},
+        "widgetIds":{"shape":"WidgetIdList"},
+        "widgetDateRangeOverride":{"shape":"DateTimeRange"}
+      }
+    },
+    "ScheduledReportName":{
+      "type":"string",
+      "max":50,
+      "min":2,
+      "pattern":"(?!.* {2})[a-zA-Z][a-zA-Z0-9 _-]{0,48}[a-zA-Z0-9_-]"
+    },
+    "ScheduledReportSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "name",
+        "dashboardArn",
+        "scheduleExpression",
+        "state",
+        "healthStatus"
+      ],
+      "members":{
+        "arn":{"shape":"ScheduledReportArn"},
+        "name":{"shape":"ScheduledReportName"},
+        "dashboardArn":{"shape":"DashboardArn"},
+        "scheduleExpression":{"shape":"GenericString"},
+        "state":{"shape":"ScheduleState"},
+        "healthStatus":{"shape":"HealthStatus"},
+        "scheduleExpressionTimeZone":{"shape":"GenericString"},
+        "widgetIds":{"shape":"WidgetIdList"}
+      }
+    },
+    "ScheduledReportSummaryList":{
+      "type":"list",
+      "member":{"shape":"ScheduledReportSummary"}
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":["message"],
@@ -654,6 +976,28 @@
         "message":{"shape":"GenericString"}
       },
       "exception":true
+    },
+    "ServiceRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[-a-z0-9]*:iam::[0-9]{12}:role/[a-zA-Z0-9+=,.@_/-]+"
+    },
+    "StatusReason":{
+      "type":"string",
+      "enum":[
+        "DATA_SOURCE_ACCESS_DENIED",
+        "EXECUTION_ROLE_ASSUME_FAILED",
+        "EXECUTION_ROLE_INSUFFICIENT_PERMISSIONS",
+        "DASHBOARD_NOT_FOUND",
+        "DASHBOARD_ACCESS_DENIED",
+        "INTERNAL_FAILURE",
+        "WIDGET_ID_NOT_FOUND"
+      ]
+    },
+    "StatusReasonList":{
+      "type":"list",
+      "member":{"shape":"StatusReason"}
     },
     "String":{"type":"string"},
     "StringList":{
@@ -671,7 +1015,7 @@
         "resourceTags"
       ],
       "members":{
-        "resourceArn":{"shape":"DashboardArn"},
+        "resourceArn":{"shape":"ResourceArn"},
         "resourceTags":{"shape":"ResourceTagList"}
       }
     },
@@ -702,7 +1046,7 @@
         "resourceTagKeys"
       ],
       "members":{
-        "resourceArn":{"shape":"DashboardArn"},
+        "resourceArn":{"shape":"ResourceArn"},
         "resourceTagKeys":{"shape":"ResourceTagKeyList"}
       }
     },
@@ -712,7 +1056,10 @@
     },
     "UpdateDashboardRequest":{
       "type":"structure",
-      "required":["arn"],
+      "required":[
+        "arn",
+        "name"
+      ],
       "members":{
         "arn":{"shape":"DashboardArn"},
         "name":{"shape":"DashboardName"},
@@ -725,6 +1072,29 @@
       "required":["arn"],
       "members":{
         "arn":{"shape":"DashboardArn"}
+      }
+    },
+    "UpdateScheduledReportRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"ScheduledReportArn"},
+        "name":{"shape":"ScheduledReportName"},
+        "description":{"shape":"Description"},
+        "dashboardArn":{"shape":"DashboardArn"},
+        "scheduledReportExecutionRoleArn":{"shape":"ServiceRoleArn"},
+        "scheduleConfig":{"shape":"ScheduleConfig"},
+        "widgetIds":{"shape":"WidgetIdList"},
+        "widgetDateRangeOverride":{"shape":"DateTimeRange"},
+        "clearWidgetIds":{"shape":"Boolean"},
+        "clearWidgetDateRangeOverride":{"shape":"Boolean"}
+      }
+    },
+    "UpdateScheduledReportResponse":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"ScheduledReportArn"}
       }
     },
     "ValidationException":{
@@ -787,6 +1157,12 @@
       "max":32,
       "min":32,
       "pattern":"[0-9a-f]{32}"
+    },
+    "WidgetIdList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":1,
+      "min":0
     },
     "WidgetList":{
       "type":"list",

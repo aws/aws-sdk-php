@@ -3,18 +3,44 @@
   "service": "<p>Amazon Web Services Billing and Cost Management Dashboards is a service that enables you to create, manage, and share dashboards that combine multiple visualizations of your Amazon Web Services cost and usage data. You can combine multiple data sources including Cost Explorer, Savings Plans, and Reserved Instance metrics into unified dashboards, helping you analyze spending patterns and share cost insights across your organization.</p> <p>You can use the Amazon Web Services Billing and Cost Management Dashboards API to programmatically create, manage, and share dashboards. This includes creating custom dashboards, configuring widgets, managing dashboard permissions, and sharing dashboards across accounts in your organization.</p>",
   "operations": {
     "CreateDashboard": "<p>Creates a new dashboard that can contain multiple widgets displaying cost and usage data. You can add custom widgets or use predefined widgets, arranging them in your preferred layout.</p>",
+    "CreateScheduledReport": "<p>Creates a new scheduled report for a dashboard. A scheduled report automatically generates and delivers dashboard snapshots on a recurring schedule. Reports are delivered within 15 minutes of the scheduled delivery time.</p>",
     "DeleteDashboard": "<p>Deletes a specified dashboard. This action cannot be undone.</p>",
+    "DeleteScheduledReport": "<p>Deletes a specified scheduled report. This is an irreversible operation.</p>",
+    "ExecuteScheduledReport": "<p>Triggers an immediate execution of a scheduled report, outside of its regular schedule. The scheduled report must be in <code>ENABLED</code> state. Calling this operation on a <code>DISABLED</code> scheduled report returns a <code>ValidationException</code>.</p> <note> <p>If a <code>clientToken</code> is provided, the service uses it for idempotency. Requests with the same client token will not trigger a new execution within the same minute.</p> </note>",
     "GetDashboard": "<p>Retrieves the configuration and metadata of a specified dashboard, including its widgets and layout settings.</p>",
     "GetResourcePolicy": "<p>Retrieves the resource-based policy attached to a dashboard, showing sharing configurations and permissions.</p>",
+    "GetScheduledReport": "<p>Retrieves the configuration and metadata of a specified scheduled report.</p>",
     "ListDashboards": "<p>Returns a list of all dashboards in your account.</p>",
+    "ListScheduledReports": "<p>Returns a list of scheduled reports in your account.</p>",
     "ListTagsForResource": "<p>Returns a list of all tags associated with a specified dashboard resource.</p>",
     "TagResource": "<p>Adds or updates tags for a specified dashboard resource.</p>",
     "UntagResource": "<p>Removes specified tags from a dashboard resource.</p>",
-    "UpdateDashboard": "<p>Updates an existing dashboard's properties, including its name, description, and widget configurations.</p>"
+    "UpdateDashboard": "<p>Updates an existing dashboard's properties, including its name, description, and widget configurations.</p>",
+    "UpdateScheduledReport": "<p>Updates an existing scheduled report's properties, including its name, description, schedule configuration, and widget settings. Only the parameters included in the request are updated; all other properties remain unchanged.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient permissions to perform this action. Verify your IAM permissions and any resource policies.</p>",
+      "refs": {}
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "ExecuteScheduledReportRequest$dryRun": "<p>When set to <code>true</code>, validates the scheduled report configuration without triggering an actual execution.</p>",
+        "ExecuteScheduledReportResponse$executionTriggered": "<p>Indicates whether the execution was successfully triggered.</p>",
+        "UpdateScheduledReportRequest$clearWidgetIds": "<p>Set to true to clear existing widgetIds.</p>",
+        "UpdateScheduledReportRequest$clearWidgetDateRangeOverride": "<p>Set to true to clear existing widgetDateRangeOverride.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "CreateScheduledReportRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "ExecuteScheduledReportRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request could not be completed due to a conflict with the current state of the resource. For example, attempting to create a resource that already exists or is being created.</p>",
       "refs": {}
     },
     "CostAndUsageQuery": {
@@ -37,6 +63,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateScheduledReportRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateScheduledReportResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DashboardArn": {
       "base": null,
       "refs": {
@@ -48,11 +82,12 @@
         "GetDashboardResponse$arn": "<p>The ARN of the retrieved dashboard.</p>",
         "GetResourcePolicyRequest$resourceArn": "<p>The ARN of the dashboard whose resource-based policy you want to retrieve.</p>",
         "GetResourcePolicyResponse$resourceArn": "<p>The ARN of the dashboard for which the resource-based policy was retrieved.</p>",
-        "ListTagsForResourceRequest$resourceArn": "<p>The unique identifier for the resource.</p>",
-        "TagResourceRequest$resourceArn": "<p>The unique identifier for the resource.</p>",
-        "UntagResourceRequest$resourceArn": "<p>The unique identifier for the resource.</p>",
+        "ScheduledReport$dashboardArn": "<p>The ARN of the dashboard associated with the scheduled report.</p>",
+        "ScheduledReportInput$dashboardArn": "<p>The ARN of the dashboard to generate the scheduled report from.</p>",
+        "ScheduledReportSummary$dashboardArn": "<p>The ARN of the dashboard associated with the scheduled report.</p>",
         "UpdateDashboardRequest$arn": "<p>The ARN of the dashboard to update.</p>",
-        "UpdateDashboardResponse$arn": "<p>The ARN of the updated dashboard.</p>"
+        "UpdateDashboardResponse$arn": "<p>The ARN of the updated dashboard.</p>",
+        "UpdateScheduledReportRequest$dashboardArn": "<p>The ARN of the dashboard to associate with the scheduled report.</p>"
       }
     },
     "DashboardName": {
@@ -61,7 +96,7 @@
         "CreateDashboardRequest$name": "<p>The name of the dashboard. The name must be unique within your account.</p>",
         "DashboardReference$name": "<p>The name of the referenced dashboard.</p>",
         "GetDashboardResponse$name": "<p>The name of the retrieved dashboard.</p>",
-        "UpdateDashboardRequest$name": "<p>The new name for the dashboard. If not specified, the existing name is retained.</p>"
+        "UpdateDashboardRequest$name": "<p>The new name for the dashboard.</p>"
       }
     },
     "DashboardReference": {
@@ -90,7 +125,10 @@
         "ReservationCoverageQuery$timeRange": null,
         "ReservationUtilizationQuery$timeRange": null,
         "SavingsPlansCoverageQuery$timeRange": null,
-        "SavingsPlansUtilizationQuery$timeRange": null
+        "SavingsPlansUtilizationQuery$timeRange": null,
+        "ScheduledReport$widgetDateRangeOverride": "<p>The date range override applied to widgets in the scheduled report.</p>",
+        "ScheduledReportInput$widgetDateRangeOverride": "<p>The date range override to apply to widgets in the scheduled report.</p>",
+        "UpdateScheduledReportRequest$widgetDateRangeOverride": "<p>The date range override to apply to widgets in the scheduled report.</p>"
       }
     },
     "DateTimeType": {
@@ -114,13 +152,24 @@
       "base": null,
       "refs": {}
     },
+    "DeleteScheduledReportRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteScheduledReportResponse": {
+      "base": null,
+      "refs": {}
+    },
     "Description": {
       "base": null,
       "refs": {
         "CreateDashboardRequest$description": "<p>A description of the dashboard's purpose or contents.</p>",
         "DashboardReference$description": "<p>The description of the referenced dashboard.</p>",
         "GetDashboardResponse$description": "<p>The description of the retrieved dashboard.</p>",
-        "UpdateDashboardRequest$description": "<p>The new description for the dashboard. If not specified, the existing description is retained.</p>",
+        "ScheduledReport$description": "<p>A description of the scheduled report's purpose or contents.</p>",
+        "ScheduledReportInput$description": "<p>A description of the scheduled report's purpose or contents.</p>",
+        "UpdateDashboardRequest$description": "<p>The new description for the dashboard.</p>",
+        "UpdateScheduledReportRequest$description": "<p>The new description for the scheduled report.</p>",
         "Widget$description": "<p>A description of the widget's purpose or the data it displays.</p>"
       }
     },
@@ -141,6 +190,14 @@
       "refs": {
         "WidgetConfig$displayConfig": "<p>The configuration that determines how the retrieved data should be visualized in the widget.</p>"
       }
+    },
+    "ExecuteScheduledReportRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ExecuteScheduledReportResponse": {
+      "base": null,
+      "refs": {}
     },
     "Expression": {
       "base": "<p>Defines complex filtering conditions using logical operators (<code>AND</code>, <code>OR</code>, <code>NOT</code>) and various filter types.</p>",
@@ -165,11 +222,16 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
+        "ConflictException$message": null,
         "DateTimeValue$value": "<p>The actual date/time value.</p>",
         "GetResourcePolicyResponse$policyDocument": "<p>The JSON policy document that represents the dashboard's resource-based policy.</p>",
         "GraphDisplayConfigMap$key": null,
         "InternalServerException$message": null,
         "ResourceNotFoundException$message": null,
+        "ScheduleConfig$scheduleExpression": "<p>The schedule expression that specifies when to trigger the scheduled report run. This value must be a cron expression consisting of six fields separated by white spaces: <code>cron(minutes hours day_of_month month day_of_week year)</code>.</p>",
+        "ScheduleConfig$scheduleExpressionTimeZone": "<p>The time zone for the schedule expression, for example, <code>UTC</code>.</p>",
+        "ScheduledReportSummary$scheduleExpression": "<p>The schedule expression that defines when the report runs.</p>",
+        "ScheduledReportSummary$scheduleExpressionTimeZone": "<p>The time zone for the schedule expression, for example, <code>UTC</code>.</p>",
         "ServiceQuotaExceededException$message": null,
         "ThrottlingException$message": null,
         "ValidationException$message": null
@@ -181,7 +243,13 @@
         "DashboardReference$createdAt": "<p>The timestamp when the dashboard was created.</p>",
         "DashboardReference$updatedAt": "<p>The timestamp when the dashboard was last modified.</p>",
         "GetDashboardResponse$createdAt": "<p>The timestamp when the dashboard was created.</p>",
-        "GetDashboardResponse$updatedAt": "<p>The timestamp when the dashboard was last modified.</p>"
+        "GetDashboardResponse$updatedAt": "<p>The timestamp when the dashboard was last modified.</p>",
+        "HealthStatus$lastRefreshedAt": "<p>The timestamp when the health status was last refreshed.</p>",
+        "SchedulePeriod$startTime": "<p>The start time of the schedule period. If not specified, defaults to the time of the create or update request. The start time cannot be more than 5 minutes before the time of the request.</p>",
+        "SchedulePeriod$endTime": "<p>The end time of the schedule period. If not specified, defaults to 3 years from the time of the create or update request. The maximum allowed value is 3 years from the current time. Setting an end time beyond this limit returns a <code>ValidationException</code>.</p>",
+        "ScheduledReport$createdAt": "<p>The timestamp when the scheduled report was created.</p>",
+        "ScheduledReport$updatedAt": "<p>The timestamp when the scheduled report was last modified.</p>",
+        "ScheduledReport$lastExecutionAt": "<p>The timestamp of the most recent execution of the scheduled report.</p>"
       }
     },
     "GetDashboardRequest": {
@@ -200,6 +268,14 @@
       "base": null,
       "refs": {}
     },
+    "GetScheduledReportRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetScheduledReportResponse": {
+      "base": null,
+      "refs": {}
+    },
     "Granularity": {
       "base": null,
       "refs": {
@@ -207,7 +283,7 @@
         "ReservationCoverageQuery$granularity": "<p>The time granularity of the retrieved data: <code>HOURLY</code>, <code>DAILY</code>, or <code>MONTHLY</code>.</p>",
         "ReservationUtilizationQuery$granularity": "<p>The time granularity of the retrieved data: <code>HOURLY</code>, <code>DAILY</code>, or <code>MONTHLY</code>.</p>",
         "SavingsPlansCoverageQuery$granularity": "<p>The time granularity of the retrieved data: <code>HOURLY</code>, <code>DAILY</code>, or <code>MONTHLY</code>.</p>",
-        "SavingsPlansUtilizationQuery$granularity": "<p>The time granularity of the retrieved data: HOURLY, DAILY, or MONTHLY.</p>"
+        "SavingsPlansUtilizationQuery$granularity": "<p>The time granularity of the retrieved data: <code>HOURLY</code>, <code>DAILY</code>, or <code>MONTHLY</code>.</p>"
       }
     },
     "GraphDisplayConfig": {
@@ -249,6 +325,20 @@
         "SavingsPlansCoverageQuery$groupBy": "<p>Specifies how to group the Savings Plans coverage data, such as by service or instance family.</p>"
       }
     },
+    "HealthStatus": {
+      "base": "<p>Contains the health status information for a scheduled report, including the status code and any reasons for an unhealthy state.</p>",
+      "refs": {
+        "ExecuteScheduledReportResponse$healthStatus": "<p>The health status of the scheduled report after the execution request.</p>",
+        "ScheduledReport$healthStatus": "<p>The health status of the scheduled report at last refresh time.</p>",
+        "ScheduledReportSummary$healthStatus": "<p>The health status of the scheduled report as of its last refresh time.</p>"
+      }
+    },
+    "HealthStatusCode": {
+      "base": null,
+      "refs": {
+        "HealthStatus$statusCode": "<p>The health status code. <code>HEALTHY</code> indicates the scheduled report is configured properly and has all required permissions to execute. <code>UNHEALTHY</code> indicates the scheduled report is unable to deliver the notification to the default Amazon EventBridge EventBus in your account and your action is needed. The reason for the unhealthy state is captured in the health status reasons.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -264,6 +354,14 @@
       "refs": {}
     },
     "ListDashboardsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListScheduledReportsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListScheduledReportsResponse": {
       "base": null,
       "refs": {}
     },
@@ -292,7 +390,8 @@
     "MaxResults": {
       "base": null,
       "refs": {
-        "ListDashboardsRequest$maxResults": "<p>The maximum number of results to return in a single call. The default value is 20.</p>"
+        "ListDashboardsRequest$maxResults": "<p>The maximum number of results to return in a single call. The default value is 20.</p>",
+        "ListScheduledReportsRequest$maxResults": "<p>The maximum number of results to return in a single call. Valid range is 1 to 100. The default value is 50.</p>"
       }
     },
     "MetricName": {
@@ -313,7 +412,9 @@
       "base": null,
       "refs": {
         "ListDashboardsRequest$nextToken": "<p>The token for the next page of results. Use the value returned in the previous response.</p>",
-        "ListDashboardsResponse$nextToken": "<p>The token to use to retrieve the next page of results. Not returned if there are no more results to retrieve.</p>"
+        "ListDashboardsResponse$nextToken": "<p>The token to use to retrieve the next page of results. Not returned if there are no more results to retrieve.</p>",
+        "ListScheduledReportsRequest$nextToken": "<p>The token for the next page of results. Use the value returned in the previous response.</p>",
+        "ListScheduledReportsResponse$nextToken": "<p>The token to use to retrieve the next page of results. Not returned if there are no more results to retrieve.</p>"
       }
     },
     "QueryParameters": {
@@ -332,6 +433,14 @@
       "base": "<p>Defines the parameters for querying Reserved Instance utilization data, including grouping options and time granularity.</p>",
       "refs": {
         "QueryParameters$reservationUtilization": "<p>The parameters for querying Reserved Instance utilization data, showing how effectively your Reserved Instances are being used.</p>"
+      }
+    },
+    "ResourceArn": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceRequest$resourceArn": "<p>The unique identifier for the resource.</p>",
+        "TagResourceRequest$resourceArn": "<p>The unique identifier for the resource.</p>",
+        "UntagResourceRequest$resourceArn": "<p>The unique identifier for the resource.</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -361,6 +470,7 @@
       "base": null,
       "refs": {
         "CreateDashboardRequest$resourceTags": "<p>The tags to apply to the dashboard resource for organization and management.</p>",
+        "CreateScheduledReportRequest$resourceTags": "<p>The tags to apply to the scheduled report resource for organization and management.</p>",
         "ListTagsForResourceResponse$resourceTags": "<p>The list of tags associated with the specified dashboard resource.</p>",
         "TagResourceRequest$resourceTags": "<p>The tags to add to the dashboard resource.</p>"
       }
@@ -383,16 +493,105 @@
         "QueryParameters$savingsPlansUtilization": "<p>The parameters for querying Savings Plans utilization data, showing how effectively your Savings Plans are being used.</p>"
       }
     },
+    "ScheduleConfig": {
+      "base": "<p>Defines the schedule for a scheduled report, including the cron expression, time zone, active period, and the schedule state.</p>",
+      "refs": {
+        "ScheduledReport$scheduleConfig": "<p>The schedule configuration that defines when and how often the report is generated.</p>",
+        "ScheduledReportInput$scheduleConfig": "<p>The schedule configuration that defines when and how often the report is generated. If the schedule state is not specified, it defaults to <code>ENABLED</code>.</p>",
+        "UpdateScheduledReportRequest$scheduleConfig": "<p>The updated schedule configuration for the report.</p>"
+      }
+    },
+    "SchedulePeriod": {
+      "base": "<p>Defines the active time period for execution of the scheduled report.</p>",
+      "refs": {
+        "ScheduleConfig$schedulePeriod": "<p>The time period during which the schedule is active.</p>"
+      }
+    },
+    "ScheduleState": {
+      "base": null,
+      "refs": {
+        "ScheduleConfig$state": "<p>The state of the schedule. <code>ENABLED</code> means the scheduled report runs according to its schedule expression. <code>DISABLED</code> means the scheduled report is paused and will not run until re-enabled.</p>",
+        "ScheduledReportSummary$state": "<p>The state of the schedule: <code>ENABLED</code> or <code>DISABLED</code>.</p>"
+      }
+    },
+    "ScheduledReport": {
+      "base": "<p>Contains the full configuration and metadata of a scheduled report.</p>",
+      "refs": {
+        "GetScheduledReportResponse$scheduledReport": "<p>The scheduled report configuration and metadata.</p>"
+      }
+    },
+    "ScheduledReportArn": {
+      "base": null,
+      "refs": {
+        "CreateScheduledReportResponse$arn": "<p>The ARN of the newly created scheduled report.</p>",
+        "DeleteScheduledReportRequest$arn": "<p>The ARN of the scheduled report to delete.</p>",
+        "DeleteScheduledReportResponse$arn": "<p>The ARN of the scheduled report that was deleted.</p>",
+        "ExecuteScheduledReportRequest$arn": "<p>The ARN of the scheduled report to execute.</p>",
+        "GetScheduledReportRequest$arn": "<p>The ARN of the scheduled report to retrieve.</p>",
+        "ScheduledReport$arn": "<p>The ARN of the scheduled report.</p>",
+        "ScheduledReportSummary$arn": "<p>The ARN of the scheduled report.</p>",
+        "UpdateScheduledReportRequest$arn": "<p>The ARN of the scheduled report to update.</p>",
+        "UpdateScheduledReportResponse$arn": "<p>The ARN of the updated scheduled report.</p>"
+      }
+    },
+    "ScheduledReportInput": {
+      "base": "<p>Defines the configuration for creating a new scheduled report, including the dashboard, schedule, execution role, and optional widget settings.</p>",
+      "refs": {
+        "CreateScheduledReportRequest$scheduledReport": "<p>The configuration for the scheduled report, including the dashboard to report on, the schedule, and the execution role that the service will use to generate the dashboard snapshot.</p>"
+      }
+    },
+    "ScheduledReportName": {
+      "base": null,
+      "refs": {
+        "ScheduledReport$name": "<p>The name of the scheduled report.</p>",
+        "ScheduledReportInput$name": "<p>The name of the scheduled report.</p>",
+        "ScheduledReportSummary$name": "<p>The name of the scheduled report.</p>",
+        "UpdateScheduledReportRequest$name": "<p>The new name for the scheduled report.</p>"
+      }
+    },
+    "ScheduledReportSummary": {
+      "base": "<p>Contains summary information for a scheduled report.</p>",
+      "refs": {
+        "ScheduledReportSummaryList$member": null
+      }
+    },
+    "ScheduledReportSummaryList": {
+      "base": null,
+      "refs": {
+        "ListScheduledReportsResponse$scheduledReports": "<p>An array of scheduled report summaries, containing basic information about each scheduled report.</p>"
+      }
+    },
     "ServiceQuotaExceededException": {
-      "base": "<p>The request would exceed service quotas. For example, attempting to create more than 20 widgets in a dashboard or exceeding the maximum number of dashboards per account.</p>",
+      "base": "<p>The request would exceed a service quota. Review the service quotas for Amazon Web Services Billing and Cost Management Dashboards and retry your request.</p>",
       "refs": {}
+    },
+    "ServiceRoleArn": {
+      "base": null,
+      "refs": {
+        "ScheduledReport$scheduledReportExecutionRoleArn": "<p>The ARN of the IAM role that the scheduled report uses to execute. Amazon Web Services Billing and Cost Management Dashboards will assume this IAM role while executing the scheduled report.</p>",
+        "ScheduledReportInput$scheduledReportExecutionRoleArn": "<p>The ARN of the IAM role that the scheduled report uses to execute. Amazon Web Services Billing and Cost Management Dashboards will assume this IAM role while executing the scheduled report.</p>",
+        "UpdateScheduledReportRequest$scheduledReportExecutionRoleArn": "<p>The ARN of the IAM role that the scheduled report uses to execute. Amazon Web Services Billing and Cost Management Dashboards will assume this IAM role while executing the scheduled report.</p>"
+      }
+    },
+    "StatusReason": {
+      "base": null,
+      "refs": {
+        "StatusReasonList$member": null
+      }
+    },
+    "StatusReasonList": {
+      "base": null,
+      "refs": {
+        "HealthStatus$statusReasons": "<p>The list of reasons for the current health status. Only present when the status is <code>UNHEALTHY</code>.</p>"
+      }
     },
     "String": {
       "base": null,
       "refs": {
         "CostCategoryValues$key": "<p>The key of the cost category to filter on.</p>",
         "StringList$member": null,
-        "TagValues$key": "<p>The key of the tag to filter on.</p>"
+        "TagValues$key": "<p>The key of the tag to filter on.</p>",
+        "WidgetIdList$member": null
       }
     },
     "StringList": {
@@ -443,6 +642,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateScheduledReportRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateScheduledReportResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ValidationException": {
       "base": "<p>The input parameters do not satisfy the requirements. Check the error message for specific validation details.</p>",
       "refs": {}
@@ -481,6 +688,15 @@
       "base": null,
       "refs": {
         "Widget$id": "<p>The unique identifier for the widget.</p>"
+      }
+    },
+    "WidgetIdList": {
+      "base": null,
+      "refs": {
+        "ScheduledReport$widgetIds": "<p>The list of widget identifiers included in the scheduled report.</p>",
+        "ScheduledReportInput$widgetIds": "<p>The list of widget identifiers to include in the scheduled report. If not specified, all widgets in the dashboard are included.</p>",
+        "ScheduledReportSummary$widgetIds": "<p>The list of widget identifiers included in the scheduled report.</p>",
+        "UpdateScheduledReportRequest$widgetIds": "<p>The list of widget identifiers to include in the scheduled report. If not specified, all widgets in the dashboard are included.</p>"
       }
     },
     "WidgetList": {

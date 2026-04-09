@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RedshiftDataAPIService` - The BatchExecuteStatement API now supports named SQL parameters, enabling secure batch queries with parameterized values. This enhancement helps prevent SQL injection vulnerabilities and improves query reusability.
+* `Aws\BedrockAgentCoreControl` - Initial release for CRUDL in AgentCore Registry Service
+* `Aws\SageMaker` - Release support for g7e instance types for SageMaker HyperPod
+* `Aws\BedrockAgentCore` - Introducing support for SearchRegistryRecords API on AgentCoreRegistry
+* `Aws\MediaConnect` - Adds support for MediaLive Channel-type Router Inputs.
+* `Aws\BCMDashboards` - Scheduled email reports of Billing and Cost Management Dashboards
+
 ## 3.378.0 - 2026-04-08
 
 * `Aws\drs` - This changes adds support for modifying the replication configuration to support data replication using IPv6.

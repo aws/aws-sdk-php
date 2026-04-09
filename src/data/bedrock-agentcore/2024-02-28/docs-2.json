@@ -33,6 +33,7 @@
     "ListSessions": "<p>Lists sessions in an AgentCore Memory resource based on specified criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>Empty sessions are automatically deleted after one day.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListSessions</code> permission.</p>",
     "RetrieveMemoryRecords": "<p>Searches for and retrieves memory records from an AgentCore Memory resource based on specified search criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:RetrieveMemoryRecords</code> permission.</p>",
     "SaveBrowserSessionProfile": "<p>Saves the current state of a browser session as a reusable profile in Amazon Bedrock AgentCore. A browser profile captures persistent browser data such as cookies and local storage from an active session, enabling you to reuse this data in future browser sessions.</p> <p>To save a browser session profile, you must specify the profile identifier, browser identifier, and session ID. The session must be active when saving the profile. Once saved, the profile can be used with the <code>StartBrowserSession</code> operation to initialize new sessions with the stored browser state.</p> <p>Browser profiles are useful for scenarios that require persistent authentication, maintaining user preferences across sessions, or continuing tasks that depend on previously stored browser data.</p> <p>The following operations are related to <code>SaveBrowserSessionProfile</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> </ul>",
+    "SearchRegistryRecords": "<p> Searches for registry records using semantic, lexical, or hybrid queries. Returns metadata for matching records ordered by relevance within the specified registry.</p>",
     "StartBrowserSession": "<p>Creates and initializes a browser session in Amazon Bedrock AgentCore. The session enables agents to navigate and interact with web content, extract information from websites, and perform web-based tasks as part of their response generation.</p> <p>To create a session, you must specify a browser identifier and a name. You can also configure the viewport dimensions to control the visible area of web content. The session remains active until it times out or you explicitly stop it using the <code>StopBrowserSession</code> operation.</p> <p>The following operations are related to <code>StartBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_UpdateBrowserStream.html\">UpdateBrowserStream</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_SaveBrowserSessionProfile.html\">SaveBrowserSessionProfile</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopBrowserSession.html\">StopBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_InvokeBrowser.html\">InvokeBrowser</a> </p> </li> </ul>",
     "StartCodeInterpreterSession": "<p>Creates and initializes a code interpreter session in Amazon Bedrock AgentCore. The session enables agents to execute code as part of their response generation, supporting programming languages such as Python for data analysis, visualization, and computation tasks.</p> <p>To create a session, you must specify a code interpreter identifier and a name. The session remains active until it times out or you explicitly stop it using the <code>StopCodeInterpreterSession</code> operation.</p> <p>The following operations are related to <code>StartCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_InvokeCodeInterpreter.html\">InvokeCodeInterpreter</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopCodeInterpreterSession.html\">StopCodeInterpreterSession</a> </p> </li> </ul>",
     "StartMemoryExtractionJob": "<p> Starts a memory extraction job that processes events that failed extraction previously in an AgentCore Memory resource and produces structured memory records. When earlier extraction attempts have left events unprocessed, this job will pick up and extract those as well. </p> <p>To use this operation, you must have the <code>bedrock-agentcore:StartMemoryExtractionJob</code> permission.</p>",
@@ -42,6 +43,12 @@
     "UpdateBrowserStream": "<p>Updates a browser stream. To use this operation, you must have permissions to perform the bedrock:UpdateBrowserStream action.</p>"
   },
   "shapes": {
+    "A2aDescriptor": {
+      "base": "<p> The A2A (Agent-to-Agent) descriptor configuration for a registry record.</p>",
+      "refs": {
+        "Descriptors$a2a": "<p> The A2A (Agent-to-Agent) descriptor configuration. Populated when the record's <code>descriptorType</code> is <code>A2A</code>.</p>"
+      }
+    },
     "AccessDeniedException": {
       "base": "<p>The exception that occurs when you do not have sufficient permissions to perform an action. Verify that your IAM policy includes the necessary permissions for the operation you are trying to perform.</p>",
       "refs": {
@@ -84,6 +91,18 @@
       "base": null,
       "refs": {
         "GetAgentCardResponse$agentCard": "<p>An agent card document that contains metadata and capabilities for an AgentCore Runtime agent.</p>"
+      }
+    },
+    "AgentCardDefinition": {
+      "base": "<p> The agent card definition for A2A descriptors, including the schema version and inline content that describes the agent's capabilities.</p>",
+      "refs": {
+        "A2aDescriptor$agentCard": "<p> The agent card definition that describes the agent's capabilities and interface.</p>"
+      }
+    },
+    "AgentSkillsDescriptor": {
+      "base": "<p> The agent skills descriptor configuration for a registry record.</p>",
+      "refs": {
+        "Descriptors$agentSkills": "<p> The agent skills descriptor configuration. Populated when the record's <code>descriptorType</code> is <code>AGENT_SKILLS</code>.</p>"
       }
     },
     "ApiKeyType": {
@@ -504,6 +523,12 @@
         "GetResourceOauth2TokenRequest$resourceCredentialProviderName": "<p>The name of the resource's credential provider.</p>"
       }
     },
+    "CustomDescriptor": {
+      "base": "<p> A custom descriptor configuration for a registry record.</p>",
+      "refs": {
+        "Descriptors$custom": "<p> The custom descriptor configuration. Populated when the record's <code>descriptorType</code> is <code>CUSTOM</code>.</p>"
+      }
+    },
     "CustomRequestKeyType": {
       "base": null,
       "refs": {
@@ -532,6 +557,8 @@
         "GetBrowserSessionResponse$createdAt": "<p>The time at which the browser session was created.</p>",
         "GetBrowserSessionResponse$lastUpdatedAt": "<p>The time at which the browser session was last updated.</p>",
         "GetCodeInterpreterSessionResponse$createdAt": "<p>The time at which the code interpreter session was created.</p>",
+        "RegistryRecordSummary$createdAt": "<p> The date and time when the registry record was created.</p>",
+        "RegistryRecordSummary$updatedAt": "<p> The date and time when the registry record was last updated.</p>",
         "SaveBrowserSessionProfileResponse$lastUpdatedAt": "<p>The timestamp when the browser profile was last updated. This value is in ISO 8601 format.</p>",
         "StartBrowserSessionResponse$createdAt": "<p>The timestamp when the browser session was created.</p>",
         "StartCodeInterpreterSessionResponse$createdAt": "<p>The time at which the code interpreter session was created.</p>",
@@ -555,6 +582,24 @@
     "DeleteMemoryRecordOutput": {
       "base": null,
       "refs": {}
+    },
+    "Description": {
+      "base": null,
+      "refs": {
+        "RegistryRecordSummary$description": "<p> A description of the registry record.</p>"
+      }
+    },
+    "DescriptorType": {
+      "base": "<p> The type of descriptor associated with a registry record.</p>",
+      "refs": {
+        "RegistryRecordSummary$descriptorType": "<p> The type of descriptor associated with this registry record.</p>"
+      }
+    },
+    "Descriptors": {
+      "base": "<p> Contains the descriptor configuration for a registry record. Only the field that matches the record's <code>descriptorType</code> is populated.</p>",
+      "refs": {
+        "RegistryRecordSummary$descriptors": "<p> The descriptor configurations for this registry record.</p>"
+      }
     },
     "Document": {
       "base": null,
@@ -909,6 +954,17 @@
         "EvaluationResultContent$ignoredReferenceInputFields": "<p> The list of reference input field names that were provided but not used by the evaluator. Helps identify which ground truth data was not consumed during evaluation. </p>"
       }
     },
+    "InlineContent": {
+      "base": null,
+      "refs": {
+        "AgentCardDefinition$inlineContent": "<p> The inline content of the agent card definition.</p>",
+        "CustomDescriptor$inlineContent": "<p> The inline content of the custom descriptor.</p>",
+        "ServerDefinition$inlineContent": "<p> The inline content of the server definition.</p>",
+        "SkillDefinition$inlineContent": "<p> The inline content of the skill definition.</p>",
+        "SkillMdDefinition$inlineContent": "<p> The inline markdown content of the skill definition.</p>",
+        "ToolsDefinition$inlineContent": "<p> The inline content of the tools definition.</p>"
+      }
+    },
     "InputContentBlock": {
       "base": "<p>A block of input content.</p>",
       "refs": {
@@ -1243,6 +1299,12 @@
         "RetrieveMemoryRecordsInput$maxResults": "<p>The maximum number of results to return in a single call. The default value is 20.</p>"
       }
     },
+    "McpDescriptor": {
+      "base": "<p> The MCP (Model Context Protocol) descriptor configuration for a registry record. Contains the server definition and tools definition.</p>",
+      "refs": {
+        "Descriptors$mcp": "<p> The MCP (Model Context Protocol) descriptor configuration. Populated when the record's <code>descriptorType</code> is <code>MCP</code>.</p>"
+      }
+    },
     "MemoryContent": {
       "base": "<p>Contains the content of a memory record.</p>",
       "refs": {
@@ -1403,6 +1465,12 @@
       "base": null,
       "refs": {
         "ExtractionJobMessages$messagesList": "<p>The list of messages that compose this extraction job.</p>"
+      }
+    },
+    "MetadataFilterExpression": {
+      "base": "<p> A JSON document that represents a structured metadata filter expression. Supports field-level operators (<code>$eq</code>, <code>$ne</code>, <code>$in</code>) and logical operators (<code>$and</code>, <code>$or</code>) on filterable fields (<code>name</code>, <code>descriptorType</code>, <code>version</code>).</p>",
+      "refs": {
+        "SearchRegistryRecordsRequest$filters": "<p> A metadata filter expression to narrow search results. Uses structured JSON operators including field-level operators (<code>$eq</code>, <code>$ne</code>, <code>$in</code>) and logical operators (<code>$and</code>, <code>$or</code>) on filterable fields (<code>name</code>, <code>descriptorType</code>, <code>version</code>). For example, to filter by descriptor type: <code>{\"descriptorType\": {\"$eq\": \"MCP\"}}</code>. To combine filters: <code>{\"$and\": [{\"descriptorType\": {\"$eq\": \"MCP\"}}, {\"name\": {\"$eq\": \"my-tool\"}}]}</code>.</p>"
       }
     },
     "MetadataKey": {
@@ -1647,6 +1715,60 @@
         "ExternalProxy$credentials": "<p>Optional authentication credentials for the proxy server. If omitted, the proxy is accessed without authentication (useful for IP-allowlisted proxies).</p>"
       }
     },
+    "RegistryArn": {
+      "base": null,
+      "refs": {
+        "RegistryRecordSummary$registryArn": "<p> The Amazon Resource Name (ARN) of the registry that this record belongs to.</p>"
+      }
+    },
+    "RegistryIdentifier": {
+      "base": null,
+      "refs": {
+        "SearchRegistryRecordsRequestRegistryIdsList$member": null
+      }
+    },
+    "RegistryRecordArn": {
+      "base": null,
+      "refs": {
+        "RegistryRecordSummary$recordArn": "<p> The Amazon Resource Name (ARN) of the registry record.</p>"
+      }
+    },
+    "RegistryRecordId": {
+      "base": null,
+      "refs": {
+        "RegistryRecordSummary$recordId": "<p> The unique identifier of the registry record.</p>"
+      }
+    },
+    "RegistryRecordName": {
+      "base": null,
+      "refs": {
+        "RegistryRecordSummary$name": "<p> The name of the registry record.</p>"
+      }
+    },
+    "RegistryRecordStatus": {
+      "base": "<p> The status of a registry record in its lifecycle.</p>",
+      "refs": {
+        "RegistryRecordSummary$status": "<p> The current status of the registry record.</p>"
+      }
+    },
+    "RegistryRecordSummary": {
+      "base": "<p> Summary information about a registry record.</p>",
+      "refs": {
+        "RegistryRecordSummaryList$member": null
+      }
+    },
+    "RegistryRecordSummaryList": {
+      "base": null,
+      "refs": {
+        "SearchRegistryRecordsResponse$registryRecords": "<p> The list of registry records that match the search query, ordered by relevance.</p>"
+      }
+    },
+    "RegistryRecordVersion": {
+      "base": null,
+      "refs": {
+        "RegistryRecordSummary$version": "<p> The version of the registry record.</p>"
+      }
+    },
     "RequestIdentifier": {
       "base": null,
       "refs": {
@@ -1781,6 +1903,15 @@
       "base": null,
       "refs": {}
     },
+    "SchemaVersion": {
+      "base": null,
+      "refs": {
+        "AgentCardDefinition$schemaVersion": "<p> The schema version of the agent card definition.</p>",
+        "ServerDefinition$schemaVersion": "<p> The schema version of the MCP server configuration. The schema version identifies the format of the server definition content.</p>",
+        "SkillDefinition$schemaVersion": "<p> The schema version of the skill definition. If you don't specify a version, the service detects it automatically.</p>",
+        "ToolsDefinition$protocolVersion": "<p> The MCP protocol version that the tools conform to. This differs from the <code>schemaVersion</code> field in the server definition, which identifies the server configuration schema format.</p>"
+      }
+    },
     "ScopeType": {
       "base": null,
       "refs": {
@@ -1829,6 +1960,32 @@
         "SearchCriteria$topK": "<p>The maximum number of top-scoring memory records to return. This value is used for semantic search ranking.</p>"
       }
     },
+    "SearchRegistryRecordsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchRegistryRecordsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "SearchRegistryRecordsRequest$maxResults": "<p> The maximum number of records to return in a single call. Valid values are 1 through 20. The default value is 10.</p>"
+      }
+    },
+    "SearchRegistryRecordsRequestRegistryIdsList": {
+      "base": null,
+      "refs": {
+        "SearchRegistryRecordsRequest$registryIds": "<p> The list of registry identifiers to search within. Currently, you can specify exactly one registry identifier. You can provide either the full Amazon Web Services Resource Name (ARN) or the 12-character alphanumeric registry ID.</p>"
+      }
+    },
+    "SearchRegistryRecordsRequestSearchQueryString": {
+      "base": null,
+      "refs": {
+        "SearchRegistryRecordsRequest$searchQuery": "<p> The search query to find matching registry records.</p>"
+      }
+    },
+    "SearchRegistryRecordsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "SecretArn": {
       "base": null,
       "refs": {
@@ -1840,6 +1997,12 @@
       "base": "<p>The Amazon Web Services Secrets Manager location configuration.</p>",
       "refs": {
         "CertificateLocation$secretsManager": "<p>The Amazon Web Services Secrets Manager location of the certificate.</p>"
+      }
+    },
+    "ServerDefinition": {
+      "base": "<p> The MCP server definition with a schema version and inline content. The <code>schemaVersion</code> identifies the version of the MCP server configuration schema.</p>",
+      "refs": {
+        "McpDescriptor$server": "<p> The MCP server definition that describes the server configuration.</p>"
       }
     },
     "ServiceException": {
@@ -1900,6 +2063,18 @@
         "InvokeAgentRuntimeCommandRequest$runtimeSessionId": "<p>The unique identifier of the runtime session in which to execute the command. This session ID is used to maintain state and context across multiple command invocations.</p>",
         "InvokeAgentRuntimeRequest$runtimeSessionId": "<p>The identifier of the runtime session.</p>",
         "StopRuntimeSessionRequest$runtimeSessionId": "<p>The ID of the session that you want to stop.</p>"
+      }
+    },
+    "SkillDefinition": {
+      "base": "<p> The structured skill definition with a schema version and inline content.</p>",
+      "refs": {
+        "AgentSkillsDescriptor$skillDefinition": "<p> The structured skill definition with a schema version and content.</p>"
+      }
+    },
+    "SkillMdDefinition": {
+      "base": "<p> The skill markdown definition for agent skills descriptors.</p>",
+      "refs": {
+        "AgentSkillsDescriptor$skillMd": "<p> The skill description in markdown format.</p>"
       }
     },
     "Span": {
@@ -2201,6 +2376,12 @@
       "base": "<p>Contains structured content from a tool result.</p>",
       "refs": {
         "CodeInterpreterResult$structuredContent": "<p>The structured content of the execution result. This includes additional metadata about the execution, such as execution time, memory usage, and structured representations of output data. The format depends on the specific code interpreter and execution context.</p>"
+      }
+    },
+    "ToolsDefinition": {
+      "base": "<p> The MCP tools definition with a protocol version and inline content. The <code>protocolVersion</code> identifies the MCP protocol version that the tools conform to. This differs from <code>schemaVersion</code> in the server definition, which identifies the server configuration schema format.</p>",
+      "refs": {
+        "McpDescriptor$tools": "<p> The MCP tools definition that describes the available tools.</p>"
       }
     },
     "TraceId": {

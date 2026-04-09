@@ -600,6 +600,24 @@
       ],
       "idempotent":true
     },
+    "SearchRegistryRecords":{
+      "name":"SearchRegistryRecords",
+      "http":{
+        "method":"POST",
+        "requestUri":"/registry-records/search",
+        "responseCode":200
+      },
+      "input":{"shape":"SearchRegistryRecordsRequest"},
+      "output":{"shape":"SearchRegistryRecordsResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "StartBrowserSession":{
       "name":"StartBrowserSession",
       "http":{
@@ -743,6 +761,13 @@
     }
   },
   "shapes":{
+    "A2aDescriptor":{
+      "type":"structure",
+      "required":["agentCard"],
+      "members":{
+        "agentCard":{"shape":"AgentCardDefinition"}
+      }
+    },
     "AccessDeniedException":{
       "type":"structure",
       "members":{
@@ -781,6 +806,21 @@
       "type":"structure",
       "members":{},
       "document":true
+    },
+    "AgentCardDefinition":{
+      "type":"structure",
+      "members":{
+        "schemaVersion":{"shape":"SchemaVersion"},
+        "inlineContent":{"shape":"InlineContent"}
+      }
+    },
+    "AgentSkillsDescriptor":{
+      "type":"structure",
+      "required":["skillMd"],
+      "members":{
+        "skillMd":{"shape":"SkillMdDefinition"},
+        "skillDefinition":{"shape":"SkillDefinition"}
+      }
     },
     "ApiKeyType":{
       "type":"string",
@@ -1311,6 +1351,12 @@
       "min":1,
       "pattern":"[a-zA-Z0-9\\-_]+"
     },
+    "CustomDescriptor":{
+      "type":"structure",
+      "members":{
+        "inlineContent":{"shape":"InlineContent"}
+      }
+    },
     "CustomRequestKeyType":{
       "type":"string",
       "max":256,
@@ -1394,6 +1440,30 @@
       "required":["memoryRecordId"],
       "members":{
         "memoryRecordId":{"shape":"MemoryRecordId"}
+      }
+    },
+    "Description":{
+      "type":"string",
+      "max":4096,
+      "min":1,
+      "sensitive":true
+    },
+    "DescriptorType":{
+      "type":"string",
+      "enum":[
+        "MCP",
+        "A2A",
+        "CUSTOM",
+        "AGENT_SKILLS"
+      ]
+    },
+    "Descriptors":{
+      "type":"structure",
+      "members":{
+        "mcp":{"shape":"McpDescriptor"},
+        "a2a":{"shape":"A2aDescriptor"},
+        "custom":{"shape":"CustomDescriptor"},
+        "agentSkills":{"shape":"AgentSkillsDescriptor"}
       }
     },
     "Document":{
@@ -1998,6 +2068,11 @@
       "member":{"shape":"IgnoredReferenceInputField"},
       "max":100,
       "min":0
+    },
+    "InlineContent":{
+      "type":"string",
+      "max":409600,
+      "min":1
     },
     "InputContentBlock":{
       "type":"structure",
@@ -2723,6 +2798,17 @@
       "max":100,
       "min":1
     },
+    "McpDescriptor":{
+      "type":"structure",
+      "required":[
+        "server",
+        "tools"
+      ],
+      "members":{
+        "server":{"shape":"ServerDefinition"},
+        "tools":{"shape":"ToolsDefinition"}
+      }
+    },
     "MemoryContent":{
       "type":"structure",
       "members":{
@@ -2906,6 +2992,11 @@
     "MessagesList":{
       "type":"list",
       "member":{"shape":"MessageMetadata"}
+    },
+    "MetadataFilterExpression":{
+      "type":"structure",
+      "members":{},
+      "document":true
     },
     "MetadataKey":{
       "type":"string",
@@ -3148,6 +3239,84 @@
       },
       "union":true
     },
+    "RegistryArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:registry/[a-zA-Z0-9]{12,16}"
+    },
+    "RegistryIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"(arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:registry/)?[a-zA-Z0-9]{12,16}"
+    },
+    "RegistryRecordArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:registry/[a-zA-Z0-9]{12,16}/record/[a-zA-Z0-9]{12}"
+    },
+    "RegistryRecordId":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"[a-zA-Z0-9]{12}"
+    },
+    "RegistryRecordName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9_\\-\\.\\/]*"
+    },
+    "RegistryRecordStatus":{
+      "type":"string",
+      "enum":[
+        "DRAFT",
+        "PENDING_APPROVAL",
+        "APPROVED",
+        "REJECTED",
+        "DEPRECATED"
+      ]
+    },
+    "RegistryRecordSummary":{
+      "type":"structure",
+      "required":[
+        "registryArn",
+        "recordArn",
+        "recordId",
+        "name",
+        "descriptorType",
+        "descriptors",
+        "version",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "registryArn":{"shape":"RegistryArn"},
+        "recordArn":{"shape":"RegistryRecordArn"},
+        "recordId":{"shape":"RegistryRecordId"},
+        "name":{"shape":"RegistryRecordName"},
+        "description":{"shape":"Description"},
+        "descriptorType":{"shape":"DescriptorType"},
+        "descriptors":{"shape":"Descriptors"},
+        "version":{"shape":"RegistryRecordVersion"},
+        "status":{"shape":"RegistryRecordStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "RegistryRecordSummaryList":{
+      "type":"list",
+      "member":{"shape":"RegistryRecordSummary"}
+    },
+    "RegistryRecordVersion":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[a-zA-Z0-9.-]+"
+    },
     "RequestIdentifier":{
       "type":"string",
       "max":80,
@@ -3367,6 +3536,11 @@
         "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
     },
+    "SchemaVersion":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
     "ScopeType":{
       "type":"string",
       "max":128,
@@ -3417,6 +3591,43 @@
       "max":100,
       "min":1
     },
+    "SearchRegistryRecordsRequest":{
+      "type":"structure",
+      "required":[
+        "searchQuery",
+        "registryIds"
+      ],
+      "members":{
+        "searchQuery":{"shape":"SearchRegistryRecordsRequestSearchQueryString"},
+        "registryIds":{"shape":"SearchRegistryRecordsRequestRegistryIdsList"},
+        "maxResults":{"shape":"SearchRegistryRecordsRequestMaxResultsInteger"},
+        "filters":{"shape":"MetadataFilterExpression"}
+      }
+    },
+    "SearchRegistryRecordsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":20,
+      "min":1
+    },
+    "SearchRegistryRecordsRequestRegistryIdsList":{
+      "type":"list",
+      "member":{"shape":"RegistryIdentifier"},
+      "max":1,
+      "min":1
+    },
+    "SearchRegistryRecordsRequestSearchQueryString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "SearchRegistryRecordsResponse":{
+      "type":"structure",
+      "required":["registryRecords"],
+      "members":{
+        "registryRecords":{"shape":"RegistryRecordSummaryList"}
+      }
+    },
     "SecretArn":{
       "type":"string",
       "pattern":"arn:aws(-[a-z-]+)?:secretsmanager:[a-z0-9-]+:[0-9]{12}:secret:[a-zA-Z0-9/_+=.@-]+"
@@ -3426,6 +3637,13 @@
       "required":["secretArn"],
       "members":{
         "secretArn":{"shape":"SecretArn"}
+      }
+    },
+    "ServerDefinition":{
+      "type":"structure",
+      "members":{
+        "schemaVersion":{"shape":"SchemaVersion"},
+        "inlineContent":{"shape":"InlineContent"}
       }
     },
     "ServiceException":{
@@ -3489,6 +3707,19 @@
       "type":"string",
       "max":256,
       "min":33
+    },
+    "SkillDefinition":{
+      "type":"structure",
+      "members":{
+        "schemaVersion":{"shape":"SchemaVersion"},
+        "inlineContent":{"shape":"InlineContent"}
+      }
+    },
+    "SkillMdDefinition":{
+      "type":"structure",
+      "members":{
+        "inlineContent":{"shape":"InlineContent"}
+      }
     },
     "Span":{
       "type":"structure",
@@ -3913,6 +4144,13 @@
         "stderr":{"shape":"String"},
         "exitCode":{"shape":"Integer"},
         "executionTime":{"shape":"Double"}
+      }
+    },
+    "ToolsDefinition":{
+      "type":"structure",
+      "members":{
+        "protocolVersion":{"shape":"SchemaVersion"},
+        "inlineContent":{"shape":"InlineContent"}
       }
     },
     "TraceId":{

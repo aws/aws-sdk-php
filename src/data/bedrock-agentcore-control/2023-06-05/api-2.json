@@ -289,6 +289,45 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "CreateRegistry":{
+      "name":"CreateRegistry",
+      "http":{
+        "method":"POST",
+        "requestUri":"/registries",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateRegistryRequest"},
+      "output":{"shape":"CreateRegistryResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "CreateRegistryRecord":{
+      "name":"CreateRegistryRecord",
+      "http":{
+        "method":"POST",
+        "requestUri":"/registries/{registryId}/records",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateRegistryRecordRequest"},
+      "output":{"shape":"CreateRegistryRecordResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "CreateWorkloadIdentity":{
       "name":"CreateWorkloadIdentity",
       "http":{
@@ -568,6 +607,44 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteRegistry":{
+      "name":"DeleteRegistry",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/registries/{registryId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteRegistryRequest"},
+      "output":{"shape":"DeleteRegistryResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteRegistryRecord":{
+      "name":"DeleteRegistryRecord",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/registries/{registryId}/records/{recordId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteRegistryRecordRequest"},
+      "output":{"shape":"DeleteRegistryRecordResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -881,6 +958,43 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetRegistry":{
+      "name":"GetRegistry",
+      "http":{
+        "method":"GET",
+        "requestUri":"/registries/{registryId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetRegistryRequest"},
+      "output":{"shape":"GetRegistryResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetRegistryRecord":{
+      "name":"GetRegistryRecord",
+      "http":{
+        "method":"GET",
+        "requestUri":"/registries/{registryId}/records/{recordId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetRegistryRecordRequest"},
+      "output":{"shape":"GetRegistryRecordResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ],
       "readonly":true
@@ -1239,6 +1353,42 @@
       ],
       "readonly":true
     },
+    "ListRegistries":{
+      "name":"ListRegistries",
+      "http":{
+        "method":"GET",
+        "requestUri":"/registries",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRegistriesRequest"},
+      "output":{"shape":"ListRegistriesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListRegistryRecords":{
+      "name":"ListRegistryRecords",
+      "http":{
+        "method":"GET",
+        "requestUri":"/registries/{registryId}/records",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRegistryRecordsRequest"},
+      "output":{"shape":"ListRegistryRecordsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -1324,6 +1474,24 @@
       "output":{"shape":"StartPolicyGenerationResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "SubmitRegistryRecordForApproval":{
+      "name":"SubmitRegistryRecordForApproval",
+      "http":{
+        "method":"POST",
+        "requestUri":"/registries/{registryId}/records/{recordId}/submit-for-approval",
+        "responseCode":202
+      },
+      "input":{"shape":"SubmitRegistryRecordForApprovalRequest"},
+      "output":{"shape":"SubmitRegistryRecordForApprovalResponse"},
+      "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
@@ -1611,6 +1779,61 @@
       ],
       "idempotent":true
     },
+    "UpdateRegistry":{
+      "name":"UpdateRegistry",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/registries/{registryId}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateRegistryRequest"},
+      "output":{"shape":"UpdateRegistryResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "UpdateRegistryRecord":{
+      "name":"UpdateRegistryRecord",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/registries/{registryId}/records/{recordId}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateRegistryRecordRequest"},
+      "output":{"shape":"UpdateRegistryRecordResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "UpdateRegistryRecordStatus":{
+      "name":"UpdateRegistryRecordStatus",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/registries/{registryId}/records/{recordId}/status",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateRegistryRecordStatusRequest"},
+      "output":{"shape":"UpdateRegistryRecordStatusResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "UpdateWorkloadIdentity":{
       "name":"UpdateWorkloadIdentity",
       "http":{
@@ -1632,6 +1855,12 @@
     }
   },
   "shapes":{
+    "A2aDescriptor":{
+      "type":"structure",
+      "members":{
+        "agentCard":{"shape":"AgentCardDefinition"}
+      }
+    },
     "AccessDeniedException":{
       "type":"structure",
       "members":{
@@ -1647,6 +1876,13 @@
       "type":"structure",
       "members":{},
       "document":true
+    },
+    "AgentCardDefinition":{
+      "type":"structure",
+      "members":{
+        "schemaVersion":{"shape":"SchemaVersion"},
+        "inlineContent":{"shape":"InlineContent"}
+      }
     },
     "AgentEndpointDescription":{
       "type":"string",
@@ -1771,6 +2007,13 @@
     "AgentRuntimes":{
       "type":"list",
       "member":{"shape":"AgentRuntime"}
+    },
+    "AgentSkillsDescriptor":{
+      "type":"structure",
+      "members":{
+        "skillMd":{"shape":"SkillMdDefinition"},
+        "skillDefinition":{"shape":"SkillDefinition"}
+      }
     },
     "AllowedAudience":{"type":"string"},
     "AllowedAudienceList":{
@@ -1934,6 +2177,12 @@
         "inlinePayload":{"shape":"InlinePayload"}
       },
       "union":true
+    },
+    "ApprovalConfiguration":{
+      "type":"structure",
+      "members":{
+        "autoApproval":{"shape":"Boolean"}
+      }
     },
     "Arn":{
       "type":"string",
@@ -2977,6 +3226,65 @@
         "statusReasons":{"shape":"PolicyStatusReasons"}
       }
     },
+    "CreateRegistryRecordRequest":{
+      "type":"structure",
+      "required":[
+        "registryId",
+        "name",
+        "descriptorType"
+      ],
+      "members":{
+        "registryId":{
+          "shape":"RegistryIdentifier",
+          "location":"uri",
+          "locationName":"registryId"
+        },
+        "name":{"shape":"RegistryRecordName"},
+        "description":{"shape":"Description"},
+        "descriptorType":{"shape":"DescriptorType"},
+        "descriptors":{"shape":"Descriptors"},
+        "recordVersion":{"shape":"RegistryRecordVersion"},
+        "synchronizationType":{"shape":"SynchronizationType"},
+        "synchronizationConfiguration":{"shape":"SynchronizationConfiguration"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateRegistryRecordResponse":{
+      "type":"structure",
+      "required":[
+        "recordArn",
+        "status"
+      ],
+      "members":{
+        "recordArn":{"shape":"RegistryRecordArn"},
+        "status":{"shape":"RegistryRecordStatus"}
+      }
+    },
+    "CreateRegistryRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"RegistryName"},
+        "description":{"shape":"Description"},
+        "authorizerType":{"shape":"RegistryAuthorizerType"},
+        "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "approvalConfiguration":{"shape":"ApprovalConfiguration"}
+      }
+    },
+    "CreateRegistryResponse":{
+      "type":"structure",
+      "required":["registryArn"],
+      "members":{
+        "registryArn":{"shape":"RegistryArn"}
+      }
+    },
     "CreateWorkloadIdentityRequest":{
       "type":"structure",
       "required":["name"],
@@ -3006,6 +3314,12 @@
         "iamCredentialProvider":{"shape":"IamCredentialProvider"}
       },
       "union":true
+    },
+    "CredentialProviderArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:.*"
     },
     "CredentialProviderArnType":{
       "type":"string",
@@ -3118,6 +3432,12 @@
       },
       "union":true
     },
+    "CustomDescriptor":{
+      "type":"structure",
+      "members":{
+        "inlineContent":{"shape":"InlineContent"}
+      }
+    },
     "CustomEvaluatorArn":{
       "type":"string",
       "pattern":"arn:aws:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:evaluator\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
@@ -3191,6 +3511,11 @@
         "oauthDiscovery":{"shape":"Oauth2Discovery"},
         "clientId":{"shape":"ClientIdType"}
       }
+    },
+    "CustomParameterMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
     },
     "CustomReflectionConfiguration":{
       "type":"structure",
@@ -3627,6 +3952,47 @@
         "statusReasons":{"shape":"PolicyStatusReasons"}
       }
     },
+    "DeleteRegistryRecordRequest":{
+      "type":"structure",
+      "required":[
+        "registryId",
+        "recordId"
+      ],
+      "members":{
+        "registryId":{
+          "shape":"RegistryIdentifier",
+          "location":"uri",
+          "locationName":"registryId"
+        },
+        "recordId":{
+          "shape":"RecordIdentifier",
+          "location":"uri",
+          "locationName":"recordId"
+        }
+      }
+    },
+    "DeleteRegistryRecordResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteRegistryRequest":{
+      "type":"structure",
+      "required":["registryId"],
+      "members":{
+        "registryId":{
+          "shape":"RegistryIdentifier",
+          "location":"uri",
+          "locationName":"registryId"
+        }
+      }
+    },
+    "DeleteRegistryResponse":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"RegistryStatus"}
+      }
+    },
     "DeleteResourcePolicyRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -3658,6 +4024,24 @@
       "max":4096,
       "min":1,
       "sensitive":true
+    },
+    "DescriptorType":{
+      "type":"string",
+      "enum":[
+        "MCP",
+        "A2A",
+        "CUSTOM",
+        "AGENT_SKILLS"
+      ]
+    },
+    "Descriptors":{
+      "type":"structure",
+      "members":{
+        "mcp":{"shape":"McpDescriptor"},
+        "a2a":{"shape":"A2aDescriptor"},
+        "custom":{"shape":"CustomDescriptor"},
+        "agentSkills":{"shape":"AgentSkillsDescriptor"}
+      }
     },
     "DiscoveryUrl":{
       "type":"string",
@@ -4056,6 +4440,14 @@
     "Findings":{
       "type":"list",
       "member":{"shape":"Finding"}
+    },
+    "FromUrlSynchronizationConfiguration":{
+      "type":"structure",
+      "required":["url"],
+      "members":{
+        "url":{"shape":"McpServerUrl"},
+        "credentialProviderConfigurations":{"shape":"RegistryRecordCredentialProviderConfigurationList"}
+      }
     },
     "GatewayArn":{
       "type":"string",
@@ -4812,6 +5204,90 @@
         "statusReasons":{"shape":"PolicyStatusReasons"}
       }
     },
+    "GetRegistryRecordRequest":{
+      "type":"structure",
+      "required":[
+        "registryId",
+        "recordId"
+      ],
+      "members":{
+        "registryId":{
+          "shape":"RegistryIdentifier",
+          "location":"uri",
+          "locationName":"registryId"
+        },
+        "recordId":{
+          "shape":"RecordIdentifier",
+          "location":"uri",
+          "locationName":"recordId"
+        }
+      }
+    },
+    "GetRegistryRecordResponse":{
+      "type":"structure",
+      "required":[
+        "registryArn",
+        "recordArn",
+        "recordId",
+        "name",
+        "descriptorType",
+        "descriptors",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "registryArn":{"shape":"RegistryArn"},
+        "recordArn":{"shape":"RegistryRecordArn"},
+        "recordId":{"shape":"RegistryRecordId"},
+        "name":{"shape":"RegistryRecordName"},
+        "description":{"shape":"Description"},
+        "descriptorType":{"shape":"DescriptorType"},
+        "descriptors":{"shape":"Descriptors"},
+        "recordVersion":{"shape":"RegistryRecordVersion"},
+        "status":{"shape":"RegistryRecordStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "statusReason":{"shape":"String"},
+        "synchronizationType":{"shape":"SynchronizationType"},
+        "synchronizationConfiguration":{"shape":"SynchronizationConfiguration"}
+      }
+    },
+    "GetRegistryRequest":{
+      "type":"structure",
+      "required":["registryId"],
+      "members":{
+        "registryId":{
+          "shape":"RegistryIdentifier",
+          "location":"uri",
+          "locationName":"registryId"
+        }
+      }
+    },
+    "GetRegistryResponse":{
+      "type":"structure",
+      "required":[
+        "name",
+        "registryId",
+        "registryArn",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "name":{"shape":"RegistryName"},
+        "description":{"shape":"Description"},
+        "registryId":{"shape":"RegistryId"},
+        "registryArn":{"shape":"RegistryArn"},
+        "authorizerType":{"shape":"RegistryAuthorizerType"},
+        "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
+        "approvalConfiguration":{"shape":"ApprovalConfiguration"},
+        "status":{"shape":"RegistryStatus"},
+        "statusReason":{"shape":"String"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
     "GetResourcePolicyRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -4945,6 +5421,24 @@
       "min":1,
       "pattern":"[a-zA-Z0-9._-]+"
     },
+    "IamRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+"
+    },
+    "IamSigningRegion":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-z0-9-]+"
+    },
+    "IamSigningServiceName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
     "InboundTokenClaimNameType":{
       "type":"string",
       "max":255,
@@ -5011,6 +5505,11 @@
       "box":true,
       "max":1,
       "min":0
+    },
+    "InlineContent":{
+      "type":"string",
+      "max":102400,
+      "min":1
     },
     "InlinePayload":{
       "type":"string",
@@ -5627,6 +6126,78 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListRegistriesRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "status":{
+          "shape":"RegistryStatus",
+          "location":"querystring",
+          "locationName":"status"
+        }
+      }
+    },
+    "ListRegistriesResponse":{
+      "type":"structure",
+      "required":["registries"],
+      "members":{
+        "registries":{"shape":"RegistrySummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListRegistryRecordsRequest":{
+      "type":"structure",
+      "required":["registryId"],
+      "members":{
+        "registryId":{
+          "shape":"RegistryIdentifier",
+          "location":"uri",
+          "locationName":"registryId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "name":{
+          "shape":"RegistryRecordName",
+          "location":"querystring",
+          "locationName":"name"
+        },
+        "status":{
+          "shape":"RegistryRecordStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "descriptorType":{
+          "shape":"DescriptorType",
+          "location":"querystring",
+          "locationName":"descriptorType"
+        }
+      }
+    },
+    "ListRegistryRecordsResponse":{
+      "type":"structure",
+      "required":["registryRecords"],
+      "members":{
+        "registryRecords":{"shape":"RegistryRecordSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -5733,6 +6304,13 @@
       "max":100,
       "min":1
     },
+    "McpDescriptor":{
+      "type":"structure",
+      "members":{
+        "server":{"shape":"ServerDefinition"},
+        "tools":{"shape":"ToolsDefinition"}
+      }
+    },
     "McpInstructions":{
       "type":"string",
       "max":2048,
@@ -5759,6 +6337,12 @@
     },
     "McpServerTargetConfigurationEndpointString":{
       "type":"string",
+      "pattern":"https://.*"
+    },
+    "McpServerUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1,
       "pattern":"https://.*"
     },
     "McpSupportedVersions":{
@@ -6629,7 +7213,14 @@
         "numerical":{"shape":"NumericalScaleDefinitions"},
         "categorical":{"shape":"CategoricalScaleDefinitions"}
       },
+      "sensitive":true,
       "union":true
+    },
+    "RecordIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"(arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:registry/[a-zA-Z0-9]{12,16}/record/)?[a-zA-Z0-9]{12}"
     },
     "RecordingConfig":{
       "type":"structure",
@@ -6645,6 +7236,195 @@
         "episodicReflectionConfiguration":{"shape":"EpisodicReflectionConfiguration"}
       },
       "union":true
+    },
+    "RegistryArn":{
+      "type":"string",
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:registry/[a-zA-Z0-9]{12,16}"
+    },
+    "RegistryAuthorizerType":{
+      "type":"string",
+      "enum":[
+        "CUSTOM_JWT",
+        "AWS_IAM"
+      ]
+    },
+    "RegistryId":{
+      "type":"string",
+      "max":16,
+      "min":12,
+      "pattern":"[a-zA-Z0-9]{12,16}"
+    },
+    "RegistryIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"(arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:registry/)?[a-zA-Z0-9]{12,16}"
+    },
+    "RegistryName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9_\\-\\.\\/]*"
+    },
+    "RegistryRecordArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:registry/[a-zA-Z0-9]{12,16}/record/[a-zA-Z0-9]{12}"
+    },
+    "RegistryRecordCredentialProviderConfiguration":{
+      "type":"structure",
+      "required":[
+        "credentialProviderType",
+        "credentialProvider"
+      ],
+      "members":{
+        "credentialProviderType":{"shape":"RegistryRecordCredentialProviderType"},
+        "credentialProvider":{"shape":"RegistryRecordCredentialProviderUnion"}
+      }
+    },
+    "RegistryRecordCredentialProviderConfigurationList":{
+      "type":"list",
+      "member":{"shape":"RegistryRecordCredentialProviderConfiguration"},
+      "max":1,
+      "min":0
+    },
+    "RegistryRecordCredentialProviderType":{
+      "type":"string",
+      "enum":[
+        "OAUTH",
+        "IAM"
+      ]
+    },
+    "RegistryRecordCredentialProviderUnion":{
+      "type":"structure",
+      "members":{
+        "oauthCredentialProvider":{"shape":"RegistryRecordOAuthCredentialProvider"},
+        "iamCredentialProvider":{"shape":"RegistryRecordIamCredentialProvider"}
+      },
+      "union":true
+    },
+    "RegistryRecordIamCredentialProvider":{
+      "type":"structure",
+      "members":{
+        "roleArn":{"shape":"IamRoleArn"},
+        "service":{"shape":"IamSigningServiceName"},
+        "region":{"shape":"IamSigningRegion"}
+      }
+    },
+    "RegistryRecordId":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"[a-zA-Z0-9]{12}"
+    },
+    "RegistryRecordName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9_\\-\\.\\/]*"
+    },
+    "RegistryRecordOAuthCredentialProvider":{
+      "type":"structure",
+      "required":["providerArn"],
+      "members":{
+        "providerArn":{"shape":"CredentialProviderArn"},
+        "grantType":{"shape":"RegistryRecordOAuthGrantType"},
+        "scopes":{"shape":"ScopeList"},
+        "customParameters":{"shape":"CustomParameterMap"}
+      }
+    },
+    "RegistryRecordOAuthGrantType":{
+      "type":"string",
+      "enum":["CLIENT_CREDENTIALS"]
+    },
+    "RegistryRecordStatus":{
+      "type":"string",
+      "enum":[
+        "DRAFT",
+        "PENDING_APPROVAL",
+        "APPROVED",
+        "REJECTED",
+        "DEPRECATED",
+        "CREATING",
+        "UPDATING",
+        "CREATE_FAILED",
+        "UPDATE_FAILED"
+      ]
+    },
+    "RegistryRecordSummary":{
+      "type":"structure",
+      "required":[
+        "registryArn",
+        "recordArn",
+        "recordId",
+        "name",
+        "descriptorType",
+        "recordVersion",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "registryArn":{"shape":"RegistryArn"},
+        "recordArn":{"shape":"RegistryRecordArn"},
+        "recordId":{"shape":"RegistryRecordId"},
+        "name":{"shape":"RegistryRecordName"},
+        "description":{"shape":"Description"},
+        "descriptorType":{"shape":"DescriptorType"},
+        "recordVersion":{"shape":"RegistryRecordVersion"},
+        "status":{"shape":"RegistryRecordStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "RegistryRecordSummaryList":{
+      "type":"list",
+      "member":{"shape":"RegistryRecordSummary"}
+    },
+    "RegistryRecordVersion":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[a-zA-Z0-9.-]+"
+    },
+    "RegistryStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "READY",
+        "UPDATING",
+        "CREATE_FAILED",
+        "UPDATE_FAILED",
+        "DELETING",
+        "DELETE_FAILED"
+      ]
+    },
+    "RegistrySummary":{
+      "type":"structure",
+      "required":[
+        "name",
+        "registryId",
+        "registryArn",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "name":{"shape":"RegistryName"},
+        "description":{"shape":"Description"},
+        "registryId":{"shape":"RegistryId"},
+        "registryArn":{"shape":"RegistryArn"},
+        "authorizerType":{"shape":"RegistryAuthorizerType"},
+        "status":{"shape":"RegistryStatus"},
+        "statusReason":{"shape":"String"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "RegistrySummaryList":{
+      "type":"list",
+      "member":{"shape":"RegistrySummary"}
     },
     "RequestHeaderAllowlist":{
       "type":"list",
@@ -6895,6 +7675,15 @@
         "integer"
       ]
     },
+    "SchemaVersion":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "ScopeList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "SearchType":{
       "type":"string",
       "enum":["SEMANTIC"]
@@ -7038,6 +7827,13 @@
         "modelId":{"shape":"String"}
       }
     },
+    "ServerDefinition":{
+      "type":"structure",
+      "members":{
+        "schemaVersion":{"shape":"SchemaVersion"},
+        "inlineContent":{"shape":"InlineContent"}
+      }
+    },
     "ServerProtocol":{
       "type":"string",
       "enum":[
@@ -7113,6 +7909,19 @@
         "tokenVaultId":{"shape":"TokenVaultIdType"},
         "kmsConfiguration":{"shape":"KmsConfiguration"},
         "lastModifiedDate":{"shape":"Timestamp"}
+      }
+    },
+    "SkillDefinition":{
+      "type":"structure",
+      "members":{
+        "schemaVersion":{"shape":"SchemaVersion"},
+        "inlineContent":{"shape":"InlineContent"}
+      }
+    },
+    "SkillMdDefinition":{
+      "type":"structure",
+      "members":{
+        "inlineContent":{"shape":"InlineContent"}
       }
     },
     "SlackOauth2ProviderConfigInput":{
@@ -7230,6 +8039,42 @@
       "min":0
     },
     "String":{"type":"string"},
+    "SubmitRegistryRecordForApprovalRequest":{
+      "type":"structure",
+      "required":[
+        "registryId",
+        "recordId"
+      ],
+      "members":{
+        "registryId":{
+          "shape":"RegistryIdentifier",
+          "location":"uri",
+          "locationName":"registryId"
+        },
+        "recordId":{
+          "shape":"RecordIdentifier",
+          "location":"uri",
+          "locationName":"recordId"
+        }
+      }
+    },
+    "SubmitRegistryRecordForApprovalResponse":{
+      "type":"structure",
+      "required":[
+        "registryArn",
+        "recordArn",
+        "recordId",
+        "status",
+        "updatedAt"
+      ],
+      "members":{
+        "registryArn":{"shape":"RegistryArn"},
+        "recordArn":{"shape":"RegistryRecordArn"},
+        "recordId":{"shape":"RegistryRecordId"},
+        "status":{"shape":"RegistryRecordStatus"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
     "SubnetId":{
       "type":"string",
       "pattern":"subnet-[0-9a-zA-Z]{8,17}"
@@ -7286,6 +8131,16 @@
         "appendToPrompt":{"shape":"Prompt"},
         "modelId":{"shape":"String"}
       }
+    },
+    "SynchronizationConfiguration":{
+      "type":"structure",
+      "members":{
+        "fromUrl":{"shape":"FromUrlSynchronizationConfiguration"}
+      }
+    },
+    "SynchronizationType":{
+      "type":"string",
+      "enum":["URL"]
     },
     "SynchronizeGatewayTargetsRequest":{
       "type":"structure",
@@ -7547,6 +8402,13 @@
     "ToolSecretArn":{
       "type":"string",
       "pattern":"arn:aws(-[a-z-]+)?:secretsmanager:[a-z0-9-]+:[0-9]{12}:secret:[a-zA-Z0-9/_+=.@-]+"
+    },
+    "ToolsDefinition":{
+      "type":"structure",
+      "members":{
+        "protocolVersion":{"shape":"SchemaVersion"},
+        "inlineContent":{"shape":"InlineContent"}
+      }
     },
     "TriggerCondition":{
       "type":"structure",
@@ -8079,6 +8941,149 @@
         "statusReasons":{"shape":"PolicyStatusReasons"}
       }
     },
+    "UpdateRegistryRecordRequest":{
+      "type":"structure",
+      "required":[
+        "registryId",
+        "recordId"
+      ],
+      "members":{
+        "registryId":{
+          "shape":"RegistryIdentifier",
+          "location":"uri",
+          "locationName":"registryId"
+        },
+        "recordId":{
+          "shape":"RecordIdentifier",
+          "location":"uri",
+          "locationName":"recordId"
+        },
+        "name":{"shape":"RegistryRecordName"},
+        "description":{"shape":"UpdatedDescription"},
+        "descriptorType":{"shape":"DescriptorType"},
+        "descriptors":{"shape":"UpdatedDescriptors"},
+        "recordVersion":{"shape":"RegistryRecordVersion"},
+        "synchronizationType":{"shape":"UpdatedSynchronizationType"},
+        "synchronizationConfiguration":{"shape":"UpdatedSynchronizationConfiguration"},
+        "triggerSynchronization":{"shape":"Boolean"}
+      }
+    },
+    "UpdateRegistryRecordResponse":{
+      "type":"structure",
+      "required":[
+        "registryArn",
+        "recordArn",
+        "recordId",
+        "name",
+        "descriptorType",
+        "descriptors",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "registryArn":{"shape":"RegistryArn"},
+        "recordArn":{"shape":"RegistryRecordArn"},
+        "recordId":{"shape":"RegistryRecordId"},
+        "name":{"shape":"RegistryRecordName"},
+        "description":{"shape":"Description"},
+        "descriptorType":{"shape":"DescriptorType"},
+        "descriptors":{"shape":"Descriptors"},
+        "recordVersion":{"shape":"RegistryRecordVersion"},
+        "status":{"shape":"RegistryRecordStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "statusReason":{"shape":"String"},
+        "synchronizationType":{"shape":"SynchronizationType"},
+        "synchronizationConfiguration":{"shape":"SynchronizationConfiguration"}
+      }
+    },
+    "UpdateRegistryRecordStatusRequest":{
+      "type":"structure",
+      "required":[
+        "registryId",
+        "recordId",
+        "status",
+        "statusReason"
+      ],
+      "members":{
+        "registryId":{
+          "shape":"RegistryIdentifier",
+          "location":"uri",
+          "locationName":"registryId"
+        },
+        "recordId":{
+          "shape":"RecordIdentifier",
+          "location":"uri",
+          "locationName":"recordId"
+        },
+        "status":{"shape":"RegistryRecordStatus"},
+        "statusReason":{"shape":"UpdateRegistryRecordStatusRequestStatusReasonString"}
+      }
+    },
+    "UpdateRegistryRecordStatusRequestStatusReasonString":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
+    "UpdateRegistryRecordStatusResponse":{
+      "type":"structure",
+      "required":[
+        "registryArn",
+        "recordArn",
+        "recordId",
+        "status",
+        "statusReason",
+        "updatedAt"
+      ],
+      "members":{
+        "registryArn":{"shape":"RegistryArn"},
+        "recordArn":{"shape":"RegistryRecordArn"},
+        "recordId":{"shape":"RegistryRecordId"},
+        "status":{"shape":"RegistryRecordStatus"},
+        "statusReason":{"shape":"String"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "UpdateRegistryRequest":{
+      "type":"structure",
+      "required":["registryId"],
+      "members":{
+        "registryId":{
+          "shape":"RegistryIdentifier",
+          "location":"uri",
+          "locationName":"registryId"
+        },
+        "name":{"shape":"RegistryName"},
+        "description":{"shape":"UpdatedDescription"},
+        "authorizerConfiguration":{"shape":"UpdatedAuthorizerConfiguration"},
+        "approvalConfiguration":{"shape":"UpdatedApprovalConfiguration"}
+      }
+    },
+    "UpdateRegistryResponse":{
+      "type":"structure",
+      "required":[
+        "name",
+        "registryId",
+        "registryArn",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "name":{"shape":"RegistryName"},
+        "description":{"shape":"Description"},
+        "registryId":{"shape":"RegistryId"},
+        "registryArn":{"shape":"RegistryArn"},
+        "authorizerType":{"shape":"RegistryAuthorizerType"},
+        "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
+        "approvalConfiguration":{"shape":"ApprovalConfiguration"},
+        "status":{"shape":"RegistryStatus"},
+        "statusReason":{"shape":"String"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
     "UpdateWorkloadIdentityRequest":{
       "type":"structure",
       "required":["name"],
@@ -8103,10 +9108,111 @@
         "lastUpdatedTime":{"shape":"Timestamp"}
       }
     },
+    "UpdatedA2aDescriptor":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"A2aDescriptor"}
+      }
+    },
+    "UpdatedAgentSkillsDescriptor":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"UpdatedAgentSkillsDescriptorFields"}
+      }
+    },
+    "UpdatedAgentSkillsDescriptorFields":{
+      "type":"structure",
+      "members":{
+        "skillMd":{"shape":"UpdatedSkillMdDefinition"},
+        "skillDefinition":{"shape":"UpdatedSkillDefinition"}
+      }
+    },
+    "UpdatedApprovalConfiguration":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"ApprovalConfiguration"}
+      }
+    },
+    "UpdatedAuthorizerConfiguration":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"AuthorizerConfiguration"}
+      }
+    },
+    "UpdatedCustomDescriptor":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"CustomDescriptor"}
+      }
+    },
     "UpdatedDescription":{
       "type":"structure",
       "members":{
         "optionalValue":{"shape":"Description"}
+      }
+    },
+    "UpdatedDescriptors":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"UpdatedDescriptorsUnion"}
+      }
+    },
+    "UpdatedDescriptorsUnion":{
+      "type":"structure",
+      "members":{
+        "mcp":{"shape":"UpdatedMcpDescriptor"},
+        "a2a":{"shape":"UpdatedA2aDescriptor"},
+        "custom":{"shape":"UpdatedCustomDescriptor"},
+        "agentSkills":{"shape":"UpdatedAgentSkillsDescriptor"}
+      }
+    },
+    "UpdatedMcpDescriptor":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"UpdatedMcpDescriptorFields"}
+      }
+    },
+    "UpdatedMcpDescriptorFields":{
+      "type":"structure",
+      "members":{
+        "server":{"shape":"UpdatedServerDefinition"},
+        "tools":{"shape":"UpdatedToolsDefinition"}
+      }
+    },
+    "UpdatedServerDefinition":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"ServerDefinition"}
+      }
+    },
+    "UpdatedSkillDefinition":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"SkillDefinition"}
+      }
+    },
+    "UpdatedSkillMdDefinition":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"SkillMdDefinition"}
+      }
+    },
+    "UpdatedSynchronizationConfiguration":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"SynchronizationConfiguration"}
+      }
+    },
+    "UpdatedSynchronizationType":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"SynchronizationType"}
+      }
+    },
+    "UpdatedToolsDefinition":{
+      "type":"structure",
+      "members":{
+        "optionalValue":{"shape":"ToolsDefinition"}
       }
     },
     "UserPreferenceConsolidationOverride":{

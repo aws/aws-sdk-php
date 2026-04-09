@@ -16,6 +16,8 @@
     "CreateOnlineEvaluationConfig": "<p> Creates an online evaluation configuration for continuous monitoring of agent performance. Online evaluation automatically samples live traffic from CloudWatch logs at specified rates and applies evaluators to assess agent quality in production. </p>",
     "CreatePolicy": "<p>Creates a policy within the AgentCore Policy system. Policies provide real-time, deterministic control over agentic interactions with AgentCore Gateway. Using the Cedar policy language, you can define fine-grained policies that specify which interactions with Gateway tools are permitted based on input parameters and OAuth claims, ensuring agents operate within defined boundaries and business rules. The policy is validated during creation against the Cedar schema generated from the Gateway's tools' input schemas, which defines the available tools, their parameters, and expected data types. This is an asynchronous operation. Use the <a href=\"https://docs.aws.amazon.com/bedrock-agentcore-control/latest/APIReference/API_GetPolicy.html\">GetPolicy</a> operation to poll the <code>status</code> field to track completion.</p>",
     "CreatePolicyEngine": "<p>Creates a new policy engine within the AgentCore Policy system. A policy engine is a collection of policies that evaluates and authorizes agent tool calls. When associated with Gateways (each Gateway can be associated with at most one policy engine, but multiple Gateways can be associated with the same engine), the policy engine intercepts all agent requests and determines whether to allow or deny each action based on the defined policies. This is an asynchronous operation. Use the <a href=\"https://docs.aws.amazon.com/bedrock-agentcore-control/latest/APIReference/API_GetPolicyEngine.html\">GetPolicyEngine</a> operation to poll the <code>status</code> field to track completion.</p>",
+    "CreateRegistry": "<p>Creates a new registry in your Amazon Web Services account. A registry serves as a centralized catalog for organizing and managing registry records, including MCP servers, A2A agents, agent skills, and custom resource types.</p> <p>If you specify <code>CUSTOM_JWT</code> as the <code>authorizerType</code>, you must provide an <code>authorizerConfiguration</code>.</p>",
+    "CreateRegistryRecord": "<p>Creates a new registry record within the specified registry. A registry record represents an individual AI resource's metadata in the registry. This could be an MCP server (and associated tools), A2A agent, agent skill, or a custom resource with a custom schema.</p> <p>The record is processed asynchronously and returns HTTP 202 Accepted.</p>",
     "CreateWorkloadIdentity": "<p>Creates a new workload identity.</p>",
     "DeleteAgentRuntime": "<p>Deletes an Amazon Bedrock AgentCore Runtime.</p>",
     "DeleteAgentRuntimeEndpoint": "<p>Deletes an AAgentCore Runtime endpoint.</p>",
@@ -31,6 +33,8 @@
     "DeleteOnlineEvaluationConfig": "<p> Deletes an online evaluation configuration and stops any ongoing evaluation processes associated with it. </p>",
     "DeletePolicy": "<p>Deletes an existing policy from the AgentCore Policy system. Once deleted, the policy can no longer be used for agent behavior control and all references to it become invalid. This is an asynchronous operation. Use the <code>GetPolicy</code> operation to poll the <code>status</code> field to track completion.</p>",
     "DeletePolicyEngine": "<p>Deletes an existing policy engine from the AgentCore Policy system. The policy engine must not have any associated policies before deletion. Once deleted, the policy engine and all its configurations become unavailable for policy management and evaluation. This is an asynchronous operation. Use the <code>GetPolicyEngine</code> operation to poll the <code>status</code> field to track completion.</p>",
+    "DeleteRegistry": "<p>Deletes a registry. The registry must contain zero records before it can be deleted. This operation initiates the deletion process asynchronously.</p>",
+    "DeleteRegistryRecord": "<p>Deletes a registry record. The record's status transitions to <code>DELETING</code> and the record is removed asynchronously.</p>",
     "DeleteResourcePolicy": "<p>Deletes the resource-based policy for a specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime and Gateway.</p> </note>",
     "DeleteWorkloadIdentity": "<p>Deletes a workload identity.</p>",
     "GetAgentRuntime": "<p>Gets an Amazon Bedrock AgentCore Runtime.</p>",
@@ -48,6 +52,8 @@
     "GetPolicy": "<p>Retrieves detailed information about a specific policy within the AgentCore Policy system. This operation returns the complete policy definition, metadata, and current status, allowing administrators to review and manage policy configurations.</p>",
     "GetPolicyEngine": "<p>Retrieves detailed information about a specific policy engine within the AgentCore Policy system. This operation returns the complete policy engine configuration, metadata, and current status, allowing administrators to review and manage policy engine settings.</p>",
     "GetPolicyGeneration": "<p>Retrieves information about a policy generation request within the AgentCore Policy system. Policy generation converts natural language descriptions into Cedar policy statements using AI-powered translation, enabling non-technical users to create policies.</p>",
+    "GetRegistry": "<p>Retrieves information about a specific registry.</p>",
+    "GetRegistryRecord": "<p>Retrieves information about a specific registry record.</p>",
     "GetResourcePolicy": "<p>Retrieves the resource-based policy for a specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime and Gateway.</p> </note>",
     "GetTokenVault": "<p>Retrieves information about a token vault.</p>",
     "GetWorkloadIdentity": "<p>Retrieves information about a workload identity.</p>",
@@ -68,11 +74,14 @@
     "ListPolicyEngines": "<p>Retrieves a list of policy engines within the AgentCore Policy system. This operation supports pagination to help administrators discover and manage policy engines across their account. Each policy engine serves as a container for related policies.</p>",
     "ListPolicyGenerationAssets": "<p>Retrieves a list of generated policy assets from a policy generation request within the AgentCore Policy system. This operation returns the actual Cedar policies and related artifacts produced by the AI-powered policy generation process, allowing users to review and select from multiple generated policy options.</p>",
     "ListPolicyGenerations": "<p>Retrieves a list of policy generation requests within the AgentCore Policy system. This operation supports pagination and filtering to help track and manage AI-powered policy generation operations.</p>",
+    "ListRegistries": "<p>Lists all registries in the account. You can optionally filter results by status using the <code>status</code> parameter.</p>",
+    "ListRegistryRecords": "<p>Lists registry records within a registry. You can optionally filter results using the <code>name</code>, <code>status</code>, and <code>descriptorType</code> parameters. When multiple filters are specified, they are combined using AND logic.</p>",
     "ListTagsForResource": "<p>Lists the tags associated with the specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Browser Profile, Code Interpreter tool, and Gateway.</p> </note>",
     "ListWorkloadIdentities": "<p>Lists all workload identities in your account.</p>",
     "PutResourcePolicy": "<p>Creates or updates a resource-based policy for a resource with the specified resourceArn.</p> <note> <p>This feature is currently available only for AgentCore Runtime and Gateway.</p> </note>",
     "SetTokenVaultCMK": "<p>Sets the customer master key (CMK) for a token vault.</p>",
     "StartPolicyGeneration": "<p>Initiates the AI-powered generation of Cedar policies from natural language descriptions within the AgentCore Policy system. This feature enables both technical and non-technical users to create policies by describing their authorization requirements in plain English, which is then automatically translated into formal Cedar policy statements. The generation process analyzes the natural language input along with the Gateway's tool context to produce validated policy options. Generated policy assets are automatically deleted after 7 days, so you should review and create policies from the generated assets within this timeframe. Once created, policies are permanent and not subject to this expiration. Generated policies should be reviewed and tested in log-only mode before deploying to production. Use this when you want to describe policy intent naturally rather than learning Cedar syntax, though generated policies may require refinement for complex scenarios.</p>",
+    "SubmitRegistryRecordForApproval": "<p>Submits a registry record for approval. This transitions the record from <code>DRAFT</code> status to <code>PENDING_APPROVAL</code> status. If the registry has auto-approval enabled, the record is automatically approved.</p>",
     "SynchronizeGatewayTargets": "<p>Synchronizes the gateway targets by fetching the latest tool definitions from the target endpoints.</p> <p>You cannot synchronize a target that is in a pending authorization state (<code>CREATE_PENDING_AUTH</code>, <code>UPDATE_PENDING_AUTH</code>, or <code>SYNCHRONIZE_PENDING_AUTH</code>). Wait for the authorization to complete or fail before synchronizing.</p> <p>You cannot synchronize a target that has a static tool schema (<code>mcpToolSchema</code>) configured. Remove the static schema through an <code>UpdateGatewayTarget</code> call to enable dynamic tool synchronization.</p>",
     "TagResource": "<p>Associates the specified tags to a resource with the specified resourceArn. If existing tags on a resource are not specified in the request parameters, they are not changed. When a resource is deleted, the tags associated with that resource are also deleted.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Browser Profile, Code Interpreter tool, and Gateway.</p> </note>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Browser Profile, Code Interpreter tool, and Gateway.</p> </note>",
@@ -87,9 +96,19 @@
     "UpdateOnlineEvaluationConfig": "<p> Updates an online evaluation configuration's settings, including rules, data sources, evaluators, and execution status. Changes take effect immediately for ongoing evaluations. </p>",
     "UpdatePolicy": "<p>Updates an existing policy within the AgentCore Policy system. This operation allows modification of the policy description and definition while maintaining the policy's identity. The updated policy is validated against the Cedar schema before being applied. This is an asynchronous operation. Use the <code>GetPolicy</code> operation to poll the <code>status</code> field to track completion.</p>",
     "UpdatePolicyEngine": "<p>Updates an existing policy engine within the AgentCore Policy system. This operation allows modification of the policy engine description while maintaining its identity. This is an asynchronous operation. Use the <code>GetPolicyEngine</code> operation to poll the <code>status</code> field to track completion.</p>",
+    "UpdateRegistry": "<p>Updates an existing registry. This operation uses PATCH semantics, so you only need to specify the fields you want to change.</p>",
+    "UpdateRegistryRecord": "<p>Updates an existing registry record. This operation uses PATCH semantics, so you only need to specify the fields you want to change. The update is processed asynchronously and returns HTTP 202 Accepted.</p>",
+    "UpdateRegistryRecordStatus": "<p>Updates the status of a registry record. Use this operation to approve, reject, or deprecate a registry record.</p>",
     "UpdateWorkloadIdentity": "<p>Updates an existing workload identity.</p>"
   },
   "shapes": {
+    "A2aDescriptor": {
+      "base": "<p>The Agent-to-Agent (A2A) protocol descriptor for a registry record. Contains the agent card definition as defined by the A2A protocol specification.</p>",
+      "refs": {
+        "Descriptors$a2a": "<p>The Agent-to-Agent (A2A) protocol descriptor configuration. Use this when the <code>descriptorType</code> is <code>A2A</code>.</p>",
+        "UpdatedA2aDescriptor$optionalValue": "<p>The updated A2A descriptor value.</p>"
+      }
+    },
     "AccessDeniedException": {
       "base": "<p>This exception is thrown when a request is denied per access permissions</p>",
       "refs": {}
@@ -98,6 +117,12 @@
       "base": null,
       "refs": {
         "BedrockEvaluatorModelConfig$additionalModelRequestFields": "<p> Additional model-specific request fields to customize model behavior beyond the standard inference configuration. </p>"
+      }
+    },
+    "AgentCardDefinition": {
+      "base": "<p>The agent card definition for an A2A descriptor. Contains the schema version and inline content for the agent card.</p>",
+      "refs": {
+        "A2aDescriptor$agentCard": "<p>The agent card definition for the A2A agent, as defined by the A2A protocol specification.</p>"
       }
     },
     "AgentEndpointDescription": {
@@ -243,6 +268,12 @@
       "refs": {
         "ListAgentRuntimeVersionsResponse$agentRuntimes": "<p>The list of AgentCore Runtime versions.</p>",
         "ListAgentRuntimesResponse$agentRuntimes": "<p>The list of AgentCore Runtime resources.</p>"
+      }
+    },
+    "AgentSkillsDescriptor": {
+      "base": "<p>The agent skills descriptor for a registry record. Contains an optional skill markdown definition in human-readable format and an optional structured skill definition.</p>",
+      "refs": {
+        "Descriptors$agentSkills": "<p>The agent skills descriptor configuration. Use this when the <code>descriptorType</code> is <code>AGENT_SKILLS</code>.</p>"
       }
     },
     "AllowedAudience": {
@@ -400,6 +431,15 @@
         "McpTargetConfiguration$smithyModel": "<p>The Smithy model for the Model Context Protocol target. This model defines the API structure of the target using the Smithy specification.</p>"
       }
     },
+    "ApprovalConfiguration": {
+      "base": "<p>Configuration for the registry record approval workflow. Controls whether records added to the registry require explicit approval before becoming active.</p>",
+      "refs": {
+        "CreateRegistryRequest$approvalConfiguration": "<p>The approval configuration for registry records. Controls whether records require explicit approval before becoming active. See the <code>ApprovalConfiguration</code> data type for supported configuration options.</p>",
+        "GetRegistryResponse$approvalConfiguration": "<p>The approval configuration for registry records. For details, see the <code>ApprovalConfiguration</code> data type.</p>",
+        "UpdateRegistryResponse$approvalConfiguration": "<p>The approval configuration for the updated registry. For details, see the <code>ApprovalConfiguration</code> data type.</p>",
+        "UpdatedApprovalConfiguration$optionalValue": "<p>The updated approval configuration value. Set to <code>null</code> to unset the approval configuration.</p>"
+      }
+    },
     "Arn": {
       "base": null,
       "refs": {
@@ -448,11 +488,15 @@
         "CreateAgentRuntimeRequest$authorizerConfiguration": "<p>The authorizer configuration for the AgentCore Runtime.</p>",
         "CreateGatewayRequest$authorizerConfiguration": "<p>The authorizer configuration for the gateway. Required if <code>authorizerType</code> is <code>CUSTOM_JWT</code>.</p>",
         "CreateGatewayResponse$authorizerConfiguration": "<p>The authorizer configuration for the created gateway.</p>",
+        "CreateRegistryRequest$authorizerConfiguration": "<p>The authorizer configuration for the registry. Required if <code>authorizerType</code> is <code>CUSTOM_JWT</code>. For details, see the <code>AuthorizerConfiguration</code> data type.</p>",
         "GetAgentRuntimeResponse$authorizerConfiguration": "<p>The authorizer configuration for the AgentCore Runtime.</p>",
         "GetGatewayResponse$authorizerConfiguration": "<p>The authorizer configuration for the gateway.</p>",
+        "GetRegistryResponse$authorizerConfiguration": "<p>The authorizer configuration for the registry. For details, see the <code>AuthorizerConfiguration</code> data type.</p>",
         "UpdateAgentRuntimeRequest$authorizerConfiguration": "<p>The updated authorizer configuration for the AgentCore Runtime.</p>",
         "UpdateGatewayRequest$authorizerConfiguration": "<p>The updated authorizer configuration for the gateway.</p>",
-        "UpdateGatewayResponse$authorizerConfiguration": "<p>The updated authorizer configuration for the gateway.</p>"
+        "UpdateGatewayResponse$authorizerConfiguration": "<p>The updated authorizer configuration for the gateway.</p>",
+        "UpdateRegistryResponse$authorizerConfiguration": "<p>The authorizer configuration for the updated registry. For details, see the <code>AuthorizerConfiguration</code> data type.</p>",
+        "UpdatedAuthorizerConfiguration$optionalValue": "<p>The updated authorizer configuration value. If not specified, it will clear the current authorizer configuration of the resource.</p>"
       }
     },
     "AuthorizerType": {
@@ -497,6 +541,7 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "ApprovalConfiguration$autoApproval": "<p>Whether registry records are auto-approved. When set to <code>true</code>, records are automatically approved upon creation. When set to <code>false</code> (the default), records require explicit approval for security purposes.</p>",
         "BrowserSigningConfigInput$enabled": "<p>Specifies whether browser signing is enabled. When enabled, the browser will cryptographically sign HTTP requests to identify itself as an AI agent to bot control vendors.</p>",
         "BrowserSigningConfigOutput$enabled": "<p>Indicates whether browser signing is currently enabled for cryptographic agent identification using HTTP message signatures.</p>",
         "CreateOnlineEvaluationConfigRequest$enableOnCreate": "<p> Whether to enable the online evaluation configuration immediately upon creation. If true, evaluation begins automatically. </p>",
@@ -505,7 +550,8 @@
         "GetEvaluatorResponse$lockedForModification": "<p> Whether the evaluator is locked for modification due to being referenced by active online evaluation configurations. </p>",
         "InterceptorInputConfiguration$passRequestHeaders": "<p>Indicates whether to pass request headers as input into the interceptor. When set to true, request headers will be passed.</p>",
         "RecordingConfig$enabled": "<p>Indicates whether recording is enabled for the browser. When set to true, browser sessions are recorded.</p>",
-        "RuntimeMetadataConfiguration$requireMMDSV2": "<p>Enables MMDSv2 (microVM Metadata Service Version 2) requirement for the agent runtime. When set to <code>true</code>, the runtime microVM will only accept MMDSv2 requests.</p>"
+        "RuntimeMetadataConfiguration$requireMMDSV2": "<p>Enables MMDSv2 (microVM Metadata Service Version 2) requirement for the agent runtime. When set to <code>true</code>, the runtime microVM will only accept MMDSv2 requests.</p>",
+        "UpdateRegistryRecordRequest$triggerSynchronization": "<p>Whether to trigger synchronization using the stored or provided configuration. When set to <code>true</code>, the service will synchronize the record metadata from the configured external source.</p>"
       }
     },
     "BrowserArn": {
@@ -759,6 +805,8 @@
         "CreateOnlineEvaluationConfigRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreatePolicyEngineRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request with the same client token, the service returns the same response without creating a duplicate policy engine.</p>",
         "CreatePolicyRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure the idempotency of the request. The AWS SDK automatically generates this token, so you don't need to provide it in most cases. If you retry a request with the same client token, the service returns the same response without creating a duplicate policy.</p>",
+        "CreateRegistryRecordRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "CreateRegistryRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "DeleteAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, the service ignores the request but does not return an error.</p>",
         "DeleteBrowserProfileRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
@@ -1040,6 +1088,22 @@
       "base": null,
       "refs": {}
     },
+    "CreateRegistryRecordRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRegistryRecordResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRegistryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRegistryResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateWorkloadIdentityRequest": {
       "base": null,
       "refs": {}
@@ -1052,6 +1116,12 @@
       "base": "<p>A credential provider for gateway authentication. This structure contains the configuration for authenticating with the target endpoint.</p>",
       "refs": {
         "CredentialProviderConfiguration$credentialProvider": "<p>The credential provider. This field contains the specific configuration for the credential provider type.</p>"
+      }
+    },
+    "CredentialProviderArn": {
+      "base": null,
+      "refs": {
+        "RegistryRecordOAuthCredentialProvider$providerArn": "<p>The Amazon Resource Name (ARN) of the OAuth credential provider resource.</p>"
       }
     },
     "CredentialProviderArnType": {
@@ -1147,6 +1217,13 @@
         "ModifyConsolidationConfiguration$customConsolidationConfiguration": "<p>The updated custom consolidation configuration.</p>"
       }
     },
+    "CustomDescriptor": {
+      "base": "<p>A custom descriptor for a registry record. Use this for resources such as APIs, Lambda functions, or servers that do not conform to a standard protocol like MCP or A2A.</p>",
+      "refs": {
+        "Descriptors$custom": "<p>The custom descriptor configuration. Use this when the <code>descriptorType</code> is <code>CUSTOM</code>.</p>",
+        "UpdatedCustomDescriptor$optionalValue": "<p>The updated custom descriptor value.</p>"
+      }
+    },
     "CustomEvaluatorArn": {
       "base": null,
       "refs": {
@@ -1193,6 +1270,12 @@
       "base": "<p>Output configuration for a custom OAuth2 provider.</p>",
       "refs": {
         "Oauth2ProviderConfigOutput$customOauth2ProviderConfig": "<p>The output configuration for a custom OAuth2 provider.</p>"
+      }
+    },
+    "CustomParameterMap": {
+      "base": null,
+      "refs": {
+        "RegistryRecordOAuthCredentialProvider$customParameters": "<p>Additional custom parameters for the OAuth flow.</p>"
       }
     },
     "CustomReflectionConfiguration": {
@@ -1277,14 +1360,23 @@
         "GetPolicyGenerationResponse$updatedAt": "<p>The timestamp when the policy generation was last updated. This tracks the progress of the generation process and any status changes.</p>",
         "GetPolicyResponse$createdAt": "<p>The timestamp when the policy was originally created.</p>",
         "GetPolicyResponse$updatedAt": "<p>The timestamp when the policy was last modified. This tracks the most recent changes to the policy configuration.</p>",
+        "GetRegistryRecordResponse$createdAt": "<p>The timestamp when the registry record was created.</p>",
+        "GetRegistryRecordResponse$updatedAt": "<p>The timestamp when the registry record was last updated.</p>",
+        "GetRegistryResponse$createdAt": "<p>The timestamp when the registry was created.</p>",
+        "GetRegistryResponse$updatedAt": "<p>The timestamp when the registry was last updated.</p>",
         "Policy$createdAt": "<p>The timestamp when the policy was originally created. This is automatically set by the service and used for auditing and lifecycle management.</p>",
         "Policy$updatedAt": "<p>The timestamp when the policy was last modified. This tracks the most recent changes to the policy configuration or metadata.</p>",
         "PolicyEngine$createdAt": "<p>The timestamp when the policy engine was originally created. This is automatically set by the service and used for auditing and lifecycle management.</p>",
         "PolicyEngine$updatedAt": "<p>The timestamp when the policy engine was last modified. This tracks the most recent changes to the policy engine configuration or metadata.</p>",
         "PolicyGeneration$createdAt": "<p>The timestamp when this policy generation request was created.</p>",
         "PolicyGeneration$updatedAt": "<p>The timestamp when this policy generation was last updated.</p>",
+        "RegistryRecordSummary$createdAt": "<p>The timestamp when the registry record was created.</p>",
+        "RegistryRecordSummary$updatedAt": "<p>The timestamp when the registry record was last updated.</p>",
+        "RegistrySummary$createdAt": "<p>The timestamp when the registry was created.</p>",
+        "RegistrySummary$updatedAt": "<p>The timestamp when the registry was last updated.</p>",
         "StartPolicyGenerationResponse$createdAt": "<p>The timestamp when the policy generation request was created.</p>",
         "StartPolicyGenerationResponse$updatedAt": "<p>The timestamp when the policy generation was last updated.</p>",
+        "SubmitRegistryRecordForApprovalResponse$updatedAt": "<p>The timestamp when the record was last updated.</p>",
         "TargetSummary$createdAt": "<p>The timestamp when the target was created.</p>",
         "TargetSummary$updatedAt": "<p>The timestamp when the target was last updated.</p>",
         "UpdateAgentRuntimeEndpointResponse$createdAt": "<p>The timestamp when the AgentCore Runtime endpoint was created.</p>",
@@ -1299,7 +1391,12 @@
         "UpdatePolicyEngineResponse$createdAt": "<p>The original creation timestamp of the policy engine.</p>",
         "UpdatePolicyEngineResponse$updatedAt": "<p>The timestamp when the policy engine was last updated.</p>",
         "UpdatePolicyResponse$createdAt": "<p>The original creation timestamp of the policy.</p>",
-        "UpdatePolicyResponse$updatedAt": "<p>The timestamp when the policy was last updated.</p>"
+        "UpdatePolicyResponse$updatedAt": "<p>The timestamp when the policy was last updated.</p>",
+        "UpdateRegistryRecordResponse$createdAt": "<p>The timestamp when the registry record was created.</p>",
+        "UpdateRegistryRecordResponse$updatedAt": "<p>The timestamp when the registry record was last updated.</p>",
+        "UpdateRegistryRecordStatusResponse$updatedAt": "<p>The timestamp when the record was last updated.</p>",
+        "UpdateRegistryResponse$createdAt": "<p>The timestamp when the registry was created.</p>",
+        "UpdateRegistryResponse$updatedAt": "<p>The timestamp when the registry was last updated.</p>"
       }
     },
     "DecryptionFailure": {
@@ -1436,6 +1533,22 @@
       "base": null,
       "refs": {}
     },
+    "DeleteRegistryRecordRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRegistryRecordResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRegistryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRegistryResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteResourcePolicyRequest": {
       "base": null,
       "refs": {}
@@ -1468,6 +1581,8 @@
         "CreatePolicyEngineResponse$description": "<p>A human-readable description of the policy engine's purpose.</p>",
         "CreatePolicyRequest$description": "<p>A human-readable description of the policy's purpose and functionality (1-4,096 characters). This helps policy administrators understand the policy's intent, business rules, and operational scope. Use this field to document why the policy exists, what business requirement it addresses, and any special considerations for maintenance. Clear descriptions are essential for policy governance, auditing, and troubleshooting.</p>",
         "CreatePolicyResponse$description": "<p>The human-readable description of the policy's purpose and functionality. This helps administrators understand and manage the policy.</p>",
+        "CreateRegistryRecordRequest$description": "<p>A description of the registry record.</p>",
+        "CreateRegistryRequest$description": "<p>A description of the registry.</p>",
         "CustomMemoryStrategyInput$description": "<p>The description of the custom memory strategy.</p>",
         "DeletePolicyEngineResponse$description": "<p>The human-readable description of the deleted policy engine.</p>",
         "DeletePolicyResponse$description": "<p>The human-readable description of the deleted policy.</p>",
@@ -1478,19 +1593,44 @@
         "GetCodeInterpreterResponse$description": "<p>The description of the code interpreter.</p>",
         "GetPolicyEngineResponse$description": "<p>The human-readable description of the policy engine's purpose and scope. This helps administrators understand the policy engine's role in governance.</p>",
         "GetPolicyResponse$description": "<p>The human-readable description of the policy's purpose and functionality. This helps administrators understand and manage the policy.</p>",
+        "GetRegistryRecordResponse$description": "<p>The description of the registry record.</p>",
+        "GetRegistryResponse$description": "<p>The description of the registry.</p>",
         "Memory$description": "<p>The description of the memory.</p>",
         "MemoryStrategy$description": "<p>The description of the memory strategy.</p>",
         "ModifyMemoryStrategyInput$description": "<p>The updated description of the memory strategy.</p>",
         "Policy$description": "<p>A human-readable description of the policy's purpose and functionality. Limited to 4,096 characters, this helps administrators understand and manage the policy.</p>",
         "PolicyEngine$description": "<p>A human-readable description of the policy engine's purpose and scope. Limited to 4,096 characters, this helps administrators understand the policy engine's role in the overall governance strategy.</p>",
+        "RegistryRecordSummary$description": "<p>The description of the registry record.</p>",
+        "RegistrySummary$description": "<p>The description of the registry.</p>",
         "SemanticMemoryStrategyInput$description": "<p>The description of the semantic memory strategy.</p>",
         "SummaryMemoryStrategyInput$description": "<p>The description of the summary memory strategy.</p>",
         "UpdateAgentRuntimeRequest$description": "<p>The updated description of the AgentCore Runtime.</p>",
         "UpdateMemoryInput$description": "<p>The updated description of the AgentCore Memory resource.</p>",
         "UpdatePolicyEngineResponse$description": "<p>The updated description of the policy engine.</p>",
         "UpdatePolicyResponse$description": "<p>The updated description of the policy.</p>",
+        "UpdateRegistryRecordResponse$description": "<p>The description of the updated registry record.</p>",
+        "UpdateRegistryResponse$description": "<p>The description of the updated registry.</p>",
         "UpdatedDescription$optionalValue": "<p>Represents an optional value that is used to update the human-readable description of the resource. If not specified, it will clear the current description of the resource.</p>",
         "UserPreferenceMemoryStrategyInput$description": "<p>The description of the user preference memory strategy.</p>"
+      }
+    },
+    "DescriptorType": {
+      "base": null,
+      "refs": {
+        "CreateRegistryRecordRequest$descriptorType": "<p>The descriptor type of the registry record.</p> <ul> <li> <p> <code>MCP</code> - Model Context Protocol descriptor for MCP-compatible servers and tools.</p> </li> <li> <p> <code>A2A</code> - Agent-to-Agent protocol descriptor.</p> </li> <li> <p> <code>CUSTOM</code> - Custom descriptor type for resources such as APIs, Lambda functions, or servers not conforming to a standard protocol.</p> </li> <li> <p> <code>AGENT_SKILLS</code> - Agent skills descriptor for defining agent skill definitions.</p> </li> </ul>",
+        "GetRegistryRecordResponse$descriptorType": "<p>The descriptor type of the registry record. Possible values are <code>MCP</code>, <code>A2A</code>, <code>CUSTOM</code>, and <code>AGENT_SKILLS</code>.</p>",
+        "ListRegistryRecordsRequest$descriptorType": "<p>Filter registry records by their descriptor type. Possible values are <code>MCP</code>, <code>A2A</code>, <code>CUSTOM</code>, and <code>AGENT_SKILLS</code>.</p>",
+        "RegistryRecordSummary$descriptorType": "<p>The descriptor type of the registry record. Possible values are <code>MCP</code>, <code>A2A</code>, <code>CUSTOM</code>, and <code>AGENT_SKILLS</code>.</p>",
+        "UpdateRegistryRecordRequest$descriptorType": "<p>The updated descriptor type for the registry record. Changing the descriptor type may require updating the <code>descriptors</code> field to match the new type's schema requirements.</p>",
+        "UpdateRegistryRecordResponse$descriptorType": "<p>The descriptor type of the updated registry record. Possible values are <code>MCP</code>, <code>A2A</code>, <code>CUSTOM</code>, and <code>AGENT_SKILLS</code>.</p>"
+      }
+    },
+    "Descriptors": {
+      "base": "<p>Contains descriptor-type-specific configurations for a registry record. Only the descriptor matching the record's <code>descriptorType</code> should be populated.</p>",
+      "refs": {
+        "CreateRegistryRecordRequest$descriptors": "<p>The descriptor-type-specific configuration containing the resource schema and metadata. The structure of this field depends on the <code>descriptorType</code> you specify.</p>",
+        "GetRegistryRecordResponse$descriptors": "<p>The descriptor-type-specific configuration containing the resource schema and metadata. For details, see the <code>Descriptors</code> data type.</p>",
+        "UpdateRegistryRecordResponse$descriptors": "<p>The descriptor-type-specific configuration of the updated registry record. For details, see the <code>Descriptors</code> data type.</p>"
       }
     },
     "DiscoveryUrl": {
@@ -1835,6 +1975,12 @@
         "PolicyGenerationAsset$findings": "<p>Analysis findings and insights related to this specific generated policy asset. These findings may include validation results, potential issues, or recommendations for improvement to help users evaluate the quality and appropriateness of the generated policy.</p>"
       }
     },
+    "FromUrlSynchronizationConfiguration": {
+      "base": "<p>Configuration for synchronizing from a URL-based MCP server.</p>",
+      "refs": {
+        "SynchronizationConfiguration$fromUrl": "<p>Configuration for synchronizing from a URL-based source.</p>"
+      }
+    },
     "GatewayArn": {
       "base": null,
       "refs": {
@@ -2140,6 +2286,22 @@
       "base": null,
       "refs": {}
     },
+    "GetRegistryRecordRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRegistryRecordResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRegistryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRegistryResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetResourcePolicyRequest": {
       "base": null,
       "refs": {}
@@ -2225,6 +2387,24 @@
         "IamCredentialProvider$service": "<p>The target Amazon Web Services service name used for SigV4 signing. This value identifies the service that the gateway authenticates with when making requests to the target endpoint.</p>"
       }
     },
+    "IamRoleArn": {
+      "base": null,
+      "refs": {
+        "RegistryRecordIamCredentialProvider$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role to assume for SigV4 signing.</p>"
+      }
+    },
+    "IamSigningRegion": {
+      "base": null,
+      "refs": {
+        "RegistryRecordIamCredentialProvider$region": "<p>The Amazon Web Services region for SigV4 signing (for example, <code>us-west-2</code>). If not specified, the region is extracted from the MCP server URL hostname, with fallback to the service's own region.</p>"
+      }
+    },
+    "IamSigningServiceName": {
+      "base": null,
+      "refs": {
+        "RegistryRecordIamCredentialProvider$service": "<p>The SigV4 signing service name (for example, <code>execute-api</code> or <code>bedrock-agentcore</code>).</p>"
+      }
+    },
     "InboundTokenClaimNameType": {
       "base": null,
       "refs": {
@@ -2277,6 +2457,17 @@
       "base": null,
       "refs": {
         "InferenceConfiguration$topP": "<p> The top-p sampling parameter that controls the diversity of the model's responses by limiting the cumulative probability of token choices. </p>"
+      }
+    },
+    "InlineContent": {
+      "base": null,
+      "refs": {
+        "AgentCardDefinition$inlineContent": "<p>The JSON content containing the A2A agent card definition, conforming to the A2A protocol specification.</p>",
+        "CustomDescriptor$inlineContent": "<p>The custom descriptor content as a valid JSON document. You can define any custom schema that describes your resource.</p>",
+        "ServerDefinition$inlineContent": "<p>The JSON content containing the MCP server definition, conforming to the MCP protocol specification.</p>",
+        "SkillDefinition$inlineContent": "<p>The JSON content containing the structured skill definition.</p>",
+        "SkillMdDefinition$inlineContent": "<p>The markdown content describing the agent's skills in a human-readable format.</p>",
+        "ToolsDefinition$inlineContent": "<p>The JSON content containing the MCP tools definition, conforming to the MCP protocol specification.</p>"
       }
     },
     "InlinePayload": {
@@ -2602,6 +2793,22 @@
       "base": null,
       "refs": {}
     },
+    "ListRegistriesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRegistriesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRegistryRecordsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRegistryRecordsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {}
@@ -2681,7 +2888,15 @@
         "ListPoliciesRequest$maxResults": "<p>The maximum number of policies to return in a single response. If not specified, the default is 10 policies per page, with a maximum of 100 per page.</p>",
         "ListPolicyEnginesRequest$maxResults": "<p>The maximum number of policy engines to return in a single response. If not specified, the default is 10 policy engines per page, with a maximum of 100 per page.</p>",
         "ListPolicyGenerationAssetsRequest$maxResults": "<p>The maximum number of policy generation assets to return in a single response. If not specified, the default is 10 assets per page, with a maximum of 100 per page. This helps control response size when dealing with policy generations that produce many alternative policy options.</p>",
-        "ListPolicyGenerationsRequest$maxResults": "<p>The maximum number of policy generations to return in a single response.</p>"
+        "ListPolicyGenerationsRequest$maxResults": "<p>The maximum number of policy generations to return in a single response.</p>",
+        "ListRegistriesRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
+        "ListRegistryRecordsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
+      }
+    },
+    "McpDescriptor": {
+      "base": "<p>The Model Context Protocol (MCP) descriptor for a registry record. Contains the server definition and tools definition for an MCP-compatible server. The schema is validated against the MCP protocol specification.</p>",
+      "refs": {
+        "Descriptors$mcp": "<p>The Model Context Protocol (MCP) descriptor configuration. Use this when the <code>descriptorType</code> is <code>MCP</code>.</p>"
       }
     },
     "McpInstructions": {
@@ -2706,6 +2921,12 @@
       "base": null,
       "refs": {
         "McpServerTargetConfiguration$endpoint": "<p>The endpoint for the MCP server target configuration.</p>"
+      }
+    },
+    "McpServerUrl": {
+      "base": null,
+      "refs": {
+        "FromUrlSynchronizationConfiguration$url": "<p>The HTTPS URL of the MCP server to synchronize from.</p>"
       }
     },
     "McpSupportedVersions": {
@@ -3041,7 +3262,11 @@
         "ListPolicyGenerationAssetsRequest$nextToken": "<p>A pagination token returned from a previous <a href=\"https://docs.aws.amazon.com/bedrock-agentcore-control/latest/APIReference/API_ListPolicyGenerationAssets.html\">ListPolicyGenerationAssets</a> call. Use this token to retrieve the next page of assets when the response is paginated due to large numbers of generated policy options.</p>",
         "ListPolicyGenerationAssetsResponse$nextToken": "<p>A pagination token that can be used in subsequent <a href=\"https://docs.aws.amazon.com/bedrock-agentcore-control/latest/APIReference/API_ListPolicyGenerationAssets.html\">ListPolicyGenerationAssets</a> calls to retrieve additional assets. This token is only present when there are more generated policy assets available beyond the current response.</p>",
         "ListPolicyGenerationsRequest$nextToken": "<p>A pagination token for retrieving additional policy generations when results are paginated.</p>",
-        "ListPolicyGenerationsResponse$nextToken": "<p>A pagination token for retrieving additional policy generations if more results are available.</p>"
+        "ListPolicyGenerationsResponse$nextToken": "<p>A pagination token for retrieving additional policy generations if more results are available.</p>",
+        "ListRegistriesRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
+        "ListRegistriesResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListRegistryRecordsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
+        "ListRegistryRecordsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>"
       }
     },
     "NonBlankString": {
@@ -3516,6 +3741,16 @@
         "LlmAsAJudgeEvaluatorConfig$ratingScale": "<p> The rating scale that defines how the evaluator should score agent performance, either numerical or categorical. </p>"
       }
     },
+    "RecordIdentifier": {
+      "base": null,
+      "refs": {
+        "DeleteRegistryRecordRequest$recordId": "<p>The identifier of the registry record to delete. You can specify either the Amazon Resource Name (ARN) or the ID of the record.</p>",
+        "GetRegistryRecordRequest$recordId": "<p>The identifier of the registry record to retrieve. You can specify either the Amazon Resource Name (ARN) or the ID of the record.</p>",
+        "SubmitRegistryRecordForApprovalRequest$recordId": "<p>The identifier of the registry record to submit for approval. You can specify either the Amazon Resource Name (ARN) or the ID of the record.</p>",
+        "UpdateRegistryRecordRequest$recordId": "<p>The identifier of the registry record to update. You can specify either the Amazon Resource Name (ARN) or the ID of the record.</p>",
+        "UpdateRegistryRecordStatusRequest$recordId": "<p>The identifier of the registry record to update the status for. You can specify either the Amazon Resource Name (ARN) or the ID of the record.</p>"
+      }
+    },
     "RecordingConfig": {
       "base": "<p>The recording configuration for a browser. This structure defines how browser sessions are recorded.</p>",
       "refs": {
@@ -3527,6 +3762,193 @@
       "base": "<p>Contains reflection configuration information for a memory strategy.</p>",
       "refs": {
         "StrategyConfiguration$reflection": "<p>The reflection configuration for the memory strategy.</p>"
+      }
+    },
+    "RegistryArn": {
+      "base": null,
+      "refs": {
+        "CreateRegistryResponse$registryArn": "<p>The Amazon Resource Name (ARN) of the created registry.</p>",
+        "GetRegistryRecordResponse$registryArn": "<p>The Amazon Resource Name (ARN) of the registry that contains the record.</p>",
+        "GetRegistryResponse$registryArn": "<p>The Amazon Resource Name (ARN) of the registry.</p>",
+        "RegistryRecordSummary$registryArn": "<p>The Amazon Resource Name (ARN) of the registry that contains the record.</p>",
+        "RegistrySummary$registryArn": "<p>The Amazon Resource Name (ARN) of the registry.</p>",
+        "SubmitRegistryRecordForApprovalResponse$registryArn": "<p>The Amazon Resource Name (ARN) of the registry that contains the record.</p>",
+        "UpdateRegistryRecordResponse$registryArn": "<p>The Amazon Resource Name (ARN) of the registry that contains the updated record.</p>",
+        "UpdateRegistryRecordStatusResponse$registryArn": "<p>The Amazon Resource Name (ARN) of the registry that contains the record.</p>",
+        "UpdateRegistryResponse$registryArn": "<p>The Amazon Resource Name (ARN) of the updated registry.</p>"
+      }
+    },
+    "RegistryAuthorizerType": {
+      "base": null,
+      "refs": {
+        "CreateRegistryRequest$authorizerType": "<p>The type of authorizer to use for the registry. This controls the authorization method for the Search and Invoke APIs used by consumers, and does not affect the standard CRUDL APIs for registry and registry record management used by administrators.</p> <ul> <li> <p> <code>CUSTOM_JWT</code> - Authorize with a bearer token.</p> </li> <li> <p> <code>AWS_IAM</code> - Authorize with your Amazon Web Services IAM credentials.</p> </li> </ul>",
+        "GetRegistryResponse$authorizerType": "<p>The type of authorizer used by the registry. This controls the authorization method for the Search and Invoke APIs used by consumers.</p> <ul> <li> <p> <code>CUSTOM_JWT</code> - Authorize with a bearer token.</p> </li> <li> <p> <code>AWS_IAM</code> - Authorize with your Amazon Web Services IAM credentials.</p> </li> </ul>",
+        "RegistrySummary$authorizerType": "<p>The type of authorizer used by the registry. This controls the authorization method for the Search and Invoke APIs used by consumers.</p> <ul> <li> <p> <code>CUSTOM_JWT</code> - Authorize with a bearer token.</p> </li> <li> <p> <code>AWS_IAM</code> - Authorize with your Amazon Web Services IAM credentials.</p> </li> </ul>",
+        "UpdateRegistryResponse$authorizerType": "<p>The type of authorizer used by the updated registry. This controls the authorization method for the Search and Invoke APIs used by consumers.</p> <ul> <li> <p> <code>CUSTOM_JWT</code> - Authorize with a bearer token.</p> </li> <li> <p> <code>AWS_IAM</code> - Authorize with your Amazon Web Services IAM credentials.</p> </li> </ul>"
+      }
+    },
+    "RegistryId": {
+      "base": null,
+      "refs": {
+        "GetRegistryResponse$registryId": "<p>The unique identifier of the registry.</p>",
+        "RegistrySummary$registryId": "<p>The unique identifier of the registry.</p>",
+        "UpdateRegistryResponse$registryId": "<p>The unique identifier of the updated registry.</p>"
+      }
+    },
+    "RegistryIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateRegistryRecordRequest$registryId": "<p>The identifier of the registry where the record will be created. You can specify either the Amazon Resource Name (ARN) or the ID of the registry.</p>",
+        "DeleteRegistryRecordRequest$registryId": "<p>The identifier of the registry containing the record. You can specify either the Amazon Resource Name (ARN) or the ID of the registry.</p>",
+        "DeleteRegistryRequest$registryId": "<p>The identifier of the registry to delete. You can specify either the Amazon Resource Name (ARN) or the ID of the registry.</p>",
+        "GetRegistryRecordRequest$registryId": "<p>The identifier of the registry containing the record. You can specify either the Amazon Resource Name (ARN) or the ID of the registry.</p>",
+        "GetRegistryRequest$registryId": "<p>The identifier of the registry to retrieve. You can specify either the Amazon Resource Name (ARN) or the ID of the registry.</p>",
+        "ListRegistryRecordsRequest$registryId": "<p>The identifier of the registry to list records from. You can specify either the Amazon Resource Name (ARN) or the ID of the registry.</p>",
+        "SubmitRegistryRecordForApprovalRequest$registryId": "<p>The identifier of the registry containing the record. You can specify either the Amazon Resource Name (ARN) or the ID of the registry.</p>",
+        "UpdateRegistryRecordRequest$registryId": "<p>The identifier of the registry containing the record. You can specify either the Amazon Resource Name (ARN) or the ID of the registry.</p>",
+        "UpdateRegistryRecordStatusRequest$registryId": "<p>The identifier of the registry containing the record. You can specify either the Amazon Resource Name (ARN) or the ID of the registry.</p>",
+        "UpdateRegistryRequest$registryId": "<p>The identifier of the registry to update. You can specify either the Amazon Resource Name (ARN) or the ID of the registry.</p>"
+      }
+    },
+    "RegistryName": {
+      "base": null,
+      "refs": {
+        "CreateRegistryRequest$name": "<p>The name of the registry. The name must be unique within your account and can contain alphanumeric characters and underscores.</p>",
+        "GetRegistryResponse$name": "<p>The name of the registry.</p>",
+        "RegistrySummary$name": "<p>The name of the registry.</p>",
+        "UpdateRegistryRequest$name": "<p>The updated name of the registry.</p>",
+        "UpdateRegistryResponse$name": "<p>The name of the updated registry.</p>"
+      }
+    },
+    "RegistryRecordArn": {
+      "base": null,
+      "refs": {
+        "CreateRegistryRecordResponse$recordArn": "<p>The Amazon Resource Name (ARN) of the created registry record.</p>",
+        "GetRegistryRecordResponse$recordArn": "<p>The Amazon Resource Name (ARN) of the registry record.</p>",
+        "RegistryRecordSummary$recordArn": "<p>The Amazon Resource Name (ARN) of the registry record.</p>",
+        "SubmitRegistryRecordForApprovalResponse$recordArn": "<p>The Amazon Resource Name (ARN) of the registry record.</p>",
+        "UpdateRegistryRecordResponse$recordArn": "<p>The Amazon Resource Name (ARN) of the updated registry record.</p>",
+        "UpdateRegistryRecordStatusResponse$recordArn": "<p>The Amazon Resource Name (ARN) of the registry record.</p>"
+      }
+    },
+    "RegistryRecordCredentialProviderConfiguration": {
+      "base": "<p>A pairing of a credential provider type with its corresponding provider details for authenticating with external sources.</p>",
+      "refs": {
+        "RegistryRecordCredentialProviderConfigurationList$member": null
+      }
+    },
+    "RegistryRecordCredentialProviderConfigurationList": {
+      "base": null,
+      "refs": {
+        "FromUrlSynchronizationConfiguration$credentialProviderConfigurations": "<p>Optional list of credential provider configurations for authenticating with the MCP server. At most one credential provider configuration can be specified.</p>"
+      }
+    },
+    "RegistryRecordCredentialProviderType": {
+      "base": null,
+      "refs": {
+        "RegistryRecordCredentialProviderConfiguration$credentialProviderType": "<p>The type of credential provider.</p> <ul> <li> <p> <code>OAUTH</code> - OAuth-based authentication.</p> </li> <li> <p> <code>IAM</code> - Amazon Web Services IAM-based authentication using SigV4 signing.</p> </li> </ul>"
+      }
+    },
+    "RegistryRecordCredentialProviderUnion": {
+      "base": "<p>Union of supported credential provider types for registry record synchronization.</p>",
+      "refs": {
+        "RegistryRecordCredentialProviderConfiguration$credentialProvider": "<p>The credential provider configuration details. The structure depends on the <code>credentialProviderType</code>.</p>"
+      }
+    },
+    "RegistryRecordIamCredentialProvider": {
+      "base": "<p>IAM credential provider configuration for authenticating with an external source using SigV4 signing during synchronization.</p>",
+      "refs": {
+        "RegistryRecordCredentialProviderUnion$iamCredentialProvider": "<p>The IAM credential provider configuration for authenticating with the external source using SigV4 signing.</p>"
+      }
+    },
+    "RegistryRecordId": {
+      "base": null,
+      "refs": {
+        "GetRegistryRecordResponse$recordId": "<p>The unique identifier of the registry record.</p>",
+        "RegistryRecordSummary$recordId": "<p>The unique identifier of the registry record.</p>",
+        "SubmitRegistryRecordForApprovalResponse$recordId": "<p>The unique identifier of the registry record.</p>",
+        "UpdateRegistryRecordResponse$recordId": "<p>The unique identifier of the updated registry record.</p>",
+        "UpdateRegistryRecordStatusResponse$recordId": "<p>The unique identifier of the registry record.</p>"
+      }
+    },
+    "RegistryRecordName": {
+      "base": null,
+      "refs": {
+        "CreateRegistryRecordRequest$name": "<p>The name of the registry record.</p>",
+        "GetRegistryRecordResponse$name": "<p>The name of the registry record.</p>",
+        "ListRegistryRecordsRequest$name": "<p>Filter registry records by name.</p>",
+        "RegistryRecordSummary$name": "<p>The name of the registry record.</p>",
+        "UpdateRegistryRecordRequest$name": "<p>The updated name for the registry record.</p>",
+        "UpdateRegistryRecordResponse$name": "<p>The name of the updated registry record.</p>"
+      }
+    },
+    "RegistryRecordOAuthCredentialProvider": {
+      "base": "<p>OAuth credential provider configuration for authenticating with an external source during synchronization.</p>",
+      "refs": {
+        "RegistryRecordCredentialProviderUnion$oauthCredentialProvider": "<p>The OAuth credential provider configuration for authenticating with the external source.</p>"
+      }
+    },
+    "RegistryRecordOAuthGrantType": {
+      "base": null,
+      "refs": {
+        "RegistryRecordOAuthCredentialProvider$grantType": "<p>The OAuth grant type. Currently only <code>CLIENT_CREDENTIALS</code> is supported.</p>"
+      }
+    },
+    "RegistryRecordStatus": {
+      "base": null,
+      "refs": {
+        "CreateRegistryRecordResponse$status": "<p>The status of the registry record. Set to <code>CREATING</code> while the asynchronous workflow is in progress.</p>",
+        "GetRegistryRecordResponse$status": "<p>The current status of the registry record. Possible values include <code>CREATING</code>, <code>DRAFT</code>, <code>APPROVED</code>, <code>PENDING_APPROVAL</code>, <code>REJECTED</code>, <code>DEPRECATED</code>, <code>UPDATING</code>, <code>CREATE_FAILED</code>, and <code>UPDATE_FAILED</code>. A record transitions from <code>CREATING</code> to <code>DRAFT</code>, then to <code>PENDING_APPROVAL</code> (via <code>SubmitRegistryRecordForApproval</code>), and finally to <code>APPROVED</code> upon approval.</p>",
+        "ListRegistryRecordsRequest$status": "<p>Filter registry records by their current status. Possible values include <code>CREATING</code>, <code>DRAFT</code>, <code>APPROVED</code>, <code>PENDING_APPROVAL</code>, <code>REJECTED</code>, <code>DEPRECATED</code>, <code>UPDATING</code>, <code>CREATE_FAILED</code>, and <code>UPDATE_FAILED</code>.</p>",
+        "RegistryRecordSummary$status": "<p>The current status of the registry record. Possible values include <code>CREATING</code>, <code>DRAFT</code>, <code>APPROVED</code>, <code>PENDING_APPROVAL</code>, <code>REJECTED</code>, <code>DEPRECATED</code>, <code>UPDATING</code>, <code>CREATE_FAILED</code>, and <code>UPDATE_FAILED</code>.</p>",
+        "SubmitRegistryRecordForApprovalResponse$status": "<p>The resulting status of the registry record after submission.</p>",
+        "UpdateRegistryRecordResponse$status": "<p>The current status of the updated registry record. Possible values include <code>CREATING</code>, <code>DRAFT</code>, <code>APPROVED</code>, <code>PENDING_APPROVAL</code>, <code>REJECTED</code>, <code>DEPRECATED</code>, <code>UPDATING</code>, <code>CREATE_FAILED</code>, and <code>UPDATE_FAILED</code>.</p>",
+        "UpdateRegistryRecordStatusRequest$status": "<p>The target status for the registry record.</p>",
+        "UpdateRegistryRecordStatusResponse$status": "<p>The resulting status of the registry record.</p>"
+      }
+    },
+    "RegistryRecordSummary": {
+      "base": "<p>Contains summary information about a registry record.</p>",
+      "refs": {
+        "RegistryRecordSummaryList$member": null
+      }
+    },
+    "RegistryRecordSummaryList": {
+      "base": null,
+      "refs": {
+        "ListRegistryRecordsResponse$registryRecords": "<p>The list of registry record summaries. For details about the fields in each summary, see the <code>RegistryRecordSummary</code> data type.</p>"
+      }
+    },
+    "RegistryRecordVersion": {
+      "base": null,
+      "refs": {
+        "CreateRegistryRecordRequest$recordVersion": "<p>The version of the registry record. Use this to track different versions of the record's content.</p>",
+        "GetRegistryRecordResponse$recordVersion": "<p>The version of the registry record.</p>",
+        "RegistryRecordSummary$recordVersion": "<p>The version of the registry record.</p>",
+        "UpdateRegistryRecordRequest$recordVersion": "<p>The version of the registry record for optimistic locking. If provided, it must match the current version of the record. The service automatically increments the version after a successful update.</p>",
+        "UpdateRegistryRecordResponse$recordVersion": "<p>The version of the updated registry record.</p>"
+      }
+    },
+    "RegistryStatus": {
+      "base": null,
+      "refs": {
+        "DeleteRegistryResponse$status": "<p>The current status of the registry, set to <code>DELETING</code> when deletion is initiated. For a list of all possible registry statuses, see the <code>RegistryStatus</code> data type.</p>",
+        "GetRegistryResponse$status": "<p>The current status of the registry. Possible values include <code>CREATING</code>, <code>READY</code>, <code>UPDATING</code>, <code>CREATE_FAILED</code>, <code>UPDATE_FAILED</code>, <code>DELETING</code>, and <code>DELETE_FAILED</code>.</p>",
+        "ListRegistriesRequest$status": "<p>Filter registries by their current status. Possible values include <code>CREATING</code>, <code>READY</code>, <code>UPDATING</code>, <code>CREATE_FAILED</code>, <code>UPDATE_FAILED</code>, <code>DELETING</code>, and <code>DELETE_FAILED</code>.</p>",
+        "RegistrySummary$status": "<p>The current status of the registry. Possible values include <code>CREATING</code>, <code>READY</code>, <code>UPDATING</code>, <code>CREATE_FAILED</code>, <code>UPDATE_FAILED</code>, <code>DELETING</code>, and <code>DELETE_FAILED</code>.</p>",
+        "UpdateRegistryResponse$status": "<p>The current status of the updated registry. Possible values include <code>CREATING</code>, <code>READY</code>, <code>UPDATING</code>, <code>CREATE_FAILED</code>, <code>UPDATE_FAILED</code>, <code>DELETING</code>, and <code>DELETE_FAILED</code>.</p>"
+      }
+    },
+    "RegistrySummary": {
+      "base": "<p>Contains summary information about a registry.</p>",
+      "refs": {
+        "RegistrySummaryList$member": null
+      }
+    },
+    "RegistrySummaryList": {
+      "base": null,
+      "refs": {
+        "ListRegistriesResponse$registries": "<p>The list of registry summaries. For details about the fields in each summary, see the <code>RegistrySummary</code> data type.</p>"
       }
     },
     "RequestHeaderAllowlist": {
@@ -3835,6 +4257,21 @@
         "SchemaDefinition$type": "<p>The type of the schema definition. This field specifies the data type of the schema.</p>"
       }
     },
+    "SchemaVersion": {
+      "base": null,
+      "refs": {
+        "AgentCardDefinition$schemaVersion": "<p>The schema version of the agent card based on the A2A protocol specification.</p>",
+        "ServerDefinition$schemaVersion": "<p>The schema version of the server definition based on the MCP protocol specification. If not specified, the version is auto-detected from the content.</p>",
+        "SkillDefinition$schemaVersion": "<p>The version of the skill definition schema.</p>",
+        "ToolsDefinition$protocolVersion": "<p>The protocol version of the tools definition based on the MCP protocol specification. If not specified, the version is auto-detected from the content.</p>"
+      }
+    },
+    "ScopeList": {
+      "base": null,
+      "refs": {
+        "RegistryRecordOAuthCredentialProvider$scopes": "<p>The OAuth scopes to request during authentication.</p>"
+      }
+    },
     "SearchType": {
       "base": null,
       "refs": {
@@ -3950,6 +4387,13 @@
         "SemanticOverrideConfigurationInput$extraction": "<p>The extraction configuration for a semantic override.</p>"
       }
     },
+    "ServerDefinition": {
+      "base": "<p>The server definition for an MCP descriptor. Contains the schema version and inline content for the MCP server configuration.</p>",
+      "refs": {
+        "McpDescriptor$server": "<p>The MCP server definition, containing the server configuration and schema as defined by the MCP protocol specification.</p>",
+        "UpdatedServerDefinition$optionalValue": "<p>The updated server definition value.</p>"
+      }
+    },
     "ServerProtocol": {
       "base": null,
       "refs": {
@@ -3995,6 +4439,20 @@
     "SetTokenVaultCMKResponse": {
       "base": null,
       "refs": {}
+    },
+    "SkillDefinition": {
+      "base": "<p>The structured skill definition with schema version and content.</p>",
+      "refs": {
+        "AgentSkillsDescriptor$skillDefinition": "<p>The structured skill definition with schema version and content.</p>",
+        "UpdatedSkillDefinition$optionalValue": "<p>The updated skill definition value.</p>"
+      }
+    },
+    "SkillMdDefinition": {
+      "base": "<p>The skill markdown definition for an agent skills descriptor.</p>",
+      "refs": {
+        "AgentSkillsDescriptor$skillMd": "<p>The optional skill markdown definition describing the agent's skills in a human-readable format.</p>",
+        "UpdatedSkillMdDefinition$optionalValue": "<p>The updated skill markdown definition value.</p>"
+      }
     },
     "SlackOauth2ProviderConfigInput": {
       "base": "<p>Input configuration for a Slack OAuth2 provider.</p>",
@@ -4081,6 +4539,8 @@
         "ConcurrentModificationException$message": null,
         "CreateOauth2CredentialProviderResponse$callbackUrl": "<p>Callback URL to register on the OAuth2 credential provider as an allowed callback URL. This URL is where the OAuth2 authorization server redirects users after they complete the authorization flow.</p>",
         "CreateOnlineEvaluationConfigResponse$failureReason": "<p> The reason for failure if the online evaluation configuration creation or execution failed. </p>",
+        "CustomParameterMap$key": null,
+        "CustomParameterMap$value": null,
         "DecryptionFailure$message": null,
         "DeleteMemoryStrategyInput$memoryStrategyId": "<p>The unique identifier of the memory strategy to delete.</p>",
         "EncryptionFailure$message": null,
@@ -4098,6 +4558,8 @@
         "GetOauth2CredentialProviderResponse$callbackUrl": "<p>Callback URL to register on the OAuth2 credential provider as an allowed callback URL. This URL is where the OAuth2 authorization server redirects users after they complete the authorization flow.</p>",
         "GetOnlineEvaluationConfigResponse$failureReason": "<p> The reason for failure if the online evaluation configuration execution failed. </p>",
         "GetPolicyGenerationResponse$findings": "<p>The findings and results from the policy generation process. This includes any issues, recommendations, validation results, or insights from the generated policies.</p>",
+        "GetRegistryRecordResponse$statusReason": "<p>The reason for the current status, typically set when the status is a failure state.</p>",
+        "GetRegistryResponse$statusReason": "<p>The reason for the current status, typically set when the status is a failure state.</p>",
         "InvocationConfiguration$payloadDeliveryBucketName": "<p>The S3 bucket name for event payload delivery.</p>",
         "ListApiKeyCredentialProvidersRequest$nextToken": "<p>Pagination token.</p>",
         "ListApiKeyCredentialProvidersResponse$nextToken": "<p>Pagination token for the next page of results.</p>",
@@ -4117,10 +4579,12 @@
         "OnlineEvaluationConfigSummary$failureReason": "<p> The reason for failure if the online evaluation configuration execution failed. </p>",
         "PolicyGeneration$findings": "<p>Findings and insights from this policy generation process.</p>",
         "PolicyStatusReasons$member": null,
+        "RegistrySummary$statusReason": "<p>The reason for the current status, typically set when the status is a failure state.</p>",
         "RequiredProperties$member": null,
         "ResourceLimitExceededException$message": null,
         "SchemaDefinition$description": "<p>The description of the schema definition. This description provides information about the purpose and usage of the schema.</p>",
         "SchemaProperties$key": null,
+        "ScopeList$member": null,
         "SemanticConsolidationOverride$modelId": "<p>The model ID to use for semantic consolidation.</p>",
         "SemanticExtractionOverride$modelId": "<p>The model ID to use for semantic extraction.</p>",
         "SemanticOverrideConsolidationConfigurationInput$modelId": "<p>The model ID to use for semantic consolidation.</p>",
@@ -4134,6 +4598,9 @@
         "ToolDefinition$description": "<p>The description of the tool. This description provides information about the purpose and usage of the tool.</p>",
         "UpdateOauth2CredentialProviderResponse$callbackUrl": "<p>Callback URL to register on the OAuth2 credential provider as an allowed callback URL. This URL is where the OAuth2 authorization server redirects users after they complete the authorization flow.</p>",
         "UpdateOnlineEvaluationConfigResponse$failureReason": "<p> The reason for failure if the online evaluation configuration update or execution failed. </p>",
+        "UpdateRegistryRecordResponse$statusReason": "<p>The reason for the current status of the updated registry record.</p>",
+        "UpdateRegistryRecordStatusResponse$statusReason": "<p>The reason for the status change.</p>",
+        "UpdateRegistryResponse$statusReason": "<p>The reason for the current status of the updated registry.</p>",
         "UserPreferenceConsolidationOverride$modelId": "<p>The model ID to use for user preference consolidation.</p>",
         "UserPreferenceExtractionOverride$modelId": "<p>The model ID to use for user preference extraction.</p>",
         "UserPreferenceOverrideConsolidationConfigurationInput$modelId": "<p>The model ID to use for user preference consolidation.</p>",
@@ -4142,6 +4609,14 @@
         "ValidationExceptionField$name": "<p>The name of the field.</p>",
         "ValidationExceptionField$message": "<p>A message describing why this field failed validation.</p>"
       }
+    },
+    "SubmitRegistryRecordForApprovalRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SubmitRegistryRecordForApprovalResponse": {
+      "base": null,
+      "refs": {}
     },
     "SubnetId": {
       "base": null,
@@ -4185,6 +4660,24 @@
       "refs": {
         "CustomConsolidationConfigurationInput$summaryConsolidationOverride": "<p>The summary consolidation override configuration input.</p>",
         "SummaryOverrideConfigurationInput$consolidation": "<p>The consolidation configuration for a summary override.</p>"
+      }
+    },
+    "SynchronizationConfiguration": {
+      "base": "<p>Configuration for synchronizing registry record metadata from an external source.</p>",
+      "refs": {
+        "CreateRegistryRecordRequest$synchronizationConfiguration": "<p>The configuration for synchronizing registry record metadata from an external source, such as a URL-based MCP server.</p>",
+        "GetRegistryRecordResponse$synchronizationConfiguration": "<p>The configuration for synchronizing registry record metadata from an external source.</p>",
+        "UpdateRegistryRecordResponse$synchronizationConfiguration": "<p>The synchronization configuration of the updated registry record.</p>",
+        "UpdatedSynchronizationConfiguration$optionalValue": "<p>The updated synchronization configuration value.</p>"
+      }
+    },
+    "SynchronizationType": {
+      "base": null,
+      "refs": {
+        "CreateRegistryRecordRequest$synchronizationType": "<p>The type of synchronization to use for keeping the record metadata up to date from an external source. Possible values include <code>FROM_URL</code> and <code>NONE</code>.</p>",
+        "GetRegistryRecordResponse$synchronizationType": "<p>The type of synchronization used for this record.</p>",
+        "UpdateRegistryRecordResponse$synchronizationType": "<p>The synchronization type of the updated registry record.</p>",
+        "UpdatedSynchronizationType$optionalValue": "<p>The updated synchronization type value.</p>"
       }
     },
     "SynchronizeGatewayTargetsRequest": {
@@ -4486,6 +4979,13 @@
         "SecretsManagerLocation$secretArn": "<p>The ARN of the Amazon Web Services Secrets Manager secret containing the certificate.</p>"
       }
     },
+    "ToolsDefinition": {
+      "base": "<p>The tools definition for an MCP descriptor. Contains the protocol version and inline content describing the available tools.</p>",
+      "refs": {
+        "McpDescriptor$tools": "<p>The MCP tools definition, containing the tools available on the MCP server as defined by the MCP protocol specification.</p>",
+        "UpdatedToolsDefinition$optionalValue": "<p>The updated tools definition value.</p>"
+      }
+    },
     "TriggerCondition": {
       "base": "<p>Condition that triggers memory processing.</p>",
       "refs": {
@@ -4623,6 +5123,36 @@
       "base": null,
       "refs": {}
     },
+    "UpdateRegistryRecordRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRegistryRecordResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRegistryRecordStatusRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRegistryRecordStatusRequestStatusReasonString": {
+      "base": null,
+      "refs": {
+        "UpdateRegistryRecordStatusRequest$statusReason": "<p>The reason for the status change, such as why the record was approved or rejected.</p>"
+      }
+    },
+    "UpdateRegistryRecordStatusResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRegistryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRegistryResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateWorkloadIdentityRequest": {
       "base": null,
       "refs": {}
@@ -4631,11 +5161,109 @@
       "base": null,
       "refs": {}
     },
+    "UpdatedA2aDescriptor": {
+      "base": "<p>Wrapper for updating an A2A descriptor with PATCH semantics. When present, the A2A descriptor is replaced with the provided value. When absent, the A2A descriptor is left unchanged. To unset, include the wrapper with the value set to null.</p>",
+      "refs": {
+        "UpdatedDescriptorsUnion$a2a": "<p>The updated A2A descriptor.</p>"
+      }
+    },
+    "UpdatedAgentSkillsDescriptor": {
+      "base": "<p>Wrapper for updating an agent skills descriptor with PATCH semantics. When present with a value, individual fields can be updated independently. When present with a null value, the entire agent skills descriptor is unset. When absent, the agent skills descriptor is left unchanged.</p>",
+      "refs": {
+        "UpdatedDescriptorsUnion$agentSkills": "<p>The updated agent skills descriptor.</p>"
+      }
+    },
+    "UpdatedAgentSkillsDescriptorFields": {
+      "base": "<p>Individual agent skills descriptor fields that can be updated independently.</p>",
+      "refs": {
+        "UpdatedAgentSkillsDescriptor$optionalValue": "<p>The updated agent skills descriptor fields.</p>"
+      }
+    },
+    "UpdatedApprovalConfiguration": {
+      "base": "<p>Wrapper for updating an optional approval configuration field with PATCH semantics. When present in an update request, the approval configuration is replaced with the provided value. When absent, the approval configuration is left unchanged.</p>",
+      "refs": {
+        "UpdateRegistryRequest$approvalConfiguration": "<p>The updated approval configuration for registry records. The updated configuration only affects new records that move to <code>PENDING_APPROVAL</code> status after the change. Existing records already in <code>PENDING_APPROVAL</code> status are not affected.</p>"
+      }
+    },
+    "UpdatedAuthorizerConfiguration": {
+      "base": "<p>Wrapper for updating an optional AuthorizerConfiguration field with PATCH semantics. When present in an update request, the authorizer configuration is replaced with optionalValue. When absent, the authorizer configuration is left unchanged. To unset, include the wrapper with optionalValue not specified.</p>",
+      "refs": {
+        "UpdateRegistryRequest$authorizerConfiguration": "<p>The updated authorizer configuration for the registry. Changing the authorizer configuration can break existing consumers of the registry who are using the authorization type prior to the update.</p>"
+      }
+    },
+    "UpdatedCustomDescriptor": {
+      "base": "<p>Wrapper for updating a custom descriptor with PATCH semantics. When present, the custom descriptor is replaced with the provided value. When absent, the custom descriptor is left unchanged. To unset, include the wrapper with the value set to null.</p>",
+      "refs": {
+        "UpdatedDescriptorsUnion$custom": "<p>The updated custom descriptor.</p>"
+      }
+    },
     "UpdatedDescription": {
       "base": "<p>Wrapper for updating an optional Description field with PATCH semantics. When present in an update request, the description is replaced with optionalValue. When absent, the description is left unchanged. To unset the description, include the wrapper with optionalValue not specified.</p>",
       "refs": {
         "UpdatePolicyEngineRequest$description": "<p>The new description for the policy engine.</p>",
-        "UpdatePolicyRequest$description": "<p>The new human-readable description for the policy. This optional field allows updating the policy's documentation while keeping the same policy logic.</p>"
+        "UpdatePolicyRequest$description": "<p>The new human-readable description for the policy. This optional field allows updating the policy's documentation while keeping the same policy logic.</p>",
+        "UpdateRegistryRecordRequest$description": "<p>The updated description for the registry record. To clear the description, include the <code>UpdatedDescription</code> wrapper with <code>optionalValue</code> not specified.</p>",
+        "UpdateRegistryRequest$description": "<p>The updated description of the registry. To clear the description, include the <code>UpdatedDescription</code> wrapper with <code>optionalValue</code> not specified.</p>"
+      }
+    },
+    "UpdatedDescriptors": {
+      "base": "<p>Wrapper for updating an optional descriptors field with PATCH semantics. When present with a value, individual descriptors can be updated. When present with a null value, all descriptors are unset. When absent, descriptors are left unchanged.</p>",
+      "refs": {
+        "UpdateRegistryRecordRequest$descriptors": "<p>The updated descriptor-type-specific configuration containing the resource schema and metadata. Uses PATCH semantics where individual descriptor fields can be updated independently.</p>"
+      }
+    },
+    "UpdatedDescriptorsUnion": {
+      "base": "<p>Contains per-descriptor-type wrappers for updating descriptors. Each descriptor type can be updated independently.</p>",
+      "refs": {
+        "UpdatedDescriptors$optionalValue": "<p>The updated descriptors value. Contains per-descriptor-type wrappers that are each independently updatable.</p>"
+      }
+    },
+    "UpdatedMcpDescriptor": {
+      "base": "<p>Wrapper for updating an MCP descriptor with PATCH semantics. When present with a value, individual MCP fields can be updated independently. When present with a null value, the entire MCP descriptor is unset. When absent, the MCP descriptor is left unchanged.</p>",
+      "refs": {
+        "UpdatedDescriptorsUnion$mcp": "<p>The updated MCP descriptor.</p>"
+      }
+    },
+    "UpdatedMcpDescriptorFields": {
+      "base": "<p>Individual MCP descriptor fields that can be updated independently.</p>",
+      "refs": {
+        "UpdatedMcpDescriptor$optionalValue": "<p>The updated MCP descriptor fields.</p>"
+      }
+    },
+    "UpdatedServerDefinition": {
+      "base": "<p>Wrapper for updating a server definition with PATCH semantics. When present, the server definition is replaced with the provided value. When absent, the server definition is left unchanged. To unset, include the wrapper with the value set to null.</p>",
+      "refs": {
+        "UpdatedMcpDescriptorFields$server": "<p>The updated server definition for the MCP descriptor.</p>"
+      }
+    },
+    "UpdatedSkillDefinition": {
+      "base": "<p>Wrapper for updating a skill definition with PATCH semantics.</p>",
+      "refs": {
+        "UpdatedAgentSkillsDescriptorFields$skillDefinition": "<p>The updated skill definition.</p>"
+      }
+    },
+    "UpdatedSkillMdDefinition": {
+      "base": "<p>Wrapper for updating a skill markdown definition with PATCH semantics.</p>",
+      "refs": {
+        "UpdatedAgentSkillsDescriptorFields$skillMd": "<p>The updated skill markdown definition.</p>"
+      }
+    },
+    "UpdatedSynchronizationConfiguration": {
+      "base": "<p>Wrapper for updating the synchronization configuration with PATCH semantics. Must be matched with <code>UpdatedSynchronizationType</code>.</p>",
+      "refs": {
+        "UpdateRegistryRecordRequest$synchronizationConfiguration": "<p>The updated synchronization configuration for the registry record.</p>"
+      }
+    },
+    "UpdatedSynchronizationType": {
+      "base": "<p>Wrapper for updating the synchronization type with PATCH semantics. Must be matched with <code>UpdatedSynchronizationConfiguration</code>.</p>",
+      "refs": {
+        "UpdateRegistryRecordRequest$synchronizationType": "<p>The updated synchronization type for the registry record.</p>"
+      }
+    },
+    "UpdatedToolsDefinition": {
+      "base": "<p>Wrapper for updating a tools definition with PATCH semantics. When present, the tools definition is replaced with the provided value. When absent, the tools definition is left unchanged. To unset, include the wrapper with the value set to null.</p>",
+      "refs": {
+        "UpdatedMcpDescriptorFields$tools": "<p>The updated tools definition for the MCP descriptor.</p>"
       }
     },
     "UserPreferenceConsolidationOverride": {
