@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.378.1 - 2026-04-09
 
 * `Aws\RedshiftDataAPIService` - The BatchExecuteStatement API now supports named SQL parameters, enabling secure batch queries with parameterized values. This enhancement helps prevent SQL injection vulnerabilities and improves query reusability.
 * `Aws\BedrockAgentCoreControl` - Initial release for CRUDL in AgentCore Registry Service
