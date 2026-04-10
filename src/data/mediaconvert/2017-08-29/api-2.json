@@ -3719,6 +3719,10 @@
           "shape": "Format",
           "locationName": "format"
         },
+        "StartTimecode": {
+          "shape": "__string",
+          "locationName": "startTimecode"
+        },
         "Tracks": {
           "shape": "__listOfTrack",
           "locationName": "tracks"
@@ -7315,6 +7319,10 @@
           "shape": "InputScanType",
           "locationName": "inputScanType"
         },
+        "MultiViewSettings": {
+          "shape": "__listOfMultiViewSettings",
+          "locationName": "multiViewSettings"
+        },
         "Position": {
           "shape": "Rectangle",
           "locationName": "position"
@@ -7535,6 +7543,10 @@
         "InputScanType": {
           "shape": "InputScanType",
           "locationName": "inputScanType"
+        },
+        "MultiViewSettings": {
+          "shape": "__listOfMultiViewSettings",
+          "locationName": "multiViewSettings"
         },
         "Position": {
           "shape": "Rectangle",
@@ -9810,6 +9822,24 @@
         "UTF8",
         "UTF16"
       ]
+    },
+    "MultiViewInput": {
+      "type": "structure",
+      "members": {
+        "FileInput": {
+          "shape": "__stringPatternS3Https",
+          "locationName": "fileInput"
+        }
+      }
+    },
+    "MultiViewSettings": {
+      "type": "structure",
+      "members": {
+        "Input": {
+          "shape": "MultiViewInput",
+          "locationName": "input"
+        }
+      }
     },
     "MxfAfdSignaling": {
       "type": "string",
@@ -13727,6 +13757,12 @@
       "type": "list",
       "member": {
         "shape": "MsSmoothAdditionalManifest"
+      }
+    },
+    "__listOfMultiViewSettings": {
+      "type": "list",
+      "member": {
+        "shape": "MultiViewSettings"
       }
     },
     "__listOfOutput": {

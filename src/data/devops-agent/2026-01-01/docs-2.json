@@ -1131,6 +1131,18 @@
         "MCPServerBearerTokenConfig$tokenValue": "<p>Bearer token value in alphanumeric for authenticating with the service.</p>"
       }
     },
+    "MCPServerConfiguration": {
+      "base": "<p>Configuration for Model Context Protocol (MCP) server integration.</p>",
+      "refs": {
+        "ServiceConfiguration$mcpserver": "<p>MCP (Model Context Protocol) server integration configuration.</p>"
+      }
+    },
+    "MCPServerDatadogConfiguration": {
+      "base": "<p>Mixin for webhook update support.</p>",
+      "refs": {
+        "ServiceConfiguration$mcpserverdatadog": "<p>Datadog MCP server integration configuration.</p>"
+      }
+    },
     "MCPServerDetails": {
       "base": "<p>Complete service details for MCP server integration.</p>",
       "refs": {
@@ -1240,9 +1252,16 @@
         "MCPServerOAuthClientCredentialsConfig$exchangeUrl": "<p>OAuth token exchange URL.</p>"
       }
     },
+    "MCPServerSplunkConfiguration": {
+      "base": "<p>Mixin for webhook update support.</p>",
+      "refs": {
+        "ServiceConfiguration$mcpserversplunk": "<p>Splunk MCP server integration configuration.</p>"
+      }
+    },
     "MCPToolsList": {
       "base": "<p>List of MCP tool names available for the association.</p>",
       "refs": {
+        "MCPServerConfiguration$tools": "<p>List of MCP tools can be used with the association.</p>",
         "MCPServerGrafanaConfiguration$tools": "<p>List of MCP tools that can be used.</p>"
       }
     },
@@ -1678,12 +1697,12 @@
       }
     },
     "ResourceConfigurationArn": {
-      "base": "<p>Resource Configuration ARN.</p>",
+      "base": "<p>The ID or ARN of the Resource Configuration.</p>",
       "refs": {
         "CreatePrivateConnectionOutput$resourceConfigurationId": "<p>The Resource Configuration ARN. Only present for self-managed Private Connections.</p>",
         "DescribePrivateConnectionOutput$resourceConfigurationId": "<p>The Resource Configuration ARN. Only present for self-managed Private Connections.</p>",
         "PrivateConnectionSummary$resourceConfigurationId": "<p>The Resource Configuration ARN. Only present for self-managed Private Connections.</p>",
-        "SelfManagedInput$resourceConfigurationId": "<p>The ARN of the Resource Configuration.</p>",
+        "SelfManagedInput$resourceConfigurationId": "<p>The ID or ARN of the resource configuration.</p>",
         "UpdatePrivateConnectionCertificateOutput$resourceConfigurationId": "<p>The Resource Configuration ARN. Only present for self-managed Private Connections.</p>"
       }
     },

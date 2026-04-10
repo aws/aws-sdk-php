@@ -14378,7 +14378,11 @@
     "FileUseCaseType":{
       "type":"string",
       "enum":[
+        "CONTACT_ANALYSIS",
         "EMAIL_MESSAGE",
+        "EMAIL_MESSAGE_PLAIN_TEXT",
+        "EMAIL_MESSAGE_REDACTED",
+        "EMAIL_MESSAGE_PLAIN_TEXT_REDACTED",
         "ATTACHMENT"
       ]
     },
@@ -20717,7 +20721,9 @@
         "Url":{"shape":"UrlReference"},
         "Attachment":{"shape":"AttachmentReference"},
         "EmailMessage":{"shape":"EmailMessageReference"},
+        "EmailMessageRedacted":{"shape":"EmailMessageReference"},
         "EmailMessagePlainText":{"shape":"EmailMessageReference"},
+        "EmailMessagePlainTextRedacted":{"shape":"EmailMessageReference"},
         "String":{"shape":"StringReference"},
         "Number":{"shape":"NumberReference"},
         "Date":{"shape":"DateReference"},
@@ -20740,7 +20746,9 @@
         "DATE",
         "EMAIL",
         "EMAIL_MESSAGE",
-        "EMAIL_MESSAGE_PLAIN_TEXT"
+        "EMAIL_MESSAGE_PLAIN_TEXT",
+        "EMAIL_MESSAGE_PLAIN_TEXT_REDACTED",
+        "EMAIL_MESSAGE_REDACTED"
       ]
     },
     "ReferenceTypes":{

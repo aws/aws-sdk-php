@@ -631,6 +631,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise sendPipelineExecutionStepFailureAsync(array $args = [])
  * @method \Aws\Result sendPipelineExecutionStepSuccess(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendPipelineExecutionStepSuccessAsync(array $args = [])
+ * @method \Aws\Result startClusterHealthCheck(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startClusterHealthCheckAsync(array $args = [])
  * @method \Aws\Result startEdgeDeploymentStage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startEdgeDeploymentStageAsync(array $args = [])
  * @method \Aws\Result startInferenceExperiment(array $args = [])

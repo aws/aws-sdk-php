@@ -483,6 +483,7 @@
         "requestUri":"/StartTelemetryEvaluation",
         "responseCode":200
       },
+      "input":{"shape":"StartTelemetryEvaluationInput"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
@@ -497,6 +498,7 @@
         "requestUri":"/StartTelemetryEvaluationForOrganization",
         "responseCode":200
       },
+      "input":{"shape":"StartTelemetryEvaluationForOrganizationInput"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
@@ -755,6 +757,10 @@
         "NotStartsWith":{"shape":"StringList"},
         "NotEndsWith":{"shape":"StringList"}
       }
+    },
+    "AllRegions":{
+      "type":"boolean",
+      "box":true
     },
     "AwsResourceExplorerManagedViewArn":{
       "type":"string",
@@ -1153,14 +1159,18 @@
       "type":"structure",
       "members":{
         "Status":{"shape":"Status"},
-        "FailureReason":{"shape":"FailureReason"}
+        "FailureReason":{"shape":"FailureReason"},
+        "HomeRegion":{"shape":"Region"},
+        "RegionStatuses":{"shape":"RegionStatuses"}
       }
     },
     "GetTelemetryEvaluationStatusOutput":{
       "type":"structure",
       "members":{
         "Status":{"shape":"Status"},
-        "FailureReason":{"shape":"FailureReason"}
+        "FailureReason":{"shape":"FailureReason"},
+        "HomeRegion":{"shape":"Region"},
+        "RegionStatuses":{"shape":"RegionStatuses"}
       }
     },
     "GetTelemetryPipelineInput":{
@@ -1190,7 +1200,10 @@
         "RuleArn":{"shape":"ResourceArn"},
         "CreatedTimeStamp":{"shape":"Long"},
         "LastUpdateTimeStamp":{"shape":"Long"},
-        "TelemetryRule":{"shape":"TelemetryRule"}
+        "TelemetryRule":{"shape":"TelemetryRule"},
+        "HomeRegion":{"shape":"Region"},
+        "IsReplicated":{"shape":"IsReplicated"},
+        "RegionStatuses":{"shape":"RegionStatuses"}
       }
     },
     "GetTelemetryRuleInput":{
@@ -1207,7 +1220,10 @@
         "RuleArn":{"shape":"ResourceArn"},
         "CreatedTimeStamp":{"shape":"Long"},
         "LastUpdateTimeStamp":{"shape":"Long"},
-        "TelemetryRule":{"shape":"TelemetryRule"}
+        "TelemetryRule":{"shape":"TelemetryRule"},
+        "HomeRegion":{"shape":"Region"},
+        "IsReplicated":{"shape":"IsReplicated"},
+        "RegionStatuses":{"shape":"RegionStatuses"}
       }
     },
     "Integer":{
@@ -1261,6 +1277,10 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "IsReplicated":{
+      "type":"boolean",
+      "box":true
     },
     "LabelNameCondition":{
       "type":"structure",
@@ -1580,6 +1600,19 @@
       "type":"string",
       "min":1
     },
+    "RegionStatus":{
+      "type":"structure",
+      "members":{
+        "Region":{"shape":"Region"},
+        "Status":{"shape":"String"},
+        "FailureReason":{"shape":"String"},
+        "RuleArn":{"shape":"ResourceArn"}
+      }
+    },
+    "RegionStatuses":{
+      "type":"list",
+      "member":{"shape":"RegionStatus"}
+    },
     "Regions":{
       "type":"list",
       "member":{"shape":"Region"},
@@ -1732,6 +1765,20 @@
       "members":{
         "Status":{"shape":"TelemetryEnrichmentStatus"},
         "AwsResourceExplorerManagedViewArn":{"shape":"AwsResourceExplorerManagedViewArn"}
+      }
+    },
+    "StartTelemetryEvaluationForOrganizationInput":{
+      "type":"structure",
+      "members":{
+        "Regions":{"shape":"Regions"},
+        "AllRegions":{"shape":"AllRegions"}
+      }
+    },
+    "StartTelemetryEvaluationInput":{
+      "type":"structure",
+      "members":{
+        "Regions":{"shape":"Regions"},
+        "AllRegions":{"shape":"AllRegions"}
       }
     },
     "Status":{
@@ -1918,7 +1965,9 @@
         "TelemetrySourceTypes":{"shape":"TelemetrySourceTypes"},
         "DestinationConfiguration":{"shape":"TelemetryDestinationConfiguration"},
         "Scope":{"shape":"String"},
-        "SelectionCriteria":{"shape":"String"}
+        "SelectionCriteria":{"shape":"String"},
+        "Regions":{"shape":"Regions"},
+        "AllRegions":{"shape":"AllRegions"}
       }
     },
     "TelemetryRuleSummaries":{

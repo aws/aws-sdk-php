@@ -1955,6 +1955,7 @@
         "schedule":{"shape":"Schedule"},
         "status":{"shape":"PipelineStatus"},
         "tags":{"shape":"TagMap"},
+        "imageTags":{"shape":"TagMap"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -3003,6 +3004,7 @@
         "dateNextRun":{"shape":"DateTime"},
         "tags":{"shape":"TagMap"},
         "imageScanningConfiguration":{"shape":"ImageScanningConfiguration"},
+        "imageTags":{"shape":"TagMap"},
         "executionRole":{"shape":"RoleNameOrArn"},
         "workflows":{"shape":"WorkflowConfigurationList"},
         "loggingConfiguration":{"shape":"PipelineLoggingConfiguration"},
@@ -3532,7 +3534,10 @@
       "members":{
         "launchTemplateId":{"shape":"LaunchTemplateId"},
         "accountId":{"shape":"AccountId"},
-        "setDefaultVersion":{"shape":"Boolean"}
+        "setDefaultVersion":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "LaunchTemplateConfigurationList":{
@@ -5008,7 +5013,8 @@
         "imageScanningConfiguration":{"shape":"ImageScanningConfiguration"},
         "workflows":{"shape":"WorkflowConfigurationList"},
         "loggingConfiguration":{"shape":"PipelineLoggingConfiguration"},
-        "executionRole":{"shape":"RoleNameOrArn"}
+        "executionRole":{"shape":"RoleNameOrArn"},
+        "imageTags":{"shape":"TagMap"}
       }
     },
     "UpdateImagePipelineResponse":{

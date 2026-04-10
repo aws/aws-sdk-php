@@ -315,6 +315,7 @@
     "SearchTrainingPlanOfferings": "<p>Searches for available training plan offerings based on specified criteria. </p> <ul> <li> <p>Users search for available plan offerings based on their requirements (e.g., instance type, count, start time, duration). </p> </li> <li> <p>And then, they create a plan that best matches their needs using the ID of the plan offering they want to use. </p> </li> </ul> <p>For more information about how to reserve GPU capacity for your SageMaker training jobs or SageMaker HyperPod clusters using Amazon SageMaker Training Plan , see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
     "SendPipelineExecutionStepFailure": "<p>Notifies the pipeline that the execution of a callback step failed, along with a message describing why. When a callback step is run, the pipeline generates a callback token and includes the token in a message sent to Amazon Simple Queue Service (Amazon SQS).</p>",
     "SendPipelineExecutionStepSuccess": "<p>Notifies the pipeline that the execution of a callback step succeeded and provides a list of the step's output parameters. When a callback step is run, the pipeline generates a callback token and includes the token in a message sent to Amazon Simple Queue Service (Amazon SQS).</p>",
+    "StartClusterHealthCheck": "<p>Start deep health checks for a SageMaker HyperPod cluster. You can use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeClusterNode.html\">DescribeClusterNode</a> API to track progress of the deep health checks. The unhealthy nodes will be automatically rebooted or replaced. Please see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-eks-resiliency-node-labels.html\"> Resilience-related Kubernetes labels by SageMaker HyperPod</a> for details.</p>",
     "StartEdgeDeploymentStage": "<p>Starts a stage in an edge deployment plan.</p>",
     "StartInferenceExperiment": "<p>Starts an inference experiment.</p>",
     "StartMlflowTrackingServer": "<p>Programmatically start an MLflow Tracking Server.</p>",
@@ -2693,6 +2694,7 @@
         "DetachClusterNodeVolumeResponse$ClusterArn": "<p> The Amazon Resource Name (ARN) of your SageMaker HyperPod cluster where the volume detachment operation was performed. </p>",
         "ListClusterSchedulerConfigsRequest$ClusterArn": "<p>Filter for ARN of the cluster.</p>",
         "ListComputeQuotasRequest$ClusterArn": "<p>Filter for ARN of the cluster.</p>",
+        "StartClusterHealthCheckResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster on which the deep health checks were initiated.</p>",
         "UpdateClusterResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the updated SageMaker HyperPod cluster.</p>",
         "UpdateClusterSoftwareResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster being updated for security patching.</p>"
       }
@@ -2733,6 +2735,7 @@
     "ClusterAvailabilityZone": {
       "base": null,
       "refs": {
+        "ClusterAvailabilityZones$member": null,
         "ClusterInstancePlacement$AvailabilityZone": "<p>The Availability Zone where the node in the SageMaker HyperPod cluster is launched.</p>"
       }
     },
@@ -2740,6 +2743,14 @@
       "base": null,
       "refs": {
         "ClusterInstancePlacement$AvailabilityZoneId": "<p>The unique identifier (ID) of the Availability Zone where the node in the SageMaker HyperPod cluster is launched.</p>"
+      }
+    },
+    "ClusterAvailabilityZones": {
+      "base": null,
+      "refs": {
+        "AddClusterNodeSpecification$AvailabilityZones": "<p>The availability zones in which to add nodes. Use this to target node placement in specific availability zones within a flexible instance group.</p>",
+        "BatchAddClusterNodesError$AvailabilityZones": "<p>The availability zones associated with the failed node addition request.</p>",
+        "NodeAdditionResult$AvailabilityZones": "<p>The availability zones associated with the successfully added node.</p>"
       }
     },
     "ClusterCapacityRequirements": {
@@ -2868,6 +2879,7 @@
         "ClusterNodeSummary$InstanceGroupName": "<p>The name of the instance group in which the instance is.</p>",
         "ClusterRestrictedInstanceGroupDetails$InstanceGroupName": "<p>The name of the restricted instance group of a SageMaker HyperPod cluster.</p>",
         "ClusterRestrictedInstanceGroupSpecification$InstanceGroupName": "<p>Specifies the name of the restricted instance group.</p>",
+        "InstanceGroupHealthCheckConfiguration$InstanceGroupName": "<p>The name of the instance group.</p>",
         "ListClusterEventsRequest$InstanceGroupName": "<p>The name of the instance group to filter events. If specified, only events related to this instance group are returned.</p>",
         "ListClusterNodesRequest$InstanceGroupNameContains": "<p>A filter that returns the instance groups whose name contain a specified string.</p>",
         "NodeAdditionResult$InstanceGroupName": "<p>The name of the instance group to which the node was added.</p>",
@@ -2905,6 +2917,18 @@
         "ClusterNodeDetails$Placement": "<p>The placement details of the SageMaker HyperPod cluster node.</p>"
       }
     },
+    "ClusterInstanceRequirementDetails": {
+      "base": "<p>The instance requirement details for a flexible instance group, including the current and desired instance types.</p>",
+      "refs": {
+        "ClusterInstanceGroupDetails$InstanceRequirements": "<p>The instance requirements for the instance group, including the current and desired instance types. This field is present for flexible instance groups that support multiple instance types.</p>"
+      }
+    },
+    "ClusterInstanceRequirements": {
+      "base": "<p>The instance requirements for a flexible instance group. Use this to specify multiple instance types that the instance group can use. The order of instance types in the list determines the priority for instance provisioning.</p>",
+      "refs": {
+        "ClusterInstanceGroupSpecification$InstanceRequirements": "<p>The instance requirements for the instance group, including the instance types to use. Use this to create a flexible instance group that supports multiple instance types. The <code>InstanceType</code> and <code>InstanceRequirements</code> properties are mutually exclusive.</p>"
+      }
+    },
     "ClusterInstanceStatus": {
       "base": null,
       "refs": {
@@ -2940,11 +2964,36 @@
       "refs": {
         "ClusterInstanceGroupDetails$InstanceType": "<p>The instance type of the instance group of a SageMaker HyperPod cluster.</p>",
         "ClusterInstanceGroupSpecification$InstanceType": "<p>Specifies the instance type of the instance group.</p>",
+        "ClusterInstanceTypeDetail$InstanceType": "<p>The instance type.</p>",
+        "ClusterInstanceTypes$member": null,
         "ClusterNodeDetails$InstanceType": "<p>The type of the instance.</p>",
         "ClusterNodeSummary$InstanceType": "<p>The type of the instance.</p>",
         "ClusterRestrictedInstanceGroupDetails$InstanceType": "<p>The instance type of the restricted instance group of a SageMaker HyperPod cluster.</p>",
         "ClusterRestrictedInstanceGroupSpecification$InstanceType": "<p>Specifies the instance type of the restricted instance group.</p>",
         "ComputeQuotaResourceConfig$InstanceType": "<p>The instance type of the instance group for the cluster.</p>"
+      }
+    },
+    "ClusterInstanceTypeDetail": {
+      "base": "<p>Details about a specific instance type within a flexible instance group, including the count and configuration.</p>",
+      "refs": {
+        "ClusterInstanceTypeDetails$member": null
+      }
+    },
+    "ClusterInstanceTypeDetails": {
+      "base": null,
+      "refs": {
+        "ClusterInstanceGroupDetails$InstanceTypeDetails": "<p>Details about the instance types in the instance group, including the count and configuration of each instance type. This field is present for flexible instance groups that support multiple instance types.</p>"
+      }
+    },
+    "ClusterInstanceTypes": {
+      "base": null,
+      "refs": {
+        "AddClusterNodeSpecification$InstanceTypes": "<p>The instance types to use when adding nodes. Use this to target specific instance types within a flexible instance group.</p>",
+        "BatchAddClusterNodesError$InstanceTypes": "<p>The instance types associated with the failed node addition request.</p>",
+        "ClusterInstanceRequirementDetails$CurrentInstanceTypes": "<p>The instance types currently in use by the instance group.</p>",
+        "ClusterInstanceRequirementDetails$DesiredInstanceTypes": "<p>The desired instance types for the instance group, as specified in the most recent update request.</p>",
+        "ClusterInstanceRequirements$InstanceTypes": "<p>The list of instance types that the instance group can use. The order of instance types determines the priority—HyperPod attempts to provision instances using the first instance type in the list and falls back to subsequent types if capacity is unavailable.</p>",
+        "NodeAdditionResult$InstanceTypes": "<p>The instance types associated with the successfully added node.</p>"
       }
     },
     "ClusterKubernetesConfig": {
@@ -3070,6 +3119,7 @@
         "DescribeClusterRequest$ClusterName": "<p>The string name or the Amazon Resource Name (ARN) of the SageMaker HyperPod cluster.</p>",
         "ListClusterEventsRequest$ClusterName": "<p>The name or Amazon Resource Name (ARN) of the HyperPod cluster for which to list events.</p>",
         "ListClusterNodesRequest$ClusterName": "<p>The string name or the Amazon Resource Name (ARN) of the SageMaker HyperPod cluster in which you want to retrieve the list of nodes.</p>",
+        "StartClusterHealthCheckRequest$ClusterName": "<p>The string name or the Amazon Resource Name (ARN) of the SageMaker HyperPod cluster.</p>",
         "UpdateClusterRequest$ClusterName": "<p>Specify the name of the SageMaker HyperPod cluster you want to update.</p>",
         "UpdateClusterSoftwareRequest$ClusterName": "<p>Specify the name or the Amazon Resource Name (ARN) of the SageMaker HyperPod cluster you want to update for security patching.</p>"
       }
@@ -3094,6 +3144,7 @@
         "DescribeClusterNodeRequest$NodeId": "<p>The ID of the SageMaker HyperPod cluster node.</p>",
         "DetachClusterNodeVolumeRequest$NodeId": "<p> The unique identifier of the cluster node from which you want to detach the volume. </p>",
         "DetachClusterNodeVolumeResponse$NodeId": "<p> The unique identifier of the cluster node from which your volume was detached. </p>",
+        "InstanceIds$member": null,
         "ListClusterEventsRequest$NodeId": "<p>The EC2 instance ID to filter events. If specified, only events related to this instance are returned.</p>"
       }
     },
@@ -3162,6 +3213,7 @@
       "base": null,
       "refs": {
         "ClusterInstanceGroupDetails$CurrentCount": "<p>The number of instances that are currently in the instance group of a SageMaker HyperPod cluster.</p>",
+        "ClusterInstanceTypeDetail$CurrentCount": "<p>The number of instances of this type currently running in the instance group.</p>",
         "ClusterRestrictedInstanceGroupDetails$CurrentCount": "<p>The number of instances that are currently in the restricted instance group of a SageMaker HyperPod cluster.</p>"
       }
     },
@@ -3348,6 +3400,7 @@
       "refs": {
         "ClusterInstanceGroupDetails$ThreadsPerCore": "<p>The number you specified to <code>TreadsPerCore</code> in <code>CreateCluster</code> for enabling or disabling multithreading. For instance types that support multithreading, you can specify 1 for disabling multithreading and 2 for enabling multithreading. For more information, see the reference table of <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cpu-options-supported-instances-values.html\">CPU cores and threads per CPU core per instance type</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
         "ClusterInstanceGroupSpecification$ThreadsPerCore": "<p>Specifies the value for <b>Threads per core</b>. For instance types that support multithreading, you can specify <code>1</code> for disabling multithreading and <code>2</code> for enabling multithreading. For instance types that doesn't support multithreading, specify <code>1</code>. For more information, see the reference table of <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cpu-options-supported-instances-values.html\">CPU cores and threads per CPU core per instance type</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
+        "ClusterInstanceTypeDetail$ThreadsPerCore": "<p>The number of threads per CPU core for this instance type.</p>",
         "ClusterNodeDetails$ThreadsPerCore": "<p>The number of threads per CPU core you specified under <code>CreateCluster</code>.</p>",
         "ClusterRestrictedInstanceGroupDetails$ThreadsPerCore": "<p>The number you specified to <code>TreadsPerCore</code> in <code>CreateCluster</code> for enabling or disabling multithreading. For instance types that support multithreading, you can specify 1 for disabling multithreading and 2 for enabling multithreading. For more information, see the reference table of <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cpu-options-supported-instances-values.html\">CPU cores and threads per CPU core per instance type</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
         "ClusterRestrictedInstanceGroupSpecification$ThreadsPerCore": "<p>The number you specified to <code>TreadsPerCore</code> in <code>CreateCluster</code> for enabling or disabling multithreading. For instance types that support multithreading, you can specify 1 for disabling multithreading and 2 for enabling multithreading. For more information, see the reference table of <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cpu-options-supported-instances-values.html\">CPU cores and threads per CPU core per instance type</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>"
@@ -4747,10 +4800,23 @@
         "TrainingJob$DebugRuleEvaluationStatuses": "<p>Information about the evaluation status of the rules for the training job.</p>"
       }
     },
+    "DeepHealthCheckConfigurations": {
+      "base": null,
+      "refs": {
+        "StartClusterHealthCheckRequest$DeepHealthCheckConfigurations": "<p>A list of configurations containing instance group names, EC2 instance IDs, and deep health checks to perform.</p>"
+      }
+    },
     "DeepHealthCheckType": {
       "base": null,
       "refs": {
+        "DeepHealthChecks$member": null,
         "OnStartDeepHealthChecks$member": null
+      }
+    },
+    "DeepHealthChecks": {
+      "base": null,
+      "refs": {
+        "InstanceGroupHealthCheckConfiguration$DeepHealthChecks": "<p>A list of deep health checks to be performed.</p>"
       }
     },
     "DefaultDomainIdList": {
@@ -9323,6 +9389,12 @@
         "InstanceGroups$member": null
       }
     },
+    "InstanceGroupHealthCheckConfiguration": {
+      "base": "<p>The configuration of deep health checks for an instance group.</p> <note> <p>Overlapping deep health check configurations will be merged into a single operation.</p> </note>",
+      "refs": {
+        "DeepHealthCheckConfigurations$member": null
+      }
+    },
     "InstanceGroupMetadata": {
       "base": "<p>Metadata information about an instance group in a HyperPod cluster.</p>",
       "refs": {
@@ -9367,6 +9439,12 @@
       "base": null,
       "refs": {
         "ResourceConfig$InstanceGroups": "<p>The configuration of a heterogeneous cluster in JSON format.</p>"
+      }
+    },
+    "InstanceIds": {
+      "base": null,
+      "refs": {
+        "InstanceGroupHealthCheckConfiguration$InstanceIds": "<p>A list of Amazon Elastic Compute Cloud (EC2) instance IDs on which to perform deep health checks.</p> <note> <p>Leave this field blank to perform deep health checks on the entire instance group.</p> </note>"
       }
     },
     "InstanceMetadata": {
@@ -16736,6 +16814,14 @@
       "refs": {
         "TrafficPattern$Stairs": "<p>Defines the stairs traffic pattern.</p>"
       }
+    },
+    "StartClusterHealthCheckRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartClusterHealthCheckResponse": {
+      "base": null,
+      "refs": {}
     },
     "StartEdgeDeploymentStageRequest": {
       "base": null,

@@ -2244,9 +2244,9 @@
       }
     },
     "HlsClearLead": {
-      "base": "Enable Clear Lead DRM to reduce video startup latency by leaving the first segment unencrypted while DRM license retrieval occurs in parallel. This optimization allows immediate playback startup while maintaining content protection for the remainder of the stream. When enabled, the first output segment remains fully unencrypted, and encryption begins at the start of the second segment. The HLS manifest will omit #EXT-X-KEY tags during the clear segment and insert the first #EXT-X-KEY immediately before the first encrypted fragment. This feature is supported exclusively for CMAF HLS (fMP4) outputs and is compatible with all existing key provider integrations (SPEKE v1, SPEKE v2, and Static Key encryption). Supported codecs: H.264 and H.265 video codecs, and AAC audio codec. Choose Enabled to activate Clear Lead DRM optimization. Choose Disabled to use standard encryption where all segments are encrypted from the beginning.",
+      "base": "Enable Clear Lead DRM to reduce video startup latency by leaving the first segment unencrypted while DRM license retrieval occurs in parallel. This optimization allows immediate playback startup while maintaining content protection for the remainder of the stream. When enabled, the first output segment remains fully unencrypted, and encryption begins at the start of the second segment. The HLS manifest will omit #EXT-X-KEY tags during the clear segment and insert the first #EXT-X-KEY immediately before the first encrypted fragment. This feature is supported exclusively for CMAF HLS (fMP4) outputs and is compatible with all existing key provider integrations (SPEKE v1, SPEKE v2, and Static Key encryption). Supported codecs: H.264, H.265, and AV1 video codecs, and AAC audio codec. Choose Enabled to activate Clear Lead DRM optimization. Choose Disabled to use standard encryption where all segments are encrypted from the beginning.",
       "refs": {
-        "CmafEncryptionSettings$ClearLead": "Enable Clear Lead DRM to reduce video startup latency by leaving the first segment unencrypted while DRM license retrieval occurs in parallel. This optimization allows immediate playback startup while maintaining content protection for the remainder of the stream. When enabled, the first output segment remains fully unencrypted, and encryption begins at the start of the second segment. The HLS manifest will omit #EXT-X-KEY tags during the clear segment and insert the first #EXT-X-KEY immediately before the first encrypted fragment. This feature is supported exclusively for CMAF HLS (fMP4) outputs and is compatible with all existing key provider integrations (SPEKE v1, SPEKE v2, and Static Key encryption). Supported codecs: H.264 and H.265 video codecs, and AAC audio codec. Choose Enabled to activate Clear Lead DRM optimization. Choose Disabled to use standard encryption where all segments are encrypted from the beginning."
+        "CmafEncryptionSettings$ClearLead": "Enable Clear Lead DRM to reduce video startup latency by leaving the first segment unencrypted while DRM license retrieval occurs in parallel. This optimization allows immediate playback startup while maintaining content protection for the remainder of the stream. When enabled, the first output segment remains fully unencrypted, and encryption begins at the start of the second segment. The HLS manifest will omit #EXT-X-KEY tags during the clear segment and insert the first #EXT-X-KEY immediately before the first encrypted fragment. This feature is supported exclusively for CMAF HLS (fMP4) outputs and is compatible with all existing key provider integrations (SPEKE v1, SPEKE v2, and Static Key encryption). Supported codecs: H.264, H.265, and AV1 video codecs, and AAC audio codec. Choose Enabled to activate Clear Lead DRM optimization. Choose Disabled to use standard encryption where all segments are encrypted from the beginning."
       }
     },
     "HlsClientCache": {
@@ -3213,6 +3213,18 @@
       "base": "Use Manifest encoding to specify the encoding format for the server and client manifest. Valid options are utf8 and utf16.",
       "refs": {
         "MsSmoothGroupSettings$ManifestEncoding": "Use Manifest encoding to specify the encoding format for the server and client manifest. Valid options are utf8 and utf16."
+      }
+    },
+    "MultiViewInput": {
+      "base": "Input settings for MultiView Settings. You can include exactly one input as enhancement layer.",
+      "refs": {
+        "MultiViewSettings$Input": "Input settings for MultiView Settings. You can include exactly one input as enhancement layer."
+      }
+    },
+    "MultiViewSettings": {
+      "base": "Specify the enhancement layer input video file path for Multi View outputs. The base layer input is treated as the left eye and this Multi View input is treated as the right eye. Only one Multi View input is currently supported. MediaConvert encodes both views into a single MV-HEVC output codec. When you add MultiViewSettings to your job, you can only produce Multi View outputs. Adding any other codec output to the same job is not supported.",
+      "refs": {
+        "__listOfMultiViewSettings$member": null
       }
     },
     "MxfAfdSignaling": {
@@ -5049,8 +5061,8 @@
     "__integerMin1Max150": {
       "base": null,
       "refs": {
-        "JobSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings. MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs.",
-        "JobTemplateSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings. MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs."
+        "JobSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings.  MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all  outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs.",
+        "JobTemplateSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings.  MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all  outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs."
       }
     },
     "__integerMin1Max17895697": {
@@ -5693,6 +5705,13 @@
         "MsSmoothGroupSettings$AdditionalManifests": "By default, the service creates one .ism Microsoft Smooth Streaming manifest for each Microsoft Smooth Streaming output group in your job. This default manifest references every output in the output group. To create additional manifests that reference a subset of the outputs in the output group, specify a list of them here."
       }
     },
+    "__listOfMultiViewSettings": {
+      "base": null,
+      "refs": {
+        "Input$MultiViewSettings": "Specify the enhancement layer input video file path for Multi View outputs. The base layer input is treated as the left eye and this Multi View input is treated as the right eye. Only one Multi View input is currently supported. MediaConvert encodes both views into a single MV-HEVC output codec. When you add MultiViewSettings to your job, you can only produce Multi View outputs. Adding any other codec output to the same job is not supported.",
+        "InputTemplate$MultiViewSettings": "Specify the enhancement layer input video file path for Multi View outputs. The base layer input is treated as the left eye and this Multi View input is treated as the right eye. Only one Multi View input is currently supported. MediaConvert encodes both views into a single MV-HEVC output codec. When you add MultiViewSettings to your job, you can only produce Multi View outputs. Adding any other codec output to the same job is not supported."
+      }
+    },
     "__listOfOutput": {
       "base": null,
       "refs": {
@@ -5949,6 +5968,7 @@
         "CodecMetadata$Level": "The codec level or tier that specifies the maximum processing requirements and capabilities. Levels define constraints such as maximum bit rate, frame rate, and resolution.",
         "CodecMetadata$Profile": "The codec profile used to encode the video. Profiles define specific feature sets and capabilities within a codec standard. For example, H.264 profiles include Baseline, Main, and High, each supporting different encoding features and complexity levels.",
         "CodecMetadata$ScanType": "The scanning method specified in the video essence, indicating whether the video uses progressive or interlaced scanning.",
+        "Container$StartTimecode": "The start timecode of the media file, in HH:MM:SS:FF format (or HH:MM:SS;FF for drop frame timecode). Note that this field is null when the container does not include an embedded start timecode.",
         "CreateJobRequest$ClientRequestToken": "Prevent duplicate jobs from being created and ensure idempotency for your requests. A client request token can be any string that includes up to 64 ASCII characters. If you reuse a client request token within one minute of a successful request, the API returns the job details of the original request instead. For more information see https://docs.aws.amazon.com/mediaconvert/latest/apireference/idempotency.html.",
         "CreateJobRequest$JobEngineVersion": "Use Job engine versions to run jobs for your production workflow on one version, while you test and validate the latest version. Job engine versions represent periodically grouped MediaConvert releases with new features, updates, improvements, and fixes. Job engine versions are in a YYYY-MM-DD format. Note that the Job engine version feature is not publicly available at this time. To request access, contact AWS support.",
         "CreateJobRequest$JobTemplate": "Optional. When you create a job, you can either specify a job template or specify the transcoding settings individually.",
@@ -6434,6 +6454,7 @@
       "refs": {
         "AudioSelector$ExternalAudioFileInput": "Specify the S3, HTTP, or HTTPS URL for your external audio file input.",
         "DynamicAudioSelector$ExternalAudioFileInput": "Specify the S3, HTTP, or HTTPS URL for your external audio file input.",
+        "MultiViewInput$FileInput": "Specify the input file S3, HTTP, or HTTPS URL for your right eye view video.",
         "VideoOverlayInput$FileInput": "Specify the input file S3, HTTP, or HTTPS URL for your video overlay.\nTo specify one or more Transitions for your base input video instead: Leave blank."
       }
     },

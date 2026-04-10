@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - Conversational Analytics for Email
+* `Aws\SageMaker` - Support new SageMaker StartClusterHealthCheck API for on-demand DHC on Hyperpod EKS cluster. Support updated CreateCluster, UpdateCluster, DescribeCluster, BatchAddClusterNodes APIs for flexible instance group on HyperPod cluster
+* `Aws\imagebuilder` - Image pipelines can now automatically apply tags to images they create. Set the imageTags property when creating or updating your pipelines to get started.
+* `Aws\MediaConvert` - Adds support for MV-HEVC video output and clear lead for AV1 DRM output.
+* `Aws\DevOpsAgent` - Devops Agent now supports associate Splunk, Datadog and custom MCP server to an Agent Space.
+* `Aws\ECS` - Minor updates to exceptions for completeness
+* `Aws\RTBFabric` - Adds optional health check configuration for Responder Gateways with ASG Managed Endpoints. When provided, RTB Fabric continuously probes customers' instance IPs and routes traffic only to healthy ones, reducing errors during deployments, scaling events, and instance failures.
+* `Aws\ObservabilityAdmin` - CloudWatch Observability Admin adds support for multi-region telemetry evaluation and telemetry enablement rules.
+
 ## 3.378.1 - 2026-04-09
 
 * `Aws\RedshiftDataAPIService` - The BatchExecuteStatement API now supports named SQL parameters, enabling secure batch queries with parameterized values. This enhancement helps prevent SQL injection vulnerabilities and improves query reusability.

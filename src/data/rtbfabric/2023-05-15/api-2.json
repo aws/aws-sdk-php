@@ -600,7 +600,8 @@
       ],
       "members":{
         "autoScalingGroupNames":{"shape":"AutoScalingGroupNameList"},
-        "roleArn":{"shape":"AutoScalingGroupsConfigurationRoleArnString"}
+        "roleArn":{"shape":"AutoScalingGroupsConfigurationRoleArnString"},
+        "healthCheckConfig":{"shape":"HealthCheckConfig"}
       }
     },
     "AutoScalingGroupsConfigurationRoleArnString":{
@@ -1377,6 +1378,59 @@
         "value":{"shape":"String"}
       }
     },
+    "HealthCheckConfig":{
+      "type":"structure",
+      "required":[
+        "port",
+        "path"
+      ],
+      "members":{
+        "port":{"shape":"HealthCheckConfigPortInteger"},
+        "path":{"shape":"HealthCheckConfigPathString"},
+        "protocol":{"shape":"Protocol"},
+        "timeoutMs":{"shape":"HealthCheckConfigTimeoutMsInteger"},
+        "intervalSeconds":{"shape":"HealthCheckConfigIntervalSecondsInteger"},
+        "statusCodeMatcher":{"shape":"StatusCodeMatcher"},
+        "healthyThresholdCount":{"shape":"HealthCheckConfigHealthyThresholdCountInteger"},
+        "unhealthyThresholdCount":{"shape":"HealthCheckConfigUnhealthyThresholdCountInteger"}
+      }
+    },
+    "HealthCheckConfigHealthyThresholdCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":2
+    },
+    "HealthCheckConfigIntervalSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":60,
+      "min":5
+    },
+    "HealthCheckConfigPathString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"/.*"
+    },
+    "HealthCheckConfigPortInteger":{
+      "type":"integer",
+      "box":true,
+      "max":65535,
+      "min":80
+    },
+    "HealthCheckConfigTimeoutMsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":5000,
+      "min":100
+    },
+    "HealthCheckConfigUnhealthyThresholdCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":2
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -1898,6 +1952,11 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "StatusCodeMatcher":{
+      "type":"string",
+      "max":64,
+      "min":1
     },
     "String":{"type":"string"},
     "SubnetId":{

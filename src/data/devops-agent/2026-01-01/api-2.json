@@ -2689,7 +2689,7 @@
     "MCPServerAPIKeyConfigApiKeyValueString":{
       "type":"string",
       "min":1,
-      "pattern":"[a-zA-Z0-9+/=._-]+(\\s[a-zA-Z0-9+/=._-]+)?",
+      "pattern":"[!-~]([ \\t]*[!-~])*",
       "sensitive":true
     },
     "MCPServerAuthorizationConfig":{
@@ -2747,6 +2747,17 @@
       "type":"string",
       "pattern":"[\\S]+",
       "sensitive":true
+    },
+    "MCPServerConfiguration":{
+      "type":"structure",
+      "required":["tools"],
+      "members":{
+        "tools":{"shape":"MCPToolsList"}
+      }
+    },
+    "MCPServerDatadogConfiguration":{
+      "type":"structure",
+      "members":{}
     },
     "MCPServerDetails":{
       "type":"structure",
@@ -2877,6 +2888,10 @@
     "MCPServerOAuthClientCredentialsConfigExchangeUrlString":{
       "type":"string",
       "pattern":"https://[a-zA-Z0-9.-]+(?::[0-9]+)?(?:/.*)?"
+    },
+    "MCPServerSplunkConfiguration":{
+      "type":"structure",
+      "members":{}
     },
     "MCPToolsList":{
       "type":"list",
@@ -3441,7 +3456,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:resourceconfiguration/rcfg-[0-9a-z]{17}"
+      "pattern":"(arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:resourceconfiguration/rcfg-[0-9a-z]{17}|rcfg-[0-9a-z]{17})"
     },
     "ResourceGatewayArn":{
       "type":"string",
@@ -3686,7 +3701,10 @@
         "dynatrace":{"shape":"DynatraceConfiguration"},
         "servicenow":{"shape":"ServiceNowConfiguration"},
         "mcpservernewrelic":{"shape":"MCPServerNewRelicConfiguration"},
+        "mcpserverdatadog":{"shape":"MCPServerDatadogConfiguration"},
+        "mcpserver":{"shape":"MCPServerConfiguration"},
         "gitlab":{"shape":"GitLabConfiguration"},
+        "mcpserversplunk":{"shape":"MCPServerSplunkConfiguration"},
         "eventChannel":{"shape":"EventChannelConfiguration"},
         "azure":{"shape":"AzureConfiguration"},
         "azuredevops":{"shape":"AzureDevOpsConfiguration"},
