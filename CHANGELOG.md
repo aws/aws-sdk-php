@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.378.2 - 2026-04-10
 
 * `Aws\Connect` - Conversational Analytics for Email
 * `Aws\SageMaker` - Support new SageMaker StartClusterHealthCheck API for on-demand DHC on Hyperpod EKS cluster. Support updated CreateCluster, UpdateCluster, DescribeCluster, BatchAddClusterNodes APIs for flexible instance group on HyperPod cluster
