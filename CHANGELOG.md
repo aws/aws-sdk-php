@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.379.0 - 2026-04-13
 
 * `Aws\Interconnect` - Initial release of AWS Interconnect -- a managed private connectivity service that enables you to create high-speed network connections between your AWS Virtual Private Clouds (VPCs) and your VPCs on other public clouds or your on-premise networks.
 * `Aws\CustomerProfiles` - This release introduces changes to SegmentDefinition APIs to support sorting by attributes.
