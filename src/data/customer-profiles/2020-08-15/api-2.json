@@ -2655,6 +2655,7 @@
         "Description":{"shape":"sensitiveString1To4000"},
         "SegmentGroups":{"shape":"SegmentGroup"},
         "SegmentSqlQuery":{"shape":"sensitiveString1To50000"},
+        "SegmentSort":{"shape":"SegmentSort"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -2775,7 +2776,7 @@
     },
     "CustomAttributes":{
       "type":"map",
-      "key":{"shape":"typeName"},
+      "key":{"shape":"string1To255"},
       "value":{"shape":"AttributeDimension"}
     },
     "DataFormat":{
@@ -4440,6 +4441,10 @@
         "SegmentGroups":{
           "shape":"SegmentGroup",
           "locationName":"SegmentGroups"
+        },
+        "SegmentSort":{
+          "shape":"SegmentSort",
+          "locationName":"SegmentSort"
         },
         "SegmentDefinitionArn":{
           "shape":"SegmentDefinitionArn",
@@ -7159,6 +7164,32 @@
         "FAILED"
       ]
     },
+    "SegmentSort":{
+      "type":"structure",
+      "required":["Attributes"],
+      "members":{
+        "Attributes":{
+          "shape":"SortAttributeList",
+          "locationName":"Attributes"
+        }
+      },
+      "sensitive":true
+    },
+    "SegmentSortDataType":{
+      "type":"string",
+      "enum":[
+        "STRING",
+        "NUMBER",
+        "DATE"
+      ]
+    },
+    "SegmentSortOrder":{
+      "type":"string",
+      "enum":[
+        "ASC",
+        "DESC"
+      ]
+    },
     "SegmentType":{
       "type":"string",
       "enum":[
@@ -7198,6 +7229,44 @@
       "members":{
         "Object":{"shape":"Object"}
       }
+    },
+    "SortAttribute":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Order"
+      ],
+      "members":{
+        "Name":{
+          "shape":"fieldName",
+          "locationName":"Name"
+        },
+        "DataType":{
+          "shape":"SegmentSortDataType",
+          "locationName":"DataType"
+        },
+        "Order":{
+          "shape":"SegmentSortOrder",
+          "locationName":"Order"
+        },
+        "Type":{
+          "shape":"SortAttributeType",
+          "locationName":"Type"
+        }
+      }
+    },
+    "SortAttributeList":{
+      "type":"list",
+      "member":{"shape":"SortAttribute"},
+      "max":10,
+      "min":1
+    },
+    "SortAttributeType":{
+      "type":"string",
+      "enum":[
+        "PROFILE",
+        "CALCULATED"
+      ]
     },
     "SourceConnectorProperties":{
       "type":"structure",

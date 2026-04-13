@@ -58,6 +58,7 @@
     "GetLicenseEndpoint": "<p>Gets a licence endpoint.</p>",
     "GetLimit": "<p>Gets information about a specific limit.</p>",
     "GetMonitor": "<p>Gets information about the specified monitor.</p>",
+    "GetMonitorSettings": "<p>Gets the settings for a Deadline Cloud monitor.</p>",
     "GetQueue": "<p>Gets a queue.</p>",
     "GetQueueEnvironment": "<p>Gets a queue environment.</p>",
     "GetQueueFleetAssociation": "<p>Gets a queue-fleet association.</p>",
@@ -113,6 +114,7 @@
     "UpdateJob": "<p>Updates a job. </p> <p>When you change the status of the job to <code>ARCHIVED</code>, the job can't be scheduled or archived.</p> <important> <p>An archived jobs and its steps and tasks are deleted after 120 days. The job can't be recovered.</p> </important>",
     "UpdateLimit": "<p>Updates the properties of the specified limit. </p>",
     "UpdateMonitor": "<p>Modifies the settings for a Deadline Cloud monitor. You can modify one or all of the settings when you call <code>UpdateMonitor</code>.</p>",
+    "UpdateMonitorSettings": "<p>Updates the settings for a Deadline Cloud monitor. Keys present in the request are upserted; keys absent are left unchanged. Send an empty string value to delete a key.</p>",
     "UpdateQueue": "<p>Updates a queue.</p>",
     "UpdateQueueEnvironment": "<p>Updates the queue environment.</p>",
     "UpdateQueueFleetAssociation": "<p>Updates a queue-fleet association.</p>",
@@ -2018,6 +2020,14 @@
       "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
       "refs": {}
     },
+    "GetMonitorSettingsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetMonitorSettingsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetQueueEnvironmentRequest": {
       "base": null,
       "refs": {}
@@ -3181,8 +3191,10 @@
         "DeleteMonitorRequest$monitorId": "<p>The unique identifier of the monitor to delete. This ID is returned by the <code>CreateMonitor</code> operation, and is included in the response to the <code>GetMonitor</code> operation.</p>",
         "GetMonitorRequest$monitorId": "<p>The unique identifier for the monitor. This ID is returned by the <code>CreateMonitor</code> operation.</p>",
         "GetMonitorResponse$monitorId": "<p>The unique identifier for the monitor.</p>",
+        "GetMonitorSettingsRequest$monitorId": "<p>The unique identifier of the monitor. This ID is returned by the <code>CreateMonitor</code> operation, and is included in the response to the <code>GetMonitor</code> operation.</p>",
         "MonitorSummary$monitorId": "<p>The unique identifier for the monitor.</p>",
-        "UpdateMonitorRequest$monitorId": "<p>The unique identifier of the monitor to update.</p>"
+        "UpdateMonitorRequest$monitorId": "<p>The unique identifier of the monitor to update.</p>",
+        "UpdateMonitorSettingsRequest$monitorId": "<p>The unique identifier of the monitor to update settings for.</p>"
       }
     },
     "MonitorSummaries": {
@@ -4152,6 +4164,25 @@
         "SessionsStatisticsResources$queueIds": "<p>One to 10 queue IDs that specify the queues to return statistics for. If you specify the <code>queueIds</code> field, you can't specify the <code>fleetIds</code> field.</p>"
       }
     },
+    "SettingKey": {
+      "base": null,
+      "refs": {
+        "SettingsMap$key": null
+      }
+    },
+    "SettingValue": {
+      "base": null,
+      "refs": {
+        "SettingsMap$value": null
+      }
+    },
+    "SettingsMap": {
+      "base": null,
+      "refs": {
+        "GetMonitorSettingsResponse$settings": "<p>Monitor settings as key-value pairs.</p>",
+        "UpdateMonitorSettingsRequest$settings": "<p>Monitor settings as key-value pairs. Keys present in the request are upserted; keys absent are left unchanged. Send an empty string value to delete a key.</p>"
+      }
+    },
     "SortOrder": {
       "base": null,
       "refs": {
@@ -4918,6 +4949,14 @@
       "refs": {}
     },
     "UpdateMonitorResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateMonitorSettingsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateMonitorSettingsResponse": {
       "base": null,
       "refs": {}
     },

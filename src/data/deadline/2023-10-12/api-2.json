@@ -1084,6 +1084,25 @@
       "endpoint":{"hostPrefix":"management."},
       "readonly":true
     },
+    "GetMonitorSettings":{
+      "name":"GetMonitorSettings",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2023-10-12/monitors/{monitorId}/settings",
+        "responseCode":200
+      },
+      "input":{"shape":"GetMonitorSettingsRequest"},
+      "output":{"shape":"GetMonitorSettingsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ],
+      "endpoint":{"hostPrefix":"management."},
+      "readonly":true
+    },
     "GetQueue":{
       "name":"GetQueue",
       "http":{
@@ -2115,6 +2134,25 @@
       },
       "input":{"shape":"UpdateMonitorRequest"},
       "output":{"shape":"UpdateMonitorResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ],
+      "endpoint":{"hostPrefix":"management."},
+      "idempotent":true
+    },
+    "UpdateMonitorSettings":{
+      "name":"UpdateMonitorSettings",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/2023-10-12/monitors/{monitorId}/settings",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateMonitorSettingsRequest"},
+      "output":{"shape":"UpdateMonitorSettingsResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerErrorException"},
@@ -5637,6 +5675,24 @@
         "updatedBy":{"shape":"UpdatedBy"}
       }
     },
+    "GetMonitorSettingsRequest":{
+      "type":"structure",
+      "required":["monitorId"],
+      "members":{
+        "monitorId":{
+          "shape":"MonitorId",
+          "location":"uri",
+          "locationName":"monitorId"
+        }
+      }
+    },
+    "GetMonitorSettingsResponse":{
+      "type":"structure",
+      "required":["settings"],
+      "members":{
+        "settings":{"shape":"SettingsMap"}
+      }
+    },
     "GetQueueEnvironmentRequest":{
       "type":"structure",
       "required":[
@@ -9037,6 +9093,24 @@
       "max":10,
       "min":1
     },
+    "SettingKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z][a-zA-Z0-9_.:-]*"
+    },
+    "SettingValue":{
+      "type":"string",
+      "max":8192,
+      "min":0
+    },
+    "SettingsMap":{
+      "type":"map",
+      "key":{"shape":"SettingKey"},
+      "value":{"shape":"SettingValue"},
+      "max":64,
+      "min":0
+    },
     "SortOrder":{
       "type":"string",
       "enum":[
@@ -9923,6 +9997,25 @@
       }
     },
     "UpdateMonitorResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateMonitorSettingsRequest":{
+      "type":"structure",
+      "required":[
+        "monitorId",
+        "settings"
+      ],
+      "members":{
+        "monitorId":{
+          "shape":"MonitorId",
+          "location":"uri",
+          "locationName":"monitorId"
+        },
+        "settings":{"shape":"SettingsMap"}
+      }
+    },
+    "UpdateMonitorSettingsResponse":{
       "type":"structure",
       "members":{}
     },

@@ -378,6 +378,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionInspector2(array $args = [])
  * @method \Aws\InspectorScan\InspectorScanClient createInspectorScan(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionInspectorScan(array $args = [])
+ * @method \Aws\Interconnect\InterconnectClient createInterconnect(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionInterconnect(array $args = [])
  * @method \Aws\InternetMonitor\InternetMonitorClient createInternetMonitor(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionInternetMonitor(array $args = [])
  * @method \Aws\Invoicing\InvoicingClient createInvoicing(array $args = [])

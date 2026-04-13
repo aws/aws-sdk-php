@@ -1386,7 +1386,7 @@
       }
     },
     "S3Destination" : {
-      "base" : "<p>Specifies an S3 bucket to store data classification results in, and the encryption settings to use when storing results in that bucket.</p>",
+      "base" : "<p>Specifies an S3 bucket to store data classification results in, and the encryption settings to use when storing results in that bucket. The bucket must be an existing general purpose bucket. It can be a bucket in your own account or a bucket that another account owns. If another account owns the bucket, you must specify both the unique identifier for the account and the name of the bucket.</p>",
       "refs" : {
         "ClassificationExportConfiguration$S3Destination" : "<p>The S3 bucket to store data classification results in, and the encryption settings to use when storing results in that bucket.</p>"
       }
@@ -2386,7 +2386,6 @@
         "AccessDeniedException$Message" : "<p>The explanation of the error that occurred.</p>",
         "AccountDetail$AccountId" : "<p>The Amazon Web Services account ID for the account.</p>",
         "AccountDetail$Email" : "<p>The email address for the account.</p>",
-        "AccountStatusPair$AccountId" : null,
         "AdminAccount$AccountId" : "<p>The Amazon Web Services account ID for the account.</p>",
         "ApiCallDetails$Api" : "<p>The name of the operation that was invoked most recently and produced the finding.</p>",
         "ApiCallDetails$ApiServiceName" : "<p>The URL of the Amazon Web Services service that provides the operation, for example: s3.amazonaws.com.</p>",
@@ -2554,6 +2553,7 @@
         "S3BucketOwner$DisplayName" : "<p>The display name of the account that owns the bucket.</p>",
         "S3BucketOwner$Id" : "<p>The canonical user ID for the account that owns the bucket.</p>",
         "S3Destination$BucketName" : "<p>The name of the bucket. This must be the name of an existing general purpose bucket.</p>",
+        "S3Destination$ExpectedBucketOwner" : "<p>The unique identifier (ID) for the Amazon Web Services account that owns the bucket. This must be the ID for the account that owns the specified bucket.</p>",
         "S3Destination$KeyPrefix" : "<p>The path prefix to use in the path to the location in the bucket. This prefix specifies where to store classification results in the bucket.</p>",
         "S3Destination$KmsKeyArn" : "<p>The Amazon Resource Name (ARN) of the customer managed KMS key to use for encryption of the results. This must be the ARN of an existing, symmetric encryption KMS key that's enabled in the same Amazon Web Services Region as the bucket.</p>",
         "S3Object$BucketArn" : "<p>The Amazon Resource Name (ARN) of the bucket that contains the object.</p>",

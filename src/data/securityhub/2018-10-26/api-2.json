@@ -1029,7 +1029,9 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"OrganizationalUnitNotFoundException"},
+        {"shape":"OrganizationNotFoundException"}
       ]
     },
     "GetFindings":{
@@ -1075,7 +1077,9 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"OrganizationalUnitNotFoundException"},
+        {"shape":"OrganizationNotFoundException"}
       ]
     },
     "GetInsightResults":{
@@ -1173,7 +1177,9 @@
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OrganizationalUnitNotFoundException"},
+        {"shape":"OrganizationNotFoundException"}
       ]
     },
     "GetResourcesTrendsV2":{
@@ -1205,7 +1211,9 @@
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OrganizationalUnitNotFoundException"},
+        {"shape":"OrganizationNotFoundException"}
       ]
     },
     "GetSecurityControlDefinition":{
@@ -6090,6 +6098,17 @@
         "SubnetIds":{"shape":"NonEmptyStringList"}
       }
     },
+    "AwsOrganizationScope":{
+      "type":"structure",
+      "members":{
+        "OrganizationId":{"shape":"NonEmptyString"},
+        "OrganizationalUnitId":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsOrganizationScopeList":{
+      "type":"list",
+      "member":{"shape":"AwsOrganizationScope"}
+    },
     "AwsRdsDbClusterAssociatedRole":{
       "type":"structure",
       "members":{
@@ -9190,6 +9209,12 @@
         "Original":{"shape":"NonEmptyString"}
       }
     },
+    "FindingScopes":{
+      "type":"structure",
+      "members":{
+        "AwsOrganizations":{"shape":"AwsOrganizationScopeList"}
+      }
+    },
     "FindingsTrendsCompositeFilter":{
       "type":"structure",
       "members":{
@@ -9481,6 +9506,7 @@
       "required":["GroupByRules"],
       "members":{
         "GroupByRules":{"shape":"GroupByRules"},
+        "Scopes":{"shape":"FindingScopes"},
         "SortOrder":{"shape":"SortOrder"},
         "MaxStatisticResults":{"shape":"MaxStatisticResults"}
       }
@@ -9538,6 +9564,7 @@
       "type":"structure",
       "members":{
         "Filters":{"shape":"OcsfFindingFilters"},
+        "Scopes":{"shape":"FindingScopes"},
         "SortCriteria":{"shape":"SortCriteria"},
         "NextToken":{"shape":"NextToken"},
         "MaxResults":{"shape":"MaxResults"}
@@ -9623,6 +9650,7 @@
       "required":["GroupByRules"],
       "members":{
         "GroupByRules":{"shape":"ResourceGroupByRules"},
+        "Scopes":{"shape":"ResourceScopes"},
         "SortOrder":{"shape":"SortOrder"},
         "MaxStatisticResults":{"shape":"MaxStatisticResults"}
       }
@@ -9664,6 +9692,7 @@
       "type":"structure",
       "members":{
         "Filters":{"shape":"ResourcesFilters"},
+        "Scopes":{"shape":"ResourceScopes"},
         "SortCriteria":{"shape":"SortCriteria"},
         "NextToken":{"shape":"NextToken"},
         "MaxResults":{"shape":"MaxResults"}
@@ -10898,6 +10927,24 @@
         "FAILED"
       ]
     },
+    "OrganizationNotFoundException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"NonEmptyString"},
+        "Code":{"shape":"NonEmptyString"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
+    "OrganizationalUnitNotFoundException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"NonEmptyString"},
+        "Code":{"shape":"NonEmptyString"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
     "Page":{
       "type":"structure",
       "members":{
@@ -11454,6 +11501,12 @@
         "FindingsSummary":{"shape":"ResourceFindingsSummaryList"},
         "ResourceTags":{"shape":"ResourceTagList"},
         "ResourceConfig":{"shape":"ResourceConfig"}
+      }
+    },
+    "ResourceScopes":{
+      "type":"structure",
+      "members":{
+        "AwsOrganizations":{"shape":"AwsOrganizationScopeList"}
       }
     },
     "ResourceSeverityBreakdown":{
