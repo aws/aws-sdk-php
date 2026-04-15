@@ -157,6 +157,11 @@ final class ResumableDownload extends AbstractResumableTransfer
             }
         }
 
+        self::validatePathSafety($data['destination'], 'destination');
+        if ($data['temporaryFile'] !== null) {
+            self::validatePathSafety($data['temporaryFile'], 'temporaryFile');
+        }
+
         return new self(
             $data['resumeFilePath'],
             $data['requestArgs'],
@@ -296,5 +301,23 @@ final class ResumableDownload extends AbstractResumableTransfer
     public function markPartCompleted(int $partNumber): void
     {
         $this->partsCompleted[$partNumber] = true;
+    }
+
+    /**
+     * Validate that a path does not contain directory traversal segments.
+     *
+     * @param string $path The path to validate
+     * @param string $fieldName The field name for error messaging
+     *
+     * @throws S3TransferException If path traversal is detected
+     */
+    private static function validatePathSafety(string $path, string $fieldName): void
+    {
+        $segments = preg_split('/[\\/\\\\]/', $path);
+        if (in_array('..', $segments, true)) {
+            throw new S3TransferException(
+                "Invalid resume file: path traversal detected in '$fieldName'"
+            );
+        }
     }
 }
