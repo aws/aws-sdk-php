@@ -14,7 +14,6 @@ env:
   SCRIPT_LOCATION: 'workflows/start-pull-request-build/pull-request-build-v1.sh'
 
   # custom variables
-  IAM_ROLE_ARN: 'ROLE_ARN'
   ROLE_SESSION_DURATION_SECONDS: 7200
 
 jobs:
@@ -30,7 +29,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@main
         with:
-          role-to-assume: '$IAM_ROLE_ARN'
+          role-to-assume: ${{secrets.PR_WORKFLOW_IAM_ROLE_ARN}}
           role-session-name: PullRequestBuildGitHubAction
           role-duration-seconds: '$ROLE_SESSION_DURATION_SECONDS'
           aws-region: us-west-2
