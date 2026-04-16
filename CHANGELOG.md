@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.379.1 - 2026-04-16
 
 * `Aws\DataZone` - Launching SMUS IAM domain SDK support
 * `Aws\CloudWatchLogs` - Endpoint update for CloudWatch Logs Streaming APIs.
