@@ -5,8 +5,6 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS DevOps Agent Service** service.
- * @method \Aws\Result allowVendedLogDeliveryForResource(array $args = [])
- * @method \GuzzleHttp\Promise\Promise allowVendedLogDeliveryForResourceAsync(array $args = [])
  * @method \Aws\Result associateService(array $args = [])
  * @method \GuzzleHttp\Promise\Promise associateServiceAsync(array $args = [])
  * @method \Aws\Result createAgentSpace(array $args = [])

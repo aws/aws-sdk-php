@@ -14,6 +14,7 @@
     "CreateProfile": "<p>Creates a standard profile.</p> <p>A standard profile represents the following attributes for a customer profile in a domain.</p>",
     "CreateRecommender": "<p>Creates a recommender</p>",
     "CreateRecommenderFilter": "<p>Creates a recommender filter. A recommender filter specifies which items to include or exclude from recommendations.</p>",
+    "CreateRecommenderSchema": "<p>Creates a recommender schema. A recommender schema defines the set of data columns available for training recommenders and filters under a domain.</p>",
     "CreateSegmentDefinition": "<p>Creates a segment definition associated to the given domain.</p>",
     "CreateSegmentEstimate": "<p>Creates a segment estimate query.</p>",
     "CreateSegmentSnapshot": "<p>Triggers a job to export a segment to a specified destination.</p>",
@@ -31,6 +32,7 @@
     "DeleteProfileObjectType": "<p>Removes a ProfileObjectType from a specific domain as well as removes all the ProfileObjects of that type. It also disables integrations from this specific ProfileObjectType. In addition, it scrubs all of the fields of the standard profile that were populated from this ProfileObjectType.</p>",
     "DeleteRecommender": "<p>Deletes a recommender.</p>",
     "DeleteRecommenderFilter": "<p>Deletes a recommender filter from a domain.</p>",
+    "DeleteRecommenderSchema": "<p>Deletes a recommender schema from a domain.</p>",
     "DeleteSegmentDefinition": "<p>Deletes a segment definition from the domain.</p>",
     "DeleteWorkflow": "<p>Deletes the specified workflow and all its corresponding resources. This is an async process.</p>",
     "DetectProfileObjectType": "<p>The process of detecting profile object type mapping by using given objects.</p>",
@@ -52,6 +54,7 @@
     "GetProfileRecommendations": "<p>Fetches the recommendations for a profile in the input Customer Profiles domain. Fetches all the profile recommendations </p>",
     "GetRecommender": "<p>Retrieves a recommender.</p>",
     "GetRecommenderFilter": "<p>Retrieves information about a specific recommender filter in a domain.</p>",
+    "GetRecommenderSchema": "<p>Retrieves information about a specific recommender schema in a domain.</p>",
     "GetSegmentDefinition": "<p>Gets a segment definition from the domain.</p>",
     "GetSegmentEstimate": "<p>Gets the result of a segment estimate query.</p>",
     "GetSegmentMembership": "<p>Determines if the given profiles are within a segment.</p>",
@@ -80,6 +83,7 @@
     "ListProfileObjects": "<p>Returns a list of objects associated with a profile of a given ProfileObjectType.</p>",
     "ListRecommenderFilters": "<p>Returns a list of recommender filters in the specified domain.</p>",
     "ListRecommenderRecipes": "<p>Returns a list of available recommender recipes that can be used to create recommenders.</p>",
+    "ListRecommenderSchemas": "<p>Returns a list of recommender schemas in the specified domain.</p>",
     "ListRecommenders": "<p>Returns a list of recommenders in the specified domain.</p>",
     "ListRuleBasedMatches": "<p>Returns a set of <code>MatchIds</code> that belong to the given domain.</p>",
     "ListSegmentDefinitions": "<p>Lists all segment definitions under a domain.</p>",
@@ -132,8 +136,13 @@
         "CreateIntegrationWorkflowRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateRecommenderFilterRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "CreateRecommenderFilterRequest$RecommenderSchemaName": "<p>The name of the recommender schema to use for this recommender filter. If not specified, the default schema is used.</p>",
         "CreateRecommenderRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateRecommenderRequest$RecommenderName": "<p>The name of the recommender.</p>",
+        "CreateRecommenderRequest$RecommenderSchemaName": "<p>The name of the recommender schema to use for this recommender. If not specified, the default schema is used.</p>",
+        "CreateRecommenderSchemaRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "CreateRecommenderSchemaRequest$RecommenderSchemaName": "<p>The name of the recommender schema. The name must be unique within the domain.</p>",
+        "CreateRecommenderSchemaResponse$RecommenderSchemaName": "<p>The name of the recommender schema.</p>",
         "CreateSegmentDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateSegmentDefinitionRequest$SegmentDefinitionName": "<p>The unique name of the segment definition.</p>",
         "CreateSegmentDefinitionResponse$SegmentDefinitionName": "<p>The name of the segment definition.</p>",
@@ -160,6 +169,8 @@
         "DeleteRecommenderFilterRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteRecommenderRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteRecommenderRequest$RecommenderName": "<p>The recommender name.</p>",
+        "DeleteRecommenderSchemaRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "DeleteRecommenderSchemaRequest$RecommenderSchemaName": "<p>The name of the recommender schema to delete.</p>",
         "DeleteSegmentDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteSegmentDefinitionRequest$SegmentDefinitionName": "<p>The unique name of the segment definition.</p>",
         "DeleteWorkflowRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -203,9 +214,14 @@
         "GetProfileRecommendationsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetProfileRecommendationsRequest$RecommenderName": "<p>The unique name of the recommender.</p>",
         "GetRecommenderFilterRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "GetRecommenderFilterResponse$RecommenderSchemaName": "<p>The name of the recommender schema associated with this recommender filter.</p>",
         "GetRecommenderRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetRecommenderRequest$RecommenderName": "<p>The name of the recommender.</p>",
         "GetRecommenderResponse$RecommenderName": "<p>The name of the recommender.</p>",
+        "GetRecommenderResponse$RecommenderSchemaName": "<p>The name of the recommender schema associated with this recommender.</p>",
+        "GetRecommenderSchemaRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "GetRecommenderSchemaRequest$RecommenderSchemaName": "<p>The name of the recommender schema to retrieve.</p>",
+        "GetRecommenderSchemaResponse$RecommenderSchemaName": "<p>The name of the recommender schema.</p>",
         "GetSegmentDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetSegmentDefinitionRequest$SegmentDefinitionName": "<p>The unique name of the segment definition.</p>",
         "GetSegmentDefinitionResponse$SegmentDefinitionName": "<p>The name of the segment definition.</p>",
@@ -245,6 +261,7 @@
         "ListProfileObjectTypesRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListProfileObjectsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListRecommenderFiltersRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "ListRecommenderSchemasRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListRecommendersRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListRuleBasedMatchesRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListSegmentDefinitionsRequest$DomainName": "<p>The unique identifier of the domain.</p>",
@@ -262,9 +279,12 @@
         "PutProfileObjectTypeRequest$TemplateId": "<p>A unique identifier for the object template. For some attributes in the request, the service will use the default value from the object template when TemplateId is present. If these attributes are present in the request, the service may return a <code>BadRequestException</code>. These attributes include: AllowProfileCreation, SourceLastUpdatedTimestampFormat, Fields, and Keys. For example, if AllowProfileCreation is set to true when TemplateId is set, the service may return a <code>BadRequestException</code>.</p>",
         "PutProfileObjectTypeResponse$TemplateId": "<p>A unique identifier for the object template.</p>",
         "RecommenderFilter$Name": "<p>The name of the recommender filter to apply.</p>",
+        "RecommenderFilterSummary$RecommenderSchemaName": "<p>The name of the recommender schema associated with this recommender filter.</p>",
         "RecommenderPromotionalFilter$Name": "<p>The name of the recommender filter to use for the promotion.</p>",
         "RecommenderPromotionalFilter$PromotionName": "<p>The name of the promotion.</p>",
+        "RecommenderSchemaSummary$RecommenderSchemaName": "<p>The name of the recommender schema.</p>",
         "RecommenderSummary$RecommenderName": "<p>The name of the recommender.</p>",
+        "RecommenderSummary$RecommenderSchemaName": "<p>The name of the recommender schema associated with this recommender.</p>",
         "SearchProfilesRequest$DomainName": "<p>The unique name of the domain.</p>",
         "SearchProfilesRequest$KeyName": "<p>A searchable identifier of a customer profile. The predefined keys you can use to search include: _account, _profileId, _assetId, _caseId, _orderId, _fullName, _phone, _email, _ctrContactId, _marketoLeadId, _salesforceAccountId, _salesforceContactId, _salesforceAssetId, _zendeskUserId, _zendeskExternalId, _zendeskTicketId, _serviceNowSystemId, _serviceNowIncidentId, _segmentUserId, _shopifyCustomerId, _shopifyOrderId.</p>",
         "SegmentDefinitionItem$SegmentDefinitionName": "<p>Name of the segment definition.</p>",
@@ -376,7 +396,8 @@
       "base": null,
       "refs": {
         "CreateRecommenderFilterResponse$RecommenderFilterArn": "<p>The Amazon Resource Name (ARN) of the recommender filter.</p>",
-        "CreateRecommenderResponse$RecommenderArn": "<p>The ARN of the recommender</p>"
+        "CreateRecommenderResponse$RecommenderArn": "<p>The ARN of the recommender</p>",
+        "CreateRecommenderSchemaResponse$RecommenderSchemaArn": "<p>The Amazon Resource Name (ARN) of the recommender schema.</p>"
       }
     },
     "AttributeDetails": {
@@ -594,6 +615,12 @@
         "Recommendation$CatalogItem": "<p>The catalog item being recommended, including its complete details and attributes.</p>"
       }
     },
+    "ColumnNamesList": {
+      "base": null,
+      "refs": {
+        "IncludedColumns$value": null
+      }
+    },
     "ComparisonOperator": {
       "base": null,
       "refs": {
@@ -669,7 +696,8 @@
     "ContentType": {
       "base": null,
       "refs": {
-        "DomainObjectTypeField$ContentType": "<p>The content type of the field.</p>"
+        "DomainObjectTypeField$ContentType": "<p>The content type of the field.</p>",
+        "RecommenderSchemaField$ContentType": "<p>The data type of the column value. Valid values are <code>String</code> and <code>Number</code>. The default value is <code>String</code>.</p>"
       }
     },
     "ContextKey": {
@@ -747,6 +775,14 @@
       "refs": {}
     },
     "CreateRecommenderResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRecommenderSchemaRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRecommenderSchemaResponse": {
       "base": null,
       "refs": {}
     },
@@ -949,6 +985,14 @@
       "refs": {}
     },
     "DeleteRecommenderResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRecommenderSchemaRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRecommenderSchemaResponse": {
       "base": null,
       "refs": {}
     },
@@ -1284,7 +1328,8 @@
     "FeatureType": {
       "base": null,
       "refs": {
-        "DomainObjectTypeField$FeatureType": "<p>The semantic meaning of the field.</p>"
+        "DomainObjectTypeField$FeatureType": "<p>The semantic meaning of the field.</p>",
+        "RecommenderSchemaField$FeatureType": "<p>How the column is treated for model training. Valid values are <code>CATEGORICAL</code> and <code>TEXTUAL</code>.</p>"
       }
     },
     "FieldContentType": {
@@ -1551,6 +1596,14 @@
       "base": null,
       "refs": {}
     },
+    "GetRecommenderSchemaRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRecommenderSchemaResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetSegmentDefinitionRequest": {
       "base": null,
       "refs": {}
@@ -1679,6 +1732,12 @@
         "Group$Type": "<p>Defines how to interact with the profiles found in the current filtering.</p>",
         "SegmentGroup$Include": "<p>Defines whether to include or exclude the profiles that fit the segment criteria.</p>",
         "SegmentGroupStructure$Include": "<p>Define whether to include or exclude the profiles that fit the segment criteria.</p>"
+      }
+    },
+    "IncludedColumns": {
+      "base": null,
+      "refs": {
+        "RecommenderConfig$IncludedColumns": "<p>A map of dataset type to a list of column names to train on. The column names must be a subset of the columns defined in the recommender schema. If not specified, all columns in the schema are used for training. The following columns are always included and do not need to be specified: <code>Item.Id</code>, <code>ItemList[].Id</code>, <code>EventTimestamp</code>, <code>EventType</code>, and <code>EventValue</code>.</p>"
       }
     },
     "IncrementalPullConfig": {
@@ -1994,6 +2053,14 @@
       }
     },
     "ListRecommenderRecipesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommenderSchemasRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommenderSchemasResponse": {
       "base": null,
       "refs": {}
     },
@@ -2684,6 +2751,47 @@
         "ListRecommenderRecipesResponse$RecommenderRecipes": "<p>A list of available recommender recipes and their properties.</p>"
       }
     },
+    "RecommenderSchemaField": {
+      "base": "<p>Defines a column in a recommender schema, including the target field name and optional feature and content type settings for training.</p>",
+      "refs": {
+        "RecommenderSchemaFieldList$member": null
+      }
+    },
+    "RecommenderSchemaFieldList": {
+      "base": null,
+      "refs": {
+        "RecommenderSchemaFields$value": null
+      }
+    },
+    "RecommenderSchemaFields": {
+      "base": null,
+      "refs": {
+        "CreateRecommenderSchemaRequest$Fields": "<p>A map of dataset type to column definitions that specifies which data columns to include in the schema. Currently only the <code>_webAnalytics</code> key is supported.</p>",
+        "CreateRecommenderSchemaResponse$Fields": "<p>A map of dataset type to column definitions included in the schema.</p>",
+        "GetRecommenderSchemaResponse$Fields": "<p>A map of dataset type to column definitions included in the schema.</p>",
+        "RecommenderSchemaSummary$Fields": "<p>A map of dataset type to column definitions included in the schema.</p>"
+      }
+    },
+    "RecommenderSchemaStatus": {
+      "base": null,
+      "refs": {
+        "CreateRecommenderSchemaResponse$Status": "<p>The status of the recommender schema.</p>",
+        "GetRecommenderSchemaResponse$Status": "<p>The status of the recommender schema.</p>",
+        "RecommenderSchemaSummary$Status": "<p>The current operational status of the recommender schema.</p>"
+      }
+    },
+    "RecommenderSchemaSummary": {
+      "base": "<p>Provides a summary of a recommender schema's configuration and current state.</p>",
+      "refs": {
+        "RecommenderSchemaSummaryList$member": null
+      }
+    },
+    "RecommenderSchemaSummaryList": {
+      "base": null,
+      "refs": {
+        "ListRecommenderSchemasResponse$RecommenderSchemas": "<p>A list of recommender schemas and their properties in the specified domain.</p>"
+      }
+    },
     "RecommenderStatus": {
       "base": null,
       "refs": {
@@ -3060,8 +3168,10 @@
         "DeleteRecommenderFilterResponse$Message": "<p>A message that indicates the delete request is done.</p>",
         "GetRecommenderFilterResponse$FailureReason": "<p>If the recommender filter failed, provides the reason for the failure.</p>",
         "GetRecommenderResponse$FailureReason": "<p>If the recommender fails, provides the reason for the failure.</p>",
+        "IncludedColumns$key": null,
         "RecommenderFilterSummary$FailureReason": "<p>If the recommender filter is in a failed state, provides the reason for the failure.</p>",
         "RecommenderRecipe$description": "<p>A description of the recommender recipe's purpose and functionality.</p>",
+        "RecommenderSchemaFields$key": null,
         "RecommenderSummary$FailureReason": "<p>If the recommender is in a failed state, provides the reason for the failure.</p>",
         "RecommenderUpdate$FailureReason": "<p>If the update operation failed, provides the reason for the failure.</p>"
       }
@@ -3112,6 +3222,8 @@
         "CreateRecommenderFilterResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateRecommenderRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateRecommenderResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "CreateRecommenderSchemaRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "CreateRecommenderSchemaResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateSegmentDefinitionRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateSegmentDefinitionResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "DomainObjectTypesListItem$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
@@ -3586,6 +3698,7 @@
         "ListProfileObjectTypesRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListProfileObjectsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListRecommenderFiltersRequest$MaxResults": "<p>The maximum number of recommender filters to return in the response. The default value is 100.</p>",
+        "ListRecommenderSchemasRequest$MaxResults": "<p>The maximum number of recommender schemas to return in the response. The default value is 100.</p>",
         "ListRuleBasedMatchesRequest$MaxResults": "<p>The maximum number of <code>MatchIds</code> returned per page.</p>",
         "ListWorkflowsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchProfilesRequest$MaxResults": "<p>The maximum number of objects returned per page.</p> <p>The default is 20 if this parameter is not included in the request.</p>"
@@ -4033,6 +4146,7 @@
     "text": {
       "base": null,
       "refs": {
+        "ColumnNamesList$member": null,
         "CreateUploadJobRequest$UniqueKey": "<p>The unique key columns for de-duping the profiles used to map data to the profile. </p>",
         "DomainObjectTypeField$Source": "<p>The expression that defines how to extract the field value from the source object.&gt;</p>",
         "DomainObjectTypeField$Target": "<p>The expression that defines where the field value should be placed in the standard domain object.</p>",
@@ -4042,8 +4156,9 @@
         "ListProfileObjectTypeItem$Description": "<p>Description of the profile object type.</p>",
         "ObjectAttribute$Source": "<p>An attribute contained within a source object.</p>",
         "ObjectTypeField$Source": "<p>A field of a ProfileObject. For example: _source.FirstName, where “_source” is a ProfileObjectType of a Zendesk user and “FirstName” is a field in that ObjectType.</p>",
-        "ObjectTypeField$Target": "<p>The location of the data in the standard ProfileObject model. For example: _profile.Address.PostalCode.</p>",
-        "Readiness$Message": "<p>Any customer messaging.</p>"
+        "ObjectTypeField$Target": "<p>The location of the data in the standard ProfileObject model. For example: _profile.Address.PostalCode. Do not include sensitive or personally identifiable information (PII) in the target field name.</p>",
+        "Readiness$Message": "<p>Any customer messaging.</p>",
+        "RecommenderSchemaField$TargetFieldName": "<p>The name of the target field in the dataset, such as <code>Location.City</code> or <code>Attributes.MealTime</code>.</p>"
       }
     },
     "timestamp": {
@@ -4064,6 +4179,7 @@
         "CreateDomainResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "CreateEventTriggerResponse$CreatedAt": "<p>The timestamp of when the event trigger was created.</p>",
         "CreateEventTriggerResponse$LastUpdatedAt": "<p>The timestamp of when the event trigger was most recently updated.</p>",
+        "CreateRecommenderSchemaResponse$CreatedAt": "<p>The timestamp of when the recommender schema was created.</p>",
         "CreateSegmentDefinitionResponse$CreatedAt": "<p>The timestamp of when the segment definition was created.</p>",
         "DestinationSummary$UnhealthySince": "<p>The timestamp when the status last changed to <code>UNHEALHY</code>.</p>",
         "DomainObjectTypesListItem$CreatedAt": "<p>The timestamp of when the domain object type was created.</p>",
@@ -4100,6 +4216,7 @@
         "GetRecommenderFilterResponse$CreatedAt": "<p>The timestamp of when the recommender filter was created.</p>",
         "GetRecommenderResponse$LastUpdatedAt": "<p>The timestamp of when the recommender was edited.</p>",
         "GetRecommenderResponse$CreatedAt": "<p>The timestamp of when the recommender was created.</p>",
+        "GetRecommenderSchemaResponse$CreatedAt": "<p>The timestamp of when the recommender schema was created.</p>",
         "GetSegmentDefinitionResponse$CreatedAt": "<p>The timestamp of when the segment definition was created.</p>",
         "GetSegmentMembershipResponse$LastComputedAt": "<p>The timestamp indicating when the segment membership was last computed or updated.</p>",
         "GetUploadJobPathResponse$ValidUntil": "<p>The expiry timestamp for the pre-signed URL, after which the URL will no longer be valid. </p>",
@@ -4135,6 +4252,7 @@
         "PutProfileObjectTypeResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "PutProfileObjectTypeResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "RecommenderFilterSummary$CreatedAt": "<p>The timestamp when the recommender filter was created.</p>",
+        "RecommenderSchemaSummary$CreatedAt": "<p>The timestamp when the recommender schema was created.</p>",
         "RecommenderSummary$CreatedAt": "<p>The timestamp when the recommender was created.</p>",
         "RecommenderSummary$LastUpdatedAt": "<p>The timestamp of when the recommender was edited.</p>",
         "RecommenderUpdate$CreatedAt": "<p>The timestamp when this recommender update was initiated.</p>",
@@ -4198,6 +4316,8 @@
         "ListRecommenderFiltersResponse$NextToken": "<p>A token to retrieve the next page of results. Null if there are no more results to retrieve.</p>",
         "ListRecommenderRecipesRequest$NextToken": "<p>A token received from a previous ListRecommenderRecipes call to retrieve the next page of results.</p>",
         "ListRecommenderRecipesResponse$NextToken": "<p>A token to retrieve the next page of results. Null if there are no more results to retrieve.</p>",
+        "ListRecommenderSchemasRequest$NextToken": "<p>A token received from a previous ListRecommenderSchemas call to retrieve the next page of results.</p>",
+        "ListRecommenderSchemasResponse$NextToken": "<p>A token to retrieve the next page of results. Null if there are no more results to retrieve.</p>",
         "ListRecommendersRequest$NextToken": "<p>A token received from a previous ListRecommenders call to retrieve the next page of results.</p>",
         "ListRecommendersResponse$NextToken": "<p>A token to retrieve the next page of results. Null if there are no more results to retrieve.</p>",
         "ListRuleBasedMatchesRequest$NextToken": "<p>The pagination token from the previous <code>ListRuleBasedMatches</code> API call.</p>",

@@ -1574,6 +1574,30 @@
         "Eac3Settings$SurroundMode": "When encoding 2/0 audio, sets whether Dolby Surround is matrix encoded into the two channels."
       }
     },
+    "ElementalInferenceConfiguration": {
+      "base": "The Elemental Inference configuration used in this job.",
+      "refs": {
+        "Job$ElementalInferenceConfiguration": "The Elemental Inference configuration used in this job."
+      }
+    },
+    "ElementalInferenceFeature": {
+      "base": "Elemental Inference feature.",
+      "refs": {
+        "__listOfElementalInferenceFeature$member": null
+      }
+    },
+    "ElementalInferenceFeed": {
+      "base": "Elemental Inference Feed.",
+      "refs": {
+        "__listOfElementalInferenceFeed$member": null
+      }
+    },
+    "ElementalInferenceFeedManagementState": {
+      "base": "Elemental Inference Feed management state.",
+      "refs": {
+        "ElementalInferenceFeed$FeedManagementState": "Elemental Inference Feed management state."
+      }
+    },
     "EmbeddedConvert608To708": {
       "base": "Specify whether this set of input captions appears in your outputs in both 608 and 708 format. If you choose Upconvert, MediaConvert includes the captions data in two ways: it passes the 608 data through using the 608 compatibility bytes fields of the 708 wrapper, and it also translates the 608 data into 708.",
       "refs": {
@@ -3720,9 +3744,9 @@
       }
     },
     "ScalingBehavior": {
-      "base": "Specify the video Scaling behavior when your output has a different resolution than your input. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/video-scaling.html",
+      "base": "Specify the video Scaling behavior when your output has a different resolution than your input. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/video-scaling.html Select Smart Cropping using Elemental Inference as your scaling behavior to have Elemental Inference automatically crop your video. Smart Crop requires a vertical output aspect ratio (1:1 is the widest aspect ratio supported).",
       "refs": {
-        "VideoDescription$ScalingBehavior": "Specify the video Scaling behavior when your output has a different resolution than your input. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/video-scaling.html"
+        "VideoDescription$ScalingBehavior": "Specify the video Scaling behavior when your output has a different resolution than your input. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/video-scaling.html Select Smart Cropping using Elemental Inference as your scaling behavior to have Elemental Inference automatically crop your video. Smart Crop requires a vertical output aspect ratio (1:1 is the widest aspect ratio supported)."
       }
     },
     "SccDestinationFramerate": {
@@ -4638,6 +4662,14 @@
         "ListQueuesResponse$UnallocatedConcurrentJobs": "The remaining number of concurrent jobs that are not associated with a queue and are available to allocate to a queue. You can allocate these jobs when you create or update a queue."
       }
     },
+    "__integerMin0": {
+      "base": null,
+      "refs": {
+        "CreateQueueRequest$MaximumConcurrentFeeds": "Specify the maximum number of Elemental Inference feeds MediaConvert can process concurrently.",
+        "Queue$MaximumConcurrentFeeds": "Specify the maximum number of Elemental Inference feeds MediaConvert can process concurrently.",
+        "UpdateQueueRequest$MaximumConcurrentFeeds": "Specify the maximum number of Elemental Inference feeds MediaConvert can process concurrently."
+      }
+    },
     "__integerMin0Max0": {
       "base": null,
       "refs": {
@@ -5061,8 +5093,8 @@
     "__integerMin1Max150": {
       "base": null,
       "refs": {
-        "JobSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings.  MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all  outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs.",
-        "JobTemplateSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings.  MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all  outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs."
+        "JobSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings. MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs.",
+        "JobTemplateSettings$FollowSource": "Specify the input that MediaConvert references for your default output settings. MediaConvert uses this input's Resolution, Frame rate, and Pixel aspect ratio for all outputs that you don't manually specify different output settings for. Enabling this setting will disable \"Follow source\" for all other inputs.  If MediaConvert cannot follow your source, for example if you specify an audio-only input,  MediaConvert uses the first followable input instead. In your JSON job specification, enter an integer from 1 to 150 corresponding  to the order of your inputs."
       }
     },
     "__integerMin1Max17895697": {
@@ -5589,6 +5621,18 @@
         "DashIsoGroupSettings$AdditionalManifests": "By default, the service creates one .mpd DASH manifest for each DASH ISO output group in your job. This default manifest references every output in the output group. To create additional DASH manifests that reference a subset of the outputs in the output group, specify a list of them here."
       }
     },
+    "__listOfElementalInferenceFeature": {
+      "base": null,
+      "refs": {
+        "ElementalInferenceConfiguration$Features": "A list of Elemental Inference features used in this job."
+      }
+    },
+    "__listOfElementalInferenceFeed": {
+      "base": null,
+      "refs": {
+        "ElementalInferenceConfiguration$Feeds": "A list of Elemental Inference feeds used by this job."
+      }
+    },
     "__listOfEndpoint": {
       "base": null,
       "refs": {
@@ -5942,8 +5986,8 @@
     "__mapOf__string": {
       "base": null,
       "refs": {
-        "CreateJobRequest$Tags": "Optional. The tags that you want to add to the resource. You can tag resources with a key-value pair or with only a key.  Use standard AWS tags on your job for automatic integration with AWS services and for custom integrations and workflows.",
-        "CreateJobRequest$UserMetadata": "Optional. User-defined metadata that you want to associate with an MediaConvert job. You specify metadata in key/value pairs.  Use only for existing integrations or workflows that rely on job metadata tags. Otherwise, we recommend that you use standard AWS tags.",
+        "CreateJobRequest$Tags": "Optional. The tags that you want to add to the resource. You can tag resources with a key-value pair or with only a key. Use standard AWS tags on your job for automatic integration with AWS services and for custom integrations and workflows.",
+        "CreateJobRequest$UserMetadata": "Optional. User-defined metadata that you want to associate with an MediaConvert job. You specify metadata in key/value pairs. Use only for existing integrations or workflows that rely on job metadata tags. Otherwise, we recommend that you use standard AWS tags.",
         "CreateJobTemplateRequest$Tags": "The tags that you want to add to the resource. You can tag resources with a key-value pair or with only a key.",
         "CreatePresetRequest$Tags": "The tags that you want to add to the resource. You can tag resources with a key-value pair or with only a key.",
         "CreateQueueRequest$Tags": "The tags that you want to add to the resource. You can tag resources with a key-value pair or with only a key.",
@@ -5993,6 +6037,7 @@
         "DescribeEndpointsRequest$NextToken": "Use this string, provided with the response to a previous request, to request the next batch of endpoints.",
         "DescribeEndpointsResponse$NextToken": "Use this string to request the next batch of endpoints.",
         "DisassociateCertificateRequest$Arn": "The ARN of the ACM certificate that you want to disassociate from your MediaConvert resource.",
+        "ElementalInferenceFeed$Arn": "Feed ARN.",
         "Endpoint$Url": "URL of endpoint",
         "ExceptionBody$Message": null,
         "GetJobRequest$Id": "the job ID of the job.",

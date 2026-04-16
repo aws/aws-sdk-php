@@ -1665,6 +1665,19 @@
         {"shape":"ReservedDBInstancesOfferingNotFoundFault"}
       ]
     },
+    "DescribeServerlessV2PlatformVersions":{
+      "name":"DescribeServerlessV2PlatformVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeServerlessV2PlatformVersionsMessage"},
+      "output":{
+        "shape":"ServerlessV2PlatformVersionsMessage",
+        "resultWrapper":"DescribeServerlessV2PlatformVersionsResult"
+      },
+      "errors":[]
+    },
     "DescribeSourceRegions":{
       "name":"DescribeSourceRegions",
       "http":{
@@ -6728,6 +6741,18 @@
         "Marker":{"shape":"String"}
       }
     },
+    "DescribeServerlessV2PlatformVersionsMessage":{
+      "type":"structure",
+      "members":{
+        "ServerlessV2PlatformVersion":{"shape":"String"},
+        "Engine":{"shape":"String"},
+        "Filters":{"shape":"FilterList"},
+        "DefaultOnly":{"shape":"BooleanOptional"},
+        "IncludeAll":{"shape":"BooleanOptional"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
+      }
+    },
     "DescribeSourceRegionsMessage":{
       "type":"structure",
       "members":{
@@ -9766,6 +9791,28 @@
       "members":{
         "MinCapacity":{"shape":"DoubleOptional"},
         "MaxCapacity":{"shape":"DoubleOptional"}
+      }
+    },
+    "ServerlessV2PlatformVersionInfo":{
+      "type":"structure",
+      "members":{
+        "ServerlessV2PlatformVersion":{"shape":"String"},
+        "ServerlessV2PlatformVersionDescription":{"shape":"String"},
+        "Engine":{"shape":"String"},
+        "ServerlessV2FeaturesSupport":{"shape":"ServerlessV2FeaturesSupport"},
+        "Status":{"shape":"String"},
+        "IsDefault":{"shape":"Boolean"}
+      }
+    },
+    "ServerlessV2PlatformVersionList":{
+      "type":"list",
+      "member":{"shape":"ServerlessV2PlatformVersionInfo"}
+    },
+    "ServerlessV2PlatformVersionsMessage":{
+      "type":"structure",
+      "members":{
+        "Marker":{"shape":"String"},
+        "ServerlessV2PlatformVersions":{"shape":"ServerlessV2PlatformVersionList"}
       }
     },
     "ServerlessV2ScalingConfiguration":{

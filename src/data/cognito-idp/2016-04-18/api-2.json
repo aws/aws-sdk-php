@@ -2848,6 +2848,7 @@
         "SMSMfaSettings":{"shape":"SMSMfaSettingsType"},
         "SoftwareTokenMfaSettings":{"shape":"SoftwareTokenMfaSettingsType"},
         "EmailMfaSettings":{"shape":"EmailMfaSettingsType"},
+        "WebAuthnMfaSettings":{"shape":"WebAuthnMfaSettingsType"},
         "Username":{"shape":"UsernameType"},
         "UserPoolId":{"shape":"UserPoolIdType"}
       }
@@ -5907,6 +5908,7 @@
         "SMSMfaSettings":{"shape":"SMSMfaSettingsType"},
         "SoftwareTokenMfaSettings":{"shape":"SoftwareTokenMfaSettingsType"},
         "EmailMfaSettings":{"shape":"EmailMfaSettingsType"},
+        "WebAuthnMfaSettings":{"shape":"WebAuthnMfaSettingsType"},
         "AccessToken":{"shape":"TokenModelType"}
       }
     },
@@ -7008,7 +7010,8 @@
       "type":"structure",
       "members":{
         "RelyingPartyId":{"shape":"RelyingPartyIdType"},
-        "UserVerification":{"shape":"UserVerificationType"}
+        "UserVerification":{"shape":"UserVerificationType"},
+        "FactorConfiguration":{"shape":"WebAuthnFactorConfigurationType"}
       }
     },
     "WebAuthnCredentialDescription":{
@@ -7044,6 +7047,19 @@
       "type":"integer",
       "max":20,
       "min":0
+    },
+    "WebAuthnFactorConfigurationType":{
+      "type":"string",
+      "enum":[
+        "SINGLE_FACTOR",
+        "MULTI_FACTOR_WITH_USER_VERIFICATION"
+      ]
+    },
+    "WebAuthnMfaSettingsType":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"BooleanType"}
+      }
     },
     "WebAuthnNotEnabledException":{
       "type":"structure",

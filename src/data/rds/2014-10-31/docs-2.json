@@ -100,6 +100,7 @@
     "DescribePendingMaintenanceActions": "<p>Returns a list of resources (for example, DB instances) that have at least one pending maintenance action.</p> <p>This API follows an eventual consistency model. This means that the result of the <code>DescribePendingMaintenanceActions</code> command might not be immediately visible to all subsequent RDS commands. Keep this in mind when you use <code>DescribePendingMaintenanceActions</code> immediately after using a previous API command such as <code>ApplyPendingMaintenanceActions</code>.</p>",
     "DescribeReservedDBInstances": "<p>Returns information about reserved DB instances for this account, or about a specified reserved DB instance.</p>",
     "DescribeReservedDBInstancesOfferings": "<p>Lists available reserved DB instance offerings.</p>",
+    "DescribeServerlessV2PlatformVersions": "<p>Describes the properties of specific platform versions for Aurora Serverless v2.</p>",
     "DescribeSourceRegions": "<p>Returns a list of the source Amazon Web Services Regions where the current Amazon Web Services Region can create a read replica, copy a DB snapshot from, or replicate automated backups from.</p> <p>Use this operation to determine whether cross-Region features are supported between other Regions and your current Region. This operation supports pagination.</p> <p>To return information about the Regions that are enabled for your account, or all Regions, use the EC2 operation <code>DescribeRegions</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeRegions.html\"> DescribeRegions</a> in the <i>Amazon EC2 API Reference</i>.</p>",
     "DescribeTenantDatabases": "<p>Describes the tenant databases in a DB instance that uses the multi-tenant configuration. Only RDS for Oracle CDB instances are supported.</p>",
     "DescribeValidDBInstanceModifications": "<p>You can call <code>DescribeValidDBInstanceModifications</code> to learn what modifications you can make to your DB instance. You can use this information when you call <code>ModifyDBInstance</code>.</p> <p>This command doesn't apply to RDS Custom.</p>",
@@ -584,6 +585,7 @@
         "ResetDBParameterGroupMessage$ResetAllParameters": "<p>Specifies whether to reset all parameters in the DB parameter group to default values. By default, all parameters in the DB parameter group are reset to default values.</p>",
         "RestoreDBClusterToPointInTimeMessage$UseLatestRestorableTime": "<p>Specifies whether to restore the DB cluster to the latest restorable backup time. By default, the DB cluster isn't restored to the latest restorable backup time.</p> <p>Constraints: Can't be specified if <code>RestoreToTime</code> parameter is provided.</p> <p>Valid for: Aurora DB clusters and Multi-AZ DB clusters</p>",
         "RestoreDBInstanceToPointInTimeMessage$UseLatestRestorableTime": "<p>Specifies whether the DB instance is restored from the latest backup time. By default, the DB instance isn't restored from the latest backup time.</p> <p>Constraints:</p> <ul> <li> <p>Can't be specified if the <code>RestoreTime</code> parameter is provided.</p> </li> </ul>",
+        "ServerlessV2PlatformVersionInfo$IsDefault": "<p>Indicates whether this platform version is the default version for the engine. The default platform version is the version used for new DB clusters.</p>",
         "SourceRegion$SupportsDBInstanceAutomatedBackupsReplication": "<p>Indicates whether the source Amazon Web Services Region supports replicating automated backups to the current Amazon Web Services Region.</p>",
         "StartActivityStreamResponse$ApplyImmediately": "<p>Indicates whether or not the database activity stream will start as soon as possible, regardless of the maintenance window for the database.</p>",
         "TenantDatabase$DeletionProtection": "<p>Specifies whether deletion protection is enabled for the DB instance.</p>",
@@ -678,6 +680,8 @@
         "DescribeOrderableDBInstanceOptionsMessage$Vpc": "<p>Specifies whether to show only VPC or non-VPC offerings. RDS Custom supports only VPC offerings.</p> <p>RDS Custom supports only VPC offerings. If you describe non-VPC offerings for RDS Custom, the output shows VPC offerings.</p>",
         "DescribeReservedDBInstancesMessage$MultiAZ": "<p>Specifies whether to show only those reservations that support Multi-AZ.</p>",
         "DescribeReservedDBInstancesOfferingsMessage$MultiAZ": "<p>Specifies whether to show only those reservations that support Multi-AZ.</p>",
+        "DescribeServerlessV2PlatformVersionsMessage$DefaultOnly": "<p>Specifies whether to return only the default platform versions for each engine. The default platform version is the version used for new DB clusters.</p>",
+        "DescribeServerlessV2PlatformVersionsMessage$IncludeAll": "<p>Specifies whether to also include platform versions which are no longer in use.</p>",
         "FailoverGlobalClusterMessage$AllowDataLoss": "<p>Specifies whether to allow data loss for this global database cluster operation. Allowing data loss triggers a global failover operation.</p> <p>If you don't specify <code>AllowDataLoss</code>, the global database cluster operation defaults to a switchover.</p> <p>Constraints:</p> <ul> <li> <p>Can't be specified together with the <code>Switchover</code> parameter.</p> </li> </ul>",
         "FailoverGlobalClusterMessage$Switchover": "<p>Specifies whether to switch over this global database cluster.</p> <p>Constraints:</p> <ul> <li> <p>Can't be specified together with the <code>AllowDataLoss</code> parameter.</p> </li> </ul>",
         "GlobalCluster$StorageEncrypted": "<p>The storage encryption setting for the global database cluster.</p>",
@@ -2362,6 +2366,10 @@
       "base": "<p/>",
       "refs": {}
     },
+    "DescribeServerlessV2PlatformVersionsMessage": {
+      "base": "<p/>",
+      "refs": {}
+    },
     "DescribeSourceRegionsMessage": {
       "base": "<p/>",
       "refs": {}
@@ -2737,6 +2745,7 @@
         "DescribePendingMaintenanceActionsMessage$Filters": "<p>A filter that specifies one or more resources to return pending maintenance actions for.</p> <p>Supported filters:</p> <ul> <li> <p> <code>db-cluster-id</code> - Accepts DB cluster identifiers and DB cluster Amazon Resource Names (ARNs). The results list only includes pending maintenance actions for the DB clusters identified by these ARNs.</p> </li> <li> <p> <code>db-instance-id</code> - Accepts DB instance identifiers and DB instance ARNs. The results list only includes pending maintenance actions for the DB instances identified by these ARNs.</p> </li> </ul>",
         "DescribeReservedDBInstancesMessage$Filters": "<p>This parameter isn't currently supported.</p>",
         "DescribeReservedDBInstancesOfferingsMessage$Filters": "<p>This parameter isn't currently supported.</p>",
+        "DescribeServerlessV2PlatformVersionsMessage$Filters": "<p>This parameter isn't currently supported.</p>",
         "DescribeSourceRegionsMessage$Filters": "<p>This parameter isn't currently supported.</p>",
         "DescribeTenantDatabasesMessage$Filters": "<p>A filter that specifies one or more database tenants to describe.</p> <p>Supported filters:</p> <ul> <li> <p> <code>tenant-db-name</code> - Tenant database names. The results list only includes information about the tenant databases that match these tenant DB names.</p> </li> <li> <p> <code>tenant-database-resource-id</code> - Tenant database resource identifiers.</p> </li> <li> <p> <code>dbi-resource-id</code> - DB instance resource identifiers. The results list only includes information about the tenants contained within the DB instances identified by these resource identifiers.</p> </li> </ul>",
         "ListTagsForResourceMessage$Filters": "<p>This parameter isn't currently supported.</p>"
@@ -3008,6 +3017,7 @@
         "DescribePendingMaintenanceActionsMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribeReservedDBInstancesMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more than the <code>MaxRecords</code> value is available, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribeReservedDBInstancesOfferingsMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more than the <code>MaxRecords</code> value is available, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
+        "DescribeServerlessV2PlatformVersionsMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more than the <code>MaxRecords</code> value is available, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p> <p>Default: 20</p> <p>Constraints: Minimum 1, maximum 200.</p>",
         "DescribeSourceRegionsMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribeTenantDatabasesMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that you can retrieve the remaining results.</p>",
         "ModifyAdditionalStorageVolume$AllocatedStorage": "<p>The amount of storage allocated for the additional storage volume, in gibibytes (GiB). The minimum is 20 GiB. The maximum is 65,536 GiB (64 TiB).</p>",
@@ -4313,8 +4323,25 @@
     "ServerlessV2FeaturesSupport": {
       "base": "<p>Specifies any Aurora Serverless v2 properties or limits that differ between Aurora engine versions and platform versions. You can test the values of this attribute when deciding which Aurora version to use in a new or upgraded DB cluster. You can also retrieve the version of an existing DB cluster and check whether that version supports certain Aurora Serverless v2 features before you attempt to use those features. </p>",
       "refs": {
-        "DBEngineVersion$ServerlessV2FeaturesSupport": "<p>Specifies any Aurora Serverless v2 properties or limits that differ between Aurora engine versions. You can test the values of this attribute when deciding which Aurora version to use in a new or upgraded DB cluster. You can also retrieve the version of an existing DB cluster and check whether that version supports certain Aurora Serverless v2 features before you attempt to use those features. </p>"
+        "DBEngineVersion$ServerlessV2FeaturesSupport": "<p>Specifies any Aurora Serverless v2 properties or limits that differ between Aurora engine versions. You can test the values of this attribute when deciding which Aurora version to use in a new or upgraded DB cluster. You can also retrieve the version of an existing DB cluster and check whether that version supports certain Aurora Serverless v2 features before you attempt to use those features. </p>",
+        "ServerlessV2PlatformVersionInfo$ServerlessV2FeaturesSupport": "<p>Specifies any Aurora Serverless v2 properties or limits that differ between Aurora Serverless v2 platform versions. You can retrieve the platform version of an existing DB cluster and check whether that version supports certain Aurora Serverless v2 features before you attempt to use those features.</p>"
       }
+    },
+    "ServerlessV2PlatformVersionInfo": {
+      "base": "<p>This data type is used as a response element in the action <code>DescribeServerlessV2PlatformVersions</code>.</p>",
+      "refs": {
+        "ServerlessV2PlatformVersionList$member": null
+      }
+    },
+    "ServerlessV2PlatformVersionList": {
+      "base": null,
+      "refs": {
+        "ServerlessV2PlatformVersionsMessage$ServerlessV2PlatformVersions": "<p>A list of <code>ServerlessV2PlatformVersionInfo</code> elements.</p>"
+      }
+    },
+    "ServerlessV2PlatformVersionsMessage": {
+      "base": "<p>Contains the result of a successful invocation of the <code>DescribeServerlessV2PlatformVersions</code> action.</p>",
+      "refs": {}
     },
     "ServerlessV2ScalingConfiguration": {
       "base": "<p>Contains the scaling configuration of an Aurora Serverless v2 DB cluster.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html\">Using Amazon Aurora Serverless v2</a> in the <i>Amazon Aurora User Guide</i>.</p>",
@@ -5093,6 +5120,9 @@
         "DescribeReservedDBInstancesOfferingsMessage$ProductDescription": "<p>Product description filter value. Specify this parameter to show only the available offerings that contain the specified product description.</p> <note> <p>The results show offerings that partially match the filter value.</p> </note>",
         "DescribeReservedDBInstancesOfferingsMessage$OfferingType": "<p>The offering type filter value. Specify this parameter to show only the available offerings matching the specified offering type.</p> <p>Valid Values: <code>\"Partial Upfront\" | \"All Upfront\" | \"No Upfront\" </code> </p>",
         "DescribeReservedDBInstancesOfferingsMessage$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
+        "DescribeServerlessV2PlatformVersionsMessage$ServerlessV2PlatformVersion": "<p>A specific platform version to return details for.</p> <p>Example: <code>3</code> </p>",
+        "DescribeServerlessV2PlatformVersionsMessage$Engine": "<p>The database engine to return platform version details for.</p> <p>Valid Values:</p> <ul> <li> <p> <code>aurora-mysql</code> </p> </li> <li> <p> <code>aurora-postgresql</code> </p> </li> </ul>",
+        "DescribeServerlessV2PlatformVersionsMessage$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
         "DescribeSourceRegionsMessage$RegionName": "<p>The source Amazon Web Services Region name. For example, <code>us-east-1</code>.</p> <p>Constraints:</p> <ul> <li> <p>Must specify a valid Amazon Web Services Region name.</p> </li> </ul>",
         "DescribeSourceRegionsMessage$Marker": "<p>An optional pagination token provided by a previous <code>DescribeSourceRegions</code> request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
         "DescribeTenantDatabasesMessage$DBInstanceIdentifier": "<p>The user-supplied DB instance identifier, which must match the identifier of an existing instance owned by the Amazon Web Services account. This parameter isn't case-sensitive.</p>",
@@ -5310,7 +5340,7 @@
         "Parameter$DataType": "<p>Specifies the valid data type for the parameter.</p>",
         "Parameter$AllowedValues": "<p>Specifies the valid range of values for the parameter.</p>",
         "Parameter$MinimumEngineVersion": "<p>The earliest engine version to which the parameter can apply.</p>",
-        "PendingMaintenanceAction$Action": "<p>The type of pending maintenance action that is available for the resource. </p> <p>For more information about maintenance actions, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Maintenance.html\">Maintaining a DB instance</a>.</p> <p>Valid Values:</p> <ul> <li> <p> <code>ca-certificate-rotation</code> </p> </li> <li> <p> <code>db-upgrade</code> </p> </li> <li> <p> <code>hardware-maintenance</code> </p> </li> <li> <p> <code>os-upgrade</code> </p> </li> <li> <p> <code>system-update</code> </p> </li> </ul> <p>For more information about these actions, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_UpgradeDBInstance.Maintenance.html#maintenance-actions-aurora\">Maintenance actions for Amazon Aurora</a> or <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Maintenance.html#maintenance-actions-rds\">Maintenance actions for Amazon RDS</a>.</p>",
+        "PendingMaintenanceAction$Action": "<p>The type of pending maintenance action that is available for the resource. </p> <p>For more information about maintenance actions, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Maintenance.html\">Maintaining a DB instance</a>.</p> <p>Valid Values:</p> <ul> <li> <p> <code>ca-certificate-rotation</code> </p> </li> <li> <p> <code>db-upgrade</code> </p> </li> <li> <p> <code>hardware-maintenance</code> </p> </li> <li> <p> <code>os-upgrade</code> </p> </li> <li> <p> <code>serverless-platform-version-update</code> </p> </li> <li> <p> <code>system-update</code> </p> </li> </ul> <p>For more information about these actions, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_UpgradeDBInstance.Maintenance.html#maintenance-actions-aurora\">Maintenance actions for Amazon Aurora</a> or <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Maintenance.html#maintenance-actions-rds\">Maintenance actions for Amazon RDS</a>.</p>",
         "PendingMaintenanceAction$OptInStatus": "<p>Indicates the type of opt-in request that has been received for the resource.</p>",
         "PendingMaintenanceAction$Description": "<p>A description providing more detail about the maintenance action.</p>",
         "PendingMaintenanceActionsMessage$Marker": "<p>An optional pagination token provided by a previous <code>DescribePendingMaintenanceActions</code> request. If this parameter is specified, the response includes only records beyond the marker, up to a number of records specified by <code>MaxRecords</code>.</p>",
@@ -5523,6 +5553,11 @@
         "RevokeDBSecurityGroupIngressMessage$EC2SecurityGroupOwnerId": "<p>The Amazon Web Services account number of the owner of the EC2 security group specified in the <code>EC2SecurityGroupName</code> parameter. The Amazon Web Services access key ID isn't an acceptable value. For VPC DB security groups, <code>EC2SecurityGroupId</code> must be provided. Otherwise, EC2SecurityGroupOwnerId and either <code>EC2SecurityGroupName</code> or <code>EC2SecurityGroupId</code> must be provided.</p>",
         "ScalingConfiguration$TimeoutAction": "<p>The action to take when the timeout is reached, either <code>ForceApplyCapacityChange</code> or <code>RollbackCapacityChange</code>.</p> <p> <code>ForceApplyCapacityChange</code> sets the capacity to the specified value as soon as possible.</p> <p> <code>RollbackCapacityChange</code>, the default, ignores the capacity change if a scaling point isn't found in the timeout period.</p> <important> <p>If you specify <code>ForceApplyCapacityChange</code>, connections that prevent Aurora Serverless v1 from finding a scaling point might be dropped.</p> </important> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.how-it-works.html#aurora-serverless.how-it-works.auto-scaling\"> Autoscaling for Aurora Serverless v1</a> in the <i>Amazon Aurora User Guide</i>.</p>",
         "ScalingConfigurationInfo$TimeoutAction": "<p>The action that occurs when Aurora times out while attempting to change the capacity of an Aurora Serverless v1 cluster. The value is either <code>ForceApplyCapacityChange</code> or <code>RollbackCapacityChange</code>.</p> <p> <code>ForceApplyCapacityChange</code>, the default, sets the capacity to the specified value as soon as possible.</p> <p> <code>RollbackCapacityChange</code> ignores the capacity change if a scaling point isn't found in the timeout period.</p>",
+        "ServerlessV2PlatformVersionInfo$ServerlessV2PlatformVersion": "<p>The version number of the serverless platform.</p>",
+        "ServerlessV2PlatformVersionInfo$ServerlessV2PlatformVersionDescription": "<p>The description of the serverless platform.</p>",
+        "ServerlessV2PlatformVersionInfo$Engine": "<p>The name of the database engine.</p>",
+        "ServerlessV2PlatformVersionInfo$Status": "<p>The status of the serverless platform. Valid statuses are the following:</p> <ul> <li> <p> <code>enabled</code> - The platform version is in use.</p> </li> <li> <p> <code>disabled</code> - The platform version is not in use.</p> </li> </ul>",
+        "ServerlessV2PlatformVersionsMessage$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
         "SourceIdsList$member": null,
         "SourceRegion$RegionName": "<p>The name of the source Amazon Web Services Region.</p>",
         "SourceRegion$Endpoint": "<p>The endpoint for the source Amazon Web Services Region endpoint.</p>",

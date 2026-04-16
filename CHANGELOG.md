@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DataZone` - Launching SMUS IAM domain SDK support
+* `Aws\CloudWatchLogs` - Endpoint update for CloudWatch Logs Streaming APIs.
+* `Aws\CognitoIdentityProvider` - Adds support for passkey-based multi-factor authentication in Cognito User Pools. Users can authenticate securely using FIDO2-compliant passkeys with user verification, enabling passwordless MFA flows while maintaining backward compatibility with password-based authentication
+* `Aws\CustomerProfiles` - Amazon Connect Customer Profiles adds RecommenderSchema CRUD APIs for custom ML training columns. CreateRecommender and CreateRecommenderFilter now accept optional RecommenderSchemaName.
+* `Aws\ConnectCases` - Added error handling for service quota limits
+* `Aws\DevOpsAgent` - Deprecate the userId from the Chat operations. This update also removes support of AllowVendedLogDeliveryForResource API from AWS SDKs.
+* `Aws\CloudWatch` - Update documentation of alarm mute rules start and end date fields
+* `Aws\BedrockAgentCore` - Introducing NamespacePath in AgentCore Memory to support hierarchical prefix based memory record retrieval.
+* `Aws\AutoScaling` - This release adds support for specifying Availability Zone IDs as an alternative to Availability Zone names when creating or updating Auto Scaling groups.
+* `Aws\MediaConvert` - Adds support for Elemental Inference powered smart crop feature, enabling video verticalization
+* `Aws\drs` - Updating regex for identification of AWS Regions.
+* `Aws\RDS` - Adds a new DescribeServerlessV2PlatformVersions API to describe platform version properties for Aurora Serverless v2. Also introduces a new valid maintenance action value for serverless platform version updates.
+* `Aws\Connect` - This release updates the Amazon Connect Rules CRUD APIs to support a new EventSourceName - OnEmailAnalysisAvailable. Use this event source to trigger rules when conversational analytics results are available for email contacts.
+* `Aws\AppStream` - Add content redirection to Update Stack
+
 ## 3.379.0 - 2026-04-13
 
 * `Aws\Interconnect` - Initial release of AWS Interconnect -- a managed private connectivity service that enables you to create high-speed network connections between your AWS Virtual Private Clouds (VPCs) and your VPCs on other public clouds or your on-premise networks.

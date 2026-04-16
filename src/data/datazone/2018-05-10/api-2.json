@@ -5407,10 +5407,7 @@
     },
     "CreateDomainInput":{
       "type":"structure",
-      "required":[
-        "name",
-        "domainExecutionRole"
-      ],
+      "required":["name"],
       "members":{
         "name":{"shape":"String"},
         "description":{"shape":"String"},
@@ -5831,10 +5828,7 @@
     },
     "CreateGroupProfileInput":{
       "type":"structure",
-      "required":[
-        "domainIdentifier",
-        "groupIdentifier"
-      ],
+      "required":["domainIdentifier"],
       "members":{
         "domainIdentifier":{
           "shape":"DomainId",
@@ -5842,6 +5836,7 @@
           "locationName":"domainIdentifier"
         },
         "groupIdentifier":{"shape":"GroupIdentifier"},
+        "rolePrincipalArn":{"shape":"String"},
         "clientToken":{
           "shape":"String",
           "idempotencyToken":true
@@ -5854,7 +5849,9 @@
         "domainId":{"shape":"DomainId"},
         "id":{"shape":"GroupProfileId"},
         "status":{"shape":"GroupProfileStatus"},
-        "groupName":{"shape":"GroupProfileName"}
+        "groupName":{"shape":"GroupProfileName"},
+        "rolePrincipalArn":{"shape":"String"},
+        "rolePrincipalId":{"shape":"String"}
       }
     },
     "CreateListingChangeSetInput":{
@@ -5919,7 +5916,10 @@
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "domainUnitId":{"shape":"DomainUnitId"},
         "projectProfileId":{"shape":"ProjectProfileId"},
-        "userParameters":{"shape":"EnvironmentConfigurationUserParametersList"}
+        "userParameters":{"shape":"EnvironmentConfigurationUserParametersList"},
+        "projectCategory":{"shape":"String"},
+        "projectExecutionRole":{"shape":"RoleArn"},
+        "membershipAssignments":{"shape":"ProjectMembershipAssignments"}
       }
     },
     "CreateProjectInputResourceTagsMap":{
@@ -5979,7 +5979,8 @@
         "domainUnitId":{"shape":"DomainUnitId"},
         "projectProfileId":{"shape":"ProjectProfileId"},
         "userParameters":{"shape":"EnvironmentConfigurationUserParametersList"},
-        "environmentDeploymentDetails":{"shape":"EnvironmentDeploymentDetails"}
+        "environmentDeploymentDetails":{"shape":"EnvironmentDeploymentDetails"},
+        "projectCategory":{"shape":"String"}
       }
     },
     "CreateProjectPolicyGrantDetail":{
@@ -6297,11 +6298,17 @@
         },
         "userIdentifier":{"shape":"UserIdentifier"},
         "userType":{"shape":"UserType"},
+        "sessionName":{"shape":"CreateUserProfileInputSessionNameString"},
         "clientToken":{
           "shape":"String",
           "idempotencyToken":true
         }
       }
+    },
+    "CreateUserProfileInputSessionNameString":{
+      "type":"string",
+      "max":64,
+      "min":2
     },
     "CreateUserProfileOutput":{
       "type":"structure",
@@ -9258,7 +9265,9 @@
         "domainId":{"shape":"DomainId"},
         "id":{"shape":"GroupProfileId"},
         "status":{"shape":"GroupProfileStatus"},
-        "groupName":{"shape":"GroupProfileName"}
+        "groupName":{"shape":"GroupProfileName"},
+        "rolePrincipalArn":{"shape":"String"},
+        "rolePrincipalId":{"shape":"String"}
       }
     },
     "GetIamPortalLoginUrlInput":{
@@ -9557,7 +9566,8 @@
         "domainUnitId":{"shape":"DomainUnitId"},
         "projectProfileId":{"shape":"ProjectProfileId"},
         "userParameters":{"shape":"EnvironmentConfigurationUserParametersList"},
-        "environmentDeploymentDetails":{"shape":"EnvironmentDeploymentDetails"}
+        "environmentDeploymentDetails":{"shape":"EnvironmentDeploymentDetails"},
+        "projectCategory":{"shape":"String"}
       }
     },
     "GetProjectProfileInput":{
@@ -9944,8 +9954,18 @@
           "shape":"UserProfileType",
           "location":"querystring",
           "locationName":"type"
+        },
+        "sessionName":{
+          "shape":"GetUserProfileInputSessionNameString",
+          "location":"querystring",
+          "locationName":"sessionName"
         }
       }
+    },
+    "GetUserProfileInputSessionNameString":{
+      "type":"string",
+      "max":64,
+      "min":2
     },
     "GetUserProfileOutput":{
       "type":"structure",
@@ -10408,7 +10428,9 @@
         "domainId":{"shape":"DomainId"},
         "id":{"shape":"GroupProfileId"},
         "status":{"shape":"GroupProfileStatus"},
-        "groupName":{"shape":"GroupProfileName"}
+        "groupName":{"shape":"GroupProfileName"},
+        "rolePrincipalArn":{"shape":"String"},
+        "rolePrincipalId":{"shape":"String"}
       }
     },
     "GroupSearchText":{
@@ -10421,7 +10443,8 @@
       "type":"string",
       "enum":[
         "SSO_GROUP",
-        "DATAZONE_SSO_GROUP"
+        "DATAZONE_SSO_GROUP",
+        "IAM_ROLE_SESSION_GROUP"
       ]
     },
     "HyperPodOrchestrator":{
@@ -10485,7 +10508,9 @@
       "type":"structure",
       "members":{
         "arn":{"shape":"String"},
-        "principalId":{"shape":"String"}
+        "principalId":{"shape":"String"},
+        "sessionName":{"shape":"String"},
+        "groupProfileId":{"shape":"String"}
       }
     },
     "Import":{
@@ -12012,6 +12037,11 @@
           "location":"querystring",
           "locationName":"name"
         },
+        "projectCategory":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"projectCategory"
+        },
         "nextToken":{
           "shape":"PaginationToken",
           "location":"querystring",
@@ -13297,6 +13327,21 @@
       "type":"list",
       "member":{"shape":"ProjectMember"}
     },
+    "ProjectMembershipAssignment":{
+      "type":"structure",
+      "required":[
+        "member",
+        "designation"
+      ],
+      "members":{
+        "member":{"shape":"Member"},
+        "designation":{"shape":"UserDesignation"}
+      }
+    },
+    "ProjectMembershipAssignments":{
+      "type":"list",
+      "member":{"shape":"ProjectMembershipAssignment"}
+    },
     "ProjectName":{
       "type":"string",
       "max":64,
@@ -13391,7 +13436,8 @@
         "createdBy":{"shape":"CreatedBy"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "domainUnitId":{"shape":"DomainUnitId"}
+        "domainUnitId":{"shape":"DomainUnitId"},
+        "projectCategory":{"shape":"String"}
       }
     },
     "ProjectsForRule":{
@@ -14191,7 +14237,7 @@
     },
     "RoleArn":{
       "type":"string",
-      "pattern":"arn:aws[^:]*:iam::\\d{12}:(role|role/service-role)/[\\w+=,.@-]*"
+      "pattern":"arn:aws[^:]*:iam::\\d{12}:role(/[a-zA-Z0-9+=,.@_-]+)*/[a-zA-Z0-9+=,.@_-]+"
     },
     "RowFilter":{
       "type":"structure",
@@ -16474,7 +16520,9 @@
         "domainId":{"shape":"DomainId"},
         "id":{"shape":"GroupProfileId"},
         "status":{"shape":"GroupProfileStatus"},
-        "groupName":{"shape":"GroupProfileName"}
+        "groupName":{"shape":"GroupProfileName"},
+        "rolePrincipalArn":{"shape":"String"},
+        "rolePrincipalId":{"shape":"String"}
       }
     },
     "UpdateProjectInput":{
@@ -16534,7 +16582,8 @@
         "domainUnitId":{"shape":"DomainUnitId"},
         "projectProfileId":{"shape":"ProjectProfileId"},
         "userParameters":{"shape":"EnvironmentConfigurationUserParametersList"},
-        "environmentDeploymentDetails":{"shape":"EnvironmentDeploymentDetails"}
+        "environmentDeploymentDetails":{"shape":"EnvironmentDeploymentDetails"},
+        "projectCategory":{"shape":"String"}
       }
     },
     "UpdateProjectProfileInput":{
@@ -16878,8 +16927,14 @@
           "locationName":"userIdentifier"
         },
         "type":{"shape":"UserProfileType"},
-        "status":{"shape":"UserProfileStatus"}
+        "status":{"shape":"UserProfileStatus"},
+        "sessionName":{"shape":"UpdateUserProfileInputSessionNameString"}
       }
+    },
+    "UpdateUserProfileInputSessionNameString":{
+      "type":"string",
+      "max":64,
+      "min":2
     },
     "UpdateUserProfileOutput":{
       "type":"structure",
@@ -17004,7 +17059,8 @@
       "enum":[
         "IAM_USER",
         "IAM_ROLE",
-        "SSO_USER"
+        "SSO_USER",
+        "IAM_ROLE_SESSION"
       ]
     },
     "Username":{

@@ -209,6 +209,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "CreateRecommenderSchema":{
+      "name":"CreateRecommenderSchema",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/recommender-schemas/{RecommenderSchemaName}",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateRecommenderSchemaRequest"},
+      "output":{"shape":"CreateRecommenderSchemaResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "CreateSegmentDefinition":{
       "name":"CreateSegmentDefinition",
       "http":{
@@ -479,6 +496,23 @@
       },
       "input":{"shape":"DeleteRecommenderFilterRequest"},
       "output":{"shape":"DeleteRecommenderFilterResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "DeleteRecommenderSchema":{
+      "name":"DeleteRecommenderSchema",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{DomainName}/recommender-schemas/{RecommenderSchemaName}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteRecommenderSchemaRequest"},
+      "output":{"shape":"DeleteRecommenderSchemaResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
@@ -820,6 +854,24 @@
       },
       "input":{"shape":"GetRecommenderFilterRequest"},
       "output":{"shape":"GetRecommenderFilterResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "GetRecommenderSchema":{
+      "name":"GetRecommenderSchema",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/recommender-schemas/{RecommenderSchemaName}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetRecommenderSchemaRequest"},
+      "output":{"shape":"GetRecommenderSchemaResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
@@ -1281,6 +1333,24 @@
       "input":{"shape":"ListRecommenderRecipesRequest"},
       "output":{"shape":"ListRecommenderRecipesResponse"},
       "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListRecommenderSchemas":{
+      "name":"ListRecommenderSchemas",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/recommender-schemas",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRecommenderSchemasRequest"},
+      "output":{"shape":"ListRecommenderSchemasResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"BadRequestException"},
         {"shape":"ThrottlingException"},
@@ -2174,6 +2244,12 @@
         "Attributes":{"shape":"Attributes"}
       }
     },
+    "ColumnNamesList":{
+      "type":"list",
+      "member":{"shape":"text"},
+      "max":100,
+      "min":1
+    },
     "ComparisonOperator":{
       "type":"string",
       "enum":[
@@ -2589,6 +2665,7 @@
           "locationName":"RecommenderFilterName"
         },
         "RecommenderFilterExpression":{"shape":"RecommenderFilterExpression"},
+        "RecommenderSchemaName":{"shape":"name"},
         "Description":{"shape":"sensitiveText"},
         "Tags":{"shape":"TagMap"}
       }
@@ -2622,6 +2699,7 @@
         "RecommenderRecipeName":{"shape":"RecommenderRecipeName"},
         "RecommenderConfig":{"shape":"RecommenderConfig"},
         "Description":{"shape":"sensitiveText"},
+        "RecommenderSchemaName":{"shape":"name"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -2630,6 +2708,46 @@
       "required":["RecommenderArn"],
       "members":{
         "RecommenderArn":{"shape":"Arn"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateRecommenderSchemaRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "RecommenderSchemaName",
+        "Fields"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "RecommenderSchemaName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"RecommenderSchemaName"
+        },
+        "Fields":{"shape":"RecommenderSchemaFields"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateRecommenderSchemaResponse":{
+      "type":"structure",
+      "required":[
+        "RecommenderSchemaArn",
+        "RecommenderSchemaName",
+        "Fields",
+        "CreatedAt",
+        "Status"
+      ],
+      "members":{
+        "RecommenderSchemaArn":{"shape":"Arn"},
+        "RecommenderSchemaName":{"shape":"name"},
+        "Fields":{"shape":"RecommenderSchemaFields"},
+        "CreatedAt":{"shape":"timestamp"},
+        "Status":{"shape":"RecommenderSchemaStatus"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -3153,6 +3271,29 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteRecommenderSchemaRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "RecommenderSchemaName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "RecommenderSchemaName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"RecommenderSchemaName"
+        }
+      }
+    },
+    "DeleteRecommenderSchemaResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteSegmentDefinitionRequest":{
       "type":"structure",
       "required":[
@@ -3381,7 +3522,7 @@
     "EventParametersList":{
       "type":"list",
       "member":{"shape":"EventParameters"},
-      "max":5,
+      "max":10,
       "min":1
     },
     "EventStreamDestinationDetails":{
@@ -4346,6 +4487,7 @@
       "members":{
         "RecommenderFilterName":{"shape":"RecommenderFilterName"},
         "RecommenderFilterExpression":{"shape":"RecommenderFilterExpression"},
+        "RecommenderSchemaName":{"shape":"name"},
         "CreatedAt":{"shape":"timestamp"},
         "Status":{"shape":"RecommenderFilterStatus"},
         "Description":{"shape":"sensitiveText"},
@@ -4392,6 +4534,7 @@
       "members":{
         "RecommenderName":{"shape":"name"},
         "RecommenderRecipeName":{"shape":"RecommenderRecipeName"},
+        "RecommenderSchemaName":{"shape":"name"},
         "RecommenderConfig":{"shape":"RecommenderConfig"},
         "Description":{"shape":"sensitiveText"},
         "Status":{"shape":"RecommenderStatus"},
@@ -4401,6 +4544,40 @@
         "LatestRecommenderUpdate":{"shape":"RecommenderUpdate"},
         "TrainingMetrics":{"shape":"TrainingMetricsList"},
         "Tags":{"shape":"TagMap"}
+      }
+    },
+    "GetRecommenderSchemaRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "RecommenderSchemaName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "RecommenderSchemaName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"RecommenderSchemaName"
+        }
+      }
+    },
+    "GetRecommenderSchemaResponse":{
+      "type":"structure",
+      "required":[
+        "RecommenderSchemaName",
+        "Fields",
+        "CreatedAt",
+        "Status"
+      ],
+      "members":{
+        "RecommenderSchemaName":{"shape":"name"},
+        "Fields":{"shape":"RecommenderSchemaFields"},
+        "CreatedAt":{"shape":"timestamp"},
+        "Status":{"shape":"RecommenderSchemaStatus"}
       }
     },
     "GetSegmentDefinitionRequest":{
@@ -4875,6 +5052,13 @@
         "ANY",
         "NONE"
       ]
+    },
+    "IncludedColumns":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"ColumnNamesList"},
+      "max":2,
+      "min":1
     },
     "IncrementalPullConfig":{
       "type":"structure",
@@ -5654,6 +5838,34 @@
       "members":{
         "NextToken":{"shape":"token"},
         "RecommenderRecipes":{"shape":"RecommenderRecipesList"}
+      }
+    },
+    "ListRecommenderSchemasRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "MaxResults":{
+          "shape":"maxSize100",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListRecommenderSchemasResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"token"},
+        "RecommenderSchemas":{"shape":"RecommenderSchemaSummaryList"}
       }
     },
     "ListRecommendersRequest":{
@@ -6709,7 +6921,8 @@
       "members":{
         "EventsConfig":{"shape":"EventsConfig"},
         "TrainingFrequency":{"shape":"RecommenderConfigTrainingFrequencyInteger"},
-        "InferenceConfig":{"shape":"InferenceConfig"}
+        "InferenceConfig":{"shape":"InferenceConfig"},
+        "IncludedColumns":{"shape":"IncludedColumns"}
       }
     },
     "RecommenderConfigTrainingFrequencyInteger":{
@@ -6738,7 +6951,7 @@
     },
     "RecommenderFilterAttributeValue":{
       "type":"string",
-      "max":1000,
+      "max":3000,
       "sensitive":true
     },
     "RecommenderFilterExpression":{
@@ -6767,6 +6980,7 @@
       "type":"structure",
       "members":{
         "RecommenderFilterName":{"shape":"RecommenderFilterName"},
+        "RecommenderSchemaName":{"shape":"name"},
         "RecommenderFilterExpression":{"shape":"RecommenderFilterExpression"},
         "CreatedAt":{"shape":"timestamp"},
         "Description":{"shape":"sensitiveText"},
@@ -6826,6 +7040,54 @@
       "type":"list",
       "member":{"shape":"RecommenderRecipe"}
     },
+    "RecommenderSchemaField":{
+      "type":"structure",
+      "required":["TargetFieldName"],
+      "members":{
+        "TargetFieldName":{"shape":"text"},
+        "ContentType":{"shape":"ContentType"},
+        "FeatureType":{"shape":"FeatureType"}
+      }
+    },
+    "RecommenderSchemaFieldList":{
+      "type":"list",
+      "member":{"shape":"RecommenderSchemaField"},
+      "max":9,
+      "min":1
+    },
+    "RecommenderSchemaFields":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"RecommenderSchemaFieldList"},
+      "max":1,
+      "min":1
+    },
+    "RecommenderSchemaStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "DELETING"
+      ]
+    },
+    "RecommenderSchemaSummary":{
+      "type":"structure",
+      "required":[
+        "RecommenderSchemaName",
+        "Fields",
+        "CreatedAt",
+        "Status"
+      ],
+      "members":{
+        "RecommenderSchemaName":{"shape":"name"},
+        "Fields":{"shape":"RecommenderSchemaFields"},
+        "CreatedAt":{"shape":"timestamp"},
+        "Status":{"shape":"RecommenderSchemaStatus"}
+      }
+    },
+    "RecommenderSchemaSummaryList":{
+      "type":"list",
+      "member":{"shape":"RecommenderSchemaSummary"}
+    },
     "RecommenderStatus":{
       "type":"string",
       "enum":[
@@ -6844,6 +7106,7 @@
       "members":{
         "RecommenderName":{"shape":"name"},
         "RecipeName":{"shape":"RecommenderRecipeName"},
+        "RecommenderSchemaName":{"shape":"name"},
         "RecommenderConfig":{"shape":"RecommenderConfig"},
         "CreatedAt":{"shape":"timestamp"},
         "Description":{"shape":"sensitiveText"},
@@ -7599,7 +7862,14 @@
         "recall",
         "popularity",
         "freshness",
-        "similarity"
+        "similarity",
+        "mean_reciprocal_rank_at_25",
+        "normalized_discounted_cumulative_gain_at_5",
+        "normalized_discounted_cumulative_gain_at_10",
+        "normalized_discounted_cumulative_gain_at_25",
+        "precision_at_5",
+        "precision_at_10",
+        "precision_at_25"
       ]
     },
     "TrainingMetrics":{

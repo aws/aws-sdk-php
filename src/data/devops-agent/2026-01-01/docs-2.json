@@ -2,7 +2,6 @@
   "version": "2.0",
   "service": "<p>AWS DevOps Agent is a frontier agent that resolves and proactively prevents incidents, continuously improving reliability and performance. AWS DevOps Agent investigates incidents and identifies operational improvements as an experienced DevOps engineer.</p> <p>The agent works by:</p> <ul> <li>Learning your resources and their relationships.</li> <li>Working with your observability tools, runbooks, code repositories, and CI/CD pipelines.</li> <li>Correlating telemetry, code, and deployment data to understand relationships between your application resources.</li> <li>Supporting applications in multicloud and hybrid environments.</li> </ul>",
   "operations": {
-    "AllowVendedLogDeliveryForResource": "<p>Authorize Ingestion Hub subscription operation.</p>",
     "AssociateService": "<p>Adds a specific service association to an AgentSpace. It overwrites the existing association of the same service. Returns 201 Created on success.</p>",
     "CreateAgentSpace": "<p>Creates a new AgentSpace with the specified name and description. Duplicate space names are allowed.</p>",
     "CreateBacklogTask": "<p>Creates a new backlog task in the specified agent space</p>",
@@ -138,20 +137,6 @@
         "CreateAgentSpaceInput$name": "<p>The name of the AgentSpace.</p>",
         "UpdateAgentSpaceInput$name": "<p>The updated name of the AgentSpace.</p>"
       }
-    },
-    "AllowVendedLogDeliveryForResourceInput": {
-      "base": "<p>Input for authorizing vended log delivery for a resource.</p>",
-      "refs": {}
-    },
-    "AllowVendedLogDeliveryForResourceInputDeliverySourceArnString": {
-      "base": null,
-      "refs": {
-        "AllowVendedLogDeliveryForResourceInput$deliverySourceArn": "<p>The ARN of the delivery source for vended log delivery.</p>"
-      }
-    },
-    "AllowVendedLogDeliveryForResourceOutput": {
-      "base": "<p>Output for the vended log delivery authorization operation.</p>",
-      "refs": {}
     },
     "ApiKeyValue": {
       "base": "<p>API Key Value for service.</p>",
@@ -1719,11 +1704,11 @@
       "base": "<p>Generic resource identifier (allows alphanumeric characters, hyphens, and underscores; 1-128 characters)</p>",
       "refs": {
         "ChatExecution$executionId": "<p>The unique identifier for the execution</p>",
-        "CreateChatRequest$userId": "<p>The user identifier for the chat</p>",
+        "CreateChatRequest$userId": "<p>The user identifier for the chat. This field is deprecated and will be ignored — the service resolves user identity from the authenticated session.</p>",
         "CreateChatResponse$executionId": "<p>The unique identifier for the created execution</p>",
         "GetBacklogTaskRequest$taskId": "<p>The unique identifier of the task to retrieve</p>",
         "GetRecommendationRequest$recommendationId": "<p>The unique identifier for the recommendation to retrieve</p>",
-        "ListChatsRequest$userId": "<p>The user identifier to list chats for</p>",
+        "ListChatsRequest$userId": "<p>The user identifier to list chats for. This field is deprecated and will be ignored — the service resolves user identity from the authenticated session.</p>",
         "ListExecutionsRequest$taskId": "<p>The unique identifier of the task whose executions to retrieve</p>",
         "ListJournalRecordsRequest$executionId": "<p>The unique identifier of the execution whose journal records to retrieve</p>",
         "ListPendingMessagesRequest$executionId": "<p>The unique identifier of the execution whose journal records to retrieve</p>",
@@ -1732,7 +1717,7 @@
         "ReferenceInput$referenceId": "<p>The unique identifier in the external system</p>",
         "ReferenceInput$associationId": "<p>Association identifier of the external system</p>",
         "SendMessageRequest$executionId": "<p>The execution identifier for the chat session</p>",
-        "SendMessageRequest$userId": "<p>Required user identifier</p>",
+        "SendMessageRequest$userId": "<p>User identifier. This field is deprecated and will be ignored — the service resolves user identity from the authenticated session.</p>",
         "TaskFilter$primaryTaskId": "<p>Filter by primary task ID to get linked tasks</p>",
         "UpdateBacklogTaskRequest$taskId": "<p>The unique identifier of the task to update</p>",
         "UpdateRecommendationRequest$recommendationId": "<p>The unique identifier for the recommendation to update</p>"
@@ -2020,9 +2005,6 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": "<p>Detailed error message describing why access was denied.</p>",
-        "AllowVendedLogDeliveryForResourceInput$resourceArnBeingAuthorized": "<p>The ARN of the resource being authorized for vended log delivery.</p>",
-        "AllowVendedLogDeliveryForResourceInput$logType": "<p>The type of log to be delivered.</p>",
-        "AllowVendedLogDeliveryForResourceOutput$message": "<p>A message describing the result of the authorization operation.</p>",
         "AssistantMessageBlock$text": "<p>Text content from the assistant.</p>",
         "AzureConfiguration$subscriptionId": "<p>Azure subscription ID corresponding to provided resources.</p>",
         "AzureDevOpsConfiguration$organizationName": "<p>Azure DevOps organization name.</p>",

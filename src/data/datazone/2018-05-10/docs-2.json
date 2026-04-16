@@ -1706,6 +1706,12 @@
       "base": null,
       "refs": {}
     },
+    "CreateUserProfileInputSessionNameString": {
+      "base": null,
+      "refs": {
+        "CreateUserProfileInput$sessionName": "<p>The session name for IAM role sessions.</p>"
+      }
+    },
     "CreateUserProfileOutput": {
       "base": null,
       "refs": {}
@@ -4178,6 +4184,12 @@
       "base": null,
       "refs": {}
     },
+    "GetUserProfileInputSessionNameString": {
+      "base": null,
+      "refs": {
+        "GetUserProfileInput$sessionName": "<p>The session name for IAM role sessions.</p>"
+      }
+    },
     "GetUserProfileOutput": {
       "base": null,
       "refs": {}
@@ -5555,7 +5567,8 @@
       "base": "<p>The details about a project member.</p>",
       "refs": {
         "CreateProjectMembershipInput$member": "<p>The project member whose project membership was created.</p>",
-        "DeleteProjectMembershipInput$member": "<p>The project member whose project membership is deleted.</p>"
+        "DeleteProjectMembershipInput$member": "<p>The project member whose project membership is deleted.</p>",
+        "ProjectMembershipAssignment$member": "<p>The details about a project member.</p>"
       }
     },
     "MemberDetails": {
@@ -6241,6 +6254,18 @@
       "base": null,
       "refs": {
         "ListProjectMembershipsOutput$members": "<p>The members of the project.</p>"
+      }
+    },
+    "ProjectMembershipAssignment": {
+      "base": "<p>A map of user or group profiles to designations that need to be assigned in the project.</p>",
+      "refs": {
+        "ProjectMembershipAssignments$member": null
+      }
+    },
+    "ProjectMembershipAssignments": {
+      "base": null,
+      "refs": {
+        "CreateProjectInput$membershipAssignments": "<p>The members to be assigned to the project.</p>"
       }
     },
     "ProjectName": {
@@ -6939,6 +6964,7 @@
         "CreateDomainInput$serviceRole": "<p>The service role of the domain that is created.</p>",
         "CreateDomainOutput$domainExecutionRole": "<p>The domain execution role that is created when an Amazon DataZone domain is created. The domain execution role is created in the Amazon Web Services account that houses the Amazon DataZone domain.</p>",
         "CreateDomainOutput$serviceRole": "<p>Te service role of the domain that is created.</p>",
+        "CreateProjectInput$projectExecutionRole": "<p>The default project IAM role that is used to access project resources and run computes such as Glue and Sagemaker.</p>",
         "EnvironmentBlueprintConfigurationItem$provisioningRoleArn": "<p>The ARN of the provisioning role specified in the environment blueprint configuration.</p>",
         "EnvironmentBlueprintConfigurationItem$manageAccessRoleArn": "<p>The ARN of the manage access role specified in the environment blueprint configuration.</p>",
         "GetDomainOutput$domainExecutionRole": "<p>The domain execution role with which the Amazon DataZone domain is created.</p>",
@@ -7732,7 +7758,12 @@
         "CreateEnvironmentOutput$createdBy": "<p>The Amazon DataZone user who created this environment.</p>",
         "CreateEnvironmentOutput$provider": "<p>The provider of this Amazon DataZone environment.</p>",
         "CreateEnvironmentProfileOutput$createdBy": "<p>The Amazon DataZone user who created this environment profile.</p>",
+        "CreateGroupProfileInput$rolePrincipalArn": "<p>The ARN of the IAM role that will be associated with the group profile. This role defines the permissions that group members will assume when accessing Amazon DataZone resources.</p>",
         "CreateGroupProfileInput$clientToken": "<p> A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
+        "CreateGroupProfileOutput$rolePrincipalArn": "<p>The ARN of the IAM role principal. This role is associated with the group profile.</p>",
+        "CreateGroupProfileOutput$rolePrincipalId": "<p>The unique identifier of the IAM role principal. This principal is associated with the group profile.</p>",
+        "CreateProjectInput$projectCategory": "<p>The category of the project. Set to 'ADMIN' designates this as an administrative project for the Amazon DataZone domain.</p>",
+        "CreateProjectOutput$projectCategory": "<p>The category of the project.</p>",
         "CreateSubscriptionGrantInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "CreateSubscriptionRequestInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "CreateSubscriptionRequestOutput$reviewerId": "<p>The ID of the reviewer of the subscription request.</p>",
@@ -7801,6 +7832,8 @@
         "GetEnvironmentOutput$createdBy": "<p>The Amazon DataZone user who created the environment.</p>",
         "GetEnvironmentOutput$provider": "<p>The provider of this Amazon DataZone environment.</p>",
         "GetEnvironmentProfileOutput$createdBy": "<p>The Amazon DataZone user who created this environment profile.</p>",
+        "GetGroupProfileOutput$rolePrincipalArn": "<p>The ARN of the IAM role principal. This role is associated with the group profile.</p>",
+        "GetGroupProfileOutput$rolePrincipalId": "<p>The unique identifier of the IAM role principal. This principal is associated with the group profile.</p>",
         "GetIamPortalLoginUrlOutput$authCodeUrl": "<p>The data portal URL of the specified Amazon DataZone domain.</p>",
         "GetIamPortalLoginUrlOutput$userProfileId": "<p>The ID of the user profile.</p>",
         "GetJobRunOutput$id": "<p>The ID of the job run.</p>",
@@ -7810,6 +7843,7 @@
         "GetLineageNodeOutput$description": "<p>The description of the data lineage node.</p>",
         "GetLineageNodeOutput$typeName": "<p>The name of the type of the specified data lineage node.</p>",
         "GetLineageNodeOutput$sourceIdentifier": "<p>The source identifier of the data lineage node.</p>",
+        "GetProjectOutput$projectCategory": "<p>The category of the project.</p>",
         "GetSubscriptionRequestDetailsOutput$reviewerId": "<p>The identifier of the Amazon DataZone user who reviewed the subscription request.</p>",
         "GetSubscriptionTargetOutput$type": "<p>The type of the subscription target.</p>",
         "GetSubscriptionTargetOutput$provider": "<p>The provider of the subscription target.</p>",
@@ -7825,11 +7859,15 @@
         "GreaterThanOrEqualToExpression$columnName": "<p>The name of the column.</p>",
         "GreaterThanOrEqualToExpression$value": "<p>The value that might be greater than or equal to an expression.</p>",
         "GroupDetails$groupId": "<p>The identifier of the group in Amazon DataZone.</p>",
+        "GroupProfileSummary$rolePrincipalArn": "<p>The ARN of the IAM role principal. This role is associated with the group profile.</p>",
+        "GroupProfileSummary$rolePrincipalId": "<p>The unique identifier of the IAM role principal. This principal is associated with the group profile.</p>",
         "HyperPodPropertiesOutput$clusterName": "<p>The cluster name the hyper pod properties.</p>",
         "HyperPodPropertiesOutput$clusterArn": "<p>The cluster ARN of the hyper pod properties.</p>",
         "IamPropertiesOutput$environmentId": "<p>The environment ID of the connection.</p>",
         "IamUserProfileDetails$arn": "<p>The ARN of the IAM user.</p>",
         "IamUserProfileDetails$principalId": "<p>The principal ID as part of the IAM user profile details.</p>",
+        "IamUserProfileDetails$sessionName": "<p>The session name for IAM role sessions.</p>",
+        "IamUserProfileDetails$groupProfileId": "<p>The identifier of the group profile associated with the IAM user profile. This links the user to a specific group profile within the Amazon DataZone domain.</p>",
         "InExpression$columnName": "<p>The name of the column.</p>",
         "IsNotNullExpression$columnName": "<p>The name of the column.</p>",
         "IsNullExpression$columnName": "<p>The name of the column.</p>",
@@ -7863,6 +7901,7 @@
         "ListPolicyGrantsInput$entityIdentifier": "<p>The ID of the entity for which you want to list policy grants.</p>",
         "ListProjectsInput$userIdentifier": "<p>The identifier of the Amazon DataZone user.</p>",
         "ListProjectsInput$groupIdentifier": "<p>The identifier of a group.</p>",
+        "ListProjectsInput$projectCategory": "<p>A parameter to filter projects by their category.</p>",
         "ListRulesInput$targetIdentifier": "<p>The target ID of the rule.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>The ARN of the resource whose tags you want to list.</p>",
         "ManagedEndpointCredentials$token": "<p>The ARN of the managed endpoint credentials.</p>",
@@ -7895,6 +7934,7 @@
         "ProjectDeletionError$code": "<p>The code of the project deletion error.</p>",
         "ProjectDeletionError$message": "<p>The message of the project deletion error.</p>",
         "ProjectProfileList$member": null,
+        "ProjectSummary$projectCategory": "<p>The category of the project.</p>",
         "RedshiftLineageSyncConfigurationOutput$lineageJobId": "<p>The lineage job ID of the Amaon Redshift lineage sync configuration.</p>",
         "RedshiftPropertiesOutput$jdbcIamUrl": "<p>The jdbcIam URL of the Amazon Redshift properties.</p>",
         "RedshiftPropertiesOutput$jdbcUrl": "<p>The jdbcURL of the Amazon Redshift properties. </p>",
@@ -7965,7 +8005,10 @@
         "UpdateEnvironmentOutput$provider": "<p>The provider identifier of the environment.</p>",
         "UpdateEnvironmentProfileInput$description": "<p>The description to be updated as part of the <code>UpdateEnvironmentProfile</code> action.</p>",
         "UpdateEnvironmentProfileOutput$createdBy": "<p>The Amazon DataZone user who created the environment profile.</p>",
+        "UpdateGroupProfileOutput$rolePrincipalArn": "<p>The ARN of the IAM role principal. This role is associated with the updated group profile.</p>",
+        "UpdateGroupProfileOutput$rolePrincipalId": "<p>The unique identifier of the IAM role principal. This principal is associated with the updated group profile.</p>",
         "UpdateProjectInput$projectProfileVersion": "<p>The project profile version to which the project should be updated. You can only specify the following string for this parameter: <code>latest</code>.</p>",
+        "UpdateProjectOutput$projectCategory": "<p>The category of the project.</p>",
         "UpdateRootDomainUnitOwnerInput$newOwner": "<p>The new owner of the root domain unit.</p>",
         "UpdateSubscriptionGrantStatusInput$targetName": "<p>The target name to be updated as part of the <code>UpdateSubscriptionGrantStatus</code> action.</p>",
         "UpdateSubscriptionRequestOutput$reviewerId": "<p>The identifier of the Amazon DataZone user who reviews the subscription request.</p>",
@@ -8917,6 +8960,12 @@
       "base": null,
       "refs": {}
     },
+    "UpdateUserProfileInputSessionNameString": {
+      "base": null,
+      "refs": {
+        "UpdateUserProfileInput$sessionName": "<p>The session name for IAM role sessions.</p>"
+      }
+    },
     "UpdateUserProfileOutput": {
       "base": null,
       "refs": {}
@@ -9029,7 +9078,8 @@
       "base": null,
       "refs": {
         "CreateProjectMembershipInput$designation": "<p>The designation of the project membership.</p>",
-        "ProjectMember$designation": "<p>The designated role of a project member.</p>"
+        "ProjectMember$designation": "<p>The designated role of a project member.</p>",
+        "ProjectMembershipAssignment$designation": "<p>The designation of the project membership.</p>"
       }
     },
     "UserDetails": {

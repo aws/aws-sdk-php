@@ -3978,6 +3978,10 @@
           "shape": "__string",
           "locationName": "description"
         },
+        "MaximumConcurrentFeeds": {
+          "shape": "__integerMin0",
+          "locationName": "maximumConcurrentFeeds"
+        },
         "Name": {
           "shape": "__string",
           "locationName": "name"
@@ -5215,6 +5219,47 @@
         "NOT_INDICATED",
         "ENABLED",
         "DISABLED"
+      ]
+    },
+    "ElementalInferenceConfiguration": {
+      "type": "structure",
+      "members": {
+        "Features": {
+          "shape": "__listOfElementalInferenceFeature",
+          "locationName": "features"
+        },
+        "Feeds": {
+          "shape": "__listOfElementalInferenceFeed",
+          "locationName": "feeds"
+        }
+      }
+    },
+    "ElementalInferenceFeature": {
+      "type": "string",
+      "enum": [
+        "SMART_CROP"
+      ]
+    },
+    "ElementalInferenceFeed": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "FeedManagementState": {
+          "shape": "ElementalInferenceFeedManagementState",
+          "locationName": "feedManagementState"
+        }
+      }
+    },
+    "ElementalInferenceFeedManagementState": {
+      "type": "string",
+      "enum": [
+        "CREATED",
+        "ASSOCIATED",
+        "PENDING_DELETION",
+        "DELETED"
       ]
     },
     "EmbeddedConvert608To708": {
@@ -7715,6 +7760,10 @@
         "CurrentPhase": {
           "shape": "JobPhase",
           "locationName": "currentPhase"
+        },
+        "ElementalInferenceConfiguration": {
+          "shape": "ElementalInferenceConfiguration",
+          "locationName": "elementalInferenceConfiguration"
         },
         "ErrorCode": {
           "shape": "__integer",
@@ -10676,6 +10725,10 @@
           "shape": "__timestampUnix",
           "locationName": "lastUpdated"
         },
+        "MaximumConcurrentFeeds": {
+          "shape": "__integerMin0",
+          "locationName": "maximumConcurrentFeeds"
+        },
         "Name": {
           "shape": "__string",
           "locationName": "name"
@@ -10985,7 +11038,8 @@
         "STRETCH_TO_OUTPUT",
         "FIT",
         "FIT_NO_UPSCALE",
-        "FILL"
+        "FILL",
+        "SMART_CROP"
       ]
     },
     "SccDestinationFramerate": {
@@ -11764,6 +11818,10 @@
         "Description": {
           "shape": "__string",
           "locationName": "description"
+        },
+        "MaximumConcurrentFeeds": {
+          "shape": "__integerMin0",
+          "locationName": "maximumConcurrentFeeds"
         },
         "Name": {
           "shape": "__string",
@@ -13063,6 +13121,10 @@
     "__integer": {
       "type": "integer"
     },
+    "__integerMin0": {
+      "type": "integer",
+      "min": 0
+    },
     "__integerMin0Max0": {
       "type": "integer",
       "min": 0,
@@ -13655,6 +13717,18 @@
       "type": "list",
       "member": {
         "shape": "DashAdditionalManifest"
+      }
+    },
+    "__listOfElementalInferenceFeature": {
+      "type": "list",
+      "member": {
+        "shape": "ElementalInferenceFeature"
+      }
+    },
+    "__listOfElementalInferenceFeed": {
+      "type": "list",
+      "member": {
+        "shape": "ElementalInferenceFeed"
       }
     },
     "__listOfEndpoint": {

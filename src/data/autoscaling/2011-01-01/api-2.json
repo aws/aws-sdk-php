@@ -1242,6 +1242,7 @@
         "PredictedCapacity":{"shape":"AutoScalingGroupPredictedCapacity"},
         "DefaultCooldown":{"shape":"Cooldown"},
         "AvailabilityZones":{"shape":"AvailabilityZones"},
+        "AvailabilityZoneIds":{"shape":"AvailabilityZoneIds"},
         "LoadBalancerNames":{"shape":"LoadBalancerNames"},
         "TargetGroupARNs":{"shape":"TargetGroupARNs"},
         "HealthCheckType":{"shape":"XmlStringMaxLen32"},
@@ -1323,6 +1324,7 @@
         "InstanceType":{"shape":"XmlStringMaxLen255"},
         "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"},
         "AvailabilityZone":{"shape":"XmlStringMaxLen255"},
+        "AvailabilityZoneId":{"shape":"XmlStringMaxLen255"},
         "LifecycleState":{"shape":"XmlStringMaxLen32"},
         "HealthStatus":{"shape":"XmlStringMaxLen32"},
         "LaunchConfigurationName":{"shape":"XmlStringMaxLen255"},
@@ -1352,6 +1354,10 @@
       "members":{
         "CapacityDistributionStrategy":{"shape":"CapacityDistributionStrategy"}
       }
+    },
+    "AvailabilityZoneIds":{
+      "type":"list",
+      "member":{"shape":"XmlStringMaxLen255"}
     },
     "AvailabilityZoneIdsLimit1":{
       "type":"list",
@@ -1623,6 +1629,7 @@
         "DesiredCapacity":{"shape":"AutoScalingGroupDesiredCapacity"},
         "DefaultCooldown":{"shape":"Cooldown"},
         "AvailabilityZones":{"shape":"AvailabilityZones"},
+        "AvailabilityZoneIds":{"shape":"AvailabilityZoneIds"},
         "LoadBalancerNames":{"shape":"LoadBalancerNames"},
         "TargetGroupARNs":{"shape":"TargetGroupARNs"},
         "HealthCheckType":{"shape":"XmlStringMaxLen32"},
@@ -2242,6 +2249,7 @@
         "InstanceId":{"shape":"XmlStringMaxLen19"},
         "InstanceType":{"shape":"XmlStringMaxLen255"},
         "AvailabilityZone":{"shape":"XmlStringMaxLen255"},
+        "AvailabilityZoneId":{"shape":"XmlStringMaxLen255"},
         "LifecycleState":{"shape":"LifecycleState"},
         "HealthStatus":{"shape":"XmlStringMaxLen32"},
         "LaunchConfigurationName":{"shape":"XmlStringMaxLen255"},
@@ -3819,6 +3827,7 @@
         "DesiredCapacity":{"shape":"AutoScalingGroupDesiredCapacity"},
         "DefaultCooldown":{"shape":"Cooldown"},
         "AvailabilityZones":{"shape":"AvailabilityZones"},
+        "AvailabilityZoneIds":{"shape":"AvailabilityZoneIds"},
         "HealthCheckType":{"shape":"XmlStringMaxLen32"},
         "HealthCheckGracePeriod":{"shape":"HealthCheckGracePeriod"},
         "PlacementGroup":{"shape":"UpdatePlacementGroupParam"},

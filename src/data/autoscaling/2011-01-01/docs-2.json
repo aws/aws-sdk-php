@@ -372,6 +372,14 @@
         "UpdateAutoScalingGroupType$AvailabilityZoneDistribution": "<p> The instance capacity distribution across Availability Zones. </p>"
       }
     },
+    "AvailabilityZoneIds": {
+      "base": null,
+      "refs": {
+        "AutoScalingGroup$AvailabilityZoneIds": "<p> The Availability Zone IDs where the Auto Scaling group can launch instances. </p>",
+        "CreateAutoScalingGroupType$AvailabilityZoneIds": "<p> A list of Availability Zone IDs where the Auto Scaling group can launch instances. You cannot specify both AvailabilityZones and AvailabilityZoneIds in the same request. </p>",
+        "UpdateAutoScalingGroupType$AvailabilityZoneIds": "<p> A list of Availability Zone IDs for the Auto Scaling group. You cannot specify both AvailabilityZones and AvailabilityZoneIds in the same request. </p>"
+      }
+    },
     "AvailabilityZoneIdsLimit1": {
       "base": null,
       "refs": {
@@ -2627,9 +2635,11 @@
         "AutoScalingInstanceDetails$InstanceType": "<p>The instance type of the EC2 instance.</p>",
         "AutoScalingInstanceDetails$AutoScalingGroupName": "<p>The name of the Auto Scaling group for the instance.</p>",
         "AutoScalingInstanceDetails$AvailabilityZone": "<p>The Availability Zone for the instance.</p>",
+        "AutoScalingInstanceDetails$AvailabilityZoneId": "<p> The Availability Zone ID where the instance is located. </p>",
         "AutoScalingInstanceDetails$LaunchConfigurationName": "<p>The launch configuration used to launch the instance. This value is not available if you attached the instance to the Auto Scaling group.</p>",
         "AutoScalingInstanceDetails$ImageId": "<p> The ID of the Amazon Machine Image (AMI) associated with the instance. This field shows the current AMI ID of the instance's root volume. It may differ from the original AMI used when the instance was first launched. </p> <p> This field appears for: </p> <ul> <li> <p>Instances with root volume replacements through Instance Refresh</p> </li> <li> <p>Instances launched with AMI overrides </p> </li> </ul> <p>This field won't appear for:</p> <ul> <li> <p>Existing instances launched from Launch Templates without overrides</p> </li> <li> <p>Existing instances that didn’t have their root volume replaced through Instance Refresh</p> </li> </ul>",
         "AutoScalingNotificationTypes$member": null,
+        "AvailabilityZoneIds$member": null,
         "AvailabilityZoneIdsLimit1$member": null,
         "AvailabilityZones$member": null,
         "AvailabilityZonesLimit1$member": null,
@@ -2688,6 +2698,7 @@
         "IdempotentParameterMismatchError$Message": null,
         "Instance$InstanceType": "<p>The instance type of the EC2 instance.</p>",
         "Instance$AvailabilityZone": "<p>The Availability Zone in which the instance is running.</p>",
+        "Instance$AvailabilityZoneId": "<p> The Availability Zone ID where the instance was launched. </p>",
         "Instance$LaunchConfigurationName": "<p>The launch configuration associated with the instance.</p>",
         "Instance$ImageId": "<p> The ID of the Amazon Machine Image (AMI) used for the instance's current root volume. This value reflects the most recent AMI applied to the instance, including updates made through root volume replacement operations. </p> <p> This field appears for: </p> <ul> <li> <p>Instances with root volume replacements through Instance Refresh</p> </li> <li> <p>Instances launched with AMI overrides </p> </li> </ul> <p>This field won't appear for:</p> <ul> <li> <p>Existing instances launched from Launch Templates without overrides</p> </li> <li> <p>Existing instances that didn’t have their root volume replaced through Instance Refresh</p> </li> </ul>",
         "InstanceCollection$InstanceType": "<p> The instance type of the launched instances. </p>",

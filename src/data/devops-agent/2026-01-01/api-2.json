@@ -13,27 +13,6 @@
     "uid":"devops-agent-2026-01-01"
   },
   "operations":{
-    "AllowVendedLogDeliveryForResource":{
-      "name":"AllowVendedLogDeliveryForResource",
-      "http":{
-        "method":"POST",
-        "requestUri":"/allow-vended-log-delivery-for-resource",
-        "responseCode":200
-      },
-      "input":{"shape":"AllowVendedLogDeliveryForResourceInput"},
-      "output":{"shape":"AllowVendedLogDeliveryForResourceOutput"},
-      "errors":[
-        {"shape":"ContentSizeExceededException"},
-        {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidParameterException"}
-      ],
-      "endpoint":{"hostPrefix":"cp."}
-    },
     "AssociateService":{
       "name":"AssociateService",
       "http":{
@@ -1116,28 +1095,6 @@
       "min":1,
       "pattern":"[\\p{L}\\p{N}\\p{P}\\p{S}\\p{Z}]+"
     },
-    "AllowVendedLogDeliveryForResourceInput":{
-      "type":"structure",
-      "required":[
-        "resourceArnBeingAuthorized",
-        "deliverySourceArn"
-      ],
-      "members":{
-        "resourceArnBeingAuthorized":{"shape":"String"},
-        "deliverySourceArn":{"shape":"AllowVendedLogDeliveryForResourceInputDeliverySourceArnString"},
-        "logType":{"shape":"String"}
-      }
-    },
-    "AllowVendedLogDeliveryForResourceInputDeliverySourceArnString":{
-      "type":"string",
-      "pattern":"arn:.*"
-    },
-    "AllowVendedLogDeliveryForResourceOutput":{
-      "type":"structure",
-      "members":{
-        "message":{"shape":"String"}
-      }
-    },
     "ApiKeyValue":{
       "type":"string",
       "min":1,
@@ -1379,10 +1336,7 @@
     },
     "CreateChatRequest":{
       "type":"structure",
-      "required":[
-        "agentSpaceId",
-        "userId"
-      ],
+      "required":["agentSpaceId"],
       "members":{
         "agentSpaceId":{
           "shape":"AgentSpaceId",
@@ -1391,6 +1345,9 @@
         },
         "userId":{
           "shape":"ResourceId",
+          "deprecated":true,
+          "deprecatedMessage":"userId is managed by the service and should not be provided by the caller",
+          "deprecatedSince":"2026-04-15",
           "location":"querystring",
           "locationName":"userId"
         },
@@ -2361,10 +2318,7 @@
     },
     "ListChatsRequest":{
       "type":"structure",
-      "required":[
-        "agentSpaceId",
-        "userId"
-      ],
+      "required":["agentSpaceId"],
       "members":{
         "agentSpaceId":{
           "shape":"AgentSpaceId",
@@ -2373,6 +2327,9 @@
         },
         "userId":{
           "shape":"ResourceId",
+          "deprecated":true,
+          "deprecatedMessage":"userId is managed by the service and should not be provided by the caller",
+          "deprecatedSince":"2026-04-15",
           "location":"querystring",
           "locationName":"userId"
         },
@@ -3591,8 +3548,7 @@
       "required":[
         "agentSpaceId",
         "executionId",
-        "content",
-        "userId"
+        "content"
       ],
       "members":{
         "agentSpaceId":{
@@ -3603,7 +3559,12 @@
         "executionId":{"shape":"ResourceId"},
         "content":{"shape":"MessageContent"},
         "context":{"shape":"SendMessageContext"},
-        "userId":{"shape":"ResourceId"}
+        "userId":{
+          "shape":"ResourceId",
+          "deprecated":true,
+          "deprecatedMessage":"userId is managed by the service and should not be provided by the caller",
+          "deprecatedSince":"2026-04-15"
+        }
       }
     },
     "SendMessageResponse":{

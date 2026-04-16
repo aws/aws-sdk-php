@@ -466,6 +466,11 @@
             {
               "AutoScalingGroupARN": "arn:aws:autoscaling:us-west-1:123456789012:autoScalingGroup:12345678-1234-1234-1234-123456789012:autoScalingGroupName/my-auto-scaling-group",
               "AutoScalingGroupName": "my-auto-scaling-group",
+              "AvailabilityZoneIds": [
+                "usw2-az1",
+                "usw2-az2",
+                "usw2-az3"
+              ],
               "AvailabilityZones": [
                 "us-west-2a",
                 "us-west-2b",
@@ -480,6 +485,7 @@
               "Instances": [
                 {
                   "AvailabilityZone": "us-west-2c",
+                  "AvailabilityZoneId": "usw2-az3",
                   "HealthStatus": "Healthy",
                   "InstanceId": "i-05b4f7d5be44822a6",
                   "InstanceType": "t3.micro",
@@ -489,6 +495,7 @@
                 },
                 {
                   "AvailabilityZone": "us-west-2b",
+                  "AvailabilityZoneId": "usw2-az2",
                   "HealthStatus": "Healthy",
                   "InstanceId": "i-0c20ac468fa3049e8",
                   "InstanceType": "t3.micro",
@@ -535,6 +542,7 @@
             {
               "AutoScalingGroupName": "my-auto-scaling-group",
               "AvailabilityZone": "us-west-2c",
+              "AvailabilityZoneId": "usw2-az2",
               "HealthStatus": "HEALTHY",
               "InstanceId": "i-05b4f7d5be44822a6",
               "InstanceType": "t3.micro",

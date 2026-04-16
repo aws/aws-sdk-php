@@ -3006,6 +3006,64 @@
         "title": "To describe reserved DB instance offerings"
       }
     ],
+    "DescribeServerlessV2PlatformVersions": [
+      {
+        "input": {
+          "Engine": "aurora-mysql"
+        },
+        "output": {
+          "ServerlessV2PlatformVersions": [
+            {
+              "Engine": "aurora-mysql",
+              "IsDefault": true,
+              "ServerlessV2FeaturesSupport": {
+                "MaxCapacity": 256.0,
+                "MinCapacity": 0.0
+              },
+              "ServerlessV2PlatformVersion": "4",
+              "ServerlessV2PlatformVersionDescription": "Version 4 offering scaling up to 256 ACUs, and performance improvement up to 30% compared to version 3",
+              "Status": "enabled"
+            },
+            {
+              "Engine": "aurora-mysql",
+              "IsDefault": false,
+              "ServerlessV2FeaturesSupport": {
+                "MaxCapacity": 256.0,
+                "MinCapacity": 0.0
+              },
+              "ServerlessV2PlatformVersion": "3",
+              "ServerlessV2PlatformVersionDescription": "Version 3 offering scaling up to 256 ACUs, and performance improvement up to 30% compared to version 2",
+              "Status": "enabled"
+            },
+            {
+              "Engine": "aurora-mysql",
+              "IsDefault": false,
+              "ServerlessV2FeaturesSupport": {
+                "MaxCapacity": 256.0,
+                "MinCapacity": 0.0
+              },
+              "ServerlessV2PlatformVersion": "2",
+              "ServerlessV2PlatformVersionDescription": "Version 2 offering scaling up to 256 ACUs",
+              "Status": "enabled"
+            },
+            {
+              "Engine": "aurora-mysql",
+              "IsDefault": false,
+              "ServerlessV2FeaturesSupport": {
+                "MaxCapacity": 128.0,
+                "MinCapacity": 0.0
+              },
+              "ServerlessV2PlatformVersion": "1",
+              "ServerlessV2PlatformVersionDescription": "Version 1 offering scaling up to 128 ACUs",
+              "Status": "enabled"
+            }
+          ]
+        },
+        "description": "The following example displays details about each of the serverless platform versions for the specified DB engine.",
+        "id": "example-1",
+        "title": "To describe the serverless platform versions for the Aurora MySQL DB engine"
+      }
+    ],
     "DescribeSourceRegions": [
       {
         "input": {

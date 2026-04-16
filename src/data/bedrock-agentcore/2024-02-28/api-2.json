@@ -2723,10 +2723,7 @@
     },
     "ListMemoryRecordsInput":{
       "type":"structure",
-      "required":[
-        "memoryId",
-        "namespace"
-      ],
+      "required":["memoryId"],
       "members":{
         "memoryId":{
           "shape":"MemoryId",
@@ -2734,6 +2731,7 @@
           "locationName":"memoryId"
         },
         "namespace":{"shape":"Namespace"},
+        "namespacePath":{"shape":"Namespace"},
         "memoryStrategyId":{"shape":"MemoryStrategyId"},
         "maxResults":{"shape":"MaxResults"},
         "nextToken":{"shape":"PaginationToken"}
@@ -3389,7 +3387,6 @@
       "type":"structure",
       "required":[
         "memoryId",
-        "namespace",
         "searchCriteria"
       ],
       "members":{
@@ -3399,6 +3396,7 @@
           "locationName":"memoryId"
         },
         "namespace":{"shape":"Namespace"},
+        "namespacePath":{"shape":"Namespace"},
         "searchCriteria":{"shape":"SearchCriteria"},
         "nextToken":{"shape":"PaginationToken"},
         "maxResults":{"shape":"MaxResults"}
