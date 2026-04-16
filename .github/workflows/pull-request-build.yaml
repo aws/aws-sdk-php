@@ -2,7 +2,7 @@ name: Build SDK
 on:
   pull_request_review:
     types: [ submitted ]
-    branches: [ main ]
+    branches: [ master ]
 
 concurrency:
   group: start-pull-request-build-${{ github.ref }}
@@ -27,11 +27,11 @@ jobs:
       contents: read
     steps:
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@main
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{secrets.PR_WORKFLOW_IAM_ROLE_ARN}}
+          role-to-assume: ${{ vars.PR_WORKFLOW_IAM_ROLE_ARN }}
           role-session-name: PullRequestBuildGitHubAction
-          role-duration-seconds: '$ROLE_SESSION_DURATION_SECONDS'
+          role-duration-seconds: ${{ env.ROLE_SESSION_DURATION_SECONDS }}
           aws-region: us-west-2
       - name: Download Build Script
         run: |
