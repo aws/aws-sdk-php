@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.379.2 - 2026-04-17
 
 * `Aws\ConnectCampaignsV2` - This release adds support for campaign entry limits configuration and hourly refresh frequency in Amazon Connect Outbound Campaigns.
 * `Aws\STS` - The STS client now supports configuring SigV4a through the auth scheme preference setting. SigV4a uses asymmetric cryptography, enabling customers using long-term IAM credentials to continue making STS API calls even when a region is isolated from the partition leader.
