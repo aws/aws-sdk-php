@@ -7,6 +7,7 @@
     "DeleteCampaignChannelSubtypeConfig": "<p>Deletes the channel subtype config of a campaign. This API is idempotent.</p>",
     "DeleteCampaignCommunicationLimits": "<p>Deletes the communication limits config for a campaign. This API is idempotent.</p>",
     "DeleteCampaignCommunicationTime": "<p>Deletes the communication time config for a campaign. This API is idempotent.</p>",
+    "DeleteCampaignEntryLimits": "<p>Deletes the entry limits config for a campaign. This API is idempotent.</p>",
     "DeleteConnectInstanceConfig": "<p>Deletes a connect instance config from the specified AWS account.</p>",
     "DeleteConnectInstanceIntegration": "<p>Delete the integration for the specified Amazon Connect instance.</p>",
     "DeleteInstanceOnboardingJob": "<p>Delete the Connect Campaigns onboarding job for the specified Amazon Connect instance.</p>",
@@ -33,6 +34,7 @@
     "UpdateCampaignChannelSubtypeConfig": "<p>Updates the channel subtype config of a campaign. This API is idempotent.</p>",
     "UpdateCampaignCommunicationLimits": "<p>Updates the communication limits config for a campaign. This API is idempotent.</p>",
     "UpdateCampaignCommunicationTime": "<p>Updates the communication time config for a campaign. This API is idempotent.</p>",
+    "UpdateCampaignEntryLimits": "<p>Updates the entry limits config for a campaign. This API is idempotent.</p>",
     "UpdateCampaignFlowAssociation": "<p>Updates the campaign flow associated with a campaign. This API is idempotent.</p>",
     "UpdateCampaignName": "<p>Updates the name of a campaign. This API is idempotent.</p>",
     "UpdateCampaignSchedule": "<p>Updates the schedule for a campaign. This API is idempotent.</p>",
@@ -172,6 +174,7 @@
         "DeleteCampaignChannelSubtypeConfigRequest$id": null,
         "DeleteCampaignCommunicationLimitsRequest$id": null,
         "DeleteCampaignCommunicationTimeRequest$id": null,
+        "DeleteCampaignEntryLimitsRequest$id": null,
         "DeleteCampaignRequest$id": null,
         "DescribeCampaignRequest$id": null,
         "FailedCampaignStateResponse$campaignId": null,
@@ -187,6 +190,7 @@
         "UpdateCampaignChannelSubtypeConfigRequest$id": null,
         "UpdateCampaignCommunicationLimitsRequest$id": null,
         "UpdateCampaignCommunicationTimeRequest$id": null,
+        "UpdateCampaignEntryLimitsRequest$id": null,
         "UpdateCampaignFlowAssociationRequest$id": null,
         "UpdateCampaignNameRequest$id": null,
         "UpdateCampaignScheduleRequest$id": null,
@@ -394,6 +398,10 @@
       "base": "<p>The request for DeleteCampaignCommunicationTime API.</p>",
       "refs": {}
     },
+    "DeleteCampaignEntryLimitsRequest": {
+      "base": "<p>The request for DeleteCampaignEntryLimits API.</p>",
+      "refs": {}
+    },
     "DeleteCampaignRequest": {
       "base": "<p>The request for DeleteCampaign API.</p>",
       "refs": {}
@@ -494,6 +502,21 @@
       "base": "<p>Server-side encryption type.</p>",
       "refs": {
         "EncryptionConfig$encryptionType": null
+      }
+    },
+    "EntryLimitsConfig": {
+      "base": "<p>Campaign entry limits config</p>",
+      "refs": {
+        "Campaign$entryLimitsConfig": null,
+        "CampaignSummary$entryLimitsConfig": null,
+        "CreateCampaignRequest$entryLimitsConfig": null,
+        "UpdateCampaignEntryLimitsRequest$entryLimitsConfig": null
+      }
+    },
+    "EntryLimitsConfigMaxEntryCountInteger": {
+      "base": null,
+      "refs": {
+        "EntryLimitsConfig$maxEntryCount": "<p>Maximum number of times a participant can enter the campaign. A value of 0 indicates unlimited entries. Values of 1 or greater specify the exact number of entries allowed.</p>"
       }
     },
     "EventTrigger": {
@@ -727,6 +750,7 @@
     "Iso8601Duration": {
       "base": "<p>Time duration in ISO 8601 format</p>",
       "refs": {
+        "EntryLimitsConfig$minEntryInterval": "<p>Minimum time interval that must pass before a participant can enter the campaign again.</p>",
         "Schedule$refreshFrequency": null
       }
     },
@@ -1239,6 +1263,10 @@
     },
     "UpdateCampaignCommunicationTimeRequest": {
       "base": "<p>The request for UpdateCampaignCommunicationTime API.</p>",
+      "refs": {}
+    },
+    "UpdateCampaignEntryLimitsRequest": {
+      "base": "<p>The request for UpdateCampaignEntryLimits API.</p>",
       "refs": {}
     },
     "UpdateCampaignFlowAssociationRequest": {

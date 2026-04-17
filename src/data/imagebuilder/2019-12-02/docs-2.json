@@ -2346,6 +2346,7 @@
         "ImageTestsConfiguration$imageTestsEnabled": "<p>Determines if tests should run after building the image. Image Builder defaults to enable tests to run following the image build, before image distribution.</p>",
         "InfrastructureConfiguration$terminateInstanceOnFailure": "<p>The terminate instance on failure configuration of the infrastructure configuration.</p>",
         "ListImagesRequest$includeDeprecated": "<p>Includes deprecated images in the response list.</p>",
+        "RegisterImageOptions$secureBootEnabled": "<p>Specifies whether Secure Boot is enabled for the output AMI. The default value is <code>true</code>. To disable Secure Boot for custom unsigned drivers, set this value to <code>false</code>.</p>",
         "SystemsManagerAgent$uninstallAfterBuild": "<p>Controls whether the Systems Manager agent is removed from your final build image, prior to creating the new AMI. If this is set to true, then the agent is removed from the final image. If it's set to false, then the agent is left in, so that it is included in the new AMI. default value is false.</p> <p>The default behavior of uninstallAfterBuild is to remove the SSM Agent if it was installed by EC2 Image Builder</p>",
         "UpdateImagePipelineRequest$enhancedImageMetadataEnabled": "<p>Collects additional information about the image being created, including the operating system (OS) version and package list. This information is used to enhance the overall experience of using EC2 Image Builder. Enabled by default.</p>",
         "UpdateInfrastructureConfigurationRequest$terminateInstanceOnFailure": "<p>The terminate instance on failure setting of the infrastructure configuration. Set to false if you want Image Builder to retain the instance used to configure your AMI if the build or test phase of your workflow fails.</p>",
@@ -2603,6 +2604,12 @@
       "base": null,
       "refs": {
         "DistributionConfigurationSummary$regions": "<p>A list of Regions where the container image is distributed to.</p>"
+      }
+    },
+    "RegisterImageOptions": {
+      "base": "<p>Controls Secure Boot and UEFI data settings for the resulting image during ISO imports. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/uefi-secure-boot.html\">UEFI Secure Boot for Amazon EC2 instances</a> in the <i> <i>Amazon EC2 User Guide</i> </i>.</p>",
+      "refs": {
+        "ImportDiskImageRequest$registerImageOptions": "<p>Configures Secure Boot and UEFI settings for the imported image.</p>"
       }
     },
     "Remediation": {
@@ -3007,6 +3014,12 @@
       "base": "<p>You have attempted too many requests for the specific operation.</p>",
       "refs": {}
     },
+    "UefiData": {
+      "base": null,
+      "refs": {
+        "RegisterImageOptions$uefiData": "<p>A Base64-encoded representation of the non-volatile UEFI variable store. You can specify this parameter only when <code>secureBootEnabled</code> is <code>true</code> or unspecified. You can inspect and modify the UEFI data by using the <a href=\"https://github.com/awslabs/python-uefivars\">python-uefivars tool on GitHub</a>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/uefi-variables.html\">UEFI variables for Amazon EC2 instances</a>.</p>"
+      }
+    },
     "UntagResourceRequest": {
       "base": null,
       "refs": {}
@@ -3121,6 +3134,18 @@
         "CreateContainerRecipeRequest$semanticVersion": "<p>The semantic version of the container recipe. This version follows the semantic version syntax.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b> For the first three nodes you can assign any positive integer value, including zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder automatically assigns the build number to the fourth node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment requirements for the nodes that you can assign. For example, you might choose a software version pattern, such as 1.0.0, or a date, such as 2021.01.01.</p> </note>",
         "CreateImageRecipeRequest$semanticVersion": "<p>The semantic version of the image recipe. This version follows the semantic version syntax.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b> For the first three nodes you can assign any positive integer value, including zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder automatically assigns the build number to the fourth node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment requirements for the nodes that you can assign. For example, you might choose a software version pattern, such as 1.0.0, or a date, such as 2021.01.01.</p> </note>",
         "LifecyclePolicyResourceSelectionRecipe$semanticVersion": "<p>The version of the Image Builder recipe specified by the <code>name</code> field.</p>"
+      }
+    },
+    "WindowsConfiguration": {
+      "base": "<p>Windows-specific configuration settings for an ISO import, including the edition to install from a multi-edition Windows ISO file.</p>",
+      "refs": {
+        "ImportDiskImageRequest$windowsConfiguration": "<p>Specifies Windows settings for ISO imports.</p>"
+      }
+    },
+    "WindowsConfigurationImageIndex": {
+      "base": null,
+      "refs": {
+        "WindowsConfiguration$imageIndex": "<p>The 1-based index that specifies which Windows edition to install from a multi-edition Windows ISO file. A Windows ISO can contain a <code>.wim</code> file with multiple image indexes, each representing a different edition.</p>"
       }
     },
     "Workflow": {

@@ -7447,7 +7447,8 @@
         "TargetStateCount":{"shape":"ClusterInstanceCount"},
         "SoftwareUpdateStatus":{"shape":"SoftwareUpdateStatus"},
         "ActiveSoftwareUpdateConfig":{"shape":"DeploymentConfiguration"},
-        "SlurmConfig":{"shape":"ClusterSlurmConfigDetails"}
+        "SlurmConfig":{"shape":"ClusterSlurmConfigDetails"},
+        "NetworkInterface":{"shape":"ClusterNetworkInterfaceDetails"}
       }
     },
     "ClusterInstanceGroupDetailsList":{
@@ -7484,7 +7485,8 @@
         "ImageId":{"shape":"ImageId"},
         "KubernetesConfig":{"shape":"ClusterKubernetesConfig"},
         "SlurmConfig":{"shape":"ClusterSlurmConfig"},
-        "CapacityRequirements":{"shape":"ClusterCapacityRequirements"}
+        "CapacityRequirements":{"shape":"ClusterCapacityRequirements"},
+        "NetworkInterface":{"shape":"ClusterNetworkInterface"}
       }
     },
     "ClusterInstanceGroupSpecifications":{
@@ -7709,6 +7711,13 @@
       "max":20,
       "min":1
     },
+    "ClusterInterfaceType":{
+      "type":"string",
+      "enum":[
+        "efa",
+        "efa-only"
+      ]
+    },
     "ClusterKubernetesConfig":{
       "type":"structure",
       "members":{
@@ -7795,7 +7804,8 @@
       "type":"structure",
       "members":{
         "SourceS3Uri":{"shape":"S3Uri"},
-        "OnCreate":{"shape":"ClusterLifeCycleConfigFileName"}
+        "OnCreate":{"shape":"ClusterLifeCycleConfigFileName"},
+        "OnInitComplete":{"shape":"ClusterLifeCycleConfigFileName"}
       }
     },
     "ClusterLifeCycleConfigFileName":{
@@ -7830,6 +7840,18 @@
       "min":0,
       "pattern":"(arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:cluster/[a-z0-9]{12})|([a-zA-Z0-9](-*[a-zA-Z0-9]){0,62})"
     },
+    "ClusterNetworkInterface":{
+      "type":"structure",
+      "members":{
+        "InterfaceType":{"shape":"ClusterInterfaceType"}
+      }
+    },
+    "ClusterNetworkInterfaceDetails":{
+      "type":"structure",
+      "members":{
+        "InterfaceType":{"shape":"ClusterInterfaceType"}
+      }
+    },
     "ClusterNodeDetails":{
       "type":"structure",
       "members":{
@@ -7852,7 +7874,8 @@
         "DesiredImageId":{"shape":"ImageId"},
         "UltraServerInfo":{"shape":"UltraServerInfo"},
         "KubernetesConfig":{"shape":"ClusterKubernetesConfigNodeDetails"},
-        "CapacityType":{"shape":"ClusterCapacityType"}
+        "CapacityType":{"shape":"ClusterCapacityType"},
+        "NetworkInterface":{"shape":"ClusterNetworkInterfaceDetails"}
       }
     },
     "ClusterNodeId":{

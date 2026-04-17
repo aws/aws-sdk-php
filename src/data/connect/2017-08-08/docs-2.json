@@ -4789,6 +4789,13 @@
         "ListEntitySecurityProfilesRequest$EntityType": "<p> Only supported type is AI_AGENT. </p>"
       }
     },
+    "EpochMilliseconds": {
+      "base": null,
+      "refs": {
+        "ListTestCaseExecutionsRequest$StartTime": "<p>Filter executions that started after this time.</p>",
+        "ListTestCaseExecutionsRequest$EndTime": "<p>Filter executions that started before this time.</p>"
+      }
+    },
     "ErrorCode": {
       "base": null,
       "refs": {
@@ -12788,7 +12795,7 @@
       "base": null,
       "refs": {
         "CreateTestCaseRequest$InitializationData": "<p>Defines the initial custom attributes for your test.</p>",
-        "TestCase$InitializationData": "<p>Defines the test attributes for precise data representation.</p>",
+        "TestCase$InitializationData": "<p>Defines the test attributes for precise data representation. The value must be a valid JSON string.</p>",
         "UpdateTestCaseRequest$InitializationData": "<p>Defines the test attributes for precise data representation.</p>"
       }
     },
@@ -13007,8 +13014,6 @@
         "ListSecurityProfileApplicationsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListSecurityProfileFlowModulesResponse$LastModifiedTime": "<p> The time the flow module was last modified. </p>",
         "ListSecurityProfilePermissionsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
-        "ListTestCaseExecutionsRequest$StartTime": "<p>Filter executions that started after this time.</p>",
-        "ListTestCaseExecutionsRequest$EndTime": "<p>Filter executions that started before this time.</p>",
         "ListUserProficienciesResponse$LastModifiedTime": "<p>The last time that the user's proficiencies are were modified.</p>",
         "MetricInterval$StartTime": "<p>The timestamp, in UNIX Epoch time format. Start time is based on the interval period selected. </p>",
         "MetricInterval$EndTime": "<p>The timestamp, in UNIX Epoch time format. End time is based on the interval period selected. For example, If <code>IntervalPeriod</code> is selected <code>THIRTY_MIN</code>, <code>StartTime</code> and <code>EndTime</code> in the API request differs by 1 day, then 48 results are returned in the response. Each result is aggregated by the 30 minutes period, with each <code>StartTime</code> and <code>EndTime</code> differing by 30 minutes. </p>",

@@ -103,6 +103,24 @@
       ],
       "idempotent":true
     },
+    "DeleteCampaignEntryLimits":{
+      "name":"DeleteCampaignEntryLimits",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v2/campaigns/{id}/entry-limits",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteCampaignEntryLimitsRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidCampaignStateException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "DeleteConnectInstanceConfig":{
       "name":"DeleteConnectInstanceConfig",
       "http":{
@@ -559,6 +577,24 @@
       ],
       "idempotent":true
     },
+    "UpdateCampaignEntryLimits":{
+      "name":"UpdateCampaignEntryLimits",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/campaigns/{id}/entry-limits",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateCampaignEntryLimitsRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidCampaignStateException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "UpdateCampaignFlowAssociation":{
       "name":"UpdateCampaignFlowAssociation",
       "http":{
@@ -721,6 +757,7 @@
         "source":{"shape":"Source"},
         "connectCampaignFlowArn":{"shape":"Arn"},
         "schedule":{"shape":"Schedule"},
+        "entryLimitsConfig":{"shape":"EntryLimitsConfig"},
         "communicationTimeConfig":{"shape":"CommunicationTimeConfig"},
         "communicationLimitsOverride":{"shape":"CommunicationLimitsConfig"},
         "tags":{"shape":"TagMap"}
@@ -783,6 +820,7 @@
         "channelSubtypes":{"shape":"ChannelSubtypeList"},
         "type":{"shape":"ExternalCampaignType"},
         "schedule":{"shape":"Schedule"},
+        "entryLimitsConfig":{"shape":"EntryLimitsConfig"},
         "connectCampaignFlowArn":{"shape":"Arn"}
       }
     },
@@ -942,6 +980,7 @@
         "source":{"shape":"Source"},
         "connectCampaignFlowArn":{"shape":"Arn"},
         "schedule":{"shape":"Schedule"},
+        "entryLimitsConfig":{"shape":"EntryLimitsConfig"},
         "communicationTimeConfig":{"shape":"CommunicationTimeConfig"},
         "communicationLimitsOverride":{"shape":"CommunicationLimitsConfig"},
         "tags":{"shape":"TagMap"}
@@ -1055,6 +1094,17 @@
           "shape":"CommunicationTimeConfigType",
           "location":"querystring",
           "locationName":"config"
+        }
+      }
+    },
+    "DeleteCampaignEntryLimitsRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"CampaignId",
+          "location":"uri",
+          "locationName":"id"
         }
       }
     },
@@ -1216,6 +1266,22 @@
     "EncryptionType":{
       "type":"string",
       "enum":["KMS"]
+    },
+    "EntryLimitsConfig":{
+      "type":"structure",
+      "required":[
+        "maxEntryCount",
+        "minEntryInterval"
+      ],
+      "members":{
+        "maxEntryCount":{"shape":"EntryLimitsConfigMaxEntryCountInteger"},
+        "minEntryInterval":{"shape":"Iso8601Duration"}
+      }
+    },
+    "EntryLimitsConfigMaxEntryCountInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
     },
     "EventTrigger":{
       "type":"structure",
@@ -2334,6 +2400,21 @@
           "locationName":"id"
         },
         "communicationTimeConfig":{"shape":"CommunicationTimeConfig"}
+      }
+    },
+    "UpdateCampaignEntryLimitsRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "entryLimitsConfig"
+      ],
+      "members":{
+        "id":{
+          "shape":"CampaignId",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "entryLimitsConfig":{"shape":"EntryLimitsConfig"}
       }
     },
     "UpdateCampaignFlowAssociationRequest":{

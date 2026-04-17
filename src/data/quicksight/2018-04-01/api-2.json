@@ -5782,6 +5782,7 @@
       "members":{
         "WorkGroup":{"shape":"WorkGroup"},
         "RoleArn":{"shape":"RoleArn"},
+        "ConsumerAccountRoleArn":{"shape":"RoleArn"},
         "IdentityCenterConfiguration":{"shape":"IdentityCenterConfiguration"}
       }
     },
@@ -6905,7 +6906,8 @@
         "Research":{"shape":"CapabilityState"},
         "SelfUpgradeUserRole":{"shape":"CapabilityState"},
         "Extension":{"shape":"CapabilityState"},
-        "ManageSharedFolders":{"shape":"CapabilityState"}
+        "ManageSharedFolders":{"shape":"CapabilityState"},
+        "GenerateAnalyses":{"shape":"CapabilityState"}
       }
     },
     "CapabilityState":{
@@ -7830,6 +7832,26 @@
       "member":{"shape":"ColumnIdentifier"},
       "max":4,
       "min":1
+    },
+    "ControlSortConfiguration":{
+      "type":"structure",
+      "members":{
+        "SelectableValuesSort":{"shape":"SelectableValuesSort"},
+        "ControlColumnSort":{"shape":"AggregationSortConfiguration"}
+      }
+    },
+    "ControlSortConfigurationList":{
+      "type":"list",
+      "member":{"shape":"ControlSortConfiguration"},
+      "max":1
+    },
+    "ControlSortDirection":{
+      "type":"string",
+      "enum":[
+        "ASC",
+        "DESC",
+        "USER_DEFINED_ORDER"
+      ]
     },
     "Coordinate":{
       "type":"structure",
@@ -9136,6 +9158,13 @@
         "DISABLED"
       ]
     },
+    "DashboardCustomizationSummaryConfigurations":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"}
+      }
+    },
     "DashboardCustomizationVisualOptions":{
       "type":"structure",
       "members":{
@@ -10054,6 +10083,7 @@
         "RdsParameters":{"shape":"RdsParameters"},
         "RedshiftParameters":{"shape":"RedshiftParameters"},
         "S3Parameters":{"shape":"S3Parameters"},
+        "S3TablesParameters":{"shape":"S3TablesParameters"},
         "S3KnowledgeBaseParameters":{"shape":"S3KnowledgeBaseParameters"},
         "ServiceNowParameters":{"shape":"ServiceNowParameters"},
         "SnowflakeParameters":{"shape":"SnowflakeParameters"},
@@ -10132,6 +10162,7 @@
         "PRESTO",
         "REDSHIFT",
         "S3",
+        "S3_TABLES",
         "SALESFORCE",
         "SERVICENOW",
         "SNOWFLAKE",
@@ -10641,7 +10672,8 @@
         "DisplayOptions":{"shape":"DropDownControlDisplayOptions"},
         "Type":{"shape":"SheetControlListType"},
         "SelectableValues":{"shape":"FilterSelectableValues"},
-        "CommitMode":{"shape":"CommitMode"}
+        "CommitMode":{"shape":"CommitMode"},
+        "ControlSortConfigurations":{"shape":"ControlSortConfigurationList"}
       }
     },
     "DefaultFilterListControlOptions":{
@@ -10649,7 +10681,8 @@
       "members":{
         "DisplayOptions":{"shape":"ListControlDisplayOptions"},
         "Type":{"shape":"SheetControlListType"},
-        "SelectableValues":{"shape":"FilterSelectableValues"}
+        "SelectableValues":{"shape":"FilterSelectableValues"},
+        "ControlSortConfigurations":{"shape":"ControlSortConfigurationList"}
       }
     },
     "DefaultFormatting":{
@@ -14346,7 +14379,8 @@
         "Type":{"shape":"SheetControlListType"},
         "SelectableValues":{"shape":"FilterSelectableValues"},
         "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"},
-        "CommitMode":{"shape":"CommitMode"}
+        "CommitMode":{"shape":"CommitMode"},
+        "ControlSortConfigurations":{"shape":"ControlSortConfigurationList"}
       }
     },
     "FilterGroup":{
@@ -14399,7 +14433,8 @@
         "DisplayOptions":{"shape":"ListControlDisplayOptions"},
         "Type":{"shape":"SheetControlListType"},
         "SelectableValues":{"shape":"FilterSelectableValues"},
-        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"}
+        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"},
+        "ControlSortConfigurations":{"shape":"ControlSortConfigurationList"}
       }
     },
     "FilterNullOption":{
@@ -19902,7 +19937,8 @@
         "Type":{"shape":"SheetControlListType"},
         "SelectableValues":{"shape":"ParameterSelectableValues"},
         "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"},
-        "CommitMode":{"shape":"CommitMode"}
+        "CommitMode":{"shape":"CommitMode"},
+        "ControlSortConfigurations":{"shape":"ControlSortConfigurationList"}
       }
     },
     "ParameterListControl":{
@@ -19919,7 +19955,8 @@
         "DisplayOptions":{"shape":"ListControlDisplayOptions"},
         "Type":{"shape":"SheetControlListType"},
         "SelectableValues":{"shape":"ParameterSelectableValues"},
-        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"}
+        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"},
+        "ControlSortConfigurations":{"shape":"ControlSortConfigurationList"}
       }
     },
     "ParameterName":{
@@ -21477,7 +21514,8 @@
         "AmazonQInQuickSight":{"shape":"AmazonQInQuickSightConsoleConfigurations"},
         "Schedules":{"shape":"SchedulesConfigurations"},
         "RecentSnapshots":{"shape":"RecentSnapshotsConfigurations"},
-        "ThresholdAlerts":{"shape":"ThresholdAlertsConfigurations"}
+        "ThresholdAlerts":{"shape":"ThresholdAlertsConfigurations"},
+        "DashboardCustomizationSummary":{"shape":"DashboardCustomizationSummaryConfigurations"}
       }
     },
     "RegisteredUserDashboardEmbeddingConfiguration":{
@@ -21497,7 +21535,8 @@
         "AmazonQInQuickSight":{"shape":"AmazonQInQuickSightDashboardConfigurations"},
         "Schedules":{"shape":"SchedulesConfigurations"},
         "RecentSnapshots":{"shape":"RecentSnapshotsConfigurations"},
-        "ThresholdAlerts":{"shape":"ThresholdAlertsConfigurations"}
+        "ThresholdAlerts":{"shape":"ThresholdAlertsConfigurations"},
+        "DashboardCustomizationSummary":{"shape":"DashboardCustomizationSummaryConfigurations"}
       }
     },
     "RegisteredUserDashboardVisualEmbeddingConfiguration":{
@@ -21997,6 +22036,16 @@
         "DataSourceArn":{"shape":"Arn"},
         "UploadSettings":{"shape":"UploadSettings"},
         "InputColumns":{"shape":"InputColumnList"}
+      }
+    },
+    "S3TableBucketArn":{
+      "type":"string",
+      "pattern":"^(arn:aws[-a-z0-9]*:[a-z0-9]+:[-a-z0-9]*:[0-9]{12}:bucket/[a-zA-Z0-9-_]{3,63})$"
+    },
+    "S3TablesParameters":{
+      "type":"structure",
+      "members":{
+        "TableBucketArn":{"shape":"S3TableBucketArn"}
       }
     },
     "S3Uri":{
@@ -22575,6 +22624,13 @@
     "SelectAllValueOptions":{
       "type":"string",
       "enum":["ALL_VALUES"]
+    },
+    "SelectableValuesSort":{
+      "type":"structure",
+      "required":["Direction"],
+      "members":{
+        "Direction":{"shape":"ControlSortDirection"}
+      }
     },
     "SelectedFieldList":{
       "type":"list",

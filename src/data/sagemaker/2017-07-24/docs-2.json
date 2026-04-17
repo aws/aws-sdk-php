@@ -2996,6 +2996,13 @@
         "NodeAdditionResult$InstanceTypes": "<p>The instance types associated with the successfully added node.</p>"
       }
     },
+    "ClusterInterfaceType": {
+      "base": null,
+      "refs": {
+        "ClusterNetworkInterface$InterfaceType": "<p>The type of network interface for the instance group. Valid values:</p> <ul> <li> <p> <code>efa</code> – An EFA with ENA interface, which provides both the EFA device for low-latency, high-throughput communication and the ENA device for IP networking.</p> </li> <li> <p> <code>efa-only</code> – An EFA-only interface, which provides only the EFA device capabilities without the ENA device for traditional IP networking.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html\">Elastic Fabric Adapter</a>.</p>",
+        "ClusterNetworkInterfaceDetails$InterfaceType": "<p>The type of network interface for the instance group. Valid values are <code>efa</code> and <code>efa-only</code>.</p>"
+      }
+    },
     "ClusterKubernetesConfig": {
       "base": "<p>Kubernetes configuration that specifies labels and taints to be applied to cluster nodes in an instance group. </p>",
       "refs": {
@@ -3081,7 +3088,8 @@
     "ClusterLifeCycleConfigFileName": {
       "base": null,
       "refs": {
-        "ClusterLifeCycleConfig$OnCreate": "<p>The file name of the entrypoint script of lifecycle scripts under <code>SourceS3Uri</code>. This entrypoint script runs during cluster creation.</p>"
+        "ClusterLifeCycleConfig$OnCreate": "<p>The file name of the entrypoint script of lifecycle scripts under <code>SourceS3Uri</code>. This entrypoint script runs during cluster creation.</p>",
+        "ClusterLifeCycleConfig$OnInitComplete": "<p>The file name of the entrypoint script of lifecycle scripts under <code>SourceS3Uri</code>. This script runs on the node after the AMI-based initialization is complete.</p>"
       }
     },
     "ClusterMetadata": {
@@ -3122,6 +3130,19 @@
         "StartClusterHealthCheckRequest$ClusterName": "<p>The string name or the Amazon Resource Name (ARN) of the SageMaker HyperPod cluster.</p>",
         "UpdateClusterRequest$ClusterName": "<p>Specify the name of the SageMaker HyperPod cluster you want to update.</p>",
         "UpdateClusterSoftwareRequest$ClusterName": "<p>Specify the name or the Amazon Resource Name (ARN) of the SageMaker HyperPod cluster you want to update for security patching.</p>"
+      }
+    },
+    "ClusterNetworkInterface": {
+      "base": "<p>The network interface configuration for a Amazon SageMaker HyperPod cluster instance group.</p>",
+      "refs": {
+        "ClusterInstanceGroupSpecification$NetworkInterface": "<p>The network interface configuration for the instance group.</p>"
+      }
+    },
+    "ClusterNetworkInterfaceDetails": {
+      "base": "<p>The network interface configuration details for a Amazon SageMaker HyperPod cluster instance group.</p>",
+      "refs": {
+        "ClusterInstanceGroupDetails$NetworkInterface": "<p>The network interface configuration for the instance group.</p>",
+        "ClusterNodeDetails$NetworkInterface": "<p>The network interface configuration for the cluster node.</p>"
       }
     },
     "ClusterNodeDetails": {
@@ -6128,7 +6149,7 @@
       }
     },
     "DomainId": {
-      "base": null,
+      "base": "<p>Types duplicated from IronmanApiServiceModel for federation. These types are defined in other service directories and are not available via IronmanApiServiceCommonModel.</p>",
       "refs": {
         "AppDetails$DomainId": "<p>The domain ID.</p>",
         "CreateAppRequest$DomainId": "<p>The domain ID.</p>",

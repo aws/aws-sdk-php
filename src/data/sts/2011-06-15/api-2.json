@@ -2,6 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2011-06-15",
+    "auth":[
+      "aws.auth#sigv4",
+      "aws.auth#sigv4a"
+    ],
     "endpointPrefix":"sts",
     "globalEndpoint":"sts.amazonaws.com",
     "protocol":"query",
@@ -11,8 +15,7 @@
     "serviceId":"STS",
     "signatureVersion":"v4",
     "uid":"sts-2011-06-15",
-    "xmlNamespace":"https://sts.amazonaws.com/doc/2011-06-15/",
-    "auth":["aws.auth#sigv4"]
+    "xmlNamespace":"https://sts.amazonaws.com/doc/2011-06-15/"
   },
   "operations":{
     "AssumeRole":{
@@ -52,8 +55,8 @@
         {"shape":"ExpiredTokenException"},
         {"shape":"RegionDisabledException"}
       ],
-      "authtype":"none",
-      "auth":["smithy.api#noAuth"]
+      "auth":["smithy.api#noAuth"],
+      "authtype":"none"
     },
     "AssumeRoleWithWebIdentity":{
       "name":"AssumeRoleWithWebIdentity",
@@ -75,8 +78,8 @@
         {"shape":"ExpiredTokenException"},
         {"shape":"RegionDisabledException"}
       ],
-      "authtype":"none",
-      "auth":["smithy.api#noAuth"]
+      "auth":["smithy.api#noAuth"],
+      "authtype":"none"
     },
     "AssumeRoot":{
       "name":"AssumeRoot",

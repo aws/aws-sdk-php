@@ -3310,6 +3310,8 @@
         "uri":{"shape":"Uri"},
         "loggingConfiguration":{"shape":"ImageLoggingConfiguration"},
         "tags":{"shape":"TagMap"},
+        "registerImageOptions":{"shape":"RegisterImageOptions"},
+        "windowsConfiguration":{"shape":"WindowsConfiguration"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -4552,6 +4554,13 @@
       "type":"list",
       "member":{"shape":"NonEmptyString"}
     },
+    "RegisterImageOptions":{
+      "type":"structure",
+      "members":{
+        "secureBootEnabled":{"shape":"NullableBoolean"},
+        "uefiData":{"shape":"UefiData"}
+      }
+    },
     "Remediation":{
       "type":"structure",
       "members":{
@@ -4940,6 +4949,11 @@
       "error":{"httpStatusCode":429},
       "exception":true
     },
+    "UefiData":{
+      "type":"string",
+      "max":64000,
+      "min":0
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -5135,6 +5149,18 @@
     "WildcardVersionNumber":{
       "type":"string",
       "pattern":"^(?:[0-9]+|x)\\.(?:[0-9]+|x)\\.(?:[0-9]+|x)$"
+    },
+    "WindowsConfiguration":{
+      "type":"structure",
+      "required":["imageIndex"],
+      "members":{
+        "imageIndex":{"shape":"WindowsConfigurationImageIndex"}
+      }
+    },
+    "WindowsConfigurationImageIndex":{
+      "type":"long",
+      "max":4294967295,
+      "min":1
     },
     "Workflow":{
       "type":"structure",

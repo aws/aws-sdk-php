@@ -6684,13 +6684,14 @@
       ],
       "members":{
         "type":{"shape":"ProtectedJobWorkerComputeType"},
-        "number":{"shape":"ProtectedJobWorkerComputeConfigurationNumberInteger"}
+        "number":{"shape":"ProtectedJobWorkerComputeConfigurationNumberInteger"},
+        "properties":{"shape":"WorkerComputeConfigurationProperties"}
       }
     },
     "ProtectedJobWorkerComputeConfigurationNumberInteger":{
       "type":"integer",
       "box":true,
-      "max":128,
+      "max":1024,
       "min":4
     },
     "ProtectedJobWorkerComputeType":{

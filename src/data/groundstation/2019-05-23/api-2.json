@@ -187,6 +187,22 @@
       ],
       "readonly":true
     },
+    "DescribeContactVersion":{
+      "name":"DescribeContactVersion",
+      "http":{
+        "method":"GET",
+        "requestUri":"/contact/{contactId}/versions/{versionId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeContactVersionRequest"},
+      "output":{"shape":"DescribeContactVersionResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"DependencyException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "DescribeEphemeris":{
       "name":"DescribeEphemeris",
       "http":{
@@ -315,6 +331,21 @@
       ],
       "readonly":true
     },
+    "ListAntennas":{
+      "name":"ListAntennas",
+      "http":{
+        "method":"GET",
+        "requestUri":"/groundstation/{groundStationId}/antenna",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAntennasRequest"},
+      "output":{"shape":"ListAntennasResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"DependencyException"}
+      ],
+      "readonly":true
+    },
     "ListConfigs":{
       "name":"ListConfigs",
       "http":{
@@ -324,6 +355,22 @@
       },
       "input":{"shape":"ListConfigsRequest"},
       "output":{"shape":"ListConfigsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"DependencyException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListContactVersions":{
+      "name":"ListContactVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/contact/{contactId}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListContactVersionsRequest"},
+      "output":{"shape":"ListContactVersionsResponse"},
       "errors":[
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
@@ -376,6 +423,21 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListGroundStationReservations":{
+      "name":"ListGroundStationReservations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/groundstation/{groundStationId}/reservation",
+        "responseCode":200
+      },
+      "input":{"shape":"ListGroundStationReservationsRequest"},
+      "output":{"shape":"ListGroundStationReservationsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"DependencyException"}
       ],
       "readonly":true
     },
@@ -537,6 +599,23 @@
       ],
       "idempotent":true
     },
+    "UpdateContact":{
+      "name":"UpdateContact",
+      "http":{
+        "method":"POST",
+        "requestUri":"/contact/{contactId}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateContactRequest"},
+      "output":{"shape":"UpdateContactResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"DependencyException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "UpdateEphemeris":{
       "name":"UpdateEphemeris",
       "http":{
@@ -649,6 +728,31 @@
         "demodulationConfig":{"shape":"DemodulationConfig"},
         "decodeConfig":{"shape":"DecodeConfig"}
       }
+    },
+    "AntennaList":{
+      "type":"list",
+      "member":{"shape":"AntennaListItem"},
+      "max":100,
+      "min":0
+    },
+    "AntennaListItem":{
+      "type":"structure",
+      "required":[
+        "groundStationName",
+        "antennaName",
+        "region"
+      ],
+      "members":{
+        "groundStationName":{"shape":"GroundStationName"},
+        "antennaName":{"shape":"AntennaName"},
+        "region":{"shape":"AWSRegion"}
+      }
+    },
+    "AntennaName":{
+      "type":"string",
+      "max":256,
+      "min":4,
+      "pattern":"[ a-zA-Z0-9-._:=]{4,256}"
     },
     "AntennaUplinkConfig":{
       "type":"structure",
@@ -809,6 +913,12 @@
       "max":500,
       "min":0
     },
+    "ClientToken":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[!-~]{1,64}"
+    },
     "ComponentStatusData":{
       "type":"structure",
       "required":[
@@ -943,18 +1053,26 @@
         "tags":{"shape":"TagsMap"},
         "visibilityStartTime":{"shape":"Timestamp"},
         "visibilityEndTime":{"shape":"Timestamp"},
-        "ephemeris":{"shape":"EphemerisResponseData"}
+        "ephemeris":{"shape":"EphemerisResponseData"},
+        "version":{"shape":"ContactVersion"}
       }
     },
     "ContactIdResponse":{
       "type":"structure",
       "members":{
-        "contactId":{"shape":"Uuid"}
+        "contactId":{"shape":"Uuid"},
+        "versionId":{"shape":"VersionId"}
       }
     },
     "ContactList":{
       "type":"list",
       "member":{"shape":"ContactData"}
+    },
+    "ContactReservationDetails":{
+      "type":"structure",
+      "members":{
+        "contactId":{"shape":"Uuid"}
+      }
     },
     "ContactStatus":{
       "type":"string",
@@ -973,6 +1091,23 @@
         "CANCELLING",
         "AWS_FAILED"
       ]
+    },
+    "ContactVersion":{
+      "type":"structure",
+      "members":{
+        "versionId":{"shape":"VersionId"},
+        "created":{"shape":"Timestamp"},
+        "activated":{"shape":"Timestamp"},
+        "superseded":{"shape":"Timestamp"},
+        "lastUpdated":{"shape":"Timestamp"},
+        "status":{"shape":"VersionStatus"},
+        "failureCodes":{"shape":"VersionFailureReasonCodes"},
+        "failureMessage":{"shape":"String"}
+      }
+    },
+    "ContactVersionsList":{
+      "type":"list",
+      "member":{"shape":"ContactVersion"}
     },
     "CreateConfigRequest":{
       "type":"structure",
@@ -1258,7 +1393,51 @@
         "visibilityStartTime":{"shape":"Timestamp"},
         "visibilityEndTime":{"shape":"Timestamp"},
         "trackingOverrides":{"shape":"TrackingOverrides"},
-        "ephemeris":{"shape":"EphemerisResponseData"}
+        "ephemeris":{"shape":"EphemerisResponseData"},
+        "version":{"shape":"ContactVersion"}
+      }
+    },
+    "DescribeContactVersionRequest":{
+      "type":"structure",
+      "required":[
+        "contactId",
+        "versionId"
+      ],
+      "members":{
+        "contactId":{
+          "shape":"Uuid",
+          "location":"uri",
+          "locationName":"contactId"
+        },
+        "versionId":{
+          "shape":"VersionId",
+          "location":"uri",
+          "locationName":"versionId"
+        }
+      }
+    },
+    "DescribeContactVersionResponse":{
+      "type":"structure",
+      "members":{
+        "contactId":{"shape":"Uuid"},
+        "missionProfileArn":{"shape":"MissionProfileArn"},
+        "satelliteArn":{"shape":"satelliteArn"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "prePassStartTime":{"shape":"Timestamp"},
+        "postPassEndTime":{"shape":"Timestamp"},
+        "groundStation":{"shape":"String"},
+        "contactStatus":{"shape":"ContactStatus"},
+        "errorMessage":{"shape":"String"},
+        "maximumElevation":{"shape":"Elevation"},
+        "tags":{"shape":"TagsMap"},
+        "region":{"shape":"String"},
+        "dataflowList":{"shape":"DataflowList"},
+        "visibilityStartTime":{"shape":"Timestamp"},
+        "visibilityEndTime":{"shape":"Timestamp"},
+        "trackingOverrides":{"shape":"TrackingOverrides"},
+        "ephemeris":{"shape":"EphemerisResponseData"},
+        "version":{"shape":"ContactVersion"}
       }
     },
     "DescribeEphemerisRequest":{
@@ -1834,9 +2013,34 @@
     },
     "GroundStationName":{
       "type":"string",
-      "max":500,
+      "max":97,
       "min":4,
-      "pattern":"[ a-zA-Z0-9-._:=]{4,256}"
+      "pattern":"[ a-zA-Z0-9-._:=]{4,97}"
+    },
+    "GroundStationReservationList":{
+      "type":"list",
+      "member":{"shape":"GroundStationReservationListItem"},
+      "max":100,
+      "min":0
+    },
+    "GroundStationReservationListItem":{
+      "type":"structure",
+      "required":[
+        "reservationType",
+        "groundStationId",
+        "antennaName",
+        "startTime",
+        "endTime",
+        "reservationDetails"
+      ],
+      "members":{
+        "reservationType":{"shape":"ReservationType"},
+        "groundStationId":{"shape":"GroundStationName"},
+        "antennaName":{"shape":"AntennaName"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "reservationDetails":{"shape":"ReservationDetails"}
+      }
     },
     "ISO8601TimeRange":{
       "type":"structure",
@@ -1945,6 +2149,35 @@
       },
       "union":true
     },
+    "ListAntennasRequest":{
+      "type":"structure",
+      "required":["groundStationId"],
+      "members":{
+        "groundStationId":{
+          "shape":"GroundStationName",
+          "location":"uri",
+          "locationName":"groundStationId"
+        },
+        "maxResults":{
+          "shape":"PaginationMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListAntennasResponse":{
+      "type":"structure",
+      "required":["antennaList"],
+      "members":{
+        "antennaList":{"shape":"AntennaList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListConfigsRequest":{
       "type":"structure",
       "members":{
@@ -1965,6 +2198,34 @@
       "members":{
         "nextToken":{"shape":"PaginationToken"},
         "configList":{"shape":"ConfigList"}
+      }
+    },
+    "ListContactVersionsRequest":{
+      "type":"structure",
+      "required":["contactId"],
+      "members":{
+        "contactId":{
+          "shape":"Uuid",
+          "location":"uri",
+          "locationName":"contactId"
+        },
+        "maxResults":{
+          "shape":"PaginationMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListContactVersionsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "contactVersionsList":{"shape":"ContactVersionsList"}
       }
     },
     "ListContactsRequest":{
@@ -2044,6 +2305,54 @@
       "members":{
         "nextToken":{"shape":"PaginationToken"},
         "ephemerides":{"shape":"EphemeridesList"}
+      }
+    },
+    "ListGroundStationReservationsRequest":{
+      "type":"structure",
+      "required":[
+        "groundStationId",
+        "startTime",
+        "endTime"
+      ],
+      "members":{
+        "groundStationId":{
+          "shape":"GroundStationName",
+          "location":"uri",
+          "locationName":"groundStationId"
+        },
+        "startTime":{
+          "shape":"SyntheticTimestamp_epoch_seconds",
+          "location":"querystring",
+          "locationName":"startTime"
+        },
+        "endTime":{
+          "shape":"SyntheticTimestamp_epoch_seconds",
+          "location":"querystring",
+          "locationName":"endTime"
+        },
+        "reservationTypes":{
+          "shape":"ReservationTypeFilterList",
+          "location":"querystring",
+          "locationName":"reservationTypes"
+        },
+        "maxResults":{
+          "shape":"PaginationMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListGroundStationReservationsResponse":{
+      "type":"structure",
+      "required":["reservationList"],
+      "members":{
+        "reservationList":{"shape":"GroundStationReservationList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListGroundStationsRequest":{
@@ -2138,6 +2447,20 @@
       "type":"long",
       "box":true
     },
+    "MaintenanceReservationDetails":{
+      "type":"structure",
+      "required":["maintenanceType"],
+      "members":{
+        "maintenanceType":{"shape":"MaintenanceType"}
+      }
+    },
+    "MaintenanceType":{
+      "type":"string",
+      "enum":[
+        "PLANNED",
+        "UNPLANNED"
+      ]
+    },
     "MissionProfileArn":{
       "type":"string",
       "max":138,
@@ -2176,6 +2499,13 @@
         "oemData":{"shape":"UnboundedString"}
       }
     },
+    "OemProgramTrackSettings":{
+      "type":"structure",
+      "required":["ephemerisId"],
+      "members":{
+        "ephemerisId":{"shape":"Uuid"}
+      }
+    },
     "PaginationMaxResults":{
       "type":"integer",
       "box":true,
@@ -2205,7 +2535,9 @@
     "ProgramTrackSettings":{
       "type":"structure",
       "members":{
-        "azEl":{"shape":"AzElProgramTrackSettings"}
+        "azEl":{"shape":"AzElProgramTrackSettings"},
+        "oem":{"shape":"OemProgramTrackSettings"},
+        "tle":{"shape":"TleProgramTrackSettings"}
       },
       "union":true
     },
@@ -2251,6 +2583,25 @@
       "members":{
         "agentId":{"shape":"Uuid"}
       }
+    },
+    "ReservationDetails":{
+      "type":"structure",
+      "members":{
+        "maintenance":{"shape":"MaintenanceReservationDetails"},
+        "contact":{"shape":"ContactReservationDetails"}
+      },
+      "union":true
+    },
+    "ReservationType":{
+      "type":"string",
+      "enum":[
+        "MAINTENANCE",
+        "CONTACT"
+      ]
+    },
+    "ReservationTypeFilterList":{
+      "type":"list",
+      "member":{"shape":"ReservationType"}
     },
     "ReserveContactRequest":{
       "type":"structure",
@@ -2462,6 +2813,10 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
+    "SyntheticTimestamp_epoch_seconds":{
+      "type":"timestamp",
+      "timestampFormat":"unixTimestamp"
+    },
     "TLEData":{
       "type":"structure",
       "required":[
@@ -2582,6 +2937,13 @@
       "min":69,
       "pattern":"2 [ 0-9]{5} [ 0-9]{3}[.][ 0-9]{4} [ 0-9]{3}[.][ 0-9]{4} [ 0-9]{7} [ 0-9]{3}[.][ 0-9]{4} [ 0-9]{3}[.][ 0-9]{4} [ 0-9]{2}[.][ 0-9]{13}[ 0-9]"
     },
+    "TleProgramTrackSettings":{
+      "type":"structure",
+      "required":["ephemerisId"],
+      "members":{
+        "ephemerisId":{"shape":"Uuid"}
+      }
+    },
     "TrackingConfig":{
       "type":"structure",
       "required":["autotrack"],
@@ -2591,7 +2953,6 @@
     },
     "TrackingOverrides":{
       "type":"structure",
-      "required":["programTrackSettings"],
       "members":{
         "programTrackSettings":{"shape":"ProgramTrackSettings"}
       }
@@ -2671,6 +3032,30 @@
           "locationName":"configType"
         },
         "configData":{"shape":"ConfigTypeData"}
+      }
+    },
+    "UpdateContactRequest":{
+      "type":"structure",
+      "required":["contactId"],
+      "members":{
+        "contactId":{
+          "shape":"Uuid",
+          "location":"uri",
+          "locationName":"contactId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "trackingOverrides":{"shape":"TrackingOverrides"},
+        "satelliteArn":{"shape":"satelliteArn"}
+      }
+    },
+    "UpdateContactResponse":{
+      "type":"structure",
+      "members":{
+        "contactId":{"shape":"Uuid"},
+        "versionId":{"shape":"VersionId"}
       }
     },
     "UpdateEphemerisRequest":{
@@ -2776,6 +3161,42 @@
       "max":36,
       "min":36,
       "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+    },
+    "VersionFailureReasonCode":{
+      "type":"string",
+      "enum":[
+        "INTERNAL_ERROR",
+        "INVALID_SATELLITE_ARN",
+        "INVALID_UPDATE_CONTACT_REQUEST",
+        "EPHEMERIS_NOT_FOUND",
+        "EPHEMERIS_TIME_RANGE_INVALID",
+        "EPHEMERIS_NOT_ENABLED",
+        "SATELLITE_DOES_NOT_MATCH_EPHEMERIS",
+        "NOT_ONBOARDED_TO_AZEL_EPHEMERIS",
+        "AZEL_EPHEMERIS_NOT_FOUND",
+        "AZEL_EPHEMERIS_WRONG_GROUND_STATION",
+        "AZEL_EPHEMERIS_INVALID_STATUS",
+        "AZEL_EPHEMERIS_TIME_RANGE_INVALID"
+      ]
+    },
+    "VersionFailureReasonCodes":{
+      "type":"list",
+      "member":{"shape":"VersionFailureReasonCode"}
+    },
+    "VersionId":{
+      "type":"integer",
+      "box":true,
+      "max":128,
+      "min":1
+    },
+    "VersionStatus":{
+      "type":"string",
+      "enum":[
+        "UPDATING",
+        "ACTIVE",
+        "SUPERSEDED",
+        "FAILED_TO_UPDATE"
+      ]
     },
     "VersionString":{
       "type":"string",
