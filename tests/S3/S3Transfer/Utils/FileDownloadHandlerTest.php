@@ -241,15 +241,15 @@ final class FileDownloadHandlerTest extends TestCase
     }
 
     /**
-     * Preservation: FileDownloadHandler constructed with legitimate paths
-     * (no '..' segments) must succeed without throwing.
+     * FileDownloadHandler accepts paths explicitly selected by the caller.
      */
     #[DataProvider('legitimatePathsProvider')]
     public function testConstructorAcceptsLegitimatePaths(
         string $destination,
         ?string $temporaryFilePath,
         string $description
-    ): void {
+    ): void
+    {
         $handler = new FileDownloadHandler(
             $destination,
             false,
@@ -273,10 +273,20 @@ final class FileDownloadHandlerTest extends TestCase
                 null,
                 'Relative path succeeds',
             ],
+            'relative parent path' => [
+                '../downloads/file.dat',
+                null,
+                'Relative parent path succeeds',
+            ],
             'dots in filename' => [
                 '/tmp/file.v2.0.tar.gz',
                 null,
                 'Dots in filename must NOT be falsely rejected',
+            ],
+            'equivalent destination and temporary directories' => [
+                '/tmp/downloads/file.dat',
+                '/tmp/downloads/./file.s3tmp.12345678',
+                'Equivalent directory paths succeed',
             ],
             'null temporaryFilePath' => [
                 '/tmp/destination.dat',
@@ -284,36 +294,6 @@ final class FileDownloadHandlerTest extends TestCase
                 'Null temporaryFilePath succeeds',
             ],
         ];
-    }
-
-    /**
-     * FileDownloadHandler with destination containing '..'
-     * segments should throw FileDownloadException with "path traversal" message.
-     */
-    public function testConstructorThrowsOnDestinationPathTraversal(): void
-    {
-        $this->expectException(FileDownloadException::class);
-        $this->expectExceptionMessage('path traversal');
-        new FileDownloadHandler(
-            '/tmp/../../etc/cron.d/job',
-            false
-        );
-    }
-
-    /**
-     * FileDownloadHandler with temporaryFilePath containing
-     * '..' segments should throw FileDownloadException with "path traversal" message.
-     */
-    public function testConstructorThrowsOnTemporaryFilePathTraversal(): void
-    {
-        $this->expectException(FileDownloadException::class);
-        $this->expectExceptionMessage('path traversal');
-        new FileDownloadHandler(
-            $this->tempDir . 'safe-destination.txt',
-            false,
-            true,
-            '../../var/malicious'
-        );
     }
 
     public function testCleansUpResourcesAfterFailure(): void

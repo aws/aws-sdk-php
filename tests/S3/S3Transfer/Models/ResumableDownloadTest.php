@@ -251,10 +251,29 @@ final class ResumableDownloadTest extends TestCase
         $path = $nestedDir . 'download.resume';
         $download = $this->createResumableDownload([
             'resumeFilePath' => $path,
+            'temporaryFile' => $nestedDir . 'download.tmp',
+            'destination' => $nestedDir . 'destination.dat',
         ]);
 
         $download->toFile();
         $this->assertFileExists($path);
+    }
+
+    public function testToFileRejectsPathsOutsideResumeDirectory(): void
+    {
+        $resumeDir = $this->tempDir . 'resume' . DIRECTORY_SEPARATOR;
+        $path = $resumeDir . 'download.resume';
+        $download = $this->createResumableDownload([
+            'resumeFilePath' => $path,
+            'temporaryFile' => $this->tempDir . 'download.tmp',
+            'destination' => $this->tempDir . 'destination.dat',
+        ]);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage(
+            "'destination' resolves outside the resume file directory"
+        );
+        $download->toFile();
     }
 
     public function testFromFileThrowsOnNonExistentFile(): void
@@ -292,6 +311,110 @@ final class ResumableDownloadTest extends TestCase
 
         $restored = ResumableDownload::fromFile($path);
         $this->assertEquals($download->getETag(), $restored->getETag());
+    }
+
+    public function testFromFileRejectsDestinationOutsideResumeDirectory(): void
+    {
+        $outsideDir = rtrim($this->tempDir, DIRECTORY_SEPARATOR)
+            . '-outside'
+            . DIRECTORY_SEPARATOR;
+        mkdir($outsideDir, 0777, true);
+        $path = $this->tempDir . 'unsafe-destination.resume';
+        file_put_contents($path, $this->buildResumeJson([
+            'resumeFilePath' => $path,
+            'temporaryFile' => $this->tempDir . 'download.tmp',
+            'destination' => $outsideDir . 'destination.dat',
+        ]));
+
+        try {
+            $this->expectException(S3TransferException::class);
+            $this->expectExceptionMessage(
+                "'destination' resolves outside the resume file directory"
+            );
+            ResumableDownload::fromFile($path);
+        } finally {
+            TestsUtility::cleanUpDir($outsideDir);
+        }
+    }
+
+    public function testFromFileRejectsTemporaryFileOutsideResumeDirectory(): void
+    {
+        $outsideDir = rtrim($this->tempDir, DIRECTORY_SEPARATOR)
+            . '-outside'
+            . DIRECTORY_SEPARATOR;
+        mkdir($outsideDir, 0777, true);
+        $path = $this->tempDir . 'unsafe-temporary.resume';
+        file_put_contents($path, $this->buildResumeJson([
+            'resumeFilePath' => $path,
+            'temporaryFile' => $outsideDir . 'download.tmp',
+            'destination' => $this->tempDir . 'destination.dat',
+        ]));
+
+        try {
+            $this->expectException(S3TransferException::class);
+            $this->expectExceptionMessage(
+                "'temporaryFile' resolves outside the resume file directory"
+            );
+            ResumableDownload::fromFile($path);
+        } finally {
+            TestsUtility::cleanUpDir($outsideDir);
+        }
+    }
+
+    public function testFromFileRejectsSymbolicLinkTemporaryFile(): void
+    {
+        if (DIRECTORY_SEPARATOR === '\\') {
+            $this->markTestSkipped(
+                'Creating symbolic links is not consistently available on Windows.'
+            );
+        }
+
+        $outsideDir = rtrim($this->tempDir, DIRECTORY_SEPARATOR)
+            . '-outside'
+            . DIRECTORY_SEPARATOR;
+        mkdir($outsideDir, 0777, true);
+        $target = $outsideDir . 'target.tmp';
+        file_put_contents($target, 'target');
+        $link = $this->tempDir . 'download.tmp';
+        symlink($target, $link);
+        $path = $this->tempDir . 'unsafe-symlink.resume';
+        file_put_contents($path, $this->buildResumeJson([
+            'resumeFilePath' => $path,
+            'temporaryFile' => $link,
+            'destination' => $this->tempDir . 'destination.dat',
+        ]));
+
+        try {
+            $this->expectException(S3TransferException::class);
+            $this->expectExceptionMessage(
+                "symbolic links are not allowed for 'temporaryFile'"
+            );
+            ResumableDownload::fromFile($path);
+        } finally {
+            TestsUtility::cleanUpDir($outsideDir);
+        }
+    }
+
+    public function testFromFileAcceptsEquivalentConfinedPaths(): void
+    {
+        $path = $this->tempDir . 'normalized.resume';
+        file_put_contents($path, $this->buildResumeJson([
+            'resumeFilePath' => '../../untrusted/location.resume',
+            'temporaryFile' => $this->tempDir . './download.tmp',
+            'destination' => $this->tempDir . './destination.dat',
+        ]));
+
+        $restored = ResumableDownload::fromFile($path);
+
+        $this->assertSame(
+            $this->tempDir . './download.tmp',
+            $restored->getTemporaryFile()
+        );
+        $this->assertSame(
+            $this->tempDir . './destination.dat',
+            $restored->getDestination()
+        );
+        $this->assertSame($path, $restored->getResumeFilePath());
     }
 
     public function testDeleteResumeFile(): void
@@ -344,7 +467,8 @@ final class ResumableDownloadTest extends TestCase
     #[\PHPUnit\Framework\Attributes\DataProvider('legitimateDestinationPathsProvider')]
     public function testFromJsonPreservesLegitimateDestinationPaths(
         string $destination,
-    ): void {
+    ): void
+    {
         $json = $this->buildResumeJson([
             'destination' => $destination,
         ]);
@@ -481,11 +605,11 @@ final class ResumableDownloadTest extends TestCase
             $overrides['initialRequestResult'] ?? ['ContentLength' => 5000, 'ETag' => '"abc123"'],
             $overrides['partsCompleted'] ?? [],
             $overrides['totalNumberOfParts'] ?? 3,
-            $overrides['temporaryFile'] ?? '/tmp/download.tmp',
+            $overrides['temporaryFile'] ?? $this->tempDir . 'download.tmp',
             $overrides['eTag'] ?? '"abc123"',
             $overrides['objectSizeInBytes'] ?? 5000,
             $overrides['fixedPartSize'] ?? 8388608,
-            $overrides['destination'] ?? '/tmp/destination.dat'
+            $overrides['destination'] ?? $this->tempDir . 'destination.dat'
         );
     }
 }

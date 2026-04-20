@@ -226,7 +226,73 @@ final class ResumableDownload extends AbstractResumableTransfer
             $json = $content;
         }
 
-        return self::fromJson($json);
+        $resumableDownload = self::fromJson($json);
+        $resumeFileDirectory = realpath(dirname($filePath));
+        if ($resumeFileDirectory === false) {
+            throw new S3TransferException(
+                "Unable to resolve resume file directory: " . dirname($filePath)
+            );
+        }
+
+        $resumableDownload->destination = self::resolveConfinedPath(
+            $resumableDownload->destination,
+            $resumeFileDirectory,
+            'destination'
+        );
+        if ($resumableDownload->temporaryFile !== null) {
+            $resumableDownload->temporaryFile = self::resolveConfinedPath(
+                $resumableDownload->temporaryFile,
+                $resumeFileDirectory,
+                'temporaryFile'
+            );
+        }
+
+        // Use the path selected by the caller rather than trusting the path
+        // stored in the resume file.
+        $resumableDownload->resumeFilePath = $filePath;
+
+        return $resumableDownload;
+    }
+
+    /**
+     * @param string|null $filePath
+     *
+     * @return void
+     */
+    public function toFile(?string $filePath = null): void
+    {
+        $saveFileToPath = $filePath ?? $this->resumeFilePath;
+        $resumeFileDirectory = dirname($saveFileToPath);
+        if (!is_dir($resumeFileDirectory)
+            && !mkdir($resumeFileDirectory, 0755, true)
+            && !is_dir($resumeFileDirectory)
+        ) {
+            throw new S3TransferException(
+                "Failed to create resume directory: $resumeFileDirectory"
+            );
+        }
+
+        $resolvedResumeFileDirectory = realpath($resumeFileDirectory);
+        if ($resolvedResumeFileDirectory === false) {
+            throw new S3TransferException(
+                "Unable to resolve resume file directory: $resumeFileDirectory"
+            );
+        }
+
+        self::resolveConfinedPath(
+            $this->destination,
+            $resolvedResumeFileDirectory,
+            'destination'
+        );
+        if ($this->temporaryFile !== null) {
+            self::resolveConfinedPath(
+                $this->temporaryFile,
+                $resolvedResumeFileDirectory,
+                'temporaryFile'
+            );
+        }
+
+        parent::toFile($filePath);
     }
 
     /**
@@ -319,5 +385,77 @@ final class ResumableDownload extends AbstractResumableTransfer
                 "Invalid resume file: path traversal detected in '$fieldName'"
             );
         }
+    }
+
+    /**
+     * Resolve a resume-file path and ensure it remains within the directory
+     * containing the resume file.
+     *
+     * @param string $path Path stored in the resume file
+     * @param string $resumeFileDirectory Canonical resume file directory
+     * @param string $fieldName Resume file field name
+     *
+     * @return string
+     *
+     * @throws S3TransferException If the path cannot be resolved or escapes
+     * the resume file directory
+     */
+    private static function resolveConfinedPath(
+        string $path,
+        string $resumeFileDirectory,
+        string $fieldName
+    ): string
+    {
+        $pathDirectory = realpath(dirname($path));
+        if ($pathDirectory === false) {
+            throw new S3TransferException(
+                "Invalid resume file: unable to resolve '$fieldName' directory"
+            );
+        }
+
+        $resolvedPath = $pathDirectory
+            . DIRECTORY_SEPARATOR
+            . basename($path);
+        if (!self::isPathWithinDirectory($resolvedPath, $resumeFileDirectory)) {
+            throw new S3TransferException(
+                "Invalid resume file: '$fieldName' resolves outside the "
+                . "resume file directory"
+            );
+        }
+
+        if ($fieldName === 'temporaryFile' && is_link($path)) {
+            throw new S3TransferException(
+                "Invalid resume file: symbolic links are not allowed for "
+                . "'temporaryFile'"
+            );
+        }
+
+        return $path;
+    }
+
+    /**
+     * @param string $path Canonical path to inspect
+     * @param string $directory Canonical containing directory
+     *
+     * @return bool
+     */
+    private static function isPathWithinDirectory(
+        string $path,
+        string $directory
+    ): bool
+    {
+        $path = rtrim($path, '/\\');
+        $directory = rtrim($directory, '/\\');
+
+        if (DIRECTORY_SEPARATOR === '\\') {
+            $path = strtolower($path);
+            $directory = strtolower($directory);
+        }
+
+        return $path === $directory
+            || str_starts_with(
+                $path,
+                $directory . DIRECTORY_SEPARATOR
+            );
     }
 }
