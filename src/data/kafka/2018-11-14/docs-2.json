@@ -71,6 +71,14 @@
         "KafkaClusterSummary$AmazonMskCluster" : "<p>Details of an Amazon MSK Cluster</p>."
       }
     },
+    "ApacheKafkaCluster" : {
+      "base" : "<p>Details of an Apache Kafka Cluster.</p>",
+      "refs" : {
+        "KafkaCluster$ApacheKafkaCluster" : "<p>Details of an Apache Kafka Cluster.</p>",
+        "KafkaClusterDescription$ApacheKafkaCluster" : "<p>Details of an Apache Kafka Cluster.</p>",
+        "KafkaClusterSummary$ApacheKafkaCluster" : "<p>Details of an Apache Kafka Cluster.</p>"
+      }
+    },
     "BatchAssociateScramSecretRequest" : {
       "base" : "<p>Request body for BatchAssociateScramSecret.</p>",
       "refs" : { }
@@ -336,6 +344,12 @@
       "refs" : {
         "ReplicationInfo$ConsumerGroupReplication" : "<p>Configuration relating to consumer group replication.</p>",
         "ReplicationInfoDescription$ConsumerGroupReplication" : "<p>Configuration relating to consumer group replication</p>."
+      }
+    },
+    "ConsumerGroupOffsetSyncMode" : {
+      "base" : "<p>The consumer group offset synchronization mode. With LEGACY, offsets are synchronized when producers write to the source cluster. With ENHANCED, consumer offsets are synchronized regardless of producer location. ENHANCED requires a corresponding replicator that replicates data from the target cluster to the source cluster.</p>",
+      "refs" : {
+        "ConsumerGroupReplication$ConsumerGroupOffsetSyncMode" : "<p>The consumer group offset synchronization mode. With LEGACY, offsets are synchronized when producers write to the source cluster. With ENHANCED, consumer offsets are synchronized regardless of producer location. ENHANCED requires a corresponding replicator that replicates data from the target cluster to the source cluster.</p>"
       }
     },
     "ConsumerGroupReplicationUpdate" : {
@@ -614,8 +628,40 @@
     "KafkaClusterClientVpcConfig" : {
       "base" : null,
       "refs" : {
-        "KafkaCluster$VpcConfig" : "Details of an Amazon VPC which has network connectivity to the Apache Kafka cluster.",
-        "KafkaClusterDescription$VpcConfig" : "Details of an Amazon VPC which has network connectivity to the Apache Kafka cluster."
+        "KafkaCluster$VpcConfig" : "<p>Details of an Amazon VPC which has network connectivity to the Apache Kafka cluster.</p>",
+        "KafkaClusterDescription$VpcConfig" : "<p>Details of an Amazon VPC which has network connectivity to the Apache Kafka cluster.</p>"
+      }
+    },
+    "KafkaClusterClientAuthentication" : {
+      "base" : "<p>Details of the client authentication used by the Apache Kafka cluster.</p>",
+      "refs" : {
+        "KafkaCluster$ClientAuthentication" : "<p>Details of the client authentication used by the Apache Kafka cluster.</p>",
+        "KafkaClusterDescription$ClientAuthentication" : "<p>Details of the client authentication used by the Apache Kafka cluster.</p>"
+      }
+    },
+    "KafkaClusterSaslScramAuthentication" : {
+      "base" : "<p>Details for SASL/SCRAM client authentication.</p>",
+      "refs" : {
+        "KafkaClusterClientAuthentication$SaslScram" : "<p>Details for SASL/SCRAM client authentication.</p>"
+      }
+    },
+    "KafkaClusterSaslScramMechanism" : {
+      "base" : "<p>The SASL/SCRAM authentication mechanism.</p>",
+      "refs" : {
+        "KafkaClusterSaslScramAuthentication$Mechanism" : "<p>The SASL/SCRAM authentication mechanism.</p>"
+      }
+    },
+    "KafkaClusterEncryptionInTransit" : {
+      "base" : "<p>Details of encryption in transit to the Apache Kafka cluster.</p>",
+      "refs" : {
+        "KafkaCluster$EncryptionInTransit" : "<p>Details of encryption in transit to the Apache Kafka cluster.</p>",
+        "KafkaClusterDescription$EncryptionInTransit" : "<p>Details of encryption in transit to the Apache Kafka cluster.</p>"
+      }
+    },
+    "KafkaClusterEncryptionInTransitType" : {
+      "base" : "<p>The type of encryption in transit to the Apache Kafka cluster.</p>",
+      "refs" : {
+        "KafkaClusterEncryptionInTransit$EncryptionType" : "<p>The type of encryption in transit to the Apache Kafka cluster.</p>"
       }
     },
     "KafkaClusterDescription" : {
@@ -868,6 +914,38 @@
       "base" : "<p>The type of replicated topic name.</p>",
       "refs" : {
         "ReplicationTopicNameConfiguration$Type" : "<p>The type of replicated topic name.</p>"
+      }
+    },
+    "ReplicatorCloudWatchLogs" : {
+      "base" : "<p>Details of the CloudWatch Logs destination for replicator logs.</p>",
+      "refs" : {
+        "ReplicatorLogDelivery$CloudWatchLogs" : "<p>Details of the CloudWatch Logs destination for replicator logs.</p>"
+      }
+    },
+    "ReplicatorFirehose" : {
+      "base" : "<p>Details of the Kinesis Data Firehose delivery stream that is the destination for replicator logs.</p>",
+      "refs" : {
+        "ReplicatorLogDelivery$Firehose" : "<p>Details of the Kinesis Data Firehose delivery stream that is the destination for replicator logs.</p>"
+      }
+    },
+    "LogDelivery" : {
+      "base" : "<p>Configuration for log delivery for the replicator.</p>",
+      "refs" : {
+        "CreateReplicatorRequest$LogDelivery" : "<p>Configuration for delivering replicator logs to customer destinations.</p>",
+        "DescribeReplicatorResponse$LogDelivery" : "<p>Configuration for log delivery for the replicator.</p>",
+        "UpdateReplicationInfoRequest$LogDelivery" : "<p>Configuration for delivering replicator logs to customer destinations.</p>"
+      }
+    },
+    "ReplicatorLogDelivery" : {
+      "base" : "<p>Details of the log delivery for the replicator.</p>",
+      "refs" : {
+        "LogDelivery$ReplicatorLogDelivery" : "<p>The replicator logs configuration for this MSK replicator.</p>"
+      }
+    },
+    "ReplicatorS3" : {
+      "base" : "<p>Details of the Amazon S3 destination for replicator logs.</p>",
+      "refs" : {
+        "ReplicatorLogDelivery$S3" : "<p>Details of the Amazon S3 destination for replicator logs.</p>"
       }
     },
     "ReplicationStateInfo" : {
@@ -1180,6 +1258,9 @@
         "DescribeReplicatorResponse$IsReplicatorReference" : "<p>Whether this resource is a replicator reference.</p>",
         "EncryptionInTransit$InCluster" : "<p>When set to true, it indicates that data communication among the broker nodes of the cluster is encrypted. When set to false, the communication happens in plaintext.</p> <p>The default value is true.</p>",
         "Firehose$Enabled" : "<p>Specifies whether broker logs get sent to the specified Kinesis Data Firehose delivery stream.</p>",
+        "ReplicatorCloudWatchLogs$Enabled" : "<p>Specifies whether broker logs get sent to the specified CloudWatch Logs destination for replication.</p>",
+        "ReplicatorFirehose$Enabled" : "<p>Specifies whether broker logs get sent to the specified Kinesis Data Firehose delivery stream for replication.</p>",
+        "ReplicatorS3$Enabled" : "<p>Specifies whether broker logs get sent to the specified Amazon S3 destination for replication.</p>",
         "IAM$Enabled" : "<p>IAM authentication is enabled or not.</p>",
         "JmxExporter$EnabledInBroker" : "<p>Indicates whether you want to enable or disable the JMX Exporter.</p>",
         "JmxExporterInfo$EnabledInBroker" : "<p>JMX Exporter being enabled in broker.</p>",
@@ -1442,6 +1523,8 @@
       "base" : null,
       "refs" : {
         "AmazonMskCluster$MskClusterArn" : "<p>The Amazon Resource Name (ARN) of an Amazon MSK cluster.</p>",
+        "ApacheKafkaCluster$ApacheKafkaClusterId" : "<p>The ID of the Apache Kafka cluster.</p>",
+        "ApacheKafkaCluster$BootstrapBrokerString" : "<p>The bootstrap broker string of the Apache Kafka cluster.</p>",
         "BatchAssociateScramSecretResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "BatchDisassociateScramSecretResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "BrokerEBSVolumeInfo$KafkaBrokerNodeId" : "<p>The ID of the broker to update.</p>",
@@ -1511,6 +1594,10 @@
         "ErrorInfo$ErrorCode" : "<p>A number describing the error programmatically.</p>",
         "ErrorInfo$ErrorString" : "<p>An optional field to provide more details about the error.</p>",
         "Firehose$DeliveryStream" : "<p>The Kinesis Data Firehose delivery stream that is the destination for broker logs.</p>",
+        "ReplicatorCloudWatchLogs$LogGroup" : "<p>The CloudWatch log group that is the destination for replicator logs.</p>",
+        "ReplicatorFirehose$DeliveryStream" : "<p>The Kinesis Data Firehose delivery stream that is the destination for replicator logs.</p>",
+        "ReplicatorS3$Bucket" : "<p>The name of the S3 bucket that is the destination for replicator logs.</p>",
+        "ReplicatorS3$Prefix" : "<p>The S3 prefix that is the destination for replicator logs.</p>",
         "GetBootstrapBrokersResponse$BootstrapBrokerString" : "<p>A string containing one or more hostname:port pairs.</p>",
         "GetBootstrapBrokersResponse$BootstrapBrokerStringTls" : "<p>A string containing one or more DNS names (or IP addresses) and TLS port pairs. The following is an example.</p> <programlisting>{\n    \"BootstrapBrokerStringTls\": \"b-3.exampleClusterName.abcde.c2.kafka.us-east-1.amazonaws.com:9094,b-1.exampleClusterName.abcde.c2.kafka.us-east-1.amazonaws.com:9094,b-2.exampleClusterName.abcde.c2.kafka.us-east-1.amazonaws.com:9094\"\n}</programlisting>",
         "GetBootstrapBrokersResponse$BootstrapBrokerStringSaslScram" : "<p>A string containing one or more DNS names (or IP addresses) and SASL SCRAM port pairs. The following is an example.</p> <programlisting>{\n    \"BootstrapBrokerStringSaslScram\": \"b-3.exampleClusterName.abcde.c2.kafka.us-east-1.amazonaws.com:9096,b-1.exampleClusterName.abcde.c2.kafka.us-east-1.amazonaws.com:9096,b-2.exampleClusterName.abcde.c2.kafka.us-east-1.amazonaws.com:9096\"\n}</programlisting>",
@@ -1529,6 +1616,8 @@
         "GetClusterPolicyResponse$Policy" : "<p>Cluster policy attached to the MSK cluster.</p>",
         "KafkaVersion$Version" : "<p>The Apache Kafka version.</p>",
         "KafkaClusterDescription$KafkaClusterAlias" : "<p>The alias of the Kafka cluster. Used to prefix names of replicated topics.</p> ",
+        "KafkaClusterEncryptionInTransit$RootCaCertificate" : "<p>The root CA certificate.</p>",
+        "KafkaClusterSaslScramAuthentication$SecretArn" : "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret.</p>",
         "KafkaClusterSummary$KafkaClusterAlias" : "<p>The alias of the Kafka cluster. Used to prefix names of replicated topics.</p> ",
         "ListClientVpcConnectionsResponse$NextToken" : "<p>If the response of ListClientVpcConnections is truncated, it returns a NextToken in the response. This Nexttoken should be sent in the subsequent request to ListClientVpcConnections.</p>",
         "ListClusterOperationsResponse$NextToken" : "<p>If the response of ListClusterOperations is truncated, it returns a NextToken in the response. This Nexttoken should be sent in the subsequent request to ListClusterOperations.</p>",
@@ -1549,7 +1638,9 @@
         "RebootBrokerResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "RebootBrokerResponse$ClusterOperationArn" : "<p>The Amazon Resource Name (ARN) of the cluster operation.</p>",
         "ReplicationInfo$SourceKafkaClusterArn" : "<p>The ARN of the source Kafka cluster.</p>",
+        "ReplicationInfo$SourceKafkaClusterId" : "<p>The ID of the source Kafka cluster.</p>",
         "ReplicationInfo$TargetKafkaClusterArn" : "<p>The ARN of the target Kafka cluster.</p>",
+        "ReplicationInfo$TargetKafkaClusterId" : "<p>The ID of the target Kafka cluster.</p>",
         "ReplicationInfoDescription$SourceKafkaClusterAlias" : "<p>The alias of the source Kafka cluster.</p>",
         "ReplicationInfoDescription$TargetKafkaClusterAlias" : "<p>The alias of the target Kafka cluster.</p>",
         "ReplicationInfoSummary$SourceKafkaClusterAlias" : "<p>The alias of the source Kafka cluster.</p>",
@@ -1596,7 +1687,9 @@
         "UpdateRebalancingResponse$ClusterOperationArn" : "<p>The Amazon Resource Name (ARN) of the cluster operation.</p>",
         "UpdateReplicationInfoRequest$CurrentVersion" : "<p>Current replicator version.</p>",
         "UpdateReplicationInfoRequest$SourceKafkaClusterArn" : "<p>The ARN of the source Kafka cluster.</p>",
+        "UpdateReplicationInfoRequest$SourceKafkaClusterId" : "<p>The ID of the source Kafka cluster.</p>",
         "UpdateReplicationInfoRequest$TargetKafkaClusterArn" : "<p>The ARN of the target Kafka cluster.</p>",
+        "UpdateReplicationInfoRequest$TargetKafkaClusterId" : "<p>The ID of the target Kafka cluster.</p>",
         "UpdateReplicationInfoResponse$ReplicatorArn" : "<p>The Amazon Resource Name (ARN) of the replicator.</p>",
         "UpdateSecurityRequest$CurrentVersion" : "<p>You can use the DescribeCluster operation to get the current version of the cluster. After the security update is complete, the cluster will have a new version.</p>",
         "UpdateSecurityResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",

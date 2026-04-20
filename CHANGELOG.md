@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockAgentCoreControl` - Supporting listingMode for AgentCore Gateway MCP server targets
+* `Aws\Kafka` - Amazon MSK Replicator now supports data migration from external Apache Kafka clusters to Amazon MSK Express brokers. This release adds SaslScram authentication with TLS encryption, enhanced consumer offset synchronization, and customer log forwarding for troubleshooting.
+* `Aws\LocationService` - This release adds support for new Job APIs for bulk workloads. The initial job type supported is Address Validation. The new APIs added are StartJob, CancelJob, ListJobs, and GetJob.
+* `Aws\Evs` - Amazon EVS now allows you to create connectors to your vCenter appliances and create Windows Server entitlements for virtual machines running in your EVS environments
+* `Aws\ObservabilityAdmin` - Enablement for Security Hub v2 via Observability Admin Telemetry Rule for account and organization level.
+* `Aws\EC2` - Added Transit Gateway Integration into AWS Client VPN.
+* `Aws\GuardDuty` - Expanded support for new suppression rule fields.
+* `Aws\ApplicationSignals` - Releasing Second phase of SLO Recommendations where you can create recommended SLOs out-of-the box using CreateSLO API
+
 ## 3.379.2 - 2026-04-17
 
 * `Aws\ConnectCampaignsV2` - This release adds support for campaign entry limits configuration and hourly refresh frequency in Amazon Connect Outbound Campaigns.

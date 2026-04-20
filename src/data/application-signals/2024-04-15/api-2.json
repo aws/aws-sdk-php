@@ -695,7 +695,8 @@
         "RequestBasedSliConfig":{"shape":"RequestBasedServiceLevelIndicatorConfig"},
         "Goal":{"shape":"Goal"},
         "Tags":{"shape":"TagList"},
-        "BurnRateConfigurations":{"shape":"BurnRateConfigurations"}
+        "BurnRateConfigurations":{"shape":"BurnRateConfigurations"},
+        "CreateRecommendedSlo":{"shape":"Boolean"}
       }
     },
     "CreateServiceLevelObjectiveOutput":{
@@ -1830,14 +1831,13 @@
     },
     "ServiceLevelIndicatorConfig":{
       "type":"structure",
-      "required":[
-        "SliMetricConfig",
-        "MetricThreshold",
-        "ComparisonOperator"
-      ],
+      "required":["SliMetricConfig"],
       "members":{
         "SliMetricConfig":{"shape":"ServiceLevelIndicatorMetricConfig"},
-        "MetricThreshold":{"shape":"ServiceLevelIndicatorMetricThreshold"},
+        "MetricThreshold":{
+          "shape":"ServiceLevelIndicatorMetricThreshold",
+          "box":true
+        },
         "ComparisonOperator":{"shape":"ServiceLevelIndicatorComparisonOperator"}
       }
     },

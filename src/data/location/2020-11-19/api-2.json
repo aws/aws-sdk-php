@@ -180,6 +180,23 @@
       "endpoint":{"hostPrefix":"routes."},
       "readonly":true
     },
+    "CancelJob":{
+      "name":"CancelJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/metadata/v0/jobs/cancel-job",
+        "responseCode":200
+      },
+      "input":{"shape":"CancelJobRequest"},
+      "output":{"shape":"CancelJobResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"metadata."}
+    },
     "CreateGeofenceCollection":{
       "name":"CreateGeofenceCollection",
       "http":{
@@ -622,6 +639,25 @@
       "endpoint":{"hostPrefix":"geofencing."},
       "readonly":true
     },
+    "GetJob":{
+      "name":"GetJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/metadata/v0/jobs/{JobId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetJobRequest"},
+      "output":{"shape":"GetJobResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"metadata."},
+      "readonly":true
+    },
     "GetMapGlyphs":{
       "name":"GetMapGlyphs",
       "http":{
@@ -770,6 +806,24 @@
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"geofencing."},
+      "readonly":true
+    },
+    "ListJobs":{
+      "name":"ListJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/metadata/v0/jobs/list-jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListJobsRequest"},
+      "output":{"shape":"ListJobsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"metadata."},
       "readonly":true
     },
     "ListKeys":{
@@ -975,6 +1029,24 @@
       ],
       "endpoint":{"hostPrefix":"places."},
       "readonly":true
+    },
+    "StartJob":{
+      "name":"StartJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/metadata/v0/jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"StartJobRequest"},
+      "output":{"shape":"StartJobResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"metadata."},
+      "idempotent":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -1809,6 +1881,26 @@
         "Weight":{"shape":"TruckWeight"}
       }
     },
+    "CancelJobRequest":{
+      "type":"structure",
+      "required":["JobId"],
+      "members":{
+        "JobId":{"shape":"JobId"}
+      }
+    },
+    "CancelJobResponse":{
+      "type":"structure",
+      "required":[
+        "JobArn",
+        "JobId",
+        "Status"
+      ],
+      "members":{
+        "JobArn":{"shape":"GeoArn"},
+        "JobId":{"shape":"JobId"},
+        "Status":{"shape":"JobStatus"}
+      }
+    },
     "CellSignals":{
       "type":"structure",
       "required":["LteCellDetails"],
@@ -1833,6 +1925,12 @@
         "Radius":{"shape":"SensitiveDouble"}
       },
       "sensitive":true
+    },
+    "ClientToken":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[!-~]+"
     },
     "ConflictException":{
       "type":"structure",
@@ -2768,6 +2866,47 @@
         "GeofenceProperties":{"shape":"PropertyMap"}
       }
     },
+    "GetJobRequest":{
+      "type":"structure",
+      "required":["JobId"],
+      "members":{
+        "JobId":{
+          "shape":"JobId",
+          "location":"uri",
+          "locationName":"JobId"
+        }
+      }
+    },
+    "GetJobResponse":{
+      "type":"structure",
+      "required":[
+        "Action",
+        "CreatedAt",
+        "ExecutionRoleArn",
+        "InputOptions",
+        "JobArn",
+        "JobId",
+        "OutputOptions",
+        "Status",
+        "UpdatedAt"
+      ],
+      "members":{
+        "Action":{"shape":"JobAction"},
+        "ActionOptions":{"shape":"JobActionOptions"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "EndedAt":{"shape":"Timestamp"},
+        "Error":{"shape":"JobError"},
+        "ExecutionRoleArn":{"shape":"IamRoleArn"},
+        "InputOptions":{"shape":"JobInputOptions"},
+        "JobArn":{"shape":"GeoArn"},
+        "JobId":{"shape":"JobId"},
+        "Name":{"shape":"ResourceName"},
+        "OutputOptions":{"shape":"JobOutputOptions"},
+        "Status":{"shape":"JobStatus"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
     "GetMapGlyphsRequest":{
       "type":"structure",
       "required":[
@@ -3001,6 +3140,7 @@
         "Place":{"shape":"Place"}
       }
     },
+    "IamRoleArn":{"type":"string"},
     "Id":{
       "type":"string",
       "max":100,
@@ -3041,6 +3181,107 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "JobAction":{
+      "type":"string",
+      "enum":["ValidateAddress"]
+    },
+    "JobActionOptions":{
+      "type":"structure",
+      "members":{
+        "ValidateAddress":{"shape":"ValidateAddressActionOptions"}
+      }
+    },
+    "JobError":{
+      "type":"structure",
+      "required":["Code"],
+      "members":{
+        "Code":{"shape":"JobErrorCode"},
+        "Messages":{"shape":"JobErrorMessagesList"}
+      }
+    },
+    "JobErrorCode":{
+      "type":"string",
+      "enum":[
+        "ValidationError",
+        "InternalServerError"
+      ]
+    },
+    "JobErrorMessage":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "JobErrorMessagesList":{
+      "type":"list",
+      "member":{"shape":"JobErrorMessage"},
+      "max":4,
+      "min":1
+    },
+    "JobId":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"[-._\\w]+"
+    },
+    "JobInputFormat":{
+      "type":"string",
+      "enum":["Parquet"]
+    },
+    "JobInputLocation":{
+      "type":"string",
+      "max":300,
+      "min":0,
+      "pattern":"(arn:aws(-[a-z]+)*:[a-z0-9-]+:[a-z0-9-]*:(\\d{12})?:[\\w/+=,.-]+|s3://[a-z0-9][a-z0-9._-]{2,254}(/[^/]+)*/?)"
+    },
+    "JobInputOptions":{
+      "type":"structure",
+      "required":[
+        "Location",
+        "Format"
+      ],
+      "members":{
+        "Location":{"shape":"JobInputLocation"},
+        "Format":{"shape":"JobInputFormat"}
+      }
+    },
+    "JobOutputFormat":{
+      "type":"string",
+      "enum":["Parquet"]
+    },
+    "JobOutputLocation":{
+      "type":"string",
+      "max":300,
+      "min":0,
+      "pattern":"(arn:aws(-[a-z]+)*:[a-z0-9-]+:[a-z0-9-]*:(\\d{12})?:[\\w/+=,.-]+|s3://[a-z0-9][a-z0-9._-]{2,254}(/[^/]+)*/)"
+    },
+    "JobOutputOptions":{
+      "type":"structure",
+      "required":[
+        "Format",
+        "Location"
+      ],
+      "members":{
+        "Format":{"shape":"JobOutputFormat"},
+        "Location":{"shape":"JobOutputLocation"}
+      }
+    },
+    "JobStatus":{
+      "type":"string",
+      "enum":[
+        "Pending",
+        "Running",
+        "Completed",
+        "Failed",
+        "Cancelling",
+        "Cancelled"
+      ]
+    },
+    "JobsFilter":{
+      "type":"structure",
+      "members":{
+        "JobStatus":{"shape":"JobStatus"}
+      }
     },
     "KmsKeyId":{
       "type":"string",
@@ -3259,6 +3500,61 @@
         "Entries":{"shape":"ListGeofenceResponseEntryList"},
         "NextToken":{"shape":"LargeToken"}
       }
+    },
+    "ListJobsRequest":{
+      "type":"structure",
+      "members":{
+        "Filter":{"shape":"JobsFilter"},
+        "MaxResults":{"shape":"ListJobsRequestMaxResultsInteger"},
+        "NextToken":{"shape":"LargeToken"}
+      }
+    },
+    "ListJobsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListJobsResponse":{
+      "type":"structure",
+      "required":["Entries"],
+      "members":{
+        "Entries":{"shape":"ListJobsResponseEntryList"},
+        "NextToken":{"shape":"LargeToken"}
+      }
+    },
+    "ListJobsResponseEntry":{
+      "type":"structure",
+      "required":[
+        "Action",
+        "CreatedAt",
+        "ExecutionRoleArn",
+        "InputOptions",
+        "JobId",
+        "JobArn",
+        "OutputOptions",
+        "Status",
+        "UpdatedAt"
+      ],
+      "members":{
+        "Action":{"shape":"JobAction"},
+        "ActionOptions":{"shape":"JobActionOptions"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "ExecutionRoleArn":{"shape":"IamRoleArn"},
+        "EndedAt":{"shape":"Timestamp"},
+        "Error":{"shape":"JobError"},
+        "InputOptions":{"shape":"JobInputOptions"},
+        "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"GeoArn"},
+        "Name":{"shape":"ResourceName"},
+        "OutputOptions":{"shape":"JobOutputOptions"},
+        "Status":{"shape":"JobStatus"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "ListJobsResponseEntryList":{
+      "type":"list",
+      "member":{"shape":"ListJobsResponseEntry"}
     },
     "ListKeysRequest":{
       "type":"structure",
@@ -4204,6 +4500,43 @@
         "MilesPerHour"
       ]
     },
+    "StartJobRequest":{
+      "type":"structure",
+      "required":[
+        "Action",
+        "ExecutionRoleArn",
+        "InputOptions",
+        "OutputOptions"
+      ],
+      "members":{
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "Action":{"shape":"JobAction"},
+        "ActionOptions":{"shape":"JobActionOptions"},
+        "ExecutionRoleArn":{"shape":"IamRoleArn"},
+        "InputOptions":{"shape":"JobInputOptions"},
+        "Name":{"shape":"ResourceName"},
+        "OutputOptions":{"shape":"JobOutputOptions"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "StartJobResponse":{
+      "type":"structure",
+      "required":[
+        "CreatedAt",
+        "JobArn",
+        "JobId",
+        "Status"
+      ],
+      "members":{
+        "CreatedAt":{"shape":"Timestamp"},
+        "JobArn":{"shape":"GeoArn"},
+        "JobId":{"shape":"JobId"},
+        "Status":{"shape":"JobStatus"}
+      }
+    },
     "Status":{
       "type":"string",
       "enum":[
@@ -4610,6 +4943,25 @@
     "Uuid":{
       "type":"string",
       "pattern":"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+    },
+    "ValidateAddressActionOptions":{
+      "type":"structure",
+      "members":{
+        "AdditionalFeatures":{"shape":"ValidateAddressAdditionalFeatureList"}
+      }
+    },
+    "ValidateAddressAdditionalFeature":{
+      "type":"string",
+      "enum":[
+        "Position",
+        "CountrySpecificAttributes"
+      ]
+    },
+    "ValidateAddressAdditionalFeatureList":{
+      "type":"list",
+      "member":{"shape":"ValidateAddressAdditionalFeature"},
+      "max":2,
+      "min":1
     },
     "ValidationException":{
       "type":"structure",

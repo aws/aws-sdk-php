@@ -31,6 +31,21 @@
       ],
       "idempotent":true
     },
+    "CreateEntitlement":{
+      "name":"CreateEntitlement",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateEntitlementRequest"},
+      "output":{"shape":"CreateEntitlementResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "CreateEnvironment":{
       "name":"CreateEnvironment",
       "http":{
@@ -41,6 +56,21 @@
       "output":{"shape":"CreateEnvironmentResponse"},
       "errors":[
         {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
+    "CreateEnvironmentConnector":{
+      "name":"CreateEnvironmentConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateEnvironmentConnectorRequest"},
+      "output":{"shape":"CreateEnvironmentConnectorResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
     },
@@ -58,6 +88,21 @@
       ],
       "idempotent":true
     },
+    "DeleteEntitlement":{
+      "name":"DeleteEntitlement",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteEntitlementRequest"},
+      "output":{"shape":"DeleteEntitlementResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "DeleteEnvironment":{
       "name":"DeleteEnvironment",
       "http":{
@@ -67,6 +112,21 @@
       "input":{"shape":"DeleteEnvironmentRequest"},
       "output":{"shape":"DeleteEnvironmentResponse"},
       "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteEnvironmentConnector":{
+      "name":"DeleteEnvironmentConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteEnvironmentConnectorRequest"},
+      "output":{"shape":"DeleteEnvironmentConnectorResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
       ],
@@ -129,6 +189,20 @@
       ],
       "readonly":true
     },
+    "ListEnvironmentConnectors":{
+      "name":"ListEnvironmentConnectors",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListEnvironmentConnectorsRequest"},
+      "output":{"shape":"ListEnvironmentConnectorsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "ListEnvironmentHosts":{
       "name":"ListEnvironmentHosts",
       "http":{
@@ -183,6 +257,20 @@
       ],
       "readonly":true
     },
+    "ListVmEntitlements":{
+      "name":"ListVmEntitlements",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListVmEntitlementsRequest"},
+      "output":{"shape":"ListVmEntitlementsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -212,6 +300,21 @@
         {"shape":"TagPolicyException"}
       ],
       "idempotent":true
+    },
+    "UpdateEnvironmentConnector":{
+      "name":"UpdateEnvironmentConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateEnvironmentConnectorRequest"},
+      "output":{"shape":"UpdateEnvironmentConnectorResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
     }
   },
   "shapes":{
@@ -220,6 +323,12 @@
       "max":26,
       "min":9,
       "pattern":"eipalloc-[a-zA-Z0-9_-]+"
+    },
+    "ApplianceFqdn":{
+      "type":"string",
+      "max":253,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*"
     },
     "Arn":{
       "type":"string",
@@ -287,7 +396,10 @@
         "KEY_REUSE",
         "KEY_COVERAGE",
         "REACHABILITY",
-        "HOST_COUNT"
+        "HOST_COUNT",
+        "VCENTER_REACHABILITY",
+        "VCENTER_VM_SYNC",
+        "VCENTER_VM_EVENT"
       ]
     },
     "ChecksList":{
@@ -309,6 +421,109 @@
       "required":["privateRouteServerPeerings"],
       "members":{
         "privateRouteServerPeerings":{"shape":"RouteServerPeeringList"}
+      }
+    },
+    "Connector":{
+      "type":"structure",
+      "members":{
+        "environmentId":{"shape":"EnvironmentId"},
+        "connectorId":{"shape":"ConnectorId"},
+        "type":{"shape":"ConnectorType"},
+        "applianceFqdn":{"shape":"ApplianceFqdn"},
+        "secretArn":{"shape":"SecretIdentifier"},
+        "state":{"shape":"ConnectorState"},
+        "stateDetails":{"shape":"StateDetails"},
+        "status":{"shape":"CheckResult"},
+        "checks":{"shape":"ConnectorsChecksList"},
+        "createdAt":{"shape":"Timestamp"},
+        "modifiedAt":{"shape":"Timestamp"}
+      }
+    },
+    "ConnectorCheck":{
+      "type":"structure",
+      "members":{
+        "type":{"shape":"CheckType"},
+        "result":{"shape":"CheckResult"},
+        "lastCheckAttempt":{"shape":"Timestamp"},
+        "impairedSince":{"shape":"Timestamp"}
+      }
+    },
+    "ConnectorId":{
+      "type":"string",
+      "pattern":"(cnctr-[a-zA-Z0-9]{10})"
+    },
+    "ConnectorList":{
+      "type":"list",
+      "member":{"shape":"Connector"}
+    },
+    "ConnectorState":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATE_FAILED",
+        "ACTIVE",
+        "UPDATING",
+        "UPDATE_FAILED",
+        "DELETING",
+        "DELETED"
+      ]
+    },
+    "ConnectorType":{
+      "type":"string",
+      "enum":["VCENTER"]
+    },
+    "ConnectorsChecksList":{
+      "type":"list",
+      "member":{"shape":"ConnectorCheck"}
+    },
+    "CreateEntitlementRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "connectorId",
+        "entitlementType",
+        "vmIds"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "environmentId":{"shape":"EnvironmentId"},
+        "connectorId":{"shape":"ConnectorId"},
+        "entitlementType":{"shape":"EntitlementType"},
+        "vmIds":{"shape":"VmIdList"}
+      }
+    },
+    "CreateEntitlementResponse":{
+      "type":"structure",
+      "members":{
+        "entitlements":{"shape":"VmEntitlementList"}
+      }
+    },
+    "CreateEnvironmentConnectorRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "type",
+        "applianceFqdn",
+        "secretIdentifier"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "environmentId":{"shape":"EnvironmentId"},
+        "type":{"shape":"ConnectorType"},
+        "applianceFqdn":{"shape":"ApplianceFqdn"},
+        "secretIdentifier":{"shape":"SecretIdentifier"}
+      }
+    },
+    "CreateEnvironmentConnectorResponse":{
+      "type":"structure",
+      "members":{
+        "connector":{"shape":"Connector"}
       }
     },
     "CreateEnvironmentHostRequest":{
@@ -380,6 +595,53 @@
       "max":25,
       "min":1,
       "pattern":"h-[a-f0-9]{8}([a-f0-9]{9})?"
+    },
+    "DeleteEntitlementRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "connectorId",
+        "entitlementType",
+        "vmIds"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "environmentId":{"shape":"EnvironmentId"},
+        "connectorId":{"shape":"ConnectorId"},
+        "entitlementType":{"shape":"EntitlementType"},
+        "vmIds":{"shape":"VmIdList"}
+      }
+    },
+    "DeleteEntitlementResponse":{
+      "type":"structure",
+      "members":{
+        "entitlements":{"shape":"VmEntitlementList"}
+      }
+    },
+    "DeleteEnvironmentConnectorRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "connectorId"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "environmentId":{"shape":"EnvironmentId"},
+        "connectorId":{"shape":"ConnectorId"}
+      }
+    },
+    "DeleteEnvironmentConnectorResponse":{
+      "type":"structure",
+      "members":{
+        "connector":{"shape":"Connector"},
+        "environmentSummary":{"shape":"EnvironmentSummary"}
+      }
     },
     "DeleteEnvironmentHostRequest":{
       "type":"structure",
@@ -460,6 +722,21 @@
       "type":"list",
       "member":{"shape":"EipAssociation"}
     },
+    "EntitlementStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATED",
+        "DELETED",
+        "AT_RISK",
+        "ENTITLEMENT_REMOVED",
+        "CREATE_FAILED"
+      ]
+    },
+    "EntitlementType":{
+      "type":"string",
+      "enum":["WINDOWS_SERVER"]
+    },
     "Environment":{
       "type":"structure",
       "members":{
@@ -525,6 +802,17 @@
     "EnvironmentSummaryList":{
       "type":"list",
       "member":{"shape":"EnvironmentSummary"}
+    },
+    "ErrorDetail":{
+      "type":"structure",
+      "required":[
+        "errorCode",
+        "errorMessage"
+      ],
+      "members":{
+        "errorCode":{"shape":"String"},
+        "errorMessage":{"shape":"String"}
+      }
     },
     "EsxVersion":{
       "type":"string",
@@ -721,6 +1009,22 @@
       "max":1,
       "min":1
     },
+    "ListEnvironmentConnectorsRequest":{
+      "type":"structure",
+      "required":["environmentId"],
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxResults"},
+        "environmentId":{"shape":"EnvironmentId"}
+      }
+    },
+    "ListEnvironmentConnectorsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "connectors":{"shape":"ConnectorList"}
+      }
+    },
     "ListEnvironmentHostsRequest":{
       "type":"structure",
       "required":["environmentId"],
@@ -779,6 +1083,28 @@
       "type":"structure",
       "members":{
         "tags":{"shape":"ResponseTagMap"}
+      }
+    },
+    "ListVmEntitlementsRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "connectorId",
+        "entitlementType"
+      ],
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxResults"},
+        "environmentId":{"shape":"EnvironmentId"},
+        "connectorId":{"shape":"ConnectorId"},
+        "entitlementType":{"shape":"EntitlementType"}
+      }
+    },
+    "ListVmEntitlementsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "entitlements":{"shape":"VmEntitlementList"}
       }
     },
     "MaxResults":{
@@ -859,6 +1185,12 @@
       "members":{
         "secretArn":{"shape":"String"}
       }
+    },
+    "SecretIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"(arn:aws:secretsmanager:[a-z0-9-]+:[0-9]{12}:secret:[a-zA-Z0-9/_+=.@!-]+|[a-zA-Z0-9/_+=.@!-]+)"
     },
     "SecretList":{
       "type":"list",
@@ -976,6 +1308,29 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{}
+    },
+    "UpdateEnvironmentConnectorRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "connectorId"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "environmentId":{"shape":"EnvironmentId"},
+        "connectorId":{"shape":"ConnectorId"},
+        "applianceFqdn":{"shape":"ApplianceFqdn"},
+        "secretIdentifier":{"shape":"SecretIdentifier"}
+      }
+    },
+    "UpdateEnvironmentConnectorResponse":{
+      "type":"structure",
+      "members":{
+        "connector":{"shape":"Connector"}
+      }
     },
     "VSanLicenseKey":{
       "type":"string",
@@ -1103,6 +1458,42 @@
         "DELETED",
         "CREATE_FAILED"
       ]
+    },
+    "VmEntitlement":{
+      "type":"structure",
+      "members":{
+        "vmId":{"shape":"VmId"},
+        "environmentId":{"shape":"EnvironmentId"},
+        "connectorId":{"shape":"ConnectorId"},
+        "vmName":{"shape":"VmName"},
+        "type":{"shape":"EntitlementType"},
+        "status":{"shape":"EntitlementStatus"},
+        "lastSyncedAt":{"shape":"Timestamp"},
+        "startedAt":{"shape":"Timestamp"},
+        "stoppedAt":{"shape":"Timestamp"},
+        "errorDetail":{"shape":"ErrorDetail"}
+      }
+    },
+    "VmEntitlementList":{
+      "type":"list",
+      "member":{"shape":"VmEntitlement"}
+    },
+    "VmId":{
+      "type":"string",
+      "max":1024,
+      "min":4,
+      "pattern":"vm-[0-9]+"
+    },
+    "VmIdList":{
+      "type":"list",
+      "member":{"shape":"VmId"},
+      "max":100,
+      "min":1
+    },
+    "VmName":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "VpcId":{
       "type":"string",

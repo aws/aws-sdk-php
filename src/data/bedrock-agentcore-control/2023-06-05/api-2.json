@@ -6236,6 +6236,13 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListingMode":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "DYNAMIC"
+      ]
+    },
     "LlmAsAJudgeEvaluatorConfig":{
       "type":"structure",
       "required":[
@@ -6332,7 +6339,8 @@
       "required":["endpoint"],
       "members":{
         "endpoint":{"shape":"McpServerTargetConfigurationEndpointString"},
-        "mcpToolSchema":{"shape":"McpToolSchemaConfiguration"}
+        "mcpToolSchema":{"shape":"McpToolSchemaConfiguration"},
+        "listingMode":{"shape":"ListingMode"}
       }
     },
     "McpServerTargetConfigurationEndpointString":{

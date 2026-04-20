@@ -2041,6 +2041,23 @@
         "MskClusterArn"
       ]
     },
+    "ApacheKafkaCluster": {
+      "type": "structure",
+      "members": {
+        "ApacheKafkaClusterId": {
+          "shape": "__string",
+          "locationName": "apacheKafkaClusterId"
+        },
+        "BootstrapBrokerString": {
+          "shape": "__string",
+          "locationName": "bootstrapBrokerString"
+        }
+      },
+      "required": [
+        "ApacheKafkaClusterId",
+        "BootstrapBrokerString"
+      ]
+    },
     "BatchAssociateScramSecretRequest": {
       "type": "structure",
       "members": {
@@ -2785,10 +2802,21 @@
         "SynchroniseConsumerGroupOffsets": {
           "shape": "__boolean",
           "locationName": "synchroniseConsumerGroupOffsets"
+        },
+        "ConsumerGroupOffsetSyncMode": {
+          "shape": "ConsumerGroupOffsetSyncMode",
+          "locationName": "consumerGroupOffsetSyncMode"
         }
       },
       "required": [
         "ConsumerGroupsToReplicate"
+      ]
+    },
+    "ConsumerGroupOffsetSyncMode": {
+      "type": "string",
+      "enum": [
+        "LEGACY",
+        "ENHANCED"
       ]
     },
     "ConsumerGroupReplicationUpdate": {
@@ -2958,6 +2986,10 @@
         "KafkaClusters": {
           "shape": "__listOfKafkaCluster",
           "locationName": "kafkaClusters"
+        },
+        "LogDelivery": {
+          "shape": "LogDelivery",
+          "locationName": "logDelivery"
         },
         "ReplicationInfoList": {
           "shape": "__listOfReplicationInfo",
@@ -3574,6 +3606,10 @@
           "shape": "__listOfKafkaClusterDescription",
           "locationName": "kafkaClusters"
         },
+        "LogDelivery": {
+          "shape": "LogDelivery",
+          "locationName": "logDelivery"
+        },
         "ReplicationInfoList": {
           "shape": "__listOfReplicationInfoDescription",
           "locationName": "replicationInfoList"
@@ -3934,15 +3970,23 @@
           "shape": "AmazonMskCluster",
           "locationName": "amazonMskCluster"
         },
+        "ApacheKafkaCluster": {
+          "shape": "ApacheKafkaCluster",
+          "locationName": "apacheKafkaCluster"
+        },
         "VpcConfig": {
           "shape": "KafkaClusterClientVpcConfig",
           "locationName": "vpcConfig"
+        },
+        "ClientAuthentication": {
+          "shape": "KafkaClusterClientAuthentication",
+          "locationName": "clientAuthentication"
+        },
+        "EncryptionInTransit": {
+          "shape": "KafkaClusterEncryptionInTransit",
+          "locationName": "encryptionInTransit"
         }
-      },
-      "required": [
-        "VpcConfig",
-        "AmazonMskCluster"
-      ]
+      }
     },
     "KafkaClusterClientVpcConfig": {
       "type": "structure",
@@ -3960,12 +4004,74 @@
         "SubnetIds"
       ]
     },
+    "KafkaClusterClientAuthentication": {
+      "type": "structure",
+      "members": {
+        "SaslScram": {
+          "shape": "KafkaClusterSaslScramAuthentication",
+          "locationName": "saslScram"
+        }
+      },
+      "required": [
+        "SaslScram"
+      ]
+    },
+    "KafkaClusterSaslScramAuthentication": {
+      "type": "structure",
+      "members": {
+        "Mechanism": {
+          "shape": "KafkaClusterSaslScramMechanism",
+          "locationName": "mechanism"
+        },
+        "SecretArn": {
+          "shape": "__string",
+          "locationName": "secretArn"
+        }
+      },
+      "required": [
+        "Mechanism",
+        "SecretArn"
+      ]
+    },
+    "KafkaClusterSaslScramMechanism": {
+      "type": "string",
+      "enum": [
+        "SHA256",
+        "SHA512"
+      ]
+    },
+    "KafkaClusterEncryptionInTransit": {
+      "type": "structure",
+      "members": {
+        "EncryptionType": {
+          "shape": "KafkaClusterEncryptionInTransitType",
+          "locationName": "encryptionType"
+        },
+        "RootCaCertificate": {
+          "shape": "__string",
+          "locationName": "rootCaCertificate"
+        }
+      },
+      "required": [
+        "EncryptionType"
+      ]
+    },
+    "KafkaClusterEncryptionInTransitType": {
+      "type": "string",
+      "enum": [
+        "TLS"
+      ]
+    },
     "KafkaClusterDescription": {
       "type": "structure",
       "members": {
         "AmazonMskCluster": {
           "shape": "AmazonMskCluster",
           "locationName": "amazonMskCluster"
+        },
+        "ApacheKafkaCluster": {
+          "shape": "ApacheKafkaCluster",
+          "locationName": "apacheKafkaCluster"
         },
         "KafkaClusterAlias": {
           "shape": "__string",
@@ -3974,6 +4080,14 @@
         "VpcConfig": {
           "shape": "KafkaClusterClientVpcConfig",
           "locationName": "vpcConfig"
+        },
+        "ClientAuthentication": {
+          "shape": "KafkaClusterClientAuthentication",
+          "locationName": "clientAuthentication"
+        },
+        "EncryptionInTransit": {
+          "shape": "KafkaClusterEncryptionInTransit",
+          "locationName": "encryptionInTransit"
         }
       }
     },
@@ -3983,6 +4097,10 @@
         "AmazonMskCluster": {
           "shape": "AmazonMskCluster",
           "locationName": "amazonMskCluster"
+        },
+        "ApacheKafkaCluster": {
+          "shape": "ApacheKafkaCluster",
+          "locationName": "apacheKafkaCluster"
         },
         "KafkaClusterAlias": {
           "shape": "__string",
@@ -5143,6 +5261,10 @@
           "shape": "__string",
           "locationName": "sourceKafkaClusterArn"
         },
+        "SourceKafkaClusterId": {
+          "shape": "__string",
+          "locationName": "sourceKafkaClusterId"
+        },
         "TargetCompressionType": {
           "shape": "TargetCompressionType",
           "locationName": "targetCompressionType"
@@ -5150,6 +5272,10 @@
         "TargetKafkaClusterArn": {
           "shape": "__string",
           "locationName": "targetKafkaClusterArn"
+        },
+        "TargetKafkaClusterId": {
+          "shape": "__string",
+          "locationName": "targetKafkaClusterId"
         },
         "TopicReplication": {
           "shape": "TopicReplication",
@@ -5159,9 +5285,7 @@
       "required": [
         "TargetCompressionType",
         "TopicReplication",
-        "ConsumerGroupReplication",
-        "SourceKafkaClusterArn",
-        "TargetKafkaClusterArn"
+        "ConsumerGroupReplication"
       ]
     },
     "ReplicationInfoDescription": {
@@ -5233,6 +5357,84 @@
         "PREFIXED_WITH_SOURCE_CLUSTER_ALIAS",
         "IDENTICAL"
       ]
+    },
+    "ReplicatorCloudWatchLogs": {
+      "type": "structure",
+      "members": {
+        "Enabled": {
+          "shape": "__boolean",
+          "locationName": "enabled"
+        },
+        "LogGroup": {
+          "shape": "__string",
+          "locationName": "logGroup"
+        }
+      },
+      "required": [
+        "Enabled"
+      ]
+    },
+    "ReplicatorFirehose": {
+      "type": "structure",
+      "members": {
+        "DeliveryStream": {
+          "shape": "__string",
+          "locationName": "deliveryStream"
+        },
+        "Enabled": {
+          "shape": "__boolean",
+          "locationName": "enabled"
+        }
+      },
+      "required": [
+        "Enabled"
+      ]
+    },
+    "ReplicatorS3": {
+      "type": "structure",
+      "members": {
+        "Bucket": {
+          "shape": "__string",
+          "locationName": "bucket"
+        },
+        "Enabled": {
+          "shape": "__boolean",
+          "locationName": "enabled"
+        },
+        "Prefix": {
+          "shape": "__string",
+          "locationName": "prefix"
+        }
+      },
+      "required": [
+        "Enabled"
+      ]
+    },
+    "LogDelivery": {
+      "type": "structure",
+      "members": {
+        "ReplicatorLogDelivery": {
+          "shape": "ReplicatorLogDelivery",
+          "locationName": "replicatorLogDelivery"
+        }
+      }
+    },
+    "ReplicatorLogDelivery": {
+      "type": "structure",
+      "members": {
+        "CloudWatchLogs": {
+          "shape": "ReplicatorCloudWatchLogs",
+          "locationName": "cloudWatchLogs"
+        },
+        "Firehose": {
+          "shape": "ReplicatorFirehose",
+          "locationName": "firehose"
+        },
+        "S3": {
+          "shape": "ReplicatorS3",
+          "locationName": "s3"
+        }
+      }
     },
     "ReplicationStateInfo": {
       "type": "structure",
@@ -6126,6 +6328,10 @@
           "shape": "__string",
           "locationName": "currentVersion"
         },
+        "LogDelivery": {
+          "shape": "LogDelivery",
+          "locationName": "logDelivery"
+        },
         "ReplicatorArn": {
           "shape": "__string",
           "location": "uri",
@@ -6135,9 +6341,17 @@
           "shape": "__string",
           "locationName": "sourceKafkaClusterArn"
         },
+        "SourceKafkaClusterId": {
+          "shape": "__string",
+          "locationName": "sourceKafkaClusterId"
+        },
         "TargetKafkaClusterArn": {
           "shape": "__string",
           "locationName": "targetKafkaClusterArn"
+        },
+        "TargetKafkaClusterId": {
+          "shape": "__string",
+          "locationName": "targetKafkaClusterId"
         },
         "TopicReplication": {
           "shape": "TopicReplicationUpdate",
@@ -6146,9 +6360,7 @@
       },
       "required": [
         "ReplicatorArn",
-        "SourceKafkaClusterArn",
-        "CurrentVersion",
-        "TargetKafkaClusterArn"
+        "CurrentVersion"
       ]
     },
     "UpdateReplicationInfoResponse": {
