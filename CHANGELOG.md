@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.379.3 - 2026-04-20
 
 * `Aws\BedrockAgentCoreControl` - Supporting listingMode for AgentCore Gateway MCP server targets
 * `Aws\Kafka` - Amazon MSK Replicator now supports data migration from external Apache Kafka clusters to Amazon MSK Express brokers. This release adds SaslScram authentication with TLS encryption, enhanced consumer offset synchronization, and customer log forwarding for troubleshooting.
