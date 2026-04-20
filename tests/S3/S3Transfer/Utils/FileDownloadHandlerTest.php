@@ -338,4 +338,16 @@ final class FileDownloadHandlerTest extends TestCase
 
         $this->assertFileDoesNotExist($tempFile);
     }
+
+    public function testConstructorThrowsWhenDestinationAndTemporaryDirsAreNotTheSame(): void
+    {
+        $this->expectException(FileDownloadException::class);
+        $this->expectExceptionMessage('The destination and temporary paths must be on same directory.');
+        new FileDownloadHandler(
+            '/opt/temp/myfile.txt',
+            false,
+            false,
+            '/opt/temp/anotherdir/myfile.s3tmp.12345678'
+        );
+    }
 }

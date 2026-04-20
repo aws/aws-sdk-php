@@ -60,7 +60,14 @@ final class FileDownloadHandler extends AbstractDownloadHandler
 
         self::validatePathSafety($this->destination, 'destination');
         if ($this->temporaryFilePath !== null) {
+            // Validate temporary path has no directory traversal segments
             self::validatePathSafety($this->temporaryFilePath, 'temporaryFilePath');
+
+            // Validate temporary path and destination are both on the same directory
+            self::validateTemporaryFileIsOnSameDestinationDirectory(
+                $this->destination,
+                $this->temporaryFilePath
+            );
         }
     }
 
@@ -465,12 +472,37 @@ final class FileDownloadHandler extends AbstractDownloadHandler
      *
      * @throws FileDownloadException If path traversal is detected
      */
-    private static function validatePathSafety(string $path, string $fieldName): void
+    private static function validatePathSafety(
+        string $path,
+        string $fieldName
+    ): void
     {
         $segments = preg_split('/[\\/\\\\]/', $path);
         if (in_array('..', $segments, true)) {
             throw new FileDownloadException(
                 "path traversal detected in '$fieldName'"
+            );
+        }
+    }
+
+    /**
+     * Validates that destination and temporary path are on the same directory.
+     *
+     * @param string $destinationPath
+     * @param string $temporaryFilePath
+     *
+     * @return void
+     */
+    private static function validateTemporaryFileIsOnSameDestinationDirectory(
+        string $destinationPath,
+        string $temporaryFilePath
+    ): void
+    {
+        $destinationDir = dirname($destinationPath);
+        $temporaryFileDir = dirname($temporaryFilePath);
+        if ($destinationDir !== $temporaryFileDir) {
+            throw new FileDownloadException(
+                "The destination and temporary paths must be on same directory."
             );
         }
     }
