@@ -1,7 +1,7 @@
 name: Build SDK
 on:
-  pull_request_review:
-    types: [ submitted ]
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
     branches: [ master ]
 
 concurrency:
@@ -13,12 +13,9 @@ env:
   DOWNLOAD_FOLDER: '.build-scripts/'
   SCRIPT_LOCATION: 'workflows/start-pull-request-build/pull-request-build-v1.sh'
 
-  # custom variables
-  ROLE_SESSION_DURATION_SECONDS: 7200
-
 jobs:
   aws-sdk-pr-build:
-    if: github.event.review.state == 'approved'
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -29,9 +26,9 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ vars.PR_WORKFLOW_IAM_ROLE_ARN }}
+          role-to-assume: ${{ secrets.PR_WORKFLOW_IAM_ROLE_ARN }}
           role-session-name: PullRequestBuildGitHubAction
-          role-duration-seconds: ${{ env.ROLE_SESSION_DURATION_SECONDS }}
+          role-duration-seconds: 7200
           aws-region: us-west-2
       - name: Download Build Script
         run: |
@@ -51,4 +48,3 @@ jobs:
             --pr-number "$PR_NUMBER" \
             --run-id "$RUN_ID"
         timeout-minutes: 120
-
