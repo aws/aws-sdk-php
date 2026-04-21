@@ -4,8 +4,11 @@
     "apiVersion":"2018-10-30",
     "endpointPrefix":"comprehendmedical",
     "jsonVersion":"1.1",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceAbbreviation":"ComprehendMedical",
     "serviceFullName":"AWS Comprehend Medical",
     "serviceId":"ComprehendMedical",
@@ -880,6 +883,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
     },
@@ -888,6 +892,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "InvalidRequestException":{
@@ -895,6 +900,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "JobId":{
@@ -1062,6 +1068,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true
     },
     "RxNormAttribute":{
@@ -1293,6 +1300,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":503},
       "exception":true
     },
     "StartEntitiesDetectionV2JobRequest":{
@@ -1504,6 +1512,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "Timestamp":{"type":"timestamp"},
@@ -1512,6 +1521,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":429},
       "exception":true
     },
     "Trait":{
@@ -1541,6 +1551,7 @@
       "members":{
         "Message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true
     }
   }

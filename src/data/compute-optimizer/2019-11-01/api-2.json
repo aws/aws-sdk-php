@@ -4,8 +4,11 @@
     "apiVersion":"2019-11-01",
     "endpointPrefix":"compute-optimizer",
     "jsonVersion":"1.0",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceFullName":"AWS Compute Optimizer",
     "serviceId":"Compute Optimizer",
     "signatureVersion":"v4",
@@ -547,6 +550,7 @@
       "members":{
         "message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":403},
       "exception":true,
       "synthetic":true
     },
@@ -2458,6 +2462,7 @@
       "members":{
         "message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
     },
@@ -2466,6 +2471,7 @@
       "members":{
         "message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true,
       "synthetic":true
     },
@@ -2774,6 +2780,7 @@
       "members":{
         "message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":400},
       "exception":true,
       "synthetic":true
     },
@@ -2871,6 +2878,7 @@
       "members":{
         "message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":403},
       "exception":true,
       "synthetic":true
     },
@@ -2897,6 +2905,7 @@
       "members":{
         "message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":403},
       "exception":true,
       "synthetic":true
     },
@@ -3413,6 +3422,7 @@
       "members":{
         "message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":404},
       "exception":true,
       "synthetic":true
     },
@@ -3498,6 +3508,7 @@
       "members":{
         "message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":503},
       "exception":true,
       "fault":true
     },
@@ -3545,6 +3556,7 @@
       "members":{
         "message":{"shape":"ErrorMessage"}
       },
+      "error":{"httpStatusCode":429},
       "exception":true,
       "synthetic":true
     },

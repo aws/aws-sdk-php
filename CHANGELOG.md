@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ComprehendMedical` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.1. The SDK will prioritize its most performant protocol.
+* `Aws\MarketplaceEntitlementService` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.1. The SDK will prioritize its most performant protocol.
+* `Aws\SageMaker` - SageMaker AI now supports generative AI inference recommendations. Provide your model and workload, and SageMaker AI optimizes configurations, benchmarks them on real GPUs, and returns deployment-ready recommendations with validated metrics, accelerating the path to production from weeks to hours.
+* `Aws\GameLift` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.1. The SDK will prioritize its most performant protocol.
+* `Aws\NetworkFirewall` - Support for new types of partner managed rulegroups for Network Firewall Service
+* `Aws\ComputeOptimizerAutomation` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.0. The SDK will prioritize its most performant protocol.
+* `Aws\CognitoIdentityProvider` - Adding dutch language support for Cognito Managed Login and Terms on Console
+* `Aws\ComputeOptimizer` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.0. The SDK will prioritize its most performant protocol.
+* `Aws\Snowball` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.1. The SDK will prioritize its most performant protocol.
+
 ## 3.379.3 - 2026-04-20
 
 * `Aws\BedrockAgentCoreControl` - Supporting listingMode for AgentCore Gateway MCP server targets

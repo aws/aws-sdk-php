@@ -11,6 +11,9 @@
     "BatchDescribeModelPackage": "<p>This action batch describes a list of versioned model packages</p>",
     "BatchRebootClusterNodes": "<p>Reboots specific nodes within a SageMaker HyperPod cluster using a soft recovery mechanism. <code>BatchRebootClusterNodes</code> performs a graceful reboot of the specified nodes by calling the Amazon Elastic Compute Cloud <code>RebootInstances</code> API, which attempts to cleanly shut down the operating system before restarting the instance.</p> <p>This operation is useful for recovering from transient issues or applying certain configuration changes that require a restart.</p> <note> <ul> <li> <p>Rebooting a node may cause temporary service interruption for workloads running on that node. Ensure your workloads can handle node restarts or use appropriate scheduling to minimize impact.</p> </li> <li> <p>You can reboot up to 25 nodes in a single request.</p> </li> <li> <p>For SageMaker HyperPod clusters using the Slurm workload manager, ensure rebooting nodes will not disrupt critical cluster operations.</p> </li> </ul> </note>",
     "BatchReplaceClusterNodes": "<p>Replaces specific nodes within a SageMaker HyperPod cluster with new hardware. <code>BatchReplaceClusterNodes</code> terminates the specified instances and provisions new replacement instances with the same configuration but fresh hardware. The Amazon Machine Image (AMI) and instance configuration remain the same.</p> <p>This operation is useful for recovering from hardware failures or persistent issues that cannot be resolved through a reboot.</p> <important> <ul> <li> <p> <b>Data Loss Warning:</b> Replacing nodes destroys all instance volumes, including both root and secondary volumes. All data stored on these volumes will be permanently lost and cannot be recovered.</p> </li> <li> <p>To safeguard your work, back up your data to Amazon S3 or an FSx for Lustre file system before invoking the API on a worker node group. This will help prevent any potential data loss from the instance root volume. For more information about backup, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-operate-cli-command.html#sagemaker-hyperpod-operate-cli-command-update-cluster-software-backup\">Use the backup script provided by SageMaker HyperPod</a>.</p> </li> <li> <p>If you want to invoke this API on an existing cluster, you'll first need to patch the cluster by running the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateClusterSoftware.html\">UpdateClusterSoftware API</a>. For more information about patching a cluster, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-operate-cli-command.html#sagemaker-hyperpod-operate-cli-command-update-cluster-software\">Update the SageMaker HyperPod platform software of a cluster</a>.</p> </li> <li> <p>You can replace up to 25 nodes in a single request.</p> </li> </ul> </important>",
+    "CreateAIBenchmarkJob": "<p>Creates a benchmark job that runs performance benchmarks against inference infrastructure using a predefined AI workload configuration. The benchmark job measures metrics such as latency, throughput, and cost for your generative AI inference endpoints.</p>",
+    "CreateAIRecommendationJob": "<p>Creates a recommendation job that generates intelligent optimization recommendations for generative AI inference deployments. The job analyzes your model, workload configuration, and performance targets to recommend optimal instance types, model optimization techniques (such as quantization and speculative decoding), and deployment configurations.</p>",
+    "CreateAIWorkloadConfig": "<p>Creates a reusable AI workload configuration that defines datasets, data sources, and benchmark tool settings for consistent performance testing of generative AI inference deployments on Amazon SageMaker AI.</p>",
     "CreateAction": "<p>Creates an <i>action</i>. An action is a lineage tracking entity that represents an action or activity. For example, a model deployment or an HPO job. Generally, an action involves at least one input or output artifact. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/lineage-tracking.html\">Amazon SageMaker ML Lineage Tracking</a>.</p>",
     "CreateAlgorithm": "<p>Create a machine learning algorithm that you can use in SageMaker and list in the Amazon Web Services Marketplace.</p>",
     "CreateApp": "<p>Creates a running app for the specified UserProfile. This operation is automatically invoked by Amazon SageMaker AI upon access to the associated Domain, and when new kernel configurations are selected by the user. A user may have multiple Apps active simultaneously.</p>",
@@ -79,6 +82,9 @@
     "CreateUserProfile": "<p>Creates a user profile. A user profile represents a single user within a domain, and is the main way to reference a \"person\" for the purposes of sharing, reporting, and other user-oriented features. This entity is created when a user onboards to a domain. If an administrator invites a person by email or imports them from IAM Identity Center, a user profile is automatically created. A user profile is the primary holder of settings for an individual user and has a reference to the user's private Amazon Elastic File System home directory. </p>",
     "CreateWorkforce": "<p>Use this operation to create a workforce. This operation will return an error if a workforce already exists in the Amazon Web Services Region that you specify. You can only create one workforce in each Amazon Web Services Region per Amazon Web Services account.</p> <p>If you want to create a new workforce in an Amazon Web Services Region where a workforce already exists, use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteWorkforce.html\">DeleteWorkforce</a> API operation to delete the existing workforce and then use <code>CreateWorkforce</code> to create a new workforce.</p> <p>To create a private workforce using Amazon Cognito, you must specify a Cognito user pool in <code>CognitoConfig</code>. You can also create an Amazon Cognito workforce using the Amazon SageMaker console. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-workforce-create-private.html\"> Create a Private Workforce (Amazon Cognito)</a>.</p> <p>To create a private workforce using your own OIDC Identity Provider (IdP), specify your IdP configuration in <code>OidcConfig</code>. Your OIDC IdP must support <i>groups</i> because groups are used by Ground Truth and Amazon A2I to create work teams. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-workforce-create-private-oidc.html\"> Create a Private Workforce (OIDC IdP)</a>.</p>",
     "CreateWorkteam": "<p>Creates a new work team for labeling your data. A work team is defined by one or more Amazon Cognito user pools. You must first create the user pools before you can create a work team.</p> <p>You cannot create more than 25 work teams in an account and region.</p>",
+    "DeleteAIBenchmarkJob": "<p>Deletes the specified AI benchmark job.</p>",
+    "DeleteAIRecommendationJob": "<p>Deletes the specified AI recommendation job.</p>",
+    "DeleteAIWorkloadConfig": "<p>Deletes the specified AI workload configuration. You cannot delete a configuration that is referenced by an active benchmark job.</p>",
     "DeleteAction": "<p>Deletes an action.</p>",
     "DeleteAlgorithm": "<p>Removes the specified algorithm from your account.</p>",
     "DeleteApp": "<p>Used to stop and delete an app.</p>",
@@ -138,6 +144,9 @@
     "DeleteWorkforce": "<p>Use this operation to delete a workforce.</p> <p>If you want to create a new workforce in an Amazon Web Services Region where a workforce already exists, use this operation to delete the existing workforce and then use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateWorkforce.html\">CreateWorkforce</a> to create a new workforce.</p> <important> <p>If a private workforce contains one or more work teams, you must use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteWorkteam.html\">DeleteWorkteam</a> operation to delete all work teams before you delete the workforce. If you try to delete a workforce that contains one or more work teams, you will receive a <code>ResourceInUse</code> error.</p> </important>",
     "DeleteWorkteam": "<p>Deletes an existing work team. This operation can't be undone.</p>",
     "DeregisterDevices": "<p>Deregisters the specified devices. After you deregister a device, you will need to re-register the devices.</p>",
+    "DescribeAIBenchmarkJob": "<p>Returns details of an AI benchmark job, including its status, configuration, target endpoint, and timing information.</p>",
+    "DescribeAIRecommendationJob": "<p>Returns details of an AI recommendation job, including its status, model source, performance targets, optimization recommendations, and deployment configurations.</p>",
+    "DescribeAIWorkloadConfig": "<p>Returns details of an AI workload configuration, including the dataset configuration, benchmark tool settings, tags, and creation time.</p>",
     "DescribeAction": "<p>Describes an action.</p>",
     "DescribeAlgorithm": "<p>Returns a description of the specified algorithm that is in your account.</p>",
     "DescribeApp": "<p>Describes the app.</p>",
@@ -221,6 +230,9 @@
     "GetScalingConfigurationRecommendation": "<p>Starts an Amazon SageMaker Inference Recommender autoscaling recommendation job. Returns recommendations for autoscaling policies that you can apply to your SageMaker endpoint.</p>",
     "GetSearchSuggestions": "<p>An auto-complete API for the search functionality in the SageMaker console. It returns suggestions of possible matches for the property name to use in <code>Search</code> queries. Provides suggestions for <code>HyperParameters</code>, <code>Tags</code>, and <code>Metrics</code>.</p>",
     "ImportHubContent": "<p>Import hub content.</p>",
+    "ListAIBenchmarkJobs": "<p>Returns a list of AI benchmark jobs in your account. You can filter the results by name, status, and creation time, and sort the results. The response is paginated.</p>",
+    "ListAIRecommendationJobs": "<p>Returns a list of AI recommendation jobs in your account. You can filter the results by name, status, and creation time, and sort the results. The response is paginated.</p>",
+    "ListAIWorkloadConfigs": "<p>Returns a list of AI workload configurations in your account. You can filter the results by name and creation time, and sort the results. The response is paginated.</p>",
     "ListActions": "<p>Lists the actions in your account and their properties.</p>",
     "ListAlgorithms": "<p>Lists the machine learning algorithms that have been created.</p>",
     "ListAliases": "<p>Lists the aliases of a specified image or image version.</p>",
@@ -323,6 +335,8 @@
     "StartNotebookInstance": "<p>Launches an ML compute instance with the latest version of the libraries and attaches your ML storage volume. After configuring the notebook instance, SageMaker AI sets the notebook instance status to <code>InService</code>. A notebook instance's status must be <code>InService</code> before you can connect to your Jupyter notebook. </p>",
     "StartPipelineExecution": "<p>Starts a pipeline execution.</p>",
     "StartSession": "<p>Initiates a remote connection session between a local integrated development environments (IDEs) and a remote SageMaker space.</p>",
+    "StopAIBenchmarkJob": "<p>Stops a running AI benchmark job.</p>",
+    "StopAIRecommendationJob": "<p>Stops a running AI recommendation job.</p>",
     "StopAutoMLJob": "<p>A method for forcing a running job to shut down.</p>",
     "StopCompilationJob": "<p>Stops a model compilation job.</p> <p> To stop a job, Amazon SageMaker AI sends the algorithm the SIGTERM signal. This gracefully shuts the job down. If the job hasn't stopped, it sends the SIGKILL signal.</p> <p>When it receives a <code>StopCompilationJob</code> request, Amazon SageMaker AI changes the <code>CompilationJobStatus</code> of the job to <code>Stopping</code>. After Amazon SageMaker stops the job, it sets the <code>CompilationJobStatus</code> to <code>Stopped</code>. </p>",
     "StopEdgeDeploymentStage": "<p>Stops a stage in an edge deployment plan.</p>",
@@ -386,6 +400,438 @@
     "UpdateWorkteam": "<p>Updates an existing work team with new member definitions or description.</p>"
   },
   "shapes": {
+    "AIBenchmarkEndpoint": {
+      "base": "<p>The SageMaker endpoint configuration for benchmarking.</p>",
+      "refs": {
+        "AIBenchmarkTarget$Endpoint": "<p>The SageMaker endpoint to benchmark.</p>"
+      }
+    },
+    "AIBenchmarkInferenceComponent": {
+      "base": "<p>An inference component to benchmark.</p>",
+      "refs": {
+        "AIBenchmarkInferenceComponentList$member": null
+      }
+    },
+    "AIBenchmarkInferenceComponentList": {
+      "base": null,
+      "refs": {
+        "AIBenchmarkEndpoint$InferenceComponents": "<p>The list of inference components to benchmark on the endpoint.</p>"
+      }
+    },
+    "AIBenchmarkJobArn": {
+      "base": null,
+      "refs": {
+        "AIBenchmarkJobSummary$AIBenchmarkJobArn": "<p>The Amazon Resource Name (ARN) of the benchmark job.</p>",
+        "AIRecommendation$AIBenchmarkJobArn": "<p>The Amazon Resource Name (ARN) of the benchmark job associated with this recommendation.</p>",
+        "CreateAIBenchmarkJobResponse$AIBenchmarkJobArn": "<p>The Amazon Resource Name (ARN) of the created benchmark job.</p>",
+        "DeleteAIBenchmarkJobResponse$AIBenchmarkJobArn": "<p>The Amazon Resource Name (ARN) of the deleted benchmark job.</p>",
+        "DescribeAIBenchmarkJobResponse$AIBenchmarkJobArn": "<p>The Amazon Resource Name (ARN) of the AI benchmark job.</p>",
+        "StopAIBenchmarkJobResponse$AIBenchmarkJobArn": "<p>The Amazon Resource Name (ARN) of the stopped benchmark job.</p>"
+      }
+    },
+    "AIBenchmarkJobStatus": {
+      "base": null,
+      "refs": {
+        "AIBenchmarkJobSummary$AIBenchmarkJobStatus": "<p>The status of the benchmark job.</p>",
+        "DescribeAIBenchmarkJobResponse$AIBenchmarkJobStatus": "<p>The status of the AI benchmark job.</p>",
+        "ListAIBenchmarkJobsRequest$StatusEquals": "<p>A filter that returns only benchmark jobs with the specified status.</p>"
+      }
+    },
+    "AIBenchmarkJobSummary": {
+      "base": "<p>Summary information about an AI benchmark job.</p>",
+      "refs": {
+        "AIBenchmarkJobSummaryList$member": null
+      }
+    },
+    "AIBenchmarkJobSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAIBenchmarkJobsResponse$AIBenchmarkJobs": "<p>An array of <code>AIBenchmarkJobSummary</code> objects, one for each benchmark job that matches the specified filters.</p>"
+      }
+    },
+    "AIBenchmarkNetworkConfig": {
+      "base": "<p>The network configuration for an AI benchmark job.</p>",
+      "refs": {
+        "CreateAIBenchmarkJobRequest$NetworkConfig": "<p>The network configuration for the benchmark job, including VPC settings.</p>",
+        "DescribeAIBenchmarkJobResponse$NetworkConfig": "<p>The network configuration for the benchmark job.</p>"
+      }
+    },
+    "AIBenchmarkOutputConfig": {
+      "base": "<p>The output configuration for an AI benchmark job.</p>",
+      "refs": {
+        "CreateAIBenchmarkJobRequest$OutputConfig": "<p>The output configuration for the benchmark job, including the Amazon S3 location where benchmark results are stored.</p>"
+      }
+    },
+    "AIBenchmarkOutputResult": {
+      "base": "<p>The output result of an AI benchmark job, including the Amazon S3 location and CloudWatch log information.</p>",
+      "refs": {
+        "DescribeAIBenchmarkJobResponse$OutputConfig": "<p>The output configuration for the benchmark job, including the Amazon S3 output location and CloudWatch log information.</p>"
+      }
+    },
+    "AIBenchmarkTarget": {
+      "base": "<p>The target for an AI benchmark job. This is a union type — specify one of the members.</p>",
+      "refs": {
+        "CreateAIBenchmarkJobRequest$BenchmarkTarget": "<p>The target endpoint to benchmark. Specify a SageMaker endpoint by providing its name or Amazon Resource Name (ARN).</p>",
+        "DescribeAIBenchmarkJobResponse$BenchmarkTarget": "<p>The target endpoint that was benchmarked.</p>"
+      }
+    },
+    "AICapacityReservationConfig": {
+      "base": "<p>The capacity reservation configuration for an AI recommendation job.</p>",
+      "refs": {
+        "AIRecommendationComputeSpec$CapacityReservationConfig": "<p>The capacity reservation configuration.</p>"
+      }
+    },
+    "AICapacityReservationPreference": {
+      "base": null,
+      "refs": {
+        "AICapacityReservationConfig$CapacityReservationPreference": "<p>The capacity reservation preference. The only valid value is <code>capacity-reservations-only</code>.</p>"
+      }
+    },
+    "AIChannelName": {
+      "base": null,
+      "refs": {
+        "AIRecommendationDeploymentS3Channel$ChannelName": "<p>A custom name for this Amazon S3 data channel.</p>",
+        "AIWorkloadInputDataConfig$ChannelName": "<p>The logical name for the data channel.</p>"
+      }
+    },
+    "AICloudWatchLogs": {
+      "base": "<p>CloudWatch log information for an AI benchmark or recommendation job.</p>",
+      "refs": {
+        "AICloudWatchLogsList$member": null
+      }
+    },
+    "AICloudWatchLogsList": {
+      "base": null,
+      "refs": {
+        "AIBenchmarkOutputResult$CloudWatchLogs": "<p>The CloudWatch log information for the benchmark job.</p>"
+      }
+    },
+    "AIDatasetConfig": {
+      "base": "<p>The dataset configuration for an AI workload. This is a union type — specify one of the members.</p>",
+      "refs": {
+        "CreateAIWorkloadConfigRequest$DatasetConfig": "<p>The dataset configuration for the workload. Specify input data channels with their data sources for benchmark workloads.</p>",
+        "DescribeAIWorkloadConfigResponse$DatasetConfig": "<p>The dataset configuration for the workload.</p>"
+      }
+    },
+    "AIEntityName": {
+      "base": null,
+      "refs": {
+        "AIBenchmarkJobSummary$AIBenchmarkJobName": "<p>The name of the benchmark job.</p>",
+        "AIBenchmarkJobSummary$AIWorkloadConfigName": "<p>The name of the AI workload configuration used by the benchmark job.</p>",
+        "AIRecommendationJobSummary$AIRecommendationJobName": "<p>The name of the recommendation job.</p>",
+        "AIWorkloadConfigSummary$AIWorkloadConfigName": "<p>The name of the AI workload configuration.</p>",
+        "CreateAIBenchmarkJobRequest$AIBenchmarkJobName": "<p>The name of the AI benchmark job. The name must be unique within your Amazon Web Services account in the current Amazon Web Services Region.</p>",
+        "CreateAIRecommendationJobRequest$AIRecommendationJobName": "<p>The name of the AI recommendation job. The name must be unique within your Amazon Web Services account in the current Amazon Web Services Region.</p>",
+        "CreateAIWorkloadConfigRequest$AIWorkloadConfigName": "<p>The name of the AI workload configuration. The name must be unique within your Amazon Web Services account in the current Amazon Web Services Region.</p>",
+        "DeleteAIBenchmarkJobRequest$AIBenchmarkJobName": "<p>The name of the AI benchmark job to delete.</p>",
+        "DeleteAIRecommendationJobRequest$AIRecommendationJobName": "<p>The name of the AI recommendation job to delete.</p>",
+        "DeleteAIWorkloadConfigRequest$AIWorkloadConfigName": "<p>The name of the AI workload configuration to delete.</p>",
+        "DescribeAIBenchmarkJobRequest$AIBenchmarkJobName": "<p>The name of the AI benchmark job to describe.</p>",
+        "DescribeAIBenchmarkJobResponse$AIBenchmarkJobName": "<p>The name of the AI benchmark job.</p>",
+        "DescribeAIRecommendationJobRequest$AIRecommendationJobName": "<p>The name of the AI recommendation job to describe.</p>",
+        "DescribeAIRecommendationJobResponse$AIRecommendationJobName": "<p>The name of the AI recommendation job.</p>",
+        "DescribeAIWorkloadConfigRequest$AIWorkloadConfigName": "<p>The name of the AI workload configuration to describe.</p>",
+        "DescribeAIWorkloadConfigResponse$AIWorkloadConfigName": "<p>The name of the AI workload configuration.</p>",
+        "StopAIBenchmarkJobRequest$AIBenchmarkJobName": "<p>The name of the AI benchmark job to stop.</p>",
+        "StopAIRecommendationJobRequest$AIRecommendationJobName": "<p>The name of the AI recommendation job to stop.</p>"
+      }
+    },
+    "AIInferenceSpecificationName": {
+      "base": null,
+      "refs": {
+        "AIRecommendationModelDetails$InferenceSpecificationName": "<p>The name of the inference specification within the model package.</p>"
+      }
+    },
+    "AIMlReservationArn": {
+      "base": null,
+      "refs": {
+        "AIMlReservationArnList$member": null
+      }
+    },
+    "AIMlReservationArnList": {
+      "base": null,
+      "refs": {
+        "AICapacityReservationConfig$MlReservationArns": "<p>The list of ML reservation ARNs to use.</p>"
+      }
+    },
+    "AIModelSource": {
+      "base": "<p>The source of the model for an AI recommendation job. This is a union type.</p>",
+      "refs": {
+        "CreateAIRecommendationJobRequest$ModelSource": "<p>The source of the model to optimize. Specify the Amazon S3 location of the model artifacts.</p>",
+        "DescribeAIRecommendationJobResponse$ModelSource": "<p>The source of the model that was analyzed.</p>"
+      }
+    },
+    "AIModelSourceS3": {
+      "base": "<p>The Amazon S3 model source configuration.</p>",
+      "refs": {
+        "AIModelSource$S3": "<p>The Amazon S3 location of the model artifacts.</p>"
+      }
+    },
+    "AIRecommendation": {
+      "base": "<p>An optimization recommendation generated by an AI recommendation job.</p>",
+      "refs": {
+        "AIRecommendationList$member": null
+      }
+    },
+    "AIRecommendationAllowOptimization": {
+      "base": null,
+      "refs": {
+        "CreateAIRecommendationJobRequest$OptimizeModel": "<p>Whether to allow model optimization techniques such as quantization, speculative decoding, and kernel tuning. The default is <code>true</code>.</p>",
+        "DescribeAIRecommendationJobResponse$OptimizeModel": "<p>Whether model optimization techniques were allowed.</p>"
+      }
+    },
+    "AIRecommendationComputeSpec": {
+      "base": "<p>The compute resource specification for an AI recommendation job.</p>",
+      "refs": {
+        "CreateAIRecommendationJobRequest$ComputeSpec": "<p>The compute resource specification for the recommendation job. You can specify up to 3 instance types to consider, and optionally provide capacity reservation configuration.</p>",
+        "DescribeAIRecommendationJobResponse$ComputeSpec": "<p>The compute resource specification for the recommendation job.</p>"
+      }
+    },
+    "AIRecommendationConstraint": {
+      "base": "<p>A performance constraint for an AI recommendation job.</p>",
+      "refs": {
+        "AIRecommendationConstraintList$member": null
+      }
+    },
+    "AIRecommendationConstraintList": {
+      "base": null,
+      "refs": {
+        "AIRecommendationPerformanceTarget$Constraints": "<p>An array of performance constraints that define the optimization objectives.</p>"
+      }
+    },
+    "AIRecommendationCopyCountPerInstance": {
+      "base": null,
+      "refs": {
+        "AIRecommendationDeploymentConfiguration$CopyCountPerInstance": "<p>The number of model copies per instance.</p>",
+        "AIRecommendationInstanceDetail$CopyCountPerInstance": "<p>The number of model copies per instance.</p>"
+      }
+    },
+    "AIRecommendationDeploymentConfiguration": {
+      "base": "<p>The deployment configuration for a recommendation.</p>",
+      "refs": {
+        "AIRecommendation$DeploymentConfiguration": "<p>The deployment configuration for this recommendation, including the container image, instance type, instance count, and environment variables.</p>"
+      }
+    },
+    "AIRecommendationDeploymentS3Channel": {
+      "base": "<p>An Amazon S3 data channel for a recommended deployment configuration, containing model artifacts or optimized model outputs.</p>",
+      "refs": {
+        "AIRecommendationDeploymentS3ChannelList$member": null
+      }
+    },
+    "AIRecommendationDeploymentS3ChannelList": {
+      "base": null,
+      "refs": {
+        "AIRecommendationDeploymentConfiguration$S3": "<p>The Amazon S3 data channels for the deployment.</p>"
+      }
+    },
+    "AIRecommendationInferenceFramework": {
+      "base": null,
+      "refs": {
+        "AIRecommendationInferenceSpecification$Framework": "<p>The inference framework. Valid values are <code>LMI</code> and <code>VLLM</code>.</p>"
+      }
+    },
+    "AIRecommendationInferenceSpecification": {
+      "base": "<p>The inference framework for an AI recommendation job.</p>",
+      "refs": {
+        "CreateAIRecommendationJobRequest$InferenceSpecification": "<p>The inference framework configuration. Specify the framework (such as LMI or vLLM) for the recommendation job.</p>",
+        "DescribeAIRecommendationJobResponse$InferenceSpecification": "<p>The inference framework configuration.</p>"
+      }
+    },
+    "AIRecommendationInstanceCount": {
+      "base": null,
+      "refs": {
+        "AIRecommendationDeploymentConfiguration$InstanceCount": "<p>The recommended number of instances for the deployment.</p>",
+        "AIRecommendationInstanceDetail$InstanceCount": "<p>The recommended number of instances.</p>"
+      }
+    },
+    "AIRecommendationInstanceDetail": {
+      "base": "<p>Instance details for a recommendation.</p>",
+      "refs": {
+        "AIRecommendationInstanceDetailList$member": null
+      }
+    },
+    "AIRecommendationInstanceDetailList": {
+      "base": null,
+      "refs": {
+        "AIRecommendationModelDetails$InstanceDetails": "<p>The instance details for this recommendation, including instance type, count, and model copies per instance.</p>"
+      }
+    },
+    "AIRecommendationInstanceType": {
+      "base": null,
+      "refs": {
+        "AIRecommendationDeploymentConfiguration$InstanceType": "<p>The recommended instance type for the deployment.</p>",
+        "AIRecommendationInstanceDetail$InstanceType": "<p>The recommended instance type.</p>",
+        "AIRecommendationInstanceTypeList$member": null
+      }
+    },
+    "AIRecommendationInstanceTypeList": {
+      "base": null,
+      "refs": {
+        "AIRecommendationComputeSpec$InstanceTypes": "<p>The list of instance types to consider for recommendations. You can specify up to 3 instance types.</p>"
+      }
+    },
+    "AIRecommendationJobArn": {
+      "base": null,
+      "refs": {
+        "AIRecommendationJobSummary$AIRecommendationJobArn": "<p>The Amazon Resource Name (ARN) of the recommendation job.</p>",
+        "CreateAIRecommendationJobResponse$AIRecommendationJobArn": "<p>The Amazon Resource Name (ARN) of the created recommendation job.</p>",
+        "DeleteAIRecommendationJobResponse$AIRecommendationJobArn": "<p>The Amazon Resource Name (ARN) of the deleted recommendation job.</p>",
+        "DescribeAIRecommendationJobResponse$AIRecommendationJobArn": "<p>The Amazon Resource Name (ARN) of the AI recommendation job.</p>",
+        "StopAIRecommendationJobResponse$AIRecommendationJobArn": "<p>The Amazon Resource Name (ARN) of the stopped recommendation job.</p>"
+      }
+    },
+    "AIRecommendationJobStatus": {
+      "base": null,
+      "refs": {
+        "AIRecommendationJobSummary$AIRecommendationJobStatus": "<p>The status of the recommendation job.</p>",
+        "DescribeAIRecommendationJobResponse$AIRecommendationJobStatus": "<p>The status of the AI recommendation job.</p>",
+        "ListAIRecommendationJobsRequest$StatusEquals": "<p>A filter that returns only recommendation jobs with the specified status.</p>"
+      }
+    },
+    "AIRecommendationJobSummary": {
+      "base": "<p>Summary information about an AI recommendation job.</p>",
+      "refs": {
+        "AIRecommendationJobSummaryList$member": null
+      }
+    },
+    "AIRecommendationJobSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAIRecommendationJobsResponse$AIRecommendationJobs": "<p>An array of <code>AIRecommendationJobSummary</code> objects, one for each recommendation job that matches the specified filters.</p>"
+      }
+    },
+    "AIRecommendationList": {
+      "base": null,
+      "refs": {
+        "DescribeAIRecommendationJobResponse$Recommendations": "<p>The list of optimization recommendations generated by the job. Each recommendation includes optimization details, deployment configuration, expected performance metrics, and the associated benchmark job ARN.</p>"
+      }
+    },
+    "AIRecommendationMetric": {
+      "base": null,
+      "refs": {
+        "AIRecommendationConstraint$Metric": "<p>The performance metric. Valid values are <code>ttft-ms</code> (time to first token in milliseconds), <code>throughput</code>, and <code>cost</code>.</p>"
+      }
+    },
+    "AIRecommendationModelDetails": {
+      "base": "<p>Details about the model package in a recommendation.</p>",
+      "refs": {
+        "AIRecommendation$ModelDetails": "<p>Details about the model package associated with this recommendation.</p>"
+      }
+    },
+    "AIRecommendationOptimizationConfigMap": {
+      "base": null,
+      "refs": {
+        "AIRecommendationOptimizationDetail$OptimizationConfig": "<p>A map of configuration parameters for the optimization technique.</p>"
+      }
+    },
+    "AIRecommendationOptimizationDetail": {
+      "base": "<p>Details about an optimization technique applied in a recommendation.</p>",
+      "refs": {
+        "AIRecommendationOptimizationDetailList$member": null
+      }
+    },
+    "AIRecommendationOptimizationDetailList": {
+      "base": null,
+      "refs": {
+        "AIRecommendation$OptimizationDetails": "<p>The optimization techniques applied in this recommendation.</p>"
+      }
+    },
+    "AIRecommendationOptimizationType": {
+      "base": null,
+      "refs": {
+        "AIRecommendationOptimizationDetail$OptimizationType": "<p>The type of optimization. Valid values are <code>SpeculativeDecoding</code> and <code>KernelTuning</code>.</p>"
+      }
+    },
+    "AIRecommendationOutputConfig": {
+      "base": "<p>The output configuration for an AI recommendation job.</p>",
+      "refs": {
+        "CreateAIRecommendationJobRequest$OutputConfig": "<p>The output configuration for the recommendation job, including the Amazon S3 location for results and an optional model package group where the optimized model is registered.</p>"
+      }
+    },
+    "AIRecommendationOutputResult": {
+      "base": "<p>The output configuration for an AI recommendation job, including the S3 location for results and the model package group for deployment.</p>",
+      "refs": {
+        "DescribeAIRecommendationJobResponse$OutputConfig": "<p>The output configuration for the recommendation job.</p>"
+      }
+    },
+    "AIRecommendationPerformanceMetric": {
+      "base": "<p>An expected performance metric for a recommendation.</p>",
+      "refs": {
+        "ExpectedPerformanceList$member": null
+      }
+    },
+    "AIRecommendationPerformanceTarget": {
+      "base": "<p>The performance targets for an AI recommendation job.</p>",
+      "refs": {
+        "CreateAIRecommendationJobRequest$PerformanceTarget": "<p>The performance targets for the recommendation job. Specify constraints on metrics such as time to first token (<code>ttft-ms</code>), <code>throughput</code>, or <code>cost</code>.</p>",
+        "DescribeAIRecommendationJobResponse$PerformanceTarget": "<p>The performance targets specified for the recommendation job.</p>"
+      }
+    },
+    "AIResourceIdentifier": {
+      "base": null,
+      "refs": {
+        "AIBenchmarkEndpoint$Identifier": "<p>The name or Amazon Resource Name (ARN) of the SageMaker endpoint to benchmark.</p>",
+        "AIBenchmarkInferenceComponent$Identifier": "<p>The name or Amazon Resource Name (ARN) of the inference component.</p>",
+        "AIRecommendationOutputConfig$ModelPackageGroupIdentifier": "<p>The name or Amazon Resource Name (ARN) of the model package group where the optimized model is registered as a new model package version.</p>",
+        "AIRecommendationOutputResult$ModelPackageGroupIdentifier": "<p>The name or Amazon Resource Name (ARN) of the model package group where deployment-ready model packages are registered.</p>",
+        "CreateAIBenchmarkJobRequest$AIWorkloadConfigIdentifier": "<p>The name or Amazon Resource Name (ARN) of the AI workload configuration to use for this benchmark job.</p>",
+        "CreateAIRecommendationJobRequest$AIWorkloadConfigIdentifier": "<p>The name or Amazon Resource Name (ARN) of the AI workload configuration to use for this recommendation job.</p>",
+        "DescribeAIBenchmarkJobResponse$AIWorkloadConfigIdentifier": "<p>The name or Amazon Resource Name (ARN) of the AI workload configuration used for this benchmark job.</p>",
+        "DescribeAIRecommendationJobResponse$AIWorkloadConfigIdentifier": "<p>The name or Amazon Resource Name (ARN) of the AI workload configuration used for this recommendation job.</p>"
+      }
+    },
+    "AIWorkloadConfigArn": {
+      "base": null,
+      "refs": {
+        "AIWorkloadConfigSummary$AIWorkloadConfigArn": "<p>The Amazon Resource Name (ARN) of the AI workload configuration.</p>",
+        "CreateAIWorkloadConfigResponse$AIWorkloadConfigArn": "<p>The Amazon Resource Name (ARN) of the created AI workload configuration.</p>",
+        "DeleteAIWorkloadConfigResponse$AIWorkloadConfigArn": "<p>The Amazon Resource Name (ARN) of the deleted AI workload configuration.</p>",
+        "DescribeAIWorkloadConfigResponse$AIWorkloadConfigArn": "<p>The Amazon Resource Name (ARN) of the AI workload configuration.</p>"
+      }
+    },
+    "AIWorkloadConfigSummary": {
+      "base": "<p>Summary information about an AI workload configuration.</p>",
+      "refs": {
+        "AIWorkloadConfigSummaryList$member": null
+      }
+    },
+    "AIWorkloadConfigSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAIWorkloadConfigsResponse$AIWorkloadConfigs": "<p>An array of <code>AIWorkloadConfigSummary</code> objects, one for each AI workload configuration that matches the specified filters.</p>"
+      }
+    },
+    "AIWorkloadConfigs": {
+      "base": "<p>The benchmark tool configuration for an AI workload.</p>",
+      "refs": {
+        "CreateAIWorkloadConfigRequest$AIWorkloadConfigs": "<p>The benchmark tool configuration and workload specification. Provide the specification as an inline YAML or JSON string.</p>",
+        "DescribeAIWorkloadConfigResponse$AIWorkloadConfigs": "<p>The benchmark tool configuration and workload specification.</p>"
+      }
+    },
+    "AIWorkloadDataSource": {
+      "base": "<p>The data source for an AI workload input data channel.</p>",
+      "refs": {
+        "AIWorkloadInputDataConfig$DataSource": "<p>The data source for this channel.</p>"
+      }
+    },
+    "AIWorkloadInputDataConfig": {
+      "base": "<p>A channel of input data for an AI workload configuration. Each channel has a name and a data source.</p>",
+      "refs": {
+        "AIWorkloadInputDataConfigList$member": null
+      }
+    },
+    "AIWorkloadInputDataConfigList": {
+      "base": null,
+      "refs": {
+        "AIDatasetConfig$InputDataConfig": "<p>An array of input data channel configurations for the workload.</p>"
+      }
+    },
+    "AIWorkloadS3DataSource": {
+      "base": "<p>The Amazon S3 data source for an AI workload.</p>",
+      "refs": {
+        "AIWorkloadDataSource$S3DataSource": "<p>The Amazon S3 data source configuration.</p>"
+      }
+    },
     "AbsoluteBorrowLimitResourceList": {
       "base": null,
       "refs": {
@@ -588,7 +1034,8 @@
     "AdditionalModelDataSources": {
       "base": null,
       "refs": {
-        "ContainerDefinition$AdditionalModelDataSources": "<p>Data sources that are available to your model in addition to the one that you specify for <code>ModelDataSource</code> when you use the <code>CreateModel</code> action.</p>"
+        "ContainerDefinition$AdditionalModelDataSources": "<p>Data sources that are available to your model in addition to the one that you specify for <code>ModelDataSource</code> when you use the <code>CreateModel</code> action.</p>",
+        "ModelPackageContainerDefinition$AdditionalModelDataSources": "<p>Data sources that are available to your model in addition to the one that you specify for <code>ModelDataSource</code> when you use the <code>CreateModelPackage</code> action.</p>"
       }
     },
     "AdditionalS3DataSource": {
@@ -2042,7 +2489,7 @@
         "MonitoringNetworkConfig$EnableNetworkIsolation": "<p>Whether to allow inbound and outbound network calls to and from the containers used for the monitoring job.</p>",
         "NetworkConfig$EnableInterContainerTrafficEncryption": "<p>Whether to encrypt all communications between distributed processing jobs. Choose <code>True</code> to encrypt communications. Encryption provides greater security for distributed processing jobs, but the processing might take longer.</p>",
         "NetworkConfig$EnableNetworkIsolation": "<p>Whether to allow inbound and outbound network calls to and from the containers used for the processing job.</p>",
-        "OfflineStoreConfig$DisableGlueTableCreation": "<p>Set to <code>True</code> to disable the automatic creation of an Amazon Web Services Glue table when configuring an <code>OfflineStore</code>. If set to <code>False</code>, Feature Store will name the <code>OfflineStore</code> Glue table following <a href=\"https://docs.aws.amazon.com/athena/latest/ug/tables-databases-columns-names.html\">Athena's naming recommendations</a>.</p> <p>The default value is <code>False</code>.</p>",
+        "OfflineStoreConfig$DisableGlueTableCreation": "<p>Set to <code>True</code> to disable the automatic creation of an Amazon Web Services Glue table when configuring an <code>OfflineStore</code>. If set to <code>True</code> and <code>DataCatalogConfig</code> is provided, Feature Store associates the provided catalog configuration with the feature group without creating a table. In this case, you are responsible for creating and managing the Glue table. If set to <code>True</code> without <code>DataCatalogConfig</code>, no Glue table is created or associated with the feature group. The <code>Iceberg</code> table format is only supported when this is set to <code>False</code>.</p> <p>If set to <code>False</code> and <code>DataCatalogConfig</code> is provided, Feature Store creates the table using the specified names. If set to <code>False</code> without <code>DataCatalogConfig</code>, Feature Store auto-generates the table name following <a href=\"https://docs.aws.amazon.com/athena/latest/ug/tables-databases-columns-names.html\">Athena's naming recommendations</a>. This applies to both Glue and Apache Iceberg table formats.</p> <p>The default value is <code>False</code>.</p>",
         "OnlineStoreConfig$EnableOnlineStore": "<p>Turn <code>OnlineStore</code> off by specifying <code>False</code> for the <code>EnableOnlineStore</code> flag. Turn <code>OnlineStore</code> on by specifying <code>True</code> for the <code>EnableOnlineStore</code> flag. </p> <p>The default value is <code>False</code>.</p>",
         "PresignedUrlAccessConfig$AcceptEula": "<p>Indicates acceptance of the End User License Agreement (EULA) for gated models. Set to true to acknowledge acceptance of the license terms required for accessing gated content.</p>",
         "QualityCheckStepMetadata$SkipCheck": "<p>This flag indicates if the drift check against the previous baseline will be skipped or not. If it is set to <code>False</code>, the previous baseline of the configured check type must be available.</p>",
@@ -3946,6 +4393,30 @@
         "HolidayConfigAttributes$CountryCode": "<p>The country code for the holiday calendar.</p> <p>For the list of public holiday calendars supported by AutoML job V2, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-timeseries-forecasting-holiday-calendars.html#holiday-country-codes\">Country Codes</a>. Use the country code corresponding to the country of your choice.</p>"
       }
     },
+    "CreateAIBenchmarkJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAIBenchmarkJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAIRecommendationJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAIRecommendationJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAIWorkloadConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAIWorkloadConfigResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateActionRequest": {
       "base": null,
       "refs": {}
@@ -4704,7 +5175,7 @@
     "DataCatalogConfig": {
       "base": "<p>The meta data of the Glue table which serves as data catalog for the <code>OfflineStore</code>. </p>",
       "refs": {
-        "OfflineStoreConfig$DataCatalogConfig": "<p>The meta data of the Glue table that is autogenerated when an <code>OfflineStore</code> is created. </p>"
+        "OfflineStoreConfig$DataCatalogConfig": "<p>The meta data of the Glue table for the <code>OfflineStore</code>. If not provided, Feature Store auto-generates the table name, database, and catalog when the <code>OfflineStore</code> is created. You can optionally provide this configuration to specify custom values. This applies to both Glue and Apache Iceberg table formats.</p>"
       }
     },
     "DataDistributionType": {
@@ -4880,6 +5351,30 @@
       "refs": {
         "FileSystemConfig$DefaultUid": "<p>The default POSIX user ID (UID). If not specified, defaults to <code>1000</code>.</p>"
       }
+    },
+    "DeleteAIBenchmarkJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAIBenchmarkJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAIRecommendationJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAIRecommendationJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAIWorkloadConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAIWorkloadConfigResponse": {
+      "base": null,
+      "refs": {}
     },
     "DeleteActionRequest": {
       "base": null,
@@ -5282,6 +5777,30 @@
       "refs": {
         "DescribeCompilationJobResponse$DerivedInformation": "<p>Information that SageMaker Neo automatically derived about the model.</p>"
       }
+    },
+    "DescribeAIBenchmarkJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAIBenchmarkJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAIRecommendationJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAIRecommendationJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAIWorkloadConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAIWorkloadConfigResponse": {
+      "base": null,
+      "refs": {}
     },
     "DescribeActionRequest": {
       "base": null,
@@ -6987,6 +7506,7 @@
     "EnvironmentMap": {
       "base": null,
       "refs": {
+        "AIRecommendationDeploymentConfiguration$EnvironmentVariables": "<p>The environment variables for the deployment.</p>",
         "AutoMLContainerDefinition$Environment": "<p>The environment variables to set in the container. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ContainerDefinition.html\"> ContainerDefinition</a>.</p>",
         "ContainerDefinition$Environment": "<p>The environment variables to set in the Docker container. Don't include any sensitive data in your environment variables.</p> <p>The maximum length of each key and value in the <code>Environment</code> map is 1024 bytes. The maximum length of all keys and values in the map, combined, is 32 KB. If you pass multiple containers to a <code>CreateModel</code> request, then the maximum length of all of their maps, combined, is also 32 KB.</p>",
         "InferenceComponentContainerSpecification$Environment": "<p>The environment variables to set in the Docker container. Each key and value in the Environment string-to-string map can have length of up to 1024. We support up to 16 entries in the map.</p>",
@@ -7096,6 +7616,12 @@
         "DescribeProcessingJobResponse$ExitMessage": "<p>An optional string, up to one KB in size, that contains metadata from the processing container when the processing job exits.</p>",
         "ProcessingJob$ExitMessage": "<p>A string, up to one KB in size, that contains metadata from the processing container when the processing job exits.</p>",
         "ProcessingJobSummary$ExitMessage": "<p>An optional string, up to one KB in size, that contains metadata from the processing container when the processing job exits.</p>"
+      }
+    },
+    "ExpectedPerformanceList": {
+      "base": null,
+      "refs": {
+        "AIRecommendation$ExpectedPerformance": "<p>The expected performance metrics for this recommendation.</p>"
       }
     },
     "Experiment": {
@@ -7339,6 +7865,8 @@
       "base": null,
       "refs": {
         "ConflictException$Message": null,
+        "DescribeAIBenchmarkJobResponse$FailureReason": "<p>If the benchmark job failed, the reason it failed.</p>",
+        "DescribeAIRecommendationJobResponse$FailureReason": "<p>If the recommendation job failed, the reason it failed.</p>",
         "DescribeAppResponse$FailureReason": "<p>The failure reason.</p>",
         "DescribeClusterSchedulerConfigResponse$FailureReason": "<p>Failure reason of the cluster policy.</p>",
         "DescribeCompilationJobResponse$FailureReason": "<p>If a model compilation job failed, the reason it failed. </p>",
@@ -10104,6 +10632,48 @@
         "Vertex$LineageType": "<p>The type of resource of the lineage entity.</p>"
       }
     },
+    "ListAIBenchmarkJobsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAIBenchmarkJobsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAIBenchmarkJobsSortBy": {
+      "base": null,
+      "refs": {
+        "ListAIBenchmarkJobsRequest$SortBy": "<p>The field to sort results by. The default is <code>CreationTime</code>.</p>"
+      }
+    },
+    "ListAIRecommendationJobsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAIRecommendationJobsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAIRecommendationJobsSortBy": {
+      "base": null,
+      "refs": {
+        "ListAIRecommendationJobsRequest$SortBy": "<p>The field to sort results by. The default is <code>CreationTime</code>.</p>"
+      }
+    },
+    "ListAIWorkloadConfigsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAIWorkloadConfigsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAIWorkloadConfigsSortBy": {
+      "base": null,
+      "refs": {
+        "ListAIWorkloadConfigsRequest$SortBy": "<p>The field to sort results by. The default is <code>CreationTime</code>.</p>"
+      }
+    },
     "ListActionsRequest": {
       "base": null,
       "refs": {}
@@ -11079,6 +11649,9 @@
       "refs": {
         "CreateHubContentPresignedUrlsRequest$MaxResults": "<p>The maximum number of presigned URLs to return in the response. Default value is 100. Large models may contain hundreds of files, requiring pagination to retrieve all URLs.</p>",
         "DescribeTrainingPlanExtensionHistoryRequest$MaxResults": "<p>The maximum number of extensions to return in the response.</p>",
+        "ListAIBenchmarkJobsRequest$MaxResults": "<p>The maximum number of benchmark jobs to return in the response.</p>",
+        "ListAIRecommendationJobsRequest$MaxResults": "<p>The maximum number of recommendation jobs to return in the response.</p>",
+        "ListAIWorkloadConfigsRequest$MaxResults": "<p>The maximum number of AI workload configurations to return in the response.</p>",
         "ListActionsRequest$MaxResults": "<p>The maximum number of actions to return in the response. The default value is 10.</p>",
         "ListAlgorithmsInput$MaxResults": "<p>The maximum number of algorithms to return in the response.</p>",
         "ListAliasesRequest$MaxResults": "<p>The maximum number of aliases to return.</p>",
@@ -11971,6 +12544,7 @@
     "ModelPackageArn": {
       "base": null,
       "refs": {
+        "AIRecommendationModelDetails$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
         "BatchDescribeModelPackageErrorMap$key": null,
         "BatchDescribeModelPackageSummary$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
         "CreateCompilationJobRequest$ModelPackageVersionArn": "<p>The Amazon Resource Name (ARN) of a versioned model package. Provide either a <code>ModelPackageVersionArn</code> or an <code>InputConfig</code> object in the request syntax. The presence of both objects in the <code>CreateCompilationJob</code> request will return an exception.</p>",
@@ -12814,6 +13388,9 @@
     "NameContains": {
       "base": null,
       "refs": {
+        "ListAIBenchmarkJobsRequest$NameContains": "<p>A string in the job name. This filter returns only jobs whose name contains the specified string.</p>",
+        "ListAIRecommendationJobsRequest$NameContains": "<p>A string in the job name. This filter returns only jobs whose name contains the specified string.</p>",
+        "ListAIWorkloadConfigsRequest$NameContains": "<p>A string in the configuration name. This filter returns only configurations whose name contains the specified string.</p>",
         "ListAlgorithmsInput$NameContains": "<p>A string in the algorithm name. This filter returns only algorithms whose name contains the specified string.</p>",
         "ListClustersRequest$NameContains": "<p>Set the maximum number of instances to print in the list.</p>",
         "ListCompilationJobsRequest$NameContains": "<p>A filter that returns the model compilation jobs whose name contains a specified string.</p>",
@@ -12912,6 +13489,12 @@
         "DescribeFeatureGroupResponse$NextToken": "<p>A token to resume pagination of the list of <code>Features</code> (<code>FeatureDefinitions</code>).</p>",
         "DescribeTrainingPlanExtensionHistoryRequest$NextToken": "<p>A token to continue pagination if more results are available.</p>",
         "DescribeTrainingPlanExtensionHistoryResponse$NextToken": "<p>A token to continue pagination if more results are available.</p>",
+        "ListAIBenchmarkJobsRequest$NextToken": "<p>If the previous call to <code>ListAIBenchmarkJobs</code> didn't return the full set of jobs, the call returns a token for getting the next set.</p>",
+        "ListAIBenchmarkJobsResponse$NextToken": "<p>If the response is truncated, Amazon SageMaker AI returns this token. To retrieve the next set of jobs, use it in the subsequent request.</p>",
+        "ListAIRecommendationJobsRequest$NextToken": "<p>If the previous call to <code>ListAIRecommendationJobs</code> didn't return the full set of jobs, the call returns a token for getting the next set.</p>",
+        "ListAIRecommendationJobsResponse$NextToken": "<p>If the response is truncated, Amazon SageMaker AI returns this token. To retrieve the next set of jobs, use it in the subsequent request.</p>",
+        "ListAIWorkloadConfigsRequest$NextToken": "<p>If the previous call to <code>ListAIWorkloadConfigs</code> didn't return the full set of configurations, the call returns a token for getting the next set of configurations.</p>",
+        "ListAIWorkloadConfigsResponse$NextToken": "<p>If the response is truncated, Amazon SageMaker AI returns this token. To retrieve the next set of configurations, use it in the subsequent request.</p>",
         "ListActionsRequest$NextToken": "<p>If the previous call to <code>ListActions</code> didn't return the full set of actions, the call returns a token for getting the next set of actions.</p>",
         "ListActionsResponse$NextToken": "<p>A token for getting the next set of actions, if there are any.</p>",
         "ListAlgorithmsInput$NextToken": "<p>If the response to a previous <code>ListAlgorithms</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of algorithms, use the token in the next request.</p>",
@@ -15713,6 +16296,8 @@
         "ClusterInstanceGroupSpecification$ExecutionRole": "<p>Specifies an IAM execution role to be assumed by the instance group.</p>",
         "ClusterRestrictedInstanceGroupDetails$ExecutionRole": "<p>The execution role for the restricted instance group to assume.</p>",
         "ClusterRestrictedInstanceGroupSpecification$ExecutionRole": "<p>Specifies an IAM execution role to be assumed by the restricted instance group.</p>",
+        "CreateAIBenchmarkJobRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that enables Amazon SageMaker AI to perform tasks on your behalf.</p>",
+        "CreateAIRecommendationJobRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that enables Amazon SageMaker AI to perform tasks on your behalf.</p>",
         "CreateAutoMLJobRequest$RoleArn": "<p>The ARN of the role that is used to access the data.</p>",
         "CreateAutoMLJobV2Request$RoleArn": "<p>The ARN of the role that is used to access the data.</p>",
         "CreateClusterRequest$ClusterRole": "<p>The Amazon Resource Name (ARN) of the IAM role that HyperPod assumes to perform cluster autoscaling operations. This role must have permissions for <code>sagemaker:BatchAddClusterNodes</code> and <code>sagemaker:BatchDeleteClusterNodes</code>. This is only required when autoscaling is enabled and when HyperPod is performing autoscaling operations.</p>",
@@ -15740,6 +16325,8 @@
         "CreateProcessingJobRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker can assume to perform tasks on your behalf.</p>",
         "CreateTrainingJobRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that SageMaker can assume to perform tasks on your behalf. </p> <p>During model training, SageMaker needs your permission to read input data from an S3 bucket, download a Docker image that contains training code, write model artifacts to an S3 bucket, write logs to Amazon CloudWatch Logs, and publish metrics to Amazon CloudWatch. You grant permissions for all of these tasks to an IAM role. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-roles.html\">SageMaker Roles</a>. </p> <note> <p>To be able to pass this role to SageMaker, the caller of this API must have the <code>iam:PassRole</code> permission.</p> </note>",
         "DefaultSpaceSettings$ExecutionRole": "<p>The ARN of the execution role for the space.</p>",
+        "DescribeAIBenchmarkJobResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role used by the benchmark job.</p>",
+        "DescribeAIRecommendationJobResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role used by the recommendation job.</p>",
         "DescribeAutoMLJobResponse$RoleArn": "<p>The ARN of the IAM role that has read permission to the input data location and write permission to the output data location in Amazon S3.</p>",
         "DescribeAutoMLJobV2Response$RoleArn": "<p>The ARN of the IAM role that has read permission to the input data location and write permission to the output data location in Amazon S3.</p>",
         "DescribeClusterResponse$ClusterRole": "<p>The Amazon Resource Name (ARN) of the IAM role that HyperPod uses for cluster autoscaling operations.</p>",
@@ -15936,6 +16523,13 @@
     "S3Uri": {
       "base": null,
       "refs": {
+        "AIBenchmarkOutputConfig$S3OutputLocation": "<p>The Amazon S3 URI where benchmark results are stored.</p>",
+        "AIBenchmarkOutputResult$S3OutputLocation": "<p>The Amazon S3 URI where benchmark results are stored.</p>",
+        "AIModelSourceS3$S3Uri": "<p>The Amazon S3 URI of the model artifacts.</p>",
+        "AIRecommendationDeploymentS3Channel$Uri": "<p>The Amazon S3 URI of the data for this channel.</p>",
+        "AIRecommendationOutputConfig$S3OutputLocation": "<p>The Amazon S3 URI where recommendation results are stored.</p>",
+        "AIRecommendationOutputResult$S3OutputLocation": "<p>The Amazon S3 URI where the recommendation job writes its output results.</p>",
+        "AIWorkloadS3DataSource$S3Uri": "<p>The Amazon S3 URI of the data.</p>",
         "AdditionalS3DataSource$S3Uri": "<p>The uniform resource identifier (URI) used to identify an additional data source used in inference or training.</p>",
         "AthenaDatasetDefinition$OutputS3Uri": "<p>The location in Amazon S3 where Athena query results are stored.</p>",
         "AutoMLCandidateGenerationConfig$FeatureSpecificationS3Uri": "<p>A URL to the Amazon S3 data source containing selected features from the input data source to run an Autopilot job. You can input <code>FeatureAttributeNames</code> (optional) in JSON format as shown below: </p> <p> <code>{ \"FeatureAttributeNames\":[\"col1\", \"col2\", ...] }</code>.</p> <p>You can also specify the data type of the feature (optional) in the format shown below:</p> <p> <code>{ \"FeatureDataTypes\":{\"col1\":\"numeric\", \"col2\":\"categorical\" ... } }</code> </p> <note> <p>These column keys may not include the target column.</p> </note> <p>In ensembling mode, Autopilot only supports the following data types: <code>numeric</code>, <code>categorical</code>, <code>text</code>, and <code>datetime</code>. In HPO mode, Autopilot can support <code>numeric</code>, <code>categorical</code>, <code>text</code>, <code>datetime</code>, and <code>sequence</code>.</p> <p>If only <code>FeatureDataTypes</code> is provided, the column keys (<code>col1</code>, <code>col2</code>,..) should be a subset of the column names in the input data. </p> <p>If both <code>FeatureDataTypes</code> and <code>FeatureAttributeNames</code> are provided, then the column keys should be a subset of the column names provided in <code>FeatureAttributeNames</code>. </p> <p>The key name <code>FeatureAttributeNames</code> is fixed. The values listed in <code>[\"col1\", \"col2\", ...]</code> are case sensitive and should be a list of strings containing unique values that are a subset of the column names in the input data. The list of columns provided must not include the target column.</p>",
@@ -16541,6 +17135,9 @@
     "SortOrder": {
       "base": null,
       "refs": {
+        "ListAIBenchmarkJobsRequest$SortOrder": "<p>The sort order for results. The default is <code>Descending</code>.</p>",
+        "ListAIRecommendationJobsRequest$SortOrder": "<p>The sort order for results. The default is <code>Descending</code>.</p>",
+        "ListAIWorkloadConfigsRequest$SortOrder": "<p>The sort order for results. The default is <code>Descending</code>.</p>",
         "ListActionsRequest$SortOrder": "<p>The sort order. The default value is <code>Descending</code>.</p>",
         "ListAlgorithmsInput$SortOrder": "<p>The sort order for the results. The default is <code>Ascending</code>.</p>",
         "ListAppImageConfigsRequest$SortOrder": "<p>The sort order. The default value is <code>Descending</code>.</p>",
@@ -16937,6 +17534,22 @@
         "PipelineExecutionStep$StepStatus": "<p>The status of the step execution.</p>"
       }
     },
+    "StopAIBenchmarkJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopAIBenchmarkJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StopAIRecommendationJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopAIRecommendationJobResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StopAutoMLJobRequest": {
       "base": null,
       "refs": {}
@@ -17042,6 +17655,17 @@
     "String": {
       "base": null,
       "refs": {
+        "AIBenchmarkEndpoint$TargetContainerHostname": "<p>The hostname of the specific container to target within a multi-container endpoint.</p>",
+        "AICloudWatchLogs$LogGroupArn": "<p>The Amazon Resource Name (ARN) of the CloudWatch log group.</p>",
+        "AICloudWatchLogs$LogStreamName": "<p>The name of the CloudWatch log stream.</p>",
+        "AIRecommendation$RecommendationDescription": "<p>A description of the recommendation.</p>",
+        "AIRecommendationDeploymentConfiguration$ImageUri": "<p>The URI of the container image for the deployment.</p>",
+        "AIRecommendationOptimizationConfigMap$key": null,
+        "AIRecommendationOptimizationConfigMap$value": null,
+        "AIRecommendationPerformanceMetric$Metric": "<p>The name of the performance metric.</p>",
+        "AIRecommendationPerformanceMetric$Stat": "<p>The statistical measure for the metric.</p>",
+        "AIRecommendationPerformanceMetric$Value": "<p>The value of the metric.</p>",
+        "AIRecommendationPerformanceMetric$Unit": "<p>The unit of the metric value.</p>",
         "AdditionalS3DataSource$ETag": "<p>The ETag associated with S3 URI.</p>",
         "AlgorithmStatusItem$FailureReason": "<p>if the overall status is <code>Failed</code>, the reason for the failure.</p>",
         "BatchAddClusterNodesError$Message": "<p>A descriptive message providing additional details about the error.</p>",
@@ -17156,6 +17780,7 @@
         "UserContext$UserProfileName": "<p>The name of the user's profile.</p>",
         "UserContext$DomainId": "<p>The domain associated with the user.</p>",
         "Workforce$SubDomain": "<p>The subdomain for your OIDC Identity Provider.</p>",
+        "WorkloadSpec$Inline": "<p>An inline YAML or JSON string that defines benchmark parameters.</p>",
         "Workteam$SubDomain": "<p>The URI of the labeling job's user interface. Workers open this URI to start labeling your data objects.</p>"
       }
     },
@@ -17474,6 +18099,9 @@
       "refs": {
         "AddTagsInput$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p>",
         "AddTagsOutput$Tags": "<p>A list of tags associated with the SageMaker resource.</p>",
+        "CreateAIBenchmarkJobRequest$Tags": "<p>The metadata that you apply to Amazon Web Services resources to help you categorize and organize them. Each tag consists of a key and a value, both of which you define.</p>",
+        "CreateAIRecommendationJobRequest$Tags": "<p>The metadata that you apply to Amazon Web Services resources to help you categorize and organize them.</p>",
+        "CreateAIWorkloadConfigRequest$Tags": "<p>The metadata that you apply to Amazon Web Services resources to help you categorize and organize them. Each tag consists of a key and a value, both of which you define. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a> in the Amazon Web Services General Reference.</p>",
         "CreateActionRequest$Tags": "<p>A list of tags to apply to the action.</p>",
         "CreateAlgorithmInput$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p>",
         "CreateAppImageConfigRequest$Tags": "<p>A list of tags to apply to the AppImageConfig.</p>",
@@ -17533,6 +18161,9 @@
         "CreateUserProfileRequest$Tags": "<p>Each tag consists of a key and an optional value. Tag keys must be unique per resource.</p> <p>Tags that you specify for the User Profile are also added to all Apps that the User Profile launches.</p>",
         "CreateWorkforceRequest$Tags": "<p>An array of key-value pairs that contain metadata to help you categorize and organize our workforce. Each tag consists of a key and a value, both of which you define.</p>",
         "CreateWorkteamRequest$Tags": "<p>An array of key-value pairs.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html\">Resource Tag</a> and <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html#allocation-what\">Using Cost Allocation Tags</a> in the <i> Amazon Web Services Billing and Cost Management User Guide</i>.</p>",
+        "DescribeAIBenchmarkJobResponse$Tags": "<p>The tags associated with the benchmark job.</p>",
+        "DescribeAIRecommendationJobResponse$Tags": "<p>The tags associated with the recommendation job.</p>",
+        "DescribeAIWorkloadConfigResponse$Tags": "<p>The tags associated with the AI workload configuration.</p>",
         "DescribeLabelingJobResponse$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p>",
         "Endpoint$Tags": "<p>A list of the tags associated with the endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services resources</a> in the <i>Amazon Web Services General Reference Guide</i>.</p>",
         "Experiment$Tags": "<p>The list of tags that are associated with the experiment. You can use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API to search on the tags.</p>",
@@ -17851,6 +18482,11 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "AIBenchmarkJobSummary$CreationTime": "<p>A timestamp that indicates when the benchmark job was created.</p>",
+        "AIBenchmarkJobSummary$EndTime": "<p>A timestamp that indicates when the benchmark job completed.</p>",
+        "AIRecommendationJobSummary$CreationTime": "<p>A timestamp that indicates when the recommendation job was created.</p>",
+        "AIRecommendationJobSummary$EndTime": "<p>A timestamp that indicates when the recommendation job completed.</p>",
+        "AIWorkloadConfigSummary$CreationTime": "<p>A timestamp that indicates when the configuration was created.</p>",
         "ActionSummary$CreationTime": "<p>When the action was created.</p>",
         "ActionSummary$LastModifiedTime": "<p>When the action was last modified.</p>",
         "AppImageConfigDetails$CreationTime": "<p>When the AppImageConfig was created.</p>",
@@ -17884,6 +18520,13 @@
         "CreateTrialComponentRequest$EndTime": "<p>When the component ended.</p>",
         "DebugRuleEvaluationStatus$LastModifiedTime": "<p>Timestamp when the rule evaluation status was last modified.</p>",
         "DeployedImage$ResolutionTime": "<p>The date and time when the image path for the model resolved to the <code>ResolvedImage</code> </p>",
+        "DescribeAIBenchmarkJobResponse$CreationTime": "<p>A timestamp that indicates when the benchmark job was created.</p>",
+        "DescribeAIBenchmarkJobResponse$StartTime": "<p>A timestamp that indicates when the benchmark job started running.</p>",
+        "DescribeAIBenchmarkJobResponse$EndTime": "<p>A timestamp that indicates when the benchmark job completed.</p>",
+        "DescribeAIRecommendationJobResponse$CreationTime": "<p>A timestamp that indicates when the recommendation job was created.</p>",
+        "DescribeAIRecommendationJobResponse$StartTime": "<p>A timestamp that indicates when the recommendation job started running.</p>",
+        "DescribeAIRecommendationJobResponse$EndTime": "<p>A timestamp that indicates when the recommendation job completed.</p>",
+        "DescribeAIWorkloadConfigResponse$CreationTime": "<p>A timestamp that indicates when the AI workload configuration was created.</p>",
         "DescribeActionResponse$CreationTime": "<p>When the action was created.</p>",
         "DescribeActionResponse$LastModifiedTime": "<p>When the action was last modified.</p>",
         "DescribeAppImageConfigResponse$CreationTime": "<p>When the AppImageConfig was created.</p>",
@@ -18053,6 +18696,12 @@
         "LabelingJobSummary$LastModifiedTime": "<p>The date and time that the job was last modified (timestamp).</p>",
         "LineageGroupSummary$CreationTime": "<p>The creation time of the lineage group summary.</p>",
         "LineageGroupSummary$LastModifiedTime": "<p>The last modified time of the lineage group summary.</p>",
+        "ListAIBenchmarkJobsRequest$CreationTimeAfter": "<p>A filter that returns only jobs created after the specified time.</p>",
+        "ListAIBenchmarkJobsRequest$CreationTimeBefore": "<p>A filter that returns only jobs created before the specified time.</p>",
+        "ListAIRecommendationJobsRequest$CreationTimeAfter": "<p>A filter that returns only jobs created after the specified time.</p>",
+        "ListAIRecommendationJobsRequest$CreationTimeBefore": "<p>A filter that returns only jobs created before the specified time.</p>",
+        "ListAIWorkloadConfigsRequest$CreationTimeAfter": "<p>A filter that returns only configurations created after the specified time.</p>",
+        "ListAIWorkloadConfigsRequest$CreationTimeBefore": "<p>A filter that returns only configurations created before the specified time.</p>",
         "ListActionsRequest$CreatedAfter": "<p>A filter that returns only actions created on or after the specified time.</p>",
         "ListActionsRequest$CreatedBefore": "<p>A filter that returns only actions created on or before the specified time.</p>",
         "ListAppImageConfigsRequest$CreationTimeBefore": "<p>A filter that returns only AppImageConfigs created on or before the specified time.</p>",
@@ -20096,6 +20745,7 @@
     "VpcConfig": {
       "base": "<p>Specifies an Amazon Virtual Private Cloud (VPC) that your SageMaker jobs, hosted models, and compute resources have access to. You can control access to and from your resources by configuring a VPC. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/infrastructure-give-access.html\">Give SageMaker Access to Resources in your Amazon VPC</a>. </p>",
       "refs": {
+        "AIBenchmarkNetworkConfig$VpcConfig": "<p>The VPC configuration, including security group IDs and subnet IDs.</p>",
         "AutoMLSecurityConfig$VpcConfig": "<p>The VPC configuration.</p>",
         "ClusterInstanceGroupDetails$OverrideVpcConfig": "<p>The customized Amazon VPC configuration at the instance group level that overrides the default Amazon VPC configuration of the SageMaker HyperPod cluster.</p>",
         "ClusterInstanceGroupSpecification$OverrideVpcConfig": "<p>To configure multi-AZ deployments, customize the Amazon VPC configuration at the instance group level. You can specify different subnets and security groups across different AZs in the instance group specification to override a SageMaker HyperPod cluster's default Amazon VPC configuration. For more information about deploying a cluster in multiple AZs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-prerequisites.html#sagemaker-hyperpod-prerequisites-multiple-availability-zones\">Setting up SageMaker HyperPod clusters across multiple AZs</a>.</p> <note> <p>When your Amazon VPC and subnets support IPv6, network communications differ based on the cluster orchestration platform:</p> <ul> <li> <p>Slurm-orchestrated clusters automatically configure nodes with dual IPv6 and IPv4 addresses, allowing immediate IPv6 network communications.</p> </li> <li> <p>In Amazon EKS-orchestrated clusters, nodes receive dual-stack addressing, but pods can only use IPv6 when the Amazon EKS cluster is explicitly IPv6-enabled. For information about deploying an IPv6 Amazon EKS cluster, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/deploy-ipv6-cluster.html#_deploy_an_ipv6_cluster_with_eksctl\">Amazon EKS IPv6 Cluster Deployment</a>.</p> </li> </ul> <p>Additional resources for IPv6 configuration:</p> <ul> <li> <p>For information about adding IPv6 support to your VPC, see to <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-migrate-ipv6.html\">IPv6 Support for VPC</a>.</p> </li> <li> <p>For information about creating a new IPv6-compatible VPC, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/create-vpc.html\">Amazon VPC Creation Guide</a>.</p> </li> <li> <p>To configure SageMaker HyperPod with a custom Amazon VPC, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-prerequisites.html#sagemaker-hyperpod-prerequisites-optional-vpc\">Custom Amazon VPC Setup for SageMaker HyperPod</a>.</p> </li> </ul> </note>",
@@ -20295,6 +20945,12 @@
       "base": null,
       "refs": {
         "ListWorkforcesResponse$Workforces": "<p>A list containing information about your workforce.</p>"
+      }
+    },
+    "WorkloadSpec": {
+      "base": "<p>The workload specification for benchmark tool configuration. Provide an inline YAML or JSON string.</p>",
+      "refs": {
+        "AIWorkloadConfigs$WorkloadSpec": "<p>The workload specification that defines benchmark parameters.</p>"
       }
     },
     "WorkspaceSettings": {

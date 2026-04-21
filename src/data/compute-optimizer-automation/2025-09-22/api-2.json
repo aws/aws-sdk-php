@@ -5,8 +5,11 @@
     "auth":["aws.auth#sigv4"],
     "endpointPrefix":"aco-automation",
     "jsonVersion":"1.0",
-    "protocol":"json",
-    "protocols":["json"],
+    "protocol":"smithy-rpc-v2-cbor",
+    "protocols":[
+      "smithy-rpc-v2-cbor",
+      "json"
+    ],
     "serviceFullName":"Compute Optimizer Automation",
     "serviceId":"Compute Optimizer Automation",
     "signatureVersion":"v4",
@@ -490,6 +493,10 @@
       "members":{
         "message":{"shape":"String"}
       },
+      "error":{
+        "httpStatusCode":403,
+        "senderFault":true
+      },
       "exception":true
     },
     "AccountId":{
@@ -883,6 +890,10 @@
       "members":{
         "message":{"shape":"String"}
       },
+      "error":{
+        "httpStatusCode":403,
+        "senderFault":true
+      },
       "exception":true
     },
     "GetAutomationEventRequest":{
@@ -959,12 +970,20 @@
       "members":{
         "message":{"shape":"String"}
       },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "IdempotentParameterMismatchException":{
       "type":"structure",
       "members":{
         "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
       },
       "exception":true
     },
@@ -992,6 +1011,7 @@
       "members":{
         "message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
     },
@@ -999,6 +1019,10 @@
       "type":"structure",
       "members":{
         "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
       },
       "exception":true
     },
@@ -1236,12 +1260,20 @@
       "members":{
         "message":{"shape":"String"}
       },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "OptInRequiredException":{
       "type":"structure",
       "members":{
         "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":403,
+        "senderFault":true
       },
       "exception":true
     },
@@ -1426,6 +1458,10 @@
       "members":{
         "message":{"shape":"String"}
       },
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "ResourceTagsCriteriaCondition":{
@@ -1540,6 +1576,10 @@
       "members":{
         "message":{"shape":"String"}
       },
+      "error":{
+        "httpStatusCode":402,
+        "senderFault":true
+      },
       "exception":true
     },
     "ServiceUnavailableException":{
@@ -1547,6 +1587,7 @@
       "members":{
         "message":{"shape":"String"}
       },
+      "error":{"httpStatusCode":503},
       "exception":true,
       "fault":true
     },
@@ -1701,6 +1742,10 @@
       "type":"structure",
       "members":{
         "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":429,
+        "senderFault":true
       },
       "exception":true
     },
