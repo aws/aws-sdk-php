@@ -77,6 +77,7 @@
     "RejectInboundConnection": "<p>Allows the remote Amazon OpenSearch Service domain owner to reject an inbound cross-cluster connection request.</p>",
     "RemoveTags": "<p>Removes the specified set of tags from an Amazon OpenSearch Service domain, data source, or application. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains.html#managedomains-awsresorcetagging\"> Tagging Amazon OpenSearch Service resources</a>.</p>",
     "RevokeVpcEndpointAccess": "<p>Revokes access to an Amazon OpenSearch Service domain that was provided through an interface VPC endpoint.</p>",
+    "RollbackServiceSoftwareUpdate": "<p>Rolls back a service software update for a domain to the previous version. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
     "StartDomainMaintenance": "<p>Starts the node maintenance process on the data node. These processes can include a node reboot, an Opensearch or Elasticsearch process restart, or a Dashboard or Kibana restart.</p>",
     "StartServiceSoftwareUpdate": "<p>Schedules a service software update for an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
     "UpdateApplication": "<p>Updates the configuration and settings of an existing OpenSearch application.</p>",
@@ -565,6 +566,7 @@
         "PackageEncryptionOptions$EncryptionEnabled": "<p>Whether encryption is enabled for the package.</p>",
         "PackageVendingOptions$VendingEnabled": "<p>Indicates whether the package vending feature is enabled, allowing the package to be used by other users.</p>",
         "PutDefaultApplicationSettingRequest$setAsDefault": "<p>Set to true to set the specified ARN as the default application. Set to false to clear the default application.</p>",
+        "RollbackServiceSoftwareOptions$RollbackAvailable": "<p>Whether a service software rollback is available for the domain.</p>",
         "S3VectorsEngine$Enabled": "<p>Enables S3 vectors engine features.</p>",
         "SAMLOptionsInput$Enabled": "<p>True to enable SAML authentication for a domain.</p>",
         "SAMLOptionsOutput$Enabled": "<p>True if SAML is enabled.</p>",
@@ -575,6 +577,7 @@
         "ServiceSoftwareOptions$Cancellable": "<p> True if you're able to cancel your service software version update. False if you can't cancel your service software update.</p>",
         "ServiceSoftwareOptions$OptionalDeployment": "<p>True if a service software is never automatically updated. False if a service software is automatically updated after the automated update date.</p>",
         "SoftwareUpdateOptions$AutoSoftwareUpdateEnabled": "<p>Whether automatic service software updates are enabled for the domain.</p>",
+        "SoftwareUpdateOptions$UseLatestServiceSoftwareForBlueGreen": "<p>Whether the domain should use the latest service software version during a blue/green deployment. If enabled, the domain will automatically use the latest available service software when a blue/green deployment is triggered.</p>",
         "UpgradeDomainRequest$PerformCheckOnly": "<p>When true, indicates that an upgrade eligibility check needs to be performed. Does not actually perform the upgrade.</p>",
         "UpgradeDomainResponse$PerformCheckOnly": "<p>When true, indicates that an upgrade eligibility check was performed.</p>"
       }
@@ -1451,6 +1454,7 @@
         "ListVpcEndpointAccessRequest$DomainName": "<p>The name of the OpenSearch Service domain to retrieve access information for.</p>",
         "ListVpcEndpointsForDomainRequest$DomainName": "<p>The name of the domain to list associated VPC endpoints for.</p>",
         "RevokeVpcEndpointAccessRequest$DomainName": "<p>The name of the OpenSearch Service domain.</p>",
+        "RollbackServiceSoftwareUpdateRequest$DomainName": "<p>The name of the domain to roll back the service software update on.</p>",
         "StartDomainMaintenanceRequest$DomainName": "<p>The name of the domain.</p>",
         "StartServiceSoftwareUpdateRequest$DomainName": "<p>The name of the domain that you want to update to the latest service software.</p>",
         "UpdateDataSourceRequest$DomainName": "<p>The name of the domain.</p>",
@@ -3154,6 +3158,20 @@
         "AutoTuneOptions$RollbackOnDisable": "<p>When disabling Auto-Tune, specify <code>NO_ROLLBACK</code> to retain all prior Auto-Tune settings or <code>DEFAULT_ROLLBACK</code> to revert to the OpenSearch Service defaults. If you specify <code>DEFAULT_ROLLBACK</code>, you must include a <code>MaintenanceSchedule</code> in the request. Otherwise, OpenSearch Service is unable to perform the rollback.</p>"
       }
     },
+    "RollbackServiceSoftwareOptions": {
+      "base": "<p>Details about the rollback options for a service software update.</p>",
+      "refs": {
+        "RollbackServiceSoftwareUpdateResponse$RollbackServiceSoftwareOptions": "<p>The rollback options for the service software update.</p>"
+      }
+    },
+    "RollbackServiceSoftwareUpdateRequest": {
+      "base": "<p>Container for the request parameters to the <code>RollbackServiceSoftwareUpdate</code> operation.</p>",
+      "refs": {}
+    },
+    "RollbackServiceSoftwareUpdateResponse": {
+      "base": "<p>Contains details about the rolled-back service software update.</p>",
+      "refs": {}
+    },
     "S3BucketName": {
       "base": null,
       "refs": {
@@ -3461,6 +3479,9 @@
         "ReservedInstance$CurrencyCode": "<p>The currency code for the offering.</p>",
         "ReservedInstance$State": "<p>The state of the Reserved Instance.</p>",
         "ReservedInstanceOffering$CurrencyCode": "<p>The currency code for the Reserved Instance offering.</p>",
+        "RollbackServiceSoftwareOptions$CurrentVersion": "<p>The current service software version on the domain.</p>",
+        "RollbackServiceSoftwareOptions$NewVersion": "<p>The service software version that the domain will roll back to.</p>",
+        "RollbackServiceSoftwareOptions$Description": "<p>A description of the rollback status.</p>",
         "SAMLOptionsInput$SubjectKey": "<p>Element of the SAML assertion to use for the user name. Default is <code>NameID</code>.</p>",
         "SAMLOptionsInput$RolesKey": "<p>Element of the SAML assertion to use for backend roles. Default is <code>roles</code>.</p>",
         "SAMLOptionsOutput$SubjectKey": "<p>The key used for matching the SAML subject attribute.</p>",

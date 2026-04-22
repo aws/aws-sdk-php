@@ -49,6 +49,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise invokeBrowserAsync(array $args = [])
  * @method \Aws\Result invokeCodeInterpreter(array $args = [])
  * @method \GuzzleHttp\Promise\Promise invokeCodeInterpreterAsync(array $args = [])
+ * @method \Aws\Result invokeHarness(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise invokeHarnessAsync(array $args = [])
  * @method \Aws\Result listActors(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listActorsAsync(array $args = [])
  * @method \Aws\Result listBrowserSessions(array $args = [])

@@ -1947,6 +1947,12 @@
       "min":0
     },
     "AddGwMetadata":{"type":"boolean"},
+    "AdvancedConfiguration":{
+      "type":"structure",
+      "members":{
+        "WiFiCellular":{"shape":"WiFiCellular"}
+      }
+    },
     "AggregationPeriod":{
       "type":"string",
       "enum":[
@@ -2341,6 +2347,11 @@
       "max":64,
       "min":1,
       "pattern":"^[a-zA-Z0-9-_]+$"
+    },
+    "ConfidencePercent":{
+      "type":"integer",
+      "max":99,
+      "min":50
     },
     "ConflictException":{
       "type":"structure",
@@ -3711,7 +3722,8 @@
         "CellTowers":{"shape":"CellTowers"},
         "Ip":{"shape":"Ip"},
         "Gnss":{"shape":"Gnss"},
-        "Timestamp":{"shape":"CreationDate"}
+        "Timestamp":{"shape":"CreationDate"},
+        "AdvancedConfiguration":{"shape":"AdvancedConfiguration"}
       }
     },
     "GetPositionEstimateResponse":{
@@ -6942,6 +6954,12 @@
     "WiFiAccessPoints":{
       "type":"list",
       "member":{"shape":"WiFiAccessPoint"}
+    },
+    "WiFiCellular":{
+      "type":"structure",
+      "members":{
+        "ConfidencePercent":{"shape":"ConfidencePercent"}
+      }
     },
     "WirelessDeviceArn":{"type":"string"},
     "WirelessDeviceEvent":{

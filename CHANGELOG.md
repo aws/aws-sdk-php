@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Lambda` - Add Ruby 4.0 (ruby4.0) support to AWS Lambda.
+* `Aws\S3` - This release adds five additional checksum algorithms for S3 data integrity (MD5, SHA-512, XXHash3, XXHash64, XXHash128) and support for S3 Inventory on directory buckets (S3 Express One Zone).
+* `Aws\IVS` - Adds support for Amazon IVS server-side ad insertion
+* `Aws\BedrockAgentCoreControl` - Adds support for Amazon Bedrock AgentCore Harness control plane APIs, enabling customers to create, manage, and configure managed agent loops with customizable models, tools, memory, and isolated execution environments.
+* `Aws\S3Control` - This release adds support for five additional checksum algorithms for data integrity checking in Amazon S3 - MD5, SHA-512, XXHash3, XXHash64, and XXHash128.
+* `Aws\BedrockAgentCore` - Adds support for Amazon Bedrock AgentCore Harness data plane APIs, enabling customers to invoke managed agent loops and execute commands on live agent sessions with streaming responses.
+* `Aws\EMRServerless` - This release adds support for Spark connect sessions starting with release label emr-7.13.0.
+* `Aws\EC2` - Managed resource visibility settings control whether resources that AWS services provision on your behalf within your AWS account appear in your Amazon console views and API list operations.
+* `Aws\Batch` - Support of S3Files volume type, container start and stop timeouts.
+* `Aws\OpenSearchService` - Adds support for RollbackServiceSoftwareUpdate API
+* `Aws\OSIS` - Update the pipeline configuration body character limit for the CreatePipeline API call.
+* `Aws\ECS` - GPU health monitoring and auto-repair for ECS Managed Instances
+* `Aws\IoTWireless` - Enable customers to optionally specify a desired confidence level for Cellular and WiFi position estimates. Customers can use this to trade off confidence level and radius of uncertainty based on their needs.
+
 ## 3.379.4 - 2026-04-21
 
 * `Aws\ComprehendMedical` - This release adds Smithy RPC v2 CBOR as an additional protocol alongside the existing AWS JSON 1.1. The SDK will prioritize its most performant protocol.

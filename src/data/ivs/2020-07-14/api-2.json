@@ -2,8 +2,8 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-07-14",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"ivs",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceAbbreviation":"Amazon IVS",
@@ -11,8 +11,7 @@
     "serviceId":"ivs",
     "signatureVersion":"v4",
     "signingName":"ivs",
-    "uid":"ivs-2020-07-14",
-    "auth":["aws.auth#sigv4"]
+    "uid":"ivs-2020-07-14"
   },
   "operations":{
     "BatchGetChannel":{
@@ -23,7 +22,13 @@
         "responseCode":200
       },
       "input":{"shape":"BatchGetChannelRequest"},
-      "output":{"shape":"BatchGetChannelResponse"}
+      "output":{"shape":"BatchGetChannelResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceUnavailable"}
+      ],
+      "readonly":true
     },
     "BatchGetStreamKey":{
       "name":"BatchGetStreamKey",
@@ -33,7 +38,13 @@
         "responseCode":200
       },
       "input":{"shape":"BatchGetStreamKeyRequest"},
-      "output":{"shape":"BatchGetStreamKeyResponse"}
+      "output":{"shape":"BatchGetStreamKeyResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceUnavailable"}
+      ],
+      "readonly":true
     },
     "BatchStartViewerSessionRevocation":{
       "name":"BatchStartViewerSessionRevocation",
@@ -49,6 +60,27 @@
         {"shape":"ValidationException"},
         {"shape":"PendingVerification"},
         {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
+    },
+    "CreateAdConfiguration":{
+      "name":"CreateAdConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateAdConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateAdConfigurationRequest"},
+      "output":{"shape":"CreateAdConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"PendingVerification"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "CreateChannel":{
@@ -118,6 +150,22 @@
         {"shape":"ValidationException"},
         {"shape":"PendingVerification"},
         {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
+    "DeleteAdConfiguration":{
+      "name":"DeleteAdConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteAdConfiguration",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteAdConfigurationRequest"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
       ]
     },
     "DeleteChannel":{
@@ -199,6 +247,23 @@
         {"shape":"PendingVerification"}
       ]
     },
+    "GetAdConfiguration":{
+      "name":"GetAdConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetAdConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAdConfigurationRequest"},
+      "output":{"shape":"GetAdConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
     "GetChannel":{
       "name":"GetChannel",
       "http":{
@@ -212,7 +277,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPlaybackKeyPair":{
       "name":"GetPlaybackKeyPair",
@@ -227,7 +293,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPlaybackRestrictionPolicy":{
       "name":"GetPlaybackRestrictionPolicy",
@@ -243,7 +310,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"PendingVerification"}
-      ]
+      ],
+      "readonly":true
     },
     "GetRecordingConfiguration":{
       "name":"GetRecordingConfiguration",
@@ -259,7 +327,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetStream":{
       "name":"GetStream",
@@ -275,7 +344,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ChannelNotBroadcasting"}
-      ]
+      ],
+      "readonly":true
     },
     "GetStreamKey":{
       "name":"GetStreamKey",
@@ -290,7 +360,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetStreamSession":{
       "name":"GetStreamSession",
@@ -305,7 +376,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ImportPlaybackKeyPair":{
       "name":"ImportPlaybackKeyPair",
@@ -324,6 +396,41 @@
         {"shape":"ServiceQuotaExceededException"}
       ]
     },
+    "InsertAdBreak":{
+      "name":"InsertAdBreak",
+      "http":{
+        "method":"POST",
+        "requestUri":"/InsertAdBreak",
+        "responseCode":200
+      },
+      "input":{"shape":"InsertAdBreakRequest"},
+      "output":{"shape":"InsertAdBreakResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ChannelNotBroadcasting"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "ListAdConfigurations":{
+      "name":"ListAdConfigurations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListAdConfigurations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAdConfigurationsRequest"},
+      "output":{"shape":"ListAdConfigurationsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
     "ListChannels":{
       "name":"ListChannels",
       "http":{
@@ -337,7 +444,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPlaybackKeyPairs":{
       "name":"ListPlaybackKeyPairs",
@@ -351,7 +459,8 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPlaybackRestrictionPolicies":{
       "name":"ListPlaybackRestrictionPolicies",
@@ -367,7 +476,8 @@
         {"shape":"ValidationException"},
         {"shape":"PendingVerification"},
         {"shape":"ConflictException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListRecordingConfigurations":{
       "name":"ListRecordingConfigurations",
@@ -382,7 +492,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListStreamKeys":{
       "name":"ListStreamKeys",
@@ -397,7 +508,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListStreamSessions":{
       "name":"ListStreamSessions",
@@ -412,7 +524,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListStreams":{
       "name":"ListStreams",
@@ -426,7 +539,8 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -441,7 +555,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutMetadata":{
       "name":"PutMetadata",
@@ -473,9 +588,10 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"PendingVerification"},
-        {"shape":"ThrottlingException"}
-      ]
+        {"shape":"ThrottlingException"},
+        {"shape":"PendingVerification"}
+      ],
+      "readonly":true
     },
     "StopStream":{
       "name":"StopStream",
@@ -564,6 +680,46 @@
     "AccessDeniedException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -572,13 +728,67 @@
       },
       "exception":true
     },
+    "AdBreakId":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"[a-zA-Z0-9]+"
+    },
+    "AdConfiguration":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "mediaTailorPlaybackConfigurations"
+      ],
+      "members":{
+        "arn":{"shape":"AdConfigurationArn"},
+        "name":{"shape":"AdConfigurationName"},
+        "mediaTailorPlaybackConfigurations":{"shape":"MediaTailorPlaybackConfigurationsList"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "AdConfigurationArn":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:ad-configuration/[a-zA-Z0-9-]+"
+    },
+    "AdConfigurationList":{
+      "type":"list",
+      "member":{"shape":"AdConfigurationSummary"}
+    },
+    "AdConfigurationName":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"[a-zA-Z0-9-_]*"
+    },
+    "AdConfigurationSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "mediaTailorPlaybackConfigurations"
+      ],
+      "members":{
+        "arn":{"shape":"AdConfigurationArn"},
+        "name":{"shape":"AdConfigurationName"},
+        "mediaTailorPlaybackConfigurations":{"shape":"MediaTailorPlaybackConfigurationsList"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "AdDurationSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":300,
+      "min":1
+    },
     "AudioConfiguration":{
       "type":"structure",
       "members":{
-        "channels":{"shape":"Integer"},
         "codec":{"shape":"String"},
-        "sampleRate":{"shape":"Integer"},
         "targetBitrate":{"shape":"Integer"},
+        "sampleRate":{"shape":"Integer"},
+        "channels":{"shape":"Integer"},
         "track":{"shape":"String"}
       }
     },
@@ -608,6 +818,41 @@
     "BatchGetChannelResponse":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
         "channels":{"shape":"Channels"},
         "errors":{"shape":"BatchErrors"}
       }
@@ -622,8 +867,43 @@
     "BatchGetStreamKeyResponse":{
       "type":"structure",
       "members":{
-        "errors":{"shape":"BatchErrors"},
-        "streamKeys":{"shape":"StreamKeys"}
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "streamKeys":{"shape":"StreamKeys"},
+        "errors":{"shape":"BatchErrors"}
       }
     },
     "BatchStartViewerSessionRevocationError":{
@@ -634,9 +914,9 @@
       ],
       "members":{
         "channelArn":{"shape":"ChannelArn"},
+        "viewerId":{"shape":"ViewerId"},
         "code":{"shape":"errorCode"},
-        "message":{"shape":"errorMessage"},
-        "viewerId":{"shape":"ViewerId"}
+        "message":{"shape":"errorMessage"}
       }
     },
     "BatchStartViewerSessionRevocationErrors":{
@@ -653,6 +933,41 @@
     "BatchStartViewerSessionRevocationResponse":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
         "errors":{"shape":"BatchStartViewerSessionRevocationErrors"}
       }
     },
@@ -679,27 +994,34 @@
       "type":"structure",
       "members":{
         "arn":{"shape":"ChannelArn"},
-        "authorized":{"shape":"IsAuthorized"},
-        "containerFormat":{"shape":"ContainerFormat"},
-        "ingestEndpoint":{"shape":"IngestEndpoint"},
-        "insecureIngest":{"shape":"InsecureIngest"},
-        "latencyMode":{"shape":"ChannelLatencyMode"},
-        "multitrackInputConfiguration":{"shape":"MultitrackInputConfiguration"},
         "name":{"shape":"ChannelName"},
-        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
-        "playbackUrl":{"shape":"PlaybackURL"},
-        "preset":{"shape":"TranscodePreset"},
+        "latencyMode":{"shape":"ChannelLatencyMode"},
+        "type":{"shape":"ChannelType"},
         "recordingConfigurationArn":{"shape":"ChannelRecordingConfigurationArn"},
-        "srt":{"shape":"Srt"},
+        "ingestEndpoint":{"shape":"IngestEndpoint"},
+        "playbackUrl":{"shape":"PlaybackURL"},
+        "authorized":{"shape":"IsAuthorized"},
         "tags":{"shape":"Tags"},
-        "type":{"shape":"ChannelType"}
+        "insecureIngest":{"shape":"InsecureIngest"},
+        "preset":{"shape":"TranscodePreset"},
+        "srt":{"shape":"Srt"},
+        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
+        "multitrackInputConfiguration":{"shape":"MultitrackInputConfiguration"},
+        "containerFormat":{"shape":"ContainerFormat"},
+        "adConfigurationArn":{"shape":"ChannelAdConfigurationArn"}
       }
+    },
+    "ChannelAdConfigurationArn":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"^$|^arn:aws:ivs:[a-z0-9-]+:[0-9]+:ad-configuration/[a-zA-Z0-9-]+$"
     },
     "ChannelArn":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:channel/[a-zA-Z0-9-]+$"
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:channel/[a-zA-Z0-9-]+"
     },
     "ChannelArnList":{
       "type":"list",
@@ -722,11 +1044,51 @@
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^[a-zA-Z0-9-_]*$"
+      "pattern":"[a-zA-Z0-9-_]*"
     },
     "ChannelNotBroadcasting":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -739,27 +1101,28 @@
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^^$|^arn:aws:ivs:[a-z0-9-]+:[0-9]+:playback-restriction-policy/[a-zA-Z0-9-]+$$"
+      "pattern":"^$|^arn:aws:ivs:[a-z0-9-]+:[0-9]+:playback-restriction-policy/[a-zA-Z0-9-]+$"
     },
     "ChannelRecordingConfigurationArn":{
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^^$|^arn:aws:ivs:[a-z0-9-]+:[0-9]+:recording-configuration/[a-zA-Z0-9-]+$$"
+      "pattern":"^$|^arn:aws:ivs:[a-z0-9-]+:[0-9]+:recording-configuration/[a-zA-Z0-9-]+$"
     },
     "ChannelSummary":{
       "type":"structure",
       "members":{
         "arn":{"shape":"ChannelArn"},
-        "authorized":{"shape":"IsAuthorized"},
-        "insecureIngest":{"shape":"InsecureIngest"},
-        "latencyMode":{"shape":"ChannelLatencyMode"},
         "name":{"shape":"ChannelName"},
-        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
-        "preset":{"shape":"TranscodePreset"},
+        "latencyMode":{"shape":"ChannelLatencyMode"},
+        "authorized":{"shape":"IsAuthorized"},
         "recordingConfigurationArn":{"shape":"ChannelRecordingConfigurationArn"},
         "tags":{"shape":"Tags"},
-        "type":{"shape":"ChannelType"}
+        "insecureIngest":{"shape":"InsecureIngest"},
+        "type":{"shape":"ChannelType"},
+        "preset":{"shape":"TranscodePreset"},
+        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
+        "adConfigurationArn":{"shape":"ChannelAdConfigurationArn"}
       }
     },
     "ChannelType":{
@@ -778,6 +1141,46 @@
     "ConflictException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -793,20 +1196,36 @@
         "FRAGMENTED_MP4"
       ]
     },
+    "CreateAdConfigurationRequest":{
+      "type":"structure",
+      "required":["mediaTailorPlaybackConfigurations"],
+      "members":{
+        "name":{"shape":"AdConfigurationName"},
+        "mediaTailorPlaybackConfigurations":{"shape":"MediaTailorPlaybackConfigurationsList"}
+      }
+    },
+    "CreateAdConfigurationResponse":{
+      "type":"structure",
+      "required":["adConfiguration"],
+      "members":{
+        "adConfiguration":{"shape":"AdConfiguration"}
+      }
+    },
     "CreateChannelRequest":{
       "type":"structure",
       "members":{
-        "authorized":{"shape":"Boolean"},
-        "containerFormat":{"shape":"ContainerFormat"},
-        "insecureIngest":{"shape":"Boolean"},
-        "latencyMode":{"shape":"ChannelLatencyMode"},
-        "multitrackInputConfiguration":{"shape":"MultitrackInputConfiguration"},
         "name":{"shape":"ChannelName"},
-        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
-        "preset":{"shape":"TranscodePreset"},
+        "latencyMode":{"shape":"ChannelLatencyMode"},
+        "type":{"shape":"ChannelType"},
+        "authorized":{"shape":"Boolean"},
         "recordingConfigurationArn":{"shape":"ChannelRecordingConfigurationArn"},
         "tags":{"shape":"Tags"},
-        "type":{"shape":"ChannelType"}
+        "insecureIngest":{"shape":"Boolean"},
+        "preset":{"shape":"TranscodePreset"},
+        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
+        "multitrackInputConfiguration":{"shape":"MultitrackInputConfiguration"},
+        "containerFormat":{"shape":"ContainerFormat"},
+        "adConfigurationArn":{"shape":"ChannelAdConfigurationArn"}
       }
     },
     "CreateChannelResponse":{
@@ -836,12 +1255,12 @@
       "type":"structure",
       "required":["destinationConfiguration"],
       "members":{
-        "destinationConfiguration":{"shape":"DestinationConfiguration"},
         "name":{"shape":"RecordingConfigurationName"},
-        "recordingReconnectWindowSeconds":{"shape":"RecordingReconnectWindowSeconds"},
-        "renditionConfiguration":{"shape":"RenditionConfiguration"},
+        "destinationConfiguration":{"shape":"DestinationConfiguration"},
         "tags":{"shape":"Tags"},
-        "thumbnailConfiguration":{"shape":"ThumbnailConfiguration"}
+        "thumbnailConfiguration":{"shape":"ThumbnailConfiguration"},
+        "recordingReconnectWindowSeconds":{"shape":"RecordingReconnectWindowSeconds"},
+        "renditionConfiguration":{"shape":"RenditionConfiguration"}
       }
     },
     "CreateRecordingConfigurationResponse":{
@@ -864,6 +1283,13 @@
         "streamKey":{"shape":"StreamKey"}
       }
     },
+    "DeleteAdConfigurationRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"AdConfigurationArn"}
+      }
+    },
     "DeleteChannelRequest":{
       "type":"structure",
       "required":["arn"],
@@ -880,8 +1306,7 @@
     },
     "DeletePlaybackKeyPairResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePlaybackRestrictionPolicyRequest":{
       "type":"structure",
@@ -908,6 +1333,19 @@
       "type":"structure",
       "members":{
         "s3":{"shape":"S3DestinationConfiguration"}
+      }
+    },
+    "GetAdConfigurationRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"AdConfigurationArn"}
+      }
+    },
+    "GetAdConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "adConfiguration":{"shape":"AdConfiguration"}
       }
     },
     "GetChannelRequest":{
@@ -1006,8 +1444,8 @@
       "type":"structure",
       "required":["publicKeyMaterial"],
       "members":{
-        "name":{"shape":"PlaybackKeyPairName"},
         "publicKeyMaterial":{"shape":"PlaybackPublicKeyMaterial"},
+        "name":{"shape":"PlaybackKeyPairName"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -1020,27 +1458,84 @@
     "IngestConfiguration":{
       "type":"structure",
       "members":{
-        "audio":{"shape":"AudioConfiguration"},
-        "video":{"shape":"VideoConfiguration"}
+        "video":{"shape":"VideoConfiguration"},
+        "audio":{"shape":"AudioConfiguration"}
       }
     },
     "IngestConfigurations":{
       "type":"structure",
       "required":[
-        "audioConfigurations",
-        "videoConfigurations"
+        "videoConfigurations",
+        "audioConfigurations"
       ],
       "members":{
-        "audioConfigurations":{"shape":"AudioConfigurationList"},
-        "videoConfigurations":{"shape":"VideoConfigurationList"}
+        "videoConfigurations":{"shape":"VideoConfigurationList"},
+        "audioConfigurations":{"shape":"AudioConfigurationList"}
       }
     },
     "IngestEndpoint":{"type":"string"},
     "InsecureIngest":{"type":"boolean"},
+    "InsertAdBreakRequest":{
+      "type":"structure",
+      "required":[
+        "channelArn",
+        "durationSeconds"
+      ],
+      "members":{
+        "channelArn":{"shape":"ChannelArn"},
+        "durationSeconds":{"shape":"AdDurationSeconds"}
+      }
+    },
+    "InsertAdBreakResponse":{
+      "type":"structure",
+      "members":{
+        "adBreakId":{"shape":"AdBreakId"}
+      }
+    },
     "Integer":{"type":"long"},
     "InternalServerException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{"httpStatusCode":500},
@@ -1049,14 +1544,30 @@
     },
     "IsAuthorized":{"type":"boolean"},
     "IsMultitrackInputEnabled":{"type":"boolean"},
+    "ListAdConfigurationsRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxAdConfigurationResults"}
+      }
+    },
+    "ListAdConfigurationsResponse":{
+      "type":"structure",
+      "required":["adConfigurations"],
+      "members":{
+        "adConfigurations":{"shape":"AdConfigurationList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListChannelsRequest":{
       "type":"structure",
       "members":{
         "filterByName":{"shape":"ChannelName"},
-        "filterByPlaybackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
         "filterByRecordingConfigurationArn":{"shape":"ChannelRecordingConfigurationArn"},
-        "maxResults":{"shape":"MaxChannelResults"},
-        "nextToken":{"shape":"PaginationToken"}
+        "filterByPlaybackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
+        "filterByAdConfigurationArn":{"shape":"ChannelAdConfigurationArn"},
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxChannelResults"}
       }
     },
     "ListChannelsResponse":{
@@ -1070,8 +1581,8 @@
     "ListPlaybackKeyPairsRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{"shape":"MaxPlaybackKeyPairResults"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxPlaybackKeyPairResults"}
       }
     },
     "ListPlaybackKeyPairsResponse":{
@@ -1085,31 +1596,31 @@
     "ListPlaybackRestrictionPoliciesRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{"shape":"MaxPlaybackRestrictionPolicyResults"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxPlaybackRestrictionPolicyResults"}
       }
     },
     "ListPlaybackRestrictionPoliciesResponse":{
       "type":"structure",
       "required":["playbackRestrictionPolicies"],
       "members":{
-        "nextToken":{"shape":"PaginationToken"},
-        "playbackRestrictionPolicies":{"shape":"PlaybackRestrictionPolicyList"}
+        "playbackRestrictionPolicies":{"shape":"PlaybackRestrictionPolicyList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListRecordingConfigurationsRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{"shape":"MaxRecordingConfigurationResults"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxRecordingConfigurationResults"}
       }
     },
     "ListRecordingConfigurationsResponse":{
       "type":"structure",
       "required":["recordingConfigurations"],
       "members":{
-        "nextToken":{"shape":"PaginationToken"},
-        "recordingConfigurations":{"shape":"RecordingConfigurationList"}
+        "recordingConfigurations":{"shape":"RecordingConfigurationList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListStreamKeysRequest":{
@@ -1117,16 +1628,16 @@
       "required":["channelArn"],
       "members":{
         "channelArn":{"shape":"ChannelArn"},
-        "maxResults":{"shape":"MaxStreamKeyResults"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxStreamKeyResults"}
       }
     },
     "ListStreamKeysResponse":{
       "type":"structure",
       "required":["streamKeys"],
       "members":{
-        "nextToken":{"shape":"PaginationToken"},
-        "streamKeys":{"shape":"StreamKeyList"}
+        "streamKeys":{"shape":"StreamKeyList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListStreamSessionsRequest":{
@@ -1134,32 +1645,32 @@
       "required":["channelArn"],
       "members":{
         "channelArn":{"shape":"ChannelArn"},
-        "maxResults":{"shape":"MaxStreamResults"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxStreamResults"}
       }
     },
     "ListStreamSessionsResponse":{
       "type":"structure",
       "required":["streamSessions"],
       "members":{
-        "nextToken":{"shape":"PaginationToken"},
-        "streamSessions":{"shape":"StreamSessionList"}
+        "streamSessions":{"shape":"StreamSessionList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListStreamsRequest":{
       "type":"structure",
       "members":{
         "filterBy":{"shape":"StreamFilters"},
-        "maxResults":{"shape":"MaxStreamResults"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxStreamResults"}
       }
     },
     "ListStreamsResponse":{
       "type":"structure",
       "required":["streams"],
       "members":{
-        "nextToken":{"shape":"PaginationToken"},
-        "streams":{"shape":"StreamList"}
+        "streams":{"shape":"StreamList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -1179,6 +1690,12 @@
       "members":{
         "tags":{"shape":"Tags"}
       }
+    },
+    "MaxAdConfigurationResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
     },
     "MaxChannelResults":{
       "type":"integer",
@@ -1216,12 +1733,30 @@
       "max":100,
       "min":1
     },
+    "MediaTailorPlaybackConfiguration":{
+      "type":"structure",
+      "members":{
+        "playbackConfigurationArn":{"shape":"MediaTailorPlaybackConfigurationArn"}
+      }
+    },
+    "MediaTailorPlaybackConfigurationArn":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"arn:aws:mediatailor:[a-z0-9-]+:[0-9]+:playbackConfiguration/[a-zA-Z0-9-]+"
+    },
+    "MediaTailorPlaybackConfigurationsList":{
+      "type":"list",
+      "member":{"shape":"MediaTailorPlaybackConfiguration"},
+      "max":1,
+      "min":1
+    },
     "MultitrackInputConfiguration":{
       "type":"structure",
       "members":{
         "enabled":{"shape":"IsMultitrackInputEnabled"},
-        "maximumResolution":{"shape":"MultitrackMaximumResolution"},
-        "policy":{"shape":"MultitrackPolicy"}
+        "policy":{"shape":"MultitrackPolicy"},
+        "maximumResolution":{"shape":"MultitrackMaximumResolution"}
       }
     },
     "MultitrackMaximumResolution":{
@@ -1243,11 +1778,51 @@
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"^[a-zA-Z0-9+/=_-]*$"
+      "pattern":"[a-zA-Z0-9+/=_-]*"
     },
     "PendingVerification":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -1260,8 +1835,8 @@
       "type":"structure",
       "members":{
         "arn":{"shape":"PlaybackKeyPairArn"},
-        "fingerprint":{"shape":"PlaybackKeyPairFingerprint"},
         "name":{"shape":"PlaybackKeyPairName"},
+        "fingerprint":{"shape":"PlaybackKeyPairFingerprint"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -1269,7 +1844,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:playback-key/[a-zA-Z0-9-]+$"
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:playback-key/[a-zA-Z0-9-]+"
     },
     "PlaybackKeyPairFingerprint":{"type":"string"},
     "PlaybackKeyPairList":{
@@ -1280,7 +1855,7 @@
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^[a-zA-Z0-9-_]*$"
+      "pattern":"[a-zA-Z0-9-_]*"
     },
     "PlaybackKeyPairSummary":{
       "type":"structure",
@@ -1294,14 +1869,14 @@
     "PlaybackRestrictionPolicy":{
       "type":"structure",
       "required":[
+        "arn",
         "allowedCountries",
-        "allowedOrigins",
-        "arn"
+        "allowedOrigins"
       ],
       "members":{
+        "arn":{"shape":"PlaybackRestrictionPolicyArn"},
         "allowedCountries":{"shape":"PlaybackRestrictionPolicyAllowedCountryList"},
         "allowedOrigins":{"shape":"PlaybackRestrictionPolicyAllowedOriginList"},
-        "arn":{"shape":"PlaybackRestrictionPolicyArn"},
         "enableStrictOriginEnforcement":{"shape":"PlaybackRestrictionPolicyEnableStrictOriginEnforcement"},
         "name":{"shape":"PlaybackRestrictionPolicyName"},
         "tags":{"shape":"Tags"}
@@ -1329,7 +1904,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:playback-restriction-policy/[a-zA-Z0-9-]+$"
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:playback-restriction-policy/[a-zA-Z0-9-]+"
     },
     "PlaybackRestrictionPolicyEnableStrictOriginEnforcement":{
       "type":"boolean",
@@ -1343,19 +1918,19 @@
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^[a-zA-Z0-9-_]*$"
+      "pattern":"[a-zA-Z0-9-_]*"
     },
     "PlaybackRestrictionPolicySummary":{
       "type":"structure",
       "required":[
+        "arn",
         "allowedCountries",
-        "allowedOrigins",
-        "arn"
+        "allowedOrigins"
       ],
       "members":{
+        "arn":{"shape":"PlaybackRestrictionPolicyArn"},
         "allowedCountries":{"shape":"PlaybackRestrictionPolicyAllowedCountryList"},
         "allowedOrigins":{"shape":"PlaybackRestrictionPolicyAllowedOriginList"},
-        "arn":{"shape":"PlaybackRestrictionPolicyArn"},
         "enableStrictOriginEnforcement":{"shape":"PlaybackRestrictionPolicyEnableStrictOriginEnforcement"},
         "name":{"shape":"PlaybackRestrictionPolicyName"},
         "tags":{"shape":"Tags"}
@@ -1382,20 +1957,20 @@
       ],
       "members":{
         "arn":{"shape":"RecordingConfigurationArn"},
-        "destinationConfiguration":{"shape":"DestinationConfiguration"},
         "name":{"shape":"RecordingConfigurationName"},
-        "recordingReconnectWindowSeconds":{"shape":"RecordingReconnectWindowSeconds"},
-        "renditionConfiguration":{"shape":"RenditionConfiguration"},
+        "destinationConfiguration":{"shape":"DestinationConfiguration"},
         "state":{"shape":"RecordingConfigurationState"},
         "tags":{"shape":"Tags"},
-        "thumbnailConfiguration":{"shape":"ThumbnailConfiguration"}
+        "thumbnailConfiguration":{"shape":"ThumbnailConfiguration"},
+        "recordingReconnectWindowSeconds":{"shape":"RecordingReconnectWindowSeconds"},
+        "renditionConfiguration":{"shape":"RenditionConfiguration"}
       }
     },
     "RecordingConfigurationArn":{
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:recording-configuration/[a-zA-Z0-9-]+$"
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:recording-configuration/[a-zA-Z0-9-]+"
     },
     "RecordingConfigurationList":{
       "type":"list",
@@ -1405,7 +1980,7 @@
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^[a-zA-Z0-9-_]*$"
+      "pattern":"[a-zA-Z0-9-_]*"
     },
     "RecordingConfigurationState":{
       "type":"string",
@@ -1424,8 +1999,8 @@
       ],
       "members":{
         "arn":{"shape":"RecordingConfigurationArn"},
-        "destinationConfiguration":{"shape":"DestinationConfiguration"},
         "name":{"shape":"RecordingConfigurationName"},
+        "destinationConfiguration":{"shape":"DestinationConfiguration"},
         "state":{"shape":"RecordingConfigurationState"},
         "tags":{"shape":"Tags"}
       }
@@ -1474,11 +2049,51 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:[a-z-]/[a-zA-Z0-9-]+$"
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:[a-z-]/[a-zA-Z0-9-]+"
     },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -1491,7 +2106,7 @@
       "type":"string",
       "max":63,
       "min":3,
-      "pattern":"^[a-z0-9-.]+$"
+      "pattern":"[a-z0-9-.]+"
     },
     "S3DestinationConfiguration":{
       "type":"structure",
@@ -1503,6 +2118,46 @@
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -1510,6 +2165,55 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ServiceUnavailable":{
+      "type":"structure",
+      "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
+        "exceptionMessage":{"shape":"errorMessage"}
+      },
+      "error":{"httpStatusCode":503},
+      "exception":true,
+      "fault":true
     },
     "Srt":{
       "type":"structure",
@@ -1537,8 +2241,7 @@
     },
     "StartViewerSessionRevocationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopStreamRequest":{
       "type":"structure",
@@ -1549,28 +2252,27 @@
     },
     "StopStreamResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Stream":{
       "type":"structure",
       "members":{
         "channelArn":{"shape":"ChannelArn"},
-        "health":{"shape":"StreamHealth"},
+        "streamId":{"shape":"StreamId"},
         "playbackUrl":{"shape":"PlaybackURL"},
         "startTime":{"shape":"StreamStartTime"},
         "state":{"shape":"StreamState"},
-        "streamId":{"shape":"StreamId"},
+        "health":{"shape":"StreamHealth"},
         "viewerCount":{"shape":"StreamViewerCount"}
       }
     },
     "StreamEvent":{
       "type":"structure",
       "members":{
-        "code":{"shape":"String"},
-        "eventTime":{"shape":"Time"},
         "name":{"shape":"String"},
-        "type":{"shape":"String"}
+        "type":{"shape":"String"},
+        "eventTime":{"shape":"Time"},
+        "code":{"shape":"String"}
       }
     },
     "StreamEvents":{
@@ -1597,22 +2299,22 @@
       "type":"string",
       "max":26,
       "min":26,
-      "pattern":"^st-[a-zA-Z0-9]+$"
+      "pattern":"st-[a-zA-Z0-9]+"
     },
     "StreamKey":{
       "type":"structure",
       "members":{
         "arn":{"shape":"StreamKeyArn"},
+        "value":{"shape":"StreamKeyValue"},
         "channelArn":{"shape":"ChannelArn"},
-        "tags":{"shape":"Tags"},
-        "value":{"shape":"StreamKeyValue"}
+        "tags":{"shape":"Tags"}
       }
     },
     "StreamKeyArn":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:stream-key/[a-zA-Z0-9-]+$"
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:stream-key/[a-zA-Z0-9-]+"
     },
     "StreamKeyArnList":{
       "type":"list",
@@ -1652,13 +2354,13 @@
     "StreamSession":{
       "type":"structure",
       "members":{
-        "channel":{"shape":"Channel"},
+        "streamId":{"shape":"StreamId"},
+        "startTime":{"shape":"Time"},
         "endTime":{"shape":"Time"},
+        "channel":{"shape":"Channel"},
         "ingestConfiguration":{"shape":"IngestConfiguration"},
         "ingestConfigurations":{"shape":"IngestConfigurations"},
         "recordingConfiguration":{"shape":"RecordingConfiguration"},
-        "startTime":{"shape":"Time"},
-        "streamId":{"shape":"StreamId"},
         "truncatedEvents":{"shape":"StreamEvents"}
       }
     },
@@ -1669,10 +2371,10 @@
     "StreamSessionSummary":{
       "type":"structure",
       "members":{
-        "endTime":{"shape":"Time"},
-        "hasErrorEvent":{"shape":"Boolean"},
+        "streamId":{"shape":"StreamId"},
         "startTime":{"shape":"Time"},
-        "streamId":{"shape":"StreamId"}
+        "endTime":{"shape":"Time"},
+        "hasErrorEvent":{"shape":"Boolean"}
       }
     },
     "StreamStartTime":{
@@ -1690,16 +2392,56 @@
       "type":"structure",
       "members":{
         "channelArn":{"shape":"ChannelArn"},
-        "health":{"shape":"StreamHealth"},
-        "startTime":{"shape":"StreamStartTime"},
-        "state":{"shape":"StreamState"},
         "streamId":{"shape":"StreamId"},
-        "viewerCount":{"shape":"StreamViewerCount"}
+        "state":{"shape":"StreamState"},
+        "health":{"shape":"StreamHealth"},
+        "viewerCount":{"shape":"StreamViewerCount"},
+        "startTime":{"shape":"StreamStartTime"}
       }
     },
     "StreamUnavailable":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{"httpStatusCode":503},
@@ -1736,8 +2478,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1760,6 +2501,46 @@
     "ThrottlingException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -1772,9 +2553,9 @@
       "type":"structure",
       "members":{
         "recordingMode":{"shape":"RecordingMode"},
+        "targetIntervalSeconds":{"shape":"TargetIntervalSeconds"},
         "resolution":{"shape":"ThumbnailConfigurationResolution"},
-        "storage":{"shape":"ThumbnailConfigurationStorageList"},
-        "targetIntervalSeconds":{"shape":"TargetIntervalSeconds"}
+        "storage":{"shape":"ThumbnailConfigurationStorageList"}
       }
     },
     "ThumbnailConfigurationResolution":{
@@ -1829,24 +2610,24 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateChannelRequest":{
       "type":"structure",
       "required":["arn"],
       "members":{
         "arn":{"shape":"ChannelArn"},
-        "authorized":{"shape":"Boolean"},
-        "containerFormat":{"shape":"ContainerFormat"},
-        "insecureIngest":{"shape":"Boolean"},
-        "latencyMode":{"shape":"ChannelLatencyMode"},
-        "multitrackInputConfiguration":{"shape":"MultitrackInputConfiguration"},
         "name":{"shape":"ChannelName"},
-        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
-        "preset":{"shape":"TranscodePreset"},
+        "latencyMode":{"shape":"ChannelLatencyMode"},
+        "type":{"shape":"ChannelType"},
+        "authorized":{"shape":"Boolean"},
         "recordingConfigurationArn":{"shape":"ChannelRecordingConfigurationArn"},
-        "type":{"shape":"ChannelType"}
+        "insecureIngest":{"shape":"Boolean"},
+        "preset":{"shape":"TranscodePreset"},
+        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
+        "multitrackInputConfiguration":{"shape":"MultitrackInputConfiguration"},
+        "containerFormat":{"shape":"ContainerFormat"},
+        "adConfigurationArn":{"shape":"ChannelAdConfigurationArn"}
       }
     },
     "UpdateChannelResponse":{
@@ -1859,9 +2640,9 @@
       "type":"structure",
       "required":["arn"],
       "members":{
+        "arn":{"shape":"PlaybackRestrictionPolicyArn"},
         "allowedCountries":{"shape":"PlaybackRestrictionPolicyAllowedCountryList"},
         "allowedOrigins":{"shape":"PlaybackRestrictionPolicyAllowedOriginList"},
-        "arn":{"shape":"PlaybackRestrictionPolicyArn"},
         "enableStrictOriginEnforcement":{"shape":"PlaybackRestrictionPolicyEnableStrictOriginEnforcement"},
         "name":{"shape":"PlaybackRestrictionPolicyName"}
       }
@@ -1875,6 +2656,46 @@
     "ValidationException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -1886,17 +2707,17 @@
     "VideoConfiguration":{
       "type":"structure",
       "members":{
-        "avcLevel":{"shape":"String"},
         "avcProfile":{"shape":"String"},
+        "avcLevel":{"shape":"String"},
         "codec":{"shape":"String"},
         "encoder":{"shape":"String"},
-        "level":{"shape":"String"},
-        "profile":{"shape":"String"},
         "targetBitrate":{"shape":"Integer"},
         "targetFramerate":{"shape":"Integer"},
-        "track":{"shape":"String"},
         "videoHeight":{"shape":"Integer"},
-        "videoWidth":{"shape":"Integer"}
+        "videoWidth":{"shape":"Integer"},
+        "level":{"shape":"String"},
+        "track":{"shape":"String"},
+        "profile":{"shape":"String"}
       }
     },
     "VideoConfigurationList":{

@@ -5084,6 +5084,15 @@
       "input":{"shape":"GetManagedPrefixListEntriesRequest"},
       "output":{"shape":"GetManagedPrefixListEntriesResult"}
     },
+    "GetManagedResourceVisibility":{
+      "name":"GetManagedResourceVisibility",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetManagedResourceVisibilityRequest"},
+      "output":{"shape":"GetManagedResourceVisibilityResult"}
+    },
     "GetNetworkInsightsAccessScopeAnalysisFindings":{
       "name":"GetNetworkInsightsAccessScopeAnalysisFindings",
       "http":{
@@ -5736,6 +5745,15 @@
       },
       "input":{"shape":"ModifyManagedPrefixListRequest"},
       "output":{"shape":"ModifyManagedPrefixListResult"}
+    },
+    "ModifyManagedResourceVisibility":{
+      "name":"ModifyManagedResourceVisibility",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyManagedResourceVisibilityRequest"},
+      "output":{"shape":"ModifyManagedResourceVisibilityResult"}
     },
     "ModifyNetworkInterfaceAttribute":{
       "name":"ModifyNetworkInterfaceAttribute",
@@ -20747,6 +20765,7 @@
         },
         "MaxResults":{"shape":"Integer"},
         "NextToken":{"shape":"String"},
+        "IncludeManagedResources":{"shape":"Boolean"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -20882,6 +20901,7 @@
           "shape":"InstanceIdStringList",
           "locationName":"InstanceId"
         },
+        "IncludeManagedResources":{"shape":"Boolean"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -21316,7 +21336,8 @@
           "shape":"FilterList",
           "locationName":"Filter"
         },
-        "ResolveAlias":{"shape":"Boolean"}
+        "ResolveAlias":{"shape":"Boolean"},
+        "IncludeManagedResources":{"shape":"Boolean"}
       }
     },
     "DescribeLaunchTemplateVersionsResult":{
@@ -21354,7 +21375,8 @@
           "locationName":"Filter"
         },
         "NextToken":{"shape":"String"},
-        "MaxResults":{"shape":"DescribeLaunchTemplatesMaxResults"}
+        "MaxResults":{"shape":"DescribeLaunchTemplatesMaxResults"},
+        "IncludeManagedResources":{"shape":"Boolean"}
       }
     },
     "DescribeLaunchTemplatesResult":{
@@ -21997,6 +22019,7 @@
       "members":{
         "NextToken":{"shape":"String"},
         "MaxResults":{"shape":"DescribeNetworkInterfacesMaxResults"},
+        "IncludeManagedResources":{"shape":"Boolean"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -23951,6 +23974,7 @@
           "shape":"VolumeIdStringList",
           "locationName":"VolumeId"
         },
+        "IncludeManagedResources":{"shape":"Boolean"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -24010,6 +24034,7 @@
           "shape":"VolumeIdStringList",
           "locationName":"VolumeId"
         },
+        "IncludeManagedResources":{"shape":"Boolean"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -30186,6 +30211,21 @@
         "NextToken":{
           "shape":"NextToken",
           "locationName":"nextToken"
+        }
+      }
+    },
+    "GetManagedResourceVisibilityRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetManagedResourceVisibilityResult":{
+      "type":"structure",
+      "members":{
+        "Visibility":{
+          "shape":"ManagedResourceVisibilitySettings",
+          "locationName":"visibility"
         }
       }
     },
@@ -40907,6 +40947,22 @@
         "locationName":"item"
       }
     },
+    "ManagedResourceDefaultVisibility":{
+      "type":"string",
+      "enum":[
+        "hidden",
+        "visible"
+      ]
+    },
+    "ManagedResourceVisibilitySettings":{
+      "type":"structure",
+      "members":{
+        "DefaultVisibility":{
+          "shape":"ManagedResourceDefaultVisibility",
+          "locationName":"defaultVisibility"
+        }
+      }
+    },
     "MarketType":{
       "type":"string",
       "enum":[
@@ -41567,7 +41623,7 @@
           "locationName":"attribute"
         },
         "Value":{
-          "shape":"String",
+          "shape":"ModifyInstanceAttributeValue",
           "locationName":"value"
         },
         "BlockDeviceMappings":{
@@ -41615,6 +41671,16 @@
           "locationName":"enaSupport"
         }
       }
+    },
+    "ModifyInstanceAttributeUserDataRequest":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"ModifyInstanceAttributeValue"}
+      }
+    },
+    "ModifyInstanceAttributeValue":{
+      "type":"string",
+      "sensitive":true
     },
     "ModifyInstanceCapacityReservationAttributesRequest":{
       "type":"structure",
@@ -42182,6 +42248,22 @@
         "PrefixList":{
           "shape":"ManagedPrefixList",
           "locationName":"prefixList"
+        }
+      }
+    },
+    "ModifyManagedResourceVisibilityRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "DefaultVisibility":{"shape":"ManagedResourceDefaultVisibility"}
+      }
+    },
+    "ModifyManagedResourceVisibilityResult":{
+      "type":"structure",
+      "members":{
+        "Visibility":{
+          "shape":"ManagedResourceVisibilitySettings",
+          "locationName":"visibility"
         }
       }
     },
@@ -45058,6 +45140,10 @@
         "Principal":{
           "shape":"String",
           "locationName":"principal"
+        },
+        "HiddenByDefault":{
+          "shape":"Boolean",
+          "locationName":"hiddenByDefault"
         }
       }
     },
@@ -57991,6 +58077,10 @@
         "EndTime":{
           "shape":"DateTime",
           "locationName":"endTime"
+        },
+        "Operator":{
+          "shape":"OperatorResponse",
+          "locationName":"operator"
         }
       }
     },
@@ -58257,6 +58347,10 @@
         "AvailabilityZoneId":{
           "shape":"String",
           "locationName":"availabilityZoneId"
+        },
+        "Operator":{
+          "shape":"OperatorResponse",
+          "locationName":"operator"
         }
       }
     },

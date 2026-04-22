@@ -109,6 +109,54 @@
       ],
       "readonly":true
     },
+    "GetResourceDashboard":{
+      "name":"GetResourceDashboard",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications/{applicationId}/dashboard",
+        "responseCode":200
+      },
+      "input":{"shape":"GetResourceDashboardRequest"},
+      "output":{"shape":"GetResourceDashboardResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetSession":{
+      "name":"GetSession",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications/{applicationId}/sessions/{sessionId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetSessionRequest"},
+      "output":{"shape":"GetSessionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "GetSessionEndpoint":{
+      "name":"GetSessionEndpoint",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications/{applicationId}/sessions/{sessionId}/endpoint",
+        "responseCode":200
+      },
+      "input":{"shape":"GetSessionEndpointRequest"},
+      "output":{"shape":"GetSessionEndpointResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListApplications":{
       "name":"ListApplications",
       "http":{
@@ -152,6 +200,22 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListSessions":{
+      "name":"ListSessions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications/{applicationId}/sessions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSessionsRequest"},
+      "output":{"shape":"ListSessionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
       ],
       "readonly":true
     },
@@ -205,6 +269,24 @@
       ],
       "idempotent":true
     },
+    "StartSession":{
+      "name":"StartSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/applications/{applicationId}/sessions",
+        "responseCode":200
+      },
+      "input":{"shape":"StartSessionRequest"},
+      "output":{"shape":"StartSessionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
     "StopApplication":{
       "name":"StopApplication",
       "http":{
@@ -235,6 +317,22 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "TerminateSession":{
+      "name":"TerminateSession",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/applications/{applicationId}/sessions/{sessionId}",
+        "responseCode":200
+      },
+      "input":{"shape":"TerminateSessionRequest"},
+      "output":{"shape":"TerminateSessionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
     },
     "UntagResource":{
       "name":"UntagResource",
@@ -628,6 +726,11 @@
       "min":20,
       "pattern":"arn:(aws[a-zA-Z0-9-]*):kms:[a-zA-Z0-9\\-]*:([0-9]{12}):key\\/[a-zA-Z0-9-]+"
     },
+    "EndpointUrl":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "EngineType":{
       "type":"string",
       "max":64,
@@ -736,6 +839,99 @@
         "jobRun":{"shape":"JobRun"}
       }
     },
+    "GetResourceDashboardRequest":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "resourceId",
+        "resourceType"
+      ],
+      "members":{
+        "applicationId":{
+          "shape":"ApplicationId",
+          "location":"uri",
+          "locationName":"applicationId"
+        },
+        "resourceId":{
+          "shape":"ResourceId",
+          "location":"querystring",
+          "locationName":"resourceId"
+        },
+        "resourceType":{
+          "shape":"ResourceType",
+          "location":"querystring",
+          "locationName":"resourceType"
+        }
+      }
+    },
+    "GetResourceDashboardResponse":{
+      "type":"structure",
+      "members":{
+        "url":{"shape":"Url"}
+      }
+    },
+    "GetSessionEndpointRequest":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "sessionId"
+      ],
+      "members":{
+        "applicationId":{
+          "shape":"ApplicationId",
+          "location":"uri",
+          "locationName":"applicationId"
+        },
+        "sessionId":{
+          "shape":"SessionId",
+          "location":"uri",
+          "locationName":"sessionId"
+        }
+      }
+    },
+    "GetSessionEndpointResponse":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "sessionId",
+        "endpoint",
+        "authToken",
+        "authTokenExpiresAt"
+      ],
+      "members":{
+        "applicationId":{"shape":"ApplicationId"},
+        "sessionId":{"shape":"SessionId"},
+        "endpoint":{"shape":"EndpointUrl"},
+        "authToken":{"shape":"SessionAuthToken"},
+        "authTokenExpiresAt":{"shape":"Date"}
+      }
+    },
+    "GetSessionRequest":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "sessionId"
+      ],
+      "members":{
+        "applicationId":{
+          "shape":"ApplicationId",
+          "location":"uri",
+          "locationName":"applicationId"
+        },
+        "sessionId":{
+          "shape":"SessionId",
+          "location":"uri",
+          "locationName":"sessionId"
+        }
+      }
+    },
+    "GetSessionResponse":{
+      "type":"structure",
+      "required":["session"],
+      "members":{
+        "session":{"shape":"Session"}
+      }
+    },
     "Hive":{
       "type":"structure",
       "required":["query"],
@@ -837,7 +1033,8 @@
       "type":"structure",
       "members":{
         "studioEnabled":{"shape":"Boolean"},
-        "livyEndpointEnabled":{"shape":"Boolean"}
+        "livyEndpointEnabled":{"shape":"Boolean"},
+        "sessionEnabled":{"shape":"Boolean"}
       }
     },
     "InternalServerException":{
@@ -1166,6 +1363,56 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListSessionsRequest":{
+      "type":"structure",
+      "required":["applicationId"],
+      "members":{
+        "applicationId":{
+          "shape":"ApplicationId",
+          "location":"uri",
+          "locationName":"applicationId"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListSessionsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "states":{
+          "shape":"SessionStateSet",
+          "location":"querystring",
+          "locationName":"states"
+        },
+        "createdAtAfter":{
+          "shape":"Date",
+          "location":"querystring",
+          "locationName":"createdAtAfter"
+        },
+        "createdAtBefore":{
+          "shape":"Date",
+          "location":"querystring",
+          "locationName":"createdAtBefore"
+        }
+      }
+    },
+    "ListSessionsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
+    },
+    "ListSessionsResponse":{
+      "type":"structure",
+      "required":["sessions"],
+      "members":{
+        "sessions":{"shape":"Sessions"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -1314,6 +1561,12 @@
       "min":60,
       "pattern":"arn:(aws[a-zA-Z0-9-]*):emr-serverless:.+:(\\d{12}):\\/applications\\/[0-9a-zA-Z]+(\\/jobruns\\/[0-9a-zA-Z]+)?"
     },
+    "ResourceId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[0-9a-z]+"
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "required":["message"],
@@ -1325,6 +1578,10 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ResourceType":{
+      "type":"string",
+      "enum":["SESSION"]
     },
     "ResourceUtilization":{
       "type":"structure",
@@ -1391,6 +1648,122 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "Session":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "sessionId",
+        "arn",
+        "state",
+        "stateDetails",
+        "releaseLabel",
+        "executionRoleArn",
+        "createdBy",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "applicationId":{"shape":"ApplicationId"},
+        "sessionId":{"shape":"SessionId"},
+        "arn":{"shape":"SessionArn"},
+        "name":{"shape":"String256"},
+        "state":{"shape":"SessionState"},
+        "stateDetails":{"shape":"String1024"},
+        "releaseLabel":{"shape":"ReleaseLabel"},
+        "executionRoleArn":{"shape":"IAMRoleArn"},
+        "createdBy":{"shape":"RequestIdentityUserArn"},
+        "createdAt":{"shape":"Date"},
+        "updatedAt":{"shape":"Date"},
+        "startedAt":{"shape":"Date"},
+        "endedAt":{"shape":"Date"},
+        "idleSince":{"shape":"Date"},
+        "configurationOverrides":{"shape":"SessionConfigurationOverrides"},
+        "networkConfiguration":{"shape":"NetworkConfiguration"},
+        "idleTimeoutMinutes":{
+          "shape":"Duration",
+          "box":true
+        },
+        "tags":{"shape":"TagMap"},
+        "totalResourceUtilization":{"shape":"TotalResourceUtilization"},
+        "billedResourceUtilization":{"shape":"ResourceUtilization"},
+        "totalExecutionDurationSeconds":{"shape":"Long"}
+      }
+    },
+    "SessionArn":{
+      "type":"string",
+      "max":1024,
+      "min":60,
+      "pattern":"arn:(aws[a-zA-Z0-9-]*):emr-serverless:.+:(\\d{12}):\\/applications\\/[0-9a-zA-Z]+\\/sessions\\/[0-9a-zA-Z]+"
+    },
+    "SessionAuthToken":{
+      "type":"string",
+      "max":8000,
+      "min":1,
+      "sensitive":true
+    },
+    "SessionConfigurationOverrides":{
+      "type":"structure",
+      "members":{
+        "runtimeConfiguration":{"shape":"ConfigurationList"}
+      }
+    },
+    "SessionId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[0-9a-z]+"
+    },
+    "SessionState":{
+      "type":"string",
+      "enum":[
+        "SUBMITTED",
+        "STARTING",
+        "STARTED",
+        "IDLE",
+        "BUSY",
+        "FAILED",
+        "TERMINATING",
+        "TERMINATED"
+      ]
+    },
+    "SessionStateSet":{
+      "type":"list",
+      "member":{"shape":"SessionState"},
+      "max":8,
+      "min":1
+    },
+    "SessionSummary":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "sessionId",
+        "arn",
+        "state",
+        "stateDetails",
+        "releaseLabel",
+        "executionRoleArn",
+        "createdBy",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "applicationId":{"shape":"ApplicationId"},
+        "sessionId":{"shape":"SessionId"},
+        "arn":{"shape":"SessionArn"},
+        "name":{"shape":"String256"},
+        "state":{"shape":"SessionState"},
+        "stateDetails":{"shape":"String1024"},
+        "releaseLabel":{"shape":"ReleaseLabel"},
+        "executionRoleArn":{"shape":"IAMRoleArn"},
+        "createdBy":{"shape":"RequestIdentityUserArn"},
+        "createdAt":{"shape":"Date"},
+        "updatedAt":{"shape":"Date"}
+      }
+    },
+    "Sessions":{
+      "type":"list",
+      "member":{"shape":"SessionSummary"}
     },
     "ShutdownGracePeriodInSeconds":{
       "type":"integer",
@@ -1469,6 +1842,46 @@
         "applicationId":{"shape":"ApplicationId"},
         "jobRunId":{"shape":"JobRunId"},
         "arn":{"shape":"JobArn"}
+      }
+    },
+    "StartSessionRequest":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "clientToken",
+        "executionRoleArn"
+      ],
+      "members":{
+        "applicationId":{
+          "shape":"ApplicationId",
+          "location":"uri",
+          "locationName":"applicationId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "executionRoleArn":{"shape":"IAMRoleArn"},
+        "configurationOverrides":{"shape":"SessionConfigurationOverrides"},
+        "tags":{"shape":"TagMap"},
+        "idleTimeoutMinutes":{
+          "shape":"Duration",
+          "box":true
+        },
+        "name":{"shape":"String256"}
+      }
+    },
+    "StartSessionResponse":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "sessionId",
+        "arn"
+      ],
+      "members":{
+        "applicationId":{"shape":"ApplicationId"},
+        "sessionId":{"shape":"SessionId"},
+        "arn":{"shape":"SessionArn"}
       }
     },
     "StopApplicationRequest":{
@@ -1553,6 +1966,36 @@
       "max":256,
       "min":0,
       "pattern":"[A-Za-z0-9 /_.:=+@-]*"
+    },
+    "TerminateSessionRequest":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "sessionId"
+      ],
+      "members":{
+        "applicationId":{
+          "shape":"ApplicationId",
+          "location":"uri",
+          "locationName":"applicationId"
+        },
+        "sessionId":{
+          "shape":"SessionId",
+          "location":"uri",
+          "locationName":"sessionId"
+        }
+      }
+    },
+    "TerminateSessionResponse":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "sessionId"
+      ],
+      "members":{
+        "applicationId":{"shape":"ApplicationId"},
+        "sessionId":{"shape":"SessionId"}
+      }
     },
     "TotalResourceUtilization":{
       "type":"structure",

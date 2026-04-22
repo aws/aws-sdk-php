@@ -157,6 +157,12 @@
         "LoRaWANServiceProfile$AddGwMetadata": "<p>The AddGWMetaData value.</p>"
       }
     },
+    "AdvancedConfiguration": {
+      "base": "Optional configuration to customize location estimates.",
+      "refs": {
+        "GetPositionEstimateRequest$AdvancedConfiguration": "Optional configuration to customize position estimates. If not provided, defaults are applied."
+      }
+    },
     "AggregationPeriod": {
       "base": null,
       "refs": {
@@ -494,6 +500,12 @@
         "CreateWirelessGatewayTaskDefinitionRequest$ClientRequestToken": "<p>Each resource must have a unique client request token. The client token is used to implement idempotency. It ensures that the request completes no more than one time. If you retry a request with the same token and the same parameters, the request will complete successfully. However, if you try to create a new resource using the same token but different parameters, an HTTP 409 conflict occurs. If you omit this value, AWS SDKs will automatically generate a unique client request. For more information about idempotency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency in Amazon EC2 API requests</a>.</p>",
         "StartSingleWirelessDeviceImportTaskRequest$ClientRequestToken": null,
         "StartWirelessDeviceImportTaskRequest$ClientRequestToken": null
+      }
+    },
+    "ConfidencePercent": {
+      "base": null,
+      "refs": {
+        "WiFiCellular$ConfidencePercent": "Confidence level for WiFi and cellular position estimates, expressed as a percentage. Valid range: 50–99 inclusive. Defaults to 68 if not specified."
       }
     },
     "ConflictException": {
@@ -4138,6 +4150,12 @@
       "base": null,
       "refs": {
         "GetPositionEstimateRequest$WiFiAccessPoints": "<p>Retrieves an estimated device position by resolving WLAN measurement data. The position is resolved using HERE's Wi-Fi based solver.</p>"
+      }
+    },
+    "WiFiCellular": {
+      "base": "Configuration for WiFi and cellular location payloads.",
+      "refs": {
+        "AdvancedConfiguration$WiFiCellular": "Configuration for WiFi and cellular-based payloads for location estimates."
       }
     },
     "WirelessDeviceArn": {

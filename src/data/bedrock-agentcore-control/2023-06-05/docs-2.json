@@ -11,6 +11,7 @@
     "CreateEvaluator": "<p> Creates a custom evaluator for agent quality assessment. Custom evaluators can use either LLM-as-a-Judge configurations with user-defined prompts, rating scales, and model settings, or code-based configurations with customer-managed Lambda functions to evaluate agent performance at tool call, trace, or session levels. </p>",
     "CreateGateway": "<p>Creates a gateway for Amazon Bedrock Agent. A gateway serves as an integration point between your agent and external services.</p> <p>If you specify <code>CUSTOM_JWT</code> as the <code>authorizerType</code>, you must provide an <code>authorizerConfiguration</code>.</p>",
     "CreateGatewayTarget": "<p>Creates a target for a gateway. A target defines an endpoint that the gateway can connect to.</p>",
+    "CreateHarness": "<p>Operation to create a Harness.</p>",
     "CreateMemory": "<p>Creates a new Amazon Bedrock AgentCore Memory resource.</p>",
     "CreateOauth2CredentialProvider": "<p>Creates a new OAuth2 credential provider.</p>",
     "CreateOnlineEvaluationConfig": "<p> Creates an online evaluation configuration for continuous monitoring of agent performance. Online evaluation automatically samples live traffic from CloudWatch logs at specified rates and applies evaluators to assess agent quality in production. </p>",
@@ -28,6 +29,7 @@
     "DeleteEvaluator": "<p> Deletes a custom evaluator. Builtin evaluators cannot be deleted. The evaluator must not be referenced by any active online evaluation configurations. </p>",
     "DeleteGateway": "<p>Deletes a gateway.</p>",
     "DeleteGatewayTarget": "<p>Deletes a gateway target.</p> <p>You cannot delete a target that is in a pending authorization state (<code>CREATE_PENDING_AUTH</code>, <code>UPDATE_PENDING_AUTH</code>, or <code>SYNCHRONIZE_PENDING_AUTH</code>). Wait for the authorization to complete or fail before deleting the target.</p>",
+    "DeleteHarness": "<p>Operation to delete a Harness.</p>",
     "DeleteMemory": "<p>Deletes an Amazon Bedrock AgentCore Memory resource.</p>",
     "DeleteOauth2CredentialProvider": "<p>Deletes an OAuth2 credential provider.</p>",
     "DeleteOnlineEvaluationConfig": "<p> Deletes an online evaluation configuration and stops any ongoing evaluation processes associated with it. </p>",
@@ -46,6 +48,7 @@
     "GetEvaluator": "<p> Retrieves detailed information about an evaluator, including its configuration, status, and metadata. Works with both built-in and custom evaluators. </p>",
     "GetGateway": "<p>Retrieves information about a specific Gateway.</p>",
     "GetGatewayTarget": "<p>Retrieves information about a specific gateway target.</p>",
+    "GetHarness": "<p>Operation to get a single Harness.</p>",
     "GetMemory": "<p>Retrieve an existing Amazon Bedrock AgentCore Memory resource.</p>",
     "GetOauth2CredentialProvider": "<p>Retrieves information about an OAuth2 credential provider.</p>",
     "GetOnlineEvaluationConfig": "<p> Retrieves detailed information about an online evaluation configuration, including its rules, data sources, evaluators, and execution status. </p>",
@@ -67,6 +70,7 @@
     "ListEvaluators": "<p> Lists all available evaluators, including both builtin evaluators provided by the service and custom evaluators created by the user. </p>",
     "ListGatewayTargets": "<p>Lists all targets for a specific gateway.</p>",
     "ListGateways": "<p>Lists all gateways in the account.</p>",
+    "ListHarnesses": "<p>Operation to list Harnesses.</p>",
     "ListMemories": "<p>Lists the available Amazon Bedrock AgentCore Memory resources in the current Amazon Web Services Region.</p>",
     "ListOauth2CredentialProviders": "<p>Lists all OAuth2 credential providers in your account.</p>",
     "ListOnlineEvaluationConfigs": "<p> Lists all online evaluation configurations in the account, providing summary information about each configuration's status and settings. </p>",
@@ -91,6 +95,7 @@
     "UpdateEvaluator": "<p> Updates a custom evaluator's configuration, description, or evaluation level. Built-in evaluators cannot be updated. The evaluator must not be locked for modification. </p>",
     "UpdateGateway": "<p>Updates an existing gateway.</p>",
     "UpdateGatewayTarget": "<p>Updates an existing gateway target.</p> <p>You cannot update a target that is in a pending authorization state (<code>CREATE_PENDING_AUTH</code>, <code>UPDATE_PENDING_AUTH</code>, or <code>SYNCHRONIZE_PENDING_AUTH</code>). Wait for the authorization to complete or fail before updating the target.</p>",
+    "UpdateHarness": "<p>Operation to update a Harness.</p>",
     "UpdateMemory": "<p>Update an Amazon Bedrock AgentCore Memory resource memory.</p>",
     "UpdateOauth2CredentialProvider": "<p>Updates an existing OAuth2 credential provider.</p>",
     "UpdateOnlineEvaluationConfig": "<p> Updates an online evaluation configuration's settings, including rules, data sources, evaluators, and execution status. Changes take effect immediately for ongoing evaluations. </p>",
@@ -366,6 +371,13 @@
         "ApiGatewayToolConfiguration$toolOverrides": "<p>A list of explicit tool definitions with optional custom names and descriptions.</p>"
       }
     },
+    "ApiKeyArn": {
+      "base": null,
+      "refs": {
+        "HarnessGeminiModelConfig$apiKeyArn": "<p>The ARN of your Gemini API key on AgentCore Identity.</p>",
+        "HarnessOpenAiModelConfig$apiKeyArn": "<p>The ARN of your OpenAI API key on AgentCore Identity.</p>"
+      }
+    },
     "ApiKeyCredentialLocation": {
       "base": null,
       "refs": {
@@ -488,10 +500,12 @@
         "CreateAgentRuntimeRequest$authorizerConfiguration": "<p>The authorizer configuration for the AgentCore Runtime.</p>",
         "CreateGatewayRequest$authorizerConfiguration": "<p>The authorizer configuration for the gateway. Required if <code>authorizerType</code> is <code>CUSTOM_JWT</code>.</p>",
         "CreateGatewayResponse$authorizerConfiguration": "<p>The authorizer configuration for the created gateway.</p>",
+        "CreateHarnessRequest$authorizerConfiguration": null,
         "CreateRegistryRequest$authorizerConfiguration": "<p>The authorizer configuration for the registry. Required if <code>authorizerType</code> is <code>CUSTOM_JWT</code>. For details, see the <code>AuthorizerConfiguration</code> data type.</p>",
         "GetAgentRuntimeResponse$authorizerConfiguration": "<p>The authorizer configuration for the AgentCore Runtime.</p>",
         "GetGatewayResponse$authorizerConfiguration": "<p>The authorizer configuration for the gateway.</p>",
         "GetRegistryResponse$authorizerConfiguration": "<p>The authorizer configuration for the registry. For details, see the <code>AuthorizerConfiguration</code> data type.</p>",
+        "Harness$authorizerConfiguration": null,
         "UpdateAgentRuntimeRequest$authorizerConfiguration": "<p>The updated authorizer configuration for the AgentCore Runtime.</p>",
         "UpdateGatewayRequest$authorizerConfiguration": "<p>The updated authorizer configuration for the gateway.</p>",
         "UpdateGatewayResponse$authorizerConfiguration": "<p>The updated authorizer configuration for the gateway.</p>",
@@ -527,6 +541,7 @@
       "refs": {
         "DeleteResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to delete the resource policy.</p>",
         "GetResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to retrieve the resource policy.</p>",
+        "HarnessAgentCoreRuntimeEnvironment$agentRuntimeArn": "<p>The ARN of the underlying AgentCore Runtime.</p>",
         "ListPoliciesRequest$targetResourceScope": "<p>Optional filter to list policies that apply to a specific resource scope or resource type. This helps narrow down policy results to those relevant for particular Amazon Web Services resources, agent tools, or operational contexts within the policy engine ecosystem.</p>",
         "PutResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to create or update the resource policy.</p>",
         "Resource$arn": "<p>The Amazon Resource Name (ARN) of the resource. This globally unique identifier specifies the exact resource that policies will be evaluated against for access control decisions. </p>"
@@ -559,7 +574,8 @@
       "refs": {
         "BrowserSummary$browserArn": "<p>The Amazon Resource Name (ARN) of the browser.</p>",
         "CreateBrowserResponse$browserArn": "<p>The Amazon Resource Name (ARN) of the created browser.</p>",
-        "GetBrowserResponse$browserArn": "<p>The Amazon Resource Name (ARN) of the browser.</p>"
+        "GetBrowserResponse$browserArn": "<p>The Amazon Resource Name (ARN) of the browser.</p>",
+        "HarnessAgentCoreBrowserConfig$browserArn": "<p>If not populated, the built-in Browser ARN is used.</p>"
       }
     },
     "BrowserEnterprisePolicies": {
@@ -802,6 +818,7 @@
         "CreateEvaluatorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayTargetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "CreateHarnessRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateOnlineEvaluationConfigRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreatePolicyEngineRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request with the same client token, the service returns the same response without creating a duplicate policy engine.</p>",
         "CreatePolicyRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure the idempotency of the request. The AWS SDK automatically generates this token, so you don't need to provide it in most cases. If you retry a request with the same client token, the service returns the same response without creating a duplicate policy.</p>",
@@ -812,10 +829,12 @@
         "DeleteBrowserProfileRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "DeleteHarnessRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "StartPolicyGenerationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure the idempotency of the request. The AWS SDK automatically generates this token, so you don't need to provide it in most cases. If you retry a request with the same client token, the service returns the same response without starting a duplicate generation.</p>",
         "UpdateAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateEvaluatorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "UpdateHarnessRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateOnlineEvaluationConfigRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>"
       }
     },
@@ -872,7 +891,8 @@
       "refs": {
         "CodeInterpreterSummary$codeInterpreterArn": "<p>The Amazon Resource Name (ARN) of the code interpreter.</p>",
         "CreateCodeInterpreterResponse$codeInterpreterArn": "<p>The Amazon Resource Name (ARN) of the created code interpreter.</p>",
-        "GetCodeInterpreterResponse$codeInterpreterArn": "<p>The Amazon Resource Name (ARN) of the code interpreter.</p>"
+        "GetCodeInterpreterResponse$codeInterpreterArn": "<p>The Amazon Resource Name (ARN) of the code interpreter.</p>",
+        "HarnessAgentCoreCodeInterpreterConfig$codeInterpreterArn": "<p>If not populated, the built-in Code Interpreter ARN is used.</p>"
       }
     },
     "CodeInterpreterId": {
@@ -937,7 +957,8 @@
     "ContainerConfiguration": {
       "base": "<p>Representation of a container configuration.</p>",
       "refs": {
-        "AgentRuntimeArtifact$containerConfiguration": "<p>The container configuration for the agent artifact.</p>"
+        "AgentRuntimeArtifact$containerConfiguration": "<p>The container configuration for the agent artifact.</p>",
+        "HarnessEnvironmentArtifact$containerConfiguration": null
       }
     },
     "Content": {
@@ -1033,6 +1054,14 @@
       "refs": {}
     },
     "CreateGatewayTargetResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateHarnessRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateHarnessResponse": {
       "base": null,
       "refs": {}
     },
@@ -1364,6 +1393,10 @@
         "GetRegistryRecordResponse$updatedAt": "<p>The timestamp when the registry record was last updated.</p>",
         "GetRegistryResponse$createdAt": "<p>The timestamp when the registry was created.</p>",
         "GetRegistryResponse$updatedAt": "<p>The timestamp when the registry was last updated.</p>",
+        "Harness$createdAt": "<p>The createdAt time of the Harness.</p>",
+        "Harness$updatedAt": "<p>The updatedAt time of the Harness.</p>",
+        "HarnessSummary$createdAt": "<p>The timestamp when the harness was created.</p>",
+        "HarnessSummary$updatedAt": "<p>The timestamp when the harness was last updated.</p>",
         "Policy$createdAt": "<p>The timestamp when the policy was originally created. This is automatically set by the service and used for auditing and lifecycle management.</p>",
         "Policy$updatedAt": "<p>The timestamp when the policy was last modified. This tracks the most recent changes to the policy configuration or metadata.</p>",
         "PolicyEngine$createdAt": "<p>The timestamp when the policy engine was originally created. This is automatically set by the service and used for auditing and lifecycle management.</p>",
@@ -1472,6 +1505,14 @@
       "refs": {}
     },
     "DeleteGatewayTargetResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteHarnessRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteHarnessResponse": {
       "base": null,
       "refs": {}
     },
@@ -1696,8 +1737,11 @@
       "base": null,
       "refs": {
         "CreateAgentRuntimeRequest$environmentVariables": "<p>Environment variables to set in the AgentCore Runtime environment.</p>",
+        "CreateHarnessRequest$environmentVariables": "<p>Environment variables to set in the harness runtime environment.</p>",
         "GetAgentRuntimeResponse$environmentVariables": "<p>Environment variables set in the AgentCore Runtime environment.</p>",
-        "UpdateAgentRuntimeRequest$environmentVariables": "<p>Updated environment variables to set in the AgentCore Runtime environment.</p>"
+        "Harness$environmentVariables": "<p>Environment variables exposed in the environment in which the Harness operates.</p>",
+        "UpdateAgentRuntimeRequest$environmentVariables": "<p>Updated environment variables to set in the AgentCore Runtime environment.</p>",
+        "UpdateHarnessRequest$environmentVariables": "<p>Environment variables to set in the harness runtime environment. If specified, this replaces all existing environment variables. If not specified, the existing value is retained.</p>"
       }
     },
     "EpisodicConsolidationOverride": {
@@ -1918,6 +1962,8 @@
       "refs": {
         "CreateAgentRuntimeRequest$filesystemConfigurations": "<p>The filesystem configurations to mount into the AgentCore Runtime. Use filesystem configurations to provide persistent storage to your AgentCore Runtime sessions.</p>",
         "GetAgentRuntimeResponse$filesystemConfigurations": "<p>The filesystem configurations mounted into the AgentCore Runtime.</p>",
+        "HarnessAgentCoreRuntimeEnvironment$filesystemConfigurations": "<p>The filesystem configurations for the runtime environment.</p>",
+        "HarnessAgentCoreRuntimeEnvironmentRequest$filesystemConfigurations": "<p>The filesystem configurations for the runtime environment.</p>",
         "UpdateAgentRuntimeRequest$filesystemConfigurations": "<p>The updated filesystem configurations to mount into the AgentCore Runtime.</p>"
       }
     },
@@ -1975,6 +2021,13 @@
         "PolicyGenerationAsset$findings": "<p>Analysis findings and insights related to this specific generated policy asset. These findings may include validation results, potential issues, or recommendations for improvement to help users evaluate the quality and appropriateness of the generated policy.</p>"
       }
     },
+    "Float": {
+      "base": null,
+      "refs": {
+        "HarnessAgentCoreMemoryRetrievalConfig$relevanceScore": "<p>The minimum relevance score for retrieved memories.</p>",
+        "HarnessSummarizationConfiguration$summaryRatio": "<p>The ratio of content to summarize.</p>"
+      }
+    },
     "FromUrlSynchronizationConfiguration": {
       "base": "<p>Configuration for synchronizing from a URL-based MCP server.</p>",
       "refs": {
@@ -1990,6 +2043,7 @@
         "GatewayTarget$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway target.</p>",
         "GetGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>",
         "GetGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>",
+        "HarnessAgentCoreGatewayConfig$gatewayArn": "<p>The ARN of the desired AgentCore Gateway.</p>",
         "UpdateGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the updated gateway.</p>",
         "UpdateGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>"
       }
@@ -2238,6 +2292,14 @@
       "base": null,
       "refs": {}
     },
+    "GetHarnessRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetHarnessResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetMemoryInput": {
       "base": null,
       "refs": {}
@@ -2350,10 +2412,314 @@
         "Oauth2ProviderConfigOutput$googleOauth2ProviderConfig": "<p>The output configuration for a Google OAuth2 provider.</p>"
       }
     },
+    "Harness": {
+      "base": "<p>Representation of a Harness.</p>",
+      "refs": {
+        "CreateHarnessResponse$harness": "<p>The harness that was created.</p>",
+        "DeleteHarnessResponse$harness": "<p>The harness that was deleted.</p>",
+        "GetHarnessResponse$harness": "<p>The harness resource.</p>",
+        "UpdateHarnessResponse$harness": "<p>The updated harness.</p>"
+      }
+    },
+    "HarnessAgentCoreBrowserConfig": {
+      "base": "<p>Configuration for AgentCore Browser.</p>",
+      "refs": {
+        "HarnessToolConfiguration$agentCoreBrowser": "<p>Configuration for AgentCore Browser.</p>"
+      }
+    },
+    "HarnessAgentCoreCodeInterpreterConfig": {
+      "base": "<p>Configuration for AgentCore Code Interpreter.</p>",
+      "refs": {
+        "HarnessToolConfiguration$agentCoreCodeInterpreter": "<p>Configuration for AgentCore Code Interpreter.</p>"
+      }
+    },
+    "HarnessAgentCoreGatewayConfig": {
+      "base": "<p>Configuration for AgentCore Gateway.</p>",
+      "refs": {
+        "HarnessToolConfiguration$agentCoreGateway": "<p>Configuration for AgentCore Gateway.</p>"
+      }
+    },
+    "HarnessAgentCoreMemoryConfiguration": {
+      "base": "<p>Configuration for AgentCore Memory integration.</p>",
+      "refs": {
+        "HarnessMemoryConfiguration$agentCoreMemoryConfiguration": "<p>The AgentCore Memory configuration.</p>"
+      }
+    },
+    "HarnessAgentCoreMemoryRetrievalConfig": {
+      "base": "<p>Configuration for memory retrieval within a namespace.</p>",
+      "refs": {
+        "HarnessAgentCoreMemoryRetrievalConfigs$value": null
+      }
+    },
+    "HarnessAgentCoreMemoryRetrievalConfigs": {
+      "base": null,
+      "refs": {
+        "HarnessAgentCoreMemoryConfiguration$retrievalConfig": "<p>The retrieval configuration for long-term memory, mapping namespace path templates to retrieval settings.</p>"
+      }
+    },
+    "HarnessAgentCoreRuntimeEnvironment": {
+      "base": "<p>The AgentCore Runtime environment for a harness.</p>",
+      "refs": {
+        "HarnessEnvironmentProvider$agentCoreRuntimeEnvironment": "<p>The AgentCore Runtime environment configuration.</p>"
+      }
+    },
+    "HarnessAgentCoreRuntimeEnvironmentRequest": {
+      "base": "<p>The AgentCore Runtime environment request configuration.</p>",
+      "refs": {
+        "HarnessEnvironmentProviderRequest$agentCoreRuntimeEnvironment": "<p>The AgentCore Runtime environment configuration.</p>"
+      }
+    },
+    "HarnessAllowedTool": {
+      "base": null,
+      "refs": {
+        "HarnessAllowedTools$member": null
+      }
+    },
+    "HarnessAllowedTools": {
+      "base": null,
+      "refs": {
+        "CreateHarnessRequest$allowedTools": "<p>The tools that the agent is allowed to use. Supports glob patterns such as * for all tools, @builtin for all built-in tools, or @serverName/toolName for specific MCP server tools.</p>",
+        "Harness$allowedTools": "<p>The allowed tools of the Harness. All tools are allowed by default.</p>",
+        "UpdateHarnessRequest$allowedTools": "<p>The tools that the agent is allowed to use. If specified, this replaces all existing allowed tools. If not specified, the existing value is retained.</p>"
+      }
+    },
+    "HarnessArn": {
+      "base": null,
+      "refs": {
+        "Harness$arn": "<p>The ARN of the Harness.</p>",
+        "HarnessSummary$arn": "<p>The ARN of the harness.</p>"
+      }
+    },
+    "HarnessBedrockModelConfig": {
+      "base": "<p>Configuration for an Amazon Bedrock model provider.</p>",
+      "refs": {
+        "HarnessModelConfiguration$bedrockModelConfig": "<p>Configuration for an Amazon Bedrock model.</p>"
+      }
+    },
+    "HarnessEnvironmentArtifact": {
+      "base": "<p>The environment artifact for a harness, such as a container image containing custom dependencies.</p>",
+      "refs": {
+        "CreateHarnessRequest$environmentArtifact": "<p>The environment artifact for the harness, such as a custom container image containing additional dependencies.</p>",
+        "Harness$environmentArtifact": "<p>The environment artifact (e.g., container) in which the Harness operates.</p>",
+        "UpdatedHarnessEnvironmentArtifact$optionalValue": "<p>The updated environment artifact value, or null to clear the existing configuration.</p>"
+      }
+    },
+    "HarnessEnvironmentProvider": {
+      "base": "<p>The environment provider for a harness.</p>",
+      "refs": {
+        "Harness$environment": "<p>The compute environment on which the Harness runs.</p>"
+      }
+    },
+    "HarnessEnvironmentProviderRequest": {
+      "base": "<p>The environment provider request configuration.</p>",
+      "refs": {
+        "CreateHarnessRequest$environment": "<p>The compute environment configuration for the harness, including network and lifecycle settings.</p>",
+        "UpdateHarnessRequest$environment": "<p>The compute environment configuration for the harness. If not specified, the existing value is retained.</p>"
+      }
+    },
+    "HarnessGatewayOutboundAuth": {
+      "base": "<p>Authentication method for calling a Gateway.</p>",
+      "refs": {
+        "HarnessAgentCoreGatewayConfig$outboundAuth": "<p>How Loopy authenticates to this Gateway. Defaults to AWS_IAM (SigV4) if omitted.</p>"
+      }
+    },
+    "HarnessGeminiModelConfig": {
+      "base": "<p>Configuration for a Google Gemini model provider. Requires an API key stored in AgentCore Identity.</p>",
+      "refs": {
+        "HarnessModelConfiguration$geminiModelConfig": "<p>Configuration for a Google Gemini model.</p>"
+      }
+    },
+    "HarnessId": {
+      "base": null,
+      "refs": {
+        "DeleteHarnessRequest$harnessId": "<p>The ID of the harness to delete.</p>",
+        "GetHarnessRequest$harnessId": "<p>The ID of the harness to retrieve.</p>",
+        "Harness$harnessId": "<p>The ID of the Harness.</p>",
+        "HarnessSummary$harnessId": "<p>The ID of the harness.</p>",
+        "UpdateHarnessRequest$harnessId": "<p>The ID of the harness to update.</p>"
+      }
+    },
+    "HarnessInlineFunctionConfig": {
+      "base": "<p>Configuration for an inline function tool. When the agent calls this tool, the tool call is returned to the caller for external execution.</p>",
+      "refs": {
+        "HarnessToolConfiguration$inlineFunction": "<p>Configuration for an inline function tool.</p>"
+      }
+    },
+    "HarnessInlineFunctionDescription": {
+      "base": null,
+      "refs": {
+        "HarnessInlineFunctionConfig$description": "<p>Description of what the tool does, provided to the model.</p>"
+      }
+    },
+    "HarnessMemoryConfiguration": {
+      "base": "<p>The memory configuration for a harness.</p>",
+      "refs": {
+        "CreateHarnessRequest$memory": "<p>The AgentCore Memory configuration for persisting conversation context across sessions.</p>",
+        "Harness$memory": "<p>AgentCore Memory instance configuration for short and long term memory.</p>",
+        "UpdatedHarnessMemoryConfiguration$optionalValue": "<p>The updated memory configuration value, or null to clear the existing configuration.</p>"
+      }
+    },
+    "HarnessModelConfiguration": {
+      "base": "<p>Specification of which model to use.</p>",
+      "refs": {
+        "CreateHarnessRequest$model": "<p>The model configuration for the harness. Supports Amazon Bedrock, OpenAI, and Google Gemini model providers.</p>",
+        "Harness$model": "<p>The configuration of the default model used by the Harness.</p>",
+        "UpdateHarnessRequest$model": "<p>The model configuration for the harness. If not specified, the existing value is retained.</p>"
+      }
+    },
+    "HarnessName": {
+      "base": null,
+      "refs": {
+        "CreateHarnessRequest$harnessName": "<p>The name of the harness. Must start with a letter and contain only alphanumeric characters and underscores.</p>",
+        "Harness$harnessName": "<p>The name of the Harness.</p>",
+        "HarnessSummary$harnessName": "<p>The name of the harness.</p>"
+      }
+    },
+    "HarnessOpenAiModelConfig": {
+      "base": "<p>Configuration for an OpenAI model provider. Requires an API key stored in AgentCore Identity.</p>",
+      "refs": {
+        "HarnessModelConfiguration$openAiModelConfig": "<p>Configuration for an OpenAI model.</p>"
+      }
+    },
+    "HarnessRemoteMcpConfig": {
+      "base": "<p>Configuration for connecting to a remote MCP server.</p>",
+      "refs": {
+        "HarnessToolConfiguration$remoteMcp": "<p>Configuration for remote MCP server.</p>"
+      }
+    },
+    "HarnessRemoteMcpUrl": {
+      "base": null,
+      "refs": {
+        "HarnessRemoteMcpConfig$url": "<p>URL of the MCP endpoint.</p>"
+      }
+    },
+    "HarnessSkill": {
+      "base": "<p>A skill available to the agent.</p>",
+      "refs": {
+        "HarnessSkills$member": null
+      }
+    },
+    "HarnessSkillPath": {
+      "base": null,
+      "refs": {
+        "HarnessSkill$path": "<p>The filesystem path to the skill definition.</p>"
+      }
+    },
+    "HarnessSkills": {
+      "base": null,
+      "refs": {
+        "CreateHarnessRequest$skills": "<p>The skills available to the agent. Skills are bundles of files that the agent can pull into its context on demand.</p>",
+        "Harness$skills": "<p>The skills of the Harness.</p>",
+        "UpdateHarnessRequest$skills": "<p>The skills available to the agent. If specified, this replaces all existing skills. If not specified, the existing value is retained.</p>"
+      }
+    },
+    "HarnessSlidingWindowConfiguration": {
+      "base": "<p>Configuration for sliding window truncation strategy.</p>",
+      "refs": {
+        "HarnessTruncationStrategyConfiguration$slidingWindow": "<p>Configuration for sliding window truncation.</p>"
+      }
+    },
+    "HarnessStatus": {
+      "base": null,
+      "refs": {
+        "Harness$status": "<p>The status of the Harness.</p>",
+        "HarnessSummary$status": "<p>The current status of the harness.</p>"
+      }
+    },
+    "HarnessSummaries": {
+      "base": null,
+      "refs": {
+        "ListHarnessesResponse$harnesses": "<p>The list of harness summaries.</p>"
+      }
+    },
+    "HarnessSummarizationConfiguration": {
+      "base": "<p>Configuration for summarization-based truncation strategy.</p>",
+      "refs": {
+        "HarnessTruncationStrategyConfiguration$summarization": "<p>Configuration for summarization-based truncation.</p>"
+      }
+    },
+    "HarnessSummary": {
+      "base": "<p>Summary information about a harness.</p>",
+      "refs": {
+        "HarnessSummaries$member": null
+      }
+    },
+    "HarnessSystemContentBlock": {
+      "base": "<p>A content block in the system prompt.</p>",
+      "refs": {
+        "HarnessSystemPrompt$member": null
+      }
+    },
+    "HarnessSystemPrompt": {
+      "base": null,
+      "refs": {
+        "CreateHarnessRequest$systemPrompt": "<p>The system prompt that defines the agent's behavior and instructions.</p>",
+        "Harness$systemPrompt": "<p>The system prompt of the Harness.</p>",
+        "UpdateHarnessRequest$systemPrompt": "<p>The system prompt that defines the agent's behavior. If not specified, the existing value is retained.</p>"
+      }
+    },
+    "HarnessTool": {
+      "base": "<p>A tool available to the agent loop.</p>",
+      "refs": {
+        "HarnessTools$member": null
+      }
+    },
+    "HarnessToolConfiguration": {
+      "base": "<p>Configuration union for different tool types.</p>",
+      "refs": {
+        "HarnessTool$config": "<p>Tool-specific configuration.</p>"
+      }
+    },
+    "HarnessToolName": {
+      "base": null,
+      "refs": {
+        "HarnessTool$name": "<p>Unique name for the tool. If not provided, a name will be inferred or generated.</p>"
+      }
+    },
+    "HarnessToolType": {
+      "base": null,
+      "refs": {
+        "HarnessTool$type": "<p>The type of tool.</p>"
+      }
+    },
+    "HarnessTools": {
+      "base": null,
+      "refs": {
+        "CreateHarnessRequest$tools": "<p>The tools available to the agent, such as remote MCP servers, AgentCore Gateway, AgentCore Browser, Code Interpreter, or inline functions.</p>",
+        "Harness$tools": "<p>The tools of the Harness.</p>",
+        "UpdateHarnessRequest$tools": "<p>The tools available to the agent. If specified, this replaces all existing tools. If not specified, the existing value is retained.</p>"
+      }
+    },
+    "HarnessTruncationConfiguration": {
+      "base": "<p>Configuration for truncating conversation context when it exceeds model limits.</p>",
+      "refs": {
+        "CreateHarnessRequest$truncation": "<p>The truncation configuration for managing conversation context when it exceeds model limits.</p>",
+        "Harness$truncation": "<p>Configuration for truncating model context.</p>",
+        "UpdateHarnessRequest$truncation": "<p>The truncation configuration for managing conversation context. If not specified, the existing value is retained.</p>"
+      }
+    },
+    "HarnessTruncationStrategy": {
+      "base": null,
+      "refs": {
+        "HarnessTruncationConfiguration$strategy": "<p>The truncation strategy to use.</p>"
+      }
+    },
+    "HarnessTruncationStrategyConfiguration": {
+      "base": "<p>Strategy-specific truncation configuration.</p>",
+      "refs": {
+        "HarnessTruncationConfiguration$config": "<p>The strategy-specific configuration.</p>"
+      }
+    },
     "HeaderName": {
       "base": null,
       "refs": {
         "RequestHeaderAllowlist$member": null
+      }
+    },
+    "HttpHeaderKey": {
+      "base": "<p>The key of an HTTP header.</p>",
+      "refs": {
+        "HttpHeadersMap$key": null
       }
     },
     "HttpHeaderName": {
@@ -2361,6 +2727,18 @@
       "refs": {
         "AllowedRequestHeaders$member": null,
         "AllowedResponseHeaders$member": null
+      }
+    },
+    "HttpHeaderValue": {
+      "base": "<p>The value of an HTTP header.</p>",
+      "refs": {
+        "HttpHeadersMap$value": null
+      }
+    },
+    "HttpHeadersMap": {
+      "base": "<p>Map of key/value pairs for HTTP headers.</p>",
+      "refs": {
+        "HarnessRemoteMcpConfig$headers": null
       }
     },
     "HttpQueryParameterName": {
@@ -2480,10 +2858,23 @@
     "Integer": {
       "base": null,
       "refs": {
+        "CreateHarnessRequest$maxIterations": "<p>The maximum number of iterations the agent loop can execute per invocation.</p>",
+        "CreateHarnessRequest$maxTokens": "<p>The maximum number of tokens the agent can generate per iteration.</p>",
+        "CreateHarnessRequest$timeoutSeconds": "<p>The maximum duration in seconds for the agent loop execution per invocation.</p>",
+        "Harness$maxIterations": "<p>The maximum number of iterations in the agent loop allowed before exiting per invocation.</p>",
+        "Harness$maxTokens": "<p>The maximum number of tokens allowed before exiting per invocation.</p>",
+        "Harness$timeoutSeconds": "<p>The maximum duration per invocation.</p>",
+        "HarnessAgentCoreMemoryConfiguration$messagesCount": "<p>The number of messages to retrieve from memory.</p>",
+        "HarnessAgentCoreMemoryRetrievalConfig$topK": "<p>The maximum number of memory entries to retrieve.</p>",
+        "HarnessSlidingWindowConfiguration$messagesCount": "<p>The number of recent messages to retain in the context window.</p>",
+        "HarnessSummarizationConfiguration$preserveRecentMessages": "<p>The number of recent messages to preserve without summarization.</p>",
         "MessageBasedTrigger$messageCount": "<p>The number of messages that trigger memory processing.</p>",
         "SelfManagedConfiguration$historicalContextWindowSize": "<p>The number of historical messages to include in processing context.</p>",
         "TimeBasedTrigger$idleSessionTimeout": "<p>Idle session timeout (seconds) that triggers memory processing.</p>",
-        "TokenBasedTrigger$tokenCount": "<p>Number of tokens that trigger memory processing.</p>"
+        "TokenBasedTrigger$tokenCount": "<p>Number of tokens that trigger memory processing.</p>",
+        "UpdateHarnessRequest$maxIterations": "<p>The maximum number of iterations the agent loop can execute per invocation. If not specified, the existing value is retained.</p>",
+        "UpdateHarnessRequest$maxTokens": "<p>The maximum number of tokens the agent can generate per iteration. If not specified, the existing value is retained.</p>",
+        "UpdateHarnessRequest$timeoutSeconds": "<p>The maximum duration in seconds for the agent loop execution per invocation. If not specified, the existing value is retained.</p>"
       }
     },
     "InterceptorConfiguration": {
@@ -2606,6 +2997,8 @@
       "refs": {
         "CreateAgentRuntimeRequest$lifecycleConfiguration": "<p>The life cycle configuration for the AgentCore Runtime.</p>",
         "GetAgentRuntimeResponse$lifecycleConfiguration": "<p>The life cycle configuration for the AgentCore Runtime.</p>",
+        "HarnessAgentCoreRuntimeEnvironment$lifecycleConfiguration": null,
+        "HarnessAgentCoreRuntimeEnvironmentRequest$lifecycleConfiguration": null,
         "UpdateAgentRuntimeRequest$lifecycleConfiguration": "<p>The updated life cycle configuration for the AgentCore Runtime.</p>"
       }
     },
@@ -2716,6 +3109,14 @@
       "refs": {}
     },
     "ListGatewaysResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListHarnessesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListHarnessesResponse": {
       "base": null,
       "refs": {}
     },
@@ -2891,12 +3292,21 @@
         "ListBrowserProfilesRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListBrowsersRequest$maxResults": "<p>The maximum number of results to return in a single call. The default value is 10. The maximum value is 50.</p>",
         "ListCodeInterpretersRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
+        "ListHarnessesRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListPoliciesRequest$maxResults": "<p>The maximum number of policies to return in a single response. If not specified, the default is 10 policies per page, with a maximum of 100 per page.</p>",
         "ListPolicyEnginesRequest$maxResults": "<p>The maximum number of policy engines to return in a single response. If not specified, the default is 10 policy engines per page, with a maximum of 100 per page.</p>",
         "ListPolicyGenerationAssetsRequest$maxResults": "<p>The maximum number of policy generation assets to return in a single response. If not specified, the default is 10 assets per page, with a maximum of 100 per page. This helps control response size when dealing with policy generations that produce many alternative policy options.</p>",
         "ListPolicyGenerationsRequest$maxResults": "<p>The maximum number of policy generations to return in a single response.</p>",
         "ListRegistriesRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListRegistryRecordsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
+      }
+    },
+    "MaxTokens": {
+      "base": null,
+      "refs": {
+        "HarnessBedrockModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per iteration.</p>",
+        "HarnessGeminiModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per iteration.</p>",
+        "HarnessOpenAiModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per iteration.</p>"
       }
     },
     "McpDescriptor": {
@@ -2970,6 +3380,7 @@
     "MemoryArn": {
       "base": null,
       "refs": {
+        "HarnessAgentCoreMemoryConfiguration$arn": "<p>The ARN of the AgentCore Memory resource.</p>",
         "Memory$arn": "<p>The Amazon Resource Name (ARN) of the memory.</p>",
         "MemorySummary$arn": "<p>The Amazon Resource Name (ARN) of the memory.</p>"
       }
@@ -3104,7 +3515,10 @@
     "ModelId": {
       "base": null,
       "refs": {
-        "BedrockEvaluatorModelConfig$modelId": "<p> The identifier of the Amazon Bedrock model to use for evaluation. Must be a supported foundation model available in your region. </p>"
+        "BedrockEvaluatorModelConfig$modelId": "<p> The identifier of the Amazon Bedrock model to use for evaluation. Must be a supported foundation model available in your region. </p>",
+        "HarnessBedrockModelConfig$modelId": "<p>The Bedrock model ID.</p>",
+        "HarnessGeminiModelConfig$modelId": "<p>The Gemini model ID.</p>",
+        "HarnessOpenAiModelConfig$modelId": "<p>The OpenAI model ID.</p>"
       }
     },
     "ModifyConsolidationConfiguration": {
@@ -3237,6 +3651,8 @@
       "refs": {
         "CreateAgentRuntimeRequest$networkConfiguration": "<p>The network configuration for the AgentCore Runtime.</p>",
         "GetAgentRuntimeResponse$networkConfiguration": "<p>The network configuration for the AgentCore Runtime.</p>",
+        "HarnessAgentCoreRuntimeEnvironment$networkConfiguration": null,
+        "HarnessAgentCoreRuntimeEnvironmentRequest$networkConfiguration": null,
         "UpdateAgentRuntimeRequest$networkConfiguration": "<p>The updated network configuration for the AgentCore Runtime.</p>"
       }
     },
@@ -3261,6 +3677,8 @@
         "ListBrowsersResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListCodeInterpretersRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListCodeInterpretersResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListHarnessesRequest$nextToken": "<p>The token for the next set of results.</p>",
+        "ListHarnessesResponse$nextToken": "<p>The token for the next set of results.</p>",
         "ListPoliciesRequest$nextToken": "<p>A pagination token returned from a previous <a href=\"https://docs.aws.amazon.com/bedrock-agentcore-control/latest/APIReference/API_ListPolicies.html\">ListPolicies</a> call. Use this token to retrieve the next page of results when the response is paginated.</p>",
         "ListPoliciesResponse$nextToken": "<p>A pagination token that can be used in subsequent ListPolicies calls to retrieve additional results. This token is only present when there are more results available.</p>",
         "ListPolicyEnginesRequest$nextToken": "<p>A pagination token returned from a previous <a href=\"https://docs.aws.amazon.com/bedrock-agentcore-control/latest/APIReference/API_ListPolicyEngines.html\">ListPolicyEngines</a> call. Use this token to retrieve the next page of results when the response is paginated.</p>",
@@ -3338,7 +3756,8 @@
     "OAuthCredentialProvider": {
       "base": "<p>An OAuth credential provider for gateway authentication. This structure contains the configuration for authenticating with the target endpoint using OAuth.</p>",
       "refs": {
-        "CredentialProvider$oauthCredentialProvider": "<p>The OAuth credential provider. This provider uses OAuth authentication to access the target endpoint.</p>"
+        "CredentialProvider$oauthCredentialProvider": "<p>The OAuth credential provider. This provider uses OAuth authentication to access the target endpoint.</p>",
+        "HarnessGatewayOutboundAuth$oauth": null
       }
     },
     "OAuthCredentialProviderArn": {
@@ -4128,15 +4547,18 @@
         "CreateCodeInterpreterRequest$executionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the code interpreter to access Amazon Web Services services.</p>",
         "CreateGatewayRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the gateway to access Amazon Web Services services.</p>",
         "CreateGatewayResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the gateway.</p>",
+        "CreateHarnessRequest$executionRoleArn": "<p>The ARN of the IAM role that the harness assumes when running. This role must have permissions for the services the agent needs to access, such as Amazon Bedrock for model invocation.</p>",
         "CreateOnlineEvaluationConfigRequest$evaluationExecutionRoleArn": "<p> The Amazon Resource Name (ARN) of the IAM role that grants permissions to read from CloudWatch logs, write evaluation results, and invoke Amazon Bedrock models for evaluation. </p>",
         "GetAgentRuntimeResponse$roleArn": "<p>The IAM role ARN that provides permissions for the AgentCore Runtime.</p>",
         "GetBrowserResponse$executionRoleArn": "<p>The IAM role ARN that provides permissions for the browser.</p>",
         "GetCodeInterpreterResponse$executionRoleArn": "<p>The IAM role ARN that provides permissions for the code interpreter.</p>",
         "GetGatewayResponse$roleArn": "<p>The IAM role ARN that provides permissions for the gateway.</p>",
         "GetOnlineEvaluationConfigResponse$evaluationExecutionRoleArn": "<p> The Amazon Resource Name (ARN) of the IAM role used for evaluation execution. </p>",
+        "Harness$executionRoleArn": "<p>IAM role the Harness assumes when running.</p>",
         "UpdateAgentRuntimeRequest$roleArn": "<p>The updated IAM role ARN that provides permissions for the AgentCore Runtime.</p>",
         "UpdateGatewayRequest$roleArn": "<p>The updated IAM role ARN that provides permissions for the gateway.</p>",
         "UpdateGatewayResponse$roleArn": "<p>The updated IAM role ARN that provides permissions for the gateway.</p>",
+        "UpdateHarnessRequest$executionRoleArn": "<p>The ARN of the IAM role that the harness assumes when running. If not specified, the existing value is retained.</p>",
         "UpdateOnlineEvaluationConfigRequest$evaluationExecutionRoleArn": "<p> The updated Amazon Resource Name (ARN) of the IAM role used for evaluation execution. </p>"
       }
     },
@@ -4393,6 +4815,18 @@
         "SemanticOverrideConfigurationInput$extraction": "<p>The extraction configuration for a semantic override.</p>"
       }
     },
+    "SensitiveJson": {
+      "base": null,
+      "refs": {
+        "HarnessInlineFunctionConfig$inputSchema": "<p>JSON Schema describing the tool's input parameters.</p>"
+      }
+    },
+    "SensitiveText": {
+      "base": null,
+      "refs": {
+        "HarnessSystemContentBlock$text": "<p>The text content of the system prompt block.</p>"
+      }
+    },
     "ServerDefinition": {
       "base": "<p>The server definition for an MCP descriptor. Contains the schema version and inline content for the MCP server configuration.</p>",
       "refs": {
@@ -4566,6 +5000,13 @@
         "GetPolicyGenerationResponse$findings": "<p>The findings and results from the policy generation process. This includes any issues, recommendations, validation results, or insights from the generated policies.</p>",
         "GetRegistryRecordResponse$statusReason": "<p>The reason for the current status, typically set when the status is a failure state.</p>",
         "GetRegistryResponse$statusReason": "<p>The reason for the current status, typically set when the status is a failure state.</p>",
+        "Harness$failureReason": "<p>Reason why create or update operations fail.</p>",
+        "HarnessAgentCoreMemoryConfiguration$actorId": "<p>The actor ID for memory operations.</p>",
+        "HarnessAgentCoreMemoryRetrievalConfig$strategyId": "<p>The ID of the retrieval strategy to use.</p>",
+        "HarnessAgentCoreMemoryRetrievalConfigs$key": null,
+        "HarnessAgentCoreRuntimeEnvironment$agentRuntimeName": "<p>The name of the underlying AgentCore Runtime.</p>",
+        "HarnessAgentCoreRuntimeEnvironment$agentRuntimeId": "<p>The ID of the underlying AgentCore Runtime.</p>",
+        "HarnessSummarizationConfiguration$summarizationSystemPrompt": "<p>The system prompt used for generating summaries.</p>",
         "InvocationConfiguration$payloadDeliveryBucketName": "<p>The S3 bucket name for event payload delivery.</p>",
         "ListApiKeyCredentialProvidersRequest$nextToken": "<p>Pagination token.</p>",
         "ListApiKeyCredentialProvidersResponse$nextToken": "<p>Pagination token for the next page of results.</p>",
@@ -4740,6 +5181,7 @@
         "CreateCodeInterpreterRequest$tags": "<p>A map of tag keys and values to assign to the code interpreter. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateEvaluatorRequest$tags": "<p>A map of tag keys and values to assign to an AgentCore Evaluator. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateGatewayRequest$tags": "<p>A map of key-value pairs to associate with the gateway as metadata tags.</p>",
+        "CreateHarnessRequest$tags": "<p>Tags to apply to the harness resource.</p>",
         "CreateMemoryInput$tags": "<p>A map of tag keys and values to assign to an AgentCore Memory. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateOauth2CredentialProviderRequest$tags": "<p>A map of tag keys and values to assign to the OAuth2 credential provider. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateOnlineEvaluationConfigRequest$tags": "<p>A map of tag keys and values to assign to an AgentCore Online Evaluation Config. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
@@ -4819,6 +5261,13 @@
         "ListGatewayTargetsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>"
       }
     },
+    "TargetResourcePriority": {
+      "base": null,
+      "refs": {
+        "McpServerTargetConfiguration$resourcePriority": "<p>Priority for resolving MCP server targets with shared resource URIs. Lower values take precedence. Defaults to 1000 when not set.</p>",
+        "TargetSummary$resourcePriority": "<p>Priority for resolving resource URI conflicts across targets. Lower values take precedence. Defaults to 1000 when not set.</p>"
+      }
+    },
     "TargetStatus": {
       "base": null,
       "refs": {
@@ -4840,6 +5289,14 @@
       "base": "<p>Contains summary information about a gateway target. A target represents an endpoint that the gateway can connect to.</p>",
       "refs": {
         "TargetSummaries$member": null
+      }
+    },
+    "Temperature": {
+      "base": null,
+      "refs": {
+        "HarnessBedrockModelConfig$temperature": "<p>The temperature to set when calling the model.</p>",
+        "HarnessGeminiModelConfig$temperature": "<p>The temperature to set when calling the model.</p>",
+        "HarnessOpenAiModelConfig$temperature": "<p>The temperature to set when calling the model.</p>"
       }
     },
     "TenantIdType": {
@@ -4992,6 +5449,20 @@
         "UpdatedToolsDefinition$optionalValue": "<p>The updated tools definition value.</p>"
       }
     },
+    "TopK": {
+      "base": null,
+      "refs": {
+        "HarnessGeminiModelConfig$topK": "<p>The topK set when calling the model.</p>"
+      }
+    },
+    "TopP": {
+      "base": null,
+      "refs": {
+        "HarnessBedrockModelConfig$topP": "<p>The topP set when calling the model.</p>",
+        "HarnessGeminiModelConfig$topP": "<p>The topP set when calling the model.</p>",
+        "HarnessOpenAiModelConfig$topP": "<p>The topP set when calling the model.</p>"
+      }
+    },
     "TriggerCondition": {
       "base": "<p>Condition that triggers memory processing.</p>",
       "refs": {
@@ -5020,6 +5491,13 @@
     "UnauthorizedException": {
       "base": "<p>This exception is thrown when the JWT bearer token is invalid or not found for OAuth bearer token based access</p>",
       "refs": {}
+    },
+    "Unit": {
+      "base": null,
+      "refs": {
+        "HarnessGatewayOutboundAuth$awsIam": "<p>SigV4-sign requests using the agent's execution role.</p>",
+        "HarnessGatewayOutboundAuth$none": "<p>No authentication.</p>"
+      }
     },
     "UntagResourceRequest": {
       "base": null,
@@ -5074,6 +5552,14 @@
       "refs": {}
     },
     "UpdateGatewayTargetResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateHarnessRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateHarnessResponse": {
       "base": null,
       "refs": {}
     },
@@ -5194,6 +5680,7 @@
     "UpdatedAuthorizerConfiguration": {
       "base": "<p>Wrapper for updating an optional AuthorizerConfiguration field with PATCH semantics. When present in an update request, the authorizer configuration is replaced with optionalValue. When absent, the authorizer configuration is left unchanged. To unset, include the wrapper with optionalValue not specified.</p>",
       "refs": {
+        "UpdateHarnessRequest$authorizerConfiguration": null,
         "UpdateRegistryRequest$authorizerConfiguration": "<p>The updated authorizer configuration for the registry. Changing the authorizer configuration can break existing consumers of the registry who are using the authorization type prior to the update.</p>"
       }
     },
@@ -5222,6 +5709,18 @@
       "base": "<p>Contains per-descriptor-type wrappers for updating descriptors. Each descriptor type can be updated independently.</p>",
       "refs": {
         "UpdatedDescriptors$optionalValue": "<p>The updated descriptors value. Contains per-descriptor-type wrappers that are each independently updatable.</p>"
+      }
+    },
+    "UpdatedHarnessEnvironmentArtifact": {
+      "base": "<p>Wrapper for updating the environment artifact configuration.</p>",
+      "refs": {
+        "UpdateHarnessRequest$environmentArtifact": "<p>The environment artifact for the harness. Use the optionalValue wrapper to set a new value, or set it to null to clear the existing configuration.</p>"
+      }
+    },
+    "UpdatedHarnessMemoryConfiguration": {
+      "base": "<p>Wrapper for updating the memory configuration.</p>",
+      "refs": {
+        "UpdateHarnessRequest$memory": "<p>The AgentCore Memory configuration. Use the optionalValue wrapper to set a new value, or set it to null to clear the existing configuration.</p>"
       }
     },
     "UpdatedMcpDescriptor": {

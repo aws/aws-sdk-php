@@ -2859,6 +2859,16 @@
         "cpuArchitecture":{"shape":"String"}
       }
     },
+    "S3FilesVolumeConfiguration":{
+      "type":"structure",
+      "required":["fileSystemArn"],
+      "members":{
+        "fileSystemArn":{"shape":"String"},
+        "rootDirectory":{"shape":"String"},
+        "transitEncryptionPort":{"shape":"Integer"},
+        "accessPointArn":{"shape":"String"}
+      }
+    },
     "SchedulingPolicyDetail":{
       "type":"structure",
       "required":[
@@ -3295,6 +3305,8 @@
         "secrets":{"shape":"SecretList"},
         "ulimits":{"shape":"Ulimits"},
         "user":{"shape":"String"},
+        "startTimeout":{"shape":"Integer"},
+        "stopTimeout":{"shape":"Integer"},
         "exitCode":{"shape":"Integer"},
         "reason":{"shape":"String"},
         "logStreamName":{"shape":"String"},
@@ -3330,7 +3342,9 @@
         "resourceRequirements":{"shape":"ResourceRequirements"},
         "secrets":{"shape":"SecretList"},
         "ulimits":{"shape":"Ulimits"},
-        "user":{"shape":"String"}
+        "user":{"shape":"String"},
+        "startTimeout":{"shape":"Integer"},
+        "stopTimeout":{"shape":"Integer"}
       }
     },
     "TaskPropertiesOverride":{
@@ -3579,7 +3593,8 @@
       "members":{
         "host":{"shape":"Host"},
         "name":{"shape":"String"},
-        "efsVolumeConfiguration":{"shape":"EFSVolumeConfiguration"}
+        "efsVolumeConfiguration":{"shape":"EFSVolumeConfiguration"},
+        "s3filesVolumeConfiguration":{"shape":"S3FilesVolumeConfiguration"}
       }
     },
     "Volumes":{

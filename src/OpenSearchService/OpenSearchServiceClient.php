@@ -155,6 +155,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise removeTagsAsync(array $args = [])
  * @method \Aws\Result revokeVpcEndpointAccess(array $args = [])
  * @method \GuzzleHttp\Promise\Promise revokeVpcEndpointAccessAsync(array $args = [])
+ * @method \Aws\Result rollbackServiceSoftwareUpdate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise rollbackServiceSoftwareUpdateAsync(array $args = [])
  * @method \Aws\Result startDomainMaintenance(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startDomainMaintenanceAsync(array $args = [])
  * @method \Aws\Result startServiceSoftwareUpdate(array $args = [])

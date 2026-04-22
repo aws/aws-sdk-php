@@ -5,15 +5,18 @@
     "BatchGetChannel": "<p>Performs <a>GetChannel</a> on multiple ARNs simultaneously.</p>",
     "BatchGetStreamKey": "<p>Performs <a>GetStreamKey</a> on multiple ARNs simultaneously.</p>",
     "BatchStartViewerSessionRevocation": "<p>Performs <a>StartViewerSessionRevocation</a> on multiple channel ARN and viewer ID pairs simultaneously.</p>",
+    "CreateAdConfiguration": "<p>Creates a new ad configuration to be used for server-side ad insertion.</p>",
     "CreateChannel": "<p>Creates a new channel and an associated stream key to start streaming.</p>",
     "CreatePlaybackRestrictionPolicy": "<p>Creates a new playback restriction policy, for constraining playback by countries and/or origins.</p>",
     "CreateRecordingConfiguration": "<p>Creates a new recording configuration, used to enable recording to Amazon S3.</p> <p> <b>Known issue:</b> In the us-east-1 region, if you use the Amazon Web Services CLI to create a recording configuration, it returns success even if the S3 bucket is in a different region. In this case, the <code>state</code> of the recording configuration is <code>CREATE_FAILED</code> (instead of <code>ACTIVE</code>). (In other regions, the CLI correctly returns failure if the bucket is in a different region.)</p> <p> <b>Workaround:</b> Ensure that your S3 bucket is in the same region as the recording configuration. If you create a recording configuration in a different region as your S3 bucket, delete that recording configuration and create a new one with an S3 bucket from the correct region.</p>",
     "CreateStreamKey": "<p>Creates a stream key, used to initiate a stream, for the specified channel ARN.</p> <p>Note that <a>CreateChannel</a> creates a stream key. If you subsequently use CreateStreamKey on the same channel, it will fail because a stream key already exists and there is a limit of 1 stream key per channel. To reset the stream key on a channel, use <a>DeleteStreamKey</a> and then CreateStreamKey.</p>",
+    "DeleteAdConfiguration": "<p>Deletes the specified ad configuration.</p>",
     "DeleteChannel": "<p>Deletes the specified channel and its associated stream keys.</p> <p>If you try to delete a live channel, you will get an error (409 ConflictException). To delete a channel that is live, call <a>StopStream</a>, wait for the Amazon EventBridge \"Stream End\" event (to verify that the stream's state is no longer Live), then call DeleteChannel. (See <a href=\"https://docs.aws.amazon.com/ivs/latest/userguide/eventbridge.html\"> Using EventBridge with Amazon IVS</a>.) </p>",
     "DeletePlaybackKeyPair": "<p>Deletes a specified authorization key pair. This invalidates future viewer tokens generated using the key pair’s <code>privateKey</code>. For more information, see <a href=\"https://docs.aws.amazon.com/ivs/latest/userguide/private-channels.html\">Setting Up Private Channels</a> in the <i>Amazon IVS User Guide</i>.</p>",
     "DeletePlaybackRestrictionPolicy": "<p>Deletes the specified playback restriction policy.</p>",
     "DeleteRecordingConfiguration": "<p>Deletes the recording configuration for the specified ARN.</p> <p>If you try to delete a recording configuration that is associated with a channel, you will get an error (409 ConflictException). To avoid this, for all channels that reference the recording configuration, first use <a>UpdateChannel</a> to set the <code>recordingConfigurationArn</code> field to an empty string, then use DeleteRecordingConfiguration.</p>",
     "DeleteStreamKey": "<p>Deletes the stream key for the specified ARN, so it can no longer be used to stream.</p>",
+    "GetAdConfiguration": "<p>Gets the ad configuration represented by the specified ARN.</p>",
     "GetChannel": "<p>Gets the channel configuration for the specified channel ARN. See also <a>BatchGetChannel</a>.</p>",
     "GetPlaybackKeyPair": "<p>Gets a specified playback authorization key pair and returns the <code>arn</code> and <code>fingerprint</code>. The <code>privateKey</code> held by the caller can be used to generate viewer authorization tokens, to grant viewers access to private channels. For more information, see <a href=\"https://docs.aws.amazon.com/ivs/latest/userguide/private-channels.html\">Setting Up Private Channels</a> in the <i>Amazon IVS User Guide</i>.</p>",
     "GetPlaybackRestrictionPolicy": "<p>Gets the specified playback restriction policy.</p>",
@@ -22,6 +25,8 @@
     "GetStreamKey": "<p>Gets stream-key information for a specified ARN.</p>",
     "GetStreamSession": "<p>Gets metadata on a specified stream.</p>",
     "ImportPlaybackKeyPair": "<p>Imports the public portion of a new key pair and returns its <code>arn</code> and <code>fingerprint</code>. The <code>privateKey</code> can then be used to generate viewer authorization tokens, to grant viewers access to private channels. For more information, see <a href=\"https://docs.aws.amazon.com/ivs/latest/userguide/private-channels.html\">Setting Up Private Channels</a> in the <i>Amazon IVS User Guide</i>.</p>",
+    "InsertAdBreak": "<p>Inserts an ad marker in the playlist for the specified channel and duration using the ad configuration associated with the channel.</p> <p> <b>Note:</b> AWS Elemental MediaTailor (EMT), the service that handles ad requests, provides CloudWatch metrics to help you monitor the success or failure of each InsertAdBreak operation. See <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monitoring-cloudwatch-metrics.html\">Monitoring AWS Elemental MediaTailor with Amazon CloudWatch</a> metrics in the <i>AWS Elemental MediaTailor User Guide</i> for details on available metrics.</p>",
+    "ListAdConfigurations": "<p>Gets summary information about all ad configurations in your account, in the AWS region where the API request is processed.</p>",
     "ListChannels": "<p>Gets summary information about all channels in your account, in the Amazon Web Services region where the API request is processed. This list can be filtered to match a specified name or recording-configuration ARN. Filters are mutually exclusive and cannot be used together. If you try to use both filters, you will get an error (409 ConflictException).</p>",
     "ListPlaybackKeyPairs": "<p>Gets summary information about playback key pairs. For more information, see <a href=\"https://docs.aws.amazon.com/ivs/latest/userguide/private-channels.html\">Setting Up Private Channels</a> in the <i>Amazon IVS User Guide</i>.</p>",
     "ListPlaybackRestrictionPolicies": "<p>Gets summary information about playback restriction policies.</p>",
@@ -41,7 +46,54 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p/>",
+      "refs": {}
+    },
+    "AdBreakId": {
+      "base": null,
       "refs": {
+        "InsertAdBreakResponse$adBreakId": "<p>Unique identifier for the ad break that was inserted into the playlist.</p>"
+      }
+    },
+    "AdConfiguration": {
+      "base": "<p>Object specifying a configuration for a server-side advertising insertion (which can be triggered with the operation).</p>",
+      "refs": {
+        "CreateAdConfigurationResponse$adConfiguration": "<p/>",
+        "GetAdConfigurationResponse$adConfiguration": "<p/>"
+      }
+    },
+    "AdConfigurationArn": {
+      "base": null,
+      "refs": {
+        "AdConfiguration$arn": "<p>Ad configuration ARN.</p>",
+        "AdConfigurationSummary$arn": "<p>Ad configuration ARN.</p>",
+        "DeleteAdConfigurationRequest$arn": "<p>ARN of the ad configuration to be deleted.</p>",
+        "GetAdConfigurationRequest$arn": "<p>ARN of the ad configuration to be retrieved.</p>"
+      }
+    },
+    "AdConfigurationList": {
+      "base": null,
+      "refs": {
+        "ListAdConfigurationsResponse$adConfigurations": "<p>List of the matching ad configurations.</p>"
+      }
+    },
+    "AdConfigurationName": {
+      "base": null,
+      "refs": {
+        "AdConfiguration$name": "<p>Ad configuration name. Defaults to “”.</p>",
+        "AdConfigurationSummary$name": "<p>Ad configuration name. Defaults to “”.</p>",
+        "CreateAdConfigurationRequest$name": "<p>Ad configuration name. Defaults to “”.</p>"
+      }
+    },
+    "AdConfigurationSummary": {
+      "base": "<p>Summary information about an ad configuration.</p>",
+      "refs": {
+        "AdConfigurationList$member": null
+      }
+    },
+    "AdDurationSeconds": {
+      "base": null,
+      "refs": {
+        "InsertAdBreakRequest$durationSeconds": "<p>Maximum duration of the ad break, in seconds.</p>"
       }
     },
     "AudioConfiguration": {
@@ -72,23 +124,19 @@
     },
     "BatchGetChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetStreamKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetStreamKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchStartViewerSessionRevocationError": {
       "base": "<p>Error for a request in the batch for BatchStartViewerSessionRevocation. Each error is related to a specific channel-ARN and viewer-ID pair.</p>",
@@ -104,13 +152,11 @@
     },
     "BatchStartViewerSessionRevocationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchStartViewerSessionRevocationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchStartViewerSessionRevocationViewerSession": {
       "base": "<p>A viewer session to revoke in the call to <a>BatchStartViewerSessionRevocation</a>.</p>",
@@ -144,6 +190,16 @@
         "UpdateChannelResponse$channel": "<p>Object specifying the updated channel.</p>"
       }
     },
+    "ChannelAdConfigurationArn": {
+      "base": null,
+      "refs": {
+        "Channel$adConfigurationArn": "<p>ARN of the ad configuration associated with the channel.</p>",
+        "ChannelSummary$adConfigurationArn": "<p>ARN of the ad configuration associated with the channel.</p>",
+        "CreateChannelRequest$adConfigurationArn": "<p>ARN of the ad configuration associated with the channel.</p>",
+        "ListChannelsRequest$filterByAdConfigurationArn": "<p>Filters the channel list to match the specified ad configuration ARN.</p>",
+        "UpdateChannelRequest$adConfigurationArn": "<p>ARN of the ad configuration associated with the channel.</p>"
+      }
+    },
     "ChannelArn": {
       "base": null,
       "refs": {
@@ -157,6 +213,7 @@
         "GetChannelRequest$arn": "<p>ARN of the channel for which the configuration is to be retrieved.</p>",
         "GetStreamRequest$channelArn": "<p>Channel ARN for stream to be accessed.</p>",
         "GetStreamSessionRequest$channelArn": "<p>ARN of the channel resource</p>",
+        "InsertAdBreakRequest$channelArn": "<p>ARN of the channel into which the ad break is inserted.</p>",
         "ListStreamKeysRequest$channelArn": "<p>Channel ARN used to filter the list.</p>",
         "ListStreamSessionsRequest$channelArn": "<p>Channel ARN used to filter the list.</p>",
         "PutMetadataRequest$channelArn": "<p>ARN of the channel into which metadata is inserted. This channel must have an active stream.</p>",
@@ -202,8 +259,7 @@
     },
     "ChannelNotBroadcasting": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ChannelPlaybackRestrictionPolicyArn": {
       "base": null,
@@ -248,8 +304,7 @@
     },
     "ConflictException": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ContainerFormat": {
       "base": null,
@@ -259,75 +314,73 @@
         "UpdateChannelRequest$containerFormat": "<p>Indicates which content-packaging format is used (MPEG-TS or fMP4). If <code>multitrackInputConfiguration</code> is specified and <code>enabled</code> is <code>true</code>, then <code>containerFormat</code> is required and must be set to <code>FRAGMENTED_MP4</code>. Otherwise, <code>containerFormat</code> may be set to <code>TS</code> or <code>FRAGMENTED_MP4</code>. Default: <code>TS</code>.</p>"
       }
     },
+    "CreateAdConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAdConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePlaybackRestrictionPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePlaybackRestrictionPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRecordingConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRecordingConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStreamKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStreamKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DeleteAdConfigurationRequest": {
+      "base": null,
+      "refs": {}
     },
     "DeleteChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePlaybackKeyPairRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePlaybackKeyPairResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePlaybackRestrictionPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRecordingConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteStreamKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DestinationConfiguration": {
       "base": "<p>A complex type that describes a location where recorded videos will be stored. Each member represents a type of destination configuration. For recording, you define one and only one type of destination configuration.</p>",
@@ -337,96 +390,88 @@
         "RecordingConfigurationSummary$destinationConfiguration": "<p>A complex type that contains information about where recorded video will be stored.</p>"
       }
     },
+    "GetAdConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAdConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPlaybackKeyPairRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPlaybackKeyPairResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPlaybackRestrictionPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPlaybackRestrictionPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecordingConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecordingConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStreamKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStreamKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStreamRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStreamResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStreamSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStreamSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportPlaybackKeyPairRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportPlaybackKeyPairResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IngestConfiguration": {
-      "base": "<p>Object specifying the ingest configuration set up by the broadcaster, usually in an encoder.</p> <p> <b>Note:</b> IngestConfiguration is deprecated in favor of <a>IngestConfigurations</a> but retained to ensure backward compatibility. If multitrack is not enabled, IngestConfiguration and IngestConfigurations contain the same data, namely information about track0 (the sole track). If multitrack is enabled, IngestConfiguration contains data for only the first track (track0) and IngestConfigurations contains data for all tracks.</p>",
+      "base": "<p>Object specifying the ingest configuration set up by the broadcaster, usually in an encoder.</p> <p> <b>Note:</b> IngestConfiguration is deprecated in favor of <a>IngestConfigurations</a> but retained to ensure backward compatibility. If multitrack is not enabled, IngestConfiguration and IngestConfigurations contain the same data, namely information about Track0 (the sole track). If multitrack is enabled, IngestConfiguration contains data for only the first track (Track0) and IngestConfigurations contains data for all tracks.</p>",
       "refs": {
-        "StreamSession$ingestConfiguration": "<p>The properties of the incoming RTMP stream.</p> <p> <b>Note:</b> <code>ingestConfiguration</code> is deprecated in favor of <code>ingestConfigurations</code> but retained to ensure backward compatibility. If multitrack is not enabled, <code>ingestConfiguration</code> and <code>ingestConfigurations</code> contain the same data, namely information about track0 (the sole track). If multitrack is enabled, <code>ingestConfiguration</code> contains data for only the first track (track0) and <code>ingestConfigurations</code> contains data for all tracks.</p>"
+        "StreamSession$ingestConfiguration": "<p>The properties of the incoming RTMP stream.</p> <p> <b>Note:</b> <code>ingestConfiguration</code> is deprecated in favor of <code>ingestConfigurations</code> but retained to ensure backward compatibility. If multitrack is not enabled, <code>ingestConfiguration</code> and <code>ingestConfigurations</code> contain the same data, namely information about Track0 (the sole track). If multitrack is enabled, <code>ingestConfiguration</code> contains data for only the first track (Track0) and <code>ingestConfigurations</code> contains data for all tracks.</p>"
       }
     },
     "IngestConfigurations": {
-      "base": "<p>Object specifying the ingest configuration set up by the broadcaster, usually in an encoder. </p> <p> <b>Note:</b> Use IngestConfigurations instead of <a>IngestConfiguration</a> (which is deprecated). If multitrack is not enabled, IngestConfiguration and IngestConfigurations contain the same data, namely information about track0 (the sole track). If multitrack is enabled, IngestConfiguration contains data for only the first track (track0) and IngestConfigurations contains data for all tracks.</p>",
+      "base": "<p>Object specifying the ingest configuration set up by the broadcaster, usually in an encoder. </p> <p> <b>Note:</b> Use IngestConfigurations instead of <a>IngestConfiguration</a> (which is deprecated). If multitrack is not enabled, IngestConfiguration and IngestConfigurations contain the same data, namely information about Track0 (the sole track). If multitrack is enabled, IngestConfiguration contains data for only the first track (Track0) and IngestConfigurations contains data for all tracks.</p>",
       "refs": {
-        "StreamSession$ingestConfigurations": "<p>The properties of the incoming RTMP stream. If multitrack is enabled, <code>ingestConfigurations</code> contains data for all tracks; otherwise, it contains data only for track0 (the sole track).</p>"
+        "StreamSession$ingestConfigurations": "<p>The properties of the incoming RTMP stream. If multitrack is enabled, <code>ingestConfigurations</code> contains data for all tracks; otherwise, it contains data only for Track0 (the sole track).</p>"
       }
     },
     "IngestEndpoint": {
@@ -442,12 +487,20 @@
         "ChannelSummary$insecureIngest": "<p>Whether the channel allows insecure RTMP ingest. Default: <code>false</code>.</p>"
       }
     },
+    "InsertAdBreakRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "InsertAdBreakResponse": {
+      "base": null,
+      "refs": {}
+    },
     "Integer": {
       "base": null,
       "refs": {
-        "AudioConfiguration$channels": "<p>Number of audio channels.</p>",
-        "AudioConfiguration$sampleRate": "<p>Number of audio samples recorded per second.</p>",
         "AudioConfiguration$targetBitrate": "<p>The expected ingest bitrate (bits per second). This is configured in the encoder.</p>",
+        "AudioConfiguration$sampleRate": "<p>Number of audio samples recorded per second.</p>",
+        "AudioConfiguration$channels": "<p>Number of audio channels.</p>",
         "VideoConfiguration$targetBitrate": "<p>The expected ingest bitrate (bits per second). This is configured in the encoder.</p>",
         "VideoConfiguration$targetFramerate": "<p>The expected ingest framerate. This is configured in the encoder.</p>",
         "VideoConfiguration$videoHeight": "<p>Video-resolution height in pixels.</p>",
@@ -456,8 +509,7 @@
     },
     "InternalServerException": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IsAuthorized": {
       "base": null,
@@ -472,84 +524,82 @@
         "MultitrackInputConfiguration$enabled": "<p>Indicates whether multitrack input is enabled. Can be set to <code>true</code> only if channel type is <code>STANDARD</code>. Setting <code>enabled</code> to <code>true</code> with any other channel type will cause an exception. If <code>true</code>, then <code>policy</code>, <code>maximumResolution</code>, and <code>containerFormat</code> are required, and <code>containerFormat</code> must be set to <code>FRAGMENTED_MP4</code>. Default: <code>false</code>.</p>"
       }
     },
+    "ListAdConfigurationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAdConfigurationsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListChannelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListChannelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPlaybackKeyPairsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPlaybackKeyPairsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPlaybackRestrictionPoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPlaybackRestrictionPoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecordingConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecordingConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStreamKeysRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStreamKeysResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStreamSessionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStreamSessionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStreamsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStreamsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
+      "refs": {}
+    },
+    "MaxAdConfigurationResults": {
+      "base": null,
       "refs": {
+        "ListAdConfigurationsRequest$maxResults": "<p>Maximum number of ad configurations to return. Default: your service quota or 100, whichever is smaller.</p>"
       }
     },
     "MaxChannelResults": {
@@ -589,6 +639,26 @@
         "ListStreamsRequest$maxResults": "<p>Maximum number of streams to return. Default: 100.</p>"
       }
     },
+    "MediaTailorPlaybackConfiguration": {
+      "base": "<p>Object specifying a configuration for integration with an AWS Elemental MediaTailor (EMT).</p>",
+      "refs": {
+        "MediaTailorPlaybackConfigurationsList$member": null
+      }
+    },
+    "MediaTailorPlaybackConfigurationArn": {
+      "base": null,
+      "refs": {
+        "MediaTailorPlaybackConfiguration$playbackConfigurationArn": "<p>ARN of the customer-created EMT PlaybackConfiguration resource in the same region and account.</p>"
+      }
+    },
+    "MediaTailorPlaybackConfigurationsList": {
+      "base": null,
+      "refs": {
+        "AdConfiguration$mediaTailorPlaybackConfigurations": "<p>List of integration configurations with media tailor resources.</p>",
+        "AdConfigurationSummary$mediaTailorPlaybackConfigurations": "<p>List of integration configurations with media tailor resources.</p>",
+        "CreateAdConfigurationRequest$mediaTailorPlaybackConfigurations": "<p>List of integration configurations with media tailor resources.</p>"
+      }
+    },
     "MultitrackInputConfiguration": {
       "base": "<p>A complex type that specifies multitrack input configuration.</p>",
       "refs": {
@@ -612,6 +682,8 @@
     "PaginationToken": {
       "base": null,
       "refs": {
+        "ListAdConfigurationsRequest$nextToken": "<p>The first ad configuration to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
+        "ListAdConfigurationsResponse$nextToken": "<p>If there are more ad configurations than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set.</p>",
         "ListChannelsRequest$nextToken": "<p>The first channel to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
         "ListChannelsResponse$nextToken": "<p>If there are more channels than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set.</p>",
         "ListPlaybackKeyPairsRequest$nextToken": "<p>The first key pair to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
@@ -630,8 +702,7 @@
     },
     "PendingVerification": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PlaybackKeyPair": {
       "base": "<p>A key pair used to sign and validate a playback authorization token.</p>",
@@ -768,8 +839,7 @@
     },
     "PutMetadataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RecordingConfiguration": {
       "base": "<p>An object representing a configuration to record a channel stream.</p>",
@@ -864,8 +934,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "S3DestinationBucketName": {
       "base": null,
@@ -881,8 +950,11 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ServiceUnavailable": {
+      "base": "<p/>",
+      "refs": {}
     },
     "Srt": {
       "base": "<p>Specifies information needed to stream using the SRT protocol.</p>",
@@ -904,23 +976,19 @@
     },
     "StartViewerSessionRevocationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartViewerSessionRevocationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopStreamRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopStreamResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Stream": {
       "base": "<p>Specifies a live video stream that has been ingested and distributed.</p>",
@@ -1065,8 +1133,7 @@
     },
     "StreamUnavailable": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StreamViewerCount": {
       "base": null,
@@ -1078,18 +1145,127 @@
     "String": {
       "base": null,
       "refs": {
+        "AccessDeniedException$accessControlAllowOrigin": "<p/>",
+        "AccessDeniedException$accessControlExposeHeaders": "<p/>",
+        "AccessDeniedException$cacheControl": "<p/>",
+        "AccessDeniedException$contentSecurityPolicy": "<p/>",
+        "AccessDeniedException$strictTransportSecurity": "<p/>",
+        "AccessDeniedException$xContentTypeOptions": "<p/>",
+        "AccessDeniedException$xFrameOptions": "<p/>",
+        "AccessDeniedException$xAmznErrorType": "<p/>",
         "AudioConfiguration$codec": "<p>Codec used for the audio encoding.</p>",
-        "AudioConfiguration$track": "<p>Name of the audio track (if the stream has an audio track). If multitrack is not enabled, this is track0 (the sole track).</p>",
-        "StreamEvent$code": "<p>Provides additional details about the stream event. There are several values; the long descriptions are provided in the IVS console but not delivered through the IVS API or EventBridge. Multitrack-related codes are used only for certain Session Ended events.</p> <ul> <li> <p> <code>MultitrackInputNotAllowed</code> — The broadcast client attempted to connect with multitrack input, but multitrack input was not enabled on the channel. Check your broadcast software settings or set <code>MultitrackInputConfiguration.Policy</code> to <code>ALLOW</code> or <code>REQUIRE</code>.</p> </li> <li> <p> <code>MultitrackInputRequired</code> — The broadcast client attempted to connect with single-track video, but multitrack input is required on this channel. Enable multitrack video in your broadcast software or configure the channel’s <code>MultitrackInputConfiguration.Policy</code> to <code>ALLOW</code>.</p> </li> <li> <p> <code>InvalidGetClientConfigurationStreamKey</code> — The broadcast client attempted to connect with an invalid, expired, or corrupt stream key.</p> </li> <li> <p> <code>GetClientConfigurationStreamKeyRequired</code> — The broadcast client attempted to stream multitrack video without providing an authenticated stream key from GetClientConfiguration.</p> </li> <li> <p> <code>InvalidMultitrackInputTrackCount</code> — The multitrack input stream contained an invalid number of tracks.</p> </li> <li> <p> <code>InvalidMultitrackInputVideoTrackMediaProperties</code> — The multitrack input stream contained one or more tracks with an invalid codec, resolution, bitrate, or framerate.</p> </li> <li> <p> <code>StreamTakeoverMediaMismatch</code> — The broadcast client attempted to take over with different media properties (e.g., codec, resolution, or video track type) from the original stream.</p> </li> <li> <p> <code>StreamTakeoverInvalidPriority</code> — The broadcast client attempted a takeover with either a priority integer value equal to or lower than the original stream's value or a value outside the allowed range of 1 to 2,147,483,647.</p> <p> <code>StreamTakeoverLimitBreached</code> — The broadcast client reached the maximum allowed takeover attempts for this stream.</p> </li> </ul>",
+        "AudioConfiguration$track": "<p>Name of the audio track (if the stream has an audio track). If multitrack is not enabled, this is Track0 (the sole track).</p>",
+        "BatchGetChannelResponse$accessControlAllowOrigin": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Allow-Origin\">Access-Control-Allow-Origin</a> in the MDN Web Docs.</p>",
+        "BatchGetChannelResponse$accessControlExposeHeaders": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Expose-Headers\">Access-Control-Expose-Headers</a> in the MDN Web Docs.</p>",
+        "BatchGetChannelResponse$cacheControl": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control\">Cache-Control</a> in the MDN Web Docs.</p>",
+        "BatchGetChannelResponse$contentSecurityPolicy": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy\">Content-Security-Policy</a> in the MDN Web Docs.</p>",
+        "BatchGetChannelResponse$strictTransportSecurity": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security\">Strict-Transport-Security</a> in the MDN Web Docs.</p>",
+        "BatchGetChannelResponse$xContentTypeOptions": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options\">X-Content-Type-Options</a> in the MDN Web Docs.</p>",
+        "BatchGetChannelResponse$xFrameOptions": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options\">X-Frame-Options</a> in the MDN Web Docs.</p>",
+        "BatchGetStreamKeyResponse$accessControlAllowOrigin": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Allow-Origin\">Access-Control-Allow-Origin</a> in the MDN Web Docs.</p>",
+        "BatchGetStreamKeyResponse$accessControlExposeHeaders": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Expose-Headers\">Access-Control-Expose-Headers</a> in the MDN Web Docs.</p>",
+        "BatchGetStreamKeyResponse$cacheControl": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control\">Cache-Control</a> in the MDN Web Docs.</p>",
+        "BatchGetStreamKeyResponse$contentSecurityPolicy": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy\">Content-Security-Policy</a> in the MDN Web Docs.</p>",
+        "BatchGetStreamKeyResponse$strictTransportSecurity": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security\">Strict-Transport-Security</a> in the MDN Web Docs.</p>",
+        "BatchGetStreamKeyResponse$xContentTypeOptions": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options\">X-Content-Type-Options</a> in the MDN Web Docs.</p>",
+        "BatchGetStreamKeyResponse$xFrameOptions": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options\">X-Frame-Options</a> in the MDN Web Docs.</p>",
+        "BatchStartViewerSessionRevocationResponse$accessControlAllowOrigin": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Allow-Origin\">Access-Control-Allow-Origin</a> in the MDN Web Docs.</p>",
+        "BatchStartViewerSessionRevocationResponse$accessControlExposeHeaders": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Expose-Headers\">Access-Control-Expose-Headers</a> in the MDN Web Docs.</p>",
+        "BatchStartViewerSessionRevocationResponse$cacheControl": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control\">Cache-Control</a> in the MDN Web Docs.</p>",
+        "BatchStartViewerSessionRevocationResponse$contentSecurityPolicy": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy\">Content-Security-Policy</a> in the MDN Web Docs.</p>",
+        "BatchStartViewerSessionRevocationResponse$strictTransportSecurity": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security\">Strict-Transport-Security</a> in the MDN Web Docs.</p>",
+        "BatchStartViewerSessionRevocationResponse$xContentTypeOptions": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options\">X-Content-Type-Options</a> in the MDN Web Docs.</p>",
+        "BatchStartViewerSessionRevocationResponse$xFrameOptions": "<p>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options\">X-Frame-Options</a> in the MDN Web Docs.</p>",
+        "ChannelNotBroadcasting$accessControlAllowOrigin": "<p/>",
+        "ChannelNotBroadcasting$accessControlExposeHeaders": "<p/>",
+        "ChannelNotBroadcasting$cacheControl": "<p/>",
+        "ChannelNotBroadcasting$contentSecurityPolicy": "<p/>",
+        "ChannelNotBroadcasting$strictTransportSecurity": "<p/>",
+        "ChannelNotBroadcasting$xContentTypeOptions": "<p/>",
+        "ChannelNotBroadcasting$xFrameOptions": "<p/>",
+        "ChannelNotBroadcasting$xAmznErrorType": "<p/>",
+        "ConflictException$accessControlAllowOrigin": "<p/>",
+        "ConflictException$accessControlExposeHeaders": "<p/>",
+        "ConflictException$cacheControl": "<p/>",
+        "ConflictException$contentSecurityPolicy": "<p/>",
+        "ConflictException$strictTransportSecurity": "<p/>",
+        "ConflictException$xContentTypeOptions": "<p/>",
+        "ConflictException$xFrameOptions": "<p/>",
+        "ConflictException$xAmznErrorType": "<p/>",
+        "InternalServerException$accessControlAllowOrigin": "<p/>",
+        "InternalServerException$accessControlExposeHeaders": "<p/>",
+        "InternalServerException$cacheControl": "<p/>",
+        "InternalServerException$contentSecurityPolicy": "<p/>",
+        "InternalServerException$strictTransportSecurity": "<p/>",
+        "InternalServerException$xContentTypeOptions": "<p/>",
+        "InternalServerException$xFrameOptions": "<p/>",
+        "InternalServerException$xAmznErrorType": "<p/>",
+        "PendingVerification$accessControlAllowOrigin": "<p/>",
+        "PendingVerification$accessControlExposeHeaders": "<p/>",
+        "PendingVerification$cacheControl": "<p/>",
+        "PendingVerification$contentSecurityPolicy": "<p/>",
+        "PendingVerification$strictTransportSecurity": "<p/>",
+        "PendingVerification$xContentTypeOptions": "<p/>",
+        "PendingVerification$xFrameOptions": "<p/>",
+        "PendingVerification$xAmznErrorType": "<p/>",
+        "ResourceNotFoundException$accessControlAllowOrigin": "<p/>",
+        "ResourceNotFoundException$accessControlExposeHeaders": "<p/>",
+        "ResourceNotFoundException$cacheControl": "<p/>",
+        "ResourceNotFoundException$contentSecurityPolicy": "<p/>",
+        "ResourceNotFoundException$strictTransportSecurity": "<p/>",
+        "ResourceNotFoundException$xContentTypeOptions": "<p/>",
+        "ResourceNotFoundException$xFrameOptions": "<p/>",
+        "ResourceNotFoundException$xAmznErrorType": "<p/>",
+        "ServiceQuotaExceededException$accessControlAllowOrigin": "<p/>",
+        "ServiceQuotaExceededException$accessControlExposeHeaders": "<p/>",
+        "ServiceQuotaExceededException$cacheControl": "<p/>",
+        "ServiceQuotaExceededException$contentSecurityPolicy": "<p/>",
+        "ServiceQuotaExceededException$strictTransportSecurity": "<p/>",
+        "ServiceQuotaExceededException$xContentTypeOptions": "<p/>",
+        "ServiceQuotaExceededException$xFrameOptions": "<p/>",
+        "ServiceQuotaExceededException$xAmznErrorType": "<p/>",
+        "ServiceUnavailable$accessControlAllowOrigin": "<p/>",
+        "ServiceUnavailable$accessControlExposeHeaders": "<p/>",
+        "ServiceUnavailable$cacheControl": "<p/>",
+        "ServiceUnavailable$contentSecurityPolicy": "<p/>",
+        "ServiceUnavailable$strictTransportSecurity": "<p/>",
+        "ServiceUnavailable$xContentTypeOptions": "<p/>",
+        "ServiceUnavailable$xFrameOptions": "<p/>",
+        "ServiceUnavailable$xAmznErrorType": "<p/>",
         "StreamEvent$name": "<p>Name that identifies the stream event within a <code>type</code>.</p>",
         "StreamEvent$type": "<p>Logical group for certain events.</p>",
-        "VideoConfiguration$avcLevel": "<p>Indicates the degree of required decoder performance for a profile. Normally this is set automatically by the encoder. For details, see the H.264 specification.</p>",
-        "VideoConfiguration$avcProfile": "<p>Indicates to the decoder the requirements for decoding the stream. For definitions of the valid values, see the H.264 specification.</p>",
+        "StreamEvent$code": "<p>Provides additional details about the stream event. There are several values; the long descriptions are provided in the IVS console but not delivered through the IVS API or EventBridge. Multitrack-related codes are used only for certain Session Ended events.</p> <ul> <li> <p> <code>MultitrackInputNotAllowed</code> — The broadcast client attempted to connect with multitrack input, but multitrack input was not enabled on the channel. Check your broadcast software settings or set <code>MultitrackInputConfiguration.Policy</code> to <code>ALLOW</code> or <code>REQUIRE</code>.</p> </li> <li> <p> <code>MultitrackInputRequired</code> — The broadcast client attempted to connect with single-track video, but multitrack input is required on this channel. Enable multitrack video in your broadcast software or configure the channel’s <code>MultitrackInputConfiguration.Policy</code> to <code>ALLOW</code>.</p> </li> <li> <p> <code>InvalidGetClientConfigurationStreamKey</code> — The broadcast client attempted to connect with an invalid, expired, or corrupt stream key.</p> </li> <li> <p> <code>GetClientConfigurationStreamKeyRequired</code> — The broadcast client attempted to stream multitrack video without providing an authenticated stream key from GetClientConfiguration.</p> </li> <li> <p> <code>InvalidMultitrackInputTrackCount</code> — The multitrack input stream contained an invalid number of tracks.</p> </li> <li> <p> <code>InvalidMultitrackInputVideoTrackMediaProperties</code> — The multitrack input stream contained one or more tracks with an invalid codec, resolution, bitrate, or framerate.</p> </li> <li> <p> <code>StreamTakeoverMediaMismatch</code> — The broadcast client attempted to take over with different media properties (e.g., codec, resolution, or video track type) from the original stream.</p> </li> <li> <p> <code>StreamTakeoverInvalidPriority</code> — The broadcast client attempted a takeover with either a priority integer value equal to or lower than the original stream's value or a value outside the allowed range of 1 to 2,147,483,647.</p> <p> <code>StreamTakeoverLimitBreached</code> — The broadcast client reached the maximum allowed takeover attempts for this stream.</p> </li> </ul>",
+        "StreamUnavailable$accessControlAllowOrigin": "<p/>",
+        "StreamUnavailable$accessControlExposeHeaders": "<p/>",
+        "StreamUnavailable$cacheControl": "<p/>",
+        "StreamUnavailable$contentSecurityPolicy": "<p/>",
+        "StreamUnavailable$strictTransportSecurity": "<p/>",
+        "StreamUnavailable$xContentTypeOptions": "<p/>",
+        "StreamUnavailable$xFrameOptions": "<p/>",
+        "StreamUnavailable$xAmznErrorType": "<p/>",
+        "ThrottlingException$accessControlAllowOrigin": "<p/>",
+        "ThrottlingException$accessControlExposeHeaders": "<p/>",
+        "ThrottlingException$cacheControl": "<p/>",
+        "ThrottlingException$contentSecurityPolicy": "<p/>",
+        "ThrottlingException$strictTransportSecurity": "<p/>",
+        "ThrottlingException$xContentTypeOptions": "<p/>",
+        "ThrottlingException$xFrameOptions": "<p/>",
+        "ThrottlingException$xAmznErrorType": "<p/>",
+        "ValidationException$accessControlAllowOrigin": "<p/>",
+        "ValidationException$accessControlExposeHeaders": "<p/>",
+        "ValidationException$cacheControl": "<p/>",
+        "ValidationException$contentSecurityPolicy": "<p/>",
+        "ValidationException$strictTransportSecurity": "<p/>",
+        "ValidationException$xContentTypeOptions": "<p/>",
+        "ValidationException$xFrameOptions": "<p/>",
+        "ValidationException$xAmznErrorType": "<p/>",
+        "VideoConfiguration$avcProfile": "<p>(Deprecated) Indicates to the decoder the requirements for decoding the stream. For definitions of the valid values, see the H.264 specification. This is populated only when VideoConfiguration is part of the deprecated IngestConfiguration; otherwise, this is an empty string.</p>",
+        "VideoConfiguration$avcLevel": "<p>(Deprecated) Indicates the degree of required decoder performance for a profile. Normally this is set automatically by the encoder. For details, see the H.264 specification. This is populated only when VideoConfiguration is part of the deprecated IngestConfiguration; otherwise, this is an empty string.</p>",
         "VideoConfiguration$codec": "<p>Codec used for the video encoding.</p>",
         "VideoConfiguration$encoder": "<p>Software or hardware used to encode the video.</p>",
         "VideoConfiguration$level": "<p>Indicates the degree of required decoder performance for a profile. Normally this is set automatically by the encoder. When an AVC codec is used, this field has the same value as <code>avcLevel</code>.</p>",
-        "VideoConfiguration$profile": "<p>Indicates to the decoder the requirements for decoding the stream. When an AVC codec is used, this field has the same value as <code>avcProfile</code>.</p>",
-        "VideoConfiguration$track": "<p>Name of the video track. If multitrack is not enabled, this is track0 (the sole track).</p>"
+        "VideoConfiguration$track": "<p>Name of the video track. If multitrack is not enabled, this is Track0 (the sole track).</p>",
+        "VideoConfiguration$profile": "<p>Indicates to the decoder the requirements for decoding the stream. When an AVC codec is used, this field has the same value as <code>avcProfile</code>.</p>"
       }
     },
     "TagKey": {
@@ -1102,18 +1278,16 @@
     "TagKeyList": {
       "base": null,
       "refs": {
-        "UntagResourceRequest$tagKeys": "<p>Array of tags to be removed. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>"
+        "UntagResourceRequest$tagKeys": "<p>Array of tag keys (strings) for the tags to be removed. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>"
       }
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1124,6 +1298,8 @@
     "Tags": {
       "base": null,
       "refs": {
+        "AdConfiguration$tags": "<p>Tags attached to the resource. Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
+        "AdConfigurationSummary$tags": "<p>Tags attached to the resource. Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
         "Channel$tags": "<p>Tags attached to the resource. Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
         "ChannelSummary$tags": "<p>Tags attached to the resource. Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
         "CreateChannelRequest$tags": "<p>Array of 1-50 maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging Amazon Web Services Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no service-specific constraints beyond what is documented there.</p>",
@@ -1151,8 +1327,7 @@
     },
     "ThrottlingException": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ThumbnailConfiguration": {
       "base": "<p>An object representing a configuration of thumbnails for recorded video.</p>",
@@ -1183,10 +1358,10 @@
       "base": null,
       "refs": {
         "StreamEvent$eventTime": "<p>Time when the event occurred. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
-        "StreamSession$endTime": "<p>Time when the channel went offline. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>. For live streams, this is <code>NULL</code>.</p>",
         "StreamSession$startTime": "<p>Time when the channel went live. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
-        "StreamSessionSummary$endTime": "<p>Time when the channel went offline. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>. For live streams, this is <code>NULL</code>.</p>",
-        "StreamSessionSummary$startTime": "<p>Time when the channel went live. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>"
+        "StreamSession$endTime": "<p>Time when the channel went offline. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>. For live streams, this is <code>NULL</code>.</p>",
+        "StreamSessionSummary$startTime": "<p>Time when the channel went live. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
+        "StreamSessionSummary$endTime": "<p>Time when the channel went offline. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>. For live streams, this is <code>NULL</code>.</p>"
       }
     },
     "TranscodePreset": {
@@ -1200,38 +1375,31 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePlaybackRestrictionPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePlaybackRestrictionPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "VideoConfiguration": {
       "base": "<p>Object specifying a stream’s video configuration, as set up by the broadcaster (usually in an encoder). This is part of the <a>IngestConfigurations</a> object and the deprecated <a>IngestConfiguration</a> object. It is used for monitoring stream health. </p>",
@@ -1280,6 +1448,7 @@
         "PendingVerification$exceptionMessage": "<p> Your account is pending verification. </p>",
         "ResourceNotFoundException$exceptionMessage": "<p>Request references a resource which does not exist.</p>",
         "ServiceQuotaExceededException$exceptionMessage": "<p>Request would cause a service quota to be exceeded.</p>",
+        "ServiceUnavailable$exceptionMessage": "<p/>",
         "StreamUnavailable$exceptionMessage": "<p>The stream is temporarily unavailable.</p>",
         "ThrottlingException$exceptionMessage": "<p>Request was denied due to request throttling.</p>",
         "ValidationException$exceptionMessage": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>"

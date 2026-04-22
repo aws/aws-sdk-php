@@ -1210,6 +1210,22 @@
         {"shape":"BaseException"}
       ]
     },
+    "RollbackServiceSoftwareUpdate":{
+      "name":"RollbackServiceSoftwareUpdate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/serviceSoftwareUpdate/rollback"
+      },
+      "input":{"shape":"RollbackServiceSoftwareUpdateRequest"},
+      "output":{"shape":"RollbackServiceSoftwareUpdateResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "StartDomainMaintenance":{
       "name":"StartDomainMaintenance",
       "http":{
@@ -5444,6 +5460,28 @@
         "DEFAULT_ROLLBACK"
       ]
     },
+    "RollbackServiceSoftwareOptions":{
+      "type":"structure",
+      "members":{
+        "CurrentVersion":{"shape":"String"},
+        "NewVersion":{"shape":"String"},
+        "RollbackAvailable":{"shape":"Boolean"},
+        "Description":{"shape":"String"}
+      }
+    },
+    "RollbackServiceSoftwareUpdateRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{"shape":"DomainName"}
+      }
+    },
+    "RollbackServiceSoftwareUpdateResponse":{
+      "type":"structure",
+      "members":{
+        "RollbackServiceSoftwareOptions":{"shape":"RollbackServiceSoftwareOptions"}
+      }
+    },
     "S3BucketName":{
       "type":"string",
       "max":63,
@@ -5645,7 +5683,8 @@
     "SoftwareUpdateOptions":{
       "type":"structure",
       "members":{
-        "AutoSoftwareUpdateEnabled":{"shape":"Boolean"}
+        "AutoSoftwareUpdateEnabled":{"shape":"Boolean"},
+        "UseLatestServiceSoftwareForBlueGreen":{"shape":"Boolean"}
       }
     },
     "SoftwareUpdateOptionsStatus":{

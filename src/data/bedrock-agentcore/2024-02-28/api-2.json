@@ -428,6 +428,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "InvokeHarness":{
+      "name":"InvokeHarness",
+      "http":{
+        "method":"POST",
+        "requestUri":"/harnesses/invoke",
+        "responseCode":200
+      },
+      "input":{"shape":"InvokeHarnessRequest"},
+      "output":{"shape":"InvokeHarnessResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListActors":{
       "name":"ListActors",
       "http":{
@@ -822,6 +839,10 @@
         "skillDefinition":{"shape":"SkillDefinition"}
       }
     },
+    "ApiKeyArn":{
+      "type":"string",
+      "pattern":"arn:aws:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:token-vault/[a-zA-Z0-9-.]+/apikeycredentialprovider/[a-zA-Z0-9-.]+"
+    },
     "ApiKeyType":{
       "type":"string",
       "max":65536,
@@ -1014,6 +1035,10 @@
         "FAILED"
       ]
     },
+    "BrowserArn":{
+      "type":"string",
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:(aws|[0-9]{12}):browser(-custom)?/(aws\\.browser\\.v1|[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10})"
+    },
     "BrowserEnterprisePolicies":{
       "type":"list",
       "member":{"shape":"BrowserEnterprisePolicy"},
@@ -1135,6 +1160,10 @@
       "max":256,
       "min":33,
       "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,256}"
+    },
+    "CodeInterpreterArn":{
+      "type":"string",
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:(aws|[0-9]{12}):code-interpreter(-custom)?/(aws\\.codeinterpreter\\.v1|[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10})"
     },
     "CodeInterpreterResult":{
       "type":"structure",
@@ -1768,6 +1797,10 @@
         "eventMetadata":{"shape":"EventMetadataFilterList"}
       }
     },
+    "GatewayArn":{
+      "type":"string",
+      "pattern":"arn:aws(|-cn|-us-gov):bedrock-agentcore:[a-z0-9-]{1,20}:[0-9]{12}:gateway/([0-9a-z][-]?){1,48}-[a-z0-9]{10}"
+    },
     "GetAgentCardRequest":{
       "type":"structure",
       "required":["agentRuntimeArn"],
@@ -2048,11 +2081,524 @@
         "workloadAccessToken":{"shape":"WorkloadIdentityTokenType"}
       }
     },
+    "HarnessAgentCoreBrowserConfig":{
+      "type":"structure",
+      "members":{
+        "browserArn":{"shape":"BrowserArn"}
+      }
+    },
+    "HarnessAgentCoreCodeInterpreterConfig":{
+      "type":"structure",
+      "members":{
+        "codeInterpreterArn":{"shape":"CodeInterpreterArn"}
+      }
+    },
+    "HarnessAgentCoreGatewayConfig":{
+      "type":"structure",
+      "required":["gatewayArn"],
+      "members":{
+        "gatewayArn":{"shape":"GatewayArn"},
+        "outboundAuth":{"shape":"HarnessGatewayOutboundAuth"}
+      }
+    },
+    "HarnessAllowedTool":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"(\\*|@?[^/]+(/[^/]+)?)"
+    },
+    "HarnessAllowedTools":{
+      "type":"list",
+      "member":{"shape":"HarnessAllowedTool"}
+    },
+    "HarnessArn":{
+      "type":"string",
+      "pattern":"arn:([^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:harness/[a-zA-Z][a-zA-Z0-9_]{0,39}-[a-zA-Z0-9]{10}"
+    },
+    "HarnessBedrockModelConfig":{
+      "type":"structure",
+      "required":["modelId"],
+      "members":{
+        "modelId":{"shape":"ModelId"},
+        "maxTokens":{"shape":"MaxTokens"},
+        "temperature":{"shape":"Temperature"},
+        "topP":{"shape":"TopP"}
+      }
+    },
+    "HarnessContentBlock":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"SensitiveText"},
+        "toolUse":{"shape":"HarnessToolUseBlock"},
+        "toolResult":{"shape":"HarnessToolResultBlock"},
+        "reasoningContent":{"shape":"HarnessReasoningContentBlock"}
+      },
+      "union":true
+    },
+    "HarnessContentBlockDelta":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"SensitiveText"},
+        "toolUse":{"shape":"HarnessToolUseBlockDelta"},
+        "toolResult":{"shape":"HarnessToolResultBlocksDelta"},
+        "reasoningContent":{"shape":"HarnessReasoningContentBlockDelta"}
+      },
+      "union":true
+    },
+    "HarnessContentBlockDeltaEvent":{
+      "type":"structure",
+      "required":[
+        "contentBlockIndex",
+        "delta"
+      ],
+      "members":{
+        "contentBlockIndex":{"shape":"Integer"},
+        "delta":{"shape":"HarnessContentBlockDelta"}
+      },
+      "event":true
+    },
+    "HarnessContentBlockStart":{
+      "type":"structure",
+      "members":{
+        "toolUse":{"shape":"HarnessToolUseBlockStart"},
+        "toolResult":{"shape":"HarnessToolResultBlockStart"}
+      },
+      "union":true
+    },
+    "HarnessContentBlockStartEvent":{
+      "type":"structure",
+      "required":[
+        "contentBlockIndex",
+        "start"
+      ],
+      "members":{
+        "contentBlockIndex":{"shape":"Integer"},
+        "start":{"shape":"HarnessContentBlockStart"}
+      },
+      "event":true
+    },
+    "HarnessContentBlockStopEvent":{
+      "type":"structure",
+      "required":["contentBlockIndex"],
+      "members":{
+        "contentBlockIndex":{"shape":"Integer"}
+      },
+      "event":true
+    },
+    "HarnessContentBlocks":{
+      "type":"list",
+      "member":{"shape":"HarnessContentBlock"}
+    },
+    "HarnessConversationRole":{
+      "type":"string",
+      "enum":[
+        "user",
+        "assistant"
+      ]
+    },
+    "HarnessGatewayOutboundAuth":{
+      "type":"structure",
+      "members":{
+        "awsIam":{"shape":"Unit"},
+        "none":{"shape":"Unit"},
+        "oauth":{"shape":"OAuthCredentialProvider"}
+      },
+      "union":true
+    },
+    "HarnessGeminiModelConfig":{
+      "type":"structure",
+      "required":[
+        "modelId",
+        "apiKeyArn"
+      ],
+      "members":{
+        "modelId":{"shape":"ModelId"},
+        "apiKeyArn":{"shape":"ApiKeyArn"},
+        "maxTokens":{"shape":"MaxTokens"},
+        "temperature":{"shape":"Temperature"},
+        "topP":{"shape":"TopP"},
+        "topK":{"shape":"TopK"}
+      }
+    },
+    "HarnessInlineFunctionConfig":{
+      "type":"structure",
+      "required":[
+        "description",
+        "inputSchema"
+      ],
+      "members":{
+        "description":{"shape":"HarnessInlineFunctionDescription"},
+        "inputSchema":{"shape":"SensitiveJson"}
+      }
+    },
+    "HarnessInlineFunctionDescription":{
+      "type":"string",
+      "max":4096,
+      "min":1,
+      "sensitive":true
+    },
+    "HarnessMessage":{
+      "type":"structure",
+      "required":[
+        "role",
+        "content"
+      ],
+      "members":{
+        "role":{"shape":"HarnessConversationRole"},
+        "content":{"shape":"HarnessContentBlocks"}
+      }
+    },
+    "HarnessMessageStartEvent":{
+      "type":"structure",
+      "required":["role"],
+      "members":{
+        "role":{"shape":"HarnessConversationRole"}
+      },
+      "event":true
+    },
+    "HarnessMessageStopEvent":{
+      "type":"structure",
+      "required":["stopReason"],
+      "members":{
+        "stopReason":{"shape":"HarnessStopReason"}
+      },
+      "event":true
+    },
+    "HarnessMessages":{
+      "type":"list",
+      "member":{"shape":"HarnessMessage"}
+    },
+    "HarnessMetadataEvent":{
+      "type":"structure",
+      "required":[
+        "usage",
+        "metrics"
+      ],
+      "members":{
+        "usage":{"shape":"HarnessTokenUsage"},
+        "metrics":{"shape":"HarnessStreamMetrics"}
+      },
+      "event":true
+    },
+    "HarnessModelConfiguration":{
+      "type":"structure",
+      "members":{
+        "bedrockModelConfig":{"shape":"HarnessBedrockModelConfig"},
+        "openAiModelConfig":{"shape":"HarnessOpenAiModelConfig"},
+        "geminiModelConfig":{"shape":"HarnessGeminiModelConfig"}
+      },
+      "union":true
+    },
+    "HarnessOpenAiModelConfig":{
+      "type":"structure",
+      "required":[
+        "modelId",
+        "apiKeyArn"
+      ],
+      "members":{
+        "modelId":{"shape":"ModelId"},
+        "apiKeyArn":{"shape":"ApiKeyArn"},
+        "maxTokens":{"shape":"MaxTokens"},
+        "temperature":{"shape":"Temperature"},
+        "topP":{"shape":"TopP"}
+      }
+    },
+    "HarnessReasoningContentBlock":{
+      "type":"structure",
+      "members":{
+        "reasoningText":{"shape":"HarnessReasoningTextBlock"},
+        "redactedContent":{"shape":"Blob"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "HarnessReasoningContentBlockDelta":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"String"},
+        "redactedContent":{"shape":"Body"},
+        "signature":{"shape":"String"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "HarnessReasoningTextBlock":{
+      "type":"structure",
+      "required":["text"],
+      "members":{
+        "text":{"shape":"String"},
+        "signature":{"shape":"String"}
+      },
+      "sensitive":true
+    },
+    "HarnessRemoteMcpConfig":{
+      "type":"structure",
+      "required":["url"],
+      "members":{
+        "url":{"shape":"HarnessRemoteMcpUrl"},
+        "headers":{"shape":"HttpHeadersMap"}
+      }
+    },
+    "HarnessRemoteMcpUrl":{
+      "type":"string",
+      "max":16383,
+      "min":1,
+      "sensitive":true
+    },
+    "HarnessSkill":{
+      "type":"structure",
+      "members":{
+        "path":{"shape":"HarnessSkillPath"}
+      },
+      "union":true
+    },
+    "HarnessSkillPath":{
+      "type":"string",
+      "min":1
+    },
+    "HarnessSkills":{
+      "type":"list",
+      "member":{"shape":"HarnessSkill"}
+    },
+    "HarnessStopReason":{
+      "type":"string",
+      "enum":[
+        "end_turn",
+        "tool_use",
+        "tool_result",
+        "max_tokens",
+        "stop_sequence",
+        "content_filtered",
+        "malformed_model_output",
+        "malformed_tool_use",
+        "interrupted",
+        "partial_turn",
+        "model_context_window_exceeded",
+        "max_iterations_exceeded",
+        "max_output_tokens_exceeded",
+        "timeout_exceeded"
+      ]
+    },
+    "HarnessStreamMetrics":{
+      "type":"structure",
+      "required":["latencyMs"],
+      "members":{
+        "latencyMs":{"shape":"Long"}
+      }
+    },
+    "HarnessSystemContentBlock":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"SensitiveText"}
+      },
+      "union":true
+    },
+    "HarnessSystemPrompt":{
+      "type":"list",
+      "member":{"shape":"HarnessSystemContentBlock"}
+    },
+    "HarnessTokenUsage":{
+      "type":"structure",
+      "required":[
+        "inputTokens",
+        "outputTokens",
+        "totalTokens"
+      ],
+      "members":{
+        "inputTokens":{"shape":"HarnessTokenUsageInputTokensInteger"},
+        "outputTokens":{"shape":"HarnessTokenUsageOutputTokensInteger"},
+        "totalTokens":{"shape":"HarnessTokenUsageTotalTokensInteger"},
+        "cacheReadInputTokens":{"shape":"HarnessTokenUsageCacheReadInputTokensInteger"},
+        "cacheWriteInputTokens":{"shape":"HarnessTokenUsageCacheWriteInputTokensInteger"}
+      }
+    },
+    "HarnessTokenUsageCacheReadInputTokensInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "HarnessTokenUsageCacheWriteInputTokensInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "HarnessTokenUsageInputTokensInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "HarnessTokenUsageOutputTokensInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "HarnessTokenUsageTotalTokensInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "HarnessTool":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"HarnessToolType"},
+        "name":{"shape":"HarnessToolName"},
+        "config":{"shape":"HarnessToolConfiguration"}
+      }
+    },
+    "HarnessToolConfiguration":{
+      "type":"structure",
+      "members":{
+        "remoteMcp":{"shape":"HarnessRemoteMcpConfig"},
+        "agentCoreBrowser":{"shape":"HarnessAgentCoreBrowserConfig"},
+        "agentCoreGateway":{"shape":"HarnessAgentCoreGatewayConfig"},
+        "inlineFunction":{"shape":"HarnessInlineFunctionConfig"},
+        "agentCoreCodeInterpreter":{"shape":"HarnessAgentCoreCodeInterpreterConfig"}
+      },
+      "union":true
+    },
+    "HarnessToolName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "HarnessToolResultBlock":{
+      "type":"structure",
+      "required":[
+        "toolUseId",
+        "content"
+      ],
+      "members":{
+        "toolUseId":{"shape":"HarnessToolUseId"},
+        "content":{"shape":"HarnessToolResultContentBlocks"},
+        "status":{"shape":"HarnessToolUseStatus"},
+        "type":{"shape":"HarnessToolUseType"}
+      }
+    },
+    "HarnessToolResultBlockDelta":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"SensitiveText"},
+        "json":{"shape":"SensitiveJson"}
+      },
+      "union":true
+    },
+    "HarnessToolResultBlockStart":{
+      "type":"structure",
+      "required":["toolUseId"],
+      "members":{
+        "toolUseId":{"shape":"HarnessToolUseId"},
+        "status":{"shape":"HarnessToolUseStatus"}
+      }
+    },
+    "HarnessToolResultBlocksDelta":{
+      "type":"list",
+      "member":{"shape":"HarnessToolResultBlockDelta"}
+    },
+    "HarnessToolResultContentBlock":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"SensitiveText"},
+        "json":{"shape":"SensitiveJson"}
+      },
+      "union":true
+    },
+    "HarnessToolResultContentBlocks":{
+      "type":"list",
+      "member":{"shape":"HarnessToolResultContentBlock"}
+    },
+    "HarnessToolType":{
+      "type":"string",
+      "enum":[
+        "remote_mcp",
+        "agentcore_browser",
+        "agentcore_gateway",
+        "inline_function",
+        "agentcore_code_interpreter"
+      ]
+    },
+    "HarnessToolUseBlock":{
+      "type":"structure",
+      "required":[
+        "name",
+        "toolUseId",
+        "input"
+      ],
+      "members":{
+        "name":{"shape":"HarnessToolName"},
+        "toolUseId":{"shape":"HarnessToolUseId"},
+        "input":{"shape":"SensitiveJson"},
+        "type":{"shape":"HarnessToolUseType"},
+        "serverName":{"shape":"String"}
+      }
+    },
+    "HarnessToolUseBlockDelta":{
+      "type":"structure",
+      "required":["input"],
+      "members":{
+        "input":{"shape":"SensitiveText"}
+      }
+    },
+    "HarnessToolUseBlockStart":{
+      "type":"structure",
+      "required":[
+        "toolUseId",
+        "name"
+      ],
+      "members":{
+        "toolUseId":{"shape":"HarnessToolUseId"},
+        "name":{"shape":"HarnessToolName"},
+        "type":{"shape":"HarnessToolUseType"},
+        "serverName":{"shape":"String"}
+      }
+    },
+    "HarnessToolUseId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "HarnessToolUseStatus":{
+      "type":"string",
+      "enum":[
+        "success",
+        "error"
+      ]
+    },
+    "HarnessToolUseType":{
+      "type":"string",
+      "enum":[
+        "tool_use",
+        "server_tool_use",
+        "mcp_tool_use"
+      ]
+    },
+    "HarnessTools":{
+      "type":"list",
+      "member":{"shape":"HarnessTool"}
+    },
     "HostName":{
       "type":"string",
       "max":253,
       "min":1,
       "pattern":"[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?(\\.[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)*"
+    },
+    "HttpHeaderKey":{
+      "type":"string",
+      "max":16383,
+      "min":1
+    },
+    "HttpHeaderValue":{
+      "type":"string",
+      "max":16383,
+      "min":1
+    },
+    "HttpHeadersMap":{
+      "type":"map",
+      "key":{"shape":"HttpHeaderKey"},
+      "value":{"shape":"HttpHeaderValue"},
+      "sensitive":true
     },
     "HttpResponseCode":{
       "type":"integer",
@@ -2513,6 +3059,59 @@
       },
       "payload":"stream"
     },
+    "InvokeHarnessRequest":{
+      "type":"structure",
+      "required":[
+        "harnessArn",
+        "runtimeSessionId",
+        "messages"
+      ],
+      "members":{
+        "harnessArn":{
+          "shape":"HarnessArn",
+          "location":"querystring",
+          "locationName":"harnessArn"
+        },
+        "runtimeSessionId":{
+          "shape":"SessionId",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Runtime-Session-Id"
+        },
+        "messages":{"shape":"HarnessMessages"},
+        "model":{"shape":"HarnessModelConfiguration"},
+        "systemPrompt":{"shape":"HarnessSystemPrompt"},
+        "tools":{"shape":"HarnessTools"},
+        "skills":{"shape":"HarnessSkills"},
+        "allowedTools":{"shape":"HarnessAllowedTools"},
+        "maxIterations":{"shape":"Integer"},
+        "maxTokens":{"shape":"Integer"},
+        "timeoutSeconds":{"shape":"Integer"},
+        "actorId":{"shape":"String"}
+      }
+    },
+    "InvokeHarnessResponse":{
+      "type":"structure",
+      "required":["stream"],
+      "members":{
+        "stream":{"shape":"InvokeHarnessStreamOutput"}
+      },
+      "payload":"stream"
+    },
+    "InvokeHarnessStreamOutput":{
+      "type":"structure",
+      "members":{
+        "messageStart":{"shape":"HarnessMessageStartEvent"},
+        "contentBlockStart":{"shape":"HarnessContentBlockStartEvent"},
+        "contentBlockDelta":{"shape":"HarnessContentBlockDeltaEvent"},
+        "contentBlockStop":{"shape":"HarnessContentBlockStopEvent"},
+        "messageStop":{"shape":"HarnessMessageStopEvent"},
+        "metadata":{"shape":"HarnessMetadataEvent"},
+        "internalServerException":{"shape":"InternalServerException"},
+        "validationException":{"shape":"ValidationException"},
+        "runtimeClientError":{"shape":"RuntimeClientError"}
+      },
+      "eventstream":true
+    },
     "KeyList":{
       "type":"list",
       "member":{"shape":"String"},
@@ -2796,6 +3395,11 @@
       "max":100,
       "min":1
     },
+    "MaxTokens":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
     "McpDescriptor":{
       "type":"structure",
       "required":[
@@ -3027,6 +3631,7 @@
       "max":256,
       "min":1
     },
+    "ModelId":{"type":"string"},
     "MouseButton":{
       "type":"string",
       "enum":[
@@ -3164,6 +3769,66 @@
     "NonBlankString":{
       "type":"string",
       "pattern":"[\\s\\S]+"
+    },
+    "OAuthCredentialProvider":{
+      "type":"structure",
+      "required":[
+        "providerArn",
+        "scopes"
+      ],
+      "members":{
+        "providerArn":{"shape":"OAuthCredentialProviderArn"},
+        "scopes":{"shape":"OAuthScopes"},
+        "customParameters":{"shape":"OAuthCustomParameters"},
+        "grantType":{"shape":"OAuthGrantType"},
+        "defaultReturnUrl":{"shape":"OAuthDefaultReturnUrl"}
+      }
+    },
+    "OAuthCredentialProviderArn":{
+      "type":"string",
+      "pattern":"arn:([^:]*):([^:]*):([^:]*):([0-9]{12})?:(.+)"
+    },
+    "OAuthCustomParameters":{
+      "type":"map",
+      "key":{"shape":"OAuthCustomParametersKey"},
+      "value":{"shape":"OAuthCustomParametersValue"},
+      "max":10,
+      "min":1
+    },
+    "OAuthCustomParametersKey":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "OAuthCustomParametersValue":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "sensitive":true
+    },
+    "OAuthDefaultReturnUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"\\w+:(\\/?\\/?)[^\\s]+"
+    },
+    "OAuthGrantType":{
+      "type":"string",
+      "enum":[
+        "CLIENT_CREDENTIALS",
+        "AUTHORIZATION_CODE"
+      ]
+    },
+    "OAuthScope":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "OAuthScopes":{
+      "type":"list",
+      "member":{"shape":"OAuthScope"},
+      "max":100,
+      "min":0
     },
     "Oauth2FlowType":{
       "type":"string",
@@ -3637,6 +4302,17 @@
         "secretArn":{"shape":"SecretArn"}
       }
     },
+    "SensitiveJson":{
+      "type":"structure",
+      "members":{},
+      "document":true,
+      "sensitive":true
+    },
+    "SensitiveText":{
+      "type":"string",
+      "min":1,
+      "sensitive":true
+    },
     "ServerDefinition":{
       "type":"structure",
       "members":{
@@ -4072,6 +4748,12 @@
         "failed"
       ]
     },
+    "Temperature":{
+      "type":"float",
+      "box":true,
+      "max":2.0,
+      "min":0.0
+    },
     "ThrottledException":{
       "type":"structure",
       "required":["message"],
@@ -4151,6 +4833,18 @@
         "inlineContent":{"shape":"InlineContent"}
       }
     },
+    "TopK":{
+      "type":"integer",
+      "box":true,
+      "max":500,
+      "min":0
+    },
+    "TopP":{
+      "type":"float",
+      "box":true,
+      "max":1.0,
+      "min":0.0
+    },
     "TraceId":{
       "type":"string",
       "max":32,
@@ -4172,6 +4866,10 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "Unit":{
+      "type":"structure",
+      "members":{}
     },
     "UpdateBrowserStreamRequest":{
       "type":"structure",

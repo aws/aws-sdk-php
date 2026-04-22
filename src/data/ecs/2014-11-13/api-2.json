@@ -1536,6 +1536,19 @@
       "type":"list",
       "member":{"shape":"Attribute"}
     },
+    "AutoRepairActionsStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "AutoRepairConfiguration":{
+      "type":"structure",
+      "members":{
+        "actionsStatus":{"shape":"AutoRepairActionsStatus"}
+      }
+    },
     "AutoScalingGroupProvider":{
       "type":"structure",
       "required":["autoScalingGroupArn"],
@@ -2206,7 +2219,8 @@
         "infrastructureRoleArn":{"shape":"String"},
         "instanceLaunchTemplate":{"shape":"InstanceLaunchTemplate"},
         "propagateTags":{"shape":"PropagateMITags"},
-        "infrastructureOptimization":{"shape":"InfrastructureOptimization"}
+        "infrastructureOptimization":{"shape":"InfrastructureOptimization"},
+        "autoRepairConfiguration":{"shape":"AutoRepairConfiguration"}
       }
     },
     "CreateServiceRequest":{
@@ -3696,6 +3710,7 @@
       "members":{
         "type":{"shape":"InstanceHealthCheckType"},
         "status":{"shape":"InstanceHealthCheckState"},
+        "statusReason":{"shape":"String"},
         "lastUpdated":{"shape":"Timestamp"},
         "lastStatusChange":{"shape":"Timestamp"}
       }
@@ -4298,7 +4313,8 @@
         "infrastructureRoleArn":{"shape":"String"},
         "instanceLaunchTemplate":{"shape":"InstanceLaunchTemplate"},
         "propagateTags":{"shape":"PropagateMITags"},
-        "infrastructureOptimization":{"shape":"InfrastructureOptimization"}
+        "infrastructureOptimization":{"shape":"InfrastructureOptimization"},
+        "autoRepairConfiguration":{"shape":"AutoRepairConfiguration"}
       }
     },
     "ManagedInstancesStorageConfiguration":{
@@ -6284,7 +6300,8 @@
         "infrastructureRoleArn":{"shape":"String"},
         "instanceLaunchTemplate":{"shape":"InstanceLaunchTemplateUpdate"},
         "propagateTags":{"shape":"PropagateMITags"},
-        "infrastructureOptimization":{"shape":"InfrastructureOptimization"}
+        "infrastructureOptimization":{"shape":"InfrastructureOptimization"},
+        "autoRepairConfiguration":{"shape":"AutoRepairConfiguration"}
       }
     },
     "UpdateServicePrimaryTaskSetRequest":{

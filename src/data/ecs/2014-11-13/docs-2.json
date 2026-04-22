@@ -232,6 +232,20 @@
         "Task$attributes": "<p>The attributes of the task</p>"
       }
     },
+    "AutoRepairActionsStatus": {
+      "base": null,
+      "refs": {
+        "AutoRepairConfiguration$actionsStatus": "<p>The status of auto repair actions for the capacity provider. When set to <code>ENABLED</code>, Amazon ECS automatically replaces container instances with an <code>IMPAIRED</code> health status. When set to <code>DISABLED</code>, Amazon ECS still monitors container instance health but does not automatically replace impaired instances.</p>"
+      }
+    },
+    "AutoRepairConfiguration": {
+      "base": "<p>The auto repair configuration for an Amazon ECS Managed Instances capacity provider. When enabled, Amazon ECS automatically replaces container instances that are detected as unhealthy based on container instance health checks, including accelerated compute device and daemon health checks.</p>",
+      "refs": {
+        "CreateManagedInstancesProviderConfiguration$autoRepairConfiguration": "<p>The auto repair configuration for the Amazon ECS Managed Instances capacity provider. Use this to enable or disable automatic replacement of container instances that are detected as unhealthy.</p>",
+        "ManagedInstancesProvider$autoRepairConfiguration": "<p>The auto repair configuration for the Amazon ECS Managed Instances capacity provider. Indicates whether Amazon ECS automatically replaces container instances that are detected as unhealthy.</p>",
+        "UpdateManagedInstancesProviderConfiguration$autoRepairConfiguration": "<p>The updated auto repair configuration for the Amazon ECS Managed Instances capacity provider.</p>"
+      }
+    },
     "AutoScalingGroupProvider": {
       "base": "<p>The details of the Auto Scaling group for the capacity provider.</p>",
       "refs": {
@@ -3598,6 +3612,7 @@
         "InferenceAcceleratorOverride$deviceName": "<p>The Elastic Inference accelerator device name to override for the task. This parameter must match a <code>deviceName</code> specified in the task definition.</p>",
         "InferenceAcceleratorOverride$deviceType": "<p>The Elastic Inference accelerator type to use.</p>",
         "IngressPathSummary$endpoint": "<p>The endpoint for access to the service.</p>",
+        "InstanceHealthCheckResult$statusReason": "<p>The reason for the container instance health status.</p>",
         "InstanceLaunchTemplate$ec2InstanceProfileArn": "<p>The Amazon Resource Name (ARN) of the instance profile that Amazon ECS applies to Amazon ECS Managed Instances. This instance profile must include the necessary permissions for your tasks to access Amazon Web Services services and resources.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/managed-instances-instance-profile.html\">Amazon ECS instance profile for Managed Instances</a> in the <i>Amazon ECS Developer Guide</i>. </p>",
         "InstanceLaunchTemplateUpdate$ec2InstanceProfileArn": "<p>The updated Amazon Resource Name (ARN) of the instance profile. The new instance profile must have the necessary permissions for your tasks.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/managed-instances-instance-profile.html\">Amazon ECS instance profile for Managed Instances</a> in the <i>Amazon ECS Developer Guide</i>. </p>",
         "InvalidParameterException$message": "<p> Message that describes the cause of the exception.</p>",
