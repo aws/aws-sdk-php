@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.379.5 - 2026-04-22
 
 * `Aws\Lambda` - Add Ruby 4.0 (ruby4.0) support to AWS Lambda.
 * `Aws\S3` - This release adds five additional checksum algorithms for S3 data integrity (MD5, SHA-512, XXHash3, XXHash64, XXHash128) and support for S3 Inventory on directory buckets (S3 Express One Zone).
