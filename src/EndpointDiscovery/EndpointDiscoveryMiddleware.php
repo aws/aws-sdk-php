@@ -32,14 +32,15 @@ class EndpointDiscoveryMiddleware
         $args,
         $config
     ) {
+        $clientRef = \WeakReference::create($client);
         return function (callable $handler) use (
-            $client,
+            $clientRef,
             $args,
             $config
         ) {
             return new static(
                 $handler,
-                $client,
+                $clientRef->get(),
                 $args,
                 $config
             );

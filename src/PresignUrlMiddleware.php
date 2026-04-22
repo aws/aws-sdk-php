@@ -50,9 +50,9 @@ class PresignUrlMiddleware
         $endpointProvider,
         array $options = []
     ) {
-        return function (callable $handler) use ($endpointProvider, $client, $options) {
-            $f = new PresignUrlMiddleware($options, $endpointProvider, $client, $handler);
-            return $f;
+        $clientRef = \WeakReference::create($client);
+        return function (callable $handler) use ($endpointProvider, $clientRef, $options) {
+            return new PresignUrlMiddleware($options, $endpointProvider, $clientRef->get(), $handler);
         };
     }
 
