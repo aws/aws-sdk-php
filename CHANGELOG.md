@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.379.6 - 2026-04-23
 
 * `Aws\OpenSearchService` - Amazon OpenSearch UI applications now support cross-Region domain association, enabling you to connect OpenSearch Dashboards in one AWS Region to OpenSearch domains in other Regions within the same partition for centralized data visualization.
 * `Aws\IoTManagedIntegrations` - Adds "Status" field to provisioning profile operation response types, giving users visibility into the readiness of a provisioning profile to be used for device provisioning.
