@@ -1783,7 +1783,8 @@
           "locationName":"DomainName"
         },
         "Account":{"shape":"AWSAccount"},
-        "Service":{"shape":"AWSServicePrincipal"}
+        "Service":{"shape":"AWSServicePrincipal"},
+        "ServiceOptions":{"shape":"ServiceOptions"}
       }
     },
     "AuthorizeVpcEndpointAccessResponse":{
@@ -1797,7 +1798,8 @@
       "type":"structure",
       "members":{
         "PrincipalType":{"shape":"PrincipalType"},
-        "Principal":{"shape":"String"}
+        "Principal":{"shape":"String"},
+        "ServiceOptions":{"shape":"ServiceOptions"}
       }
     },
     "AuthorizedPrincipalList":{
@@ -3873,6 +3875,7 @@
       "members":{
         "EnabledAPIAccess":{"shape":"Boolean"},
         "IdentityCenterInstanceARN":{"shape":"IdentityCenterInstanceARN"},
+        "IdentityCenterInstanceRegion":{"shape":"Region"},
         "SubjectKey":{"shape":"SubjectKeyIdCOption"},
         "RolesKey":{"shape":"RolesKeyIdCOption"},
         "IdentityCenterApplicationARN":{"shape":"IdentityCenterApplicationARN"},
@@ -3884,6 +3887,7 @@
       "members":{
         "EnabledAPIAccess":{"shape":"Boolean"},
         "IdentityCenterInstanceARN":{"shape":"IdentityCenterInstanceARN"},
+        "IdentityCenterInstanceRegion":{"shape":"Region"},
         "SubjectKey":{"shape":"SubjectKeyIdCOption"},
         "RolesKey":{"shape":"RolesKeyIdCOption"}
       }
@@ -5284,6 +5288,10 @@
       "min":5,
       "pattern":"[a-z][a-z0-9\\-]+"
     },
+    "RegionsList":{
+      "type":"list",
+      "member":{"shape":"Region"}
+    },
     "RegisterCapabilityRequest":{
       "type":"structure",
       "required":[
@@ -5428,7 +5436,8 @@
           "locationName":"DomainName"
         },
         "Account":{"shape":"AWSAccount"},
-        "Service":{"shape":"AWSServicePrincipal"}
+        "Service":{"shape":"AWSServicePrincipal"},
+        "ServiceOptions":{"shape":"ServiceOptions"}
       }
     },
     "RevokeVpcEndpointAccessResponse":{
@@ -5622,6 +5631,12 @@
       "type":"structure",
       "members":{
         "Enabled":{"shape":"Boolean"}
+      }
+    },
+    "ServiceOptions":{
+      "type":"structure",
+      "members":{
+        "SupportedRegions":{"shape":"RegionsList"}
       }
     },
     "ServiceQuotaExceededException":{

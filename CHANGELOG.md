@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\OpenSearchService` - Amazon OpenSearch UI applications now support cross-Region domain association, enabling you to connect OpenSearch Dashboards in one AWS Region to OpenSearch domains in other Regions within the same partition for centralized data visualization.
+* `Aws\IoTManagedIntegrations` - Adds "Status" field to provisioning profile operation response types, giving users visibility into the readiness of a provisioning profile to be used for device provisioning.
+* `Aws\DataZone` - Releasing For LakehouseProperties attributes in the Connections API's
+* `Aws\PCS` - This release adds support for Slurm 25.11 with expedited requeue enabled by default for jobs failing due to node issues, configurable requeue delay, health checks at node startup only, and unauthenticated HTTP endpoints disabled by default for improved security.
+
 ## 3.379.5 - 2026-04-22
 
 * `Aws\Lambda` - Add Ruby 4.0 (ruby4.0) support to AWS Lambda.

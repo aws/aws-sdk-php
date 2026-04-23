@@ -406,6 +406,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"UnauthorizedException"},
+        {"shape":"ConflictException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
@@ -2344,7 +2345,12 @@
         "Name":{"shape":"Name"},
         "CapabilityReport":{"shape":"CapabilityReport"},
         "CapabilitySchemas":{"shape":"CapabilitySchemas"},
-        "Capabilities":{"shape":"Capabilities"},
+        "Capabilities":{
+          "shape":"Capabilities",
+          "deprecated":true,
+          "deprecatedMessage":"Capabilities has been deprecated, use CapabilityReport instead",
+          "deprecatedSince":"06-25-2025"
+        },
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -2461,6 +2467,7 @@
         "Name":{"shape":"ProvisioningProfileName"},
         "ProvisioningType":{"shape":"ProvisioningType"},
         "Id":{"shape":"ProvisioningProfileId"},
+        "Status":{"shape":"ProvisioningProfileStatus"},
         "ClaimCertificate":{"shape":"ClaimCertificate"},
         "ClaimCertificatePrivateKey":{"shape":"ClaimCertificatePrivateKey"}
       }
@@ -3216,7 +3223,12 @@
       "type":"structure",
       "members":{
         "ManagedThingId":{"shape":"ManagedThingId"},
-        "Capabilities":{"shape":"Capabilities"},
+        "Capabilities":{
+          "shape":"Capabilities",
+          "deprecated":true,
+          "deprecatedMessage":"Capabilities has been deprecated, use CapabilityReport instead",
+          "deprecatedSince":"06-25-2025"
+        },
         "CapabilityReport":{"shape":"CapabilityReport"}
       }
     },
@@ -3440,6 +3452,7 @@
         "Name":{"shape":"ProvisioningProfileName"},
         "ProvisioningType":{"shape":"ProvisioningType"},
         "Id":{"shape":"ProvisioningProfileId"},
+        "Status":{"shape":"ProvisioningProfileStatus"},
         "ClaimCertificate":{"shape":"ClaimCertificate"},
         "Tags":{"shape":"TagsMap"}
       }
@@ -4772,13 +4785,24 @@
       "min":1,
       "pattern":"[0-9A-Za-z_-]+"
     },
+    "ProvisioningProfileStatus":{
+      "type":"string",
+      "enum":[
+        "CREATE_IN_PROGRESS",
+        "CREATE_FAILED",
+        "CREATED",
+        "DELETE_IN_PROGRESS",
+        "DELETE_FAILED"
+      ]
+    },
     "ProvisioningProfileSummary":{
       "type":"structure",
       "members":{
         "Name":{"shape":"ProvisioningProfileName"},
         "Id":{"shape":"ProvisioningProfileId"},
         "Arn":{"shape":"ProvisioningProfileArn"},
-        "ProvisioningType":{"shape":"ProvisioningType"}
+        "ProvisioningType":{"shape":"ProvisioningType"},
+        "Status":{"shape":"ProvisioningProfileStatus"}
       }
     },
     "ProvisioningStatus":{
@@ -5520,7 +5544,12 @@
         "Name":{"shape":"Name"},
         "CapabilityReport":{"shape":"CapabilityReport"},
         "CapabilitySchemas":{"shape":"CapabilitySchemas"},
-        "Capabilities":{"shape":"Capabilities"},
+        "Capabilities":{
+          "shape":"Capabilities",
+          "deprecated":true,
+          "deprecatedMessage":"Capabilities has been deprecated, use CapabilityReport instead",
+          "deprecatedSince":"06-25-2025"
+        },
         "Classification":{"shape":"Classification"},
         "HubNetworkMode":{"shape":"HubNetworkMode"},
         "MetaData":{"shape":"MetaData"}

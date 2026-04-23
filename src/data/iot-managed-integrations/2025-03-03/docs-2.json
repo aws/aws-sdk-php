@@ -12,7 +12,7 @@
     "CreateNotificationConfiguration": "<p>Creates a notification configuration. A configuration is a connection between an event type and a destination that you have already created. </p>",
     "CreateOtaTask": "<p>Create an over-the-air (OTA) task to target a device.</p>",
     "CreateOtaTaskConfiguration": "<p>Create a configuraiton for the over-the-air (OTA) task.</p>",
-    "CreateProvisioningProfile": "<p>Create a provisioning profile for a device to execute the provisioning flows using a provisioning template. The provisioning template is a document that defines the set of resources and policies applied to a device during the provisioning process.</p>",
+    "CreateProvisioningProfile": "<p>Create a provisioning profile for executing device provisioning flows. The provisioning profile is a document that defines the set of resources and policies applied to a device during the provisioning process.</p>",
     "DeleteAccountAssociation": "<p>Remove a third-party account association for an end user.</p> <note> <p>You must first call the <code>DeregisterAccountAssociation</code> to remove the connection between the managed thing and the third-party account before calling the <code>DeleteAccountAssociation</code> API.</p> </note>",
     "DeleteCloudConnector": "<p>Delete a cloud connector.</p>",
     "DeleteConnectorDestination": "<p>Delete a connector destination linked to a cloud-to-cloud (C2C) connector.</p> <note> <p>Deletion can't be done if the account association has used this connector destination.</p> </note>",
@@ -44,7 +44,7 @@
     "GetNotificationConfiguration": "<p> Get a notification configuration for a specified event type.</p>",
     "GetOtaTask": "<p>Get details of the over-the-air (OTA) task by its task id.</p>",
     "GetOtaTaskConfiguration": "<p>Get a configuraiton for the over-the-air (OTA) task.</p>",
-    "GetProvisioningProfile": "<p>Get a provisioning profile by template name.</p>",
+    "GetProvisioningProfile": "<p>Get details of a provisioning profile.</p>",
     "GetRuntimeLogConfiguration": "<p>Get the runtime log configuration for a specific managed thing.</p>",
     "GetSchemaVersion": "<p>Gets a schema version with the provided information.</p>",
     "ListAccountAssociations": "<p>Lists all account associations, with optional filtering by connector destination ID.</p>",
@@ -313,7 +313,7 @@
     "CaCertificate": {
       "base": null,
       "refs": {
-        "CreateProvisioningProfileRequest$CaCertificate": "<p>The id of the certificate authority (CA) certificate.</p>"
+        "CreateProvisioningProfileRequest$CaCertificate": "<p>The body of the PEM-encoded certificate authority (CA) certificate.</p>"
       }
     },
     "Capabilities": {
@@ -453,15 +453,15 @@
     "ClaimCertificate": {
       "base": null,
       "refs": {
-        "CreateProvisioningProfileRequest$ClaimCertificate": "<p>The claim certificate.</p>",
-        "CreateProvisioningProfileResponse$ClaimCertificate": "<p>The id of the claim certificate.</p>",
-        "GetProvisioningProfileResponse$ClaimCertificate": "<p>The id of the claim certificate.</p>"
+        "CreateProvisioningProfileRequest$ClaimCertificate": "<p>The body of the PEM-encoded claim certificate. If a claim certificate is provided, it will be used for the provisioning profile. Otherwise, a claim certificate will be generated.</p>",
+        "CreateProvisioningProfileResponse$ClaimCertificate": "<p>The body of the PEM-encoded claim certificate.</p>",
+        "GetProvisioningProfileResponse$ClaimCertificate": "<p>The body of the PEM-encoded claim certificate.</p>"
       }
     },
     "ClaimCertificatePrivateKey": {
       "base": null,
       "refs": {
-        "CreateProvisioningProfileResponse$ClaimCertificatePrivateKey": "<p>The private key of the claim certificate. This is stored securely on the device for validating the connection endpoint with IoT managed integrations using the public key.</p>"
+        "CreateProvisioningProfileResponse$ClaimCertificatePrivateKey": "<p>The private key of the claim certificate. This may be stored securely on the device for validating the connection endpoint with IoT managed integrations using the public key.</p>"
       }
     },
     "Classification": {
@@ -1350,7 +1350,7 @@
     "GeneralAuthorizationUpdate": {
       "base": "<p>The General Authorization update information containing authorization materials to add or update.</p>",
       "refs": {
-        "AuthConfigUpdate$GeneralAuthorizationUpdate": "<p>The General Authorization update information containing authorization materials to add or update in Kinesis Data Streams.</p>"
+        "AuthConfigUpdate$GeneralAuthorizationUpdate": "<p>The General Authorization update information containing authorization materials to add or update.</p>"
       }
     },
     "GetAccountAssociationRequest": {
@@ -2471,17 +2471,17 @@
     "ProvisioningProfileArn": {
       "base": null,
       "refs": {
-        "CreateProvisioningProfileResponse$Arn": "<p>The Amazon Resource Name (ARN) of the provisioning template used in the provisioning profile.</p>",
-        "GetProvisioningProfileResponse$Arn": "<p>The Amazon Resource Name (ARN) of the provisioning template used in the provisioning profile.</p>",
-        "ProvisioningProfileSummary$Arn": "<p>The Amazon Resource Name (ARN) of the provisioning template used in the provisioning profile.</p>"
+        "CreateProvisioningProfileResponse$Arn": "<p>The Amazon Resource Name (ARN) of the provisioning profile.</p>",
+        "GetProvisioningProfileResponse$Arn": "<p>The Amazon Resource Name (ARN) of the provisioning profile.</p>",
+        "ProvisioningProfileSummary$Arn": "<p>The Amazon Resource Name (ARN) of the provisioning profile.</p>"
       }
     },
     "ProvisioningProfileId": {
       "base": null,
       "refs": {
         "CreateProvisioningProfileResponse$Id": "<p>The identifier of the provisioning profile.</p>",
-        "DeleteProvisioningProfileRequest$Identifier": "<p>The name of the provisioning template.</p>",
-        "GetProvisioningProfileRequest$Identifier": "<p>The provisioning template the device uses for the provisioning process.</p>",
+        "DeleteProvisioningProfileRequest$Identifier": "<p>The id of the provisioning profile.</p>",
+        "GetProvisioningProfileRequest$Identifier": "<p>The id of a provisioning profile.</p>",
         "GetProvisioningProfileResponse$Id": "<p>The provisioning profile id.</p>",
         "ProvisioningProfileSummary$Id": "<p>The identifier of the provisioning profile.</p>"
       }
@@ -2495,10 +2495,18 @@
     "ProvisioningProfileName": {
       "base": null,
       "refs": {
-        "CreateProvisioningProfileRequest$Name": "<p>The name of the provisioning template.</p>",
-        "CreateProvisioningProfileResponse$Name": "<p>The name of the provisioning template.</p>",
-        "GetProvisioningProfileResponse$Name": "<p>The name of the provisioning template.</p>",
-        "ProvisioningProfileSummary$Name": "<p>The name of the provisioning template.</p>"
+        "CreateProvisioningProfileRequest$Name": "<p>The name of the provisioning profile.</p>",
+        "CreateProvisioningProfileResponse$Name": "<p>The name of the provisioning profile.</p>",
+        "GetProvisioningProfileResponse$Name": "<p>The name of the provisioning profile.</p>",
+        "ProvisioningProfileSummary$Name": "<p>The name of the provisioning profile.</p>"
+      }
+    },
+    "ProvisioningProfileStatus": {
+      "base": null,
+      "refs": {
+        "CreateProvisioningProfileResponse$Status": "<p>The status of a provisioning profile.</p>",
+        "GetProvisioningProfileResponse$Status": "<p>The status of a provisioning profile.</p>",
+        "ProvisioningProfileSummary$Status": "<p>The status of a provisioning profile.</p>"
       }
     },
     "ProvisioningProfileSummary": {

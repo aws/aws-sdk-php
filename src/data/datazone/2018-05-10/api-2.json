@@ -4767,7 +4767,8 @@
         "amazonQProperties":{"shape":"AmazonQPropertiesInput"},
         "mlflowProperties":{"shape":"MlflowPropertiesInput"},
         "workflowsMwaaProperties":{"shape":"WorkflowsMwaaPropertiesInput"},
-        "workflowsServerlessProperties":{"shape":"WorkflowsServerlessPropertiesInput"}
+        "workflowsServerlessProperties":{"shape":"WorkflowsServerlessPropertiesInput"},
+        "lakehouseProperties":{"shape":"LakehousePropertiesInput"}
       },
       "union":true
     },
@@ -4785,7 +4786,8 @@
         "amazonQProperties":{"shape":"AmazonQPropertiesOutput"},
         "mlflowProperties":{"shape":"MlflowPropertiesOutput"},
         "workflowsMwaaProperties":{"shape":"WorkflowsMwaaPropertiesOutput"},
-        "workflowsServerlessProperties":{"shape":"WorkflowsServerlessPropertiesOutput"}
+        "workflowsServerlessProperties":{"shape":"WorkflowsServerlessPropertiesOutput"},
+        "lakehouseProperties":{"shape":"LakehousePropertiesOutput"}
       },
       "union":true
     },
@@ -4799,7 +4801,8 @@
         "sparkEmrProperties":{"shape":"SparkEmrPropertiesPatch"},
         "s3Properties":{"shape":"S3PropertiesPatch"},
         "amazonQProperties":{"shape":"AmazonQPropertiesPatch"},
-        "mlflowProperties":{"shape":"MlflowPropertiesPatch"}
+        "mlflowProperties":{"shape":"MlflowPropertiesPatch"},
+        "lakehouseProperties":{"shape":"LakehousePropertiesPatch"}
       },
       "union":true
     },
@@ -10654,6 +10657,24 @@
       "members":{
         "locationRegistrationRole":{"shape":"RoleArn"},
         "locationRegistrationExcludeS3Locations":{"shape":"S3LocationList"}
+      }
+    },
+    "LakehousePropertiesInput":{
+      "type":"structure",
+      "members":{
+        "glueLineageSyncEnabled":{"shape":"Boolean"}
+      }
+    },
+    "LakehousePropertiesOutput":{
+      "type":"structure",
+      "members":{
+        "glueLineageSyncEnabled":{"shape":"Boolean"}
+      }
+    },
+    "LakehousePropertiesPatch":{
+      "type":"structure",
+      "members":{
+        "glueLineageSyncEnabled":{"shape":"Boolean"}
       }
     },
     "LambdaExecutionRoleArn":{

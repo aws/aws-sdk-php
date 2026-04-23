@@ -3033,9 +3033,18 @@
       }
     },
     "Region": {
+      "base": "<p>An Amazon Web Services Region, such as <code>us-east-1</code>.</p>",
+      "refs": {
+        "AWSDomainInformation$Region": "<p>The Amazon Web Services Region in which the domain is located.</p>",
+        "IdentityCenterOptions$IdentityCenterInstanceRegion": "<p>The Region of the IAM Identity Center instance.</p>",
+        "IdentityCenterOptionsInput$IdentityCenterInstanceRegion": "<p>The Region of the IAM Identity Center instance.</p>",
+        "RegionsList$member": null
+      }
+    },
+    "RegionsList": {
       "base": null,
       "refs": {
-        "AWSDomainInformation$Region": "<p>The Amazon Web Services Region in which the domain is located.</p>"
+        "ServiceOptions$SupportedRegions": "<p>The list of supported Regions for the service.</p>"
       }
     },
     "RegisterCapabilityRequest": {
@@ -3289,6 +3298,14 @@
       "refs": {
         "AIMLOptionsInput$ServerlessVectorAcceleration": "<p>Specifies whether to enable serverless vector acceleration for the domain. When enabled, provides <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/gpu-acceleration-vector-index.html\">GPU-accelerated</a> vector search capabilities for improved performance on vector workloads.</p>",
         "AIMLOptionsOutput$ServerlessVectorAcceleration": "<p>The current serverless vector acceleration configuration for the domain.</p>"
+      }
+    },
+    "ServiceOptions": {
+      "base": "<p>Options for the service, such as the supported Regions.</p>",
+      "refs": {
+        "AuthorizeVpcEndpointAccessRequest$ServiceOptions": "<p>The options for the service, including the supported Regions for the endpoint access.</p>",
+        "AuthorizedPrincipal$ServiceOptions": "<p>The options for the service, including the supported Regions for the endpoint access.</p>",
+        "RevokeVpcEndpointAccessRequest$ServiceOptions": "<p>The options for the service, including the supported Regions for the endpoint access.</p>"
       }
     },
     "ServiceQuotaExceededException": {
