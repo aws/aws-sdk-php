@@ -1,0 +1,7 @@
+[
+    {
+        "type": "feature",
+        "category": "Endpoints",
+        "description": "Introduces endpoint resolution through a BDD rules based evaluation.\n\n- Add BDD-based endpoint resolution alongside the existing Tree Ruletset Evaluator. \n- Introduce a Bdd package under EndpointV2 namespace containing utilities and components used for resolving an endpoint through BDDs.\n- Enhance the EndpointDefinitionProvider to resolve the endpoint rule definitions by giving preference to BDDs \"endpoint-bdd-1.json\" rules over tree based rules.\n- Enhance EndpointProviderV2 to support both, BDD endpoint resolution and Tree \n  endpoint resolution but also giving preference to BDD resolution. \n How is it done?\n  - The parameter $ruleset now supports instances of BddRuleset, besides of array to preserve existent behavior, and when an instance of BddRuleset is present then a BDD Evaluator is instantiated which will be used to resolve the endpoint.\n  - Otherwise, if an array or an instance of Ruleset is passed in then, we resolve the endpoint with the Tree based endpoint resolution, which is the current behavior.\n- Add a new method \"getActiveParameters\" in EndpointProviderV2 that is used by \n  the EndpointV2Middleware to get the active parameters, which internally  it just evaluates which rule set property we should be getting the parameters from, either from $bddRuleset if not null or from $ruleset.\n- Enhance EndpointV2Middleware to consume the new getActiveParameters.\n"
+    }
+]
