@@ -3,6 +3,7 @@
 namespace Aws\Test\EndpointV2;
 
 use Aws\EndpointV2\EndpointDefinitionProvider;
+use Aws\Test\TestsUtility;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -72,5 +73,106 @@ class EndpointDefinitionProviderTest extends TestCase
         rmdir($tmpdir . 'data/' . 's3/' . '/08-05-1989');
         rmdir($tmpdir . 'data/' . 's3/');
         rmdir($tmpdir . 'data');
+    }
+
+    public function testGetEndpointBddReturnsNullWhenAbsentAndSuppressed()
+    {
+        $this->assertNull(
+            EndpointDefinitionProvider::getEndpointBdd('s3', 'latest', null, false)
+        );
+    }
+
+    public function testGetEndpointDefinitionFallsBackToTreeRuleset()
+    {
+        $definition = EndpointDefinitionProvider::getEndpointDefinition(
+            's3',
+            'latest'
+        );
+        $this->assertIsArray($definition);
+        $this->assertArrayHasKey('rules', $definition);
+        $this->assertArrayNotHasKey('nodes', $definition);
+    }
+
+    public function testGetParsedRulesetReturnsTreeRulesetForTreeService()
+    {
+        $parsed = EndpointDefinitionProvider::getParsedRuleset(
+            's3',
+            'latest',
+            EndpointDefinitionProvider::getPartitions()
+        );
+        $this->assertInstanceOf(\Aws\EndpointV2\Ruleset\Ruleset::class, $parsed);
+    }
+
+    public function testGetParsedRulesetReturnsBddRulesetWhenBddShipped()
+    {
+        $baseDir = sys_get_temp_dir() . '/aws-bdd-parsed-' . uniqid();
+        $serviceDir = $baseDir . '/widget/2024-01-01';
+        mkdir($serviceDir, 0777, true);
+
+        try {
+            file_put_contents(
+                $serviceDir . '/endpoint-bdd-1.json',
+                json_encode([
+                    'version' => '1.1',
+                    'parameters' => [],
+                    'conditions' => [],
+                    'results' => [],
+                    'nodes' => '',
+                    'nodeCount' => 0,
+                    'root' => 1,
+                ])
+            );
+
+            $parsed = EndpointDefinitionProvider::getParsedRuleset(
+                'widget',
+                '2024-01-01',
+                EndpointDefinitionProvider::getPartitions(),
+                $baseDir
+            );
+
+            $this->assertInstanceOf(
+                \Aws\EndpointV2\Bdd\BddRuleset::class,
+                $parsed
+            );
+        } finally {
+           TestsUtility::cleanUpDir($baseDir);;
+        }
+    }
+
+    public function testGetEndpointDefinitionPrefersBddWhenPresent()
+    {
+        $baseDir = sys_get_temp_dir() . '/aws-bdd-test-' . uniqid();
+        $serviceDir = $baseDir . '/widget/2024-01-01';
+        mkdir($serviceDir, 0777, true);
+
+        try {
+            file_put_contents(
+                $serviceDir . '/endpoint-rule-set-1.json',
+                json_encode(['version' => '1.0', 'parameters' => [], 'rules' => []])
+            );
+            file_put_contents(
+                $serviceDir . '/endpoint-bdd-1.json',
+                json_encode([
+                    'version' => '1.1',
+                    'parameters' => [],
+                    'conditions' => [],
+                    'results' => [],
+                    'nodes' => '',
+                    'nodeCount' => 0,
+                    'root' => 1,
+                ])
+            );
+
+            $definition = EndpointDefinitionProvider::getEndpointDefinition(
+                'widget',
+                '2024-01-01',
+                $baseDir
+            );
+
+            $this->assertArrayHasKey('nodes', $definition);
+            $this->assertArrayHasKey('root', $definition);
+        } finally {
+           TestsUtility::cleanUpDir($baseDir);;
+        }
     }
 }

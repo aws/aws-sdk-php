@@ -305,4 +305,89 @@ class RulesetStandardLibraryTest extends TestCase
         );
         $this->standardLibrary->callFunction($condition, $inputParameters);
     }
+
+    public function testCallFunctionThrowsOnUnknownFunction()
+    {
+        $condition = [
+            'fn' => 'aws.doesNotExist',
+            'argv' => [],
+        ];
+        $params = [];
+
+        $this->expectException(UnresolvedEndpointException::class);
+        $this->expectExceptionMessage('Unknown endpoint function `aws.doesNotExist`.');
+        $this->standardLibrary->callFunction($condition, $params);
+    }
+
+    /**
+     * @return array<string, array<int, mixed>>
+     */
+    public static function coalesceProvider(): array
+    {
+        return [
+            'first non-null' => [['primary', 'secondary'], 'primary'],
+            'skips nulls' => [[null, null, 'third'], 'third'],
+            'all nulls' => [[null, null], null],
+            'no args' => [[], null],
+            'respects falsy non-null' => [[null, 0, 'later'], 0],
+            'respects empty string' => [[null, '', 'later'], ''],
+        ];
+    }
+
+    #[DataProvider('coalesceProvider')]
+    public function testCoalesce($values, $expected)
+    {
+        $this->assertSame($expected, $this->standardLibrary->coalesce(...$values));
+    }
+
+    /**
+     * @return array<string, array<int, mixed>>
+     */
+    public static function splitProvider(): array
+    {
+        return [
+            'unlimited split' => ['a.b.c.d', '.', null, ['a', 'b', 'c', 'd']],
+            'limited split' => ['a.b.c.d', '.', 2, ['a', 'b.c.d']],
+            'delimiter not found' => ['abcd', '.', null, ['abcd']],
+            'empty input' => ['', '.', null, ['']],
+            'null input returns null' => [null, '.', null, null],
+            'empty delimiter returns null' => ['a.b', '', null, null],
+            'zero limit returns null' => ['a.b', '.', 0, null],
+            'negative limit returns null' => ['a.b', '.', -1, null],
+            'non-int limit returns null' => ['a.b', '.', '2', null],
+        ];
+    }
+
+    #[DataProvider('splitProvider')]
+    public function testSplit($input, $delimiter, $limit, $expected)
+    {
+        $this->assertSame(
+            $expected,
+            $this->standardLibrary->split($input, $delimiter, $limit)
+        );
+    }
+
+    /**
+     * @return array<string, array<int, mixed>>
+     */
+    public static function iteProvider(): array
+    {
+        return [
+            'true picks then' => [true, 'yes', 'no', 'yes'],
+            'false picks else' => [false, 'yes', 'no', 'no'],
+            'string true picks then' => ['true', 'yes', 'no', 'yes'],
+            'string false picks else' => ['false', 'yes', 'no', 'no'],
+            'null picks else' => [null, 'yes', 'no', 'no'],
+            'nested values preserved' => [true, ['a' => 1], ['b' => 2], ['a' => 1]],
+        ];
+    }
+
+    #[DataProvider('iteProvider')]
+    public function testIte($condition, $then, $else, $expected)
+    {
+        $this->assertSame(
+            $expected,
+            $this->standardLibrary->ite($condition, $then, $else)
+        );
+    }
 }

@@ -285,6 +285,60 @@ class RulesetStandardLibrary
     }
 
     /**
+     * Returns the first non-null argument, or null if every argument is null.
+     * Mirrors the standard library `coalesce` function and accepts any number
+     * of already-resolved values.
+     *
+     * @return mixed
+     */
+    public function coalesce(...$values)
+    {
+        foreach ($values as $value) {
+            if (!is_null($value)) {
+                return $value;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Splits a string on a delimiter up to an optional limit, returning an
+     * array of string parts. Returns null when the input is not a usable
+     * string or the limit is not a positive integer, so downstream conditions
+     * treat the result as "no value" rather than failing hard.
+     *
+     * @return array|null
+     */
+    public function split($input, $delimiter, $limit = null)
+    {
+        if (!is_string($input) || !is_string($delimiter) || $delimiter === '') {
+            return null;
+        }
+
+        if (is_null($limit)) {
+            return explode($delimiter, $input);
+        }
+
+        if (!is_int($limit) || $limit < 1) {
+            return null;
+        }
+
+        return explode($delimiter, $input, $limit);
+    }
+
+    /**
+     * Functional if-then-else. Returns `$then` when `$condition` is truthy,
+     * otherwise `$else`. Arguments are resolved eagerly by the caller, which
+     * matches the rules engine semantics for function arguments.
+     *
+     * @return mixed
+     */
+    public function ite($condition, $then, $else)
+    {
+        return filter_var($condition, FILTER_VALIDATE_BOOLEAN) ? $then : $else;
+    }
+
+    /**
      * Evaluates whether a value is a valid bucket name for virtual host
      * style bucket URLs.
      *
@@ -324,8 +378,14 @@ class RulesetStandardLibrary
             $funcName = 'is_set';
         }
 
+        if (!method_exists($this, $funcName)) {
+            throw new UnresolvedEndpointException(
+                "Unknown endpoint function `{$funcCondition['fn']}`."
+            );
+        }
+
         $result = call_user_func_array(
-            [RulesetStandardLibrary::class, $funcName],
+            [$this, $funcName],
             $funcArgs
         );
 
