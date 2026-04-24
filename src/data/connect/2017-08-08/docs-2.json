@@ -109,6 +109,7 @@
     "DeleteWorkspaceMedia": "<p>Deletes a media asset (such as a logo) from a workspace.</p>",
     "DeleteWorkspacePage": "<p>Removes the association between a view and a page in a workspace. The page will display the default view after deletion.</p>",
     "DescribeAgentStatus": "<p>Describes an agent status.</p>",
+    "DescribeAttachedFilesConfiguration": "<p>Describes the attached files configuration for the specified Amazon Connect instance and attachment scope.</p> <p>If a custom configuration exists for the specified attachment scope, the custom configuration is returned. If no custom configuration exists, the default configuration values for that attachment scope are returned.</p>",
     "DescribeAuthenticationProfile": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>Describes the target authentication profile.</p>",
     "DescribeContact": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Describes the specified contact. </p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>Retrieve contact information such as the caller's phone number and the specific number the caller dialed to integrate into custom monitoring or custom agent experience solutions.</p> </li> <li> <p>Detect when a customer chat session disconnects due to a network issue on the agent's end. Use the DisconnectReason field in the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/ctr-data-model.html#ctr-ContactTraceRecord\">ContactTraceRecord</a> to detect this event and then re-queue the chat for followup.</p> </li> <li> <p>Identify after contact work (ACW) duration and call recordings information when a COMPLETED event is received by using the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/contact-events.html\">contact event stream</a>. </p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p> <code>SystemEndpoint</code> is not populated for contacts with initiation method of MONITOR, QUEUE_TRANSFER, or CALLBACK</p> </li> <li> <p>Contact information remains available in Amazon Connect for 24 months from the <code>InitiationTimestamp</code>, and then it is deleted. Only contact information that is available in Amazon Connect is returned by this API.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "DescribeContactEvaluation": "<p>Describes a contact evaluation in the specified Amazon Connect instance.</p>",
@@ -182,6 +183,7 @@
     "ListAnalyticsDataLakeDataSets": "<p>Lists the data lake datasets available to associate with for a given Amazon Connect instance.</p>",
     "ListApprovedOrigins": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Returns a paginated list of all approved origins associated with the instance.</p>",
     "ListAssociatedContacts": "<p>Provides information about contact tree, a list of associated contacts with a unique identifier.</p>",
+    "ListAttachedFilesConfigurations": "<p>Provides summary information about the attached files configurations for the specified Amazon Connect instance.</p> <p>This API returns effective configurations (custom overrides or defaults) for each attachment scope. If no custom configuration exists for a scope, the default configuration values are returned.</p>",
     "ListAuthenticationProfiles": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>Provides summary information about the authentication profiles in a specified Amazon Connect instance.</p>",
     "ListBots": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>For the specified version of Amazon Lex, returns a paginated list of all the Amazon Lex bots currently associated with the instance. Use this API to return both Amazon Lex V1 and V2 bots.</p>",
     "ListChildHoursOfOperations": "<p>Provides information about the child hours of operations for the specified parent hours of operation.</p> <p>For more information about child hours of operations, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/\">Link overrides from different hours of operation</a> in the <i> Administrator Guide</i>.</p>",
@@ -307,6 +309,7 @@
     "UntagContact": "<p>Removes the specified tags from the contact resource. For more information about this API is used, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/granular-billing.html\">Set up granular billing for a detailed view of your Amazon Connect usage</a>.</p>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
     "UpdateAgentStatus": "<p>Updates agent status.</p>",
+    "UpdateAttachedFilesConfiguration": "<p>Updates the attached files configuration for the specified Amazon Connect instance and attachment scope.</p> <p>If no instance-specific configuration exists, this operation creates one. Partial updates are supported—only specified fields are updated, while unspecified fields retain their current values.</p>",
     "UpdateAuthenticationProfile": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>Updates the selected authentication profile.</p>",
     "UpdateContact": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Adds or updates user-defined contact information associated with the specified contact. At least one field to be updated must be present in the request.</p> <important> <p>You can add or update user-defined contact information for both ongoing and completed contacts.</p> </important>",
     "UpdateContactAttributes": "<p>Creates or updates user-defined contact attributes associated with the specified contact.</p> <p>You can create or update user-defined attributes for both ongoing and completed contacts. For example, while the call is active, you can update the customer's name or the reason the customer called. You can add notes about steps that the agent took during the call that display to the next agent that takes the call. You can also update attributes for a contact using data from your CRM application and save the data with the contact in Amazon Connect. You could also flag calls for additional analysis, such as legal review or to identify abusive callers.</p> <p>Contact attributes are available in Amazon Connect for 24 months, and are then deleted. For information about contact record retention and the maximum size of the contact record attributes section, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#feature-limits\">Feature specifications</a> in the <i>Amazon Connect Administrator Guide</i>. </p>",
@@ -1005,6 +1008,18 @@
         "StartWebRTCContactRequest$AllowedCapabilities": "<p>Information about the video sharing capabilities of the participants (customer, agent).</p>"
       }
     },
+    "AllowedExtension": {
+      "base": "<p>Information about an allowed file extension.</p>",
+      "refs": {
+        "AllowedExtensionsList$member": null
+      }
+    },
+    "AllowedExtensionsList": {
+      "base": "<p>A list of allowed file extensions.</p>",
+      "refs": {
+        "ExtensionConfiguration$AllowedExtensions": "<p>The list of allowed file extensions.</p>"
+      }
+    },
     "AllowedFlowModules": {
       "base": null,
       "refs": {
@@ -1325,6 +1340,24 @@
         "ServiceQuotaExceededExceptionReason$AttachedFileServiceQuotaExceededExceptionReason": "<p>Total file size of all files or total number of files exceeds the service quota</p>"
       }
     },
+    "AttachedFilesConfiguration": {
+      "base": "<p>The configuration for attached files for a specific attachment scope.</p>",
+      "refs": {
+        "DescribeAttachedFilesConfigurationResponse$AttachedFilesConfiguration": "<p>Information about the attached files configuration.</p>"
+      }
+    },
+    "AttachedFilesConfigurationSummary": {
+      "base": "<p>A summary of the attached files configuration.</p>",
+      "refs": {
+        "AttachedFilesConfigurationSummaryList$member": null
+      }
+    },
+    "AttachedFilesConfigurationSummaryList": {
+      "base": "<p>A list of attached files configuration summaries.</p>",
+      "refs": {
+        "ListAttachedFilesConfigurationsResponse$AttachedFilesConfigurations": "<p>Information about the attached files configurations.</p>"
+      }
+    },
     "AttachedFilesList": {
       "base": null,
       "refs": {
@@ -1341,6 +1374,16 @@
       "base": "<p>Information about a reference when the <code>referenceType</code> is <code>ATTACHMENT</code>. Otherwise, null.</p>",
       "refs": {
         "ReferenceSummary$Attachment": "<p>Information about the reference when the <code>referenceType</code> is <code>ATTACHMENT</code>. Otherwise, null.</p>"
+      }
+    },
+    "AttachmentScope": {
+      "base": "<p>The scope of the attachment. Valid values are:</p> <ul> <li> <p> <code>EMAIL</code> - Attachments for email messages.</p> </li> <li> <p> <code>CHAT</code> - Attachments for chat conversations.</p> </li> <li> <p> <code>CASE</code> - Attachments for cases.</p> </li> <li> <p> <code>TASK</code> - Attachments for tasks.</p> </li> </ul>",
+      "refs": {
+        "AttachedFilesConfiguration$AttachmentScope": "<p>The scope of the attachment. Valid values are <code>EMAIL</code>, <code>CHAT</code>, <code>CASE</code>, and <code>TASK</code>.</p>",
+        "AttachedFilesConfigurationSummary$AttachmentScope": "<p>The scope of the attachment. Valid values are <code>EMAIL</code>, <code>CHAT</code>, <code>CASE</code>, and <code>TASK</code>.</p>",
+        "DescribeAttachedFilesConfigurationRequest$AttachmentScope": "<p>The scope of the attachment. Valid values are <code>EMAIL</code>, <code>CHAT</code>, <code>CASE</code>, and <code>TASK</code>.</p>",
+        "UpdateAttachedFilesConfigurationRequest$AttachmentScope": "<p>The scope of the attachment. Valid values are <code>EMAIL</code>, <code>CHAT</code>, <code>CASE</code>, and <code>TASK</code>.</p>",
+        "UpdateAttachedFilesConfigurationResponse$AttachmentScope": "<p>The scope of the attachment.</p>"
       }
     },
     "Attendee": {
@@ -3920,6 +3963,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeAttachedFilesConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAttachedFilesConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeAuthenticationProfileRequest": {
       "base": null,
       "refs": {}
@@ -5751,6 +5802,15 @@
         "Expression$OrExpression": "<p>List of routing expressions which will be OR-ed together.</p>"
       }
     },
+    "ExtensionConfiguration": {
+      "base": "<p>The configuration for allowed file extensions.</p>",
+      "refs": {
+        "AttachedFilesConfiguration$ExtensionConfiguration": "<p>The configuration for allowed file extensions.</p>",
+        "AttachedFilesConfigurationSummary$ExtensionConfiguration": "<p>The configuration for allowed file extensions.</p>",
+        "UpdateAttachedFilesConfigurationRequest$ExtensionConfiguration": "<p>The configuration for allowed file extensions.</p>",
+        "UpdateAttachedFilesConfigurationResponse$ExtensionConfiguration": "<p>The configuration for allowed file extensions.</p>"
+      }
+    },
     "ExternalInvocationConfiguration": {
       "base": "<p>The external invocation configuration for the flow module</p>",
       "refs": {
@@ -5820,6 +5880,12 @@
       "refs": {
         "CreateCaseActionDefinition$Fields": "<p>An array of objects with <code>Field ID</code> and <code>Value</code> data.</p>",
         "UpdateCaseActionDefinition$Fields": "<p>An array of objects with <code>Field ID</code> and Value data.</p>"
+      }
+    },
+    "FileExtension": {
+      "base": "<p>A file extension. The extension must be between 1 and 10 characters and can contain only alphanumeric characters, hyphens, and underscores.</p>",
+      "refs": {
+        "AllowedExtension$Extension": "<p>The file extension. The extension must be between 1 and 10 characters and can contain only alphanumeric characters, hyphens, and underscores.</p>"
       }
     },
     "FileId": {
@@ -6764,6 +6830,8 @@
         "AssociateTrafficDistributionGroupUserRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateUserProficienciesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN of the instance).</p>",
         "AssociateWorkspaceRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "AttachedFilesConfiguration$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
+        "AttachedFilesConfigurationSummary$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
         "BatchAssociateAnalyticsDataSetRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "BatchCreateDataTableValueRequest$InstanceId": "<p>The unique identifier for the Amazon Connect instance.</p>",
         "BatchDeleteDataTableValueRequest$InstanceId": "<p>The unique identifier for the Amazon Connect instance.</p>",
@@ -6842,6 +6910,7 @@
         "DeleteWorkspacePageRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteWorkspaceRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeAgentStatusRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "DescribeAttachedFilesConfigurationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeAuthenticationProfileRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeContactEvaluationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeContactFlowModuleRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -6911,6 +6980,7 @@
         "ListAnalyticsDataLakeDataSetsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListApprovedOriginsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListAssociatedContactsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "ListAttachedFilesConfigurationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListAuthenticationProfilesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListBotsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListChildHoursOfOperationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -7027,6 +7097,8 @@
         "TransferContactRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UntagContactRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateAgentStatusRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "UpdateAttachedFilesConfigurationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "UpdateAttachedFilesConfigurationResponse$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
         "UpdateAuthenticationProfileRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateContactAttributesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateContactEvaluationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -7452,6 +7524,14 @@
       }
     },
     "ListAssociatedContactsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAttachedFilesConfigurationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAttachedFilesConfigurationsResponse": {
       "base": null,
       "refs": {}
     },
@@ -8029,6 +8109,7 @@
         "GetCurrentUserDataRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "GetMetricDataRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "GetMetricDataV2Request$MaxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListAttachedFilesConfigurationsRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
         "ListChildHoursOfOperationsRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
         "ListDefaultVocabulariesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListEntitySecurityProfilesRequest$MaxResults": "<p> The maximum number of results to return per page. The default MaxResult size is 100. </p>",
@@ -8153,6 +8234,15 @@
     "MaximumResultReturnedException": {
       "base": "<p>Maximum number (1000) of tags have been returned with current request. Consider changing request parameters to get more tags.</p>",
       "refs": {}
+    },
+    "MaximumSizeLimitInBytes": {
+      "base": "<p>The maximum size limit for attached files in bytes. The minimum value is 1 and the maximum value is 104857600 (100 MB).</p>",
+      "refs": {
+        "AttachedFilesConfiguration$MaximumSizeLimitInBytes": "<p>The maximum size limit for attached files in bytes.</p>",
+        "AttachedFilesConfigurationSummary$MaximumSizeLimitInBytes": null,
+        "UpdateAttachedFilesConfigurationRequest$MaximumSizeLimitInBytes": "<p>The maximum size limit for attached files in bytes. The minimum value is 1 and the maximum value is 104857600 (100 MB).</p>",
+        "UpdateAttachedFilesConfigurationResponse$MaximumSizeLimitInBytes": "<p>The maximum size limit for attached files in bytes.</p>"
+      }
     },
     "MediaConcurrencies": {
       "base": null,
@@ -8512,6 +8602,8 @@
         "ListApprovedOriginsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListAssociatedContactsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListAssociatedContactsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "ListAttachedFilesConfigurationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListAttachedFilesConfigurationsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListAuthenticationProfilesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListAuthenticationProfilesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListBotsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -13238,6 +13330,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateAttachedFilesConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAttachedFilesConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateAuthenticationProfileRequest": {
       "base": null,
       "refs": {}
@@ -14604,6 +14704,7 @@
         "AgentInfo$ConnectedToAgentTimestamp": "<p>The timestamp when the contact was connected to the agent.</p>",
         "AgentInfo$AfterContactWorkStartTimestamp": "<p>The date and time when the agent started doing After Contact Work for the contact, in UTC time.</p>",
         "AgentInfo$AfterContactWorkEndTimestamp": "<p>The date and time when the agent ended After Contact Work for the contact, in UTC time. In cases when agent finishes doing <code>AfterContactWork</code> for chat contacts and switches their activity status to offline or equivalent without clearing the contact in CCP, discrepancies may be noticed for <code>AfterContactWorkEndTimestamp</code>.</p>",
+        "AttachedFilesConfiguration$LastModifiedTime": "<p>The timestamp when the configuration was last modified.</p>",
         "ChatContactMetrics$AgentFirstResponseTimestamp": "<p>The agent first response timestamp for a chat contact.</p>",
         "Contact$InitiationTimestamp": "<p>The date and time this contact was initiated, in UTC time. For <code>INBOUND</code>, this is when the contact arrived. For <code>OUTBOUND</code>, this is when the agent began dialing. For <code>CALLBACK</code>, this is when the callback contact was created. For <code>TRANSFER</code> and <code>QUEUE_TRANSFER</code>, this is when the transfer was initiated. For <code>API</code>, this is when the request arrived. For <code>EXTERNAL_OUTBOUND</code>, this is when the agent started dialing the external participant. For <code>MONITOR</code>, this is when the supervisor started listening to a contact.</p>",
         "Contact$DisconnectTimestamp": "<p>The date and time that the customer endpoint disconnected from the current contact, in UTC time. In transfer scenarios, the DisconnectTimestamp of the previous contact indicates the date and time when that contact ended.</p>",
@@ -14642,6 +14743,7 @@
         "StateTransition$StateEndTimestamp": "<p>The date and time when the state ended in UTC time.</p>",
         "TaskTemplateMetadata$LastModifiedTime": "<p>The timestamp when the task template was last modified.</p>",
         "TaskTemplateMetadata$CreatedTime": "<p>The timestamp when the task template was created.</p>",
+        "UpdateAttachedFilesConfigurationResponse$LastModifiedTime": "<p>The timestamp when the configuration was last modified.</p>",
         "UpdateTaskTemplateResponse$LastModifiedTime": "<p>The timestamp when the task template was last modified.</p>",
         "UpdateTaskTemplateResponse$CreatedTime": "<p>The timestamp when the task template was created.</p>"
       }

@@ -1858,6 +1858,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "DescribeAttachedFilesConfiguration":{
+      "name":"DescribeAttachedFilesConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/attached-files-configurations/{InstanceId}/{AttachmentScope}"
+      },
+      "input":{"shape":"DescribeAttachedFilesConfigurationRequest"},
+      "output":{"shape":"DescribeAttachedFilesConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "DescribeAuthenticationProfile":{
       "name":"DescribeAuthenticationProfile",
       "http":{
@@ -3030,6 +3046,22 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListAttachedFilesConfigurations":{
+      "name":"ListAttachedFilesConfigurations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/attached-files-configurations/{InstanceId}"
+      },
+      "input":{"shape":"ListAttachedFilesConfigurationsRequest"},
+      "output":{"shape":"ListAttachedFilesConfigurationsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "ListAuthenticationProfiles":{
@@ -5082,6 +5114,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "UpdateAttachedFilesConfiguration":{
+      "name":"UpdateAttachedFilesConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/attached-files-configurations/{InstanceId}/{AttachmentScope}"
+      },
+      "input":{"shape":"UpdateAttachedFilesConfigurationRequest"},
+      "output":{"shape":"UpdateAttachedFilesConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "UpdateAuthenticationProfile":{
       "name":"UpdateAuthenticationProfile",
       "http":{
@@ -6522,6 +6570,17 @@
         "Agent":{"shape":"ParticipantCapabilities"}
       }
     },
+    "AllowedExtension":{
+      "type":"structure",
+      "required":["Extension"],
+      "members":{
+        "Extension":{"shape":"FileExtension"}
+      }
+    },
+    "AllowedExtensionsList":{
+      "type":"list",
+      "member":{"shape":"AllowedExtension"}
+    },
     "AllowedFlowModules":{
       "type":"list",
       "member":{"shape":"FlowModule"},
@@ -7172,6 +7231,37 @@
         "TOTAL_FILE_COUNT_EXCEEDED"
       ]
     },
+    "AttachedFilesConfiguration":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "AttachmentScope"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "AttachmentScope":{"shape":"AttachmentScope"},
+        "MaximumSizeLimitInBytes":{"shape":"MaximumSizeLimitInBytes"},
+        "ExtensionConfiguration":{"shape":"ExtensionConfiguration"},
+        "LastModifiedTime":{"shape":"timestamp"}
+      }
+    },
+    "AttachedFilesConfigurationSummary":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "AttachmentScope"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "AttachmentScope":{"shape":"AttachmentScope"},
+        "MaximumSizeLimitInBytes":{"shape":"MaximumSizeLimitInBytes"},
+        "ExtensionConfiguration":{"shape":"ExtensionConfiguration"}
+      }
+    },
+    "AttachedFilesConfigurationSummaryList":{
+      "type":"list",
+      "member":{"shape":"AttachedFilesConfigurationSummary"}
+    },
     "AttachedFilesList":{
       "type":"list",
       "member":{"shape":"AttachedFile"}
@@ -7189,6 +7279,15 @@
         "Status":{"shape":"ReferenceStatus"},
         "Arn":{"shape":"ReferenceArn"}
       }
+    },
+    "AttachmentScope":{
+      "type":"string",
+      "enum":[
+        "EMAIL",
+        "CHAT",
+        "CASE",
+        "TASK"
+      ]
     },
     "Attendee":{
       "type":"structure",
@@ -11352,6 +11451,32 @@
         "AgentStatus":{"shape":"AgentStatus"}
       }
     },
+    "DescribeAttachedFilesConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "AttachmentScope"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "AttachmentScope":{
+          "shape":"AttachmentScope",
+          "location":"uri",
+          "locationName":"AttachmentScope"
+        }
+      }
+    },
+    "DescribeAttachedFilesConfigurationResponse":{
+      "type":"structure",
+      "required":["AttachedFilesConfiguration"],
+      "members":{
+        "AttachedFilesConfiguration":{"shape":"AttachedFilesConfiguration"}
+      }
+    },
     "DescribeAuthenticationProfileRequest":{
       "type":"structure",
       "required":[
@@ -14269,6 +14394,13 @@
       "type":"list",
       "member":{"shape":"Expression"}
     },
+    "ExtensionConfiguration":{
+      "type":"structure",
+      "required":["AllowedExtensions"],
+      "members":{
+        "AllowedExtensions":{"shape":"AllowedExtensionsList"}
+      }
+    },
     "ExternalInvocationConfiguration":{
       "type":"structure",
       "members":{
@@ -14348,6 +14480,12 @@
     "FieldValues":{
       "type":"list",
       "member":{"shape":"FieldValue"}
+    },
+    "FileExtension":{
+      "type":"string",
+      "max":10,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9-_]+$"
     },
     "FileId":{
       "type":"string",
@@ -16079,6 +16217,34 @@
       "type":"structure",
       "members":{
         "ContactSummaryList":{"shape":"AssociatedContactSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAttachedFilesConfigurationsRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListAttachedFilesConfigurationsResponse":{
+      "type":"structure",
+      "members":{
+        "AttachedFilesConfigurations":{"shape":"AttachedFilesConfigurationSummaryList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -18331,6 +18497,12 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "MaximumSizeLimitInBytes":{
+      "type":"long",
+      "box":true,
+      "max":104857600,
+      "min":1
     },
     "MediaConcurrencies":{
       "type":"list",
@@ -23953,6 +24125,41 @@
           "box":true
         },
         "ResetOrderNumber":{"shape":"Boolean"}
+      }
+    },
+    "UpdateAttachedFilesConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "AttachmentScope"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "AttachmentScope":{
+          "shape":"AttachmentScope",
+          "location":"uri",
+          "locationName":"AttachmentScope"
+        },
+        "MaximumSizeLimitInBytes":{"shape":"MaximumSizeLimitInBytes"},
+        "ExtensionConfiguration":{"shape":"ExtensionConfiguration"}
+      }
+    },
+    "UpdateAttachedFilesConfigurationResponse":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "AttachmentScope"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "AttachmentScope":{"shape":"AttachmentScope"},
+        "MaximumSizeLimitInBytes":{"shape":"MaximumSizeLimitInBytes"},
+        "ExtensionConfiguration":{"shape":"ExtensionConfiguration"},
+        "LastModifiedTime":{"shape":"timestamp"}
       }
     },
     "UpdateAuthenticationProfileRequest":{

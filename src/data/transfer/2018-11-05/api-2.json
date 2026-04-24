@@ -4157,7 +4157,8 @@
     "UpdateWebAppVpcConfig":{
       "type":"structure",
       "members":{
-        "SubnetIds":{"shape":"SubnetIds"}
+        "SubnetIds":{"shape":"SubnetIds"},
+        "IpAddressType":{"shape":"WebAppVpcEndpointIpAddressType"}
       }
     },
     "Url":{
@@ -4284,8 +4285,16 @@
       "members":{
         "SubnetIds":{"shape":"SubnetIds"},
         "VpcId":{"shape":"VpcId"},
-        "SecurityGroupIds":{"shape":"SecurityGroupIds"}
+        "SecurityGroupIds":{"shape":"SecurityGroupIds"},
+        "IpAddressType":{"shape":"WebAppVpcEndpointIpAddressType"}
       }
+    },
+    "WebAppVpcEndpointIpAddressType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "DUALSTACK"
+      ]
     },
     "WorkflowDescription":{
       "type":"string",

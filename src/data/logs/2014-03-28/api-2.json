@@ -3524,11 +3524,22 @@
         "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
+    "GetQueryResultsMaxItems":{
+      "type":"integer",
+      "max":10000,
+      "min":0
+    },
+    "GetQueryResultsNextToken":{
+      "type":"string",
+      "max":1024
+    },
     "GetQueryResultsRequest":{
       "type":"structure",
       "required":["queryId"],
       "members":{
-        "queryId":{"shape":"QueryId"}
+        "queryId":{"shape":"QueryId"},
+        "nextToken":{"shape":"GetQueryResultsNextToken"},
+        "maxItems":{"shape":"GetQueryResultsMaxItems"}
       }
     },
     "GetQueryResultsResponse":{
@@ -3538,7 +3549,8 @@
         "results":{"shape":"QueryResults"},
         "statistics":{"shape":"QueryStatistics"},
         "status":{"shape":"QueryStatus"},
-        "encryptionKey":{"shape":"EncryptionKey"}
+        "encryptionKey":{"shape":"EncryptionKey"},
+        "nextToken":{"shape":"GetQueryResultsNextToken"}
       }
     },
     "GetScheduledQueryHistoryMaxResults":{

@@ -588,6 +588,7 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -1988,7 +1989,8 @@
         "PYTHON_3_11",
         "PYTHON_3_12",
         "PYTHON_3_13",
-        "PYTHON_3_14"
+        "PYTHON_3_14",
+        "NODE_22"
       ]
     },
     "AgentRuntime":{
@@ -3226,7 +3228,8 @@
         "name":{"shape":"CredentialProviderName"},
         "credentialProviderArn":{"shape":"CredentialProviderArnType"},
         "callbackUrl":{"shape":"String"},
-        "oauth2ProviderConfigOutput":{"shape":"Oauth2ProviderConfigOutput"}
+        "oauth2ProviderConfigOutput":{"shape":"Oauth2ProviderConfigOutput"},
+        "status":{"shape":"Status"}
       }
     },
     "CreateOnlineEvaluationConfigRequest":{
@@ -3605,7 +3608,9 @@
         "allowedAudience":{"shape":"AllowedAudienceList"},
         "allowedClients":{"shape":"AllowedClientsList"},
         "allowedScopes":{"shape":"AllowedScopesType"},
-        "customClaims":{"shape":"CustomClaimValidationsType"}
+        "customClaims":{"shape":"CustomClaimValidationsType"},
+        "privateEndpoint":{"shape":"PrivateEndpoint"},
+        "privateEndpointOverrides":{"shape":"PrivateEndpointOverrides"}
       }
     },
     "CustomMemoryStrategyInput":{
@@ -3634,7 +3639,9 @@
       "members":{
         "oauthDiscovery":{"shape":"Oauth2Discovery"},
         "clientId":{"shape":"ClientIdType"},
-        "clientSecret":{"shape":"ClientSecretType"}
+        "clientSecret":{"shape":"ClientSecretType"},
+        "privateEndpoint":{"shape":"PrivateEndpoint"},
+        "privateEndpointOverrides":{"shape":"PrivateEndpointOverrides"}
       }
     },
     "CustomOauth2ProviderConfigOutput":{
@@ -3642,7 +3649,9 @@
       "required":["oauthDiscovery"],
       "members":{
         "oauthDiscovery":{"shape":"Oauth2Discovery"},
-        "clientId":{"shape":"ClientIdType"}
+        "clientId":{"shape":"ClientIdType"},
+        "privateEndpoint":{"shape":"PrivateEndpoint"},
+        "privateEndpointOverrides":{"shape":"PrivateEndpointOverrides"}
       }
     },
     "CustomParameterMap":{
@@ -5213,7 +5222,9 @@
         "callbackUrl":{"shape":"String"},
         "oauth2ProviderConfigOutput":{"shape":"Oauth2ProviderConfigOutput"},
         "createdTime":{"shape":"Timestamp"},
-        "lastUpdatedTime":{"shape":"Timestamp"}
+        "lastUpdatedTime":{"shape":"Timestamp"},
+        "status":{"shape":"Status"},
+        "failureReason":{"shape":"String"}
       }
     },
     "GetOnlineEvaluationConfigRequest":{
@@ -6876,7 +6887,15 @@
         "searchType":{"shape":"SearchType"}
       }
     },
-    "ManagedLatticeResource":{
+    "ManagedResourceDetails":{
+      "type":"structure",
+      "members":{
+        "domain":{"shape":"DomainName"},
+        "resourceGatewayArn":{"shape":"ResourceGatewayArn"},
+        "resourceAssociationArn":{"shape":"ResourceAssociationArn"}
+      }
+    },
+    "ManagedVpcResource":{
       "type":"structure",
       "required":[
         "vpcIdentifier",
@@ -6890,14 +6909,6 @@
         "securityGroupIds":{"shape":"SecurityGroupIds"},
         "tags":{"shape":"TagsMap"},
         "routingDomain":{"shape":"RoutingDomain"}
-      }
-    },
-    "ManagedResourceDetails":{
-      "type":"structure",
-      "members":{
-        "domain":{"shape":"DomainName"},
-        "resourceGatewayArn":{"shape":"ResourceGatewayArn"},
-        "resourceAssociationArn":{"shape":"ResourceAssociationArn"}
       }
     },
     "MatchValueString":{
@@ -7785,13 +7796,35 @@
       "type":"structure",
       "members":{
         "selfManagedLatticeResource":{"shape":"SelfManagedLatticeResource"},
-        "managedLatticeResource":{"shape":"ManagedLatticeResource"}
+        "managedVpcResource":{"shape":"ManagedVpcResource"}
       },
       "union":true
     },
     "PrivateEndpointManagedResources":{
       "type":"list",
       "member":{"shape":"ManagedResourceDetails"}
+    },
+    "PrivateEndpointOverride":{
+      "type":"structure",
+      "required":[
+        "domain",
+        "privateEndpoint"
+      ],
+      "members":{
+        "domain":{"shape":"PrivateEndpointOverrideDomain"},
+        "privateEndpoint":{"shape":"PrivateEndpoint"}
+      }
+    },
+    "PrivateEndpointOverrideDomain":{
+      "type":"string",
+      "max":253,
+      "min":1
+    },
+    "PrivateEndpointOverrides":{
+      "type":"list",
+      "member":{"shape":"PrivateEndpointOverride"},
+      "max":5,
+      "min":0
     },
     "Prompt":{
       "type":"string",
@@ -8628,6 +8661,18 @@
       "type":"string",
       "max":10000,
       "min":35
+    },
+    "Status":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATE_FAILED",
+        "UPDATING",
+        "UPDATE_FAILED",
+        "READY",
+        "DELETING",
+        "DELETE_FAILED"
+      ]
     },
     "StatusReason":{
       "type":"string",
@@ -9514,7 +9559,8 @@
         "callbackUrl":{"shape":"String"},
         "oauth2ProviderConfigOutput":{"shape":"Oauth2ProviderConfigOutput"},
         "createdTime":{"shape":"Timestamp"},
-        "lastUpdatedTime":{"shape":"Timestamp"}
+        "lastUpdatedTime":{"shape":"Timestamp"},
+        "status":{"shape":"Status"}
       }
     },
     "UpdateOnlineEvaluationConfigRequest":{
