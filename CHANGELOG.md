@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.379.7 - 2026-04-24
 
 * `Aws\ConnectHealth` - Corrected CreateWebAppConfiguration documentation. Adding slash as an allowed character for the Ambient documentation agent to allow pronoun specifications.
 * `Aws\Connect` - Amazon Connect is expanding attachment capabilities to give customers greater flexibility and control. Currently limited to predefined file types, the new feature will allow contact center administrators to customize which file extensions and sizes are supported across chat, email, tasks, and cases.
