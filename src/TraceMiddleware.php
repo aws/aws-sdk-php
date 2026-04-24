@@ -97,7 +97,7 @@ class TraceMiddleware
 
                 return $next($command, $request)->then(
                     function ($value) use ($step, $name, $command, $start) {
-                        $this->flushHttpDebug($command);
+                        $this->flushHttpDebug($command, !empty($command['@http']['stream']));
                         $this->stepOutput($start, [
                             'step'   => $step,
                             'name'   => $name,
@@ -284,13 +284,16 @@ class TraceMiddleware
         }
     }
 
-    private function flushHttpDebug(CommandInterface $command)
+    private function flushHttpDebug(CommandInterface $command, $deferClose = false)
     {
         if ($res = $command['@http']['debug']) {
             if (is_resource($res)) {
                 rewind($res);
                 $this->write(stream_get_contents($res));
-                fclose($res);
+                // Stream handlers retain this resource until the body closes.
+                if (!$deferClose) {
+                    fclose($res);
+                }
             }
             $command['@http']['debug'] = null;
         }

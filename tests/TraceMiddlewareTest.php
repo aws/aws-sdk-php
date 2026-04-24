@@ -11,8 +11,10 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\TraceMiddleware;
 use GuzzleHttp\Promise\RejectedPromise;
+use GuzzleHttp\Psr7\FnStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Utils;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -294,6 +296,37 @@ class TraceMiddlewareTest extends TestCase
         foreach (array_values($scrubPatterns) as $scrubbed) {
             $this->assertStringContainsString($scrubbed, $str);
         }
+    }
+
+    public function testDefersDebugResourceCloseForStreamedResponse()
+    {
+        $list = new HandlerList();
+        $list->setHandler(function ($cmd) {
+            $source = Utils::streamFor('payload');
+            $debug = $cmd['@http']['debug'];
+            $body = FnStream::decorate($source, [
+                'read' => function ($length) use ($source, $debug) {
+                    fwrite($debug, "stream notification\n");
+                    return $source->read($length);
+                },
+            ]);
+            return Promise\Create::promiseFor(new Result(['Body' => $body]));
+        });
+        $list->appendInit(function ($handler) {
+            return function ($cmd, $req = null) use ($handler) {
+                return $handler($cmd, $req);
+            };
+        });
+        $list->interpose(new TraceMiddleware(['logfn' => function () {}]));
+
+        $command = new Command('GetObject');
+        $command['@http']['stream'] = true;
+        $result = $list->resolve()(
+            $command,
+            new Request('GET', 'http://foo/')
+        )->wait();
+
+        $this->assertSame('payload', $result['Body']->read(7));
     }
 
     private function generateTestClient(Service $service, $args = [])
