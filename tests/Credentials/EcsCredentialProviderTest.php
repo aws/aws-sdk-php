@@ -7,6 +7,7 @@ use Aws\Credentials\EcsCredentialProvider;
 use Aws\Exception\CredentialsException;
 use Aws\Handler\Guzzle\GuzzleHandler;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
@@ -414,6 +415,15 @@ EOF;
             'exception' => $connectException,
         ]);
 
+        $tooManyRequestsException = new BadResponseException(
+            '429 Too Many Requests',
+            new Psr7\Request('GET', '/latest'),
+            new Psr7\Response(429)
+        );
+        $rejectionTooManyRequests = Promise\Create::rejectionFor([
+            'exception' => $tooManyRequestsException,
+        ]);
+
         $promiseCreds = Promise\Create::promiseFor(
             new Response(200, [], Psr7\Utils::streamFor(
                 json_encode(call_user_func_array(
@@ -447,6 +457,16 @@ EOF;
                         $rejectionConnection,
                         $rejectionConnection,
                         $rejectionConnection,
+                        $promiseCreds
+                    ],
+                    'credentials' => $creds
+                ],
+                $credsObject
+            ],
+            'With retries for HTTP 429 (Pod Identity Agent rate limit)' => [
+                [
+                    'responses' => [
+                        $rejectionTooManyRequests,
                         $promiseCreds
                     ],
                     'credentials' => $creds
@@ -501,6 +521,13 @@ EOF;
         $rejectionConnection = Promise\Create::rejectionFor([
             'exception' => $connectException,
         ]);
+        $rejectionTooManyRequests = Promise\Create::rejectionFor([
+            'exception' => new BadResponseException(
+                '429 Too Many Requests',
+                $getRequest,
+                new Psr7\Response(429)
+            )
+        ]);
 
         return [
             'Non-retryable error' => [
@@ -518,6 +545,15 @@ EOF;
                 ],
                 new CredentialsException(
                     'Error retrieving credentials from container metadata after attempt 1/1 (cURL error 28: Connection timed out after 1000 milliseconds)'
+                )
+            ],
+            'Retryable HTTP 429 error exhausts retries' => [
+                [
+                    $rejectionTooManyRequests,
+                    $rejectionTooManyRequests,
+                ],
+                new CredentialsException(
+                    'Error retrieving credentials from container metadata after attempt 1/1 (429 Too Many Requests)'
                 )
             ],
         ];

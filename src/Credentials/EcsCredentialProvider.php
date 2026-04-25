@@ -3,6 +3,7 @@ namespace Aws\Credentials;
 
 use Aws\Arn\Arn;
 use Aws\Exception\CredentialsException;
+use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
@@ -107,7 +108,11 @@ class EcsCredentialProvider
                     })->otherwise(function ($reason) {
                         $reason = is_array($reason) ? $reason['exception'] : $reason;
 
-                        $isRetryable = $reason instanceof ConnectException;
+                        $isRetryable = $reason instanceof ConnectException
+                            || (
+                                $reason instanceof BadResponseException
+                                && $reason->getResponse()->getStatusCode() === 429
+                            );
                         if ($isRetryable && ($this->attempts < $this->retries)) {
                             sleep((int)pow(1.2, $this->attempts));
                         } else {
