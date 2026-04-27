@@ -666,6 +666,27 @@
       "max":250,
       "min":0
     },
+    "CompositeSliComponent":{
+      "type":"structure",
+      "members":{
+        "OperationName":{"shape":"OperationName"}
+      },
+      "union":true
+    },
+    "CompositeSliComponents":{
+      "type":"list",
+      "member":{"shape":"CompositeSliComponent"},
+      "max":20,
+      "min":2
+    },
+    "CompositeSliConfig":{
+      "type":"structure",
+      "required":["SelectionConfig"],
+      "members":{
+        "SelectionConfig":{"shape":"SelectionConfig"},
+        "Components":{"shape":"CompositeSliComponents"}
+      }
+    },
     "ConflictException":{
       "type":"structure",
       "required":["Message"],
@@ -696,7 +717,8 @@
         "Goal":{"shape":"Goal"},
         "Tags":{"shape":"TagList"},
         "BurnRateConfigurations":{"shape":"BurnRateConfigurations"},
-        "CreateRecommendedSlo":{"shape":"Boolean"}
+        "CreateRecommendedSlo":{"shape":"Boolean"},
+        "AutoInvestigationEnabled":{"shape":"Boolean"}
       }
     },
     "CreateServiceLevelObjectiveOutput":{
@@ -1662,7 +1684,8 @@
         "TotalRequestCountMetric":{"shape":"MetricDataQueries"},
         "MonitoredRequestCountMetric":{"shape":"MonitoredRequestCountMetricDataQueries"},
         "DependencyConfig":{"shape":"DependencyConfig"},
-        "MetricSource":{"shape":"MetricSource"}
+        "MetricSource":{"shape":"MetricSource"},
+        "CompositeSliConfig":{"shape":"CompositeSliConfig"}
       }
     },
     "RequestBasedServiceLevelIndicatorMetricConfig":{
@@ -1675,7 +1698,8 @@
         "MonitoredRequestCountMetric":{"shape":"MonitoredRequestCountMetricDataQueries"},
         "DependencyConfig":{"shape":"DependencyConfig"},
         "MetricSource":{"shape":"MetricSource"},
-        "MetricName":{"shape":"MetricName"}
+        "MetricName":{"shape":"MetricName"},
+        "CompositeSliConfig":{"shape":"CompositeSliConfig"}
       }
     },
     "ResourceId":{"type":"string"},
@@ -1723,6 +1747,26 @@
       "box":true,
       "max":900,
       "min":60
+    },
+    "SelectionConfig":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"SelectionType"},
+        "Pattern":{"shape":"SelectionPattern"}
+      }
+    },
+    "SelectionPattern":{
+      "type":"string",
+      "pattern":".+"
+    },
+    "SelectionType":{
+      "type":"string",
+      "enum":[
+        "EXPLICIT",
+        "PREFIX",
+        "REGEX"
+      ]
     },
     "Service":{
       "type":"structure",
@@ -1850,7 +1894,8 @@
         "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
         "MetricDataQueries":{"shape":"MetricDataQueries"},
         "DependencyConfig":{"shape":"DependencyConfig"},
-        "MetricSource":{"shape":"MetricSource"}
+        "MetricSource":{"shape":"MetricSource"},
+        "CompositeSliConfig":{"shape":"CompositeSliConfig"}
       }
     },
     "ServiceLevelIndicatorMetricConfig":{
@@ -1864,7 +1909,8 @@
         "PeriodSeconds":{"shape":"SLIPeriodSeconds"},
         "MetricSource":{"shape":"MetricSource"},
         "MetricDataQueries":{"shape":"MetricDataQueries"},
-        "DependencyConfig":{"shape":"DependencyConfig"}
+        "DependencyConfig":{"shape":"DependencyConfig"},
+        "CompositeSliConfig":{"shape":"CompositeSliConfig"}
       }
     },
     "ServiceLevelIndicatorMetricThreshold":{
@@ -1904,7 +1950,8 @@
         "EvaluationType":{"shape":"EvaluationType"},
         "Goal":{"shape":"Goal"},
         "BurnRateConfigurations":{"shape":"BurnRateConfigurations"},
-        "MetricSourceType":{"shape":"MetricSourceType"}
+        "MetricSourceType":{"shape":"MetricSourceType"},
+        "AutoInvestigationEnabled":{"shape":"Boolean"}
       }
     },
     "ServiceLevelObjectiveArn":{
@@ -2018,7 +2065,8 @@
         "CreatedTime":{"shape":"Timestamp"},
         "EvaluationType":{"shape":"EvaluationType"},
         "MetricSourceType":{"shape":"MetricSourceType"},
-        "MetricSource":{"shape":"MetricSource"}
+        "MetricSource":{"shape":"MetricSource"},
+        "CompositeSliConfig":{"shape":"CompositeSliConfig"}
       }
     },
     "ServiceOperation":{
@@ -2242,7 +2290,8 @@
         "SliConfig":{"shape":"ServiceLevelIndicatorConfig"},
         "RequestBasedSliConfig":{"shape":"RequestBasedServiceLevelIndicatorConfig"},
         "Goal":{"shape":"Goal"},
-        "BurnRateConfigurations":{"shape":"BurnRateConfigurations"}
+        "BurnRateConfigurations":{"shape":"BurnRateConfigurations"},
+        "AutoInvestigationEnabled":{"shape":"Boolean"}
       }
     },
     "UpdateServiceLevelObjectiveOutput":{

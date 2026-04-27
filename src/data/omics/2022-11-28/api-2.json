@@ -2558,6 +2558,7 @@
     "BatchStatus":{
       "type":"string",
       "enum":[
+        "CREATING",
         "PENDING",
         "SUBMITTING",
         "INPROGRESS",
@@ -3302,7 +3303,9 @@
         "storageType":{"shape":"StorageType"},
         "workflowOwnerId":{"shape":"WorkflowOwnerId"},
         "outputBucketOwnerId":{"shape":"AwsAccountId"},
-        "workflowVersionName":{"shape":"WorkflowVersionName"}
+        "workflowVersionName":{"shape":"WorkflowVersionName"},
+        "networkingMode":{"shape":"NetworkingMode"},
+        "configurationName":{"shape":"ConfigurationName"}
       }
     },
     "DefaultRunSettingPriorityInteger":{

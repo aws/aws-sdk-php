@@ -387,6 +387,7 @@
         "ListApplicationsRequestFilters$isArchived": "<p>Filter applications list by archival status.</p>",
         "ListWavesRequestFilters$isArchived": "<p>Filter waves list by archival status.</p>",
         "NetworkInterface$isPrimary": "<p>Network interface primary IP.</p>",
+        "NetworkMigrationMapperSegmentConstruct$excluded": "<p>Whether this construct is excluded from the migration.</p>",
         "PutSourceServerActionRequest$active": "<p>Source server post migration custom action active status.</p>",
         "PutSourceServerActionRequest$mustSucceedForCutover": "<p>Source server post migration custom action must succeed for cutover.</p>",
         "PutTemplateActionRequest$active": "<p>Template post migration custom action active status.</p>",
@@ -416,6 +417,7 @@
         "UpdateLaunchConfigurationTemplateRequest$associatePublicIpAddress": "<p>Associate public Ip address.</p>",
         "UpdateLaunchConfigurationTemplateRequest$copyTags": "<p>Copy tags.</p>",
         "UpdateLaunchConfigurationTemplateRequest$enableParametersEncryption": "<p>Enable parameters encryption.</p>",
+        "UpdateOperation$excluded": "<p>Whether to exclude this construct from the migration.</p>",
         "UpdateReplicationConfigurationRequest$associateDefaultSecurityGroup": "<p>Update replication configuration associate default Application Migration Service Security group request.</p>",
         "UpdateReplicationConfigurationRequest$useDedicatedReplicationServer": "<p>Update replication configuration use dedicated Replication Server request.</p>",
         "UpdateReplicationConfigurationRequest$createPublicIP": "<p>Update replication configuration create Public IP request.</p>",
@@ -511,6 +513,12 @@
         "TargetNetworkUpdate$inboundCidr": "<p>The updated CIDR block for inbound traffic.</p>",
         "TargetNetworkUpdate$outboundCidr": "<p>The updated CIDR block for outbound traffic.</p>",
         "TargetNetworkUpdate$inspectionCidr": "<p>The updated CIDR block for inspection traffic.</p>"
+      }
+    },
+    "CidrBlock": {
+      "base": null,
+      "refs": {
+        "SplitConstruct$cidrBlock": "<p>The CIDR block for the split construct.</p>"
       }
     },
     "ClientIdempotencyToken": {
@@ -622,6 +630,7 @@
       "refs": {
         "GetNetworkMigrationMapperSegmentConstructRequest$constructID": "<p>The unique identifier of the construct within the segment.</p>",
         "ListNetworkMigrationMapperSegmentConstructsIDsFilter$member": null,
+        "MergeConstruct$constructID": "<p>The construct ID to merge.</p>",
         "NetworkMigrationMapperSegmentConstruct$constructID": "<p>The unique identifier of the construct.</p>",
         "StartNetworkMigrationMappingUpdateConstruct$constructID": "<p>The ID of the construct to update.</p>"
       }
@@ -770,6 +779,12 @@
     "DeleteNetworkMigrationDefinitionResponse": {
       "base": null,
       "refs": {}
+    },
+    "DeleteOperation": {
+      "base": "<p>An operation that deletes a construct from the mapping.</p>",
+      "refs": {
+        "OperationUnion$delete": "<p>A delete operation to remove a construct from the mapping.</p>"
+      }
     },
     "DeleteReplicationConfigurationTemplateRequest": {
       "base": null,
@@ -1993,6 +2008,24 @@
         "ListWavesRequest$maxResults": "<p>Maximum results to return when listing waves.</p>"
       }
     },
+    "MergeConstruct": {
+      "base": "<p>A construct reference specifying the source segment and construct to merge.</p>",
+      "refs": {
+        "MergeConstructs$member": null
+      }
+    },
+    "MergeConstructs": {
+      "base": null,
+      "refs": {
+        "MergeOperation$mergeConstructs": "<p>The list of constructs to merge into the target.</p>"
+      }
+    },
+    "MergeOperation": {
+      "base": "<p>An operation that merges constructs from different segments into the target construct.</p>",
+      "refs": {
+        "OperationUnion$merge": "<p>A merge operation to combine constructs from different segments.</p>"
+      }
+    },
     "NetworkInterface": {
       "base": "<p>Network interface.</p>",
       "refs": {
@@ -2810,7 +2843,8 @@
     "SegmentConstructName": {
       "base": null,
       "refs": {
-        "NetworkMigrationMapperSegmentConstruct$name": "<p>The name of the construct.</p>"
+        "NetworkMigrationMapperSegmentConstruct$name": "<p>The name of the construct.</p>",
+        "UpdateOperation$name": "<p>The updated name for the construct.</p>"
       }
     },
     "SegmentDescription": {
@@ -2826,6 +2860,7 @@
         "ListNetworkMigrationCodeGenerationSegmentsIDsFilter$member": null,
         "ListNetworkMigrationMapperSegmentConstructsRequest$segmentID": "<p>The unique identifier of the segment to list constructs for.</p>",
         "ListNetworkMigrationMapperSegmentsIDsFilter$member": null,
+        "MergeConstruct$segmentID": "<p>The segment ID of the construct to merge.</p>",
         "NetworkMigrationCodeGenerationSegment$segmentID": "<p>The unique identifier of the segment.</p>",
         "NetworkMigrationCodeGenerationSegment$mapperSegmentID": "<p>The ID of the mapper segment that this code generation segment was created from.</p>",
         "NetworkMigrationDeployedStackDetails$segmentID": "<p>The ID of the segment that this stack was deployed for.</p>",
@@ -2959,6 +2994,24 @@
       "base": null,
       "refs": {
         "DescribeSourceServersResponse$items": "<p>Request to filter Source Servers list by item.</p>"
+      }
+    },
+    "SplitConstruct": {
+      "base": "<p>A split target specifying the CIDR block for the new construct.</p>",
+      "refs": {
+        "SplitConstructs$member": null
+      }
+    },
+    "SplitConstructs": {
+      "base": null,
+      "refs": {
+        "SplitOperation$splitConstructs": "<p>The list of split targets with their CIDR blocks.</p>"
+      }
+    },
+    "SplitOperation": {
+      "base": "<p>An operation that splits a construct into multiple constructs with different CIDR blocks.</p>",
+      "refs": {
+        "OperationUnion$split": "<p>A split operation to divide a construct into multiple constructs with specified CIDR blocks.</p>"
       }
     },
     "SsmDocument": {

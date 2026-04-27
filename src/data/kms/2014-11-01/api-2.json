@@ -469,6 +469,21 @@
         {"shape":"CustomKeyStoreInvalidStateException"}
       ]
     },
+    "GetKeyLastUsage":{
+      "name":"GetKeyLastUsage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetKeyLastUsageRequest"},
+      "output":{"shape":"GetKeyLastUsageResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"InvalidArnException"},
+        {"shape":"DependencyTimeoutException"},
+        {"shape":"KMSInternalException"}
+      ]
+    },
     "GetKeyPolicy":{
       "name":"GetKeyPolicy",
       "http":{
@@ -1100,6 +1115,7 @@
       },
       "exception":true
     },
+    "CloudTrailEventIdType":{"type":"string"},
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -1719,6 +1735,22 @@
         "CiphertextForRecipient":{"shape":"CiphertextType"}
       }
     },
+    "GetKeyLastUsageRequest":{
+      "type":"structure",
+      "required":["KeyId"],
+      "members":{
+        "KeyId":{"shape":"KeyIdType"}
+      }
+    },
+    "GetKeyLastUsageResponse":{
+      "type":"structure",
+      "members":{
+        "KeyId":{"shape":"KeyIdType"},
+        "KeyLastUsage":{"shape":"KeyLastUsageData"},
+        "TrackingStartDate":{"shape":"DateType"},
+        "KeyCreationDate":{"shape":"DateType"}
+      }
+    },
     "GetKeyPolicyRequest":{
       "type":"structure",
       "required":["KeyId"],
@@ -2040,6 +2072,32 @@
       "max":2048,
       "min":1
     },
+    "KeyLastUsageData":{
+      "type":"structure",
+      "members":{
+        "Operation":{"shape":"KeyLastUsageTrackingOperation"},
+        "Timestamp":{"shape":"DateType"},
+        "CloudTrailEventId":{"shape":"CloudTrailEventIdType"},
+        "KmsRequestId":{"shape":"KmsRequestIdType"}
+      }
+    },
+    "KeyLastUsageTrackingOperation":{
+      "type":"string",
+      "enum":[
+        "Decrypt",
+        "DeriveSharedSecret",
+        "Encrypt",
+        "GenerateDataKey",
+        "GenerateDataKeyPair",
+        "GenerateDataKeyPairWithoutPlaintext",
+        "GenerateDataKeyWithoutPlaintext",
+        "GenerateMac",
+        "ReEncrypt",
+        "Sign",
+        "Verify",
+        "VerifyMac"
+      ]
+    },
     "KeyList":{
       "type":"list",
       "member":{"shape":"KeyListEntry"}
@@ -2167,6 +2225,7 @@
         "KEY_AGREEMENT"
       ]
     },
+    "KmsRequestIdType":{"type":"string"},
     "LimitExceededException":{
       "type":"structure",
       "members":{

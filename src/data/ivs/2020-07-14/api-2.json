@@ -1201,7 +1201,8 @@
       "required":["mediaTailorPlaybackConfigurations"],
       "members":{
         "name":{"shape":"AdConfigurationName"},
-        "mediaTailorPlaybackConfigurations":{"shape":"MediaTailorPlaybackConfigurationsList"}
+        "mediaTailorPlaybackConfigurations":{"shape":"MediaTailorPlaybackConfigurationsList"},
+        "tags":{"shape":"Tags"}
       }
     },
     "CreateAdConfigurationResponse":{
@@ -2453,7 +2454,8 @@
     "TagKey":{
       "type":"string",
       "max":128,
-      "min":1
+      "min":1,
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]+)"
     },
     "TagKeyList":{
       "type":"list",
@@ -2483,7 +2485,8 @@
     "TagValue":{
       "type":"string",
       "max":256,
-      "min":0
+      "min":0,
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
     },
     "Tags":{
       "type":"map",

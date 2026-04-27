@@ -226,10 +226,13 @@
       "base": null,
       "refs": {
         "CreateServiceLevelObjectiveInput$CreateRecommendedSlo": "<p>Set this to <code>true</code> to create a recommended SLO out of the box. When set to <code>true</code>, you don't need to specify the <code>MetricThreshold</code> or <code>ComparisonOperator</code> in the <code>SliConfig</code> or <code>RequestBasedSliConfig</code>. The default value is <code>false</code>.</p> <p>This is supported for SLOs on a service, service operation, or a dependency.</p>",
+        "CreateServiceLevelObjectiveInput$AutoInvestigationEnabled": "<p>Indicates whether DevOps Agent will automatically investigate this SLO when it is breached</p>",
         "ListGroupingAttributeDefinitionsInput$IncludeLinkedAccounts": "<p>If you are using this operation in a monitoring account, specify <code>true</code> to include grouping attributes from source accounts in the returned data.</p>",
         "ListServiceLevelObjectivesInput$IncludeLinkedAccounts": "<p>If you are using this operation in a monitoring account, specify <code>true</code> to include SLO from source accounts in the returned data. </p> <p>When you are monitoring an account, you can use Amazon Web Services account ID in <code>KeyAttribute</code> filter for service source account and <code>SloOwnerawsaccountID</code> for SLO source account with <code>IncludeLinkedAccounts</code> to filter the returned data to only a single source account. </p>",
         "ListServiceStatesInput$IncludeLinkedAccounts": "<p>If you are using this operation in a monitoring account, specify <code>true</code> to include service states from source accounts in the returned data.</p>",
-        "ListServicesInput$IncludeLinkedAccounts": "<p>If you are using this operation in a monitoring account, specify <code>true</code> to include services from source accounts in the returned data. </p>"
+        "ListServicesInput$IncludeLinkedAccounts": "<p>If you are using this operation in a monitoring account, specify <code>true</code> to include services from source accounts in the returned data. </p>",
+        "ServiceLevelObjective$AutoInvestigationEnabled": "<p>Indicates whether DevOps Agent will automatically investigate this SLO when it is breached</p>",
+        "UpdateServiceLevelObjectiveInput$AutoInvestigationEnabled": "<p>Indicates whether DevOps Agent will automatically investigate this SLO when it is breached</p>"
       }
     },
     "BudgetRequestsRemaining": {
@@ -299,6 +302,28 @@
       "base": null,
       "refs": {
         "ListEntityEventsOutput$ChangeEvents": "<p>An array of structures, where each structure contains information about one change event that occurred for the specified entity during the requested time period.</p>"
+      }
+    },
+    "CompositeSliComponent": {
+      "base": "<p>Identifies a single operation to include in a composite SLI for a service-level SLO. Used as an element of the <code>Components</code> list in <code>CompositeSliConfig</code>.</p>",
+      "refs": {
+        "CompositeSliComponents$member": null
+      }
+    },
+    "CompositeSliComponents": {
+      "base": "<p>A list of operations that form a composite SLI for a service-level SLO. Each element is a <code>CompositeSliComponent</code> that identifies a single operation. Used in the <code>Components</code> field of <code>CompositeSliConfig</code>.</p>",
+      "refs": {
+        "CompositeSliConfig$Components": "<p>The list of operations included in this composite SLI. You must specify between 2 and 20 components. Each component is a <code>CompositeSliComponent</code> that identifies a single operation by its <code>OperationName</code>.</p>"
+      }
+    },
+    "CompositeSliConfig": {
+      "base": "<p>This structure contains the configuration for a composite service level indicator (SLI) that aggregates metrics across multiple operations of a service for service-level SLOs.</p>",
+      "refs": {
+        "RequestBasedServiceLevelIndicatorMetric$CompositeSliConfig": "<p>The composite SLI configuration for service-level SLOs that monitor multiple operations of a service.</p>",
+        "RequestBasedServiceLevelIndicatorMetricConfig$CompositeSliConfig": "<p>The composite SLI configuration for service-level SLOs that monitor multiple operations of a service.</p>",
+        "ServiceLevelIndicatorMetric$CompositeSliConfig": "<p>The composite SLI configuration for service-level SLOs that monitor multiple operations of a service.</p>",
+        "ServiceLevelIndicatorMetricConfig$CompositeSliConfig": "<p>The composite SLI configuration for service-level SLOs that monitor multiple operations of a service.</p>",
+        "ServiceLevelObjectiveSummary$CompositeSliConfig": "<p>The composite SLI configuration for service-level SLOs that monitor multiple operations of a service.</p>"
       }
     },
     "ConflictException": {
@@ -890,6 +915,7 @@
     "OperationName": {
       "base": null,
       "refs": {
+        "CompositeSliComponent$OperationName": "<p>The name of the operation to include in the composite SLI.</p>",
         "DependencyConfig$DependencyOperationName": "<p>The name of the called operation in the dependency.</p>",
         "ListServiceLevelObjectivesInput$OperationName": "<p>The name of the operation that this SLO is associated with.</p>",
         "RequestBasedServiceLevelIndicatorMetric$OperationName": "<p>If the SLO monitors a specific operation of the service, this field displays that operation name.</p>",
@@ -989,6 +1015,24 @@
       "base": null,
       "refs": {
         "ServiceLevelIndicatorMetricConfig$PeriodSeconds": "<p>The number of seconds to use as the period for SLO evaluation. Your application's performance is compared to the SLI during each period. For each period, the application is determined to have either achieved or not achieved the necessary performance.</p>"
+      }
+    },
+    "SelectionConfig": {
+      "base": "<p>Defines how operations are selected for a service-level SLO.</p>",
+      "refs": {
+        "CompositeSliConfig$SelectionConfig": "<p>Specifies how operations are selected for this service-level SLO. Operations can be selected explicitly by listing them, by specifying a prefix to match operation names, or by providing a regular expression pattern.</p>"
+      }
+    },
+    "SelectionPattern": {
+      "base": null,
+      "refs": {
+        "SelectionConfig$Pattern": "<p>A prefix string or regular expression that specifies which operations to include in a service-level SLO. When <code>SelectionType</code> is <code>PREFIX</code>, this value is a prefix string that matches the beginning of operation names. When <code>SelectionType</code> is <code>REGEX</code>, this value is a regular expression that matches operation names.</p>"
+      }
+    },
+    "SelectionType": {
+      "base": "<p>The strategy for selecting operations to include in a service-level SLO.</p> <ul> <li> <p> <code>EXPLICIT</code> — You provide a specific list of operations in the <code>Components</code> field of <code>CompositeSliConfig</code>.</p> </li> <li> <p> <code>PREFIX</code> — You provide a prefix string in the <code>Pattern</code> field of <code>SelectionConfig</code>, and all operations whose names start with the prefix are included.</p> </li> <li> <p> <code>REGEX</code> — You provide a regular expression in the <code>Pattern</code> field of <code>SelectionConfig</code>, and all operations whose names match the pattern are included.</p> </li> </ul>",
+      "refs": {
+        "SelectionConfig$Type": null
       }
     },
     "Service": {

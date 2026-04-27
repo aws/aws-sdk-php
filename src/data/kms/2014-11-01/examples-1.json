@@ -1498,6 +1498,38 @@
         "title": "To generate random data for a Nitro enclave or NitroTPM"
       }
     ],
+    "GetKeyLastUsage": [
+      {
+        "input": {
+          "KeyId": "1234abcd-12ab-34cd-56ef-1234567890ab"
+        },
+        "output": {
+          "KeyCreationDate": 1773253425.56,
+          "KeyId": "1234abcd-12ab-34cd-56ef-1234567890ab",
+          "KeyLastUsage": {
+            "CloudTrailEventId": "2cfd5892-ea8c-4342-ad49-4b9594b06a8b",
+            "KmsRequestId": "040cce3e-9ef3-4651-b8cf-e47c9bafdc9b",
+            "Operation": "Encrypt",
+            "Timestamp": 1773253497.0
+          },
+          "TrackingStartDate": 1773253425.56
+        },
+        "comments": {
+          "input": {
+            "KeyId": "The identifier of the KMS key to get usage information for. You can use the key ID or the Amazon Resource Name (ARN) of the KMS key. Alias names are not supported."
+          },
+          "output": {
+            "KeyCreationDate": "The date and time when the KMS key was created.",
+            "KeyId": "The globally unique identifier for the KMS key.",
+            "KeyLastUsage": "Contains usage information about the last time the KMS key was used for a successful cryptographic operation.",
+            "TrackingStartDate": "The date from which AWS KMS began recording cryptographic activity for this key, or the date the KMS key was created, whichever is later."
+          }
+        },
+        "description": "The following example retrieves usage information about the last successful cryptographic operation performed with the specified KMS key, including the operation type, timestamp, and associated AWS CloudTrail event ID.",
+        "id": "to-retrieve-the-last-usage-for-a-kms-key-1773253500001",
+        "title": "To retrieve the last usage for a KMS key"
+      }
+    ],
     "GetKeyPolicy": [
       {
         "input": {
