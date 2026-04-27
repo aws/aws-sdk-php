@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.379.8 - 2026-04-27
 
 * `Aws\OpenSearchService` - Amazon OpenSearch Service now supports JWKS URL configuration for JWT authentication
 * `Aws\mgn` - Added network modernization support, enabling customers to edit, resize, merge, and split VPCs and subnets during migration while retaining functional, non-conflicting IP addresses.
