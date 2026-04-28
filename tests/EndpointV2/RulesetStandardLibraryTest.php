@@ -348,11 +348,11 @@ class RulesetStandardLibraryTest extends TestCase
         return [
             'unlimited split' => ['a.b.c.d', '.', null, ['a', 'b', 'c', 'd']],
             'limited split' => ['a.b.c.d', '.', 2, ['a', 'b.c.d']],
+            'zero limit means unlimited' => ['a.b.c.d', '.', 0, ['a', 'b', 'c', 'd']],
             'delimiter not found' => ['abcd', '.', null, ['abcd']],
             'empty input' => ['', '.', null, ['']],
             'null input returns null' => [null, '.', null, null],
             'empty delimiter returns null' => ['a.b', '', null, null],
-            'zero limit returns null' => ['a.b', '.', 0, null],
             'negative limit returns null' => ['a.b', '.', -1, null],
             'non-int limit returns null' => ['a.b', '.', '2', null],
         ];
@@ -388,6 +388,109 @@ class RulesetStandardLibraryTest extends TestCase
         $this->assertSame(
             $expected,
             $this->standardLibrary->ite($condition, $then, $else)
+        );
+    }
+
+    /**
+     * Variable name with underscores
+     */
+    public function testIsTemplateWithUnderscoreVariable()
+    {
+        $this->assertTrue(
+            $this->standardLibrary->isTemplate('{access_point}'),
+            'isTemplate should return true for variable names containing underscores'
+        );
+    }
+
+    /**
+     * Variable name with digits
+     */
+    public function testIsTemplateWithDigitVariable()
+    {
+        $this->assertTrue(
+            $this->standardLibrary->isTemplate('{item2}'),
+            'isTemplate should return true for variable names containing digits'
+        );
+    }
+
+    /**
+     * Variable name with mixed underscores and digits
+     */
+    public function testIsTemplateWithMixedUnderscoreAndDigitVariable()
+    {
+        $this->assertTrue(
+            $this->standardLibrary->isTemplate('{bucket_name_v2}'),
+            'isTemplate should return true for variable names containing both underscores and digits'
+        );
+    }
+
+    /**
+     * resolveTemplateString with underscore variable
+     */
+    public function testResolveTemplateStringWithUnderscoreVariable()
+    {
+        $params = ['bucket_name' => 'my-bucket'];
+        $result = $this->standardLibrary->resolveTemplateString(
+            'https://{bucket_name}.s3.amazonaws.com',
+            $params
+        );
+        $this->assertEquals(
+            'https://my-bucket.s3.amazonaws.com',
+            $result,
+            'resolveTemplateString should substitute variables containing underscores'
+        );
+    }
+
+    /**
+     * resolveTemplateString with underscore+digit variable
+     */
+    public function testResolveTemplateStringWithUnderscoreDigitVariable()
+    {
+        $params = ['access_point_1' => 'myAP'];
+        $result = $this->standardLibrary->resolveTemplateString(
+            '{access_point_1}',
+            $params
+        );
+        $this->assertEquals(
+            'myAP',
+            $result,
+            'resolveTemplateString should substitute variables containing underscores and digits'
+        );
+    }
+
+    /**
+     * shorthand syntax with underscores/digits
+     */
+    public function testResolveTemplateStringShorthandWithUnderscoreDigit()
+    {
+        $params = ['data_source' => ['key_1' => 'val']];
+        $result = $this->standardLibrary->resolveTemplateString(
+            '{data_source#key_1}',
+            $params
+        );
+        $this->assertEquals(
+            'val',
+            $result,
+            'resolveTemplateString should resolve shorthand syntax with underscore/digit variable names'
+        );
+    }
+
+    public static function nonTemplateStringProvider(): array
+    {
+        return [
+            'plain text' => ['plain string no braces'],
+            'URL without templates' => ['https://example.com/path/to/resource'],
+            'empty string' => [''],
+            'brackets only' => ['array[0]'],
+        ];
+    }
+
+    #[DataProvider('nonTemplateStringProvider')]
+    public function testIsTemplateReturnsFalseForNonTemplateStrings($input)
+    {
+        $this->assertFalse(
+            $this->standardLibrary->isTemplate($input),
+            "isTemplate must return false for non-template string: '{$input}'"
         );
     }
 }

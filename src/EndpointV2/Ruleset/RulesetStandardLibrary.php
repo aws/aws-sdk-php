@@ -22,9 +22,8 @@ class RulesetStandardLibrary
                     . 1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]
                     . {1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]
                     . |1{0,1}[0-9]){0,1}[0-9])/';
-    const TEMPLATE_ESCAPE_RE = '/{\{\s*(.*?)\s*\}\}/';
-    const TEMPLATE_SEARCH_RE = '/\{[a-zA-Z#]+\}/';
-    const TEMPLATE_PARSE_RE = '#\{((?>[^\{\}]+)|(?R))*\}#x';
+    const TEMPLATE_SEARCH_RE = '/\{\{.*?\}\}|\{[a-zA-Z0-9_#]+\}/';
+    const TEMPLATE_PARSE_RE = '/\{\{\s*([^{}]*?)\s*\}\}|\{([a-zA-Z0-9_]+(?:#[a-zA-Z0-9_]+)*)\}/';
     const HOST_LABEL_RE = '/^(?!-)[a-zA-Z\d-]{1,63}(?<!-)$/';
 
     private $partitions;
@@ -303,9 +302,10 @@ class RulesetStandardLibrary
 
     /**
      * Splits a string on a delimiter up to an optional limit, returning an
-     * array of string parts. Returns null when the input is not a usable
-     * string or the limit is not a positive integer, so downstream conditions
-     * treat the result as "no value" rather than failing hard.
+     * array of string parts. Mirrors the smithy `split` function: a `null` or
+     * `0` limit means "no limit", a positive limit caps the number of parts,
+     * and any other input (non-string, empty delimiter, negative limit)
+     * returns null so downstream conditions treat it as "no value".
      *
      * @return array|null
      */
@@ -315,11 +315,11 @@ class RulesetStandardLibrary
             return null;
         }
 
-        if (is_null($limit)) {
+        if (is_null($limit) || $limit === 0) {
             return explode($delimiter, $input);
         }
 
-        if (!is_int($limit) || $limit < 1) {
+        if (!is_int($limit) || $limit < 0) {
             return null;
         }
 
@@ -409,7 +409,7 @@ class RulesetStandardLibrary
         if ($this->isFunc($value)) {
             return $this->callFunction($value, $inputParameters);
         } elseif ($this->isRef($value)) {
-            return isset($inputParameters[$value['ref']]) ? $inputParameters[$value['ref']] : null;
+            return $inputParameters[$value['ref']] ?? null;
         } elseif ($this->isTemplate($value)) {
             return $this->resolveTemplateString($value, $inputParameters);
         }
@@ -436,14 +436,14 @@ class RulesetStandardLibrary
         return preg_replace_callback(
             self::TEMPLATE_PARSE_RE,
             function ($match) use ($inputParameters) {
-                if (preg_match(self::TEMPLATE_ESCAPE_RE, $match[0])) {
-                    return $match[1];
+                if (str_starts_with($match[0], '{{')) {
+                    return '{' . $match[1] . '}';
                 }
 
                 $notFoundMessage = 'Resolved value was null.  Please check rules and ' .
                     'input parameters and try again.';
 
-                $parts = explode("#", $match[1]);
+                $parts = explode("#", $match[2]);
                 if (count($parts) > 1) {
                     $resolvedValue = $inputParameters;
                     foreach($parts as $part) {

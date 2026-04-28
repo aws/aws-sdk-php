@@ -62,11 +62,12 @@ final class BddEvaluator
             $base = ($isComplement ? -$ref : $ref) * 3 - 3;
 
             $condIndex = $nodes[$base];
-            $condResult = (bool) $library->callFunction(
+            $value = $library->callFunction(
                 $conditions[$condIndex],
                 $inputParameters
             );
 
+            $condResult = !(is_null($value) || $value === false);
             // Complement edges invert the high/low selection without
             // duplicating nodes in the BDD.
             $ref = ($condResult xor $isComplement)
