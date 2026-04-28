@@ -31,6 +31,8 @@ use Aws\Exception\AwsException;
 use Aws\Exception\InvalidRegionException;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
+use Aws\Retry\Standard\OptIn as NewRetriesOptIn;
+use Aws\Retry\Standard\RetryMiddleware as StandardRetryMiddleware;
 use Aws\Signature\SignatureProvider;
 use Aws\Token\Token;
 use Aws\Token\TokenInterface;
@@ -547,28 +549,42 @@ class ClientResolver
     public static function _apply_retries($value, array &$args, HandlerList $list)
     {
         // A value of 0 for the config option disables retries
-        if ($value) {
-            $config = RetryConfigProvider::unwrap($value);
-
-            if ($config->getMode() === 'legacy') {
-                // # of retries is 1 less than # of attempts
-                $decider = RetryMiddleware::createDefaultDecider(
-                    $config->getMaxAttempts() - 1
-                );
-                $list->appendSign(
-                    Middleware::retry($decider, null, $args['stats']['retries']),
-                    'retry'
-                );
-            } else {
-                $list->appendSign(
-                    RetryMiddlewareV2::wrap(
-                        $config,
-                        ['collect_stats' => $args['stats']['retries']]
-                    ),
-                    'retry'
-                );
-            }
+        if (!$value) {
+            return;
         }
+
+        $config = RetryConfigProvider::unwrap($value);
+
+        if ($config->getMode() === 'legacy') {
+            // # of retries is 1 less than # of attempts
+            $decider = RetryMiddleware::createDefaultDecider(
+                $config->getMaxAttempts() - 1
+            );
+            $list->appendSign(
+                Middleware::retry($decider, null, $args['stats']['retries']),
+                'retry'
+            );
+            return;
+        }
+
+        if (NewRetriesOptIn::isEnabled()) {
+            $list->appendSign(
+                StandardRetryMiddleware::wrap($config, [
+                    'collect_stats' => $args['stats']['retries'],
+                    'service'       => $args['service'],
+                ]),
+                'retry'
+            );
+            return;
+        }
+
+        $list->appendSign(
+            RetryMiddlewareV2::wrap(
+                $config,
+                ['collect_stats' => $args['stats']['retries']]
+            ),
+            'retry'
+        );
     }
 
     public static function _apply_defaults($value, array &$args, HandlerList $list)

@@ -7,6 +7,7 @@ use Aws\Retry\Configuration;
 use Aws\Retry\ConfigurationInterface;
 use Aws\Retry\ConfigurationProvider;
 use Aws\Retry\Exception\ConfigurationException;
+use Aws\Retry\Standard\OptIn;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -43,6 +44,7 @@ EOT;
             'home' => getenv('HOME') ?: '',
             'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
             'config_file' => getenv(ConfigurationProvider::ENV_CONFIG_FILE) ?: '',
+            'opt_in' => getenv(OptIn::ENV) ?: '',
         ];
     }
 
@@ -52,6 +54,8 @@ EOT;
         putenv(ConfigurationProvider::ENV_MAX_ATTEMPTS . '=');
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=');
         putenv(ConfigurationProvider::ENV_PROFILE . '=');
+        putenv(OptIn::ENV . '=');
+        OptIn::reset();
 
         $dir = sys_get_temp_dir() . '/.aws';
 
@@ -72,6 +76,8 @@ EOT;
             self::$originalEnv['profile']);
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' .
             self::$originalEnv['config_file']);
+        putenv(OptIn::ENV . '=' . self::$originalEnv['opt_in']);
+        OptIn::reset();
         putenv('HOME=' . self::$originalEnv['home']);
     }
 
@@ -111,6 +117,21 @@ EOT;
         /** @var ConfigurationInterface $result */
         $result = call_user_func(ConfigurationProvider::fallback())->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
+    }
+
+    public function testFallbackIsStandardWhenOptedIn()
+    {
+        $this->clearEnv();
+        putenv(OptIn::ENV . '=true');
+        OptIn::reset();
+        try {
+            $expected = new Configuration('standard', 3);
+            $result = call_user_func(ConfigurationProvider::fallback())->wait();
+            $this->assertSame($expected->toArray(), $result->toArray());
+        } finally {
+            putenv(OptIn::ENV . '=');
+            OptIn::reset();
+        }
     }
 
     public function testCreatesFromIniFileWithDefaultProfile()

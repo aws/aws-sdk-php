@@ -16,7 +16,10 @@ use Aws\Identity\S3\S3ExpressIdentityProvider;
 use Aws\InputValidationMiddleware;
 use Aws\Middleware;
 use Aws\ResultInterface;
+use Aws\Retry\ConfigurationInterface as RetryConfigurationInterface;
 use Aws\Retry\QuotaManager;
+use Aws\Retry\Standard\OptIn as NewRetriesOptIn;
+use Aws\Retry\Standard\RetryMiddleware as StandardRetryMiddleware;
 use Aws\RetryMiddleware;
 use Aws\RetryMiddlewareV2;
 use Aws\S3\Parser\GetBucketLocationResultMutator;
@@ -1022,89 +1025,131 @@ class S3Client extends AwsClient implements S3ClientInterface
     /** @internal */
     public static function _applyRetryConfig($value, $args, HandlerList $list)
     {
-        if ($value) {
-            $config = \Aws\Retry\ConfigurationProvider::unwrap($value);
-
-            if ($config->getMode() === 'legacy') {
-                $maxRetries = $config->getMaxAttempts() - 1;
-                $decider = RetryMiddleware::createDefaultDecider($maxRetries);
-                $decider = function ($retries, $command, $request, $result, $error) use ($decider, $maxRetries) {
-                    $maxRetries = $command['@retries'] ?? $maxRetries;
-
-                    if ($decider($retries, $command, $request, $result, $error)) {
-                        return true;
-                    }
-
-                    if ($error instanceof AwsException
-                        && $retries < $maxRetries
-                    ) {
-                        if ($error->getResponse()
-                            && $error->getResponse()->getStatusCode() >= 400
-                        ) {
-                            return strpos(
-                                    $error->getResponse()->getBody(),
-                                    'Your socket connection to the server'
-                                ) !== false;
-                        }
-
-                        if ($error->getPrevious() instanceof RequestException) {
-                            // All commands except CompleteMultipartUpload are
-                            // idempotent and may be retried without worry if a
-                            // networking error has occurred.
-                            return $command->getName() !== 'CompleteMultipartUpload';
-                        }
-                    }
-
-                    return false;
-                };
-
-                $delay = [RetryMiddleware::class, 'exponentialDelay'];
-                $list->appendSign(Middleware::retry($decider, $delay), 'retry');
-            } else {
-                $defaultDecider = RetryMiddlewareV2::createDefaultDecider(
-                    new QuotaManager(),
-                    $config->getMaxAttempts()
-                );
-
-                $list->appendSign(
-                    RetryMiddlewareV2::wrap(
-                        $config,
-                        [
-                            'collect_stats' => $args['stats']['retries'],
-                            'decider' => function(
-                                $attempts,
-                                CommandInterface $cmd,
-                                $result
-                            ) use ($defaultDecider, $config) {
-                                $isRetryable = $defaultDecider($attempts, $cmd, $result);
-                                if (!$isRetryable
-                                    && $result instanceof AwsException
-                                    && $attempts < $config->getMaxAttempts()
-                                ) {
-                                    if (!empty($result->getResponse())
-                                        && $result->getResponse()->getStatusCode() >= 400
-                                    ) {
-                                        return strpos(
-                                                $result->getResponse()->getBody(),
-                                                'Your socket connection to the server'
-                                            ) !== false;
-                                    }
-
-                                    if ($result->getPrevious() instanceof RequestException
-                                        && $cmd->getName() !== 'CompleteMultipartUpload'
-                                    ) {
-                                        $isRetryable = true;
-                                    }
-                                }
-
-                                return $isRetryable;
-                            }
-                        ]
-                    ),
-                    'retry'
-                );
-            }
+        if (!$value) {
+            return;
         }
+
+        $config = \Aws\Retry\ConfigurationProvider::unwrap($value);
+
+        if ($config->getMode() === 'legacy') {
+            self::appendLegacyModeRetries($config, $list);
+            return;
+        }
+
+        if (NewRetriesOptIn::isEnabled()) {
+            self::appendStandardModeRetriesNew($config, $args, $list);
+            return;
+        }
+
+        self::appendStandardModeRetries($config, $args, $list);
+    }
+
+    private static function appendLegacyModeRetries(
+        RetryConfigurationInterface $config,
+        HandlerList $list
+    ): void {
+        $maxRetries = $config->getMaxAttempts() - 1;
+        $baseDecider = RetryMiddleware::createDefaultDecider($maxRetries);
+
+        $decider = function ($retries, $command, $request, $result, $error) use ($baseDecider, $maxRetries) {
+            $effectiveMax = $command['@retries'] ?? $maxRetries;
+
+            if ($baseDecider($retries, $command, $request, $result, $error)) {
+                return true;
+            }
+
+            if ($error instanceof AwsException && $retries < $effectiveMax) {
+                return self::isS3SocketIssue($error, $command->getName());
+            }
+
+            return false;
+        };
+
+        $list->appendSign(
+            Middleware::retry($decider, [RetryMiddleware::class, 'exponentialDelay']),
+            'retry'
+        );
+    }
+
+    private static function appendStandardModeRetries(
+        RetryConfigurationInterface $config,
+        $args,
+        HandlerList $list
+    ): void {
+        // decider that combines V2's default decider with S3-specific checks.
+        $defaultDecider = RetryMiddlewareV2::createDefaultDecider(
+            new QuotaManager(),
+            $config->getMaxAttempts()
+        );
+
+        $list->appendSign(
+            RetryMiddlewareV2::wrap(
+                $config,
+                [
+                    'collect_stats' => $args['stats']['retries'],
+                    'decider' => function (
+                        $attempts,
+                        CommandInterface $cmd,
+                        $result
+                    ) use ($defaultDecider, $config) {
+                        if ($defaultDecider($attempts, $cmd, $result)) {
+                            return true;
+                        }
+                        if ($result instanceof AwsException
+                            && $attempts < $config->getMaxAttempts()
+                        ) {
+                            return self::isS3SocketIssue($result, $cmd->getName());
+                        }
+                        return false;
+                    },
+                ]
+            ),
+            'retry'
+        );
+    }
+
+    private static function appendStandardModeRetriesNew(
+        RetryConfigurationInterface $config,
+        $args,
+        HandlerList $list
+    ): void {
+        // AWS_NEW_RETRIES_2026 path. The base middleware already handles
+        // the standard retryable shapes, so this decider only adds the
+        // S3-specific socket carve-out.
+        $list->appendSign(
+            StandardRetryMiddleware::wrap(
+                $config,
+                [
+                    'collect_stats' => $args['stats']['retries'],
+                    'service'       => $args['service'],
+                    'decider' => function (
+                        $attempts,
+                        CommandInterface $cmd,
+                        $result
+                    ) {
+                        return $result instanceof AwsException
+                            && self::isS3SocketIssue($result, $cmd->getName());
+                    },
+                ]
+            ),
+            'retry'
+        );
+    }
+
+    private static function isS3SocketIssue(AwsException $error, string $commandName): bool
+    {
+        $response = $error->getResponse();
+        if (!empty($response) && $response->getStatusCode() >= 400) {
+            return strpos(
+                (string) $response->getBody(),
+                'Your socket connection to the server'
+            ) !== false;
+        }
+
+        // All commands except CompleteMultipartUpload are idempotent and may
+        // be retried without worry if a networking error has occurred.
+        return $error->getPrevious() instanceof RequestException
+            && $commandName !== 'CompleteMultipartUpload';
     }
 
     /** @internal */

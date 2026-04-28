@@ -5,7 +5,14 @@ use Aws\Arn\ArnParser;
 use Aws\AwsClient;
 use Aws\CacheInterface;
 use Aws\Credentials\Credentials;
+use Aws\HandlerList;
+use Aws\Middleware;
 use Aws\Result;
+use Aws\Retry\ConfigurationInterface as RetryConfigurationInterface;
+use Aws\Retry\ConfigurationProvider as RetryConfigurationProvider;
+use Aws\Retry\Standard\OptIn as NewRetriesOptIn;
+use Aws\Retry\Standard\RetryMiddleware as StandardRetryMiddleware;
+use Aws\RetryMiddleware;
 use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
 
 /**
@@ -66,6 +73,55 @@ class StsClient extends AwsClient
         }
         $this->addBuiltIns($args);
         parent::__construct($args);
+    }
+
+    public static function getArguments()
+    {
+        $args = parent::getArguments();
+        // Off-path STS keeps the default ClientResolver retry handling. The
+        // override below adds IDPCommunicationError as a transient error and
+        // is only registered when the AWS_NEW_RETRIES_2026 flag is on.
+        if (NewRetriesOptIn::isEnabled()) {
+            $args['retries']['fn'] = [__CLASS__, '_applyRetryConfig'];
+        }
+        return $args;
+    }
+
+    /**
+     * @internal Only invoked when AWS_NEW_RETRIES_2026=true. The off-path
+     *           uses the default ClientResolver::_apply_retries.
+     */
+    public static function _applyRetryConfig(
+        $value,
+        array &$args,
+        HandlerList $list
+    ): void {
+        if (!$value) {
+            return;
+        }
+
+        $config = RetryConfigurationProvider::unwrap($value);
+
+        if ($config->getMode() === 'legacy') {
+            $decider = RetryMiddleware::createDefaultDecider($config->getMaxAttempts() - 1);
+            $list->appendSign(
+                Middleware::retry($decider, null, $args['stats']['retries']),
+                'retry'
+            );
+            return;
+        }
+
+        $list->appendSign(
+            StandardRetryMiddleware::wrap(
+                $config,
+                [
+                    'collect_stats' => $args['stats']['retries'],
+                    'service'       => $args['service'],
+                    'transient_error_codes' => ['IDPCommunicationError'],
+                ]
+            ),
+            'retry'
+        );
     }
 
     /**
