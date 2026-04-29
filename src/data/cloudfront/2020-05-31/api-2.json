@@ -3713,6 +3713,13 @@
         "custom"
       ]
     },
+    "CacheTagConfig":{
+      "type":"structure",
+      "required":["HeaderName"],
+      "members":{
+        "HeaderName":{"shape":"string"}
+      }
+    },
     "CachedMethods":{
       "type":"structure",
       "required":[
@@ -5629,7 +5636,8 @@
         "TenantConfig":{"shape":"TenantConfig"},
         "ConnectionMode":{"shape":"ConnectionMode"},
         "ViewerMtlsConfig":{"shape":"ViewerMtlsConfig"},
-        "ConnectionFunctionAssociation":{"shape":"ConnectionFunctionAssociation"}
+        "ConnectionFunctionAssociation":{"shape":"ConnectionFunctionAssociation"},
+        "CacheTagConfig":{"shape":"CacheTagConfig"}
       }
     },
     "DistributionConfigWithTags":{

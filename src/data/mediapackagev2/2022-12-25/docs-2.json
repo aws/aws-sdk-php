@@ -294,6 +294,18 @@
       "base": null,
       "refs": {}
     },
+    "CustomAdType": {
+      "base": null,
+      "refs": {
+        "CustomAdTypeList$member": null
+      }
+    },
+    "CustomAdTypeList": {
+      "base": null,
+      "refs": {
+        "Scte$CustomAdTypes": "<p>A list of additional non-Ad SCTE-35 event types to treat as advertisements. When configured, events matching these types produce ad markers (such as <code>SCTE35-OUT</code> and <code>SCTE35-IN</code> in HLS DATERANGE tags) in manifests.</p> <p>Valid values: <code>PROGRAM</code> | <code>CHAPTER</code> | <code>UNSCHEDULED_EVENT</code> | <code>ALTERNATE_CONTENT_OPPORTUNITY</code> | <code>NETWORK</code> </p> <p>If you don't specify any values, the default is empty (only default ad types are used).</p>"
+      }
+    },
     "DashBaseUrl": {
       "base": "<p>The base URLs to use for retrieving segments. You can specify multiple locations and indicate the priority and weight for when each should be used, for use in mutli-CDN workflows.</p>",
       "refs": {
@@ -1335,10 +1347,17 @@
         "GetLowLatencyHlsManifestConfiguration$ScteHls": null
       }
     },
+    "ScteInManifests": {
+      "base": null,
+      "refs": {
+        "ScteDash$ScteInManifests": "<p>Controls which SCTE-35 events appear in DASH manifests. <code>ALL</code> includes all non-implicit SCTE-35 events. <code>MATCHES_FILTER</code> includes only events whose type matches the configured <code>ScteFilter</code>.</p> <p>If you don't specify a value, the default is <code>ALL</code>.</p>",
+        "ScteHls$ScteInManifests": "<p>Controls which SCTE-35 events appear in HLS manifests. <code>ALL</code> includes all non-implicit SCTE-35 events. <code>MATCHES_FILTER</code> includes only events whose type matches the configured <code>ScteFilter</code>.</p> <p>If you don't specify a value, the default is <code>ALL</code>.</p>"
+      }
+    },
     "ScteInSegments": {
       "base": null,
       "refs": {
-        "Scte$ScteInSegments": "<p>Controls whether SCTE-35 messages are included in segment files.</p> <ul> <li> <p>None – SCTE-35 messages are not included in segments (default)</p> </li> <li> <p>All – SCTE-35 messages are embedded in segment data</p> </li> </ul> <p> For DASH manifests, when set to <code>All</code>, an <code>InbandEventStream</code> tag signals that SCTE messages are present in segments. This setting works independently of manifest ad markers.</p>"
+        "Scte$ScteInSegments": "<p>Controls whether SCTE-35 messages are included in segment files.</p> <ul> <li> <p>None – SCTE-35 messages are not included in segments (default)</p> </li> <li> <p>All – SCTE-35 messages are embedded in segment data</p> </li> <li> <p>MatchesFilter – SCTE-35 messages which match the ScteFilter are embedded in segment data</p> </li> </ul> <p> For DASH manifests, when set to <code>All</code> or <code>MatchesFilter</code>, an <code>InbandEventStream</code> tag signals that SCTE messages are present in segments. This setting works independently of manifest ad markers.</p>"
       }
     },
     "Segment": {
@@ -1621,6 +1640,28 @@
     "UpdateOriginEndpointResponse": {
       "base": null,
       "refs": {}
+    },
+    "UriPathType": {
+      "base": null,
+      "refs": {
+        "CreateDashManifestConfiguration$UriPathType": "<p>The type of path to use in manifest URIs. <code>LEAF</code> uses leaf-relative paths (for example, <code>index_1.mpd</code>). <code>ROOT</code> uses root-relative paths that include the full path from root (for example, <code>/out/v1/channel-group/channel/endpoint/index_1.mpd</code>). If you don't specify a value, the default is <code>LEAF</code>.</p>",
+        "CreateHlsManifestConfiguration$UriPathType": "<p>The type of path to use in manifest URIs. <code>LEAF</code> uses leaf-relative paths (for example, <code>index_1.m3u8</code>). <code>ROOT</code> uses root-relative paths that include the full path from root (for example, <code>/out/v1/channel-group/channel/endpoint/index_1.m3u8</code>). If you don't specify a value, the default is <code>LEAF</code>.</p>",
+        "CreateLowLatencyHlsManifestConfiguration$UriPathType": "<p>The type of path to use in manifest URIs. <code>LEAF</code> uses leaf-relative paths (for example, <code>index_1.m3u8</code>). <code>ROOT</code> uses root-relative paths that include the full path from root (for example, <code>/out/v1/channel-group/channel/endpoint/index_1.m3u8</code>). If you don't specify a value, the default is <code>LEAF</code>.</p>",
+        "GetDashManifestConfiguration$UriPathType": "<p>The type of path used in manifest URIs. <code>LEAF</code> indicates leaf-relative paths. <code>ROOT</code> indicates root-relative paths that include the full path from root.</p>",
+        "GetHlsManifestConfiguration$UriPathType": "<p>The type of path used in manifest URIs. <code>LEAF</code> indicates leaf-relative paths. <code>ROOT</code> indicates root-relative paths that include the full path from root.</p>",
+        "GetLowLatencyHlsManifestConfiguration$UriPathType": "<p>The type of path used in manifest URIs. <code>LEAF</code> indicates leaf-relative paths. <code>ROOT</code> indicates root-relative paths that include the full path from root.</p>"
+      }
+    },
+    "UriSeparator": {
+      "base": null,
+      "refs": {
+        "CreateOriginEndpointRequest$UriSeparator": "<p>The separator character to use in generated URIs for this origin endpoint. This setting applies to all manifest types on the endpoint. If you don't specify a value, the default is <code>UNDERSCORE</code>.</p>",
+        "CreateOriginEndpointResponse$UriSeparator": "<p>The separator character used in generated URIs for this origin endpoint.</p>",
+        "GetOriginEndpointResponse$UriSeparator": "<p>The separator character used in generated URIs for this origin endpoint.</p>",
+        "OriginEndpointListConfiguration$UriSeparator": "<p>The separator character used in generated URIs for this origin endpoint.</p>",
+        "UpdateOriginEndpointRequest$UriSeparator": "<p>The separator character to use in generated URIs for this origin endpoint. This setting applies to all manifest types on the endpoint. If you don't specify a value in the update request, the current value is preserved.</p>",
+        "UpdateOriginEndpointResponse$UriSeparator": "<p>The separator character used in generated URIs for this origin endpoint.</p>"
+      }
     },
     "ValidationException": {
       "base": "<p>The input failed to meet the constraints specified by the AWS service.</p>",

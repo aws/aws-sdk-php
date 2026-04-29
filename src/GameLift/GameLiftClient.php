@@ -88,6 +88,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeContainerFleetAsync(array $args = [])
  * @method \Aws\Result describeContainerGroupDefinition(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeContainerGroupDefinitionAsync(array $args = [])
+ * @method \Aws\Result describeContainerGroupPortMappings(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeContainerGroupPortMappingsAsync(array $args = [])
  * @method \Aws\Result describeEC2InstanceLimits(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeEC2InstanceLimitsAsync(array $args = [])
  * @method \Aws\Result describeFleetAttributes(array $args = [])

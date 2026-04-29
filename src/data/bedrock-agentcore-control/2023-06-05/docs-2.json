@@ -8,8 +8,10 @@
     "CreateBrowser": "<p>Creates a custom browser.</p>",
     "CreateBrowserProfile": "<p>Creates a browser profile in Amazon Bedrock AgentCore. A browser profile stores persistent browser data such as cookies, local storage, session storage, and browsing history that can be saved from browser sessions and reused in subsequent sessions.</p>",
     "CreateCodeInterpreter": "<p>Creates a custom code interpreter.</p>",
+    "CreateConfigurationBundle": "<p>Creates a new configuration bundle resource. A configuration bundle stores versioned component configurations for agent evaluation workflows.</p>",
     "CreateEvaluator": "<p> Creates a custom evaluator for agent quality assessment. Custom evaluators can use either LLM-as-a-Judge configurations with user-defined prompts, rating scales, and model settings, or code-based configurations with customer-managed Lambda functions to evaluate agent performance at tool call, trace, or session levels. </p>",
     "CreateGateway": "<p>Creates a gateway for Amazon Bedrock Agent. A gateway serves as an integration point between your agent and external services.</p> <p>If you specify <code>CUSTOM_JWT</code> as the <code>authorizerType</code>, you must provide an <code>authorizerConfiguration</code>.</p>",
+    "CreateGatewayRule": "<p>Creates a rule for a gateway. Rules define conditions and actions that control how requests are routed and processed through the gateway, including principal-based access control and path-based routing.</p>",
     "CreateGatewayTarget": "<p>Creates a target for a gateway. A target defines an endpoint that the gateway can connect to.</p>",
     "CreateHarness": "<p>Operation to create a Harness.</p>",
     "CreateMemory": "<p>Creates a new Amazon Bedrock AgentCore Memory resource.</p>",
@@ -26,8 +28,10 @@
     "DeleteBrowser": "<p>Deletes a custom browser.</p>",
     "DeleteBrowserProfile": "<p>Deletes a browser profile.</p>",
     "DeleteCodeInterpreter": "<p>Deletes a custom code interpreter.</p>",
+    "DeleteConfigurationBundle": "<p>Deletes a configuration bundle and all of its versions.</p>",
     "DeleteEvaluator": "<p> Deletes a custom evaluator. Builtin evaluators cannot be deleted. The evaluator must not be referenced by any active online evaluation configurations. </p>",
     "DeleteGateway": "<p>Deletes a gateway.</p>",
+    "DeleteGatewayRule": "<p>Deletes a gateway rule.</p>",
     "DeleteGatewayTarget": "<p>Deletes a gateway target.</p> <p>You cannot delete a target that is in a pending authorization state (<code>CREATE_PENDING_AUTH</code>, <code>UPDATE_PENDING_AUTH</code>, or <code>SYNCHRONIZE_PENDING_AUTH</code>). Wait for the authorization to complete or fail before deleting the target.</p>",
     "DeleteHarness": "<p>Operation to delete a Harness.</p>",
     "DeleteMemory": "<p>Deletes an Amazon Bedrock AgentCore Memory resource.</p>",
@@ -45,8 +49,11 @@
     "GetBrowser": "<p>Gets information about a custom browser.</p>",
     "GetBrowserProfile": "<p>Gets information about a browser profile.</p>",
     "GetCodeInterpreter": "<p>Gets information about a custom code interpreter.</p>",
+    "GetConfigurationBundle": "<p>Gets the latest version of a configuration bundle. By default, returns the latest version on the mainline branch. Use <code>GetConfigurationBundleVersion</code> to retrieve a specific historical version.</p>",
+    "GetConfigurationBundleVersion": "<p>Gets a specific version of a configuration bundle by its version identifier.</p>",
     "GetEvaluator": "<p> Retrieves detailed information about an evaluator, including its configuration, status, and metadata. Works with both built-in and custom evaluators. </p>",
     "GetGateway": "<p>Retrieves information about a specific Gateway.</p>",
+    "GetGatewayRule": "<p>Retrieves detailed information about a specific gateway rule.</p>",
     "GetGatewayTarget": "<p>Retrieves information about a specific gateway target.</p>",
     "GetHarness": "<p>Operation to get a single Harness.</p>",
     "GetMemory": "<p>Retrieve an existing Amazon Bedrock AgentCore Memory resource.</p>",
@@ -67,7 +74,10 @@
     "ListBrowserProfiles": "<p>Lists all browser profiles in your account.</p>",
     "ListBrowsers": "<p>Lists all custom browsers in your account.</p>",
     "ListCodeInterpreters": "<p>Lists all custom code interpreters in your account.</p>",
+    "ListConfigurationBundleVersions": "<p>Lists all versions of a configuration bundle, with optional filtering by branch name or creation source.</p>",
+    "ListConfigurationBundles": "<p>Lists all configuration bundles in the account.</p>",
     "ListEvaluators": "<p> Lists all available evaluators, including both builtin evaluators provided by the service and custom evaluators created by the user. </p>",
+    "ListGatewayRules": "<p>Lists all rules for a gateway.</p>",
     "ListGatewayTargets": "<p>Lists all targets for a specific gateway.</p>",
     "ListGateways": "<p>Lists all gateways in the account.</p>",
     "ListHarnesses": "<p>Operation to list Harnesses.</p>",
@@ -92,8 +102,10 @@
     "UpdateAgentRuntime": "<p>Updates an existing Amazon Secure Agent.</p>",
     "UpdateAgentRuntimeEndpoint": "<p>Updates an existing Amazon Bedrock AgentCore Runtime endpoint.</p>",
     "UpdateApiKeyCredentialProvider": "<p>Updates an existing API key credential provider.</p>",
+    "UpdateConfigurationBundle": "<p>Updates a configuration bundle by creating a new version with the specified changes. Each update creates a new version in the version history.</p>",
     "UpdateEvaluator": "<p> Updates a custom evaluator's configuration, description, or evaluation level. Built-in evaluators cannot be updated. The evaluator must not be locked for modification. </p>",
     "UpdateGateway": "<p>Updates an existing gateway.</p>",
+    "UpdateGatewayRule": "<p>Updates a gateway rule's priority, conditions, actions, or description.</p>",
     "UpdateGatewayTarget": "<p>Updates an existing gateway target.</p> <p>You cannot update a target that is in a pending authorization state (<code>CREATE_PENDING_AUTH</code>, <code>UPDATE_PENDING_AUTH</code>, or <code>SYNCHRONIZE_PENDING_AUTH</code>). Wait for the authorization to complete or fail before updating the target.</p>",
     "UpdateHarness": "<p>Operation to update a Harness.</p>",
     "UpdateMemory": "<p>Update an Amazon Bedrock AgentCore Memory resource memory.</p>",
@@ -117,6 +129,23 @@
     "AccessDeniedException": {
       "base": "<p>This exception is thrown when a request is denied per access permissions</p>",
       "refs": {}
+    },
+    "Action": {
+      "base": "<p>An action to take when a gateway rule's conditions are met.</p>",
+      "refs": {
+        "Actions$member": null
+      }
+    },
+    "Actions": {
+      "base": null,
+      "refs": {
+        "CreateGatewayRuleRequest$actions": "<p>The actions to take when the rule conditions are met. Actions can route to a specific target or apply a configuration bundle override.</p>",
+        "CreateGatewayRuleResponse$actions": "<p>The actions to take when the rule conditions are met.</p>",
+        "GatewayRuleDetail$actions": "<p>The actions to take when the rule conditions are met.</p>",
+        "GetGatewayRuleResponse$actions": "<p>The actions to take when the rule conditions are met.</p>",
+        "UpdateGatewayRuleRequest$actions": "<p>The updated actions for the rule.</p>",
+        "UpdateGatewayRuleResponse$actions": "<p>The actions to take when the rule conditions are met.</p>"
+      }
     },
     "AdditionalModelRequestFields": {
       "base": null,
@@ -566,7 +595,18 @@
         "InterceptorInputConfiguration$passRequestHeaders": "<p>Indicates whether to pass request headers as input into the interceptor. When set to true, request headers will be passed.</p>",
         "RecordingConfig$enabled": "<p>Indicates whether recording is enabled for the browser. When set to true, browser sessions are recorded.</p>",
         "RuntimeMetadataConfiguration$requireMMDSV2": "<p>Enables MMDSv2 (microVM Metadata Service Version 2) requirement for the agent runtime. When set to <code>true</code>, the runtime microVM will only accept MMDSv2 requests.</p>",
-        "UpdateRegistryRecordRequest$triggerSynchronization": "<p>Whether to trigger synchronization using the stored or provided configuration. When set to <code>true</code>, the service will synchronize the record metadata from the configured external source.</p>"
+        "UpdateRegistryRecordRequest$triggerSynchronization": "<p>Whether to trigger synchronization using the stored or provided configuration. When set to <code>true</code>, the service will synchronize the record metadata from the configured external source.</p>",
+        "VersionFilter$latestPerBranch": "<p>When true, returns only the latest version for each branch. When false or not specified, returns all versions. Can be combined with <code>branchName</code> to get the latest version for a specific branch.</p>"
+      }
+    },
+    "BranchName": {
+      "base": null,
+      "refs": {
+        "CreateConfigurationBundleRequest$branchName": "<p>The branch name for version tracking. Defaults to <code>mainline</code> if not specified.</p>",
+        "GetConfigurationBundleRequest$branchName": "<p>The branch name to get the latest version from. If not specified, returns the latest version on the mainline branch.</p>",
+        "UpdateConfigurationBundleRequest$branchName": "<p>The branch name for this version. If not specified, inherits the parent's branch or defaults to <code>mainline</code>.</p>",
+        "VersionFilter$branchName": "<p>Filter by branch name.</p>",
+        "VersionLineageMetadata$branchName": "<p>The branch name for this version. If not specified, inherits the parent's branch or defaults to <code>mainline</code>.</p>"
       }
     },
     "BrowserArn": {
@@ -815,8 +855,10 @@
         "CreateBrowserProfileRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request but does not return an error.</p>",
         "CreateBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request but does not return an error.</p>",
         "CreateCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request but does not return an error.</p>",
+        "CreateConfigurationBundleRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateEvaluatorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "CreateGatewayRuleRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayTargetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateHarnessRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateOnlineEvaluationConfigRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -833,6 +875,7 @@
         "StartPolicyGenerationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure the idempotency of the request. The AWS SDK automatically generates this token, so you don't need to provide it in most cases. If you retry a request with the same client token, the service returns the same response without starting a duplicate generation.</p>",
         "UpdateAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "UpdateConfigurationBundleRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "UpdateEvaluatorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "UpdateHarnessRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateOnlineEvaluationConfigRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>"
@@ -940,9 +983,162 @@
         "CodeInterpreterSummaries$member": null
       }
     },
+    "ComponentConfiguration": {
+      "base": "<p>The configuration for a component within a configuration bundle. The component type is inferred from the component identifier ARN.</p>",
+      "refs": {
+        "ComponentConfigurationMap$value": null
+      }
+    },
+    "ComponentConfigurationMap": {
+      "base": null,
+      "refs": {
+        "CreateConfigurationBundleRequest$components": "<p>A map of component identifiers to their configurations. Each component represents a configurable element within the bundle.</p>",
+        "GetConfigurationBundleResponse$components": "<p>A map of component identifiers to their configurations for this version.</p>",
+        "GetConfigurationBundleVersionResponse$components": "<p>A map of component identifiers to their configurations for this version.</p>",
+        "UpdateConfigurationBundleRequest$components": "<p>The updated component configurations. Creates a new version of the bundle.</p>"
+      }
+    },
+    "ComponentIdentifier": {
+      "base": null,
+      "refs": {
+        "ComponentConfigurationMap$key": null
+      }
+    },
     "ConcurrentModificationException": {
       "base": "<p>Exception thrown when a resource is modified concurrently by multiple requests.</p>",
       "refs": {}
+    },
+    "Condition": {
+      "base": "<p>A condition that determines when a gateway rule applies. Conditions can match on principals or request paths.</p>",
+      "refs": {
+        "Conditions$member": null
+      }
+    },
+    "Conditions": {
+      "base": null,
+      "refs": {
+        "CreateGatewayRuleRequest$conditions": "<p>The conditions that must be met for the rule to apply. Conditions can match on principals (IAM ARNs) or request paths.</p>",
+        "CreateGatewayRuleResponse$conditions": "<p>The conditions that must be met for the rule to apply.</p>",
+        "GatewayRuleDetail$conditions": "<p>The conditions that must be met for the rule to apply.</p>",
+        "GetGatewayRuleResponse$conditions": "<p>The conditions that must be met for the rule to apply.</p>",
+        "UpdateGatewayRuleRequest$conditions": "<p>The updated conditions for the rule.</p>",
+        "UpdateGatewayRuleResponse$conditions": "<p>The conditions that must be met for the rule to apply.</p>"
+      }
+    },
+    "ConfigurationBundleAction": {
+      "base": "<p>An action that applies a configuration bundle override, either as a static override or a weighted split for A/B testing.</p>",
+      "refs": {
+        "Action$configurationBundle": "<p>An action that applies a configuration bundle override to the request.</p>"
+      }
+    },
+    "ConfigurationBundleArn": {
+      "base": null,
+      "refs": {
+        "ConfigurationBundleSummary$bundleArn": "<p>The Amazon Resource Name (ARN) of the configuration bundle.</p>",
+        "ConfigurationBundleVersionSummary$bundleArn": "<p>The Amazon Resource Name (ARN) of the configuration bundle.</p>",
+        "CreateConfigurationBundleResponse$bundleArn": "<p>The Amazon Resource Name (ARN) of the created configuration bundle.</p>",
+        "GetConfigurationBundleResponse$bundleArn": "<p>The Amazon Resource Name (ARN) of the configuration bundle.</p>",
+        "GetConfigurationBundleVersionResponse$bundleArn": "<p>The Amazon Resource Name (ARN) of the configuration bundle.</p>",
+        "UpdateConfigurationBundleResponse$bundleArn": "<p>The Amazon Resource Name (ARN) of the updated configuration bundle.</p>"
+      }
+    },
+    "ConfigurationBundleDescription": {
+      "base": null,
+      "refs": {
+        "ConfigurationBundleSummary$description": "<p>The description of the configuration bundle.</p>",
+        "CreateConfigurationBundleRequest$description": "<p>The description for the configuration bundle.</p>",
+        "GetConfigurationBundleResponse$description": "<p>The description of the configuration bundle.</p>",
+        "GetConfigurationBundleVersionResponse$description": "<p>The description of the configuration bundle.</p>",
+        "UpdateConfigurationBundleRequest$description": "<p>The updated description for the configuration bundle.</p>"
+      }
+    },
+    "ConfigurationBundleId": {
+      "base": null,
+      "refs": {
+        "ConfigurationBundleSummary$bundleId": "<p>The unique identifier of the configuration bundle.</p>",
+        "ConfigurationBundleVersionSummary$bundleId": "<p>The unique identifier of the configuration bundle.</p>",
+        "CreateConfigurationBundleResponse$bundleId": "<p>The unique identifier of the created configuration bundle.</p>",
+        "DeleteConfigurationBundleRequest$bundleId": "<p>The unique identifier of the configuration bundle to delete.</p>",
+        "DeleteConfigurationBundleResponse$bundleId": "<p>The unique identifier of the deleted configuration bundle.</p>",
+        "GetConfigurationBundleRequest$bundleId": "<p>The unique identifier of the configuration bundle to retrieve.</p>",
+        "GetConfigurationBundleResponse$bundleId": "<p>The unique identifier of the configuration bundle.</p>",
+        "GetConfigurationBundleVersionRequest$bundleId": "<p>The unique identifier of the configuration bundle.</p>",
+        "GetConfigurationBundleVersionResponse$bundleId": "<p>The unique identifier of the configuration bundle.</p>",
+        "ListConfigurationBundleVersionsRequest$bundleId": "<p>The unique identifier of the configuration bundle to list versions for.</p>",
+        "UpdateConfigurationBundleRequest$bundleId": "<p>The unique identifier of the configuration bundle to update.</p>",
+        "UpdateConfigurationBundleResponse$bundleId": "<p>The unique identifier of the updated configuration bundle.</p>"
+      }
+    },
+    "ConfigurationBundleName": {
+      "base": null,
+      "refs": {
+        "ConfigurationBundleSummary$bundleName": "<p>The name of the configuration bundle.</p>",
+        "CreateConfigurationBundleRequest$bundleName": "<p>The name for the configuration bundle. Names must be unique within your account.</p>",
+        "GetConfigurationBundleResponse$bundleName": "<p>The name of the configuration bundle.</p>",
+        "GetConfigurationBundleVersionResponse$bundleName": "<p>The name of the configuration bundle.</p>",
+        "UpdateConfigurationBundleRequest$bundleName": "<p>The updated name for the configuration bundle.</p>"
+      }
+    },
+    "ConfigurationBundleReference": {
+      "base": "<p>A reference to a specific version of a configuration bundle.</p>",
+      "refs": {
+        "TrafficSplitEntry$configurationBundle": "<p>The configuration bundle reference for this variant.</p>"
+      }
+    },
+    "ConfigurationBundleReferenceBundleVersionString": {
+      "base": null,
+      "refs": {
+        "ConfigurationBundleReference$bundleVersion": "<p>The version of the configuration bundle.</p>"
+      }
+    },
+    "ConfigurationBundleStatus": {
+      "base": null,
+      "refs": {
+        "DeleteConfigurationBundleResponse$status": "<p>The status of the configuration bundle deletion operation.</p>"
+      }
+    },
+    "ConfigurationBundleSummary": {
+      "base": "<p>Summary information about a configuration bundle.</p>",
+      "refs": {
+        "ConfigurationBundleSummaryList$member": null
+      }
+    },
+    "ConfigurationBundleSummaryList": {
+      "base": null,
+      "refs": {
+        "ListConfigurationBundlesResponse$bundles": "<p>The list of configuration bundle summaries.</p>"
+      }
+    },
+    "ConfigurationBundleVersion": {
+      "base": null,
+      "refs": {
+        "ConfigurationBundleVersionList$member": null,
+        "ConfigurationBundleVersionSummary$versionId": "<p>The version identifier of this configuration bundle version.</p>",
+        "CreateConfigurationBundleResponse$versionId": "<p>The initial version identifier of the configuration bundle.</p>",
+        "GetConfigurationBundleResponse$versionId": "<p>The version identifier of this configuration bundle.</p>",
+        "GetConfigurationBundleVersionRequest$versionId": "<p>The version identifier of the configuration bundle version to retrieve.</p>",
+        "GetConfigurationBundleVersionResponse$versionId": "<p>The version identifier of this configuration bundle version.</p>",
+        "UpdateConfigurationBundleResponse$versionId": "<p>The new version identifier created by this update.</p>"
+      }
+    },
+    "ConfigurationBundleVersionList": {
+      "base": null,
+      "refs": {
+        "UpdateConfigurationBundleRequest$parentVersionIds": "<p>A list of parent version identifiers for lineage tracking. Regular commits have a single parent. Merge commits have two parents: the target branch parent and the source branch parent. If the branch already exists, the first parent must be the latest version on that branch.</p>",
+        "VersionLineageMetadata$parentVersionIds": "<p>A list of parent version identifiers. Regular commits have 0-1 parents. Merge commits have 2 parents: the target branch parent and the source branch parent. The first parent represents the primary lineage.</p>"
+      }
+    },
+    "ConfigurationBundleVersionSummary": {
+      "base": "<p>Summary information about a configuration bundle version.</p>",
+      "refs": {
+        "ConfigurationBundleVersionSummaryList$member": null
+      }
+    },
+    "ConfigurationBundleVersionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListConfigurationBundleVersionsResponse$versions": "<p>The list of configuration bundle version summaries.</p>"
+      }
     },
     "ConflictException": {
       "base": "<p>This exception is thrown when there is a conflict performing an operation</p>",
@@ -1033,6 +1229,20 @@
       "base": null,
       "refs": {}
     },
+    "CreateConfigurationBundleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateConfigurationBundleRequestCommitMessageString": {
+      "base": null,
+      "refs": {
+        "CreateConfigurationBundleRequest$commitMessage": "<p>A commit message describing the initial version of the configuration bundle.</p>"
+      }
+    },
+    "CreateConfigurationBundleResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateEvaluatorRequest": {
       "base": null,
       "refs": {}
@@ -1046,6 +1256,14 @@
       "refs": {}
     },
     "CreateGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateGatewayRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateGatewayRuleResponse": {
       "base": null,
       "refs": {}
     },
@@ -1347,6 +1565,7 @@
         "CreateCodeInterpreterResponse$createdAt": "<p>The timestamp when the code interpreter was created.</p>",
         "CreateGatewayResponse$createdAt": "<p>The timestamp when the gateway was created.</p>",
         "CreateGatewayResponse$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
+        "CreateGatewayRuleResponse$createdAt": "<p>The timestamp when the rule was created.</p>",
         "CreateGatewayTargetResponse$createdAt": "<p>The timestamp when the target was created.</p>",
         "CreateGatewayTargetResponse$updatedAt": "<p>The timestamp when the target was last updated.</p>",
         "CreateGatewayTargetResponse$lastSynchronizedAt": "<p>The last synchronization of the target.</p>",
@@ -1362,6 +1581,8 @@
         "DeletePolicyEngineResponse$updatedAt": "<p>The timestamp when the deleted policy engine was last modified before deletion. This tracks the final state of the policy engine before it was removed from the system.</p>",
         "DeletePolicyResponse$createdAt": "<p>The timestamp when the deleted policy was originally created.</p>",
         "DeletePolicyResponse$updatedAt": "<p>The timestamp when the deleted policy was last modified before deletion. This tracks the final state of the policy before it was removed from the system.</p>",
+        "GatewayRuleDetail$createdAt": "<p>The timestamp when the rule was created.</p>",
+        "GatewayRuleDetail$updatedAt": "<p>The timestamp when the rule was last updated.</p>",
         "GatewaySummary$createdAt": "<p>The timestamp when the gateway was created.</p>",
         "GatewaySummary$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
         "GatewayTarget$createdAt": "<p>The date and time at which the target was created.</p>",
@@ -1380,6 +1601,8 @@
         "GetCodeInterpreterResponse$lastUpdatedAt": "<p>The timestamp when the code interpreter was last updated.</p>",
         "GetGatewayResponse$createdAt": "<p>The timestamp when the gateway was created.</p>",
         "GetGatewayResponse$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
+        "GetGatewayRuleResponse$createdAt": "<p>The timestamp when the rule was created.</p>",
+        "GetGatewayRuleResponse$updatedAt": "<p>The timestamp when the rule was last updated.</p>",
         "GetGatewayTargetResponse$createdAt": "<p>The timestamp when the gateway target was created.</p>",
         "GetGatewayTargetResponse$updatedAt": "<p>The timestamp when the gateway target was last updated.</p>",
         "GetGatewayTargetResponse$lastSynchronizedAt": "<p>The last synchronization of the target.</p>",
@@ -1418,6 +1641,8 @@
         "UpdateAgentRuntimeResponse$lastUpdatedAt": "<p>The timestamp when the AgentCore Runtime was last updated.</p>",
         "UpdateGatewayResponse$createdAt": "<p>The timestamp when the gateway was created.</p>",
         "UpdateGatewayResponse$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
+        "UpdateGatewayRuleResponse$createdAt": "<p>The timestamp when the rule was created.</p>",
+        "UpdateGatewayRuleResponse$updatedAt": "<p>The timestamp when the rule was last updated.</p>",
         "UpdateGatewayTargetResponse$createdAt": "<p>The timestamp when the gateway target was created.</p>",
         "UpdateGatewayTargetResponse$updatedAt": "<p>The timestamp when the gateway target was last updated.</p>",
         "UpdateGatewayTargetResponse$lastSynchronizedAt": "<p>The date and time at which the targets were last synchronized.</p>",
@@ -1484,6 +1709,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteConfigurationBundleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteConfigurationBundleResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteEvaluatorRequest": {
       "base": null,
       "refs": {}
@@ -1497,6 +1730,14 @@
       "refs": {}
     },
     "DeleteGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteGatewayRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteGatewayRuleResponse": {
       "base": null,
       "refs": {}
     },
@@ -1684,6 +1925,12 @@
       "base": null,
       "refs": {
         "Oauth2Discovery$discoveryUrl": "<p>The discovery URL for the OAuth2 provider.</p>"
+      }
+    },
+    "Document": {
+      "base": null,
+      "refs": {
+        "ComponentConfiguration$configuration": "<p>The configuration values as a flexible JSON document.</p>"
       }
     },
     "DomainName": {
@@ -2038,14 +2285,25 @@
       "base": null,
       "refs": {
         "CreateGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the created gateway.</p>",
+        "CreateGatewayRuleResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway that the rule belongs to.</p>",
         "CreateGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>",
         "DeleteGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>",
+        "GatewayRuleDetail$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway that the rule belongs to.</p>",
         "GatewayTarget$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway target.</p>",
         "GetGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>",
+        "GetGatewayRuleResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway that the rule belongs to.</p>",
         "GetGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>",
         "HarnessAgentCoreGatewayConfig$gatewayArn": "<p>The ARN of the desired AgentCore Gateway.</p>",
         "UpdateGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the updated gateway.</p>",
+        "UpdateGatewayRuleResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway that the rule belongs to.</p>",
         "UpdateGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>"
+      }
+    },
+    "GatewayConfigurationBundleArn": {
+      "base": null,
+      "refs": {
+        "ConfigurationBundleReference$bundleArn": "<p>The Amazon Resource Name (ARN) of the configuration bundle.</p>",
+        "StaticOverride$bundleArn": "<p>The Amazon Resource Name (ARN) of the configuration bundle to apply.</p>"
       }
     },
     "GatewayDescription": {
@@ -2072,14 +2330,19 @@
     "GatewayIdentifier": {
       "base": null,
       "refs": {
+        "CreateGatewayRuleRequest$gatewayIdentifier": "<p>The identifier of the gateway to create a rule for.</p>",
         "CreateGatewayTargetRequest$gatewayIdentifier": "<p>The identifier of the gateway to create a target for.</p>",
         "DeleteGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to delete.</p>",
+        "DeleteGatewayRuleRequest$gatewayIdentifier": "<p>The identifier of the gateway containing the rule.</p>",
         "DeleteGatewayTargetRequest$gatewayIdentifier": "<p>The unique identifier of the gateway associated with the target.</p>",
         "GetGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to retrieve.</p>",
+        "GetGatewayRuleRequest$gatewayIdentifier": "<p>The identifier of the gateway containing the rule.</p>",
         "GetGatewayTargetRequest$gatewayIdentifier": "<p>The identifier of the gateway that contains the target.</p>",
+        "ListGatewayRulesRequest$gatewayIdentifier": "<p>The identifier of the gateway to list rules for.</p>",
         "ListGatewayTargetsRequest$gatewayIdentifier": "<p>The identifier of the gateway to list targets for.</p>",
         "SynchronizeGatewayTargetsRequest$gatewayIdentifier": "<p>The gateway Identifier.</p>",
         "UpdateGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to update.</p>",
+        "UpdateGatewayRuleRequest$gatewayIdentifier": "<p>The identifier of the gateway containing the rule.</p>",
         "UpdateGatewayTargetRequest$gatewayIdentifier": "<p>The unique identifier of the gateway associated with the target.</p>"
       }
     },
@@ -2178,6 +2441,76 @@
         "UpdateGatewayResponse$protocolType": "<p>The updated protocol type for the gateway.</p>"
       }
     },
+    "GatewayRuleDescription": {
+      "base": null,
+      "refs": {
+        "CreateGatewayRuleRequest$description": "<p>The description of the gateway rule.</p>",
+        "CreateGatewayRuleResponse$description": "<p>The description of the gateway rule.</p>",
+        "GatewayRuleDetail$description": "<p>The description of the gateway rule.</p>",
+        "GetGatewayRuleResponse$description": "<p>The description of the gateway rule.</p>",
+        "UpdateGatewayRuleRequest$description": "<p>The updated description of the rule.</p>",
+        "UpdateGatewayRuleResponse$description": "<p>The description of the gateway rule.</p>"
+      }
+    },
+    "GatewayRuleDetail": {
+      "base": "<p>Detailed information about a gateway rule.</p>",
+      "refs": {
+        "GatewayRules$member": null
+      }
+    },
+    "GatewayRuleId": {
+      "base": null,
+      "refs": {
+        "CreateGatewayRuleResponse$ruleId": "<p>The unique identifier of the gateway rule.</p>",
+        "DeleteGatewayRuleRequest$ruleId": "<p>The unique identifier of the rule to delete.</p>",
+        "DeleteGatewayRuleResponse$ruleId": "<p>The unique identifier of the deleted rule.</p>",
+        "GatewayRuleDetail$ruleId": "<p>The unique identifier of the gateway rule.</p>",
+        "GetGatewayRuleRequest$ruleId": "<p>The unique identifier of the rule to retrieve.</p>",
+        "GetGatewayRuleResponse$ruleId": "<p>The unique identifier of the gateway rule.</p>",
+        "UpdateGatewayRuleRequest$ruleId": "<p>The unique identifier of the rule to update.</p>",
+        "UpdateGatewayRuleResponse$ruleId": "<p>The unique identifier of the gateway rule.</p>"
+      }
+    },
+    "GatewayRuleMaxResults": {
+      "base": null,
+      "refs": {
+        "ListGatewayRulesRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
+      }
+    },
+    "GatewayRuleNextToken": {
+      "base": null,
+      "refs": {
+        "ListGatewayRulesRequest$nextToken": "<p>The pagination token from a previous request.</p>",
+        "ListGatewayRulesResponse$nextToken": "<p>The pagination token to use in a subsequent request.</p>"
+      }
+    },
+    "GatewayRulePriority": {
+      "base": null,
+      "refs": {
+        "CreateGatewayRuleRequest$priority": "<p>The priority of the rule. Rules are evaluated in order of priority, with lower numbers evaluated first. Must be between 1 and 1,000,000.</p>",
+        "CreateGatewayRuleResponse$priority": "<p>The priority of the rule. Rules are evaluated in order of priority, with lower numbers evaluated first.</p>",
+        "GatewayRuleDetail$priority": "<p>The priority of the rule. Rules are evaluated in order of priority, with lower numbers evaluated first.</p>",
+        "GetGatewayRuleResponse$priority": "<p>The priority of the rule. Rules are evaluated in order of priority, with lower numbers evaluated first.</p>",
+        "UpdateGatewayRuleRequest$priority": "<p>The updated priority of the rule.</p>",
+        "UpdateGatewayRuleResponse$priority": "<p>The priority of the rule. Rules are evaluated in order of priority, with lower numbers evaluated first.</p>"
+      }
+    },
+    "GatewayRuleStatus": {
+      "base": null,
+      "refs": {
+        "CreateGatewayRuleResponse$status": "<p>The current status of the rule.</p>",
+        "DeleteGatewayRuleResponse$status": "<p>The status of the rule deletion operation.</p>",
+        "GatewayRuleDetail$status": "<p>The current status of the rule.</p>",
+        "GetGatewayRuleResponse$status": "<p>The current status of the rule.</p>",
+        "UpdateGatewayRuleResponse$status": "<p>The current status of the rule.</p>"
+      }
+    },
+    "GatewayRules": {
+      "base": null,
+      "refs": {
+        "ListGatewayRulesResponse$gatewayRules": "<p>The list of gateway rules.</p>"
+      }
+    },
     "GatewayStatus": {
       "base": null,
       "refs": {
@@ -2268,6 +2601,22 @@
       "base": null,
       "refs": {}
     },
+    "GetConfigurationBundleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConfigurationBundleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConfigurationBundleVersionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConfigurationBundleVersionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetEvaluatorRequest": {
       "base": null,
       "refs": {}
@@ -2282,6 +2631,14 @@
     },
     "GetGatewayResponse": {
       "base": null,
+      "refs": {}
+    },
+    "GetGatewayRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetGatewayRuleResponse": {
+      "base": "<p>Create response excludes updatedAt (redundant on create). Get/Update responses include it via their own output structures.</p>",
       "refs": {}
     },
     "GetGatewayTargetRequest": {
@@ -2520,7 +2877,7 @@
     "HarnessGatewayOutboundAuth": {
       "base": "<p>Authentication method for calling a Gateway.</p>",
       "refs": {
-        "HarnessAgentCoreGatewayConfig$outboundAuth": "<p>How Loopy authenticates to this Gateway. Defaults to AWS_IAM (SigV4) if omitted.</p>"
+        "HarnessAgentCoreGatewayConfig$outboundAuth": "<p>How harness authenticates to this Gateway. Defaults to AWS_IAM (SigV4) if omitted.</p>"
       }
     },
     "HarnessGeminiModelConfig": {
@@ -2738,13 +3095,19 @@
     "HttpHeadersMap": {
       "base": "<p>Map of key/value pairs for HTTP headers.</p>",
       "refs": {
-        "HarnessRemoteMcpConfig$headers": null
+        "HarnessRemoteMcpConfig$headers": "<p>Custom headers to include when connecting to the remote MCP server.</p>"
       }
     },
     "HttpQueryParameterName": {
       "base": null,
       "refs": {
         "AllowedQueryParameters$member": null
+      }
+    },
+    "HttpTargetConfiguration": {
+      "base": "<p>The HTTP target configuration for a gateway target. Contains the configuration for HTTP-based target endpoints.</p>",
+      "refs": {
+        "TargetConfiguration$http": "<p>The HTTP target configuration. Use this to route gateway requests to an HTTP-based endpoint such as an AgentCore Runtime.</p>"
       }
     },
     "IamCredentialProvider": {
@@ -2763,6 +3126,18 @@
       "base": null,
       "refs": {
         "IamCredentialProvider$service": "<p>The target Amazon Web Services service name used for SigV4 signing. This value identifies the service that the gateway authenticates with when making requests to the target endpoint.</p>"
+      }
+    },
+    "IamPrincipal": {
+      "base": "<p>An IAM principal specification for rule matching.</p>",
+      "refs": {
+        "MatchPrincipalEntry$iamPrincipal": "<p>An IAM principal to match against, specified by ARN.</p>"
+      }
+    },
+    "IamPrincipalArn": {
+      "base": null,
+      "refs": {
+        "IamPrincipal$arn": "<p>The Amazon Resource Name (ARN) of the IAM principal. Supports user, role, and assumed-role ARNs. Wildcards can be used with the <code>StringLike</code> operator.</p>"
       }
     },
     "IamRoleArn": {
@@ -2793,6 +3168,12 @@
       "base": null,
       "refs": {
         "CustomClaimValidationType$inboundTokenClaimValueType": "<p>The data type of the claim value to check for.</p> <ul> <li> <p>Use <code>STRING</code> if you want to find an exact match to a string you define.</p> </li> <li> <p>Use <code>STRING_ARRAY</code> if you want to fnd a match to at least one value in an array you define.</p> </li> </ul>"
+      }
+    },
+    "IncludedData": {
+      "base": null,
+      "refs": {
+        "GetEvaluatorRequest$includedData": "<p> Controls which data is returned in the response. <code>ALL_DATA</code> (default) returns the full evaluator including decrypted instructions and rating scale. For evaluators encrypted with a customer managed KMS key, this requires <code>kms:Decrypt</code> permission on the key. <code>METADATA_ONLY</code> returns evaluator metadata and model configuration without instructions or rating scale, and does not require any KMS permissions. </p>"
       }
     },
     "IncludedOauth2ProviderConfigInput": {
@@ -2859,10 +3240,10 @@
       "base": null,
       "refs": {
         "CreateHarnessRequest$maxIterations": "<p>The maximum number of iterations the agent loop can execute per invocation.</p>",
-        "CreateHarnessRequest$maxTokens": "<p>The maximum number of tokens the agent can generate per iteration.</p>",
+        "CreateHarnessRequest$maxTokens": "<p>The maximum total number of output tokens the agent can generate across all model calls within a single invocation.</p>",
         "CreateHarnessRequest$timeoutSeconds": "<p>The maximum duration in seconds for the agent loop execution per invocation.</p>",
         "Harness$maxIterations": "<p>The maximum number of iterations in the agent loop allowed before exiting per invocation.</p>",
-        "Harness$maxTokens": "<p>The maximum number of tokens allowed before exiting per invocation.</p>",
+        "Harness$maxTokens": "<p>The maximum total number of output tokens the agent can generate across all model calls within a single invocation.</p>",
         "Harness$timeoutSeconds": "<p>The maximum duration per invocation.</p>",
         "HarnessAgentCoreMemoryConfiguration$messagesCount": "<p>The number of messages to retrieve from memory.</p>",
         "HarnessAgentCoreMemoryRetrievalConfig$topK": "<p>The maximum number of memory entries to retrieve.</p>",
@@ -2873,7 +3254,7 @@
         "TimeBasedTrigger$idleSessionTimeout": "<p>Idle session timeout (seconds) that triggers memory processing.</p>",
         "TokenBasedTrigger$tokenCount": "<p>Number of tokens that trigger memory processing.</p>",
         "UpdateHarnessRequest$maxIterations": "<p>The maximum number of iterations the agent loop can execute per invocation. If not specified, the existing value is retained.</p>",
-        "UpdateHarnessRequest$maxTokens": "<p>The maximum number of tokens the agent can generate per iteration. If not specified, the existing value is retained.</p>",
+        "UpdateHarnessRequest$maxTokens": "<p>The maximum total number of output tokens the agent can generate across all model calls within a single invocation. If not specified, the existing value is retained.</p>",
         "UpdateHarnessRequest$timeoutSeconds": "<p>The maximum duration in seconds for the agent loop execution per invocation. If not specified, the existing value is retained.</p>"
       }
     },
@@ -2947,15 +3328,19 @@
     "KmsKeyArn": {
       "base": null,
       "refs": {
+        "CreateEvaluatorRequest$kmsKeyArn": "<p> The Amazon Resource Name (ARN) of a customer managed KMS key to use for encrypting sensitive evaluator data, including instructions and rating scale. If you don't specify a KMS key, the evaluator data is encrypted with an Amazon Web Services owned key. Only symmetric encryption KMS keys are supported. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluations-encryption.html\">Encryption at rest for AgentCore Evaluations</a>. </p>",
         "CreateGatewayRequest$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt data associated with the gateway.</p>",
         "CreateGatewayResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt data associated with the gateway.</p>",
         "CreatePolicyEngineRequest$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "CreatePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "DeletePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
+        "EvaluatorSummary$kmsKeyArn": "<p> The Amazon Resource Name (ARN) of the customer managed KMS key used to encrypt the evaluator's sensitive data. This field is only present for evaluators encrypted with a customer managed key. </p>",
+        "GetEvaluatorResponse$kmsKeyArn": "<p> The Amazon Resource Name (ARN) of the customer managed KMS key used to encrypt the evaluator's sensitive data. This field is only present for evaluators encrypted with a customer managed key. </p>",
         "GetGatewayResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the gateway.</p>",
         "GetPolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "KmsConfiguration$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key.</p>",
         "PolicyEngine$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
+        "UpdateEvaluatorRequest$kmsKeyArn": "<p> The Amazon Resource Name (ARN) of a customer managed KMS key to use for encrypting sensitive evaluator data. Specify a new key ARN to rotate the encryption key, or specify a key ARN to add encryption to an evaluator that was previously created without one. When you rotate to a new key, the service decrypts the existing data with the old key and re-encrypts it with the new key. Only symmetric encryption KMS keys are supported. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluations-encryption.html\">Encryption at rest for AgentCore Evaluations</a>. </p>",
         "UpdateGatewayRequest$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the gateway.</p>",
         "UpdateGatewayResponse$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the gateway.</p>",
         "UpdatePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>"
@@ -3082,6 +3467,34 @@
       "base": null,
       "refs": {}
     },
+    "ListConfigurationBundleVersionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConfigurationBundleVersionsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListConfigurationBundleVersionsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
+      }
+    },
+    "ListConfigurationBundleVersionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConfigurationBundlesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConfigurationBundlesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListConfigurationBundlesRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
+      }
+    },
+    "ListConfigurationBundlesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListEvaluatorsRequest": {
       "base": null,
       "refs": {}
@@ -3093,6 +3506,14 @@
       }
     },
     "ListEvaluatorsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGatewayRulesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGatewayRulesResponse": {
       "base": null,
       "refs": {}
     },
@@ -3269,6 +3690,42 @@
         "PrivateEndpoint$managedVpcResource": "<p>Configuration for connecting to a private resource using a managed VPC Lattice resource. The gateway creates and manages the VPC Lattice resources on your behalf.</p>"
       }
     },
+    "MatchPathPattern": {
+      "base": null,
+      "refs": {
+        "MatchPathsAnyOfList$member": null
+      }
+    },
+    "MatchPaths": {
+      "base": "<p>A condition that matches requests based on the request path.</p>",
+      "refs": {
+        "Condition$matchPaths": "<p>A condition that matches on the request path.</p>"
+      }
+    },
+    "MatchPathsAnyOfList": {
+      "base": null,
+      "refs": {
+        "MatchPaths$anyOf": "<p>A list of path patterns. The condition is met if the request path matches any of the patterns.</p>"
+      }
+    },
+    "MatchPrincipalEntry": {
+      "base": "<p>Union for principal matching. Currently supports IAM principal ARN glob matching. Extensible for future principal types (e.g., OAuth client ID).</p>",
+      "refs": {
+        "MatchPrincipalsAnyOfList$member": null
+      }
+    },
+    "MatchPrincipals": {
+      "base": "<p>A condition that matches requests based on the caller's identity.</p>",
+      "refs": {
+        "Condition$matchPrincipals": "<p>A condition that matches on the identity of the caller making the request.</p>"
+      }
+    },
+    "MatchPrincipalsAnyOfList": {
+      "base": null,
+      "refs": {
+        "MatchPrincipals$anyOf": "<p>A list of principal entries. The condition is met if any of the entries match the caller's identity.</p>"
+      }
+    },
     "MatchValueString": {
       "base": null,
       "refs": {
@@ -3304,9 +3761,9 @@
     "MaxTokens": {
       "base": null,
       "refs": {
-        "HarnessBedrockModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per iteration.</p>",
-        "HarnessGeminiModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per iteration.</p>",
-        "HarnessOpenAiModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per iteration.</p>"
+        "HarnessBedrockModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per model call.</p>",
+        "HarnessGeminiModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per model call.</p>",
+        "HarnessOpenAiModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per model call.</p>"
       }
     },
     "McpDescriptor": {
@@ -4103,6 +4560,12 @@
         "UpdatePolicyRequest$validationMode": "<p>The validation mode for the policy update. Determines how Cedar analyzer validation results are handled during policy updates. FAIL_ON_ANY_FINDINGS runs the Cedar analyzer and fails the update if validation issues are detected, ensuring the policy conforms to the Cedar schema and tool context. IGNORE_ALL_FINDINGS runs the Cedar analyzer but allows updates despite validation warnings. Use FAIL_ON_ANY_FINDINGS to ensure policy correctness during updates, especially when modifying policy logic or conditions.</p>"
       }
     },
+    "PrincipalMatchOperator": {
+      "base": null,
+      "refs": {
+        "IamPrincipal$operator": "<p>The match operator. <code>StringEquals</code> requires an exact match. <code>StringLike</code> supports wildcard patterns using <code>*</code> and <code>?</code>.</p>"
+      }
+    },
     "PrivateEndpoint": {
       "base": "<p>The private endpoint configuration for a gateway target. Defines how the gateway connects to private resources in your VPC.</p>",
       "refs": {
@@ -4572,7 +5035,7 @@
         "CreateGatewayRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the gateway to access Amazon Web Services services.</p>",
         "CreateGatewayResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the gateway.</p>",
         "CreateHarnessRequest$executionRoleArn": "<p>The ARN of the IAM role that the harness assumes when running. This role must have permissions for the services the agent needs to access, such as Amazon Bedrock for model invocation.</p>",
-        "CreateOnlineEvaluationConfigRequest$evaluationExecutionRoleArn": "<p> The Amazon Resource Name (ARN) of the IAM role that grants permissions to read from CloudWatch logs, write evaluation results, and invoke Amazon Bedrock models for evaluation. </p>",
+        "CreateOnlineEvaluationConfigRequest$evaluationExecutionRoleArn": "<p> The Amazon Resource Name (ARN) of the IAM role that grants permissions to read from CloudWatch logs, write evaluation results, and invoke Amazon Bedrock models for evaluation. If the configuration references evaluators encrypted with a customer managed KMS key, this role must also have <code>kms:Decrypt</code> permission on the KMS key. The service validates this permission at configuration creation time. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluations-encryption.html\">Encryption at rest for AgentCore Evaluations</a>. </p>",
         "GetAgentRuntimeResponse$roleArn": "<p>The IAM role ARN that provides permissions for the AgentCore Runtime.</p>",
         "GetBrowserResponse$executionRoleArn": "<p>The IAM role ARN that provides permissions for the browser.</p>",
         "GetCodeInterpreterResponse$executionRoleArn": "<p>The IAM role ARN that provides permissions for the code interpreter.</p>",
@@ -4584,6 +5047,12 @@
         "UpdateGatewayResponse$roleArn": "<p>The updated IAM role ARN that provides permissions for the gateway.</p>",
         "UpdateHarnessRequest$executionRoleArn": "<p>The ARN of the IAM role that the harness assumes when running. If not specified, the existing value is retained.</p>",
         "UpdateOnlineEvaluationConfigRequest$evaluationExecutionRoleArn": "<p> The updated Amazon Resource Name (ARN) of the IAM role used for evaluation execution. </p>"
+      }
+    },
+    "RouteToTargetAction": {
+      "base": "<p>An action that routes requests to a gateway target, either statically or with weighted traffic splitting.</p>",
+      "refs": {
+        "Action$routeToTarget": "<p>An action that routes the request to a specific target.</p>"
       }
     },
     "RoutingDomain": {
@@ -4600,6 +5069,12 @@
         "UpdateOnlineEvaluationConfigRequest$rule": "<p> The updated evaluation rule containing sampling configuration, filters, and session settings. </p>"
       }
     },
+    "RuntimeArn": {
+      "base": null,
+      "refs": {
+        "RuntimeTargetConfiguration$arn": "<p>The Amazon Resource Name (ARN) of the AgentCore Runtime to route requests to.</p>"
+      }
+    },
     "RuntimeContainerUri": {
       "base": null,
       "refs": {
@@ -4611,6 +5086,18 @@
       "refs": {
         "GetAgentRuntimeResponse$metadataConfiguration": "<p>Configuration for microVM Metadata Service (MMDS) settings for the AgentCore Runtime.</p>",
         "UpdateAgentRuntimeRequest$metadataConfiguration": "<p>The updated configuration for microVM Metadata Service (MMDS) settings for the AgentCore Runtime.</p>"
+      }
+    },
+    "RuntimeQualifier": {
+      "base": null,
+      "refs": {
+        "RuntimeTargetConfiguration$qualifier": "<p>The qualifier for the agent runtime, used to target a specific endpoint version. If not specified, the default endpoint is used.</p>"
+      }
+    },
+    "RuntimeTargetConfiguration": {
+      "base": "<p>Configuration for an AgentCore Runtime target. Specifies the agent runtime to route requests to via HTTP.</p>",
+      "refs": {
+        "HttpTargetConfiguration$agentcoreRuntime": "<p>The AgentCore Runtime target configuration for HTTP-based communication with an agent runtime.</p>"
       }
     },
     "S3BucketUri": {
@@ -4944,6 +5431,24 @@
         "CedarPolicy$statement": "<p>The Cedar policy statement that defines the authorization logic. This statement follows Cedar syntax and specifies principals, actions, resources, and conditions that determine when access should be allowed or denied.</p>"
       }
     },
+    "StaticOverride": {
+      "base": "<p>A static configuration bundle override.</p>",
+      "refs": {
+        "ConfigurationBundleAction$staticOverride": "<p>A static configuration bundle override that applies a single bundle version to all matching requests.</p>"
+      }
+    },
+    "StaticOverrideBundleVersionString": {
+      "base": null,
+      "refs": {
+        "StaticOverride$bundleVersion": "<p>The version of the configuration bundle to apply.</p>"
+      }
+    },
+    "StaticRoute": {
+      "base": "<p>A static route to a single gateway target.</p>",
+      "refs": {
+        "RouteToTargetAction$staticRoute": "<p>A static route that sends all matching requests to a single target.</p>"
+      }
+    },
     "Status": {
       "base": null,
       "refs": {
@@ -5043,6 +5548,10 @@
         "InvocationConfiguration$payloadDeliveryBucketName": "<p>The S3 bucket name for event payload delivery.</p>",
         "ListApiKeyCredentialProvidersRequest$nextToken": "<p>Pagination token.</p>",
         "ListApiKeyCredentialProvidersResponse$nextToken": "<p>Pagination token for the next page of results.</p>",
+        "ListConfigurationBundleVersionsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
+        "ListConfigurationBundleVersionsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListConfigurationBundlesRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
+        "ListConfigurationBundlesResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListEvaluatorsRequest$nextToken": "<p> The pagination token from a previous request to retrieve the next page of results. </p>",
         "ListEvaluatorsResponse$nextToken": "<p> The pagination token to use in a subsequent request to retrieve the next page of results. </p>",
         "ListMemoriesInput$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -5073,6 +5582,7 @@
         "StartPolicyGenerationResponse$findings": "<p>Initial findings from the policy generation process.</p>",
         "SummaryConsolidationOverride$modelId": "<p>The model ID to use for summary consolidation.</p>",
         "SummaryOverrideConsolidationConfigurationInput$modelId": "<p>The model ID to use for summary consolidation.</p>",
+        "SystemManagedBlock$managedBy": "<p>The identifier of the system or process that manages this rule.</p>",
         "ThrottledException$message": null,
         "ToolDefinition$name": "<p>The name of the tool. This name identifies the tool in the Model Context Protocol.</p>",
         "ToolDefinition$description": "<p>The description of the tool. This description provides information about the purpose and usage of the tool.</p>",
@@ -5087,7 +5597,10 @@
         "UserPreferenceOverrideExtractionConfigurationInput$modelId": "<p>The model ID to use for user preference extraction.</p>",
         "ValidationException$message": null,
         "ValidationExceptionField$name": "<p>The name of the field.</p>",
-        "ValidationExceptionField$message": "<p>A message describing why this field failed validation.</p>"
+        "ValidationExceptionField$message": "<p>A message describing why this field failed validation.</p>",
+        "VersionCreatedBySource$name": "<p>The name of the source (for example, <code>user</code>, <code>optimization-job</code>, or <code>system</code>).</p>",
+        "VersionCreatedBySource$arn": "<p>The Amazon Resource Name (ARN) of the source, if applicable (for example, a user ARN or optimization job ARN).</p>",
+        "VersionFilter$createdByName": "<p>Filter by creation source name.</p>"
       }
     },
     "SubmitRegistryRecordForApprovalRequest": {
@@ -5168,6 +5681,15 @@
       "base": null,
       "refs": {}
     },
+    "SystemManagedBlock": {
+      "base": "<p>System-managed metadata for rules created by automated processes such as A/B tests.</p>",
+      "refs": {
+        "CreateGatewayRuleResponse$system": "<p>System-managed metadata for rules created by automated processes.</p>",
+        "GatewayRuleDetail$system": "<p>System-managed metadata for rules created by automated processes.</p>",
+        "GetGatewayRuleResponse$system": "<p>System-managed metadata for rules created by automated processes.</p>",
+        "UpdateGatewayRuleResponse$system": "<p>System-managed metadata for rules created by automated processes.</p>"
+      }
+    },
     "TagKey": {
       "base": null,
       "refs": {
@@ -5212,6 +5734,7 @@
         "CreateBrowserProfileRequest$tags": "<p>A map of tag keys and values to assign to the browser profile. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateBrowserRequest$tags": "<p>A map of tag keys and values to assign to the browser. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateCodeInterpreterRequest$tags": "<p>A map of tag keys and values to assign to the code interpreter. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
+        "CreateConfigurationBundleRequest$tags": "<p>A map of tag keys and values to assign to the configuration bundle. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateEvaluatorRequest$tags": "<p>A map of tag keys and values to assign to an AgentCore Evaluator. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateGatewayRequest$tags": "<p>A map of key-value pairs to associate with the gateway as metadata tags.</p>",
         "CreateHarnessRequest$tags": "<p>Tags to apply to the harness resource.</p>",
@@ -5282,7 +5805,9 @@
         "CreateGatewayTargetResponse$name": "<p>The name of the target.</p>",
         "GatewayTarget$name": "<p>The name of the gateway target.</p>",
         "GetGatewayTargetResponse$name": "<p>The name of the gateway target.</p>",
+        "StaticRoute$targetName": "<p>The name of the target to route requests to.</p>",
         "TargetSummary$name": "<p>The name of the target.</p>",
+        "TargetTrafficSplitEntry$targetName": "<p>The name of the target to route traffic to.</p>",
         "UpdateGatewayTargetRequest$name": "<p>The updated name for the gateway target.</p>",
         "UpdateGatewayTargetResponse$name": "<p>The updated name of the gateway target.</p>"
       }
@@ -5292,6 +5817,15 @@
       "refs": {
         "ListGatewayTargetsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "ListGatewayTargetsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>"
+      }
+    },
+    "TargetProtocolType": {
+      "base": null,
+      "refs": {
+        "CreateGatewayTargetResponse$protocolType": "<p>The protocol type of the created gateway target.</p>",
+        "GatewayTarget$protocolType": "<p>The protocol type of the gateway target.</p>",
+        "GetGatewayTargetResponse$protocolType": "<p>The protocol type of the gateway target.</p>",
+        "UpdateGatewayTargetResponse$protocolType": "<p>The protocol type of the updated gateway target.</p>"
       }
     },
     "TargetResourcePriority": {
@@ -5322,6 +5856,36 @@
       "base": "<p>Contains summary information about a gateway target. A target represents an endpoint that the gateway can connect to.</p>",
       "refs": {
         "TargetSummaries$member": null
+      }
+    },
+    "TargetTrafficSplitEntries": {
+      "base": null,
+      "refs": {
+        "WeightedRoute$trafficSplit": "<p>The traffic split entries defining how traffic is distributed between targets.</p>"
+      }
+    },
+    "TargetTrafficSplitEntry": {
+      "base": "<p>An entry in a target traffic split configuration.</p>",
+      "refs": {
+        "TargetTrafficSplitEntries$member": null
+      }
+    },
+    "TargetTrafficSplitEntryDescriptionString": {
+      "base": null,
+      "refs": {
+        "TargetTrafficSplitEntry$description": "<p>The description of this traffic split variant.</p>"
+      }
+    },
+    "TargetTrafficSplitEntryNameString": {
+      "base": null,
+      "refs": {
+        "TargetTrafficSplitEntry$name": "<p>The name of this traffic split variant.</p>"
+      }
+    },
+    "TargetTrafficSplitEntryWeightInteger": {
+      "base": null,
+      "refs": {
+        "TargetTrafficSplitEntry$weight": "<p>The percentage of traffic to route to this variant.</p>"
       }
     },
     "Temperature": {
@@ -5369,12 +5933,18 @@
       "refs": {
         "ApiKeyCredentialProviderItem$createdTime": "<p>The timestamp when the API key credential provider was created.</p>",
         "ApiKeyCredentialProviderItem$lastUpdatedTime": "<p>The timestamp when the API key credential provider was last updated.</p>",
+        "ConfigurationBundleVersionSummary$versionCreatedAt": "<p>The timestamp when this version was created.</p>",
+        "CreateConfigurationBundleResponse$createdAt": "<p>The timestamp when the configuration bundle was created.</p>",
         "CreateEvaluatorResponse$createdAt": "<p> The timestamp when the evaluator was created. </p>",
         "CreateOnlineEvaluationConfigResponse$createdAt": "<p> The timestamp when the online evaluation configuration was created. </p>",
         "EvaluatorSummary$createdAt": "<p> The timestamp when the evaluator was created. </p>",
         "EvaluatorSummary$updatedAt": "<p> The timestamp when the evaluator was last updated. </p>",
         "GetApiKeyCredentialProviderResponse$createdTime": "<p>The timestamp when the API key credential provider was created.</p>",
         "GetApiKeyCredentialProviderResponse$lastUpdatedTime": "<p>The timestamp when the API key credential provider was last updated.</p>",
+        "GetConfigurationBundleResponse$createdAt": "<p>The timestamp when the configuration bundle was created.</p>",
+        "GetConfigurationBundleResponse$updatedAt": "<p>The timestamp when the configuration bundle was last updated.</p>",
+        "GetConfigurationBundleVersionResponse$createdAt": "<p>The timestamp when the configuration bundle was created.</p>",
+        "GetConfigurationBundleVersionResponse$versionCreatedAt": "<p>The timestamp when this specific version was created.</p>",
         "GetEvaluatorResponse$createdAt": "<p> The timestamp when the evaluator was created. </p>",
         "GetEvaluatorResponse$updatedAt": "<p> The timestamp when the evaluator was last updated. </p>",
         "GetOauth2CredentialProviderResponse$createdTime": "<p>The timestamp when the OAuth2 credential provider was created.</p>",
@@ -5397,6 +5967,7 @@
         "SetTokenVaultCMKResponse$lastModifiedDate": "<p>The timestamp when the token vault was last modified.</p>",
         "UpdateApiKeyCredentialProviderResponse$createdTime": "<p>The timestamp when the API key credential provider was created.</p>",
         "UpdateApiKeyCredentialProviderResponse$lastUpdatedTime": "<p>The timestamp when the API key credential provider was last updated.</p>",
+        "UpdateConfigurationBundleResponse$updatedAt": "<p>The timestamp when the configuration bundle was updated.</p>",
         "UpdateEvaluatorResponse$updatedAt": "<p> The timestamp when the evaluator was last updated. </p>",
         "UpdateOauth2CredentialProviderResponse$createdTime": "<p>The timestamp when the OAuth2 credential provider was created.</p>",
         "UpdateOauth2CredentialProviderResponse$lastUpdatedTime": "<p>The timestamp when the OAuth2 credential provider was last updated.</p>",
@@ -5496,6 +6067,55 @@
         "HarnessOpenAiModelConfig$topP": "<p>The topP set when calling the model.</p>"
       }
     },
+    "TrafficSplitEntries": {
+      "base": null,
+      "refs": {
+        "WeightedOverride$trafficSplit": "<p>The traffic split entries defining how traffic is distributed between configuration bundle versions.</p>"
+      }
+    },
+    "TrafficSplitEntry": {
+      "base": "<p>An entry in a traffic split configuration, defining a named variant with a weight and configuration bundle reference.</p>",
+      "refs": {
+        "TrafficSplitEntries$member": null
+      }
+    },
+    "TrafficSplitEntryDescriptionString": {
+      "base": null,
+      "refs": {
+        "TrafficSplitEntry$description": "<p>The description of this traffic split variant.</p>"
+      }
+    },
+    "TrafficSplitEntryNameString": {
+      "base": null,
+      "refs": {
+        "TrafficSplitEntry$name": "<p>The name of this traffic split variant.</p>"
+      }
+    },
+    "TrafficSplitEntryWeightInteger": {
+      "base": null,
+      "refs": {
+        "TrafficSplitEntry$weight": "<p>The percentage of traffic to route to this variant. Weights across all entries must sum to 100.</p>"
+      }
+    },
+    "TrafficSplitMetadataKey": {
+      "base": null,
+      "refs": {
+        "TrafficSplitMetadataMap$key": null
+      }
+    },
+    "TrafficSplitMetadataMap": {
+      "base": null,
+      "refs": {
+        "TargetTrafficSplitEntry$metadata": "<p>Key-value metadata associated with this traffic split variant.</p>",
+        "TrafficSplitEntry$metadata": "<p>Key-value metadata associated with this traffic split variant.</p>"
+      }
+    },
+    "TrafficSplitMetadataValue": {
+      "base": null,
+      "refs": {
+        "TrafficSplitMetadataMap$value": null
+      }
+    },
     "TriggerCondition": {
       "base": "<p>Condition that triggers memory processing.</p>",
       "refs": {
@@ -5564,6 +6184,20 @@
       "base": null,
       "refs": {}
     },
+    "UpdateConfigurationBundleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateConfigurationBundleRequestCommitMessageString": {
+      "base": null,
+      "refs": {
+        "UpdateConfigurationBundleRequest$commitMessage": "<p>A commit message describing the changes in this version.</p>"
+      }
+    },
+    "UpdateConfigurationBundleResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateEvaluatorRequest": {
       "base": null,
       "refs": {}
@@ -5578,6 +6212,14 @@
     },
     "UpdateGatewayResponse": {
       "base": null,
+      "refs": {}
+    },
+    "UpdateGatewayRuleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateGatewayRuleResponse": {
+      "base": "<p>Create response excludes updatedAt (redundant on create). Get/Update responses include it via their own output structures.</p>",
       "refs": {}
     },
     "UpdateGatewayTargetRequest": {
@@ -5864,6 +6506,34 @@
         "ValidationException$reason": null
       }
     },
+    "VersionCreatedBySource": {
+      "base": "<p>The source that created a configuration bundle version.</p>",
+      "refs": {
+        "CreateConfigurationBundleRequest$createdBy": "<p>The source that created this version, including the source name and optional ARN.</p>",
+        "UpdateConfigurationBundleRequest$createdBy": "<p>The source that created this version, including the source name and optional ARN.</p>",
+        "VersionLineageMetadata$createdBy": "<p>The source that created this version.</p>"
+      }
+    },
+    "VersionFilter": {
+      "base": "<p>A filter for listing configuration bundle versions.</p>",
+      "refs": {
+        "ListConfigurationBundleVersionsRequest$filter": "<p>An optional filter for listing versions, including branch name, creation source, and whether to return only the latest version per branch.</p>"
+      }
+    },
+    "VersionLineageMetadata": {
+      "base": "<p>The version lineage metadata that tracks parent versions and creation source. Supports git-like two-parent merges for branch management.</p>",
+      "refs": {
+        "ConfigurationBundleVersionSummary$lineageMetadata": "<p>The version lineage metadata, including parent versions, branch name, and creation source.</p>",
+        "GetConfigurationBundleResponse$lineageMetadata": "<p>The version lineage metadata, including parent versions, branch name, and creation source.</p>",
+        "GetConfigurationBundleVersionResponse$lineageMetadata": "<p>The version lineage metadata, including parent versions, branch name, and creation source.</p>"
+      }
+    },
+    "VersionLineageMetadataCommitMessageString": {
+      "base": null,
+      "refs": {
+        "VersionLineageMetadata$commitMessage": "<p>A commit message describing the changes in this version.</p>"
+      }
+    },
     "VpcConfig": {
       "base": "<p>VpcConfig for the Agent.</p>",
       "refs": {
@@ -5876,6 +6546,18 @@
       "base": null,
       "refs": {
         "ManagedVpcResource$vpcIdentifier": "<p>The ID of the VPC that contains your private resource.</p>"
+      }
+    },
+    "WeightedOverride": {
+      "base": "<p>A weighted configuration bundle override that splits traffic between multiple bundle versions.</p>",
+      "refs": {
+        "ConfigurationBundleAction$weightedOverride": "<p>A weighted configuration bundle override that splits traffic between multiple bundle versions based on configured weights.</p>"
+      }
+    },
+    "WeightedRoute": {
+      "base": "<p>A weighted route that splits traffic between multiple gateway targets.</p>",
+      "refs": {
+        "RouteToTargetAction$weightedRoute": "<p>A weighted route that splits traffic between multiple targets.</p>"
       }
     },
     "WorkloadIdentityArn": {

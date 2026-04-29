@@ -86,6 +86,25 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "CreateABTest":{
+      "name":"CreateABTest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ab-tests",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateABTestRequest"},
+      "output":{"shape":"CreateABTestResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateEvent":{
       "name":"CreateEvent",
       "http":{
@@ -104,6 +123,46 @@
         {"shape":"ValidationException"},
         {"shape":"InvalidInputException"},
         {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteABTest":{
+      "name":"DeleteABTest",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/ab-tests/{abTestId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteABTestRequest"},
+      "output":{"shape":"DeleteABTestResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteBatchEvaluation":{
+      "name":"DeleteBatchEvaluation",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/evaluations/batch-evaluate/{batchEvaluationId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteBatchEvaluationRequest"},
+      "output":{"shape":"DeleteBatchEvaluationResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
       ],
       "idempotent":true
     },
@@ -145,6 +204,25 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "DeleteRecommendation":{
+      "name":"DeleteRecommendation",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/recommendations/{recommendationId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteRecommendationRequest"},
+      "output":{"shape":"DeleteRecommendationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "Evaluate":{
       "name":"Evaluate",
       "http":{
@@ -166,6 +244,25 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetABTest":{
+      "name":"GetABTest",
+      "http":{
+        "method":"GET",
+        "requestUri":"/ab-tests/{abTestId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetABTestRequest"},
+      "output":{"shape":"GetABTestResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "GetAgentCard":{
       "name":"GetAgentCard",
       "http":{
@@ -184,6 +281,25 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "GetBatchEvaluation":{
+      "name":"GetBatchEvaluation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/evaluations/batch-evaluate/{batchEvaluationId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetBatchEvaluationRequest"},
+      "output":{"shape":"GetBatchEvaluationResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
     },
     "GetBrowserSession":{
       "name":"GetBrowserSession",
@@ -258,6 +374,24 @@
         {"shape":"ValidationException"},
         {"shape":"InvalidInputException"},
         {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "GetRecommendation":{
+      "name":"GetRecommendation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/recommendations/{recommendationId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetRecommendationRequest"},
+      "output":{"shape":"GetRecommendationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
       ],
       "readonly":true
     },
@@ -445,6 +579,24 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListABTests":{
+      "name":"ListABTests",
+      "http":{
+        "method":"GET",
+        "requestUri":"/ab-tests",
+        "responseCode":200
+      },
+      "input":{"shape":"ListABTestsRequest"},
+      "output":{"shape":"ListABTestsResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListActors":{
       "name":"ListActors",
       "http":{
@@ -462,6 +614,24 @@
         {"shape":"ValidationException"},
         {"shape":"InvalidInputException"},
         {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListBatchEvaluations":{
+      "name":"ListBatchEvaluations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/evaluations/batch-evaluate",
+        "responseCode":200
+      },
+      "input":{"shape":"ListBatchEvaluationsRequest"},
+      "output":{"shape":"ListBatchEvaluationsResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
       ],
       "readonly":true
     },
@@ -559,6 +729,23 @@
       ],
       "readonly":true
     },
+    "ListRecommendations":{
+      "name":"ListRecommendations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/recommendations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRecommendationsRequest"},
+      "output":{"shape":"ListRecommendationsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListSessions":{
       "name":"ListSessions",
       "http":{
@@ -635,6 +822,26 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "StartBatchEvaluation":{
+      "name":"StartBatchEvaluation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/evaluations/batch-evaluate",
+        "responseCode":202
+      },
+      "input":{"shape":"StartBatchEvaluationRequest"},
+      "output":{"shape":"StartBatchEvaluationResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "StartBrowserSession":{
       "name":"StartBrowserSession",
       "http":{
@@ -693,6 +900,43 @@
         {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
+    },
+    "StartRecommendation":{
+      "name":"StartRecommendation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/recommendations",
+        "responseCode":202
+      },
+      "input":{"shape":"StartRecommendationRequest"},
+      "output":{"shape":"StartRecommendationResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "StopBatchEvaluation":{
+      "name":"StopBatchEvaluation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/evaluations/batch-evaluate/{batchEvaluationId}/stop",
+        "responseCode":202
+      },
+      "input":{"shape":"StopBatchEvaluationRequest"},
+      "output":{"shape":"StopBatchEvaluationResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
     },
     "StopBrowserSession":{
       "name":"StopBrowserSession",
@@ -756,6 +1000,27 @@
       ],
       "idempotent":true
     },
+    "UpdateABTest":{
+      "name":"UpdateABTest",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/ab-tests/{abTestId}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateABTestRequest"},
+      "output":{"shape":"UpdateABTestResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "UpdateBrowserStream":{
       "name":"UpdateBrowserStream",
       "http":{
@@ -784,6 +1049,88 @@
       "members":{
         "agentCard":{"shape":"AgentCardDefinition"}
       }
+    },
+    "ABTestArn":{
+      "type":"string",
+      "pattern":"arn:aws[a-zA-Z-]*:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:ab-test/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+    },
+    "ABTestDescription":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "ABTestEvaluationConfig":{
+      "type":"structure",
+      "members":{
+        "onlineEvaluationConfigArn":{"shape":"OnlineEvaluationConfigArn"},
+        "perVariantOnlineEvaluationConfig":{"shape":"PerVariantOnlineEvaluationConfigList"}
+      },
+      "union":true
+    },
+    "ABTestExecutionStatus":{
+      "type":"string",
+      "enum":[
+        "PAUSED",
+        "RUNNING",
+        "STOPPED",
+        "NOT_STARTED"
+      ]
+    },
+    "ABTestId":{
+      "type":"string",
+      "pattern":"[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+    },
+    "ABTestName":{
+      "type":"string",
+      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,47}"
+    },
+    "ABTestResults":{
+      "type":"structure",
+      "required":["evaluatorMetrics"],
+      "members":{
+        "analysisTimestamp":{"shape":"Timestamp"},
+        "evaluatorMetrics":{"shape":"EvaluatorMetricList"}
+      }
+    },
+    "ABTestStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "CREATE_FAILED",
+        "UPDATING",
+        "UPDATE_FAILED",
+        "DELETING",
+        "DELETE_FAILED",
+        "FAILED"
+      ]
+    },
+    "ABTestSummary":{
+      "type":"structure",
+      "required":[
+        "abTestId",
+        "abTestArn",
+        "name",
+        "status",
+        "executionStatus",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "abTestId":{"shape":"ABTestId"},
+        "abTestArn":{"shape":"ABTestArn"},
+        "name":{"shape":"ABTestName"},
+        "status":{"shape":"ABTestStatus"},
+        "executionStatus":{"shape":"ABTestExecutionStatus"},
+        "description":{"shape":"ABTestDescription"},
+        "gatewayArn":{"shape":"GatewayArn"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "ABTestSummaryList":{
+      "type":"list",
+      "member":{"shape":"ABTestSummary"}
     },
     "AccessDeniedException":{
       "type":"structure",
@@ -838,6 +1185,14 @@
         "skillMd":{"shape":"SkillMdDefinition"},
         "skillDefinition":{"shape":"SkillDefinition"}
       }
+    },
+    "AgentTracesConfig":{
+      "type":"structure",
+      "members":{
+        "sessionSpans":{"shape":"Spans"},
+        "cloudwatchLogs":{"shape":"CloudWatchLogsTraceConfig"}
+      },
+      "union":true
     },
     "ApiKeyArn":{
       "type":"string",
@@ -940,6 +1295,59 @@
         "successfulRecords":{"shape":"MemoryRecordsOutputList"},
         "failedRecords":{"shape":"MemoryRecordsOutputList"}
       }
+    },
+    "BatchEvaluationArn":{"type":"string"},
+    "BatchEvaluationDescription":{
+      "type":"string",
+      "max":200,
+      "min":0
+    },
+    "BatchEvaluationId":{
+      "type":"string",
+      "pattern":"[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+    },
+    "BatchEvaluationName":{
+      "type":"string",
+      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,47}"
+    },
+    "BatchEvaluationStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "COMPLETED_WITH_ERRORS",
+        "FAILED",
+        "STOPPING",
+        "STOPPED",
+        "DELETING"
+      ]
+    },
+    "BatchEvaluationSummary":{
+      "type":"structure",
+      "required":[
+        "batchEvaluationId",
+        "batchEvaluationArn",
+        "batchEvaluationName",
+        "status",
+        "createdAt"
+      ],
+      "members":{
+        "batchEvaluationId":{"shape":"BatchEvaluationId"},
+        "batchEvaluationArn":{"shape":"BatchEvaluationArn"},
+        "batchEvaluationName":{"shape":"BatchEvaluationName"},
+        "status":{"shape":"BatchEvaluationStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "description":{"shape":"BatchEvaluationDescription"},
+        "evaluators":{"shape":"EvaluatorList"},
+        "evaluationResults":{"shape":"EvaluationJobResults"},
+        "errorDetails":{"shape":"ErrorDetailsList"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "BatchEvaluationSummaryList":{
+      "type":"list",
+      "member":{"shape":"BatchEvaluationSummary"}
     },
     "BatchUpdateMemoryRecordsInput":{
       "type":"structure",
@@ -1161,6 +1569,118 @@
       "min":33,
       "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,256}"
     },
+    "CloudWatchFilterConfig":{
+      "type":"structure",
+      "members":{
+        "sessionIds":{"shape":"CloudWatchFilterConfigSessionIdsList"},
+        "timeRange":{"shape":"SessionFilterConfig"}
+      }
+    },
+    "CloudWatchFilterConfigSessionIdsList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":500,
+      "min":0
+    },
+    "CloudWatchLogsFilter":{
+      "type":"structure",
+      "required":[
+        "key",
+        "operator",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"CloudWatchLogsFilterKeyString"},
+        "operator":{"shape":"CloudWatchLogsFilterOperator"},
+        "value":{"shape":"FilterValue"}
+      }
+    },
+    "CloudWatchLogsFilterKeyString":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9._-]+"
+    },
+    "CloudWatchLogsFilterList":{
+      "type":"list",
+      "member":{"shape":"CloudWatchLogsFilter"}
+    },
+    "CloudWatchLogsFilterOperator":{
+      "type":"string",
+      "enum":[
+        "Equals",
+        "NotEquals",
+        "GreaterThan",
+        "LessThan",
+        "GreaterThanOrEqual",
+        "LessThanOrEqual",
+        "Contains",
+        "NotContains"
+      ]
+    },
+    "CloudWatchLogsRule":{
+      "type":"structure",
+      "members":{
+        "filters":{"shape":"CloudWatchLogsFilterList"}
+      }
+    },
+    "CloudWatchLogsSource":{
+      "type":"structure",
+      "required":[
+        "serviceNames",
+        "logGroupNames"
+      ],
+      "members":{
+        "serviceNames":{"shape":"CloudWatchLogsSourceServiceNamesList"},
+        "logGroupNames":{"shape":"CloudWatchLogsSourceLogGroupNamesList"},
+        "filterConfig":{"shape":"CloudWatchFilterConfig"}
+      }
+    },
+    "CloudWatchLogsSourceLogGroupNamesList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":5,
+      "min":1
+    },
+    "CloudWatchLogsSourceServiceNamesList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":1,
+      "min":1
+    },
+    "CloudWatchLogsTraceConfig":{
+      "type":"structure",
+      "required":[
+        "logGroupArns",
+        "serviceNames",
+        "startTime",
+        "endTime"
+      ],
+      "members":{
+        "logGroupArns":{"shape":"CloudWatchLogsTraceConfigLogGroupArnsList"},
+        "serviceNames":{"shape":"ServiceNameList"},
+        "startTime":{"shape":"SyntheticTimestamp_date_time"},
+        "endTime":{"shape":"SyntheticTimestamp_date_time"},
+        "rule":{"shape":"CloudWatchLogsRule"}
+      }
+    },
+    "CloudWatchLogsTraceConfigLogGroupArnsList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":5,
+      "min":1
+    },
+    "CloudWatchOutputConfig":{
+      "type":"structure",
+      "required":[
+        "logGroupName",
+        "logStreamName"
+      ],
+      "members":{
+        "logGroupName":{"shape":"String"},
+        "logStreamName":{"shape":"String"}
+      }
+    },
     "CodeInterpreterArn":{
       "type":"string",
       "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:(aws|[0-9]{12}):code-interpreter(-custom)?/(aws\\.codeinterpreter\\.v1|[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10})"
@@ -1249,6 +1769,48 @@
       "type":"structure",
       "members":{}
     },
+    "ConfidenceInterval":{
+      "type":"structure",
+      "members":{
+        "lower":{"shape":"Double"},
+        "upper":{"shape":"Double"}
+      }
+    },
+    "ConfigurationBundleArn":{
+      "type":"string",
+      "pattern":"arn:aws:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:configuration-bundle/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+    },
+    "ConfigurationBundleRef":{
+      "type":"structure",
+      "required":[
+        "bundleArn",
+        "bundleVersion"
+      ],
+      "members":{
+        "bundleArn":{"shape":"ConfigurationBundleArn"},
+        "bundleVersion":{"shape":"ConfigurationBundleVersion"}
+      }
+    },
+    "ConfigurationBundleToolEntry":{
+      "type":"structure",
+      "required":[
+        "toolName",
+        "toolDescriptionJsonPath"
+      ],
+      "members":{
+        "toolName":{"shape":"RecommendationToolName"},
+        "toolDescriptionJsonPath":{"shape":"String"}
+      }
+    },
+    "ConfigurationBundleToolEntryList":{
+      "type":"list",
+      "member":{"shape":"ConfigurationBundleToolEntry"}
+    },
+    "ConfigurationBundleVersion":{
+      "type":"string",
+      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+    },
+    "ConfigurationBundleVersionId":{"type":"string"},
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -1330,6 +1892,19 @@
       },
       "union":true
     },
+    "ControlStats":{
+      "type":"structure",
+      "required":[
+        "variantName",
+        "sampleSize",
+        "mean"
+      ],
+      "members":{
+        "variantName":{"shape":"String"},
+        "sampleSize":{"shape":"Integer"},
+        "mean":{"shape":"Double"}
+      }
+    },
     "Conversational":{
       "type":"structure",
       "required":[
@@ -1339,6 +1914,48 @@
       "members":{
         "content":{"shape":"Content"},
         "role":{"shape":"Role"}
+      }
+    },
+    "CreateABTestRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "gatewayArn",
+        "variants",
+        "evaluationConfig",
+        "roleArn"
+      ],
+      "members":{
+        "name":{"shape":"ABTestName"},
+        "description":{"shape":"ABTestDescription"},
+        "gatewayArn":{"shape":"GatewayArn"},
+        "variants":{"shape":"VariantList"},
+        "gatewayFilter":{"shape":"GatewayFilter"},
+        "evaluationConfig":{"shape":"ABTestEvaluationConfig"},
+        "roleArn":{"shape":"RoleArn"},
+        "enableOnCreate":{"shape":"Boolean"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateABTestResponse":{
+      "type":"structure",
+      "required":[
+        "abTestId",
+        "abTestArn",
+        "status",
+        "executionStatus",
+        "createdAt"
+      ],
+      "members":{
+        "abTestId":{"shape":"ABTestId"},
+        "abTestArn":{"shape":"ABTestArn"},
+        "name":{"shape":"ABTestName"},
+        "status":{"shape":"ABTestStatus"},
+        "executionStatus":{"shape":"ABTestExecutionStatus"},
+        "createdAt":{"shape":"Timestamp"}
       }
     },
     "CreateEventInput":{
@@ -1403,9 +2020,64 @@
       "min":1,
       "sensitive":true
     },
+    "DataSourceConfig":{
+      "type":"structure",
+      "members":{
+        "cloudWatchLogs":{"shape":"CloudWatchLogsSource"}
+      },
+      "union":true
+    },
     "DateTimestamp":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
+    },
+    "DeleteABTestRequest":{
+      "type":"structure",
+      "required":["abTestId"],
+      "members":{
+        "abTestId":{
+          "shape":"ABTestId",
+          "location":"uri",
+          "locationName":"abTestId"
+        }
+      }
+    },
+    "DeleteABTestResponse":{
+      "type":"structure",
+      "required":[
+        "abTestId",
+        "abTestArn",
+        "status"
+      ],
+      "members":{
+        "abTestId":{"shape":"ABTestId"},
+        "abTestArn":{"shape":"ABTestArn"},
+        "status":{"shape":"ABTestStatus"}
+      }
+    },
+    "DeleteBatchEvaluationRequest":{
+      "type":"structure",
+      "required":["batchEvaluationId"],
+      "members":{
+        "batchEvaluationId":{
+          "shape":"BatchEvaluationId",
+          "location":"uri",
+          "locationName":"batchEvaluationId"
+        }
+      }
+    },
+    "DeleteBatchEvaluationResponse":{
+      "type":"structure",
+      "required":[
+        "batchEvaluationId",
+        "batchEvaluationArn",
+        "status"
+      ],
+      "members":{
+        "batchEvaluationId":{"shape":"BatchEvaluationId"},
+        "batchEvaluationArn":{"shape":"BatchEvaluationArn"},
+        "status":{"shape":"BatchEvaluationStatus"}
+      }
     },
     "DeleteEventInput":{
       "type":"structure",
@@ -1471,6 +2143,28 @@
         "memoryRecordId":{"shape":"MemoryRecordId"}
       }
     },
+    "DeleteRecommendationRequest":{
+      "type":"structure",
+      "required":["recommendationId"],
+      "members":{
+        "recommendationId":{
+          "shape":"RecommendationId",
+          "location":"uri",
+          "locationName":"recommendationId"
+        }
+      }
+    },
+    "DeleteRecommendationResponse":{
+      "type":"structure",
+      "required":[
+        "recommendationId",
+        "status"
+      ],
+      "members":{
+        "recommendationId":{"shape":"RecommendationId"},
+        "status":{"shape":"RecommendationStatus"}
+      }
+    },
     "Description":{
       "type":"string",
       "max":4096,
@@ -1527,6 +2221,17 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ErrorDetailsList":{
+      "type":"list",
+      "member":{"shape":"ErrorDetailsListMemberString"},
+      "max":1,
+      "min":0
+    },
+    "ErrorDetailsListMemberString":{
+      "type":"string",
+      "max":1000,
+      "min":0
     },
     "EvaluateRequest":{
       "type":"structure",
@@ -1599,6 +2304,24 @@
       },
       "union":true
     },
+    "EvaluationJobResults":{
+      "type":"structure",
+      "members":{
+        "numberOfSessionsCompleted":{"shape":"Integer"},
+        "numberOfSessionsInProgress":{"shape":"Integer"},
+        "numberOfSessionsFailed":{"shape":"Integer"},
+        "totalNumberOfSessions":{"shape":"Integer"},
+        "numberOfSessionsIgnored":{"shape":"Integer"},
+        "evaluatorSummaries":{"shape":"EvaluatorSummaryList"}
+      }
+    },
+    "EvaluationMetadata":{
+      "type":"structure",
+      "members":{
+        "sessionMetadata":{"shape":"SessionMetadataList"}
+      },
+      "union":true
+    },
     "EvaluationReferenceInput":{
       "type":"structure",
       "required":["context"],
@@ -1661,6 +2384,13 @@
       "max":1000,
       "min":0
     },
+    "Evaluator":{
+      "type":"structure",
+      "required":["evaluatorId"],
+      "members":{
+        "evaluatorId":{"shape":"EvaluatorId"}
+      }
+    },
     "EvaluatorArn":{
       "type":"string",
       "pattern":"arn:aws:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:evaluator\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}$|^arn:aws:bedrock-agentcore:::evaluator/Builtin.[a-zA-Z0-9_-]+"
@@ -1669,9 +2399,49 @@
       "type":"string",
       "pattern":"(Builtin.[a-zA-Z0-9_-]+|[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10})"
     },
+    "EvaluatorList":{
+      "type":"list",
+      "member":{"shape":"Evaluator"}
+    },
+    "EvaluatorMetric":{
+      "type":"structure",
+      "required":[
+        "evaluatorArn",
+        "controlStats",
+        "variantResults"
+      ],
+      "members":{
+        "evaluatorArn":{"shape":"String"},
+        "controlStats":{"shape":"ControlStats"},
+        "variantResults":{"shape":"VariantResultList"}
+      }
+    },
+    "EvaluatorMetricList":{
+      "type":"list",
+      "member":{"shape":"EvaluatorMetric"}
+    },
     "EvaluatorName":{
       "type":"string",
       "pattern":"(Builtin.[a-zA-Z0-9_-]+|[a-zA-Z][a-zA-Z0-9_]{0,47})"
+    },
+    "EvaluatorStatistics":{
+      "type":"structure",
+      "members":{
+        "averageScore":{"shape":"Double"}
+      }
+    },
+    "EvaluatorSummary":{
+      "type":"structure",
+      "members":{
+        "evaluatorId":{"shape":"String"},
+        "statistics":{"shape":"EvaluatorStatistics"},
+        "totalEvaluated":{"shape":"Integer"},
+        "totalFailed":{"shape":"Integer"}
+      }
+    },
+    "EvaluatorSummaryList":{
+      "type":"list",
+      "member":{"shape":"EvaluatorSummary"}
     },
     "Event":{
       "type":"structure",
@@ -1797,9 +2567,76 @@
         "eventMetadata":{"shape":"EventMetadataFilterList"}
       }
     },
+    "FilterStringValue":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "FilterValue":{
+      "type":"structure",
+      "members":{
+        "stringValue":{"shape":"FilterStringValue"},
+        "doubleValue":{"shape":"Double"},
+        "booleanValue":{"shape":"Boolean"}
+      },
+      "union":true
+    },
     "GatewayArn":{
       "type":"string",
       "pattern":"arn:aws(|-cn|-us-gov):bedrock-agentcore:[a-z0-9-]{1,20}:[0-9]{12}:gateway/([0-9a-z][-]?){1,48}-[a-z0-9]{10}"
+    },
+    "GatewayFilter":{
+      "type":"structure",
+      "members":{
+        "targetPaths":{"shape":"TargetPathList"}
+      }
+    },
+    "GetABTestRequest":{
+      "type":"structure",
+      "required":["abTestId"],
+      "members":{
+        "abTestId":{
+          "shape":"ABTestId",
+          "location":"uri",
+          "locationName":"abTestId"
+        }
+      }
+    },
+    "GetABTestResponse":{
+      "type":"structure",
+      "required":[
+        "abTestId",
+        "abTestArn",
+        "name",
+        "status",
+        "executionStatus",
+        "gatewayArn",
+        "variants",
+        "evaluationConfig",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "abTestId":{"shape":"ABTestId"},
+        "abTestArn":{"shape":"ABTestArn"},
+        "name":{"shape":"ABTestName"},
+        "description":{"shape":"ABTestDescription"},
+        "status":{"shape":"ABTestStatus"},
+        "executionStatus":{"shape":"ABTestExecutionStatus"},
+        "gatewayArn":{"shape":"GatewayArn"},
+        "variants":{"shape":"VariantList"},
+        "gatewayFilter":{"shape":"GatewayFilter"},
+        "evaluationConfig":{"shape":"ABTestEvaluationConfig"},
+        "roleArn":{"shape":"RoleArn"},
+        "currentRunId":{"shape":"String"},
+        "errorDetails":{"shape":"ErrorDetailsList"},
+        "startedAt":{"shape":"Timestamp"},
+        "stoppedAt":{"shape":"Timestamp"},
+        "maxDurationExpiresAt":{"shape":"Timestamp"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "results":{"shape":"ABTestResults"}
+      }
     },
     "GetAgentCardRequest":{
       "type":"structure",
@@ -1839,6 +2676,41 @@
         }
       },
       "payload":"agentCard"
+    },
+    "GetBatchEvaluationRequest":{
+      "type":"structure",
+      "required":["batchEvaluationId"],
+      "members":{
+        "batchEvaluationId":{
+          "shape":"BatchEvaluationId",
+          "location":"uri",
+          "locationName":"batchEvaluationId"
+        }
+      }
+    },
+    "GetBatchEvaluationResponse":{
+      "type":"structure",
+      "required":[
+        "batchEvaluationId",
+        "batchEvaluationArn",
+        "batchEvaluationName",
+        "status",
+        "createdAt"
+      ],
+      "members":{
+        "batchEvaluationId":{"shape":"BatchEvaluationId"},
+        "batchEvaluationArn":{"shape":"BatchEvaluationArn"},
+        "batchEvaluationName":{"shape":"BatchEvaluationName"},
+        "status":{"shape":"BatchEvaluationStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "evaluators":{"shape":"EvaluatorList"},
+        "dataSourceConfig":{"shape":"DataSourceConfig"},
+        "outputConfig":{"shape":"OutputConfig"},
+        "evaluationResults":{"shape":"EvaluationJobResults"},
+        "errorDetails":{"shape":"ErrorDetailsList"},
+        "description":{"shape":"BatchEvaluationDescription"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
     },
     "GetBrowserSessionRequest":{
       "type":"structure",
@@ -1984,6 +2856,42 @@
         "memoryRecord":{"shape":"MemoryRecord"}
       }
     },
+    "GetRecommendationRequest":{
+      "type":"structure",
+      "required":["recommendationId"],
+      "members":{
+        "recommendationId":{
+          "shape":"RecommendationId",
+          "location":"uri",
+          "locationName":"recommendationId"
+        }
+      }
+    },
+    "GetRecommendationResponse":{
+      "type":"structure",
+      "required":[
+        "recommendationId",
+        "recommendationArn",
+        "name",
+        "type",
+        "recommendationConfig",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "recommendationId":{"shape":"RecommendationId"},
+        "recommendationArn":{"shape":"RecommendationArn"},
+        "name":{"shape":"RecommendationName"},
+        "description":{"shape":"RecommendationDescription"},
+        "type":{"shape":"RecommendationType"},
+        "recommendationConfig":{"shape":"RecommendationConfig"},
+        "status":{"shape":"RecommendationStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "recommendationResult":{"shape":"RecommendationResult"}
+      }
+    },
     "GetResourceApiKeyRequest":{
       "type":"structure",
       "required":[
@@ -2080,6 +2988,32 @@
       "members":{
         "workloadAccessToken":{"shape":"WorkloadIdentityTokenType"}
       }
+    },
+    "GroundTruthSource":{
+      "type":"structure",
+      "members":{
+        "inline":{"shape":"InlineGroundTruth"}
+      },
+      "union":true
+    },
+    "GroundTruthTurn":{
+      "type":"structure",
+      "members":{
+        "input":{"shape":"GroundTruthTurnInput"},
+        "expectedResponse":{"shape":"EvaluationContent"}
+      }
+    },
+    "GroundTruthTurnInput":{
+      "type":"structure",
+      "members":{
+        "prompt":{"shape":"GroundTruthTurnInputPromptString"}
+      },
+      "union":true
+    },
+    "GroundTruthTurnInputPromptString":{
+      "type":"string",
+      "max":4000,
+      "min":0
     },
     "HarnessAgentCoreBrowserConfig":{
       "type":"structure",
@@ -2618,6 +3552,19 @@
     "InlineContent":{
       "type":"string",
       "max":409600,
+      "min":1
+    },
+    "InlineGroundTruth":{
+      "type":"structure",
+      "members":{
+        "assertions":{"shape":"EvaluationContentList"},
+        "expectedTrajectory":{"shape":"EvaluationExpectedTrajectory"},
+        "turns":{"shape":"InlineGroundTruthTurnsList"}
+      }
+    },
+    "InlineGroundTruthTurnsList":{
+      "type":"list",
+      "member":{"shape":"GroundTruthTurn"},
       "min":1
     },
     "InputContentBlock":{
@@ -3190,6 +4137,35 @@
       },
       "union":true
     },
+    "ListABTestsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"ListABTestsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListABTestsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListABTestsResponse":{
+      "type":"structure",
+      "required":["abTests"],
+      "members":{
+        "abTests":{"shape":"ABTestSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListActorsInput":{
       "type":"structure",
       "required":["memoryId"],
@@ -3209,6 +4185,35 @@
       "members":{
         "actorSummaries":{"shape":"ActorSummaryList"},
         "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListBatchEvaluationsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"ListBatchEvaluationsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListBatchEvaluationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListBatchEvaluationsResponse":{
+      "type":"structure",
+      "required":["batchEvaluations"],
+      "members":{
+        "batchEvaluations":{"shape":"BatchEvaluationSummaryList"},
+        "nextToken":{"shape":"String"}
       }
     },
     "ListBrowserSessionsRequest":{
@@ -3342,6 +4347,40 @@
       "members":{
         "memoryRecordSummaries":{"shape":"MemoryRecordSummaryList"},
         "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListRecommendationsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"ListRecommendationsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "statusFilter":{
+          "shape":"RecommendationStatus",
+          "location":"querystring",
+          "locationName":"status"
+        }
+      }
+    },
+    "ListRecommendationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListRecommendationsResponse":{
+      "type":"structure",
+      "required":["recommendationSummaries"],
+      "members":{
+        "recommendationSummaries":{"shape":"RecommendationSummaryList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListSessionsInput":{
@@ -3837,6 +4876,10 @@
         "M2M"
       ]
     },
+    "OnlineEvaluationConfigArn":{
+      "type":"string",
+      "pattern":"arn:aws:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:online-evaluation-config\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+    },
     "OperatorType":{
       "type":"string",
       "enum":[
@@ -3845,7 +4888,19 @@
         "NOT_EXISTS"
       ]
     },
+    "OutputConfig":{
+      "type":"structure",
+      "members":{
+        "cloudWatchConfig":{"shape":"CloudWatchOutputConfig"}
+      },
+      "union":true
+    },
     "PaginationToken":{"type":"string"},
+    "PathPattern":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
     "PayloadType":{
       "type":"structure",
       "members":{
@@ -3859,6 +4914,23 @@
       "member":{"shape":"PayloadType"},
       "max":100,
       "min":0
+    },
+    "PerVariantOnlineEvaluationConfig":{
+      "type":"structure",
+      "required":[
+        "name",
+        "onlineEvaluationConfigArn"
+      ],
+      "members":{
+        "name":{"shape":"VariantName"},
+        "onlineEvaluationConfigArn":{"shape":"OnlineEvaluationConfigArn"}
+      }
+    },
+    "PerVariantOnlineEvaluationConfigList":{
+      "type":"list",
+      "member":{"shape":"PerVariantOnlineEvaluationConfig"},
+      "max":2,
+      "min":2
     },
     "ProgrammingLanguage":{
       "type":"string",
@@ -3901,6 +4973,131 @@
         "basicAuth":{"shape":"BasicAuth"}
       },
       "union":true
+    },
+    "RecommendationArn":{
+      "type":"string",
+      "pattern":"arn:aws[a-zA-Z-]*:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:recommendation/[0-9a-zA-Z_-]{1,48}-[0-9A-Z]{10}"
+    },
+    "RecommendationConfig":{
+      "type":"structure",
+      "members":{
+        "systemPromptRecommendationConfig":{"shape":"SystemPromptRecommendationConfig"},
+        "toolDescriptionRecommendationConfig":{"shape":"ToolDescriptionRecommendationConfig"}
+      },
+      "union":true
+    },
+    "RecommendationDescription":{
+      "type":"string",
+      "max":4096,
+      "min":0
+    },
+    "RecommendationErrorCode":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "RecommendationErrorMessage":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
+    "RecommendationEvaluationConfig":{
+      "type":"structure",
+      "required":["evaluators"],
+      "members":{
+        "evaluators":{"shape":"RecommendationEvaluationConfigEvaluatorsList"}
+      }
+    },
+    "RecommendationEvaluationConfigEvaluatorsList":{
+      "type":"list",
+      "member":{"shape":"RecommendationEvaluatorReference"},
+      "max":1,
+      "min":1
+    },
+    "RecommendationEvaluatorReference":{
+      "type":"structure",
+      "required":["evaluatorArn"],
+      "members":{
+        "evaluatorArn":{"shape":"EvaluatorArn"}
+      }
+    },
+    "RecommendationId":{
+      "type":"string",
+      "pattern":"[0-9a-zA-Z_-]{1,48}-[0-9A-Z]{10}"
+    },
+    "RecommendationName":{
+      "type":"string",
+      "max":100,
+      "min":0,
+      "pattern":"[a-zA-Z][a-zA-Z0-9_-]{0,47}"
+    },
+    "RecommendationResult":{
+      "type":"structure",
+      "members":{
+        "systemPromptRecommendationResult":{"shape":"SystemPromptRecommendationResult"},
+        "toolDescriptionRecommendationResult":{"shape":"ToolDescriptionRecommendationResult"}
+      },
+      "union":true
+    },
+    "RecommendationResultConfigurationBundle":{
+      "type":"structure",
+      "required":[
+        "bundleArn",
+        "versionId"
+      ],
+      "members":{
+        "bundleArn":{"shape":"ConfigurationBundleArn"},
+        "versionId":{"shape":"ConfigurationBundleVersionId"}
+      }
+    },
+    "RecommendationStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED",
+        "DELETING"
+      ]
+    },
+    "RecommendationSummary":{
+      "type":"structure",
+      "required":[
+        "recommendationId",
+        "recommendationArn",
+        "name",
+        "type",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "recommendationId":{"shape":"RecommendationId"},
+        "recommendationArn":{"shape":"RecommendationArn"},
+        "name":{"shape":"RecommendationName"},
+        "description":{"shape":"RecommendationDescription"},
+        "type":{"shape":"RecommendationType"},
+        "status":{"shape":"RecommendationStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "RecommendationSummaryList":{
+      "type":"list",
+      "member":{"shape":"RecommendationSummary"}
+    },
+    "RecommendationToolName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_\\-\\.]+"
+    },
+    "RecommendationType":{
+      "type":"string",
+      "enum":[
+        "SYSTEM_PROMPT_RECOMMENDATION",
+        "TOOL_DESCRIPTION_RECOMMENDATION"
+      ]
     },
     "RegistryArn":{
       "type":"string",
@@ -4103,6 +5300,12 @@
         "TOOL",
         "OTHER"
       ]
+    },
+    "RoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws(-[^:]+)?:iam::([0-9]{12})?:role/.+"
     },
     "RuntimeClientError":{
       "type":"structure",
@@ -4330,6 +5533,16 @@
       "exception":true,
       "fault":true
     },
+    "ServiceName":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9._-]+"
+    },
+    "ServiceNameList":{
+      "type":"list",
+      "member":{"shape":"ServiceName"},
+      "max":1,
+      "min":1
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
@@ -4347,11 +5560,34 @@
         "eventFilter":{"shape":"EventFilterCondition"}
       }
     },
+    "SessionFilterConfig":{
+      "type":"structure",
+      "members":{
+        "startTime":{"shape":"SyntheticTimestamp_date_time"},
+        "endTime":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
     "SessionId":{
       "type":"string",
       "max":100,
       "min":1,
       "pattern":"[a-zA-Z0-9][a-zA-Z0-9-_]*"
+    },
+    "SessionMetadataList":{
+      "type":"list",
+      "member":{"shape":"SessionMetadataShape"},
+      "max":500,
+      "min":0
+    },
+    "SessionMetadataShape":{
+      "type":"structure",
+      "required":["sessionId"],
+      "members":{
+        "sessionId":{"shape":"String"},
+        "testScenarioId":{"shape":"String"},
+        "groundTruth":{"shape":"GroundTruthSource"},
+        "metadata":{"shape":"StringMap"}
+      }
     },
     "SessionStatus":{
       "type":"string",
@@ -4426,6 +5662,50 @@
       "max":1000,
       "min":1,
       "sensitive":true
+    },
+    "StartBatchEvaluationRequest":{
+      "type":"structure",
+      "required":[
+        "batchEvaluationName",
+        "dataSourceConfig"
+      ],
+      "members":{
+        "batchEvaluationName":{"shape":"BatchEvaluationName"},
+        "evaluators":{"shape":"StartBatchEvaluationRequestEvaluatorsList"},
+        "dataSourceConfig":{"shape":"DataSourceConfig"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "evaluationMetadata":{"shape":"EvaluationMetadata"},
+        "description":{"shape":"BatchEvaluationDescription"}
+      }
+    },
+    "StartBatchEvaluationRequestEvaluatorsList":{
+      "type":"list",
+      "member":{"shape":"Evaluator"},
+      "max":10,
+      "min":0
+    },
+    "StartBatchEvaluationResponse":{
+      "type":"structure",
+      "required":[
+        "batchEvaluationId",
+        "batchEvaluationArn",
+        "batchEvaluationName",
+        "status",
+        "createdAt"
+      ],
+      "members":{
+        "batchEvaluationId":{"shape":"BatchEvaluationId"},
+        "batchEvaluationArn":{"shape":"BatchEvaluationArn"},
+        "batchEvaluationName":{"shape":"BatchEvaluationName"},
+        "evaluators":{"shape":"EvaluatorList"},
+        "status":{"shape":"BatchEvaluationStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "outputConfig":{"shape":"OutputConfig"},
+        "description":{"shape":"BatchEvaluationDescription"}
+      }
     },
     "StartBrowserSessionRequest":{
       "type":"structure",
@@ -4561,11 +5841,78 @@
         "jobId":{"shape":"String"}
       }
     },
+    "StartRecommendationRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type",
+        "recommendationConfig"
+      ],
+      "members":{
+        "name":{"shape":"RecommendationName"},
+        "description":{"shape":"RecommendationDescription"},
+        "type":{"shape":"RecommendationType"},
+        "recommendationConfig":{"shape":"RecommendationConfig"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartRecommendationResponse":{
+      "type":"structure",
+      "required":[
+        "recommendationId",
+        "recommendationArn",
+        "name",
+        "type",
+        "recommendationConfig",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "recommendationId":{"shape":"RecommendationId"},
+        "recommendationArn":{"shape":"RecommendationArn"},
+        "name":{"shape":"RecommendationName"},
+        "description":{"shape":"RecommendationDescription"},
+        "type":{"shape":"RecommendationType"},
+        "recommendationConfig":{"shape":"RecommendationConfig"},
+        "status":{"shape":"RecommendationStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
     "State":{
       "type":"string",
       "max":4096,
       "min":1,
       "sensitive":true
+    },
+    "StopBatchEvaluationRequest":{
+      "type":"structure",
+      "required":["batchEvaluationId"],
+      "members":{
+        "batchEvaluationId":{
+          "shape":"BatchEvaluationId",
+          "location":"uri",
+          "locationName":"batchEvaluationId"
+        }
+      }
+    },
+    "StopBatchEvaluationResponse":{
+      "type":"structure",
+      "required":[
+        "batchEvaluationId",
+        "batchEvaluationArn",
+        "status"
+      ],
+      "members":{
+        "batchEvaluationId":{"shape":"BatchEvaluationId"},
+        "batchEvaluationArn":{"shape":"BatchEvaluationArn"},
+        "status":{"shape":"BatchEvaluationStatus"},
+        "description":{"shape":"BatchEvaluationDescription"}
+      }
     },
     "StopBrowserSessionRequest":{
       "type":"structure",
@@ -4733,10 +6080,86 @@
       "type":"list",
       "member":{"shape":"MaxLenString"}
     },
+    "StringMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
     "StringType":{
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "SyntheticTimestamp_date_time":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
+    "SystemPromptConfig":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"SystemPromptText"},
+        "configurationBundle":{"shape":"SystemPromptConfigurationBundle"}
+      },
+      "union":true
+    },
+    "SystemPromptConfigurationBundle":{
+      "type":"structure",
+      "required":[
+        "bundleArn",
+        "versionId",
+        "systemPromptJsonPath"
+      ],
+      "members":{
+        "bundleArn":{"shape":"ConfigurationBundleArn"},
+        "versionId":{"shape":"ConfigurationBundleVersionId"},
+        "systemPromptJsonPath":{"shape":"String"}
+      }
+    },
+    "SystemPromptRecommendationConfig":{
+      "type":"structure",
+      "required":[
+        "systemPrompt",
+        "agentTraces",
+        "evaluationConfig"
+      ],
+      "members":{
+        "systemPrompt":{"shape":"SystemPromptConfig"},
+        "agentTraces":{"shape":"AgentTracesConfig"},
+        "evaluationConfig":{"shape":"RecommendationEvaluationConfig"}
+      }
+    },
+    "SystemPromptRecommendationResult":{
+      "type":"structure",
+      "members":{
+        "recommendedSystemPrompt":{"shape":"SystemPromptText"},
+        "configurationBundle":{"shape":"RecommendationResultConfigurationBundle"},
+        "errorCode":{"shape":"RecommendationErrorCode"},
+        "errorMessage":{"shape":"RecommendationErrorMessage"}
+      }
+    },
+    "SystemPromptText":{
+      "type":"string",
+      "max":20000,
+      "min":1,
+      "sensitive":true
+    },
+    "TargetName":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "TargetPathList":{
+      "type":"list",
+      "member":{"shape":"PathPattern"},
+      "max":1,
+      "min":1
+    },
+    "TargetRef":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"TargetName"}
+      }
     },
     "TaskStatus":{
       "type":"string",
@@ -4799,6 +6222,94 @@
         "directoryPath":{"shape":"MaxLenString"},
         "taskId":{"shape":"MaxLenString"},
         "runtime":{"shape":"LanguageRuntime"}
+      }
+    },
+    "ToolDescriptionConfig":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"ToolDescriptionText"}
+      },
+      "union":true
+    },
+    "ToolDescriptionConfigurationBundle":{
+      "type":"structure",
+      "required":[
+        "bundleArn",
+        "versionId",
+        "tools"
+      ],
+      "members":{
+        "bundleArn":{"shape":"ConfigurationBundleArn"},
+        "versionId":{"shape":"ConfigurationBundleVersionId"},
+        "tools":{"shape":"ConfigurationBundleToolEntryList"}
+      }
+    },
+    "ToolDescriptionInput":{
+      "type":"structure",
+      "required":[
+        "toolName",
+        "toolDescription"
+      ],
+      "members":{
+        "toolName":{"shape":"RecommendationToolName"},
+        "toolDescription":{"shape":"ToolDescriptionConfig"}
+      }
+    },
+    "ToolDescriptionList":{
+      "type":"list",
+      "member":{"shape":"ToolDescriptionInput"}
+    },
+    "ToolDescriptionOutput":{
+      "type":"structure",
+      "required":["toolName"],
+      "members":{
+        "toolName":{"shape":"RecommendationToolName"},
+        "recommendedToolDescription":{"shape":"ToolDescriptionText"}
+      }
+    },
+    "ToolDescriptionRecommendationConfig":{
+      "type":"structure",
+      "required":[
+        "toolDescription",
+        "agentTraces"
+      ],
+      "members":{
+        "toolDescription":{"shape":"ToolDescriptionSource"},
+        "agentTraces":{"shape":"AgentTracesConfig"}
+      }
+    },
+    "ToolDescriptionRecommendationResult":{
+      "type":"structure",
+      "members":{
+        "tools":{"shape":"ToolDescriptionResultList"},
+        "configurationBundle":{"shape":"RecommendationResultConfigurationBundle"},
+        "errorCode":{"shape":"RecommendationErrorCode"},
+        "errorMessage":{"shape":"RecommendationErrorMessage"}
+      }
+    },
+    "ToolDescriptionResultList":{
+      "type":"list",
+      "member":{"shape":"ToolDescriptionOutput"}
+    },
+    "ToolDescriptionSource":{
+      "type":"structure",
+      "members":{
+        "toolDescriptionText":{"shape":"ToolDescriptionTextInput"},
+        "configurationBundle":{"shape":"ToolDescriptionConfigurationBundle"}
+      },
+      "union":true
+    },
+    "ToolDescriptionText":{
+      "type":"string",
+      "max":20000,
+      "min":1,
+      "sensitive":true
+    },
+    "ToolDescriptionTextInput":{
+      "type":"structure",
+      "required":["tools"],
+      "members":{
+        "tools":{"shape":"ToolDescriptionList"}
       }
     },
     "ToolName":{
@@ -4870,6 +6381,45 @@
     "Unit":{
       "type":"structure",
       "members":{}
+    },
+    "UpdateABTestRequest":{
+      "type":"structure",
+      "required":["abTestId"],
+      "members":{
+        "abTestId":{
+          "shape":"ABTestId",
+          "location":"uri",
+          "locationName":"abTestId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "name":{"shape":"ABTestName"},
+        "description":{"shape":"ABTestDescription"},
+        "variants":{"shape":"VariantList"},
+        "gatewayFilter":{"shape":"GatewayFilter"},
+        "evaluationConfig":{"shape":"ABTestEvaluationConfig"},
+        "roleArn":{"shape":"RoleArn"},
+        "executionStatus":{"shape":"ABTestExecutionStatus"}
+      }
+    },
+    "UpdateABTestResponse":{
+      "type":"structure",
+      "required":[
+        "abTestId",
+        "abTestArn",
+        "status",
+        "executionStatus",
+        "updatedAt"
+      ],
+      "members":{
+        "abTestId":{"shape":"ABTestId"},
+        "abTestArn":{"shape":"ABTestArn"},
+        "status":{"shape":"ABTestStatus"},
+        "executionStatus":{"shape":"ABTestExecutionStatus"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
     },
     "UpdateBrowserStreamRequest":{
       "type":"structure",
@@ -4972,6 +6522,67 @@
         "EventInOtherSession",
         "ResourceConflict"
       ]
+    },
+    "Variant":{
+      "type":"structure",
+      "required":[
+        "name",
+        "weight",
+        "variantConfiguration"
+      ],
+      "members":{
+        "name":{"shape":"VariantName"},
+        "weight":{"shape":"VariantWeightInteger"},
+        "variantConfiguration":{"shape":"VariantConfiguration"}
+      }
+    },
+    "VariantConfiguration":{
+      "type":"structure",
+      "members":{
+        "configurationBundle":{"shape":"ConfigurationBundleRef"},
+        "target":{"shape":"TargetRef"}
+      }
+    },
+    "VariantList":{
+      "type":"list",
+      "member":{"shape":"Variant"},
+      "max":2,
+      "min":2
+    },
+    "VariantName":{
+      "type":"string",
+      "max":2,
+      "min":1,
+      "pattern":"(C|T1)"
+    },
+    "VariantResult":{
+      "type":"structure",
+      "required":[
+        "variantName",
+        "sampleSize",
+        "mean",
+        "isSignificant"
+      ],
+      "members":{
+        "variantName":{"shape":"String"},
+        "sampleSize":{"shape":"Integer"},
+        "mean":{"shape":"Double"},
+        "absoluteChange":{"shape":"Double"},
+        "percentChange":{"shape":"Double"},
+        "pValue":{"shape":"Double"},
+        "confidenceInterval":{"shape":"ConfidenceInterval"},
+        "isSignificant":{"shape":"Boolean"}
+      }
+    },
+    "VariantResultList":{
+      "type":"list",
+      "member":{"shape":"VariantResult"}
+    },
+    "VariantWeightInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
     },
     "ViewPort":{
       "type":"structure",

@@ -133,6 +133,24 @@
       ],
       "idempotent":true
     },
+    "CreateConfigurationBundle":{
+      "name":"CreateConfigurationBundle",
+      "http":{
+        "method":"POST",
+        "requestUri":"/configuration-bundles/create",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateConfigurationBundleRequest"},
+      "output":{"shape":"CreateConfigurationBundleResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateEvaluator":{
       "name":"CreateEvaluator",
       "http":{
@@ -165,6 +183,26 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "CreateGatewayRule":{
+      "name":"CreateGatewayRule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/gateways/{gatewayIdentifier}/rules",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateGatewayRuleRequest"},
+      "output":{"shape":"CreateGatewayRuleResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ],
@@ -480,6 +518,25 @@
       ],
       "idempotent":true
     },
+    "DeleteConfigurationBundle":{
+      "name":"DeleteConfigurationBundle",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/configuration-bundles/{bundleId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteConfigurationBundleRequest"},
+      "output":{"shape":"DeleteConfigurationBundleResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "DeleteEvaluator":{
       "name":"DeleteEvaluator",
       "http":{
@@ -512,6 +569,25 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteGatewayRule":{
+      "name":"DeleteGatewayRule",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/gateways/{gatewayIdentifier}/rules/{ruleId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteGatewayRuleRequest"},
+      "output":{"shape":"DeleteGatewayRuleResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -837,6 +913,42 @@
       ],
       "readonly":true
     },
+    "GetConfigurationBundle":{
+      "name":"GetConfigurationBundle",
+      "http":{
+        "method":"GET",
+        "requestUri":"/configuration-bundles/{bundleId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetConfigurationBundleRequest"},
+      "output":{"shape":"GetConfigurationBundleResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetConfigurationBundleVersion":{
+      "name":"GetConfigurationBundleVersion",
+      "http":{
+        "method":"GET",
+        "requestUri":"/configuration-bundles/{bundleId}/versions/{versionId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetConfigurationBundleVersionRequest"},
+      "output":{"shape":"GetConfigurationBundleVersionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "GetEvaluator":{
       "name":"GetEvaluator",
       "http":{
@@ -864,6 +976,24 @@
       },
       "input":{"shape":"GetGatewayRequest"},
       "output":{"shape":"GetGatewayResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetGatewayRule":{
+      "name":"GetGatewayRule",
+      "http":{
+        "method":"GET",
+        "requestUri":"/gateways/{gatewayIdentifier}/rules/{ruleId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetGatewayRuleRequest"},
+      "output":{"shape":"GetGatewayRuleResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -1234,6 +1364,41 @@
       ],
       "readonly":true
     },
+    "ListConfigurationBundleVersions":{
+      "name":"ListConfigurationBundleVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/configuration-bundles/{bundleId}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListConfigurationBundleVersionsRequest"},
+      "output":{"shape":"ListConfigurationBundleVersionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListConfigurationBundles":{
+      "name":"ListConfigurationBundles",
+      "http":{
+        "method":"POST",
+        "requestUri":"/configuration-bundles",
+        "responseCode":200
+      },
+      "input":{"shape":"ListConfigurationBundlesRequest"},
+      "output":{"shape":"ListConfigurationBundlesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListEvaluators":{
       "name":"ListEvaluators",
       "http":{
@@ -1246,6 +1411,24 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListGatewayRules":{
+      "name":"ListGatewayRules",
+      "http":{
+        "method":"GET",
+        "requestUri":"/gateways/{gatewayIdentifier}/rules",
+        "responseCode":200
+      },
+      "input":{"shape":"ListGatewayRulesRequest"},
+      "output":{"shape":"ListGatewayRulesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ],
@@ -1693,6 +1876,24 @@
       ],
       "idempotent":true
     },
+    "UpdateConfigurationBundle":{
+      "name":"UpdateConfigurationBundle",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/configuration-bundles/{bundleId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateConfigurationBundleRequest"},
+      "output":{"shape":"UpdateConfigurationBundleResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "UpdateEvaluator":{
       "name":"UpdateEvaluator",
       "http":{
@@ -1729,6 +1930,25 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateGatewayRule":{
+      "name":"UpdateGatewayRule",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/gateways/{gatewayIdentifier}/rules/{ruleId}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateGatewayRuleRequest"},
+      "output":{"shape":"UpdateGatewayRuleResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -1964,6 +2184,20 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "Action":{
+      "type":"structure",
+      "members":{
+        "configurationBundle":{"shape":"ConfigurationBundleAction"},
+        "routeToTarget":{"shape":"RouteToTargetAction"}
+      },
+      "union":true
+    },
+    "Actions":{
+      "type":"list",
+      "member":{"shape":"Action"},
+      "max":2,
+      "min":1
     },
     "AdditionalModelRequestFields":{
       "type":"structure",
@@ -2325,7 +2559,8 @@
       "enum":[
         "CUSTOM_JWT",
         "AWS_IAM",
-        "NONE"
+        "NONE",
+        "AUTHENTICATE_ONLY"
       ]
     },
     "AuthorizingClaimMatchValueType":{
@@ -2360,6 +2595,12 @@
     "Boolean":{
       "type":"boolean",
       "box":true
+    },
+    "BranchName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z][a-zA-Z0-9_/-]{0,127}"
     },
     "BrowserArn":{
       "type":"string",
@@ -2704,6 +2945,25 @@
         "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
     },
+    "ComponentConfiguration":{
+      "type":"structure",
+      "required":["configuration"],
+      "members":{
+        "configuration":{"shape":"Document"}
+      },
+      "sensitive":true
+    },
+    "ComponentConfigurationMap":{
+      "type":"map",
+      "key":{"shape":"ComponentIdentifier"},
+      "value":{"shape":"ComponentConfiguration"}
+    },
+    "ComponentIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[a-zA-Z][a-zA-Z0-9_:/.\\-]{0,2047}"
+    },
     "ConcurrentModificationException":{
       "type":"structure",
       "required":["message"],
@@ -2715,6 +2975,120 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "Condition":{
+      "type":"structure",
+      "members":{
+        "matchPrincipals":{"shape":"MatchPrincipals"},
+        "matchPaths":{"shape":"MatchPaths"}
+      },
+      "union":true
+    },
+    "Conditions":{
+      "type":"list",
+      "member":{"shape":"Condition"},
+      "max":2,
+      "min":1
+    },
+    "ConfigurationBundleAction":{
+      "type":"structure",
+      "members":{
+        "staticOverride":{"shape":"StaticOverride"},
+        "weightedOverride":{"shape":"WeightedOverride"}
+      },
+      "union":true
+    },
+    "ConfigurationBundleArn":{
+      "type":"string",
+      "pattern":"arn:aws:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:configuration-bundle/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+    },
+    "ConfigurationBundleDescription":{
+      "type":"string",
+      "max":500,
+      "min":1,
+      "pattern":".+",
+      "sensitive":true
+    },
+    "ConfigurationBundleId":{
+      "type":"string",
+      "pattern":"[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+    },
+    "ConfigurationBundleName":{
+      "type":"string",
+      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,99}"
+    },
+    "ConfigurationBundleReference":{
+      "type":"structure",
+      "required":[
+        "bundleArn",
+        "bundleVersion"
+      ],
+      "members":{
+        "bundleArn":{"shape":"GatewayConfigurationBundleArn"},
+        "bundleVersion":{"shape":"ConfigurationBundleReferenceBundleVersionString"}
+      }
+    },
+    "ConfigurationBundleReferenceBundleVersionString":{
+      "type":"string",
+      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+    },
+    "ConfigurationBundleStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "CREATING",
+        "CREATE_FAILED",
+        "UPDATING",
+        "UPDATE_FAILED",
+        "DELETING",
+        "DELETE_FAILED"
+      ]
+    },
+    "ConfigurationBundleSummary":{
+      "type":"structure",
+      "required":[
+        "bundleArn",
+        "bundleId",
+        "bundleName"
+      ],
+      "members":{
+        "bundleArn":{"shape":"ConfigurationBundleArn"},
+        "bundleId":{"shape":"ConfigurationBundleId"},
+        "bundleName":{"shape":"ConfigurationBundleName"},
+        "description":{"shape":"ConfigurationBundleDescription"}
+      }
+    },
+    "ConfigurationBundleSummaryList":{
+      "type":"list",
+      "member":{"shape":"ConfigurationBundleSummary"}
+    },
+    "ConfigurationBundleVersion":{
+      "type":"string",
+      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+    },
+    "ConfigurationBundleVersionList":{
+      "type":"list",
+      "member":{"shape":"ConfigurationBundleVersion"}
+    },
+    "ConfigurationBundleVersionSummary":{
+      "type":"structure",
+      "required":[
+        "bundleArn",
+        "bundleId",
+        "versionId",
+        "versionCreatedAt"
+      ],
+      "members":{
+        "bundleArn":{"shape":"ConfigurationBundleArn"},
+        "bundleId":{"shape":"ConfigurationBundleId"},
+        "versionId":{"shape":"ConfigurationBundleVersion"},
+        "lineageMetadata":{"shape":"VersionLineageMetadata"},
+        "versionCreatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "ConfigurationBundleVersionSummaryList":{
+      "type":"list",
+      "member":{"shape":"ConfigurationBundleVersionSummary"}
     },
     "ConflictException":{
       "type":"structure",
@@ -2977,6 +3351,46 @@
         "status":{"shape":"CodeInterpreterStatus"}
       }
     },
+    "CreateConfigurationBundleRequest":{
+      "type":"structure",
+      "required":[
+        "bundleName",
+        "components"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "bundleName":{"shape":"ConfigurationBundleName"},
+        "description":{"shape":"ConfigurationBundleDescription"},
+        "components":{"shape":"ComponentConfigurationMap"},
+        "branchName":{"shape":"BranchName"},
+        "commitMessage":{"shape":"CreateConfigurationBundleRequestCommitMessageString"},
+        "createdBy":{"shape":"VersionCreatedBySource"},
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "CreateConfigurationBundleRequestCommitMessageString":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "CreateConfigurationBundleResponse":{
+      "type":"structure",
+      "required":[
+        "bundleArn",
+        "bundleId",
+        "versionId",
+        "createdAt"
+      ],
+      "members":{
+        "bundleArn":{"shape":"ConfigurationBundleArn"},
+        "bundleId":{"shape":"ConfigurationBundleId"},
+        "versionId":{"shape":"ConfigurationBundleVersion"},
+        "createdAt":{"shape":"Timestamp"}
+      }
+    },
     "CreateEvaluatorRequest":{
       "type":"structure",
       "required":[
@@ -2993,6 +3407,7 @@
         "description":{"shape":"EvaluatorDescription"},
         "evaluatorConfig":{"shape":"EvaluatorConfig"},
         "level":{"shape":"EvaluatorLevel"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -3016,7 +3431,6 @@
       "required":[
         "name",
         "roleArn",
-        "protocolType",
         "authorizerType"
       ],
       "members":{
@@ -3047,7 +3461,6 @@
         "updatedAt",
         "status",
         "name",
-        "protocolType",
         "authorizerType"
       ],
       "members":{
@@ -3070,6 +3483,51 @@
         "policyEngineConfiguration":{"shape":"GatewayPolicyEngineConfiguration"},
         "workloadIdentityDetails":{"shape":"WorkloadIdentityDetails"},
         "exceptionLevel":{"shape":"ExceptionLevel"}
+      }
+    },
+    "CreateGatewayRuleRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayIdentifier",
+        "priority",
+        "actions"
+      ],
+      "members":{
+        "gatewayIdentifier":{
+          "shape":"GatewayIdentifier",
+          "location":"uri",
+          "locationName":"gatewayIdentifier"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "priority":{"shape":"GatewayRulePriority"},
+        "conditions":{"shape":"Conditions"},
+        "actions":{"shape":"Actions"},
+        "description":{"shape":"GatewayRuleDescription"}
+      }
+    },
+    "CreateGatewayRuleResponse":{
+      "type":"structure",
+      "required":[
+        "ruleId",
+        "gatewayArn",
+        "priority",
+        "actions",
+        "createdAt",
+        "status"
+      ],
+      "members":{
+        "ruleId":{"shape":"GatewayRuleId"},
+        "gatewayArn":{"shape":"GatewayArn"},
+        "priority":{"shape":"GatewayRulePriority"},
+        "conditions":{"shape":"Conditions"},
+        "actions":{"shape":"Actions"},
+        "description":{"shape":"GatewayRuleDescription"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "status":{"shape":"GatewayRuleStatus"},
+        "system":{"shape":"SystemManagedBlock"}
       }
     },
     "CreateGatewayTargetRequest":{
@@ -3124,7 +3582,8 @@
         "metadataConfiguration":{"shape":"MetadataConfiguration"},
         "privateEndpoint":{"shape":"PrivateEndpoint"},
         "privateEndpointManagedResources":{"shape":"PrivateEndpointManagedResources"},
-        "authorizationData":{"shape":"AuthorizationData"}
+        "authorizationData":{"shape":"AuthorizationData"},
+        "protocolType":{"shape":"TargetProtocolType"}
       }
     },
     "CreateHarnessRequest":{
@@ -3486,7 +3945,9 @@
       "enum":[
         "GATEWAY_IAM_ROLE",
         "OAUTH",
-        "API_KEY"
+        "API_KEY",
+        "CALLER_IAM_CREDENTIALS",
+        "JWT_PASSTHROUGH"
       ]
     },
     "CredentialProviderVendorType":{
@@ -3859,6 +4320,28 @@
         "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
     },
+    "DeleteConfigurationBundleRequest":{
+      "type":"structure",
+      "required":["bundleId"],
+      "members":{
+        "bundleId":{
+          "shape":"ConfigurationBundleId",
+          "location":"uri",
+          "locationName":"bundleId"
+        }
+      }
+    },
+    "DeleteConfigurationBundleResponse":{
+      "type":"structure",
+      "required":[
+        "bundleId",
+        "status"
+      ],
+      "members":{
+        "bundleId":{"shape":"ConfigurationBundleId"},
+        "status":{"shape":"ConfigurationBundleStatus"}
+      }
+    },
     "DeleteEvaluatorRequest":{
       "type":"structure",
       "required":["evaluatorId"],
@@ -3904,6 +4387,36 @@
         "gatewayId":{"shape":"GatewayId"},
         "status":{"shape":"GatewayStatus"},
         "statusReasons":{"shape":"StatusReasons"}
+      }
+    },
+    "DeleteGatewayRuleRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayIdentifier",
+        "ruleId"
+      ],
+      "members":{
+        "gatewayIdentifier":{
+          "shape":"GatewayIdentifier",
+          "location":"uri",
+          "locationName":"gatewayIdentifier"
+        },
+        "ruleId":{
+          "shape":"GatewayRuleId",
+          "location":"uri",
+          "locationName":"ruleId"
+        }
+      }
+    },
+    "DeleteGatewayRuleResponse":{
+      "type":"structure",
+      "required":[
+        "ruleId",
+        "status"
+      ],
+      "members":{
+        "ruleId":{"shape":"GatewayRuleId"},
+        "status":{"shape":"GatewayRuleStatus"}
       }
     },
     "DeleteGatewayTargetRequest":{
@@ -4216,6 +4729,11 @@
       "type":"string",
       "pattern":".+/\\.well-known/openid-configuration"
     },
+    "Document":{
+      "type":"structure",
+      "members":{},
+      "document":true
+    },
     "DomainName":{"type":"string"},
     "Double":{
       "type":"double",
@@ -4492,7 +5010,8 @@
         "status":{"shape":"EvaluatorStatus"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
-        "lockedForModification":{"shape":"Boolean"}
+        "lockedForModification":{"shape":"Boolean"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "EvaluatorSummaryList":{
@@ -4622,6 +5141,10 @@
       "type":"string",
       "pattern":"arn:aws(|-cn|-us-gov):bedrock-agentcore:[a-z0-9-]{1,20}:[0-9]{12}:gateway/([0-9a-z][-]?){1,48}-[a-z0-9]{10}"
     },
+    "GatewayConfigurationBundleArn":{
+      "type":"string",
+      "pattern":"arn:aws[a-zA-Z-]*:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:configuration-bundle/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+    },
     "GatewayDescription":{
       "type":"string",
       "max":200,
@@ -4719,6 +5242,71 @@
       "type":"string",
       "enum":["MCP"]
     },
+    "GatewayRuleDescription":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "GatewayRuleDetail":{
+      "type":"structure",
+      "required":[
+        "ruleId",
+        "gatewayArn",
+        "priority",
+        "actions",
+        "createdAt",
+        "status"
+      ],
+      "members":{
+        "ruleId":{"shape":"GatewayRuleId"},
+        "gatewayArn":{"shape":"GatewayArn"},
+        "priority":{"shape":"GatewayRulePriority"},
+        "conditions":{"shape":"Conditions"},
+        "actions":{"shape":"Actions"},
+        "description":{"shape":"GatewayRuleDescription"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "status":{"shape":"GatewayRuleStatus"},
+        "system":{"shape":"SystemManagedBlock"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "GatewayRuleId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "GatewayRuleMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "GatewayRuleNextToken":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"\\S*"
+    },
+    "GatewayRulePriority":{
+      "type":"integer",
+      "box":true,
+      "max":1000000,
+      "min":1
+    },
+    "GatewayRuleStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING"
+      ]
+    },
+    "GatewayRules":{
+      "type":"list",
+      "member":{"shape":"GatewayRuleDetail"}
+    },
     "GatewayStatus":{
       "type":"string",
       "enum":[
@@ -4742,8 +5330,7 @@
         "status",
         "createdAt",
         "updatedAt",
-        "authorizerType",
-        "protocolType"
+        "authorizerType"
       ],
       "members":{
         "gatewayId":{"shape":"GatewayId"},
@@ -4783,7 +5370,8 @@
         "metadataConfiguration":{"shape":"MetadataConfiguration"},
         "privateEndpoint":{"shape":"PrivateEndpoint"},
         "privateEndpointManagedResources":{"shape":"PrivateEndpointManagedResources"},
-        "authorizationData":{"shape":"AuthorizationData"}
+        "authorizationData":{"shape":"AuthorizationData"},
+        "protocolType":{"shape":"TargetProtocolType"}
       }
     },
     "GatewayTargetList":{
@@ -5025,6 +5613,87 @@
         "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
     },
+    "GetConfigurationBundleRequest":{
+      "type":"structure",
+      "required":["bundleId"],
+      "members":{
+        "bundleId":{
+          "shape":"ConfigurationBundleId",
+          "location":"uri",
+          "locationName":"bundleId"
+        },
+        "branchName":{
+          "shape":"BranchName",
+          "location":"querystring",
+          "locationName":"branchName"
+        }
+      }
+    },
+    "GetConfigurationBundleResponse":{
+      "type":"structure",
+      "required":[
+        "bundleArn",
+        "bundleId",
+        "bundleName",
+        "versionId",
+        "components",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "bundleArn":{"shape":"ConfigurationBundleArn"},
+        "bundleId":{"shape":"ConfigurationBundleId"},
+        "bundleName":{"shape":"ConfigurationBundleName"},
+        "description":{"shape":"ConfigurationBundleDescription"},
+        "versionId":{"shape":"ConfigurationBundleVersion"},
+        "components":{"shape":"ComponentConfigurationMap"},
+        "lineageMetadata":{"shape":"VersionLineageMetadata"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "GetConfigurationBundleVersionRequest":{
+      "type":"structure",
+      "required":[
+        "bundleId",
+        "versionId"
+      ],
+      "members":{
+        "bundleId":{
+          "shape":"ConfigurationBundleId",
+          "location":"uri",
+          "locationName":"bundleId"
+        },
+        "versionId":{
+          "shape":"ConfigurationBundleVersion",
+          "location":"uri",
+          "locationName":"versionId"
+        }
+      }
+    },
+    "GetConfigurationBundleVersionResponse":{
+      "type":"structure",
+      "required":[
+        "bundleArn",
+        "bundleId",
+        "bundleName",
+        "versionId",
+        "components",
+        "createdAt",
+        "versionCreatedAt"
+      ],
+      "members":{
+        "bundleArn":{"shape":"ConfigurationBundleArn"},
+        "bundleId":{"shape":"ConfigurationBundleId"},
+        "bundleName":{"shape":"ConfigurationBundleName"},
+        "description":{"shape":"ConfigurationBundleDescription"},
+        "versionId":{"shape":"ConfigurationBundleVersion"},
+        "components":{"shape":"ComponentConfigurationMap"},
+        "lineageMetadata":{"shape":"VersionLineageMetadata"},
+        "createdAt":{"shape":"Timestamp"},
+        "versionCreatedAt":{"shape":"Timestamp"}
+      }
+    },
     "GetEvaluatorRequest":{
       "type":"structure",
       "required":["evaluatorId"],
@@ -5033,6 +5702,11 @@
           "shape":"EvaluatorId",
           "location":"uri",
           "locationName":"evaluatorId"
+        },
+        "includedData":{
+          "shape":"IncludedData",
+          "location":"querystring",
+          "locationName":"includedData"
         }
       }
     },
@@ -5058,7 +5732,8 @@
         "status":{"shape":"EvaluatorStatus"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
-        "lockedForModification":{"shape":"Boolean"}
+        "lockedForModification":{"shape":"Boolean"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "GetGatewayRequest":{
@@ -5081,7 +5756,6 @@
         "updatedAt",
         "status",
         "name",
-        "protocolType",
         "authorizerType"
       ],
       "members":{
@@ -5104,6 +5778,48 @@
         "policyEngineConfiguration":{"shape":"GatewayPolicyEngineConfiguration"},
         "workloadIdentityDetails":{"shape":"WorkloadIdentityDetails"},
         "exceptionLevel":{"shape":"ExceptionLevel"}
+      }
+    },
+    "GetGatewayRuleRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayIdentifier",
+        "ruleId"
+      ],
+      "members":{
+        "gatewayIdentifier":{
+          "shape":"GatewayIdentifier",
+          "location":"uri",
+          "locationName":"gatewayIdentifier"
+        },
+        "ruleId":{
+          "shape":"GatewayRuleId",
+          "location":"uri",
+          "locationName":"ruleId"
+        }
+      }
+    },
+    "GetGatewayRuleResponse":{
+      "type":"structure",
+      "required":[
+        "ruleId",
+        "gatewayArn",
+        "priority",
+        "actions",
+        "createdAt",
+        "status"
+      ],
+      "members":{
+        "ruleId":{"shape":"GatewayRuleId"},
+        "gatewayArn":{"shape":"GatewayArn"},
+        "priority":{"shape":"GatewayRulePriority"},
+        "conditions":{"shape":"Conditions"},
+        "actions":{"shape":"Actions"},
+        "description":{"shape":"GatewayRuleDescription"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "status":{"shape":"GatewayRuleStatus"},
+        "system":{"shape":"SystemManagedBlock"},
+        "updatedAt":{"shape":"DateTimestamp"}
       }
     },
     "GetGatewayTargetRequest":{
@@ -5152,7 +5868,8 @@
         "metadataConfiguration":{"shape":"MetadataConfiguration"},
         "privateEndpoint":{"shape":"PrivateEndpoint"},
         "privateEndpointManagedResources":{"shape":"PrivateEndpointManagedResources"},
-        "authorizationData":{"shape":"AuthorizationData"}
+        "authorizationData":{"shape":"AuthorizationData"},
+        "protocolType":{"shape":"TargetProtocolType"}
       }
     },
     "GetHarnessRequest":{
@@ -5995,6 +6712,13 @@
       "max":40,
       "min":1
     },
+    "HttpTargetConfiguration":{
+      "type":"structure",
+      "members":{
+        "agentcoreRuntime":{"shape":"RuntimeTargetConfiguration"}
+      },
+      "union":true
+    },
     "IamCredentialProvider":{
       "type":"structure",
       "required":["service"],
@@ -6014,6 +6738,20 @@
       "max":64,
       "min":1,
       "pattern":"[a-zA-Z0-9._-]+"
+    },
+    "IamPrincipal":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"IamPrincipalArn"},
+        "operator":{"shape":"PrincipalMatchOperator"}
+      }
+    },
+    "IamPrincipalArn":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"(arn:aws[a-zA-Z-]*:iam::(\\d{12}|\\*):(user|role)/[\\w+=,.@*?/-]+|arn:aws[a-zA-Z-]*:sts::(\\d{12}|\\*):assumed-role/[\\w+=,.@*?/-]+)"
     },
     "IamRoleArn":{
       "type":"string",
@@ -6044,6 +6782,13 @@
       "enum":[
         "STRING",
         "STRING_ARRAY"
+      ]
+    },
+    "IncludedData":{
+      "type":"string",
+      "enum":[
+        "ALL_DATA",
+        "METADATA_ONLY"
       ]
     },
     "IncludedOauth2ProviderConfigInput":{
@@ -6446,6 +7191,71 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListConfigurationBundleVersionsRequest":{
+      "type":"structure",
+      "required":["bundleId"],
+      "members":{
+        "bundleId":{
+          "shape":"ConfigurationBundleId",
+          "location":"uri",
+          "locationName":"bundleId"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListConfigurationBundleVersionsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "filter":{"shape":"VersionFilter"}
+      }
+    },
+    "ListConfigurationBundleVersionsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListConfigurationBundleVersionsResponse":{
+      "type":"structure",
+      "required":["versions"],
+      "members":{
+        "versions":{"shape":"ConfigurationBundleVersionSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListConfigurationBundlesRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListConfigurationBundlesRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListConfigurationBundlesRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListConfigurationBundlesResponse":{
+      "type":"structure",
+      "required":["bundles"],
+      "members":{
+        "bundles":{"shape":"ConfigurationBundleSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListEvaluatorsRequest":{
       "type":"structure",
       "members":{
@@ -6473,6 +7283,35 @@
       "members":{
         "evaluators":{"shape":"EvaluatorSummaryList"},
         "nextToken":{"shape":"String"}
+      }
+    },
+    "ListGatewayRulesRequest":{
+      "type":"structure",
+      "required":["gatewayIdentifier"],
+      "members":{
+        "gatewayIdentifier":{
+          "shape":"GatewayIdentifier",
+          "location":"uri",
+          "locationName":"gatewayIdentifier"
+        },
+        "maxResults":{
+          "shape":"GatewayRuleMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"GatewayRuleNextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListGatewayRulesResponse":{
+      "type":"structure",
+      "required":["gatewayRules"],
+      "members":{
+        "gatewayRules":{"shape":"GatewayRules"},
+        "nextToken":{"shape":"GatewayRuleNextToken"}
       }
     },
     "ListGatewayTargetsRequest":{
@@ -6911,6 +7750,45 @@
         "routingDomain":{"shape":"RoutingDomain"}
       }
     },
+    "MatchPathPattern":{
+      "type":"string",
+      "max":512,
+      "min":0,
+      "pattern":"/[\\w\\-.]+/\\*"
+    },
+    "MatchPaths":{
+      "type":"structure",
+      "required":["anyOf"],
+      "members":{
+        "anyOf":{"shape":"MatchPathsAnyOfList"}
+      }
+    },
+    "MatchPathsAnyOfList":{
+      "type":"list",
+      "member":{"shape":"MatchPathPattern"},
+      "max":10,
+      "min":1
+    },
+    "MatchPrincipalEntry":{
+      "type":"structure",
+      "members":{
+        "iamPrincipal":{"shape":"IamPrincipal"}
+      },
+      "union":true
+    },
+    "MatchPrincipals":{
+      "type":"structure",
+      "required":["anyOf"],
+      "members":{
+        "anyOf":{"shape":"MatchPrincipalsAnyOfList"}
+      }
+    },
+    "MatchPrincipalsAnyOfList":{
+      "type":"list",
+      "member":{"shape":"MatchPrincipalEntry"},
+      "max":100,
+      "min":1
+    },
     "MatchValueString":{
       "type":"string",
       "max":255,
@@ -6962,8 +7840,8 @@
       "members":{
         "endpoint":{"shape":"McpServerTargetConfigurationEndpointString"},
         "mcpToolSchema":{"shape":"McpToolSchemaConfiguration"},
-        "resourcePriority":{"shape":"TargetResourcePriority"},
-        "listingMode":{"shape":"ListingMode"}
+        "listingMode":{"shape":"ListingMode"},
+        "resourcePriority":{"shape":"TargetResourcePriority"}
       }
     },
     "McpServerTargetConfigurationEndpointString":{
@@ -7792,6 +8670,13 @@
         "IGNORE_ALL_FINDINGS"
       ]
     },
+    "PrincipalMatchOperator":{
+      "type":"string",
+      "enum":[
+        "StringEquals",
+        "StringLike"
+      ]
+    },
     "PrivateEndpoint":{
       "type":"structure",
       "members":{
@@ -8202,6 +9087,14 @@
       "min":1,
       "pattern":"arn:aws(-[^:]+)?:iam::([0-9]{12})?:role/.+"
     },
+    "RouteToTargetAction":{
+      "type":"structure",
+      "members":{
+        "staticRoute":{"shape":"StaticRoute"},
+        "weightedRoute":{"shape":"WeightedRoute"}
+      },
+      "union":true
+    },
     "RoutingDomain":{
       "type":"string",
       "max":255,
@@ -8216,6 +9109,10 @@
         "sessionConfig":{"shape":"SessionConfig"}
       }
     },
+    "RuntimeArn":{
+      "type":"string",
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:runtime/[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10}"
+    },
     "RuntimeContainerUri":{
       "type":"string",
       "max":1024,
@@ -8227,6 +9124,18 @@
       "required":["requireMMDSV2"],
       "members":{
         "requireMMDSV2":{"shape":"Boolean"}
+      }
+    },
+    "RuntimeQualifier":{
+      "type":"string",
+      "pattern":".*([1-9][0-9]{0,4})|([a-zA-Z][a-zA-Z0-9_]{0,47}).*"
+    },
+    "RuntimeTargetConfiguration":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"RuntimeArn"},
+        "qualifier":{"shape":"RuntimeQualifier"}
       }
     },
     "S3BucketUri":{
@@ -8662,6 +9571,28 @@
       "max":10000,
       "min":35
     },
+    "StaticOverride":{
+      "type":"structure",
+      "required":[
+        "bundleArn",
+        "bundleVersion"
+      ],
+      "members":{
+        "bundleArn":{"shape":"GatewayConfigurationBundleArn"},
+        "bundleVersion":{"shape":"StaticOverrideBundleVersionString"}
+      }
+    },
+    "StaticOverrideBundleVersionString":{
+      "type":"string",
+      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+    },
+    "StaticRoute":{
+      "type":"structure",
+      "required":["targetName"],
+      "members":{
+        "targetName":{"shape":"TargetName"}
+      }
+    },
     "Status":{
       "type":"string",
       "enum":[
@@ -8840,6 +9771,13 @@
         "targets":{"shape":"GatewayTargetList"}
       }
     },
+    "SystemManagedBlock":{
+      "type":"structure",
+      "required":["managedBy"],
+      "members":{
+        "managedBy":{"shape":"String"}
+      }
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -8893,7 +9831,8 @@
     "TargetConfiguration":{
       "type":"structure",
       "members":{
-        "mcp":{"shape":"McpTargetConfiguration"}
+        "mcp":{"shape":"McpTargetConfiguration"},
+        "http":{"shape":"HttpTargetConfiguration"}
       },
       "union":true
     },
@@ -8929,6 +9868,13 @@
       "max":2048,
       "min":1,
       "pattern":"\\S*"
+    },
+    "TargetProtocolType":{
+      "type":"string",
+      "enum":[
+        "MCP",
+        "HTTP"
+      ]
     },
     "TargetResourcePriority":{
       "type":"integer",
@@ -8974,6 +9920,44 @@
         "updatedAt":{"shape":"DateTimestamp"},
         "resourcePriority":{"shape":"TargetResourcePriority"}
       }
+    },
+    "TargetTrafficSplitEntries":{
+      "type":"list",
+      "member":{"shape":"TargetTrafficSplitEntry"},
+      "max":2,
+      "min":2
+    },
+    "TargetTrafficSplitEntry":{
+      "type":"structure",
+      "required":[
+        "name",
+        "weight",
+        "targetName"
+      ],
+      "members":{
+        "name":{"shape":"TargetTrafficSplitEntryNameString"},
+        "weight":{"shape":"TargetTrafficSplitEntryWeightInteger"},
+        "targetName":{"shape":"TargetName"},
+        "description":{"shape":"TargetTrafficSplitEntryDescriptionString"},
+        "metadata":{"shape":"TrafficSplitMetadataMap"}
+      }
+    },
+    "TargetTrafficSplitEntryDescriptionString":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "TargetTrafficSplitEntryNameString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]([a-zA-Z0-9-]{0,62}[a-zA-Z0-9])?"
+    },
+    "TargetTrafficSplitEntryWeightInteger":{
+      "type":"integer",
+      "box":true,
+      "max":99,
+      "min":1
     },
     "Temperature":{
       "type":"float",
@@ -9111,6 +10095,61 @@
       "box":true,
       "max":1.0,
       "min":0.0
+    },
+    "TrafficSplitEntries":{
+      "type":"list",
+      "member":{"shape":"TrafficSplitEntry"},
+      "max":2,
+      "min":2
+    },
+    "TrafficSplitEntry":{
+      "type":"structure",
+      "required":[
+        "name",
+        "weight",
+        "configurationBundle"
+      ],
+      "members":{
+        "name":{"shape":"TrafficSplitEntryNameString"},
+        "weight":{"shape":"TrafficSplitEntryWeightInteger"},
+        "configurationBundle":{"shape":"ConfigurationBundleReference"},
+        "description":{"shape":"TrafficSplitEntryDescriptionString"},
+        "metadata":{"shape":"TrafficSplitMetadataMap"}
+      }
+    },
+    "TrafficSplitEntryDescriptionString":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "TrafficSplitEntryNameString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]([a-zA-Z0-9-]{0,62}[a-zA-Z0-9])?"
+    },
+    "TrafficSplitEntryWeightInteger":{
+      "type":"integer",
+      "box":true,
+      "max":99,
+      "min":1
+    },
+    "TrafficSplitMetadataKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "TrafficSplitMetadataMap":{
+      "type":"map",
+      "key":{"shape":"TrafficSplitMetadataKey"},
+      "value":{"shape":"TrafficSplitMetadataValue"},
+      "max":25,
+      "min":0
+    },
+    "TrafficSplitMetadataValue":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "TriggerCondition":{
       "type":"structure",
@@ -9301,6 +10340,48 @@
         "lastUpdatedTime":{"shape":"Timestamp"}
       }
     },
+    "UpdateConfigurationBundleRequest":{
+      "type":"structure",
+      "required":["bundleId"],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "bundleId":{
+          "shape":"ConfigurationBundleId",
+          "location":"uri",
+          "locationName":"bundleId"
+        },
+        "bundleName":{"shape":"ConfigurationBundleName"},
+        "description":{"shape":"ConfigurationBundleDescription"},
+        "components":{"shape":"ComponentConfigurationMap"},
+        "parentVersionIds":{"shape":"ConfigurationBundleVersionList"},
+        "branchName":{"shape":"BranchName"},
+        "commitMessage":{"shape":"UpdateConfigurationBundleRequestCommitMessageString"},
+        "createdBy":{"shape":"VersionCreatedBySource"}
+      }
+    },
+    "UpdateConfigurationBundleRequestCommitMessageString":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "UpdateConfigurationBundleResponse":{
+      "type":"structure",
+      "required":[
+        "bundleArn",
+        "bundleId",
+        "versionId",
+        "updatedAt"
+      ],
+      "members":{
+        "bundleArn":{"shape":"ConfigurationBundleArn"},
+        "bundleId":{"shape":"ConfigurationBundleId"},
+        "versionId":{"shape":"ConfigurationBundleVersion"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
     "UpdateEvaluatorRequest":{
       "type":"structure",
       "required":["evaluatorId"],
@@ -9316,7 +10397,8 @@
         },
         "description":{"shape":"EvaluatorDescription"},
         "evaluatorConfig":{"shape":"EvaluatorConfig"},
-        "level":{"shape":"EvaluatorLevel"}
+        "level":{"shape":"EvaluatorLevel"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "UpdateEvaluatorResponse":{
@@ -9340,7 +10422,6 @@
         "gatewayIdentifier",
         "name",
         "roleArn",
-        "protocolType",
         "authorizerType"
       ],
       "members":{
@@ -9371,7 +10452,6 @@
         "updatedAt",
         "status",
         "name",
-        "protocolType",
         "authorizerType"
       ],
       "members":{
@@ -9394,6 +10474,52 @@
         "policyEngineConfiguration":{"shape":"GatewayPolicyEngineConfiguration"},
         "workloadIdentityDetails":{"shape":"WorkloadIdentityDetails"},
         "exceptionLevel":{"shape":"ExceptionLevel"}
+      }
+    },
+    "UpdateGatewayRuleRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayIdentifier",
+        "ruleId"
+      ],
+      "members":{
+        "gatewayIdentifier":{
+          "shape":"GatewayIdentifier",
+          "location":"uri",
+          "locationName":"gatewayIdentifier"
+        },
+        "ruleId":{
+          "shape":"GatewayRuleId",
+          "location":"uri",
+          "locationName":"ruleId"
+        },
+        "priority":{"shape":"GatewayRulePriority"},
+        "conditions":{"shape":"Conditions"},
+        "actions":{"shape":"Actions"},
+        "description":{"shape":"GatewayRuleDescription"}
+      }
+    },
+    "UpdateGatewayRuleResponse":{
+      "type":"structure",
+      "required":[
+        "ruleId",
+        "gatewayArn",
+        "priority",
+        "actions",
+        "createdAt",
+        "status"
+      ],
+      "members":{
+        "ruleId":{"shape":"GatewayRuleId"},
+        "gatewayArn":{"shape":"GatewayArn"},
+        "priority":{"shape":"GatewayRulePriority"},
+        "conditions":{"shape":"Conditions"},
+        "actions":{"shape":"Actions"},
+        "description":{"shape":"GatewayRuleDescription"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "status":{"shape":"GatewayRuleStatus"},
+        "system":{"shape":"SystemManagedBlock"},
+        "updatedAt":{"shape":"DateTimestamp"}
       }
     },
     "UpdateGatewayTargetRequest":{
@@ -9450,7 +10576,8 @@
         "metadataConfiguration":{"shape":"MetadataConfiguration"},
         "privateEndpoint":{"shape":"PrivateEndpoint"},
         "privateEndpointManagedResources":{"shape":"PrivateEndpointManagedResources"},
-        "authorizationData":{"shape":"AuthorizationData"}
+        "authorizationData":{"shape":"AuthorizationData"},
+        "protocolType":{"shape":"TargetProtocolType"}
       }
     },
     "UpdateHarnessRequest":{
@@ -10079,6 +11206,36 @@
         "ResourceConflict"
       ]
     },
+    "VersionCreatedBySource":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"String"},
+        "arn":{"shape":"String"}
+      }
+    },
+    "VersionFilter":{
+      "type":"structure",
+      "members":{
+        "branchName":{"shape":"BranchName"},
+        "createdByName":{"shape":"String"},
+        "latestPerBranch":{"shape":"Boolean"}
+      }
+    },
+    "VersionLineageMetadata":{
+      "type":"structure",
+      "members":{
+        "parentVersionIds":{"shape":"ConfigurationBundleVersionList"},
+        "branchName":{"shape":"BranchName"},
+        "createdBy":{"shape":"VersionCreatedBySource"},
+        "commitMessage":{"shape":"VersionLineageMetadataCommitMessageString"}
+      }
+    },
+    "VersionLineageMetadataCommitMessageString":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
     "VpcConfig":{
       "type":"structure",
       "required":[
@@ -10093,6 +11250,20 @@
     "VpcIdentifier":{
       "type":"string",
       "pattern":"vpc-(([0-9a-z]{8})|([0-9a-z]{17}))"
+    },
+    "WeightedOverride":{
+      "type":"structure",
+      "required":["trafficSplit"],
+      "members":{
+        "trafficSplit":{"shape":"TrafficSplitEntries"}
+      }
+    },
+    "WeightedRoute":{
+      "type":"structure",
+      "required":["trafficSplit"],
+      "members":{
+        "trafficSplit":{"shape":"TargetTrafficSplitEntries"}
+      }
     },
     "WorkloadIdentityArn":{
       "type":"string",

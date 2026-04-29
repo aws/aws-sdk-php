@@ -687,6 +687,23 @@
         {"shape":"UnsupportedRegionException"}
       ]
     },
+    "DescribeContainerGroupPortMappings":{
+      "name":"DescribeContainerGroupPortMappings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeContainerGroupPortMappingsInput"},
+      "output":{"shape":"DescribeContainerGroupPortMappingsOutput"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"UnsupportedRegionException"}
+      ]
+    },
     "DescribeEC2InstanceLimits":{
       "name":"DescribeEC2InstanceLimits",
       "http":{
@@ -2375,6 +2392,18 @@
         "FAILED"
       ]
     },
+    "ContainerGroupPortMapping":{
+      "type":"structure",
+      "members":{
+        "ContainerName":{"shape":"NonZeroAnd128MaxAsciiString"},
+        "ContainerRuntimeId":{"shape":"NonEmptyString"},
+        "ContainerPortMappings":{"shape":"ContainerPortMappingList"}
+      }
+    },
+    "ContainerGroupPortMappingList":{
+      "type":"list",
+      "member":{"shape":"ContainerGroupPortMapping"}
+    },
     "ContainerGroupType":{
       "type":"string",
       "enum":[
@@ -2469,6 +2498,18 @@
       "members":{
         "ContainerPortRanges":{"shape":"ContainerPortRangeList"}
       }
+    },
+    "ContainerPortMapping":{
+      "type":"structure",
+      "members":{
+        "ContainerPort":{"shape":"PortNumber"},
+        "ConnectionPort":{"shape":"PortNumber"},
+        "Protocol":{"shape":"IpProtocol"}
+      }
+    },
+    "ContainerPortMappingList":{
+      "type":"list",
+      "member":{"shape":"ContainerPortMapping"}
     },
     "ContainerPortRange":{
       "type":"structure",
@@ -3205,6 +3246,32 @@
       "type":"structure",
       "members":{
         "ContainerGroupDefinition":{"shape":"ContainerGroupDefinition"}
+      }
+    },
+    "DescribeContainerGroupPortMappingsInput":{
+      "type":"structure",
+      "required":[
+        "FleetId",
+        "ContainerGroupType"
+      ],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "ContainerGroupType":{"shape":"ContainerGroupType"},
+        "ComputeName":{"shape":"ComputeNameOrArn"},
+        "InstanceId":{"shape":"InstanceId"},
+        "ContainerName":{"shape":"NonZeroAnd128MaxAsciiString"}
+      }
+    },
+    "DescribeContainerGroupPortMappingsOutput":{
+      "type":"structure",
+      "members":{
+        "FleetId":{"shape":"FleetId"},
+        "Location":{"shape":"LocationStringModel"},
+        "ContainerGroupDefinitionArn":{"shape":"ContainerGroupDefinitionArn"},
+        "ContainerGroupType":{"shape":"ContainerGroupType"},
+        "ComputeName":{"shape":"ComputeName"},
+        "InstanceId":{"shape":"InstanceId"},
+        "ContainerGroupPortMappings":{"shape":"ContainerGroupPortMappingList"}
       }
     },
     "DescribeEC2InstanceLimitsInput":{

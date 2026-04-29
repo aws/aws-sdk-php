@@ -6,7 +6,7 @@
     "DeleteAlternateContact": "<p>Deletes the specified alternate contact from an Amazon Web Services account.</p> <p>For complete details about how to use the alternate contact operations, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-update-contact-alternate.html\">Update the alternate contacts for your Amazon Web Services account</a>.</p> <note> <p>Before you can update the alternate contact information for an Amazon Web Services account that is managed by Organizations, you must first enable integration between Amazon Web Services Account Management and Organizations. For more information, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/using-orgs-trusted-access.html\">Enable trusted access for Amazon Web Services Account Management</a>.</p> </note>",
     "DisableRegion": "<p>Disables (opts-out) a particular Region for an account.</p> <note> <p>The act of disabling a Region will remove all IAM access to any resources that reside in that Region.</p> </note>",
     "EnableRegion": "<p>Enables (opts-in) a particular Region for an account.</p>",
-    "GetAccountInformation": "<p>Retrieves information about the specified account including its account name, account ID, and account creation date and time. To use this API, an IAM user or role must have the <code>account:GetAccountInformation</code> IAM permission. </p>",
+    "GetAccountInformation": "<p>Retrieves information about the specified account including its account name, account ID, account creation date and time, and account state. To use this API, an IAM user or role must have the <code>account:GetAccountInformation</code> IAM permission. </p>",
     "GetAlternateContact": "<p>Retrieves the specified alternate contact attached to an Amazon Web Services account.</p> <p>For complete details about how to use the alternate contact operations, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-update-contact-alternate.html\">Update the alternate contacts for your Amazon Web Services account</a>.</p> <note> <p>Before you can update the alternate contact information for an Amazon Web Services account that is managed by Organizations, you must first enable integration between Amazon Web Services Account Management and Organizations. For more information, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/using-orgs-trusted-access.html\">Enable trusted access for Amazon Web Services Account Management</a>.</p> </note>",
     "GetContactInformation": "<p>Retrieves the primary contact information of an Amazon Web Services account.</p> <p>For complete details about how to use the primary contact operations, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-update-contact-primary.html\">Update the primary contact for your Amazon Web Services account</a>.</p>",
     "GetGovCloudAccountInformation": "<p>Retrieves information about the GovCloud account linked to the specified standard account (if it exists) including the GovCloud account ID and state. To use this API, an IAM user or role must have the <code>account:GetGovCloudAccountInformation</code> IAM permission. </p>",
@@ -64,6 +64,12 @@
       "refs": {
         "GetAccountInformationResponse$AccountName": "<p>The name of the account.</p>",
         "PutAccountNameRequest$AccountName": "<p>The name of the account.</p>"
+      }
+    },
+    "AccountState": {
+      "base": null,
+      "refs": {
+        "GetAccountInformationResponse$AccountState": "<p>The state of the account. Each account state represents a specific phase in the account lifecycle. Use this information to manage account access, automate workflows, or trigger actions based on account state changes.</p> <p>Valid values: <code>PENDING_ACTIVATION | ACTIVE | SUSPENDED | CLOSED</code> </p>"
       }
     },
     "AddressLine": {
@@ -354,19 +360,19 @@
     "String": {
       "base": null,
       "refs": {
-        "AccessDeniedException$errorType": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
         "AccessDeniedException$message": null,
-        "ConflictException$errorType": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
+        "AccessDeniedException$errorType": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
         "ConflictException$message": null,
-        "InternalServerException$errorType": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
+        "ConflictException$errorType": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
         "InternalServerException$message": null,
+        "InternalServerException$errorType": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
         "ListRegionsResponse$NextToken": "<p>If there is more data to be returned, this will be populated. It should be passed into the <code>next-token</code> request parameter of <code>list-regions</code>.</p>",
-        "ResourceNotFoundException$errorType": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
         "ResourceNotFoundException$message": null,
-        "ResourceUnavailableException$errorType": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
+        "ResourceNotFoundException$errorType": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
         "ResourceUnavailableException$message": null,
-        "TooManyRequestsException$errorType": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
+        "ResourceUnavailableException$errorType": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
         "TooManyRequestsException$message": null,
+        "TooManyRequestsException$errorType": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
         "ValidationExceptionField$name": "<p>The field name where the invalid entry was detected.</p>"
       }
     },

@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Deadline` - Adds support for rtx-pro-server-6000 GPU accelerator for service-managed fleets.
+* `Aws\ECR` - Removes support for registry policy V1
+* `Aws\BedrockAgentCore` - Adds batch evaluation for running evaluators against multiple agent sessions with server-side orchestration, AI-powered recommendations for optimizing system prompts and tool descriptions, and AB testing with controlled traffic splitting and statistical significance reporting
+* `Aws\BedrockAgentCoreControl` - Adds configuration bundles for versioned, immutable agent configuration snapshots with branch-based lineage
+* `Aws\MediaPackageV2` - This feature adds configuration for specifying SCTE marker handling and allow greater control over generated manifest and segment URIs
+* `Aws\CloudFront` - Amazon CloudFront now supports cache tag. Tag objects via response headers and invalidate all matching objects in a single request, replacing manual URL tracking and broad wildcards.
+* `Aws\Transfer` - This launch will increase the limits for customers to list the contents from the remote directories from 10k to 200k.
+* `Aws\GameLift` - Amazon GameLift Servers adds a new DescribeContainerGroupPortMappings API for container fleets, making it easy to discover which connection ports map to your container ports without needing to remotely access the compute.
+* `Aws\Account` - Adds AccountState in the response for the GetAccountInformation API. Each state represents a specific phase in the account lifecycle. Use this information to manage account access, automate workflows, or trigger actions based on account state changes.
+* `Aws\WorkSpacesWeb` - Allow admins to configure IPv6 ranges on IP Access Settings.
+
 ## 3.379.8 - 2026-04-27
 
 * `Aws\OpenSearchService` - Amazon OpenSearch Service now supports JWKS URL configuration for JWT authentication

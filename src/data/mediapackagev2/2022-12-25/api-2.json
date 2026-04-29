@@ -841,7 +841,8 @@
         "ProgramInformation":{"shape":"DashProgramInformation"},
         "DvbSettings":{"shape":"DashDvbSettings"},
         "Compactness":{"shape":"DashCompactness"},
-        "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"}
+        "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"},
+        "UriPathType":{"shape":"UriPathType"}
       }
     },
     "CreateDashManifestConfigurationManifestWindowSecondsInteger":{
@@ -955,7 +956,8 @@
         "ManifestWindowSeconds":{"shape":"CreateHlsManifestConfigurationManifestWindowSecondsInteger"},
         "ProgramDateTimeIntervalSeconds":{"shape":"CreateHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger"},
         "FilterConfiguration":{"shape":"FilterConfiguration"},
-        "UrlEncodeChildManifest":{"shape":"Boolean"}
+        "UrlEncodeChildManifest":{"shape":"Boolean"},
+        "UriPathType":{"shape":"UriPathType"}
       }
     },
     "CreateHlsManifestConfigurationManifestWindowSecondsInteger":{
@@ -984,7 +986,8 @@
         "ManifestWindowSeconds":{"shape":"CreateLowLatencyHlsManifestConfigurationManifestWindowSecondsInteger"},
         "ProgramDateTimeIntervalSeconds":{"shape":"CreateLowLatencyHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger"},
         "FilterConfiguration":{"shape":"FilterConfiguration"},
-        "UrlEncodeChildManifest":{"shape":"Boolean"}
+        "UrlEncodeChildManifest":{"shape":"Boolean"},
+        "UriPathType":{"shape":"UriPathType"}
       }
     },
     "CreateLowLatencyHlsManifestConfigurationManifestWindowSecondsInteger":{
@@ -1056,6 +1059,7 @@
         "DashManifests":{"shape":"CreateDashManifests"},
         "MssManifests":{"shape":"CreateMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
+        "UriSeparator":{"shape":"UriSeparator"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -1093,9 +1097,26 @@
         "DashManifests":{"shape":"GetDashManifests"},
         "MssManifests":{"shape":"GetMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
+        "UriSeparator":{"shape":"UriSeparator"},
         "ETag":{"shape":"EntityTag"},
         "Tags":{"shape":"TagMap"}
       }
+    },
+    "CustomAdType":{
+      "type":"string",
+      "enum":[
+        "PROGRAM",
+        "CHAPTER",
+        "UNSCHEDULED_EVENT",
+        "ALTERNATE_CONTENT_OPPORTUNITY",
+        "NETWORK"
+      ]
+    },
+    "CustomAdTypeList":{
+      "type":"list",
+      "member":{"shape":"CustomAdType"},
+      "max":25,
+      "min":0
     },
     "DashBaseUrl":{
       "type":"structure",
@@ -1683,7 +1704,8 @@
         "ProgramInformation":{"shape":"DashProgramInformation"},
         "DvbSettings":{"shape":"DashDvbSettings"},
         "Compactness":{"shape":"DashCompactness"},
-        "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"}
+        "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"},
+        "UriPathType":{"shape":"UriPathType"}
       }
     },
     "GetDashManifests":{
@@ -1769,7 +1791,8 @@
         "ScteHls":{"shape":"ScteHls"},
         "FilterConfiguration":{"shape":"FilterConfiguration"},
         "StartTag":{"shape":"StartTag"},
-        "UrlEncodeChildManifest":{"shape":"Boolean"}
+        "UrlEncodeChildManifest":{"shape":"Boolean"},
+        "UriPathType":{"shape":"UriPathType"}
       }
     },
     "GetHlsManifests":{
@@ -1791,7 +1814,8 @@
         "ScteHls":{"shape":"ScteHls"},
         "FilterConfiguration":{"shape":"FilterConfiguration"},
         "StartTag":{"shape":"StartTag"},
-        "UrlEncodeChildManifest":{"shape":"Boolean"}
+        "UrlEncodeChildManifest":{"shape":"Boolean"},
+        "UriPathType":{"shape":"UriPathType"}
       }
     },
     "GetLowLatencyHlsManifests":{
@@ -1911,6 +1935,7 @@
         "DashManifests":{"shape":"GetDashManifests"},
         "MssManifests":{"shape":"GetMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
+        "UriSeparator":{"shape":"UriSeparator"},
         "ETag":{"shape":"EntityTag"},
         "Tags":{"shape":"TagMap"}
       }
@@ -2325,7 +2350,8 @@
         "LowLatencyHlsManifests":{"shape":"ListLowLatencyHlsManifests"},
         "DashManifests":{"shape":"ListDashManifests"},
         "MssManifests":{"shape":"ListMssManifests"},
-        "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"}
+        "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
+        "UriSeparator":{"shape":"UriSeparator"}
       }
     },
     "OriginEndpointsList":{
@@ -2559,13 +2585,15 @@
       "type":"structure",
       "members":{
         "ScteFilter":{"shape":"ScteFilterList"},
-        "ScteInSegments":{"shape":"ScteInSegments"}
+        "ScteInSegments":{"shape":"ScteInSegments"},
+        "CustomAdTypes":{"shape":"CustomAdTypeList"}
       }
     },
     "ScteDash":{
       "type":"structure",
       "members":{
-        "AdMarkerDash":{"shape":"AdMarkerDash"}
+        "AdMarkerDash":{"shape":"AdMarkerDash"},
+        "ScteInManifests":{"shape":"ScteInManifests"}
       }
     },
     "ScteFilter":{
@@ -2579,7 +2607,15 @@
         "DISTRIBUTOR_PLACEMENT_OPPORTUNITY",
         "PROVIDER_OVERLAY_PLACEMENT_OPPORTUNITY",
         "DISTRIBUTOR_OVERLAY_PLACEMENT_OPPORTUNITY",
-        "PROGRAM"
+        "PROGRAM",
+        "CHAPTER",
+        "UNSCHEDULED_EVENT",
+        "ALTERNATE_CONTENT_OPPORTUNITY",
+        "NETWORK",
+        "PROVIDER_PROMO",
+        "DISTRIBUTOR_PROMO",
+        "PROVIDER_AD_BLOCK",
+        "DISTRIBUTOR_AD_BLOCK"
       ]
     },
     "ScteFilterList":{
@@ -2591,14 +2627,23 @@
     "ScteHls":{
       "type":"structure",
       "members":{
-        "AdMarkerHls":{"shape":"AdMarkerHls"}
+        "AdMarkerHls":{"shape":"AdMarkerHls"},
+        "ScteInManifests":{"shape":"ScteInManifests"}
       }
+    },
+    "ScteInManifests":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "MATCHES_FILTER"
+      ]
     },
     "ScteInSegments":{
       "type":"string",
       "enum":[
         "NONE",
-        "ALL"
+        "ALL",
+        "MATCHES_FILTER"
       ]
     },
     "Segment":{
@@ -2886,6 +2931,7 @@
         "DashManifests":{"shape":"CreateDashManifests"},
         "MssManifests":{"shape":"CreateMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
+        "UriSeparator":{"shape":"UriSeparator"},
         "ETag":{
           "shape":"EntityTag",
           "location":"header",
@@ -2926,6 +2972,7 @@
         "LowLatencyHlsManifests":{"shape":"GetLowLatencyHlsManifests"},
         "MssManifests":{"shape":"GetMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
+        "UriSeparator":{"shape":"UriSeparator"},
         "ETag":{"shape":"EntityTag"},
         "Tags":{
           "shape":"TagMap",
@@ -2933,6 +2980,20 @@
         },
         "DashManifests":{"shape":"GetDashManifests"}
       }
+    },
+    "UriPathType":{
+      "type":"string",
+      "enum":[
+        "LEAF",
+        "ROOT"
+      ]
+    },
+    "UriSeparator":{
+      "type":"string",
+      "enum":[
+        "UNDERSCORE",
+        "HYPHEN"
+      ]
     },
     "ValidationException":{
       "type":"structure",
@@ -3042,7 +3103,9 @@
         "INVALID_CERTIFICATE_KEY_ALGORITHM",
         "INVALID_CERTIFICATE_SIGNATURE_ALGORITHM",
         "MISSING_CERTIFICATE_DOMAIN_NAME",
-        "INVALID_ARN"
+        "INVALID_ARN",
+        "SCTE_IN_MANIFESTS_INVALID_CONFIGURATION",
+        "CUSTOM_AD_TYPES_INVALID_CONFIGURATION"
       ]
     }
   }

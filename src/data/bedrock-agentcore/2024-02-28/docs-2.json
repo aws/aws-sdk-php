@@ -6,15 +6,22 @@
     "BatchDeleteMemoryRecords": "<p>Deletes multiple memory records in a single batch operation from the specified memory.</p>",
     "BatchUpdateMemoryRecords": "<p>Updates multiple memory records with custom content in a single batch operation within the specified memory.</p>",
     "CompleteResourceTokenAuth": "<p>Confirms the user authentication session for obtaining OAuth2.0 tokens for a resource.</p>",
+    "CreateABTest": "<p>Creates an A/B test for comparing agent configurations. A/B tests split traffic between a control variant and a treatment variant through a gateway, then evaluate performance using online evaluation configurations to determine which variant performs better.</p>",
     "CreateEvent": "<p>Creates an event in an AgentCore Memory resource. Events represent interactions or activities that occur within a session and are associated with specific actors.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:CreateEvent</code> permission.</p> <p>This operation is subject to request rate limiting.</p>",
+    "DeleteABTest": "<p>Deletes an A/B test and its associated gateway rules.</p>",
+    "DeleteBatchEvaluation": "<p>Deletes a batch evaluation and its associated results.</p>",
     "DeleteEvent": "<p>Deletes an event from an AgentCore Memory resource. When you delete an event, it is permanently removed.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:DeleteEvent</code> permission.</p>",
     "DeleteMemoryRecord": "<p>Deletes a memory record from an AgentCore Memory resource. When you delete a memory record, it is permanently removed.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:DeleteMemoryRecord</code> permission.</p>",
+    "DeleteRecommendation": "<p>Deletes a recommendation and its associated results.</p>",
     "Evaluate": "<p> Performs on-demand evaluation of agent traces using a specified evaluator. This synchronous API accepts traces in OpenTelemetry format and returns immediate scoring results with detailed explanations.</p>",
+    "GetABTest": "<p>Retrieves detailed information about an A/B test, including its configuration, status, and statistical results.</p>",
     "GetAgentCard": "<p>Retrieves the A2A agent card associated with an AgentCore Runtime agent.</p>",
+    "GetBatchEvaluation": "<p>Retrieves detailed information about a batch evaluation, including its status, configuration, results, and any error details.</p>",
     "GetBrowserSession": "<p>Retrieves detailed information about a specific browser session in Amazon Bedrock AgentCore. This operation returns the session's configuration, current status, associated streams, and metadata.</p> <p>To get a browser session, you must specify both the browser identifier and the session ID. The response includes information about the session's viewport configuration, timeout settings, and stream endpoints.</p> <p>The following operations are related to <code>GetBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_ListBrowserSessions.html\">ListBrowserSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopBrowserSession.html\">StopBrowserSession</a> </p> </li> </ul>",
     "GetCodeInterpreterSession": "<p>Retrieves detailed information about a specific code interpreter session in Amazon Bedrock AgentCore. This operation returns the session's configuration, current status, and metadata.</p> <p>To get a code interpreter session, you must specify both the code interpreter identifier and the session ID. The response includes information about the session's timeout settings and current status.</p> <p>The following operations are related to <code>GetCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_ListCodeInterpreterSessions.html\">ListCodeInterpreterSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopCodeInterpreterSession.html\">StopCodeInterpreterSession</a> </p> </li> </ul>",
     "GetEvent": "<p>Retrieves information about a specific event in an AgentCore Memory resource.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:GetEvent</code> permission.</p>",
     "GetMemoryRecord": "<p>Retrieves a specific memory record from an AgentCore Memory resource.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:GetMemoryRecord</code> permission.</p>",
+    "GetRecommendation": "<p>Retrieves detailed information about a recommendation, including its configuration, status, and results.</p>",
     "GetResourceApiKey": "<p>Retrieves the API key associated with an API key credential provider.</p>",
     "GetResourceOauth2Token": "<p>Returns the OAuth 2.0 token of the provided resource.</p>",
     "GetWorkloadAccessToken": "<p>Obtains a workload access token for agentic workloads not acting on behalf of a user.</p>",
@@ -25,22 +32,29 @@
     "InvokeBrowser": "<p>Invokes an operating system-level action on a browser session in Amazon Bedrock AgentCore. This operation provides direct OS-level control over browser sessions, enabling mouse actions, keyboard input, and screenshots that the WebSocket-based Chrome DevTools Protocol (CDP) cannot handle — such as interacting with print dialogs, context menus, and JavaScript alerts.</p> <p>You send a request with exactly one action in the <code>BrowserAction</code> union, and receive a corresponding result in the <code>BrowserActionResult</code> union.</p> <p>The following operations are related to <code>InvokeBrowser</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopBrowserSession.html\">StopBrowserSession</a> </p> </li> </ul>",
     "InvokeCodeInterpreter": "<p>Executes code within an active code interpreter session in Amazon Bedrock AgentCore. This operation processes the provided code, runs it in a secure environment, and returns the execution results including output, errors, and generated visualizations.</p> <p>To execute code, you must specify the code interpreter identifier, session ID, and the code to run in the arguments parameter. The operation returns a stream containing the execution results, which can include text output, error messages, and data visualizations.</p> <p>This operation is subject to request rate limiting based on your account's service quotas.</p> <p>The following operations are related to <code>InvokeCodeInterpreter</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
     "InvokeHarness": "<p>Operation to invoke a Harness.</p>",
+    "ListABTests": "<p>Lists all A/B tests in the account.</p>",
     "ListActors": "<p>Lists all actors in an AgentCore Memory resource. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListActors</code> permission.</p>",
+    "ListBatchEvaluations": "<p>Lists all batch evaluations in the account, providing summary information about each evaluation's status and configuration.</p>",
     "ListBrowserSessions": "<p>Retrieves a list of browser sessions in Amazon Bedrock AgentCore that match the specified criteria. This operation returns summary information about each session, including identifiers, status, and timestamps.</p> <p>You can filter the results by browser identifier and session status. The operation supports pagination to handle large result sets efficiently.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully when retrieving large numbers of sessions.</p> <p>The following operations are related to <code>ListBrowserSessions</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> </ul>",
     "ListCodeInterpreterSessions": "<p>Retrieves a list of code interpreter sessions in Amazon Bedrock AgentCore that match the specified criteria. This operation returns summary information about each session, including identifiers, status, and timestamps.</p> <p>You can filter the results by code interpreter identifier and session status. The operation supports pagination to handle large result sets efficiently.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully when retrieving large numbers of sessions.</p> <p>The following operations are related to <code>ListCodeInterpreterSessions</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
     "ListEvents": "<p>Lists events in an AgentCore Memory resource based on specified criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListEvents</code> permission.</p>",
     "ListMemoryExtractionJobs": "<p>Lists all long-term memory extraction jobs that are eligible to be started with optional filtering.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListMemoryExtractionJobs</code> permission.</p>",
     "ListMemoryRecords": "<p>Lists memory records in an AgentCore Memory resource based on specified criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListMemoryRecords</code> permission.</p>",
+    "ListRecommendations": "<p>Lists all recommendations in the account, with optional filtering by status.</p>",
     "ListSessions": "<p>Lists sessions in an AgentCore Memory resource based on specified criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>Empty sessions are automatically deleted after one day.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListSessions</code> permission.</p>",
     "RetrieveMemoryRecords": "<p>Searches for and retrieves memory records from an AgentCore Memory resource based on specified search criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:RetrieveMemoryRecords</code> permission.</p>",
     "SaveBrowserSessionProfile": "<p>Saves the current state of a browser session as a reusable profile in Amazon Bedrock AgentCore. A browser profile captures persistent browser data such as cookies and local storage from an active session, enabling you to reuse this data in future browser sessions.</p> <p>To save a browser session profile, you must specify the profile identifier, browser identifier, and session ID. The session must be active when saving the profile. Once saved, the profile can be used with the <code>StartBrowserSession</code> operation to initialize new sessions with the stored browser state.</p> <p>Browser profiles are useful for scenarios that require persistent authentication, maintaining user preferences across sessions, or continuing tasks that depend on previously stored browser data.</p> <p>The following operations are related to <code>SaveBrowserSessionProfile</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> </ul>",
     "SearchRegistryRecords": "<p> Searches for registry records using semantic, lexical, or hybrid queries. Returns metadata for matching records ordered by relevance within the specified registry.</p>",
+    "StartBatchEvaluation": "<p>Starts a batch evaluation job that evaluates agent performance across multiple sessions. Batch evaluations pull agent traces from CloudWatch Logs or an existing online evaluation configuration and run specified evaluators and insights against them.</p>",
     "StartBrowserSession": "<p>Creates and initializes a browser session in Amazon Bedrock AgentCore. The session enables agents to navigate and interact with web content, extract information from websites, and perform web-based tasks as part of their response generation.</p> <p>To create a session, you must specify a browser identifier and a name. You can also configure the viewport dimensions to control the visible area of web content. The session remains active until it times out or you explicitly stop it using the <code>StopBrowserSession</code> operation.</p> <p>The following operations are related to <code>StartBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_UpdateBrowserStream.html\">UpdateBrowserStream</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_SaveBrowserSessionProfile.html\">SaveBrowserSessionProfile</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopBrowserSession.html\">StopBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_InvokeBrowser.html\">InvokeBrowser</a> </p> </li> </ul>",
     "StartCodeInterpreterSession": "<p>Creates and initializes a code interpreter session in Amazon Bedrock AgentCore. The session enables agents to execute code as part of their response generation, supporting programming languages such as Python for data analysis, visualization, and computation tasks.</p> <p>To create a session, you must specify a code interpreter identifier and a name. The session remains active until it times out or you explicitly stop it using the <code>StopCodeInterpreterSession</code> operation.</p> <p>The following operations are related to <code>StartCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_InvokeCodeInterpreter.html\">InvokeCodeInterpreter</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopCodeInterpreterSession.html\">StopCodeInterpreterSession</a> </p> </li> </ul>",
     "StartMemoryExtractionJob": "<p> Starts a memory extraction job that processes events that failed extraction previously in an AgentCore Memory resource and produces structured memory records. When earlier extraction attempts have left events unprocessed, this job will pick up and extract those as well. </p> <p>To use this operation, you must have the <code>bedrock-agentcore:StartMemoryExtractionJob</code> permission.</p>",
+    "StartRecommendation": "<p>Starts a recommendation job that analyzes agent traces and generates optimization suggestions for system prompts or tool descriptions to improve agent performance.</p>",
+    "StopBatchEvaluation": "<p>Stops a running batch evaluation. Sessions that have already been evaluated retain their results.</p>",
     "StopBrowserSession": "<p>Terminates an active browser session in Amazon Bedrock AgentCore. This operation stops the session, releases associated resources, and makes the session unavailable for further use.</p> <p>To stop a browser session, you must specify both the browser identifier and the session ID. Once stopped, a session cannot be restarted; you must create a new session using <code>StartBrowserSession</code>.</p> <p>The following operations are related to <code>StopBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> </ul>",
     "StopCodeInterpreterSession": "<p>Terminates an active code interpreter session in Amazon Bedrock AgentCore. This operation stops the session, releases associated resources, and makes the session unavailable for further use.</p> <p>To stop a code interpreter session, you must specify both the code interpreter identifier and the session ID. Once stopped, a session cannot be restarted; you must create a new session using <code>StartCodeInterpreterSession</code>.</p> <p>The following operations are related to <code>StopCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
     "StopRuntimeSession": "<p>Stops a session that is running in an running AgentCore Runtime agent.</p>",
+    "UpdateABTest": "<p>Updates an A/B test's configuration, including variants, traffic allocation, evaluation settings, or execution status.</p>",
     "UpdateBrowserStream": "<p>Updates a browser stream. To use this operation, you must have permissions to perform the bedrock:UpdateBrowserStream action.</p>"
   },
   "shapes": {
@@ -48,6 +62,94 @@
       "base": "<p> The A2A (Agent-to-Agent) descriptor configuration for a registry record.</p>",
       "refs": {
         "Descriptors$a2a": "<p> The A2A (Agent-to-Agent) descriptor configuration. Populated when the record's <code>descriptorType</code> is <code>A2A</code>.</p>"
+      }
+    },
+    "ABTestArn": {
+      "base": null,
+      "refs": {
+        "ABTestSummary$abTestArn": "<p>The Amazon Resource Name (ARN) of the A/B test.</p>",
+        "CreateABTestResponse$abTestArn": "<p>The Amazon Resource Name (ARN) of the created A/B test.</p>",
+        "DeleteABTestResponse$abTestArn": "<p>The Amazon Resource Name (ARN) of the deleted A/B test.</p>",
+        "GetABTestResponse$abTestArn": "<p>The Amazon Resource Name (ARN) of the A/B test.</p>",
+        "UpdateABTestResponse$abTestArn": "<p>The Amazon Resource Name (ARN) of the updated A/B test.</p>"
+      }
+    },
+    "ABTestDescription": {
+      "base": null,
+      "refs": {
+        "ABTestSummary$description": "<p>The description of the A/B test.</p>",
+        "CreateABTestRequest$description": "<p>The description of the A/B test.</p>",
+        "GetABTestResponse$description": "<p>The description of the A/B test.</p>",
+        "UpdateABTestRequest$description": "<p>The updated description of the A/B test.</p>"
+      }
+    },
+    "ABTestEvaluationConfig": {
+      "base": "<p>The evaluation configuration for an A/B test, specifying which online evaluation configurations to use for measuring variant performance.</p>",
+      "refs": {
+        "CreateABTestRequest$evaluationConfig": "<p>The evaluation configuration specifying which online evaluation configurations to use for measuring variant performance.</p>",
+        "GetABTestResponse$evaluationConfig": "<p>The evaluation configuration for measuring variant performance.</p>",
+        "UpdateABTestRequest$evaluationConfig": "<p>The updated evaluation configuration.</p>"
+      }
+    },
+    "ABTestExecutionStatus": {
+      "base": null,
+      "refs": {
+        "ABTestSummary$executionStatus": "<p>The execution status of the A/B test.</p>",
+        "CreateABTestResponse$executionStatus": "<p>The execution status indicating whether the A/B test is currently running.</p>",
+        "GetABTestResponse$executionStatus": "<p>The execution status indicating whether the A/B test is currently running.</p>",
+        "UpdateABTestRequest$executionStatus": "<p>The updated execution status to enable or disable the A/B test.</p>",
+        "UpdateABTestResponse$executionStatus": "<p>The execution status of the A/B test.</p>"
+      }
+    },
+    "ABTestId": {
+      "base": null,
+      "refs": {
+        "ABTestSummary$abTestId": "<p>The unique identifier of the A/B test.</p>",
+        "CreateABTestResponse$abTestId": "<p>The unique identifier of the created A/B test.</p>",
+        "DeleteABTestRequest$abTestId": "<p>The unique identifier of the A/B test to delete.</p>",
+        "DeleteABTestResponse$abTestId": "<p>The unique identifier of the deleted A/B test.</p>",
+        "GetABTestRequest$abTestId": "<p>The unique identifier of the A/B test to retrieve.</p>",
+        "GetABTestResponse$abTestId": "<p>The unique identifier of the A/B test.</p>",
+        "UpdateABTestRequest$abTestId": "<p>The unique identifier of the A/B test to update.</p>",
+        "UpdateABTestResponse$abTestId": "<p>The unique identifier of the updated A/B test.</p>"
+      }
+    },
+    "ABTestName": {
+      "base": null,
+      "refs": {
+        "ABTestSummary$name": "<p>The name of the A/B test.</p>",
+        "CreateABTestRequest$name": "<p>The name of the A/B test. Must be unique within your account.</p>",
+        "CreateABTestResponse$name": "<p>The name of the A/B test.</p>",
+        "GetABTestResponse$name": "<p>The name of the A/B test.</p>",
+        "UpdateABTestRequest$name": "<p>The updated name of the A/B test.</p>"
+      }
+    },
+    "ABTestResults": {
+      "base": "<p>The statistical results of an A/B test.</p>",
+      "refs": {
+        "GetABTestResponse$results": "<p>The statistical results of the A/B test, including per-evaluator metrics and significance analysis.</p>"
+      }
+    },
+    "ABTestStatus": {
+      "base": null,
+      "refs": {
+        "ABTestSummary$status": "<p>The current status of the A/B test.</p>",
+        "CreateABTestResponse$status": "<p>The status of the A/B test.</p>",
+        "DeleteABTestResponse$status": "<p>The status of the A/B test deletion operation.</p>",
+        "GetABTestResponse$status": "<p>The current status of the A/B test.</p>",
+        "UpdateABTestResponse$status": "<p>The status of the A/B test.</p>"
+      }
+    },
+    "ABTestSummary": {
+      "base": "<p>Summary information about an A/B test.</p>",
+      "refs": {
+        "ABTestSummaryList$member": null
+      }
+    },
+    "ABTestSummaryList": {
+      "base": null,
+      "refs": {
+        "ListABTestsResponse$abTests": "<p>The list of A/B test summaries.</p>"
       }
     },
     "AccessDeniedException": {
@@ -104,6 +206,13 @@
       "base": "<p> The agent skills descriptor configuration for a registry record.</p>",
       "refs": {
         "Descriptors$agentSkills": "<p> The agent skills descriptor configuration. Populated when the record's <code>descriptorType</code> is <code>AGENT_SKILLS</code>.</p>"
+      }
+    },
+    "AgentTracesConfig": {
+      "base": "<p>The configuration specifying where to read agent traces from for recommendation analysis.</p>",
+      "refs": {
+        "SystemPromptRecommendationConfig$agentTraces": "<p>The agent traces to analyze for generating recommendations.</p>",
+        "ToolDescriptionRecommendationConfig$agentTraces": "<p>The agent traces to analyze for generating tool description recommendations.</p>"
       }
     },
     "ApiKeyArn": {
@@ -166,6 +275,70 @@
       "base": null,
       "refs": {}
     },
+    "BatchEvaluationArn": {
+      "base": "<p>ARN for a batch evaluation</p>",
+      "refs": {
+        "BatchEvaluationSummary$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the batch evaluation.</p>",
+        "DeleteBatchEvaluationResponse$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the deleted batch evaluation.</p>",
+        "GetBatchEvaluationResponse$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the batch evaluation.</p>",
+        "StartBatchEvaluationResponse$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the created batch evaluation.</p>",
+        "StopBatchEvaluationResponse$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the stopped batch evaluation.</p>"
+      }
+    },
+    "BatchEvaluationDescription": {
+      "base": null,
+      "refs": {
+        "BatchEvaluationSummary$description": "<p>The description of the batch evaluation.</p>",
+        "GetBatchEvaluationResponse$description": "<p>The description of the batch evaluation.</p>",
+        "StartBatchEvaluationRequest$description": "<p>The description of the batch evaluation.</p>",
+        "StartBatchEvaluationResponse$description": "<p>The description of the batch evaluation.</p>",
+        "StopBatchEvaluationResponse$description": "<p>The description of the batch evaluation.</p>"
+      }
+    },
+    "BatchEvaluationId": {
+      "base": "<p>Unique identifier for a batch evaluation (name-prefixed format)</p>",
+      "refs": {
+        "BatchEvaluationSummary$batchEvaluationId": "<p>The unique identifier of the batch evaluation.</p>",
+        "DeleteBatchEvaluationRequest$batchEvaluationId": "<p>The unique identifier of the batch evaluation to delete.</p>",
+        "DeleteBatchEvaluationResponse$batchEvaluationId": "<p>The unique identifier of the deleted batch evaluation.</p>",
+        "GetBatchEvaluationRequest$batchEvaluationId": "<p>The unique identifier of the batch evaluation to retrieve.</p>",
+        "GetBatchEvaluationResponse$batchEvaluationId": "<p>The unique identifier of the batch evaluation.</p>",
+        "StartBatchEvaluationResponse$batchEvaluationId": "<p>The unique identifier of the created batch evaluation.</p>",
+        "StopBatchEvaluationRequest$batchEvaluationId": "<p>The unique identifier of the batch evaluation to stop.</p>",
+        "StopBatchEvaluationResponse$batchEvaluationId": "<p>The unique identifier of the stopped batch evaluation.</p>"
+      }
+    },
+    "BatchEvaluationName": {
+      "base": "<p>Human-readable name for a batch evaluation</p>",
+      "refs": {
+        "BatchEvaluationSummary$batchEvaluationName": "<p>The name of the batch evaluation.</p>",
+        "GetBatchEvaluationResponse$batchEvaluationName": "<p>The name of the batch evaluation.</p>",
+        "StartBatchEvaluationRequest$batchEvaluationName": "<p>The name of the batch evaluation. Must be unique within your account.</p>",
+        "StartBatchEvaluationResponse$batchEvaluationName": "<p>The name of the batch evaluation.</p>"
+      }
+    },
+    "BatchEvaluationStatus": {
+      "base": null,
+      "refs": {
+        "BatchEvaluationSummary$status": "<p>The current status of the batch evaluation.</p>",
+        "DeleteBatchEvaluationResponse$status": "<p>The status of the batch evaluation deletion operation.</p>",
+        "GetBatchEvaluationResponse$status": "<p>The current status of the batch evaluation.</p>",
+        "StartBatchEvaluationResponse$status": "<p>The status of the batch evaluation.</p>",
+        "StopBatchEvaluationResponse$status": "<p>The status of the batch evaluation after the stop request.</p>"
+      }
+    },
+    "BatchEvaluationSummary": {
+      "base": "<p>Summary representation for list responses</p>",
+      "refs": {
+        "BatchEvaluationSummaryList$member": null
+      }
+    },
+    "BatchEvaluationSummaryList": {
+      "base": null,
+      "refs": {
+        "ListBatchEvaluationsResponse$batchEvaluations": "<p>The list of batch evaluation summaries.</p>"
+      }
+    },
     "BatchUpdateMemoryRecordsInput": {
       "base": null,
       "refs": {}
@@ -196,9 +369,12 @@
       "refs": {
         "BranchFilter$includeParentBranches": "<p>Specifies whether to include parent branches in the results. Set to true to include parent branches, or false to exclude them.</p>",
         "CodeInterpreterResult$isError": "<p>Indicates whether the result represents an error. If true, the content contains error messages or exception information. If false, the content contains successful execution results.</p>",
+        "CreateABTestRequest$enableOnCreate": "<p>Whether to enable the A/B test immediately upon creation. If true, traffic splitting begins automatically.</p>",
+        "FilterValue$booleanValue": "<p>A boolean value for true/false filtering conditions.</p>",
         "GetResourceOauth2TokenRequest$forceAuthentication": "<p>Indicates whether to always initiate a new three-legged OAuth (3LO) flow, regardless of any existing session.</p>",
         "ListEventsInput$includePayloads": "<p>Specifies whether to include event payloads in the response. Set to true to include payloads, or false to exclude them.</p>",
-        "ToolArguments$clearContext": "<p>Whether to clear the context for the tool.</p>"
+        "ToolArguments$clearContext": "<p>Whether to clear the context for the tool.</p>",
+        "VariantResult$isSignificant": "<p>Whether the observed difference is statistically significant.</p>"
       }
     },
     "Branch": {
@@ -382,13 +558,95 @@
     "ClientToken": {
       "base": null,
       "refs": {
+        "CreateABTestRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error.</p>",
         "SaveBrowserSessionProfileRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request, but does not return an error.</p>",
+        "StartBatchEvaluationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error.</p>",
         "StartBrowserSessionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request, but does not return an error. This parameter helps prevent the creation of duplicate sessions if there are temporary network issues.</p>",
         "StartCodeInterpreterSessionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request, but does not return an error. This parameter helps prevent the creation of duplicate sessions if there are temporary network issues.</p>",
+        "StartRecommendationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error.</p>",
         "StopBrowserSessionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request, but does not return an error.</p>",
         "StopCodeInterpreterSessionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request, but does not return an error.</p>",
         "StopRuntimeSessionRequest$clientToken": "<p>Idempotent token used to identify the request. If you use the same token with multiple requests, the same response is returned. Use ClientToken to prevent the same request from being processed more than once.</p>",
+        "UpdateABTestRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error.</p>",
         "UpdateBrowserStreamRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error.</p>"
+      }
+    },
+    "CloudWatchFilterConfig": {
+      "base": "<p>Filter configuration for narrowing down CloudWatch Logs sessions for evaluation.</p>",
+      "refs": {
+        "CloudWatchLogsSource$filterConfig": "<p>Optional filter configuration to narrow down which sessions to evaluate.</p>"
+      }
+    },
+    "CloudWatchFilterConfigSessionIdsList": {
+      "base": null,
+      "refs": {
+        "CloudWatchFilterConfig$sessionIds": "<p>A list of specific session IDs to evaluate. If specified, only these sessions are included in the evaluation.</p>"
+      }
+    },
+    "CloudWatchLogsFilter": {
+      "base": "<p>A filter for narrowing down agent traces from CloudWatch Logs based on key-value comparisons.</p>",
+      "refs": {
+        "CloudWatchLogsFilterList$member": null
+      }
+    },
+    "CloudWatchLogsFilterKeyString": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogsFilter$key": "<p>The key or field name to filter on within the agent trace data.</p>"
+      }
+    },
+    "CloudWatchLogsFilterList": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogsRule$filters": "<p>The list of filters to apply when reading agent traces.</p>"
+      }
+    },
+    "CloudWatchLogsFilterOperator": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogsFilter$operator": "<p>The comparison operator to use for filtering.</p>"
+      }
+    },
+    "CloudWatchLogsRule": {
+      "base": "<p>A rule configuration for filtering agent traces from CloudWatch Logs.</p>",
+      "refs": {
+        "CloudWatchLogsTraceConfig$rule": "<p>Optional rule configuration for filtering traces.</p>"
+      }
+    },
+    "CloudWatchLogsSource": {
+      "base": "<p>The configuration for reading agent traces from CloudWatch Logs.</p>",
+      "refs": {
+        "DataSourceConfig$cloudWatchLogs": "<p>Pull session spans from CloudWatch</p>"
+      }
+    },
+    "CloudWatchLogsSourceLogGroupNamesList": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogsSource$logGroupNames": "<p>The list of CloudWatch log group names to read agent traces from. Maximum of 5 log groups.</p>"
+      }
+    },
+    "CloudWatchLogsSourceServiceNamesList": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogsSource$serviceNames": "<p>The list of agent service names to filter traces within the specified log groups.</p>"
+      }
+    },
+    "CloudWatchLogsTraceConfig": {
+      "base": "<p>Configuration for reading agent traces from CloudWatch Logs for recommendation analysis.</p>",
+      "refs": {
+        "AgentTracesConfig$cloudwatchLogs": "<p>Agent traces read from CloudWatch Logs.</p>"
+      }
+    },
+    "CloudWatchLogsTraceConfigLogGroupArnsList": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogsTraceConfig$logGroupArns": "<p>The list of CloudWatch log group ARNs to read agent traces from.</p>"
+      }
+    },
+    "CloudWatchOutputConfig": {
+      "base": "<p>CloudWatch Logs destination for batch evaluation results</p>",
+      "refs": {
+        "OutputConfig$cloudWatchConfig": "<p>The CloudWatch Logs configuration for writing evaluation results.</p>"
       }
     },
     "CodeInterpreterArn": {
@@ -463,6 +721,53 @@
       "base": null,
       "refs": {}
     },
+    "ConfidenceInterval": {
+      "base": "<p>A confidence interval for a statistical measurement.</p>",
+      "refs": {
+        "VariantResult$confidenceInterval": "<p>The confidence interval for the observed difference.</p>"
+      }
+    },
+    "ConfigurationBundleArn": {
+      "base": null,
+      "refs": {
+        "ConfigurationBundleRef$bundleArn": "<p>The Amazon Resource Name (ARN) of the configuration bundle.</p>",
+        "RecommendationResultConfigurationBundle$bundleArn": "<p>The Amazon Resource Name (ARN) of the configuration bundle.</p>",
+        "SystemPromptConfigurationBundle$bundleArn": "<p>The Amazon Resource Name (ARN) of the configuration bundle.</p>",
+        "ToolDescriptionConfigurationBundle$bundleArn": "<p>The Amazon Resource Name (ARN) of the configuration bundle.</p>"
+      }
+    },
+    "ConfigurationBundleRef": {
+      "base": "<p>A reference to a specific version of a configuration bundle.</p>",
+      "refs": {
+        "VariantConfiguration$configurationBundle": "<p>A reference to a configuration bundle version to use for this variant.</p>"
+      }
+    },
+    "ConfigurationBundleToolEntry": {
+      "base": "<p>Maps a tool name to its JSON path within a configuration bundle.</p>",
+      "refs": {
+        "ConfigurationBundleToolEntryList$member": null
+      }
+    },
+    "ConfigurationBundleToolEntryList": {
+      "base": null,
+      "refs": {
+        "ToolDescriptionConfigurationBundle$tools": "<p>The list of tool entries mapping tool names to their JSON paths within the bundle.</p>"
+      }
+    },
+    "ConfigurationBundleVersion": {
+      "base": null,
+      "refs": {
+        "ConfigurationBundleRef$bundleVersion": "<p>The version of the configuration bundle.</p>"
+      }
+    },
+    "ConfigurationBundleVersionId": {
+      "base": null,
+      "refs": {
+        "RecommendationResultConfigurationBundle$versionId": "<p>The version identifier of the configuration bundle containing the recommendation.</p>",
+        "SystemPromptConfigurationBundle$versionId": "<p>The version identifier of the configuration bundle.</p>",
+        "ToolDescriptionConfigurationBundle$versionId": "<p>The version identifier of the configuration bundle.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>The exception that occurs when the request conflicts with the current state of the resource. This can happen when trying to modify a resource that is currently being modified by another request, or when trying to create a resource that already exists.</p>",
       "refs": {
@@ -524,11 +829,25 @@
         "EvaluationResultContent$context": "<p> The contextual information associated with this evaluation result, including span context details that identify the specific traces and sessions that were evaluated. </p>"
       }
     },
+    "ControlStats": {
+      "base": "<p>Statistics for the control variant in an A/B test.</p>",
+      "refs": {
+        "EvaluatorMetric$controlStats": "<p>The statistics for the control variant.</p>"
+      }
+    },
     "Conversational": {
       "base": "<p>Contains conversational content for an event payload.</p>",
       "refs": {
         "PayloadType$conversational": "<p>The conversational content of the payload.</p>"
       }
+    },
+    "CreateABTestRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateABTestResponse": {
+      "base": null,
+      "refs": {}
     },
     "CreateEventInput": {
       "base": null,
@@ -569,6 +888,13 @@
         "CustomRequestParametersType$value": null
       }
     },
+    "DataSourceConfig": {
+      "base": "<p>Where to pull session spans from</p>",
+      "refs": {
+        "GetBatchEvaluationResponse$dataSourceConfig": "<p>The data source configuration specifying where agent traces are pulled from.</p>",
+        "StartBatchEvaluationRequest$dataSourceConfig": "<p>The data source configuration that specifies where to pull agent session traces from for evaluation.</p>"
+      }
+    },
     "DateTimestamp": {
       "base": null,
       "refs": {
@@ -589,6 +915,22 @@
         "UpdateBrowserStreamResponse$updatedAt": "<p>The time at which the browser stream was updated.</p>"
       }
     },
+    "DeleteABTestRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteABTestResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteBatchEvaluationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteBatchEvaluationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteEventInput": {
       "base": null,
       "refs": {}
@@ -602,6 +944,14 @@
       "refs": {}
     },
     "DeleteMemoryRecordOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRecommendationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRecommendationResponse": {
       "base": null,
       "refs": {}
     },
@@ -645,14 +995,37 @@
     "Double": {
       "base": null,
       "refs": {
+        "ConfidenceInterval$lower": "<p>The lower bound of the confidence interval.</p>",
+        "ConfidenceInterval$upper": "<p>The upper bound of the confidence interval.</p>",
+        "ControlStats$mean": "<p>The mean evaluation score for the control variant.</p>",
         "EvaluationResultContent$value": "<p> The numerical score assigned by the evaluator according to its configured rating scale. For numerical scales, this is a decimal value within the defined range. This field is not allowed for categorical scales. </p>",
+        "EvaluatorStatistics$averageScore": "<p>The average score across all evaluated sessions for this evaluator.</p>",
+        "FilterValue$doubleValue": "<p>A numeric value for numerical filtering and comparisons.</p>",
         "MemoryRecordSummary$score": "<p>The relevance score of the memory record when returned as part of a search result. Higher values indicate greater relevance to the search query.</p>",
-        "ToolResultStructuredContent$executionTime": "<p>The execution time of the tool operation in milliseconds.</p>"
+        "ToolResultStructuredContent$executionTime": "<p>The execution time of the tool operation in milliseconds.</p>",
+        "VariantResult$mean": "<p>The mean evaluation score for this variant.</p>",
+        "VariantResult$absoluteChange": "<p>The absolute change in mean score compared to the control variant.</p>",
+        "VariantResult$percentChange": "<p>The percentage change in mean score compared to the control variant.</p>",
+        "VariantResult$pValue": "<p>The p-value indicating the statistical significance of the observed difference.</p>"
       }
     },
     "DuplicateIdException": {
       "base": "<p> An exception thrown when attempting to create a resource with an identifier that already exists.</p>",
       "refs": {}
+    },
+    "ErrorDetailsList": {
+      "base": null,
+      "refs": {
+        "BatchEvaluationSummary$errorDetails": "<p>The error details if the batch evaluation encountered failures.</p>",
+        "GetABTestResponse$errorDetails": "<p>The error details if the A/B test encountered failures.</p>",
+        "GetBatchEvaluationResponse$errorDetails": "<p>The error details if the batch evaluation encountered failures.</p>"
+      }
+    },
+    "ErrorDetailsListMemberString": {
+      "base": null,
+      "refs": {
+        "ErrorDetailsList$member": null
+      }
     },
     "EvaluateRequest": {
       "base": null,
@@ -666,13 +1039,15 @@
       "base": "<p> A content block for ground truth data in evaluation reference inputs. Supports text content for expected responses and assertions. </p>",
       "refs": {
         "EvaluationContentList$member": null,
-        "EvaluationReferenceInput$expectedResponse": "<p> The expected response for trace-level evaluation. Built-in evaluators that support this field compare the agent's actual response against this value for assessment. Custom evaluators can access it through the <code>{expected_response}</code> placeholder in their instructions. </p>"
+        "EvaluationReferenceInput$expectedResponse": "<p> The expected response for trace-level evaluation. Built-in evaluators that support this field compare the agent's actual response against this value for assessment. Custom evaluators can access it through the <code>{expected_response}</code> placeholder in their instructions. </p>",
+        "GroundTruthTurn$expectedResponse": "<p>The expected response for this conversation turn.</p>"
       }
     },
     "EvaluationContentList": {
       "base": null,
       "refs": {
-        "EvaluationReferenceInput$assertions": "<p> A list of assertion statements for session-level evaluation. Each assertion describes an expected behavior or outcome the agent should demonstrate during the session. </p>"
+        "EvaluationReferenceInput$assertions": "<p> A list of assertion statements for session-level evaluation. Each assertion describes an expected behavior or outcome the agent should demonstrate during the session. </p>",
+        "InlineGroundTruth$assertions": "<p>assertions for evaluation, reuses common model EvaluationContentList</p>"
       }
     },
     "EvaluationContentTextString": {
@@ -696,7 +1071,8 @@
     "EvaluationExpectedTrajectory": {
       "base": "<p> The expected tool call trajectory for trajectory-based evaluation. </p>",
       "refs": {
-        "EvaluationReferenceInput$expectedTrajectory": "<p> The expected tool call sequence for session-level trajectory evaluation. Contains a list of tool names representing the tools the agent is expected to invoke. </p>"
+        "EvaluationReferenceInput$expectedTrajectory": "<p> The expected tool call sequence for session-level trajectory evaluation. Contains a list of tool names representing the tools the agent is expected to invoke. </p>",
+        "InlineGroundTruth$expectedTrajectory": "<p>expectedTrajectory for evaluation, reuses common model EvaluationExpectedTrajectory</p>"
       }
     },
     "EvaluationExplanation": {
@@ -709,6 +1085,19 @@
       "base": "<p> The input data structure containing agent session spans in OpenTelemetry format. Supports traces from frameworks like Strands (AgentCore Runtime) and LangGraph with OpenInference instrumentation for comprehensive evaluation. </p>",
       "refs": {
         "EvaluateRequest$evaluationInput": "<p> The input data containing agent session spans to be evaluated. Includes a list of spans in OpenTelemetry format from supported frameworks like Strands (AgentCore Runtime) or LangGraph with OpenInference instrumentation. </p>"
+      }
+    },
+    "EvaluationJobResults": {
+      "base": "<p>Aggregated results from a batch evaluation, including session completion counts and evaluator score summaries.</p>",
+      "refs": {
+        "BatchEvaluationSummary$evaluationResults": "<p>The aggregated evaluation results.</p>",
+        "GetBatchEvaluationResponse$evaluationResults": "<p>The aggregated evaluation results, including session completion counts and evaluator score summaries.</p>"
+      }
+    },
+    "EvaluationMetadata": {
+      "base": "<p>Metadata for the evaluation, including session-specific ground truth data.</p>",
+      "refs": {
+        "StartBatchEvaluationRequest$evaluationMetadata": "<p>Optional metadata for the evaluation, including session-specific ground truth data and test scenario identifiers.</p>"
       }
     },
     "EvaluationReferenceInput": {
@@ -753,23 +1142,70 @@
         "EvaluationExpectedTrajectory$toolNames": "<p> The list of tool names representing the expected tool call sequence. </p>"
       }
     },
+    "Evaluator": {
+      "base": "<p>An evaluator to run against sessions</p>",
+      "refs": {
+        "EvaluatorList$member": null,
+        "StartBatchEvaluationRequestEvaluatorsList$member": null
+      }
+    },
     "EvaluatorArn": {
       "base": null,
       "refs": {
-        "EvaluationResultContent$evaluatorArn": "<p> The Amazon Resource Name (ARN) of the evaluator used to generate this result. For custom evaluators, this is the full ARN; for built-in evaluators, this follows the pattern <code>Builtin.{EvaluatorName}</code>. </p>"
+        "EvaluationResultContent$evaluatorArn": "<p> The Amazon Resource Name (ARN) of the evaluator used to generate this result. For custom evaluators, this is the full ARN; for built-in evaluators, this follows the pattern <code>Builtin.{EvaluatorName}</code>. </p>",
+        "RecommendationEvaluatorReference$evaluatorArn": "<p>The Amazon Resource Name (ARN) of the evaluator.</p>"
       }
     },
     "EvaluatorId": {
       "base": null,
       "refs": {
         "EvaluateRequest$evaluatorId": "<p> The unique identifier of the evaluator to use for scoring. Can be a built-in evaluator (e.g., <code>Builtin.Helpfulness</code>, <code>Builtin.Correctness</code>) or a custom evaluator Id created through the control plane API. </p>",
-        "EvaluationResultContent$evaluatorId": "<p> The unique identifier of the evaluator that produced this result. This matches the <code>evaluatorId</code> provided in the evaluation request and can be used to identify which evaluator generated specific results. </p>"
+        "EvaluationResultContent$evaluatorId": "<p> The unique identifier of the evaluator that produced this result. This matches the <code>evaluatorId</code> provided in the evaluation request and can be used to identify which evaluator generated specific results. </p>",
+        "Evaluator$evaluatorId": "<p>The unique identifier of the evaluator. Can reference built-in evaluators (e.g., <code>Builtin.Helpfulness</code>) or custom evaluators.</p>"
+      }
+    },
+    "EvaluatorList": {
+      "base": null,
+      "refs": {
+        "BatchEvaluationSummary$evaluators": "<p>The list of evaluators applied during the batch evaluation.</p>",
+        "GetBatchEvaluationResponse$evaluators": "<p>The list of evaluators applied during the batch evaluation.</p>",
+        "StartBatchEvaluationResponse$evaluators": "<p>The list of evaluators applied during the batch evaluation.</p>"
+      }
+    },
+    "EvaluatorMetric": {
+      "base": "<p>Statistical metrics for a single evaluator comparing control and treatment variants.</p>",
+      "refs": {
+        "EvaluatorMetricList$member": null
+      }
+    },
+    "EvaluatorMetricList": {
+      "base": null,
+      "refs": {
+        "ABTestResults$evaluatorMetrics": "<p>The per-evaluator metrics comparing control and treatment variants.</p>"
       }
     },
     "EvaluatorName": {
       "base": null,
       "refs": {
         "EvaluationResultContent$evaluatorName": "<p> The human-readable name of the evaluator used for this evaluation. For built-in evaluators, this is the descriptive name (e.g., \"Helpfulness\", \"Correctness\"); for custom evaluators, this is the user-defined name. </p>"
+      }
+    },
+    "EvaluatorStatistics": {
+      "base": "<p>Aggregated statistics for an evaluator.</p>",
+      "refs": {
+        "EvaluatorSummary$statistics": "<p>The aggregated statistics for this evaluator.</p>"
+      }
+    },
+    "EvaluatorSummary": {
+      "base": "<p>Summary statistics for a single evaluator within a batch evaluation.</p>",
+      "refs": {
+        "EvaluatorSummaryList$member": null
+      }
+    },
+    "EvaluatorSummaryList": {
+      "base": null,
+      "refs": {
+        "EvaluationJobResults$evaluatorSummaries": "<p>A list of per-evaluator summary statistics.</p>"
       }
     },
     "Event": {
@@ -869,17 +1305,56 @@
         "ListEventsInput$filter": "<p>Filter criteria to apply when listing events.</p>"
       }
     },
+    "FilterStringValue": {
+      "base": null,
+      "refs": {
+        "FilterValue$stringValue": "<p>A string value for text-based filtering.</p>"
+      }
+    },
+    "FilterValue": {
+      "base": "<p>A value used in filter comparisons, supporting different data types.</p>",
+      "refs": {
+        "CloudWatchLogsFilter$value": "<p>The value to compare against using the specified operator.</p>"
+      }
+    },
     "GatewayArn": {
       "base": null,
       "refs": {
+        "ABTestSummary$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway used for traffic splitting.</p>",
+        "CreateABTestRequest$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway to use for traffic splitting.</p>",
+        "GetABTestResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway used for traffic splitting.</p>",
         "HarnessAgentCoreGatewayConfig$gatewayArn": "<p>The ARN of the desired AgentCore Gateway.</p>"
       }
+    },
+    "GatewayFilter": {
+      "base": "<p>A filter to restrict which gateway target paths are included in the A/B test.</p>",
+      "refs": {
+        "CreateABTestRequest$gatewayFilter": "<p>Optional filter to restrict which gateway target paths are included in the A/B test.</p>",
+        "GetABTestResponse$gatewayFilter": "<p>The gateway filter restricting which target paths are included.</p>",
+        "UpdateABTestRequest$gatewayFilter": "<p>The updated gateway filter.</p>"
+      }
+    },
+    "GetABTestRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetABTestResponse": {
+      "base": null,
+      "refs": {}
     },
     "GetAgentCardRequest": {
       "base": null,
       "refs": {}
     },
     "GetAgentCardResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBatchEvaluationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBatchEvaluationResponse": {
       "base": null,
       "refs": {}
     },
@@ -912,6 +1387,14 @@
       "refs": {}
     },
     "GetMemoryRecordOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRecommendationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRecommendationResponse": {
       "base": null,
       "refs": {}
     },
@@ -954,6 +1437,30 @@
     "GetWorkloadAccessTokenResponse": {
       "base": null,
       "refs": {}
+    },
+    "GroundTruthSource": {
+      "base": "<p>Where to pull ground truth from</p>",
+      "refs": {
+        "SessionMetadataShape$groundTruth": "<p>The ground truth data for this session, including expected responses and assertions.</p>"
+      }
+    },
+    "GroundTruthTurn": {
+      "base": "<p>Ground truth data for a single conversation turn.</p>",
+      "refs": {
+        "InlineGroundTruthTurnsList$member": null
+      }
+    },
+    "GroundTruthTurnInput": {
+      "base": "<p>The input for a ground truth conversation turn.</p>",
+      "refs": {
+        "GroundTruthTurn$input": "<p>The input for this conversation turn.</p>"
+      }
+    },
+    "GroundTruthTurnInputPromptString": {
+      "base": null,
+      "refs": {
+        "GroundTruthTurnInput$prompt": "<p>The text prompt for this conversation turn.</p>"
+      }
     },
     "HarnessAgentCoreBrowserConfig": {
       "base": "<p>Configuration for AgentCore Browser.</p>",
@@ -1049,7 +1556,7 @@
     "HarnessGatewayOutboundAuth": {
       "base": "<p>Authentication method for calling a Gateway.</p>",
       "refs": {
-        "HarnessAgentCoreGatewayConfig$outboundAuth": "<p>How Loopy authenticates to this Gateway. Defaults to AWS_IAM (SigV4) if omitted.</p>"
+        "HarnessAgentCoreGatewayConfig$outboundAuth": "<p>How harness authenticates to this Gateway. Defaults to AWS_IAM (SigV4) if omitted.</p>"
       }
     },
     "HarnessGeminiModelConfig": {
@@ -1351,7 +1858,7 @@
     "HttpHeadersMap": {
       "base": "<p>Map of key/value pairs for HTTP headers.</p>",
       "refs": {
-        "HarnessRemoteMcpConfig$headers": null
+        "HarnessRemoteMcpConfig$headers": "<p>Custom headers to include when connecting to the remote MCP server.</p>"
       }
     },
     "HttpResponseCode": {
@@ -1386,6 +1893,18 @@
         "ToolsDefinition$inlineContent": "<p> The inline content of the tools definition.</p>"
       }
     },
+    "InlineGroundTruth": {
+      "base": "<p>Inline ground truth data containing assertions, expected trajectories, and per-turn expected responses.</p>",
+      "refs": {
+        "GroundTruthSource$inline": "<p>Provide ground truth inline</p>"
+      }
+    },
+    "InlineGroundTruthTurnsList": {
+      "base": null,
+      "refs": {
+        "InlineGroundTruth$turns": "<p>A list of per-turn ground truth data, each containing an input prompt and expected response.</p>"
+      }
+    },
     "InputContentBlock": {
       "base": "<p>A block of input content.</p>",
       "refs": {
@@ -1402,6 +1921,14 @@
       "base": null,
       "refs": {
         "ContentStopEvent$exitCode": "<p>The exit code returned by the executed command. An exit code of 0 indicates successful execution, -1 indicates a platform error, and values greater than 0 indicate command-specific errors.</p>",
+        "ControlStats$sampleSize": "<p>The number of sessions evaluated for the control variant.</p>",
+        "EvaluationJobResults$numberOfSessionsCompleted": "<p>The number of sessions that have been successfully evaluated.</p>",
+        "EvaluationJobResults$numberOfSessionsInProgress": "<p>The number of sessions currently being evaluated.</p>",
+        "EvaluationJobResults$numberOfSessionsFailed": "<p>The number of sessions that failed evaluation.</p>",
+        "EvaluationJobResults$totalNumberOfSessions": "<p>The total number of sessions included in the batch evaluation.</p>",
+        "EvaluationJobResults$numberOfSessionsIgnored": "<p>The number of sessions that were ignored during evaluation.</p>",
+        "EvaluatorSummary$totalEvaluated": "<p>The total number of sessions evaluated by this evaluator.</p>",
+        "EvaluatorSummary$totalFailed": "<p>The total number of sessions that failed evaluation by this evaluator.</p>",
         "HarnessContentBlockDeltaEvent$contentBlockIndex": "<p>The index of the content block being updated.</p>",
         "HarnessContentBlockStartEvent$contentBlockIndex": "<p>The index of the content block within the message.</p>",
         "HarnessContentBlockStopEvent$contentBlockIndex": "<p>The index of the content block that ended.</p>",
@@ -1424,7 +1951,8 @@
         "TokenUsage$inputTokens": "<p> The number of tokens consumed for input processing during the evaluation. Includes tokens from the evaluation prompt, agent traces, and any additional context provided to the evaluator model. </p>",
         "TokenUsage$outputTokens": "<p> The number of tokens generated by the evaluator model in its response. Includes tokens for the score, explanation, and any additional output produced during the evaluation process. </p>",
         "TokenUsage$totalTokens": "<p> The total number of tokens consumed during the evaluation, calculated as the sum of input and output tokens. Used for cost calculation and rate limiting within the service limits. </p>",
-        "ToolResultStructuredContent$exitCode": "<p>The exit code from the tool execution.</p>"
+        "ToolResultStructuredContent$exitCode": "<p>The exit code from the tool execution.</p>",
+        "VariantResult$sampleSize": "<p>The number of sessions evaluated for this variant.</p>"
       }
     },
     "InternalServerException": {
@@ -1642,11 +2170,39 @@
         "MemoryMetadataFilterExpression$left": null
       }
     },
+    "ListABTestsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListABTestsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListABTestsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
+      }
+    },
+    "ListABTestsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListActorsInput": {
       "base": null,
       "refs": {}
     },
     "ListActorsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBatchEvaluationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBatchEvaluationsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListBatchEvaluationsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
+      }
+    },
+    "ListBatchEvaluationsResponse": {
       "base": null,
       "refs": {}
     },
@@ -1693,6 +2249,20 @@
       "refs": {}
     },
     "ListMemoryRecordsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommendationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommendationsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRecommendationsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
+      }
+    },
+    "ListRecommendationsResponse": {
       "base": null,
       "refs": {}
     },
@@ -2079,7 +2649,9 @@
         "ListBrowserSessionsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results. If not specified, Amazon Bedrock AgentCore returns the first page of results.</p>",
         "ListBrowserSessionsResponse$nextToken": "<p>The token to use in a subsequent <code>ListBrowserSessions</code> request to get the next set of results.</p>",
         "ListCodeInterpreterSessionsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results. If not specified, Amazon Bedrock AgentCore returns the first page of results.</p>",
-        "ListCodeInterpreterSessionsResponse$nextToken": "<p>The token to use in a subsequent <code>ListCodeInterpreterSessions</code> request to get the next set of results.</p>"
+        "ListCodeInterpreterSessionsResponse$nextToken": "<p>The token to use in a subsequent <code>ListCodeInterpreterSessions</code> request to get the next set of results.</p>",
+        "ListRecommendationsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
+        "ListRecommendationsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>"
       }
     },
     "NonBlankString": {
@@ -2156,11 +2728,25 @@
         "GetResourceOauth2TokenRequest$oauth2Flow": "<p>The type of flow to be performed.</p>"
       }
     },
+    "OnlineEvaluationConfigArn": {
+      "base": null,
+      "refs": {
+        "ABTestEvaluationConfig$onlineEvaluationConfigArn": "<p>The Amazon Resource Name (ARN) of a single online evaluation configuration to use for both variants.</p>",
+        "PerVariantOnlineEvaluationConfig$onlineEvaluationConfigArn": "<p>The Amazon Resource Name (ARN) of the online evaluation configuration for this variant.</p>"
+      }
+    },
     "OperatorType": {
       "base": null,
       "refs": {
         "EventMetadataFilterExpression$operator": "<p>Operator applied to the event metadata filter expression.</p>",
         "MemoryMetadataFilterExpression$operator": "<p>The relationship between the metadata key and value to match when applying the metadata filter.</p>"
+      }
+    },
+    "OutputConfig": {
+      "base": "<p>Output destination configuration</p>",
+      "refs": {
+        "GetBatchEvaluationResponse$outputConfig": "<p>The output configuration specifying where evaluation results are written.</p>",
+        "StartBatchEvaluationResponse$outputConfig": "<p>The output configuration specifying where evaluation results are written.</p>"
       }
     },
     "PaginationToken": {
@@ -2180,6 +2766,12 @@
         "RetrieveMemoryRecordsOutput$nextToken": "<p>The token to use in a subsequent request to get the next set of results. This value is null when there are no more results to return.</p>"
       }
     },
+    "PathPattern": {
+      "base": null,
+      "refs": {
+        "TargetPathList$member": null
+      }
+    },
     "PayloadType": {
       "base": "<p>Contains the payload content for an event.</p>",
       "refs": {
@@ -2191,6 +2783,18 @@
       "refs": {
         "CreateEventInput$payload": "<p>The content payload of the event. This can include conversational data or binary content.</p>",
         "Event$payload": "<p>The content payload of the event.</p>"
+      }
+    },
+    "PerVariantOnlineEvaluationConfig": {
+      "base": "<p>An online evaluation configuration associated with a specific A/B test variant.</p>",
+      "refs": {
+        "PerVariantOnlineEvaluationConfigList$member": null
+      }
+    },
+    "PerVariantOnlineEvaluationConfigList": {
+      "base": null,
+      "refs": {
+        "ABTestEvaluationConfig$perVariantOnlineEvaluationConfig": "<p>Per-variant online evaluation configurations, allowing different evaluation settings for each variant.</p>"
       }
     },
     "ProgrammingLanguage": {
@@ -2228,6 +2832,135 @@
       "base": "<p>Union type representing different proxy authentication methods. Currently supports HTTP Basic Authentication (username and password).</p>",
       "refs": {
         "ExternalProxy$credentials": "<p>Optional authentication credentials for the proxy server. If omitted, the proxy is accessed without authentication (useful for IP-allowlisted proxies).</p>"
+      }
+    },
+    "RecommendationArn": {
+      "base": null,
+      "refs": {
+        "GetRecommendationResponse$recommendationArn": "<p>The Amazon Resource Name (ARN) of the recommendation.</p>",
+        "RecommendationSummary$recommendationArn": "<p>The Amazon Resource Name (ARN) of the recommendation.</p>",
+        "StartRecommendationResponse$recommendationArn": "<p>The Amazon Resource Name (ARN) of the created recommendation.</p>"
+      }
+    },
+    "RecommendationConfig": {
+      "base": "<p>The configuration for a recommendation, varying by recommendation type.</p>",
+      "refs": {
+        "GetRecommendationResponse$recommendationConfig": "<p>The configuration for the recommendation.</p>",
+        "StartRecommendationRequest$recommendationConfig": "<p>The configuration for the recommendation, including the input to optimize, agent traces to analyze, and evaluation settings.</p>",
+        "StartRecommendationResponse$recommendationConfig": "<p>The configuration for the recommendation.</p>"
+      }
+    },
+    "RecommendationDescription": {
+      "base": null,
+      "refs": {
+        "GetRecommendationResponse$description": "<p>The description of the recommendation.</p>",
+        "RecommendationSummary$description": "<p>The description of the recommendation.</p>",
+        "StartRecommendationRequest$description": "<p>The description of the recommendation.</p>",
+        "StartRecommendationResponse$description": "<p>The description of the recommendation.</p>"
+      }
+    },
+    "RecommendationErrorCode": {
+      "base": null,
+      "refs": {
+        "SystemPromptRecommendationResult$errorCode": "<p>The error code if the recommendation failed.</p>",
+        "ToolDescriptionRecommendationResult$errorCode": "<p>The error code if the recommendation failed.</p>"
+      }
+    },
+    "RecommendationErrorMessage": {
+      "base": null,
+      "refs": {
+        "SystemPromptRecommendationResult$errorMessage": "<p>The error message if the recommendation failed.</p>",
+        "ToolDescriptionRecommendationResult$errorMessage": "<p>The error message if the recommendation failed.</p>"
+      }
+    },
+    "RecommendationEvaluationConfig": {
+      "base": "<p>The evaluation configuration for assessing recommendation quality.</p>",
+      "refs": {
+        "SystemPromptRecommendationConfig$evaluationConfig": "<p>The evaluation configuration specifying which evaluator to use for assessing recommendation quality.</p>"
+      }
+    },
+    "RecommendationEvaluationConfigEvaluatorsList": {
+      "base": null,
+      "refs": {
+        "RecommendationEvaluationConfig$evaluators": "<p>The list of evaluators to use for assessing recommendation quality.</p>"
+      }
+    },
+    "RecommendationEvaluatorReference": {
+      "base": "<p>A reference to an evaluator used for recommendation assessment.</p>",
+      "refs": {
+        "RecommendationEvaluationConfigEvaluatorsList$member": null
+      }
+    },
+    "RecommendationId": {
+      "base": null,
+      "refs": {
+        "DeleteRecommendationRequest$recommendationId": "<p>The unique identifier of the recommendation to delete.</p>",
+        "DeleteRecommendationResponse$recommendationId": "<p>The unique identifier of the deleted recommendation.</p>",
+        "GetRecommendationRequest$recommendationId": "<p>The unique identifier of the recommendation to retrieve.</p>",
+        "GetRecommendationResponse$recommendationId": "<p>The unique identifier of the recommendation.</p>",
+        "RecommendationSummary$recommendationId": "<p>The unique identifier of the recommendation.</p>",
+        "StartRecommendationResponse$recommendationId": "<p>The unique identifier of the created recommendation.</p>"
+      }
+    },
+    "RecommendationName": {
+      "base": null,
+      "refs": {
+        "GetRecommendationResponse$name": "<p>The name of the recommendation.</p>",
+        "RecommendationSummary$name": "<p>The name of the recommendation.</p>",
+        "StartRecommendationRequest$name": "<p>The name of the recommendation. Must be unique within your account.</p>",
+        "StartRecommendationResponse$name": "<p>The name of the recommendation.</p>"
+      }
+    },
+    "RecommendationResult": {
+      "base": "<p>The result of a recommendation, containing the optimized output.</p>",
+      "refs": {
+        "GetRecommendationResponse$recommendationResult": "<p>The result of the recommendation, containing the optimized system prompt or tool descriptions. Only present when the recommendation status is <code>COMPLETED</code>.</p>"
+      }
+    },
+    "RecommendationResultConfigurationBundle": {
+      "base": "<p>A configuration bundle reference in a recommendation result.</p>",
+      "refs": {
+        "SystemPromptRecommendationResult$configurationBundle": "<p>The configuration bundle containing the recommended system prompt, if the input was sourced from a configuration bundle.</p>",
+        "ToolDescriptionRecommendationResult$configurationBundle": "<p>The configuration bundle containing the recommended tool descriptions, if the input was sourced from a configuration bundle.</p>"
+      }
+    },
+    "RecommendationStatus": {
+      "base": null,
+      "refs": {
+        "DeleteRecommendationResponse$status": "<p>The status of the recommendation deletion operation.</p>",
+        "GetRecommendationResponse$status": "<p>The current status of the recommendation.</p>",
+        "ListRecommendationsRequest$statusFilter": "<p>Optional filter to return only recommendations with the specified status.</p>",
+        "RecommendationSummary$status": "<p>The current status of the recommendation.</p>",
+        "StartRecommendationResponse$status": "<p>The status of the recommendation.</p>"
+      }
+    },
+    "RecommendationSummary": {
+      "base": "<p>Summary information about a recommendation.</p>",
+      "refs": {
+        "RecommendationSummaryList$member": null
+      }
+    },
+    "RecommendationSummaryList": {
+      "base": null,
+      "refs": {
+        "ListRecommendationsResponse$recommendationSummaries": "<p>The list of recommendation summaries.</p>"
+      }
+    },
+    "RecommendationToolName": {
+      "base": null,
+      "refs": {
+        "ConfigurationBundleToolEntry$toolName": "<p>The name of the tool.</p>",
+        "ToolDescriptionInput$toolName": "<p>The name of the tool.</p>",
+        "ToolDescriptionOutput$toolName": "<p>The name of the tool.</p>"
+      }
+    },
+    "RecommendationType": {
+      "base": null,
+      "refs": {
+        "GetRecommendationResponse$type": "<p>The type of recommendation.</p>",
+        "RecommendationSummary$type": "<p>The type of recommendation.</p>",
+        "StartRecommendationRequest$type": "<p>The type of recommendation to generate. Valid values are <code>SYSTEM_PROMPT_RECOMMENDATION</code> for system prompt optimization or <code>TOOL_DESCRIPTION_RECOMMENDATION</code> for tool description optimization.</p>",
+        "StartRecommendationResponse$type": "<p>The type of recommendation.</p>"
       }
     },
     "RegistryArn": {
@@ -2366,6 +3099,14 @@
       "base": null,
       "refs": {
         "Conversational$role": "<p>The role of the participant in the conversation (for example, \"user\" or \"assistant\").</p>"
+      }
+    },
+    "RoleArn": {
+      "base": null,
+      "refs": {
+        "CreateABTestRequest$roleArn": "<p>The IAM role ARN that grants permissions for the A/B test to access gateway and evaluation resources.</p>",
+        "GetABTestResponse$roleArn": "<p>The IAM role ARN used by the A/B test.</p>",
+        "UpdateABTestRequest$roleArn": "<p>The updated IAM role ARN.</p>"
       }
     },
     "RuntimeClientError": {
@@ -2545,6 +3286,18 @@
       "base": "<p>The service encountered an internal error. Try your request again later.</p>",
       "refs": {}
     },
+    "ServiceName": {
+      "base": null,
+      "refs": {
+        "ServiceNameList$member": null
+      }
+    },
+    "ServiceNameList": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogsTraceConfig$serviceNames": "<p>The list of service names to filter traces within the specified log groups.</p>"
+      }
+    },
     "ServiceQuotaExceededException": {
       "base": "<p>The exception that occurs when the request would cause a service quota to be exceeded. Review your service quotas and either reduce your request rate or request a quota increase.</p>",
       "refs": {
@@ -2556,6 +3309,12 @@
       "base": "<p>Contains filter criteria for listing sessions.</p>",
       "refs": {
         "ListSessionsInput$filter": "<p>Filter criteria to apply when listing sessions.</p>"
+      }
+    },
+    "SessionFilterConfig": {
+      "base": "<p>A time range filter for selecting sessions. Specifies the start and end times to narrow down which sessions are included.</p>",
+      "refs": {
+        "CloudWatchFilterConfig$timeRange": "<p>The time range filter for selecting sessions to evaluate.</p>"
       }
     },
     "SessionId": {
@@ -2573,6 +3332,18 @@
         "ListEventsInput$sessionId": "<p>The identifier of the session for which to list events.</p>",
         "SessionSummary$sessionId": "<p>The unique identifier of the session.</p>",
         "StopRuntimeSessionResponse$runtimeSessionId": "<p>The ID of the session that you requested to stop.</p>"
+      }
+    },
+    "SessionMetadataList": {
+      "base": null,
+      "refs": {
+        "EvaluationMetadata$sessionMetadata": "<p>A list of session metadata entries containing ground truth data and test scenario identifiers for specific sessions.</p>"
+      }
+    },
+    "SessionMetadataShape": {
+      "base": "<p>Metadata for a specific session in a batch evaluation, including ground truth data and test scenario identifiers.</p>",
+      "refs": {
+        "SessionMetadataList$member": null
       }
     },
     "SessionStatus": {
@@ -2641,8 +3412,23 @@
     "Spans": {
       "base": null,
       "refs": {
+        "AgentTracesConfig$sessionSpans": "<p>Agent traces provided as inline session spans in OpenTelemetry format.</p>",
         "EvaluationInput$sessionSpans": "<p> The collection of spans representing agent execution traces within a session. Each span contains detailed information about tool calls, model interactions, and other agent activities that can be evaluated for quality and performance. </p>"
       }
+    },
+    "StartBatchEvaluationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartBatchEvaluationRequestEvaluatorsList": {
+      "base": null,
+      "refs": {
+        "StartBatchEvaluationRequest$evaluators": "<p>The list of evaluators to apply during the batch evaluation. Can include both built-in evaluators and custom evaluators. Maximum of 10 evaluators.</p>"
+      }
+    },
+    "StartBatchEvaluationResponse": {
+      "base": null,
+      "refs": {}
     },
     "StartBrowserSessionRequest": {
       "base": null,
@@ -2692,11 +3478,27 @@
       "base": null,
       "refs": {}
     },
+    "StartRecommendationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartRecommendationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "State": {
       "base": null,
       "refs": {
         "GetResourceOauth2TokenRequest$customState": "<p>An opaque string that will be sent back to the callback URL provided in resourceOauth2ReturnUrl. This state should be used to protect the callback URL of your application against CSRF attacks by ensuring the response corresponds to the original request.</p>"
       }
+    },
+    "StopBatchEvaluationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopBatchEvaluationResponse": {
+      "base": null,
+      "refs": {}
     },
     "StopBrowserSessionRequest": {
       "base": null,
@@ -2757,7 +3559,14 @@
       "refs": {
         "BatchCreateMemoryRecordsInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotent processing of the batch request.</p>",
         "BrowserSessionSummary$browserIdentifier": "<p>The unique identifier of the browser associated with the session. This identifier specifies which browser environment is used for the session.</p>",
+        "CloudWatchFilterConfigSessionIdsList$member": null,
+        "CloudWatchLogsSourceLogGroupNamesList$member": null,
+        "CloudWatchLogsSourceServiceNamesList$member": null,
+        "CloudWatchLogsTraceConfigLogGroupArnsList$member": null,
+        "CloudWatchOutputConfig$logGroupName": "<p>The name of the CloudWatch log group where evaluation results will be written.</p>",
+        "CloudWatchOutputConfig$logStreamName": "<p>The name of the CloudWatch log stream where evaluation results will be written.</p>",
         "CodeInterpreterSessionSummary$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter associated with the session. This identifier specifies which code interpreter environment is used for the session.</p>",
+        "ConfigurationBundleToolEntry$toolDescriptionJsonPath": "<p>The JSON path within the configuration bundle's components that contains the tool description.</p>",
         "ContentBlock$text": "<p>The text content of the block.</p>",
         "ContentBlock$mimeType": "<p>The MIME type of the content.</p>",
         "ContentBlock$uri": "<p>The URI of the content.</p>",
@@ -2765,8 +3574,11 @@
         "ContentBlock$description": "<p>The description of the content block.</p>",
         "ContentDeltaEvent$stdout": "<p>The standard output content from the command execution. This field contains the incremental output written to stdout by the executing command.</p>",
         "ContentDeltaEvent$stderr": "<p>The standard error content from the command execution. This field contains the incremental output written to stderr by the executing command.</p>",
+        "ControlStats$variantName": "<p>The name of the control variant.</p>",
         "CreateEventInput$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, AgentCore ignores the request, but does not return an error.</p>",
         "EvaluationResultContent$label": "<p> The categorical label assigned by the evaluator when using a categorical rating scale. This provides a human-readable description of the evaluation result (e.g., \"Excellent\", \"Good\", \"Poor\") corresponding to the numerical value. For numerical scales, this field is optional and provides a natural language explanation of what the value means (e.g., value 0.5 = \"Somewhat Helpful\"). </p>",
+        "EvaluatorMetric$evaluatorArn": "<p>The Amazon Resource Name (ARN) of the evaluator.</p>",
+        "EvaluatorSummary$evaluatorId": "<p>The unique identifier of the evaluator.</p>",
         "ExtractionJob$jobId": "<p>The unique identifier of the extraction job.</p>",
         "ExtractionJobFilterInput$strategyId": "<p>The memory strategy identifier to filter extraction jobs by. If specified, only extraction jobs with this strategy ID are returned.</p>",
         "ExtractionJobFilterInput$sessionId": "<p>The unique identifier of the session. If specified, only extraction jobs with this session ID are returned.</p>",
@@ -2776,6 +3588,7 @@
         "ExtractionJobMetadata$strategyId": "<p>The identifier of the memory strategy for this extraction job.</p>",
         "ExtractionJobMetadata$sessionId": "<p>The identifier of the session for this extraction job.</p>",
         "ExtractionJobMetadata$actorId": "<p>The identifier of the actor for this extraction job.</p>",
+        "GetABTestResponse$currentRunId": "<p>The identifier of the current run of the A/B test.</p>",
         "GetAgentCardRequest$agentRuntimeArn": "<p>The ARN of the AgentCore Runtime agent for which you want to get the A2A agent card.</p>",
         "GetAgentCardRequest$qualifier": "<p>Optional qualifier to specify an agent alias, such as <code>prod</code>code&gt; or <code>dev</code>. If you don't provide a value, the DEFAULT alias is used. </p>",
         "GetBrowserSessionRequest$browserIdentifier": "<p>The unique identifier of the browser associated with the session.</p>",
@@ -2813,6 +3626,10 @@
         "KeyPressResult$error": "<p>The error message. Present only when the action failed.</p>",
         "KeyShortcutResult$error": "<p>The error message. Present only when the action failed.</p>",
         "KeyTypeResult$error": "<p>The error message. Present only when the action failed.</p>",
+        "ListABTestsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
+        "ListABTestsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListBatchEvaluationsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
+        "ListBatchEvaluationsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListBrowserSessionsRequest$browserIdentifier": "<p>The unique identifier of the browser to list sessions for. If specified, only sessions for this browser are returned. If not specified, sessions for all browsers are returned.</p>",
         "ListCodeInterpreterSessionsRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter to list sessions for. If specified, only sessions for this code interpreter are returned. If not specified, sessions for all code interpreters are returned.</p>",
         "MemoryRecordOutput$errorMessage": "<p>A human-readable error message describing why the memory record operation failed.</p>",
@@ -2829,6 +3646,8 @@
         "SaveBrowserSessionProfileResponse$browserIdentifier": "<p>The unique identifier of the browser associated with the session from which the profile was saved.</p>",
         "ScreenshotResult$error": "<p>The error message. Present only when the action failed.</p>",
         "ServiceException$message": null,
+        "SessionMetadataShape$sessionId": "<p>The unique identifier of the session this metadata applies to.</p>",
+        "SessionMetadataShape$testScenarioId": "<p>An optional test scenario identifier for categorizing and tracking evaluation results.</p>",
         "SpanContext$sessionId": "<p> The unique identifier of the session containing this span. Sessions represent complete conversation flows and are detected using configurable <code>SessionTimeoutMinutes</code> (default 15 minutes). </p>",
         "SpanContext$traceId": "<p> The unique identifier of the trace containing this span. Traces represent individual request-response interactions within a session and group related spans together. </p>",
         "SpanContext$spanId": "<p> The unique identifier of the specific span being referenced. Spans represent individual operations like tool calls, model invocations, or other discrete actions within the agent's execution. </p>",
@@ -2844,6 +3663,9 @@
         "StopCodeInterpreterSessionResponse$codeInterpreterIdentifier": "<p>The identifier of the code interpreter.</p>",
         "StopRuntimeSessionRequest$agentRuntimeArn": "<p>The ARN of the agent that contains the session that you want to stop.</p>",
         "StopRuntimeSessionRequest$qualifier": "<p>Optional qualifier to specify an agent alias, such as <code>prod</code>code&gt; or <code>dev</code>. If you don't provide a value, the DEFAULT alias is used. </p>",
+        "StringMap$key": null,
+        "StringMap$value": null,
+        "SystemPromptConfigurationBundle$systemPromptJsonPath": "<p>The JSON path within the configuration bundle that contains the system prompt.</p>",
         "ThrottledException$message": null,
         "ToolResultStructuredContent$taskId": "<p>The identifier of the task that produced the result.</p>",
         "ToolResultStructuredContent$stdout": "<p>The standard output from the tool execution.</p>",
@@ -2852,7 +3674,8 @@
         "UpdateBrowserStreamResponse$browserIdentifier": "<p>The identifier of the browser.</p>",
         "ValidationException$message": null,
         "ValidationExceptionField$name": "<p>The name of the field.</p>",
-        "ValidationExceptionField$message": "<p>A message describing why this field failed validation.</p>"
+        "ValidationExceptionField$message": "<p>A message describing why this field failed validation.</p>",
+        "VariantResult$variantName": "<p>The name of the treatment variant.</p>"
       }
     },
     "StringList": {
@@ -2861,12 +3684,87 @@
         "ToolArguments$paths": "<p>The paths for the tool operation.</p>"
       }
     },
+    "StringMap": {
+      "base": null,
+      "refs": {
+        "SessionMetadataShape$metadata": "<p>Additional key-value metadata associated with this session.</p>"
+      }
+    },
     "StringType": {
       "base": null,
       "refs": {
         "InvokeAgentRuntimeRequest$mcpSessionId": "<p>The identifier of the MCP session.</p>",
         "InvokeAgentRuntimeRequest$mcpProtocolVersion": "<p>The version of the MCP protocol being used.</p>",
         "InvokeAgentRuntimeRequest$runtimeUserId": "<p>The identifier of the runtime user.</p>"
+      }
+    },
+    "SyntheticTimestamp_date_time": {
+      "base": null,
+      "refs": {
+        "BatchEvaluationSummary$createdAt": "<p>The timestamp when the batch evaluation was created.</p>",
+        "BatchEvaluationSummary$updatedAt": "<p>The timestamp when the batch evaluation was last updated.</p>",
+        "CloudWatchLogsTraceConfig$startTime": "<p>The start time of the time range to read traces from.</p>",
+        "CloudWatchLogsTraceConfig$endTime": "<p>The end time of the time range to read traces from.</p>",
+        "GetBatchEvaluationResponse$createdAt": "<p>The timestamp when the batch evaluation was created.</p>",
+        "GetBatchEvaluationResponse$updatedAt": "<p>The timestamp when the batch evaluation was last updated.</p>",
+        "GetRecommendationResponse$createdAt": "<p>The timestamp when the recommendation was created.</p>",
+        "GetRecommendationResponse$updatedAt": "<p>The timestamp when the recommendation was last updated.</p>",
+        "RecommendationSummary$createdAt": "<p>The timestamp when the recommendation was created.</p>",
+        "RecommendationSummary$updatedAt": "<p>The timestamp when the recommendation was last updated.</p>",
+        "SessionFilterConfig$startTime": "<p>The start time of the time range. Only sessions with activity at or after this timestamp are included.</p>",
+        "SessionFilterConfig$endTime": "<p>The end time of the time range. Only sessions with activity before this timestamp are included.</p>",
+        "StartBatchEvaluationResponse$createdAt": "<p>The timestamp when the batch evaluation was created.</p>",
+        "StartRecommendationResponse$createdAt": "<p>The timestamp when the recommendation was created.</p>",
+        "StartRecommendationResponse$updatedAt": "<p>The timestamp when the recommendation was last updated.</p>"
+      }
+    },
+    "SystemPromptConfig": {
+      "base": "<p>The system prompt input, either as inline text or from a configuration bundle.</p>",
+      "refs": {
+        "SystemPromptRecommendationConfig$systemPrompt": "<p>The current system prompt to optimize.</p>"
+      }
+    },
+    "SystemPromptConfigurationBundle": {
+      "base": "<p>A system prompt sourced from a configuration bundle version.</p>",
+      "refs": {
+        "SystemPromptConfig$configurationBundle": "<p>The system prompt sourced from a configuration bundle version.</p>"
+      }
+    },
+    "SystemPromptRecommendationConfig": {
+      "base": "<p>Configuration for generating system prompt optimization recommendations.</p>",
+      "refs": {
+        "RecommendationConfig$systemPromptRecommendationConfig": "<p>The configuration for a system prompt recommendation.</p>"
+      }
+    },
+    "SystemPromptRecommendationResult": {
+      "base": "<p>The result of a system prompt recommendation, containing the optimized prompt.</p>",
+      "refs": {
+        "RecommendationResult$systemPromptRecommendationResult": "<p>The result of a system prompt recommendation.</p>"
+      }
+    },
+    "SystemPromptText": {
+      "base": null,
+      "refs": {
+        "SystemPromptConfig$text": "<p>The system prompt text provided inline.</p>",
+        "SystemPromptRecommendationResult$recommendedSystemPrompt": "<p>The optimized system prompt text generated by the recommendation.</p>"
+      }
+    },
+    "TargetName": {
+      "base": null,
+      "refs": {
+        "TargetRef$name": "<p>The name of the gateway target.</p>"
+      }
+    },
+    "TargetPathList": {
+      "base": null,
+      "refs": {
+        "GatewayFilter$targetPaths": "<p>A list of target path patterns to include in the A/B test.</p>"
+      }
+    },
+    "TargetRef": {
+      "base": "<p>A reference to a gateway target.</p>",
+      "refs": {
+        "VariantConfiguration$target": "<p>A reference to a gateway target to route traffic to for this variant.</p>"
       }
     },
     "TaskStatus": {
@@ -2897,13 +3795,23 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "ABTestResults$analysisTimestamp": "<p>The timestamp when the analysis was performed.</p>",
+        "ABTestSummary$createdAt": "<p>The timestamp when the A/B test was created.</p>",
+        "ABTestSummary$updatedAt": "<p>The timestamp when the A/B test was last updated.</p>",
+        "CreateABTestResponse$createdAt": "<p>The timestamp when the A/B test was created.</p>",
         "CreateEventInput$eventTimestamp": "<p>The timestamp when the event occurred. If not specified, the current time is used.</p>",
         "Event$eventTimestamp": "<p>The timestamp when the event occurred.</p>",
+        "GetABTestResponse$startedAt": "<p>The timestamp when the A/B test was started.</p>",
+        "GetABTestResponse$stoppedAt": "<p>The timestamp when the A/B test was stopped.</p>",
+        "GetABTestResponse$maxDurationExpiresAt": "<p>The timestamp when the A/B test will automatically expire.</p>",
+        "GetABTestResponse$createdAt": "<p>The timestamp when the A/B test was created.</p>",
+        "GetABTestResponse$updatedAt": "<p>The timestamp when the A/B test was last updated.</p>",
         "MemoryRecord$createdAt": "<p>The timestamp when the memory record was created.</p>",
         "MemoryRecordCreateInput$timestamp": "<p>Time at which the memory record was created.</p>",
         "MemoryRecordSummary$createdAt": "<p>The timestamp when the memory record was created.</p>",
         "MemoryRecordUpdateInput$timestamp": "<p>Time at which the memory record was updated</p>",
-        "SessionSummary$createdAt": "<p>The timestamp when the session was created.</p>"
+        "SessionSummary$createdAt": "<p>The timestamp when the session was created.</p>",
+        "UpdateABTestResponse$updatedAt": "<p>The timestamp when the A/B test was updated.</p>"
       }
     },
     "TokenUsage": {
@@ -2916,6 +3824,73 @@
       "base": "<p>The collection of arguments that specify the operation to perform and its parameters when invoking a tool in Amazon Bedrock AgentCore. Different tools require different arguments, and this structure provides a flexible way to pass the appropriate arguments to each tool type.</p>",
       "refs": {
         "InvokeCodeInterpreterRequest$arguments": "<p>The arguments for the code interpreter. This includes the code to execute and any additional parameters such as the programming language, whether to clear the execution context, and other execution options. The structure of this parameter depends on the specific code interpreter being used.</p>"
+      }
+    },
+    "ToolDescriptionConfig": {
+      "base": "<p>The tool description content.</p>",
+      "refs": {
+        "ToolDescriptionInput$toolDescription": "<p>The current description of the tool to optimize.</p>"
+      }
+    },
+    "ToolDescriptionConfigurationBundle": {
+      "base": "<p>Tool descriptions sourced from a configuration bundle version.</p>",
+      "refs": {
+        "ToolDescriptionSource$configurationBundle": "<p>Tool descriptions sourced from a configuration bundle version.</p>"
+      }
+    },
+    "ToolDescriptionInput": {
+      "base": "<p>A tool description input containing the tool name and its current description.</p>",
+      "refs": {
+        "ToolDescriptionList$member": null
+      }
+    },
+    "ToolDescriptionList": {
+      "base": null,
+      "refs": {
+        "ToolDescriptionTextInput$tools": "<p>The list of tool descriptions to optimize.</p>"
+      }
+    },
+    "ToolDescriptionOutput": {
+      "base": "<p>The output for a single tool description recommendation.</p>",
+      "refs": {
+        "ToolDescriptionResultList$member": null
+      }
+    },
+    "ToolDescriptionRecommendationConfig": {
+      "base": "<p>Configuration for generating tool description optimization recommendations.</p>",
+      "refs": {
+        "RecommendationConfig$toolDescriptionRecommendationConfig": "<p>The configuration for a tool description recommendation.</p>"
+      }
+    },
+    "ToolDescriptionRecommendationResult": {
+      "base": "<p>The result of a tool description recommendation, containing optimized descriptions.</p>",
+      "refs": {
+        "RecommendationResult$toolDescriptionRecommendationResult": "<p>The result of a tool description recommendation.</p>"
+      }
+    },
+    "ToolDescriptionResultList": {
+      "base": null,
+      "refs": {
+        "ToolDescriptionRecommendationResult$tools": "<p>The list of tools with their recommended descriptions.</p>"
+      }
+    },
+    "ToolDescriptionSource": {
+      "base": "<p>The source of tool descriptions, either inline text or from a configuration bundle.</p>",
+      "refs": {
+        "ToolDescriptionRecommendationConfig$toolDescription": "<p>The current tool descriptions to optimize.</p>"
+      }
+    },
+    "ToolDescriptionText": {
+      "base": null,
+      "refs": {
+        "ToolDescriptionConfig$text": "<p>The tool description as inline text.</p>",
+        "ToolDescriptionOutput$recommendedToolDescription": "<p>The optimized tool description text generated by the recommendation.</p>"
+      }
+    },
+    "ToolDescriptionTextInput": {
+      "base": "<p>Inline tool description input containing a list of tools.</p>",
+      "refs": {
+        "ToolDescriptionSource$toolDescriptionText": "<p>Tool descriptions provided as inline text.</p>"
       }
     },
     "ToolName": {
@@ -2973,6 +3948,14 @@
         "HarnessGatewayOutboundAuth$none": "<p>No authentication.</p>"
       }
     },
+    "UpdateABTestRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateABTestResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateBrowserStreamRequest": {
       "base": null,
       "refs": {}
@@ -3025,6 +4008,51 @@
       "base": null,
       "refs": {
         "ValidationException$reason": null
+      }
+    },
+    "Variant": {
+      "base": "<p>A variant in an A/B test, representing either the control (C) or treatment (T1) configuration.</p>",
+      "refs": {
+        "VariantList$member": null
+      }
+    },
+    "VariantConfiguration": {
+      "base": "<p>The configuration for an A/B test variant.</p>",
+      "refs": {
+        "Variant$variantConfiguration": "<p>The configuration for this variant, including the configuration bundle or target reference.</p>"
+      }
+    },
+    "VariantList": {
+      "base": null,
+      "refs": {
+        "CreateABTestRequest$variants": "<p>The list of variants for the A/B test. Must contain exactly two variants: a control (C) and a treatment (T1), each with a configuration bundle or target reference and a traffic weight.</p>",
+        "GetABTestResponse$variants": "<p>The list of variants in the A/B test.</p>",
+        "UpdateABTestRequest$variants": "<p>The updated list of variants.</p>"
+      }
+    },
+    "VariantName": {
+      "base": null,
+      "refs": {
+        "PerVariantOnlineEvaluationConfig$name": "<p>The name of the variant this evaluation configuration applies to.</p>",
+        "Variant$name": "<p>The name of the variant. Must be <code>C</code> for control or <code>T1</code> for treatment.</p>"
+      }
+    },
+    "VariantResult": {
+      "base": "<p>Statistical results for a treatment variant compared against the control.</p>",
+      "refs": {
+        "VariantResultList$member": null
+      }
+    },
+    "VariantResultList": {
+      "base": null,
+      "refs": {
+        "EvaluatorMetric$variantResults": "<p>The results for each treatment variant compared against the control.</p>"
+      }
+    },
+    "VariantWeightInteger": {
+      "base": null,
+      "refs": {
+        "Variant$weight": "<p>The percentage of traffic to route to this variant. Weights across all variants must sum to 100.</p>"
       }
     },
     "ViewPort": {
