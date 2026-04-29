@@ -55,7 +55,8 @@ final class BddEvaluator
             }
 
             if ($ref === self::TERMINAL_TRUE || $ref === self::TERMINAL_FALSE) {
-                return $this->resultResolver->resolveNoMatch($inputParameters);
+                // Throws exception
+                $this->resultResolver->resolveNoMatch($inputParameters);
             }
 
             $isComplement = $ref < 0;

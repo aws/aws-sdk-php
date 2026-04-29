@@ -62,7 +62,7 @@ final class BddResultResolver
     /**
      * @throws UnresolvedEndpointException
      */
-    public function resolveNoMatch(array $inputParameters): RulesetEndpoint
+    public function resolveNoMatch(array $inputParameters): never
     {
         throw new UnresolvedEndpointException(
             'Unable to resolve an endpoint using the provider arguments: '
@@ -73,7 +73,7 @@ final class BddResultResolver
     /**
      * @throws UnresolvedEndpointException
      */
-    private function throwError(array $result, array $inputParameters): void
+    private function throwError(array $result, array $inputParameters): never
     {
         $message = $this->ruleset->standardLibrary->resolveValue(
             $result['error'],
