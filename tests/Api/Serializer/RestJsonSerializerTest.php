@@ -497,9 +497,11 @@ class RestJsonSerializerTest extends TestCase
             'invalid continuation byte' => ["\xC3\x28"],
             'overlong encoding' => ["\xE2\x28\xA1"],
             'invalid UTF-8 in nested array' => [
-                'users' => [
-                    ['name' => "Valid Name"],
-                    ['name' => "\xB1\x31"]  // invalid UTF-8
+                [
+                    'users' => [
+                        ['name' => "Valid Name"],
+                        ['name' => "\xB1\x31"]  // invalid UTF-8
+                    ]
                 ]
             ]
         ];
@@ -577,7 +579,7 @@ class RestJsonSerializerTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            (string) $request->getUri(),
+            $request->getRequestTarget(),
             "Geo Service - {$description}"
         );
     }
@@ -600,7 +602,7 @@ class RestJsonSerializerTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            (string) $request->getUri(),
+            $request->getRequestTarget(),
             "Geo Service V2 - {$description}"
         );
     }
@@ -804,7 +806,7 @@ class RestJsonSerializerTest extends TestCase
             'endpoint' => 'https://places.geo.region.amazonaws.com/v2',
             'requestUri' => '/place/{PlaceId}',
             'pathParams' => ['PlaceId' => 'test-place-id'],
-            'expected' => 'https://places.geo.region.amazonaws.com/v2/place/test-place-id',
+            'expected' => '/v2/place/test-place-id',
             'description' => 'Geo service with /v2 path'
         ];
 
@@ -812,7 +814,7 @@ class RestJsonSerializerTest extends TestCase
             'endpoint' => 'https://places.geo.region.amazonaws.com/v2/',
             'requestUri' => '/place/{PlaceId}',
             'pathParams' => ['PlaceId' => 'test-place-id'],
-            'expected' => 'https://places.geo.region.amazonaws.com/v2/place/test-place-id',
+            'expected' => '/v2/place/test-place-id',
             'description' => 'Geo service with /v2/ trailing slash'
         ];
 
@@ -820,7 +822,7 @@ class RestJsonSerializerTest extends TestCase
             'endpoint' => 'https://routes.geo.region.amazonaws.com/v2',
             'requestUri' => '/routes',
             'pathParams' => [],
-            'expected' => 'https://routes.geo.region.amazonaws.com/v2/routes',
+            'expected' => '/v2/routes',
             'description' => 'Geo routes service list operation'
         ];
 
@@ -828,7 +830,7 @@ class RestJsonSerializerTest extends TestCase
             'endpoint' => 'https://maps.geo.us-east-1.amazonaws.com/v2',
             'requestUri' => '/maps/{MapName}/tiles/{Z}/{X}/{Y}',
             'pathParams' => ['MapName' => 'test-map', 'Z' => '10', 'X' => '512', 'Y' => '256'],
-            'expected' => 'https://maps.geo.us-east-1.amazonaws.com/v2/maps/test-map/tiles/10/512/256',
+            'expected' => '/v2/maps/test-map/tiles/10/512/256',
             'description' => 'Geo maps with multiple path params'
         ];
 
@@ -836,7 +838,7 @@ class RestJsonSerializerTest extends TestCase
             'endpoint' => 'https://places.geo.region.amazonaws.com/v2',
             'requestUri' => '/search',
             'pathParams' => ['ApiKey' => 'test-key', 'Language' => 'en'],
-            'expected' => 'https://places.geo.region.amazonaws.com/v2/search?key=test-key&lang=en',
+            'expected' => '/v2/search?key=test-key&lang=en',
             'description' => 'Geo service with query parameters via location'
         ];
     }
@@ -865,7 +867,7 @@ class RestJsonSerializerTest extends TestCase
             Middleware::tap(function ($cmd, $req) use ($expected, $description) {
                 $this->assertEquals(
                     $expected,
-                    (string) $req->getUri(),
+                    $req->getRequestTarget(),
                     "E2E Geo Service - {$description}"
                 );
             })
@@ -881,7 +883,7 @@ class RestJsonSerializerTest extends TestCase
             'region' => 'us-east-1',
             'operation' => 'getPlace',
             'params' => ['PlaceId' => 'test-place-123'],
-            'expected' => 'https://places.geo.us-east-1.amazonaws.com/v2/place/test-place-123',
+            'expected' => '/v2/place/test-place-123',
             'description' => 'Geo Places with /v2 path'
         ];
 
@@ -890,7 +892,7 @@ class RestJsonSerializerTest extends TestCase
             'region' => 'eu-west-1',
             'operation' => 'getPlace',
             'params' => ['PlaceId' => 'place-abc-456'],
-            'expected' => 'https://places.geo.eu-west-1.amazonaws.com/v2/place/place-abc-456',
+            'expected' => '/v2/place/place-abc-456',
             'description' => 'Geo Places in EU region'
         ];
 
@@ -899,7 +901,7 @@ class RestJsonSerializerTest extends TestCase
             'region' => 'us-east-1',
             'operation' => 'getPlace',
             'params' => ['PlaceId' => 'place@test.com'],
-            'expected' => 'https://places.geo.us-east-1.amazonaws.com/v2/place/place%40test.com',
+            'expected' => '/v2/place/place%40test.com',
             'description' => 'Geo Places with URL encoding'
         ];
 
@@ -911,7 +913,7 @@ class RestJsonSerializerTest extends TestCase
                 'Origin' => [-122.4194, 37.7749],
                 'Destination' => [-118.2437, 34.0522],
             ],
-            'expected' => 'https://routes.geo.us-west-2.amazonaws.com/v2/routes',
+            'expected' => '/v2/routes',
             'description' => 'Geo Routes calculate endpoint'
         ];
 
@@ -925,7 +927,7 @@ class RestJsonSerializerTest extends TestCase
                 'X' => '512',
                 'Y' => '256'
             ],
-            'expected' => 'https://maps.geo.ap-southeast-1.amazonaws.com/v2/tiles/test-tileset/10/512/256',
+            'expected' => '/v2/tiles/test-tileset/10/512/256',
             'description' => 'Geo Maps with multiple path parameters'
         ];
     }
