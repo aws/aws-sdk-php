@@ -106,6 +106,8 @@ class EndpointProviderV2
             ? $this->bddEvaluator->evaluate($inputParameters)
             : $this->ruleset->evaluate($inputParameters);
 
+        // This condition just applies to endpoint resolution
+        // through the decision tree evaluation process.
         if ($endpoint === false) {
             throw new UnresolvedEndpointException(
                 'Unable to resolve an endpoint using the provider arguments: '
@@ -132,6 +134,6 @@ class EndpointProviderV2
             return $this->bddRuleset->getParameters();
         }
 
-        return $this->ruleset?->getParameters();
+        return $this->ruleset->getParameters();
     }
 }

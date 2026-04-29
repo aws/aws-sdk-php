@@ -12,24 +12,15 @@ use Aws\EndpointV2\Ruleset\Ruleset;
 class EndpointDefinitionProvider
 {
     /**
-     * Returns the endpoint definition the client should use to resolve
-     * endpoints. When a service ships a compiled BDD alongside the
-     * legacy ruleset, the BDD takes precedence.
-     */
-    public static function getEndpointDefinition($service, $apiVersion, $baseDir = null)
-    {
-        $bdd = self::getEndpointBdd($service, $apiVersion, $baseDir, false);
-        if ($bdd !== null) {
-            return $bdd;
-        }
-        return self::getEndpointRuleset($service, $apiVersion, $baseDir);
-    }
-
-    /**
      * Returns a parsed ruleset for the service — either a {@see BddRuleset}
      * if a compiled BDD is shipped, or a {@see Ruleset} otherwise. Selection
      * is driven by which file is packaged, so callers get a typed object
      * rather than having to inspect the raw array.
+     *
+     * @param $service
+     * @param $apiVersion
+     * @param array $partitions
+     * @param null $baseDir
      *
      * @return Ruleset|BddRuleset
      */

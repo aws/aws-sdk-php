@@ -2,11 +2,14 @@
 
 namespace Aws\Test\EndpointV2;
 
+use Aws\EndpointV2\Bdd\BddRuleset;
 use Aws\EndpointV2\EndpointDefinitionProvider;
+use Aws\EndpointV2\Ruleset\Ruleset;
 use Aws\Test\TestsUtility;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use function PHPUnit\Framework\assertInstanceOf;
 
 #[CoversClass(EndpointDefinitionProvider::class)]
 class EndpointDefinitionProviderTest extends TestCase
@@ -82,25 +85,40 @@ class EndpointDefinitionProviderTest extends TestCase
         );
     }
 
-    public function testGetEndpointDefinitionFallsBackToTreeRuleset()
-    {
-        $definition = EndpointDefinitionProvider::getEndpointDefinition(
-            's3',
-            'latest'
-        );
-        $this->assertIsArray($definition);
-        $this->assertArrayHasKey('rules', $definition);
-        $this->assertArrayNotHasKey('nodes', $definition);
-    }
-
     public function testGetParsedRulesetReturnsTreeRulesetForTreeService()
     {
-        $parsed = EndpointDefinitionProvider::getParsedRuleset(
-            's3',
-            'latest',
-            EndpointDefinitionProvider::getPartitions()
-        );
-        $this->assertInstanceOf(\Aws\EndpointV2\Ruleset\Ruleset::class, $parsed);
+        $baseDir = sys_get_temp_dir() . '/aws-tree-parsed-' . uniqid();
+        $serviceDir = $baseDir . '/widget/2024-01-01';
+        if (is_dir($serviceDir)) {
+            // To make sure dir is clean and no bdd file is present
+            TestsUtility::cleanUpDir($serviceDir);
+        }
+        mkdir($serviceDir, 0777, true);
+
+        try {
+            file_put_contents(
+                $serviceDir . '/endpoint-rule-set-1.json',
+                json_encode([
+                    'version' => '1.1',
+                    'parameters' => [],
+                    'rules' => [],
+                ])
+            );
+
+            $parsed = EndpointDefinitionProvider::getParsedRuleset(
+                'widget',
+                '2024-01-01',
+                EndpointDefinitionProvider::getPartitions(),
+                $baseDir
+            );
+
+            $this->assertInstanceOf(
+                Ruleset::class,
+                $parsed
+            );
+        } finally {
+            TestsUtility::cleanUpDir($baseDir);
+        }
     }
 
     public function testGetParsedRulesetReturnsBddRulesetWhenBddShipped()
@@ -131,48 +149,11 @@ class EndpointDefinitionProviderTest extends TestCase
             );
 
             $this->assertInstanceOf(
-                \Aws\EndpointV2\Bdd\BddRuleset::class,
+                BddRuleset::class,
                 $parsed
             );
         } finally {
-           TestsUtility::cleanUpDir($baseDir);;
-        }
-    }
-
-    public function testGetEndpointDefinitionPrefersBddWhenPresent()
-    {
-        $baseDir = sys_get_temp_dir() . '/aws-bdd-test-' . uniqid();
-        $serviceDir = $baseDir . '/widget/2024-01-01';
-        mkdir($serviceDir, 0777, true);
-
-        try {
-            file_put_contents(
-                $serviceDir . '/endpoint-rule-set-1.json',
-                json_encode(['version' => '1.0', 'parameters' => [], 'rules' => []])
-            );
-            file_put_contents(
-                $serviceDir . '/endpoint-bdd-1.json',
-                json_encode([
-                    'version' => '1.1',
-                    'parameters' => [],
-                    'conditions' => [],
-                    'results' => [],
-                    'nodes' => '',
-                    'nodeCount' => 0,
-                    'root' => 1,
-                ])
-            );
-
-            $definition = EndpointDefinitionProvider::getEndpointDefinition(
-                'widget',
-                '2024-01-01',
-                $baseDir
-            );
-
-            $this->assertArrayHasKey('nodes', $definition);
-            $this->assertArrayHasKey('root', $definition);
-        } finally {
-           TestsUtility::cleanUpDir($baseDir);;
+           TestsUtility::cleanUpDir($baseDir);
         }
     }
 }

@@ -48,10 +48,7 @@ final class BddRuleset
         $this->conditions = $definition['conditions'];
         $this->results = $definition['results'];
         $this->root = (int) $definition['root'];
-
-        $nodeCount = isset($definition['nodeCount'])
-            ? (int) $definition['nodeCount']
-            : 0;
+        $nodeCount = $definition['nodeCount'];
         $this->nodes = BddNodeDecoder::decode(
             (string) $definition['nodes'],
             $nodeCount
