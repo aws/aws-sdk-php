@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.379.9 - 2026-04-29
 
 * `Aws\Deadline` - Adds support for rtx-pro-server-6000 GPU accelerator for service-managed fleets.
 * `Aws\ECR` - Removes support for registry policy V1
