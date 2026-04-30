@@ -25,7 +25,6 @@ class RulesetStandardLibrary
     const TEMPLATE_SEARCH_RE = '/\{\{.*?\}\}|\{[a-zA-Z0-9_#]+\}/';
     const TEMPLATE_PARSE_RE = '/\{\{\s*([^{}]*?)\s*\}\}|\{([a-zA-Z0-9_]+(?:#[a-zA-Z0-9_]+)*)\}/';
     const HOST_LABEL_RE = '/^(?!-)[a-zA-Z\d-]{1,63}(?<!-)$/';
-
     private $partitions;
 
     public function __construct($partitions)
@@ -228,34 +227,37 @@ class RulesetStandardLibrary
      */
     public function parseArn($arnString)
     {
-        if (is_null($arnString)
-            || substr( $arnString, 0, 3 ) !== "arn"
+        if (!is_string($arnString)
+            || strncmp($arnString, 'arn', 3) !== 0
         ) {
             return null;
         }
 
-        $arn = [];
         $parts = explode(':', $arnString, 6);
-        if (sizeof($parts) < 6) {
+        if (count($parts) < 6) {
             return null;
         }
 
-        $arn['partition'] = isset($parts[1]) ? $parts[1] : null;
-        $arn['service'] = isset($parts[2]) ? $parts[2] : null;
-        $arn['region'] = isset($parts[3]) ? $parts[3] : null;
-        $arn['accountId'] = isset($parts[4]) ? $parts[4] : null;
-        $arn['resourceId'] = isset($parts[5]) ? $parts[5] : null;
+        $partition = $parts[1];
+        $service = $parts[2];
+        $region = $parts[3];
+        $accountId = $parts[4];
+        $resource = $parts[5];
 
-        if (empty($arn['partition'])
-            || empty($arn['service'])
-            || empty($arn['resourceId'])
+        if ($partition === ''
+            || $service === ''
+            || $resource === ''
         ) {
             return null;
         }
-        $resource = $arn['resourceId'];
-        $arn['resourceId'] = preg_split("/[:\/]/", $resource);
 
-        return $arn;
+        return [
+            'partition' => $partition,
+            'service' => $service,
+            'region' => $region,
+            'accountId' => $accountId,
+            'resourceId' => preg_split("/[:\/]/", $resource),
+        ];
     }
 
     /**
@@ -367,31 +369,85 @@ class RulesetStandardLibrary
 
     public function callFunction($funcCondition, &$inputParameters)
     {
-        $funcArgs = [];
+        $argv = $funcCondition['argv'];
+        $assign = $funcCondition['assign'] ?? null;
+        $fn = $funcCondition['fn'];
+        switch ($fn) {
+            case 'aws.parseArn':
+                $result = $this->parseArn(
+                    $this->resolveValue($argv[0], $inputParameters)
+                );
+                break;
 
-        forEach($funcCondition['argv'] as $arg) {
-            $funcArgs[] = $this->resolveValue($arg, $inputParameters);
+            case 'getAttr':
+                $result = $this->getAttr(
+                    $this->resolveValue($argv[0], $inputParameters),
+                    $argv[1]
+                );
+                break;
+
+            case 'stringEquals':
+                $result = $this->stringEquals(
+                    $this->resolveValue($argv[0], $inputParameters),
+                    $this->resolveValue($argv[1], $inputParameters)
+                );
+                break;
+
+            case 'booleanEquals':
+                $result = $this->booleanEquals(
+                    $this->resolveValue($argv[0], $inputParameters),
+                    $this->resolveValue($argv[1], $inputParameters)
+                );
+                break;
+
+            case 'isSet':
+                $result = $this->is_set(
+                    $this->resolveValue($argv[0], $inputParameters)
+                );
+                break;
+
+            case 'not':
+                $result = $this->not(
+                    $this->resolveValue($argv[0], $inputParameters)
+                );
+                break;
+
+            case 'substring':
+                $result = $this->substring(
+                    $this->resolveValue($argv[0], $inputParameters),
+                    $this->resolveValue($argv[1], $inputParameters),
+                    $this->resolveValue($argv[2], $inputParameters),
+                    isset($argv[3])
+                        ? $this->resolveValue($argv[3], $inputParameters)
+                        : false
+                );
+                break;
+
+            default:
+                $funcArgs = [];
+                foreach ($argv as $arg) {
+                    $funcArgs[] = $this->resolveValue($arg, $inputParameters);
+                }
+
+                $funcName = str_replace('aws.', '', $fn);
+                if ($funcName === 'isSet') {
+                    $funcName = 'is_set';
+                }
+
+                if (!method_exists($this, $funcName)) {
+                    throw new UnresolvedEndpointException(
+                        "Unknown endpoint function `{$fn}`."
+                    );
+                }
+
+                $result = call_user_func_array(
+                    [$this, $funcName],
+                    $funcArgs
+                );
         }
 
-        $funcName = str_replace('aws.', '', $funcCondition['fn']);
-        if ($funcName === 'isSet') {
-            $funcName = 'is_set';
-        }
-
-        if (!method_exists($this, $funcName)) {
-            throw new UnresolvedEndpointException(
-                "Unknown endpoint function `{$funcCondition['fn']}`."
-            );
-        }
-
-        $result = call_user_func_array(
-            [$this, $funcName],
-            $funcArgs
-        );
-
-        if (isset($funcCondition['assign'])) {
-            $assign = $funcCondition['assign'];
-            if (isset($inputParameters[$assign])){
+        if ($assign !== null) {
+            if (isset($inputParameters[$assign])) {
                 throw new UnresolvedEndpointException(
                     "Assignment `{$assign}` already exists in input parameters" .
                     " or has already been assigned by an endpoint rule and cannot be overwritten."
@@ -428,7 +484,9 @@ class RulesetStandardLibrary
 
     public function isTemplate($arg)
     {
-        return is_string($arg) && !empty(preg_match(self::TEMPLATE_SEARCH_RE, $arg));
+        return is_string($arg)
+            && str_contains($arg, '{')
+            && preg_match(self::TEMPLATE_SEARCH_RE, $arg) === 1;
     }
 
     public function resolveTemplateString($value, $inputParameters)

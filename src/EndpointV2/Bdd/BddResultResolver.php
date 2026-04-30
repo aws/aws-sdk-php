@@ -114,7 +114,8 @@ final class BddResultResolver
             return $resolved;
         }
 
-        if ($library->isTemplate($properties)) {
+        // Inline some of the isTemplate check here to avoid unnecessary resolution attempts on simple strings
+        if (is_string($properties) && str_contains($properties, '{') && $library->isTemplate($properties)) {
             return $library->resolveTemplateString($properties, $inputParameters);
         }
 
