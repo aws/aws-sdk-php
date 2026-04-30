@@ -33,6 +33,25 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "AssociateMpaTeam":{
+      "name":"AssociateMpaTeam",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateMpaTeamInput"},
+      "output":{"shape":"AssociateMpaTeamOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateAlias":{
       "name":"CreateAlias",
       "http":{
@@ -110,6 +129,25 @@
       ],
       "idempotent":true
     },
+    "DeleteResourcePolicy":{
+      "name":"DeleteResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteResourcePolicyInput"},
+      "output":{"shape":"DeleteResourcePolicyOutput"},
+      "errors":[
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "DisableDefaultKeyReplicationRegions":{
       "name":"DisableDefaultKeyReplicationRegions",
       "http":{
@@ -120,6 +158,25 @@
       "output":{"shape":"DisableDefaultKeyReplicationRegionsOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "DisassociateMpaTeam":{
+      "name":"DisassociateMpaTeam",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateMpaTeamInput"},
+      "output":{"shape":"DisassociateMpaTeamOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ServiceUnavailableException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
@@ -235,6 +292,26 @@
       ],
       "readonly":true
     },
+    "GetMpaTeamAssociation":{
+      "name":"GetMpaTeamAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetMpaTeamAssociationInput"},
+      "output":{"shape":"GetMpaTeamAssociationOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "GetParametersForExport":{
       "name":"GetParametersForExport",
       "http":{
@@ -281,6 +358,24 @@
       },
       "input":{"shape":"GetPublicKeyCertificateInput"},
       "output":{"shape":"GetPublicKeyCertificateOutput"},
+      "errors":[
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetResourcePolicy":{
+      "name":"GetResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetResourcePolicyInput"},
+      "output":{"shape":"GetResourcePolicyOutput"},
       "errors":[
         {"shape":"ServiceUnavailableException"},
         {"shape":"ValidationException"},
@@ -363,6 +458,27 @@
         {"shape":"InternalServerException"}
       ],
       "readonly":true
+    },
+    "PutResourcePolicy":{
+      "name":"PutResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutResourcePolicyInput"},
+      "output":{"shape":"PutResourcePolicyOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"PublicPolicyException"}
+      ],
+      "idempotent":true
     },
     "RemoveKeyReplicationRegions":{
       "name":"RemoveKeyReplicationRegions",
@@ -548,6 +664,33 @@
         "DATA_ENCRYPTION_KEY_VARIANT_22"
       ]
     },
+    "AssociateMpaTeamInput":{
+      "type":"structure",
+      "required":[
+        "Action",
+        "MpaTeamArn"
+      ],
+      "members":{
+        "Action":{"shape":"MpaOperation"},
+        "MpaTeamArn":{"shape":"MpaTeamArn"},
+        "RequesterComment":{"shape":"MpaRequesterComment"}
+      }
+    },
+    "AssociateMpaTeamOutput":{
+      "type":"structure",
+      "required":["MpaTeamAssociation"],
+      "members":{
+        "MpaTeamAssociation":{"shape":"MpaTeamAssociation"}
+      }
+    },
+    "AssociationState":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "UPDATE_PENDING",
+        "DELETE_PENDING"
+      ]
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -697,6 +840,17 @@
         "Key":{"shape":"Key"}
       }
     },
+    "DeleteResourcePolicyInput":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"}
+      }
+    },
+    "DeleteResourcePolicyOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "DeriveKeyUsage":{
       "type":"string",
       "enum":[
@@ -740,6 +894,21 @@
       "required":["EnabledReplicationRegions"],
       "members":{
         "EnabledReplicationRegions":{"shape":"Regions"}
+      }
+    },
+    "DisassociateMpaTeamInput":{
+      "type":"structure",
+      "required":["Action"],
+      "members":{
+        "Action":{"shape":"MpaOperation"},
+        "RequesterComment":{"shape":"MpaRequesterComment"}
+      }
+    },
+    "DisassociateMpaTeamOutput":{
+      "type":"structure",
+      "required":["MpaTeamAssociation"],
+      "members":{
+        "MpaTeamAssociation":{"shape":"MpaTeamAssociation"}
       }
     },
     "EnableDefaultKeyReplicationRegionsInput":{
@@ -939,6 +1108,20 @@
         "Key":{"shape":"Key"}
       }
     },
+    "GetMpaTeamAssociationInput":{
+      "type":"structure",
+      "required":["Action"],
+      "members":{
+        "Action":{"shape":"MpaOperation"}
+      }
+    },
+    "GetMpaTeamAssociationOutput":{
+      "type":"structure",
+      "required":["MpaTeamAssociation"],
+      "members":{
+        "MpaTeamAssociation":{"shape":"MpaTeamAssociation"}
+      }
+    },
     "GetParametersForExportInput":{
       "type":"structure",
       "required":[
@@ -1015,6 +1198,24 @@
         "KeyCertificateChain":{"shape":"CertificateType"}
       }
     },
+    "GetResourcePolicyInput":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"}
+      }
+    },
+    "GetResourcePolicyOutput":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "Policy"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"},
+        "Policy":{"shape":"ResourcePolicy"}
+      }
+    },
     "HexLength20Or24":{
       "type":"string",
       "max":24,
@@ -1087,7 +1288,8 @@
         "KeyCheckValueAlgorithm":{"shape":"KeyCheckValueAlgorithm"},
         "Enabled":{"shape":"Boolean"},
         "Tags":{"shape":"Tags"},
-        "ReplicationRegions":{"shape":"Regions"}
+        "ReplicationRegions":{"shape":"Regions"},
+        "RequesterComment":{"shape":"MpaRequesterComment"}
       }
     },
     "ImportKeyMaterial":{
@@ -1183,7 +1385,8 @@
         "MultiRegionKeyType":{"shape":"MultiRegionKeyType"},
         "PrimaryRegion":{"shape":"Region"},
         "ReplicationStatus":{"shape":"ReplicationStatus"},
-        "UsingDefaultReplicationRegions":{"shape":"Boolean"}
+        "UsingDefaultReplicationRegions":{"shape":"Boolean"},
+        "MpaStatus":{"shape":"MpaStatus"}
       }
     },
     "KeyAlgorithm":{
@@ -1459,6 +1662,61 @@
       "max":100,
       "min":1
     },
+    "MpaOperation":{
+      "type":"string",
+      "enum":["IMPORT_ROOT_PUBLIC_KEY_CERTIFICATE"]
+    },
+    "MpaRequesterComment":{
+      "type":"string",
+      "max":200,
+      "min":0,
+      "sensitive":true
+    },
+    "MpaSessionArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-[^:]+)?:mpa:[a-z0-9-]{1,20}:[0-9]{12}:session/[a-zA-Z0-9._-]+/[a-zA-Z0-9_-]+"
+    },
+    "MpaStatus":{
+      "type":"structure",
+      "required":[
+        "MpaSessionArn",
+        "Status",
+        "InitiationDate"
+      ],
+      "members":{
+        "MpaSessionArn":{"shape":"MpaSessionArn"},
+        "Status":{"shape":"SessionStatus"},
+        "InitiationDate":{"shape":"Timestamp"},
+        "StatusMessage":{"shape":"MpaStatusMessage"}
+      }
+    },
+    "MpaStatusMessage":{
+      "type":"string",
+      "max":1000,
+      "min":0
+    },
+    "MpaTeamArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-[^:]+)?:mpa:[a-z0-9-]{1,20}:[0-9]{12}:approval-team/[a-zA-Z0-9._-]+"
+    },
+    "MpaTeamAssociation":{
+      "type":"structure",
+      "required":[
+        "Action",
+        "MpaTeamArn",
+        "AssociationState"
+      ],
+      "members":{
+        "Action":{"shape":"MpaOperation"},
+        "MpaTeamArn":{"shape":"MpaTeamArn"},
+        "AssociationState":{"shape":"AssociationState"},
+        "MpaStatus":{"shape":"MpaStatus"}
+      }
+    },
     "MultiRegionKeyType":{
       "type":"string",
       "enum":[
@@ -1491,6 +1749,35 @@
       "value":{"shape":"OptionalBlockValue"}
     },
     "PrimitiveBoolean":{"type":"boolean"},
+    "PublicPolicyException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "PutResourcePolicyInput":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "Policy"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"},
+        "Policy":{"shape":"ResourcePolicy"}
+      }
+    },
+    "PutResourcePolicyOutput":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "Policy"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"ResourceArn"},
+        "Policy":{"shape":"ResourcePolicy"}
+      }
+    },
     "Region":{
       "type":"string",
       "pattern":"[a-z]{2}-[a-z]{1,16}-[0-9]+"
@@ -1543,6 +1830,12 @@
       },
       "exception":true
     },
+    "ResourcePolicy":{
+      "type":"string",
+      "max":20480,
+      "min":1,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+"
+    },
     "RestoreKeyInput":{
       "type":"structure",
       "required":["KeyIdentifier"],
@@ -1582,6 +1875,15 @@
       },
       "exception":true,
       "fault":true
+    },
+    "SessionStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "APPROVED",
+        "FAILED",
+        "CANCELLED"
+      ]
     },
     "SharedInformation":{
       "type":"string",

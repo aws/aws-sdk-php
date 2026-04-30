@@ -96,6 +96,7 @@
     "GetLineageNode": "<p>Gets the data lineage node.</p>",
     "GetListing": "<p>Gets a listing (a record of an asset at a given time). If you specify a listing version, only details that are specific to that version are returned.</p>",
     "GetMetadataGenerationRun": "<p>Gets a metadata generation run in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>Valid domain and run identifier. </p> </li> <li> <p>The metadata generation run must exist.</p> </li> <li> <p>User must have read access to the metadata run.</p> </li> </ul>",
+    "GetNotebookRun": "<p>Gets the details of a notebook run in an Amazon DataZone domain.</p>",
     "GetProject": "<p>Gets a project in Amazon DataZone.</p>",
     "GetProjectProfile": "<p>The details of the project profile.</p>",
     "GetRule": "<p>Gets the details of a rule in Amazon DataZone. A rule is a formal agreement that enforces specific requirements across user workflows (e.g., publishing assets to the catalog, requesting subscriptions, creating projects) within the Amazon DataZone data portal. These rules help maintain consistency, ensure compliance, and uphold governance standards in data management processes. For instance, a metadata enforcement rule can specify the required information for creating a subscription request or publishing a data asset to the catalog, ensuring alignment with organizational standards.</p>",
@@ -126,6 +127,7 @@
     "ListLineageEvents": "<p>Lists lineage events.</p>",
     "ListLineageNodeHistory": "<p>Lists the history of the specified data lineage node.</p>",
     "ListMetadataGenerationRuns": "<p>Lists all metadata generation runs.</p> <p>Metadata generation runs represent automated processes that leverage AI/ML capabilities to create or enhance asset metadata at scale. This feature helps organizations maintain comprehensive and consistent metadata across large numbers of assets without manual intervention. It can automatically generate business descriptions, tags, and other metadata elements, significantly reducing the time and effort required for metadata management while improving consistency and completeness.</p> <p>Prerequisites:</p> <ul> <li> <p>Valid domain identifier. </p> </li> <li> <p>User must have access to metadata generation runs in the domain.</p> </li> </ul>",
+    "ListNotebookRuns": "<p>Lists notebook runs in an Amazon DataZone domain.</p>",
     "ListNotifications": "<p>Lists all Amazon DataZone notifications.</p>",
     "ListPolicyGrants": "<p>Lists policy grants.</p>",
     "ListProjectMemberships": "<p>Lists all members of the specified project.</p>",
@@ -155,6 +157,8 @@
     "SearchUserProfiles": "<p>Searches user profiles in Amazon DataZone.</p>",
     "StartDataSourceRun": "<p>Start the run of the specified data source in Amazon DataZone.</p>",
     "StartMetadataGenerationRun": "<p>Starts the metadata generation run.</p> <p>Prerequisites:</p> <ul> <li> <p>Asset must be created and belong to the specified domain and project. </p> </li> <li> <p>Asset type must be supported for metadata generation (e.g., Amazon Web Services Glue table).</p> </li> <li> <p>Asset must have a structured schema with valid rows and columns.</p> </li> <li> <p>Valid values for --type: BUSINESS_DESCRIPTIONS, BUSINESS_NAMES, BUSINESS_GLOSSARY_ASSOCIATIONS.</p> </li> <li> <p>The user must have permission to run metadata generation in the domain/project.</p> </li> </ul>",
+    "StartNotebookRun": "<p>Starts a notebook run in an Amazon DataZone domain. A notebook run represents the execution of a Amazon DataZone notebook within a project. You can configure compute, network, timeout, and environment settings for the run.</p>",
+    "StopNotebookRun": "<p>Stops a running notebook run in an Amazon DataZone domain.</p>",
     "TagResource": "<p>Tags a resource in Amazon DataZone.</p>",
     "UntagResource": "<p>Untags a resource in Amazon DataZone.</p>",
     "UpdateAccountPool": "<p>Updates the account pool.</p>",
@@ -1159,6 +1163,19 @@
       "base": null,
       "refs": {}
     },
+    "CellInformation": {
+      "base": "<p>The information about a cell in a notebook run in Amazon DataZone.</p>",
+      "refs": {
+        "CellOrder$member": null
+      }
+    },
+    "CellOrder": {
+      "base": null,
+      "refs": {
+        "GetNotebookRunOutput$cellOrder": "<p>The ordered list of cells in the notebook run.</p>",
+        "StartNotebookRunOutput$cellOrder": "<p>The ordered list of cells in the notebook run.</p>"
+      }
+    },
     "ChangeAction": {
       "base": null,
       "refs": {
@@ -1189,6 +1206,8 @@
         "RemoveEntityOwnerInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "RemovePolicyGrantInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "StartMetadataGenerationRunInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
+        "StartNotebookRunInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
+        "StopNotebookRunInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "UpdateGlossaryInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "UpdateRootDomainUnitOwnerInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>"
       }
@@ -1213,6 +1232,14 @@
         "CreateAssetFilterOutput$effectiveColumnNames": "<p>The column names in the asset filter.</p>",
         "GetAssetFilterOutput$effectiveColumnNames": "<p>The column names of the asset filter.</p>",
         "UpdateAssetFilterOutput$effectiveColumnNames": "<p>The column names of the asset filter.</p>"
+      }
+    },
+    "ComputeConfig": {
+      "base": "<p>The compute configuration for a notebook run in Amazon DataZone.</p>",
+      "refs": {
+        "GetNotebookRunOutput$computeConfiguration": "<p>The compute configuration of the notebook run.</p>",
+        "StartNotebookRunInput$computeConfiguration": "<p>The compute configuration for the notebook run, including instance type and environment version.</p>",
+        "StartNotebookRunOutput$computeConfiguration": "<p>The compute configuration of the notebook run.</p>"
       }
     },
     "ComputeEnvironments": {
@@ -1770,6 +1797,7 @@
         "GetLineageNodeOutput$createdAt": "<p>The timestamp at which the data lineage node was created.</p>",
         "GetListingOutput$createdAt": "<p>The timestamp of when the listing was created.</p>",
         "GetMetadataGenerationRunOutput$createdAt": "<p>The timestamp of when the metadata generation run was start.</p>",
+        "GetNotebookRunOutput$createdAt": "<p>The timestamp of when the notebook run was created.</p>",
         "GetRuleOutput$createdAt": "<p>The timestamp at which the rule was created.</p>",
         "GetSubscriptionGrantOutput$createdAt": "<p>The timestamp of when the subscription grant is created.</p>",
         "GetSubscriptionOutput$createdAt": "<p>The timestamp of when the subscription was created.</p>",
@@ -1782,10 +1810,12 @@
         "LineageNodeSummary$createdAt": "<p>The timestamp at which the data lineage node was created.</p>",
         "LineageNodeTypeItem$createdAt": "<p>The timestamp at which the data lineage node type was created.</p>",
         "MetadataGenerationRunItem$createdAt": "<p>The timestamp at which the metadata generation run was created.</p>",
+        "NotebookRunSummary$createdAt": "<p>The timestamp of when the notebook run was created.</p>",
         "PolicyGrantMember$createdAt": "<p>Specifies the timestamp at which policy grant member was created.</p>",
         "RejectSubscriptionRequestOutput$createdAt": "<p>The timestamp of when the subscription request was rejected.</p>",
         "RevokeSubscriptionOutput$createdAt": "<p>The timestamp of when the subscription was revoked.</p>",
         "StartMetadataGenerationRunOutput$createdAt": "<p>The timestamp at which the metadata generation run was started.</p>",
+        "StartNotebookRunOutput$createdAt": "<p>The timestamp of when the notebook run was created.</p>",
         "SubscriptionGrantSummary$createdAt": "<p>The timestamp of when a subscription grant was created.</p>",
         "SubscriptionRequestSummary$createdAt": "<p>The timestamp of when a subscription request was created.</p>",
         "SubscriptionSummary$createdAt": "<p>The timestamp of when the subscription was created.</p>",
@@ -1846,6 +1876,7 @@
         "GetLineageNodeOutput$createdBy": "<p>The user who created the data lineage node.</p>",
         "GetListingOutput$createdBy": "<p>The Amazon DataZone user who created the listing.</p>",
         "GetMetadataGenerationRunOutput$createdBy": "<p>The Amazon DataZone user who started the metadata generation run.</p>",
+        "GetNotebookRunOutput$createdBy": "<p>The identifier of the user who created the notebook run.</p>",
         "GetProjectOutput$createdBy": "<p>The Amazon DataZone user who created the project.</p>",
         "GetProjectProfileOutput$createdBy": "<p>The user who created the project profile.</p>",
         "GetRuleOutput$createdBy": "<p>The user who created the rule.</p>",
@@ -1860,12 +1891,14 @@
         "LineageNodeSummary$createdBy": "<p>The user who created the data lineage node.</p>",
         "LineageNodeTypeItem$createdBy": "<p>The user who created the data lineage node type.</p>",
         "MetadataGenerationRunItem$createdBy": "<p>The user who created the metadata generation run.</p>",
+        "NotebookRunSummary$createdBy": "<p>The identifier of the user who created the notebook run.</p>",
         "PolicyGrantMember$createdBy": "<p>Specifies the user who created the policy grant member.</p>",
         "ProjectProfileSummary$createdBy": "<p>The user who created the project profile.</p>",
         "ProjectSummary$createdBy": "<p>The Amazon DataZone user who created the project.</p>",
         "RejectSubscriptionRequestOutput$createdBy": "<p>The timestamp of when the subscription request was rejected.</p>",
         "RevokeSubscriptionOutput$createdBy": "<p>The identifier of the user who revoked the subscription.</p>",
         "StartMetadataGenerationRunOutput$createdBy": "<p>The ID of the user who started the metadata generation run.</p>",
+        "StartNotebookRunOutput$createdBy": "<p>The identifier of the user who created the notebook run.</p>",
         "SubscriptionGrantSummary$createdBy": "<p>The datazone user who created the subscription grant.</p>",
         "SubscriptionRequestSummary$createdBy": "<p>The Amazon DataZone user who created the subscription request.</p>",
         "SubscriptionSummary$createdBy": "<p>The Amazon DataZone user who created the subscription.</p>",
@@ -2830,6 +2863,8 @@
         "GetListingOutput$domainId": "<p>The ID of the Amazon DataZone domain.</p>",
         "GetMetadataGenerationRunInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain the metadata generation run of which you want to get.</p>",
         "GetMetadataGenerationRunOutput$domainId": "<p>The ID of the Amazon DataZone domain the metadata generation run of which you want to get.</p>",
+        "GetNotebookRunInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which the notebook run exists.</p>",
+        "GetNotebookRunOutput$domainId": "<p>The identifier of the Amazon DataZone domain.</p>",
         "GetProjectInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the project exists.</p>",
         "GetProjectOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the project exists.</p>",
         "GetProjectProfileInput$domainIdentifier": "<p>The ID of the domain.</p>",
@@ -2875,6 +2910,7 @@
         "ListLineageEventsInput$domainIdentifier": "<p>The ID of the domain where you want to list lineage events.</p>",
         "ListLineageNodeHistoryInput$domainIdentifier": "<p>The ID of the domain where you want to list the history of the specified data lineage node.</p>",
         "ListMetadataGenerationRunsInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain where you want to list metadata generation runs.</p>",
+        "ListNotebookRunsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which to list notebook runs.</p>",
         "ListNotificationsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain.</p>",
         "ListPolicyGrantsInput$domainIdentifier": "<p>The ID of the domain where you want to list policy grants.</p>",
         "ListProjectMembershipsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which you want to list project memberships.</p>",
@@ -2887,6 +2923,7 @@
         "ListSubscriptionsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain.</p>",
         "ListTimeSeriesDataPointsInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain that houses the assets for which you want to list time series data points.</p>",
         "MetadataGenerationRunItem$domainId": "<p>The ID of the Amazon DataZone domain in which the metadata generation run was created.</p>",
+        "NotebookRunSummary$domainId": "<p>The identifier of the Amazon DataZone domain.</p>",
         "NotificationOutput$domainIdentifier": "<p>The identifier of a Amazon DataZone domain in which the notification exists.</p>",
         "PostLineageEventInput$domainIdentifier": "<p>The ID of the domain where you want to post a data lineage event.</p>",
         "PostLineageEventOutput$domainId": "<p>The ID of the domain.</p>",
@@ -2915,6 +2952,10 @@
         "StartDataSourceRunOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which to start a data source run.</p>",
         "StartMetadataGenerationRunInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain where you want to start a metadata generation run.</p>",
         "StartMetadataGenerationRunOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the metadata generation run was started.</p>",
+        "StartNotebookRunInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which the notebook run is started.</p>",
+        "StartNotebookRunOutput$domainId": "<p>The identifier of the Amazon DataZone domain.</p>",
+        "StopNotebookRunInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which the notebook run is stopped.</p>",
+        "StopNotebookRunOutput$domainId": "<p>The identifier of the Amazon DataZone domain.</p>",
         "SubscriptionGrantSummary$domainId": "<p>The identifier of the Amazon DataZone domain in which a subscription grant exists.</p>",
         "SubscriptionRequestSummary$domainId": "<p>The identifier of the Amazon DataZone domain in which a subscription request exists.</p>",
         "SubscriptionSummary$domainId": "<p>The identifier of the Amazon DataZone domain in which a subscription exists.</p>",
@@ -3310,6 +3351,13 @@
       "base": "<p>The details of an environment blueprint summary.</p>",
       "refs": {
         "EnvironmentBlueprintSummaries$member": null
+      }
+    },
+    "EnvironmentConfig": {
+      "base": "<p>The environment configuration for a notebook run in Amazon DataZone.</p>",
+      "refs": {
+        "GetNotebookRunOutput$environmentConfiguration": "<p>The environment configuration of the notebook run, including image version and package settings.</p>",
+        "StartNotebookRunOutput$environmentConfiguration": "<p>The environment configuration of the notebook run, including image version and package settings.</p>"
       }
     },
     "EnvironmentConfiguration": {
@@ -4107,6 +4155,14 @@
       "base": null,
       "refs": {}
     },
+    "GetNotebookRunInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetNotebookRunOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GetProjectInput": {
       "base": null,
       "refs": {}
@@ -4779,6 +4835,12 @@
         "RowFilterExpression$in": "<p>The 'in' clause of the row filter expression.</p>"
       }
     },
+    "InstanceType": {
+      "base": null,
+      "refs": {
+        "ComputeConfig$instanceType": "<p>The instance type for the notebook run compute.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -4889,7 +4951,8 @@
       "refs": {
         "CreateDomainInput$kmsKeyIdentifier": "<p>The identifier of the Amazon Web Services Key Management Service (KMS) key that is used to encrypt the Amazon DataZone domain, metadata, and reporting data. </p>",
         "CreateDomainOutput$kmsKeyIdentifier": "<p>The identifier of the Amazon Web Services Key Management Service (KMS) key that is used to encrypt the Amazon DataZone domain, metadata, and reporting data. </p>",
-        "GetDomainOutput$kmsKeyIdentifier": "<p>The identifier of the Amazon Web Services Key Management Service (KMS) key that is used to encrypt the Amazon DataZone domain, metadata, and reporting data. </p>"
+        "GetDomainOutput$kmsKeyIdentifier": "<p>The identifier of the Amazon Web Services Key Management Service (KMS) key that is used to encrypt the Amazon DataZone domain, metadata, and reporting data. </p>",
+        "StorageConfig$kmsKeyArn": "<p>The ARN of the KMS key used for encryption.</p>"
       }
     },
     "LakeFormationConfiguration": {
@@ -5273,6 +5336,14 @@
       "base": null,
       "refs": {}
     },
+    "ListNotebookRunsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNotebookRunsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListNotificationsInput": {
       "base": null,
       "refs": {}
@@ -5558,6 +5629,7 @@
         "ListLineageEventsInput$maxResults": "<p>The maximum number of lineage events to return in a single call to ListLineageEvents. When the number of lineage events to be listed is greater than the value of MaxResults, the response contains a NextToken value that you can use in a subsequent call to ListLineageEvents to list the next set of lineage events.</p>",
         "ListLineageNodeHistoryInput$maxResults": "<p>The maximum number of history items to return in a single call to ListLineageNodeHistory. When the number of memberships to be listed is greater than the value of MaxResults, the response contains a NextToken value that you can use in a subsequent call to ListLineageNodeHistory to list the next set of items.</p>",
         "ListMetadataGenerationRunsInput$maxResults": "<p>The maximum number of metadata generation runs to return in a single call to ListMetadataGenerationRuns. When the number of metadata generation runs to be listed is greater than the value of MaxResults, the response contains a NextToken value that you can use in a subsequent call to ListMetadataGenerationRuns to list the next set of revisions.</p>",
+        "ListNotebookRunsInput$maxResults": "<p>The maximum number of notebook runs to return in a single call. When the number of notebook runs exceeds the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value.</p>",
         "ListNotificationsInput$maxResults": "<p>The maximum number of notifications to return in a single call to <code>ListNotifications</code>. When the number of notifications to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListNotifications</code> to list the next set of notifications.</p>",
         "ListProjectMembershipsInput$maxResults": "<p>The maximum number of memberships to return in a single call to <code>ListProjectMemberships</code>. When the number of memberships to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListProjectMemberships</code> to list the next set of memberships.</p>",
         "ListProjectProfilesInput$maxResults": "<p>The maximum number of project profiles to return in a single call to ListProjectProfiles. When the number of project profiles to be listed is greater than the value of MaxResults, the response contains a NextToken value that you can use in a subsequent call to ListProjectProfiles to list the next set of project profiles.</p>",
@@ -5602,6 +5674,14 @@
       "base": null,
       "refs": {
         "NotificationOutput$message": "<p>The message included in the notification.</p>"
+      }
+    },
+    "Metadata": {
+      "base": null,
+      "refs": {
+        "GetNotebookRunOutput$metadata": "<p>The metadata of the notebook run.</p>",
+        "StartNotebookRunInput$metadata": "<p>The metadata for the notebook run, specified as key-value pairs. You can specify up to 50 entries, with keys up to 128 characters and values up to 1024 characters.</p>",
+        "StartNotebookRunOutput$metadata": "<p>The metadata of the notebook run.</p>"
       }
     },
     "MetadataFormEnforcementDetail": {
@@ -5724,10 +5804,22 @@
         "MetadataGenerationRunTarget$type": "<p>The type of the asset for which metadata was generated.</p>"
       }
     },
+    "MetadataKey": {
+      "base": null,
+      "refs": {
+        "Metadata$key": null
+      }
+    },
     "MetadataMap": {
       "base": null,
       "refs": {
         "NotificationOutput$metadata": "<p>The metadata included in the notification.</p>"
+      }
+    },
+    "MetadataValue": {
+      "base": null,
+      "refs": {
+        "Metadata$value": null
       }
     },
     "MlflowPropertiesInput": {
@@ -5785,6 +5877,20 @@
         "OpenLineageRunEventSummary$outputs": "<p>The outputs of the open lineage run event summary.</p>"
       }
     },
+    "NetworkAccessType": {
+      "base": "<p>The network access type for a notebook run in Amazon DataZone.</p>",
+      "refs": {
+        "NetworkConfig$networkAccessType": "<p>The network access type for the notebook run. Valid values are <code>PUBLIC_INTERNET_ONLY</code> and <code>VPC_ONLY</code>.</p>"
+      }
+    },
+    "NetworkConfig": {
+      "base": "<p>The network configuration for a notebook run in Amazon DataZone.</p>",
+      "refs": {
+        "GetNotebookRunOutput$networkConfiguration": "<p>The network configuration of the notebook run.</p>",
+        "StartNotebookRunInput$networkConfiguration": "<p>The network configuration for the notebook run, including network access type and optional VPC settings.</p>",
+        "StartNotebookRunOutput$networkConfiguration": "<p>The network configuration of the notebook run.</p>"
+      }
+    },
     "NotEqualToExpression": {
       "base": "<p>Specifies that a value is not equal to the expression.</p>",
       "refs": {
@@ -5801,6 +5907,62 @@
       "base": "<p>Specifies that a value might be not like the expression.</p>",
       "refs": {
         "RowFilterExpression$notLike": "<p>The 'not like' clause of the row filter expression.</p>"
+      }
+    },
+    "NotebookId": {
+      "base": null,
+      "refs": {
+        "GetNotebookRunOutput$notebookId": "<p>The identifier of the notebook.</p>",
+        "ListNotebookRunsInput$notebookIdentifier": "<p>The identifier of the notebook to filter runs by.</p>",
+        "NotebookRunSummary$notebookId": "<p>The identifier of the notebook.</p>",
+        "StartNotebookRunInput$notebookIdentifier": "<p>The identifier of the notebook to run.</p>",
+        "StartNotebookRunOutput$notebookId": "<p>The identifier of the notebook.</p>"
+      }
+    },
+    "NotebookRunError": {
+      "base": "<p>The error details of a failed notebook run in Amazon DataZone.</p>",
+      "refs": {
+        "GetNotebookRunOutput$error": "<p>The error details if the notebook run failed.</p>",
+        "StartNotebookRunOutput$error": "<p>The error details if the notebook run failed.</p>"
+      }
+    },
+    "NotebookRunErrorMessageString": {
+      "base": null,
+      "refs": {
+        "NotebookRunError$message": "<p>The error message. The maximum length is 1024 characters.</p>"
+      }
+    },
+    "NotebookRunId": {
+      "base": null,
+      "refs": {
+        "GetNotebookRunInput$identifier": "<p>The identifier of the notebook run.</p>",
+        "GetNotebookRunOutput$id": "<p>The identifier of the notebook run.</p>",
+        "NotebookRunSummary$id": "<p>The identifier of the notebook run.</p>",
+        "StartNotebookRunOutput$id": "<p>The identifier of the notebook run.</p>",
+        "StopNotebookRunInput$identifier": "<p>The identifier of the notebook run to stop.</p>",
+        "StopNotebookRunOutput$id": "<p>The identifier of the notebook run.</p>"
+      }
+    },
+    "NotebookRunStatus": {
+      "base": "<p>The status of a notebook run in Amazon DataZone.</p>",
+      "refs": {
+        "GetNotebookRunOutput$status": "<p>The status of the notebook run.</p>",
+        "ListNotebookRunsInput$status": "<p>The status to filter notebook runs by.</p>",
+        "NotebookRunSummary$status": "<p>The status of the notebook run.</p>",
+        "StartNotebookRunOutput$status": "<p>The status of the notebook run.</p>",
+        "StopNotebookRunOutput$status": "<p>The status of the notebook run.</p>"
+      }
+    },
+    "NotebookRunSummary": {
+      "base": "<p>The summary of a notebook run in Amazon DataZone.</p>",
+      "refs": {
+        "NotebookRunSummaryList$member": null
+      }
+    },
+    "NotebookRunSummaryList": {
+      "base": null,
+      "refs": {
+        "ListNotebookRunsOutput$items": "<p>The results of the <code>ListNotebookRuns</code> action.</p>"
       }
     },
     "NotificationOutput": {
@@ -5950,6 +6112,24 @@
         "OwnerPropertiesOutput$user": "<p>Specifies that the domain unit owner is a user.</p>"
       }
     },
+    "PackageConfig": {
+      "base": "<p>The package configuration for a notebook run environment in Amazon DataZone.</p>",
+      "refs": {
+        "EnvironmentConfig$packageConfig": "<p>The package configuration for the notebook run environment.</p>"
+      }
+    },
+    "PackageConfigPackageSpecificationString": {
+      "base": null,
+      "refs": {
+        "PackageConfig$packageSpecification": "<p>The package specification content for the notebook run environment. The maximum length is 10240 characters.</p>"
+      }
+    },
+    "PackageManager": {
+      "base": "<p>The package manager for a notebook run environment in Amazon DataZone.</p>",
+      "refs": {
+        "PackageConfig$packageManager": "<p>The package manager for the notebook run environment. The default value is <code>UV</code>.</p>"
+      }
+    },
     "PaginationToken": {
       "base": null,
       "refs": {
@@ -5995,6 +6175,8 @@
         "ListLineageNodeHistoryOutput$nextToken": "<p>When the number of history items is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of items, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListLineageNodeHistory to list the next set of items.</p>",
         "ListMetadataGenerationRunsInput$nextToken": "<p>When the number of metadata generation runs is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of metadata generation runs, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListMetadataGenerationRuns to list the next set of revisions.</p>",
         "ListMetadataGenerationRunsOutput$nextToken": "<p>When the number of metadata generation runs is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of metadata generation runs, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListMetadataGenerationRuns to list the next set of revisions.</p>",
+        "ListNotebookRunsInput$nextToken": "<p>When the number of notebook runs is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of notebook runs, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListNotebookRuns</code> to list the next set of notebook runs.</p>",
+        "ListNotebookRunsOutput$nextToken": "<p>When the number of notebook runs is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of notebook runs, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListNotebookRuns</code> to list the next set of notebook runs.</p>",
         "ListNotificationsInput$nextToken": "<p>When the number of notifications is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of notifications, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListNotifications</code> to list the next set of notifications.</p>",
         "ListNotificationsOutput$nextToken": "<p>When the number of notifications is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of notifications, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListNotifications</code> to list the next set of notifications.</p>",
         "ListPolicyGrantsInput$nextToken": "<p>When the number of grants is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of grants, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListPolicyGrants</code> to list the next set of grants.</p>",
@@ -6031,12 +6213,32 @@
         "SearchUserProfilesOutput$nextToken": "<p>When the number of results is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of results, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>SearchUserProfiles</code> to list the next set of results.</p>"
       }
     },
+    "ParameterKey": {
+      "base": null,
+      "refs": {
+        "Parameters$key": null
+      }
+    },
     "ParameterStorePath": {
       "base": null,
       "refs": {
         "AwsAccount$awsAccountIdPath": "<p>The account ID path of a project.</p>",
         "EnvironmentConfigurationParametersDetails$ssmPath": "<p>Ssm path environment configuration parameters.</p>",
         "Region$regionNamePath": "<p>The region name path.</p>"
+      }
+    },
+    "ParameterValue": {
+      "base": null,
+      "refs": {
+        "Parameters$value": null
+      }
+    },
+    "Parameters": {
+      "base": null,
+      "refs": {
+        "GetNotebookRunOutput$parameters": "<p>The sensitive parameters of the notebook run.</p>",
+        "StartNotebookRunInput$parameters": "<p>The sensitive parameters for the notebook run, specified as key-value pairs. You can specify up to 50 entries, with keys up to 128 characters and values up to 1024 characters.</p>",
+        "StartNotebookRunOutput$parameters": "<p>The sensitive parameters of the notebook run.</p>"
       }
     },
     "Password": {
@@ -6223,6 +6425,7 @@
         "GetFormTypeOutput$originProjectId": "<p>The ID of the project in which this metadata form type was originally created.</p>",
         "GetGlossaryOutput$owningProjectId": "<p>The ID of the project that owns this business glossary.</p>",
         "GetMetadataGenerationRunOutput$owningProjectId": "<p>The ID of the project that owns the assets for which you're running metadata generation.</p>",
+        "GetNotebookRunOutput$owningProjectId": "<p>The identifier of the project that owns the notebook run.</p>",
         "GetProjectInput$identifier": "<p>The ID of the project.</p>",
         "GetProjectOutput$id": "<p>&gt;The ID of the project.</p>",
         "GetSubscriptionTargetOutput$projectId": "<p>The ID of the project associated with the subscription target.</p>",
@@ -6230,6 +6433,7 @@
         "ListConnectionsInput$projectIdentifier": "<p>The ID of the project where you want to list connections.</p>",
         "ListEnvironmentProfilesInput$projectIdentifier": "<p>The identifier of the Amazon DataZone project.</p>",
         "ListEnvironmentsInput$projectIdentifier": "<p>The identifier of the Amazon DataZone project.</p>",
+        "ListNotebookRunsInput$owningProjectIdentifier": "<p>The identifier of the project that owns the notebook runs.</p>",
         "ListProjectMembershipsInput$projectIdentifier": "<p>The identifier of the project whose memberships you want to list.</p>",
         "ListSubscriptionGrantsInput$owningProjectId": "<p>The ID of the owning project of the subscription grants.</p>",
         "ListSubscriptionRequestsInput$owningProjectId": "<p>The identifier of the project for the subscription requests.</p>",
@@ -6237,6 +6441,7 @@
         "ListSubscriptionsInput$owningProjectId": "<p>The identifier of the owning project.</p>",
         "ListSubscriptionsInput$approverProjectId": "<p>The identifier of the project for the subscription's approver.</p>",
         "MetadataGenerationRunItem$owningProjectId": "<p>The ID of the project that owns the asset for which the metadata generation was ran.</p>",
+        "NotebookRunSummary$owningProjectId": "<p>The identifier of the project that owns the notebook run.</p>",
         "ProjectIds$member": null,
         "ProjectPolicyGrantPrincipal$projectIdentifier": "<p>The project ID of the project policy grant principal.</p>",
         "ProjectSummary$id": "<p>The identifier of a project.</p>",
@@ -6245,6 +6450,9 @@
         "StartDataSourceRunOutput$projectId": "<p>The identifier of the project.</p>",
         "StartMetadataGenerationRunInput$owningProjectIdentifier": "<p>The ID of the project that owns the asset for which you want to start a metadata generation run.</p>",
         "StartMetadataGenerationRunOutput$owningProjectId": "<p>The ID of the project that owns the asset for which the metadata generation run was started.</p>",
+        "StartNotebookRunInput$owningProjectIdentifier": "<p>The identifier of the project that owns the notebook run.</p>",
+        "StartNotebookRunOutput$owningProjectId": "<p>The identifier of the project that owns the notebook run.</p>",
+        "StopNotebookRunOutput$owningProjectId": "<p>The identifier of the project that owns the notebook run.</p>",
         "SubscribedListing$ownerProjectId": "<p>The identifier of the project of the published asset for which the subscription grant is created.</p>",
         "SubscribedProject$id": "<p>The identifier of the project that has the subscription grant.</p>",
         "SubscribedProjectInput$identifier": "<p>The identifier of the project that is to be given a subscription grant.</p>",
@@ -7178,6 +7386,12 @@
         "LakeFormationConfiguration$locationRegistrationExcludeS3Locations": "<p>Specifies certain Amazon S3 locations if you do not want Amazon DataZone to automatically register them in hybrid mode. </p>"
       }
     },
+    "S3Path": {
+      "base": null,
+      "refs": {
+        "StorageConfig$projectS3Path": "<p>The Amazon Simple Storage Service path for the project storage.</p>"
+      }
+    },
     "S3Permission": {
       "base": null,
       "refs": {
@@ -7262,6 +7476,16 @@
         "GetDataSourceOutput$schedule": "<p>The schedule of the data source runs.</p>",
         "UpdateDataSourceInput$schedule": "<p>The schedule to be updated as part of the <code>UpdateDataSource</code> action.</p>",
         "UpdateDataSourceOutput$schedule": "<p>The schedule to be updated as part of the <code>UpdateDataSource</code> action.</p>"
+      }
+    },
+    "ScheduleId": {
+      "base": null,
+      "refs": {
+        "GetNotebookRunOutput$scheduleId": "<p>The identifier of the schedule associated with the notebook run.</p>",
+        "ListNotebookRunsInput$scheduleIdentifier": "<p>The identifier of the schedule to filter notebook runs by.</p>",
+        "NotebookRunSummary$scheduleId": "<p>The identifier of the schedule associated with the notebook run.</p>",
+        "StartNotebookRunInput$scheduleIdentifier": "<p>The identifier of the schedule associated with the notebook run.</p>",
+        "StartNotebookRunOutput$scheduleId": "<p>The identifier of the schedule associated with the notebook run.</p>"
       }
     },
     "SearchGroupProfilesInput": {
@@ -7400,6 +7624,12 @@
         "SecurityGroupIdList$member": null
       }
     },
+    "SecurityGroupIds": {
+      "base": null,
+      "refs": {
+        "NetworkConfig$securityGroupIds": "<p>The identifiers of the security groups for the notebook run. You can specify up to 5 security groups.</p>"
+      }
+    },
     "SelfGrantStatus": {
       "base": null,
       "refs": {
@@ -7513,6 +7743,7 @@
         "ListJobRunsInput$sortOrder": "<p>Specifies the order in which job runs are to be sorted.</p>",
         "ListLineageEventsInput$sortOrder": "<p>The sort order of the lineage events.</p>",
         "ListLineageNodeHistoryInput$sortOrder": "<p>The order by which you want data lineage node history to be sorted.</p>",
+        "ListNotebookRunsInput$sortOrder": "<p>The sort order for the results.</p>",
         "ListProjectMembershipsInput$sortOrder": "<p>The sort order of the project memberships.</p>",
         "ListProjectProfilesInput$sortOrder": "<p>Specifies the sort order of the project profiles.</p>",
         "ListSubscriptionGrantsInput$sortOrder": "<p>Specifies the sort order of this action.</p>",
@@ -7713,6 +7944,14 @@
       "base": null,
       "refs": {}
     },
+    "StartNotebookRunInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartNotebookRunOutput": {
+      "base": null,
+      "refs": {}
+    },
     "Status": {
       "base": null,
       "refs": {
@@ -7722,6 +7961,21 @@
         "ProjectProfileSummary$status": "<p>The status of a project profile.</p>",
         "UpdateProjectProfileInput$status": "<p>The status of a project profile.</p>",
         "UpdateProjectProfileOutput$status": "<p>The status of the project profile.</p>"
+      }
+    },
+    "StopNotebookRunInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StopNotebookRunOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "StorageConfig": {
+      "base": "<p>The storage configuration for a notebook run in Amazon DataZone.</p>",
+      "refs": {
+        "GetNotebookRunOutput$storageConfiguration": "<p>The storage configuration of the notebook run, including the Amazon Simple Storage Service path and KMS key ARN.</p>",
+        "StartNotebookRunOutput$storageConfiguration": "<p>The storage configuration of the notebook run, including the Amazon Simple Storage Service path and KMS key ARN.</p>"
       }
     },
     "String": {
@@ -7745,6 +7999,7 @@
         "AwsConsoleLinkParameters$uri": "<p>The URI of the console link specified as part of the environment action.</p>",
         "CloudFormationProperties$templateUrl": "<p>The template URL of the cloud formation provisioning properties of the environment blueprint.</p>",
         "ColumnNameList$member": null,
+        "ComputeConfig$environmentVersion": "<p>The environment version for the notebook run compute.</p>",
         "ConfigurableActionParameter$key": "<p>The key of the configurable action parameter.</p>",
         "ConfigurableActionParameter$value": "<p>The value of the configurable action parameter.</p>",
         "ConfigurableEnvironmentAction$type": "<p>The type of a configurable action in a Amazon DataZone environment.</p>",
@@ -7819,6 +8074,7 @@
         "EnvironmentActionSummary$name": "<p>The name of the environment action.</p>",
         "EnvironmentActionSummary$description": "<p>The environment action description.</p>",
         "EnvironmentBlueprintSummary$provider": "<p>The provider of the blueprint.</p>",
+        "EnvironmentConfig$imageVersion": "<p>The image version for the notebook run environment.</p>",
         "EnvironmentConfigurationParameter$value": "<p>The value of the environment configuration parameter.</p>",
         "EnvironmentError$code": "<p>The error code for the failure reason for the environment deployment.</p>",
         "EnvironmentError$message": "<p>The error message for the failure reason for the environment deployment.</p>",
@@ -7938,6 +8194,7 @@
         "MlflowPropertiesPatch$trackingServerArn": "<p>The tracking server ARN as part of the MLflow properties of a connection.</p>",
         "NameIdentifier$name": "<p>The name in the name identifier.</p>",
         "NameIdentifier$namespace": "<p>The namespace in the name identifier.</p>",
+        "NetworkConfig$vpcId": "<p>The identifier of the VPC for the notebook run. This is required when the network access type is <code>VPC_ONLY</code>.</p>",
         "NotEqualToExpression$columnName": "<p>The name of the column.</p>",
         "NotEqualToExpression$value": "<p>The value that might not be equal to the expression.</p>",
         "NotInExpression$columnName": "<p>The name of the column.</p>",
@@ -7972,6 +8229,7 @@
         "Resource$value": "<p>The value of a provisioned resource of this Amazon DataZone environment.</p>",
         "Resource$type": "<p>The type of a provisioned resource of this Amazon DataZone environment.</p>",
         "S3PropertiesOutput$errorMessage": "<p>The error message that gets displayed.</p>",
+        "SecurityGroupIds$member": null,
         "SelfGrantStatusDetail$failureCause": "<p>The reason for why the operation failed.</p>",
         "SparkEmrPropertiesOutput$computeArn": "<p>The compute ARN of the Spark EMR.</p>",
         "SparkEmrPropertiesOutput$instanceProfileArn": "<p>The instance profile ARN of the Spark EMR.</p>",
@@ -7991,6 +8249,7 @@
         "StartDataSourceRunInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "StartDataSourceRunOutput$dataSourceConfigurationSnapshot": "<p>The configuration snapshot of the data source that is being run.</p>",
         "StringList$member": null,
+        "SubnetIds$member": null,
         "SubscribedAsset$targetName": "<p>The target name of the asset for which the subscription grant is created.</p>",
         "SubscribedListing$ownerProjectName": "<p>The name of the project that owns the published asset for which the subscription grant is created.</p>",
         "SubscribedProductListing$name": "<p>The name of the data product listing.</p>",
@@ -8002,6 +8261,7 @@
         "TagResourceRequest$resourceArn": "<p>The ARN of the resource to be tagged in Amazon DataZone.</p>",
         "TextMatchItem$text": "<p>Snippet of attribute text containing highlighted content.</p>",
         "Topic$subject": "<p>The subject of the resource mentioned in a notification.</p>",
+        "TriggerSource$name": "<p>The name of the trigger source.</p>",
         "UntagResourceRequest$resourceArn": "<p>The ARN of the resource to be untagged in Amazon DataZone.</p>",
         "UpdateAssetFilterInput$name": "<p>The name of the asset filter.</p>",
         "UpdateAssetFilterOutput$errorMessage": "<p>The error message that is displayed if the action is not completed successfully.</p>",
@@ -8059,6 +8319,12 @@
       "base": null,
       "refs": {
         "PhysicalConnectionRequirements$subnetIdList": "<p>The subnet ID list of the physical connection requirements of a connection. </p>"
+      }
+    },
+    "SubnetIds": {
+      "base": null,
+      "refs": {
+        "NetworkConfig$subnetIds": "<p>The identifiers of the subnets for the notebook run. You can specify up to 10 subnets.</p>"
       }
     },
     "SubscribedAsset": {
@@ -8667,6 +8933,20 @@
         "TimeSeriesDataPointSummaryFormOutput$formName": "<p>The name of the time series data points summary form.</p>"
       }
     },
+    "TimeoutConfig": {
+      "base": "<p>The timeout configuration for a notebook run in Amazon DataZone.</p>",
+      "refs": {
+        "GetNotebookRunOutput$timeoutConfiguration": "<p>The timeout configuration of the notebook run.</p>",
+        "StartNotebookRunInput$timeoutConfiguration": "<p>The timeout configuration for the notebook run. The default timeout is 720 minutes (12 hours) and the maximum is 1440 minutes (24 hours).</p>",
+        "StartNotebookRunOutput$timeoutConfiguration": "<p>The timeout configuration of the notebook run.</p>"
+      }
+    },
+    "TimeoutConfigRunTimeoutInMinutesInteger": {
+      "base": null,
+      "refs": {
+        "TimeoutConfig$runTimeoutInMinutes": "<p>The timeout for the notebook run, in minutes. The minimum value is 60 minutes (1 hour), the maximum value is 1440 minutes (24 hours), and the default value is 720 minutes (12 hours).</p>"
+      }
+    },
     "Timestamp": {
       "base": null,
       "refs": {
@@ -8676,6 +8956,8 @@
         "GetLineageEventOutput$eventTime": "<p>The time of the lineage event.</p>",
         "GetLineageNodeInput$eventTimestamp": "<p>The event time stamp for which you want to get the data lineage node.</p>",
         "GetLineageNodeOutput$eventTimestamp": "<p>The timestamp of the event described in the data lineage node.</p>",
+        "GetNotebookRunOutput$startedAt": "<p>The timestamp of when the notebook run started executing.</p>",
+        "GetNotebookRunOutput$completedAt": "<p>The timestamp of when the notebook run completed.</p>",
         "GlueConnection$creationTime": "<p>The creation time of the Amazon Web Services Glue connection.</p>",
         "GlueConnection$lastUpdatedTime": "<p>The timestamp at which the Amazon Web Services Glue connection was last updated.</p>",
         "GlueConnection$lastConnectionValidationTime": "<p>The last validation time of the Amazon Web Services Glue connection.</p>",
@@ -8696,8 +8978,12 @@
         "ListNotificationsInput$beforeTimestamp": "<p>The time before which you want to list notifications.</p>",
         "ListTimeSeriesDataPointsInput$startedAt": "<p>The timestamp at which the data points that you want to list started.</p>",
         "ListTimeSeriesDataPointsInput$endedAt": "<p>The timestamp at which the data points that you wanted to list ended.</p>",
+        "NotebookRunSummary$startedAt": "<p>The timestamp of when the notebook run started executing.</p>",
+        "NotebookRunSummary$completedAt": "<p>The timestamp of when the notebook run completed.</p>",
         "NotificationOutput$creationTimestamp": "<p>The timestamp of when a notification was created.</p>",
         "NotificationOutput$lastUpdatedTimestamp": "<p>The timestamp of when the notification was last updated.</p>",
+        "StartNotebookRunOutput$startedAt": "<p>The timestamp of when the notebook run started executing.</p>",
+        "StartNotebookRunOutput$completedAt": "<p>The timestamp of when the notebook run completed.</p>",
         "SubscribedAsset$grantedTimestamp": "<p>The timestamp of when the subscription grant to the asset is created.</p>",
         "SubscribedAsset$failureTimestamp": "<p>The failure timestamp included in the details of the asset for which the subscription grant is created.</p>",
         "TimeSeriesDataPointFormInput$timestamp": "<p>The timestamp of the time series data points form.</p>",
@@ -8752,6 +9038,21 @@
       "refs": {
         "SageMakerRunConfigurationInput$trackingAssets": "<p>The tracking assets of the Amazon SageMaker run.</p>",
         "SageMakerRunConfigurationOutput$trackingAssets": "<p>The tracking assets of the Amazon SageMaker.</p>"
+      }
+    },
+    "TriggerSource": {
+      "base": "<p>The source that triggered a notebook run in Amazon DataZone.</p>",
+      "refs": {
+        "GetNotebookRunOutput$triggerSource": "<p>The source that triggered the notebook run.</p>",
+        "NotebookRunSummary$triggerSource": "<p>The source that triggered the notebook run.</p>",
+        "StartNotebookRunInput$triggerSource": "<p>The source that triggered the notebook run.</p>",
+        "StartNotebookRunOutput$triggerSource": "<p>The source that triggered the notebook run.</p>"
+      }
+    },
+    "TriggerSourceType": {
+      "base": "<p>The type of trigger source for a notebook run in Amazon DataZone.</p>",
+      "refs": {
+        "TriggerSource$type": "<p>The type of the trigger source. Valid values are <code>MANUAL</code>, <code>SCHEDULED</code>, and <code>WORKFLOW</code>.</p>"
       }
     },
     "TypeName": {
@@ -9011,6 +9312,7 @@
         "GetGlossaryTermOutput$updatedAt": "<p>The timestamp of when the business glossary term was updated.</p>",
         "GetLineageNodeOutput$updatedAt": "<p>The timestamp at which the data lineage node was updated.</p>",
         "GetListingOutput$updatedAt": "<p>The timestamp of when the listing was updated.</p>",
+        "GetNotebookRunOutput$updatedAt": "<p>The timestamp of when the notebook run was last updated.</p>",
         "GetRuleOutput$updatedAt": "<p>The timestamp at which the rule was last updated.</p>",
         "GetSubscriptionGrantOutput$updatedAt": "<p>The timestamp of when the subscription grant was upated.</p>",
         "GetSubscriptionOutput$updatedAt": "<p>The timestamp of when the subscription was updated.</p>",
@@ -9021,9 +9323,11 @@
         "LineageNodeItem$updatedAt": "<p>The timestamp at which the data lineage node was updated.</p>",
         "LineageNodeSummary$updatedAt": "<p>The timestamp at which the data lineage node was updated.</p>",
         "LineageNodeTypeItem$updatedAt": "<p>The timestamp at which the data lineage node type was updated.</p>",
+        "NotebookRunSummary$updatedAt": "<p>The timestamp of when the notebook run was last updated.</p>",
         "RejectSubscriptionRequestOutput$updatedAt": "<p>The timestamp of when the subscription request was updated.</p>",
         "RevokeSubscriptionOutput$updatedAt": "<p>The timestamp of when the subscription was revoked.</p>",
         "RuleSummary$updatedAt": "<p>The timestamp at which the rule was last updated.</p>",
+        "StartNotebookRunOutput$updatedAt": "<p>The timestamp of when the notebook run was last updated.</p>",
         "SubscriptionGrantSummary$updatedAt": "<p>The timestamp of when the subscription grant was updated.</p>",
         "SubscriptionRequestSummary$updatedAt": "<p>The timestamp of when the subscription request was updated.</p>",
         "SubscriptionSummary$updatedAt": "<p>The timestamp of when the subscription was updated.</p>",
@@ -9058,6 +9362,7 @@
         "GetGlossaryTermOutput$updatedBy": "<p>The Amazon DataZone user who updated the business glossary term.</p>",
         "GetLineageNodeOutput$updatedBy": "<p>The user who updated the data lineage node.</p>",
         "GetListingOutput$updatedBy": "<p>The Amazon DataZone user who updated the listing.</p>",
+        "GetNotebookRunOutput$updatedBy": "<p>The identifier of the user who last updated the notebook run.</p>",
         "GetRuleOutput$lastUpdatedBy": "<p>The timestamp at which the rule was last updated.</p>",
         "GetSubscriptionGrantOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant.</p>",
         "GetSubscriptionOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription.</p>",
@@ -9068,9 +9373,11 @@
         "LineageNodeItem$updatedBy": "<p>The user who updated the data lineage node.</p>",
         "LineageNodeSummary$updatedBy": "<p>The user who updated the data lineage node.</p>",
         "LineageNodeTypeItem$updatedBy": "<p>The user who updated the data lineage node type.</p>",
+        "NotebookRunSummary$updatedBy": "<p>The identifier of the user who last updated the notebook run.</p>",
         "RejectSubscriptionRequestOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription request.</p>",
         "RevokeSubscriptionOutput$updatedBy": "<p>The Amazon DataZone user who revoked the subscription.</p>",
         "RuleSummary$lastUpdatedBy": "<p>The timestamp at which the rule was last updated.</p>",
+        "StartNotebookRunOutput$updatedBy": "<p>The identifier of the user who last updated the notebook run.</p>",
         "SubscriptionGrantSummary$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant.</p>",
         "SubscriptionRequestSummary$updatedBy": "<p>The identifier of the Amazon DataZone user who updated the subscription request.</p>",
         "SubscriptionSummary$updatedBy": "<p>The Amazon DataZone user who updated the subscription.</p>",

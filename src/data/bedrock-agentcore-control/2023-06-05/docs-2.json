@@ -147,6 +147,12 @@
         "UpdateGatewayRuleResponse$actions": "<p>The actions to take when the rule conditions are met.</p>"
       }
     },
+    "ActorTokenContentType": {
+      "base": null,
+      "refs": {
+        "TokenExchangeGrantTypeConfigType$actorTokenContent": "<p>The content type for the actor token in the token exchange.</p>"
+      }
+    },
     "AdditionalModelRequestFields": {
       "base": null,
       "refs": {
@@ -362,6 +368,30 @@
       "base": null,
       "refs": {
         "CustomJWTAuthorizerConfiguration$allowedScopes": "<p>An array of scopes that are allowed to access the token.</p>"
+      }
+    },
+    "AllowedStringListValue": {
+      "base": null,
+      "refs": {
+        "AllowedStringListValuesList$member": null
+      }
+    },
+    "AllowedStringListValuesList": {
+      "base": null,
+      "refs": {
+        "StringListValidation$allowedValues": "<p>Allowed values for items in this STRINGLIST field.</p>"
+      }
+    },
+    "AllowedStringValue": {
+      "base": null,
+      "refs": {
+        "AllowedStringValuesList$member": null
+      }
+    },
+    "AllowedStringValuesList": {
+      "base": null,
+      "refs": {
+        "StringValidation$allowedValues": "<p>Allowed values for this STRING field.</p>"
       }
     },
     "ApiGatewayTargetConfiguration": {
@@ -810,12 +840,18 @@
         "AuthorizingClaimMatchValueType$claimMatchValue": "<p>The value or values to match for.</p>"
       }
     },
+    "ClientAuthenticationMethodType": {
+      "base": null,
+      "refs": {
+        "CustomOauth2ProviderConfigInput$clientAuthenticationMethod": "<p>The client authentication method to use when authenticating with the token endpoint.</p>",
+        "CustomOauth2ProviderConfigOutput$clientAuthenticationMethod": "<p>The client authentication method used when authenticating with the token endpoint.</p>"
+      }
+    },
     "ClientIdType": {
       "base": null,
       "refs": {
         "AtlassianOauth2ProviderConfigInput$clientId": "<p>The client ID for the Atlassian OAuth2 provider. This identifier is assigned by Atlassian when you register your application.</p>",
         "AtlassianOauth2ProviderConfigOutput$clientId": "<p>The client ID for the Atlassian OAuth2 provider.</p>",
-        "CustomOauth2ProviderConfigInput$clientId": "<p>The client ID for the custom OAuth2 provider.</p>",
         "CustomOauth2ProviderConfigOutput$clientId": "<p>The client ID for the custom OAuth2 provider.</p>",
         "GithubOauth2ProviderConfigInput$clientId": "<p>The client ID for the GitHub OAuth2 provider.</p>",
         "GithubOauth2ProviderConfigOutput$clientId": "<p>The client ID for the GitHub OAuth2 provider.</p>",
@@ -837,7 +873,6 @@
       "base": null,
       "refs": {
         "AtlassianOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Atlassian OAuth2 provider. This secret is assigned by Atlassian and used along with the client ID to authenticate your application.</p>",
-        "CustomOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the custom OAuth2 provider.</p>",
         "GithubOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the GitHub OAuth2 provider.</p>",
         "GoogleOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Google OAuth2 provider.</p>",
         "IncludedOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the supported OAuth2 provider. This secret is assigned by the OAuth2 provider and used along with the client ID to authenticate your application.</p>",
@@ -1661,6 +1696,24 @@
       "base": "<p>Exception thrown when decryption of a secret fails.</p>",
       "refs": {}
     },
+    "DefaultClientIdType": {
+      "base": null,
+      "refs": {
+        "CustomOauth2ProviderConfigInput$clientId": "<p>The client ID for the custom OAuth2 provider.</p>"
+      }
+    },
+    "DefaultClientSecretType": {
+      "base": null,
+      "refs": {
+        "CustomOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the custom OAuth2 provider.</p>"
+      }
+    },
+    "Definition": {
+      "base": null,
+      "refs": {
+        "LlmExtractionConfig$definition": "<p>Description of what this metadata field represents.</p>"
+      }
+    },
     "DeleteAgentRuntimeEndpointRequest": {
       "base": null,
       "refs": {}
@@ -1942,7 +1995,9 @@
     "Double": {
       "base": null,
       "refs": {
-        "FilterValue$doubleValue": "<p> The numeric value for numerical filtering and comparisons. </p>"
+        "FilterValue$doubleValue": "<p> The numeric value for numerical filtering and comparisons. </p>",
+        "NumberValidation$minValue": "<p>Minimum allowed value.</p>",
+        "NumberValidation$maxValue": "<p>Maximum allowed value.</p>"
       }
     },
     "EncryptionFailure": {
@@ -2190,6 +2245,12 @@
         "GetGatewayResponse$exceptionLevel": "<p>The level of detail in error messages returned when invoking the gateway.</p> <ul> <li> <p>If the value is <code>DEBUG</code>, granular exception messages are returned to help a user debug the gateway.</p> </li> <li> <p>If the value is omitted, a generic error message is returned to the end user.</p> </li> </ul>",
         "UpdateGatewayRequest$exceptionLevel": "<p>The level of detail in error messages returned when invoking the gateway.</p> <ul> <li> <p>If the value is <code>DEBUG</code>, granular exception messages are returned to help a user debug the gateway.</p> </li> <li> <p>If the value is omitted, a generic error message is returned to the end user.</p> </li> </ul>",
         "UpdateGatewayResponse$exceptionLevel": "<p>The level of detail in error messages returned when invoking the gateway.</p> <ul> <li> <p>If the value is <code>DEBUG</code>, granular exception messages are returned to help a user debug the gateway.</p> </li> <li> <p>If the value is omitted, a generic error message is returned to the end user.</p> </li> </ul>"
+      }
+    },
+    "ExtractionConfig": {
+      "base": "<p>Configuration for metadata extraction from conversational content.</p>",
+      "refs": {
+        "MetadataSchemaEntry$extractionConfig": "<p>Configuration for extracting this metadata value from conversational content.</p>"
       }
     },
     "ExtractionConfiguration": {
@@ -3188,6 +3249,20 @@
         "Oauth2ProviderConfigOutput$includedOauth2ProviderConfig": "<p>The configuration for a non-custom OAuth2 provider. This includes the configuration details for supported OAuth2 providers that have built-in integration support.</p>"
       }
     },
+    "IndexedKey": {
+      "base": "<p>A metadata key indexed for filtering.</p>",
+      "refs": {
+        "IndexedKeysList$member": null
+      }
+    },
+    "IndexedKeysList": {
+      "base": null,
+      "refs": {
+        "CreateMemoryInput$indexedKeys": "<p>Metadata keys to index for filtering. Once declared, indexed keys cannot be removed.</p>",
+        "Memory$indexedKeys": "<p>The indexed metadata keys for this memory. Only indexed keys can be used in metadata filters.</p>",
+        "UpdateMemoryInput$addIndexedKeys": "<p>Additional metadata keys to index. Previously indexed keys cannot be removed.</p>"
+      }
+    },
     "InferenceConfiguration": {
       "base": "<p> The configuration parameters that control how the foundation model behaves during evaluation, including response generation settings. </p>",
       "refs": {
@@ -3665,6 +3740,18 @@
         "EvaluatorConfig$llmAsAJudge": "<p> The LLM-as-a-Judge configuration that uses a language model to evaluate agent performance based on custom instructions and rating scales. </p>"
       }
     },
+    "LlmExtractionConfig": {
+      "base": "<p>Model-based metadata extraction configuration.</p>",
+      "refs": {
+        "ExtractionConfig$llmExtractionConfig": "<p>Model-based extraction using a definition and instructions.</p>"
+      }
+    },
+    "LlmExtractionInstruction": {
+      "base": null,
+      "refs": {
+        "LlmExtractionConfig$llmExtractionInstruction": "<p>Instructions for extraction. Supports built-in operators like LATEST_VALUE or custom natural-language instructions.</p>"
+      }
+    },
     "LogGroupName": {
       "base": null,
       "refs": {
@@ -3859,6 +3946,22 @@
         "UpdateMemoryInput$memoryId": "<p>The unique identifier of the memory to update.</p>"
       }
     },
+    "MemoryRecordSchema": {
+      "base": "<p>Schema for metadata on memory records generated by a strategy.</p>",
+      "refs": {
+        "CustomMemoryStrategyInput$memoryRecordSchema": "<p>Schema for metadata fields on records generated by this strategy.</p>",
+        "EpisodicMemoryStrategyInput$memoryRecordSchema": "<p>Schema for metadata fields on records generated by this strategy.</p>",
+        "EpisodicOverrideReflectionConfigurationInput$memoryRecordSchema": "<p>Schema for metadata fields on records generated by this reflection override.</p>",
+        "EpisodicReflectionConfiguration$memoryRecordSchema": "<p>\"Schema for metadata fields on records generated by reflections.</p>",
+        "EpisodicReflectionConfigurationInput$memoryRecordSchema": "<p>Schema for metadata fields on records generated by reflections.</p>",
+        "EpisodicReflectionOverride$memoryRecordSchema": "<p>Schema for metadata fields on records generated by this reflection override.</p>",
+        "MemoryStrategy$memoryRecordSchema": "<p>Schema for metadata fields on records generated by this strategy.</p>",
+        "ModifyMemoryStrategyInput$memoryRecordSchema": "<p>Updated metadata schema for records generated by this strategy.</p>",
+        "SemanticMemoryStrategyInput$memoryRecordSchema": null,
+        "SummaryMemoryStrategyInput$memoryRecordSchema": "<p>Schema for metadata fields on records generated by this strategy.</p>",
+        "UserPreferenceMemoryStrategyInput$memoryRecordSchema": "<p>Schema for metadata fields on records generated by this strategy.</p>"
+      }
+    },
     "MemoryStatus": {
       "base": null,
       "refs": {
@@ -3955,6 +4058,32 @@
         "GetGatewayTargetResponse$metadataConfiguration": "<p>The metadata configuration for HTTP header and query parameter propagation for the retrieved gateway target.</p>",
         "UpdateGatewayTargetRequest$metadataConfiguration": "<p>Configuration for HTTP header and query parameter propagation to the gateway target.</p>",
         "UpdateGatewayTargetResponse$metadataConfiguration": "<p>The metadata configuration that was applied to the gateway target.</p>"
+      }
+    },
+    "MetadataKey": {
+      "base": null,
+      "refs": {
+        "IndexedKey$key": "<p>The metadata key name to index.</p>",
+        "MetadataSchemaEntry$key": "<p>The metadata field name. Must match an indexed key to be queryable via metadata filters.</p>"
+      }
+    },
+    "MetadataSchemaEntry": {
+      "base": "<p>A metadata field definition within a strategy's schema.</p>",
+      "refs": {
+        "MetadataSchemaList$member": null
+      }
+    },
+    "MetadataSchemaList": {
+      "base": null,
+      "refs": {
+        "MemoryRecordSchema$metadataSchema": "<p>The metadata field definitions for this strategy.</p>"
+      }
+    },
+    "MetadataValueType": {
+      "base": null,
+      "refs": {
+        "IndexedKey$type": "<p>The data type of the indexed key.</p>",
+        "MetadataSchemaEntry$type": "<p>The MetadataValueType.</p>"
       }
     },
     "MicrosoftOauth2ProviderConfigInput": {
@@ -4168,6 +4297,12 @@
         "InferenceConfigurationStopSequencesList$member": null
       }
     },
+    "NumberValidation": {
+      "base": "<p>Validation for NUMBER fields.</p>",
+      "refs": {
+        "Validation$numberValidation": null
+      }
+    },
     "NumericalScaleDefinition": {
       "base": "<p> The definition of a numerical rating scale option that provides a numeric value with its description for evaluation scoring. </p>",
       "refs": {
@@ -4311,6 +4446,19 @@
         "CreateOauth2CredentialProviderResponse$oauth2ProviderConfigOutput": null,
         "GetOauth2CredentialProviderResponse$oauth2ProviderConfigOutput": "<p>The configuration output for the OAuth2 provider.</p>",
         "UpdateOauth2CredentialProviderResponse$oauth2ProviderConfigOutput": "<p>The configuration output for the OAuth2 provider.</p>"
+      }
+    },
+    "OnBehalfOfTokenExchangeConfigType": {
+      "base": "<p>Configuration for on-behalf-of token exchange</p>",
+      "refs": {
+        "CustomOauth2ProviderConfigInput$onBehalfOfTokenExchangeConfig": "<p>The configuration for on-behalf-of token exchange. This enables authentication flows that use RFC 8693 token exchange or RFC 7523 JWT authorization grants.</p>",
+        "CustomOauth2ProviderConfigOutput$onBehalfOfTokenExchangeConfig": "<p>The configuration for on-behalf-of token exchange.</p>"
+      }
+    },
+    "OnBehalfOfTokenExchangeGrantTypeType": {
+      "base": null,
+      "refs": {
+        "OnBehalfOfTokenExchangeConfigType$grantType": "<p>The grant type for the on-behalf-of token exchange.</p>"
       }
     },
     "OnlineEvaluationConfigArn": {
@@ -5211,6 +5359,18 @@
         "RegistryRecordOAuthCredentialProvider$scopes": "<p>The OAuth scopes to request during authentication.</p>"
       }
     },
+    "ScopeType": {
+      "base": null,
+      "refs": {
+        "ScopesListType$member": null
+      }
+    },
+    "ScopesListType": {
+      "base": null,
+      "refs": {
+        "TokenExchangeGrantTypeConfigType$actorTokenScopes": "<p>Only valid when actorTokenContent is M2M</p>"
+      }
+    },
     "SearchType": {
       "base": null,
       "refs": {
@@ -5601,6 +5761,24 @@
         "VersionCreatedBySource$name": "<p>The name of the source (for example, <code>user</code>, <code>optimization-job</code>, or <code>system</code>).</p>",
         "VersionCreatedBySource$arn": "<p>The Amazon Resource Name (ARN) of the source, if applicable (for example, a user ARN or optimization job ARN).</p>",
         "VersionFilter$createdByName": "<p>Filter by creation source name.</p>"
+      }
+    },
+    "StringListValidation": {
+      "base": "<p>Validation for STRINGLIST fields.</p>",
+      "refs": {
+        "Validation$stringListValidation": null
+      }
+    },
+    "StringListValidationMaxItemsInteger": {
+      "base": null,
+      "refs": {
+        "StringListValidation$maxItems": "<p>Maximum number of items in the string list.</p>"
+      }
+    },
+    "StringValidation": {
+      "base": "<p>Validation for STRING fields.</p>",
+      "refs": {
+        "Validation$stringValidation": null
       }
     },
     "SubmitRegistryRecordForApprovalRequest": {
@@ -6011,6 +6189,12 @@
       "refs": {
         "IncludedOauth2ProviderConfigInput$tokenEndpoint": "<p>OAuth2 token endpoint for your isolated OAuth2 application tenant. This is where authorization codes are exchanged for access tokens.</p>",
         "Oauth2AuthorizationServerMetadata$tokenEndpoint": "<p>The token endpoint URL for the OAuth2 authorization server.</p>"
+      }
+    },
+    "TokenExchangeGrantTypeConfigType": {
+      "base": "<p>Configuration for RFC 8693 Token Exchange</p>",
+      "refs": {
+        "OnBehalfOfTokenExchangeConfigType$tokenExchangeGrantTypeConfig": "<p>Configuration specific to TOKEN_EXCHANGE grant type (RFC 8693)</p>"
       }
     },
     "TokenVaultIdType": {
@@ -6482,6 +6666,12 @@
       "refs": {
         "CustomExtractionConfigurationInput$userPreferenceExtractionOverride": "<p>The user preference extraction override configuration input.</p>",
         "UserPreferenceOverrideConfigurationInput$extraction": "<p>The extraction configuration for a user preference override.</p>"
+      }
+    },
+    "Validation": {
+      "base": "<p>Validation rules for extracted metadata values. Only one type can be specified, matching the field's data type.</p>",
+      "refs": {
+        "LlmExtractionConfig$validation": "<p>Validation rules to constrain extracted values.</p>"
       }
     },
     "ValidationException": {

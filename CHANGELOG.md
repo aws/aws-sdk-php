@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockAgentCore` - AgentCore Identity now supports on-behalf-of token exchange OAuth2. AgentCore Memory now supports metadata for LongTerm Memory Records.
+* `Aws\EKS` - Vended logs update param for capability vended logs feature
+* `Aws\ObservabilityAdmin` - Observability Admin enablement launch for AWS Kafka, Bedrock Agent Core Workload Identity and OTel metric enablement.
+* `Aws\Kafka` - Adds support for ZookeeperAccess field to control the Client-Zookeeper connectivity.
+* `Aws\DataZone` - Adds support for asynchronous notebook runs
+* `Aws\PaymentCryptography` - Adds support for resource-based policies on AWS Payment Cryptography keys, enabling cross-account key sharing. Also adds Multi-Party Approval (MPA) team association APIs for protecting sensitive import root public key operations.
+* `Aws\SSOAdmin` - Add InstanceArn and IdentityStoreArn in the response of CreateApplication API and IdentityStoreArn in the response of DescribeApplication API
+* `Aws\SageMaker` - Add InstancePools support to Endpoint for flexible provisioning across a prioritized list of instance types. Add Specifications support to InferenceComponent for per-instance-type model configurations.
+* `Aws\Route53GlobalResolver` - Adds support for regions in the UpdateGlobalResolver input.
+* `Aws\BedrockAgentCoreControl` - AgentCore Identity now supports on-behalf-of token exchange OAuth2. AgentCore Memory now supports metadata for LongTerm Memory Records.
+
 ## 3.379.9 - 2026-04-29
 
 * `Aws\Deadline` - Adds support for rtx-pro-server-6000 GPU accelerator for service-managed fleets.

@@ -228,6 +228,18 @@
         "GetResourceApiKeyResponse$apiKey": "<p>The API key associated with the resource requested.</p>"
       }
     },
+    "AudienceType": {
+      "base": null,
+      "refs": {
+        "AudiencesListType$member": null
+      }
+    },
+    "AudiencesListType": {
+      "base": null,
+      "refs": {
+        "GetResourceOauth2TokenRequest$audiences": "<p>The audiences to include in the token request. These are used to specify the intended recipients of the OAuth2 token.</p>"
+      }
+    },
     "AuthorizationUrlType": {
       "base": null,
       "refs": {
@@ -1001,6 +1013,7 @@
         "EvaluationResultContent$value": "<p> The numerical score assigned by the evaluator according to its configured rating scale. For numerical scales, this is a decimal value within the defined range. This field is not allowed for categorical scales. </p>",
         "EvaluatorStatistics$averageScore": "<p>The average score across all evaluated sessions for this evaluator.</p>",
         "FilterValue$doubleValue": "<p>A numeric value for numerical filtering and comparisons.</p>",
+        "MemoryRecordMetadataValue$numberValue": "<p>A numeric value.</p>",
         "MemoryRecordSummary$score": "<p>The relevance score of the memory record when returned as part of a search result. Higher values indicate greater relevance to the search query.</p>",
         "ToolResultStructuredContent$executionTime": "<p>The execution time of the tool operation in milliseconds.</p>",
         "VariantResult$mean": "<p>The mean evaluation score for this variant.</p>",
@@ -2166,8 +2179,7 @@
     "LeftExpression": {
       "base": "<p>Left expression of the event metadata filter.</p>",
       "refs": {
-        "EventMetadataFilterExpression$left": "<p>Left operand of the event metadata filter expression.</p>",
-        "MemoryMetadataFilterExpression$left": null
+        "EventMetadataFilterExpression$left": "<p>Left operand of the event metadata filter expression.</p>"
       }
     },
     "ListABTestsRequest": {
@@ -2371,6 +2383,7 @@
     "MemoryMetadataFilterList": {
       "base": null,
       "refs": {
+        "ListMemoryRecordsInput$metadataFilters": "<p>A list of metadata filter expressions to scope the returned memory records.</p>",
         "SearchCriteria$metadataFilters": "<p>Filters to apply to metadata associated with a memory.</p>"
       }
     },
@@ -2405,10 +2418,44 @@
         "MemoryRecordUpdateInput$memoryRecordId": "<p>The unique ID of the memory record to be updated.</p>"
       }
     },
+    "MemoryRecordLeftExpression": {
+      "base": "<p>The left-hand side of a memory record metadata filter expression.</p>",
+      "refs": {
+        "MemoryMetadataFilterExpression$left": "<p>The metadata key to evaluate.</p>"
+      }
+    },
+    "MemoryRecordMetadataMap": {
+      "base": null,
+      "refs": {
+        "MemoryRecord$metadata": "<p>A map of metadata key-value pairs associated with a memory record.</p>",
+        "MemoryRecordCreateInput$metadata": "<p>Metadata key-value pairs to be stored with the memory record.</p>",
+        "MemoryRecordSummary$metadata": "<p>A map of metadata key-value pairs associated with a memory record.</p>",
+        "MemoryRecordUpdateInput$metadata": "<p>Metadata key-value pairs to be stored with the memory record.</p>"
+      }
+    },
+    "MemoryRecordMetadataValue": {
+      "base": "<p>The value of a memory record metadata entry.</p>",
+      "refs": {
+        "MemoryRecordMetadataMap$value": null,
+        "MemoryRecordRightExpression$metadataValue": "<p>The metadata value to compare against.</p>"
+      }
+    },
+    "MemoryRecordOperatorType": {
+      "base": null,
+      "refs": {
+        "MemoryMetadataFilterExpression$operator": "<p>The relationship between the metadata key and value to match when applying the metadata filter.</p>"
+      }
+    },
     "MemoryRecordOutput": {
       "base": "<p>Output information returned after processing a memory record operation.</p>",
       "refs": {
         "MemoryRecordsOutputList$member": null
+      }
+    },
+    "MemoryRecordRightExpression": {
+      "base": "<p>The right-hand side of a memory record metadata filter expression.</p>",
+      "refs": {
+        "MemoryMetadataFilterExpression$right": "<p>The value to compare against. Required for all operators except EXISTS and NOT_EXISTS.</p>"
       }
     },
     "MemoryRecordStatus": {
@@ -2498,6 +2545,8 @@
       "base": null,
       "refs": {
         "LeftExpression$metadataKey": "<p>Key associated with the metadata in an event.</p>",
+        "MemoryRecordLeftExpression$metadataKey": "<p>The metadata key to filter on.</p>",
+        "MemoryRecordMetadataMap$key": null,
         "MetadataMap$key": null
       }
     },
@@ -2505,9 +2554,7 @@
       "base": null,
       "refs": {
         "CreateEventInput$metadata": "<p>The key-value metadata to attach to the event.</p>",
-        "Event$metadata": "<p>Metadata associated with an event.</p>",
-        "MemoryRecord$metadata": "<p>A map of metadata key-value pairs associated with a memory record.</p>",
-        "MemoryRecordSummary$metadata": "<p>A map of metadata key-value pairs associated with a memory record.</p>"
+        "Event$metadata": "<p>Metadata associated with an event.</p>"
       }
     },
     "MetadataValue": {
@@ -2738,8 +2785,7 @@
     "OperatorType": {
       "base": null,
       "refs": {
-        "EventMetadataFilterExpression$operator": "<p>Operator applied to the event metadata filter expression.</p>",
-        "MemoryMetadataFilterExpression$operator": "<p>The relationship between the metadata key and value to match when applying the metadata filter.</p>"
+        "EventMetadataFilterExpression$operator": "<p>Operator applied to the event metadata filter expression.</p>"
       }
     },
     "OutputConfig": {
@@ -3064,6 +3110,18 @@
         "GetResourceOauth2TokenRequest$resourceOauth2ReturnUrl": "<p>The callback URL to redirect to after the OAuth 2.0 token retrieval is complete. This URL must be one of the provided URLs configured for the workload identity.</p>"
       }
     },
+    "ResourceType": {
+      "base": null,
+      "refs": {
+        "ResourcesListType$member": null
+      }
+    },
+    "ResourcesListType": {
+      "base": null,
+      "refs": {
+        "GetResourceOauth2TokenRequest$resources": "<p>The resources to include in the token request. These are used to specify the target resources for which the OAuth2 token is being requested.</p>"
+      }
+    },
     "ResponseChunk": {
       "base": "<p>A structure representing a response chunk that contains exactly one of the possible event types: <code>contentStart</code>, <code>contentDelta</code>, or <code>contentStop</code>.</p>",
       "refs": {
@@ -3091,8 +3149,7 @@
     "RightExpression": {
       "base": "<p>Right expression of the <code>eventMetadata</code>filter.</p>",
       "refs": {
-        "EventMetadataFilterExpression$right": "<p>Right operand of the event metadata filter expression.</p>",
-        "MemoryMetadataFilterExpression$right": null
+        "EventMetadataFilterExpression$right": "<p>Right operand of the event metadata filter expression.</p>"
       }
     },
     "Role": {
@@ -3684,6 +3741,12 @@
         "ToolArguments$paths": "<p>The paths for the tool operation.</p>"
       }
     },
+    "StringListMemberValue": {
+      "base": null,
+      "refs": {
+        "StringValueList$member": null
+      }
+    },
     "StringMap": {
       "base": null,
       "refs": {
@@ -3696,6 +3759,18 @@
         "InvokeAgentRuntimeRequest$mcpSessionId": "<p>The identifier of the MCP session.</p>",
         "InvokeAgentRuntimeRequest$mcpProtocolVersion": "<p>The version of the MCP protocol being used.</p>",
         "InvokeAgentRuntimeRequest$runtimeUserId": "<p>The identifier of the runtime user.</p>"
+      }
+    },
+    "StringValue": {
+      "base": null,
+      "refs": {
+        "MemoryRecordMetadataValue$stringValue": "<p>A string value.</p>"
+      }
+    },
+    "StringValueList": {
+      "base": null,
+      "refs": {
+        "MemoryRecordMetadataValue$stringListValue": "<p>A list of string values.</p>"
       }
     },
     "SyntheticTimestamp_date_time": {
@@ -3808,6 +3883,7 @@
         "GetABTestResponse$updatedAt": "<p>The timestamp when the A/B test was last updated.</p>",
         "MemoryRecord$createdAt": "<p>The timestamp when the memory record was created.</p>",
         "MemoryRecordCreateInput$timestamp": "<p>Time at which the memory record was created.</p>",
+        "MemoryRecordMetadataValue$dateTimeValue": "<p>A timestamp value in ISO 8601 UTC format.</p>",
         "MemoryRecordSummary$createdAt": "<p>The timestamp when the memory record was created.</p>",
         "MemoryRecordUpdateInput$timestamp": "<p>Time at which the memory record was updated</p>",
         "SessionSummary$createdAt": "<p>The timestamp when the session was created.</p>",

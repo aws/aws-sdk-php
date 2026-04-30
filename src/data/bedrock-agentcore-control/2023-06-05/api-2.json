@@ -2199,6 +2199,14 @@
       "max":2,
       "min":1
     },
+    "ActorTokenContentType":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "M2M",
+        "AWS_IAM_ID_TOKEN_JWT"
+      ]
+    },
     "AdditionalModelRequestFields":{
       "type":"structure",
       "members":{},
@@ -2382,6 +2390,30 @@
     "AllowedScopesType":{
       "type":"list",
       "member":{"shape":"AllowedScopeType"},
+      "min":1
+    },
+    "AllowedStringListValue":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*"
+    },
+    "AllowedStringListValuesList":{
+      "type":"list",
+      "member":{"shape":"AllowedStringListValue"},
+      "max":10,
+      "min":1
+    },
+    "AllowedStringValue":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*"
+    },
+    "AllowedStringValuesList":{
+      "type":"list",
+      "member":{"shape":"AllowedStringValue"},
+      "max":10,
       "min":1
     },
     "ApiGatewayTargetConfiguration":{
@@ -2807,6 +2839,14 @@
         "matchValueStringList":{"shape":"MatchValueStringList"}
       },
       "union":true
+    },
+    "ClientAuthenticationMethodType":{
+      "type":"string",
+      "enum":[
+        "CLIENT_SECRET_BASIC",
+        "CLIENT_SECRET_POST",
+        "AWS_IAM_ID_TOKEN_JWT"
+      ]
     },
     "ClientIdType":{
       "type":"string",
@@ -3640,6 +3680,7 @@
         "memoryExecutionRoleArn":{"shape":"Arn"},
         "eventExpiryDuration":{"shape":"CreateMemoryInputEventExpiryDurationInteger"},
         "memoryStrategies":{"shape":"MemoryStrategyInputList"},
+        "indexedKeys":{"shape":"IndexedKeysList"},
         "streamDeliveryResources":{"shape":"StreamDeliveryResources"},
         "tags":{"shape":"TagsMap"}
       }
@@ -4087,22 +4128,21 @@
           "deprecatedSince":"2026-03-02"
         },
         "namespaceTemplates":{"shape":"NamespacesList"},
-        "configuration":{"shape":"CustomConfigurationInput"}
+        "configuration":{"shape":"CustomConfigurationInput"},
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
       }
     },
     "CustomOauth2ProviderConfigInput":{
       "type":"structure",
-      "required":[
-        "oauthDiscovery",
-        "clientId",
-        "clientSecret"
-      ],
+      "required":["oauthDiscovery"],
       "members":{
         "oauthDiscovery":{"shape":"Oauth2Discovery"},
-        "clientId":{"shape":"ClientIdType"},
-        "clientSecret":{"shape":"ClientSecretType"},
+        "clientId":{"shape":"DefaultClientIdType"},
+        "clientSecret":{"shape":"DefaultClientSecretType"},
         "privateEndpoint":{"shape":"PrivateEndpoint"},
-        "privateEndpointOverrides":{"shape":"PrivateEndpointOverrides"}
+        "privateEndpointOverrides":{"shape":"PrivateEndpointOverrides"},
+        "onBehalfOfTokenExchangeConfig":{"shape":"OnBehalfOfTokenExchangeConfigType"},
+        "clientAuthenticationMethod":{"shape":"ClientAuthenticationMethodType"}
       }
     },
     "CustomOauth2ProviderConfigOutput":{
@@ -4112,7 +4152,9 @@
         "oauthDiscovery":{"shape":"Oauth2Discovery"},
         "clientId":{"shape":"ClientIdType"},
         "privateEndpoint":{"shape":"PrivateEndpoint"},
-        "privateEndpointOverrides":{"shape":"PrivateEndpointOverrides"}
+        "privateEndpointOverrides":{"shape":"PrivateEndpointOverrides"},
+        "onBehalfOfTokenExchangeConfig":{"shape":"OnBehalfOfTokenExchangeConfigType"},
+        "clientAuthenticationMethod":{"shape":"ClientAuthenticationMethodType"}
       }
     },
     "CustomParameterMap":{
@@ -4156,6 +4198,23 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "DefaultClientIdType":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
+    "DefaultClientSecretType":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "sensitive":true
+    },
+    "Definition":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "sensitive":true
     },
     "DeleteAgentRuntimeEndpointRequest":{
       "type":"structure",
@@ -4727,7 +4786,7 @@
     },
     "DiscoveryUrlType":{
       "type":"string",
-      "pattern":".+/\\.well-known/openid-configuration"
+      "pattern":".+/\\.well-known/(openid-configuration|oauth-authorization-server)"
     },
     "Document":{
       "type":"structure",
@@ -4816,7 +4875,8 @@
           "deprecatedSince":"2026-03-02"
         },
         "namespaceTemplates":{"shape":"NamespacesList"},
-        "reflectionConfiguration":{"shape":"EpisodicReflectionConfigurationInput"}
+        "reflectionConfiguration":{"shape":"EpisodicReflectionConfigurationInput"},
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
       }
     },
     "EpisodicOverrideConfigurationInput":{
@@ -4864,7 +4924,8 @@
           "deprecatedMessage":"Use namespaceTemplates instead",
           "deprecatedSince":"2026-03-02"
         },
-        "namespaceTemplates":{"shape":"NamespacesList"}
+        "namespaceTemplates":{"shape":"NamespacesList"},
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
       }
     },
     "EpisodicReflectionConfiguration":{
@@ -4876,7 +4937,8 @@
           "deprecatedMessage":"Use namespaceTemplates instead",
           "deprecatedSince":"2026-03-02"
         },
-        "namespaceTemplates":{"shape":"NamespacesList"}
+        "namespaceTemplates":{"shape":"NamespacesList"},
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
       }
     },
     "EpisodicReflectionConfigurationInput":{
@@ -4888,7 +4950,8 @@
           "deprecatedMessage":"Use namespaceTemplates instead",
           "deprecatedSince":"2026-03-02"
         },
-        "namespaceTemplates":{"shape":"NamespacesList"}
+        "namespaceTemplates":{"shape":"NamespacesList"},
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
       }
     },
     "EpisodicReflectionOverride":{
@@ -4906,7 +4969,8 @@
           "deprecatedMessage":"Use namespaceTemplates instead",
           "deprecatedSince":"2026-03-02"
         },
-        "namespaceTemplates":{"shape":"NamespacesList"}
+        "namespaceTemplates":{"shape":"NamespacesList"},
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
       }
     },
     "EvaluationConfigDescription":{
@@ -5029,6 +5093,13 @@
     "ExceptionLevel":{
       "type":"string",
       "enum":["DEBUG"]
+    },
+    "ExtractionConfig":{
+      "type":"structure",
+      "members":{
+        "llmExtractionConfig":{"shape":"LlmExtractionConfig"}
+      },
+      "union":true
     },
     "ExtractionConfiguration":{
       "type":"structure",
@@ -6813,6 +6884,23 @@
         "clientId":{"shape":"ClientIdType"}
       }
     },
+    "IndexedKey":{
+      "type":"structure",
+      "required":[
+        "key",
+        "type"
+      ],
+      "members":{
+        "key":{"shape":"MetadataKey"},
+        "type":{"shape":"MetadataValueType"}
+      }
+    },
+    "IndexedKeysList":{
+      "type":"list",
+      "member":{"shape":"IndexedKey"},
+      "max":10,
+      "min":1
+    },
     "InferenceConfiguration":{
       "type":"structure",
       "members":{
@@ -7712,6 +7800,21 @@
         "modelConfig":{"shape":"EvaluatorModelConfig"}
       }
     },
+    "LlmExtractionConfig":{
+      "type":"structure",
+      "required":["definition"],
+      "members":{
+        "llmExtractionInstruction":{"shape":"LlmExtractionInstruction"},
+        "definition":{"shape":"Definition"},
+        "validation":{"shape":"Validation"}
+      }
+    },
+    "LlmExtractionInstruction":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "sensitive":true
+    },
     "LogGroupName":{
       "type":"string",
       "max":512,
@@ -7902,6 +8005,7 @@
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
         "strategies":{"shape":"MemoryStrategyList"},
+        "indexedKeys":{"shape":"IndexedKeysList"},
         "streamDeliveryResources":{"shape":"StreamDeliveryResources"}
       }
     },
@@ -7919,6 +8023,12 @@
       "type":"string",
       "min":12,
       "pattern":"[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+    },
+    "MemoryRecordSchema":{
+      "type":"structure",
+      "members":{
+        "metadataSchema":{"shape":"MetadataSchemaList"}
+      }
     },
     "MemoryStatus":{
       "type":"string",
@@ -7953,7 +8063,8 @@
         "namespaceTemplates":{"shape":"NamespacesList"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
-        "status":{"shape":"MemoryStrategyStatus"}
+        "status":{"shape":"MemoryStrategyStatus"},
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
       }
     },
     "MemoryStrategyId":{
@@ -8050,6 +8161,35 @@
         "allowedResponseHeaders":{"shape":"AllowedResponseHeaders"}
       }
     },
+    "MetadataKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*"
+    },
+    "MetadataSchemaEntry":{
+      "type":"structure",
+      "required":["key"],
+      "members":{
+        "key":{"shape":"MetadataKey"},
+        "type":{"shape":"MetadataValueType"},
+        "extractionConfig":{"shape":"ExtractionConfig"}
+      }
+    },
+    "MetadataSchemaList":{
+      "type":"list",
+      "member":{"shape":"MetadataSchemaEntry"},
+      "max":20,
+      "min":1
+    },
+    "MetadataValueType":{
+      "type":"string",
+      "enum":[
+        "STRING",
+        "STRINGLIST",
+        "NUMBER"
+      ]
+    },
     "MicrosoftOauth2ProviderConfigInput":{
       "type":"structure",
       "required":[
@@ -8121,7 +8261,8 @@
           "deprecatedSince":"2026-03-02"
         },
         "namespaceTemplates":{"shape":"NamespacesList"},
-        "configuration":{"shape":"ModifyStrategyConfiguration"}
+        "configuration":{"shape":"ModifyStrategyConfiguration"},
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
       }
     },
     "ModifyReflectionConfiguration":{
@@ -8210,6 +8351,13 @@
     "NonEmptyString":{
       "type":"string",
       "min":1
+    },
+    "NumberValidation":{
+      "type":"structure",
+      "members":{
+        "minValue":{"shape":"Double"},
+        "maxValue":{"shape":"Double"}
+      }
     },
     "NumericalScaleDefinition":{
       "type":"structure",
@@ -8301,7 +8449,8 @@
       "type":"string",
       "enum":[
         "CLIENT_CREDENTIALS",
-        "AUTHORIZATION_CODE"
+        "AUTHORIZATION_CODE",
+        "TOKEN_EXCHANGE"
       ]
     },
     "OAuthScope":{
@@ -8388,6 +8537,21 @@
         "includedOauth2ProviderConfig":{"shape":"IncludedOauth2ProviderConfigOutput"}
       },
       "union":true
+    },
+    "OnBehalfOfTokenExchangeConfigType":{
+      "type":"structure",
+      "required":["grantType"],
+      "members":{
+        "grantType":{"shape":"OnBehalfOfTokenExchangeGrantTypeType"},
+        "tokenExchangeGrantTypeConfig":{"shape":"TokenExchangeGrantTypeConfigType"}
+      }
+    },
+    "OnBehalfOfTokenExchangeGrantTypeType":{
+      "type":"string",
+      "enum":[
+        "TOKEN_EXCHANGE",
+        "JWT_AUTHORIZATION_GRANT"
+      ]
     },
     "OnlineEvaluationConfigArn":{
       "type":"string",
@@ -9247,6 +9411,15 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "ScopeType":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "ScopesListType":{
+      "type":"list",
+      "member":{"shape":"ScopeType"}
+    },
     "SearchType":{
       "type":"string",
       "enum":["SEMANTIC"]
@@ -9358,7 +9531,8 @@
           "deprecatedMessage":"Use namespaceTemplates instead",
           "deprecatedSince":"2026-03-02"
         },
-        "namespaceTemplates":{"shape":"NamespacesList"}
+        "namespaceTemplates":{"shape":"NamespacesList"},
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
       }
     },
     "SemanticOverrideConfigurationInput":{
@@ -9647,6 +9821,26 @@
       "min":0
     },
     "String":{"type":"string"},
+    "StringListValidation":{
+      "type":"structure",
+      "members":{
+        "allowedValues":{"shape":"AllowedStringListValuesList"},
+        "maxItems":{"shape":"StringListValidationMaxItemsInteger"}
+      }
+    },
+    "StringListValidationMaxItemsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":5,
+      "min":1
+    },
+    "StringValidation":{
+      "type":"structure",
+      "required":["allowedValues"],
+      "members":{
+        "allowedValues":{"shape":"AllowedStringValuesList"}
+      }
+    },
     "SubmitRegistryRecordForApprovalRequest":{
       "type":"structure",
       "required":[
@@ -9720,7 +9914,8 @@
           "deprecatedMessage":"Use namespaceTemplates instead",
           "deprecatedSince":"2026-03-02"
         },
-        "namespaceTemplates":{"shape":"NamespacesList"}
+        "namespaceTemplates":{"shape":"NamespacesList"},
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
       }
     },
     "SummaryOverrideConfigurationInput":{
@@ -10041,6 +10236,14 @@
       "min":1
     },
     "TokenEndpointType":{"type":"string"},
+    "TokenExchangeGrantTypeConfigType":{
+      "type":"structure",
+      "required":["actorTokenContent"],
+      "members":{
+        "actorTokenContent":{"shape":"ActorTokenContentType"},
+        "actorTokenScopes":{"shape":"ScopesListType"}
+      }
+    },
     "TokenVaultIdType":{
       "type":"string",
       "max":64,
@@ -10634,6 +10837,7 @@
         "eventExpiryDuration":{"shape":"UpdateMemoryInputEventExpiryDurationInteger"},
         "memoryExecutionRoleArn":{"shape":"Arn"},
         "memoryStrategies":{"shape":"ModifyMemoryStrategies"},
+        "addIndexedKeys":{"shape":"IndexedKeysList"},
         "streamDeliveryResources":{"shape":"StreamDeliveryResources"}
       }
     },
@@ -11132,7 +11336,8 @@
           "deprecatedMessage":"Use namespaceTemplates instead",
           "deprecatedSince":"2026-03-02"
         },
-        "namespaceTemplates":{"shape":"NamespacesList"}
+        "namespaceTemplates":{"shape":"NamespacesList"},
+        "memoryRecordSchema":{"shape":"MemoryRecordSchema"}
       }
     },
     "UserPreferenceOverrideConfigurationInput":{
@@ -11163,6 +11368,15 @@
         "appendToPrompt":{"shape":"Prompt"},
         "modelId":{"shape":"String"}
       }
+    },
+    "Validation":{
+      "type":"structure",
+      "members":{
+        "stringValidation":{"shape":"StringValidation"},
+        "stringListValidation":{"shape":"StringListValidation"},
+        "numberValidation":{"shape":"NumberValidation"}
+      },
+      "union":true
     },
     "ValidationException":{
       "type":"structure",

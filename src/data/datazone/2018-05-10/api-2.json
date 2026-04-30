@@ -1845,6 +1845,25 @@
       ],
       "readonly":true
     },
+    "GetNotebookRun":{
+      "name":"GetNotebookRun",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/notebook-runs/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetNotebookRunInput"},
+      "output":{"shape":"GetNotebookRunOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "readonly":true
+    },
     "GetProject":{
       "name":"GetProject",
       "http":{
@@ -2415,6 +2434,24 @@
       ],
       "readonly":true
     },
+    "ListNotebookRuns":{
+      "name":"ListNotebookRuns",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/notebook-runs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListNotebookRunsInput"},
+      "output":{"shape":"ListNotebookRunsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "readonly":true
+    },
     "ListNotifications":{
       "name":"ListNotifications",
       "http":{
@@ -2960,6 +2997,47 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "StartNotebookRun":{
+      "name":"StartNotebookRun",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/notebook-runs",
+        "responseCode":201
+      },
+      "input":{"shape":"StartNotebookRunInput"},
+      "output":{"shape":"StartNotebookRunOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "StopNotebookRun":{
+      "name":"StopNotebookRun",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v2/domains/{domainIdentifier}/notebook-runs/{identifier}/stop",
+        "responseCode":200
+      },
+      "input":{"shape":"StopNotebookRunInput"},
+      "output":{"shape":"StopNotebookRunOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"}
@@ -4618,6 +4696,16 @@
         "retainPermissions":{"shape":"Boolean"}
       }
     },
+    "CellInformation":{
+      "type":"structure",
+      "members":{}
+    },
+    "CellOrder":{
+      "type":"list",
+      "member":{"shape":"CellInformation"},
+      "max":200,
+      "min":0
+    },
     "ChangeAction":{
       "type":"string",
       "enum":[
@@ -4647,6 +4735,13 @@
     "ColumnNameList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "ComputeConfig":{
+      "type":"structure",
+      "members":{
+        "instanceType":{"shape":"InstanceType"},
+        "environmentVersion":{"shape":"String"}
+      }
     },
     "ComputeEnvironments":{
       "type":"string",
@@ -7876,6 +7971,13 @@
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
+    "EnvironmentConfig":{
+      "type":"structure",
+      "members":{
+        "imageVersion":{"shape":"String"},
+        "packageConfig":{"shape":"PackageConfig"}
+      }
+    },
     "EnvironmentConfiguration":{
       "type":"structure",
       "required":[
@@ -9527,6 +9629,59 @@
         "typeStats":{"shape":"MetadataGenerationRunTypeStats"}
       }
     },
+    "GetNotebookRunInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"NotebookRunId",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "GetNotebookRunOutput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "domainId",
+        "owningProjectId",
+        "notebookId",
+        "status"
+      ],
+      "members":{
+        "id":{"shape":"NotebookRunId"},
+        "domainId":{"shape":"DomainId"},
+        "owningProjectId":{"shape":"ProjectId"},
+        "notebookId":{"shape":"NotebookId"},
+        "scheduleId":{"shape":"ScheduleId"},
+        "status":{"shape":"NotebookRunStatus"},
+        "cellOrder":{"shape":"CellOrder"},
+        "metadata":{"shape":"Metadata"},
+        "parameters":{"shape":"Parameters"},
+        "computeConfiguration":{"shape":"ComputeConfig"},
+        "networkConfiguration":{"shape":"NetworkConfig"},
+        "timeoutConfiguration":{"shape":"TimeoutConfig"},
+        "environmentConfiguration":{"shape":"EnvironmentConfig"},
+        "storageConfiguration":{"shape":"StorageConfig"},
+        "triggerSource":{"shape":"TriggerSource"},
+        "error":{"shape":"NotebookRunError"},
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "updatedAt":{"shape":"UpdatedAt"},
+        "updatedBy":{"shape":"UpdatedBy"},
+        "startedAt":{"shape":"Timestamp"},
+        "completedAt":{"shape":"Timestamp"}
+      }
+    },
     "GetProjectInput":{
       "type":"structure",
       "required":[
@@ -10543,6 +10698,10 @@
         "columnName":{"shape":"String"},
         "values":{"shape":"StringList"}
       }
+    },
+    "InstanceType":{
+      "type":"string",
+      "pattern":"(ml|sc)\\.[a-z][0-9]+[a-z]*\\.[a-z0-9]+"
     },
     "Integer":{
       "type":"integer",
@@ -11839,6 +11998,62 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListNotebookRunsInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "owningProjectIdentifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "owningProjectIdentifier":{
+          "shape":"ProjectId",
+          "location":"querystring",
+          "locationName":"owningProjectIdentifier"
+        },
+        "notebookIdentifier":{
+          "shape":"NotebookId",
+          "location":"querystring",
+          "locationName":"notebookIdentifier"
+        },
+        "status":{
+          "shape":"NotebookRunStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "scheduleIdentifier":{
+          "shape":"ScheduleId",
+          "location":"querystring",
+          "locationName":"scheduleIdentifier"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "sortOrder":{
+          "shape":"SortOrder",
+          "location":"querystring",
+          "locationName":"sortOrder"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListNotebookRunsOutput":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"NotebookRunSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListNotificationsInput":{
       "type":"structure",
       "required":[
@@ -12713,6 +12928,13 @@
       "min":0,
       "sensitive":true
     },
+    "Metadata":{
+      "type":"map",
+      "key":{"shape":"MetadataKey"},
+      "value":{"shape":"MetadataValue"},
+      "max":50,
+      "min":0
+    },
     "MetadataFormEnforcementDetail":{
       "type":"structure",
       "members":{
@@ -12843,10 +13065,21 @@
       "type":"string",
       "enum":["ASSET"]
     },
+    "MetadataKey":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
     "MetadataMap":{
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"String"}
+    },
+    "MetadataValue":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "sensitive":true
     },
     "MlflowPropertiesInput":{
       "type":"structure",
@@ -12891,6 +13124,23 @@
       "type":"list",
       "member":{"shape":"NameIdentifier"}
     },
+    "NetworkAccessType":{
+      "type":"string",
+      "enum":[
+        "PUBLIC_INTERNET_ONLY",
+        "VPC_ONLY"
+      ]
+    },
+    "NetworkConfig":{
+      "type":"structure",
+      "required":["networkAccessType"],
+      "members":{
+        "networkAccessType":{"shape":"NetworkAccessType"},
+        "vpcId":{"shape":"String"},
+        "subnetIds":{"shape":"SubnetIds"},
+        "securityGroupIds":{"shape":"SecurityGroupIds"}
+      }
+    },
     "NotEqualToExpression":{
       "type":"structure",
       "required":[
@@ -12923,6 +13173,67 @@
         "columnName":{"shape":"String"},
         "value":{"shape":"String"}
       }
+    },
+    "NotebookId":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9_-]{1,36}"
+    },
+    "NotebookRunError":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"NotebookRunErrorMessageString"}
+      }
+    },
+    "NotebookRunErrorMessageString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "NotebookRunId":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9_-]{1,36}"
+    },
+    "NotebookRunStatus":{
+      "type":"string",
+      "enum":[
+        "QUEUED",
+        "STARTING",
+        "RUNNING",
+        "STOPPING",
+        "STOPPED",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
+    "NotebookRunSummary":{
+      "type":"structure",
+      "required":[
+        "id",
+        "domainId",
+        "owningProjectId",
+        "notebookId",
+        "status"
+      ],
+      "members":{
+        "id":{"shape":"NotebookRunId"},
+        "domainId":{"shape":"DomainId"},
+        "owningProjectId":{"shape":"ProjectId"},
+        "notebookId":{"shape":"NotebookId"},
+        "scheduleId":{"shape":"ScheduleId"},
+        "status":{"shape":"NotebookRunStatus"},
+        "triggerSource":{"shape":"TriggerSource"},
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "updatedAt":{"shape":"UpdatedAt"},
+        "updatedBy":{"shape":"UpdatedBy"},
+        "startedAt":{"shape":"Timestamp"},
+        "completedAt":{"shape":"Timestamp"}
+      }
+    },
+    "NotebookRunSummaryList":{
+      "type":"list",
+      "member":{"shape":"NotebookRunSummary"}
     },
     "NotificationOutput":{
       "type":"structure",
@@ -13121,15 +13432,50 @@
         "userId":{"shape":"String"}
       }
     },
+    "PackageConfig":{
+      "type":"structure",
+      "required":["packageManager"],
+      "members":{
+        "packageManager":{"shape":"PackageManager"},
+        "packageSpecification":{"shape":"PackageConfigPackageSpecificationString"}
+      }
+    },
+    "PackageConfigPackageSpecificationString":{
+      "type":"string",
+      "max":10240,
+      "min":0
+    },
+    "PackageManager":{
+      "type":"string",
+      "enum":["UV"]
+    },
     "PaginationToken":{
       "type":"string",
       "max":8192,
       "min":1
     },
+    "ParameterKey":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
     "ParameterStorePath":{
       "type":"string",
       "max":2048,
       "min":1
+    },
+    "ParameterValue":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "Parameters":{
+      "type":"map",
+      "key":{"shape":"ParameterKey"},
+      "value":{"shape":"ParameterValue"},
+      "max":50,
+      "min":0,
+      "sensitive":true
     },
     "Password":{
       "type":"string",
@@ -14419,6 +14765,12 @@
       "max":20,
       "min":0
     },
+    "S3Path":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"s3://.+"
+    },
     "S3Permission":{
       "type":"string",
       "enum":[
@@ -14509,6 +14861,10 @@
         "schedule":{"shape":"CronString"}
       },
       "sensitive":true
+    },
+    "ScheduleId":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9_-]{1,36}"
     },
     "SearchGroupProfilesInput":{
       "type":"structure",
@@ -14742,6 +15098,12 @@
       "type":"string",
       "max":255,
       "min":1
+    },
+    "SecurityGroupIds":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":5,
+      "min":0
     },
     "SelfGrantStatus":{
       "type":"string",
@@ -15149,12 +15511,119 @@
         "owningProjectId":{"shape":"ProjectId"}
       }
     },
+    "StartNotebookRunInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "owningProjectIdentifier",
+        "notebookIdentifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "owningProjectIdentifier":{"shape":"ProjectId"},
+        "notebookIdentifier":{"shape":"NotebookId"},
+        "scheduleIdentifier":{"shape":"ScheduleId"},
+        "computeConfiguration":{"shape":"ComputeConfig"},
+        "networkConfiguration":{"shape":"NetworkConfig"},
+        "timeoutConfiguration":{"shape":"TimeoutConfig"},
+        "triggerSource":{"shape":"TriggerSource"},
+        "metadata":{"shape":"Metadata"},
+        "parameters":{"shape":"Parameters"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartNotebookRunOutput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "domainId",
+        "owningProjectId",
+        "notebookId",
+        "status"
+      ],
+      "members":{
+        "id":{"shape":"NotebookRunId"},
+        "domainId":{"shape":"DomainId"},
+        "owningProjectId":{"shape":"ProjectId"},
+        "notebookId":{"shape":"NotebookId"},
+        "scheduleId":{"shape":"ScheduleId"},
+        "status":{"shape":"NotebookRunStatus"},
+        "cellOrder":{"shape":"CellOrder"},
+        "metadata":{"shape":"Metadata"},
+        "parameters":{"shape":"Parameters"},
+        "computeConfiguration":{"shape":"ComputeConfig"},
+        "networkConfiguration":{"shape":"NetworkConfig"},
+        "timeoutConfiguration":{"shape":"TimeoutConfig"},
+        "environmentConfiguration":{"shape":"EnvironmentConfig"},
+        "storageConfiguration":{"shape":"StorageConfig"},
+        "triggerSource":{"shape":"TriggerSource"},
+        "error":{"shape":"NotebookRunError"},
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "updatedAt":{"shape":"UpdatedAt"},
+        "updatedBy":{"shape":"UpdatedBy"},
+        "startedAt":{"shape":"Timestamp"},
+        "completedAt":{"shape":"Timestamp"}
+      }
+    },
     "Status":{
       "type":"string",
       "enum":[
         "ENABLED",
         "DISABLED"
       ]
+    },
+    "StopNotebookRunInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"NotebookRunId",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StopNotebookRunOutput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "domainId",
+        "owningProjectId",
+        "status"
+      ],
+      "members":{
+        "id":{"shape":"NotebookRunId"},
+        "domainId":{"shape":"DomainId"},
+        "owningProjectId":{"shape":"ProjectId"},
+        "status":{"shape":"NotebookRunStatus"}
+      }
+    },
+    "StorageConfig":{
+      "type":"structure",
+      "members":{
+        "projectS3Path":{"shape":"S3Path"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
+      }
     },
     "String":{"type":"string"},
     "StringList":{
@@ -15172,6 +15641,12 @@
       "member":{"shape":"SubnetId"},
       "max":50,
       "min":1
+    },
+    "SubnetIds":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":10,
+      "min":0
     },
     "SubscribedAsset":{
       "type":"structure",
@@ -15769,6 +16244,18 @@
       "max":128,
       "min":1
     },
+    "TimeoutConfig":{
+      "type":"structure",
+      "members":{
+        "runTimeoutInMinutes":{"shape":"TimeoutConfigRunTimeoutInMinutesInteger"}
+      }
+    },
+    "TimeoutConfigRunTimeoutInMinutesInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1440,
+      "min":60
+    },
     "Timestamp":{"type":"timestamp"},
     "Timezone":{
       "type":"string",
@@ -15885,6 +16372,21 @@
       "value":{"shape":"TrackingAssetArns"},
       "max":1,
       "min":1
+    },
+    "TriggerSource":{
+      "type":"structure",
+      "members":{
+        "type":{"shape":"TriggerSourceType"},
+        "name":{"shape":"String"}
+      }
+    },
+    "TriggerSourceType":{
+      "type":"string",
+      "enum":[
+        "MANUAL",
+        "SCHEDULED",
+        "WORKFLOW"
+      ]
     },
     "TypeName":{
       "type":"string",

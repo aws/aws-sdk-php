@@ -1534,6 +1534,21 @@
       "type":"long",
       "box":true
     },
+    "MskEnhancedMonitoringLevel":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "PER_BROKER",
+        "PER_TOPIC_PER_BROKER",
+        "PER_TOPIC_PER_PARTITION"
+      ]
+    },
+    "MskMonitoringParameters":{
+      "type":"structure",
+      "members":{
+        "EnhancedMonitoring":{"shape":"MskEnhancedMonitoringLevel"}
+      }
+    },
     "NextToken":{"type":"string"},
     "OrganizationUnitIdentifier":{
       "type":"string",
@@ -1659,9 +1674,12 @@
         "AWS::BedrockAgentCore::CodeInterpreter",
         "AWS::BedrockAgentCore::Gateway",
         "AWS::BedrockAgentCore::Memory",
+        "AWS::BedrockAgentCore::WorkloadIdentity",
         "AWS::SecurityHub::Hub",
         "AWS::CloudFront::Distribution",
-        "AWS::SecurityHub::HubV2"
+        "AWS::SecurityHub::HubV2",
+        "AWS::CloudWatch::OTelEnrichment",
+        "AWS::MSK::Cluster"
       ]
     },
     "ResourceTypes":{
@@ -1877,7 +1895,8 @@
         "CloudtrailParameters":{"shape":"CloudtrailParameters"},
         "ELBLoadBalancerLoggingParameters":{"shape":"ELBLoadBalancerLoggingParameters"},
         "WAFLoggingParameters":{"shape":"WAFLoggingParameters"},
-        "LogDeliveryParameters":{"shape":"LogDeliveryParameters"}
+        "LogDeliveryParameters":{"shape":"LogDeliveryParameters"},
+        "MskMonitoringParameters":{"shape":"MskMonitoringParameters"}
       }
     },
     "TelemetryEnrichmentStatus":{

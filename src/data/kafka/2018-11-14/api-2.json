@@ -5172,6 +5172,10 @@
           "shape": "ConnectivityInfo",
           "locationName": "connectivityInfo"
         },
+        "ZookeeperAccess": {
+          "shape": "ZookeeperAccess",
+          "locationName": "zookeeperAccess"
+        },
         "StorageMode": {
           "shape": "StorageMode",
           "locationName": "storageMode"
@@ -5226,6 +5230,16 @@
         "IPV4",
         "DUAL"
       ]
+    },
+    "ZookeeperAccess": {
+      "type": "structure",
+      "members": {
+        "Enabled": {
+          "shape": "__boolean",
+          "locationName": "enabled"
+        }
+      },
+      "documentation": "\n            <p>Access control settings for zookeeper</p>\n         "
     },
     "NodeType": {
       "type": "string",
@@ -6253,11 +6267,14 @@
         "CurrentVersion": {
           "shape": "__string",
           "locationName": "currentVersion"
+        },
+        "ZookeeperAccess": {
+          "shape": "ZookeeperAccess",
+          "locationName": "zookeeperAccess"
         }
       },
       "required": [
         "ClusterArn",
-        "ConnectivityInfo",
         "CurrentVersion"
       ]
     },

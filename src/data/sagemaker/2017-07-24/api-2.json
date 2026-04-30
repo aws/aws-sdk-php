@@ -8654,8 +8654,7 @@
         "InstanceCount",
         "InstanceGroupName",
         "InstanceType",
-        "ExecutionRole",
-        "EnvironmentConfig"
+        "ExecutionRole"
       ],
       "members":{
         "InstanceCount":{"shape":"ClusterInstanceCount"},
@@ -10180,6 +10179,7 @@
         "EndpointName":{"shape":"EndpointName"},
         "VariantName":{"shape":"VariantName"},
         "Specification":{"shape":"InferenceComponentSpecification"},
+        "Specifications":{"shape":"InferenceComponentSpecificationList"},
         "RuntimeConfig":{"shape":"InferenceComponentRuntimeConfig"},
         "Tags":{"shape":"TagList"}
       }
@@ -13426,6 +13426,7 @@
         "VariantName":{"shape":"VariantName"},
         "FailureReason":{"shape":"FailureReason"},
         "Specification":{"shape":"InferenceComponentSpecificationSummary"},
+        "Specifications":{"shape":"InferenceComponentSpecificationSummaryList"},
         "RuntimeConfig":{"shape":"InferenceComponentRuntimeConfigSummary"},
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
@@ -17871,6 +17872,22 @@
       "min":0,
       "pattern":"[a-zA-Z0-9-]+"
     },
+    "InferenceComponentPlacementStatus":{
+      "type":"structure",
+      "required":[
+        "InstanceType",
+        "CurrentCopyCount"
+      ],
+      "members":{
+        "InstanceType":{"shape":"ProductionVariantInstanceType"},
+        "CurrentCopyCount":{"shape":"InferenceComponentCopyCount"}
+      }
+    },
+    "InferenceComponentPlacementStatusList":{
+      "type":"list",
+      "member":{"shape":"InferenceComponentPlacementStatus"},
+      "min":1
+    },
     "InferenceComponentPlacementStrategy":{
       "type":"string",
       "enum":[
@@ -17902,7 +17919,8 @@
       "type":"structure",
       "members":{
         "DesiredCopyCount":{"shape":"InferenceComponentCopyCount"},
-        "CurrentCopyCount":{"shape":"InferenceComponentCopyCount"}
+        "CurrentCopyCount":{"shape":"InferenceComponentCopyCount"},
+        "PlacementStatus":{"shape":"InferenceComponentPlacementStatusList"}
       }
     },
     "InferenceComponentSchedulingConfig":{
@@ -17924,6 +17942,7 @@
     "InferenceComponentSpecification":{
       "type":"structure",
       "members":{
+        "InstanceType":{"shape":"ProductionVariantInstanceType"},
         "ModelName":{"shape":"ModelName"},
         "Container":{"shape":"InferenceComponentContainerSpecification"},
         "StartupParameters":{"shape":"InferenceComponentStartupParameters"},
@@ -17933,9 +17952,16 @@
         "SchedulingConfig":{"shape":"InferenceComponentSchedulingConfig"}
       }
     },
+    "InferenceComponentSpecificationList":{
+      "type":"list",
+      "member":{"shape":"InferenceComponentSpecification"},
+      "max":5,
+      "min":1
+    },
     "InferenceComponentSpecificationSummary":{
       "type":"structure",
       "members":{
+        "InstanceType":{"shape":"ProductionVariantInstanceType"},
         "ModelName":{"shape":"ModelName"},
         "Container":{"shape":"InferenceComponentContainerSpecificationSummary"},
         "StartupParameters":{"shape":"InferenceComponentStartupParameters"},
@@ -17944,6 +17970,11 @@
         "DataCacheConfig":{"shape":"InferenceComponentDataCacheConfigSummary"},
         "SchedulingConfig":{"shape":"InferenceComponentSchedulingConfig"}
       }
+    },
+    "InferenceComponentSpecificationSummaryList":{
+      "type":"list",
+      "member":{"shape":"InferenceComponentSpecificationSummary"},
+      "min":1
     },
     "InferenceComponentStartupParameters":{
       "type":"structure",
@@ -18383,6 +18414,46 @@
         },
         "PlacementSpecifications":{"shape":"PlacementSpecifications"}
       }
+    },
+    "InstancePool":{
+      "type":"structure",
+      "required":[
+        "InstanceType",
+        "Priority"
+      ],
+      "members":{
+        "InstanceType":{"shape":"ProductionVariantInstanceType"},
+        "ModelNameOverride":{"shape":"ModelName"},
+        "Priority":{"shape":"InstancePoolPriority"}
+      }
+    },
+    "InstancePoolList":{
+      "type":"list",
+      "member":{"shape":"InstancePool"},
+      "max":5,
+      "min":1
+    },
+    "InstancePoolPriority":{
+      "type":"integer",
+      "box":true,
+      "max":5,
+      "min":1
+    },
+    "InstancePoolSummary":{
+      "type":"structure",
+      "required":[
+        "InstanceType",
+        "CurrentInstanceCount"
+      ],
+      "members":{
+        "InstanceType":{"shape":"ProductionVariantInstanceType"},
+        "CurrentInstanceCount":{"shape":"TaskCount"}
+      }
+    },
+    "InstancePoolSummaryList":{
+      "type":"list",
+      "member":{"shape":"InstancePoolSummary"},
+      "min":1
     },
     "InstanceType":{
       "type":"string",
@@ -24065,6 +24136,7 @@
         "CurrentInstanceCount":{"shape":"TaskCount"},
         "DesiredInstanceCount":{"shape":"TaskCount"},
         "InstanceType":{"shape":"ProductionVariantInstanceType"},
+        "InstancePools":{"shape":"InstancePoolSummaryList"},
         "AcceleratorType":{"shape":"ProductionVariantAcceleratorType"},
         "VariantStatus":{"shape":"ProductionVariantStatusList"},
         "CurrentServerlessConfig":{"shape":"ProductionVariantServerlessConfig"},
@@ -24879,6 +24951,8 @@
         "ModelName":{"shape":"ModelName"},
         "InitialInstanceCount":{"shape":"InitialTaskCount"},
         "InstanceType":{"shape":"ProductionVariantInstanceType"},
+        "InstancePools":{"shape":"InstancePoolList"},
+        "VariantInstanceProvisionTimeoutInSeconds":{"shape":"VariantInstanceProvisionTimeoutInSeconds"},
         "InitialVariantWeight":{"shape":"VariantWeight"},
         "AcceleratorType":{"shape":"ProductionVariantAcceleratorType"},
         "CoreDumpConfig":{"shape":"ProductionVariantCoreDumpConfig"},
@@ -25307,6 +25381,7 @@
         "DesiredWeight":{"shape":"VariantWeight"},
         "CurrentInstanceCount":{"shape":"TaskCount"},
         "DesiredInstanceCount":{"shape":"TaskCount"},
+        "InstancePools":{"shape":"InstancePoolSummaryList"},
         "VariantStatus":{"shape":"ProductionVariantStatusList"},
         "CurrentServerlessConfig":{"shape":"ProductionVariantServerlessConfig"},
         "DesiredServerlessConfig":{"shape":"ProductionVariantServerlessConfig"},
@@ -30560,6 +30635,7 @@
       "members":{
         "InferenceComponentName":{"shape":"InferenceComponentName"},
         "Specification":{"shape":"InferenceComponentSpecification"},
+        "Specifications":{"shape":"InferenceComponentSpecificationList"},
         "RuntimeConfig":{"shape":"InferenceComponentRuntimeConfig"},
         "DeploymentConfig":{"shape":"InferenceComponentDeploymentConfig"}
       }
@@ -31140,6 +31216,12 @@
       "box":true,
       "max":1,
       "min":0
+    },
+    "VariantInstanceProvisionTimeoutInSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":3600,
+      "min":300
     },
     "VariantName":{
       "type":"string",

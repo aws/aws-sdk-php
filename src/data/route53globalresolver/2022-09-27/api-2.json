@@ -234,6 +234,7 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
@@ -2477,7 +2478,7 @@
       "type":"string",
       "max":39,
       "min":1,
-      "pattern":"(?:[A-F0-9]{1,4}:){7}[A-F0-9]{1,4}"
+      "pattern":"(?:[A-Fa-f0-9]{0,4}:){2,7}[A-Fa-f0-9]{1,4}"
     },
     "IPv6Addresses":{
       "type":"list",
@@ -3225,7 +3226,8 @@
         "name":{"shape":"ResourceName"},
         "observabilityRegion":{"shape":"Region"},
         "description":{"shape":"ResourceDescription"},
-        "ipAddressType":{"shape":"GlobalResolverIpAddressType"}
+        "ipAddressType":{"shape":"GlobalResolverIpAddressType"},
+        "regions":{"shape":"Regions"}
       }
     },
     "UpdateGlobalResolverOutput":{

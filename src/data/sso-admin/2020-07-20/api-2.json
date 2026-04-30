@@ -1483,6 +1483,7 @@
         "Name":{"shape":"ApplicationNameType"},
         "ApplicationAccount":{"shape":"AccountId"},
         "InstanceArn":{"shape":"InstanceArn"},
+        "IdentityStoreArn":{"shape":"IdentityStoreArn"},
         "Status":{"shape":"ApplicationStatus"},
         "PortalOptions":{"shape":"PortalOptions"},
         "Description":{"shape":"Description"},
@@ -1753,7 +1754,9 @@
     "CreateApplicationResponse":{
       "type":"structure",
       "members":{
-        "ApplicationArn":{"shape":"ApplicationArn"}
+        "ApplicationArn":{"shape":"ApplicationArn"},
+        "InstanceArn":{"shape":"InstanceArn"},
+        "IdentityStoreArn":{"shape":"IdentityStoreArn"}
       }
     },
     "CreateInstanceAccessControlAttributeConfigurationRequest":{
@@ -2099,6 +2102,7 @@
         "Name":{"shape":"ApplicationNameType"},
         "ApplicationAccount":{"shape":"AccountId"},
         "InstanceArn":{"shape":"InstanceArn"},
+        "IdentityStoreArn":{"shape":"IdentityStoreArn"},
         "Status":{"shape":"ApplicationStatus"},
         "PortalOptions":{"shape":"PortalOptions"},
         "Description":{"shape":"Description"},
@@ -2456,6 +2460,7 @@
       "min":1,
       "pattern":"[a-zA-Z0-9-]*"
     },
+    "IdentityStoreArn":{"type":"string"},
     "InstanceAccessControlAttributeConfiguration":{
       "type":"structure",
       "required":["AccessControlAttributes"],

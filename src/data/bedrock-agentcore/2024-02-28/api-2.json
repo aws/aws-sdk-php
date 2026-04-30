@@ -1204,6 +1204,15 @@
       "min":1,
       "sensitive":true
     },
+    "AudienceType":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "AudiencesListType":{
+      "type":"list",
+      "member":{"shape":"AudienceType"}
+    },
     "AuthorizationUrlType":{
       "type":"string",
       "min":1,
@@ -2927,7 +2936,9 @@
         "resourceOauth2ReturnUrl":{"shape":"ResourceOauth2ReturnUrlType"},
         "forceAuthentication":{"shape":"Boolean"},
         "customParameters":{"shape":"CustomRequestParametersType"},
-        "customState":{"shape":"State"}
+        "customState":{"shape":"State"},
+        "resources":{"shape":"ResourcesListType"},
+        "audiences":{"shape":"AudiencesListType"}
       }
     },
     "GetResourceOauth2TokenResponse":{
@@ -4338,7 +4349,8 @@
         "namespacePath":{"shape":"Namespace"},
         "memoryStrategyId":{"shape":"MemoryStrategyId"},
         "maxResults":{"shape":"MaxResults"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "metadataFilters":{"shape":"MemoryMetadataFilterList"}
       }
     },
     "ListMemoryRecordsOutput":{
@@ -4475,15 +4487,15 @@
         "operator"
       ],
       "members":{
-        "left":{"shape":"LeftExpression"},
-        "operator":{"shape":"OperatorType"},
-        "right":{"shape":"RightExpression"}
+        "left":{"shape":"MemoryRecordLeftExpression"},
+        "operator":{"shape":"MemoryRecordOperatorType"},
+        "right":{"shape":"MemoryRecordRightExpression"}
       }
     },
     "MemoryMetadataFilterList":{
       "type":"list",
       "member":{"shape":"MemoryMetadataFilterExpression"},
-      "max":1,
+      "max":5,
       "min":1
     },
     "MemoryRecord":{
@@ -4501,7 +4513,7 @@
         "memoryStrategyId":{"shape":"MemoryStrategyId"},
         "namespaces":{"shape":"NamespacesList"},
         "createdAt":{"shape":"Timestamp"},
-        "metadata":{"shape":"MetadataMap"}
+        "metadata":{"shape":"MemoryRecordMetadataMap"}
       }
     },
     "MemoryRecordCreateInput":{
@@ -4517,7 +4529,8 @@
         "namespaces":{"shape":"NamespacesList"},
         "content":{"shape":"MemoryContent"},
         "timestamp":{"shape":"Timestamp"},
-        "memoryStrategyId":{"shape":"MemoryStrategyId"}
+        "memoryStrategyId":{"shape":"MemoryStrategyId"},
+        "metadata":{"shape":"MemoryRecordMetadataMap"}
       }
     },
     "MemoryRecordDeleteInput":{
@@ -4533,6 +4546,45 @@
       "min":40,
       "pattern":"mem-[a-zA-Z0-9-_]*"
     },
+    "MemoryRecordLeftExpression":{
+      "type":"structure",
+      "members":{
+        "metadataKey":{"shape":"MetadataKey"}
+      },
+      "union":true
+    },
+    "MemoryRecordMetadataMap":{
+      "type":"map",
+      "key":{"shape":"MetadataKey"},
+      "value":{"shape":"MemoryRecordMetadataValue"},
+      "max":20,
+      "min":1
+    },
+    "MemoryRecordMetadataValue":{
+      "type":"structure",
+      "members":{
+        "stringValue":{"shape":"StringValue"},
+        "stringListValue":{"shape":"StringValueList"},
+        "numberValue":{"shape":"Double"},
+        "dateTimeValue":{"shape":"Timestamp"}
+      },
+      "union":true
+    },
+    "MemoryRecordOperatorType":{
+      "type":"string",
+      "enum":[
+        "EQUALS_TO",
+        "EXISTS",
+        "NOT_EXISTS",
+        "BEFORE",
+        "AFTER",
+        "CONTAINS",
+        "GREATER_THAN",
+        "GREATER_THAN_OR_EQUALS",
+        "LESS_THAN",
+        "LESS_THAN_OR_EQUALS"
+      ]
+    },
     "MemoryRecordOutput":{
       "type":"structure",
       "required":[
@@ -4546,6 +4598,13 @@
         "errorCode":{"shape":"Integer"},
         "errorMessage":{"shape":"String"}
       }
+    },
+    "MemoryRecordRightExpression":{
+      "type":"structure",
+      "members":{
+        "metadataValue":{"shape":"MemoryRecordMetadataValue"}
+      },
+      "union":true
     },
     "MemoryRecordStatus":{
       "type":"string",
@@ -4570,7 +4629,7 @@
         "namespaces":{"shape":"NamespacesList"},
         "createdAt":{"shape":"Timestamp"},
         "score":{"shape":"Double"},
-        "metadata":{"shape":"MetadataMap"}
+        "metadata":{"shape":"MemoryRecordMetadataMap"}
       }
     },
     "MemoryRecordSummaryList":{
@@ -4588,7 +4647,8 @@
         "timestamp":{"shape":"Timestamp"},
         "content":{"shape":"MemoryContent"},
         "namespaces":{"shape":"NamespacesList"},
-        "memoryStrategyId":{"shape":"MemoryStrategyId"}
+        "memoryStrategyId":{"shape":"MemoryStrategyId"},
+        "metadata":{"shape":"MemoryRecordMetadataMap"}
       }
     },
     "MemoryRecordsCreateInputList":{
@@ -4873,7 +4933,8 @@
       "type":"string",
       "enum":[
         "USER_FEDERATION",
-        "M2M"
+        "M2M",
+        "ON_BEHALF_OF_TOKEN_EXCHANGE"
       ]
     },
     "OnlineEvaluationConfigArn":{
@@ -5230,6 +5291,15 @@
       "max":2048,
       "min":1,
       "pattern":"\\w+:(\\/?\\/?)[^\\s]+"
+    },
+    "ResourceType":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ResourcesListType":{
+      "type":"list",
+      "member":{"shape":"ResourceType"}
     },
     "ResponseChunk":{
       "type":"structure",
@@ -6080,6 +6150,12 @@
       "type":"list",
       "member":{"shape":"MaxLenString"}
     },
+    "StringListMemberValue":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*"
+    },
     "StringMap":{
       "type":"map",
       "key":{"shape":"String"},
@@ -6088,6 +6164,18 @@
     "StringType":{
       "type":"string",
       "max":1024,
+      "min":1
+    },
+    "StringValue":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*"
+    },
+    "StringValueList":{
+      "type":"list",
+      "member":{"shape":"StringListMemberValue"},
+      "max":5,
       "min":1
     },
     "SyntheticTimestamp_date_time":{
