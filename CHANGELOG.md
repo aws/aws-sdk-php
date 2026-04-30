@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.379.10 - 2026-04-30
 
 * `Aws\BedrockAgentCore` - AgentCore Identity now supports on-behalf-of token exchange OAuth2. AgentCore Memory now supports metadata for LongTerm Memory Records.
 * `Aws\EKS` - Vended logs update param for capability vended logs feature
