@@ -21,7 +21,7 @@ class EndpointDiscoveryMiddleware
     private static $discoveryCooldown = 60;
 
     private $args;
-    private $client;
+    private \WeakReference $client;
     private $config;
     private $discoveryTimes = [];
     private $nextHandler;
@@ -32,14 +32,15 @@ class EndpointDiscoveryMiddleware
         $args,
         $config
     ) {
+        $clientRef = \WeakReference::create($client);
         return function (callable $handler) use (
-            $client,
+            $clientRef,
             $args,
             $config
         ) {
             return new static(
                 $handler,
-                $client,
+                $clientRef->get(),
                 $args,
                 $config
             );
@@ -53,7 +54,7 @@ class EndpointDiscoveryMiddleware
         $config
     ) {
         $this->nextHandler = $handler;
-        $this->client = $client;
+        $this->client = \WeakReference::create($client);
         $this->args = $args;
         $this->service = $client->getApi();
         $this->config = $config;
@@ -91,7 +92,7 @@ class EndpointDiscoveryMiddleware
                 $identifiers = $this->getIdentifiers($op);
 
                 $cacheKey = $this->getCacheKey(
-                    $this->client->getCredentials()->wait(),
+                    $this->client->get()->getCredentials()->wait(),
                     $cmd,
                     $identifiers
                 );
@@ -178,7 +179,7 @@ class EndpointDiscoveryMiddleware
     ) {
         $discCmd = $this->getDiscoveryCommand($cmd, $identifiers);
         $this->discoveryTimes[$cacheKey] = time();
-        $result = $this->client->execute($discCmd);
+        $result = $this->client->get()->execute($discCmd);
 
         if (isset($result['Endpoints'])) {
             $endpointData = [];
@@ -237,7 +238,7 @@ class EndpointDiscoveryMiddleware
                 $params['Identifiers'][$identifier] = $cmd[$identifier];
             }
         }
-        $command = $this->client->getCommand($endpointOperation, $params);
+        $command = $this->client->get()->getCommand($endpointOperation, $params);
         $command->getHandlerList()->appendBuild(
             Middleware::mapRequest(function (RequestInterface $r) {
                 return $r->withHeader(
