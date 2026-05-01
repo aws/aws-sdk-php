@@ -7,7 +7,7 @@ use Aws\Retry\Configuration;
 use Aws\Retry\ConfigurationInterface;
 use Aws\Retry\ConfigurationProvider;
 use Aws\Retry\Exception\ConfigurationException;
-use Aws\Retry\Standard\OptIn;
+use Aws\Retry\V3\OptIn;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;

@@ -31,8 +31,8 @@ use Aws\Exception\AwsException;
 use Aws\Exception\InvalidRegionException;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
-use Aws\Retry\Standard\OptIn as NewRetriesOptIn;
-use Aws\Retry\Standard\RetryMiddleware as StandardRetryMiddleware;
+use Aws\Retry\V3\OptIn as NewRetriesOptIn;
+use Aws\Retry\V3\RetryMiddleware as RetryV3Middleware;
 use Aws\Signature\SignatureProvider;
 use Aws\Token\Token;
 use Aws\Token\TokenInterface;
@@ -569,7 +569,7 @@ class ClientResolver
 
         if (NewRetriesOptIn::isEnabled()) {
             $list->appendSign(
-                StandardRetryMiddleware::wrap($config, [
+                RetryV3Middleware::wrap($config, [
                     'collect_stats' => $args['stats']['retries'],
                     'service'       => $args['service'],
                 ]),

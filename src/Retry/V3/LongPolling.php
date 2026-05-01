@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Retry\Standard;
+namespace Aws\Retry\V3;
 
 /**
  * Operations that use server-side long polling and should not be retried

@@ -10,8 +10,8 @@ use Aws\Middleware;
 use Aws\Retry\Configuration as RetryConfiguration;
 use Aws\Retry\ConfigurationInterface as RetryConfigurationInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigurationProvider;
-use Aws\Retry\Standard\OptIn as NewRetriesOptIn;
-use Aws\Retry\Standard\RetryMiddleware as StandardRetryMiddleware;
+use Aws\Retry\V3\OptIn as NewRetriesOptIn;
+use Aws\Retry\V3\RetryMiddleware as RetryV3Middleware;
 use Aws\RetryMiddleware;
 use Aws\RetryMiddlewareV2;
 use GuzzleHttp\Promise\Create;
@@ -223,7 +223,8 @@ class DynamoDbClient extends AwsClient
         RetryConfigurationInterface $config,
         array &$args,
         HandlerList $list
-    ): void {
+    ): void
+    {
         $maxRetries = self::resolveLegacyModeMaxRetries($value, $config);
 
         $list->appendSign(
@@ -246,7 +247,8 @@ class DynamoDbClient extends AwsClient
     private static function resolveLegacyModeMaxRetries(
         $value,
         RetryConfigurationInterface $config
-    ): int {
+    ): int
+    {
         if (
             NewRetriesOptIn::isEnabled()
             && is_array($value)
@@ -262,7 +264,8 @@ class DynamoDbClient extends AwsClient
         RetryConfigurationInterface $config,
         array &$args,
         HandlerList $list
-    ): void {
+    ): void
+    {
         $list->appendSign(
             RetryMiddlewareV2::wrap(
                 $config,
@@ -279,9 +282,10 @@ class DynamoDbClient extends AwsClient
         RetryConfigurationInterface $config,
         array &$args,
         HandlerList $list
-    ): void {
+    ): void
+    {
         $list->appendSign(
-            StandardRetryMiddleware::wrap(
+            RetryV3Middleware::wrap(
                 $config,
                 [
                     'collect_stats' => $args['stats']['retries'],

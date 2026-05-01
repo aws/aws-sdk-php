@@ -1,8 +1,8 @@
 <?php
 
-namespace Aws\Test\Retry\Standard;
+namespace Aws\Test\Retry\V3;
 
-use Aws\Retry\Standard\QuotaManager;
+use Aws\Retry\V3\QuotaManager;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 

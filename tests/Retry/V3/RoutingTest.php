@@ -1,11 +1,11 @@
 <?php
-namespace Aws\Test\Retry\Standard;
+namespace Aws\Test\Retry\V3;
 
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Retry\Configuration;
 use Aws\Retry\ConfigurationProvider;
-use Aws\Retry\Standard\OptIn;
-use Aws\Retry\Standard\RetryMiddleware as StandardRetryMiddleware;
+use Aws\Retry\V3\OptIn;
+use Aws\Retry\V3\RetryMiddleware as RetryV3Middleware;
 use Aws\RetryMiddlewareV2;
 use Aws\S3\S3Client;
 use Aws\Sts\StsClient;
@@ -73,7 +73,7 @@ class RoutingTest extends TestCase
         $client = $this->newS3();
         $entries = $this->retryEntries($client);
         $this->assertCount(1, $entries);
-        $this->assertSame(StandardRetryMiddleware::class, $entries[0]['middleware_class']);
+        $this->assertSame(RetryV3Middleware::class, $entries[0]['middleware_class']);
     }
 
     public function testDynamoDbDefaultRetriesIsTenWhenOptedOut(): void
@@ -104,7 +104,7 @@ class RoutingTest extends TestCase
         $client = $this->newDynamoDb(['retries' => new Configuration('standard', 3)]);
         $entries = $this->retryEntries($client);
         $this->assertCount(1, $entries);
-        $this->assertSame(StandardRetryMiddleware::class, $entries[0]['middleware_class']);
+        $this->assertSame(RetryV3Middleware::class, $entries[0]['middleware_class']);
     }
 
     public function testStsRetriesFnInheritsParentWhenOptedOut(): void
@@ -135,7 +135,7 @@ class RoutingTest extends TestCase
         ]);
         $entries = $this->retryEntries($client);
         $this->assertCount(1, $entries);
-        $this->assertSame(StandardRetryMiddleware::class, $entries[0]['middleware_class']);
+        $this->assertSame(RetryV3Middleware::class, $entries[0]['middleware_class']);
     }
 
     private function newS3(array $extra = []): S3Client

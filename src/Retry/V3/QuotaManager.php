@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Retry\Standard;
+namespace Aws\Retry\V3;
 
 /**
  * Retry-quota manager for the AWS_NEW_RETRIES_2026 opt-in path. Implements

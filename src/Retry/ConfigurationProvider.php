@@ -5,7 +5,7 @@ use Aws\AbstractConfigurationProvider;
 use Aws\CacheInterface;
 use Aws\ConfigurationProviderInterface;
 use Aws\Retry\Exception\ConfigurationException;
-use Aws\Retry\Standard\OptIn;
+use Aws\Retry\V3\OptIn;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 

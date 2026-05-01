@@ -18,8 +18,8 @@ use Aws\Middleware;
 use Aws\ResultInterface;
 use Aws\Retry\ConfigurationInterface as RetryConfigurationInterface;
 use Aws\Retry\QuotaManager;
-use Aws\Retry\Standard\OptIn as NewRetriesOptIn;
-use Aws\Retry\Standard\RetryMiddleware as StandardRetryMiddleware;
+use Aws\Retry\V3\OptIn as NewRetriesOptIn;
+use Aws\Retry\V3\RetryMiddleware as RetryV3Middleware;
 use Aws\RetryMiddleware;
 use Aws\RetryMiddlewareV2;
 use Aws\S3\Parser\GetBucketLocationResultMutator;
@@ -1047,7 +1047,8 @@ class S3Client extends AwsClient implements S3ClientInterface
     private static function appendLegacyModeRetries(
         RetryConfigurationInterface $config,
         HandlerList $list
-    ): void {
+    ): void
+    {
         $maxRetries = $config->getMaxAttempts() - 1;
         $baseDecider = RetryMiddleware::createDefaultDecider($maxRetries);
 
@@ -1075,7 +1076,8 @@ class S3Client extends AwsClient implements S3ClientInterface
         RetryConfigurationInterface $config,
         $args,
         HandlerList $list
-    ): void {
+    ): void
+    {
         // decider that combines V2's default decider with S3-specific checks.
         $defaultDecider = RetryMiddlewareV2::createDefaultDecider(
             new QuotaManager(),
@@ -1112,12 +1114,13 @@ class S3Client extends AwsClient implements S3ClientInterface
         RetryConfigurationInterface $config,
         $args,
         HandlerList $list
-    ): void {
+    ): void
+    {
         // AWS_NEW_RETRIES_2026 path. The base middleware already handles
         // the standard retryable shapes, so this decider only adds the
         // S3-specific socket carve-out.
         $list->appendSign(
-            StandardRetryMiddleware::wrap(
+            RetryV3Middleware::wrap(
                 $config,
                 [
                     'collect_stats' => $args['stats']['retries'],

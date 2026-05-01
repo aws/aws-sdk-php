@@ -10,8 +10,8 @@ use Aws\Middleware;
 use Aws\Result;
 use Aws\Retry\ConfigurationInterface as RetryConfigurationInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigurationProvider;
-use Aws\Retry\Standard\OptIn as NewRetriesOptIn;
-use Aws\Retry\Standard\RetryMiddleware as StandardRetryMiddleware;
+use Aws\Retry\V3\OptIn as NewRetriesOptIn;
+use Aws\Retry\V3\RetryMiddleware as RetryV3Middleware;
 use Aws\RetryMiddleware;
 use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
 
@@ -95,7 +95,8 @@ class StsClient extends AwsClient
         $value,
         array &$args,
         HandlerList $list
-    ): void {
+    ): void
+    {
         if (!$value) {
             return;
         }
@@ -112,7 +113,7 @@ class StsClient extends AwsClient
         }
 
         $list->appendSign(
-            StandardRetryMiddleware::wrap(
+            RetryV3Middleware::wrap(
                 $config,
                 [
                     'collect_stats' => $args['stats']['retries'],

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Test\Retry\Standard;
+namespace Aws\Test\Retry\V3;
 
-use Aws\Retry\Standard\OptIn;
+use Aws\Retry\V3\OptIn;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -36,6 +36,26 @@ class OptInTest extends TestCase
     }
 
     /**
+     * @dataProvider matchingValues
+     */
+    public function testTrimmedTrueOptsIn(string $value): void
+    {
+        putenv(OptIn::ENV . '=' . $value);
+        OptIn::reset();
+        $this->assertTrue(OptIn::isEnabled(), "value '$value' should opt in");
+    }
+
+    public static function matchingValues(): array
+    {
+        return [
+            [' true'],
+            ['true '],
+            ['  true  '],
+            ["\ttrue\n"],
+        ];
+    }
+
+    /**
      * @dataProvider nonMatchingValues
      */
     public function testRejectsAnythingOtherThanLiteralTrue(string $value): void
@@ -54,8 +74,6 @@ class OptInTest extends TestCase
             ['on'],
             ['TRUE'],
             ['True'],
-            [' true'],
-            ['true '],
         ];
     }
 

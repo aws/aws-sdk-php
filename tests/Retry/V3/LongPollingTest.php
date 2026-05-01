@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Test\Retry\Standard;
+namespace Aws\Test\Retry\V3;
 
-use Aws\Retry\Standard\LongPolling;
+use Aws\Retry\V3\LongPolling;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

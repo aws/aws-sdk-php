@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Retry\Standard;
+namespace Aws\Retry\V3;
 
 /**
  * Source of truth for the AWS_NEW_RETRIES_2026 opt-in flag. The env var
@@ -17,7 +17,12 @@ final class OptIn
     public static function isEnabled(): bool
     {
         if (self::$enabled === null) {
-            self::$enabled = getenv(self::ENV) === 'true';
+            $value = getenv(self::ENV);
+            if (is_string($value) && trim($value) === 'true') {
+                self::$enabled = true;
+            } else {
+                self::$enabled = false;
+            }
         }
 
         return self::$enabled;

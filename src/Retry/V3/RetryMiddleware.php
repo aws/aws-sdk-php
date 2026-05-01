@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Retry\Standard;
+namespace Aws\Retry\V3;
 
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
@@ -337,7 +337,8 @@ class RetryMiddleware
         mixed $result,
         array $retryCurlErrors,
         array $options = []
-    ): bool {
+    ): bool
+    {
         $errorCodes = self::$standardThrottlingErrors + self::$standardTransientErrors;
         if (!empty($options['transient_error_codes'])
             && is_array($options['transient_error_codes'])

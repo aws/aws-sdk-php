@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Test\Retry\Standard;
+namespace Aws\Test\Retry\V3;
 
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
@@ -11,8 +11,8 @@ use Aws\Result;
 use Aws\ResultInterface;
 use Aws\Retry\Configuration;
 use Aws\Retry\ConfigurationProvider;
-use Aws\Retry\Standard\QuotaManager;
-use Aws\Retry\Standard\RetryMiddleware;
+use Aws\Retry\V3\QuotaManager;
+use Aws\Retry\V3\RetryMiddleware;
 use Aws\Retry\RateLimiter;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\RejectedPromise;
