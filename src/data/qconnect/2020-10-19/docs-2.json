@@ -1960,7 +1960,8 @@
         "SpanAttributes$usageTotalTokens": "<p>Total tokens consumed (input + output)</p>",
         "SpanAttributes$cacheReadInputTokens": "<p>Number of input tokens that were retrieved from cache</p>",
         "SpanAttributes$cacheWriteInputTokens": "<p>Number of input tokens that were written to cache in this request</p>",
-        "SpanAttributes$promptVersion": "<p>AI prompt version number</p>"
+        "SpanAttributes$promptVersion": "<p>AI prompt version number</p>",
+        "SpanAttributes$timeToFirstTokenMs": "<p>Time to first token in milliseconds, measured from when Amazon Bedrock was invoked to when the first token was returned</p>"
       }
     },
     "IntentDetectedDataDetails": {
@@ -2693,6 +2694,7 @@
         "RetrieveRequest$retrievalQuery": "<p>The query for content retrieval.</p>",
         "RuntimeSessionData$key": "<p>The key of the data stored on the session.</p>",
         "RuntimeSessionDataValue$stringValue": "<p>The string value of the data stored on the session.</p>",
+        "SpanReasoningValue$value": "<p>The reasoning text content</p>",
         "SpanTextValue$value": "<p>String content of the message text</p>",
         "SuggestedMessageDataDetails$messageText": "<p>The text content of the suggested message.</p>",
         "SuggestedMessagesList$member": null,
@@ -3730,7 +3732,7 @@
       }
     },
     "SpanMessageValue": {
-      "base": "<p>Message content value - can be text, tool invocation, or tool result</p>",
+      "base": "<p>Message content value - can be text, tool invocation, tool result, or reasoning</p>",
       "refs": {
         "SpanMessageValueList$member": null
       }
@@ -3739,7 +3741,7 @@
       "base": null,
       "refs": {
         "SpanAttributes$systemInstructions": "<p>System prompt instructions</p>",
-        "SpanMessage$values": "<p>Message content values (text, tool use, tool result)</p>",
+        "SpanMessage$values": "<p>Message content values (text, tool use, tool result, reasoning)</p>",
         "SpanToolResultValue$values": "<p>The tool results</p>"
       }
     },
@@ -3749,10 +3751,22 @@
         "Span$originRequestId": "<p>The origin request identifier for end-to-end tracing.</p>"
       }
     },
+    "SpanReasoningValue": {
+      "base": "<p>Model reasoning and it's internal decision making process</p>",
+      "refs": {
+        "SpanMessageValue$reasoning": null
+      }
+    },
     "SpanStatus": {
       "base": null,
       "refs": {
         "Span$status": "<p>Span completion status</p>"
+      }
+    },
+    "SpanStatusDescriptionString": {
+      "base": null,
+      "refs": {
+        "Span$statusDescription": "<p>Human-readable error description when status is ERROR or TIMEOUT</p>"
       }
     },
     "SpanTextValue": {

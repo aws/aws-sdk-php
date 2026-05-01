@@ -2700,6 +2700,12 @@
         "BrandDetail$VersionStatus": "<p>The status of the version.</p>"
       }
     },
+    "CACertificatesBundleS3Uri": {
+      "base": null,
+      "refs": {
+        "OAuthParameters$IdentityProviderCACertificatesBundleS3Uri": "<p>The S3 URI of the identity provider's CA certificates bundle in PEM format. Use this parameter to provide a custom CA certificate bundle for the identity provider when the default trust store does not include the required certificates.</p>"
+      }
+    },
     "CIDR": {
       "base": null,
       "refs": {
@@ -2989,7 +2995,9 @@
         "Capabilities$SelfUpgradeUserRole": "<p>The ability to enable users to upgrade their user role.</p>",
         "Capabilities$Extension": "<p>The ability to perform Extension-related actions.</p>",
         "Capabilities$ManageSharedFolders": "<p>The ability to create, update, delete and view shared folders (both restricted and unrestricted), ability to add any asset to shared folders, and ability to share the folders.</p> <p> <b>Note:</b> This does <i>not</i> prevent inheriting access to assets that others share with them through folder membership.</p>",
-        "Capabilities$GenerateAnalyses": "<p>The ability to generate analysis using AI</p>"
+        "Capabilities$GenerateAnalyses": "<p>The ability to generate analysis using AI</p>",
+        "Capabilities$Story": "<p>The ability to perform Story-related actions.</p>",
+        "Capabilities$Scenario": "<p>The ability to perform Scenario-related actions.</p>"
       }
     },
     "CascadingControlConfiguration": {
@@ -3917,6 +3925,43 @@
       "base": null,
       "refs": {
         "SelectableValuesSort$Direction": "<p>The sort direction for the selectable values. Choose one of the following options:</p> <ul> <li> <p> <code>ASC</code>: Sort in ascending order.</p> </li> <li> <p> <code>DESC</code>: Sort in descending order.</p> </li> <li> <p> <code>USER_DEFINED_ORDER</code>: Preserve the order in which the values were entered.</p> </li> </ul>"
+      }
+    },
+    "ControlTitleFontConfiguration": {
+      "base": "<p>Configures the display properties of the control title.</p>",
+      "refs": {
+        "Typography$ControlTitleFontConfiguration": "<p>Configures the display properties of the control title.</p>"
+      }
+    },
+    "ControlTitleFormatText": {
+      "base": "<p>The title format text configuration for a sheet control. This is a tagged union type. Specify either <code>PlainText</code> or <code>RichText</code>, but not both.</p>",
+      "refs": {
+        "DefaultFilterControlConfiguration$ControlTitleFormatText": "<p>The title text format configuration for the default filter control.</p>",
+        "FilterDateTimePickerControl$ControlTitleFormatText": "<p>The title text format configuration for the control.</p>",
+        "FilterDropDownControl$ControlTitleFormatText": "<p>The title text format configuration for the control.</p>",
+        "FilterListControl$ControlTitleFormatText": "<p>The title text format configuration for the control.</p>",
+        "FilterRelativeDateTimeControl$ControlTitleFormatText": "<p>The title text format configuration for the control.</p>",
+        "FilterSliderControl$ControlTitleFormatText": "<p>The title text format configuration for the control.</p>",
+        "FilterTextAreaControl$ControlTitleFormatText": "<p>The title text format configuration for the control.</p>",
+        "FilterTextFieldControl$ControlTitleFormatText": "<p>The title text format configuration for the control.</p>",
+        "ParameterDateTimePickerControl$ControlTitleFormatText": "<p>The title text format configuration for the control.</p>",
+        "ParameterDropDownControl$ControlTitleFormatText": "<p>The title text format configuration for the control.</p>",
+        "ParameterListControl$ControlTitleFormatText": "<p>The title text format configuration for the control.</p>",
+        "ParameterSliderControl$ControlTitleFormatText": "<p>The title text format configuration for the control.</p>",
+        "ParameterTextAreaControl$ControlTitleFormatText": "<p>The title text format configuration for the control.</p>",
+        "ParameterTextFieldControl$ControlTitleFormatText": "<p>The title text format configuration for the control.</p>"
+      }
+    },
+    "ControlTitlePlainText": {
+      "base": "<p>The plain text title for a sheet control.</p>",
+      "refs": {
+        "ControlTitleFormatText$PlainText": "<p>The plain text format of the title text.</p>"
+      }
+    },
+    "ControlTitleRichText": {
+      "base": "<p>The rich text title for a sheet control.</p>",
+      "refs": {
+        "ControlTitleFormatText$RichText": "<p>The rich text format of the title text.</p>"
       }
     },
     "Coordinate": {
@@ -7321,6 +7366,7 @@
       "base": "<p>Configures the display properties of the given text.</p>",
       "refs": {
         "AxisLabelOptions$FontConfiguration": "<p>The font configuration of the axis label.</p>",
+        "ControlTitleFontConfiguration$FontConfiguration": "<p>Configures the font settings for the control title.</p>",
         "DataLabelOptions$LabelFontConfiguration": "<p>Determines the font configuration of the data labels.</p>",
         "FunnelChartDataLabelOptions$LabelFontConfiguration": "<p>The font configuration for the data labels.</p> <p>Only the <code>FontSize</code> attribute of the font configuration is used for data labels.</p>",
         "GaugeChartOptions$PrimaryValueFontConfiguration": "<p>The options that determine the primary value font configuration.</p>",
@@ -8460,6 +8506,7 @@
     "HorizontalTextAlignment": {
       "base": null,
       "refs": {
+        "ControlTitleFontConfiguration$TextAlignment": "<p>Determines the alignment of the control title.</p>",
         "PanelTitleOptions$HorizontalTextAlignment": "<p>Sets the horizontal text alignment of the title within each panel.</p>",
         "TableCellStyle$HorizontalTextAlignment": "<p>The horizontal text alignment (left, center, right, auto) for the table cells.</p>",
         "VisualSubtitleFontConfiguration$TextAlignment": "<p>Determines the alignment of visual sub-title.</p>",
@@ -9315,6 +9362,8 @@
         "DisplayFormatOptions$Prefix": "<p>The prefix value for a display format.</p>",
         "DisplayFormatOptions$Suffix": "<p>The suffix value for a display format.</p>",
         "DisplayFormatOptions$CurrencySymbol": "<p>The currency symbol, such as <code>USD</code>.</p>",
+        "Font$FontFamily": "<p>Determines the font family settings.</p>",
+        "FontConfiguration$FontFamily": "<p>The font family that you want to use.</p>",
         "Identifier$Identity": "<p>The identity of the identifier.</p>",
         "NamedEntityDefinition$FieldName": "<p>The name of the entity.</p>",
         "NamedEntityDefinition$PropertyName": "<p>The property name to be used for the named entity.</p>",
@@ -11995,6 +12044,12 @@
         "ListRefreshSchedulesResponse$RefreshSchedules": "<p>The list of refresh schedules for the dataset.</p>"
       }
     },
+    "Region": {
+      "base": null,
+      "refs": {
+        "GetIdentityContextRequest$ContextRegion": "<p>The region in which the context is to be used. Use this parameter to obtain an identity context for cross-region use.</p> <p>The specified region must meet the following conditions:</p> <ul> <li> <p>The region must be in the same Amazon Web Services partition as the region you are calling from. Cross-partition requests are not supported. For example, you cannot specify a region in the <code>aws-cn</code> partition when calling from a region in the <code>aws</code> partition.</p> </li> <li> <p>It must be a valid Amazon QuickSight supported region.</p> </li> <li> <p>The calling customer account must be enabled in the specified context region.</p> </li> <li> <p>This parameter is not supported when calling from an opt-in region.</p> </li> </ul>"
+      }
+    },
     "RegisterUserRequest": {
       "base": null,
       "refs": {}
@@ -14618,8 +14673,6 @@
         "FlowSummary$LastPublishedBy": "<p>The identifier of the last principal who published the flow.</p>",
         "FolderColumnList$member": null,
         "FolderSearchFilter$Value": "<p>The value of the named item (in this example, <code>PARENT_FOLDER_ARN</code>), that you want to use as a filter. For example, <code>\"Value\": \"arn:aws:quicksight:us-east-1:1:folder/folderId\"</code>.</p>",
-        "Font$FontFamily": "<p>Determines the font family settings.</p>",
-        "FontConfiguration$FontFamily": "<p>The font family that you want to use.</p>",
         "ForecastComputation$Name": "<p>The name of a computation.</p>",
         "GenerateEmbedUrlForAnonymousUserResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "GenerateEmbedUrlForRegisteredUserResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",

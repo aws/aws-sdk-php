@@ -148,6 +148,38 @@
         "AdminAppLicenseUsageList$member": null
       }
     },
+    "AgentAccessConfig": {
+      "base": "<p>The configuration for agent access on a stack. Agent access enables AI agents to interact with desktop applications during streaming sessions.</p>",
+      "refs": {
+        "CreateStackRequest$AgentAccessConfig": "<p>The configuration for agent access on the stack. If specified, agent access is enabled for the stack.</p>",
+        "Stack$AgentAccessConfig": "<p>The agent access configuration of the stack, if agent access is enabled.</p>"
+      }
+    },
+    "AgentAccessConfigForUpdate": {
+      "base": "<p>The configuration for updating agent access on a stack. This type supports partial updates, so you only need to specify the fields you want to change.</p>",
+      "refs": {
+        "UpdateStackRequest$AgentAccessConfig": "<p>The configuration for agent access on the stack. Specify this to update agent access settings. To remove agent access, use AttributesToDelete with the AGENT_ACCESS_CONFIG value.</p>"
+      }
+    },
+    "AgentAccessSetting": {
+      "base": "<p>A permission setting for an agent action. Each setting specifies an agent action and whether it is enabled or disabled.</p>",
+      "refs": {
+        "AgentAccessSettingList$member": null
+      }
+    },
+    "AgentAccessSettingList": {
+      "base": "<p>A list of AgentAccessSetting objects.</p>",
+      "refs": {
+        "AgentAccessConfig$Settings": "<p>The list of agent access settings that define permissions for each agent action. You must specify at least one setting.</p>",
+        "AgentAccessConfigForUpdate$Settings": "<p>The list of agent access settings that define permissions for each agent action.</p>"
+      }
+    },
+    "AgentAction": {
+      "base": "<p>The type of agent action.</p> <ul> <li> <p>COMPUTER_VISION - Allows agents to take screenshots of the desktop.</p> </li> <li> <p>COMPUTER_INPUT - Allows agents to click, type, and scroll on the desktop. Requires COMPUTER_VISION to also be enabled.</p> </li> </ul>",
+      "refs": {
+        "AgentAccessSetting$AgentAction": "<p>The agent action to configure. Valid values are COMPUTER_VISION and COMPUTER_INPUT. If you enable COMPUTER_INPUT, you must also enable COMPUTER_VISION.</p>"
+      }
+    },
     "AgentSoftwareVersion": {
       "base": "The image type is the type of AppStream image resource.",
       "refs": {
@@ -504,6 +536,8 @@
     "BooleanObject": {
       "base": null,
       "refs": {
+        "AgentAccessConfig$ScreenshotsUploadEnabled": "<p>Indicates whether screenshot uploads to Amazon S3 are enabled for agent sessions.</p>",
+        "AgentAccessConfigForUpdate$ScreenshotsUploadEnabled": "<p>Indicates whether screenshot uploads to Amazon S3 are enabled for agent sessions.</p>",
         "AppBlockBuilder$EnableDefaultInternetAccess": "<p>Indicates whether default internet access is enabled for the app block builder.</p>",
         "AppBlockBuilder$DisableIMDSV1": "<p>Indicates whether Instance Metadata Service Version 1 (IMDSv1) is disabled for the app block builder.</p>",
         "CreateAppBlockBuilderRequest$EnableDefaultInternetAccess": "<p>Enables or disables default internet access for the app block builder.</p>",
@@ -1750,6 +1784,7 @@
     "Permission": {
       "base": null,
       "refs": {
+        "AgentAccessSetting$Permission": "<p>Whether the agent action is enabled or disabled.</p>",
         "UserSetting$Permission": "<p>Indicates whether the action is enabled or disabled.</p>"
       }
     },
@@ -1851,6 +1886,13 @@
         "S3Location$S3Bucket": "<p>The S3 bucket of the S3 object.</p>"
       }
     },
+    "S3BucketArn": {
+      "base": null,
+      "refs": {
+        "AgentAccessConfig$S3BucketArn": "<p>The Amazon Resource Name (ARN) of the Amazon S3 bucket where agent screenshots are stored. Required when ScreenshotsUploadEnabled is true.</p>",
+        "AgentAccessConfigForUpdate$S3BucketArn": "<p>The Amazon Resource Name (ARN) of the Amazon S3 bucket where agent screenshots are stored.</p>"
+      }
+    },
     "S3Key": {
       "base": null,
       "refs": {
@@ -1873,6 +1915,20 @@
         "UpdateFleetRequest$SessionScriptS3Location": "<p>The S3 location of the session scripts configuration zip file. This only applies to Elastic fleets. </p>",
         "UpdateThemeForStackRequest$OrganizationLogoS3Location": "<p>The organization logo that appears on the streaming application catalog page.</p>",
         "UpdateThemeForStackRequest$FaviconS3Location": "<p>The S3 location of the favicon. The favicon enables users to recognize their application streaming site in a browser full of tabs or bookmarks. It is displayed at the top of the browser tab for the application streaming site during users' streaming sessions.</p>"
+      }
+    },
+    "ScreenImageFormat": {
+      "base": "<p>The image format for agent screen captures.</p> <ul> <li> <p>PNG - PNG format.</p> </li> <li> <p>JPEG - JPEG format.</p> </li> </ul>",
+      "refs": {
+        "AgentAccessConfig$ScreenImageFormat": "<p>The image format for agent screen captures.</p>",
+        "AgentAccessConfigForUpdate$ScreenImageFormat": "<p>The image format for agent screen captures.</p>"
+      }
+    },
+    "ScreenResolution": {
+      "base": "<p>The screen resolution for the agent streaming environment.</p> <ul> <li> <p>W_1280xH_720 - 1280 x 720 pixels.</p> </li> </ul>",
+      "refs": {
+        "AgentAccessConfig$ScreenResolution": "<p>The screen resolution for the agent streaming environment.</p>",
+        "AgentAccessConfigForUpdate$ScreenResolution": "<p>The screen resolution for the agent streaming environment.</p>"
       }
     },
     "ScriptDetails": {
@@ -1968,7 +2024,7 @@
       }
     },
     "StackAttribute": {
-      "base": null,
+      "base": "<p>The stack attributes to delete.</p> <ul> <li> <p>STORAGE_CONNECTORS</p> </li> <li> <p>STORAGE_CONNECTOR_HOMEFOLDERS</p> </li> <li> <p>STORAGE_CONNECTOR_GOOGLE_DRIVE</p> </li> <li> <p>STORAGE_CONNECTOR_ONE_DRIVE</p> </li> <li> <p>REDIRECT_URL</p> </li> <li> <p>FEEDBACK_URL</p> </li> <li> <p>THEME_NAME</p> </li> <li> <p>USER_SETTINGS</p> </li> <li> <p>EMBED_HOST_DOMAINS</p> </li> <li> <p>IAM_ROLE_ARN</p> </li> <li> <p>ACCESS_ENDPOINTS</p> </li> <li> <p>STREAMING_EXPERIENCE_SETTINGS</p> </li> <li> <p>AGENT_ACCESS_CONFIG</p> </li> </ul>",
       "refs": {
         "StackAttributes$member": null
       }

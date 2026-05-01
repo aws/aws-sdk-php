@@ -108,6 +108,7 @@
         "GetProviderServiceOutput$anonymizedOutput": "<p>Specifies whether output data from the provider is anonymized. A value of <code>TRUE</code> means the output will be anonymized and you can't relate the data that comes back from the provider to the identifying input. A value of <code>FALSE</code> means the output won't be anonymized and you can relate the data that comes back from the provider to your source data. </p>",
         "GetSchemaMappingOutput$hasWorkflows": "<p>Specifies whether the schema mapping has been applied to a workflow.</p>",
         "InputSource$applyNormalization": "<p>Normalizes the attributes defined in the schema in the input data. For example, if an attribute has an <code>AttributeType</code> of <code>PHONE_NUMBER</code>, and the data in the input table is in a format of 1234567890, Entity Resolution will normalize this field in the output to (123)-456-7890.</p>",
+        "MatchingConfig$enableTransitiveMatching": "<p>Enables transitive matching for the rule-based matching workflow. When enabled, records that match through different rules are grouped together into the same match group.</p>",
         "OutputAttribute$hashed": "<p>Enables the ability to hash the column values in the output.</p>",
         "OutputSource$applyNormalization": "<p>Normalizes the attributes defined in the schema in the input data. For example, if an attribute has an <code>AttributeType</code> of <code>PHONE_NUMBER</code>, and the data in the input table is in a format of 1234567890, Entity Resolution will normalize this field in the output to (123)-456-7890.</p>",
         "ProviderSchemaAttribute$hashing": "<p>The hashing attribute of the provider schema.</p>",
@@ -985,6 +986,12 @@
       "base": null,
       "refs": {
         "MatchGroup$records": "<p> The matched records.</p>"
+      }
+    },
+    "MatchingConfig": {
+      "base": "<p>An object that contains configuration settings for the matching process in a rule-based matching workflow.</p>",
+      "refs": {
+        "RuleConditionProperties$matchingConfig": "<p>An object that contains configuration settings for the matching process.</p>"
       }
     },
     "MatchingWorkflowArn": {

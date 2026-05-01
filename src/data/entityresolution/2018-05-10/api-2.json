@@ -2153,6 +2153,12 @@
       "type":"list",
       "member":{"shape":"MatchedRecord"}
     },
+    "MatchingConfig":{
+      "type":"structure",
+      "members":{
+        "enableTransitiveMatching":{"shape":"Boolean"}
+      }
+    },
     "MatchingWorkflowArn":{
       "type":"string",
       "pattern":"arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(matchingworkflow/[a-zA-Z_0-9-]{1,255})"
@@ -2539,7 +2545,8 @@
       "type":"structure",
       "required":["rules"],
       "members":{
-        "rules":{"shape":"RuleConditionPropertiesRulesList"}
+        "rules":{"shape":"RuleConditionPropertiesRulesList"},
+        "matchingConfig":{"shape":"MatchingConfig"}
       }
     },
     "RuleConditionPropertiesRulesList":{

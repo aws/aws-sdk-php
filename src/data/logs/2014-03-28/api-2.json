@@ -4013,7 +4013,8 @@
         "nextToken":{"shape":"NextToken"},
         "limit":{"shape":"ListLimit"},
         "dataSources":{"shape":"DataSourceFilters"},
-        "fieldIndexNames":{"shape":"FieldIndexNames"}
+        "fieldIndexNames":{"shape":"FieldIndexNames"},
+        "logGroupTags":{"shape":"TagFilters"}
       }
     },
     "ListLogGroupsRequestLimit":{
@@ -5871,6 +5872,38 @@
     "TableFields":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "TagFilter":{
+      "type":"structure",
+      "required":["key"],
+      "members":{
+        "key":{"shape":"TagFilterKey"},
+        "values":{"shape":"TagFilterValues"}
+      }
+    },
+    "TagFilterKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]+)$"
+    },
+    "TagFilterValue":{
+      "type":"string",
+      "max":259,
+      "min":0,
+      "pattern":"^!?\\*?([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)\\*?$"
+    },
+    "TagFilterValues":{
+      "type":"list",
+      "member":{"shape":"TagFilterValue"},
+      "max":5,
+      "min":0
+    },
+    "TagFilters":{
+      "type":"list",
+      "member":{"shape":"TagFilter"},
+      "max":5,
+      "min":1
     },
     "TagKey":{
       "type":"string",

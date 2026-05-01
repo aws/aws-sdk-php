@@ -1390,6 +1390,54 @@
         "UserId":{"shape":"String"}
       }
     },
+    "AgentAccessConfig":{
+      "type":"structure",
+      "required":[
+        "Settings",
+        "ScreenResolution",
+        "ScreenImageFormat"
+      ],
+      "members":{
+        "Settings":{"shape":"AgentAccessSettingList"},
+        "S3BucketArn":{"shape":"S3BucketArn"},
+        "ScreenshotsUploadEnabled":{"shape":"BooleanObject"},
+        "ScreenResolution":{"shape":"ScreenResolution"},
+        "ScreenImageFormat":{"shape":"ScreenImageFormat"}
+      }
+    },
+    "AgentAccessConfigForUpdate":{
+      "type":"structure",
+      "members":{
+        "Settings":{"shape":"AgentAccessSettingList"},
+        "S3BucketArn":{"shape":"S3BucketArn"},
+        "ScreenshotsUploadEnabled":{"shape":"BooleanObject"},
+        "ScreenResolution":{"shape":"ScreenResolution"},
+        "ScreenImageFormat":{"shape":"ScreenImageFormat"}
+      }
+    },
+    "AgentAccessSetting":{
+      "type":"structure",
+      "required":[
+        "AgentAction",
+        "Permission"
+      ],
+      "members":{
+        "AgentAction":{"shape":"AgentAction"},
+        "Permission":{"shape":"Permission"}
+      }
+    },
+    "AgentAccessSettingList":{
+      "type":"list",
+      "member":{"shape":"AgentAccessSetting"},
+      "min":1
+    },
+    "AgentAction":{
+      "type":"string",
+      "enum":[
+        "COMPUTER_VISION",
+        "COMPUTER_INPUT"
+      ]
+    },
     "AgentSoftwareVersion":{
       "type":"string",
       "enum":[
@@ -2124,7 +2172,8 @@
         "AccessEndpoints":{"shape":"AccessEndpointList"},
         "EmbedHostDomains":{"shape":"EmbedHostDomains"},
         "StreamingExperienceSettings":{"shape":"StreamingExperienceSettings"},
-        "ContentRedirection":{"shape":"ContentRedirection"}
+        "ContentRedirection":{"shape":"ContentRedirection"},
+        "AgentAccessConfig":{"shape":"AgentAccessConfig"}
       }
     },
     "CreateStackResult":{
@@ -3645,6 +3694,10 @@
       "min":3,
       "pattern":"^[0-9a-z\\.\\-]*(?<!\\.)$"
     },
+    "S3BucketArn":{
+      "type":"string",
+      "pattern":"^arn:aws(?:\\-cn|\\-iso\\-b|\\-iso|\\-us\\-gov)?:s3:::[a-z0-9][a-z0-9.\\-]{1,61}[a-z0-9]$"
+    },
     "S3Key":{
       "type":"string",
       "max":1024,
@@ -3657,6 +3710,17 @@
         "S3Bucket":{"shape":"S3Bucket"},
         "S3Key":{"shape":"S3Key"}
       }
+    },
+    "ScreenImageFormat":{
+      "type":"string",
+      "enum":[
+        "PNG",
+        "JPEG"
+      ]
+    },
+    "ScreenResolution":{
+      "type":"string",
+      "enum":["W_1280xH_720"]
     },
     "ScriptDetails":{
       "type":"structure",
@@ -3792,7 +3856,8 @@
         "AccessEndpoints":{"shape":"AccessEndpointList"},
         "EmbedHostDomains":{"shape":"EmbedHostDomains"},
         "StreamingExperienceSettings":{"shape":"StreamingExperienceSettings"},
-        "ContentRedirection":{"shape":"ContentRedirection"}
+        "ContentRedirection":{"shape":"ContentRedirection"},
+        "AgentAccessConfig":{"shape":"AgentAccessConfig"}
       }
     },
     "StackAttribute":{
@@ -3810,7 +3875,8 @@
         "IAM_ROLE_ARN",
         "ACCESS_ENDPOINTS",
         "STREAMING_EXPERIENCE_SETTINGS",
-        "CONTENT_REDIRECTION"
+        "CONTENT_REDIRECTION",
+        "AGENT_ACCESS_CONFIG"
       ]
     },
     "StackAttributes":{
@@ -4259,7 +4325,8 @@
         "AccessEndpoints":{"shape":"AccessEndpointList"},
         "EmbedHostDomains":{"shape":"EmbedHostDomains"},
         "StreamingExperienceSettings":{"shape":"StreamingExperienceSettings"},
-        "ContentRedirection":{"shape":"ContentRedirection"}
+        "ContentRedirection":{"shape":"ContentRedirection"},
+        "AgentAccessConfig":{"shape":"AgentAccessConfigForUpdate"}
       }
     },
     "UpdateStackResult":{

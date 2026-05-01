@@ -72,7 +72,6 @@
       },
       "errors":[
         {"shape":"InvalidParameterValueException"},
-        {"shape":"DashboardNotFoundError"},
         {"shape":"InternalServiceFault"},
         {"shape":"ConflictException"}
       ]
@@ -1045,7 +1044,8 @@
       "type":"map",
       "key":{"shape":"AttributeName"},
       "value":{"shape":"AttributeValue"},
-      "max":30
+      "max":150,
+      "min":0
     },
     "ContributorId":{
       "type":"string",
@@ -2536,7 +2536,8 @@
       ],
       "members":{
         "DashboardName":{"shape":"DashboardName"},
-        "DashboardBody":{"shape":"DashboardBody"}
+        "DashboardBody":{"shape":"DashboardBody"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "PutDashboardOutput":{
