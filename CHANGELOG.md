@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.379.11 - 2026-05-01
 
 * `Aws\` - Use WeakReference in PresignUrlMiddleware and EndpointDiscoveryMiddleware to prevent circular reference memory leaks.
 * `Aws\QConnect` - Added reasoning details, statusDescription, and timeToFirstTokenMs fields to the ListSpans response in Amazon Q in Connect to provide visibility into model thinking, error diagnostics, and inference latency metrics.
