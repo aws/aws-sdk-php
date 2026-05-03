@@ -126,9 +126,9 @@ class EndpointProviderV2
     }
 
     /**
-     * @return array|null
+     * @return array
      */
-    public function getActiveParameters(): ?array
+    public function getActiveParameters(): array
     {
         if ($this->bddRuleset !== null) {
             return $this->bddRuleset->getParameters();

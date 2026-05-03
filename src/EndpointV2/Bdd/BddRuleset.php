@@ -18,6 +18,10 @@ use Aws\Exception\UnresolvedEndpointException;
  */
 final class BddRuleset
 {
+    private const REQUIRED_FIELDS = [
+        'conditions', 'results', 'nodes', 'root', 'nodeCount'
+    ];
+
     /** @var array<string, RulesetParameter> */
     private array $parameters;
 
@@ -36,7 +40,7 @@ final class BddRuleset
 
     public function __construct(array $definition, array $partitions)
     {
-        foreach (['conditions', 'results', 'nodes', 'root'] as $key) {
+        foreach (self::REQUIRED_FIELDS as $key) {
             if (!array_key_exists($key, $definition)) {
                 throw new UnresolvedEndpointException(
                     "Endpoint BDD definition is missing `{$key}`."

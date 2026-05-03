@@ -9,7 +9,6 @@ use Aws\Test\TestsUtility;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
-use function PHPUnit\Framework\assertInstanceOf;
 
 #[CoversClass(EndpointDefinitionProvider::class)]
 class EndpointDefinitionProviderTest extends TestCase
