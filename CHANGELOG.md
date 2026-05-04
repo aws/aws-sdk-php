@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Retries` - Adds an opt-in new retry behavior. Set AWS_NEW_RETRIES_2026=true to enable the new path. When the env var is unset (the default), retry behavior is unchanged from previous releases. With the flag enabled, the SDK switches the default retry mode from 'legacy' to 'standard', adopts a throttling-aware token-bucket retry quota (cost 14 for non-throttling, 5 for throttling), reduces the non-throttling base backoff to 50ms, checks max-attempts before quota, honors the x-amz-retry-after header, sleeps without retrying on long-polling operations (SQS, SFN, SWF) when the quota is exhausted, and lets custom deciders supplement (rather than replace) built-in retryability checks. DynamoDB defaults to 4 attempts with a 25ms base; STS treats IDPCommunicationError as transient; S3's existing custom decider keeps its socket carve-out. The flag is intended as an opt-in for early adopters and will become the default in a future release.
+* `Aws\GeoRoutes` - Added support for TravelTimeExceedsDriverWorkHours, ViolatedBlockedRoad, and ViolatedVehicleRestriction notice codes to the CalculateRoutes API response.
+* `Aws\MediaLive` - Updates the type of the MediaLiveRouterOutputConnectionMap.
+* `Aws\BedrockAgentCoreControl` - Amazon Bedrock AgentCore gateways now support MCP Sessions and response streaming from MCP targets. Session timeouts can be set between 15 minutes and 8 hours, and response streaming enables forwarding stream events sent by MCP targets to gateway users.
+* `Aws\EC2` - This feature allows customers to change the tunnel bandwidth on existing VPN connections using the ModifyVpnConnectionOptions API
+* `Aws\CloudWatchLogs` - Adding an additional optional deliverySourceConfiguration field to PutDeliverySource API. This enables customers to pass service-specific configurations through IngestionHub such as tracing enablement or sampling rates that will be propagated to the source resource.
+* `Aws\SecurityAgent` - AWS Security Agent is adding a new target domain verification method for private VPC penetration testing. Additionally, the target domain resource will now have a verification status reason field to surface additional details about domain verification
+* `Aws\LexModelBuildingService` - Lex V1 is deprecated, use Lex V2 instead
+* `Aws\VPCLattice` - Amazon VPC Lattice now supports privately resolvable DNS resources
+
 ## 3.379.11 - 2026-05-01
 
 * `Aws\` - Use WeakReference in PresignUrlMiddleware and EndpointDiscoveryMiddleware to prevent circular reference memory leaks.

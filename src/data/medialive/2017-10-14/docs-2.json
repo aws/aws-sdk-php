@@ -5313,7 +5313,8 @@
         "InferenceSettings$FeedArn": "The ARN of the feed resource that is associated with this channel. The feed is a resource in the Elemental Inference service.",
         "MediaConnectRouterOutputConnectionMap$Pipeline0": "The ARN of the MediaConnect Router Input connected to pipeline 0.",
         "MediaConnectRouterOutputConnectionMap$Pipeline1": "The ARN of the MediaConnect Router Input connected to pipeline 1.",
-        "MediaConnectRouterOutputDestinationSettings$SecretArn": "ARN of the secret used to encrypt this input. Used only with the SECRETS_MANAGER encryption type."
+        "MediaConnectRouterOutputDestinationSettings$SecretArn": "ARN of the secret used to encrypt this input. Used only with the SECRETS_MANAGER encryption type.",
+        "MediaConnectRouterOutputConnection$RouterInputArn": "The ARN of the MediaConnect Router Input connected to this pipeline."
       }
     },
     "__stringMax1000": {
@@ -7601,7 +7602,7 @@
     "MediaConnectRouterOutputConnectionMap": {
       "base": "Map of MediaLive pipeline IDs to the ARNs of the MediaConnect Router Inputs to which this Output is connected.",
       "refs": {
-        "MediaConnectRouterOutputSettings$ConnectedRouterInputs": "Shows the MediaConnect Router Inputs that are connected to this output. This parameter is purely informative, and editing it will have no effect. To connect or disconnect MediaConnect Router Inputs, go to MediaConnect."
+        "MediaConnectRouterOutputSettings$ConnectedRouterInputs": "This parameter is deprecated and unused."
       }
     },
     "MediaConnectRouterOutputDestinationSettings": {
@@ -7626,6 +7627,18 @@
       "base": null,
       "refs": {
         "OutputDestination$MediaConnectRouterSettings": "Destination settings for a MediaConnect Router output; one destination for each redundant encoder."
+      }
+    },
+    "MediaConnectRouterOutputConnection": {
+      "base": "Connection details for a single pipeline of a MediaConnect Router output.",
+      "refs": {
+        "MediaConnectRouterOutputConnections$member": null
+      }
+    },
+    "MediaConnectRouterOutputConnections": {
+      "base": "A map of output names to the MediaConnect Router connection for this pipeline.",
+      "refs": {
+        "PipelineDetail$MediaConnectRouterOutputConnectionMap": "A map of output names to the MediaConnect Router connection for this pipeline. Only present for channels with MediaConnect Router outputs."
       }
     }
   },

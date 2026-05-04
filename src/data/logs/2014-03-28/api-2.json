@@ -2005,7 +2005,9 @@
         "allowedOutputFormats":{"shape":"OutputFormats"},
         "allowedActionForAllowVendedLogsDeliveryForResource":{"shape":"AllowedActionForAllowVendedLogsDeliveryForResource"},
         "allowedFieldDelimiters":{"shape":"AllowedFieldDelimiters"},
-        "allowedSuffixPathFields":{"shape":"RecordFields"}
+        "allowedSuffixPathFields":{"shape":"RecordFields"},
+        "deliverySourceConfiguration":{"shape":"DeliverySourceConfigurationSchemas"},
+        "s3TablesIntegration":{"shape":"S3TablesIntegration"}
       }
     },
     "ConfigurationTemplateDeliveryConfigValues":{
@@ -2552,14 +2554,86 @@
         "resourceArns":{"shape":"ResourceArns"},
         "service":{"shape":"Service"},
         "logType":{"shape":"LogType"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "deliverySourceConfiguration":{"shape":"DeliverySourceConfiguration"},
+        "status":{"shape":"DeliverySourceStatus"},
+        "statusReason":{"shape":"DeliverySourceStatusReason"}
       }
+    },
+    "DeliverySourceConfiguration":{
+      "type":"map",
+      "key":{"shape":"DeliverySourceConfigurationKey"},
+      "value":{"shape":"DeliverySourceConfigurationValue"}
+    },
+    "DeliverySourceConfigurationKey":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "DeliverySourceConfigurationNumericValue":{
+      "type":"double",
+      "box":true
+    },
+    "DeliverySourceConfigurationSchema":{
+      "type":"structure",
+      "required":[
+        "keyName",
+        "valueType",
+        "defaultValue"
+      ],
+      "members":{
+        "keyName":{"shape":"DeliverySourceConfigurationSchemaField"},
+        "valueType":{"shape":"DeliverySourceConfigurationSchemaValueType"},
+        "defaultValue":{"shape":"DeliverySourceConfigurationSchemaField"},
+        "supportedValues":{"shape":"DeliverySourceConfigurationSupportedValues"},
+        "minValue":{"shape":"DeliverySourceConfigurationNumericValue"},
+        "maxValue":{"shape":"DeliverySourceConfigurationNumericValue"}
+      }
+    },
+    "DeliverySourceConfigurationSchemaField":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "DeliverySourceConfigurationSchemaValueType":{
+      "type":"string",
+      "enum":[
+        "string",
+        "boolean",
+        "int",
+        "double",
+        "long"
+      ]
+    },
+    "DeliverySourceConfigurationSchemas":{
+      "type":"list",
+      "member":{"shape":"DeliverySourceConfigurationSchema"}
+    },
+    "DeliverySourceConfigurationSupportedValues":{
+      "type":"list",
+      "member":{"shape":"DeliverySourceConfigurationSchemaField"}
+    },
+    "DeliverySourceConfigurationValue":{
+      "type":"string",
+      "max":255,
+      "min":1
     },
     "DeliverySourceName":{
       "type":"string",
       "max":60,
       "min":1,
       "pattern":"[\\w-]*"
+    },
+    "DeliverySourceStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
+    "DeliverySourceStatusReason":{
+      "type":"string",
+      "enum":["RESOURCE_DELETED"]
     },
     "DeliverySources":{
       "type":"list",
@@ -4952,7 +5026,8 @@
         "name":{"shape":"DeliverySourceName"},
         "resourceArn":{"shape":"Arn"},
         "logType":{"shape":"LogType"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "deliverySourceConfiguration":{"shape":"DeliverySourceConfiguration"}
       }
     },
     "PutDeliverySourceResponse":{
@@ -5499,6 +5574,23 @@
     "S3TableIntegrationSources":{
       "type":"list",
       "member":{"shape":"S3TableIntegrationSource"}
+    },
+    "S3TablesDatasourceName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "S3TablesDatasourceType":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "S3TablesIntegration":{
+      "type":"structure",
+      "members":{
+        "datasourceName":{"shape":"S3TablesDatasourceName"},
+        "datasourceType":{"shape":"S3TablesDatasourceType"}
+      }
     },
     "S3Uri":{
       "type":"string",

@@ -418,6 +418,7 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ],
@@ -1221,6 +1222,7 @@
         "targetDomainId":{"shape":"TargetDomainId"},
         "domainName":{"shape":"String"},
         "verificationStatus":{"shape":"TargetDomainStatus"},
+        "verificationStatusReason":{"shape":"String"},
         "verificationDetails":{"shape":"VerificationDetails"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "verifiedAt":{"shape":"SyntheticTimestamp_date_time"}
@@ -1376,7 +1378,8 @@
       "type":"string",
       "enum":[
         "DNS_TXT",
-        "HTTP_ROUTE"
+        "HTTP_ROUTE",
+        "PRIVATE_VPC"
       ]
     },
     "Endpoint":{
@@ -2458,6 +2461,7 @@
         "targetDomainId":{"shape":"TargetDomainId"},
         "domainName":{"shape":"String"},
         "verificationStatus":{"shape":"TargetDomainStatus"},
+        "verificationStatusReason":{"shape":"String"},
         "verificationDetails":{"shape":"VerificationDetails"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "verifiedAt":{"shape":"SyntheticTimestamp_date_time"}
@@ -2724,6 +2728,7 @@
         "targetDomainId":{"shape":"TargetDomainId"},
         "domainName":{"shape":"String"},
         "verificationStatus":{"shape":"TargetDomainStatus"},
+        "verificationStatusReason":{"shape":"String"},
         "verificationDetails":{"shape":"VerificationDetails"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "verifiedAt":{"shape":"SyntheticTimestamp_date_time"}
@@ -2801,7 +2806,8 @@
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
         "verifiedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "status":{"shape":"TargetDomainStatus"}
+        "status":{"shape":"TargetDomainStatus"},
+        "verificationStatusReason":{"shape":"String"}
       }
     },
     "VpcArn":{"type":"string"},

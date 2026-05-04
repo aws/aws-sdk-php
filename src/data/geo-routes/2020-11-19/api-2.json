@@ -1504,7 +1504,9 @@
         "ViolatedAvoidFerry",
         "ViolatedAvoidRailFerry",
         "SeasonalClosure",
-        "PotentialViolatedVehicleRestrictionUsage"
+        "PotentialViolatedVehicleRestrictionUsage",
+        "ViolatedAvoidAreas",
+        "ViolatedVehicleRestriction"
       ]
     },
     "RouteFerryNoticeList":{
@@ -2294,7 +2296,8 @@
         "Other",
         "ViolatedAvoidDirtRoad",
         "ViolatedAvoidTunnel",
-        "ViolatedPedestrianOption"
+        "ViolatedPedestrianOption",
+        "ViolatedAvoidAreas"
       ]
     },
     "RoutePedestrianNoticeList":{
@@ -3308,7 +3311,8 @@
         "ViolatedStartDirection",
         "ViolatedTurnRestriction",
         "ViolatedVehicleRestriction",
-        "ViolatedZoneRestriction"
+        "ViolatedZoneRestriction",
+        "TravelTimeExceedsDriverWorkHours"
       ]
     },
     "RouteVehicleNoticeDetail":{
@@ -3915,8 +3919,14 @@
       "type":"structure",
       "required":["DrivingDistance"],
       "members":{
-        "DrivingDistance":{"shape":"DistanceMeters"}
+        "DrivingDistance":{"shape":"WaypointOptimizationDrivingDistanceOptionsDrivingDistanceLong"}
       }
+    },
+    "WaypointOptimizationDrivingDistanceOptionsDrivingDistanceLong":{
+      "type":"long",
+      "box":true,
+      "max":50000,
+      "min":5
     },
     "WaypointOptimizationExclusionOptions":{
       "type":"structure",

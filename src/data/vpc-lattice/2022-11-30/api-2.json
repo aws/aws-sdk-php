@@ -1653,6 +1653,7 @@
         "securityGroupIds":{"shape":"CreateResourceGatewayRequestSecurityGroupIdsList"},
         "ipAddressType":{"shape":"ResourceGatewayIpAddressType"},
         "ipv4AddressesPerEni":{"shape":"Ipv4AddressesPerEni"},
+        "resourceConfigDnsResolution":{"shape":"ResourceConfigDnsResolution"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -1673,7 +1674,8 @@
         "subnetIds":{"shape":"SubnetList"},
         "securityGroupIds":{"shape":"SecurityGroupList"},
         "ipAddressType":{"shape":"ResourceGatewayIpAddressType"},
-        "ipv4AddressesPerEni":{"shape":"Ipv4AddressesPerEni"}
+        "ipv4AddressesPerEni":{"shape":"Ipv4AddressesPerEni"},
+        "resourceConfigDnsResolution":{"shape":"ResourceConfigDnsResolution"}
       }
     },
     "CreateRuleRequest":{
@@ -2455,9 +2457,12 @@
         "status":{"shape":"ResourceGatewayStatus"},
         "vpcId":{"shape":"VpcId"},
         "subnetIds":{"shape":"SubnetList"},
+        "serviceManaged":{"shape":"Boolean"},
+        "managedBy":{"shape":"String"},
         "securityGroupIds":{"shape":"SecurityGroupList"},
         "ipAddressType":{"shape":"ResourceGatewayIpAddressType"},
         "ipv4AddressesPerEni":{"shape":"Ipv4AddressesPerEni"},
+        "resourceConfigDnsResolution":{"shape":"ResourceConfigDnsResolution"},
         "createdAt":{"shape":"Timestamp"},
         "lastUpdatedAt":{"shape":"Timestamp"}
       }
@@ -3573,6 +3578,13 @@
       "min":20,
       "pattern":"arn(:[a-z0-9]+([.-][a-z0-9]+)*){2}(:([a-z0-9]+([.-][a-z0-9]+)*)?){2}:((servicenetwork/sn)|(service/svc)|(resourceconfiguration/rcfg))-[0-9a-z]{17}"
     },
+    "ResourceConfigDnsResolution":{
+      "type":"string",
+      "enum":[
+        "IN_VPC",
+        "PUBLIC"
+      ]
+    },
     "ResourceConfigurationArn":{
       "type":"string",
       "max":2048,
@@ -3753,6 +3765,7 @@
         "securityGroupIds":{"shape":"SecurityGroupList"},
         "ipAddressType":{"shape":"ResourceGatewayIpAddressType"},
         "ipv4AddressesPerEni":{"shape":"Ipv4AddressesPerEni"},
+        "resourceConfigDnsResolution":{"shape":"ResourceConfigDnsResolution"},
         "createdAt":{"shape":"Timestamp"},
         "lastUpdatedAt":{"shape":"Timestamp"}
       }

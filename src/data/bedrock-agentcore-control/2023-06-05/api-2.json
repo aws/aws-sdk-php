@@ -6755,7 +6755,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"(Authorization|X-Amzn-Bedrock-AgentCore-Runtime-Custom-[a-zA-Z0-9-]+)"
+      "pattern":"[A-Za-z][A-Za-z0-9_-]{0,255}"
     },
     "HttpHeaderKey":{
       "type":"string",
@@ -7826,7 +7826,9 @@
       "members":{
         "supportedVersions":{"shape":"McpSupportedVersions"},
         "instructions":{"shape":"McpInstructions"},
-        "searchType":{"shape":"SearchType"}
+        "searchType":{"shape":"SearchType"},
+        "sessionConfiguration":{"shape":"SessionConfiguration"},
+        "streamingConfiguration":{"shape":"StreamingConfiguration"}
       }
     },
     "ManagedResourceDetails":{
@@ -9631,6 +9633,18 @@
       "max":1440,
       "min":1
     },
+    "SessionConfiguration":{
+      "type":"structure",
+      "members":{
+        "sessionTimeoutInSeconds":{"shape":"SessionConfigurationSessionTimeoutInSecondsInteger"}
+      }
+    },
+    "SessionConfigurationSessionTimeoutInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":28800,
+      "min":900
+    },
     "SessionStorageConfiguration":{
       "type":"structure",
       "required":["mountPath"],
@@ -9819,6 +9833,12 @@
       "member":{"shape":"StreamDeliveryResource"},
       "max":1,
       "min":0
+    },
+    "StreamingConfiguration":{
+      "type":"structure",
+      "members":{
+        "enableResponseStreaming":{"shape":"Boolean"}
+      }
     },
     "String":{"type":"string"},
     "StringListValidation":{

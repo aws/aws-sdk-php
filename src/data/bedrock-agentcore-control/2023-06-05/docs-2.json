@@ -625,6 +625,7 @@
         "InterceptorInputConfiguration$passRequestHeaders": "<p>Indicates whether to pass request headers as input into the interceptor. When set to true, request headers will be passed.</p>",
         "RecordingConfig$enabled": "<p>Indicates whether recording is enabled for the browser. When set to true, browser sessions are recorded.</p>",
         "RuntimeMetadataConfiguration$requireMMDSV2": "<p>Enables MMDSv2 (microVM Metadata Service Version 2) requirement for the agent runtime. When set to <code>true</code>, the runtime microVM will only accept MMDSv2 requests.</p>",
+        "StreamingConfiguration$enableResponseStreaming": "<p>Indicates whether response streaming is enabled for the gateway. When set to <code>true</code>, the gateway streams responses from targets back to the client.</p>",
         "UpdateRegistryRecordRequest$triggerSynchronization": "<p>Whether to trigger synchronization using the stored or provided configuration. When set to <code>true</code>, the service will synchronize the record metadata from the configured external source.</p>",
         "VersionFilter$latestPerBranch": "<p>When true, returns only the latest version for each branch. When false or not specified, returns all versions. Can be combined with <code>branchName</code> to get the latest version for a specific branch.</p>"
       }
@@ -4449,7 +4450,7 @@
       }
     },
     "OnBehalfOfTokenExchangeConfigType": {
-      "base": "<p>Configuration for on-behalf-of token exchange</p>",
+      "base": "<p>Configuration for on-behalf-of token exchange.</p>",
       "refs": {
         "CustomOauth2ProviderConfigInput$onBehalfOfTokenExchangeConfig": "<p>The configuration for on-behalf-of token exchange. This enables authentication flows that use RFC 8693 token exchange or RFC 7523 JWT authorization grants.</p>",
         "CustomOauth2ProviderConfigOutput$onBehalfOfTokenExchangeConfig": "<p>The configuration for on-behalf-of token exchange.</p>"
@@ -5206,7 +5207,7 @@
     "RoutingDomain": {
       "base": null,
       "refs": {
-        "ManagedVpcResource$routingDomain": "<p>An intermediate publicly resolvable domain used as the VPC Lattice resource configuration endpoint. Required when your private endpoint uses a domain that is not publicly resolvable.</p>"
+        "ManagedVpcResource$routingDomain": "<p>An intermediate domain to use as the resource configuration endpoint instead of the actual target domain. Use this when you want to route traffic through an intermediate component such as a VPC endpoint or internal load balancer. For more information, see xref:lattice-vpc-egress-routing-domain[Route traffic through an intermediate domain].</p>"
       }
     },
     "Rule": {
@@ -5368,7 +5369,7 @@
     "ScopesListType": {
       "base": null,
       "refs": {
-        "TokenExchangeGrantTypeConfigType$actorTokenScopes": "<p>Only valid when actorTokenContent is M2M</p>"
+        "TokenExchangeGrantTypeConfigType$actorTokenScopes": "<p>The scopes for the actor token. Only valid when actorTokenContent is M2M.</p>"
       }
     },
     "SearchType": {
@@ -5537,6 +5538,18 @@
         "SessionConfig$sessionTimeoutMinutes": "<p> The number of minutes of inactivity after which an agent session is considered complete and ready for evaluation. Default is 15 minutes. </p>"
       }
     },
+    "SessionConfiguration": {
+      "base": "<p>The session configuration for an MCP gateway. This structure defines settings that control session behavior.</p>",
+      "refs": {
+        "MCPGatewayConfiguration$sessionConfiguration": "<p>The session configuration for the MCP gateway. This configuration controls session behavior, including session timeout settings.</p>"
+      }
+    },
+    "SessionConfigurationSessionTimeoutInSecondsInteger": {
+      "base": null,
+      "refs": {
+        "SessionConfiguration$sessionTimeoutInSeconds": "<p>The session timeout in seconds. After this timeout, the session expires and subsequent requests to this session will receive an error. The minimum value is 900 seconds (15 minutes), the maximum value is 28800 seconds (8 hours), and the default value is 3600 seconds (1 hour).</p>"
+      }
+    },
     "SessionStorageConfiguration": {
       "base": "<p>Configuration for a session storage filesystem mounted into the AgentCore Runtime. Session storage provides persistent storage that is preserved across AgentCore Runtime session invocations.</p>",
       "refs": {
@@ -5661,6 +5674,12 @@
       "base": null,
       "refs": {
         "StreamDeliveryResources$resources": "<p>List of stream delivery resource configurations.</p>"
+      }
+    },
+    "StreamingConfiguration": {
+      "base": "<p>The streaming configuration for an MCP gateway. This structure defines settings that control response streaming behavior.</p>",
+      "refs": {
+        "MCPGatewayConfiguration$streamingConfiguration": "<p>The streaming configuration for the MCP gateway. This configuration controls whether response streaming is enabled for the gateway.</p>"
       }
     },
     "String": {
@@ -6192,9 +6211,9 @@
       }
     },
     "TokenExchangeGrantTypeConfigType": {
-      "base": "<p>Configuration for RFC 8693 Token Exchange</p>",
+      "base": "<p>Configuration for RFC 8693 token exchange.</p>",
       "refs": {
-        "OnBehalfOfTokenExchangeConfigType$tokenExchangeGrantTypeConfig": "<p>Configuration specific to TOKEN_EXCHANGE grant type (RFC 8693)</p>"
+        "OnBehalfOfTokenExchangeConfigType$tokenExchangeGrantTypeConfig": "<p>Configuration specific to the TOKEN_EXCHANGE grant type (RFC 8693).</p>"
       }
     },
     "TokenVaultIdType": {

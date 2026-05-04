@@ -13874,6 +13874,10 @@
         "ChannelEngineVersion": {
           "shape": "ChannelEngineVersionResponse",
           "locationName": "channelEngineVersion"
+        },
+        "MediaConnectRouterOutputConnectionMap": {
+          "shape": "MediaConnectRouterOutputConnections",
+          "locationName": "mediaConnectRouterOutputConnectionMap"
         }
       }
     },
@@ -25679,6 +25683,24 @@
       "type": "list",
       "member": {
         "shape": "MediaConnectRouterOutputDestinationSettings"
+      }
+    },
+    "MediaConnectRouterOutputConnection": {
+      "type": "structure",
+      "members": {
+        "RouterInputArn": {
+          "shape": "__string",
+          "locationName": "routerInputArn"
+        }
+      }
+    },
+    "MediaConnectRouterOutputConnections": {
+      "type": "map",
+      "key": {
+        "shape": "__string"
+      },
+      "value": {
+        "shape": "MediaConnectRouterOutputConnection"
       }
     }
   }
