@@ -2,7 +2,10 @@
 
 namespace Aws\Test\EndpointV2;
 
+use Aws\EndpointV2\Bdd\BddRuleset;
 use Aws\EndpointV2\EndpointDefinitionProvider;
+use Aws\EndpointV2\Ruleset\Ruleset;
+use Aws\Test\TestsUtility;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -72,5 +75,84 @@ class EndpointDefinitionProviderTest extends TestCase
         rmdir($tmpdir . 'data/' . 's3/' . '/08-05-1989');
         rmdir($tmpdir . 'data/' . 's3/');
         rmdir($tmpdir . 'data');
+    }
+
+    public function testGetEndpointBddReturnsNullWhenAbsentAndSuppressed()
+    {
+        $this->assertNull(
+            EndpointDefinitionProvider::getEndpointBdd('s3', 'latest', null, false)
+        );
+    }
+
+    public function testGetParsedRulesetReturnsTreeRulesetForTreeService()
+    {
+        $baseDir = sys_get_temp_dir() . '/aws-tree-parsed-' . uniqid();
+        $serviceDir = $baseDir . '/widget/2024-01-01';
+        if (is_dir($serviceDir)) {
+            // To make sure dir is clean and no bdd file is present
+            TestsUtility::cleanUpDir($serviceDir);
+        }
+        mkdir($serviceDir, 0777, true);
+
+        try {
+            file_put_contents(
+                $serviceDir . '/endpoint-rule-set-1.json',
+                json_encode([
+                    'version' => '1.1',
+                    'parameters' => [],
+                    'rules' => [],
+                ])
+            );
+
+            $parsed = EndpointDefinitionProvider::getParsedRuleset(
+                'widget',
+                '2024-01-01',
+                EndpointDefinitionProvider::getPartitions(),
+                $baseDir
+            );
+
+            $this->assertInstanceOf(
+                Ruleset::class,
+                $parsed
+            );
+        } finally {
+            TestsUtility::cleanUpDir($baseDir);
+        }
+    }
+
+    public function testGetParsedRulesetReturnsBddRulesetWhenBddShipped()
+    {
+        $baseDir = sys_get_temp_dir() . '/aws-bdd-parsed-' . uniqid();
+        $serviceDir = $baseDir . '/widget/2024-01-01';
+        mkdir($serviceDir, 0777, true);
+
+        try {
+            file_put_contents(
+                $serviceDir . '/endpoint-bdd-1.json',
+                json_encode([
+                    'version' => '1.1',
+                    'parameters' => [],
+                    'conditions' => [],
+                    'results' => [],
+                    'nodes' => '',
+                    'nodeCount' => 0,
+                    'root' => 1,
+                ])
+            );
+
+            $parsed = EndpointDefinitionProvider::getParsedRuleset(
+                'widget',
+                '2024-01-01',
+                EndpointDefinitionProvider::getPartitions(),
+                $baseDir
+            );
+
+            $this->assertInstanceOf(
+                BddRuleset::class,
+                $parsed
+            );
+        } finally {
+           TestsUtility::cleanUpDir($baseDir);
+        }
     }
 }

@@ -439,4 +439,75 @@ class EndpointProviderV2Test extends TestCase
             yield $case;
         }
     }
+
+    public function testDispatchesToTreeRulesetByDefault()
+    {
+        $provider = new EndpointProviderV2(
+            json_decode(
+                file_get_contents(__DIR__ . '/valid-rules/fns.json'),
+                true
+            ),
+            EndpointDefinitionProvider::getPartitions()
+        );
+
+        $this->assertInstanceOf(
+            \Aws\EndpointV2\Ruleset\Ruleset::class,
+            $provider->getRuleset()
+        );
+        $this->assertNull($provider->getBddRuleset());
+    }
+
+    public function testAcceptsPrebuiltBddRuleset()
+    {
+        $partitions = EndpointDefinitionProvider::getPartitions();
+        $bdd = new \Aws\EndpointV2\Bdd\BddRuleset(
+            [
+                'parameters' => ['Region' => ['type' => 'string']],
+                'conditions' => [
+                    ['fn' => 'isSet', 'argv' => [['ref' => 'Region']]],
+                ],
+                'results' => [[
+                    'endpoint' => ['url' => 'https://typed.example'],
+                    'type' => 'endpoint',
+                ]],
+                'nodes' => \Aws\Test\EndpointV2\Bdd\BddFixtures::encodeNodes([
+                    [-1, 1, -1],
+                    [0, 100_000_001, -1],
+                ]),
+                'nodeCount' => 2,
+                'root' => 2,
+            ],
+            $partitions
+        );
+
+        $provider = new EndpointProviderV2($bdd, $partitions);
+
+        $this->assertSame($bdd, $provider->getBddRuleset());
+        $this->assertNull($provider->getRuleset());
+        $this->assertSame(
+            'https://typed.example',
+            $provider->resolveEndpoint(['Region' => 'us-east-1'])->getUrl()
+        );
+    }
+
+    public function testAcceptsPrebuiltRuleset()
+    {
+        $partitions = EndpointDefinitionProvider::getPartitions();
+        $tree = new Ruleset(
+            json_decode(file_get_contents(__DIR__ . '/valid-rules/fns.json'), true),
+            $partitions
+        );
+
+        $provider = new EndpointProviderV2($tree, $partitions);
+
+        $this->assertSame($tree, $provider->getRuleset());
+        $this->assertNull($provider->getBddRuleset());
+    }
+
+    public function testRejectsInvalidConstructorInput()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('EndpointProviderV2 expects an array, Ruleset, or BddRuleset');
+        new EndpointProviderV2('not-a-ruleset', []);
+    }
 }
