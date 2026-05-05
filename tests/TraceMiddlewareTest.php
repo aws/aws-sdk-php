@@ -4,6 +4,7 @@ namespace Aws\Test;
 use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Command;
+use Aws\DebugResourceBoundStream;
 use Aws\EventBridge\EventBridgeClient;
 use Aws\Exception\AwsException;
 use Aws\HandlerList;
@@ -13,7 +14,9 @@ use Aws\TraceMiddleware;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Utils;
 use GuzzleHttp\Promise;
+use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -294,6 +297,142 @@ class TraceMiddlewareTest extends TestCase
         foreach (array_values($scrubPatterns) as $scrubbed) {
             $this->assertStringContainsString($scrubbed, $str);
         }
+    }
+
+    /**
+     * @return array{0: HandlerList, 1: resource|null}
+     */
+    private function buildStreamedHandlerList(StreamInterface $body, &$capturedRes): HandlerList
+    {
+        $list = new HandlerList();
+        $list->setHandler(function ($cmd, $req) use ($body, &$capturedRes) {
+            $capturedRes = $cmd['@http']['debug'] ?? null;
+            return Promise\Create::promiseFor(new Result(['Body' => $body]));
+        });
+        // TraceMiddleware is interposed around each middleware step, so we
+        // need at least one middleware for it to wrap.
+        $list->appendInit(function ($handler) {
+            return function ($cmd, $req = null) use ($handler) {
+                return $handler($cmd, $req);
+            };
+        });
+        $list->interpose(new TraceMiddleware(['logfn' => function () {}]));
+
+        return $list;
+    }
+
+    public function testStreamedBodyDefersDebugResourceClose()
+    {
+        $payload = 'streamed-response-body';
+        $body = Utils::streamFor($payload);
+        $capturedRes = null;
+
+        $list = $this->buildStreamedHandlerList($body, $capturedRes);
+
+        $handler = $list->resolve();
+        $command = new Command('GetObject');
+        $command['@http']['stream'] = true;
+
+        /** @var Result $result */
+        $result = $handler($command, new Request('GET', 'http://foo/'))->wait();
+
+        $this->assertInstanceOf(DebugResourceBoundStream::class, $result['Body']);
+        $this->assertTrue(is_resource($capturedRes), 'debug FD must remain open while body is live');
+        $this->assertSame($payload, (string) $result['Body']);
+
+        $result['Body']->close();
+        $this->assertFalse(is_resource($capturedRes), 'debug FD must close when body closes');
+    }
+
+    public function testNonStreamedCommandStillClosesDebugResourceEagerly()
+    {
+        $capturedRes = null;
+        $list = $this->buildStreamedHandlerList(Utils::streamFor('x'), $capturedRes);
+
+        $handler = $list->resolve();
+        $command = new Command('GetObject'); // no @http.stream flag
+
+        $result = $handler($command, new Request('GET', 'http://foo/'))->wait();
+
+        $this->assertNotInstanceOf(DebugResourceBoundStream::class, $result['Body']);
+        $this->assertFalse(is_resource($capturedRes), 'non-streamed commands must close eagerly');
+    }
+
+    public function testRejectedPromiseClosesDebugResource()
+    {
+        $capturedRes = null;
+
+        $list = new HandlerList();
+        $list->setHandler(function ($cmd, $req) use (&$capturedRes) {
+            $capturedRes = $cmd['@http']['debug'] ?? null;
+            return new RejectedPromise(new \RuntimeException('boom'));
+        });
+        $list->appendInit(function ($handler) {
+            return function ($cmd, $req = null) use ($handler) {
+                return $handler($cmd, $req);
+            };
+        });
+        $list->interpose(new TraceMiddleware(['logfn' => function () {}]));
+
+        $handler = $list->resolve();
+        $command = new Command('GetObject');
+        $command['@http']['stream'] = true;
+
+        try {
+            $handler($command, new Request('GET', 'http://foo/'))->wait();
+            $this->fail('expected rejection');
+        } catch (\RuntimeException $e) {
+            // expected
+        }
+
+        $this->assertFalse(is_resource($capturedRes), 'rejected path must still fclose');
+    }
+
+    /**
+     * after the middleware chain returns, reads on the
+     * streamed body must not emit warnings — Guzzle's stream_notification
+     * closure still references the trace debug FD. Previously the FD was
+     * fclose()d inside flushHttpDebug, and fread()s on the body raised
+     * "fprintf(): supplied resource is not a valid stream resource".
+     */
+    public function testStreamedBodyReadAfterFlushDoesNotEmitWarnings()
+    {
+        $debugFd = null;
+        $list = $this->buildStreamedHandlerList(
+            Utils::streamFor('streamed-response-body'),
+            $debugFd
+        );
+
+        $handler = $list->resolve();
+        $command = new Command('GetObject');
+        $command['@http']['stream'] = true;
+
+        /** @var Result $result */
+        $result = $handler($command, new Request('GET', 'http://foo/'))->wait();
+
+        // Simulate Guzzle's notifier firing on every read of the body.
+        $body = $result['Body'];
+        $this->assertInstanceOf(StreamInterface::class, $body);
+
+        $caught = [];
+        set_error_handler(static function ($severity, $message) use (&$caught) {
+            $caught[] = $message;
+            return true;
+        });
+        try {
+            while (!$body->eof()) {
+                $chunk = $body->read(4);
+                if ($chunk === '') {
+                    break;
+                }
+                // Mirrors GuzzleHttp\Handler\StreamHandler::add_debug() closure:
+                @fprintf($debugFd, "<GET /> [PROGRESS]\n");
+            }
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertSame([], $caught, 'no PHP warnings should be emitted');
     }
 
     private function generateTestClient(Service $service, $args = [])
