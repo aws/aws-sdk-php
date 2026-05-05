@@ -3,6 +3,7 @@ namespace Aws\Credentials;
 
 use Aws\Arn\Arn;
 use Aws\Exception\CredentialsException;
+use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
@@ -41,11 +42,22 @@ class EcsCredentialProvider
     /** @var int */
     private $attempts;
 
+    /** @var string[] */
+    private $retryableExceptions;
+
+    /** @var int[] */
+    private $retryableErrorCodes;
+
     /**
      *  The constructor accepts following options:
      *  - timeout: (optional) Connection timeout, in seconds, default 1.0
      *  - retries: Optional number of retries to be attempted, default 3.
      *  - client: An EcsClient to make request from
+     *  - retryable_exceptions: Optional array of exception class names that
+     *    should be retried. Defaults to [ConnectException::class].
+     *  - retryable_error_codes: Optional array of HTTP status codes that
+     *    should be retried when returned in a BadResponseException. Defaults
+     *    to an empty array.
      *
      * @param array $config Configuration options
      */
@@ -59,6 +71,9 @@ class EcsCredentialProvider
             : ((int) getenv(self::ENV_RETRIES) ?: self::DEFAULT_ENV_RETRIES);
 
         $this->client = $config['client'] ?? \Aws\default_http_handler();
+        $this->retryableExceptions = $config['retryable_exceptions']
+            ?? [ConnectException::class];
+        $this->retryableErrorCodes = $config['retryable_error_codes'] ?? [];
     }
 
     /**
@@ -107,8 +122,7 @@ class EcsCredentialProvider
                     })->otherwise(function ($reason) {
                         $reason = is_array($reason) ? $reason['exception'] : $reason;
 
-                        $isRetryable = $reason instanceof ConnectException;
-                        if ($isRetryable && ($this->attempts < $this->retries)) {
+                        if ($this->isRetryable($reason) && ($this->attempts < $this->retries)) {
                             sleep((int)pow(1.2, $this->attempts));
                         } else {
                             $msg = $reason->getMessage();
@@ -219,6 +233,31 @@ class EcsCredentialProvider
         }
 
         return self::SERVER_URI . $credsUri;
+    }
+
+    /**
+     * Determines whether a failed request should be retried, based on the
+     * configured retryable_exceptions and retryable_error_codes.
+     */
+    private function isRetryable($reason): bool
+    {
+        foreach ($this->retryableExceptions as $exceptionClass) {
+            if ($reason instanceof $exceptionClass) {
+                return true;
+            }
+        }
+
+        if ($reason instanceof BadResponseException
+            && in_array(
+                $reason->getResponse()->getStatusCode(),
+                $this->retryableErrorCodes,
+                true
+            )
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     private function decodeResult($response)
