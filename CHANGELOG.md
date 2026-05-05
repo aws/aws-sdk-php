@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.380.1 - 2026-05-05
 
 * `Aws\CleanRoomsML` - Increase max configurable output limits in the Clean Rooms ML configured model algorithm association resource.
 * `Aws\Route53Domains` - This release adds the TLDInMaintenance exception.
