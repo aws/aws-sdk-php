@@ -12,6 +12,7 @@
     "CreateVodSource": "<p>The VOD source configuration parameters.</p>",
     "DeleteChannel": "<p>Deletes a channel. For information about MediaTailor channels, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/channel-assembly-channels.html\">Working with channels</a> in the <i>MediaTailor User Guide</i>.</p>",
     "DeleteChannelPolicy": "<p>The channel policy to delete.</p>",
+    "DeleteFunction": "<p>Deletes a function. MediaTailor prevents deletion of a function that is still referenced by a playback configuration or by another function. Remove all references before deleting. For more information about functions, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions.html\">Working with functions</a> in the <i>MediaTailor User Guide</i>.</p>",
     "DeleteLiveSource": "<p>The live source to delete.</p>",
     "DeletePlaybackConfiguration": "<p>Deletes a playback configuration. For information about MediaTailor configurations, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/configurations.html\">Working with configurations in AWS Elemental MediaTailor</a>.</p>",
     "DeletePrefetchSchedule": "<p>Deletes a prefetch schedule for a specific playback configuration. If you call <code>DeletePrefetchSchedule</code> on an expired prefetch schedule, MediaTailor returns an HTTP 404 status code. For more information about ad prefetching, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/prefetching-ads.html\">Using ad prefetching</a> in the <i>MediaTailor User Guide</i>.</p>",
@@ -25,10 +26,12 @@
     "DescribeVodSource": "<p>Provides details about a specific video on demand (VOD) source in a specific source location.</p>",
     "GetChannelPolicy": "<p>Returns the channel's IAM policy. IAM policies are used to control access to your channel.</p>",
     "GetChannelSchedule": "<p>Retrieves information about your channel's schedule.</p>",
+    "GetFunction": "<p>Retrieves the configuration and metadata for a function. For more information about functions, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions.html\">Working with functions</a> in the <i>MediaTailor User Guide</i>.</p>",
     "GetPlaybackConfiguration": "<p>Retrieves a playback configuration. For information about MediaTailor configurations, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/configurations.html\">Working with configurations in AWS Elemental MediaTailor</a>.</p>",
     "GetPrefetchSchedule": "<p>Retrieves a prefetch schedule for a playback configuration. A prefetch schedule allows you to tell MediaTailor to fetch and prepare certain ads before an ad break happens. For more information about ad prefetching, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/prefetching-ads.html\">Using ad prefetching</a> in the <i>MediaTailor User Guide</i>.</p>",
     "ListAlerts": "<p>Lists the alerts that are associated with a MediaTailor channel assembly resource.</p>",
     "ListChannels": "<p>Retrieves information about the channels that are associated with the current AWS account.</p>",
+    "ListFunctions": "<p>Retrieves all functions associated with your AWS account in the current Region. For more information about functions, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions.html\">Working with functions</a> in the <i>MediaTailor User Guide</i>.</p>",
     "ListLiveSources": "<p>Lists the live sources contained in a source location. A source represents a piece of content.</p>",
     "ListPlaybackConfigurations": "<p>Retrieves existing playback configurations. For information about MediaTailor configurations, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/configurations.html\">Working with Configurations in AWS Elemental MediaTailor</a>.</p>",
     "ListPrefetchSchedules": "<p>Lists the prefetch schedules for a playback configuration.</p>",
@@ -36,6 +39,7 @@
     "ListTagsForResource": "<p>A list of tags that are associated with this resource. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
     "ListVodSources": "<p>Lists the VOD sources contained in a source location. A source represents a piece of content.</p>",
     "PutChannelPolicy": "<p>Creates an IAM policy for the channel. IAM policies are used to control access to your channel.</p>",
+    "PutFunction": "<p>Creates or updates a function. A function defines reusable logic that MediaTailor executes at lifecycle hooks during ad insertion. For more information about functions, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions.html\">Working with functions</a> in the <i>MediaTailor User Guide</i>.</p>",
     "PutPlaybackConfiguration": "<p>Creates a playback configuration. For information about MediaTailor configurations, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/configurations.html\">Working with configurations in AWS Elemental MediaTailor</a>.</p>",
     "StartChannel": "<p>Starts a channel. For information about MediaTailor channels, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/channel-assembly-channels.html\">Working with channels</a> in the <i>MediaTailor User Guide</i>.</p>",
     "StopChannel": "<p>Stops a channel. For information about MediaTailor channels, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/channel-assembly-channels.html\">Working with channels</a> in the <i>MediaTailor User Guide</i>.</p>",
@@ -321,6 +325,15 @@
       "base": null,
       "refs": {}
     },
+    "CustomOutputConfiguration": {
+      "base": "<p>The configuration for a <code>CUSTOM_OUTPUT</code> function. MediaTailor evaluates the output expressions against the current session state and commits the results as output bindings. <code>CUSTOM_OUTPUT</code> functions do not make external calls. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-types-custom-output.html\">CUSTOM_OUTPUT</a> in the <i>MediaTailor User Guide</i>.</p>",
+      "refs": {
+        "Function$CustomOutputConfiguration": "<p>The configuration for a <code>CUSTOM_OUTPUT</code> function.</p>",
+        "GetFunctionResponse$CustomOutputConfiguration": "<p>The configuration for a <code>CUSTOM_OUTPUT</code> function.</p>",
+        "PutFunctionRequest$CustomOutputConfiguration": "<p>The configuration for a <code>CUSTOM_OUTPUT</code> function. Specifies the runtime and output expressions. Required when <code>FunctionType</code> is <code>CUSTOM_OUTPUT</code>.</p>",
+        "PutFunctionResponse$CustomOutputConfiguration": "<p>The configuration for a <code>CUSTOM_OUTPUT</code> function.</p>"
+      }
+    },
     "DashConfiguration": {
       "base": "<p>The configuration for DASH content.</p>",
       "refs": {
@@ -366,6 +379,14 @@
       "refs": {}
     },
     "DeleteChannelResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteFunctionResponse": {
       "base": null,
       "refs": {}
     },
@@ -457,10 +478,46 @@
       "base": null,
       "refs": {}
     },
+    "EventName": {
+      "base": null,
+      "refs": {
+        "FunctionMapping$key": null
+      }
+    },
     "FillPolicy": {
       "base": null,
       "refs": {
         "AvailSuppression$FillPolicy": "<p>Defines the policy to apply to the avail suppression mode. <code>BEHIND_LIVE_EDGE</code> will always use the full avail suppression policy. <code>AFTER_LIVE_EDGE</code> mode can be used to invoke partial ad break fills when a session starts mid-break.</p>"
+      }
+    },
+    "Function": {
+      "base": "<p>-- Define Mixin --</p>",
+      "refs": {
+        "__listOfFunctionsResponse$member": null
+      }
+    },
+    "FunctionMapping": {
+      "base": null,
+      "refs": {
+        "GetPlaybackConfigurationResponse$FunctionMapping": "<p>A map of lifecycle hook event names to function identifiers. The function mapping specifies which function MediaTailor executes at each lifecycle hook during ad insertion. Valid keys are <code>PRE_SESSION_INITIALIZATION</code> and <code>PRE_ADS_REQUEST</code>. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-hooks.html\">Functions lifecycle hooks</a> in the <i>MediaTailor User Guide</i>.</p>",
+        "PlaybackConfiguration$FunctionMapping": "<p>A map of lifecycle hook event names to function identifiers. The function mapping specifies which function MediaTailor executes at each lifecycle hook during ad insertion. Valid keys are <code>PRE_SESSION_INITIALIZATION</code> and <code>PRE_ADS_REQUEST</code>. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-hooks.html\">Functions lifecycle hooks</a> in the <i>MediaTailor User Guide</i>.</p>",
+        "PutPlaybackConfigurationRequest$FunctionMapping": "<p>A map of lifecycle hook event names to function identifiers. The function mapping specifies which function MediaTailor executes at each lifecycle hook during ad insertion. Valid keys are <code>PRE_SESSION_INITIALIZATION</code> and <code>PRE_ADS_REQUEST</code>. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-hooks.html\">Functions lifecycle hooks</a> in the <i>MediaTailor User Guide</i>.</p>",
+        "PutPlaybackConfigurationResponse$FunctionMapping": "<p>A map of lifecycle hook event names to function identifiers. The function mapping specifies which function MediaTailor executes at each lifecycle hook during ad insertion. Valid keys are <code>PRE_SESSION_INITIALIZATION</code> and <code>PRE_ADS_REQUEST</code>. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-hooks.html\">Functions lifecycle hooks</a> in the <i>MediaTailor User Guide</i>.</p>"
+      }
+    },
+    "FunctionRef": {
+      "base": "<p>A reference to a child function within a <code>SEQUENTIAL_EXECUTOR</code> function.</p>",
+      "refs": {
+        "__listOfFunctionsRef$member": null
+      }
+    },
+    "FunctionType": {
+      "base": "<p>-- Define Enums</p>",
+      "refs": {
+        "Function$FunctionType": "<p>The type of the function.</p>",
+        "GetFunctionResponse$FunctionType": "<p>The type of the function.</p>",
+        "PutFunctionRequest$FunctionType": "<p>The type of the function. The function type determines what the function can do at runtime. Valid values: <code>CUSTOM_OUTPUT</code> evaluates expressions and produces output bindings with no external calls. <code>HTTP_REQUEST</code> makes an HTTP call to an external service and evaluates output expressions that can reference the response. <code>SEQUENTIAL_EXECUTOR</code> runs a sequence of child functions in order, passing data between steps through temporary data. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-types.html\">Function types and composition</a> in the <i>MediaTailor User Guide</i>.</p>",
+        "PutFunctionResponse$FunctionType": "<p>The type of the function.</p>"
       }
     },
     "GetChannelPolicyRequest": {
@@ -477,6 +534,14 @@
     },
     "GetChannelScheduleResponse": {
       "base": null,
+      "refs": {}
+    },
+    "GetFunctionRequest": {
+      "base": "<p>-- Request/Response DataStructures --</p>",
+      "refs": {}
+    },
+    "GetFunctionResponse": {
+      "base": "<p>-- Define Mixin --</p>",
       "refs": {}
     },
     "GetPlaybackConfigurationRequest": {
@@ -550,6 +615,15 @@
         "AdDecisionServerConfiguration$HttpRequest": "<p>The HTTP request configuration parameters for the ad decision server.</p>"
       }
     },
+    "HttpRequestConfiguration": {
+      "base": "<p>-- Function Configuration DataStructure</p>",
+      "refs": {
+        "Function$HttpRequestConfiguration": "<p>The configuration for an <code>HTTP_REQUEST</code> function.</p>",
+        "GetFunctionResponse$HttpRequestConfiguration": "<p>The configuration for an <code>HTTP_REQUEST</code> function.</p>",
+        "PutFunctionRequest$HttpRequestConfiguration": "<p>The configuration for an <code>HTTP_REQUEST</code> function. Specifies the HTTP method, URL, headers, body, timeout, and output expressions. Required when <code>FunctionType</code> is <code>HTTP_REQUEST</code>.</p>",
+        "PutFunctionResponse$HttpRequestConfiguration": "<p>The configuration for an <code>HTTP_REQUEST</code> function.</p>"
+      }
+    },
     "InsertionMode": {
       "base": "<p>Insertion Mode controls whether players can use stitched or guided ad insertion.</p>",
       "refs": {
@@ -590,6 +664,14 @@
       "refs": {}
     },
     "ListChannelsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFunctionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFunctionsResponse": {
       "base": null,
       "refs": {}
     },
@@ -726,12 +808,19 @@
         "LogConfiguration$ManifestServiceInteractionLog": "<p>Settings for customizing what events are included in logs for interactions with the origin server.</p>"
       }
     },
+    "ManifestServicePublishOptInEventType": {
+      "base": null,
+      "refs": {
+        "__manifestServicePublishOptInEventTypesList$member": null
+      }
+    },
     "MaxResults": {
       "base": null,
       "refs": {
         "GetChannelScheduleRequest$MaxResults": "<p>The maximum number of channel schedules that you want MediaTailor to return in response to the current request. If there are more than <code>MaxResults</code> channel schedules, use the value of <code>NextToken</code> in the response to get the next page of results.</p>",
         "ListAlertsRequest$MaxResults": "<p>The maximum number of alerts that you want MediaTailor to return in response to the current request. If there are more than <code>MaxResults</code> alerts, use the value of <code>NextToken</code> in the response to get the next page of results.</p> <p>The default value is 100. MediaTailor uses DynamoDB-based pagination, which means that a response might contain fewer than <code>MaxResults</code> items, including 0 items, even when more results are available. To retrieve all results, you must continue making requests using the <code>NextToken</code> value from each response until the response no longer includes a <code>NextToken</code> value.</p>",
         "ListChannelsRequest$MaxResults": "<p>The maximum number of channels that you want MediaTailor to return in response to the current request. If there are more than <code>MaxResults</code> channels, use the value of <code>NextToken</code> in the response to get the next page of results.</p> <p>The default value is 100. MediaTailor uses DynamoDB-based pagination, which means that a response might contain fewer than <code>MaxResults</code> items, including 0 items, even when more results are available. To retrieve all results, you must continue making requests using the <code>NextToken</code> value from each response until the response no longer includes a <code>NextToken</code> value.</p>",
+        "ListFunctionsRequest$MaxResults": "<p>The maximum number of functions that you want MediaTailor to return in response to the current request. If there are more than <code>MaxResults</code> functions, use the value of <code>NextToken</code> in the response to get the next page of results.</p> <p>The default value is 100. MediaTailor uses token-based pagination, which means that a response might contain fewer than <code>MaxResults</code> items, including 0 items, even when more results are available. To retrieve all results, you must continue making requests using the <code>NextToken</code> value from each response until the response no longer includes a <code>NextToken</code> value.</p>",
         "ListLiveSourcesRequest$MaxResults": "<p>The maximum number of live sources that you want MediaTailor to return in response to the current request. If there are more than <code>MaxResults</code> live sources, use the value of <code>NextToken</code> in the response to get the next page of results.</p> <p>The default value is 100. MediaTailor uses DynamoDB-based pagination, which means that a response might contain fewer than <code>MaxResults</code> items, including 0 items, even when more results are available. To retrieve all results, you must continue making requests using the <code>NextToken</code> value from each response until the response no longer includes a <code>NextToken</code> value.</p>",
         "ListPlaybackConfigurationsRequest$MaxResults": "<p>The maximum number of playback configurations that you want MediaTailor to return in response to the current request. If there are more than <code>MaxResults</code> playback configurations, use the value of <code>NextToken</code> in the response to get the next page of results.</p> <p>The default value is 100. MediaTailor uses DynamoDB-based pagination, which means that a response might contain fewer than <code>MaxResults</code> items, including 0 items, even when more results are available. To retrieve all results, you must continue making requests using the <code>NextToken</code> value from each response until the response no longer includes a <code>NextToken</code> value.</p>",
         "ListSourceLocationsRequest$MaxResults": "<p> The maximum number of source locations that you want MediaTailor to return in response to the current request. If there are more than <code>MaxResults</code> source locations, use the value of <code>NextToken</code> in the response to get the next page of results.</p> <p>The default value is 100. MediaTailor uses DynamoDB-based pagination, which means that a response might contain fewer than <code>MaxResults</code> items, including 0 items, even when more results are available. To retrieve all results, you must continue making requests using the <code>NextToken</code> value from each response until the response no longer includes a <code>NextToken</code> value.</p>",
@@ -748,6 +837,12 @@
       "base": null,
       "refs": {
         "HttpRequest$Method": "<p>The HTTP method to use when making requests to the ad decision server. Supported values are <code>GET</code> and <code>POST</code>.</p>"
+      }
+    },
+    "MethodType": {
+      "base": null,
+      "refs": {
+        "HttpRequestConfiguration$MethodType": "<p>The HTTP method for the request. Valid values: <code>GET</code> and <code>POST</code>.</p>"
       }
     },
     "Mode": {
@@ -822,6 +917,14 @@
       "base": null,
       "refs": {}
     },
+    "PutFunctionRequest": {
+      "base": "<p>-- Define Mixin --</p>",
+      "refs": {}
+    },
+    "PutFunctionResponse": {
+      "base": "<p>-- Define Mixin --</p>",
+      "refs": {}
+    },
     "PutPlaybackConfigurationRequest": {
       "base": null,
       "refs": {}
@@ -885,6 +988,14 @@
         "UpdateChannelResponse$Outputs": "<p>The channel's output properties.</p>"
       }
     },
+    "RuntimeType": {
+      "base": null,
+      "refs": {
+        "CustomOutputConfiguration$Runtime": "<p>The expression language used to evaluate expressions in the function configuration. Set this to <code>JSONata</code>.</p>",
+        "HttpRequestConfiguration$Runtime": "<p>The expression language used to evaluate expressions in the function configuration. Set this to <code>JSONata</code>.</p>",
+        "SequentialExecutorConfiguration$Runtime": "<p>The expression language used to evaluate expressions in the function configuration. Set this to <code>JSONata</code>.</p>"
+      }
+    },
     "ScheduleAdBreak": {
       "base": "<p>The schedule's ad break properties.</p>",
       "refs": {
@@ -931,6 +1042,15 @@
       "base": null,
       "refs": {
         "TimeSignalMessage$SegmentationDescriptors": "<p>The configurations for the SCTE-35 <code>segmentation_descriptor</code> message(s) sent with the <code>time_signal</code> message.</p>"
+      }
+    },
+    "SequentialExecutorConfiguration": {
+      "base": "<p>The configuration for a <code>SEQUENTIAL_EXECUTOR</code> function. A <code>SEQUENTIAL_EXECUTOR</code> runs a sequence of child functions in order, passing data between steps through temporary data. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-types-sequential-executor.html\">SEQUENTIAL_EXECUTOR</a> in the <i>MediaTailor User Guide</i>.</p>",
+      "refs": {
+        "Function$SequentialExecutorConfiguration": "<p>The configuration for a <code>SEQUENTIAL_EXECUTOR</code> function.</p>",
+        "GetFunctionResponse$SequentialExecutorConfiguration": "<p>The configuration for a <code>SEQUENTIAL_EXECUTOR</code> function.</p>",
+        "PutFunctionRequest$SequentialExecutorConfiguration": "<p>The configuration for a <code>SEQUENTIAL_EXECUTOR</code> function. Specifies the ordered list of child functions to execute, an optional output block, and a timeout. Required when <code>FunctionType</code> is <code>SEQUENTIAL_EXECUTOR</code>.</p>",
+        "PutFunctionResponse$SequentialExecutorConfiguration": "<p>The configuration for a <code>SEQUENTIAL_EXECUTOR</code> function.</p>"
       }
     },
     "SlateSource": {
@@ -1143,10 +1263,12 @@
         "DashPlaylistSettings$MinUpdatePeriodSeconds": "<p>Minimum amount of time (in seconds) that the player should wait before requesting updates to the manifest. Minimum value: <code>2</code> seconds. Maximum value: <code>60</code> seconds.</p>",
         "DashPlaylistSettings$SuggestedPresentationDelaySeconds": "<p>Amount of time (in seconds) that the player should be from the live point at the end of the manifest. Minimum value: <code>2</code> seconds. Maximum value: <code>60</code> seconds.</p>",
         "HlsPlaylistSettings$ManifestWindowSeconds": "<p>The total duration (in seconds) of each manifest. Minimum value: <code>30</code> seconds. Maximum value: <code>3600</code> seconds.</p>",
+        "HttpRequestConfiguration$RequestTimeoutMilliseconds": "<p>The maximum time, in milliseconds, that MediaTailor waits for a response from the external service. If the call exceeds this timeout, MediaTailor sets the response status code to <code>null</code> and proceeds with output expression evaluation. Valid values: <code>100</code> to <code>2000</code>.</p>",
         "LivePreRollConfiguration$MaxDurationSeconds": "<p>The maximum allowed duration for the pre-roll ad avail. AWS Elemental MediaTailor won't play pre-roll ads to exceed this duration, regardless of the total duration of ads that the ADS returns.</p>",
         "LogConfiguration$PercentEnabled": "<p>The percentage of session logs that MediaTailor sends to your configured log destination. For example, if your playback configuration has 1000 sessions and <code>percentEnabled</code> is set to <code>60</code>, MediaTailor sends logs for 600 of the sessions to CloudWatch Logs. MediaTailor decides at random which of the playback configuration sessions to send logs for. If you want to view logs for a specific session, you can use the <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/debug-log-mode.html\">debug log mode</a>.</p> <p>Valid values: <code>0</code> - <code>100</code> </p>",
         "RecurringConsumption$RetrievedAdExpirationSeconds": "<p>The number of seconds that an ad is available for insertion after it was prefetched.</p>",
         "RecurringRetrieval$DelayAfterAvailEndSeconds": "<p>The number of seconds that MediaTailor waits after an ad avail before prefetching ads for the next avail. If not set, the default is 0 (no delay).</p>",
+        "SequentialExecutorConfiguration$TimeoutMilliseconds": "<p>The maximum time, in milliseconds, for the entire sequence to complete. This timeout covers all steps, including any HTTP calls made by child functions. If the sequence exceeds this timeout, MediaTailor discards all output from the sequence and proceeds with default behavior.</p>",
         "SpliceInsertMessage$AvailNum": "<p>This is written to <code>splice_insert.avail_num</code>, as defined in section 9.7.3.1 of the SCTE-35 specification. The default value is <code>0</code>. Values must be between <code>0</code> and <code>256</code>, inclusive.</p>",
         "SpliceInsertMessage$AvailsExpected": "<p>This is written to <code>splice_insert.avails_expected</code>, as defined in section 9.7.3.1 of the SCTE-35 specification. The default value is <code>0</code>. Values must be between <code>0</code> and <code>256</code>, inclusive.</p>",
         "SpliceInsertMessage$SpliceEventId": "<p>This is written to <code>splice_insert.splice_event_id</code>, as defined in section 9.7.3.1 of the SCTE-35 specification. The default value is <code>1</code>.</p>",
@@ -1216,6 +1338,18 @@
       "base": null,
       "refs": {
         "ListChannelsResponse$Items": "<p>A list of channels that are associated with this account.</p>"
+      }
+    },
+    "__listOfFunctionsRef": {
+      "base": null,
+      "refs": {
+        "SequentialExecutorConfiguration$FunctionList": "<p>An ordered list of 1 to 10 steps. Each step specifies a child function to execute and an optional run condition expression that controls whether the step runs. MediaTailor executes steps in order, passing data between steps through temporary data.</p>"
+      }
+    },
+    "__listOfFunctionsResponse": {
+      "base": null,
+      "refs": {
+        "ListFunctionsResponse$Items": "<p>A list of functions associated with your account in the current Region.</p>"
       }
     },
     "__listOfLiveSource": {
@@ -1311,6 +1445,12 @@
         "ManifestServiceInteractionLog$ExcludeEventTypes": "<p>Indicates that MediaTailor won't emit the selected events in the logs for playback sessions that are initialized with this configuration.</p>"
       }
     },
+    "__manifestServicePublishOptInEventTypesList": {
+      "base": null,
+      "refs": {
+        "ManifestServiceInteractionLog$PublishOptInEventTypes": "<p>Indicates that MediaTailor will emit the selected events in the logs for playback sessions that are initialized with this configuration. These events are not emitted by default and must be explicitly opted in.</p>"
+      }
+    },
     "__mapOf__string": {
       "base": null,
       "refs": {
@@ -1322,28 +1462,36 @@
         "CreateLiveSourceRequest$Tags": "<p>The tags to assign to the live source. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "CreateLiveSourceResponse$Tags": "<p>The tags to assign to the live source. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "CreatePrefetchScheduleRequest$Tags": "<p>The tags to assign to the prefetch schedule. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
-        "CreatePrefetchScheduleResponse$Tags": "<p>The tags to assign to the prefetch schedule. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
+        "CreatePrefetchScheduleResponse$Tags": "<p>The tags assigned to the prefetch schedule. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "CreateProgramRequest$Tags": "<p>The tags to assign to the program. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
-        "CreateProgramResponse$Tags": "<p>The tags to assign to the program. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
+        "CreateProgramResponse$Tags": "<p>The tags assigned to the program. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "CreateSourceLocationRequest$Tags": "<p>The tags to assign to the source location. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "CreateSourceLocationResponse$Tags": "<p>The tags to assign to the source location. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "CreateVodSourceRequest$Tags": "<p>The tags to assign to the VOD source. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "CreateVodSourceResponse$Tags": "<p>The tags to assign to the VOD source. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
+        "CustomOutputConfiguration$Output": "<p>A map of output bindings. Each key is a namespaced output path (such as <code>player_params.device_type</code> or <code>temp.variant</code>), and each value is an expression that MediaTailor evaluates at runtime against the current session state. For more information about expression syntax, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-jsonata.html\">JSONata expression reference</a> in the <i>MediaTailor User Guide</i>.</p>",
         "DescribeChannelResponse$Tags": "<p>The tags assigned to the channel. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "DescribeLiveSourceResponse$Tags": "<p>The tags assigned to the live source. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "DescribeProgramResponse$Tags": "<p>The tags assigned to the program. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "DescribeSourceLocationResponse$Tags": "<p>The tags assigned to the source location. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "DescribeVodSourceResponse$Tags": "<p>The tags assigned to the VOD source. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
+        "Function$Tags": "<p>The tags assigned to the function. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
+        "GetFunctionResponse$Tags": "<p>The tags assigned to the function. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "GetPlaybackConfigurationResponse$Tags": "<p>The tags assigned to the playback configuration. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "GetPrefetchScheduleResponse$Tags": "<p>The tags assigned to the prefetch schedule. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
+        "HttpRequestConfiguration$Output": "<p>A map of output bindings. Each key is a namespaced output path (such as <code>player_params.device_type</code> or <code>temp.identity</code>), and each value is an expression that MediaTailor evaluates at runtime. Output expressions in an <code>HTTP_REQUEST</code> function can reference the <code>response</code> object returned by the HTTP call. For more information about expression syntax, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-jsonata.html\">JSONata expression reference</a> in the <i>MediaTailor User Guide</i>.</p>",
+        "HttpRequestConfiguration$Headers": "<p>A map of HTTP header names to expression values. MediaTailor evaluates each header value expression at runtime and includes the result in the outbound HTTP request. Maximum 50 headers.</p>",
         "ListTagsForResourceResponse$Tags": "<p>The tags associated with this resource. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "LiveSource$Tags": "<p>The tags assigned to the live source. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "PlaybackConfiguration$Tags": "<p>The tags to assign to the playback configuration. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "PrefetchRetrieval$DynamicVariables": "<p>The dynamic variables to use for substitution during prefetch requests to the ad decision server (ADS).</p> <p>You initially configure <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables.html\">dynamic variables</a> for the ADS URL when you set up your playback configuration. When you specify <code>DynamicVariables</code> for prefetch retrieval, MediaTailor includes the dynamic variables in the request to the ADS.</p>",
         "PrefetchSchedule$Tags": "<p>The tags assigned to the prefetch schedule. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
+        "PutFunctionRequest$Tags": "<p>The tags to assign to the function. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
+        "PutFunctionResponse$Tags": "<p>The tags assigned to the function. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "PutPlaybackConfigurationRequest$Tags": "<p>The tags to assign to the playback configuration. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "PutPlaybackConfigurationResponse$Tags": "<p>The tags to assign to the playback configuration. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "RecurringRetrieval$DynamicVariables": "<p>The dynamic variables to use for substitution during prefetch requests to the ADS.</p>",
+        "SequentialExecutorConfiguration$Output": "<p>An optional map of output bindings that controls which bindings the sequence commits to the session state after all steps complete. If omitted, MediaTailor commits all accumulated output bindings from all child steps.</p>",
         "SourceLocation$Tags": "<p>The tags assigned to the source location. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "TagResourceRequest$Tags": "<p>The tags to assign to the resource. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "UpdateChannelResponse$Tags": "<p>The tags to assign to the channel. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
@@ -1424,6 +1572,7 @@
         "DefaultSegmentDeliveryConfiguration$BaseUrl": "<p>The hostname of the server that will be used to serve segments. This string must include the protocol, such as <b>https://</b>.</p>",
         "DeleteChannelPolicyRequest$ChannelName": "<p>The name of the channel associated with this channel policy.</p>",
         "DeleteChannelRequest$ChannelName": "<p>The name of the channel.</p>",
+        "DeleteFunctionRequest$FunctionId": "<p>The identifier of the function to delete.</p>",
         "DeleteLiveSourceRequest$LiveSourceName": "<p>The name of the live source.</p>",
         "DeleteLiveSourceRequest$SourceLocationName": "<p>The name of the source location associated with this Live Source.</p>",
         "DeletePlaybackConfigurationRequest$Name": "<p>The name of the playback configuration.</p>",
@@ -1460,6 +1609,12 @@
         "DescribeVodSourceResponse$Arn": "<p>The ARN of the VOD source.</p>",
         "DescribeVodSourceResponse$SourceLocationName": "<p>The name of the source location associated with the VOD source.</p>",
         "DescribeVodSourceResponse$VodSourceName": "<p>The name of the VOD source.</p>",
+        "Function$FunctionId": "<p>The identifier of the function.</p>",
+        "Function$Description": "<p>A description of the function.</p>",
+        "Function$Arn": "<p>The Amazon Resource Name (ARN) of the function.</p>",
+        "FunctionMapping$value": null,
+        "FunctionRef$RunCondition": "<p>An optional expression that evaluates to a boolean. MediaTailor evaluates this expression immediately before running the step, using the accumulated state at that point in the sequence. If the expression evaluates to <code>false</code>, MediaTailor skips the step and moves to the next one. If omitted, the step always runs.</p>",
+        "FunctionRef$FunctionId": "<p>The identifier of the child function to execute in this step.</p>",
         "GetChannelPolicyRequest$ChannelName": "<p>The name of the channel associated with this Channel Policy.</p>",
         "GetChannelPolicyResponse$Policy": "<p>The IAM policy for the channel. IAM policies are used to control access to your channel.</p>",
         "GetChannelScheduleRequest$ChannelName": "<p>The name of the channel associated with this Channel Schedule.</p>",
@@ -1467,6 +1622,10 @@
         "GetChannelScheduleRequest$NextToken": "<p>(Optional) If the playback configuration has more than <code>MaxResults</code> channel schedules, use <code>NextToken</code> to get the second and subsequent pages of results.</p> <p>For the first <code>GetChannelScheduleRequest</code> request, omit this value.</p> <p>For the second and subsequent requests, get the value of <code>NextToken</code> from the previous response and specify that value for <code>NextToken</code> in the request.</p> <p>If the previous response didn't include a <code>NextToken</code> element, there are no more channel schedules to get.</p>",
         "GetChannelScheduleRequest$Audience": "<p>The single audience for GetChannelScheduleRequest.</p>",
         "GetChannelScheduleResponse$NextToken": "<p>Pagination token returned by the list request when results exceed the maximum allowed. Use the token to fetch the next page of results.</p>",
+        "GetFunctionRequest$FunctionId": "<p>The identifier of the function.</p>",
+        "GetFunctionResponse$FunctionId": "<p>The identifier of the function.</p>",
+        "GetFunctionResponse$Description": "<p>A description of the function.</p>",
+        "GetFunctionResponse$Arn": "<p>The Amazon Resource Name (ARN) of the function.</p>",
         "GetPlaybackConfigurationRequest$Name": "<p>The identifier for the playback configuration.</p>",
         "GetPlaybackConfigurationResponse$AdDecisionServerUrl": "<p>The URL for the ad decision server (ADS). This includes the specification of static parameters and placeholders for dynamic parameters. AWS Elemental MediaTailor substitutes player-specific and session-specific parameters as needed when calling the ADS. Alternately, for testing, you can provide a static VAST URL. The maximum length is 25,000 characters.</p>",
         "GetPlaybackConfigurationResponse$Name": "<p>The identifier for the playback configuration.</p>",
@@ -1487,11 +1646,15 @@
         "HttpPackageConfiguration$Path": "<p>The relative path to the URL for this VOD source. This is combined with <code>SourceLocation::HttpConfiguration::BaseUrl</code> to form a valid URL.</p>",
         "HttpPackageConfiguration$SourceGroup": "<p>The name of the source group. This has to match one of the <code>Channel::Outputs::SourceGroup</code>.</p>",
         "HttpRequest$Body": "<p>The request body content to send with HTTP requests to the ad decision server. This value is only eligible for <code>POST</code> requests.</p>",
+        "HttpRequestConfiguration$Url": "<p>An expression that evaluates to the request URL. Use <code>{%...%}</code> delimiters for dynamic expressions. The maximum length after evaluation is 2,048 characters.</p>",
+        "HttpRequestConfiguration$Body": "<p>An expression that evaluates to the request body. Used with <code>POST</code> requests. The maximum size after evaluation is 64 KB.</p>",
         "ListAlertsRequest$NextToken": "<p>Pagination token returned by the list request when results exceed the maximum allowed. Use the token to fetch the next page of results.</p> <p>For the first <code>ListAlerts</code> request, omit this value. For subsequent requests, get the value of <code>NextToken</code> from the previous response and specify that value for <code>NextToken</code> in the request. Continue making requests until the response no longer includes a <code>NextToken</code> value, which indicates that all results have been retrieved.</p>",
         "ListAlertsRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "ListAlertsResponse$NextToken": "<p>Pagination token returned by the list request when results exceed the maximum allowed. Use the token to fetch the next page of results.</p>",
         "ListChannelsRequest$NextToken": "<p>Pagination token returned by the list request when results exceed the maximum allowed. Use the token to fetch the next page of results.</p> <p>For the first <code>ListChannels</code> request, omit this value. For subsequent requests, get the value of <code>NextToken</code> from the previous response and specify that value for <code>NextToken</code> in the request. Continue making requests until the response no longer includes a <code>NextToken</code> value, which indicates that all results have been retrieved.</p>",
         "ListChannelsResponse$NextToken": "<p>Pagination token returned by the list request when results exceed the maximum allowed. Use the token to fetch the next page of results.</p>",
+        "ListFunctionsRequest$NextToken": "<p>Pagination token returned by the list request when results exceed the maximum allowed. Use the token to fetch the next page of results.</p> <p>For the first <code>ListFunctions</code> request, omit this value. For subsequent requests, get the value of <code>NextToken</code> from the previous response and specify that value for <code>NextToken</code> in the request. Continue making requests until the response no longer includes a <code>NextToken</code> value, which indicates that all results have been retrieved.</p>",
+        "ListFunctionsResponse$NextToken": "<p>Pagination token returned by the list request when results exceed the maximum allowed. Use the token to fetch the next page of results.</p> <p>For the first <code>ListFunctions</code> request, omit this value. For subsequent requests, get the value of <code>NextToken</code> from the previous response and specify that value for <code>NextToken</code> in the request. Continue making requests until the response no longer includes a <code>NextToken</code> value, which indicates that all results have been retrieved.</p>",
         "ListLiveSourcesRequest$NextToken": "<p>Pagination token returned by the list request when results exceed the maximum allowed. Use the token to fetch the next page of results.</p> <p>For the first <code>ListLiveSources</code> request, omit this value. For subsequent requests, get the value of <code>NextToken</code> from the previous response and specify that value for <code>NextToken</code> in the request. Continue making requests until the response no longer includes a <code>NextToken</code> value, which indicates that all results have been retrieved.</p>",
         "ListLiveSourcesRequest$SourceLocationName": "<p>The name of the source location associated with this Live Sources list.</p>",
         "ListLiveSourcesResponse$NextToken": "<p>Pagination token returned by the list request when results exceed the maximum allowed. Use the token to fetch the next page of results.</p>",
@@ -1525,6 +1688,11 @@
         "PrefetchSchedule$StreamId": "<p>An optional stream identifier that you can specify in order to prefetch for multiple streams that use the same playback configuration.</p>",
         "PutChannelPolicyRequest$ChannelName": "<p>The channel name associated with this Channel Policy.</p>",
         "PutChannelPolicyRequest$Policy": "<p>Adds an IAM role that determines the permissions of your channel.</p>",
+        "PutFunctionRequest$FunctionId": "<p>The identifier of the function. The identifier must be unique within your account.</p>",
+        "PutFunctionRequest$Description": "<p>A description of the function.</p>",
+        "PutFunctionResponse$FunctionId": "<p>The identifier of the function.</p>",
+        "PutFunctionResponse$Description": "<p>A description of the function.</p>",
+        "PutFunctionResponse$Arn": "<p>The Amazon Resource Name (ARN) of the function.</p>",
         "PutPlaybackConfigurationRequest$AdDecisionServerUrl": "<p>The URL for the ad decision server (ADS). This includes the specification of static parameters and placeholders for dynamic parameters. AWS Elemental MediaTailor substitutes player-specific and session-specific parameters as needed when calling the ADS. Alternately, for testing you can provide a static VAST URL. The maximum length is 25,000 characters.</p>",
         "PutPlaybackConfigurationRequest$Name": "<p>The identifier for the playback configuration.</p>",
         "PutPlaybackConfigurationRequest$SlateAdUrl": "<p>The URL for a high-quality video asset to transcode and use to fill in time that's not used by ads. AWS Elemental MediaTailor shows the slate to fill in gaps in media content. Configuring the slate is optional for non-VPAID configurations. For VPAID, the slate is required because MediaTailor provides it in the slots that are designated for dynamic ad content. The slate must be a high-quality asset that contains both audio and video.</p>",

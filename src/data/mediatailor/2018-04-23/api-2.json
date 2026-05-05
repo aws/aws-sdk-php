@@ -123,6 +123,17 @@
       "output":{"shape":"DeleteChannelPolicyResponse"},
       "idempotent":true
     },
+    "DeleteFunction":{
+      "name":"DeleteFunction",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/function/{FunctionId}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteFunctionRequest"},
+      "output":{"shape":"DeleteFunctionResponse"},
+      "idempotent":true
+    },
     "DeleteLiveSource":{
       "name":"DeleteLiveSource",
       "http":{
@@ -266,6 +277,17 @@
       "output":{"shape":"GetChannelScheduleResponse"},
       "readonly":true
     },
+    "GetFunction":{
+      "name":"GetFunction",
+      "http":{
+        "method":"GET",
+        "requestUri":"/function/{FunctionId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetFunctionRequest"},
+      "output":{"shape":"GetFunctionResponse"},
+      "readonly":true
+    },
     "GetPlaybackConfiguration":{
       "name":"GetPlaybackConfiguration",
       "http":{
@@ -308,6 +330,17 @@
       },
       "input":{"shape":"ListChannelsRequest"},
       "output":{"shape":"ListChannelsResponse"},
+      "readonly":true
+    },
+    "ListFunctions":{
+      "name":"ListFunctions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/functions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListFunctionsRequest"},
+      "output":{"shape":"ListFunctionsResponse"},
       "readonly":true
     },
     "ListLiveSources":{
@@ -388,6 +421,17 @@
       },
       "input":{"shape":"PutChannelPolicyRequest"},
       "output":{"shape":"PutChannelPolicyResponse"},
+      "idempotent":true
+    },
+    "PutFunction":{
+      "name":"PutFunction",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/function/{FunctionId}",
+        "responseCode":200
+      },
+      "input":{"shape":"PutFunctionRequest"},
+      "output":{"shape":"PutFunctionResponse"},
       "idempotent":true
     },
     "PutPlaybackConfiguration":{
@@ -616,7 +660,9 @@
         "VOD_TIME_BASED_AVAIL_PLAN_SUCCESS",
         "VOD_TIME_BASED_AVAIL_PLAN_WARNING_NO_ADVERTISEMENTS",
         "INTERSTITIAL_VOD_SUCCESS",
-        "INTERSTITIAL_VOD_FAILURE"
+        "INTERSTITIAL_VOD_FAILURE",
+        "PRE_ADS_REQUEST_HOOK_ERROR",
+        "PRE_ADS_REQUEST_FUNCTION_ERROR"
       ]
     },
     "AdsInteractionLog":{
@@ -630,7 +676,9 @@
       "type":"string",
       "enum":[
         "RAW_ADS_RESPONSE",
-        "RAW_ADS_REQUEST"
+        "RAW_ADS_REQUEST",
+        "PRE_ADS_REQUEST_HOOK_SUMMARY",
+        "PRE_ADS_REQUEST_FUNCTION_COMPLETED"
       ]
     },
     "Alert":{
@@ -1093,6 +1141,14 @@
         "VodSourceName":{"shape":"__string"}
       }
     },
+    "CustomOutputConfiguration":{
+      "type":"structure",
+      "required":["Runtime"],
+      "members":{
+        "Runtime":{"shape":"RuntimeType"},
+        "Output":{"shape":"__mapOf__string"}
+      }
+    },
     "DashConfiguration":{
       "type":"structure",
       "members":{
@@ -1150,6 +1206,21 @@
       }
     },
     "DeleteChannelResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteFunctionRequest":{
+      "type":"structure",
+      "required":["FunctionId"],
+      "members":{
+        "FunctionId":{
+          "shape":"__string",
+          "location":"uri",
+          "locationName":"FunctionId"
+        }
+      }
+    },
+    "DeleteFunctionResponse":{
       "type":"structure",
       "members":{}
     },
@@ -1445,11 +1516,58 @@
         "VodSourceName":{"shape":"__string"}
       }
     },
+    "EventName":{
+      "type":"string",
+      "enum":[
+        "PRE_SESSION_INITIALIZATION",
+        "PRE_ADS_REQUEST"
+      ]
+    },
     "FillPolicy":{
       "type":"string",
       "enum":[
         "FULL_AVAIL_ONLY",
         "PARTIAL_AVAIL"
+      ]
+    },
+    "Function":{
+      "type":"structure",
+      "required":[
+        "FunctionId",
+        "FunctionType"
+      ],
+      "members":{
+        "FunctionId":{"shape":"__string"},
+        "FunctionType":{"shape":"FunctionType"},
+        "Description":{"shape":"__string"},
+        "HttpRequestConfiguration":{"shape":"HttpRequestConfiguration"},
+        "CustomOutputConfiguration":{"shape":"CustomOutputConfiguration"},
+        "SequentialExecutorConfiguration":{"shape":"SequentialExecutorConfiguration"},
+        "Tags":{
+          "shape":"__mapOf__string",
+          "locationName":"tags"
+        },
+        "Arn":{"shape":"__string"}
+      }
+    },
+    "FunctionMapping":{
+      "type":"map",
+      "key":{"shape":"EventName"},
+      "value":{"shape":"__string"}
+    },
+    "FunctionRef":{
+      "type":"structure",
+      "members":{
+        "RunCondition":{"shape":"__string"},
+        "FunctionId":{"shape":"__string"}
+      }
+    },
+    "FunctionType":{
+      "type":"string",
+      "enum":[
+        "HTTP_REQUEST",
+        "CUSTOM_OUTPUT",
+        "SEQUENTIAL_EXECUTOR"
       ]
     },
     "GetChannelPolicyRequest":{
@@ -1507,6 +1625,37 @@
         "NextToken":{"shape":"__string"}
       }
     },
+    "GetFunctionRequest":{
+      "type":"structure",
+      "required":["FunctionId"],
+      "members":{
+        "FunctionId":{
+          "shape":"__string",
+          "location":"uri",
+          "locationName":"FunctionId"
+        }
+      }
+    },
+    "GetFunctionResponse":{
+      "type":"structure",
+      "required":[
+        "FunctionId",
+        "FunctionType"
+      ],
+      "members":{
+        "FunctionId":{"shape":"__string"},
+        "FunctionType":{"shape":"FunctionType"},
+        "Description":{"shape":"__string"},
+        "HttpRequestConfiguration":{"shape":"HttpRequestConfiguration"},
+        "CustomOutputConfiguration":{"shape":"CustomOutputConfiguration"},
+        "SequentialExecutorConfiguration":{"shape":"SequentialExecutorConfiguration"},
+        "Tags":{
+          "shape":"__mapOf__string",
+          "locationName":"tags"
+        },
+        "Arn":{"shape":"__string"}
+      }
+    },
     "GetPlaybackConfigurationRequest":{
       "type":"structure",
       "required":["Name"],
@@ -1545,7 +1694,8 @@
         "TranscodeProfileName":{"shape":"__string"},
         "VideoContentSourceUrl":{"shape":"__string"},
         "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"},
-        "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"}
+        "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"},
+        "FunctionMapping":{"shape":"FunctionMapping"}
       }
     },
     "GetPrefetchScheduleRequest":{
@@ -1630,6 +1780,24 @@
         "CompressRequest":{"shape":"CompressionMethod"}
       }
     },
+    "HttpRequestConfiguration":{
+      "type":"structure",
+      "required":[
+        "Runtime",
+        "MethodType",
+        "RequestTimeoutMilliseconds",
+        "Url"
+      ],
+      "members":{
+        "Runtime":{"shape":"RuntimeType"},
+        "Output":{"shape":"__mapOf__string"},
+        "MethodType":{"shape":"MethodType"},
+        "RequestTimeoutMilliseconds":{"shape":"__integer"},
+        "Url":{"shape":"__string"},
+        "Body":{"shape":"__string"},
+        "Headers":{"shape":"__mapOf__string"}
+      }
+    },
     "InsertionMode":{
       "type":"string",
       "enum":[
@@ -1699,6 +1867,28 @@
       "type":"structure",
       "members":{
         "Items":{"shape":"__listOfChannel"},
+        "NextToken":{"shape":"__string"}
+      }
+    },
+    "ListFunctionsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"__string",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListFunctionsResponse":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"__listOfFunctionsResponse"},
         "NextToken":{"shape":"__string"}
       }
     },
@@ -1958,14 +2148,24 @@
         "ERROR_SLATE_AD_URL_INTERPOLATION",
         "ERROR_PROFILE_NAME_INTERPOLATION",
         "ERROR_BUMPER_START_INTERPOLATION",
-        "ERROR_BUMPER_END_INTERPOLATION"
+        "ERROR_BUMPER_END_INTERPOLATION",
+        "PRE_SESSION_INIT_HOOK_ERROR",
+        "PRE_SESSION_INIT_FUNCTION_ERROR"
       ]
     },
     "ManifestServiceInteractionLog":{
       "type":"structure",
       "members":{
+        "PublishOptInEventTypes":{"shape":"__manifestServicePublishOptInEventTypesList"},
         "ExcludeEventTypes":{"shape":"__manifestServiceExcludeEventTypesList"}
       }
+    },
+    "ManifestServicePublishOptInEventType":{
+      "type":"string",
+      "enum":[
+        "PRE_SESSION_INIT_HOOK_SUMMARY",
+        "PRE_SESSION_INIT_FUNCTION_COMPLETED"
+      ]
     },
     "MaxResults":{
       "type":"integer",
@@ -1981,6 +2181,13 @@
       ]
     },
     "Method":{
+      "type":"string",
+      "enum":[
+        "GET",
+        "POST"
+      ]
+    },
+    "MethodType":{
       "type":"string",
       "enum":[
         "GET",
@@ -2033,7 +2240,8 @@
         "TranscodeProfileName":{"shape":"__string"},
         "VideoContentSourceUrl":{"shape":"__string"},
         "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"},
-        "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"}
+        "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"},
+        "FunctionMapping":{"shape":"FunctionMapping"}
       }
     },
     "PlaybackMode":{
@@ -2112,6 +2320,49 @@
       "type":"structure",
       "members":{}
     },
+    "PutFunctionRequest":{
+      "type":"structure",
+      "required":[
+        "FunctionId",
+        "FunctionType"
+      ],
+      "members":{
+        "FunctionId":{
+          "shape":"__string",
+          "location":"uri",
+          "locationName":"FunctionId"
+        },
+        "FunctionType":{"shape":"FunctionType"},
+        "Description":{"shape":"__string"},
+        "HttpRequestConfiguration":{"shape":"HttpRequestConfiguration"},
+        "CustomOutputConfiguration":{"shape":"CustomOutputConfiguration"},
+        "SequentialExecutorConfiguration":{"shape":"SequentialExecutorConfiguration"},
+        "Tags":{
+          "shape":"__mapOf__string",
+          "locationName":"tags"
+        }
+      }
+    },
+    "PutFunctionResponse":{
+      "type":"structure",
+      "required":[
+        "FunctionId",
+        "FunctionType"
+      ],
+      "members":{
+        "FunctionId":{"shape":"__string"},
+        "FunctionType":{"shape":"FunctionType"},
+        "Description":{"shape":"__string"},
+        "HttpRequestConfiguration":{"shape":"HttpRequestConfiguration"},
+        "CustomOutputConfiguration":{"shape":"CustomOutputConfiguration"},
+        "SequentialExecutorConfiguration":{"shape":"SequentialExecutorConfiguration"},
+        "Tags":{
+          "shape":"__mapOf__string",
+          "locationName":"tags"
+        },
+        "Arn":{"shape":"__string"}
+      }
+    },
     "PutPlaybackConfigurationRequest":{
       "type":"structure",
       "required":["Name"],
@@ -2135,7 +2386,8 @@
         "TranscodeProfileName":{"shape":"__string"},
         "VideoContentSourceUrl":{"shape":"__string"},
         "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"},
-        "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"}
+        "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"},
+        "FunctionMapping":{"shape":"FunctionMapping"}
       }
     },
     "PutPlaybackConfigurationResponse":{
@@ -2165,7 +2417,8 @@
         "TranscodeProfileName":{"shape":"__string"},
         "VideoContentSourceUrl":{"shape":"__string"},
         "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"},
-        "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"}
+        "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"},
+        "FunctionMapping":{"shape":"FunctionMapping"}
       }
     },
     "RecurringConsumption":{
@@ -2241,6 +2494,10 @@
     "ResponseOutputs":{
       "type":"list",
       "member":{"shape":"ResponseOutputItem"}
+    },
+    "RuntimeType":{
+      "type":"string",
+      "enum":["JSONATA"]
     },
     "ScheduleAdBreak":{
       "type":"structure",
@@ -2320,6 +2577,20 @@
     "SegmentationDescriptorList":{
       "type":"list",
       "member":{"shape":"SegmentationDescriptor"}
+    },
+    "SequentialExecutorConfiguration":{
+      "type":"structure",
+      "required":[
+        "Runtime",
+        "FunctionList",
+        "TimeoutMilliseconds"
+      ],
+      "members":{
+        "Runtime":{"shape":"RuntimeType"},
+        "Output":{"shape":"__mapOf__string"},
+        "FunctionList":{"shape":"__listOfFunctionsRef"},
+        "TimeoutMilliseconds":{"shape":"__integer"}
+      }
     },
     "SlateSource":{
       "type":"structure",
@@ -2775,6 +3046,14 @@
       "type":"list",
       "member":{"shape":"Channel"}
     },
+    "__listOfFunctionsRef":{
+      "type":"list",
+      "member":{"shape":"FunctionRef"}
+    },
+    "__listOfFunctionsResponse":{
+      "type":"list",
+      "member":{"shape":"Function"}
+    },
     "__listOfLiveSource":{
       "type":"list",
       "member":{"shape":"LiveSource"}
@@ -2822,6 +3101,10 @@
     "__manifestServiceExcludeEventTypesList":{
       "type":"list",
       "member":{"shape":"ManifestServiceExcludeEventType"}
+    },
+    "__manifestServicePublishOptInEventTypesList":{
+      "type":"list",
+      "member":{"shape":"ManifestServicePublishOptInEventType"}
     },
     "__mapOf__string":{
       "type":"map",
