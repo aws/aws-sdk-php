@@ -21,7 +21,7 @@ clean: clear-cache
 	rm -rf build/artifacts/*
 
 clear-cache:
-	php build/aws-clear-cache.php
+	php build/WorkflowCommandRunner.php clear-cache
 
 test:
 	AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_SESSION_TOKEN= \
@@ -33,10 +33,10 @@ test:
 
 test-phar: package
 	[ -f build/artifacts/behat.phar ] || (cd build/artifacts && \
-	wget https://github.com/Behat/Behat/releases/download/v3.0.15/behat.phar)
+	wget https://github.com/Behat/Behat/releases/download/v3.13.0/behat.phar)
 	[ -f build/artifacts/phpunit.phar ] || (cd build/artifacts && \
 	wget https://phar.phpunit.de/phpunit.phar)
-	php -dopcache.enable_cli=1 build/phar-test-runner.php --format=progress
+	php -dopcache.enable_cli=1 build/WorkflowCommandRunner.php phar-test-runner --format=progress
 
 coverage:
 	@AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_CSM_ENABLED=false \
@@ -78,7 +78,7 @@ smoke-noassumerole:
 
 # Packages the phar and zip
 package:
-	php build/packager.php $(SERVICE)
+	php build/WorkflowCommandRunner.php package$(if $(SERVICE), --service=$(SERVICE),)
 
 api-get-phpdocumentor:
 	mkdir -p build/artifacts
@@ -89,19 +89,19 @@ api: api-get-phpdocumentor
 	[ -d build/artifacts/staging ] || make package
 	# Delete a previously built API build to avoid the prompt.
 	rm -rf build/artifacts/docs
-	php build/remove-method-annotations.php
+	php build/WorkflowCommandRunner.php remove-method-annotations
 	php build/artifacts/phpDocumentor.phar run --config build/docs/phpdoc.dist.xml
-	php build/normalize-docs-files.php
+	php build/WorkflowCommandRunner.php normalize-docs-files
 	make api-models
 	make redirect-map
 
 api-models:
 	# Build custom docs
-	php build/docs.php $(if $(ISSUE_LOGGING_ENABLED),--issue-logging-enabled,)
+	php build/WorkflowCommandRunner.php docs $(if $(ISSUE_LOGGING_ENABLED),--issue-logging-enabled,)
 
 redirect-map:
 	# Build redirect map
-	php build/build-redirect-map.php
+	php build/WorkflowCommandRunner.php build-redirect-map
 
 api-show:
 	open build/artifacts/docs/index.html
@@ -110,23 +110,23 @@ api-package:
 	zip -r build/artifacts/aws-docs-api.zip build/artifacts/docs/build
 
 api-manifest:
-	php build/build-manifest.php
+	php build/WorkflowCommandRunner.php build-manifest
 	make clear-cache
 
 # Compiles JSON data files and prints the names of PHP data files created or
 # updated.
 compile-json:
-	php -dopcache.enable_cli=1 build/compile-json.php
+	php -dopcache.enable_cli=1 build/WorkflowCommandRunner.php compile-json
 	git diff --name-only | grep ^src/data/.*\.json\.php$ || true
 
 annotate-clients: clean
-	php build/annotate-clients.php --all
+	php build/WorkflowCommandRunner.php annotate-clients --all
 
 annotate-client-locator: clean
-	php build/annotate-client-locator.php
+	php build/WorkflowCommandRunner.php annotate-client-locator
 
 build-manifest:
-	php build/build-manifest.php >/dev/null
+	php build/WorkflowCommandRunner.php build-manifest >/dev/null
 
 build: | build-manifest compile-json annotate-clients annotate-client-locator
 
@@ -159,7 +159,7 @@ tag: check-tag
 release: check-tag package
 	git push origin master
 	git push origin $(TAG)
-	php build/gh-release.php $(TAG)
+	php build/WorkflowCommandRunner.php gh-release --tag=$(TAG)
 
 # Tags the repo and publishes a release.
 full_release: tag release
