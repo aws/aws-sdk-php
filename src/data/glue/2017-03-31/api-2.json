@@ -7834,7 +7834,8 @@
       "members":{
         "CloudWatchMetricsEnabled":{"shape":"NullableBoolean"},
         "ResultsS3Prefix":{"shape":"UriString"},
-        "CompositeRuleEvaluationMethod":{"shape":"DQCompositeRuleEvaluationMethod"}
+        "CompositeRuleEvaluationMethod":{"shape":"DQCompositeRuleEvaluationMethod"},
+        "CustomLogGroupPrefix":{"shape":"GenericString"}
       }
     },
     "DataQualityGlueTable":{
@@ -8020,7 +8021,8 @@
       "members":{
         "DataSource":{"shape":"DataSource"},
         "StartedBefore":{"shape":"Timestamp"},
-        "StartedAfter":{"shape":"Timestamp"}
+        "StartedAfter":{"shape":"Timestamp"},
+        "RulesetName":{"shape":"NameString"}
       }
     },
     "DataQualityRulesetEvaluationRunList":{

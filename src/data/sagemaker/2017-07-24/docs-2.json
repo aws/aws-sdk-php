@@ -3289,6 +3289,14 @@
         "ClusterInstanceStorageConfig$FsxOpenZfsConfig": "<p>Defines the configuration for attaching an Amazon FSx for OpenZFS file system to the instances in the SageMaker HyperPod cluster instance group.</p>"
       }
     },
+    "ClusterImageVersionStatus": {
+      "base": "<p>The status of the Amazon Machine Image (AMI) version for the HyperPod cluster instance group, node, or cluster. The AMI version is determined at the instance group level, and all nodes within an instance group run the same AMI. The cluster-level status is aggregated across all instance groups.</p> <ul> <li> <p> <code>UpToDate</code>: The resource is running the latest available AMI version.</p> </li> <li> <p> <code>UpdateAvailable</code>: A newer AMI version is available for the resource.</p> </li> </ul>",
+      "refs": {
+        "ClusterInstanceGroupDetails$ImageVersionStatus": "<p>The status of the image version for the instance group. Indicates whether the instance group is running the latest image version or if an update is available.</p>",
+        "ClusterNodeDetails$ImageVersionStatus": "<p>The status of the image version for the cluster node.</p>",
+        "ClusterNodeSummary$ImageVersionStatus": "<p>The status of the image version for the cluster node.</p>"
+      }
+    },
     "ClusterInstanceCount": {
       "base": null,
       "refs": {

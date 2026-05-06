@@ -4798,6 +4798,23 @@
       "type":"double",
       "box":true
     },
+    "EfsAccessPointArn":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"arn:aws[-a-z]*:elasticfilesystem:[0-9a-z-:]+:access-point/fsap-[0-9a-f]{8,40}"
+    },
+    "EfsAccessPointConfiguration":{
+      "type":"structure",
+      "required":[
+        "accessPointArn",
+        "mountPath"
+      ],
+      "members":{
+        "accessPointArn":{"shape":"EfsAccessPointArn"},
+        "mountPath":{"shape":"MountPath"}
+      }
+    },
     "EncryptionFailure":{
       "type":"structure",
       "required":["message"],
@@ -5111,14 +5128,16 @@
     "FilesystemConfiguration":{
       "type":"structure",
       "members":{
-        "sessionStorage":{"shape":"SessionStorageConfiguration"}
+        "sessionStorage":{"shape":"SessionStorageConfiguration"},
+        "s3FilesAccessPoint":{"shape":"S3FilesAccessPointConfiguration"},
+        "efsAccessPoint":{"shape":"EfsAccessPointConfiguration"}
       },
       "union":true
     },
     "FilesystemConfigurations":{
       "type":"list",
       "member":{"shape":"FilesystemConfiguration"},
-      "max":1,
+      "max":5,
       "min":0
     },
     "Filter":{
@@ -9313,6 +9332,23 @@
       "members":{
         "uri":{"shape":"S3BucketUri"},
         "bucketOwnerAccountId":{"shape":"AwsAccountId"}
+      }
+    },
+    "S3FilesAccessPointArn":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}/access-point/fsap-[0-9a-f]{17,40}"
+    },
+    "S3FilesAccessPointConfiguration":{
+      "type":"structure",
+      "required":[
+        "accessPointArn",
+        "mountPath"
+      ],
+      "members":{
+        "accessPointArn":{"shape":"S3FilesAccessPointArn"},
+        "mountPath":{"shape":"MountPath"}
       }
     },
     "S3Location":{

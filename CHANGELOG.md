@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\imagebuilder` - The ImportDiskImage API now enforces a maximum character limit of 128 characters on the image name field.
+* `Aws\MWAA` - Amazon MWAA now supports a PublicAndPrivate webserver access mode. The Airflow web server is accessible over both public and private endpoints, enabling workers in VPCs without internet access to reach the Task API privately while retaining public access to the Airflow UI.
+* `Aws\S3` - Validate outpost access point resource name
+* `Aws\BedrockAgentCoreControl` - Adds support for bring-your-own file system in AgentCore Runtime. Developers can mount Amazon S3 Files and Amazon EFS access points directly into agent sessions using filesystemConfigurations.
+* `Aws\LexModelsV2` - Amazon Lex V2 introduces audio filler support for speech-to-speech bots. Configure melody or typing sounds that play during backend processing to reduce perceived latency and maintain a natural conversational experience for callers.
+* `Aws\Glue` - Adds support for a CustomLogGroupPrefix parameter in StartDataQualityRulesetEvaluationRun to specify custom CloudWatch log group paths, and a RulesetName filter in ListDataQualityRulesetEvaluationRuns to filter evaluation runs by ruleset name.
+* `Aws\SageMaker` - Amazon SageMaker HyperPod now returns ImageVersionStatus in DescribeCluster, DescribeClusterNode, and ListClusterNodes responses, indicating whether cluster instances are running the latest available image version.
+* `Aws\SecurityHub` - Release GenerateRecommendedPolicyV2 and GetRecommendedPolicyV2 APIs. This supports generating and retrieving policy recommendations to remediate unused permissions findings that are now being supported on Security Hub.
+
 ## 3.380.1 - 2026-05-05
 
 * `Aws\CleanRoomsML` - Increase max configurable output limits in the Clean Rooms ML configured model algorithm association resource.

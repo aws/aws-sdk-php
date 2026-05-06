@@ -2708,6 +2708,42 @@
       "min":1,
       "pattern":"^s3://([a-z0-9\\\\.-]+)/(.+)$"
     },
+    "AudioFillerDelayInMilliseconds":{
+      "type":"integer",
+      "box":true
+    },
+    "AudioFillerDeliveryDelayInMilliseconds":{
+      "type":"integer",
+      "box":true
+    },
+    "AudioFillerDurationInMilliseconds":{
+      "type":"integer",
+      "box":true
+    },
+    "AudioFillerSettings":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"Boolean"},
+        "audioType":{"shape":"AudioFillerType"},
+        "startDelayInMilliseconds":{"shape":"AudioFillerDelayInMilliseconds"},
+        "minimumPlayDurationInMilliseconds":{"shape":"AudioFillerDurationInMilliseconds"},
+        "responseDeliveryDelayInMilliseconds":{"shape":"AudioFillerDeliveryDelayInMilliseconds"}
+      }
+    },
+    "AudioFillerType":{
+      "type":"string",
+      "enum":[
+        "MELODY_CHIPPER_CHIME",
+        "MELODY_CURIOUS_CRAWL",
+        "MELODY_RISING_RIPPLE",
+        "MELODY_PATIENT_PING",
+        "MELODY_PONDERING_PONG",
+        "TYPING_KINETIC_KEYS",
+        "TYPING_QUIET_QWERTY"
+      ],
+      "max":64,
+      "min":1
+    },
     "AudioLogDestination":{
       "type":"structure",
       "required":["s3Bucket"],
@@ -3210,7 +3246,8 @@
         "voiceSettings":{"shape":"VoiceSettings"},
         "speechRecognitionSettings":{"shape":"SpeechRecognitionSettings"},
         "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"},
-        "unifiedSpeechSettings":{"shape":"UnifiedSpeechSettings"}
+        "unifiedSpeechSettings":{"shape":"UnifiedSpeechSettings"},
+        "audioFillerSettings":{"shape":"AudioFillerSettings"}
       }
     },
     "BotLocaleSortAttribute":{
@@ -3938,6 +3975,7 @@
         "nluIntentConfidenceThreshold":{"shape":"ConfidenceThreshold"},
         "voiceSettings":{"shape":"VoiceSettings"},
         "unifiedSpeechSettings":{"shape":"UnifiedSpeechSettings"},
+        "audioFillerSettings":{"shape":"AudioFillerSettings"},
         "speechRecognitionSettings":{"shape":"SpeechRecognitionSettings"},
         "generativeAISettings":{"shape":"GenerativeAISettings"},
         "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
@@ -3954,6 +3992,7 @@
         "nluIntentConfidenceThreshold":{"shape":"ConfidenceThreshold"},
         "voiceSettings":{"shape":"VoiceSettings"},
         "unifiedSpeechSettings":{"shape":"UnifiedSpeechSettings"},
+        "audioFillerSettings":{"shape":"AudioFillerSettings"},
         "speechRecognitionSettings":{"shape":"SpeechRecognitionSettings"},
         "botLocaleStatus":{"shape":"BotLocaleStatus"},
         "creationDateTime":{"shape":"Timestamp"},
@@ -5035,6 +5074,7 @@
         "nluIntentConfidenceThreshold":{"shape":"ConfidenceThreshold"},
         "voiceSettings":{"shape":"VoiceSettings"},
         "unifiedSpeechSettings":{"shape":"UnifiedSpeechSettings"},
+        "audioFillerSettings":{"shape":"AudioFillerSettings"},
         "speechRecognitionSettings":{"shape":"SpeechRecognitionSettings"},
         "intentsCount":{"shape":"ResourceCount"},
         "slotTypesCount":{"shape":"ResourceCount"},
@@ -9458,6 +9498,7 @@
         "nluIntentConfidenceThreshold":{"shape":"ConfidenceThreshold"},
         "voiceSettings":{"shape":"VoiceSettings"},
         "unifiedSpeechSettings":{"shape":"UnifiedSpeechSettings"},
+        "audioFillerSettings":{"shape":"AudioFillerSettings"},
         "speechRecognitionSettings":{"shape":"SpeechRecognitionSettings"},
         "generativeAISettings":{"shape":"GenerativeAISettings"},
         "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
@@ -9474,6 +9515,7 @@
         "nluIntentConfidenceThreshold":{"shape":"ConfidenceThreshold"},
         "voiceSettings":{"shape":"VoiceSettings"},
         "unifiedSpeechSettings":{"shape":"UnifiedSpeechSettings"},
+        "audioFillerSettings":{"shape":"AudioFillerSettings"},
         "speechRecognitionSettings":{"shape":"SpeechRecognitionSettings"},
         "botLocaleStatus":{"shape":"BotLocaleStatus"},
         "failureReasons":{"shape":"FailureReasons"},

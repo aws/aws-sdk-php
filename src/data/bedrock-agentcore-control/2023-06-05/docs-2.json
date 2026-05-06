@@ -2001,6 +2001,18 @@
         "NumberValidation$maxValue": "<p>Maximum allowed value.</p>"
       }
     },
+    "EfsAccessPointArn": {
+      "base": null,
+      "refs": {
+        "EfsAccessPointConfiguration$accessPointArn": "<p>The ARN of the EFS access point to mount into the AgentCore Runtime.</p>"
+      }
+    },
+    "EfsAccessPointConfiguration": {
+      "base": "<p>Configuration for an Amazon EFS access point filesystem mounted into the AgentCore Runtime. EFS access points provide shared file storage accessible from your AgentCore Runtime sessions.</p>",
+      "refs": {
+        "FilesystemConfiguration$efsAccessPoint": "<p>Configuration for an Amazon EFS access point to mount into the AgentCore Runtime.</p>"
+      }
+    },
     "EncryptionFailure": {
       "base": "<p>Exception thrown when encryption of a secret fails.</p>",
       "refs": {}
@@ -4177,6 +4189,8 @@
     "MountPath": {
       "base": null,
       "refs": {
+        "EfsAccessPointConfiguration$mountPath": "<p>The mount path for the EFS access point inside the AgentCore Runtime. The path must be under <code>/mnt</code> with exactly one subdirectory level (for example, <code>/mnt/data</code>).</p>",
+        "S3FilesAccessPointConfiguration$mountPath": "<p>The mount path for the S3 Files access point inside the AgentCore Runtime. The path must be under <code>/mnt</code> with exactly one subdirectory level (for example, <code>/mnt/data</code>).</p>",
         "SessionStorageConfiguration$mountPath": "<p>The mount path for the session storage filesystem inside the AgentCore Runtime. The path must be under <code>/mnt</code> with exactly one subdirectory level (for example, <code>/mnt/data</code>).</p>"
       }
     },
@@ -5261,6 +5275,18 @@
         "ApiSchemaConfiguration$s3": null,
         "McpToolSchemaConfiguration$s3": "<p>The Amazon S3 location of the tool schema. This location contains the schema definition file.</p>",
         "ToolSchema$s3": "<p>The Amazon S3 location of the tool schema. This location contains the schema definition file.</p>"
+      }
+    },
+    "S3FilesAccessPointArn": {
+      "base": null,
+      "refs": {
+        "S3FilesAccessPointConfiguration$accessPointArn": "<p>The ARN of the S3 Files access point to mount into the AgentCore Runtime.</p>"
+      }
+    },
+    "S3FilesAccessPointConfiguration": {
+      "base": "<p>Configuration for an Amazon S3 Files access point filesystem mounted into the AgentCore Runtime. S3 Files access points provide shared file storage accessible from your AgentCore Runtime sessions.</p>",
+      "refs": {
+        "FilesystemConfiguration$s3FilesAccessPoint": "<p>Configuration for an Amazon S3 Files access point to mount into the AgentCore Runtime.</p>"
       }
     },
     "S3Location": {

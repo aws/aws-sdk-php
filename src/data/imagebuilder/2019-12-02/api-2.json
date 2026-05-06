@@ -754,7 +754,9 @@
       "errors":[
         {"shape":"ServiceException"},
         {"shape":"ClientException"},
-        {"shape":"ServiceUnavailableException"}
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"}
       ]
     },
     "ImportVmImage":{
@@ -3300,7 +3302,7 @@
         "clientToken"
       ],
       "members":{
-        "name":{"shape":"NonEmptyString"},
+        "name":{"shape":"ResourceName"},
         "semanticVersion":{"shape":"VersionNumber"},
         "description":{"shape":"NonEmptyString"},
         "platform":{"shape":"NonEmptyString"},
