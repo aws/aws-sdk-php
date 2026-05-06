@@ -384,8 +384,8 @@ final class Middleware
      */
     public static function mapRequest(callable $f)
     {
-        return function (callable $handler) use ($f) {
-            return function (
+        return static function (callable $handler) use ($f) {
+            return static function (
                 CommandInterface $command,
                 ?RequestInterface $request = null
             ) use ($handler, $f) {

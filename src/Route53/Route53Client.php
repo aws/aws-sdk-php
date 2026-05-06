@@ -161,11 +161,11 @@ class Route53Client extends AwsClient
 
     private function cleanIdFn()
     {
-        return function (callable $handler) {
-            return function (CommandInterface $c, ?RequestInterface $r = null) use ($handler) {
+        return static function (callable $handler) {
+            return static function (CommandInterface $c, ?RequestInterface $r = null) use ($handler) {
                 foreach (['Id', 'HostedZoneId', 'DelegationSetId'] as $clean) {
                     if ($c->hasParam($clean)) {
-                        $c[$clean] = $this->cleanId($c[$clean]);
+                        $c[$clean] = self::cleanId($c[$clean]);
                     }
                 }
                 return $handler($c, $r);
@@ -173,7 +173,7 @@ class Route53Client extends AwsClient
         };
     }
 
-    private function cleanId($id)
+    private static function cleanId($id)
     {
         static $toClean = ['/hostedzone/', '/change/', '/delegationset/'];
 
