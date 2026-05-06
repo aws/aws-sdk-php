@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.380.2 - 2026-05-06
 
 * `Aws\imagebuilder` - The ImportDiskImage API now enforces a maximum character limit of 128 characters on the image name field.
 * `Aws\MWAA` - Amazon MWAA now supports a PublicAndPrivate webserver access mode. The Airflow web server is accessible over both public and private endpoints, enabling workers in VPCs without internet access to reach the Task API privately while retaining public access to the Airflow UI.
