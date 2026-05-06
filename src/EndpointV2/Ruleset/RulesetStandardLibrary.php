@@ -179,11 +179,11 @@ class RulesetStandardLibrary
 
         $urlInfo = [];
         $urlInfo['scheme'] = $parsed['scheme'];
-        $urlInfo['authority'] = isset($parsed['host']) ? $parsed['host'] : '';
+        $urlInfo['authority'] = $parsed['host'] ?? '';
         if (isset($parsed['port'])) {
             $urlInfo['authority'] = $urlInfo['authority'] . ":" . $parsed['port'];
         }
-        $urlInfo['path'] = isset($parsed['path']) ? $parsed['path'] : '';
+        $urlInfo['path'] = $parsed['path'] ?? '';
         $urlInfo['normalizedPath'] = !empty($parsed['path'])
             ? rtrim($urlInfo['path'] ?: '', '/' .  "/") . '/'
             : '/';
@@ -401,9 +401,10 @@ class RulesetStandardLibrary
                 break;
 
             case 'isSet':
-                $result = $this->is_set(
-                    $this->resolveValue($argv[0], $inputParameters)
-                );
+                $arg = $argv[0];
+                $result = isset($arg['ref'])
+                    ? isset($inputParameters[$arg['ref']])
+                    : $this->is_set($this->resolveValue($arg, $inputParameters));
                 break;
 
             case 'not':
@@ -462,13 +463,20 @@ class RulesetStandardLibrary
     {
         //Given a value, check if it's a function, reference or template.
         //returns resolved value
-        if ($this->isFunc($value)) {
-            return $this->callFunction($value, $inputParameters);
-        } elseif ($this->isRef($value)) {
-            return $inputParameters[$value['ref']] ?? null;
-        } elseif ($this->isTemplate($value)) {
+        if (is_array($value)) {
+            if (isset($value['fn'])) {
+                return $this->callFunction($value, $inputParameters);
+            }
+            if (isset($value['ref'])) {
+                return $inputParameters[$value['ref']] ?? null;
+            }
+        } elseif (is_string($value)
+            && str_contains($value, '{')
+            && $this->isTemplate($value)
+        ) {
             return $this->resolveTemplateString($value, $inputParameters);
         }
+
         return $value;
     }
 

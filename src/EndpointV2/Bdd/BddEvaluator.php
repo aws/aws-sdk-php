@@ -68,7 +68,7 @@ final class BddEvaluator
                 $inputParameters
             );
 
-            $condResult = !(is_null($value) || $value === false);
+            $condResult = ($value !== null && $value !== false);
             // Complement edges invert the high/low selection without
             // duplicating nodes in the BDD.
             $ref = ($condResult xor $isComplement)
