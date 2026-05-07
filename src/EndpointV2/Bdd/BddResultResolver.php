@@ -31,7 +31,7 @@ final class BddResultResolver
     public function resolve(int $resultIndex, array $inputParameters): RulesetEndpoint
     {
         if ($resultIndex === 0) {
-            return $this->resolveNoMatch($inputParameters);
+            $this->resolveNoMatch($inputParameters);
         }
 
         // The serialized `results` array omits the implicit no-match rule,

@@ -125,7 +125,7 @@ class EndpointDefinitionProvider
     {
         return match ($type) {
             'tests' => '/endpoint-tests-1',
-            'bdd' => '/endpoint-bdd-1',
+            'bdd' => '/endpoint-bdd',
             default => '/endpoint-rule-set-1',
         };
     }

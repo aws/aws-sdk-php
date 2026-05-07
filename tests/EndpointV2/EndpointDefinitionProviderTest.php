@@ -128,7 +128,7 @@ class EndpointDefinitionProviderTest extends TestCase
 
         try {
             file_put_contents(
-                $serviceDir . '/endpoint-bdd-1.json',
+                $serviceDir . '/endpoint-bdd.json',
                 json_encode([
                     'version' => '1.1',
                     'parameters' => [],
