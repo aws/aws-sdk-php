@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.380.3 - 2026-05-07
 
 * `Aws\Route53Resolver` - Adds supports for DNS64 on inbound endpoints and IPv6 forwarding through the internet gateway (IGW) on outbound endpoints, making it easier to manage hybrid DNS across IPv4 and IPv6 networks.
 * `Aws\BedrockAgentCoreControl` - Launching AgentCore payments - a capability that provides secure, instant microtransaction payments for AI agents to access paid APIs, MCP servers, and content. It handles payment processing for x402 protocol, payment limits, and 3P wallet integrations with Coinbase CDP and Stripe (Privy).
