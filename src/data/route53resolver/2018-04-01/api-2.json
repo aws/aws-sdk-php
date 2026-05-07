@@ -321,6 +321,7 @@
       "input":{"shape":"DeleteResolverRuleRequest"},
       "output":{"shape":"DeleteResolverRuleResponse"},
       "errors":[
+        {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceInUseException"},
@@ -389,6 +390,7 @@
       "output":{"shape":"DisassociateResolverRuleResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InternalServiceErrorException"},
         {"shape":"ThrottlingException"}
@@ -1492,6 +1494,14 @@
         "TargetNameServerMetricsEnabled":{
           "shape":"TargetNameServerMetricsEnabled",
           "box":true
+        },
+        "Dns64Enabled":{
+          "shape":"Dns64Enabled",
+          "box":true
+        },
+        "Ipv6InternetAccessEnabled":{
+          "shape":"Ipv6InternetAccessEnabled",
+          "box":true
         }
       }
     },
@@ -1744,6 +1754,7 @@
         "ResolverRuleAssociation":{"shape":"ResolverRuleAssociation"}
       }
     },
+    "Dns64Enabled":{"type":"boolean"},
     "DnsThreatProtection":{
       "type":"string",
       "enum":[
@@ -2325,6 +2336,7 @@
       "max":39,
       "min":7
     },
+    "Ipv6InternetAccessEnabled":{"type":"boolean"},
     "LimitExceededException":{
       "type":"structure",
       "members":{
@@ -2945,7 +2957,9 @@
         "ResolverEndpointType":{"shape":"ResolverEndpointType"},
         "Protocols":{"shape":"ProtocolList"},
         "RniEnhancedMetricsEnabled":{"shape":"RniEnhancedMetricsEnabled"},
-        "TargetNameServerMetricsEnabled":{"shape":"TargetNameServerMetricsEnabled"}
+        "TargetNameServerMetricsEnabled":{"shape":"TargetNameServerMetricsEnabled"},
+        "Dns64Enabled":{"shape":"Dns64Enabled"},
+        "Ipv6InternetAccessEnabled":{"shape":"Ipv6InternetAccessEnabled"}
       }
     },
     "ResolverEndpointDirection":{
@@ -3562,6 +3576,14 @@
         },
         "TargetNameServerMetricsEnabled":{
           "shape":"TargetNameServerMetricsEnabled",
+          "box":true
+        },
+        "Dns64Enabled":{
+          "shape":"Dns64Enabled",
+          "box":true
+        },
+        "Ipv6InternetAccessEnabled":{
+          "shape":"Ipv6InternetAccessEnabled",
           "box":true
         }
       }

@@ -126,6 +126,44 @@
       ],
       "idempotent":true
     },
+    "CreatePaymentInstrument":{
+      "name":"CreatePaymentInstrument",
+      "http":{
+        "method":"POST",
+        "requestUri":"/payments/createPaymentInstrument",
+        "responseCode":201
+      },
+      "input":{"shape":"CreatePaymentInstrumentRequest"},
+      "output":{"shape":"CreatePaymentInstrumentResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "CreatePaymentSession":{
+      "name":"CreatePaymentSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/payments/createPaymentSession",
+        "responseCode":201
+      },
+      "input":{"shape":"CreatePaymentSessionRequest"},
+      "output":{"shape":"CreatePaymentSessionResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "DeleteABTest":{
       "name":"DeleteABTest",
       "http":{
@@ -203,6 +241,42 @@
         {"shape":"InvalidInputException"},
         {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "DeletePaymentInstrument":{
+      "name":"DeletePaymentInstrument",
+      "http":{
+        "method":"POST",
+        "requestUri":"/payments/deletePaymentInstrument",
+        "responseCode":200
+      },
+      "input":{"shape":"DeletePaymentInstrumentRequest"},
+      "output":{"shape":"DeletePaymentInstrumentResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeletePaymentSession":{
+      "name":"DeletePaymentSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/payments/deletePaymentSession",
+        "responseCode":200
+      },
+      "input":{"shape":"DeletePaymentSessionRequest"},
+      "output":{"shape":"DeletePaymentSessionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
     },
     "DeleteRecommendation":{
       "name":"DeleteRecommendation",
@@ -377,6 +451,60 @@
       ],
       "readonly":true
     },
+    "GetPaymentInstrument":{
+      "name":"GetPaymentInstrument",
+      "http":{
+        "method":"POST",
+        "requestUri":"/payments/getPaymentInstrument",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPaymentInstrumentRequest"},
+      "output":{"shape":"GetPaymentInstrumentResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetPaymentInstrumentBalance":{
+      "name":"GetPaymentInstrumentBalance",
+      "http":{
+        "method":"POST",
+        "requestUri":"/payments/getPaymentInstrumentBalance",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPaymentInstrumentBalanceRequest"},
+      "output":{"shape":"GetPaymentInstrumentBalanceResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetPaymentSession":{
+      "name":"GetPaymentSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/payments/getPaymentSession",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPaymentSessionRequest"},
+      "output":{"shape":"GetPaymentSessionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "GetRecommendation":{
       "name":"GetRecommendation",
       "http":{
@@ -423,6 +551,25 @@
       },
       "input":{"shape":"GetResourceOauth2TokenRequest"},
       "output":{"shape":"GetResourceOauth2TokenResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetResourcePaymentToken":{
+      "name":"GetResourcePaymentToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/identities/payment/token",
+        "responseCode":200
+      },
+      "input":{"shape":"GetResourcePaymentTokenRequest"},
+      "output":{"shape":"GetResourcePaymentTokenResponse"},
       "errors":[
         {"shape":"UnauthorizedException"},
         {"shape":"ValidationException"},
@@ -729,6 +876,40 @@
       ],
       "readonly":true
     },
+    "ListPaymentInstruments":{
+      "name":"ListPaymentInstruments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/payments/listPaymentInstruments",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPaymentInstrumentsRequest"},
+      "output":{"shape":"ListPaymentInstrumentsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListPaymentSessions":{
+      "name":"ListPaymentSessions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/payments/listPaymentSessions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPaymentSessionsRequest"},
+      "output":{"shape":"ListPaymentSessionsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListRecommendations":{
       "name":"ListRecommendations",
       "http":{
@@ -765,6 +946,25 @@
         {"shape":"ResourceNotFoundException"}
       ],
       "readonly":true
+    },
+    "ProcessPayment":{
+      "name":"ProcessPayment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/payments/processPayment",
+        "responseCode":200
+      },
+      "input":{"shape":"ProcessPaymentRequest"},
+      "output":{"shape":"ProcessPaymentResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
     },
     "RetrieveMemoryRecords":{
       "name":"RetrieveMemoryRecords",
@@ -1194,6 +1394,17 @@
       },
       "union":true
     },
+    "Amount":{
+      "type":"structure",
+      "required":[
+        "value",
+        "currency"
+      ],
+      "members":{
+        "value":{"shape":"String"},
+        "currency":{"shape":"Currency"}
+      }
+    },
     "ApiKeyArn":{
       "type":"string",
       "pattern":"arn:aws:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:token-vault/[a-zA-Z0-9-.]+/apikeycredentialprovider/[a-zA-Z0-9-.]+"
@@ -1240,6 +1451,13 @@
       "type":"structure",
       "members":{
         "streamStatus":{"shape":"AutomationStreamStatus"}
+      }
+    },
+    "AvailableLimits":{
+      "type":"structure",
+      "members":{
+        "availableSpendAmount":{"shape":"Amount"},
+        "updatedAt":{"shape":"DateTimestamp"}
       }
     },
     "BasicAuth":{
@@ -1385,6 +1603,16 @@
       }
     },
     "Blob":{"type":"blob"},
+    "BlockchainChainId":{
+      "type":"string",
+      "enum":[
+        "BASE",
+        "BASE_SEPOLIA",
+        "ETHEREUM",
+        "SOLANA",
+        "SOLANA_DEVNET"
+      ]
+    },
     "Body":{
       "type":"blob",
       "max":100000000,
@@ -1756,6 +1984,40 @@
       },
       "eventstream":true
     },
+    "CoinbaseCdpPaymentJwtTokenType":{
+      "type":"string",
+      "max":8192,
+      "min":1,
+      "sensitive":true
+    },
+    "CoinbaseCdpPaymentRequestBodyType":{
+      "type":"string",
+      "max":16384,
+      "min":1,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007E]+"
+    },
+    "CoinbaseCdpTokenRequestInput":{
+      "type":"structure",
+      "required":[
+        "requestMethod",
+        "requestPath"
+      ],
+      "members":{
+        "requestMethod":{"shape":"PaymentHttpMethodType"},
+        "requestHost":{"shape":"PaymentRequestHostType"},
+        "requestPath":{"shape":"PaymentRequestPathType"},
+        "includeWalletAuthToken":{"shape":"Boolean"},
+        "requestBody":{"shape":"CoinbaseCdpPaymentRequestBodyType"}
+      }
+    },
+    "CoinbaseCdpTokenResponseOutput":{
+      "type":"structure",
+      "required":["bearerToken"],
+      "members":{
+        "bearerToken":{"shape":"CoinbaseCdpPaymentJwtTokenType"},
+        "walletAuthToken":{"shape":"CoinbaseCdpPaymentJwtTokenType"}
+      }
+    },
     "CommandExecutionStatus":{
       "type":"string",
       "enum":[
@@ -2000,11 +2262,119 @@
         "event":{"shape":"Event"}
       }
     },
+    "CreatePaymentInstrumentRequest":{
+      "type":"structure",
+      "required":[
+        "paymentManagerArn",
+        "paymentConnectorId",
+        "paymentInstrumentType",
+        "paymentInstrumentDetails"
+      ],
+      "members":{
+        "userId":{
+          "shape":"UserId",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-User-Id"
+        },
+        "agentName":{
+          "shape":"PaymentAgentName",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-Agent-Name"
+        },
+        "paymentManagerArn":{"shape":"PaymentManagerArn"},
+        "paymentConnectorId":{"shape":"PaymentConnectorId"},
+        "paymentInstrumentType":{"shape":"PaymentInstrumentType"},
+        "paymentInstrumentDetails":{"shape":"PaymentInstrumentDetails"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreatePaymentInstrumentResponse":{
+      "type":"structure",
+      "required":["paymentInstrument"],
+      "members":{
+        "paymentInstrument":{"shape":"PaymentInstrument"}
+      }
+    },
+    "CreatePaymentSessionRequest":{
+      "type":"structure",
+      "required":[
+        "paymentManagerArn",
+        "expiryTimeInMinutes"
+      ],
+      "members":{
+        "userId":{
+          "shape":"UserId",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-User-Id"
+        },
+        "agentName":{
+          "shape":"PaymentAgentName",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-Agent-Name"
+        },
+        "paymentManagerArn":{"shape":"PaymentManagerArn"},
+        "limits":{"shape":"SessionLimits"},
+        "expiryTimeInMinutes":{"shape":"CreatePaymentSessionRequestExpiryTimeInMinutesInteger"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreatePaymentSessionRequestExpiryTimeInMinutesInteger":{
+      "type":"integer",
+      "box":true,
+      "max":480,
+      "min":15
+    },
+    "CreatePaymentSessionResponse":{
+      "type":"structure",
+      "required":["paymentSession"],
+      "members":{
+        "paymentSession":{"shape":"PaymentSession"}
+      }
+    },
     "CredentialProviderName":{
       "type":"string",
       "max":128,
       "min":1,
       "pattern":"[a-zA-Z0-9\\-_]+"
+    },
+    "CryptoWalletNetwork":{
+      "type":"string",
+      "enum":[
+        "ETHEREUM",
+        "SOLANA"
+      ]
+    },
+    "CryptoX402PaymentInput":{
+      "type":"structure",
+      "required":[
+        "version",
+        "payload"
+      ],
+      "members":{
+        "version":{"shape":"String"},
+        "payload":{"shape":"PaymentDocument"}
+      }
+    },
+    "CryptoX402PaymentOutput":{
+      "type":"structure",
+      "required":[
+        "version",
+        "payload"
+      ],
+      "members":{
+        "version":{"shape":"String"},
+        "payload":{"shape":"PaymentDocument"}
+      }
+    },
+    "Currency":{
+      "type":"string",
+      "enum":["USD"]
     },
     "CustomDescriptor":{
       "type":"structure",
@@ -2152,6 +2522,54 @@
         "memoryRecordId":{"shape":"MemoryRecordId"}
       }
     },
+    "DeletePaymentInstrumentRequest":{
+      "type":"structure",
+      "required":[
+        "paymentManagerArn",
+        "paymentConnectorId",
+        "paymentInstrumentId"
+      ],
+      "members":{
+        "userId":{
+          "shape":"UserId",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-User-Id"
+        },
+        "paymentManagerArn":{"shape":"PaymentManagerArn"},
+        "paymentConnectorId":{"shape":"PaymentConnectorId"},
+        "paymentInstrumentId":{"shape":"PaymentInstrumentId"}
+      }
+    },
+    "DeletePaymentInstrumentResponse":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"PaymentInstrumentStatus"}
+      }
+    },
+    "DeletePaymentSessionRequest":{
+      "type":"structure",
+      "required":[
+        "paymentManagerArn",
+        "paymentSessionId"
+      ],
+      "members":{
+        "userId":{
+          "shape":"UserId",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-User-Id"
+        },
+        "paymentManagerArn":{"shape":"PaymentManagerArn"},
+        "paymentSessionId":{"shape":"PaymentSessionId"}
+      }
+    },
+    "DeletePaymentSessionResponse":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"PaymentSessionStatus"}
+      }
+    },
     "DeleteRecommendationRequest":{
       "type":"structure",
       "required":["recommendationId"],
@@ -2230,6 +2648,31 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "Email":{
+      "type":"string",
+      "max":254,
+      "min":1,
+      "pattern":"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}",
+      "sensitive":true
+    },
+    "EmbeddedCryptoWallet":{
+      "type":"structure",
+      "required":[
+        "network",
+        "linkedAccounts"
+      ],
+      "members":{
+        "network":{"shape":"CryptoWalletNetwork"},
+        "linkedAccounts":{"shape":"LinkedAccountList"},
+        "walletAddress":{"shape":"String"},
+        "redirectUrl":{"shape":"EmbeddedCryptoWalletRedirectUrlString"}
+      }
+    },
+    "EmbeddedCryptoWalletRedirectUrlString":{
+      "type":"string",
+      "max":2048,
+      "min":0
     },
     "ErrorDetailsList":{
       "type":"list",
@@ -2865,6 +3308,101 @@
         "memoryRecord":{"shape":"MemoryRecord"}
       }
     },
+    "GetPaymentInstrumentBalanceRequest":{
+      "type":"structure",
+      "required":[
+        "paymentManagerArn",
+        "paymentConnectorId",
+        "paymentInstrumentId",
+        "chain",
+        "token"
+      ],
+      "members":{
+        "userId":{
+          "shape":"UserId",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-User-Id"
+        },
+        "agentName":{
+          "shape":"PaymentAgentName",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-Agent-Name"
+        },
+        "paymentManagerArn":{"shape":"PaymentManagerArn"},
+        "paymentConnectorId":{"shape":"PaymentConnectorId"},
+        "paymentInstrumentId":{"shape":"PaymentInstrumentId"},
+        "chain":{"shape":"BlockchainChainId"},
+        "token":{"shape":"InstrumentBalanceToken"}
+      }
+    },
+    "GetPaymentInstrumentBalanceResponse":{
+      "type":"structure",
+      "required":[
+        "paymentInstrumentId",
+        "tokenBalance"
+      ],
+      "members":{
+        "paymentInstrumentId":{"shape":"PaymentInstrumentId"},
+        "tokenBalance":{"shape":"TokenBalance"}
+      }
+    },
+    "GetPaymentInstrumentRequest":{
+      "type":"structure",
+      "required":[
+        "paymentManagerArn",
+        "paymentInstrumentId"
+      ],
+      "members":{
+        "userId":{
+          "shape":"UserId",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-User-Id"
+        },
+        "agentName":{
+          "shape":"PaymentAgentName",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-Agent-Name"
+        },
+        "paymentManagerArn":{"shape":"PaymentManagerArn"},
+        "paymentConnectorId":{"shape":"PaymentConnectorId"},
+        "paymentInstrumentId":{"shape":"PaymentInstrumentId"}
+      }
+    },
+    "GetPaymentInstrumentResponse":{
+      "type":"structure",
+      "required":["paymentInstrument"],
+      "members":{
+        "paymentInstrument":{"shape":"PaymentInstrument"}
+      }
+    },
+    "GetPaymentSessionRequest":{
+      "type":"structure",
+      "required":[
+        "paymentManagerArn",
+        "paymentSessionId"
+      ],
+      "members":{
+        "userId":{
+          "shape":"UserId",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-User-Id"
+        },
+        "agentName":{
+          "shape":"PaymentAgentName",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-Agent-Name"
+        },
+        "paymentManagerArn":{"shape":"PaymentManagerArn"},
+        "paymentSessionId":{"shape":"PaymentSessionId"}
+      }
+    },
+    "GetPaymentSessionResponse":{
+      "type":"structure",
+      "required":["paymentSession"],
+      "members":{
+        "paymentSession":{"shape":"PaymentSession"}
+      }
+    },
     "GetRecommendationRequest":{
       "type":"structure",
       "required":["recommendationId"],
@@ -2948,6 +3486,26 @@
         "accessToken":{"shape":"AccessTokenType"},
         "sessionUri":{"shape":"RequestUri"},
         "sessionStatus":{"shape":"SessionStatus"}
+      }
+    },
+    "GetResourcePaymentTokenRequest":{
+      "type":"structure",
+      "required":[
+        "workloadIdentityToken",
+        "resourceCredentialProviderName",
+        "paymentTokenRequest"
+      ],
+      "members":{
+        "workloadIdentityToken":{"shape":"WorkloadIdentityTokenType"},
+        "resourceCredentialProviderName":{"shape":"CredentialProviderName"},
+        "paymentTokenRequest":{"shape":"PaymentTokenRequestInput"}
+      }
+    },
+    "GetResourcePaymentTokenResponse":{
+      "type":"structure",
+      "required":["paymentTokenResponse"],
+      "members":{
+        "paymentTokenResponse":{"shape":"PaymentTokenResponseOutput"}
       }
     },
     "GetWorkloadAccessTokenForJWTRequest":{
@@ -3591,6 +4149,10 @@
       "type":"list",
       "member":{"shape":"InputContentBlock"}
     },
+    "InstrumentBalanceToken":{
+      "type":"string",
+      "enum":["USDC"]
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -4070,6 +4632,12 @@
       },
       "eventstream":true
     },
+    "JwtKeyId":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]{1,255}"
+    },
     "KeyList":{
       "type":"list",
       "member":{"shape":"String"},
@@ -4147,6 +4715,66 @@
         "metadataKey":{"shape":"MetadataKey"}
       },
       "union":true
+    },
+    "LinkedAccount":{
+      "type":"structure",
+      "members":{
+        "email":{"shape":"LinkedAccountEmail"},
+        "sms":{"shape":"LinkedAccountSms"},
+        "developerJwt":{"shape":"LinkedAccountDeveloperJwt"},
+        "oAuth2":{"shape":"LinkedAccountOAuth2"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "LinkedAccountDeveloperJwt":{
+      "type":"structure",
+      "required":[
+        "kid",
+        "sub"
+      ],
+      "members":{
+        "kid":{"shape":"JwtKeyId"},
+        "sub":{"shape":"LinkedAccountDeveloperJwtSubString"}
+      }
+    },
+    "LinkedAccountDeveloperJwtSubString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "LinkedAccountEmail":{
+      "type":"structure",
+      "required":["emailAddress"],
+      "members":{
+        "emailAddress":{"shape":"Email"}
+      },
+      "sensitive":true
+    },
+    "LinkedAccountList":{
+      "type":"list",
+      "member":{"shape":"LinkedAccount"},
+      "max":1,
+      "min":0
+    },
+    "LinkedAccountOAuth2":{
+      "type":"structure",
+      "members":{
+        "google":{"shape":"OAuth2Authentication"},
+        "apple":{"shape":"OAuth2Authentication"},
+        "x":{"shape":"OAuth2Authentication"},
+        "telegram":{"shape":"OAuth2Authentication"},
+        "github":{"shape":"OAuth2Authentication"}
+      },
+      "union":true
+    },
+    "LinkedAccountSms":{
+      "type":"structure",
+      "required":["phoneNumber"],
+      "members":{
+        "phoneNumber":{"shape":"PhoneNumber"}
+      },
+      "sensitive":true
     },
     "ListABTestsRequest":{
       "type":"structure",
@@ -4359,6 +4987,61 @@
       "members":{
         "memoryRecordSummaries":{"shape":"MemoryRecordSummaryList"},
         "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListPaymentInstrumentsRequest":{
+      "type":"structure",
+      "required":["paymentManagerArn"],
+      "members":{
+        "userId":{
+          "shape":"UserId",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-User-Id"
+        },
+        "agentName":{
+          "shape":"PaymentAgentName",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-Agent-Name"
+        },
+        "paymentManagerArn":{"shape":"PaymentManagerArn"},
+        "paymentConnectorId":{"shape":"PaymentConnectorId"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"Integer"}
+      }
+    },
+    "ListPaymentInstrumentsResponse":{
+      "type":"structure",
+      "required":["paymentInstruments"],
+      "members":{
+        "paymentInstruments":{"shape":"PaymentInstrumentSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListPaymentSessionsRequest":{
+      "type":"structure",
+      "required":["paymentManagerArn"],
+      "members":{
+        "userId":{
+          "shape":"UserId",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-User-Id"
+        },
+        "agentName":{
+          "shape":"PaymentAgentName",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-Agent-Name"
+        },
+        "paymentManagerArn":{"shape":"PaymentManagerArn"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"Integer"}
+      }
+    },
+    "ListPaymentSessionsResponse":{
+      "type":"structure",
+      "required":["paymentSessions"],
+      "members":{
+        "paymentSessions":{"shape":"PaymentSessionSummaryList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListRecommendationsRequest":{
@@ -4869,6 +5552,32 @@
       "type":"string",
       "pattern":"[\\s\\S]+"
     },
+    "OAuth2Authentication":{
+      "type":"structure",
+      "required":["sub"],
+      "members":{
+        "sub":{"shape":"OAuth2AuthenticationSubString"},
+        "emailAddress":{"shape":"Email"},
+        "name":{"shape":"OAuth2AuthenticationNameString"},
+        "username":{"shape":"OAuth2AuthenticationUsernameString"}
+      },
+      "sensitive":true
+    },
+    "OAuth2AuthenticationNameString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "OAuth2AuthenticationSubString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "OAuth2AuthenticationUsernameString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
     "OAuthCredentialProvider":{
       "type":"structure",
       "required":[
@@ -4915,7 +5624,8 @@
       "type":"string",
       "enum":[
         "CLIENT_CREDENTIALS",
-        "AUTHORIZATION_CODE"
+        "AUTHORIZATION_CODE",
+        "TOKEN_EXCHANGE"
       ]
     },
     "OAuthScope":{
@@ -4976,6 +5686,225 @@
       "max":100,
       "min":0
     },
+    "PaymentAgentName":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
+    "PaymentConnectorId":{
+      "type":"string",
+      "max":211,
+      "min":12,
+      "pattern":"([0-9a-z][-]?){1,100}-[0-9a-z]{10}"
+    },
+    "PaymentDocument":{
+      "type":"structure",
+      "members":{},
+      "document":true,
+      "sensitive":true
+    },
+    "PaymentHttpMethodType":{
+      "type":"string",
+      "enum":[
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "PATCH"
+      ]
+    },
+    "PaymentInput":{
+      "type":"structure",
+      "members":{
+        "cryptoX402":{"shape":"CryptoX402PaymentInput"}
+      },
+      "union":true
+    },
+    "PaymentInstrument":{
+      "type":"structure",
+      "required":[
+        "paymentInstrumentId",
+        "paymentManagerArn",
+        "paymentConnectorId",
+        "userId",
+        "paymentInstrumentType",
+        "paymentInstrumentDetails",
+        "createdAt",
+        "status",
+        "updatedAt"
+      ],
+      "members":{
+        "paymentInstrumentId":{"shape":"PaymentInstrumentId"},
+        "paymentManagerArn":{"shape":"PaymentManagerArn"},
+        "paymentConnectorId":{"shape":"PaymentConnectorId"},
+        "userId":{"shape":"UserId"},
+        "paymentInstrumentType":{"shape":"PaymentInstrumentType"},
+        "paymentInstrumentDetails":{"shape":"PaymentInstrumentDetails"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "status":{"shape":"PaymentInstrumentStatus"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "PaymentInstrumentDetails":{
+      "type":"structure",
+      "members":{
+        "embeddedCryptoWallet":{"shape":"EmbeddedCryptoWallet"}
+      },
+      "union":true
+    },
+    "PaymentInstrumentId":{
+      "type":"string",
+      "max":34,
+      "min":34,
+      "pattern":"payment-instrument-[0-9a-zA-Z-]{15}"
+    },
+    "PaymentInstrumentStatus":{
+      "type":"string",
+      "enum":[
+        "INITIATED",
+        "ACTIVE",
+        "FAILED",
+        "DELETED"
+      ]
+    },
+    "PaymentInstrumentSummary":{
+      "type":"structure",
+      "required":[
+        "paymentInstrumentId",
+        "paymentManagerArn",
+        "paymentConnectorId",
+        "userId",
+        "paymentInstrumentType",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "paymentInstrumentId":{"shape":"PaymentInstrumentId"},
+        "paymentManagerArn":{"shape":"PaymentManagerArn"},
+        "paymentConnectorId":{"shape":"PaymentConnectorId"},
+        "userId":{"shape":"UserId"},
+        "paymentInstrumentType":{"shape":"PaymentInstrumentType"},
+        "status":{"shape":"PaymentInstrumentStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "PaymentInstrumentSummaryList":{
+      "type":"list",
+      "member":{"shape":"PaymentInstrumentSummary"}
+    },
+    "PaymentInstrumentType":{
+      "type":"string",
+      "enum":["EMBEDDED_CRYPTO_WALLET"]
+    },
+    "PaymentManagerArn":{
+      "type":"string",
+      "max":2048,
+      "min":66,
+      "pattern":"arn:(aws|aws-[a-z0-9-]+):bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:payment-manager/[a-z0-9]([a-z0-9-]{0,47}[a-z0-9])?-[a-z0-9]{10}"
+    },
+    "PaymentOutput":{
+      "type":"structure",
+      "members":{
+        "cryptoX402":{"shape":"CryptoX402PaymentOutput"}
+      },
+      "union":true
+    },
+    "PaymentRequestHostType":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\-\\.]+"
+    },
+    "PaymentRequestPathType":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"/[a-zA-Z0-9/_\\-\\.~%?=&]+"
+    },
+    "PaymentSession":{
+      "type":"structure",
+      "required":[
+        "paymentSessionId",
+        "paymentManagerArn",
+        "userId",
+        "expiryTimeInMinutes",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "paymentSessionId":{"shape":"PaymentSessionId"},
+        "paymentManagerArn":{"shape":"PaymentManagerArn"},
+        "limits":{"shape":"SessionLimits"},
+        "userId":{"shape":"UserId"},
+        "expiryTimeInMinutes":{"shape":"Integer"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "availableLimits":{"shape":"AvailableLimits"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "PaymentSessionId":{
+      "type":"string",
+      "max":31,
+      "min":31,
+      "pattern":"payment-session-[0-9a-zA-Z-]{15}"
+    },
+    "PaymentSessionStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "EXPIRED",
+        "DELETED"
+      ]
+    },
+    "PaymentSessionSummary":{
+      "type":"structure",
+      "required":[
+        "paymentSessionId",
+        "paymentManagerArn",
+        "userId",
+        "expiryTimeInMinutes",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "paymentSessionId":{"shape":"PaymentSessionId"},
+        "paymentManagerArn":{"shape":"PaymentManagerArn"},
+        "userId":{"shape":"UserId"},
+        "expiryTimeInMinutes":{"shape":"Integer"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "PaymentSessionSummaryList":{
+      "type":"list",
+      "member":{"shape":"PaymentSessionSummary"}
+    },
+    "PaymentStatus":{
+      "type":"string",
+      "enum":["PROOF_GENERATED"]
+    },
+    "PaymentTokenRequestInput":{
+      "type":"structure",
+      "members":{
+        "coinbaseCdpTokenRequest":{"shape":"CoinbaseCdpTokenRequestInput"},
+        "stripePrivyTokenRequest":{"shape":"StripePrivyTokenRequestInput"}
+      },
+      "union":true
+    },
+    "PaymentTokenResponseOutput":{
+      "type":"structure",
+      "members":{
+        "coinbaseCdpTokenResponse":{"shape":"CoinbaseCdpTokenResponseOutput"},
+        "stripePrivyTokenResponse":{"shape":"StripePrivyTokenResponseOutput"}
+      },
+      "union":true
+    },
+    "PaymentType":{
+      "type":"string",
+      "enum":["CRYPTO_X402"]
+    },
     "PerVariantOnlineEvaluationConfig":{
       "type":"structure",
       "required":[
@@ -4992,6 +5921,75 @@
       "member":{"shape":"PerVariantOnlineEvaluationConfig"},
       "max":2,
       "min":2
+    },
+    "PhoneNumber":{
+      "type":"string",
+      "max":16,
+      "min":3,
+      "pattern":"\\+[1-9]\\d{1,14}",
+      "sensitive":true
+    },
+    "ProcessPaymentId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
+    },
+    "ProcessPaymentRequest":{
+      "type":"structure",
+      "required":[
+        "paymentManagerArn",
+        "paymentSessionId",
+        "paymentInstrumentId",
+        "paymentType",
+        "paymentInput"
+      ],
+      "members":{
+        "userId":{
+          "shape":"UserId",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-User-Id"
+        },
+        "agentName":{
+          "shape":"PaymentAgentName",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Payments-Agent-Name"
+        },
+        "paymentManagerArn":{"shape":"PaymentManagerArn"},
+        "paymentSessionId":{"shape":"PaymentSessionId"},
+        "paymentInstrumentId":{"shape":"PaymentInstrumentId"},
+        "paymentType":{"shape":"PaymentType"},
+        "paymentInput":{"shape":"PaymentInput"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "ProcessPaymentResponse":{
+      "type":"structure",
+      "required":[
+        "processPaymentId",
+        "paymentManagerArn",
+        "paymentSessionId",
+        "paymentInstrumentId",
+        "paymentType",
+        "status",
+        "paymentOutput",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "processPaymentId":{"shape":"ProcessPaymentId"},
+        "paymentManagerArn":{"shape":"PaymentManagerArn"},
+        "paymentSessionId":{"shape":"PaymentSessionId"},
+        "paymentInstrumentId":{"shape":"PaymentInstrumentId"},
+        "paymentType":{"shape":"PaymentType"},
+        "status":{"shape":"PaymentStatus"},
+        "paymentOutput":{"shape":"PaymentOutput"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
     },
     "ProgrammingLanguage":{
       "type":"string",
@@ -5643,6 +6641,13 @@
       "min":1,
       "pattern":"[a-zA-Z0-9][a-zA-Z0-9-_]*"
     },
+    "SessionLimits":{
+      "type":"structure",
+      "required":["maxSpendAmount"],
+      "members":{
+        "maxSpendAmount":{"shape":"Amount"}
+      }
+    },
     "SessionMetadataList":{
       "type":"list",
       "member":{"shape":"SessionMetadataShape"},
@@ -6178,6 +7183,69 @@
       "max":5,
       "min":1
     },
+    "StripePrivyAppIdType":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\-_]+"
+    },
+    "StripePrivyAuthorizationSignatureType":{
+      "type":"string",
+      "max":8192,
+      "min":1,
+      "sensitive":true
+    },
+    "StripePrivyBasicAuthTokenType":{
+      "type":"string",
+      "max":8192,
+      "min":1,
+      "sensitive":true
+    },
+    "StripePrivyRequestBodyType":{
+      "type":"string",
+      "max":16384,
+      "min":1,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007E]+",
+      "sensitive":true
+    },
+    "StripePrivyRequestHostType":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\-\\.]+"
+    },
+    "StripePrivyRequestPathType":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"/[a-zA-Z0-9/_\\-\\.~%?=&]+"
+    },
+    "StripePrivyTokenRequestInput":{
+      "type":"structure",
+      "required":[
+        "requestPath",
+        "requestBody"
+      ],
+      "members":{
+        "requestHost":{"shape":"StripePrivyRequestHostType"},
+        "requestPath":{"shape":"StripePrivyRequestPathType"},
+        "requestBody":{"shape":"StripePrivyRequestBodyType"},
+        "includeAuthorizationSignature":{"shape":"Boolean"}
+      }
+    },
+    "StripePrivyTokenResponseOutput":{
+      "type":"structure",
+      "required":[
+        "appId",
+        "basicAuthToken"
+      ],
+      "members":{
+        "authorizationSignature":{"shape":"StripePrivyAuthorizationSignatureType"},
+        "requestExpiry":{"shape":"Long"},
+        "appId":{"shape":"StripePrivyAppIdType"},
+        "basicAuthToken":{"shape":"StripePrivyBasicAuthTokenType"}
+      }
+    },
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
@@ -6289,6 +7357,23 @@
       "exception":true
     },
     "Timestamp":{"type":"timestamp"},
+    "TokenBalance":{
+      "type":"structure",
+      "required":[
+        "amount",
+        "decimals",
+        "token",
+        "network",
+        "chain"
+      ],
+      "members":{
+        "amount":{"shape":"String"},
+        "decimals":{"shape":"Integer"},
+        "token":{"shape":"InstrumentBalanceToken"},
+        "network":{"shape":"CryptoWalletNetwork"},
+        "chain":{"shape":"BlockchainChainId"}
+      }
+    },
     "TokenUsage":{
       "type":"structure",
       "members":{
@@ -6548,6 +7633,11 @@
         "streams":{"shape":"BrowserSessionStream"},
         "updatedAt":{"shape":"DateTimestamp"}
       }
+    },
+    "UserId":{
+      "type":"string",
+      "max":120,
+      "min":0
     },
     "UserIdType":{
       "type":"string",

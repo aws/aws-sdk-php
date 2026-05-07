@@ -4,21 +4,21 @@
   "operations": {
     "BatchGetInvoiceProfile": "<p>This gets the invoice profile associated with a set of accounts. The accounts must be linked accounts under the requester management account organization.</p>",
     "CreateInvoiceUnit": "<p>This creates a new invoice unit with the provided definition.</p>",
-    "CreateProcurementPortalPreference": "<p>Creates a procurement portal preference configuration for e-invoice delivery and purchase order retrieval. This preference defines how invoices are delivered to a procurement portal and how purchase orders are retrieved.</p>",
+    "CreateProcurementPortalPreference": "<p> <i> <b>This feature API is subject to changing at any time. For more information, see the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a> (Betas and Previews).</b> </i> </p> <p>Creates a procurement portal preference configuration for e-invoice delivery and purchase order retrieval. This preference defines how invoices are delivered to a procurement portal and how purchase orders are retrieved.</p>",
     "DeleteInvoiceUnit": "<p>This deletes an invoice unit with the provided invoice unit ARN. </p>",
-    "DeleteProcurementPortalPreference": "<p>Deletes an existing procurement portal preference. This action cannot be undone. Active e-invoice delivery and PO retrieval configurations will be terminated.</p>",
+    "DeleteProcurementPortalPreference": "<p> <i> <b>This feature API is subject to changing at any time. For more information, see the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a> (Betas and Previews).</b> </i> </p> <p>Deletes an existing procurement portal preference. This action cannot be undone. Active e-invoice delivery and PO retrieval configurations will be terminated.</p>",
     "GetInvoicePDF": "<p>Returns a URL to download the invoice document and supplemental documents associated with an invoice. The URLs are pre-signed and have expiration time. For special cases like Brazil, where Amazon Web Services generated invoice identifiers and government provided identifiers do not match, use the Amazon Web Services generated invoice identifier when making API requests. To grant IAM permission to use this operation, the caller needs the <code>invoicing:GetInvoicePDF</code> policy action.</p>",
     "GetInvoiceUnit": "<p>This retrieves the invoice unit definition.</p>",
-    "GetProcurementPortalPreference": "<p>Retrieves the details of a specific procurement portal preference configuration.</p>",
+    "GetProcurementPortalPreference": "<p> <i> <b>This feature API is subject to changing at any time. For more information, see the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a> (Betas and Previews).</b> </i> </p> <p>Retrieves the details of a specific procurement portal preference configuration.</p>",
     "ListInvoiceSummaries": "<p>Retrieves your invoice details programmatically, without line item details.</p>",
     "ListInvoiceUnits": "<p>This fetches a list of all invoice unit definitions for a given account, as of the provided <code>AsOf</code> date.</p>",
-    "ListProcurementPortalPreferences": "<p>Retrieves a list of procurement portal preferences associated with the Amazon Web Services account.</p>",
+    "ListProcurementPortalPreferences": "<p> <i> <b>This feature API is subject to changing at any time. For more information, see the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a> (Betas and Previews).</b> </i> </p> <p>Retrieves a list of procurement portal preferences associated with the Amazon Web Services account.</p>",
     "ListTagsForResource": "<p>Lists the tags for a resource. </p>",
-    "PutProcurementPortalPreference": "<p>Updates an existing procurement portal preference configuration. This operation can modify settings for e-invoice delivery and purchase order retrieval.</p>",
+    "PutProcurementPortalPreference": "<p> <i> <b>This feature API is subject to changing at any time. For more information, see the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a> (Betas and Previews).</b> </i> </p> <p>Updates an existing procurement portal preference configuration. This operation can modify settings for e-invoice delivery and purchase order retrieval.</p>",
     "TagResource": "<p>Adds a tag to a resource. </p>",
     "UntagResource": "<p> Removes a tag from a resource. </p>",
     "UpdateInvoiceUnit": "<p>You can update the invoice unit configuration at any time, and Amazon Web Services will use the latest configuration at the end of the month.</p>",
-    "UpdateProcurementPortalPreferenceStatus": "<p>Updates the status of a procurement portal preference, including the activation state of e-invoice delivery and purchase order retrieval features.</p>"
+    "UpdateProcurementPortalPreferenceStatus": "<p> <i> <b>This feature API is subject to changing at any time. For more information, see the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a> (Betas and Previews).</b> </i> </p> <p>Updates the status of a procurement portal preference, including the activation state of e-invoice delivery and purchase order retrieval features.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -31,13 +31,14 @@
         "BatchGetInvoiceProfileRequest$AccountIds": "<p>Retrieves the corresponding invoice profile data for these account IDs. </p>",
         "Filters$InvoiceReceivers": "<p> You can specify a list of Amazon Web Services account IDs inside filters to return invoice units that match only the specified accounts. If multiple accounts are provided, the result is an <code>OR</code> condition (match any) of the specified accounts. This filter only matches the specified accounts on the invoice receivers of the invoice units. </p>",
         "Filters$Accounts": "<p> You can specify a list of Amazon Web Services account IDs inside filters to return invoice units that match only the specified accounts. If multiple accounts are provided, the result is an <code>OR</code> condition (match any) of the specified accounts. The specified account IDs are matched with either the receiver or the linked accounts in the rules. </p>",
-        "Filters$BillSourceAccounts": "<p> A list of Amazon Web Services account account IDs used to filter invoice units. These are payer accounts from other Organizations that have delegated their billing responsibility to the receiver account through the billing transfer feature. </p>"
+        "Filters$BillSourceAccounts": "<p> A list of Amazon Web Services account IDs used to filter invoice units. These are payer accounts from other Organizations that have delegated their billing responsibility to the receiver account through the billing transfer feature. </p>"
       }
     },
     "AccountIdString": {
       "base": null,
       "refs": {
         "AccountIdList$member": null,
+        "BillSourceAccountList$member": null,
         "CreateInvoiceUnitRequest$InvoiceReceiver": "<p> The Amazon Web Services account ID chosen to be the receiver of an invoice unit. All invoices generated for that invoice unit will be sent to this account ID. </p>",
         "GetInvoiceUnitResponse$InvoiceReceiver": "<p> The Amazon Web Services account ID chosen to be the receiver of an invoice unit. All invoices generated for that invoice unit will be sent to this account ID. </p>",
         "InvoiceProfile$AccountId": "<p> The account ID the invoice profile is generated for. </p>",
@@ -87,6 +88,7 @@
         "InvoiceCurrencyAmount$TotalAmountBeforeTax": "<p> Details about the invoice total amount before tax. </p>",
         "InvoiceSummariesFilter$InvoicingEntity": "<p>The name of the entity that issues the Amazon Web Services invoice.</p>",
         "InvoiceSummary$InvoiceId": "<p> The invoice ID. </p>",
+        "InvoiceSummary$CommercialInvoiceId": "<p> The commercial invoice ID. This is only applicable for tax invoices and identifies the associated commercial invoice. </p>",
         "InvoiceSummary$OriginalInvoiceId": "<p>The initial or original invoice ID. </p>",
         "InvoiceSummary$PurchaseOrderNumber": "<p> The purchase order number associated to the invoice.</p>",
         "ProcurementPortalPreference$EinvoiceDeliveryPreferenceStatusReason": "<p>The reason for the current e-invoice delivery preference status.</p>",
@@ -154,6 +156,24 @@
     "BatchGetInvoiceProfileResponse": {
       "base": null,
       "refs": {}
+    },
+    "BillSourceAccountList": {
+      "base": null,
+      "refs": {
+        "InvoiceSummary$BillSourceAccounts": "<p> The list of Amazon Web Services account IDs that are the bill source of the invoice. Currently, only a single bill source account is returned.</p>"
+      }
+    },
+    "BillType": {
+      "base": null,
+      "refs": {
+        "InvoiceSummary$BillType": "<p> The type of the bill. </p>"
+      }
+    },
+    "BillingEntity": {
+      "base": null,
+      "refs": {
+        "Entity$BillingEntity": "<p>Helps you identify whether your invoices are for Amazon Web Services Marketplace or for purchases of other Amazon Web Services services.</p>"
+      }
     },
     "BillingPeriod": {
       "base": "<p> The billing period for which you want to retrieve invoice-related documents. </p>",
@@ -319,6 +339,12 @@
         "PutProcurementPortalPreferenceRequest$EinvoiceDeliveryPreference": "<p>Updated e-invoice delivery configuration including document types, attachment types, and customization settings for the portal.</p>"
       }
     },
+    "EinvoiceDeliveryStatus": {
+      "base": null,
+      "refs": {
+        "InvoiceSummary$EinvoiceDeliveryStatus": "<p> The e-invoice delivery status. </p>"
+      }
+    },
     "EmailString": {
       "base": null,
       "refs": {
@@ -382,7 +408,8 @@
     "Integer": {
       "base": null,
       "refs": {
-        "InternalServerException$retryAfterSeconds": "<p>The processing request failed because of an unknown error, exception, or failure.</p>"
+        "InternalServerException$retryAfterSeconds": "<p>The processing request failed because of an unknown error, exception, or failure.</p>",
+        "InvoiceSummary$BillSourceAccountsTotalCount": "<p> The total number of accounts that are the bill source of the invoice. </p>"
       }
     },
     "InternalServerException": {
@@ -395,6 +422,12 @@
         "InvoiceSummary$BaseCurrencyAmount": "<p> The summary with the product and service currency. </p>",
         "InvoiceSummary$TaxCurrencyAmount": "<p> The summary with the tax currency. </p>",
         "InvoiceSummary$PaymentCurrencyAmount": "<p> The summary with the customer configured currency. </p>"
+      }
+    },
+    "InvoiceFrequency": {
+      "base": null,
+      "refs": {
+        "InvoiceSummary$InvoiceFrequency": "<p> The frequency of the invoice. </p>"
       }
     },
     "InvoicePDF": {
@@ -688,6 +721,13 @@
         "InvoiceProfile$ReceiverAddress": "<p>The address of the receiver that will be printed on the invoice. </p>"
       }
     },
+    "ReceiverRole": {
+      "base": null,
+      "refs": {
+        "InvoiceSummariesFilter$ReceiverRole": "<p>The role of the invoice receiver to filter by.</p> <note> <p>When <code>ReceiverRole</code> is specified:</p> <ul> <li> <p>Data is available starting <code>2025-06-01</code>. Queries for periods before <code>2025-06-01</code> return a validation error.</p> </li> <li> <p> <code>TimeInterval</code> supports a time interval of up to 5 years. Without <code>ReceiverRole</code>, <code>TimeInterval</code> is limited to one month.</p> </li> </ul> </note>",
+        "InvoiceSummary$ReceiverRole": "<p>The role of the invoice receiver.</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>The resource could not be found. </p>",
       "refs": {}
@@ -730,7 +770,7 @@
       "base": null,
       "refs": {
         "InvoiceUnitRule$LinkedAccounts": "<p>The list of <code>LINKED_ACCOUNT</code> IDs where charges are included within the invoice unit. </p>",
-        "InvoiceUnitRule$BillSourceAccounts": "<p> A list of Amazon Web Services account account IDs that have delegated their billing responsibility to the receiver account through transfer billing. Unlike linked accounts, these bill source accounts can be payer accounts from other organizations that have authorized billing transfer to this account. </p>"
+        "InvoiceUnitRule$BillSourceAccounts": "<p> A list of Amazon Web Services account IDs that have delegated their billing responsibility to the receiver account through transfer billing. Unlike linked accounts, these bill source accounts can be payer accounts from other organizations that have authorized billing transfer to this account. </p>"
       }
     },
     "SellerOfRecords": {
@@ -759,6 +799,7 @@
         "InvoicePDF$InvoiceId": "<p> Your unique invoice ID. </p>",
         "InvoicePDF$DocumentUrl": "<p>The pre-signed URL to download the invoice document. </p>",
         "InvoiceSummariesSelector$Value": "<p>The value of the query identifier.</p>",
+        "SupplementalDocument$DocumentId": "<p>The ID of the supplemental document.</p>",
         "SupplementalDocument$DocumentUrl": "<p>The pre-signed URL to download invoice supplemental document.</p>"
       }
     },
@@ -766,6 +807,12 @@
       "base": "<p>Supplemental document associated with the invoice.</p>",
       "refs": {
         "SupplementalDocuments$member": null
+      }
+    },
+    "SupplementalDocumentType": {
+      "base": null,
+      "refs": {
+        "SupplementalDocument$DocumentType": "<p>The type of supplemental document.</p>"
       }
     },
     "SupplementalDocuments": {
@@ -798,6 +845,12 @@
         "ListTagsForResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of tags to list. </p>",
         "TagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the tags. </p>",
         "UntagResourceRequest$ResourceArn": "<p> The Amazon Resource Name (ARN) to untag. </p>"
+      }
+    },
+    "TaxAuthorityStatus": {
+      "base": null,
+      "refs": {
+        "InvoiceSummary$TaxAuthorityStatus": "<p> The current status of an invoice as reported to the tax authority. This captures scenarios where an invoice may be cancelled after issuance. </p>"
       }
     },
     "TaxInheritanceDisabledFlag": {

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Route53Resolver` - Adds supports for DNS64 on inbound endpoints and IPv6 forwarding through the internet gateway (IGW) on outbound endpoints, making it easier to manage hybrid DNS across IPv4 and IPv6 networks.
+* `Aws\BedrockAgentCoreControl` - Launching AgentCore payments - a capability that provides secure, instant microtransaction payments for AI agents to access paid APIs, MCP servers, and content. It handles payment processing for x402 protocol, payment limits, and 3P wallet integrations with Coinbase CDP and Stripe (Privy).
+* `Aws\EC2` - DescribeInstanceTypes now accepts an IncludeUnsupportedInRegion parameter. When set, the response also lists instance types that are not available in the current Region. Each instance type includes a SupportedInRegion field indicating its regional availability.
+* `Aws\BedrockAgentCore` - Launching AgentCore payments - a capability that provides secure, instant microtransaction payments for AI agents to access paid APIs, MCP servers, and content. It handles payment processing for x402 protocol, payment limits, and 3P wallet integrations with Coinbase CDP and Stripe (Privy).
+* `Aws\GuardDuty` - This is a documentation update
+* `Aws\Invoicing` - Updated ListInvoiceSummaries API to add new ReceiverRole filter in Request and Response
+* `Aws\BCMDataExports` - With this release, customers can configure their data exports to generate additional integration artifacts for Athena and Redshift.
+
 ## 3.380.2 - 2026-05-06
 
 * `Aws\imagebuilder` - The ImportDiskImage API now enforces a maximum character limit of 128 characters on the image name field.

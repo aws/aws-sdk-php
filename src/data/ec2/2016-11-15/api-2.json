@@ -20878,7 +20878,8 @@
           "locationName":"Filter"
         },
         "MaxResults":{"shape":"DITMaxResults"},
-        "NextToken":{"shape":"NextToken"}
+        "NextToken":{"shape":"NextToken"},
+        "IncludeUnsupportedInRegion":{"shape":"IncludeUnsupportedInRegion"}
       }
     },
     "DescribeInstanceTypesResult":{
@@ -32938,6 +32939,7 @@
         }
       }
     },
+    "IncludeUnsupportedInRegion":{"type":"boolean"},
     "InferenceAcceleratorInfo":{
       "type":"structure",
       "members":{
@@ -36351,6 +36353,10 @@
         "RebootMigrationSupport":{
           "shape":"RebootMigrationSupport",
           "locationName":"rebootMigrationSupport"
+        },
+        "SupportedInRegion":{
+          "shape":"SupportedInRegion",
+          "locationName":"supportedInRegion"
         }
       }
     },
@@ -53818,6 +53824,7 @@
         "locationName":"item"
       }
     },
+    "SupportedInRegion":{"type":"boolean"},
     "SupportedIpAddressTypes":{
       "type":"list",
       "member":{

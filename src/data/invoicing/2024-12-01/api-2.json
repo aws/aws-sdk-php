@@ -356,6 +356,25 @@
         "Profiles":{"shape":"ProfileList"}
       }
     },
+    "BillSourceAccountList":{
+      "type":"list",
+      "member":{"shape":"AccountIdString"}
+    },
+    "BillType":{
+      "type":"string",
+      "enum":[
+        "ANNIVERSARY",
+        "PURCHASE",
+        "REFUND"
+      ]
+    },
+    "BillingEntity":{
+      "type":"string",
+      "enum":[
+        "AWS",
+        "AWS_MARKETPLACE"
+      ]
+    },
     "BillingPeriod":{
       "type":"structure",
       "required":[
@@ -588,6 +607,13 @@
         "EinvoiceDeliveryActivationDate":{"shape":"Timestamp"}
       }
     },
+    "EinvoiceDeliveryStatus":{
+      "type":"string",
+      "enum":[
+        "DELIVERED",
+        "NOT_DELIVERED"
+      ]
+    },
     "EmailString":{
       "type":"string",
       "max":1024,
@@ -597,7 +623,8 @@
     "Entity":{
       "type":"structure",
       "members":{
-        "InvoicingEntity":{"shape":"BasicString"}
+        "InvoicingEntity":{"shape":"BasicString"},
+        "BillingEntity":{"shape":"BillingEntity"}
       }
     },
     "FeesBreakdown":{
@@ -701,6 +728,13 @@
         "CurrencyExchangeDetails":{"shape":"CurrencyExchangeDetails"}
       }
     },
+    "InvoiceFrequency":{
+      "type":"string",
+      "enum":[
+        "ONE_TIME",
+        "RECURRING"
+      ]
+    },
     "InvoicePDF":{
       "type":"structure",
       "members":{
@@ -730,7 +764,8 @@
       "members":{
         "TimeInterval":{"shape":"DateInterval"},
         "BillingPeriod":{"shape":"BillingPeriod"},
-        "InvoicingEntity":{"shape":"BasicString"}
+        "InvoicingEntity":{"shape":"BasicString"},
+        "ReceiverRole":{"shape":"ReceiverRole"}
       }
     },
     "InvoiceSummariesMaxResults":{
@@ -757,11 +792,19 @@
         "InvoiceId":{"shape":"BasicString"},
         "IssuedDate":{"shape":"Timestamp"},
         "DueDate":{"shape":"Timestamp"},
+        "BillSourceAccounts":{"shape":"BillSourceAccountList"},
+        "BillSourceAccountsTotalCount":{"shape":"Integer"},
+        "ReceiverRole":{"shape":"ReceiverRole"},
         "Entity":{"shape":"Entity"},
         "BillingPeriod":{"shape":"BillingPeriod"},
+        "InvoiceFrequency":{"shape":"InvoiceFrequency"},
+        "BillType":{"shape":"BillType"},
         "InvoiceType":{"shape":"InvoiceType"},
+        "CommercialInvoiceId":{"shape":"BasicString"},
         "OriginalInvoiceId":{"shape":"BasicString"},
         "PurchaseOrderNumber":{"shape":"BasicString"},
+        "EinvoiceDeliveryStatus":{"shape":"EinvoiceDeliveryStatus"},
+        "TaxAuthorityStatus":{"shape":"TaxAuthorityStatus"},
         "BaseCurrencyAmount":{"shape":"InvoiceCurrencyAmount"},
         "TaxCurrencyAmount":{"shape":"InvoiceCurrencyAmount"},
         "PaymentCurrencyAmount":{"shape":"InvoiceCurrencyAmount"}
@@ -771,7 +814,8 @@
       "type":"string",
       "enum":[
         "INVOICE",
-        "CREDIT_MEMO"
+        "CREDIT_MEMO",
+        "PAYMENT_RECEIPT"
       ]
     },
     "InvoiceUnit":{
@@ -1099,6 +1143,14 @@
       },
       "sensitive":true
     },
+    "ReceiverRole":{
+      "type":"string",
+      "enum":[
+        "SELLER",
+        "RESELLER",
+        "BUYER"
+      ]
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -1176,9 +1228,20 @@
     "SupplementalDocument":{
       "type":"structure",
       "members":{
+        "DocumentType":{"shape":"SupplementalDocumentType"},
+        "DocumentId":{"shape":"StringWithoutNewLine"},
         "DocumentUrl":{"shape":"StringWithoutNewLine"},
         "DocumentUrlExpirationDate":{"shape":"Timestamp"}
       }
+    },
+    "SupplementalDocumentType":{
+      "type":"string",
+      "enum":[
+        "GOVERNMENT_INVOICE",
+        "TAX_E_INVOICE",
+        "PAYMENT_RECEIPT",
+        "SUPPLEMENT"
+      ]
     },
     "SupplementalDocuments":{
       "type":"list",
@@ -1208,6 +1271,13 @@
       "max":2048,
       "min":20,
       "pattern":"arn:aws[-a-z0-9]*:(invoicing)::[0-9]{12}:[-a-zA-Z0-9/:_]+"
+    },
+    "TaxAuthorityStatus":{
+      "type":"string",
+      "enum":[
+        "ISSUED",
+        "CANCELLED"
+      ]
     },
     "TaxInheritanceDisabledFlag":{"type":"boolean"},
     "TaxesBreakdown":{
