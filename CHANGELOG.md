@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.381.0 - 2026-05-13
 
 * `Aws\Endpoints` - Introduces endpoint resolution through a BDD rules based evaluation.
 
