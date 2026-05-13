@@ -1719,12 +1719,20 @@
       "type":"structure",
       "members":{
         "defaultTimeZone":{"shape":"TimeZone"},
-        "localTimeZoneDetection":{"shape":"LocalTimeZoneDetection"}
+        "localTimeZoneDetection":{"shape":"LocalTimeZoneDetection"},
+        "localTimeZoneDetectionScope":{"shape":"LocalTimeZoneDetectionScope"}
       }
     },
     "LocalTimeZoneDetection":{
       "type":"list",
       "member":{"shape":"LocalTimeZoneDetectionType"}
+    },
+    "LocalTimeZoneDetectionScope":{
+      "type":"string",
+      "enum":[
+        "PRIMARY_ONLY",
+        "ALL_AVAILABLE"
+      ]
     },
     "LocalTimeZoneDetectionType":{
       "type":"string",

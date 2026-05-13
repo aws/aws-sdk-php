@@ -804,6 +804,26 @@
         "unknown"
       ]
     },
+    "EventSourceMapping":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "crossAccountRole":{"shape":"IamRoleArn"},
+        "externalId":{"shape":"String"},
+        "arn":{"shape":"EventSourceMappingArn"}
+      }
+    },
+    "EventSourceMappingAction":{
+      "type":"string",
+      "enum":[
+        "enable",
+        "disable"
+      ]
+    },
+    "EventSourceMappingArn":{
+      "type":"string",
+      "pattern":"arn:aws[a-zA-Z-]*:lambda:[a-z0-9-]+:\\d{12}:event-source-mapping:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+    },
     "ExecutionAction":{
       "type":"string",
       "enum":[
@@ -840,7 +860,8 @@
         "route53HealthCheckConfig":{"shape":"Route53HealthCheckConfiguration"},
         "documentDbConfig":{"shape":"DocumentDbConfiguration"},
         "rdsPromoteReadReplicaConfig":{"shape":"RdsPromoteReadReplicaConfiguration"},
-        "rdsCreateCrossRegionReadReplicaConfig":{"shape":"RdsCreateCrossRegionReplicaConfiguration"}
+        "rdsCreateCrossRegionReadReplicaConfig":{"shape":"RdsCreateCrossRegionReplicaConfiguration"},
+        "lambdaEventSourceMappingConfig":{"shape":"LambdaEventSourceMappingConfiguration"}
       },
       "union":true
     },
@@ -859,7 +880,8 @@
         "Route53HealthCheck",
         "DocumentDb",
         "RdsPromoteReadReplica",
-        "RdsCreateCrossRegionReplica"
+        "RdsCreateCrossRegionReplica",
+        "LambdaEventSourceMapping"
       ]
     },
     "ExecutionComment":{
@@ -1196,6 +1218,34 @@
       }
     },
     "LambdaArn":{"type":"string"},
+    "LambdaEventSourceMappingConfiguration":{
+      "type":"structure",
+      "required":[
+        "action",
+        "regionEventSourceMappings"
+      ],
+      "members":{
+        "timeoutMinutes":{"shape":"LambdaEventSourceMappingConfigurationTimeoutMinutesInteger"},
+        "action":{"shape":"EventSourceMappingAction"},
+        "regionEventSourceMappings":{"shape":"RegionEventSourceMappingMap"},
+        "ungraceful":{"shape":"LambdaEventSourceMappingUngraceful"}
+      }
+    },
+    "LambdaEventSourceMappingConfigurationTimeoutMinutesInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "LambdaEventSourceMappingUngraceful":{
+      "type":"structure",
+      "members":{
+        "behavior":{"shape":"LambdaEventSourceMappingUngracefulBehavior"}
+      }
+    },
+    "LambdaEventSourceMappingUngracefulBehavior":{
+      "type":"string",
+      "enum":["skip"]
+    },
     "LambdaList":{
       "type":"list",
       "member":{"shape":"Lambdas"},
@@ -1495,6 +1545,13 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"ArcRoutingControlStates"}
+    },
+    "RegionEventSourceMappingMap":{
+      "type":"map",
+      "key":{"shape":"Region"},
+      "value":{"shape":"EventSourceMapping"},
+      "max":2,
+      "min":1
     },
     "RegionList":{
       "type":"list",

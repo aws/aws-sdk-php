@@ -7982,8 +7982,17 @@
         "ResourceType":{"shape":"ClusterEventResourceType"},
         "EventTime":{"shape":"Timestamp"},
         "EventDetails":{"shape":"EventDetails"},
-        "Description":{"shape":"String"}
+        "Description":{"shape":"String"},
+        "EventLevel":{"shape":"ClusterEventLevel"}
       }
+    },
+    "ClusterEventLevel":{
+      "type":"string",
+      "enum":[
+        "Info",
+        "Warn",
+        "Error"
+      ]
     },
     "ClusterEventMaxResults":{
       "type":"integer",
@@ -8022,7 +8031,8 @@
         "InstanceId":{"shape":"String"},
         "ResourceType":{"shape":"ClusterEventResourceType"},
         "EventTime":{"shape":"Timestamp"},
-        "Description":{"shape":"String"}
+        "Description":{"shape":"String"},
+        "EventLevel":{"shape":"ClusterEventLevel"}
       }
     },
     "ClusterFsxLustreConfig":{
@@ -10481,7 +10491,8 @@
       "members":{
         "ModelPackageGroupName":{"shape":"EntityName"},
         "ModelPackageGroupDescription":{"shape":"EntityDescription"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "ManagedConfiguration":{"shape":"ManagedConfiguration"}
       }
     },
     "CreateModelPackageGroupOutput":{
@@ -10523,7 +10534,8 @@
         "SourceUri":{"shape":"ModelPackageSourceUri"},
         "SecurityConfig":{"shape":"ModelPackageSecurityConfig"},
         "ModelCard":{"shape":"ModelPackageModelCard"},
-        "ModelLifeCycle":{"shape":"ModelLifeCycle"}
+        "ModelLifeCycle":{"shape":"ModelLifeCycle"},
+        "ManagedStorageType":{"shape":"ManagedStorageType"}
       }
     },
     "CreateModelPackageOutput":{
@@ -13835,7 +13847,8 @@
         "ModelPackageGroupDescription":{"shape":"EntityDescription"},
         "CreationTime":{"shape":"CreationTime"},
         "CreatedBy":{"shape":"UserContext"},
-        "ModelPackageGroupStatus":{"shape":"ModelPackageGroupStatus"}
+        "ModelPackageGroupStatus":{"shape":"ModelPackageGroupStatus"},
+        "ManagedConfiguration":{"shape":"ManagedConfiguration"}
       }
     },
     "DescribeModelPackageInput":{
@@ -13888,7 +13901,8 @@
         "SourceUri":{"shape":"ModelPackageSourceUri"},
         "SecurityConfig":{"shape":"ModelPackageSecurityConfig"},
         "ModelCard":{"shape":"ModelPackageModelCard"},
-        "ModelLifeCycle":{"shape":"ModelLifeCycle"}
+        "ModelLifeCycle":{"shape":"ModelLifeCycle"},
+        "ManagedStorageType":{"shape":"ManagedStorageType"}
       }
     },
     "DescribeModelQualityJobDefinitionRequest":{
@@ -15793,6 +15807,13 @@
       "enum":[
         "USER_PROFILE_NAME",
         "DISABLED"
+      ]
+    },
+    "ExecutionRoleSessionNameMode":{
+      "type":"string",
+      "enum":[
+        "STATIC",
+        "USER_IDENTITY"
       ]
     },
     "ExecutionStatus":{
@@ -18403,6 +18424,7 @@
       "members":{
         "CustomerEni":{"shape":"String"},
         "AdditionalEnis":{"shape":"AdditionalEnis"},
+        "InstanceRequirementsEniConfigurations":{"shape":"InstanceRequirementsEniConfigurations"},
         "CapacityReservation":{"shape":"CapacityReservation"},
         "FailureMessage":{"shape":"String"},
         "LcsExecutionState":{"shape":"String"},
@@ -18465,6 +18487,17 @@
       "type":"list",
       "member":{"shape":"InstancePoolSummary"},
       "min":1
+    },
+    "InstanceRequirementsEniConfiguration":{
+      "type":"structure",
+      "members":{
+        "CustomerEni":{"shape":"String"},
+        "AdditionalEnis":{"shape":"AdditionalEnis"}
+      }
+    },
+    "InstanceRequirementsEniConfigurations":{
+      "type":"list",
+      "member":{"shape":"InstanceRequirementsEniConfiguration"}
     },
     "InstanceType":{
       "type":"string",
@@ -21195,6 +21228,12 @@
       "min":0,
       "pattern":"\\d+\\.\\d+"
     },
+    "ManagedConfiguration":{
+      "type":"structure",
+      "members":{
+        "ManagedStorageType":{"shape":"ManagedStorageType"}
+      }
+    },
     "ManagedInstanceScalingCooldownInMinutes":{
       "type":"integer",
       "box":true,
@@ -21230,6 +21269,10 @@
         "ENABLED",
         "DISABLED"
       ]
+    },
+    "ManagedStorageType":{
+      "type":"string",
+      "enum":["Restricted"]
     },
     "MapString2048":{
       "type":"map",
@@ -22366,7 +22409,8 @@
         "ModelPackageGroupArn":{"shape":"ModelPackageGroupArn"},
         "ModelPackageGroupDescription":{"shape":"EntityDescription"},
         "CreationTime":{"shape":"CreationTime"},
-        "ModelPackageGroupStatus":{"shape":"ModelPackageGroupStatus"}
+        "ModelPackageGroupStatus":{"shape":"ModelPackageGroupStatus"},
+        "ManagedConfiguration":{"shape":"ManagedConfiguration"}
       }
     },
     "ModelPackageGroupSummaryList":{
@@ -25817,7 +25861,7 @@
         "InstanceCount"
       ],
       "members":{
-        "InstanceType":{"shape":"InstanceType"},
+        "InstanceType":{"shape":"ProductionVariantInstanceType"},
         "InstanceCount":{"shape":"TaskCount"}
       }
     },
@@ -26577,7 +26621,8 @@
         "SageMakerImageVersionArn":{"shape":"ImageVersionArn"},
         "SageMakerImageVersionAlias":{"shape":"ImageVersionAlias"},
         "InstanceType":{"shape":"AppInstanceType"},
-        "LifecycleConfigArn":{"shape":"StudioLifecycleConfigArn"}
+        "LifecycleConfigArn":{"shape":"StudioLifecycleConfigArn"},
+        "TrainingPlanArn":{"shape":"StudioResourceSpecTrainingPlanArn"}
       }
     },
     "ResourceType":{
@@ -26875,7 +26920,8 @@
       "enum":[
         "training-job",
         "hyperpod-cluster",
-        "endpoint"
+        "endpoint",
+        "studio-apps"
       ]
     },
     "SageMakerResourceNames":{
@@ -28206,6 +28252,12 @@
       "type":"list",
       "member":{"shape":"StudioLifecycleConfigDetails"}
     },
+    "StudioResourceSpecTrainingPlanArn":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"(arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:training-plan/.*|None)"
+    },
     "StudioWebPortal":{
       "type":"string",
       "enum":[
@@ -28219,7 +28271,8 @@
         "HiddenMlTools":{"shape":"HiddenMlToolsList"},
         "HiddenAppTypes":{"shape":"HiddenAppTypesList"},
         "HiddenInstanceTypes":{"shape":"HiddenInstanceTypesList"},
-        "HiddenSageMakerImageVersionAliases":{"shape":"HiddenSageMakerImageVersionAliasesList"}
+        "HiddenSageMakerImageVersionAliases":{"shape":"HiddenSageMakerImageVersionAliasesList"},
+        "ExecutionRoleSessionNameMode":{"shape":"ExecutionRoleSessionNameMode"}
       }
     },
     "SubnetId":{
@@ -29063,6 +29116,7 @@
         "InputDataConfig":{"shape":"InputDataConfig"},
         "OutputDataConfig":{"shape":"OutputDataConfig"},
         "ResourceConfig":{"shape":"ResourceConfig"},
+        "WarmPoolStatus":{"shape":"WarmPoolStatus"},
         "VpcConfig":{"shape":"VpcConfig"},
         "StoppingCondition":{"shape":"StoppingCondition"},
         "CreationTime":{"shape":"Timestamp"},

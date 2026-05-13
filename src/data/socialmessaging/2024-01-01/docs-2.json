@@ -303,6 +303,7 @@
     "LinkedWhatsAppBusinessAccountId": {
       "base": null,
       "refs": {
+        "AssociateWhatsAppBusinessAccountOutput$linkedWhatsAppBusinessAccountId": "<p>The ID of the WhatsApp Business Account that was linked to your Amazon Web Services account.</p>",
         "CreateWhatsAppMessageTemplateFromLibraryInput$id": "<p>The ID of the WhatsApp Business Account to associate with this template.</p>",
         "CreateWhatsAppMessageTemplateInput$id": "<p>The ID of the WhatsApp Business Account to associate with this template.</p>",
         "CreateWhatsAppMessageTemplateMediaInput$id": "<p>The ID of the WhatsApp Business Account associated with this media upload.</p>",
@@ -508,19 +509,23 @@
     "MetaTemplateLanguage": {
       "base": null,
       "refs": {
+        "GetWhatsAppMessageTemplateInput$templateLanguageCode": "<p>The language code of the message template (for example, <code>en</code> or <code>en_US</code>). Use together with <code>templateName</code> as an alternative to <code>metaTemplateId</code> to identify a template.</p>",
         "MetaLibraryTemplate$templateLanguage": "<p>The language code for the template (for example, en_US).</p>",
         "MetaLibraryTemplateDefinition$templateLanguage": "<p>The language code for the template (for example, en_US).</p>",
-        "TemplateSummary$templateLanguage": "<p>The language code of the template (for example, en_US).</p>"
+        "TemplateSummary$templateLanguage": "<p>The language code of the template (for example, en_US).</p>",
+        "UpdateWhatsAppMessageTemplateInput$templateLanguageCode": "<p>The language code of the message template (for example, <code>en</code> or <code>en_US</code>). Use together with <code>templateName</code> as an alternative to <code>metaTemplateId</code> to identify a template.</p>"
       }
     },
     "MetaTemplateName": {
       "base": null,
       "refs": {
         "DeleteWhatsAppMessageTemplateInput$templateName": "<p>The name of the template to delete.</p>",
+        "GetWhatsAppMessageTemplateInput$templateName": "<p>The name of the message template. Use together with <code>templateLanguageCode</code> as an alternative to <code>metaTemplateId</code> to identify a template.</p>",
         "MetaLibraryTemplate$templateName": "<p>The name to assign to the template.</p>",
         "MetaLibraryTemplate$libraryTemplateName": "<p>The name of the template in Meta's library.</p>",
         "MetaLibraryTemplateDefinition$templateName": "<p>The name of the template.</p>",
-        "TemplateSummary$templateName": "<p>The name of the template.</p>"
+        "TemplateSummary$templateName": "<p>The name of the template.</p>",
+        "UpdateWhatsAppMessageTemplateInput$templateName": "<p>The name of the message template. Use together with <code>templateLanguageCode</code> as an alternative to <code>metaTemplateId</code> to identify a template.</p>"
       }
     },
     "MetaTemplateQualityScore": {
@@ -849,6 +854,13 @@
       "refs": {
         "LinkedWhatsAppBusinessAccount$linkDate": "<p>The date the WhatsApp Business Account was linked.</p>",
         "LinkedWhatsAppBusinessAccountSummary$linkDate": "<p>The date the WhatsApp Business Account was linked.</p>"
+      }
+    },
+    "WhatsAppBusinessAccountMarketingMessagesOnboardingStatus": {
+      "base": null,
+      "refs": {
+        "LinkedWhatsAppBusinessAccount$marketingMessagesOnboardingStatus": "<p>The onboarding status for the Marketing Messages API. This value is fetched from Meta and indicates whether the WhatsApp Business Account is onboarded for Meta's Marketing Messages API.</p>",
+        "LinkedWhatsAppBusinessAccountSummary$marketingMessagesOnboardingStatus": "<p>The onboarding status for the Marketing Messages API. This value is fetched from Meta and indicates whether the WhatsApp Business Account is onboarded for Meta's Marketing Messages API.</p>"
       }
     },
     "WhatsAppBusinessAccountName": {

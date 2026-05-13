@@ -475,6 +475,26 @@
         "AutoTune$AutoTuneType": "<p>The type of Auto-Tune action.</p>"
       }
     },
+    "AutomatedSnapshotPauseOptions": {
+      "base": "<p>Specifies the automated snapshot pause options for the domain. These options allow you to temporarily pause automated snapshots for a specified time period.</p>",
+      "refs": {
+        "AutomatedSnapshotPauseOptionsStatus$Options": "<p>Automated snapshot pause options for the domain.</p>",
+        "DomainStatus$AutomatedSnapshotPauseOptions": "<p>The current status of the domain's automated snapshot pause options.</p>"
+      }
+    },
+    "AutomatedSnapshotPauseOptionsStatus": {
+      "base": "<p>The status of automated snapshot pause options for the domain.</p>",
+      "refs": {
+        "DomainConfig$AutomatedSnapshotPauseOptions": "<p>Specifies <code>AutomatedSnapshotPauseOptions</code> for the domain.</p>"
+      }
+    },
+    "AutomatedSnapshotPauseRequestOptions": {
+      "base": "<p>Specifies the automated snapshot pause request options for the domain.</p> <important> <p>Suspending snapshots reduces data protection. You cannot restore your domain to points in time when snapshots are suspended. Use this feature only for short-term operational needs such as migrations or maintenance windows.</p> </important> <p>Maximum suspension duration: 3 days.</p>",
+      "refs": {
+        "CreateDomainRequest$AutomatedSnapshotPauseOptions": "<p>Specifies the automated snapshot pause options for the domain.</p> <important> <p>Suspending snapshots reduces data protection. You cannot restore your domain to points in time when snapshots are suspended. Use this feature only for short-term operational needs such as migrations or maintenance windows.</p> </important> <p>Maximum suspension duration: 3 days.</p>",
+        "UpdateDomainConfigRequest$AutomatedSnapshotPauseOptions": "<p>Specifies the automated snapshot pause options for the domain.</p> <important> <p>Suspending snapshots reduces data protection. You cannot restore your domain to points in time when snapshots are suspended. Use this feature only for short-term operational needs such as migrations or maintenance windows.</p> </important> <p>Maximum suspension duration: 3 days.</p>"
+      }
+    },
     "AvailabilityZone": {
       "base": null,
       "refs": {
@@ -524,6 +544,8 @@
         "AutoTuneOptionsInput$UseOffPeakWindow": "<p>Whether to schedule Auto-Tune optimizations that require blue/green deployments during the domain's configured daily off-peak window.</p>",
         "AutoTuneOptionsOutput$UseOffPeakWindow": "<p>Whether the domain's off-peak window will be used to deploy Auto-Tune changes rather than a maintenance schedule.</p>",
         "AutoTuneStatus$PendingDeletion": "<p>Indicates whether the domain is being deleted.</p>",
+        "AutomatedSnapshotPauseOptions$Enabled": "<p>Whether automated snapshot pause is enabled for the domain.</p>",
+        "AutomatedSnapshotPauseRequestOptions$Enabled": "<p>Whether to enable or disable automated snapshot pause for the domain.</p>",
         "ClusterConfig$DedicatedMasterEnabled": "<p>Indicates whether dedicated master nodes are enabled for the cluster.<code>True</code> if the cluster will use a dedicated master node.<code>False</code> if the cluster will not.</p>",
         "ClusterConfig$ZoneAwarenessEnabled": "<p>Indicates whether multiple Availability Zones are enabled. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-multiaz.html\">Configuring a multi-AZ domain in Amazon OpenSearch Service</a>.</p>",
         "ClusterConfig$WarmEnabled": "<p>Whether to enable warm storage for the cluster.</p>",
@@ -2714,6 +2736,7 @@
         "AccessPoliciesStatus$Status": "<p>The status of the access policy for the domain.</p>",
         "AdvancedOptionsStatus$Status": "<p>The status of advanced options for the specified domain.</p>",
         "AdvancedSecurityOptionsStatus$Status": "<p>Status of the fine-grained access control settings for a domain.</p>",
+        "AutomatedSnapshotPauseOptionsStatus$Status": "<p>The current status of the automated snapshot pause options for the domain.</p>",
         "ClusterConfigStatus$Status": "<p>The status of cluster configuration options for the specified domain.</p>",
         "CognitoOptionsStatus$Status": "<p>The status of the Cognito options for the specified domain.</p>",
         "DeploymentStrategyOptionsStatus$Status": "<p>The current status of the deployment strategy options for the domain.</p>",
@@ -2943,6 +2966,12 @@
       "base": null,
       "refs": {
         "MasterUserOptions$MasterUserPassword": "<p>Password for the master user. Only specify if <code>InternalUserDatabaseEnabled</code> is <code>true</code>.</p>"
+      }
+    },
+    "PauseState": {
+      "base": "<p>The state of the automated snapshot pause. Valid values are <code>Active</code>, <code>Completed</code>, <code>Scheduled</code>, and <code>Disabled</code>.</p>",
+      "refs": {
+        "AutomatedSnapshotPauseOptions$State": "<p>The current state of the automated snapshot pause. Valid values are <code>Active</code>, <code>Completed</code>, <code>Scheduled</code>, and <code>Disabled</code>.</p>"
       }
     },
     "PluginClassName": {
@@ -3606,6 +3635,10 @@
       "refs": {
         "ApplicationSummary$createdAt": "<p>The timestamp when an OpenSearch application was created.</p>",
         "ApplicationSummary$lastUpdatedAt": "<p>The timestamp of the last update to an OpenSearch application.</p>",
+        "AutomatedSnapshotPauseOptions$StartTime": "<p>The timestamp at which the automated snapshot pause begins.</p>",
+        "AutomatedSnapshotPauseOptions$EndTime": "<p>The timestamp at which the automated snapshot pause ends.</p>",
+        "AutomatedSnapshotPauseRequestOptions$StartTime": "<p>The timestamp at which the automated snapshot pause should begin.</p>",
+        "AutomatedSnapshotPauseRequestOptions$EndTime": "<p>The timestamp at which the automated snapshot pause should end. The maximum allowed duration between <code>StartTime</code> and <code>EndTime</code> is 3 days.</p>",
         "CreateApplicationResponse$createdAt": "<p>The timestamp indicating when the OpenSearch application was created.</p>",
         "GetApplicationResponse$createdAt": "<p>The timestamp when the OpenSearch application was created.</p>",
         "GetApplicationResponse$lastUpdatedAt": "<p>The timestamp of the last update to the OpenSearch application.</p>",

@@ -1,5 +1,44 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Endpoints` - Introduces endpoint resolution through a BDD rules based evaluation.
+
+- Add BDD-based endpoint resolution alongside the existing Tree Ruletset Evaluator. 
+- Introduce a Bdd package under EndpointV2 namespace containing utilities and components used for resolving an endpoint through BDDs.
+- Enhance the EndpointDefinitionProvider to resolve the endpoint rule definitions by giving preference to BDDs "endpoint-bdd-1.json" rules over tree based rules.
+- Enhance EndpointProviderV2 to support both, BDD endpoint resolution and Tree 
+  endpoint resolution but also giving preference to BDD resolution. 
+ How is it done?
+  - The parameter $ruleset now supports instances of BddRuleset, besides of array to preserve existent behavior, and when an instance of BddRuleset is present then a BDD Evaluator is instantiated which will be used to resolve the endpoint.
+  - Otherwise, if an array or an instance of Ruleset is passed in then, we resolve the endpoint with the Tree based endpoint resolution, which is the current behavior.
+- Add a new method "getActiveParameters" in EndpointProviderV2 that is used by 
+  the EndpointV2Middleware to get the active parameters, which internally  it just evaluates which rule set property we should be getting the parameters from, either from $bddRuleset if not null or from $ruleset.
+- Enhance EndpointV2Middleware to consume the new getActiveParameters.
+
+* `Aws\ConnectCampaignsV2` - This release added support for Outbound Campaign timezone detection using all available contact methods
+* `Aws\Glue` - AWS Glue now defaults the job timeout to 480 minutes for Glue version 5.0 and later when no timeout value is specified. The default remains 2,880 minutes for Glue version 4.0 and earlier.
+* `Aws\Batch` - Adds a billing callout to docs regarding using the CE Scale Down Delay feature
+* `Aws\DSQL` - Added support for Amazon Aurora DSQL change data capture (CDC) streams that deliver row-level database changes to Amazon Kinesis in JSON format. Includes CreateStream, GetStream, ListStreams, and DeleteStream operations.
+* `Aws\Lightsail` - Added OriginIpAddressTypeEnum (ipv4, ipv6, dualstack) and ipAddressType field to Origin and InputOrigin structures for Lightsail CDN distributions. Allows customers to specify how the distribution connects to origins, using IPv4, IPv6, or dualstack networking
+* `Aws\BedrockAgentCoreControl` - Adds support for read-only summary APIs for Policy Engine, Policy, and Policy Generation resources, enabling metadata retrieval without KMS decryption for AWS Config integration.
+* `Aws\BillingConductor` - Add ConflictException to UpdateCustomLineItem operation.
+* `Aws\OpenSearchService` - Adds support for AutomatedSnapshotPauseOptions.
+* `Aws\PartnerCentralAccount` - Added ServiceQuotaExceededExceptions for Profile operations
+* `Aws\EC2` - Include length limits in the SDK and documentation for text fields in Image (AMI) APIs such as the image name and description
+* `Aws\SocialMessaging` - Adds parameters to call the GetWhatsAppMessageTemplate and UpdateWhatsAppMessageTemplate APIs with a template name and language code in place of the template ID. Linked WhatsApp accounts also describe whether the WABA is onboarded to Meta's Marketing Messages API.
+* `Aws\Redshift` - Added rg.xlarge and rg.4xlarge to valid NodeType values and updated documentation for CreateCluster, ModifyCluster, ResizeCluster, and RestoreFromClusterSnapshot APIs to reflect RG node type support.
+* `Aws\Connect` - This change added three new EventSourceName for schedule notification feature
+* `Aws\SageMaker` - Adds execution role session name mode to reflect user identity in Studio. Adds Flexible Training Plans on Studio apps. Adds restricted model packages to control access to proprietary model artifacts via IAM. Fixed instance type parity between inference endpoints and managed shadow tests.
+* `Aws\SecurityAgent` - Add support for code reviews, a new resource type that enables automated security-focused static analysis of source code repositories.
+* `Aws\PCS` - Add support for Amazon EC2 Interruptible-ODCR
+* `Aws\ConnectCases` - Amazon Connect Cases now supports SLA durations of up to 2 years (1,051,200 minutes), increased from the previous maximum of 90 days (129,600 minutes). This enables you to track long-running service level agreements for cases that require extended resolution timelines.
+* `Aws\RTBFabric` - Customers can now configure custom domain names for their RTB Fabric gateways. This enables partners to use their own branded domain for RTB traffic instead of the default rtbfabric endpoint
+* `Aws\ARCRegionSwitch` - Adds support for enabling and disabling Lambda event source mappings in Region switch plans.
+* `Aws\ElasticsearchService` - Adds support for AutomatedSnapshotPauseOptions.
+* `Aws\QuickSight` - Adds five new custom permission option for Quick Apps so that these capabilities can be controlled by public SDK and CLI.
+* `Aws\SFN` - Updated default SDK endpoints for AWS Step Functions in AWS GovCloud (US) regions. The default Dual-Stack endpoints now resolve to "states-fips" prefixed hostnames. There are no changes to service behavior. No customer action is required.
+
 ## 3.380.3 - 2026-05-07
 
 * `Aws\Route53Resolver` - Adds supports for DNS64 on inbound endpoints and IPv6 forwarding through the internet gateway (IGW) on outbound endpoints, making it easier to manage hybrid DNS across IPv4 and IPv6 networks.

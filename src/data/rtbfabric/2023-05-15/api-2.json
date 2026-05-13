@@ -34,6 +34,26 @@
       ],
       "idempotent":true
     },
+    "AssociateCertificate":{
+      "name":"AssociateCertificate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/responder-gateway/{gatewayId}/certificate",
+        "responseCode":200
+      },
+      "input":{"shape":"AssociateCertificateRequest"},
+      "output":{"shape":"AssociateCertificateResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "CreateInboundExternalLink":{
       "name":"CreateInboundExternalLink",
       "http":{
@@ -74,6 +94,26 @@
       ],
       "idempotent":true
     },
+    "CreateLinkRoutingRule":{
+      "name":"CreateLinkRoutingRule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/responder-gateway/{gatewayId}/link/{linkId}/routing-rule",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateLinkRoutingRuleRequest"},
+      "output":{"shape":"CreateLinkRoutingRuleResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "CreateOutboundExternalLink":{
       "name":"CreateOutboundExternalLink",
       "http":{
@@ -88,6 +128,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
       ],
@@ -169,6 +210,25 @@
       ],
       "idempotent":true
     },
+    "DeleteLinkRoutingRule":{
+      "name":"DeleteLinkRoutingRule",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/responder-gateway/{gatewayId}/link/{linkId}/routing-rule/{ruleId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteLinkRoutingRuleRequest"},
+      "output":{"shape":"DeleteLinkRoutingRuleResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "DeleteOutboundExternalLink":{
       "name":"DeleteOutboundExternalLink",
       "http":{
@@ -201,6 +261,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
       ],
@@ -219,10 +280,49 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
       ],
       "idempotent":true
+    },
+    "DisassociateCertificate":{
+      "name":"DisassociateCertificate",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/responder-gateway/{gatewayId}/certificate",
+        "responseCode":200
+      },
+      "input":{"shape":"DisassociateCertificateRequest"},
+      "output":{"shape":"DisassociateCertificateResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
+    "GetCertificateAssociation":{
+      "name":"GetCertificateAssociation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/responder-gateway/{gatewayId}/certificate",
+        "responseCode":200
+      },
+      "input":{"shape":"GetCertificateAssociationRequest"},
+      "output":{"shape":"GetCertificateAssociationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
     },
     "GetInboundExternalLink":{
       "name":"GetInboundExternalLink",
@@ -256,6 +356,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "GetLinkRoutingRule":{
+      "name":"GetLinkRoutingRule",
+      "http":{
+        "method":"GET",
+        "requestUri":"/responder-gateway/{gatewayId}/link/{linkId}/routing-rule/{ruleId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetLinkRoutingRuleRequest"},
+      "output":{"shape":"GetLinkRoutingRuleResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
       ],
@@ -306,6 +424,42 @@
       },
       "input":{"shape":"GetResponderGatewayRequest"},
       "output":{"shape":"GetResponderGatewayResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListCertificateAssociations":{
+      "name":"ListCertificateAssociations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/responder-gateway/{gatewayId}/certificates",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCertificateAssociationsRequest"},
+      "output":{"shape":"ListCertificateAssociationsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
+    "ListLinkRoutingRules":{
+      "name":"ListLinkRoutingRules",
+      "http":{
+        "method":"GET",
+        "requestUri":"/responder-gateway/{gatewayId}/link/{linkId}/routing-rules",
+        "responseCode":200
+      },
+      "input":{"shape":"ListLinkRoutingRulesRequest"},
+      "output":{"shape":"ListLinkRoutingRulesResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
@@ -475,6 +629,25 @@
       ],
       "idempotent":true
     },
+    "UpdateLinkRoutingRule":{
+      "name":"UpdateLinkRoutingRule",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/responder-gateway/{gatewayId}/link/{linkId}/routing-rule/{ruleId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateLinkRoutingRuleRequest"},
+      "output":{"shape":"UpdateLinkRoutingRuleResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "UpdateRequesterGateway":{
       "name":"UpdateRequesterGateway",
       "http":{
@@ -575,6 +748,12 @@
       },
       "exception":true
     },
+    "AcmCertificateArn":{
+      "type":"string",
+      "max":256,
+      "min":75,
+      "pattern":"arn:(aws|aws-cn|aws-us-gov):acm:[a-z0-9-]+:[0-9]{12}:certificate/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
     "Action":{
       "type":"structure",
       "members":{
@@ -582,6 +761,39 @@
         "headerTag":{"shape":"HeaderTagAction"}
       },
       "union":true
+    },
+    "AssociateCertificateRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayId",
+        "acmCertificateArn",
+        "clientToken"
+      ],
+      "members":{
+        "gatewayId":{
+          "shape":"GatewayId",
+          "location":"uri",
+          "locationName":"gatewayId"
+        },
+        "acmCertificateArn":{"shape":"AcmCertificateArn"},
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "AssociateCertificateResponse":{
+      "type":"structure",
+      "required":[
+        "gatewayId",
+        "acmCertificateArn",
+        "status"
+      ],
+      "members":{
+        "gatewayId":{"shape":"GatewayId"},
+        "acmCertificateArn":{"shape":"AcmCertificateArn"},
+        "status":{"shape":"CertificateAssociationStatus"}
+      }
     },
     "AutoScalingGroupName":{
       "type":"string",
@@ -617,6 +829,33 @@
     "Boolean":{
       "type":"boolean",
       "box":true
+    },
+    "CertificateAssociationStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING_ASSOCIATION",
+        "ASSOCIATED",
+        "PENDING_DISASSOCIATION",
+        "DISASSOCIATED",
+        "FAILED"
+      ]
+    },
+    "CertificateAssociationSummary":{
+      "type":"structure",
+      "required":[
+        "acmCertificateArn",
+        "status"
+      ],
+      "members":{
+        "acmCertificateArn":{"shape":"AcmCertificateArn"},
+        "status":{"shape":"CertificateAssociationStatus"},
+        "associatedAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "CertificateAssociationSummaryList":{
+      "type":"list",
+      "member":{"shape":"CertificateAssociationSummary"}
     },
     "CertificateAuthorityCertificates":{
       "type":"list",
@@ -732,6 +971,48 @@
     "CreateLinkResponseCustomerProvidedIdString":{
       "type":"string",
       "pattern":"[a-zA-Z0-9_-]{5,50}"
+    },
+    "CreateLinkRoutingRuleRequest":{
+      "type":"structure",
+      "required":[
+        "clientToken",
+        "gatewayId",
+        "linkId",
+        "priority",
+        "conditions"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "gatewayId":{
+          "shape":"GatewayId",
+          "location":"uri",
+          "locationName":"gatewayId"
+        },
+        "linkId":{
+          "shape":"LinkId",
+          "location":"uri",
+          "locationName":"linkId"
+        },
+        "priority":{"shape":"RulePriority"},
+        "conditions":{"shape":"RuleCondition"},
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "CreateLinkRoutingRuleResponse":{
+      "type":"structure",
+      "required":[
+        "ruleId",
+        "status",
+        "createdAt"
+      ],
+      "members":{
+        "ruleId":{"shape":"RuleId"},
+        "status":{"shape":"RuleStatus"},
+        "createdAt":{"shape":"Timestamp"}
+      }
     },
     "CreateOutboundExternalLinkRequest":{
       "type":"structure",
@@ -949,6 +1230,42 @@
         "status":{"shape":"LinkStatus"}
       }
     },
+    "DeleteLinkRoutingRuleRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayId",
+        "linkId",
+        "ruleId"
+      ],
+      "members":{
+        "gatewayId":{
+          "shape":"GatewayId",
+          "location":"uri",
+          "locationName":"gatewayId"
+        },
+        "linkId":{
+          "shape":"LinkId",
+          "location":"uri",
+          "locationName":"linkId"
+        },
+        "ruleId":{
+          "shape":"RuleId",
+          "location":"uri",
+          "locationName":"ruleId"
+        }
+      }
+    },
+    "DeleteLinkRoutingRuleResponse":{
+      "type":"structure",
+      "required":[
+        "ruleId",
+        "status"
+      ],
+      "members":{
+        "ruleId":{"shape":"RuleId"},
+        "status":{"shape":"RuleStatus"}
+      }
+    },
     "DeleteOutboundExternalLinkRequest":{
       "type":"structure",
       "required":[
@@ -1021,6 +1338,38 @@
       "members":{
         "gatewayId":{"shape":"GatewayId"},
         "status":{"shape":"ResponderGatewayStatus"}
+      }
+    },
+    "DisassociateCertificateRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayId",
+        "acmCertificateArn"
+      ],
+      "members":{
+        "gatewayId":{
+          "shape":"GatewayId",
+          "location":"uri",
+          "locationName":"gatewayId"
+        },
+        "acmCertificateArn":{
+          "shape":"AcmCertificateArn",
+          "location":"querystring",
+          "locationName":"acmCertificateArn"
+        }
+      }
+    },
+    "DisassociateCertificateResponse":{
+      "type":"structure",
+      "required":[
+        "gatewayId",
+        "acmCertificateArn",
+        "status"
+      ],
+      "members":{
+        "gatewayId":{"shape":"GatewayId"},
+        "acmCertificateArn":{"shape":"AcmCertificateArn"},
+        "status":{"shape":"CertificateAssociationStatus"}
       }
     },
     "DomainName":{
@@ -1121,6 +1470,40 @@
         "INTERNAL"
       ]
     },
+    "GetCertificateAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayId",
+        "acmCertificateArn"
+      ],
+      "members":{
+        "gatewayId":{
+          "shape":"GatewayId",
+          "location":"uri",
+          "locationName":"gatewayId"
+        },
+        "acmCertificateArn":{
+          "shape":"AcmCertificateArn",
+          "location":"querystring",
+          "locationName":"acmCertificateArn"
+        }
+      }
+    },
+    "GetCertificateAssociationResponse":{
+      "type":"structure",
+      "required":[
+        "gatewayId",
+        "acmCertificateArn",
+        "status"
+      ],
+      "members":{
+        "gatewayId":{"shape":"GatewayId"},
+        "acmCertificateArn":{"shape":"AcmCertificateArn"},
+        "status":{"shape":"CertificateAssociationStatus"},
+        "associatedAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
     "GetInboundExternalLinkRequest":{
       "type":"structure",
       "required":[
@@ -1208,6 +1591,55 @@
         "tags":{"shape":"TagsMap"},
         "httpResponderAllowed":{"shape":"Boolean"},
         "timeoutInMillis":{"shape":"LinkTimeoutInMillis"}
+      }
+    },
+    "GetLinkRoutingRuleRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayId",
+        "linkId",
+        "ruleId"
+      ],
+      "members":{
+        "gatewayId":{
+          "shape":"GatewayId",
+          "location":"uri",
+          "locationName":"gatewayId"
+        },
+        "linkId":{
+          "shape":"LinkId",
+          "location":"uri",
+          "locationName":"linkId"
+        },
+        "ruleId":{
+          "shape":"RuleId",
+          "location":"uri",
+          "locationName":"ruleId"
+        }
+      }
+    },
+    "GetLinkRoutingRuleResponse":{
+      "type":"structure",
+      "required":[
+        "gatewayId",
+        "linkId",
+        "ruleId",
+        "priority",
+        "conditions",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "gatewayId":{"shape":"GatewayId"},
+        "linkId":{"shape":"LinkId"},
+        "ruleId":{"shape":"RuleId"},
+        "priority":{"shape":"RulePriority"},
+        "conditions":{"shape":"RuleCondition"},
+        "status":{"shape":"RuleStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "GetOutboundExternalLinkRequest":{
@@ -1525,6 +1957,29 @@
         "applicationLogs":{"shape":"LinkApplicationLogConfiguration"}
       }
     },
+    "LinkRoutingRuleList":{
+      "type":"list",
+      "member":{"shape":"LinkRoutingRuleSummary"}
+    },
+    "LinkRoutingRuleSummary":{
+      "type":"structure",
+      "required":[
+        "ruleId",
+        "priority",
+        "conditions",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "ruleId":{"shape":"RuleId"},
+        "priority":{"shape":"RulePriority"},
+        "conditions":{"shape":"RuleCondition"},
+        "status":{"shape":"RuleStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
     "LinkStatus":{
       "type":"string",
       "enum":[
@@ -1548,6 +2003,83 @@
       "box":true,
       "max":5000,
       "min":100
+    },
+    "ListCertificateAssociationsRequest":{
+      "type":"structure",
+      "required":["gatewayId"],
+      "members":{
+        "gatewayId":{
+          "shape":"GatewayId",
+          "location":"uri",
+          "locationName":"gatewayId"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListCertificateAssociationsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListCertificateAssociationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":1
+    },
+    "ListCertificateAssociationsResponse":{
+      "type":"structure",
+      "required":["certificateAssociations"],
+      "members":{
+        "certificateAssociations":{"shape":"CertificateAssociationSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListLinkRoutingRulesRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayId",
+        "linkId"
+      ],
+      "members":{
+        "gatewayId":{
+          "shape":"GatewayId",
+          "location":"uri",
+          "locationName":"gatewayId"
+        },
+        "linkId":{
+          "shape":"LinkId",
+          "location":"uri",
+          "locationName":"linkId"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListLinkRoutingRulesRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListLinkRoutingRulesRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":1
+    },
+    "ListLinkRoutingRulesResponse":{
+      "type":"structure",
+      "members":{
+        "rules":{"shape":"LinkRoutingRuleList"},
+        "nextToken":{"shape":"String"}
+      }
     },
     "ListLinksRequest":{
       "type":"structure",
@@ -1786,6 +2318,29 @@
       "max":2,
       "min":1
     },
+    "QueryStringKeyValuePair":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"QueryStringKeyValuePairKeyString"},
+        "value":{"shape":"QueryStringKeyValuePairValueString"}
+      }
+    },
+    "QueryStringKeyValuePairKeyString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[A-Za-z0-9._~-]+"
+    },
+    "QueryStringKeyValuePairValueString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[A-Za-z0-9._~-]+"
+    },
     "RateLimiterModuleParameters":{
       "type":"structure",
       "members":{
@@ -1935,6 +2490,70 @@
       "min":1,
       "pattern":"arn:aws:rtbfabric:[a-zA-Z0-9_-]+:[0-9]{12}:gateway/[a-zA-Z0-9-]+(/link/[a-zA-Z0-9-]+(/routing-rule/[a-zA-Z0-9-]+)?)?"
     },
+    "RuleCondition":{
+      "type":"structure",
+      "members":{
+        "hostHeader":{"shape":"RuleConditionHostHeaderString"},
+        "hostHeaderWildcard":{"shape":"RuleConditionHostHeaderWildcardString"},
+        "pathPrefix":{"shape":"RuleConditionPathPrefixString"},
+        "pathExact":{"shape":"RuleConditionPathExactString"},
+        "queryStringEquals":{"shape":"QueryStringKeyValuePair"},
+        "queryStringExists":{"shape":"RuleConditionQueryStringExistsString"}
+      }
+    },
+    "RuleConditionHostHeaderString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z0-9._~-]+"
+    },
+    "RuleConditionHostHeaderWildcardString":{
+      "type":"string",
+      "max":255,
+      "min":3,
+      "pattern":"[A-Za-z0-9._~*-]+"
+    },
+    "RuleConditionPathExactString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"/[A-Za-z0-9._~/-]*"
+    },
+    "RuleConditionPathPrefixString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"/[A-Za-z0-9._~/-]*"
+    },
+    "RuleConditionQueryStringExistsString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[A-Za-z0-9._~-]+"
+    },
+    "RuleId":{
+      "type":"string",
+      "max":30,
+      "min":6,
+      "pattern":"rule-[a-z0-9-]{1,25}"
+    },
+    "RulePriority":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "RuleStatus":{
+      "type":"string",
+      "enum":[
+        "CREATION_IN_PROGRESS",
+        "ACTIVE",
+        "UPDATE_IN_PROGRESS",
+        "DELETION_IN_PROGRESS",
+        "DELETED",
+        "FAILED"
+      ]
+    },
     "SecurityGroupId":{
       "type":"string",
       "max":43,
@@ -1969,7 +2588,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"(resourceArn|internalId|(?!aws:)[a-zA-Z0-9+\\-=._:/@]+)"
+      "pattern":"(resourceArn|internalId|[a-zA-Z0-9+\\-=._:/@]+)"
     },
     "TagKeyList":{
       "type":"list",
@@ -2131,6 +2750,48 @@
       "members":{
         "linkId":{"shape":"LinkId"},
         "status":{"shape":"LinkStatus"}
+      }
+    },
+    "UpdateLinkRoutingRuleRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayId",
+        "linkId",
+        "ruleId",
+        "priority",
+        "conditions"
+      ],
+      "members":{
+        "gatewayId":{
+          "shape":"GatewayId",
+          "location":"uri",
+          "locationName":"gatewayId"
+        },
+        "linkId":{
+          "shape":"LinkId",
+          "location":"uri",
+          "locationName":"linkId"
+        },
+        "ruleId":{
+          "shape":"RuleId",
+          "location":"uri",
+          "locationName":"ruleId"
+        },
+        "priority":{"shape":"RulePriority"},
+        "conditions":{"shape":"RuleCondition"}
+      }
+    },
+    "UpdateLinkRoutingRuleResponse":{
+      "type":"structure",
+      "required":[
+        "ruleId",
+        "status",
+        "updatedAt"
+      ],
+      "members":{
+        "ruleId":{"shape":"RuleId"},
+        "status":{"shape":"RuleStatus"},
+        "updatedAt":{"shape":"Timestamp"}
       }
     },
     "UpdateRequesterGatewayRequest":{

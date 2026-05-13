@@ -30,6 +30,16 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "BatchDeleteCodeReviews":{
+      "name":"BatchDeleteCodeReviews",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchDeleteCodeReviews",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchDeleteCodeReviewsInput"},
+      "output":{"shape":"BatchDeleteCodeReviewsOutput"}
+    },
     "BatchDeletePentests":{
       "name":"BatchDeletePentests",
       "http":{
@@ -67,6 +77,36 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
+    },
+    "BatchGetCodeReviewJobTasks":{
+      "name":"BatchGetCodeReviewJobTasks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchGetCodeReviewJobTasks",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetCodeReviewJobTasksInput"},
+      "output":{"shape":"BatchGetCodeReviewJobTasksOutput"}
+    },
+    "BatchGetCodeReviewJobs":{
+      "name":"BatchGetCodeReviewJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchGetCodeReviewJobs",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetCodeReviewJobsInput"},
+      "output":{"shape":"BatchGetCodeReviewJobsOutput"}
+    },
+    "BatchGetCodeReviews":{
+      "name":"BatchGetCodeReviews",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchGetCodeReviews",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetCodeReviewsInput"},
+      "output":{"shape":"BatchGetCodeReviewsOutput"}
     },
     "BatchGetFindings":{
       "name":"BatchGetFindings",
@@ -138,6 +178,16 @@
       },
       "input":{"shape":"CreateApplicationRequest"},
       "output":{"shape":"CreateApplicationResponse"}
+    },
+    "CreateCodeReview":{
+      "name":"CreateCodeReview",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateCodeReview",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateCodeReviewInput"},
+      "output":{"shape":"CreateCodeReviewOutput"}
     },
     "CreateIntegration":{
       "name":"CreateIntegration",
@@ -369,6 +419,36 @@
       ],
       "readonly":true
     },
+    "ListCodeReviewJobTasks":{
+      "name":"ListCodeReviewJobTasks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListCodeReviewJobTasks",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCodeReviewJobTasksInput"},
+      "output":{"shape":"ListCodeReviewJobTasksOutput"}
+    },
+    "ListCodeReviewJobsForCodeReview":{
+      "name":"ListCodeReviewJobsForCodeReview",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListCodeReviewJobsForCodeReview",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCodeReviewJobsForCodeReviewInput"},
+      "output":{"shape":"ListCodeReviewJobsForCodeReviewOutput"}
+    },
+    "ListCodeReviews":{
+      "name":"ListCodeReviews",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListCodeReviews",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCodeReviewsInput"},
+      "output":{"shape":"ListCodeReviewsOutput"}
+    },
     "ListDiscoveredEndpoints":{
       "name":"ListDiscoveredEndpoints",
       "http":{
@@ -496,6 +576,16 @@
       "input":{"shape":"StartCodeRemediationInput"},
       "output":{"shape":"StartCodeRemediationOutput"}
     },
+    "StartCodeReviewJob":{
+      "name":"StartCodeReviewJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StartCodeReviewJob",
+        "responseCode":200
+      },
+      "input":{"shape":"StartCodeReviewJobInput"},
+      "output":{"shape":"StartCodeReviewJobOutput"}
+    },
     "StartPentestJob":{
       "name":"StartPentestJob",
       "http":{
@@ -505,6 +595,16 @@
       },
       "input":{"shape":"StartPentestJobInput"},
       "output":{"shape":"StartPentestJobOutput"}
+    },
+    "StopCodeReviewJob":{
+      "name":"StopCodeReviewJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StopCodeReviewJob",
+        "responseCode":200
+      },
+      "input":{"shape":"StopCodeReviewJobInput"},
+      "output":{"shape":"StopCodeReviewJobOutput"}
     },
     "StopPentestJob":{
       "name":"StopPentestJob",
@@ -557,6 +657,16 @@
       "input":{"shape":"UpdateApplicationRequest"},
       "output":{"shape":"UpdateApplicationResponse"},
       "idempotent":true
+    },
+    "UpdateCodeReview":{
+      "name":"UpdateCodeReview",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateCodeReview",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateCodeReviewInput"},
+      "output":{"shape":"UpdateCodeReviewOutput"}
     },
     "UpdateFinding":{
       "name":"UpdateFinding",
@@ -841,6 +951,24 @@
         "AWS_INTERNAL"
       ]
     },
+    "BatchDeleteCodeReviewsInput":{
+      "type":"structure",
+      "required":[
+        "codeReviewIds",
+        "agentSpaceId"
+      ],
+      "members":{
+        "codeReviewIds":{"shape":"CodeReviewIdList"},
+        "agentSpaceId":{"shape":"String"}
+      }
+    },
+    "BatchDeleteCodeReviewsOutput":{
+      "type":"structure",
+      "members":{
+        "deleted":{"shape":"CodeReviewIdList"},
+        "failed":{"shape":"DeleteCodeReviewFailureList"}
+      }
+    },
     "BatchDeletePentestsInput":{
       "type":"structure",
       "required":[
@@ -889,6 +1017,60 @@
       "required":["artifactMetadataList"],
       "members":{
         "artifactMetadataList":{"shape":"ArtifactMetadataList"}
+      }
+    },
+    "BatchGetCodeReviewJobTasksInput":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "codeReviewJobTaskIds"
+      ],
+      "members":{
+        "agentSpaceId":{"shape":"String"},
+        "codeReviewJobTaskIds":{"shape":"TaskIdList"}
+      }
+    },
+    "BatchGetCodeReviewJobTasksOutput":{
+      "type":"structure",
+      "members":{
+        "codeReviewJobTasks":{"shape":"CodeReviewJobTaskList"},
+        "notFound":{"shape":"TaskIdList"}
+      }
+    },
+    "BatchGetCodeReviewJobsInput":{
+      "type":"structure",
+      "required":[
+        "codeReviewJobIds",
+        "agentSpaceId"
+      ],
+      "members":{
+        "codeReviewJobIds":{"shape":"CodeReviewJobIdList"},
+        "agentSpaceId":{"shape":"String"}
+      }
+    },
+    "BatchGetCodeReviewJobsOutput":{
+      "type":"structure",
+      "members":{
+        "codeReviewJobs":{"shape":"CodeReviewJobList"},
+        "notFound":{"shape":"CodeReviewJobIdList"}
+      }
+    },
+    "BatchGetCodeReviewsInput":{
+      "type":"structure",
+      "required":[
+        "codeReviewIds",
+        "agentSpaceId"
+      ],
+      "members":{
+        "codeReviewIds":{"shape":"CodeReviewIdList"},
+        "agentSpaceId":{"shape":"String"}
+      }
+    },
+    "BatchGetCodeReviewsOutput":{
+      "type":"structure",
+      "members":{
+        "codeReviews":{"shape":"CodeReviewList"},
+        "notFound":{"shape":"CodeReviewIdList"}
       }
     },
     "BatchGetFindingsInput":{
@@ -1000,6 +1182,20 @@
         "logStream":{"shape":"String"}
       }
     },
+    "CodeLocation":{
+      "type":"structure",
+      "required":["filePath"],
+      "members":{
+        "filePath":{"shape":"String"},
+        "lineStart":{"shape":"Integer"},
+        "lineEnd":{"shape":"Integer"},
+        "label":{"shape":"String"}
+      }
+    },
+    "CodeLocationList":{
+      "type":"list",
+      "member":{"shape":"CodeLocation"}
+    },
     "CodeRemediationStrategy":{
       "type":"string",
       "enum":[
@@ -1036,6 +1232,123 @@
         "FAILED"
       ]
     },
+    "CodeReview":{
+      "type":"structure",
+      "required":[
+        "codeReviewId",
+        "agentSpaceId",
+        "title",
+        "assets"
+      ],
+      "members":{
+        "codeReviewId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "assets":{"shape":"Assets"},
+        "serviceRole":{"shape":"ServiceRole"},
+        "logConfig":{"shape":"CloudWatchLog"},
+        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "CodeReviewIdList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "CodeReviewJob":{
+      "type":"structure",
+      "members":{
+        "codeReviewJobId":{"shape":"String"},
+        "codeReviewId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "overview":{"shape":"String"},
+        "status":{"shape":"JobStatus"},
+        "documents":{"shape":"DocumentList"},
+        "sourceCode":{"shape":"SourceCodeRepositoryList"},
+        "steps":{"shape":"StepList"},
+        "executionContext":{"shape":"ExecutionContextList"},
+        "serviceRole":{"shape":"ServiceRole"},
+        "logConfig":{"shape":"CloudWatchLog"},
+        "errorInformation":{"shape":"ErrorInformation"},
+        "integratedRepositories":{"shape":"IntegratedRepositoryList"},
+        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "CodeReviewJobIdList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "CodeReviewJobList":{
+      "type":"list",
+      "member":{"shape":"CodeReviewJob"}
+    },
+    "CodeReviewJobSummary":{
+      "type":"structure",
+      "required":[
+        "codeReviewJobId",
+        "codeReviewId"
+      ],
+      "members":{
+        "codeReviewJobId":{"shape":"String"},
+        "codeReviewId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "status":{"shape":"JobStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "CodeReviewJobSummaryList":{
+      "type":"list",
+      "member":{"shape":"CodeReviewJobSummary"}
+    },
+    "CodeReviewJobTask":{
+      "type":"structure",
+      "required":["taskId"],
+      "members":{
+        "taskId":{"shape":"String"},
+        "codeReviewId":{"shape":"String"},
+        "codeReviewJobId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "description":{"shape":"String"},
+        "categories":{"shape":"CategoryList"},
+        "riskType":{"shape":"RiskType"},
+        "executionStatus":{"shape":"TaskExecutionStatus"},
+        "logsLocation":{"shape":"LogLocation"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "CodeReviewJobTaskList":{
+      "type":"list",
+      "member":{"shape":"CodeReviewJobTask"}
+    },
+    "CodeReviewJobTaskSummary":{
+      "type":"structure",
+      "required":["taskId"],
+      "members":{
+        "taskId":{"shape":"String"},
+        "codeReviewId":{"shape":"String"},
+        "codeReviewJobId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "riskType":{"shape":"RiskType"},
+        "executionStatus":{"shape":"TaskExecutionStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "CodeReviewJobTaskSummaryList":{
+      "type":"list",
+      "member":{"shape":"CodeReviewJobTaskSummary"}
+    },
+    "CodeReviewList":{
+      "type":"list",
+      "member":{"shape":"CodeReview"}
+    },
     "CodeReviewSettings":{
       "type":"structure",
       "required":[
@@ -1046,6 +1359,25 @@
         "controlsScanning":{"shape":"Boolean"},
         "generalPurposeScanning":{"shape":"Boolean"}
       }
+    },
+    "CodeReviewSummary":{
+      "type":"structure",
+      "required":[
+        "codeReviewId",
+        "agentSpaceId",
+        "title"
+      ],
+      "members":{
+        "codeReviewId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "CodeReviewSummaryList":{
+      "type":"list",
+      "member":{"shape":"CodeReviewSummary"}
     },
     "ConfidenceLevel":{
       "type":"string",
@@ -1123,6 +1455,37 @@
       "required":["applicationId"],
       "members":{
         "applicationId":{"shape":"ApplicationId"}
+      }
+    },
+    "CreateCodeReviewInput":{
+      "type":"structure",
+      "required":[
+        "title",
+        "agentSpaceId",
+        "assets"
+      ],
+      "members":{
+        "title":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "assets":{"shape":"Assets"},
+        "serviceRole":{"shape":"ServiceRole"},
+        "logConfig":{"shape":"CloudWatchLog"},
+        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"}
+      }
+    },
+    "CreateCodeReviewOutput":{
+      "type":"structure",
+      "required":["codeReviewId"],
+      "members":{
+        "codeReviewId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "assets":{"shape":"Assets"},
+        "serviceRole":{"shape":"ServiceRole"},
+        "logConfig":{"shape":"CloudWatchLog"},
+        "agentSpaceId":{"shape":"String"},
+        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"}
       }
     },
     "CreateIntegrationInput":{
@@ -1280,6 +1643,17 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteCodeReviewFailure":{
+      "type":"structure",
+      "members":{
+        "codeReviewId":{"shape":"String"},
+        "reason":{"shape":"String"}
+      }
+    },
+    "DeleteCodeReviewFailureList":{
+      "type":"list",
+      "member":{"shape":"DeleteCodeReviewFailure"}
+    },
     "DeleteIntegrationInput":{
       "type":"structure",
       "required":["integrationId"],
@@ -1430,6 +1804,8 @@
         "agentSpaceId":{"shape":"String"},
         "pentestId":{"shape":"String"},
         "pentestJobId":{"shape":"String"},
+        "codeReviewId":{"shape":"String"},
+        "codeReviewJobId":{"shape":"String"},
         "taskId":{"shape":"String"},
         "name":{"shape":"String"},
         "description":{"shape":"String"},
@@ -1442,6 +1818,7 @@
         "attackScript":{"shape":"String"},
         "codeRemediationTask":{"shape":"CodeRemediationTask"},
         "lastUpdatedBy":{"shape":"String"},
+        "codeLocations":{"shape":"CodeLocationList"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -1474,6 +1851,8 @@
         "agentSpaceId":{"shape":"String"},
         "pentestId":{"shape":"String"},
         "pentestJobId":{"shape":"String"},
+        "codeReviewId":{"shape":"String"},
+        "codeReviewJobId":{"shape":"String"},
         "name":{"shape":"String"},
         "status":{"shape":"FindingStatus"},
         "riskType":{"shape":"String"},
@@ -1644,6 +2023,10 @@
         "csrfState":{"shape":"CsrfState"}
       }
     },
+    "Integer":{
+      "type":"integer",
+      "box":true
+    },
     "IntegratedRepository":{
       "type":"structure",
       "required":[
@@ -1803,6 +2186,61 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListCodeReviewJobTasksInput":{
+      "type":"structure",
+      "required":["agentSpaceId"],
+      "members":{
+        "agentSpaceId":{"shape":"String"},
+        "maxResults":{"shape":"MaxResults"},
+        "codeReviewJobId":{"shape":"String"},
+        "stepName":{"shape":"StepName"},
+        "categoryName":{"shape":"String"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCodeReviewJobTasksOutput":{
+      "type":"structure",
+      "members":{
+        "codeReviewJobTaskSummaries":{"shape":"CodeReviewJobTaskSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCodeReviewJobsForCodeReviewInput":{
+      "type":"structure",
+      "required":[
+        "codeReviewId",
+        "agentSpaceId"
+      ],
+      "members":{
+        "maxResults":{"shape":"MaxResults"},
+        "codeReviewId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCodeReviewJobsForCodeReviewOutput":{
+      "type":"structure",
+      "members":{
+        "codeReviewJobSummaries":{"shape":"CodeReviewJobSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCodeReviewsInput":{
+      "type":"structure",
+      "required":["agentSpaceId"],
+      "members":{
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"},
+        "agentSpaceId":{"shape":"String"}
+      }
+    },
+    "ListCodeReviewsOutput":{
+      "type":"structure",
+      "members":{
+        "codeReviewSummaries":{"shape":"CodeReviewSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListDiscoveredEndpointsInput":{
       "type":"structure",
       "required":[
@@ -1826,13 +2264,11 @@
     },
     "ListFindingsInput":{
       "type":"structure",
-      "required":[
-        "pentestJobId",
-        "agentSpaceId"
-      ],
+      "required":["agentSpaceId"],
       "members":{
         "maxResults":{"shape":"MaxResults"},
         "pentestJobId":{"shape":"String"},
+        "codeReviewJobId":{"shape":"String"},
         "agentSpaceId":{"shape":"String"},
         "nextToken":{"shape":"NextToken"},
         "riskType":{"shape":"String"},
@@ -2328,18 +2764,45 @@
       "type":"structure",
       "required":[
         "agentSpaceId",
-        "pentestJobId",
         "findingIds"
       ],
       "members":{
         "agentSpaceId":{"shape":"String"},
         "pentestJobId":{"shape":"String"},
+        "codeReviewJobId":{"shape":"String"},
         "findingIds":{"shape":"FindingIdList"}
       }
     },
     "StartCodeRemediationOutput":{
       "type":"structure",
       "members":{}
+    },
+    "StartCodeReviewJobInput":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "codeReviewId"
+      ],
+      "members":{
+        "agentSpaceId":{"shape":"String"},
+        "codeReviewId":{"shape":"String"}
+      }
+    },
+    "StartCodeReviewJobOutput":{
+      "type":"structure",
+      "required":[
+        "codeReviewId",
+        "codeReviewJobId"
+      ],
+      "members":{
+        "title":{"shape":"String"},
+        "status":{"shape":"JobStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "codeReviewId":{"shape":"String"},
+        "codeReviewJobId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"}
+      }
     },
     "StartPentestJobInput":{
       "type":"structure",
@@ -2395,6 +2858,21 @@
         "FAILED",
         "STOPPED"
       ]
+    },
+    "StopCodeReviewJobInput":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "codeReviewJobId"
+      ],
+      "members":{
+        "agentSpaceId":{"shape":"String"},
+        "codeReviewJobId":{"shape":"String"}
+      }
+    },
+    "StopCodeReviewJobOutput":{
+      "type":"structure",
+      "members":{}
     },
     "StopPentestJobInput":{
       "type":"structure",
@@ -2637,6 +3115,37 @@
       "required":["applicationId"],
       "members":{
         "applicationId":{"shape":"ApplicationId"}
+      }
+    },
+    "UpdateCodeReviewInput":{
+      "type":"structure",
+      "required":[
+        "codeReviewId",
+        "agentSpaceId"
+      ],
+      "members":{
+        "codeReviewId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "assets":{"shape":"Assets"},
+        "serviceRole":{"shape":"ServiceRole"},
+        "logConfig":{"shape":"CloudWatchLog"},
+        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"}
+      }
+    },
+    "UpdateCodeReviewOutput":{
+      "type":"structure",
+      "required":["codeReviewId"],
+      "members":{
+        "codeReviewId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "assets":{"shape":"Assets"},
+        "serviceRole":{"shape":"ServiceRole"},
+        "logConfig":{"shape":"CloudWatchLog"},
+        "agentSpaceId":{"shape":"String"},
+        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"}
       }
     },
     "UpdateFindingInput":{

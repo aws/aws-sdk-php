@@ -6261,7 +6261,8 @@
         "name":{"shape":"ResourceName"},
         "regionName":{"shape":"RegionName"},
         "protocolPolicy":{"shape":"OriginProtocolPolicyEnum"},
-        "responseTimeout":{"shape":"integer"}
+        "responseTimeout":{"shape":"integer"},
+        "ipAddressType":{"shape":"OriginIpAddressTypeEnum"}
       }
     },
     "Instance":{
@@ -7161,8 +7162,17 @@
         "resourceType":{"shape":"ResourceType"},
         "regionName":{"shape":"RegionName"},
         "protocolPolicy":{"shape":"OriginProtocolPolicyEnum"},
-        "responseTimeout":{"shape":"integer"}
+        "responseTimeout":{"shape":"integer"},
+        "ipAddressType":{"shape":"OriginIpAddressTypeEnum"}
       }
+    },
+    "OriginIpAddressTypeEnum":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6",
+        "dualstack"
+      ]
     },
     "OriginProtocolPolicyEnum":{
       "type":"string",

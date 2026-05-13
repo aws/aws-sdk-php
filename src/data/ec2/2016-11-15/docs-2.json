@@ -5024,6 +5024,12 @@
       "refs": {
       }
     },
+    "CopyImageClientToken": {
+      "base": null,
+      "refs": {
+        "CopyImageRequest$ClientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency in Amazon EC2 API requests</a> in the <i>Amazon EC2 API Reference</i>.</p>"
+      }
+    },
     "CopyImageRequest": {
       "base": "<p>Contains the parameters for CopyImage.</p>",
       "refs": {
@@ -5342,6 +5348,12 @@
     "CreateImageResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "CreateImageUsageReportClientToken": {
+      "base": null,
+      "refs": {
+        "CreateImageUsageReportRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure idempotency of the request.</p>"
       }
     },
     "CreateImageUsageReportRequest": {
@@ -13641,6 +13653,14 @@
         "ReplaceImageCriteriaInAllowedImagesSettingsRequest$ImageCriteria": "<p>The list of criteria that are evaluated to determine whether AMIs are discoverable and usable in the account in the specified Amazon Web Services Region.</p>"
       }
     },
+    "ImageDescriptionRequest": {
+      "base": null,
+      "refs": {
+        "CopyImageRequest$Description": "<p>A description for the new AMI.</p>",
+        "CreateImageRequest$Description": "<p>A description for the new image.</p>",
+        "RegisterImageRequest$Description": "<p>A description for your AMI.</p>"
+      }
+    },
     "ImageDiskContainer": {
       "base": "<p>Describes the disk container object for an import image task.</p>",
       "refs": {
@@ -13729,6 +13749,18 @@
         "ImageNameList$member": null
       }
     },
+    "ImageNameCriteriaRequest": {
+      "base": null,
+      "refs": {
+        "ImageNameCriteriaRequestList$member": null
+      }
+    },
+    "ImageNameCriteriaRequestList": {
+      "base": null,
+      "refs": {
+        "ImageCriterionRequest$ImageNames": "<p>The names of allowed images. Names can include wildcards (<code>?</code> and <code>*</code>).</p> <p>Length: 1–128 characters. With <code>?</code>, the minimum is 3 characters.</p> <p>Valid characters:</p> <ul> <li> <p>Letters: <code>A–Z, a–z</code> </p> </li> <li> <p>Numbers: <code>0–9</code> </p> </li> <li> <p>Special characters: <code>( ) [ ] . / - ' @ _ * ?</code> </p> </li> <li> <p>Spaces</p> </li> </ul> <p>Maximum: 50 values</p>"
+      }
+    },
     "ImageNameList": {
       "base": null,
       "refs": {
@@ -13738,13 +13770,10 @@
     "ImageNameRequest": {
       "base": null,
       "refs": {
-        "ImageNameRequestList$member": null
-      }
-    },
-    "ImageNameRequestList": {
-      "base": null,
-      "refs": {
-        "ImageCriterionRequest$ImageNames": "<p>The names of allowed images. Names can include wildcards (<code>?</code> and <code>*</code>).</p> <p>Length: 1–128 characters. With <code>?</code>, the minimum is 3 characters.</p> <p>Valid characters:</p> <ul> <li> <p>Letters: <code>A–Z, a–z</code> </p> </li> <li> <p>Numbers: <code>0–9</code> </p> </li> <li> <p>Special characters: <code>( ) [ ] . / - ' @ _ * ?</code> </p> </li> <li> <p>Spaces</p> </li> </ul> <p>Maximum: 50 values</p>"
+        "CopyImageRequest$Name": "<p>The name of the new AMI.</p>",
+        "CreateImageRequest$Name": "<p>A name for the new image.</p> <p>Constraints: 3-128 alphanumeric characters, parentheses (()), square brackets ([]), spaces ( ), periods (.), slashes (/), dashes (-), single quotes ('), at-signs (@), or underscores(_)</p>",
+        "CreateRestoreImageTaskRequest$Name": "<p>The name for the restored AMI. The name must be unique for AMIs in the Region for this account. If you do not provide a name, the new AMI gets the same name as the original AMI.</p>",
+        "RegisterImageRequest$Name": "<p>A name for your AMI.</p> <p>Constraints: 3-128 alphanumeric characters, parentheses (()), square brackets ([]), spaces ( ), periods (.), slashes (/), dashes (-), single quotes ('), at-signs (@), or underscores(_)</p>"
       }
     },
     "ImageProvider": {
@@ -13819,6 +13848,12 @@
       "base": null,
       "refs": {
         "Image$ImageType": "<p>The type of image.</p>"
+      }
+    },
+    "ImageUefiDataRequest": {
+      "base": null,
+      "refs": {
+        "RegisterImageRequest$UefiData": "<p>Base64 representation of the non-volatile UEFI variable store. To retrieve the UEFI data, use the <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetInstanceUefiData\">GetInstanceUefiData</a> command. You can inspect and modify the UEFI data by using the <a href=\"https://github.com/awslabs/python-uefivars\">python-uefivars tool</a> on GitHub. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/uefi-secure-boot.html\">UEFI Secure Boot for Amazon EC2 instances</a> in the <i>Amazon EC2 User Guide</i>.</p>"
       }
     },
     "ImageUsageReport": {
@@ -20495,7 +20530,6 @@
         "PlacementGroup$Operator": "<p>The service provider that manages the Placement Group.</p>",
         "ResponseLaunchTemplateData$Operator": "<p>The entity that manages the launch template.</p>",
         "Volume$Operator": "<p>The service provider that manages the volume.</p>",
-        "VolumeModification$Operator": null,
         "VolumeRecycleBinInfo$Operator": "<p>The service provider that manages the volume.</p>",
         "VolumeStatusItem$Operator": "<p>The service provider that manages the resource.</p>"
       }
@@ -24897,9 +24931,6 @@
         "CopyFpgaImageRequest$SourceRegion": "<p>The Region that contains the source AFI.</p>",
         "CopyFpgaImageRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "CopyFpgaImageResult$FpgaImageId": "<p>The ID of the new AFI.</p>",
-        "CopyImageRequest$ClientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency in Amazon EC2 API requests</a> in the <i>Amazon EC2 API Reference</i>.</p>",
-        "CopyImageRequest$Description": "<p>A description for the new AMI.</p>",
-        "CopyImageRequest$Name": "<p>The name of the new AMI.</p>",
         "CopyImageRequest$SourceImageId": "<p>The ID of the AMI to copy.</p>",
         "CopyImageRequest$SourceRegion": "<p>The name of the Region that contains the AMI to copy.</p>",
         "CopyImageRequest$DestinationOutpostArn": "<p>The Amazon Resource Name (ARN) of the Outpost for the new AMI.</p> <p>Only specify this parameter when copying an AMI from an Amazon Web Services Region to an Outpost. The AMI must be in the Region of the destination Outpost. You can't copy an AMI from an Outpost to a Region, from one Outpost to another, or within the same Outpost.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/snapshots-outposts.html#copy-amis\">Copy AMIs from an Amazon Web Services Region to an Outpost</a> in the <i>Amazon EBS User Guide</i>.</p> <p>Only one of <code>DestinationAvailabilityZone</code>, <code>DestinationAvailabilityZoneId</code>, or <code>DestinationOutpostArn</code> can be specified.</p>",
@@ -24957,10 +24988,7 @@
         "CreateFpgaImageRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring Idempotency</a>.</p>",
         "CreateFpgaImageResult$FpgaImageId": "<p>The FPGA image identifier (AFI ID).</p>",
         "CreateFpgaImageResult$FpgaImageGlobalId": "<p>The global FPGA image identifier (AGFI ID).</p>",
-        "CreateImageRequest$Name": "<p>A name for the new image.</p> <p>Constraints: 3-128 alphanumeric characters, parentheses (()), square brackets ([]), spaces ( ), periods (.), slashes (/), dashes (-), single quotes ('), at-signs (@), or underscores(_)</p>",
-        "CreateImageRequest$Description": "<p>A description for the new image.</p>",
         "CreateImageResult$ImageId": "<p>The ID of the new AMI.</p>",
-        "CreateImageUsageReportRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure idempotency of the request.</p>",
         "CreateInstanceConnectEndpointRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "CreateInstanceConnectEndpointResult$ClientToken": "<p>Unique, case-sensitive idempotency token provided by the client in the the request.</p>",
         "CreateInstanceEventWindowRequest$Name": "<p>The name of the event window.</p>",
@@ -25015,7 +25043,6 @@
         "CreateReservedInstancesListingRequest$ClientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of your listings. This helps avoid duplicate listings. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring Idempotency</a>.</p>",
         "CreateRestoreImageTaskRequest$Bucket": "<p>The name of the Amazon S3 bucket that contains the stored AMI object.</p>",
         "CreateRestoreImageTaskRequest$ObjectKey": "<p>The name of the stored AMI object in the bucket.</p>",
-        "CreateRestoreImageTaskRequest$Name": "<p>The name for the restored AMI. The name must be unique for AMIs in the Region for this account. If you do not provide a name, the new AMI gets the same name as the original AMI.</p>",
         "CreateRestoreImageTaskResult$ImageId": "<p>The AMI ID.</p>",
         "CreateRouteRequest$DestinationCidrBlock": "<p>The IPv4 CIDR address block used for the destination match. Routing decisions are based on the most specific match. We modify the specified CIDR block to its canonical form; for example, if you specify <code>100.68.0.18/18</code>, we modify it to <code>100.68.0.0/18</code>.</p>",
         "CreateRouteRequest$DestinationIpv6CidrBlock": "<p>The IPv6 CIDR block used for the destination match. Routing decisions are based on the most specific match.</p>",
@@ -26444,8 +26471,6 @@
         "RegionNames$member": null,
         "RegionalSummary$RegionName": "<p>The Amazon Web Services Region.</p>",
         "RegisterImageRequest$ImageLocation": "<p>The full path to your AMI manifest in Amazon S3 storage. The specified bucket must have the <code>aws-exec-read</code> canned access control list (ACL) to ensure that it can be accessed by Amazon EC2. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl\">Canned ACL</a> in the <i>Amazon S3 Service Developer Guide</i>.</p>",
-        "RegisterImageRequest$Name": "<p>A name for your AMI.</p> <p>Constraints: 3-128 alphanumeric characters, parentheses (()), square brackets ([]), spaces ( ), periods (.), slashes (/), dashes (-), single quotes ('), at-signs (@), or underscores(_)</p>",
-        "RegisterImageRequest$Description": "<p>A description for your AMI.</p>",
         "RegisterImageRequest$RootDeviceName": "<p>The device name of the root device volume (for example, <code>/dev/sda1</code>).</p>",
         "RegisterImageRequest$VirtualizationType": "<p>The type of virtualization (<code>hvm</code> | <code>paravirtual</code>).</p> <p>Default: <code>paravirtual</code> </p>",
         "RegisterImageRequest$SriovNetSupport": "<p>Set to <code>simple</code> to enable enhanced networking with the Intel 82599 Virtual Function interface for the AMI and any instances that you launch from the AMI.</p> <p>There is no way to disable <code>sriovNetSupport</code> at this time.</p> <p>This option is supported only for HVM AMIs. Specifying this option with a PV AMI can make instances launched from the AMI unreachable.</p>",
@@ -27155,12 +27180,6 @@
       "refs": {
         "Explanation$Protocols": "<p>The protocols.</p>",
         "RuleOption$Settings": "<p>The settings for the keyword.</p>"
-      }
-    },
-    "StringType": {
-      "base": null,
-      "refs": {
-        "RegisterImageRequest$UefiData": "<p>Base64 representation of the non-volatile UEFI variable store. To retrieve the UEFI data, use the <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetInstanceUefiData\">GetInstanceUefiData</a> command. You can inspect and modify the UEFI data by using the <a href=\"https://github.com/awslabs/python-uefivars\">python-uefivars tool</a> on GitHub. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/uefi-secure-boot.html\">UEFI Secure Boot for Amazon EC2 instances</a> in the <i>Amazon EC2 User Guide</i>.</p>"
       }
     },
     "Subnet": {

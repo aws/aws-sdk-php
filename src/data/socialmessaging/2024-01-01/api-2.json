@@ -478,7 +478,8 @@
       "type":"structure",
       "members":{
         "signupCallbackResult":{"shape":"WhatsAppSignupCallbackResult"},
-        "statusCode":{"shape":"Integer"}
+        "statusCode":{"shape":"Integer"},
+        "linkedWhatsAppBusinessAccountId":{"shape":"LinkedWhatsAppBusinessAccountId"}
       }
     },
     "Boolean":{
@@ -715,10 +716,7 @@
     },
     "GetWhatsAppMessageTemplateInput":{
       "type":"structure",
-      "required":[
-        "metaTemplateId",
-        "id"
-      ],
+      "required":["id"],
       "members":{
         "metaTemplateId":{
           "shape":"MetaTemplateId",
@@ -729,6 +727,16 @@
           "shape":"LinkedWhatsAppBusinessAccountId",
           "location":"querystring",
           "locationName":"id"
+        },
+        "templateName":{
+          "shape":"MetaTemplateName",
+          "location":"querystring",
+          "locationName":"templateName"
+        },
+        "templateLanguageCode":{
+          "shape":"MetaTemplateLanguage",
+          "location":"querystring",
+          "locationName":"templateLanguageCode"
         }
       }
     },
@@ -841,6 +849,7 @@
         "linkDate":{"shape":"WhatsAppBusinessAccountLinkDate"},
         "wabaName":{"shape":"WhatsAppBusinessAccountName"},
         "eventDestinations":{"shape":"WhatsAppBusinessAccountEventDestinations"},
+        "marketingMessagesOnboardingStatus":{"shape":"WhatsAppBusinessAccountMarketingMessagesOnboardingStatus"},
         "phoneNumbers":{"shape":"WhatsAppPhoneNumberSummaryList"}
       }
     },
@@ -883,7 +892,8 @@
         "registrationStatus":{"shape":"RegistrationStatus"},
         "linkDate":{"shape":"WhatsAppBusinessAccountLinkDate"},
         "wabaName":{"shape":"WhatsAppBusinessAccountName"},
-        "eventDestinations":{"shape":"WhatsAppBusinessAccountEventDestinations"}
+        "eventDestinations":{"shape":"WhatsAppBusinessAccountEventDestinations"},
+        "marketingMessagesOnboardingStatus":{"shape":"WhatsAppBusinessAccountMarketingMessagesOnboardingStatus"}
       }
     },
     "LinkedWhatsAppBusinessAccountSummaryList":{
@@ -1399,13 +1409,12 @@
     },
     "UpdateWhatsAppMessageTemplateInput":{
       "type":"structure",
-      "required":[
-        "id",
-        "metaTemplateId"
-      ],
+      "required":["id"],
       "members":{
         "id":{"shape":"LinkedWhatsAppBusinessAccountId"},
         "metaTemplateId":{"shape":"MetaTemplateId"},
+        "templateName":{"shape":"MetaTemplateName"},
+        "templateLanguageCode":{"shape":"MetaTemplateLanguage"},
         "parameterFormat":{"shape":"MetaParameterFormat"},
         "templateCategory":{"shape":"MetaTemplateCategory"},
         "templateComponents":{"shape":"MetaTemplateComponents"},
@@ -1472,6 +1481,11 @@
       "min":1
     },
     "WhatsAppBusinessAccountLinkDate":{"type":"timestamp"},
+    "WhatsAppBusinessAccountMarketingMessagesOnboardingStatus":{
+      "type":"string",
+      "max":100,
+      "min":0
+    },
     "WhatsAppBusinessAccountName":{
       "type":"string",
       "max":200,

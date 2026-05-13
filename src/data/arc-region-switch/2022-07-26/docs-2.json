@@ -357,7 +357,7 @@
     "EksResourceScalingConfigurationTargetPercentInteger": {
       "base": null,
       "refs": {
-        "EksResourceScalingConfiguration$targetPercent": "<p>The target percentage for the configuration.</p>"
+        "EksResourceScalingConfiguration$targetPercent": "<p>The target percentage for the configuration. The default is 100.</p>"
       }
     },
     "EksResourceScalingConfigurationTimeoutMinutesInteger": {
@@ -382,6 +382,24 @@
       "base": null,
       "refs": {
         "GetPlanEvaluationStatusResponse$evaluationState": "<p>The evaluation state for the plan.</p>"
+      }
+    },
+    "EventSourceMapping": {
+      "base": "<p>The Amazon Web Services Lambda event source mapping configuration, containing the resource ARN and optional cross-account configuration.</p>",
+      "refs": {
+        "RegionEventSourceMappingMap$value": null
+      }
+    },
+    "EventSourceMappingAction": {
+      "base": null,
+      "refs": {
+        "LambdaEventSourceMappingConfiguration$action": "<p>The action to take - whether to <code>enable</code> or <code>disable</code> an event source mapping.</p>"
+      }
+    },
+    "EventSourceMappingArn": {
+      "base": null,
+      "refs": {
+        "EventSourceMapping$arn": "<p>The Amazon Resource Name (ARN) of the Lambda event source mapping.</p>"
       }
     },
     "ExecutionAction": {
@@ -591,6 +609,7 @@
         "CreatePlanRequest$executionRole": "<p>An execution role is a way to categorize a Region switch plan.</p>",
         "DocumentDbConfiguration$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "EksCluster$crossAccountRole": "<p>The cross account role for the configuration.</p>",
+        "EventSourceMapping$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "GlobalAuroraConfiguration$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "Lambdas$crossAccountRole": "<p>The cross account role for the configuration.</p>",
         "Plan$executionRole": "<p>The execution role for a plan.</p>",
@@ -613,8 +632,8 @@
     "Integer": {
       "base": null,
       "refs": {
-        "Ec2AsgCapacityIncreaseConfiguration$targetPercent": "<p>The target percentage that you specify for EC2 Auto Scaling groups.</p>",
-        "EcsCapacityIncreaseConfiguration$targetPercent": "<p>The target percentage specified for the configuration.</p>",
+        "Ec2AsgCapacityIncreaseConfiguration$targetPercent": "<p>The target percentage that you specify for EC2 Auto Scaling groups. The default is 100.</p>",
+        "EcsCapacityIncreaseConfiguration$targetPercent": "<p>The target percentage specified for the configuration. The default is 100.</p>",
         "Trigger$minDelayMinutesBetweenExecutions": "<p>The minimum time, in minutes, that must elapse between automatic executions of the plan.</p>"
       }
     },
@@ -656,6 +675,30 @@
       "base": null,
       "refs": {
         "Lambdas$arn": "<p>The Amazon Resource Name (ARN) of the Lambda function.</p>"
+      }
+    },
+    "LambdaEventSourceMappingConfiguration": {
+      "base": "<p>Configuration for Amazon Web Services Lambda event source mappings used in a Region switch plan.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$lambdaEventSourceMappingConfig": "<p>A Lambda event source mapping execution block.</p>"
+      }
+    },
+    "LambdaEventSourceMappingConfigurationTimeoutMinutesInteger": {
+      "base": null,
+      "refs": {
+        "LambdaEventSourceMappingConfiguration$timeoutMinutes": "<p>The timeout value specified for the configuration.</p>"
+      }
+    },
+    "LambdaEventSourceMappingUngraceful": {
+      "base": "<p>Specifies whether to skip enabling or disabling an event source mapping during an ungraceful execution.</p>",
+      "refs": {
+        "LambdaEventSourceMappingConfiguration$ungraceful": "<p>The settings for ungraceful execution.</p>"
+      }
+    },
+    "LambdaEventSourceMappingUngracefulBehavior": {
+      "base": null,
+      "refs": {
+        "LambdaEventSourceMappingUngraceful$behavior": "<p>Set to <code>skip</code> to skip executing this event source mapping step during an ungraceful execution.</p>"
       }
     },
     "LambdaList": {
@@ -923,6 +966,7 @@
         "GetPlanEvaluationStatusResponse$region": "<p>The Amazon Web Services Region for the plan.</p>",
         "Plan$primaryRegion": "<p>The primary Region for a plan.</p>",
         "RdsDbInstanceArnMap$key": null,
+        "RegionEventSourceMappingMap$key": null,
         "RegionList$member": null,
         "RegionalScalingResource$key": null,
         "Route53HealthCheck$region": "<p>The Amazon Route 53 Region.</p>",
@@ -935,6 +979,12 @@
       "base": null,
       "refs": {
         "ArcRoutingControlConfiguration$regionAndRoutingControls": "<p>The Region and ARC routing controls for the configuration.</p>"
+      }
+    },
+    "RegionEventSourceMappingMap": {
+      "base": null,
+      "refs": {
+        "LambdaEventSourceMappingConfiguration$regionEventSourceMappings": "<p>Per-region configuration for which Lambda event source mapping to enable or disable when activating or deactivating a region.</p>"
       }
     },
     "RegionList": {
@@ -1207,6 +1257,7 @@
         "CreatePlanRequest$description": "<p>The description of a Region switch plan.</p>",
         "DocumentDbConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
         "EksCluster$externalId": "<p>The external ID (secret key) for the configuration.</p>",
+        "EventSourceMapping$externalId": "<p>The external ID (secret key) for the configuration.</p>",
         "ExecutionEvent$error": "<p>Errors for an execution event.</p>",
         "ExecutionEvent$description": "<p>The description for an execution event.</p>",
         "ExecutionEvent$eventId": "<p>The event ID for an execution event.</p>",

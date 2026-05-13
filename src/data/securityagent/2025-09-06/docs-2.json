@@ -3,9 +3,13 @@
   "service": "<p>AWS Security Agent is a frontier agent that proactively secures your applications throughout the development lifecycle. It conducts automated security reviews tailored to your organizational requirements and delivers context-aware penetration testing on demand. By continuously validating security from design to deployment, AWS Security Agent helps prevent vulnerabilities early across all your environments. Key capabilities include design security review for architecture documents, code security review for pull requests in connected repositories, and on-demand penetration testing that discovers, validates, and remediates security vulnerabilities through tailored multi-step attack scenarios. For more information, see the <a href=\"https://docs.aws.amazon.com/securityagent/latest/userguide/what-is.html\">AWS Security Agent User Guide</a>.</p>",
   "operations": {
     "AddArtifact": "<p>Uploads an artifact to an agent space. Artifacts provide additional context for security testing, such as architecture diagrams, API specifications, or configuration files.</p>",
+    "BatchDeleteCodeReviews": "<p>Deletes one or more code reviews from an agent space.</p>",
     "BatchDeletePentests": "<p>Deletes one or more pentests from an agent space.</p>",
     "BatchGetAgentSpaces": "<p>Retrieves information about one or more agent spaces.</p>",
     "BatchGetArtifactMetadata": "<p>Retrieves metadata for one or more artifacts in an agent space.</p>",
+    "BatchGetCodeReviewJobTasks": "<p>Retrieves information about one or more tasks within a code review job.</p>",
+    "BatchGetCodeReviewJobs": "<p>Retrieves information about one or more code review jobs in an agent space.</p>",
+    "BatchGetCodeReviews": "<p>Retrieves information about one or more code reviews in an agent space.</p>",
     "BatchGetFindings": "<p>Retrieves information about one or more security findings in an agent space.</p>",
     "BatchGetPentestJobTasks": "<p>Retrieves information about one or more tasks within a pentest job.</p>",
     "BatchGetPentestJobs": "<p>Retrieves information about one or more pentest jobs in an agent space.</p>",
@@ -13,6 +17,7 @@
     "BatchGetTargetDomains": "<p>Retrieves information about one or more target domains.</p>",
     "CreateAgentSpace": "<p>Creates a new agent space. An agent space is a dedicated workspace for securing a specific application.</p>",
     "CreateApplication": "<p>Creates a new application. An application is the top-level organizational unit that supports IAM Identity Center integration.</p>",
+    "CreateCodeReview": "<p>Creates a new code review configuration in an agent space. A code review defines the parameters for automated security-focused code analysis.</p>",
     "CreateIntegration": "<p>Creates a new integration with a third-party provider, such as GitHub, for code review and remediation.</p>",
     "CreateMembership": "<p>Creates a new membership, granting a user access to an agent space within an application.</p>",
     "CreatePentest": "<p>Creates a new pentest configuration in an agent space. A pentest defines the security test parameters, including target assets, risk type exclusions, and logging configuration.</p>",
@@ -30,6 +35,9 @@
     "ListAgentSpaces": "<p>Returns a paginated list of agent space summaries in your account.</p>",
     "ListApplications": "<p>Returns a paginated list of application summaries in your account.</p>",
     "ListArtifacts": "<p>Returns a paginated list of artifact summaries for the specified agent space.</p>",
+    "ListCodeReviewJobTasks": "<p>Returns a paginated list of task summaries for the specified code review job, optionally filtered by step name or category.</p>",
+    "ListCodeReviewJobsForCodeReview": "<p>Returns a paginated list of code review job summaries for the specified code review configuration.</p>",
+    "ListCodeReviews": "<p>Returns a paginated list of code review summaries for the specified agent space.</p>",
     "ListDiscoveredEndpoints": "<p>Returns a paginated list of endpoints discovered during a pentest job execution.</p>",
     "ListFindings": "<p>Lists the security findings for a pentest job.</p>",
     "ListIntegratedResources": "<p>Lists the integrated resources for an agent space, optionally filtered by integration or resource type.</p>",
@@ -41,12 +49,15 @@
     "ListTagsForResource": "<p>Returns the tags associated with the specified resource.</p>",
     "ListTargetDomains": "<p>Returns a paginated list of target domain summaries in your account.</p>",
     "StartCodeRemediation": "<p>Initiates code remediation for one or more security findings. This creates pull requests in integrated repositories to fix the identified vulnerabilities.</p>",
+    "StartCodeReviewJob": "<p>Starts a new code review job for a code review configuration. The job executes the security-focused code analysis defined in the code review.</p>",
     "StartPentestJob": "<p>Starts a new pentest job for a pentest configuration. The job executes the security tests defined in the pentest.</p>",
+    "StopCodeReviewJob": "<p>Stops a running code review job. The job transitions to a stopping state and then to stopped after cleanup completes.</p>",
     "StopPentestJob": "<p>Stops a running pentest job. The job transitions to a stopping state and then to stopped after cleanup completes.</p>",
     "TagResource": "<p>Adds tags to a resource.</p>",
     "UntagResource": "<p>Removes tags from a resource.</p>",
     "UpdateAgentSpace": "<p>Updates the configuration of an existing agent space, including its name, description, AWS resources, target domains, and code review settings.</p>",
     "UpdateApplication": "<p>Updates the configuration of an existing application, including the IAM role and default KMS key.</p>",
+    "UpdateCodeReview": "<p>Updates an existing code review configuration.</p>",
     "UpdateFinding": "<p>Updates the status or risk level of a security finding.</p>",
     "UpdateIntegratedResources": "<p>Updates the integrated resources for an agent space, including their capabilities.</p>",
     "UpdatePentest": "<p>Updates an existing pentest configuration.</p>",
@@ -255,9 +266,14 @@
     "Assets": {
       "base": "<p>The collection of assets used in a pentest configuration, including endpoints, actors, documents, source code repositories, and integrated repositories.</p>",
       "refs": {
+        "CodeReview$assets": "<p>The assets included in the code review.</p>",
+        "CreateCodeReviewInput$assets": "<p>The assets to include in the code review, such as documents and source code.</p>",
+        "CreateCodeReviewOutput$assets": "<p>The assets included in the code review.</p>",
         "CreatePentestInput$assets": "<p>The assets to include in the pentest, such as endpoints, actors, documents, and source code.</p>",
         "CreatePentestOutput$assets": "<p>The assets included in the pentest.</p>",
         "Pentest$assets": "<p>The assets included in the pentest.</p>",
+        "UpdateCodeReviewInput$assets": "<p>The updated assets for the code review.</p>",
+        "UpdateCodeReviewOutput$assets": "<p>The assets included in the code review.</p>",
         "UpdatePentestInput$assets": "<p>The updated assets for the pentest.</p>",
         "UpdatePentestOutput$assets": "<p>The assets included in the pentest.</p>"
       }
@@ -279,6 +295,14 @@
       "refs": {
         "Authentication$providerType": "<p>The type of authentication provider. Valid values include SECRETS_MANAGER, AWS_LAMBDA, AWS_IAM_ROLE, and AWS_INTERNAL.</p>"
       }
+    },
+    "BatchDeleteCodeReviewsInput": {
+      "base": "<p>Input for deleting multiple code reviews.</p>",
+      "refs": {}
+    },
+    "BatchDeleteCodeReviewsOutput": {
+      "base": "<p>Output for the BatchDeleteCodeReviews operation.</p>",
+      "refs": {}
     },
     "BatchDeletePentestsInput": {
       "base": "<p>Input for deleting multiple pentests.</p>",
@@ -302,6 +326,30 @@
     },
     "BatchGetArtifactMetadataOutput": {
       "base": null,
+      "refs": {}
+    },
+    "BatchGetCodeReviewJobTasksInput": {
+      "base": "<p>Input for retrieving multiple tasks associated with a code review job.</p>",
+      "refs": {}
+    },
+    "BatchGetCodeReviewJobTasksOutput": {
+      "base": "<p>Output for the BatchGetCodeReviewJobTasks operation.</p>",
+      "refs": {}
+    },
+    "BatchGetCodeReviewJobsInput": {
+      "base": "<p>Input for BatchGetCodeReviewJobs operation.</p>",
+      "refs": {}
+    },
+    "BatchGetCodeReviewJobsOutput": {
+      "base": "<p>Output for the BatchGetCodeReviewJobs operation.</p>",
+      "refs": {}
+    },
+    "BatchGetCodeReviewsInput": {
+      "base": "<p>Input for retrieving multiple code reviews by their IDs.</p>",
+      "refs": {}
+    },
+    "BatchGetCodeReviewsOutput": {
+      "base": "<p>Output for the BatchGetCodeReviews operation.</p>",
       "refs": {}
     },
     "BatchGetFindingsInput": {
@@ -369,27 +417,52 @@
     "CategoryList": {
       "base": null,
       "refs": {
+        "CodeReviewJobTask$categories": "<p>The list of categories assigned to the task.</p>",
         "Task$categories": "<p>The list of categories assigned to the task.</p>"
       }
     },
     "CloudWatchLog": {
       "base": "<p>The Amazon CloudWatch Logs configuration for pentest job logging.</p>",
       "refs": {
+        "CodeReview$logConfig": "<p>The CloudWatch Logs configuration for the code review.</p>",
+        "CodeReviewJob$logConfig": "<p>The CloudWatch Logs configuration for the code review job.</p>",
+        "CreateCodeReviewInput$logConfig": "<p>The CloudWatch Logs configuration for the code review.</p>",
+        "CreateCodeReviewOutput$logConfig": "<p>The CloudWatch Logs configuration for the code review.</p>",
         "CreatePentestInput$logConfig": "<p>The CloudWatch Logs configuration for the pentest.</p>",
         "CreatePentestOutput$logConfig": "<p>The CloudWatch Logs configuration for the pentest.</p>",
         "LogLocation$cloudWatchLog": "<p>The CloudWatch Logs location for the task logs.</p>",
         "Pentest$logConfig": "<p>The CloudWatch Logs configuration for the pentest.</p>",
         "PentestJob$logConfig": "<p>The CloudWatch Logs configuration for the pentest job.</p>",
+        "UpdateCodeReviewInput$logConfig": "<p>The updated CloudWatch Logs configuration for the code review.</p>",
+        "UpdateCodeReviewOutput$logConfig": "<p>The CloudWatch Logs configuration for the code review.</p>",
         "UpdatePentestInput$logConfig": "<p>The updated CloudWatch Logs configuration for the pentest.</p>",
         "UpdatePentestOutput$logConfig": "<p>The CloudWatch Logs configuration for the pentest.</p>"
+      }
+    },
+    "CodeLocation": {
+      "base": "<p>Represents a location in source code associated with a security finding.</p>",
+      "refs": {
+        "CodeLocationList$member": null
+      }
+    },
+    "CodeLocationList": {
+      "base": "<p>List of code locations.</p>",
+      "refs": {
+        "Finding$codeLocations": "<p>The file locations involved in the vulnerability, as reported by the code scanner.</p>"
       }
     },
     "CodeRemediationStrategy": {
       "base": "<p>Strategy for automated code remediation.</p>",
       "refs": {
+        "CodeReview$codeRemediationStrategy": "<p>The code remediation strategy for the code review.</p>",
+        "CodeReviewJob$codeRemediationStrategy": "<p>The code remediation strategy for the code review job.</p>",
+        "CreateCodeReviewInput$codeRemediationStrategy": "<p>The code remediation strategy for the code review. Valid values are AUTOMATIC and DISABLED.</p>",
+        "CreateCodeReviewOutput$codeRemediationStrategy": "<p>The code remediation strategy for the code review.</p>",
         "CreatePentestInput$codeRemediationStrategy": "<p>The code remediation strategy for the pentest. Valid values are AUTOMATIC and DISABLED.</p>",
         "Pentest$codeRemediationStrategy": "<p>The code remediation strategy for the pentest.</p>",
         "PentestJob$codeRemediationStrategy": "<p>The code remediation strategy for the pentest job.</p>",
+        "UpdateCodeReviewInput$codeRemediationStrategy": "<p>The updated code remediation strategy for the code review.</p>",
+        "UpdateCodeReviewOutput$codeRemediationStrategy": "<p>The code remediation strategy for the code review.</p>",
         "UpdatePentestInput$codeRemediationStrategy": "<p>The updated code remediation strategy for the pentest.</p>"
       }
     },
@@ -417,6 +490,82 @@
         "CodeRemediationTask$status": "<p>The current status of the code remediation task.</p>"
       }
     },
+    "CodeReview": {
+      "base": "<p>Represents a code review configuration that defines the parameters for automated security-focused code analysis, including target assets and logging configuration.</p>",
+      "refs": {
+        "CodeReviewList$member": null
+      }
+    },
+    "CodeReviewIdList": {
+      "base": "<p>List of code review IDs.</p>",
+      "refs": {
+        "BatchDeleteCodeReviewsInput$codeReviewIds": "<p>The list of code review identifiers to delete.</p>",
+        "BatchDeleteCodeReviewsOutput$deleted": "<p>The list of identifiers of the code reviews that were successfully deleted.</p>",
+        "BatchGetCodeReviewsInput$codeReviewIds": "<p>The list of code review identifiers to retrieve.</p>",
+        "BatchGetCodeReviewsOutput$notFound": "<p>The list of code review identifiers that were not found.</p>"
+      }
+    },
+    "CodeReviewJob": {
+      "base": "<p>Represents a code review job, which is an execution instance of a code review. A code review job progresses through preflight, static analysis, and finalizing steps.</p>",
+      "refs": {
+        "CodeReviewJobList$member": null
+      }
+    },
+    "CodeReviewJobIdList": {
+      "base": "<p>List of code review job IDs.</p>",
+      "refs": {
+        "BatchGetCodeReviewJobsInput$codeReviewJobIds": "<p>The list of code review job identifiers to retrieve.</p>",
+        "BatchGetCodeReviewJobsOutput$notFound": "<p>The list of code review job identifiers that were not found.</p>"
+      }
+    },
+    "CodeReviewJobList": {
+      "base": "<p>List of code review jobs.</p>",
+      "refs": {
+        "BatchGetCodeReviewJobsOutput$codeReviewJobs": "<p>The list of code review jobs that were found.</p>"
+      }
+    },
+    "CodeReviewJobSummary": {
+      "base": "<p>Contains summary information about a code review job.</p>",
+      "refs": {
+        "CodeReviewJobSummaryList$member": null
+      }
+    },
+    "CodeReviewJobSummaryList": {
+      "base": "<p>List of code review job summaries.</p>",
+      "refs": {
+        "ListCodeReviewJobsForCodeReviewOutput$codeReviewJobSummaries": "<p>The list of code review job summaries.</p>"
+      }
+    },
+    "CodeReviewJobTask": {
+      "base": "<p>Represents an individual security test task within a code review job. Each task targets a specific risk type and executes independently.</p>",
+      "refs": {
+        "CodeReviewJobTaskList$member": null
+      }
+    },
+    "CodeReviewJobTaskList": {
+      "base": "<p>List of code review job tasks.</p>",
+      "refs": {
+        "BatchGetCodeReviewJobTasksOutput$codeReviewJobTasks": "<p>The list of code review job tasks that were found.</p>"
+      }
+    },
+    "CodeReviewJobTaskSummary": {
+      "base": "<p>Contains summary information about a code review job task.</p>",
+      "refs": {
+        "CodeReviewJobTaskSummaryList$member": null
+      }
+    },
+    "CodeReviewJobTaskSummaryList": {
+      "base": "<p>List of code review job task summaries.</p>",
+      "refs": {
+        "ListCodeReviewJobTasksOutput$codeReviewJobTaskSummaries": "<p>The list of code review job task summaries.</p>"
+      }
+    },
+    "CodeReviewList": {
+      "base": "<p>List of code reviews.</p>",
+      "refs": {
+        "BatchGetCodeReviewsOutput$codeReviews": "<p>The list of code reviews that were found.</p>"
+      }
+    },
     "CodeReviewSettings": {
       "base": "<p>The code review settings for an agent space, controlling which types of scanning are enabled.</p>",
       "refs": {
@@ -425,6 +574,18 @@
         "CreateAgentSpaceOutput$codeReviewSettings": "<p>The code review settings for the agent space.</p>",
         "UpdateAgentSpaceInput$codeReviewSettings": "<p>The updated code review settings for the agent space.</p>",
         "UpdateAgentSpaceOutput$codeReviewSettings": "<p>The code review settings for the agent space.</p>"
+      }
+    },
+    "CodeReviewSummary": {
+      "base": "<p>Contains summary information about a code review.</p>",
+      "refs": {
+        "CodeReviewSummaryList$member": null
+      }
+    },
+    "CodeReviewSummaryList": {
+      "base": "<p>List of code review summaries.</p>",
+      "refs": {
+        "ListCodeReviewsOutput$codeReviewSummaries": "<p>The list of code review summaries.</p>"
       }
     },
     "ConfidenceLevel": {
@@ -459,6 +620,14 @@
     },
     "CreateApplicationResponse": {
       "base": null,
+      "refs": {}
+    },
+    "CreateCodeReviewInput": {
+      "base": "<p>Input for creating a new code review.</p>",
+      "refs": {}
+    },
+    "CreateCodeReviewOutput": {
+      "base": "<p>Output for the CreateCodeReview operation.</p>",
       "refs": {}
     },
     "CreateIntegrationInput": {
@@ -547,6 +716,18 @@
       "base": null,
       "refs": {}
     },
+    "DeleteCodeReviewFailure": {
+      "base": "<p>Contains information about a code review that failed to delete.</p>",
+      "refs": {
+        "DeleteCodeReviewFailureList$member": null
+      }
+    },
+    "DeleteCodeReviewFailureList": {
+      "base": "<p>List of code review deletion failures.</p>",
+      "refs": {
+        "BatchDeleteCodeReviewsOutput$failed": "<p>The list of code reviews that failed to delete, including the reason for each failure.</p>"
+      }
+    },
     "DeleteIntegrationInput": {
       "base": null,
       "refs": {}
@@ -611,6 +792,7 @@
       "base": null,
       "refs": {
         "Assets$documents": "<p>The list of documents that provide context for the pentest.</p>",
+        "CodeReviewJob$documents": "<p>The list of documents providing context for the code review job.</p>",
         "PentestJob$documents": "<p>The list of documents providing context for the pentest job.</p>"
       }
     },
@@ -647,6 +829,7 @@
     "ErrorInformation": {
       "base": "<p>Contains error information for a pentest job that encountered an error.</p>",
       "refs": {
+        "CodeReviewJob$errorInformation": "<p>Error information if the code review job encountered an error.</p>",
         "PentestJob$errorInformation": "<p>Error information if the pentest job encountered an error.</p>"
       }
     },
@@ -659,6 +842,7 @@
     "ExecutionContextList": {
       "base": null,
       "refs": {
+        "CodeReviewJob$executionContext": "<p>The execution context messages for the code review job.</p>",
         "PentestJob$executionContext": "<p>The execution context messages for the pentest job.</p>"
       }
     },
@@ -797,6 +981,13 @@
       "base": null,
       "refs": {}
     },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "CodeLocation$lineStart": "<p>The starting line number of the code location.</p>",
+        "CodeLocation$lineEnd": "<p>The ending line number of the code location.</p>"
+      }
+    },
     "IntegratedRepository": {
       "base": "<p>Represents a code repository that is integrated with the service through a third-party provider.</p>",
       "refs": {
@@ -807,6 +998,7 @@
       "base": null,
       "refs": {
         "Assets$integratedRepositories": "<p>The list of integrated repositories associated with the pentest.</p>",
+        "CodeReviewJob$integratedRepositories": "<p>The list of integrated repositories associated with the code review job.</p>",
         "PentestJob$integratedRepositories": "<p>The list of integrated repositories associated with the pentest job.</p>"
       }
     },
@@ -883,8 +1075,11 @@
     "JobStatus": {
       "base": "<p>Status of a pentest job.</p>",
       "refs": {
+        "CodeReviewJob$status": "<p>The current status of the code review job.</p>",
+        "CodeReviewJobSummary$status": "<p>The current status of the code review job.</p>",
         "PentestJob$status": "<p>The current status of the pentest job.</p>",
         "PentestJobSummary$status": "<p>The current status of the pentest job.</p>",
+        "StartCodeReviewJobOutput$status": "<p>The current status of the code review job.</p>",
         "StartPentestJobOutput$status": "<p>The current status of the pentest job.</p>"
       }
     },
@@ -932,6 +1127,30 @@
     },
     "ListArtifactsOutput": {
       "base": null,
+      "refs": {}
+    },
+    "ListCodeReviewJobTasksInput": {
+      "base": "<p>Input for listing tasks associated with a code review job.</p>",
+      "refs": {}
+    },
+    "ListCodeReviewJobTasksOutput": {
+      "base": "<p>Output for the ListCodeReviewJobTasks operation.</p>",
+      "refs": {}
+    },
+    "ListCodeReviewJobsForCodeReviewInput": {
+      "base": "<p>Input for ListCodeReviewJobsForCodeReview operation.</p>",
+      "refs": {}
+    },
+    "ListCodeReviewJobsForCodeReviewOutput": {
+      "base": "<p>Output for the ListCodeReviewJobsForCodeReview operation.</p>",
+      "refs": {}
+    },
+    "ListCodeReviewsInput": {
+      "base": "<p>Input for listing code reviews with optional filtering.</p>",
+      "refs": {}
+    },
+    "ListCodeReviewsOutput": {
+      "base": "<p>Output for the ListCodeReviews operation.</p>",
       "refs": {}
     },
     "ListDiscoveredEndpointsInput": {
@@ -1035,6 +1254,7 @@
     "LogLocation": {
       "base": "<p>The log location for a task, specifying where task execution logs are stored.</p>",
       "refs": {
+        "CodeReviewJobTask$logsLocation": "<p>The location of the task execution logs.</p>",
         "Task$logsLocation": "<p>The location of the task execution logs.</p>"
       }
     },
@@ -1050,6 +1270,9 @@
         "ListAgentSpacesInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListApplicationsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListArtifactsInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListCodeReviewJobTasksInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListCodeReviewJobsForCodeReviewInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListCodeReviewsInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListDiscoveredEndpointsInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListFindingsInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListIntegratedResourcesInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
@@ -1150,6 +1373,12 @@
         "ListApplicationsResponse$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
         "ListArtifactsInput$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
         "ListArtifactsOutput$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
+        "ListCodeReviewJobTasksInput$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
+        "ListCodeReviewJobTasksOutput$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
+        "ListCodeReviewJobsForCodeReviewInput$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
+        "ListCodeReviewJobsForCodeReviewOutput$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
+        "ListCodeReviewsInput$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
+        "ListCodeReviewsOutput$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
         "ListDiscoveredEndpointsInput$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
         "ListDiscoveredEndpointsOutput$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
         "ListFindingsInput$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the nextToken value returned from the previous request.</p>",
@@ -1308,6 +1537,8 @@
     "RiskType": {
       "base": "<p>Type of security risk.</p>",
       "refs": {
+        "CodeReviewJobTask$riskType": "<p>The type of security risk the task is testing for.</p>",
+        "CodeReviewJobTaskSummary$riskType": "<p>The type of security risk the task is testing for.</p>",
         "RiskTypeList$member": null,
         "Task$riskType": "<p>The type of security risk the task is testing for.</p>",
         "TaskSummary$riskType": "<p>The type of security risk the task is testing for.</p>"
@@ -1377,11 +1608,17 @@
     "ServiceRole": {
       "base": "<p>ARN of an IAM role that the service can assume to access customer resources.</p>",
       "refs": {
+        "CodeReview$serviceRole": "<p>The IAM service role used for the code review.</p>",
+        "CodeReviewJob$serviceRole": "<p>The IAM service role used for the code review job.</p>",
+        "CreateCodeReviewInput$serviceRole": "<p>The IAM service role to use for the code review.</p>",
+        "CreateCodeReviewOutput$serviceRole": "<p>The IAM service role used for the code review.</p>",
         "CreatePentestInput$serviceRole": "<p>The IAM service role to use for the pentest.</p>",
         "CreatePentestOutput$serviceRole": "<p>The IAM service role used for the pentest.</p>",
         "IamRoles$member": null,
         "Pentest$serviceRole": "<p>The IAM service role used for the pentest.</p>",
         "PentestJob$serviceRole": "<p>The IAM service role used for the pentest job.</p>",
+        "UpdateCodeReviewInput$serviceRole": "<p>The updated IAM service role for the code review.</p>",
+        "UpdateCodeReviewOutput$serviceRole": "<p>The IAM service role used for the code review.</p>",
         "UpdatePentestInput$serviceRole": "<p>The updated IAM service role for the pentest.</p>",
         "UpdatePentestOutput$serviceRole": "<p>The IAM service role used for the pentest.</p>"
       }
@@ -1396,6 +1633,7 @@
       "base": null,
       "refs": {
         "Assets$sourceCode": "<p>The list of source code repositories to analyze during the pentest.</p>",
+        "CodeReviewJob$sourceCode": "<p>The list of source code repositories analyzed during the code review job.</p>",
         "PentestJob$sourceCode": "<p>The list of source code repositories analyzed during the pentest job.</p>"
       }
     },
@@ -1405,6 +1643,14 @@
     },
     "StartCodeRemediationOutput": {
       "base": "<p>Output for the StartCodeRemediation operation.</p>",
+      "refs": {}
+    },
+    "StartCodeReviewJobInput": {
+      "base": "<p>Input for starting the execution of a code review.</p>",
+      "refs": {}
+    },
+    "StartCodeReviewJobOutput": {
+      "base": "<p>Output for the StartCodeReviewJob operation.</p>",
       "refs": {}
     },
     "StartPentestJobInput": {
@@ -1424,12 +1670,14 @@
     "StepList": {
       "base": "<p>List of pentest job steps.</p>",
       "refs": {
+        "CodeReviewJob$steps": "<p>The list of steps in the code review job execution.</p>",
         "PentestJob$steps": "<p>The list of steps in the pentest job execution.</p>"
       }
     },
     "StepName": {
       "base": "<p>Pentest job step names.</p>",
       "refs": {
+        "ListCodeReviewJobTasksInput$stepName": "<p>Filter tasks by step name.</p>",
         "ListPentestJobTasksInput$stepName": "<p>Filter tasks by step name. Valid values include PREFLIGHT, STATIC_ANALYSIS, PENTEST, and FINALIZING.</p>",
         "Step$name": "<p>The name of the step. Valid values include PREFLIGHT, STATIC_ANALYSIS, PENTEST, and FINALIZING.</p>"
       }
@@ -1439,6 +1687,14 @@
       "refs": {
         "Step$status": "<p>The current status of the step.</p>"
       }
+    },
+    "StopCodeReviewJobInput": {
+      "base": "<p>Input for stopping the execution of a code review job.</p>",
+      "refs": {}
+    },
+    "StopCodeReviewJobOutput": {
+      "base": "<p>Output for the StopCodeReviewJob operation.</p>",
+      "refs": {}
     },
     "StopPentestJobInput": {
       "base": "<p>Input for stopping the execution of a pentest.</p>",
@@ -1463,7 +1719,11 @@
         "ArtifactMetadataItem$fileName": "<p>The file name of the artifact.</p>",
         "ArtifactSummary$fileName": "<p>The file name of the artifact.</p>",
         "Authentication$value": "<p>The authentication value, such as a secret ARN, Lambda function ARN, or IAM role ARN, depending on the provider type.</p>",
+        "BatchDeleteCodeReviewsInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the code reviews to delete.</p>",
         "BatchDeletePentestsInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the pentests to delete.</p>",
+        "BatchGetCodeReviewJobTasksInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the tasks.</p>",
+        "BatchGetCodeReviewJobsInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the code review jobs.</p>",
+        "BatchGetCodeReviewsInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the code reviews.</p>",
         "BatchGetFindingsInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the findings.</p>",
         "BatchGetPentestJobTasksInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the tasks.</p>",
         "BatchGetPentestJobsInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the pentest jobs.</p>",
@@ -1471,13 +1731,46 @@
         "Category$name": "<p>The name of the category.</p>",
         "CloudWatchLog$logGroup": "<p>The name of the CloudWatch log group.</p>",
         "CloudWatchLog$logStream": "<p>The name of the CloudWatch log stream.</p>",
+        "CodeLocation$filePath": "<p>The absolute path to the file containing the code location.</p>",
+        "CodeLocation$label": "<p>The role of this location in the vulnerability, such as source or sink.</p>",
         "CodeRemediationTask$statusReason": "<p>The reason for the current status of the code remediation task.</p>",
         "CodeRemediationTaskDetails$repoName": "<p>The name of the repository where the remediation was applied.</p>",
         "CodeRemediationTaskDetails$codeDiffLink": "<p>The link to the code diff for the remediation.</p>",
         "CodeRemediationTaskDetails$pullRequestLink": "<p>The link to the pull request created for the remediation.</p>",
+        "CodeReview$codeReviewId": "<p>The unique identifier of the code review.</p>",
+        "CodeReview$agentSpaceId": "<p>The unique identifier of the agent space that contains the code review.</p>",
+        "CodeReview$title": "<p>The title of the code review.</p>",
+        "CodeReviewIdList$member": null,
+        "CodeReviewJob$codeReviewJobId": "<p>The unique identifier of the code review job.</p>",
+        "CodeReviewJob$codeReviewId": "<p>The unique identifier of the code review associated with the job.</p>",
+        "CodeReviewJob$title": "<p>The title of the code review job.</p>",
+        "CodeReviewJob$overview": "<p>An overview of the code review job results.</p>",
+        "CodeReviewJobIdList$member": null,
+        "CodeReviewJobSummary$codeReviewJobId": "<p>The unique identifier of the code review job.</p>",
+        "CodeReviewJobSummary$codeReviewId": "<p>The unique identifier of the code review associated with the job.</p>",
+        "CodeReviewJobSummary$title": "<p>The title of the code review job.</p>",
+        "CodeReviewJobTask$taskId": "<p>The unique identifier of the task.</p>",
+        "CodeReviewJobTask$codeReviewId": "<p>The unique identifier of the code review associated with the task.</p>",
+        "CodeReviewJobTask$codeReviewJobId": "<p>The unique identifier of the code review job that contains the task.</p>",
+        "CodeReviewJobTask$agentSpaceId": "<p>The unique identifier of the agent space.</p>",
+        "CodeReviewJobTask$title": "<p>The title of the task.</p>",
+        "CodeReviewJobTask$description": "<p>A description of the task.</p>",
+        "CodeReviewJobTaskSummary$taskId": "<p>The unique identifier of the task.</p>",
+        "CodeReviewJobTaskSummary$codeReviewId": "<p>The unique identifier of the code review associated with the task.</p>",
+        "CodeReviewJobTaskSummary$codeReviewJobId": "<p>The unique identifier of the code review job that contains the task.</p>",
+        "CodeReviewJobTaskSummary$agentSpaceId": "<p>The unique identifier of the agent space.</p>",
+        "CodeReviewJobTaskSummary$title": "<p>The title of the task.</p>",
+        "CodeReviewSummary$codeReviewId": "<p>The unique identifier of the code review.</p>",
+        "CodeReviewSummary$agentSpaceId": "<p>The unique identifier of the agent space that contains the code review.</p>",
+        "CodeReviewSummary$title": "<p>The title of the code review.</p>",
         "ConflictException$message": "<p>Error description.</p>",
         "CreateAgentSpaceInput$description": "<p>A description of the agent space.</p>",
         "CreateAgentSpaceOutput$description": "<p>The description of the agent space.</p>",
+        "CreateCodeReviewInput$title": "<p>The title of the code review.</p>",
+        "CreateCodeReviewInput$agentSpaceId": "<p>The unique identifier of the agent space to create the code review in.</p>",
+        "CreateCodeReviewOutput$codeReviewId": "<p>The unique identifier of the created code review.</p>",
+        "CreateCodeReviewOutput$title": "<p>The title of the code review.</p>",
+        "CreateCodeReviewOutput$agentSpaceId": "<p>The unique identifier of the agent space that contains the code review.</p>",
         "CreateIntegrationInput$integrationDisplayName": "<p>The display name for the integration.</p>",
         "CreatePentestInput$title": "<p>The title of the pentest.</p>",
         "CreatePentestInput$agentSpaceId": "<p>The unique identifier of the agent space to create the pentest in.</p>",
@@ -1489,6 +1782,8 @@
         "CreateTargetDomainOutput$verificationStatusReason": "<p>The reason for the current target domain verification status.</p>",
         "CustomHeader$name": "<p>The name of the custom header.</p>",
         "CustomHeader$value": "<p>The value of the custom header.</p>",
+        "DeleteCodeReviewFailure$codeReviewId": "<p>The unique identifier of the code review that failed to delete.</p>",
+        "DeleteCodeReviewFailure$reason": "<p>The reason the code review failed to delete.</p>",
         "DeletePentestFailure$pentestId": "<p>The unique identifier of the pentest that failed to delete.</p>",
         "DeletePentestFailure$reason": "<p>The reason the pentest failed to delete.</p>",
         "DiscoveredEndpoint$uri": "<p>The URI of the discovered endpoint.</p>",
@@ -1509,6 +1804,8 @@
         "Finding$agentSpaceId": "<p>The unique identifier of the agent space associated with the finding.</p>",
         "Finding$pentestId": "<p>The unique identifier of the pentest associated with the finding.</p>",
         "Finding$pentestJobId": "<p>The unique identifier of the pentest job that produced the finding.</p>",
+        "Finding$codeReviewId": "<p>The unique identifier of the code review associated with the finding.</p>",
+        "Finding$codeReviewJobId": "<p>The unique identifier of the code review job that produced the finding.</p>",
         "Finding$taskId": "<p>The unique identifier of the task that produced the finding.</p>",
         "Finding$name": "<p>The name of the finding.</p>",
         "Finding$description": "<p>A description of the finding.</p>",
@@ -1522,6 +1819,8 @@
         "FindingSummary$agentSpaceId": "<p>The unique identifier of the agent space associated with the finding.</p>",
         "FindingSummary$pentestId": "<p>The unique identifier of the pentest associated with the finding.</p>",
         "FindingSummary$pentestJobId": "<p>The unique identifier of the pentest job that produced the finding.</p>",
+        "FindingSummary$codeReviewId": "<p>The unique identifier of the code review associated with the finding.</p>",
+        "FindingSummary$codeReviewJobId": "<p>The unique identifier of the code review job that produced the finding.</p>",
         "FindingSummary$name": "<p>The name of the finding.</p>",
         "FindingSummary$riskType": "<p>The type of security risk identified by the finding.</p>",
         "GetApplicationResponse$applicationName": "<p>The name of the application.</p>",
@@ -1537,10 +1836,17 @@
         "IntegrationSummary$installationId": "<p>The installation identifier from the integration provider.</p>",
         "IntegrationSummary$displayName": "<p>The display name of the integration.</p>",
         "InternalServerException$message": "<p>Error description.</p>",
+        "ListCodeReviewJobTasksInput$agentSpaceId": "<p>The unique identifier of the agent space.</p>",
+        "ListCodeReviewJobTasksInput$codeReviewJobId": "<p>The unique identifier of the code review job to list tasks for.</p>",
+        "ListCodeReviewJobTasksInput$categoryName": "<p>Filter tasks by category name.</p>",
+        "ListCodeReviewJobsForCodeReviewInput$codeReviewId": "<p>The unique identifier of the code review to list jobs for.</p>",
+        "ListCodeReviewJobsForCodeReviewInput$agentSpaceId": "<p>The unique identifier of the agent space.</p>",
+        "ListCodeReviewsInput$agentSpaceId": "<p>The unique identifier of the agent space to list code reviews for.</p>",
         "ListDiscoveredEndpointsInput$pentestJobId": "<p>The unique identifier of the pentest job to list discovered endpoints for.</p>",
         "ListDiscoveredEndpointsInput$agentSpaceId": "<p>The unique identifier of the agent space.</p>",
         "ListDiscoveredEndpointsInput$prefix": "<p>A prefix to filter discovered endpoints by URI.</p>",
         "ListFindingsInput$pentestJobId": "<p>The unique identifier of the pentest job to list findings for.</p>",
+        "ListFindingsInput$codeReviewJobId": "<p>The unique identifier of the code review job to list findings for. Mutually exclusive with pentestJobId.</p>",
         "ListFindingsInput$agentSpaceId": "<p>The unique identifier of the agent space.</p>",
         "ListFindingsInput$riskType": "<p>Filter findings by risk type.</p>",
         "ListFindingsInput$name": "<p>Filter findings by name.</p>",
@@ -1571,13 +1877,22 @@
         "ResourceNotFoundException$message": "<p>Error description.</p>",
         "SourceCodeRepository$s3Location": "<p>The Amazon S3 location of the source code repository archive.</p>",
         "StartCodeRemediationInput$agentSpaceId": "<p>The unique identifier of the agent space.</p>",
-        "StartCodeRemediationInput$pentestJobId": "<p>The unique identifier of the pentest job that produced the findings.</p>",
+        "StartCodeRemediationInput$pentestJobId": "<p>The unique identifier of the pentest job that produced the findings. Mutually exclusive with <code>codeReviewJobId</code>.</p>",
+        "StartCodeRemediationInput$codeReviewJobId": "<p>The unique identifier of the code review job that produced the findings. Mutually exclusive with <code>pentestJobId</code>.</p>",
+        "StartCodeReviewJobInput$agentSpaceId": "<p>The unique identifier of the agent space.</p>",
+        "StartCodeReviewJobInput$codeReviewId": "<p>The unique identifier of the code review to start a job for.</p>",
+        "StartCodeReviewJobOutput$title": "<p>The title of the code review job.</p>",
+        "StartCodeReviewJobOutput$codeReviewId": "<p>The unique identifier of the code review.</p>",
+        "StartCodeReviewJobOutput$codeReviewJobId": "<p>The unique identifier of the started code review job.</p>",
+        "StartCodeReviewJobOutput$agentSpaceId": "<p>The unique identifier of the agent space.</p>",
         "StartPentestJobInput$agentSpaceId": "<p>The unique identifier of the agent space.</p>",
         "StartPentestJobInput$pentestId": "<p>The unique identifier of the pentest to start a job for.</p>",
         "StartPentestJobOutput$title": "<p>The title of the pentest job.</p>",
         "StartPentestJobOutput$pentestId": "<p>The unique identifier of the pentest.</p>",
         "StartPentestJobOutput$pentestJobId": "<p>The unique identifier of the started pentest job.</p>",
         "StartPentestJobOutput$agentSpaceId": "<p>The unique identifier of the agent space.</p>",
+        "StopCodeReviewJobInput$agentSpaceId": "<p>The unique identifier of the agent space.</p>",
+        "StopCodeReviewJobInput$codeReviewJobId": "<p>The unique identifier of the code review job to stop.</p>",
         "StopPentestJobInput$agentSpaceId": "<p>The unique identifier of the agent space.</p>",
         "StopPentestJobInput$pentestJobId": "<p>The unique identifier of the pentest job to stop.</p>",
         "TargetDomain$domainName": "<p>The domain name of the target domain.</p>",
@@ -1601,6 +1916,12 @@
         "ThrottlingException$quotaCode": "<p>Quota code for throttling limit.</p>",
         "UpdateAgentSpaceInput$description": "<p>The updated description of the agent space.</p>",
         "UpdateAgentSpaceOutput$description": "<p>The description of the agent space.</p>",
+        "UpdateCodeReviewInput$codeReviewId": "<p>The unique identifier of the code review to update.</p>",
+        "UpdateCodeReviewInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the code review.</p>",
+        "UpdateCodeReviewInput$title": "<p>The updated title of the code review.</p>",
+        "UpdateCodeReviewOutput$codeReviewId": "<p>The unique identifier of the code review.</p>",
+        "UpdateCodeReviewOutput$title": "<p>The title of the code review.</p>",
+        "UpdateCodeReviewOutput$agentSpaceId": "<p>The unique identifier of the agent space that contains the code review.</p>",
         "UpdateFindingInput$findingId": "<p>The unique identifier of the finding to update.</p>",
         "UpdateFindingInput$agentSpaceId": "<p>The unique identifier of the agent space that contains the finding.</p>",
         "UpdatePentestInput$pentestId": "<p>The unique identifier of the pentest to update.</p>",
@@ -1640,8 +1961,22 @@
         "AgentSpaceSummary$createdAt": "<p>The date and time the agent space was created, in UTC format.</p>",
         "AgentSpaceSummary$updatedAt": "<p>The date and time the agent space was last updated, in UTC format.</p>",
         "ArtifactMetadataItem$updatedAt": "<p>The date and time the artifact was last updated, in UTC format.</p>",
+        "CodeReview$createdAt": "<p>The date and time the code review was created, in UTC format.</p>",
+        "CodeReview$updatedAt": "<p>The date and time the code review was last updated, in UTC format.</p>",
+        "CodeReviewJob$createdAt": "<p>The date and time the code review job was created, in UTC format.</p>",
+        "CodeReviewJob$updatedAt": "<p>The date and time the code review job was last updated, in UTC format.</p>",
+        "CodeReviewJobSummary$createdAt": "<p>The date and time the code review job was created, in UTC format.</p>",
+        "CodeReviewJobSummary$updatedAt": "<p>The date and time the code review job was last updated, in UTC format.</p>",
+        "CodeReviewJobTask$createdAt": "<p>The date and time the task was created, in UTC format.</p>",
+        "CodeReviewJobTask$updatedAt": "<p>The date and time the task was last updated, in UTC format.</p>",
+        "CodeReviewJobTaskSummary$createdAt": "<p>The date and time the task was created, in UTC format.</p>",
+        "CodeReviewJobTaskSummary$updatedAt": "<p>The date and time the task was last updated, in UTC format.</p>",
+        "CodeReviewSummary$createdAt": "<p>The date and time the code review was created, in UTC format.</p>",
+        "CodeReviewSummary$updatedAt": "<p>The date and time the code review was last updated, in UTC format.</p>",
         "CreateAgentSpaceOutput$createdAt": "<p>The date and time the agent space was created, in UTC format.</p>",
         "CreateAgentSpaceOutput$updatedAt": "<p>The date and time the agent space was last updated, in UTC format.</p>",
+        "CreateCodeReviewOutput$createdAt": "<p>The date and time the code review was created, in UTC format.</p>",
+        "CreateCodeReviewOutput$updatedAt": "<p>The date and time the code review was last updated, in UTC format.</p>",
         "CreatePentestOutput$createdAt": "<p>The date and time the pentest was created, in UTC format.</p>",
         "CreatePentestOutput$updatedAt": "<p>The date and time the pentest was last updated, in UTC format.</p>",
         "CreateTargetDomainOutput$createdAt": "<p>The date and time the target domain was created, in UTC format.</p>",
@@ -1662,6 +1997,8 @@
         "PentestJobSummary$updatedAt": "<p>The date and time the pentest job was last updated, in UTC format.</p>",
         "PentestSummary$createdAt": "<p>The date and time the pentest was created, in UTC format.</p>",
         "PentestSummary$updatedAt": "<p>The date and time the pentest was last updated, in UTC format.</p>",
+        "StartCodeReviewJobOutput$createdAt": "<p>The date and time the code review job was created, in UTC format.</p>",
+        "StartCodeReviewJobOutput$updatedAt": "<p>The date and time the code review job was last updated, in UTC format.</p>",
         "StartPentestJobOutput$createdAt": "<p>The date and time the pentest job was created, in UTC format.</p>",
         "StartPentestJobOutput$updatedAt": "<p>The date and time the pentest job was last updated, in UTC format.</p>",
         "Step$createdAt": "<p>The date and time the step was created, in UTC format.</p>",
@@ -1674,6 +2011,8 @@
         "TaskSummary$updatedAt": "<p>The date and time the task was last updated, in UTC format.</p>",
         "UpdateAgentSpaceOutput$createdAt": "<p>The date and time the agent space was created, in UTC format.</p>",
         "UpdateAgentSpaceOutput$updatedAt": "<p>The date and time the agent space was last updated, in UTC format.</p>",
+        "UpdateCodeReviewOutput$createdAt": "<p>The date and time the code review was created, in UTC format.</p>",
+        "UpdateCodeReviewOutput$updatedAt": "<p>The date and time the code review was last updated, in UTC format.</p>",
         "UpdatePentestOutput$createdAt": "<p>The date and time the pentest was created, in UTC format.</p>",
         "UpdatePentestOutput$updatedAt": "<p>The date and time the pentest was last updated, in UTC format.</p>",
         "UpdateTargetDomainOutput$createdAt": "<p>The date and time the target domain was created, in UTC format.</p>",
@@ -1790,6 +2129,8 @@
     "TaskExecutionStatus": {
       "base": "<p>Execution status of a task.</p>",
       "refs": {
+        "CodeReviewJobTask$executionStatus": "<p>The current execution status of the task.</p>",
+        "CodeReviewJobTaskSummary$executionStatus": "<p>The current execution status of the task.</p>",
         "Task$executionStatus": "<p>The current execution status of the task.</p>",
         "TaskSummary$executionStatus": "<p>The current execution status of the task.</p>"
       }
@@ -1797,6 +2138,8 @@
     "TaskIdList": {
       "base": null,
       "refs": {
+        "BatchGetCodeReviewJobTasksInput$codeReviewJobTaskIds": "<p>The list of task identifiers to retrieve.</p>",
+        "BatchGetCodeReviewJobTasksOutput$notFound": "<p>The list of task identifiers that were not found.</p>",
         "BatchGetPentestJobTasksInput$taskIds": "<p>The list of task identifiers to retrieve.</p>",
         "BatchGetPentestJobTasksOutput$notFound": "<p>The list of task identifiers that were not found.</p>"
       }
@@ -1845,6 +2188,14 @@
     },
     "UpdateApplicationResponse": {
       "base": null,
+      "refs": {}
+    },
+    "UpdateCodeReviewInput": {
+      "base": "<p>Input for updating an existing code review.</p>",
+      "refs": {}
+    },
+    "UpdateCodeReviewOutput": {
+      "base": "<p>Output for the UpdateCodeReview operation.</p>",
       "refs": {}
     },
     "UpdateFindingInput": {

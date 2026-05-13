@@ -1305,6 +1305,24 @@
       ],
       "readonly":true
     },
+    "GetPolicyEngineSummary":{
+      "name":"GetPolicyEngineSummary",
+      "http":{
+        "method":"GET",
+        "requestUri":"/policy-engine-summaries/{policyEngineId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPolicyEngineSummaryRequest"},
+      "output":{"shape":"GetPolicyEngineSummaryResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "GetPolicyGeneration":{
       "name":"GetPolicyGeneration",
       "http":{
@@ -1314,6 +1332,42 @@
       },
       "input":{"shape":"GetPolicyGenerationRequest"},
       "output":{"shape":"GetPolicyGenerationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetPolicyGenerationSummary":{
+      "name":"GetPolicyGenerationSummary",
+      "http":{
+        "method":"GET",
+        "requestUri":"/policy-engines/{policyEngineId}/policy-generation-summaries/{policyGenerationId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPolicyGenerationSummaryRequest"},
+      "output":{"shape":"GetPolicyGenerationSummaryResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "GetPolicySummary":{
+      "name":"GetPolicySummary",
+      "http":{
+        "method":"GET",
+        "requestUri":"/policy-engines/{policyEngineId}/policy-summaries/{policyId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPolicySummaryRequest"},
+      "output":{"shape":"GetPolicySummaryResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
@@ -1784,6 +1838,23 @@
       ],
       "readonly":true
     },
+    "ListPolicyEngineSummaries":{
+      "name":"ListPolicyEngineSummaries",
+      "http":{
+        "method":"GET",
+        "requestUri":"/policy-engine-summaries",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPolicyEngineSummariesRequest"},
+      "output":{"shape":"ListPolicyEngineSummariesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListPolicyEngines":{
       "name":"ListPolicyEngines",
       "http":{
@@ -1819,6 +1890,24 @@
       ],
       "readonly":true
     },
+    "ListPolicyGenerationSummaries":{
+      "name":"ListPolicyGenerationSummaries",
+      "http":{
+        "method":"GET",
+        "requestUri":"/policy-engines/{policyEngineId}/policy-generation-summaries",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPolicyGenerationSummariesRequest"},
+      "output":{"shape":"ListPolicyGenerationSummariesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListPolicyGenerations":{
       "name":"ListPolicyGenerations",
       "http":{
@@ -1828,6 +1917,24 @@
       },
       "input":{"shape":"ListPolicyGenerationsRequest"},
       "output":{"shape":"ListPolicyGenerationsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListPolicySummaries":{
+      "name":"ListPolicySummaries",
+      "http":{
+        "method":"GET",
+        "requestUri":"/policy-engines/{policyEngineId}/policy-summaries",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPolicySummariesRequest"},
+      "output":{"shape":"ListPolicySummariesResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
@@ -4257,13 +4364,13 @@
       "members":{
         "policyEngineId":{"shape":"ResourceId"},
         "name":{"shape":"PolicyEngineName"},
-        "description":{"shape":"Description"},
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
         "policyEngineArn":{"shape":"PolicyEngineArn"},
         "status":{"shape":"PolicyEngineStatus"},
-        "statusReasons":{"shape":"PolicyStatusReasons"},
-        "encryptionKeyArn":{"shape":"KmsKeyArn"}
+        "encryptionKeyArn":{"shape":"KmsKeyArn"},
+        "description":{"shape":"Description"},
+        "statusReasons":{"shape":"PolicyStatusReasons"}
       }
     },
     "CreatePolicyRequest":{
@@ -4295,23 +4402,23 @@
         "policyId",
         "name",
         "policyEngineId",
-        "definition",
         "createdAt",
         "updatedAt",
         "policyArn",
         "status",
+        "definition",
         "statusReasons"
       ],
       "members":{
         "policyId":{"shape":"ResourceId"},
         "name":{"shape":"PolicyName"},
         "policyEngineId":{"shape":"ResourceId"},
-        "definition":{"shape":"PolicyDefinition"},
-        "description":{"shape":"Description"},
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
         "policyArn":{"shape":"PolicyArn"},
         "status":{"shape":"PolicyStatus"},
+        "definition":{"shape":"PolicyDefinition"},
+        "description":{"shape":"Description"},
         "statusReasons":{"shape":"PolicyStatusReasons"}
       }
     },
@@ -5171,13 +5278,13 @@
       "members":{
         "policyEngineId":{"shape":"ResourceId"},
         "name":{"shape":"PolicyEngineName"},
-        "description":{"shape":"Description"},
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
         "policyEngineArn":{"shape":"PolicyEngineArn"},
         "status":{"shape":"PolicyEngineStatus"},
-        "statusReasons":{"shape":"PolicyStatusReasons"},
-        "encryptionKeyArn":{"shape":"KmsKeyArn"}
+        "encryptionKeyArn":{"shape":"KmsKeyArn"},
+        "description":{"shape":"Description"},
+        "statusReasons":{"shape":"PolicyStatusReasons"}
       }
     },
     "DeletePolicyRequest":{
@@ -5205,23 +5312,23 @@
         "policyId",
         "name",
         "policyEngineId",
-        "definition",
         "createdAt",
         "updatedAt",
         "policyArn",
         "status",
+        "definition",
         "statusReasons"
       ],
       "members":{
         "policyId":{"shape":"ResourceId"},
         "name":{"shape":"PolicyName"},
         "policyEngineId":{"shape":"ResourceId"},
-        "definition":{"shape":"PolicyDefinition"},
-        "description":{"shape":"Description"},
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
         "policyArn":{"shape":"PolicyArn"},
         "status":{"shape":"PolicyStatus"},
+        "definition":{"shape":"PolicyDefinition"},
+        "description":{"shape":"Description"},
         "statusReasons":{"shape":"PolicyStatusReasons"}
       }
     },
@@ -6743,12 +6850,43 @@
       "members":{
         "policyEngineId":{"shape":"ResourceId"},
         "name":{"shape":"PolicyEngineName"},
-        "description":{"shape":"Description"},
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
         "policyEngineArn":{"shape":"PolicyEngineArn"},
         "status":{"shape":"PolicyEngineStatus"},
-        "statusReasons":{"shape":"PolicyStatusReasons"},
+        "encryptionKeyArn":{"shape":"KmsKeyArn"},
+        "description":{"shape":"Description"},
+        "statusReasons":{"shape":"PolicyStatusReasons"}
+      }
+    },
+    "GetPolicyEngineSummaryRequest":{
+      "type":"structure",
+      "required":["policyEngineId"],
+      "members":{
+        "policyEngineId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"policyEngineId"
+        }
+      }
+    },
+    "GetPolicyEngineSummaryResponse":{
+      "type":"structure",
+      "required":[
+        "policyEngineId",
+        "name",
+        "createdAt",
+        "updatedAt",
+        "policyEngineArn",
+        "status"
+      ],
+      "members":{
+        "policyEngineId":{"shape":"ResourceId"},
+        "name":{"shape":"PolicyEngineName"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "policyEngineArn":{"shape":"PolicyEngineArn"},
+        "status":{"shape":"PolicyEngineStatus"},
         "encryptionKeyArn":{"shape":"KmsKeyArn"}
       }
     },
@@ -6793,7 +6931,50 @@
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
         "status":{"shape":"PolicyGenerationStatus"},
-        "statusReasons":{"shape":"PolicyStatusReasons"},
+        "findings":{"shape":"String"},
+        "statusReasons":{"shape":"PolicyStatusReasons"}
+      }
+    },
+    "GetPolicyGenerationSummaryRequest":{
+      "type":"structure",
+      "required":[
+        "policyGenerationId",
+        "policyEngineId"
+      ],
+      "members":{
+        "policyGenerationId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"policyGenerationId"
+        },
+        "policyEngineId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"policyEngineId"
+        }
+      }
+    },
+    "GetPolicyGenerationSummaryResponse":{
+      "type":"structure",
+      "required":[
+        "policyEngineId",
+        "policyGenerationId",
+        "name",
+        "policyGenerationArn",
+        "resource",
+        "createdAt",
+        "updatedAt",
+        "status"
+      ],
+      "members":{
+        "policyEngineId":{"shape":"ResourceId"},
+        "policyGenerationId":{"shape":"ResourceId"},
+        "name":{"shape":"PolicyGenerationName"},
+        "policyGenerationArn":{"shape":"PolicyGenerationArn"},
+        "resource":{"shape":"Resource"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "status":{"shape":"PolicyGenerationStatus"},
         "findings":{"shape":"String"}
       }
     },
@@ -6822,24 +7003,64 @@
         "policyId",
         "name",
         "policyEngineId",
-        "definition",
         "createdAt",
         "updatedAt",
         "policyArn",
         "status",
+        "definition",
         "statusReasons"
       ],
       "members":{
         "policyId":{"shape":"ResourceId"},
         "name":{"shape":"PolicyName"},
         "policyEngineId":{"shape":"ResourceId"},
-        "definition":{"shape":"PolicyDefinition"},
-        "description":{"shape":"Description"},
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
         "policyArn":{"shape":"PolicyArn"},
         "status":{"shape":"PolicyStatus"},
+        "definition":{"shape":"PolicyDefinition"},
+        "description":{"shape":"Description"},
         "statusReasons":{"shape":"PolicyStatusReasons"}
+      }
+    },
+    "GetPolicySummaryRequest":{
+      "type":"structure",
+      "required":[
+        "policyEngineId",
+        "policyId"
+      ],
+      "members":{
+        "policyEngineId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"policyEngineId"
+        },
+        "policyId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"policyId"
+        }
+      }
+    },
+    "GetPolicySummaryResponse":{
+      "type":"structure",
+      "required":[
+        "policyId",
+        "name",
+        "policyEngineId",
+        "createdAt",
+        "updatedAt",
+        "policyArn",
+        "status"
+      ],
+      "members":{
+        "policyId":{"shape":"ResourceId"},
+        "name":{"shape":"PolicyName"},
+        "policyEngineId":{"shape":"ResourceId"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "policyArn":{"shape":"PolicyArn"},
+        "status":{"shape":"PolicyStatus"}
       }
     },
     "GetRegistryRecordRequest":{
@@ -8316,6 +8537,29 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListPolicyEngineSummariesRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListPolicyEngineSummariesResponse":{
+      "type":"structure",
+      "required":["policyEngines"],
+      "members":{
+        "policyEngines":{"shape":"PolicyEngineSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListPolicyEnginesRequest":{
       "type":"structure",
       "members":{
@@ -8375,6 +8619,35 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListPolicyGenerationSummariesRequest":{
+      "type":"structure",
+      "required":["policyEngineId"],
+      "members":{
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "policyEngineId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"policyEngineId"
+        }
+      }
+    },
+    "ListPolicyGenerationSummariesResponse":{
+      "type":"structure",
+      "required":["policyGenerations"],
+      "members":{
+        "policyGenerations":{"shape":"PolicyGenerationSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListPolicyGenerationsRequest":{
       "type":"structure",
       "required":["policyEngineId"],
@@ -8404,6 +8677,40 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListPolicySummariesRequest":{
+      "type":"structure",
+      "required":["policyEngineId"],
+      "members":{
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "policyEngineId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"policyEngineId"
+        },
+        "targetResourceScope":{
+          "shape":"BedrockAgentcoreResourceArn",
+          "location":"querystring",
+          "locationName":"targetResourceScope"
+        }
+      }
+    },
+    "ListPolicySummariesResponse":{
+      "type":"structure",
+      "required":["policies"],
+      "members":{
+        "policies":{"shape":"PolicySummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListRegistriesRequest":{
       "type":"structure",
       "members":{
@@ -8421,6 +8728,11 @@
           "shape":"RegistryStatus",
           "location":"querystring",
           "locationName":"status"
+        },
+        "authorizerType":{
+          "shape":"RegistryAuthorizerType",
+          "location":"querystring",
+          "locationName":"authorizerType"
         }
       }
     },
@@ -9555,23 +9867,23 @@
         "policyId",
         "name",
         "policyEngineId",
-        "definition",
         "createdAt",
         "updatedAt",
         "policyArn",
         "status",
+        "definition",
         "statusReasons"
       ],
       "members":{
         "policyId":{"shape":"ResourceId"},
         "name":{"shape":"PolicyName"},
         "policyEngineId":{"shape":"ResourceId"},
-        "definition":{"shape":"PolicyDefinition"},
-        "description":{"shape":"Description"},
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
         "policyArn":{"shape":"PolicyArn"},
         "status":{"shape":"PolicyStatus"},
+        "definition":{"shape":"PolicyDefinition"},
+        "description":{"shape":"Description"},
         "statusReasons":{"shape":"PolicyStatusReasons"}
       }
     },
@@ -9603,13 +9915,13 @@
       "members":{
         "policyEngineId":{"shape":"ResourceId"},
         "name":{"shape":"PolicyEngineName"},
-        "description":{"shape":"Description"},
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
         "policyEngineArn":{"shape":"PolicyEngineArn"},
         "status":{"shape":"PolicyEngineStatus"},
-        "statusReasons":{"shape":"PolicyStatusReasons"},
-        "encryptionKeyArn":{"shape":"KmsKeyArn"}
+        "encryptionKeyArn":{"shape":"KmsKeyArn"},
+        "description":{"shape":"Description"},
+        "statusReasons":{"shape":"PolicyStatusReasons"}
       }
     },
     "PolicyEngineArn":{
@@ -9635,6 +9947,32 @@
         "UPDATE_FAILED",
         "DELETE_FAILED"
       ]
+    },
+    "PolicyEngineSummary":{
+      "type":"structure",
+      "required":[
+        "policyEngineId",
+        "name",
+        "createdAt",
+        "updatedAt",
+        "policyEngineArn",
+        "status"
+      ],
+      "members":{
+        "policyEngineId":{"shape":"ResourceId"},
+        "name":{"shape":"PolicyEngineName"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "policyEngineArn":{"shape":"PolicyEngineArn"},
+        "status":{"shape":"PolicyEngineStatus"},
+        "encryptionKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
+    "PolicyEngineSummaryList":{
+      "type":"list",
+      "member":{"shape":"PolicyEngineSummary"},
+      "max":100,
+      "min":0
     },
     "PolicyEngines":{
       "type":"list",
@@ -9664,8 +10002,8 @@
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
         "status":{"shape":"PolicyGenerationStatus"},
-        "statusReasons":{"shape":"PolicyStatusReasons"},
-        "findings":{"shape":"String"}
+        "findings":{"shape":"String"},
+        "statusReasons":{"shape":"PolicyStatusReasons"}
       }
     },
     "PolicyGenerationArn":{
@@ -9718,6 +10056,36 @@
         "DELETE_FAILED"
       ]
     },
+    "PolicyGenerationSummary":{
+      "type":"structure",
+      "required":[
+        "policyEngineId",
+        "policyGenerationId",
+        "name",
+        "policyGenerationArn",
+        "resource",
+        "createdAt",
+        "updatedAt",
+        "status"
+      ],
+      "members":{
+        "policyEngineId":{"shape":"ResourceId"},
+        "policyGenerationId":{"shape":"ResourceId"},
+        "name":{"shape":"PolicyGenerationName"},
+        "policyGenerationArn":{"shape":"PolicyGenerationArn"},
+        "resource":{"shape":"Resource"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "status":{"shape":"PolicyGenerationStatus"},
+        "findings":{"shape":"String"}
+      }
+    },
+    "PolicyGenerationSummaryList":{
+      "type":"list",
+      "member":{"shape":"PolicyGenerationSummary"},
+      "max":100,
+      "min":0
+    },
     "PolicyGenerations":{
       "type":"list",
       "member":{"shape":"PolicyGeneration"},
@@ -9745,6 +10113,33 @@
     "PolicyStatusReasons":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "PolicySummary":{
+      "type":"structure",
+      "required":[
+        "policyId",
+        "name",
+        "policyEngineId",
+        "createdAt",
+        "updatedAt",
+        "policyArn",
+        "status"
+      ],
+      "members":{
+        "policyId":{"shape":"ResourceId"},
+        "name":{"shape":"PolicyName"},
+        "policyEngineId":{"shape":"ResourceId"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "policyArn":{"shape":"PolicyArn"},
+        "status":{"shape":"PolicyStatus"}
+      }
+    },
+    "PolicySummaryList":{
+      "type":"list",
+      "member":{"shape":"PolicySummary"},
+      "max":100,
+      "min":0
     },
     "PolicyValidationMode":{
       "type":"string",
@@ -10684,8 +11079,8 @@
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
         "status":{"shape":"PolicyGenerationStatus"},
-        "statusReasons":{"shape":"PolicyStatusReasons"},
-        "findings":{"shape":"String"}
+        "findings":{"shape":"String"},
+        "statusReasons":{"shape":"PolicyStatusReasons"}
       }
     },
     "Statement":{
@@ -12089,13 +12484,13 @@
       "members":{
         "policyEngineId":{"shape":"ResourceId"},
         "name":{"shape":"PolicyEngineName"},
-        "description":{"shape":"Description"},
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
         "policyEngineArn":{"shape":"PolicyEngineArn"},
         "status":{"shape":"PolicyEngineStatus"},
-        "statusReasons":{"shape":"PolicyStatusReasons"},
-        "encryptionKeyArn":{"shape":"KmsKeyArn"}
+        "encryptionKeyArn":{"shape":"KmsKeyArn"},
+        "description":{"shape":"Description"},
+        "statusReasons":{"shape":"PolicyStatusReasons"}
       }
     },
     "UpdatePolicyRequest":{
@@ -12126,23 +12521,23 @@
         "policyId",
         "name",
         "policyEngineId",
-        "definition",
         "createdAt",
         "updatedAt",
         "policyArn",
         "status",
+        "definition",
         "statusReasons"
       ],
       "members":{
         "policyId":{"shape":"ResourceId"},
         "name":{"shape":"PolicyName"},
         "policyEngineId":{"shape":"ResourceId"},
-        "definition":{"shape":"PolicyDefinition"},
-        "description":{"shape":"Description"},
         "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
         "policyArn":{"shape":"PolicyArn"},
         "status":{"shape":"PolicyStatus"},
+        "definition":{"shape":"PolicyDefinition"},
+        "description":{"shape":"Description"},
         "statusReasons":{"shape":"PolicyStatusReasons"}
       }
     },
@@ -12588,7 +12983,8 @@
       ],
       "members":{
         "securityGroups":{"shape":"SecurityGroups"},
-        "subnets":{"shape":"Subnets"}
+        "subnets":{"shape":"Subnets"},
+        "requireServiceS3Endpoint":{"shape":"Boolean"}
       }
     },
     "VpcIdentifier":{

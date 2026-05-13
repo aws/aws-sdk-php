@@ -31,6 +31,25 @@
         {"shape":"ConflictException"}
       ]
     },
+    "CreateStream":{
+      "name":"CreateStream",
+      "http":{
+        "method":"POST",
+        "requestUri":"/stream/{clusterIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateStreamInput"},
+      "output":{"shape":"CreateStreamOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "DeleteCluster":{
       "name":"DeleteCluster",
       "http":{
@@ -63,6 +82,25 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteStream":{
+      "name":"DeleteStream",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/stream/{clusterIdentifier}/{streamIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteStreamInput"},
+      "output":{"shape":"DeleteStreamOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"}
@@ -105,6 +143,24 @@
       ],
       "readonly":true
     },
+    "GetStream":{
+      "name":"GetStream",
+      "http":{
+        "method":"GET",
+        "requestUri":"/stream/{clusterIdentifier}/{streamIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetStreamInput"},
+      "output":{"shape":"GetStreamOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "GetVpcEndpointServiceName":{
       "name":"GetVpcEndpointServiceName",
       "http":{
@@ -132,6 +188,24 @@
       },
       "input":{"shape":"ListClustersInput"},
       "output":{"shape":"ListClustersOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListStreams":{
+      "name":"ListStreams",
+      "http":{
+        "method":"GET",
+        "requestUri":"/stream/{clusterIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"ListStreamsInput"},
+      "output":{"shape":"ListStreamsOutput"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -357,6 +431,51 @@
         "endpoint":{"shape":"Endpoint"}
       }
     },
+    "CreateStreamInput":{
+      "type":"structure",
+      "required":[
+        "clusterIdentifier",
+        "targetDefinition",
+        "ordering",
+        "format"
+      ],
+      "members":{
+        "clusterIdentifier":{
+          "shape":"ClusterId",
+          "location":"uri",
+          "locationName":"clusterIdentifier"
+        },
+        "targetDefinition":{"shape":"TargetDefinition"},
+        "ordering":{"shape":"StreamOrdering"},
+        "format":{"shape":"StreamFormat"},
+        "tags":{"shape":"TagMap"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateStreamOutput":{
+      "type":"structure",
+      "required":[
+        "clusterIdentifier",
+        "streamIdentifier",
+        "arn",
+        "status",
+        "creationTime",
+        "ordering",
+        "format"
+      ],
+      "members":{
+        "clusterIdentifier":{"shape":"ClusterId"},
+        "streamIdentifier":{"shape":"StreamId"},
+        "arn":{"shape":"StreamArn"},
+        "status":{"shape":"StreamStatus"},
+        "creationTime":{"shape":"StreamCreationTime"},
+        "ordering":{"shape":"StreamOrdering"},
+        "format":{"shape":"StreamFormat"}
+      }
+    },
     "DeleteClusterInput":{
       "type":"structure",
       "required":["identifier"],
@@ -416,6 +535,48 @@
       "required":["policyVersion"],
       "members":{
         "policyVersion":{"shape":"PolicyVersion"}
+      }
+    },
+    "DeleteStreamInput":{
+      "type":"structure",
+      "required":[
+        "clusterIdentifier",
+        "streamIdentifier"
+      ],
+      "members":{
+        "clusterIdentifier":{
+          "shape":"ClusterId",
+          "location":"uri",
+          "locationName":"clusterIdentifier"
+        },
+        "streamIdentifier":{
+          "shape":"StreamId",
+          "location":"uri",
+          "locationName":"streamIdentifier"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"client-token"
+        }
+      }
+    },
+    "DeleteStreamOutput":{
+      "type":"structure",
+      "required":[
+        "clusterIdentifier",
+        "streamIdentifier",
+        "arn",
+        "status",
+        "creationTime"
+      ],
+      "members":{
+        "clusterIdentifier":{"shape":"ClusterId"},
+        "streamIdentifier":{"shape":"StreamId"},
+        "arn":{"shape":"StreamArn"},
+        "status":{"shape":"StreamStatus"},
+        "creationTime":{"shape":"StreamCreationTime"}
       }
     },
     "DeletionProtectionEnabled":{
@@ -508,6 +669,49 @@
         "policyVersion":{"shape":"PolicyVersion"}
       }
     },
+    "GetStreamInput":{
+      "type":"structure",
+      "required":[
+        "clusterIdentifier",
+        "streamIdentifier"
+      ],
+      "members":{
+        "clusterIdentifier":{
+          "shape":"ClusterId",
+          "location":"uri",
+          "locationName":"clusterIdentifier"
+        },
+        "streamIdentifier":{
+          "shape":"StreamId",
+          "location":"uri",
+          "locationName":"streamIdentifier"
+        }
+      }
+    },
+    "GetStreamOutput":{
+      "type":"structure",
+      "required":[
+        "clusterIdentifier",
+        "streamIdentifier",
+        "arn",
+        "status",
+        "creationTime",
+        "ordering",
+        "format"
+      ],
+      "members":{
+        "clusterIdentifier":{"shape":"ClusterId"},
+        "streamIdentifier":{"shape":"StreamId"},
+        "arn":{"shape":"StreamArn"},
+        "status":{"shape":"StreamStatus"},
+        "creationTime":{"shape":"StreamCreationTime"},
+        "ordering":{"shape":"StreamOrdering"},
+        "format":{"shape":"StreamFormat"},
+        "targetDefinition":{"shape":"TargetDefinition"},
+        "statusReason":{"shape":"StatusReason"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
     "GetVpcEndpointServiceNameInput":{
       "type":"structure",
       "required":["identifier"],
@@ -547,6 +751,23 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
+    "KinesisStreamArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws.*:kinesis:.*:\\d{12}:stream/\\S+"
+    },
+    "KinesisTargetDefinition":{
+      "type":"structure",
+      "required":[
+        "streamArn",
+        "roleArn"
+      ],
+      "members":{
+        "streamArn":{"shape":"KinesisStreamArn"},
+        "roleArn":{"shape":"RoleArn"}
+      }
+    },
     "KmsEncryptionKey":{
       "type":"string",
       "max":2048,
@@ -575,6 +796,35 @@
       "members":{
         "nextToken":{"shape":"NextToken"},
         "clusters":{"shape":"ClusterList"}
+      }
+    },
+    "ListStreamsInput":{
+      "type":"structure",
+      "required":["clusterIdentifier"],
+      "members":{
+        "clusterIdentifier":{
+          "shape":"ClusterId",
+          "location":"uri",
+          "locationName":"clusterIdentifier"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListStreamsOutput":{
+      "type":"structure",
+      "required":["streams"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "streams":{"shape":"StreamList"}
       }
     },
     "ListTagsForResourceInput":{
@@ -665,6 +915,12 @@
       },
       "exception":true
     },
+    "RoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-[^:]+)?:iam::[0-9]{12}:role(/[a-zA-Z0-9+=,.@_-]+)+"
+    },
     "ServiceName":{
       "type":"string",
       "max":128,
@@ -692,6 +948,79 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "StatusReason":{
+      "type":"structure",
+      "required":[
+        "error",
+        "updatedAt"
+      ],
+      "members":{
+        "error":{"shape":"StreamFailureErrorCode"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "StreamArn":{
+      "type":"string",
+      "pattern":"arn:aws(-[^:]+)?:dsql:[a-z0-9-]{1,20}:[0-9]{12}:cluster/[a-z0-9]{26}/stream/[a-z0-9]{26}"
+    },
+    "StreamCreationTime":{"type":"timestamp"},
+    "StreamFailureErrorCode":{
+      "type":"string",
+      "enum":[
+        "KINESIS_THROUGHPUT_EXCEEDED",
+        "KINESIS_STREAM_NOT_FOUND",
+        "ROLE_ACCESS_DENIED",
+        "KINESIS_ACCESS_DENIED",
+        "KINESIS_KMS_ACCESS_DENIED",
+        "KINESIS_OVERSIZE_RECORD",
+        "CLUSTER_CMK_INACCESSIBLE",
+        "INTERNAL_ERROR"
+      ]
+    },
+    "StreamFormat":{
+      "type":"string",
+      "enum":["JSON"]
+    },
+    "StreamId":{
+      "type":"string",
+      "pattern":"[a-z0-9]{26}"
+    },
+    "StreamList":{
+      "type":"list",
+      "member":{"shape":"StreamSummary"}
+    },
+    "StreamOrdering":{
+      "type":"string",
+      "enum":["UNORDERED"]
+    },
+    "StreamStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "DELETING",
+        "DELETED",
+        "FAILED",
+        "IMPAIRED"
+      ]
+    },
+    "StreamSummary":{
+      "type":"structure",
+      "required":[
+        "clusterIdentifier",
+        "streamIdentifier",
+        "arn",
+        "creationTime",
+        "status"
+      ],
+      "members":{
+        "clusterIdentifier":{"shape":"ClusterId"},
+        "streamIdentifier":{"shape":"StreamId"},
+        "arn":{"shape":"StreamArn"},
+        "creationTime":{"shape":"StreamCreationTime"},
+        "status":{"shape":"StreamStatus"}
+      }
     },
     "String":{"type":"string"},
     "TagKey":{
@@ -734,6 +1063,13 @@
       "min":0,
       "pattern":"[a-zA-Z0-9_.:/=+\\-@ ]*"
     },
+    "TargetDefinition":{
+      "type":"structure",
+      "members":{
+        "kinesis":{"shape":"KinesisTargetDefinition"}
+      },
+      "union":true
+    },
     "ThrottlingException":{
       "type":"structure",
       "required":["message"],
@@ -754,6 +1090,7 @@
       "exception":true,
       "retryable":{"throttling":true}
     },
+    "Timestamp":{"type":"timestamp"},
     "UntagResourceInput":{
       "type":"structure",
       "required":[

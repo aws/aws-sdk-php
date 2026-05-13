@@ -28,6 +28,23 @@
         "title": "Accept a link request"
       }
     ],
+    "AssociateCertificate": [
+      {
+        "input": {
+          "acmCertificateArn": "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012",
+          "clientToken": "550e8400-e29b-41d4-a716-446655440000",
+          "gatewayId": "rtb-gw-12345678"
+        },
+        "output": {
+          "acmCertificateArn": "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012",
+          "gatewayId": "rtb-gw-12345678",
+          "status": "PENDING_ASSOCIATION"
+        },
+        "description": "Associate an ACM certificate with a responder gateway",
+        "id": "example-1",
+        "title": "Associate a certificate with a responder gateway"
+      }
+    ],
     "CreateInboundExternalLink": [
       {
         "input": {
@@ -78,6 +95,28 @@
         "description": "Creates a new link between two RTB applications. Requires peerGatewayId to specify the target gateway.",
         "id": "example-1",
         "title": "Create a standard link between gateways"
+      }
+    ],
+    "CreateLinkRoutingRule": [
+      {
+        "input": {
+          "clientToken": "550e8400-e29b-41d4-a716-446655440000",
+          "conditions": {
+            "hostHeader": "api.customer.com",
+            "pathPrefix": "/openrtb/"
+          },
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "priority": 10
+        },
+        "output": {
+          "createdAt": "2024-01-01T12:00:00Z",
+          "ruleId": "rule-abc123def456",
+          "status": "CREATION_IN_PROGRESS"
+        },
+        "description": "Create a routing rule with host header and path prefix conditions",
+        "id": "example-1",
+        "title": "Create a link routing rule"
       }
     ],
     "CreateOutboundExternalLink": [
@@ -184,6 +223,22 @@
         "title": "Delete a link"
       }
     ],
+    "DeleteLinkRoutingRule": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "ruleId": "rule-abc123def456"
+        },
+        "output": {
+          "ruleId": "rule-abc123def456",
+          "status": "DELETION_IN_PROGRESS"
+        },
+        "description": "Delete a link routing rule",
+        "id": "example-1",
+        "title": "Delete a link routing rule"
+      }
+    ],
     "DeleteOutboundExternalLink": [
       {
         "input": {
@@ -227,6 +282,40 @@
         "title": "Delete a responder gateway"
       }
     ],
+    "DisassociateCertificate": [
+      {
+        "input": {
+          "acmCertificateArn": "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012",
+          "gatewayId": "rtb-gw-12345678"
+        },
+        "output": {
+          "acmCertificateArn": "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012",
+          "gatewayId": "rtb-gw-12345678",
+          "status": "PENDING_DISASSOCIATION"
+        },
+        "description": "Remove an ACM certificate association from a responder gateway",
+        "id": "example-1",
+        "title": "Disassociate a certificate from a responder gateway"
+      }
+    ],
+    "GetCertificateAssociation": [
+      {
+        "input": {
+          "acmCertificateArn": "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012",
+          "gatewayId": "rtb-gw-12345678"
+        },
+        "output": {
+          "acmCertificateArn": "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012",
+          "associatedAt": 1704067200,
+          "gatewayId": "rtb-gw-12345678",
+          "status": "ASSOCIATED",
+          "updatedAt": 1704067200
+        },
+        "description": "Retrieve details of an ACM certificate association with a responder gateway",
+        "id": "example-1",
+        "title": "Get certificate association details from a responder gateway"
+      }
+    ],
     "GetInboundExternalLink": [
       {
         "input": {
@@ -263,6 +352,31 @@
         "description": "Retrieves details of a specific link",
         "id": "example-1",
         "title": "Get link details"
+      }
+    ],
+    "GetLinkRoutingRule": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "ruleId": "rule-abc123def456"
+        },
+        "output": {
+          "conditions": {
+            "hostHeader": "api.customer.com",
+            "pathPrefix": "/openrtb/"
+          },
+          "createdAt": "2024-01-01T12:00:00Z",
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "priority": 10,
+          "ruleId": "rule-abc123def456",
+          "status": "ACTIVE",
+          "updatedAt": "2024-01-01T12:00:00Z"
+        },
+        "description": "Get details of a link routing rule",
+        "id": "example-1",
+        "title": "Get link routing rule details"
       }
     ],
     "GetOutboundExternalLink": [
@@ -340,6 +454,55 @@
         "description": "Get responder gateway",
         "id": "example-1",
         "title": "Get responder gateway details"
+      }
+    ],
+    "ListCertificateAssociations": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "maxResults": 5
+        },
+        "output": {
+          "certificateAssociations": [
+            {
+              "acmCertificateArn": "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012",
+              "associatedAt": 1704067200,
+              "status": "ASSOCIATED",
+              "updatedAt": 1704067200
+            }
+          ],
+          "nextToken": "token123"
+        },
+        "description": "Retrieve all certificate associations for a responder gateway",
+        "id": "example-1",
+        "title": "List certificate associations for a responder gateway"
+      }
+    ],
+    "ListLinkRoutingRules": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "maxResults": 10
+        },
+        "output": {
+          "nextToken": "token123",
+          "rules": [
+            {
+              "conditions": {
+                "hostHeader": "api.customer.com"
+              },
+              "createdAt": "2024-01-01T12:00:00Z",
+              "priority": 10,
+              "ruleId": "rule-abc123def456",
+              "status": "ACTIVE",
+              "updatedAt": "2024-01-01T12:00:00Z"
+            }
+          ]
+        },
+        "description": "List all routing rules for a link",
+        "id": "example-1",
+        "title": "List link routing rules"
       }
     ],
     "ListLinks": [
@@ -546,6 +709,28 @@
         "description": "Update link module flow for link",
         "id": "example-1",
         "title": "Update link module flow"
+      }
+    ],
+    "UpdateLinkRoutingRule": [
+      {
+        "input": {
+          "conditions": {
+            "hostHeader": "api.customer.com",
+            "pathPrefix": "/openrtb/"
+          },
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "priority": 20,
+          "ruleId": "rule-abc123def456"
+        },
+        "output": {
+          "ruleId": "rule-abc123def456",
+          "status": "UPDATE_IN_PROGRESS",
+          "updatedAt": "2024-01-01T12:30:00Z"
+        },
+        "description": "Update the conditions of a routing rule",
+        "id": "example-1",
+        "title": "Update a link routing rule"
       }
     ],
     "UpdateRequesterGateway": [

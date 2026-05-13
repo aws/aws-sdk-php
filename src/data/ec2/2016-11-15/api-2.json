@@ -12635,6 +12635,11 @@
         }
       }
     },
+    "CopyImageClientToken":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
     "CopyImageRequest":{
       "type":"structure",
       "required":[
@@ -12644,10 +12649,10 @@
       ],
       "members":{
         "ClientToken":{
-          "shape":"String",
+          "shape":"CopyImageClientToken",
           "idempotencyToken":true
         },
-        "Description":{"shape":"String"},
+        "Description":{"shape":"ImageDescriptionRequest"},
         "Encrypted":{
           "shape":"Boolean",
           "locationName":"encrypted"
@@ -12656,7 +12661,7 @@
           "shape":"KmsKeyId",
           "locationName":"kmsKeyId"
         },
-        "Name":{"shape":"String"},
+        "Name":{"shape":"ImageNameRequest"},
         "SourceImageId":{"shape":"String"},
         "SourceRegion":{"shape":"String"},
         "DestinationOutpostArn":{"shape":"String"},
@@ -13534,11 +13539,11 @@
           "locationName":"instanceId"
         },
         "Name":{
-          "shape":"String",
+          "shape":"ImageNameRequest",
           "locationName":"name"
         },
         "Description":{
-          "shape":"String",
+          "shape":"ImageDescriptionRequest",
           "locationName":"description"
         },
         "NoReboot":{
@@ -13560,6 +13565,11 @@
         }
       }
     },
+    "CreateImageUsageReportClientToken":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
     "CreateImageUsageReportRequest":{
       "type":"structure",
       "required":[
@@ -13578,7 +13588,7 @@
           "locationName":"AccountId"
         },
         "ClientToken":{
-          "shape":"String",
+          "shape":"CreateImageUsageReportClientToken",
           "idempotencyToken":true
         },
         "TagSpecifications":{
@@ -14736,7 +14746,7 @@
       "members":{
         "Bucket":{"shape":"String"},
         "ObjectKey":{"shape":"String"},
-        "Name":{"shape":"String"},
+        "Name":{"shape":"ImageNameRequest"},
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
@@ -31959,7 +31969,7 @@
           "locationName":"MarketplaceProductCode"
         },
         "ImageNames":{
-          "shape":"ImageNameRequestList",
+          "shape":"ImageNameCriteriaRequestList",
           "locationName":"ImageName"
         },
         "DeprecationTimeCondition":{"shape":"DeprecationTimeConditionRequest"},
@@ -31972,6 +31982,11 @@
         "shape":"ImageCriterionRequest",
         "locationName":"ImageCriterion"
       }
+    },
+    "ImageDescriptionRequest":{
+      "type":"string",
+      "max":255,
+      "min":0
     },
     "ImageDiskContainer":{
       "type":"structure",
@@ -32055,6 +32070,18 @@
       }
     },
     "ImageName":{"type":"string"},
+    "ImageNameCriteriaRequest":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
+    "ImageNameCriteriaRequestList":{
+      "type":"list",
+      "member":{
+        "shape":"ImageNameCriteriaRequest",
+        "locationName":"item"
+      }
+    },
     "ImageNameList":{
       "type":"list",
       "member":{
@@ -32062,13 +32089,10 @@
         "locationName":"item"
       }
     },
-    "ImageNameRequest":{"type":"string"},
-    "ImageNameRequestList":{
-      "type":"list",
-      "member":{
-        "shape":"ImageNameRequest",
-        "locationName":"item"
-      }
+    "ImageNameRequest":{
+      "type":"string",
+      "max":128,
+      "min":3
     },
     "ImageProvider":{"type":"string"},
     "ImageProviderList":{
@@ -32179,6 +32203,11 @@
         "kernel",
         "ramdisk"
       ]
+    },
+    "ImageUefiDataRequest":{
+      "type":"string",
+      "max":64000,
+      "min":0
     },
     "ImageUsageReport":{
       "type":"structure",
@@ -47103,7 +47132,7 @@
         },
         "BootMode":{"shape":"BootModeValues"},
         "TpmSupport":{"shape":"TpmSupportValues"},
-        "UefiData":{"shape":"StringType"},
+        "UefiData":{"shape":"ImageUefiDataRequest"},
         "ImdsSupport":{"shape":"ImdsSupportValues"},
         "TagSpecifications":{
           "shape":"TagSpecificationList",
@@ -47114,11 +47143,11 @@
           "locationName":"dryRun"
         },
         "Name":{
-          "shape":"String",
+          "shape":"ImageNameRequest",
           "locationName":"name"
         },
         "Description":{
-          "shape":"String",
+          "shape":"ImageDescriptionRequest",
           "locationName":"description"
         },
         "Architecture":{
@@ -53442,11 +53471,6 @@
         "locationName":"item"
       }
     },
-    "StringType":{
-      "type":"string",
-      "max":64000,
-      "min":0
-    },
     "Subnet":{
       "type":"structure",
       "members":{
@@ -58086,10 +58110,6 @@
         "EndTime":{
           "shape":"DateTime",
           "locationName":"endTime"
-        },
-        "Operator":{
-          "shape":"OperatorResponse",
-          "locationName":"operator"
         }
       }
     },
