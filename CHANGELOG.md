@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.381.1 - 2026-05-14
 
 * `Aws\ManagedGrafana` - Adds support for dual-stack (IPv4 and IPv6) connectivity to Amazon Managed Grafana workspaces. Customers can configure the ipAddressType parameter when creating or updating a workspace to choose between IPv4-only or dual-stack (IPv4 and IPv6) access.
 * `Aws\QConnect` - ListModels is an API that returns the available AI models for a Connect Assistant based on its region and AI prompt type.
