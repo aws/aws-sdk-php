@@ -678,6 +678,7 @@
         },
         "networkAccessControl":{"shape":"NetworkAccessConfiguration"},
         "grafanaVersion":{"shape":"GrafanaVersion"},
+        "ipAddressType":{"shape":"IPAddressType"},
         "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
@@ -1004,6 +1005,13 @@
     "GrafanaVersionList":{
       "type":"list",
       "member":{"shape":"GrafanaVersion"}
+    },
+    "IPAddressType":{
+      "type":"string",
+      "enum":[
+        "IPv4",
+        "DualStack"
+      ]
     },
     "IamRoleArn":{
       "type":"string",
@@ -1753,7 +1761,8 @@
         "vpcConfiguration":{"shape":"VpcConfiguration"},
         "removeVpcConfiguration":{"shape":"Boolean"},
         "networkAccessControl":{"shape":"NetworkAccessConfiguration"},
-        "removeNetworkAccessConfiguration":{"shape":"Boolean"}
+        "removeNetworkAccessConfiguration":{"shape":"Boolean"},
+        "ipAddressType":{"shape":"IPAddressType"}
       }
     },
     "UpdateWorkspaceResponse":{
@@ -1884,6 +1893,7 @@
         "vpcConfiguration":{"shape":"VpcConfiguration"},
         "networkAccessControl":{"shape":"NetworkAccessConfiguration"},
         "grafanaToken":{"shape":"GrafanaToken"},
+        "ipAddressType":{"shape":"IPAddressType"},
         "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },

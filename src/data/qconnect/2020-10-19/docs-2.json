@@ -65,6 +65,7 @@
     "ListMessageTemplateVersions": "<p>Lists all the available versions for the specified Amazon Q in Connect message template.</p>",
     "ListMessageTemplates": "<p>Lists all the available Amazon Q in Connect message templates for the specified knowledge base.</p>",
     "ListMessages": "<p>Lists messages on an Amazon Q in Connect session.</p>",
+    "ListModels": "<p>Lists the models available to an Amazon Q in Connect assistant in the assistant's Amazon Web Services Region. The available models are determined by the region of the specified assistant.</p>",
     "ListQuickResponses": "<p>Lists information about quick response.</p>",
     "ListSpans": "<p>Retrieves AI agent execution traces for a session, providing granular visibility into agent orchestration flows, LLM interactions, and tool invocations.</p>",
     "ListTagsForResource": "<p>Lists the tags for the specified resource.</p>",
@@ -344,8 +345,16 @@
       "refs": {
         "AIPromptData$type": "<p>The type of this AI Prompt.</p>",
         "AIPromptSummary$type": "<p>The type of this AI Prompt.</p>",
+        "AIPromptTypeList$member": null,
         "CreateAIPromptRequest$type": "<p>The type of this AI Prompt.</p>",
+        "ListModelsRequest$aiPromptType": "<p>The type of the AI Prompt to filter models by. When specified, only models that support the given AI Prompt type are returned.</p>",
         "SpanAttributes$promptType": "<p>AI prompt type</p>"
+      }
+    },
+    "AIPromptTypeList": {
+      "base": null,
+      "refs": {
+        "ModelSummary$supportedAIPromptTypes": "<p>The list of AI Prompt types that the model supports.</p>"
       }
     },
     "AIPromptVersionSummariesList": {
@@ -652,6 +661,7 @@
         "MessageTemplateQueryField$allowFuzziness": "<p>Whether the query expects only exact matches on the attribute field values. The results of the query will only include exact matches if this parameter is set to false.</p>",
         "MessageTemplateSearchResultData$isActive": "<p>Whether the version of the message template is activated.</p>",
         "MessageTemplateVersionSummary$isActive": "<p>Whether the version of the message template is activated.</p>",
+        "ModelSummary$supportsPromptCaching": "<p>Whether the model supports prompt caching.</p>",
         "QuickResponseData$isActive": "<p>Whether the quick response is active.</p>",
         "QuickResponseFilterField$includeNoExistence": "<p>Whether to treat null value as a match for the attribute field.</p>",
         "QuickResponseQueryField$allowFuzziness": "<p>Whether the query expects only exact matches on the attribute field values. The results of the query will only include exact matches if this parameter is set to false.</p>",
@@ -1094,6 +1104,12 @@
     "CreateSessionResponse": {
       "base": null,
       "refs": {}
+    },
+    "CrossRegionStatus": {
+      "base": null,
+      "refs": {
+        "ModelSummary$crossRegionStatus": "<p>The cross-region availability status of the model. <code>NONE</code> indicates the model is only available in a single region, <code>REGIONAL</code> indicates the model is available through regional inference, and <code>GLOBAL</code> indicates the model is available through global cross-region inference.</p>"
+      }
     },
     "CustomAttributes": {
       "base": null,
@@ -2182,6 +2198,14 @@
       "base": null,
       "refs": {}
     },
+    "ListModelsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListModelsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListQuickResponsesRequest": {
       "base": null,
       "refs": {}
@@ -2244,6 +2268,7 @@
         "ListMessageTemplateVersionsRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "ListMessageTemplatesRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "ListMessagesRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListModelsRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "ListQuickResponsesRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "ListSpansRequest$maxResults": "<p>Maximum number of spans to return per page</p>",
         "QueryAssistantRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
@@ -2595,6 +2620,37 @@
         "SendMessageRequest$type": "<p>The message type.</p>"
       }
     },
+    "ModelDisplayName": {
+      "base": null,
+      "refs": {
+        "ModelSummary$displayName": "<p>The display name of the model.</p>"
+      }
+    },
+    "ModelId": {
+      "base": null,
+      "refs": {
+        "ModelSummary$modelId": "<p>The identifier of the model.</p>"
+      }
+    },
+    "ModelLifecycle": {
+      "base": null,
+      "refs": {
+        "ListModelsRequest$modelLifecycle": "<p>The lifecycle status of models to filter by. When specified, only models with the given lifecycle status are returned.</p>",
+        "ModelSummary$modelLifecycle": "<p>The current lifecycle of the model. <code>ACTIVE</code> indicates the model is recommended for use and <code>LEGACY</code> indicates the model is still usable but is deprecated.</p>"
+      }
+    },
+    "ModelSummary": {
+      "base": "<p>The summary of a model available to an Amazon Q in Connect assistant.</p>",
+      "refs": {
+        "ModelSummaryList$member": null
+      }
+    },
+    "ModelSummaryList": {
+      "base": null,
+      "refs": {
+        "ListModelsResponse$modelSummaries": "<p>The summaries of the models available to the assistant.</p>"
+      }
+    },
     "Name": {
       "base": null,
       "refs": {
@@ -2668,6 +2724,8 @@
         "ListMessageTemplatesResponse$nextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListMessagesRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListMessagesResponse$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListModelsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListModelsResponse$nextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListSpansRequest$nextToken": "<p>Pagination token for retrieving the next page of results</p>",
         "ListSpansResponse$nextToken": "<p>Pagination token for retrieving additional results</p>",
         "NotesChunkDataDetails$nextChunkToken": "<p>The token for the next chunk of notes data.</p>",
@@ -4063,6 +4121,8 @@
         "CreateAIGuardrailVersionRequest$modifiedTime": "<p>The time the AI Guardrail was last modified.</p>",
         "CreateAIPromptVersionRequest$modifiedTime": "<p>The time the AI Prompt was last modified.</p>",
         "MessageOutput$timestamp": "<p>The timestamp of a message.</p>",
+        "ModelSummary$legacyTimestamp": "<p>The timestamp when the model lifecycle will transition from <code>ACTIVE</code> to <code>LEGACY</code>.</p>",
+        "ModelSummary$endOfLifeTimestamp": "<p>The timestamp when the model will reach end of life and no longer be available for use.</p>",
         "SelfServiceConversationHistory$timestamp": "<p>The timestamp of the conversation history entry.</p>",
         "Span$startTimestamp": "<p>Operation start time in milliseconds since epoch</p>",
         "Span$endTimestamp": "<p>Operation end time in milliseconds since epoch</p>",
@@ -4504,6 +4564,7 @@
         "ListMessageTemplatesRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "ListMessagesRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
         "ListMessagesRequest$sessionId": "<p>The identifier of the Amazon Q in Connect session.</p>",
+        "ListModelsRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN. The assistant's region determines which models are available.</p>",
         "ListQuickResponsesRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "ListSpansRequest$assistantId": "<p>UUID or ARN of the Connect AI Assistant resource</p>",
         "ListSpansRequest$sessionId": "<p>UUID or ARN of the Connect AI Session resource</p>",

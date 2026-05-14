@@ -16,6 +16,22 @@
     "uid":"bedrock-2023-04-20"
   },
   "operations":{
+    "BatchDeleteAdvancedPromptOptimizationJob":{
+      "name":"BatchDeleteAdvancedPromptOptimizationJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/advanced-prompt-optimization-job/batch-delete",
+        "responseCode":202
+      },
+      "input":{"shape":"BatchDeleteAdvancedPromptOptimizationJobRequest"},
+      "output":{"shape":"BatchDeleteAdvancedPromptOptimizationJobResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "BatchDeleteEvaluationJob":{
       "name":"BatchDeleteEvaluationJob",
       "http":{
@@ -48,6 +64,27 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "CreateAdvancedPromptOptimizationJob":{
+      "name":"CreateAdvancedPromptOptimizationJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/advanced-prompt-optimization-jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateAdvancedPromptOptimizationJobRequest"},
+      "output":{"shape":"CreateAdvancedPromptOptimizationJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"TooManyTagsException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
       ],
       "idempotent":true
@@ -709,6 +746,24 @@
       ],
       "readonly":true
     },
+    "GetAdvancedPromptOptimizationJob":{
+      "name":"GetAdvancedPromptOptimizationJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/advanced-prompt-optimization-jobs/{jobIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAdvancedPromptOptimizationJobRequest"},
+      "output":{"shape":"GetAdvancedPromptOptimizationJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
+    },
     "GetAutomatedReasoningPolicy":{
       "name":"GetAutomatedReasoningPolicy",
       "http":{
@@ -1150,6 +1205,23 @@
       "output":{"shape":"GetUseCaseForModelAccessResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
+    },
+    "ListAdvancedPromptOptimizationJobs":{
+      "name":"ListAdvancedPromptOptimizationJobs",
+      "http":{
+        "method":"GET",
+        "requestUri":"/advanced-prompt-optimization-jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAdvancedPromptOptimizationJobsRequest"},
+      "output":{"shape":"ListAdvancedPromptOptimizationJobsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
@@ -1649,6 +1721,24 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "StopAdvancedPromptOptimizationJob":{
+      "name":"StopAdvancedPromptOptimizationJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/advanced-prompt-optimization-jobs/{jobIdentifier}/stop",
+        "responseCode":200
+      },
+      "input":{"shape":"StopAdvancedPromptOptimizationJobRequest"},
+      "output":{"shape":"StopAdvancedPromptOptimizationJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "StopEvaluationJob":{
       "name":"StopEvaluationJob",
       "http":{
@@ -1954,6 +2044,81 @@
       "type":"structure",
       "members":{},
       "document":true
+    },
+    "AdvancedPromptOptimizationInputConfig":{
+      "type":"structure",
+      "required":["s3Uri"],
+      "members":{
+        "s3Uri":{"shape":"S3Uri"}
+      }
+    },
+    "AdvancedPromptOptimizationJobArn":{
+      "type":"string",
+      "max":1011,
+      "min":0,
+      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:advanced-prompt-optimization-job/[a-z0-9]{12}"
+    },
+    "AdvancedPromptOptimizationJobDescription":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "AdvancedPromptOptimizationJobIdentifier":{
+      "type":"string",
+      "max":1011,
+      "min":0,
+      "pattern":"((arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:advanced-prompt-optimization-job/)?[a-z0-9]{12})"
+    },
+    "AdvancedPromptOptimizationJobIdentifiers":{
+      "type":"list",
+      "member":{"shape":"AdvancedPromptOptimizationJobIdentifier"},
+      "max":25,
+      "min":1
+    },
+    "AdvancedPromptOptimizationJobName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9.+-]*"
+    },
+    "AdvancedPromptOptimizationJobStatus":{
+      "type":"string",
+      "enum":[
+        "InProgress",
+        "Completed",
+        "Failed",
+        "PartiallyCompleted",
+        "Stopping",
+        "Stopped",
+        "Deleting"
+      ]
+    },
+    "AdvancedPromptOptimizationJobSummaries":{
+      "type":"list",
+      "member":{"shape":"AdvancedPromptOptimizationJobSummary"}
+    },
+    "AdvancedPromptOptimizationJobSummary":{
+      "type":"structure",
+      "required":[
+        "jobArn",
+        "jobName",
+        "jobStatus",
+        "creationTime"
+      ],
+      "members":{
+        "jobArn":{"shape":"AdvancedPromptOptimizationJobArn"},
+        "jobName":{"shape":"AdvancedPromptOptimizationJobName"},
+        "jobStatus":{"shape":"AdvancedPromptOptimizationJobStatus"},
+        "creationTime":{"shape":"Timestamp"},
+        "lastModifiedTime":{"shape":"Timestamp"}
+      }
+    },
+    "AdvancedPromptOptimizationOutputConfig":{
+      "type":"structure",
+      "required":["s3Uri"],
+      "members":{
+        "s3Uri":{"shape":"S3UriFolder"}
+      }
     },
     "AgreementAvailability":{
       "type":"structure",
@@ -3449,6 +3614,59 @@
       "min":1,
       "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})|(([0-9a-zA-Z][_-]?)+)"
     },
+    "BatchDeleteAdvancedPromptOptimizationJobError":{
+      "type":"structure",
+      "required":[
+        "jobIdentifier",
+        "code"
+      ],
+      "members":{
+        "jobIdentifier":{"shape":"AdvancedPromptOptimizationJobIdentifier"},
+        "code":{"shape":"String"},
+        "message":{"shape":"String"}
+      }
+    },
+    "BatchDeleteAdvancedPromptOptimizationJobErrors":{
+      "type":"list",
+      "member":{"shape":"BatchDeleteAdvancedPromptOptimizationJobError"},
+      "max":25,
+      "min":0
+    },
+    "BatchDeleteAdvancedPromptOptimizationJobItem":{
+      "type":"structure",
+      "required":[
+        "jobIdentifier",
+        "jobStatus"
+      ],
+      "members":{
+        "jobIdentifier":{"shape":"AdvancedPromptOptimizationJobIdentifier"},
+        "jobStatus":{"shape":"AdvancedPromptOptimizationJobStatus"}
+      }
+    },
+    "BatchDeleteAdvancedPromptOptimizationJobItems":{
+      "type":"list",
+      "member":{"shape":"BatchDeleteAdvancedPromptOptimizationJobItem"},
+      "max":25,
+      "min":0
+    },
+    "BatchDeleteAdvancedPromptOptimizationJobRequest":{
+      "type":"structure",
+      "required":["jobIdentifiers"],
+      "members":{
+        "jobIdentifiers":{"shape":"AdvancedPromptOptimizationJobIdentifiers"}
+      }
+    },
+    "BatchDeleteAdvancedPromptOptimizationJobResponse":{
+      "type":"structure",
+      "required":[
+        "errors",
+        "advancedPromptOptimizationJobs"
+      ],
+      "members":{
+        "errors":{"shape":"BatchDeleteAdvancedPromptOptimizationJobErrors"},
+        "advancedPromptOptimizationJobs":{"shape":"BatchDeleteAdvancedPromptOptimizationJobItems"}
+      }
+    },
     "BatchDeleteEvaluationJobError":{
       "type":"structure",
       "required":[
@@ -3625,6 +3843,35 @@
     "ContentType":{
       "type":"string",
       "pattern":".*[a-z]{1,20}/.{1,20}.*"
+    },
+    "CreateAdvancedPromptOptimizationJobRequest":{
+      "type":"structure",
+      "required":[
+        "jobName",
+        "inputConfig",
+        "outputConfig",
+        "modelConfigurations"
+      ],
+      "members":{
+        "jobName":{"shape":"AdvancedPromptOptimizationJobName"},
+        "jobDescription":{"shape":"AdvancedPromptOptimizationJobDescription"},
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        },
+        "inputConfig":{"shape":"AdvancedPromptOptimizationInputConfig"},
+        "outputConfig":{"shape":"AdvancedPromptOptimizationOutputConfig"},
+        "encryptionKeyArn":{"shape":"KmsKeyArn"},
+        "tags":{"shape":"TagList"},
+        "modelConfigurations":{"shape":"ModelConfigurations"}
+      }
+    },
+    "CreateAdvancedPromptOptimizationJobResponse":{
+      "type":"structure",
+      "required":["jobArn"],
+      "members":{
+        "jobArn":{"shape":"AdvancedPromptOptimizationJobArn"}
+      }
     },
     "CreateAutomatedReasoningPolicyRequest":{
       "type":"structure",
@@ -5159,6 +5406,42 @@
         "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
         "kbInferenceConfig":{"shape":"KbInferenceConfig"},
         "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"}
+      }
+    },
+    "GetAdvancedPromptOptimizationJobRequest":{
+      "type":"structure",
+      "required":["jobIdentifier"],
+      "members":{
+        "jobIdentifier":{
+          "shape":"AdvancedPromptOptimizationJobIdentifier",
+          "location":"uri",
+          "locationName":"jobIdentifier"
+        }
+      }
+    },
+    "GetAdvancedPromptOptimizationJobResponse":{
+      "type":"structure",
+      "required":[
+        "jobArn",
+        "jobName",
+        "jobStatus",
+        "inputConfig",
+        "outputConfig",
+        "creationTime",
+        "modelConfigurations"
+      ],
+      "members":{
+        "jobArn":{"shape":"AdvancedPromptOptimizationJobArn"},
+        "jobName":{"shape":"AdvancedPromptOptimizationJobName"},
+        "jobDescription":{"shape":"AdvancedPromptOptimizationJobDescription"},
+        "jobStatus":{"shape":"AdvancedPromptOptimizationJobStatus"},
+        "inputConfig":{"shape":"AdvancedPromptOptimizationInputConfig"},
+        "outputConfig":{"shape":"AdvancedPromptOptimizationOutputConfig"},
+        "encryptionKeyArn":{"shape":"KmsKeyArn"},
+        "creationTime":{"shape":"Timestamp"},
+        "lastModifiedTime":{"shape":"Timestamp"},
+        "failureMessage":{"shape":"ErrorMessage"},
+        "modelConfigurations":{"shape":"ModelConfigurations"}
       }
     },
     "GetAutomatedReasoningPolicyAnnotationsRequest":{
@@ -6882,6 +7165,42 @@
       "member":{"shape":"IncludedModelId"},
       "min":1
     },
+    "InferenceConfiguration":{
+      "type":"structure",
+      "members":{
+        "maxTokens":{"shape":"InferenceConfigurationMaxTokensInteger"},
+        "temperature":{"shape":"InferenceConfigurationTemperatureFloat"},
+        "topP":{"shape":"InferenceConfigurationTopPFloat"},
+        "stopSequences":{"shape":"InferenceConfigurationStopSequencesList"}
+      }
+    },
+    "InferenceConfigurationMaxTokensInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "InferenceConfigurationStopSequencesList":{
+      "type":"list",
+      "member":{"shape":"InferenceConfigurationStopSequencesListMemberString"},
+      "max":2500,
+      "min":0
+    },
+    "InferenceConfigurationStopSequencesListMemberString":{
+      "type":"string",
+      "min":1
+    },
+    "InferenceConfigurationTemperatureFloat":{
+      "type":"float",
+      "box":true,
+      "max":1,
+      "min":0
+    },
+    "InferenceConfigurationTopPFloat":{
+      "type":"float",
+      "box":true,
+      "max":1,
+      "min":0
+    },
     "InferenceProfileArn":{
       "type":"string",
       "max":2048,
@@ -7144,6 +7463,38 @@
       "type":"structure",
       "members":{
         "url":{"shape":"String"}
+      }
+    },
+    "ListAdvancedPromptOptimizationJobsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "sortBy":{
+          "shape":"SortJobsBy",
+          "location":"querystring",
+          "locationName":"sortBy"
+        },
+        "sortOrder":{
+          "shape":"SortOrder",
+          "location":"querystring",
+          "locationName":"sortOrder"
+        }
+      }
+    },
+    "ListAdvancedPromptOptimizationJobsResponse":{
+      "type":"structure",
+      "members":{
+        "jobSummaries":{"shape":"AdvancedPromptOptimizationJobSummaries"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListAutomatedReasoningPoliciesRequest":{
@@ -8107,6 +8458,21 @@
       "max":1011,
       "min":20,
       "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/((imported)|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}))(([:][a-z0-9-]{1,63}){0,2})?/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}))"
+    },
+    "ModelConfiguration":{
+      "type":"structure",
+      "required":["modelId"],
+      "members":{
+        "modelId":{"shape":"BedrockModelId"},
+        "inferenceConfig":{"shape":"InferenceConfiguration"},
+        "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"}
+      }
+    },
+    "ModelConfigurations":{
+      "type":"list",
+      "member":{"shape":"ModelConfiguration"},
+      "max":5,
+      "min":1
     },
     "ModelCopyJobArn":{
       "type":"string",
@@ -9082,6 +9448,12 @@
       "min":1,
       "pattern":"s3://[a-z0-9][-.a-z0-9]{1,61}[a-z0-9](?:/[-!_*'().a-z0-9A-Z]+(?:/[-!_*'().a-z0-9A-Z]+)*)?/?"
     },
+    "S3UriFolder":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"s3://[a-z0-9][-.a-z0-9]{1,61}[a-z0-9](?:/[-!_*'().a-z0-9A-Z]+(?:/[-!_*'().a-z0-9A-Z]+)*)?/"
+    },
     "SageMakerEndpoint":{
       "type":"structure",
       "required":[
@@ -9259,6 +9631,21 @@
         "dataProcessingDetails":{"shape":"DataProcessingDetails"},
         "trainingDetails":{"shape":"TrainingDetails"}
       }
+    },
+    "StopAdvancedPromptOptimizationJobRequest":{
+      "type":"structure",
+      "required":["jobIdentifier"],
+      "members":{
+        "jobIdentifier":{
+          "shape":"AdvancedPromptOptimizationJobIdentifier",
+          "location":"uri",
+          "locationName":"jobIdentifier"
+        }
+      }
+    },
+    "StopAdvancedPromptOptimizationJobResponse":{
+      "type":"structure",
+      "members":{}
     },
     "StopEvaluationJobRequest":{
       "type":"structure",

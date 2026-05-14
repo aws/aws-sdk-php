@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ManagedGrafana` - Adds support for dual-stack (IPv4 and IPv6) connectivity to Amazon Managed Grafana workspaces. Customers can configure the ipAddressType parameter when creating or updating a workspace to choose between IPv4-only or dual-stack (IPv4 and IPv6) access.
+* `Aws\QConnect` - ListModels is an API that returns the available AI models for a Connect Assistant based on its region and AI prompt type.
+* `Aws\DataZone` - Adds support for SageMaker Unified Studio notebook operations, including notebook import and export
+* `Aws\CloudFront` - Adding a new boolean for OCSP Revocations in Viewer mTLS Create and Update APIs, and adding a new 'Passthrough' option for TrustStore modes
+* `Aws\Bedrock` - Advanced Prompt Optimization (AdvPO) allows you to optimize and migrate your prompts for any model on Bedrock by automatically evaluating responses and rewriting prompts to improve performance. This release provides a programmatic way to create, get, list, stop, and delete AdvPO jobs.
+* `Aws\mgn` - Introducing new option for security groups mapping - with MAP-DHCP the service translates security rules from your source environment with DHCP compatibility.
+* `Aws\DatabaseMigrationService` - Add 9 SDK waiters for DMS Schema Conversion async operations. Eliminates manual polling for import, assessment, conversion, export, and creation jobs.
+* `Aws\Glue` - Release --has-databases parameter for AWS Glue get-catalogs API, which filters catalog responses to include only those capable of containing databases, excluding parent catalogs that hold only other catalogs. Remove model-level validation on partition index list size for AWS Glue tables.
+
 ## 3.381.0 - 2026-05-13
 
 * `Aws\Endpoints` - Introduces endpoint resolution through a BDD rules based evaluation.

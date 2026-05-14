@@ -2,8 +2,10 @@
   "version": "2.0",
   "service": "<p>Describes the API operations for creating, managing, fine-turning, and evaluating Amazon Bedrock models.</p>",
   "operations": {
+    "BatchDeleteAdvancedPromptOptimizationJob": "<p>Batch delete the specified advanced prompt optimization jobs.</p>",
     "BatchDeleteEvaluationJob": "<p>Deletes a batch of evaluation jobs. An evaluation job can only be deleted if it has following status <code>FAILED</code>, <code>COMPLETED</code>, and <code>STOPPED</code>. You can request up to 25 model evaluation jobs be deleted in a single request.</p>",
     "CancelAutomatedReasoningPolicyBuildWorkflow": "<p>Cancels a running Automated Reasoning policy build workflow. This stops the policy generation process and prevents further processing of the source documents.</p>",
+    "CreateAdvancedPromptOptimizationJob": "<p>Creates an asynchronous batch job for advanced prompt optimization.</p>",
     "CreateAutomatedReasoningPolicy": "<p>Creates an Automated Reasoning policy for Amazon Bedrock Guardrails. Automated Reasoning policies use mathematical techniques to detect hallucinations, suggest corrections, and highlight unstated assumptions in the responses of your GenAI application.</p> <p>To create a policy, you upload a source document that describes the rules that you're encoding. Automated Reasoning extracts important concepts from the source document that will become variables in the policy and infers policy rules.</p>",
     "CreateAutomatedReasoningPolicyTestCase": "<p>Creates a test for an Automated Reasoning policy. Tests validate that your policy works as expected by providing sample inputs and expected outcomes. Use tests to verify policy behavior before deploying to production.</p>",
     "CreateAutomatedReasoningPolicyVersion": "<p>Creates a new version of an existing Automated Reasoning policy. This allows you to iterate on your policy rules while maintaining previous versions for rollback or comparison purposes.</p>",
@@ -38,6 +40,7 @@
     "DeleteResourcePolicy": "<p>Deletes a previously created Bedrock resource policy.</p>",
     "DeregisterMarketplaceModelEndpoint": "<p>Deregisters an endpoint for a model from Amazon Bedrock Marketplace. This operation removes the endpoint's association with Amazon Bedrock but does not delete the underlying Amazon SageMaker endpoint.</p>",
     "ExportAutomatedReasoningPolicyVersion": "<p>Exports the policy definition for an Automated Reasoning policy version. Returns the complete policy definition including rules, variables, and custom variable types in a structured format.</p>",
+    "GetAdvancedPromptOptimizationJob": "<p>Retrieves the details and status of an advanced prompt optimization job.</p>",
     "GetAutomatedReasoningPolicy": "<p>Retrieves details about an Automated Reasoning policy or policy version. Returns information including the policy definition, metadata, and timestamps.</p>",
     "GetAutomatedReasoningPolicyAnnotations": "<p>Retrieves the current annotations for an Automated Reasoning policy build workflow. Annotations contain corrections to the rules, variables and types to be applied to the policy.</p>",
     "GetAutomatedReasoningPolicyBuildWorkflow": "<p>Retrieves detailed information about an Automated Reasoning policy build workflow, including its status, configuration, and metadata.</p>",
@@ -63,6 +66,7 @@
     "GetProvisionedModelThroughput": "<p>Returns details for a Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "GetResourcePolicy": "<p>Gets the resource policy document for a Bedrock resource</p>",
     "GetUseCaseForModelAccess": "<p>Get usecase for model access.</p>",
+    "ListAdvancedPromptOptimizationJobs": "<p>Lists all advanced prompt optimization jobs for the account.</p>",
     "ListAutomatedReasoningPolicies": "<p>Lists all Automated Reasoning policies in your account, with optional filtering by policy ARN. This helps you manage and discover existing policies.</p>",
     "ListAutomatedReasoningPolicyBuildWorkflows": "<p>Lists all build workflows for an Automated Reasoning policy, showing the history of policy creation and modification attempts.</p>",
     "ListAutomatedReasoningPolicyTestCases": "<p>Lists tests for an Automated Reasoning policy. We recommend using pagination to ensure that the operation returns quickly and successfully.</p>",
@@ -91,6 +95,7 @@
     "RegisterMarketplaceModelEndpoint": "<p>Registers an existing Amazon SageMaker endpoint with Amazon Bedrock Marketplace, allowing it to be used with Amazon Bedrock APIs.</p>",
     "StartAutomatedReasoningPolicyBuildWorkflow": "<p>Starts a new build workflow for an Automated Reasoning policy. This initiates the process of analyzing source documents and generating policy rules, variables, and types.</p>",
     "StartAutomatedReasoningPolicyTestWorkflow": "<p>Initiates a test workflow to validate Automated Reasoning policy tests. The workflow executes the specified tests against the policy and generates validation results.</p>",
+    "StopAdvancedPromptOptimizationJob": "<p>Stops an in-progress advanced prompt optimization job.</p>",
     "StopEvaluationJob": "<p>Stops an evaluation job that is current being created or running.</p>",
     "StopModelCustomizationJob": "<p>Stops an active model customization job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "StopModelInvocationJob": "<p>Stops a batch inference job. You're only charged for tokens that were already processed. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-stop.html\">Stop a batch inference job</a>.</p>",
@@ -165,6 +170,7 @@
       "refs": {
         "ExternalSourcesGenerationConfiguration$additionalModelRequestFields": "<p>Additional model parameters and their corresponding values not included in the text inference configuration for an external source. Takes in custom model parameters specific to the language model being used.</p>",
         "GenerationConfiguration$additionalModelRequestFields": "<p>Additional model parameters and corresponding values not included in the <code>textInferenceConfig</code> structure for a knowledge base. This allows you to provide custom model parameters specific to the language model being used.</p>",
+        "ModelConfiguration$additionalModelRequestFields": "<p>Additional model request fields.</p>",
         "VectorSearchBedrockRerankingModelConfiguration$additionalModelRequestFields": "<p>A list of additional fields to include in the model request during reranking. These fields provide extra context or configuration options specific to the selected foundation model.</p>"
       }
     },
@@ -178,6 +184,79 @@
       "base": null,
       "refs": {
         "AdditionalModelRequestFields$value": null
+      }
+    },
+    "AdvancedPromptOptimizationInputConfig": {
+      "base": "<p>Input data configuration for the advanced prompt optimization job.</p>",
+      "refs": {
+        "CreateAdvancedPromptOptimizationJobRequest$inputConfig": "<p>Input data configuration for the advanced prompt optimization job.</p>",
+        "GetAdvancedPromptOptimizationJobResponse$inputConfig": "<p>Input data configuration for the advanced prompt optimization job.</p>"
+      }
+    },
+    "AdvancedPromptOptimizationJobArn": {
+      "base": "<p>ARN of the advanced prompt optimization job.</p>",
+      "refs": {
+        "AdvancedPromptOptimizationJobSummary$jobArn": "<p>ARN of the advanced prompt optimization job.</p>",
+        "CreateAdvancedPromptOptimizationJobResponse$jobArn": "<p>ARN of the created advanced prompt optimization job.</p>",
+        "GetAdvancedPromptOptimizationJobResponse$jobArn": "<p>ARN of the advanced prompt optimization job.</p>"
+      }
+    },
+    "AdvancedPromptOptimizationJobDescription": {
+      "base": "<p>Description of the advanced prompt optimization job.</p>",
+      "refs": {
+        "CreateAdvancedPromptOptimizationJobRequest$jobDescription": "<p>Description of the advanced prompt optimization job.</p>",
+        "GetAdvancedPromptOptimizationJobResponse$jobDescription": "<p>Description of the advanced prompt optimization job.</p>"
+      }
+    },
+    "AdvancedPromptOptimizationJobIdentifier": {
+      "base": "<p>ARN or ID of the advanced prompt optimization job.</p>",
+      "refs": {
+        "AdvancedPromptOptimizationJobIdentifiers$member": null,
+        "BatchDeleteAdvancedPromptOptimizationJobError$jobIdentifier": "<p>Identifier of the job that failed to delete.</p>",
+        "BatchDeleteAdvancedPromptOptimizationJobItem$jobIdentifier": "<p>Identifier of the deleted job.</p>",
+        "GetAdvancedPromptOptimizationJobRequest$jobIdentifier": "<p>ARN or ID of the advanced prompt optimization job.</p>",
+        "StopAdvancedPromptOptimizationJobRequest$jobIdentifier": "<p>ARN or ID of the advanced prompt optimization job to stop.</p>"
+      }
+    },
+    "AdvancedPromptOptimizationJobIdentifiers": {
+      "base": "<p>List of advanced prompt optimization job identifiers.</p>",
+      "refs": {
+        "BatchDeleteAdvancedPromptOptimizationJobRequest$jobIdentifiers": "<p>List of advanced prompt optimization job identifiers to delete.</p>"
+      }
+    },
+    "AdvancedPromptOptimizationJobName": {
+      "base": "<p>Name of the advanced prompt optimization job.</p>",
+      "refs": {
+        "AdvancedPromptOptimizationJobSummary$jobName": "<p>Name of the advanced prompt optimization job.</p>",
+        "CreateAdvancedPromptOptimizationJobRequest$jobName": "<p>Name of the advanced prompt optimization job.</p>",
+        "GetAdvancedPromptOptimizationJobResponse$jobName": "<p>Name of the advanced prompt optimization job.</p>"
+      }
+    },
+    "AdvancedPromptOptimizationJobStatus": {
+      "base": "<p>Status of the advanced prompt optimization job.</p>",
+      "refs": {
+        "AdvancedPromptOptimizationJobSummary$jobStatus": "<p>Status of the advanced prompt optimization job.</p>",
+        "BatchDeleteAdvancedPromptOptimizationJobItem$jobStatus": "<p>Status of the deleted job.</p>",
+        "GetAdvancedPromptOptimizationJobResponse$jobStatus": "<p>Status of the advanced prompt optimization job.</p>"
+      }
+    },
+    "AdvancedPromptOptimizationJobSummaries": {
+      "base": "<p>List of advanced prompt optimization job summaries.</p>",
+      "refs": {
+        "ListAdvancedPromptOptimizationJobsResponse$jobSummaries": "<p>List of advanced prompt optimization job summaries.</p>"
+      }
+    },
+    "AdvancedPromptOptimizationJobSummary": {
+      "base": "<p>Summary of an advanced prompt optimization job.</p>",
+      "refs": {
+        "AdvancedPromptOptimizationJobSummaries$member": null
+      }
+    },
+    "AdvancedPromptOptimizationOutputConfig": {
+      "base": "<p>Output data configuration for the advanced prompt optimization job.</p>",
+      "refs": {
+        "CreateAdvancedPromptOptimizationJobRequest$outputConfig": "<p>Output data configuration for the advanced prompt optimization job.</p>",
+        "GetAdvancedPromptOptimizationJobResponse$outputConfig": "<p>Output data configuration for the advanced prompt optimization job.</p>"
       }
     },
     "AgreementAvailability": {
@@ -1537,6 +1616,38 @@
         "CreateModelCustomizationJobRequest$baseModelIdentifier": "<p>Name of the base model.</p>"
       }
     },
+    "BatchDeleteAdvancedPromptOptimizationJobError": {
+      "base": "<p>Batch deletion error for an advanced prompt optimization job.</p>",
+      "refs": {
+        "BatchDeleteAdvancedPromptOptimizationJobErrors$member": null
+      }
+    },
+    "BatchDeleteAdvancedPromptOptimizationJobErrors": {
+      "base": "<p>List of batch deletion errors for advanced prompt optimization jobs.</p>",
+      "refs": {
+        "BatchDeleteAdvancedPromptOptimizationJobResponse$errors": "<p>List of errors encountered during batch deletion.</p>"
+      }
+    },
+    "BatchDeleteAdvancedPromptOptimizationJobItem": {
+      "base": "<p>Successfully deleted advanced prompt optimization job.</p>",
+      "refs": {
+        "BatchDeleteAdvancedPromptOptimizationJobItems$member": null
+      }
+    },
+    "BatchDeleteAdvancedPromptOptimizationJobItems": {
+      "base": "<p>List of successfully deleted advanced prompt optimization jobs.</p>",
+      "refs": {
+        "BatchDeleteAdvancedPromptOptimizationJobResponse$advancedPromptOptimizationJobs": "<p>List of successfully deleted advanced prompt optimization jobs.</p>"
+      }
+    },
+    "BatchDeleteAdvancedPromptOptimizationJobRequest": {
+      "base": "<p>Batch Delete Advanced Prompt Optimization Jobs Request</p>",
+      "refs": {}
+    },
+    "BatchDeleteAdvancedPromptOptimizationJobResponse": {
+      "base": "<p>Batch Delete Advanced Prompt Optimization Jobs Response</p>",
+      "refs": {}
+    },
     "BatchDeleteEvaluationJobError": {
       "base": "<p>A JSON array that provides the status of the evaluation jobs being deleted.</p>",
       "refs": {
@@ -1600,7 +1711,8 @@
         "GetFoundationModelAvailabilityRequest$modelId": "<p>The model Id of the foundation model.</p>",
         "GetFoundationModelAvailabilityResponse$modelId": "<p>The model Id of the foundation model.</p>",
         "ListFoundationModelAgreementOffersRequest$modelId": "<p>Model Id of the foundation model.</p>",
-        "ListFoundationModelAgreementOffersResponse$modelId": "<p>Model Id of the foundation model.</p>"
+        "ListFoundationModelAgreementOffersResponse$modelId": "<p>Model Id of the foundation model.</p>",
+        "ModelConfiguration$modelId": "<p>The model ID.</p>"
       }
     },
     "BedrockRerankingModelArn": {
@@ -1713,6 +1825,14 @@
       "refs": {
         "ByteContentDoc$contentType": "<p>The MIME type of the document contained in the wrapper object.</p>"
       }
+    },
+    "CreateAdvancedPromptOptimizationJobRequest": {
+      "base": "<p>Create Advanced Prompt Optimization Job Request</p>",
+      "refs": {}
+    },
+    "CreateAdvancedPromptOptimizationJobResponse": {
+      "base": "<p>Create Advanced Prompt Optimization Job Response</p>",
+      "refs": {}
     },
     "CreateAutomatedReasoningPolicyRequest": {
       "base": null,
@@ -2187,6 +2307,7 @@
       "refs": {
         "CustomModelDeploymentSummary$failureMessage": "<p>If the deployment status is <code>FAILED</code>, this field contains a message describing the failure reason.</p>",
         "ErrorMessages$member": null,
+        "GetAdvancedPromptOptimizationJobResponse$failureMessage": "<p>Failure message if the advanced prompt optimization job failed.</p>",
         "GetCustomModelDeploymentResponse$failureMessage": "<p>If the deployment status is <code>FAILED</code>, this field contains a message describing the failure reason.</p>",
         "GetCustomModelResponse$failureMessage": "<p>A failure message for any issues that occurred when creating the custom model. This is included for only a failed CreateCustomModel operation.</p>",
         "GetModelCopyJobResponse$failureMessage": "<p>An error message for why the model copy job failed.</p>",
@@ -2652,6 +2773,14 @@
       "refs": {
         "KnowledgeBaseRetrieveAndGenerateConfiguration$generationConfiguration": "<p>Contains configurations details for response generation based on retrieved text chunks.</p>"
       }
+    },
+    "GetAdvancedPromptOptimizationJobRequest": {
+      "base": "<p>Get Advanced Prompt Optimization Job Request</p>",
+      "refs": {}
+    },
+    "GetAdvancedPromptOptimizationJobResponse": {
+      "base": "<p>Get Advanced Prompt Optimization Job Response</p>",
+      "refs": {}
     },
     "GetAutomatedReasoningPolicyAnnotationsRequest": {
       "base": null,
@@ -3575,6 +3704,7 @@
     "IdempotencyToken": {
       "base": null,
       "refs": {
+        "CreateAdvancedPromptOptimizationJobRequest$clientToken": "<p>Idempotency token for the request.</p>",
         "CreateAutomatedReasoningPolicyRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than once. If this token matches a previous request, Amazon Bedrock ignores the request but doesn't return an error.</p>",
         "CreateAutomatedReasoningPolicyTestCaseRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error.</p>",
         "CreateAutomatedReasoningPolicyVersionRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error.</p>",
@@ -3658,6 +3788,42 @@
       "base": null,
       "refs": {
         "ModelEnforcement$includedModels": "<p>Models to enforce the guardrail on.</p>"
+      }
+    },
+    "InferenceConfiguration": {
+      "base": "<p>Inference configuration for a model.</p>",
+      "refs": {
+        "ModelConfiguration$inferenceConfig": "<p>Inference configuration for the model.</p>"
+      }
+    },
+    "InferenceConfigurationMaxTokensInteger": {
+      "base": null,
+      "refs": {
+        "InferenceConfiguration$maxTokens": "<p>The maximum number of tokens to generate.</p>"
+      }
+    },
+    "InferenceConfigurationStopSequencesList": {
+      "base": "<p>A list of non-empty strings.</p>",
+      "refs": {
+        "InferenceConfiguration$stopSequences": "<p>Stop sequences that end generation.</p>"
+      }
+    },
+    "InferenceConfigurationStopSequencesListMemberString": {
+      "base": null,
+      "refs": {
+        "InferenceConfigurationStopSequencesList$member": null
+      }
+    },
+    "InferenceConfigurationTemperatureFloat": {
+      "base": null,
+      "refs": {
+        "InferenceConfiguration$temperature": "<p>The temperature for sampling.</p>"
+      }
+    },
+    "InferenceConfigurationTopPFloat": {
+      "base": null,
+      "refs": {
+        "InferenceConfiguration$topP": "<p>The top-p value for nucleus sampling.</p>"
       }
     },
     "InferenceProfileArn": {
@@ -3858,7 +4024,9 @@
     "KmsKeyArn": {
       "base": null,
       "refs": {
+        "CreateAdvancedPromptOptimizationJobRequest$encryptionKeyArn": "<p>KMS key ARN for encrypting output data.</p>",
         "CreateCustomModelRequest$modelKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer managed KMS key to encrypt the custom model. If you don't provide a KMS key, Amazon Bedrock uses an Amazon Web Services-managed KMS key to encrypt the model. </p> <p>If you provide a customer managed KMS key, your Amazon Bedrock service role must have permissions to use it. For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/encryption-import-model.html\">Encryption of imported models</a>. </p>",
+        "GetAdvancedPromptOptimizationJobResponse$encryptionKeyArn": "<p>KMS key ARN used for encrypting output data.</p>",
         "GetAutomatedReasoningPolicyResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the automated reasoning policy and its associated artifacts. If a KMS key is not provided during the initial CreateAutomatedReasoningPolicyRequest, the kmsKeyArn won't be included in the GetAutomatedReasoningPolicyResponse. </p>",
         "GetCustomModelResponse$modelKmsKeyArn": "<p>The custom model is encrypted at rest using this key.</p>",
         "GetGuardrailResponse$kmsKeyArn": "<p>The ARN of the KMS key that encrypts the guardrail.</p>",
@@ -3940,6 +4108,14 @@
       "refs": {
         "TermDetails$legalTerm": "<p>Describes the legal terms.</p>"
       }
+    },
+    "ListAdvancedPromptOptimizationJobsRequest": {
+      "base": "<p>List Advanced Prompt Optimization Jobs Request</p>",
+      "refs": {}
+    },
+    "ListAdvancedPromptOptimizationJobsResponse": {
+      "base": "<p>List Advanced Prompt Optimization Jobs Response</p>",
+      "refs": {}
     },
     "ListAutomatedReasoningPoliciesRequest": {
       "base": null,
@@ -4146,6 +4322,7 @@
     "MaxResults": {
       "base": null,
       "refs": {
+        "ListAdvancedPromptOptimizationJobsRequest$maxResults": "<p>Maximum number of results to return.</p>",
         "ListAutomatedReasoningPoliciesRequest$maxResults": "<p>The maximum number of policies to return in a single call.</p>",
         "ListAutomatedReasoningPolicyBuildWorkflowsRequest$maxResults": "<p>The maximum number of build workflows to return in a single response. Valid range is 1-100.</p>",
         "ListAutomatedReasoningPolicyTestCasesRequest$maxResults": "<p>The maximum number of tests to return in a single call.</p>",
@@ -4247,6 +4424,19 @@
         "ModelCustomizationJobSummary$baseModelArn": "<p>Amazon Resource Name (ARN) of the base model.</p>",
         "ProvisionedModelSummary$modelArn": "<p>The Amazon Resource Name (ARN) of the model associated with the Provisioned Throughput.</p>",
         "ProvisionedModelSummary$desiredModelArn": "<p>The Amazon Resource Name (ARN) of the model requested to be associated to this Provisioned Throughput. This value differs from the <code>modelArn</code> if updating hasn't completed.</p>"
+      }
+    },
+    "ModelConfiguration": {
+      "base": "<p>Configuration for a model used in advanced prompt optimization.</p>",
+      "refs": {
+        "ModelConfigurations$member": null
+      }
+    },
+    "ModelConfigurations": {
+      "base": "<p>Model configurations for advanced prompt optimization.</p>",
+      "refs": {
+        "CreateAdvancedPromptOptimizationJobRequest$modelConfigurations": "<p>Model configurations for advanced prompt optimization.</p>",
+        "GetAdvancedPromptOptimizationJobResponse$modelConfigurations": "<p>Model configurations for advanced prompt optimization.</p>"
       }
     },
     "ModelCopyJobArn": {
@@ -4624,6 +4814,8 @@
     "PaginationToken": {
       "base": null,
       "refs": {
+        "ListAdvancedPromptOptimizationJobsRequest$nextToken": "<p>Pagination token for the next page of results.</p>",
+        "ListAdvancedPromptOptimizationJobsResponse$nextToken": "<p>Pagination token for the next page of results.</p>",
         "ListAutomatedReasoningPoliciesRequest$nextToken": "<p>The pagination token from a previous request to retrieve the next page of results.</p>",
         "ListAutomatedReasoningPoliciesResponse$nextToken": "<p>The pagination token to use in a subsequent request to retrieve the next page of results.</p>",
         "ListAutomatedReasoningPolicyBuildWorkflowsRequest$nextToken": "<p>A pagination token from a previous request to continue listing build workflows from where the previous request left off.</p>",
@@ -5164,6 +5356,7 @@
     "S3Uri": {
       "base": null,
       "refs": {
+        "AdvancedPromptOptimizationInputConfig$s3Uri": "<p>S3 URI of the input JSONL file.</p>",
         "EvaluationDatasetLocation$s3Uri": "<p>The S3 URI of the S3 bucket specified in the job.</p>",
         "EvaluationOutputDataConfig$s3Uri": "<p>The Amazon S3 URI where the results of the evaluation job are saved.</p>",
         "InvocationLogSource$s3Uri": "<p>The URI of an invocation log in a bucket.</p>",
@@ -5173,6 +5366,12 @@
         "S3DataSource$s3Uri": "<p>The URI of the Amazon S3 data source.</p>",
         "TrainingDataConfig$s3Uri": "<p>The S3 URI where the training data is stored.</p>",
         "Validator$s3Uri": "<p>The S3 URI where the validation data is stored.</p>"
+      }
+    },
+    "S3UriFolder": {
+      "base": null,
+      "refs": {
+        "AdvancedPromptOptimizationOutputConfig$s3Uri": "<p>S3 URI prefix for the output location.</p>"
       }
     },
     "SageMakerEndpoint": {
@@ -5236,6 +5435,7 @@
     "SortJobsBy": {
       "base": null,
       "refs": {
+        "ListAdvancedPromptOptimizationJobsRequest$sortBy": "<p>Field to sort by in the returned list of jobs.</p>",
         "ListEvaluationJobsRequest$sortBy": "<p>Specifies a creation time to sort the list of evaluation jobs by when they were created.</p>",
         "ListModelCopyJobsRequest$sortBy": "<p>The field to sort by in the returned list of model copy jobs.</p>",
         "ListModelCustomizationJobsRequest$sortBy": "<p>The field to sort by in the returned list of jobs.</p>",
@@ -5254,6 +5454,7 @@
     "SortOrder": {
       "base": null,
       "refs": {
+        "ListAdvancedPromptOptimizationJobsRequest$sortOrder": "<p>Sort order for the results.</p>",
         "ListCustomModelDeploymentsRequest$sortOrder": "<p>The sort order for the results. Valid values are <code>Ascending</code> and <code>Descending</code>. Default is <code>Descending</code>.</p>",
         "ListCustomModelsRequest$sortOrder": "<p>The sort order of the results.</p>",
         "ListEvaluationJobsRequest$sortOrder": "<p>Specifies whether to sort the list of evaluation jobs by either ascending or descending order.</p>",
@@ -5295,6 +5496,14 @@
         "ModelCustomizationJobSummary$statusDetails": "<p>Details about the status of the data processing sub-task of the job.</p>"
       }
     },
+    "StopAdvancedPromptOptimizationJobRequest": {
+      "base": "<p>Stop Advanced Prompt Optimization Job Request</p>",
+      "refs": {}
+    },
+    "StopAdvancedPromptOptimizationJobResponse": {
+      "base": "<p>Stop Advanced Prompt Optimization Job Response</p>",
+      "refs": {}
+    },
     "StopEvaluationJobRequest": {
       "base": null,
       "refs": {}
@@ -5326,6 +5535,8 @@
         "AccountEnforcedGuardrailOutputConfiguration$updatedBy": "<p>The ARN of the role used to update the configuration.</p>",
         "AgreementAvailability$errorMessage": "<p>Error message.</p>",
         "AutomatedReasoningPolicyBuildStepMessage$message": "<p>The content of the message, describing what occurred during the build step.</p>",
+        "BatchDeleteAdvancedPromptOptimizationJobError$code": "<p>Error code for the deletion failure.</p>",
+        "BatchDeleteAdvancedPromptOptimizationJobError$message": "<p>Error message describing the deletion failure.</p>",
         "BatchDeleteEvaluationJobError$code": "<p>A HTTP status code of the evaluation job being deleted.</p>",
         "BatchDeleteEvaluationJobError$message": "<p>A status message about the evaluation job deletion.</p>",
         "DimensionalPriceRate$dimension": "<p>Dimension for the price rate.</p>",
@@ -5385,6 +5596,7 @@
     "TagList": {
       "base": null,
       "refs": {
+        "CreateAdvancedPromptOptimizationJobRequest$tags": "<p>Tags to associate with the job.</p>",
         "CreateAutomatedReasoningPolicyRequest$tags": "<p>A list of tags to associate with the Automated Reasoning policy. Tags help you organize and manage your policies.</p>",
         "CreateAutomatedReasoningPolicyVersionRequest$tags": "<p>A list of tags to associate with the policy version.</p>",
         "CreateCustomModelDeploymentRequest$tags": "<p>Tags to assign to the custom model deployment. You can use tags to organize and track your Amazon Web Services resources for cost allocation and management purposes.</p>",
@@ -5475,6 +5687,8 @@
       "refs": {
         "AccountEnforcedGuardrailOutputConfiguration$createdAt": "<p>Timestamp.</p>",
         "AccountEnforcedGuardrailOutputConfiguration$updatedAt": "<p>Timestamp.</p>",
+        "AdvancedPromptOptimizationJobSummary$creationTime": "<p>Creation time of the advanced prompt optimization job.</p>",
+        "AdvancedPromptOptimizationJobSummary$lastModifiedTime": "<p>Last modified time of the advanced prompt optimization job.</p>",
         "AutomatedReasoningPolicyBuildWorkflowSummary$createdAt": "<p>The timestamp when the build workflow was created.</p>",
         "AutomatedReasoningPolicyBuildWorkflowSummary$updatedAt": "<p>The timestamp when the build workflow was last updated.</p>",
         "AutomatedReasoningPolicySummary$createdAt": "<p>The timestamp when the policy was created.</p>",
@@ -5498,6 +5712,8 @@
         "FoundationModelLifecycle$endOfLifeTime": "<p>Time when the model is no longer available for use</p>",
         "FoundationModelLifecycle$legacyTime": "<p>Time when the model enters legacy state. Models in legacy state can still be used, but users should plan to transition to an Active model before the end of life time</p>",
         "FoundationModelLifecycle$publicExtendedAccessTime": "<p>Public extended access portion of the legacy period, when users should expect higher pricing</p>",
+        "GetAdvancedPromptOptimizationJobResponse$creationTime": "<p>Creation time of the advanced prompt optimization job.</p>",
+        "GetAdvancedPromptOptimizationJobResponse$lastModifiedTime": "<p>Last modified time of the advanced prompt optimization job.</p>",
         "GetAutomatedReasoningPolicyAnnotationsResponse$updatedAt": "<p>The timestamp when the annotations were last updated.</p>",
         "GetAutomatedReasoningPolicyBuildWorkflowResponse$createdAt": "<p>The timestamp when the build workflow was created.</p>",
         "GetAutomatedReasoningPolicyBuildWorkflowResponse$updatedAt": "<p>The timestamp when the build workflow was last updated.</p>",
