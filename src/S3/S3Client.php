@@ -883,8 +883,8 @@ class S3Client extends AwsClient implements S3ClientInterface
      */
     private function getDisableExpressSessionAuthMiddleware()
     {
-        return function (callable $handler) {
-            return function (
+        return static function (callable $handler) {
+            return static function (
                 CommandInterface $command,
                 ?RequestInterface $request = null
             ) use ($handler) {

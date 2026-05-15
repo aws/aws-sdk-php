@@ -544,7 +544,7 @@ class AwsClient implements AwsClientInterface
     {
         $list = $this->getHandlerList();
         $list->appendBuild(
-            Middleware::mapRequest(function (RequestInterface $r) {
+            Middleware::mapRequest(static function (RequestInterface $r) {
                 return $r->withHeader(
                     'x-amzn-query-mode',
                     "true"
@@ -657,11 +657,12 @@ class AwsClient implements AwsClientInterface
      */
     private function addEventStreamHttpFlagMiddleware(): void
     {
+        $api = $this->getApi();
         $this->getHandlerList()
             -> appendInit(
-                function (callable $handler) {
-                    return function (CommandInterface $command, $request = null) use ($handler) {
-                        $operation = $this->getApi()->getOperation($command->getName());
+                static function (callable $handler) use ($api) {
+                    return static function (CommandInterface $command, $request = null) use ($handler, $api) {
+                        $operation = $api->getOperation($command->getName());
                         $output = $operation->getOutput();
                         foreach ($output->getMembers() as $memberProps) {
                             if (!empty($memberProps['eventstream'])) {
