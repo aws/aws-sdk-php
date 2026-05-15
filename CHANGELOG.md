@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.381.2 - 2026-05-15
 
 * `Aws\` - Fix circular reference cycles caused by non-static middleware closures implicitly capturing $this in AwsClient, GlacierClient, Route53Client, S3Client, S3MultiRegionClient, and Middleware.
 * `Aws\CloudWatchLogs` - Updating the max limit for start query api parameter.
