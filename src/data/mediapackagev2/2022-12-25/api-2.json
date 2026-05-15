@@ -842,7 +842,8 @@
         "DvbSettings":{"shape":"DashDvbSettings"},
         "Compactness":{"shape":"DashCompactness"},
         "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"},
-        "UriPathType":{"shape":"UriPathType"}
+        "UriPathType":{"shape":"UriPathType"},
+        "AvailabilityStartTimeConfiguration":{"shape":"DashAvailabilityStartTimeConfiguration"}
       }
     },
     "CreateDashManifestConfigurationManifestWindowSecondsInteger":{
@@ -1117,6 +1118,13 @@
       "member":{"shape":"CustomAdType"},
       "max":25,
       "min":0
+    },
+    "DashAvailabilityStartTimeConfiguration":{
+      "type":"structure",
+      "members":{
+        "FixedAvailabilityStartTime":{"shape":"SyntheticTimestamp_date_time"}
+      },
+      "union":true
     },
     "DashBaseUrl":{
       "type":"structure",
@@ -1705,7 +1713,8 @@
         "DvbSettings":{"shape":"DashDvbSettings"},
         "Compactness":{"shape":"DashCompactness"},
         "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"},
-        "UriPathType":{"shape":"UriPathType"}
+        "UriPathType":{"shape":"UriPathType"},
+        "AvailabilityStartTimeConfiguration":{"shape":"DashAvailabilityStartTimeConfiguration"}
       }
     },
     "GetDashManifests":{
@@ -2736,6 +2745,10 @@
       }
     },
     "String":{"type":"string"},
+    "SyntheticTimestamp_date_time":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
     "TagArn":{"type":"string"},
     "TagKey":{"type":"string"},
     "TagKeyList":{

@@ -3183,6 +3183,11 @@
       "max":10000,
       "min":1
     },
+    "EventsLimitStartQuery":{
+      "type":"integer",
+      "max":100000,
+      "min":1
+    },
     "ExecutionStatus":{
       "type":"string",
       "enum":[
@@ -5843,7 +5848,7 @@
         "startTime":{"shape":"Timestamp"},
         "endTime":{"shape":"Timestamp"},
         "queryString":{"shape":"QueryString"},
-        "limit":{"shape":"EventsLimit"}
+        "limit":{"shape":"EventsLimitStartQuery"}
       }
     },
     "StartQueryResponse":{

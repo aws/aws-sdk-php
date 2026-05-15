@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Fix circular reference cycles caused by non-static middleware closures implicitly capturing $this in AwsClient, GlacierClient, Route53Client, S3Client, S3MultiRegionClient, and Middleware.
+* `Aws\CloudWatchLogs` - Updating the max limit for start query api parameter.
+* `Aws\PartnerCentralSelling` - Enable TCV intake on Opportunity to improve Opportunities Hygiene and downstream revenue attribution.
+* `Aws\MediaPackageV2` - This release adds support for AvailabilityStartTimeConfiguration in MediaPackageV2 DASH manifests
+
 ## 3.381.1 - 2026-05-14
 
 * `Aws\ManagedGrafana` - Adds support for dual-stack (IPv4 and IPv6) connectivity to Amazon Managed Grafana workspaces. Customers can configure the ipAddressType parameter when creating or updating a workspace to choose between IPv4-only or dual-stack (IPv4 and IPv6) access.

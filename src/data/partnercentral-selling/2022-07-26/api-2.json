@@ -2335,6 +2335,21 @@
       "type":"string",
       "pattern":"https://(calculator\\.aws|pricing\\.calculator\\.aws\\.eu)/#/estimate\\?id=[a-f0-9]{32,64}"
     },
+    "ExpectedContractDuration":{
+      "type":"structure",
+      "required":[
+        "Term",
+        "Value"
+      ],
+      "members":{
+        "Term":{"shape":"ExpectedContractDurationTerm"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "ExpectedContractDurationTerm":{
+      "type":"string",
+      "enum":["Months"]
+    },
     "ExpectedCustomerSpend":{
       "type":"structure",
       "required":[
@@ -3541,6 +3556,7 @@
       "members":{
         "DeliveryModels":{"shape":"DeliveryModels"},
         "ExpectedCustomerSpend":{"shape":"ExpectedCustomerSpendList"},
+        "ExpectedContractDuration":{"shape":"ExpectedContractDuration"},
         "Title":{"shape":"ProjectTitleString"},
         "ApnPrograms":{"shape":"ApnPrograms"},
         "CustomerBusinessProblem":{"shape":"ProjectCustomerBusinessProblemString"},
@@ -3595,7 +3611,8 @@
       "type":"structure",
       "members":{
         "DeliveryModels":{"shape":"DeliveryModels"},
-        "ExpectedCustomerSpend":{"shape":"ExpectedCustomerSpendList"}
+        "ExpectedCustomerSpend":{"shape":"ExpectedCustomerSpendList"},
+        "ExpectedContractDuration":{"shape":"ExpectedContractDuration"}
       }
     },
     "ProjectTitleString":{
@@ -3608,6 +3625,7 @@
       "members":{
         "DeliveryModels":{"shape":"DeliveryModels"},
         "ExpectedCustomerSpend":{"shape":"ExpectedCustomerSpendList"},
+        "ExpectedContractDuration":{"shape":"ExpectedContractDuration"},
         "CustomerUseCase":{"shape":"String"},
         "SalesActivities":{"shape":"SalesActivities"},
         "OtherSolutionDescription":{"shape":"ProjectViewOtherSolutionDescriptionString"}
