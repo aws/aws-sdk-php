@@ -2,6 +2,7 @@
   "version": "2.0",
   "service": "<p><fullname>Amazon Elastic Container Service</fullname> <p>Amazon Elastic Container Service (Amazon ECS) is a highly scalable, fast, container management service. It makes it easy to run, stop, and manage Docker containers. You can host your cluster on a serverless infrastructure that's managed by Amazon ECS by launching your services or tasks on Fargate. For more control, you can host your tasks on a cluster of Amazon Elastic Compute Cloud (Amazon EC2) or External (on-premises) instances that you manage.</p> <p>Amazon ECS makes it easy to launch and stop container-based applications with simple API calls. This makes it easy to get the state of your cluster from a centralized service, and gives you access to many familiar Amazon EC2 features.</p> <p>You can use Amazon ECS to schedule the placement of containers across your cluster based on your resource needs, isolation policies, and availability requirements. With Amazon ECS, you don't need to operate your own cluster management and configuration management systems. You also don't need to worry about scaling your management infrastructure. </p></p>",
   "operations": {
+    "ContinueServiceDeployment": "<p>Continues or rolls back an Amazon ECS service deployment that is paused at a lifecycle hook.</p> <p>When a service deployment reaches a lifecycle stage that has a <code>PAUSE</code> hook configured, the deployment pauses and waits for an explicit action. Use this API to either continue the deployment to the next stage or roll back to the previous service revision.</p> <p>To find the <code>hookId</code> of the paused hook, call <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_DescribeServiceDeployments.html\">DescribeServiceDeployments</a> and inspect the <code>lifecycleHookDetails</code> field.</p>",
     "CreateCapacityProvider": "<p>Creates a capacity provider. Capacity providers are associated with a cluster and are used in capacity provider strategies to facilitate cluster auto scaling. You can create capacity providers for Amazon ECS Managed Instances and EC2 instances. Fargate has the predefined <code>FARGATE</code> and <code>FARGATE_SPOT</code> capacity providers.</p>",
     "CreateCluster": "<p>Creates a new Amazon ECS cluster. By default, your account receives a <code>default</code> cluster when you launch your first container instance. However, you can create your own cluster with a unique name.</p> <note> <p>When you call the <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_CreateCluster.html\">CreateCluster</a> API operation, Amazon ECS attempts to create the Amazon ECS service-linked role for your account. This is so that it can manage required resources in other Amazon Web Services services on your behalf. However, if the user that makes the call doesn't have permissions to create the service-linked role, it isn't created. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using-service-linked-roles.html\">Using service-linked roles for Amazon ECS</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p> </note>",
     "CreateDaemon": "<p>Creates a new daemon in the specified cluster and capacity providers. A daemon deploys cross-cutting software agents such as security monitoring, telemetry, and logging independently across your Amazon ECS infrastructure.</p> <p>Amazon ECS deploys exactly one daemon task on each container instance of the specified capacity providers. When a container instance registers with the cluster, Amazon ECS automatically starts daemon tasks. Amazon ECS starts a daemon task before scheduling other tasks.</p> <p>Daemons are essential for instance health - if a daemon task stops, Amazon ECS automatically drains and replaces that container instance.</p> <note> <p>ECS Managed Daemons is only supported for Amazon ECS Managed Instances Capacity Providers.</p> </note>",
@@ -829,6 +830,14 @@
         "Task$containers": "<p>The containers that's associated with the task.</p>"
       }
     },
+    "ContinueServiceDeploymentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ContinueServiceDeploymentResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CpuManufacturer": {
       "base": null,
       "refs": {
@@ -1306,6 +1315,32 @@
         "DeploymentLifecycleHookList$member": null
       }
     },
+    "DeploymentLifecycleHookAction": {
+      "base": null,
+      "refs": {
+        "ContinueServiceDeploymentRequest$action": "<p>The action to take on the paused lifecycle hook. Valid values are:</p> <ul> <li> <p> <code>CONTINUE</code> - Proceeds the deployment to the next lifecycle stage.</p> </li> <li> <p> <code>ROLLBACK</code> - Rolls back the deployment to the previous service revision.</p> </li> </ul> <p>If no value is specified, the default action is <code>CONTINUE</code>.</p>",
+        "DeploymentLifecycleHookDetail$timeoutAction": "<p>The action Amazon ECS takes when the lifecycle hook times out. Valid values are <code>CONTINUE</code> and <code>ROLLBACK</code>.</p>",
+        "DeploymentLifecycleHookTimeoutConfiguration$action": "<p>The action Amazon ECS takes when the lifecycle hook times out. Valid values are:</p> <ul> <li> <p> <code>CONTINUE</code> - Proceeds the deployment to the next lifecycle stage.</p> </li> <li> <p> <code>ROLLBACK</code> - Rolls back the deployment to the previous service revision.</p> </li> </ul>"
+      }
+    },
+    "DeploymentLifecycleHookDetail": {
+      "base": "<p>The details of a deployment lifecycle hook that is active during a service deployment.</p> <p>You can view lifecycle hook details by calling <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_DescribeServiceDeployments.html\">DescribeServiceDeployments</a>.</p>",
+      "refs": {
+        "DeploymentLifecycleHookDetailList$member": null
+      }
+    },
+    "DeploymentLifecycleHookDetailList": {
+      "base": null,
+      "refs": {
+        "ServiceDeployment$lifecycleHookDetails": "<p>The details of the lifecycle hooks for the current service deployment.</p>"
+      }
+    },
+    "DeploymentLifecycleHookDuration": {
+      "base": null,
+      "refs": {
+        "DeploymentLifecycleHookTimeoutConfiguration$timeoutInMinutes": "<p>The number of minutes Amazon ECS waits for the lifecycle hook to complete before taking the timeout action.</p>"
+      }
+    },
     "DeploymentLifecycleHookList": {
       "base": null,
       "refs": {
@@ -1322,6 +1357,25 @@
       "base": null,
       "refs": {
         "DeploymentLifecycleHook$lifecycleStages": "<p>The lifecycle stages at which to run the hook. Choose from these valid values:</p> <ul> <li> <p>RECONCILE_SERVICE</p> <p>The reconciliation stage that only happens when you start a new service deployment with more than 1 service revision in an ACTIVE state.</p> <p>You can use a lifecycle hook for this stage.</p> </li> <li> <p>PRE_SCALE_UP</p> <p>The green service revision has not started. The blue service revision is handling 100% of the production traffic. There is no test traffic.</p> <p>You can use a lifecycle hook for this stage.</p> </li> <li> <p>POST_SCALE_UP</p> <p>The green service revision has started. The blue service revision is handling 100% of the production traffic. There is no test traffic.</p> <p>You can use a lifecycle hook for this stage.</p> </li> <li> <p>TEST_TRAFFIC_SHIFT</p> <p>The blue and green service revisions are running. The blue service revision handles 100% of the production traffic. The green service revision is migrating from 0% to 100% of test traffic.</p> <p>You can use a lifecycle hook for this stage.</p> </li> <li> <p>POST_TEST_TRAFFIC_SHIFT</p> <p>The test traffic shift is complete. The green service revision handles 100% of the test traffic.</p> <p>You can use a lifecycle hook for this stage.</p> </li> <li> <p>PRODUCTION_TRAFFIC_SHIFT</p> <p>Production traffic is shifting to the green service revision. The green service revision is migrating from 0% to 100% of production traffic.</p> <p>You can use a lifecycle hook for this stage.</p> </li> <li> <p>POST_PRODUCTION_TRAFFIC_SHIFT</p> <p>The production traffic shift is complete.</p> <p>You can use a lifecycle hook for this stage.</p> </li> </ul> <p>You must provide this parameter when configuring a deployment lifecycle hook.</p>"
+      }
+    },
+    "DeploymentLifecycleHookStatus": {
+      "base": null,
+      "refs": {
+        "DeploymentLifecycleHookDetail$status": "<p>The status of the lifecycle hook. Valid values depend on the hook type:</p> <ul> <li> <p>For <code>AWS_LAMBDA</code> hooks: <code>IN_PROGRESS</code>, <code>SUCCEEDED</code>, <code>FAILED</code>, and <code>TIMED_OUT</code>.</p> </li> <li> <p>For <code>PAUSE</code> hooks: <code>AWAITING_ACTION</code>, <code>SUCCEEDED</code>, <code>FAILED</code>, and <code>TIMED_OUT</code>.</p> </li> </ul>"
+      }
+    },
+    "DeploymentLifecycleHookTargetType": {
+      "base": null,
+      "refs": {
+        "DeploymentLifecycleHook$targetType": "<p>The type of action the lifecycle hook performs. Valid values are:</p> <ul> <li> <p> <code>AWS_LAMBDA</code> - Invokes a Lambda function at the specified lifecycle stage. This is the default value.</p> </li> <li> <p> <code>PAUSE</code> - Pauses the deployment at the specified lifecycle stage until you call <code>ContinueServiceDeployment</code> to continue or roll back.</p> </li> </ul> <p>This field is optional. If not specified, the default value is <code>AWS_LAMBDA</code>.</p>",
+        "DeploymentLifecycleHookDetail$targetType": "<p>The type of action the lifecycle hook performs, such as <code>AWS_LAMBDA</code> or <code>PAUSE</code>.</p>"
+      }
+    },
+    "DeploymentLifecycleHookTimeoutConfiguration": {
+      "base": "<p>The timeout configuration for a deployment lifecycle hook. This determines how long Amazon ECS waits for the hook to complete before taking the specified timeout action.</p>",
+      "refs": {
+        "DeploymentLifecycleHook$timeoutConfiguration": "<p>The timeout configuration for the lifecycle hook. This specifies how long Amazon ECS waits before taking the timeout action if the hook is not resolved.</p>"
       }
     },
     "DeploymentRolloutState": {
@@ -2933,7 +2987,7 @@
       }
     },
     "S3FilesVolumeConfiguration": {
-      "base": "<p>This parameter is specified when you're using an Amazon S3 Files file system for task storage. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/s3files-volumes.html\">Amazon S3 Files volumes</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p> <important> <p>Your task definition must include a Task IAM Role. See <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-files-prereq-policies.html#s3-files-prereq-iam-compute-role\"> IAM role for attaching your file system to AWS compute resources</a> for required permissions.</p> </important>",
+      "base": "<p>This parameter is specified when you're using an Amazon S3 Files file system for task storage. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/s3files-volumes.html\">Amazon S3 Files volumes</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p> <important> <p>Your task definition must include a Task IAM Role. See <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-files-prereq-policies.html#s3-files-prereq-iam-compute-role\"> IAM role for attaching your file system to Amazon Web Services compute resources</a> for required permissions.</p> </important>",
       "refs": {
         "Volume$s3filesVolumeConfiguration": "<p>This parameter is specified when you use an Amazon S3 Files file system for task storage.</p>"
       }
@@ -2994,10 +3048,10 @@
     "Service": {
       "base": "<p>Details on a service within a cluster.</p>",
       "refs": {
-        "CreateServiceResponse$service": "<p>The full description of your service following the create call.</p> <p>A service will return either a <code>capacityProviderStrategy</code> or <code>launchType</code> parameter, but not both, depending where one was specified when it was created.</p> <p>If a service is using the <code>ECS</code> deployment controller, the <code>deploymentController</code> and <code>taskSets</code> parameters will not be returned.</p> <p>if the service uses the <code>CODE_DEPLOY</code> deployment controller, the <code>deploymentController</code>, <code>taskSets</code> and <code>deployments</code> parameters will be returned, however the <code>deployments</code> parameter will be an empty list.</p>",
+        "CreateServiceResponse$service": "<p>The full description of your service following the create call.</p> <p>A service will return either a <code>capacityProviderStrategy</code> or <code>launchType</code> parameter, but not both, depending where one was specified when it was created.</p> <p>If a service is using the <code>ECS</code> deployment controller, the <code>deploymentController</code> and <code>taskSets</code> parameters will not be returned.</p> <p>if the service uses the <code>CODE_DEPLOY</code> deployment controller, the <code>deploymentController</code>, <code>taskSets</code> and <code>deployments</code> parameters will be returned, however the <code>deployments</code> parameter will be an empty list.</p> <p>The response includes a <code>lifecycleHookDetails</code> field, which is an empty array when the service is created or updated. The values are populated when a lifecycle hook executes and are available as part of the service deployment details (<a href=\"https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_DescribeServiceDeployments.html\">DescribeServiceDeployments</a>).</p>",
         "DeleteServiceResponse$service": "<p>The full description of the deleted service.</p>",
         "Services$member": null,
-        "UpdateServiceResponse$service": "<p>The full description of your service following the update call.</p>"
+        "UpdateServiceResponse$service": "<p>The full description of your service following the update call.</p> <p>The response includes a <code>lifecycleHookDetails</code> field, which is an empty array when the service is created or updated. The values are populated when a lifecycle hook executes and are available as part of the service deployment details (<a href=\"https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_DescribeServiceDeployments.html\">DescribeServiceDeployments</a>).</p>"
       }
     },
     "ServiceConnectAccessLogConfiguration": {
@@ -3441,6 +3495,9 @@
         "ContainerStateChange$runtimeId": "<p>The ID of the Docker container.</p>",
         "ContainerStateChange$reason": "<p>The reason for the state change.</p>",
         "ContainerStateChange$status": "<p>The status of the container.</p>",
+        "ContinueServiceDeploymentRequest$serviceDeploymentArn": "<p>The ARN of the service deployment to continue or roll back.</p>",
+        "ContinueServiceDeploymentRequest$hookId": "<p>The ID of the paused lifecycle hook to act on. You can find the <code>hookId</code> by calling <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_DescribeServiceDeployments.html\">DescribeServiceDeployments</a> and inspecting the <code>lifecycleHookDetails</code> field of the service deployment.</p>",
+        "ContinueServiceDeploymentResponse$serviceDeploymentArn": "<p>The ARN of the service deployment that was continued or rolled back.</p>",
         "CreateCapacityProviderRequest$name": "<p>The name of the capacity provider. Up to 255 characters are allowed. They include letters (both upper and lowercase letters), numbers, underscores (_), and hyphens (-). The name can't be prefixed with \"<code>aws</code>\", \"<code>ecs</code>\", or \"<code>fargate</code>\".</p>",
         "CreateCapacityProviderRequest$cluster": "<p>The name of the cluster to associate with the capacity provider. When you create a capacity provider with Amazon ECS Managed Instances, it becomes available only within the specified cluster.</p>",
         "CreateClusterRequest$clusterName": "<p>The name of your cluster. If you don't specify a name for your cluster, you create a cluster that's named <code>default</code>. Up to 255 letters (uppercase and lowercase), numbers, underscores, and hyphens are allowed. </p>",
@@ -3536,6 +3593,8 @@
         "Deployment$rolloutStateReason": "<p>A description of the rollout state of a deployment.</p>",
         "DeploymentEphemeralStorage$kmsKeyId": "<p>Specify an Key Management Service key ID to encrypt the ephemeral storage for deployment.</p>",
         "DeploymentLifecycleHook$hookTargetArn": "<p>The Amazon Resource Name (ARN) of the hook target. Currently, only Lambda function ARNs are supported.</p> <p>You must provide this parameter when configuring a deployment lifecycle hook.</p>",
+        "DeploymentLifecycleHookDetail$hookId": "<p>The ID of the lifecycle hook. Use this value when calling <code>ContinueServiceDeployment</code> to continue or roll back a paused deployment.</p>",
+        "DeploymentLifecycleHookDetail$targetArn": "<p>The Amazon Resource Name (ARN) of the hook target. For <code>AWS_LAMBDA</code> hooks, this is the Lambda function ARN. For <code>PAUSE</code> hooks, this field is not set.</p>",
         "DeregisterContainerInstanceRequest$cluster": "<p>The short name or full Amazon Resource Name (ARN) of the cluster that hosts the container instance to deregister. If you do not specify a cluster, the default cluster is assumed.</p>",
         "DeregisterContainerInstanceRequest$containerInstance": "<p>The container instance ID or full ARN of the container instance to deregister. For more information about the ARN format, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html#ecs-resource-ids\">Amazon Resource Name (ARN)</a> in the <i>Amazon ECS Developer Guide</i>.</p>",
         "DeregisterTaskDefinitionRequest$taskDefinition": "<p>The <code>family</code> and <code>revision</code> (<code>family:revision</code>) or full Amazon Resource Name (ARN) of the task definition to deregister. You must specify a <code>revision</code>.</p>",
@@ -4334,6 +4393,7 @@
         "DeleteDaemonResponse$updatedAt": "<p>The Unix timestamp for the time when the daemon was last updated.</p>",
         "Deployment$createdAt": "<p>The Unix timestamp for the time when the service deployment was created.</p>",
         "Deployment$updatedAt": "<p>The Unix timestamp for the time when the service deployment was last updated.</p>",
+        "DeploymentLifecycleHookDetail$expiresAt": "<p>The time when the lifecycle hook times out. If the hook has not been completed by this time, Amazon ECS takes the timeout action.</p>",
         "ECSExpressGatewayService$createdAt": "<p>The Unix timestamp for when the Express service was created.</p>",
         "ECSExpressGatewayService$updatedAt": "<p>The Unix timestamp for when the Express service was last updated.</p>",
         "ExpressGatewayServiceConfiguration$createdAt": "<p>The Unix timestamp for when this service revision was created.</p>",

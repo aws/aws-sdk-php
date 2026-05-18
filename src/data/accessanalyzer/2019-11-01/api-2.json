@@ -162,6 +162,25 @@
       ],
       "idempotent":true
     },
+    "CreateServiceLinkedAnalyzer":{
+      "name":"CreateServiceLinkedAnalyzer",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/service-linked-analyzer",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateServiceLinkedAnalyzerRequest"},
+      "output":{"shape":"CreateServiceLinkedAnalyzerResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "DeleteAnalyzer":{
       "name":"DeleteAnalyzer",
       "http":{
@@ -189,6 +208,24 @@
       "input":{"shape":"DeleteArchiveRuleRequest"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteServiceLinkedAnalyzer":{
+      "name":"DeleteServiceLinkedAnalyzer",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/service-linked-analyzer/{analyzerName}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteServiceLinkedAnalyzerRequest"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
@@ -957,6 +994,12 @@
       },
       "union":true
     },
+    "AnalyzerName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z_][A-Za-z0-9_.-]*"
+    },
     "AnalyzerStatus":{
       "type":"string",
       "enum":[
@@ -977,7 +1020,7 @@
       ],
       "members":{
         "arn":{"shape":"AnalyzerArn"},
-        "name":{"shape":"Name"},
+        "name":{"shape":"AnalyzerName"},
         "type":{"shape":"Type"},
         "createdAt":{"shape":"Timestamp"},
         "lastResourceAnalyzed":{"shape":"String"},
@@ -985,7 +1028,8 @@
         "tags":{"shape":"TagsMap"},
         "status":{"shape":"AnalyzerStatus"},
         "statusReason":{"shape":"StatusReason"},
-        "configuration":{"shape":"AnalyzerConfiguration"}
+        "configuration":{"shape":"AnalyzerConfiguration"},
+        "managedBy":{"shape":"String"}
       }
     },
     "AnalyzersList":{
@@ -1242,7 +1286,7 @@
         "type"
       ],
       "members":{
-        "analyzerName":{"shape":"Name"},
+        "analyzerName":{"shape":"AnalyzerName"},
         "type":{"shape":"Type"},
         "archiveRules":{"shape":"InlineArchiveRulesList"},
         "tags":{"shape":"TagsMap"},
@@ -1268,7 +1312,7 @@
       ],
       "members":{
         "analyzerName":{
-          "shape":"Name",
+          "shape":"AnalyzerName",
           "location":"uri",
           "locationName":"analyzerName"
         },
@@ -1278,6 +1322,25 @@
           "shape":"String",
           "idempotencyToken":true
         }
+      }
+    },
+    "CreateServiceLinkedAnalyzerRequest":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"Type"},
+        "archiveRules":{"shape":"InlineArchiveRulesList"},
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "configuration":{"shape":"AnalyzerConfiguration"}
+      }
+    },
+    "CreateServiceLinkedAnalyzerResponse":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"AnalyzerArn"}
       }
     },
     "Criterion":{
@@ -1294,7 +1357,7 @@
       "required":["analyzerName"],
       "members":{
         "analyzerName":{
-          "shape":"Name",
+          "shape":"AnalyzerName",
           "location":"uri",
           "locationName":"analyzerName"
         },
@@ -1314,7 +1377,7 @@
       ],
       "members":{
         "analyzerName":{
-          "shape":"Name",
+          "shape":"AnalyzerName",
           "location":"uri",
           "locationName":"analyzerName"
         },
@@ -1322,6 +1385,23 @@
           "shape":"Name",
           "location":"uri",
           "locationName":"ruleName"
+        },
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "DeleteServiceLinkedAnalyzerRequest":{
+      "type":"structure",
+      "required":["analyzerName"],
+      "members":{
+        "analyzerName":{
+          "shape":"AnalyzerName",
+          "location":"uri",
+          "locationName":"analyzerName"
         },
         "clientToken":{
           "shape":"String",
@@ -1713,7 +1793,7 @@
       "required":["analyzerName"],
       "members":{
         "analyzerName":{
-          "shape":"Name",
+          "shape":"AnalyzerName",
           "location":"uri",
           "locationName":"analyzerName"
         }
@@ -1734,7 +1814,7 @@
       ],
       "members":{
         "analyzerName":{
-          "shape":"Name",
+          "shape":"AnalyzerName",
           "location":"uri",
           "locationName":"analyzerName"
         },
@@ -2287,7 +2367,7 @@
       "required":["analyzerName"],
       "members":{
         "analyzerName":{
-          "shape":"Name",
+          "shape":"AnalyzerName",
           "location":"uri",
           "locationName":"analyzerName"
         },
@@ -3144,7 +3224,7 @@
       "required":["analyzerName"],
       "members":{
         "analyzerName":{
-          "shape":"Name",
+          "shape":"AnalyzerName",
           "location":"uri",
           "locationName":"analyzerName"
         },
@@ -3166,7 +3246,7 @@
       ],
       "members":{
         "analyzerName":{
-          "shape":"Name",
+          "shape":"AnalyzerName",
           "location":"uri",
           "locationName":"analyzerName"
         },

@@ -1,6 +1,34 @@
 {
   "version": "1.0",
   "examples": {
+    "ContinueServiceDeployment": [
+      {
+        "input": {
+          "action": "CONTINUE",
+          "hookId": "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567",
+          "serviceDeploymentArn": "arn:aws:ecs:us-east-1:123456789012:service-deployment/MyCluster/MyService/r9i43YFjvgF_xlg7m2eJ1r"
+        },
+        "output": {
+          "serviceDeploymentArn": "arn:aws:ecs:us-east-1:123456789012:service-deployment/MyCluster/MyService/r9i43YFjvgF_xlg7m2eJ1r"
+        },
+        "description": "This example continues a service deployment that is paused at a lifecycle hook, using the CONTINUE action to proceed to the next deployment stage.",
+        "id": "example-1",
+        "title": "To continue a paused service deployment"
+      },
+      {
+        "input": {
+          "action": "ROLLBACK",
+          "hookId": "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567",
+          "serviceDeploymentArn": "arn:aws:ecs:us-east-1:123456789012:service-deployment/MyCluster/MyService/r9i43YFjvgF_xlg7m2eJ1r"
+        },
+        "output": {
+          "serviceDeploymentArn": "arn:aws:ecs:us-east-1:123456789012:service-deployment/MyCluster/MyService/r9i43YFjvgF_xlg7m2eJ1r"
+        },
+        "description": "This example rolls back a service deployment that is paused at a lifecycle hook, using the ROLLBACK action to revert to the previous service revision.",
+        "id": "example-2",
+        "title": "To roll back a paused service deployment"
+      }
+    ],
     "CreateCapacityProvider": [
       {
         "input": {
@@ -191,6 +219,75 @@
         "description": "This example creates a service in your default region called ``ecs-simple-service-elb``. The service uses the ``ecs-demo`` task definition and it maintains 10 copies of that task. You must reference an existing load balancer in the same region by its name.",
         "id": "example-2",
         "title": "To create a new service behind a load balancer"
+      },
+      {
+        "input": {
+          "deploymentConfiguration": {
+            "lifecycleHooks": [
+              {
+                "lifecycleStages": [
+                  "POST_PRODUCTION_TRAFFIC_SHIFT"
+                ],
+                "targetType": "PAUSE",
+                "timeoutConfiguration": {
+                  "action": "ROLLBACK",
+                  "timeoutInMinutes": 60
+                }
+              }
+            ],
+            "strategy": "BLUE_GREEN"
+          },
+          "desiredCount": 2,
+          "serviceName": "ecs-service-with-pause-hook",
+          "taskDefinition": "ecs-demo"
+        },
+        "output": {
+          "service": {
+            "clusterArn": "arn:aws:ecs:us-east-1:012345678910:cluster/default",
+            "createdAt": "2026-05-06T16:00:00.000Z",
+            "deploymentConfiguration": {
+              "lifecycleHooks": [
+                {
+                  "lifecycleStages": [
+                    "POST_PRODUCTION_TRAFFIC_SHIFT"
+                  ],
+                  "targetType": "PAUSE",
+                  "timeoutConfiguration": {
+                    "action": "ROLLBACK",
+                    "timeoutInMinutes": 60
+                  }
+                }
+              ],
+              "maximumPercent": 200,
+              "minimumHealthyPercent": 100,
+              "strategy": "BLUE_GREEN"
+            },
+            "deployments": [
+              {
+                "createdAt": "2026-05-06T16:00:00.000Z",
+                "desiredCount": 2,
+                "id": "ecs-svc/9223370564342348388",
+                "pendingCount": 0,
+                "runningCount": 0,
+                "status": "PRIMARY",
+                "taskDefinition": "arn:aws:ecs:us-east-1:012345678910:task-definition/ecs-demo:1",
+                "updatedAt": "2026-05-06T16:00:00.000Z"
+              }
+            ],
+            "desiredCount": 2,
+            "events": [],
+            "loadBalancers": [],
+            "pendingCount": 0,
+            "runningCount": 0,
+            "serviceArn": "arn:aws:ecs:us-east-1:012345678910:service/default/ecs-service-with-pause-hook",
+            "serviceName": "ecs-service-with-pause-hook",
+            "status": "ACTIVE",
+            "taskDefinition": "arn:aws:ecs:us-east-1:012345678910:task-definition/ecs-demo:1"
+          }
+        },
+        "description": "This example creates a service with a blue/green deployment strategy that includes a pause lifecycle hook at the POST_PRODUCTION_TRAFFIC_SHIFT stage. The deployment will pause at that stage until you explicitly continue or roll back using the ContinueServiceDeployment API, or until the 60-minute timeout expires and triggers a rollback.",
+        "id": "example-3",
+        "title": "To create a service with a pause lifecycle hook"
       }
     ],
     "CreateTaskSet": [
@@ -927,6 +1024,65 @@
         "description": "This example describes a service deployment for the service sd-example in the example cluster. ",
         "id": "example-1",
         "title": "To describe a service deployment "
+      },
+      {
+        "input": {
+          "serviceDeploymentArns": [
+            "arn:aws:ecs:us-east-1:123456789012:service-deployment/MyCluster/MyService/r9i43YFjvgF_xlg7m2eJ1r"
+          ]
+        },
+        "output": {
+          "failures": [],
+          "serviceDeployments": [
+            {
+              "clusterArn": "arn:aws:ecs:us-east-1:123456789012:cluster/MyCluster",
+              "deploymentConfiguration": {
+                "deploymentCircuitBreaker": {
+                  "enable": false,
+                  "rollback": false
+                },
+                "lifecycleHooks": [
+                  {
+                    "lifecycleStages": [
+                      "POST_PRODUCTION_TRAFFIC_SHIFT"
+                    ],
+                    "targetType": "PAUSE",
+                    "timeoutConfiguration": {
+                      "action": "ROLLBACK",
+                      "timeoutInMinutes": 60
+                    }
+                  }
+                ],
+                "maximumPercent": 200,
+                "minimumHealthyPercent": 100,
+                "strategy": "BLUE_GREEN"
+              },
+              "lifecycleHookDetails": [
+                {
+                  "expiresAt": "2026-05-06T17:00:00.000Z",
+                  "hookId": "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567",
+                  "status": "AWAITING_ACTION",
+                  "targetType": "PAUSE",
+                  "timeoutAction": "ROLLBACK"
+                }
+              ],
+              "lifecycleStage": "POST_PRODUCTION_TRAFFIC_SHIFT",
+              "serviceArn": "arn:aws:ecs:us-east-1:123456789012:service/MyCluster/MyService",
+              "serviceDeploymentArn": "arn:aws:ecs:us-east-1:123456789012:service-deployment/MyCluster/MyService/r9i43YFjvgF_xlg7m2eJ1r",
+              "status": "IN_PROGRESS",
+              "targetServiceRevision": {
+                "arn": "arn:aws:ecs:us-east-1:123456789012:service-revision/MyCluster/MyService/1234567890123456789",
+                "pendingTaskCount": 1,
+                "requestedTaskCount": 2,
+                "runningTaskCount": 1
+              },
+              "updatedAt": "2026-05-06T16:00:00.000Z"
+            }
+          ]
+        },
+        "description": "This example describes a service deployment that is currently paused at a lifecycle hook. The lifecycleHookDetails field shows the status of the pause hook, including when it will expire and what action will be taken if the timeout is reached.",
+        "id": "example-2",
+        "title": "To describe a service deployment with a paused lifecycle hook"
       }
     ],
     "DescribeServiceRevisions": [
@@ -1017,6 +1173,63 @@
         "description": "This example provides descriptive information about the service named ``ecs-simple-service``.",
         "id": "example-1",
         "title": "To describe a service"
+      },
+      {
+        "input": {
+          "services": [
+            "ecs-service-with-pause-hook"
+          ]
+        },
+        "output": {
+          "failures": [],
+          "services": [
+            {
+              "clusterArn": "arn:aws:ecs:us-east-1:012345678910:cluster/default",
+              "createdAt": "2026-05-06T16:00:00.000Z",
+              "deploymentConfiguration": {
+                "lifecycleHooks": [
+                  {
+                    "lifecycleStages": [
+                      "POST_PRODUCTION_TRAFFIC_SHIFT"
+                    ],
+                    "targetType": "PAUSE",
+                    "timeoutConfiguration": {
+                      "action": "ROLLBACK",
+                      "timeoutInMinutes": 60
+                    }
+                  }
+                ],
+                "maximumPercent": 200,
+                "minimumHealthyPercent": 100,
+                "strategy": "BLUE_GREEN"
+              },
+              "deployments": [
+                {
+                  "createdAt": "2026-05-06T16:00:00.000Z",
+                  "desiredCount": 2,
+                  "id": "ecs-svc/9223370564341623665",
+                  "pendingCount": 0,
+                  "runningCount": 2,
+                  "status": "PRIMARY",
+                  "taskDefinition": "arn:aws:ecs:us-east-1:012345678910:task-definition/ecs-demo:1",
+                  "updatedAt": "2026-05-06T16:00:00.000Z"
+                }
+              ],
+              "desiredCount": 2,
+              "events": [],
+              "loadBalancers": [],
+              "pendingCount": 0,
+              "runningCount": 2,
+              "serviceArn": "arn:aws:ecs:us-east-1:012345678910:service/default/ecs-service-with-pause-hook",
+              "serviceName": "ecs-service-with-pause-hook",
+              "status": "ACTIVE",
+              "taskDefinition": "arn:aws:ecs:us-east-1:012345678910:task-definition/ecs-demo:1"
+            }
+          ]
+        },
+        "description": "This example provides descriptive information about the service ``ecs-service-with-pause-hook``, which is configured with a pause lifecycle hook in its deployment configuration.",
+        "id": "example-2",
+        "title": "To describe a service with a pause lifecycle hook"
       }
     ],
     "DescribeTaskDefinition": [
@@ -2649,6 +2862,30 @@
         "description": "This example updates the desired count of the my-http-service service to 10.",
         "id": "example-2",
         "title": "To change the number of tasks in a service"
+      },
+      {
+        "input": {
+          "deploymentConfiguration": {
+            "lifecycleHooks": [
+              {
+                "lifecycleStages": [
+                  "POST_PRODUCTION_TRAFFIC_SHIFT"
+                ],
+                "targetType": "PAUSE",
+                "timeoutConfiguration": {
+                  "action": "CONTINUE",
+                  "timeoutInMinutes": 30
+                }
+              }
+            ],
+            "strategy": "BLUE_GREEN"
+          },
+          "service": "my-blue-green-service"
+        },
+        "output": {},
+        "description": "This example updates the my-blue-green-service service to add a pause lifecycle hook at the POST_PRODUCTION_TRAFFIC_SHIFT stage. The deployment will pause at that stage until you explicitly continue or roll back using the ContinueServiceDeployment API, or until the 30-minute timeout expires and triggers a continue.",
+        "id": "example-3",
+        "title": "To update a service to add a pause lifecycle hook"
       }
     ],
     "UpdateServicePrimaryTaskSet": [

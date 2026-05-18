@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\QuickSight` - Support for dataset enrichment and geo spatial in new data preparation experience
+* `Aws\IVS` - Adds support for up to 3 mediaTailorPlaybackConfiguration objects in an ad configuration resource
+* `Aws\Connect` - Amazon Connect Cases now supports SLA durations of up to 2 years (1,051,200 minutes), increased from the previous maximum of 90 days (129,600 minutes). This enables you to track long-running service level agreements for cases that require extended resolution timelines.
+* `Aws\Evs` - Amazon EVS now supports up to 32 hosts per EVS environment, increasing the previous host limit to allow a larger scale of VMware workload deployments and reduce operational overhead.
+* `Aws\ECS` - Amazon ECS now supports Pause lifecycle hooks for service deployments, allowing customers to automatically pause deployments at specified stages and use the new ContinueServiceDeployment API to continue or roll back with confidence.
+* `Aws\AccessAnalyzer` - Services manage service-linked analyzers through dedicated APIs - CreateServiceLinkedAnalyzer and DeleteServiceLinkedAnalyzer that separate service-linked specific operations from customer-managed operations. It also shows up in ListAnalyzers and GetAnalyzer responses.
+* `Aws\EC2` - Amazon VPC IP Address Manager (IPAM) now supports tags on IPAM pool allocations, enabling all standard tagging features for allocations including tag-on-create.
+
 ## 3.381.2 - 2026-05-15
 
 * `Aws\` - Fix circular reference cycles caused by non-static middleware closures implicitly capturing $this in AwsClient, GlacierClient, Route53Client, S3Client, S3MultiRegionClient, and Middleware.

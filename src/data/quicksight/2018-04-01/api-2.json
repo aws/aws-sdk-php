@@ -4401,6 +4401,18 @@
       "max":20,
       "min":1
     },
+    "AdditionalNotes":{
+      "type":"structure",
+      "members":{
+        "Text":{"shape":"AdditionalNotesText"}
+      }
+    },
+    "AdditionalNotesText":{
+      "type":"string",
+      "max":2000,
+      "min":0,
+      "sensitive":true
+    },
     "AggFunction":{
       "type":"structure",
       "members":{
@@ -7386,6 +7398,12 @@
       "max":128,
       "min":1
     },
+    "ColumnNameList":{
+      "type":"list",
+      "member":{"shape":"ColumnName"},
+      "max":2000,
+      "min":1
+    },
     "ColumnOrderingType":{
       "type":"string",
       "enum":[
@@ -7413,6 +7431,26 @@
       "type":"list",
       "member":{"shape":"ColumnSchema"},
       "max":500
+    },
+    "ColumnSemanticProperty":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"ColumnDescription"},
+        "AdditionalNotes":{"shape":"AdditionalNotes"},
+        "SemanticType":{"shape":"ColumnSemanticType"}
+      }
+    },
+    "ColumnSemanticPropertyList":{
+      "type":"list",
+      "member":{"shape":"ColumnSemanticProperty"},
+      "max":3,
+      "min":1
+    },
+    "ColumnSemanticType":{
+      "type":"structure",
+      "members":{
+        "GeographicalRole":{"shape":"GeoSpatialDataRole"}
+      }
     },
     "ColumnSort":{
       "type":"structure",
@@ -9081,6 +9119,18 @@
         "NullOption":{"shape":"FilterNullOption"}
       }
     },
+    "CustomInstruction":{
+      "type":"structure",
+      "members":{
+        "InlineCustomInstruction":{"shape":"InlineCustomInstruction"}
+      }
+    },
+    "CustomInstructionList":{
+      "type":"list",
+      "member":{"shape":"CustomInstruction"},
+      "max":2,
+      "min":1
+    },
     "CustomInstructions":{
       "type":"structure",
       "required":["CustomInstructionsString"],
@@ -9790,6 +9840,12 @@
         }
       }
     },
+    "DataSetDescriptiveText":{
+      "type":"string",
+      "max":500,
+      "min":1,
+      "sensitive":true
+    },
     "DataSetEntityResourceId":{
       "type":"string",
       "max":64,
@@ -9942,6 +9998,26 @@
     "DataSetSearchFilterList":{
       "type":"list",
       "member":{"shape":"DataSetSearchFilter"},
+      "max":1,
+      "min":1
+    },
+    "DataSetSemanticDescription":{
+      "type":"structure",
+      "required":["Text"],
+      "members":{
+        "Text":{"shape":"DataSetDescriptiveText"}
+      }
+    },
+    "DataSetSemanticMetadata":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"DataSetSemanticDescription"},
+        "CustomInstructions":{"shape":"CustomInstructionList"}
+      }
+    },
+    "DataSetSemanticMetadataList":{
+      "type":"list",
+      "member":{"shape":"DataSetSemanticMetadata"},
       "max":1,
       "min":1
     },
@@ -16763,6 +16839,20 @@
       "type":"list",
       "member":{"shape":"Ingestion"}
     },
+    "InlineCustomInstruction":{
+      "type":"structure",
+      "required":["InstructionText"],
+      "members":{
+        "InstructionText":{"shape":"InlineCustomInstructionText"},
+        "UploadedDocumentMetadata":{"shape":"UploadedDocumentMetadata"}
+      }
+    },
+    "InlineCustomInstructionText":{
+      "type":"string",
+      "max":50000,
+      "min":0,
+      "sensitive":true
+    },
     "InnerFilter":{
       "type":"structure",
       "members":{
@@ -22757,7 +22847,8 @@
     "SemanticModelConfiguration":{
       "type":"structure",
       "members":{
-        "TableMap":{"shape":"SemanticTableMap"}
+        "TableMap":{"shape":"SemanticTableMap"},
+        "SemanticMetadata":{"shape":"DataSetSemanticMetadataList"}
       }
     },
     "SemanticTable":{
@@ -22769,7 +22860,8 @@
       "members":{
         "Alias":{"shape":"SemanticTableAlias"},
         "DestinationTableId":{"shape":"DataSetEntityResourceId"},
-        "RowLevelPermissionConfiguration":{"shape":"RowLevelPermissionConfiguration"}
+        "RowLevelPermissionConfiguration":{"shape":"RowLevelPermissionConfiguration"},
+        "SemanticMetadata":{"shape":"TableSemanticMetadata"}
       }
     },
     "SemanticTableAlias":{
@@ -22951,6 +23043,20 @@
       "members":{
         "BackgroundColor":{"shape":"ConditionalFormattingColor"}
       }
+    },
+    "SharedColumnSemanticMetadata":{
+      "type":"structure",
+      "required":["ColumnProperties"],
+      "members":{
+        "ColumnNames":{"shape":"ColumnNameList"},
+        "ColumnProperties":{"shape":"ColumnSemanticPropertyList"}
+      }
+    },
+    "SharedColumnSemanticMetadataList":{
+      "type":"list",
+      "member":{"shape":"SharedColumnSemanticMetadata"},
+      "max":2000,
+      "min":1
     },
     "SharedViewConfigurations":{
       "type":"structure",
@@ -24417,6 +24523,12 @@
       "members":{
         "BackgroundColor":{"shape":"ConditionalFormattingColor"},
         "TextColor":{"shape":"ConditionalFormattingColor"}
+      }
+    },
+    "TableSemanticMetadata":{
+      "type":"structure",
+      "members":{
+        "ColumnMetadata":{"shape":"SharedColumnSemanticMetadataList"}
       }
     },
     "TableSideBorderOptions":{
@@ -27840,6 +27952,17 @@
         "Delimiter":{"shape":"Delimiter"},
         "CustomCellAddressRange":{"shape":"String"}
       }
+    },
+    "UploadedDocumentMetadata":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"UploadedDocumentName"}
+      }
+    },
+    "UploadedDocumentName":{
+      "type":"string",
+      "max":127,
+      "min":1
     },
     "User":{
       "type":"structure",

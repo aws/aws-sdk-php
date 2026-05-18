@@ -3049,6 +3049,15 @@
       "input":{"shape":"DescribeIpamPoliciesRequest"},
       "output":{"shape":"DescribeIpamPoliciesResult"}
     },
+    "DescribeIpamPoolAllocations":{
+      "name":"DescribeIpamPoolAllocations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeIpamPoolAllocationsRequest"},
+      "output":{"shape":"DescribeIpamPoolAllocationsResult"}
+    },
     "DescribeIpamPools":{
       "name":"DescribeIpamPools",
       "http":{
@@ -5674,6 +5683,15 @@
       "input":{"shape":"ModifyIpamPoolRequest"},
       "output":{"shape":"ModifyIpamPoolResult"}
     },
+    "ModifyIpamPoolAllocation":{
+      "name":"ModifyIpamPoolAllocation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyIpamPoolAllocationRequest"},
+      "output":{"shape":"ModifyIpamPoolAllocationResult"}
+    },
     "ModifyIpamPrefixListResolver":{
       "name":"ModifyIpamPrefixListResolver",
       "http":{
@@ -7741,6 +7759,10 @@
         "DisallowedCidrs":{
           "shape":"IpamPoolAllocationDisallowedCidrs",
           "locationName":"DisallowedCidr"
+        },
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
         }
       }
     },
@@ -21062,6 +21084,40 @@
         "IpamPolicies":{
           "shape":"IpamPolicySet",
           "locationName":"ipamPolicySet"
+        }
+      }
+    },
+    "DescribeIpamPoolAllocationsMaxResults":{
+      "type":"integer",
+      "max":100000,
+      "min":1000
+    },
+    "DescribeIpamPoolAllocationsRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPoolAllocationIds":{
+          "shape":"ValueStringList",
+          "locationName":"IpamPoolAllocationId"
+        },
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"DescribeIpamPoolAllocationsMaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeIpamPoolAllocationsResult":{
+      "type":"structure",
+      "members":{
+        "IpamPoolAllocations":{
+          "shape":"IpamPoolAllocationSet",
+          "locationName":"ipamPoolAllocationSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
         }
       }
     },
@@ -37542,6 +37598,10 @@
         "ResourceOwner":{
           "shape":"String",
           "locationName":"resourceOwner"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
         }
       }
     },
@@ -42021,6 +42081,24 @@
         "IpamPolicyDocument":{
           "shape":"IpamPolicyDocument",
           "locationName":"ipamPolicyDocument"
+        }
+      }
+    },
+    "ModifyIpamPoolAllocationRequest":{
+      "type":"structure",
+      "required":["IpamPoolAllocationId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPoolAllocationId":{"shape":"IpamPoolAllocationId"},
+        "Description":{"shape":"String"}
+      }
+    },
+    "ModifyIpamPoolAllocationResult":{
+      "type":"structure",
+      "members":{
+        "IpamPoolAllocation":{
+          "shape":"IpamPoolAllocation",
+          "locationName":"ipamPoolAllocation"
         }
       }
     },
@@ -49033,7 +49111,8 @@
         "secondary-network",
         "secondary-subnet",
         "capacity-manager-data-export",
-        "vpn-concentrator"
+        "vpn-concentrator",
+        "ipam-pool-allocation"
       ]
     },
     "ResourceTypeOption":{
@@ -58110,6 +58189,10 @@
         "EndTime":{
           "shape":"DateTime",
           "locationName":"endTime"
+        },
+        "Operator":{
+          "shape":"OperatorResponse",
+          "locationName":"operator"
         }
       }
     },

@@ -433,6 +433,18 @@
         "GetDashboardEmbedUrlRequest$AdditionalDashboardIds": "<p>A list of one or more dashboard IDs that you want anonymous users to have tempporary access to. Currently, the <code>IdentityType</code> parameter must be set to <code>ANONYMOUS</code> because other identity types authenticate as Quick or IAM users. For example, if you set \"<code>--dashboard-id dash_id1 --dashboard-id dash_id2 dash_id3 identity-type ANONYMOUS</code>\", the session can access all three dashboards.</p>"
       }
     },
+    "AdditionalNotes": {
+      "base": "<p>Additional notes that provide supplementary context for a column.</p>",
+      "refs": {
+        "ColumnSemanticProperty$AdditionalNotes": "<p>Additional notes for the column.</p>"
+      }
+    },
+    "AdditionalNotesText": {
+      "base": null,
+      "refs": {
+        "AdditionalNotes$Text": "<p>The additional notes text.</p>"
+      }
+    },
     "AggFunction": {
       "base": "<p>The definition of an Agg function.</p>",
       "refs": {
@@ -3351,6 +3363,7 @@
     "ColumnDescription": {
       "base": "<p>Metadata that contains a description for a column.</p>",
       "refs": {
+        "ColumnSemanticProperty$Description": "<p>A description of the column.</p>",
         "ColumnTag$ColumnDescription": "<p>A description for a column.</p>"
       }
     },
@@ -3525,6 +3538,7 @@
         "CastColumnTypeOperation$ColumnName": "<p>Column name.</p>",
         "ColumnIdentifier$ColumnName": "<p>The name of the column.</p>",
         "ColumnList$member": null,
+        "ColumnNameList$member": null,
         "ColumnToUnpivot$ColumnName": "<p>The name of the column to unpivot from the source data.</p>",
         "DataPrepListAggregationFunction$InputColumnName": "<p>The name of the column containing values to be concatenated.</p>",
         "DataPrepSimpleAggregationFunction$InputColumnName": "<p>The name of the column on which to perform the aggregation function.</p>",
@@ -3546,6 +3560,12 @@
         "UnpivotOperation$UnpivotedLabelColumnName": "<p>The name for the new column that will contain the unpivoted column names.</p>",
         "UnpivotOperation$UnpivotedValueColumnName": "<p>The name for the new column that will contain the unpivoted values.</p>",
         "UntagColumnOperation$ColumnName": "<p>The column that this operation acts on.</p>"
+      }
+    },
+    "ColumnNameList": {
+      "base": null,
+      "refs": {
+        "SharedColumnSemanticMetadata$ColumnNames": "<p>The names of the columns this metadata applies to.</p>"
       }
     },
     "ColumnOrderingType": {
@@ -3570,6 +3590,24 @@
       "base": null,
       "refs": {
         "DataSetSchema$ColumnSchemaList": "<p>A structure containing the list of column schemas.</p>"
+      }
+    },
+    "ColumnSemanticProperty": {
+      "base": "<p>A semantic property for a column.</p>",
+      "refs": {
+        "ColumnSemanticPropertyList$member": null
+      }
+    },
+    "ColumnSemanticPropertyList": {
+      "base": null,
+      "refs": {
+        "SharedColumnSemanticMetadata$ColumnProperties": "<p>The semantic properties for the specified columns.</p>"
+      }
+    },
+    "ColumnSemanticType": {
+      "base": "<p>The semantic type information for a column in the new data preparation experience.</p>",
+      "refs": {
+        "ColumnSemanticProperty$SemanticType": "<p>The semantic type of the column.</p>"
       }
     },
     "ColumnSort": {
@@ -4327,6 +4365,18 @@
         "CategoryFilterConfiguration$CustomFilterListConfiguration": "<p>A list of custom filter values. In the Quick Sight console, this filter type is called a custom filter list.</p>"
       }
     },
+    "CustomInstruction": {
+      "base": "<p>A custom instruction that provides guidance on how the dataset should be consumed.</p>",
+      "refs": {
+        "CustomInstructionList$member": null
+      }
+    },
+    "CustomInstructionList": {
+      "base": null,
+      "refs": {
+        "DataSetSemanticMetadata$CustomInstructions": "<p>A list of custom instructions that guide how the dataset should be consumed.</p>"
+      }
+    },
     "CustomInstructions": {
       "base": "<p>Instructions that provide additional guidance and context for response generation.</p>",
       "refs": {
@@ -4874,6 +4924,12 @@
         "DataSetDateFilterCondition$RangeFilterCondition": "<p>A range-based filter condition for the date column, filtering values between minimum and maximum dates.</p>"
       }
     },
+    "DataSetDescriptiveText": {
+      "base": null,
+      "refs": {
+        "DataSetSemanticDescription$Text": "<p>The descriptive text for the dataset.</p>"
+      }
+    },
     "DataSetEntityResourceId": {
       "base": null,
       "refs": {
@@ -5013,6 +5069,24 @@
       "base": null,
       "refs": {
         "SearchDataSetsRequest$Filters": "<p>The filters to apply to the search.</p>"
+      }
+    },
+    "DataSetSemanticDescription": {
+      "base": "<p>A description structure for dataset-level semantic metadata.</p>",
+      "refs": {
+        "DataSetSemanticMetadata$Description": "<p>A description of the dataset.</p>"
+      }
+    },
+    "DataSetSemanticMetadata": {
+      "base": "<p>Semantic metadata for a dataset, including a description and custom instructions.</p>",
+      "refs": {
+        "DataSetSemanticMetadataList$member": null
+      }
+    },
+    "DataSetSemanticMetadataList": {
+      "base": null,
+      "refs": {
+        "SemanticModelConfiguration$SemanticMetadata": "<p>The dataset-level semantic metadata, including a description and custom instructions.</p>"
       }
     },
     "DataSetStringComparisonFilterCondition": {
@@ -7693,6 +7767,7 @@
     "GeoSpatialDataRole": {
       "base": null,
       "refs": {
+        "ColumnSemanticType$GeographicalRole": "<p>The geographical role of the column in the new data preparation experience.</p>",
         "ColumnTag$ColumnGeographicRole": "<p>A geospatial role for a column.</p>"
       }
     },
@@ -8850,6 +8925,18 @@
       "base": null,
       "refs": {
         "ListIngestionsResponse$Ingestions": "<p>A list of the ingestions.</p>"
+      }
+    },
+    "InlineCustomInstruction": {
+      "base": "<p>An inline custom instruction with text content and optional file upload metadata.</p>",
+      "refs": {
+        "CustomInstruction$InlineCustomInstruction": "<p>An inline custom instruction containing text and optional uploaded document metadata.</p>"
+      }
+    },
+    "InlineCustomInstructionText": {
+      "base": null,
+      "refs": {
+        "InlineCustomInstruction$InstructionText": "<p>The instruction text content.</p>"
       }
     },
     "InnerFilter": {
@@ -13218,6 +13305,18 @@
         "FilledMapShapeConditionalFormatting$Format": "<p>The conditional formatting that determines the background color of a filled map's shape.</p>"
       }
     },
+    "SharedColumnSemanticMetadata": {
+      "base": "<p>Semantic metadata shared across one or more columns.</p>",
+      "refs": {
+        "SharedColumnSemanticMetadataList$member": null
+      }
+    },
+    "SharedColumnSemanticMetadataList": {
+      "base": null,
+      "refs": {
+        "TableSemanticMetadata$ColumnMetadata": "<p>A list of column semantic metadata entries.</p>"
+      }
+    },
     "SharedViewConfigurations": {
       "base": "<p>The shared view settings of an embedded dashboard.</p>",
       "refs": {
@@ -15392,6 +15491,12 @@
         "TableConditionalFormattingOption$Row": "<p>The row conditional formatting option for a table.</p>"
       }
     },
+    "TableSemanticMetadata": {
+      "base": "<p>Column-level semantic metadata for a semantic table.</p>",
+      "refs": {
+        "SemanticTable$SemanticMetadata": "<p>The column-level semantic metadata for this semantic table.</p>"
+      }
+    },
     "TableSideBorderOptions": {
       "base": "<p>The side border options for a table.</p>",
       "refs": {
@@ -17236,6 +17341,18 @@
       "base": "<p>Information about the format for a source file or files.</p>",
       "refs": {
         "S3Source$UploadSettings": "<p>Information about the format for the S3 source file or files.</p>"
+      }
+    },
+    "UploadedDocumentMetadata": {
+      "base": "<p>Metadata for an uploaded document associated with a custom instruction.</p>",
+      "refs": {
+        "InlineCustomInstruction$UploadedDocumentMetadata": "<p>Metadata about an uploaded document associated with this instruction.</p>"
+      }
+    },
+    "UploadedDocumentName": {
+      "base": null,
+      "refs": {
+        "UploadedDocumentMetadata$Name": "<p>The name of the uploaded document.</p>"
       }
     },
     "User": {

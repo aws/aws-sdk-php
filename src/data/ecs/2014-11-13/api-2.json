@@ -16,6 +16,23 @@
     "uid":"ecs-2014-11-13"
   },
   "operations":{
+    "ContinueServiceDeployment":{
+      "name":"ContinueServiceDeployment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ContinueServiceDeploymentRequest"},
+      "output":{"shape":"ContinueServiceDeploymentResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceDeploymentNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
+      ]
+    },
     "CreateCapacityProvider":{
       "name":"CreateCapacityProvider",
       "http":{
@@ -2105,6 +2122,24 @@
       "type":"list",
       "member":{"shape":"Container"}
     },
+    "ContinueServiceDeploymentRequest":{
+      "type":"structure",
+      "required":[
+        "serviceDeploymentArn",
+        "hookId"
+      ],
+      "members":{
+        "serviceDeploymentArn":{"shape":"String"},
+        "hookId":{"shape":"String"},
+        "action":{"shape":"DeploymentLifecycleHookAction"}
+      }
+    },
+    "ContinueServiceDeploymentResponse":{
+      "type":"structure",
+      "members":{
+        "serviceDeploymentArn":{"shape":"String"}
+      }
+    },
     "CpuManufacturer":{
       "type":"string",
       "enum":[
@@ -2888,11 +2923,41 @@
     "DeploymentLifecycleHook":{
       "type":"structure",
       "members":{
+        "targetType":{"shape":"DeploymentLifecycleHookTargetType"},
         "hookTargetArn":{"shape":"String"},
         "roleArn":{"shape":"IAMRoleArn"},
         "lifecycleStages":{"shape":"DeploymentLifecycleHookStageList"},
-        "hookDetails":{"shape":"HookDetails"}
+        "hookDetails":{"shape":"HookDetails"},
+        "timeoutConfiguration":{"shape":"DeploymentLifecycleHookTimeoutConfiguration"}
       }
+    },
+    "DeploymentLifecycleHookAction":{
+      "type":"string",
+      "enum":[
+        "ROLLBACK",
+        "CONTINUE"
+      ]
+    },
+    "DeploymentLifecycleHookDetail":{
+      "type":"structure",
+      "members":{
+        "hookId":{"shape":"String"},
+        "targetType":{"shape":"DeploymentLifecycleHookTargetType"},
+        "targetArn":{"shape":"String"},
+        "status":{"shape":"DeploymentLifecycleHookStatus"},
+        "expiresAt":{"shape":"Timestamp"},
+        "timeoutAction":{"shape":"DeploymentLifecycleHookAction"}
+      }
+    },
+    "DeploymentLifecycleHookDetailList":{
+      "type":"list",
+      "member":{"shape":"DeploymentLifecycleHookDetail"}
+    },
+    "DeploymentLifecycleHookDuration":{
+      "type":"integer",
+      "box":true,
+      "max":20160,
+      "min":1
     },
     "DeploymentLifecycleHookList":{
       "type":"list",
@@ -2906,6 +2971,7 @@
         "POST_SCALE_UP",
         "TEST_TRAFFIC_SHIFT",
         "POST_TEST_TRAFFIC_SHIFT",
+        "PRE_PRODUCTION_TRAFFIC_SHIFT",
         "PRODUCTION_TRAFFIC_SHIFT",
         "POST_PRODUCTION_TRAFFIC_SHIFT"
       ]
@@ -2913,6 +2979,30 @@
     "DeploymentLifecycleHookStageList":{
       "type":"list",
       "member":{"shape":"DeploymentLifecycleHookStage"}
+    },
+    "DeploymentLifecycleHookStatus":{
+      "type":"string",
+      "enum":[
+        "AWAITING_ACTION",
+        "IN_PROGRESS",
+        "SUCCEEDED",
+        "FAILED",
+        "TIMED_OUT"
+      ]
+    },
+    "DeploymentLifecycleHookTargetType":{
+      "type":"string",
+      "enum":[
+        "AWS_LAMBDA",
+        "PAUSE"
+      ]
+    },
+    "DeploymentLifecycleHookTimeoutConfiguration":{
+      "type":"structure",
+      "members":{
+        "timeoutInMinutes":{"shape":"DeploymentLifecycleHookDuration"},
+        "action":{"shape":"DeploymentLifecycleHookAction"}
+      }
     },
     "DeploymentRolloutState":{
       "type":"string",
@@ -5300,6 +5390,7 @@
         "status":{"shape":"ServiceDeploymentStatus"},
         "statusReason":{"shape":"String"},
         "lifecycleStage":{"shape":"ServiceDeploymentLifecycleStage"},
+        "lifecycleHookDetails":{"shape":"DeploymentLifecycleHookDetailList"},
         "deploymentConfiguration":{"shape":"DeploymentConfiguration"},
         "rollback":{"shape":"Rollback"},
         "deploymentCircuitBreaker":{"shape":"ServiceDeploymentCircuitBreaker"},
