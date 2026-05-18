@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.381.3 - 2026-05-18
 
 * `Aws\QuickSight` - Support for dataset enrichment and geo spatial in new data preparation experience
 * `Aws\IVS` - Adds support for up to 3 mediaTailorPlaybackConfiguration objects in an ad configuration resource
