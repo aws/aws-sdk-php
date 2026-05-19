@@ -628,7 +628,8 @@
         "GetRequesterGatewayResponse$totalLinksCount": "<p>The total count of links for the requester gateway.</p>",
         "GetResponderGatewayResponse$activeLinksCount": "<p>The count of active links for the responder gateway.</p>",
         "GetResponderGatewayResponse$totalLinksCount": "<p>The total count of links for the responder gateway.</p>",
-        "GetResponderGatewayResponse$inboundLinksCount": "<p>The count of inbound links for the responder gateway.</p>",
+        "GetResponderGatewayResponse$inboundLinksCount": "<p>Deprecated. Use 'linksRequestedCount' instead.</p>",
+        "GetResponderGatewayResponse$linksRequestedCount": "<p>The count of requested links waiting for the responder gateway to accept or reject.</p>",
         "ListLinksRequest$maxResults": "<p>The maximum number of results that are returned per call. You can use <code>nextToken</code> to obtain further pages of results.</p> <p>This is only an upper limit. The actual number of results returned per call might be fewer than the specified maximum.</p>"
       }
     },
@@ -769,7 +770,7 @@
       }
     },
     "LinkRoutingRuleSummary": {
-      "base": "<p>Summary of a routing rule for list responses</p>",
+      "base": "<p>A summary of a link routing rule.</p>",
       "refs": {
         "LinkRoutingRuleList$member": null
       }
@@ -994,21 +995,21 @@
       }
     },
     "QueryStringKeyValuePair": {
-      "base": "<p>Key-value pair for query string matching</p>",
+      "base": "<p>A key-value pair for query string matching in a routing rule condition.</p>",
       "refs": {
-        "RuleCondition$queryStringEquals": "<p>Query string key=value pair match (single pair)</p>"
+        "RuleCondition$queryStringEquals": "<p>A query string key-value pair that must be present and match exactly.</p>"
       }
     },
     "QueryStringKeyValuePairKeyString": {
       "base": null,
       "refs": {
-        "QueryStringKeyValuePair$key": "<p>RFC 3986 unreserved characters</p>"
+        "QueryStringKeyValuePair$key": "<p>The key of the query string parameter to match. Must contain only RFC 3986 unreserved characters.</p>"
       }
     },
     "QueryStringKeyValuePairValueString": {
       "base": null,
       "refs": {
-        "QueryStringKeyValuePair$value": "<p>RFC 3986 unreserved characters</p>"
+        "QueryStringKeyValuePair$value": "<p>The value of the query string parameter to match. Must contain only RFC 3986 unreserved characters.</p>"
       }
     },
     "RateLimiterModuleParameters": {
@@ -1098,7 +1099,7 @@
       }
     },
     "RuleCondition": {
-      "base": "<p>Conditions bag for a routing rule. All non-null fields must match (AND logic). At least one field must be set (enforced by CP).</p>",
+      "base": "<p>The conditions for a routing rule. All specified fields must match for the rule to apply (AND logic). At least one condition field must be set.</p>",
       "refs": {
         "CreateLinkRoutingRuleRequest$conditions": "<p>The conditions for the routing rule. All specified fields must match for the rule to apply. At least one condition field must be set.</p>",
         "GetLinkRoutingRuleResponse$conditions": "<p>The conditions for the routing rule.</p>",
@@ -1109,31 +1110,31 @@
     "RuleConditionHostHeaderString": {
       "base": null,
       "refs": {
-        "RuleCondition$hostHeader": "<p>Exact host match — RFC 3986 unreserved characters</p>"
+        "RuleCondition$hostHeader": "<p>The exact host header value to match.</p>"
       }
     },
     "RuleConditionHostHeaderWildcardString": {
       "base": null,
       "refs": {
-        "RuleCondition$hostHeaderWildcard": "<p>Wildcard host pattern (e.g., *.example.com) — RFC 3986 unreserved plus *</p>"
+        "RuleCondition$hostHeaderWildcard": "<p>A wildcard pattern for host header matching (for example, <code>*.example.com</code>).</p>"
       }
     },
     "RuleConditionPathExactString": {
       "base": null,
       "refs": {
-        "RuleCondition$pathExact": "<p>Exact path match — must start with /; RFC 3986 unreserved plus /</p>"
+        "RuleCondition$pathExact": "<p>The exact path to match. Must start with <code>/</code>.</p>"
       }
     },
     "RuleConditionPathPrefixString": {
       "base": null,
       "refs": {
-        "RuleCondition$pathPrefix": "<p>Path prefix matching — strict starts-with, no wildcard (preferred for new rules). Must start with /; RFC 3986 unreserved plus /</p>"
+        "RuleCondition$pathPrefix": "<p>The path prefix to match. The request path must start with this value. Must start with <code>/</code>.</p>"
       }
     },
     "RuleConditionQueryStringExistsString": {
       "base": null,
       "refs": {
-        "RuleCondition$queryStringExists": "<p>Query string key presence check (any value accepted) — RFC 3986 unreserved characters</p>"
+        "RuleCondition$queryStringExists": "<p>A query string key that must be present in the request (any value is accepted).</p>"
       }
     },
     "RuleId": {

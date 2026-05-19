@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>AWS DevOps Agent is a frontier agent that resolves and proactively prevents incidents, continuously improving reliability and performance. AWS DevOps Agent investigates incidents and identifies operational improvements as an experienced DevOps engineer.</p> <p>The agent works by:</p> <ul> <li>Learning your resources and their relationships.</li> <li>Working with your observability tools, runbooks, code repositories, and CI/CD pipelines.</li> <li>Correlating telemetry, code, and deployment data to understand relationships between your application resources.</li> <li>Supporting applications in multicloud and hybrid environments.</li> </ul>",
+  "service": "<p>AWS DevOps Agent is your always-available operations teammate. It resolves and proactively prevents incidents, optimizes application reliability and performance, and handles on-demand SRE tasks across AWS, multicloud, and on-premises environments. AWS DevOps Agent investigates incidents as an experienced DevOps engineer would. It learns your applications and their relationships. It works with your observability tools, runbooks, code repositories, and CI/CD pipelines. The agent correlates telemetry, code, and deployment data across all of them. </p>",
   "operations": {
     "AssociateService": "<p>Adds a specific service association to an AgentSpace. It overwrites the existing association of the same service. Returns 201 Created on success.</p>",
     "CreateAgentSpace": "<p>Creates a new AgentSpace with the specified name and description. Duplicate space names are allowed.</p>",
@@ -214,6 +214,7 @@
         "Goal$createdAt": "<p>Timestamp when this goal was created</p>",
         "Goal$updatedAt": "<p>Timestamp when this goal was last updated</p>",
         "Goal$lastEvaluatedAt": "<p>Timestamp when the goal was last evaluated</p>",
+        "Recommendation$rankedAt": "<p>Timestamp when the recommendation was last ranked</p>",
         "Recommendation$createdAt": "<p>Timestamp when this recommendation was created</p>",
         "Recommendation$updatedAt": "<p>Timestamp when this recommendation was last updated</p>",
         "Task$createdAt": "<p>Timestamp when this task was created</p>",
@@ -327,6 +328,25 @@
     "CreatePrivateConnectionOutput": {
       "base": "<p>Output containing the newly created Private Connection summary.</p>",
       "refs": {}
+    },
+    "CustomHeaderName": {
+      "base": "<p>HTTP header name. Allows alphanumeric characters, hyphens, and underscores.</p>",
+      "refs": {
+        "CustomHeaders$key": null
+      }
+    },
+    "CustomHeaderValue": {
+      "base": "<p>Value type for custom headers.</p>",
+      "refs": {
+        "CustomHeaders$value": null
+      }
+    },
+    "CustomHeaders": {
+      "base": "<p>Custom headers map.</p>",
+      "refs": {
+        "MCPServerSigV4AuthorizationConfig$customHeaders": "<p>Custom headers for the SigV4 MCP server.</p>",
+        "RegisteredMCPServerSigV4Details$customHeaders": "<p>Custom headers for the SigV4 MCP server.</p>"
+      }
     },
     "DatadogAuthorizationConfig": {
       "base": "<p>Authorization configuration for Datadog MCP server (uses authorization discovery only).</p>",
@@ -1237,6 +1257,48 @@
         "MCPServerOAuthClientCredentialsConfig$exchangeUrl": "<p>OAuth token exchange URL.</p>"
       }
     },
+    "MCPServerSigV4AuthorizationConfig": {
+      "base": "<p>Authorization configuration for SigV4-authenticated MCP server.</p>",
+      "refs": {
+        "MCPServerSigV4ServiceDetails$authorizationConfig": "<p>MCP Server SigV4 authorization configuration.</p>"
+      }
+    },
+    "MCPServerSigV4AuthorizationConfigServiceString": {
+      "base": null,
+      "refs": {
+        "MCPServerSigV4AuthorizationConfig$service": "<p>AWS service name for SigV4 signing.</p>"
+      }
+    },
+    "MCPServerSigV4Configuration": {
+      "base": "<p>Configuration for SigV4-authenticated MCP server integration.</p>",
+      "refs": {
+        "ServiceConfiguration$mcpserversigv4": "<p>SigV4-authenticated MCP server integration configuration.</p>"
+      }
+    },
+    "MCPServerSigV4ServiceDetails": {
+      "base": "<p>Complete service details for SigV4-authenticated MCP server integration.</p>",
+      "refs": {
+        "ServiceDetails$mcpserversigv4": "<p>SigV4-authenticated MCP server-specific service details.</p>"
+      }
+    },
+    "MCPServerSigV4ServiceDetailsDescriptionString": {
+      "base": "<p>Description field</p>",
+      "refs": {
+        "MCPServerSigV4ServiceDetails$description": "<p>Optional description for the MCP server.</p>"
+      }
+    },
+    "MCPServerSigV4ServiceDetailsEndpointString": {
+      "base": null,
+      "refs": {
+        "MCPServerSigV4ServiceDetails$endpoint": "<p>MCP server endpoint URL.</p>"
+      }
+    },
+    "MCPServerSigV4ServiceDetailsNameString": {
+      "base": null,
+      "refs": {
+        "MCPServerSigV4ServiceDetails$name": "<p>MCP server name.</p>"
+      }
+    },
     "MCPServerSplunkConfiguration": {
       "base": "<p>Mixin for webhook update support.</p>",
       "refs": {
@@ -1247,7 +1309,8 @@
       "base": "<p>List of MCP tool names available for the association.</p>",
       "refs": {
         "MCPServerConfiguration$tools": "<p>List of MCP tools can be used with the association.</p>",
-        "MCPServerGrafanaConfiguration$tools": "<p>List of MCP tools that can be used.</p>"
+        "MCPServerGrafanaConfiguration$tools": "<p>List of MCP tools that can be used.</p>",
+        "MCPServerSigV4Configuration$tools": "<p>List of MCP tools available for the association.</p>"
       }
     },
     "MCPToolsListMemberString": {
@@ -1553,6 +1616,12 @@
         "Recommendation$priority": "<p>Priority level of the recommendation</p>"
       }
     },
+    "RecommendationRankPositionInteger": {
+      "base": null,
+      "refs": {
+        "Recommendation$rankPosition": "<p>Position in ranked list (1 = highest priority)</p>"
+      }
+    },
     "RecommendationStatus": {
       "base": "<p>Status of a recommendation</p>",
       "refs": {
@@ -1644,6 +1713,36 @@
         "AdditionalServiceDetails$mcpserversplunk": "<p>Splunk MCP server-specific service details.</p>"
       }
     },
+    "RegisteredMCPServerSigV4Details": {
+      "base": "<p>Details specific to a registered SigV4-authenticated MCP server.</p>",
+      "refs": {
+        "AdditionalServiceDetails$mcpserversigv4": "<p>SigV4-authenticated MCP server-specific service details.</p>"
+      }
+    },
+    "RegisteredMCPServerSigV4DetailsDescriptionString": {
+      "base": "<p>Description field</p>",
+      "refs": {
+        "RegisteredMCPServerSigV4Details$description": "<p>Optional description for the MCP server.</p>"
+      }
+    },
+    "RegisteredMCPServerSigV4DetailsEndpointString": {
+      "base": null,
+      "refs": {
+        "RegisteredMCPServerSigV4Details$endpoint": "<p>MCP server endpoint URL.</p>"
+      }
+    },
+    "RegisteredMCPServerSigV4DetailsNameString": {
+      "base": null,
+      "refs": {
+        "RegisteredMCPServerSigV4Details$name": "<p>MCP server name.</p>"
+      }
+    },
+    "RegisteredMCPServerSigV4DetailsServiceString": {
+      "base": null,
+      "refs": {
+        "RegisteredMCPServerSigV4Details$service": "<p>AWS service name for SigV4 signing.</p>"
+      }
+    },
     "RegisteredNewRelicDetails": {
       "base": "<p>Details specific to a registered NewRelic instance.</p>",
       "refs": {
@@ -1732,7 +1831,9 @@
       "refs": {
         "AWSConfiguration$assumableRoleArn": "<p>Role ARN to be assumed by AIDevOps to operate on behalf of customer.</p>",
         "EnableOperatorAppInput$operatorAppRoleArn": "<p>The IAM role end users assume to access AIDevOps APIs</p>",
+        "MCPServerSigV4AuthorizationConfig$roleArn": "<p>IAM role ARN to assume for SigV4 signing.</p>",
         "RegisteredAzureIdentityDetails$webIdentityRoleArn": "<p>The role ARN to be assumed by DevOps Agent for requesting Web Identity Token.</p>",
+        "RegisteredMCPServerSigV4Details$roleArn": "<p>IAM role ARN to assume for SigV4 signing.</p>",
         "SourceAwsConfiguration$assumableRoleArn": "<p>Role ARN to be assumed by AIDevOps to operate on behalf of customer.</p>"
       }
     },
@@ -1793,7 +1894,7 @@
       }
     },
     "SendMessageEvents": {
-      "base": "<p>Event stream for chat message responses using the content block model. Events follow a lifecycle: responseCreated -&gt; responseInProgress -&gt; (contentBlockStart/contentBlockDelta/contentBlockStop events) -&gt; responseCompleted|responseFailed</p> <p>SendMessage always uses content block mode — legacy per-field events (outputTextDelta, functionCallArgumentsDelta, etc.) are not emitted.</p>",
+      "base": "<p>Event stream for chat message responses using the content block model. Events follow a lifecycle: responseCreated -&gt; responseInProgress -&gt; (contentBlockStart/contentBlockDelta/contentBlockStop events) -&gt; responseCompleted|responseFailed SendMessage always uses content block mode — legacy per-field events (outputTextDelta, functionCallArgumentsDelta, etc.) are not emitted.</p>",
       "refs": {
         "SendMessageResponse$events": "<p>The stream of chat message events</p>"
       }
@@ -1951,6 +2052,13 @@
     "ServiceQuotaExceededException": {
       "base": "<p>The request would exceed the service quota limit.</p>",
       "refs": {}
+    },
+    "SigV4Region": {
+      "base": "<p>AWS region identifier or wildcard (*) for SigV4a multi-region signing.</p>",
+      "refs": {
+        "MCPServerSigV4AuthorizationConfig$region": "<p>AWS region for SigV4 signing. Use '*' for SigV4a multi-region signing.</p>",
+        "RegisteredMCPServerSigV4Details$region": "<p>AWS region for SigV4 signing. Use '*' for SigV4a multi-region signing.</p>"
+      }
     },
     "SlackChannel": {
       "base": "<p>Represents a Slack channel with its ID and optional name.</p>",
@@ -2229,7 +2337,7 @@
     "TaskFilter": {
       "base": "<p>Filter criteria for listing backlog tasks, supporting time range, priority, status, and type filters.</p>",
       "refs": {
-        "ListBacklogTasksRequest$filter": "<p>Filter criteria to apply when listing tasks</p> <p>Filtering restrictions:</p> <ul> <li>Each filter field list is limited to a single value</li> <li>Filtering by Priority and Status at the same time when not filtering by Type is not permitted</li> <li>Timestamp filters (createdAfter, createdBefore) can be combined with other filters when not sorting by priority</li> </ul>"
+        "ListBacklogTasksRequest$filter": "<p>Filter criteria to apply when listing tasks Filtering restrictions: - Each filter field list is limited to a single value - Filtering by Priority and Status at the same time when not filtering by Type is not permitted - Timestamp filters (createdAfter, createdBefore) can be combined with other filters when not sorting by priority</p>"
       }
     },
     "TaskFilterPriorityList": {
@@ -2259,7 +2367,7 @@
     "TaskSortField": {
       "base": "<p>Fields available for sorting tasks</p>",
       "refs": {
-        "ListBacklogTasksRequest$sortField": "<p>Field to sort by</p> <pre><code>Sorting restrictions: </code></pre> <ul> <li>Only sorting on createdAt is supported when using priority or status filters alone.</li> <li>Sorting by priority is not supported when using Timestamp filters (createdAfter, createdBefore)</li> </ul>"
+        "ListBacklogTasksRequest$sortField": "<p>Field to sort by Sorting restrictions: - Only sorting on createdAt is supported when using priority or status filters alone. - Sorting by priority is not supported when using Timestamp filters (createdAfter, createdBefore)</p>"
       }
     },
     "TaskSortOrder": {
@@ -2410,7 +2518,7 @@
       "refs": {}
     },
     "ValidationException": {
-      "base": "<p>A standard error for input validation failures. This should be thrown by services when a member of the input structure falls outside of the modeled or documented constraints.</p>",
+      "base": "<p>The input fails to satisfy the constraints specified by the service.</p>",
       "refs": {}
     },
     "ValidationExceptionField": {

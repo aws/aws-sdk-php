@@ -1774,7 +1774,13 @@
         "tags":{"shape":"TagsMap"},
         "activeLinksCount":{"shape":"Integer"},
         "totalLinksCount":{"shape":"Integer"},
-        "inboundLinksCount":{"shape":"Integer"},
+        "inboundLinksCount":{
+          "shape":"Integer",
+          "deprecated":true,
+          "deprecatedMessage":"Use linksRequestedCount instead",
+          "deprecatedSince":"2026-05-11"
+        },
+        "linksRequestedCount":{"shape":"Integer"},
         "gatewayType":{"shape":"GatewayType"},
         "externalInboundEndpoint":{"shape":"DomainName"}
       }
