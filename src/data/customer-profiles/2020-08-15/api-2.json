@@ -5075,7 +5075,7 @@
     "InferenceConfigMinProvisionedTPSInteger":{
       "type":"integer",
       "box":true,
-      "max":500,
+      "max":1000,
       "min":1
     },
     "IntegrationConfig":{
@@ -6922,14 +6922,15 @@
         "EventsConfig":{"shape":"EventsConfig"},
         "TrainingFrequency":{"shape":"RecommenderConfigTrainingFrequencyInteger"},
         "InferenceConfig":{"shape":"InferenceConfig"},
-        "IncludedColumns":{"shape":"IncludedColumns"}
+        "IncludedColumns":{"shape":"IncludedColumns"},
+        "ExcludedColumns":{"shape":"IncludedColumns"}
       }
     },
     "RecommenderConfigTrainingFrequencyInteger":{
       "type":"integer",
       "box":true,
       "max":30,
-      "min":1
+      "min":0
     },
     "RecommenderContext":{
       "type":"map",
@@ -7059,7 +7060,7 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"RecommenderSchemaFieldList"},
-      "max":1,
+      "max":2,
       "min":1
     },
     "RecommenderSchemaStatus":{

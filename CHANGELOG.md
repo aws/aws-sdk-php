@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\KMS` - AWS KMS now supports creating grants for AWS service principals using new GranteeServicePrincipal and RetiringServicePrincipal parameters. This release adds SourceArn grant constraint and three condition keys for controlling CreateGrant access. For more information, see Grants in AWS KMS.
+* `Aws\PaymentCryptographyData` - GenerateAuthRequestCryptogram API launch.
+* `Aws\BedrockRuntime` - Supporting Request Metadata for Invoke Model and Invoke Model with Response Stream
+* `Aws\MWAA` - Updated API documentation to describe the PublicAndPrivate webserver access mode.
+* `Aws\CustomerProfiles` - Amazon Connect Customer Profiles adds support for item catalog columns in RecommenderSchema, ExcludedColumns in Create and Update Recommender to specify columns to exclude from training, and the ability to disable automatic retraining by setting TrainingFrequency to 0.
+
 ## 3.381.4 - 2026-05-19
 
 * `Aws\BedrockAgentCore` - Add RetryableConflictException (HTTP 409) to InvokeAgentRuntime and StopRuntimeSession to prevent orphaned VMs during concurrent session access. The SDK automatically retries this exception with backoff. Enforcement is not yet active and will be enabled in a future service update.

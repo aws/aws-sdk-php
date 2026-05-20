@@ -177,6 +177,42 @@
         "description": "The following example creates a grant that allows the specified IAM role to encrypt data with the specified KMS key.",
         "id": "to-create-a-grant-1477972226782",
         "title": "To create a grant"
+      },
+      {
+        "input": {
+          "Constraints": {
+            "SourceArn": "arn:aws:dynamodb:us-east-2:444455556666:table/ExampleTable"
+          },
+          "GranteeServicePrincipal": "service-name.amazonaws.com",
+          "KeyId": "arn:aws:kms:us-east-2:444455556666:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+          "Operations": [
+            "Encrypt",
+            "Decrypt",
+            "GenerateDataKey",
+            "DescribeKey"
+          ],
+          "RetiringServicePrincipal": "service-name.amazonaws.com"
+        },
+        "output": {
+          "GrantId": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2",
+          "GrantToken": "AQpAM2RhZTk1MGMyNTk2ZmZmMzEyYWVhOWViN2I1MWM4Mzc0MWFiYjc0ZDE1ODkyNGFlNTIzODZhMzgyZjBlNGY3NiKIAgEBAgB4Pa6VDCWW..."
+        },
+        "comments": {
+          "input": {
+            "Constraints": "The SourceArn grant constraint restricts the grant permissions to requests associated with the specified AWS resource.",
+            "GranteeServicePrincipal": "The AWS service principal that is given permission to perform the operations specified in the grant.",
+            "KeyId": "The identifier of the KMS key to which the grant applies. You can use the key ID or the Amazon Resource Name (ARN) of the KMS key.",
+            "Operations": "A list of operations that the grant allows.",
+            "RetiringServicePrincipal": "The AWS service principal that can retire the grant."
+          },
+          "output": {
+            "GrantId": "The unique identifier of the grant.",
+            "GrantToken": "The grant token."
+          }
+        },
+        "description": "The following example creates a grant that allows the specified AWS service principal to encrypt and decrypt data with the specified KMS key. The grant includes a SourceArn constraint that restricts the grant permissions to requests associated with the specified DynamoDB table.",
+        "id": "to-create-a-grant-for-a-service-principal-1477972226783",
+        "title": "To create a grant for a service principal"
       }
     ],
     "CreateKey": [
@@ -1921,6 +1957,47 @@
         "description": "The following example lists grants for the specified KMS key.",
         "id": "to-list-grants-for-a-cmk-1481067365389",
         "title": "To list grants for a KMS key"
+      },
+      {
+        "input": {
+          "GranteeServicePrincipal": "service-name.amazonaws.com",
+          "KeyId": "1234abcd-12ab-34cd-56ef-1234567890ab"
+        },
+        "output": {
+          "Grants": [
+            {
+              "Constraints": {
+                "SourceArn": "arn:aws:dynamodb:us-east-2:111122223333:table/ExampleTable"
+              },
+              "CreationDate": "2026-03-06T10:15:00-08:00",
+              "GrantId": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2",
+              "GranteeServicePrincipal": "service-name.amazonaws.com",
+              "IssuingAccount": "arn:aws:iam::111122223333:root",
+              "KeyId": "arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+              "Operations": [
+                "Encrypt",
+                "Decrypt",
+                "GenerateDataKey",
+                "DescribeKey"
+              ],
+              "RetiringServicePrincipal": "service-name.amazonaws.com"
+            }
+          ],
+          "Truncated": false
+        },
+        "comments": {
+          "input": {
+            "GranteeServicePrincipal": "Returns only grants where the specified AWS service principal is the grantee service principal.",
+            "KeyId": "The identifier of the KMS key whose grants you want to list. You can use the key ID or the Amazon Resource Name (ARN) of the KMS key."
+          },
+          "output": {
+            "Grants": "A list of grants.",
+            "Truncated": "A boolean that indicates whether there are more items in the list. Returns true when there are more items, or false when there are not."
+          }
+        },
+        "description": "The following example lists grants for the specified KMS key that were created with a GranteeServicePrincipal. The response includes the GranteeServicePrincipal, RetiringServicePrincipal, and SourceArn constraint fields.",
+        "id": "to-list-grants-by-grantee-service-principal-1481067365390",
+        "title": "To list grants for a grantee service principal"
       }
     ],
     "ListKeyPolicies": [
@@ -2098,6 +2175,45 @@
         "description": "The following example lists the grants that the specified principal (identity) can retire.",
         "id": "to-list-grants-that-the-specified-principal-can-retire-1481140499620",
         "title": "To list grants that the specified principal can retire"
+      },
+      {
+        "input": {
+          "RetiringServicePrincipal": "service-name.amazonaws.com"
+        },
+        "output": {
+          "Grants": [
+            {
+              "Constraints": {
+                "SourceArn": "arn:aws:dynamodb:us-east-2:444455556666:table/ExampleTable"
+              },
+              "CreationDate": "2026-03-06T10:15:00-08:00",
+              "GrantId": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2",
+              "GranteeServicePrincipal": "service-name.amazonaws.com",
+              "IssuingAccount": "arn:aws:iam::444455556666:root",
+              "KeyId": "arn:aws:kms:us-east-2:444455556666:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+              "Operations": [
+                "Encrypt",
+                "Decrypt",
+                "GenerateDataKey",
+                "DescribeKey"
+              ],
+              "RetiringServicePrincipal": "service-name.amazonaws.com"
+            }
+          ],
+          "Truncated": false
+        },
+        "comments": {
+          "input": {
+            "RetiringServicePrincipal": "The retiring service principal whose grants you want to list. Use the AWS service principal name of the service (for example, service-name.amazonaws.com)."
+          },
+          "output": {
+            "Grants": "A list of grants that the specified service principal can retire.",
+            "Truncated": "A boolean that indicates whether there are more items in the list. Returns true when there are more items, or false when there are not."
+          }
+        },
+        "description": "The following example lists the grants that the specified AWS service principal can retire.",
+        "id": "to-list-grants-by-retiring-service-principal-1481140499621",
+        "title": "To list grants that the specified service principal can retire"
       }
     ],
     "PutKeyPolicy": [

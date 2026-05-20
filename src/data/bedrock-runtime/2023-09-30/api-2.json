@@ -2935,6 +2935,11 @@
                     "shape": "ServiceTierType",
                     "location": "header",
                     "locationName": "X-Amzn-Bedrock-Service-Tier"
+                },
+                "requestMetadata": {
+                    "shape": "RequestMetadataJson",
+                    "location": "header",
+                    "locationName": "X-Amzn-Bedrock-Request-Metadata"
                 }
             },
             "payload": "body"
@@ -3092,6 +3097,11 @@
                     "shape": "ServiceTierType",
                     "location": "header",
                     "locationName": "X-Amzn-Bedrock-Service-Tier"
+                },
+                "requestMetadata": {
+                    "shape": "RequestMetadataJson",
+                    "location": "header",
+                    "locationName": "X-Amzn-Bedrock-Request-Metadata"
                 }
             },
             "payload": "body"
@@ -3512,6 +3522,12 @@
             },
             "max": 16,
             "min": 1,
+            "sensitive": true
+        },
+        "RequestMetadataJson": {
+            "type": "string",
+            "max": 8500,
+            "min": 0,
             "sensitive": true
         },
         "RequestMetadataKeyString": {
