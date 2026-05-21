@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.381.6 - 2026-05-21
 
 * `Aws\NetworkManager` - Adding new BDD representation of endpoint ruleset
 * `Aws\ApiGatewayV2` - Adding new BDD representation of endpoint ruleset
