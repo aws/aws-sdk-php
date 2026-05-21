@@ -2511,7 +2511,13 @@
         "ADD_MEMBER",
         "GRANT_RECEIVE_RESULTS_ABILITY",
         "REVOKE_RECEIVE_RESULTS_ABILITY",
-        "EDIT_AUTO_APPROVED_CHANGE_TYPES"
+        "EDIT_AUTO_APPROVED_CHANGE_TYPES",
+        "ADD_PAYER_CANDIDATE",
+        "REMOVE_PAYER_CANDIDATE",
+        "GRANT_CAN_RECEIVE_MODEL_OUTPUT",
+        "GRANT_CAN_RECEIVE_INFERENCE_OUTPUT",
+        "REVOKE_CAN_RECEIVE_MODEL_OUTPUT",
+        "REVOKE_CAN_RECEIVE_INFERENCE_OUTPUT"
       ]
     },
     "ChangeTypeList":{
@@ -5897,6 +5903,8 @@
       "members":{
         "accountId":{"shape":"AccountId"},
         "memberAbilities":{"shape":"MemberAbilities"},
+        "mlMemberAbilities":{"shape":"MLMemberAbilities"},
+        "paymentConfiguration":{"shape":"PaymentConfiguration"},
         "displayName":{"shape":"DisplayName"}
       }
     },
@@ -6459,7 +6467,8 @@
         "statistics":{"shape":"ProtectedJobStatistics"},
         "result":{"shape":"ProtectedJobResult"},
         "error":{"shape":"ProtectedJobError"},
-        "computeConfiguration":{"shape":"ProtectedJobComputeConfiguration"}
+        "computeConfiguration":{"shape":"ProtectedJobComputeConfiguration"},
+        "jobComputePayerAccountId":{"shape":"AccountId"}
       }
     },
     "ProtectedJobAnalysisType":{
@@ -6665,7 +6674,8 @@
         "membershipArn":{"shape":"MembershipArn"},
         "createTime":{"shape":"Timestamp"},
         "status":{"shape":"ProtectedJobStatus"},
-        "receiverConfigurations":{"shape":"ProtectedJobReceiverConfigurations"}
+        "receiverConfigurations":{"shape":"ProtectedJobReceiverConfigurations"},
+        "jobComputePayerAccountId":{"shape":"AccountId"}
       }
     },
     "ProtectedJobSummaryList":{
@@ -6722,7 +6732,8 @@
         "result":{"shape":"ProtectedQueryResult"},
         "error":{"shape":"ProtectedQueryError"},
         "differentialPrivacy":{"shape":"DifferentialPrivacyParameters"},
-        "computeConfiguration":{"shape":"ComputeConfiguration"}
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
+        "queryComputePayerAccountId":{"shape":"AccountId"}
       }
     },
     "ProtectedQueryDistributeOutput":{
@@ -6894,7 +6905,8 @@
         "membershipArn":{"shape":"MembershipArn"},
         "createTime":{"shape":"Timestamp"},
         "status":{"shape":"ProtectedQueryStatus"},
-        "receiverConfigurations":{"shape":"ReceiverConfigurationsList"}
+        "receiverConfigurations":{"shape":"ReceiverConfigurationsList"},
+        "queryComputePayerAccountId":{"shape":"AccountId"}
       }
     },
     "ProtectedQuerySummaryList":{
@@ -7377,7 +7389,8 @@
         },
         "jobParameters":{"shape":"ProtectedJobParameters"},
         "resultConfiguration":{"shape":"ProtectedJobResultConfigurationInput"},
-        "computeConfiguration":{"shape":"ProtectedJobComputeConfiguration"}
+        "computeConfiguration":{"shape":"ProtectedJobComputeConfiguration"},
+        "jobComputePayerAccountId":{"shape":"AccountId"}
       }
     },
     "StartProtectedJobOutput":{
@@ -7403,7 +7416,8 @@
         },
         "sqlParameters":{"shape":"ProtectedQuerySQLParameters"},
         "resultConfiguration":{"shape":"ProtectedQueryResultConfiguration"},
-        "computeConfiguration":{"shape":"ComputeConfiguration"}
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
+        "queryComputePayerAccountId":{"shape":"AccountId"}
       }
     },
     "StartProtectedQueryOutput":{
@@ -7895,7 +7909,8 @@
         "queryLogStatus":{"shape":"MembershipQueryLogStatus"},
         "jobLogStatus":{"shape":"MembershipJobLogStatus"},
         "defaultResultConfiguration":{"shape":"MembershipProtectedQueryResultConfiguration"},
-        "defaultJobResultConfiguration":{"shape":"MembershipProtectedJobResultConfiguration"}
+        "defaultJobResultConfiguration":{"shape":"MembershipProtectedJobResultConfiguration"},
+        "membershipPaymentConfiguration":{"shape":"UpdateMembershipPaymentConfiguration"}
       }
     },
     "UpdateMembershipOutput":{
@@ -7903,6 +7918,14 @@
       "required":["membership"],
       "members":{
         "membership":{"shape":"Membership"}
+      }
+    },
+    "UpdateMembershipPaymentConfiguration":{
+      "type":"structure",
+      "members":{
+        "queryCompute":{"shape":"MembershipQueryComputePaymentConfig"},
+        "machineLearning":{"shape":"MembershipMLPaymentConfig"},
+        "jobCompute":{"shape":"MembershipJobComputePaymentConfig"}
       }
     },
     "UpdatePrivacyBudgetTemplateInput":{

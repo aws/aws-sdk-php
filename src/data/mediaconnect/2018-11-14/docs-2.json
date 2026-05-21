@@ -1713,6 +1713,14 @@
         "__listOfNdiMediaStreamInfo$member": null
       }
     },
+    "NdiOutputTimecodeSource": {
+      "base": null,
+      "refs": {
+        "AddOutputRequest$NdiOutputTimecodeSource": "<p>Controls how MediaConnect generates timecodes for NDI output frames. If you don't specify this field, MediaConnect uses <code>EMBEDDED_TIMECODE</code>.</p> <ul> <li> <p> <code>EMBEDDED_TIMECODE</code> (default) - Preserves timecodes from the input transport stream. The timecodes must be embedded in the video stream as SEI timing messages. If no embedded timecode is detected, MediaConnect uses the UTC system time instead.</p> </li> <li> <p> <code>UTC_SYSTEM_TIME</code> - Generates timecodes based on the system clock time when each frame is sent.</p> </li> </ul>",
+        "Transport$NdiOutputTimecodeSource": "<p>The timecode source for NDI output frames. For NDI outputs, this field is always present and defaults to <code>EMBEDDED_TIMECODE</code>.</p> <ul> <li> <p> <code>EMBEDDED_TIMECODE</code> - Preserves timecodes from the input transport stream. The timecodes must be embedded in the video stream as SEI timing messages. If no embedded timecode is detected, MediaConnect uses the UTC system time instead.</p> </li> <li> <p> <code>UTC_SYSTEM_TIME</code> - Generates timecodes based on the system clock time when each frame is sent.</p> </li> </ul>",
+        "UpdateFlowOutputRequest$NdiOutputTimecodeSource": "<p>Controls how MediaConnect generates timecodes for NDI output frames. If you don't specify this field, MediaConnect leaves the value unchanged.</p> <ul> <li> <p> <code>EMBEDDED_TIMECODE</code> - Preserves timecodes from the input transport stream. The timecodes must be embedded in the video stream as SEI timing messages. If no embedded timecode is detected, MediaConnect uses the UTC system time instead.</p> </li> <li> <p> <code>UTC_SYSTEM_TIME</code> - Generates timecodes based on the system clock time when each frame is sent.</p> </li> </ul>"
+      }
+    },
     "NdiSourceInfo": {
       "base": "<p> Information about a single NDI® sender, including its name. </p>",
       "refs": {
@@ -1824,6 +1832,12 @@
       "base": "<p>A rule that allows a specific CIDR block to access the public router network interface.</p>",
       "refs": {
         "PublicRouterNetworkInterfaceConfigurationAllowRulesList$member": null
+      }
+    },
+    "PublicRouterNetworkInterfaceRuleCidrString": {
+      "base": null,
+      "refs": {
+        "PublicRouterNetworkInterfaceRule$Cidr": "<p>The CIDR block that is allowed to access the public router network interface.</p>"
       }
     },
     "PurchaseOfferingRequest": {
@@ -2976,7 +2990,6 @@
         "Output$PeerIpAddress": "<p>The IP address of the device that is currently receiving content from this output.</p> <note> <ul> <li> <p>For outputs that use protocols where you specify the destination (such as SRT Caller or Zixi Push), this value matches the configured destination address.</p> </li> <li> <p>For outputs that use listener protocols (such as SRT Listener), this value shows the address of the connected receiver. </p> </li> <li> <p>Peer IP addresses aren't available for entitlements, managed MediaLive outputs, NDI® sources and outputs, and CDI/ST2110 outputs. </p> </li> <li> <p>The peer IP address might not be visible for flows that haven't been started yet, or flows that were started before May 2025. In these cases, restart your flow to see the peer IP address.</p> </li> </ul> </note>",
         "Output$ConnectedRouterInputArn": "<p>The ARN of the router input that's connected to this flow output.</p>",
         "PreferredDayTimeMaintenanceConfiguration$Time": "<p>The preferred time for maintenance operations.</p>",
-        "PublicRouterNetworkInterfaceRule$Cidr": "<p>The CIDR block that is allowed to access the public router network interface.</p>",
         "PurchaseOfferingRequest$OfferingArn": "<p> The Amazon Resource Name (ARN) of the offering.</p>",
         "PurchaseOfferingRequest$ReservationName": "<p> The name that you want to use for the reservation.</p>",
         "PurchaseOfferingRequest$Start": "<p> The date and time that you want the reservation to begin, in Coordinated Universal Time (UTC). </p> <p>You can specify any date and time between 12:00am on the first day of the current month to the current time on today's date, inclusive. Specify the start in a 24-hour notation. Use the following format: <code>YYYY-MM-DDTHH:mm:SSZ</code>, where <code>T</code> and <code>Z</code> are literal characters. For example, to specify 11:30pm on March 5, 2020, enter <code>2020-03-05T23:30:00Z</code>.</p>",

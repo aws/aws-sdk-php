@@ -625,9 +625,19 @@
           "aliasName": "policy-store-alias/example-policy-store"
         },
         "output": {},
-        "description": "The following example deletes the policy store alias with name example-policy-store.",
+        "description": "The following example soft deletes the policy store alias with name example-policy-store. The alias enters the PendingDeletion state.",
         "id": "example-1",
-        "title": "DeletePolicyStoreAlias"
+        "title": "Soft delete a policy store alias"
+      },
+      {
+        "input": {
+          "aliasName": "policy-store-alias/example-policy-store",
+          "deletionMode": "HardDelete"
+        },
+        "output": {},
+        "description": "The following example hard deletes the policy store alias with name example-policy-store. The alias is immediately deleted, bypassing the PendingDeletion state.",
+        "id": "example-2",
+        "title": "Hard delete a policy store alias"
       }
     ],
     "DeletePolicyTemplate": [
@@ -844,7 +854,7 @@
       {
         "input": {
           "action": {
-            "actionId": "view",
+            "actionId": "updatePhoto",
             "actionType": "Action"
           },
           "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",

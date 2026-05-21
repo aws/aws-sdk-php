@@ -161,6 +161,21 @@
       ],
       "idempotent":true
     },
+    "GetDepotUrl":{
+      "name":"GetDepotUrl",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDepotUrlRequest"},
+      "output":{"shape":"GetDepotUrlResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "GetEnvironment":{
       "name":"GetEnvironment",
       "http":{
@@ -823,6 +838,25 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "GetDepotUrlRequest":{
+      "type":"structure",
+      "required":["environmentId"],
+      "members":{
+        "environmentId":{"shape":"EnvironmentId"},
+        "rotate":{"shape":"Boolean"}
+      }
+    },
+    "GetDepotUrlResponse":{
+      "type":"structure",
+      "required":[
+        "depotUrl",
+        "token"
+      ],
+      "members":{
+        "depotUrl":{"shape":"String"},
+        "token":{"shape":"String"}
+      }
+    },
     "GetEnvironmentRequest":{
       "type":"structure",
       "required":["environmentId"],
@@ -1227,7 +1261,8 @@
     },
     "SolutionKey":{
       "type":"string",
-      "pattern":"[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}"
+      "pattern":"[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}",
+      "sensitive":true
     },
     "StateDetails":{"type":"string"},
     "String":{"type":"string"},
@@ -1337,7 +1372,8 @@
     },
     "VSanLicenseKey":{
       "type":"string",
-      "pattern":"[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}"
+      "pattern":"[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}",
+      "sensitive":true
     },
     "ValidationException":{
       "type":"structure",

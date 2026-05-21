@@ -2058,6 +2058,10 @@
         "RouterIntegrationTransitEncryption":{
           "shape":"FlowTransitEncryption",
           "locationName":"routerIntegrationTransitEncryption"
+        },
+        "NdiOutputTimecodeSource":{
+          "shape":"NdiOutputTimecodeSource",
+          "locationName":"ndiOutputTimecodeSource"
         }
       }
     },
@@ -2862,7 +2866,8 @@
     "CreateRouterNetworkInterfaceRequestNameString":{
       "type":"string",
       "max":128,
-      "min":1
+      "min":1,
+      "pattern":"[a-zA-Z0-9]([a-zA-Z0-9\\-_]*[a-zA-Z0-9])?"
     },
     "CreateRouterNetworkInterfaceResponse":{
       "type":"structure",
@@ -5799,6 +5804,13 @@
         }
       }
     },
+    "NdiOutputTimecodeSource":{
+      "type":"string",
+      "enum":[
+        "EMBEDDED_TIMECODE",
+        "UTC_SYSTEM_TIME"
+      ]
+    },
     "NdiSourceInfo":{
       "type":"structure",
       "required":["SourceName"],
@@ -6076,10 +6088,14 @@
       "required":["Cidr"],
       "members":{
         "Cidr":{
-          "shape":"String",
+          "shape":"PublicRouterNetworkInterfaceRuleCidrString",
           "locationName":"cidr"
         }
       }
+    },
+    "PublicRouterNetworkInterfaceRuleCidrString":{
+      "type":"string",
+      "pattern":"(?:[0-9]{1,3}\\.){3}[0-9]{1,3}/([0-9]|[12][0-9]|3[0-2])"
     },
     "PurchaseOfferingRequest":{
       "type":"structure",
@@ -8492,6 +8508,10 @@
         "NdiSourceSettings":{
           "shape":"NdiSourceSettings",
           "locationName":"ndiSourceSettings"
+        },
+        "NdiOutputTimecodeSource":{
+          "shape":"NdiOutputTimecodeSource",
+          "locationName":"ndiOutputTimecodeSource"
         }
       }
     },
@@ -9116,6 +9136,10 @@
         "RouterIntegrationTransitEncryption":{
           "shape":"FlowTransitEncryption",
           "locationName":"routerIntegrationTransitEncryption"
+        },
+        "NdiOutputTimecodeSource":{
+          "shape":"NdiOutputTimecodeSource",
+          "locationName":"ndiOutputTimecodeSource"
         }
       }
     },
@@ -9471,7 +9495,8 @@
     "UpdateRouterNetworkInterfaceRequestNameString":{
       "type":"string",
       "max":128,
-      "min":1
+      "min":1,
+      "pattern":"[a-zA-Z0-9]([a-zA-Z0-9\\-_]*[a-zA-Z0-9])?"
     },
     "UpdateRouterNetworkInterfaceResponse":{
       "type":"structure",

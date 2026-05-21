@@ -104,15 +104,26 @@
         "CollaborationConfiguredModelAlgorithmAssociationSummary$creatorAccountId": "<p>The account ID of the member that created the configured model algorithm association.</p>",
         "CollaborationMLInputChannelSummary$creatorAccountId": "<p>The account ID of the member who created the ML input channel.</p>",
         "CollaborationTrainedModelExportJobSummary$creatorAccountId": "<p>The account ID of the member that created the trained model.</p>",
+        "CollaborationTrainedModelInferenceJobSummary$mlModelInferencePayerAccountId": "<p>The account ID of the member that is responsible for paying for model inference costs.</p>",
         "CollaborationTrainedModelInferenceJobSummary$creatorAccountId": "<p>The account ID that created the trained model inference job.</p>",
         "CollaborationTrainedModelSummary$creatorAccountId": "<p>The account ID of the member that created the trained model.</p>",
+        "CollaborationTrainedModelSummary$mlModelTrainingPayerAccountId": "<p>The account ID of the member that is responsible for paying for model training costs.</p>",
+        "CreateTrainedModelRequest$mlModelTrainingPayerAccountId": "<p>The account ID of the member that is responsible for paying for model training costs.</p>",
         "GetAudienceGenerationJobResponse$startedBy": "<p>The AWS account that started this audience generation job.</p>",
         "GetCollaborationConfiguredModelAlgorithmAssociationResponse$creatorAccountId": "<p>The account ID of the member that created the configured model algorithm association.</p>",
         "GetCollaborationMLInputChannelResponse$creatorAccountId": "<p>The account ID of the member who created the ML input channel.</p>",
+        "GetCollaborationTrainedModelResponse$mlModelTrainingPayerAccountId": "<p>The account ID of the member that is responsible for paying for model training costs.</p>",
         "GetCollaborationTrainedModelResponse$creatorAccountId": "<p>The account ID of the member that created the trained model.</p>",
+        "GetTrainedModelInferenceJobResponse$mlModelInferencePayerAccountId": "<p>The account ID of the member that is responsible for paying for model inference costs.</p>",
+        "GetTrainedModelResponse$mlModelTrainingPayerAccountId": "<p>The account ID of the member that is responsible for paying for model training costs.</p>",
         "GlueDataSource$catalogId": "<p>The Glue catalog that contains the training data.</p>",
         "InferenceReceiverMember$accountId": "<p>The account ID of the member that can receive inference results.</p>",
-        "TrainedModelExportReceiverMember$accountId": "<p>The account ID of the member who will receive trained model exports.</p>"
+        "PayerConfiguration$computePayerAccountId": "<p>The account ID of the member that is responsible for paying compute costs.</p>",
+        "PayerConfiguration$syntheticDataPayerAccountId": "<p>The account ID of the member that is responsible for paying synthetic data generation costs.</p>",
+        "StartTrainedModelInferenceJobRequest$mlModelInferencePayerAccountId": "<p>The account ID of the member that is responsible for paying for model inference costs.</p>",
+        "TrainedModelExportReceiverMember$accountId": "<p>The account ID of the member who will receive trained model exports.</p>",
+        "TrainedModelInferenceJobSummary$mlModelInferencePayerAccountId": "<p>The account ID of the member that is responsible for paying for model inference costs.</p>",
+        "TrainedModelSummary$mlModelTrainingPayerAccountId": "<p>The account ID of the member that is responsible for paying for model training costs.</p>"
       }
     },
     "AccountIdList": {
@@ -1628,6 +1639,16 @@
       "base": null,
       "refs": {
         "ParameterMap$value": null
+      }
+    },
+    "PayerConfiguration": {
+      "base": "<p>Specifies which member accounts are responsible for paying for compute and synthetic data generation costs in a Clean Rooms ML collaboration.</p>",
+      "refs": {
+        "CollaborationMLInputChannelSummary$payerConfiguration": "<p>The payer configuration for the ML input channel.</p>",
+        "CreateMLInputChannelRequest$payerConfiguration": "<p>The payer configuration for the ML input channel. Determines which member account pays for compute and synthetic data costs.</p>",
+        "GetCollaborationMLInputChannelResponse$payerConfiguration": "<p>The payer configuration for the ML input channel.</p>",
+        "GetMLInputChannelResponse$payerConfiguration": "<p>The payer configuration for the ML input channel.</p>",
+        "MLInputChannelSummary$payerConfiguration": "<p>The payer configuration for the ML input channel.</p>"
       }
     },
     "PolicyExistenceCondition": {

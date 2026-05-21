@@ -12,6 +12,7 @@
     "DeleteEnvironmentConnector": "<p>Deletes a connector from an Amazon EVS environment.</p> <note> <p>Before deleting a connector, you must remove all entitlements that are associated with the same vCenter.</p> </note>",
     "DeleteEnvironmentHost": "<p>Deletes a host from an Amazon EVS environment.</p> <note> <p>Before deleting a host, you must unassign and decommission the host from within the SDDC Manager user interface. Not doing so could impact the availability of your virtual machines or result in data loss.</p> </note>",
     "DisassociateEipFromVlan": "<p>Disassociates an Elastic IP address from a public HCX VLAN. This operation is only allowed for public HCX VLANs at this time.</p>",
+    "GetDepotUrl": "<p>Returns a URL and authentication token for accessing the Amazon EVS Custom Addon depot. Configure the depot URL as a download source in vSphere Lifecycle Manager (vLCM) to sync and install the Amazon EVS Custom Addon.</p> <p>The depot URL remains active until you rotate the authentication token by calling this action with <code>rotate</code> set to <code>true</code>.</p>",
     "GetEnvironment": "<p>Returns a description of the specified environment.</p>",
     "GetVersions": "<p>Returns information about VCF versions, ESX versions and EC2 instance types provided by Amazon EVS. For each VCF version, the response also includes the default ESX version and provided EC2 instance types.</p>",
     "ListEnvironmentConnectors": "<p>Lists the connectors within an environment. Returns the status of each connector and its applicable checks, among other connector details.</p>",
@@ -76,6 +77,7 @@
       "refs": {
         "CreateEnvironmentRequest$termsAccepted": "<p>Customer confirmation that the customer has purchased and will continue to maintain the required number of VCF software licenses to cover all physical processor cores in the Amazon EVS environment. Information about your VCF software in Amazon EVS will be shared with Broadcom to verify license compliance. Amazon EVS does not validate license keys. To validate license keys, visit the Broadcom support portal.</p>",
         "Environment$termsAccepted": "<p>Customer confirmation that the customer has purchased and will continue to maintain the required number of VCF software licenses to cover all physical processor cores in the Amazon EVS environment. Information about your VCF software in Amazon EVS will be shared with Broadcom to verify license compliance. Amazon EVS does not validate license keys. To validate license keys, visit the Broadcom support portal. </p>",
+        "GetDepotUrlRequest$rotate": "<p>Revokes the current authentication token and returns a new depot URL with a new token. Previously issued depot URLs will stop working within 5 minutes of rotation.</p>",
         "InitialVlans$isHcxPublic": "<p>Determines if the HCX VLAN that Amazon EVS provisions is public or private.</p>",
         "Vlan$isPublic": "<p>Determines if the VLAN that Amazon EVS provisions is public or private.</p>"
       }
@@ -326,6 +328,7 @@
         "DisassociateEipFromVlanRequest$environmentId": "<p>A unique ID for the environment containing the VLAN that the Elastic IP address disassociates from.</p>",
         "Environment$environmentId": "<p>The unique ID for the environment.</p>",
         "EnvironmentSummary$environmentId": "<p>A unique ID for the environment.</p>",
+        "GetDepotUrlRequest$environmentId": "<p>The unique ID of the Amazon EVS environment to get the depot URL for.</p>",
         "GetEnvironmentRequest$environmentId": "<p>A unique ID for the environment.</p>",
         "ListEnvironmentConnectorsRequest$environmentId": "<p>A unique ID for the environment.</p>",
         "ListEnvironmentHostsRequest$environmentId": "<p>A unique ID for the environment.</p>",
@@ -389,6 +392,14 @@
       "refs": {
         "InstanceTypeEsxVersionsInfo$esxVersions": "<p>The list of ESX versions offered for this instance type.</p>"
       }
+    },
+    "GetDepotUrlRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDepotUrlResponse": {
+      "base": null,
+      "refs": {}
     },
     "GetEnvironmentRequest": {
       "base": null,
@@ -743,6 +754,8 @@
         "ErrorDetail$errorCode": "<p>The error code.</p>",
         "ErrorDetail$errorMessage": "<p>The error message.</p>",
         "EsxVersionList$member": null,
+        "GetDepotUrlResponse$depotUrl": "<p>The URL for accessing the Amazon EVS Custom Addon depot. This URL includes the authentication token as a path component.</p>",
+        "GetDepotUrlResponse$token": "<p>The authentication token for depot access. This token is included in the depot URL and is used to authenticate requests.</p>",
         "Host$ec2InstanceId": "<p>The unique ID of the EC2 instance that represents the host.</p>",
         "InternalServerException$message": "<p>Describes the error encountered.</p>",
         "ResourceNotFoundException$message": "<p>Describes the error encountered.</p>",

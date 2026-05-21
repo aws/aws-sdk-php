@@ -1,5 +1,61 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\NetworkManager` - Adding new BDD representation of endpoint ruleset
+* `Aws\ApiGatewayV2` - Adding new BDD representation of endpoint ruleset
+* `Aws\AppStream` - Adding new BDD representation of endpoint ruleset
+* `Aws\Route53Resolver` - Adding new BDD representation of endpoint ruleset
+* `Aws\MarketplaceEntitlementService` - Adding new BDD representation of endpoint ruleset
+* `Aws\ACM` - Adding new BDD representation of endpoint ruleset
+* `Aws\IoTJobsDataPlane` - Adding new BDD representation of endpoint ruleset
+* `Aws\TranscribeService` - Adding new BDD representation of endpoint ruleset
+* `Aws\VerifiedPermissions` - Support hard deleting policy store aliases. Users can now delete an alias and immediately reassign it to a different policy store without waiting for the soft-delete retention period.
+* `Aws\CleanRooms` - Collaboration creators can update payment configurations without recreating the collaboration. When multiple payer candidates are configured for a cost type, analysis runners can specify the actual payer at submission time, providing granular control over billing.
+* `Aws\MediaTailor` - Adding new BDD representation of endpoint ruleset
+* `Aws\Kafka` - Adding new BDD representation of endpoint ruleset
+* `Aws\Comprehend` - Adding new BDD representation of endpoint ruleset
+* `Aws\ComprehendMedical` - Adding new BDD representation of endpoint ruleset
+* `Aws\MediaConnect` - Adds support for controlling the timecode source of NDI flow outputs.
+* `Aws\Connect` - Adding new BDD representation of endpoint ruleset
+* `Aws\KinesisVideoArchivedMedia` - Adding new BDD representation of endpoint ruleset
+* `Aws\CodeGuruProfiler` - Adding new BDD representation of endpoint ruleset
+* `Aws\ACMPCA` - Adding new BDD representation of endpoint ruleset
+* `Aws\CodeArtifact` - Adding new BDD representation of endpoint ruleset
+* `Aws\SSOAdmin` - Adding new BDD representation of endpoint ruleset
+* `Aws\Evs` - A new GetDepotUrl API has been added to retrieve a URL for accessing Amazon EVS custom addon packages. Customers can use this URL to configure vSphere Lifecycle Manager (vLCM) as an online depot source, enabling upgrades of addon components across ESXi hosts.
+* `Aws\KendraRanking` - Adding new BDD representation of endpoint ruleset
+* `Aws\CleanRoomsML` - Collaboration creators can update payment configurations without recreating the collaboration. When multiple payer candidates are configured for a cost type, analysis runners can specify the actual payer at submission time, providing granular control over billing.
+* `Aws\SageMakerMetrics` - Adding new BDD representation of endpoint ruleset
+* `Aws\AppRegistry` - Adding new BDD representation of endpoint ruleset
+* `Aws\signer` - Adding new BDD representation of endpoint ruleset
+* `Aws\MigrationHubConfig` - Adding new BDD representation of endpoint ruleset
+* `Aws\BedrockAgentCoreControl` - Adds dataset management APIs for creating, versioning, and managing evaluation datasets.
+* `Aws\Cloud9` - Adding new BDD representation of endpoint ruleset
+* `Aws\GuardDuty` - Adding new BDD representation of endpoint ruleset
+* `Aws\EKS` - Adding new BDD representation of endpoint ruleset
+* `Aws\Textract` - Adding new BDD representation of endpoint ruleset
+* `Aws\Backup` - Adding new BDD representation of endpoint ruleset
+* `Aws\APIGateway` - Adding new BDD representation of endpoint ruleset
+* `Aws\HealthLake` - Adding new BDD representation of endpoint ruleset
+* `Aws\ServerlessApplicationRepository` - Adding new BDD representation of endpoint ruleset
+* `Aws\SecurityHub` - Adding new BDD representation of endpoint ruleset
+* `Aws\DLM` - Adding new BDD representation of endpoint ruleset
+* `Aws\MigrationHubOrchestrator` - Adding new BDD representation of endpoint ruleset
+* `Aws\QApps` - Adding new BDD representation of endpoint ruleset
+* `Aws\FMS` - Adding new BDD representation of endpoint ruleset
+* `Aws\DataSync` - Adding new BDD representation of endpoint ruleset
+* `Aws\BedrockRuntime` - Adding new BDD representation of endpoint ruleset
+* `Aws\QuickSight` - Adding new BDD representation of endpoint ruleset
+* `Aws\FSx` - Adding new BDD representation of endpoint ruleset
+* `Aws\WorkMail` - Adding new BDD representation of endpoint ruleset
+* `Aws\GlobalAccelerator` - Adding new BDD representation of endpoint ruleset
+* `Aws\Batch` - Clarified CreateComputeEnvironment parameter requirements - serviceRole is required for UNMANAGED compute environments, allocationStrategy is required for EKS compute environments, and compute environments must be created in the ENABLED state.
+* `Aws\BedrockAgent` - Adding new BDD representation of endpoint ruleset
+* `Aws\Pricing` - Adding new BDD representation of endpoint ruleset
+* `Aws\SageMaker` - Add support for disabling home EFS file system creation on SageMaker domains.
+* `Aws\Translate` - Adding new BDD representation of endpoint ruleset
+
 ## 3.381.5 - 2026-05-20
 
 * `Aws\KMS` - AWS KMS now supports creating grants for AWS service principals using new GranteeServicePrincipal and RetiringServicePrincipal parameters. This release adds SourceArn grant constraint and three condition keys for controlling CreateGrant access. For more information, see Grants in AWS KMS.

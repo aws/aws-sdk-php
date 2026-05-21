@@ -169,15 +169,21 @@
         "MemberSummary$accountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "Membership$collaborationCreatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "MembershipSummary$collaborationCreatorAccountId": "<p>The identifier of the Amazon Web Services principal that created the collaboration. Currently only supports Amazon Web Services account ID.</p>",
+        "ProtectedJob$jobComputePayerAccountId": "<p>The account ID of the member that pays for the job compute costs.</p>",
         "ProtectedJobMemberOutputConfigurationInput$accountId": "<p> The account ID.</p>",
         "ProtectedJobMemberOutputConfigurationOutput$accountId": "<p> The account ID.</p>",
         "ProtectedJobReceiverAccountIds$member": null,
         "ProtectedJobSingleMemberOutput$accountId": "<p>The Amazon Web Services account ID of the member in the collaboration who can receive results from analyses.</p>",
+        "ProtectedJobSummary$jobComputePayerAccountId": "<p>The account ID of the member that pays for the job compute costs.</p>",
+        "ProtectedQuery$queryComputePayerAccountId": "<p>The account ID of the member that pays for the query compute costs.</p>",
         "ProtectedQueryMemberOutputConfiguration$accountId": "<p>The unique identifier for the account.</p>",
         "ProtectedQuerySingleMemberOutput$accountId": "<p>The Amazon Web Services account ID of the member in the collaboration who can receive results for the query.</p>",
+        "ProtectedQuerySummary$queryComputePayerAccountId": "<p>The account ID of the member that pays for the query compute costs.</p>",
         "ReceiverAccountIds$member": null,
         "Schema$creatorAccountId": "<p>The unique account ID for the Amazon Web Services account that owns the schema.</p>",
-        "SchemaSummary$creatorAccountId": "<p>The unique account ID for the Amazon Web Services account that owns the schema.</p>"
+        "SchemaSummary$creatorAccountId": "<p>The unique account ID for the Amazon Web Services account that owns the schema.</p>",
+        "StartProtectedJobInput$jobComputePayerAccountId": "<p>The account ID of the member that pays for the job compute costs.</p>",
+        "StartProtectedQueryInput$queryComputePayerAccountId": "<p>The account ID of the member that pays for the query compute costs.</p>"
       }
     },
     "AdditionalAnalyses": {
@@ -2525,6 +2531,7 @@
       "base": "<p>The ML member abilities for a collaboration member.</p>",
       "refs": {
         "CreateCollaborationInput$creatorMLMemberAbilities": "<p>The ML abilities granted to the collaboration creator.</p>",
+        "MemberChangeSpecification$mlMemberAbilities": null,
         "MemberSpecification$mlMemberAbilities": "<p>The ML abilities granted to the collaboration member.</p>",
         "MemberSummary$mlAbilities": "<p>Provides a summary of the ML abilities for the collaboration member.</p>",
         "Membership$mlMemberAbilities": "<p>Specifies the ML member abilities that are granted to a collaboration member.</p>",
@@ -2734,7 +2741,8 @@
     "MembershipJobComputePaymentConfig": {
       "base": "<p>An object representing the payment responsibilities accepted by the collaboration member for query and job compute costs.</p>",
       "refs": {
-        "MembershipPaymentConfiguration$jobCompute": "<p>The payment responsibilities accepted by the collaboration member for job compute costs.</p>"
+        "MembershipPaymentConfiguration$jobCompute": "<p>The payment responsibilities accepted by the collaboration member for job compute costs.</p>",
+        "UpdateMembershipPaymentConfiguration$jobCompute": null
       }
     },
     "MembershipJobLogStatus": {
@@ -2748,7 +2756,8 @@
     "MembershipMLPaymentConfig": {
       "base": "<p>An object representing the collaboration member's machine learning payment responsibilities set by the collaboration creator.</p>",
       "refs": {
-        "MembershipPaymentConfiguration$machineLearning": "<p>The payment responsibilities accepted by the collaboration member for machine learning costs.</p>"
+        "MembershipPaymentConfiguration$machineLearning": "<p>The payment responsibilities accepted by the collaboration member for machine learning costs.</p>",
+        "UpdateMembershipPaymentConfiguration$machineLearning": null
       }
     },
     "MembershipModelInferencePaymentConfig": {
@@ -2802,7 +2811,8 @@
     "MembershipQueryComputePaymentConfig": {
       "base": "<p>An object representing the payment responsibilities accepted by the collaboration member for query compute costs.</p>",
       "refs": {
-        "MembershipPaymentConfiguration$queryCompute": "<p>The payment responsibilities accepted by the collaboration member for query compute costs.</p>"
+        "MembershipPaymentConfiguration$queryCompute": "<p>The payment responsibilities accepted by the collaboration member for query compute costs.</p>",
+        "UpdateMembershipPaymentConfiguration$queryCompute": null
       }
     },
     "MembershipQueryLogStatus": {
@@ -2926,6 +2936,7 @@
       "base": "<p>An object representing the collaboration member's payment responsibilities set by the collaboration creator.</p>",
       "refs": {
         "CreateCollaborationInput$creatorPaymentConfiguration": "<p>The collaboration creator's payment responsibilities set by the collaboration creator. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for query compute costs, then the member who can query is the default payer.</p>",
+        "MemberChangeSpecification$paymentConfiguration": null,
         "MemberSpecification$paymentConfiguration": "<p>The collaboration member's payment responsibilities set by the collaboration creator. </p> <p>If the collaboration creator hasn't speciﬁed anyone as the member paying for query compute costs, then the member who can query is the default payer.</p>",
         "MemberSummary$paymentConfiguration": "<p>The collaboration member's payment responsibilities set by the collaboration creator. </p>"
       }
@@ -4229,6 +4240,12 @@
     "UpdateMembershipOutput": {
       "base": null,
       "refs": {}
+    },
+    "UpdateMembershipPaymentConfiguration": {
+      "base": "<p>An object representing the payment responsibilities to update for the membership.</p>",
+      "refs": {
+        "UpdateMembershipInput$membershipPaymentConfiguration": "<p>The payment configuration to update for the membership.</p>"
+      }
     },
     "UpdatePrivacyBudgetTemplateInput": {
       "base": null,

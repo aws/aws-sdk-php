@@ -9837,6 +9837,7 @@
         },
         "KmsKeyId":{"shape":"KmsKeyId"},
         "AppSecurityGroupManagement":{"shape":"AppSecurityGroupManagement"},
+        "HomeEfsFileSystemCreation":{"shape":"HomeEfsFileSystemCreation"},
         "TagPropagation":{"shape":"TagPropagation"},
         "DefaultSpaceSettings":{"shape":"DefaultSpaceSettings"}
       }
@@ -12957,6 +12958,7 @@
         "VpcId":{"shape":"VpcId"},
         "KmsKeyId":{"shape":"KmsKeyId"},
         "AppSecurityGroupManagement":{"shape":"AppSecurityGroupManagement"},
+        "HomeEfsFileSystemCreation":{"shape":"HomeEfsFileSystemCreation"},
         "TagPropagation":{"shape":"TagPropagation"},
         "DefaultSpaceSettings":{"shape":"DefaultSpaceSettings"}
       }
@@ -16716,6 +16718,13 @@
       "members":{
         "CountryCode":{"shape":"CountryCode"}
       }
+    },
+    "HomeEfsFileSystemCreation":{
+      "type":"string",
+      "enum":[
+        "Enabled",
+        "Disabled"
+      ]
     },
     "HookParameters":{
       "type":"map",
@@ -30478,6 +30487,7 @@
         "SubnetIds":{"shape":"Subnets"},
         "AppNetworkAccessType":{"shape":"AppNetworkAccessType"},
         "TagPropagation":{"shape":"TagPropagation"},
+        "HomeEfsFileSystemCreation":{"shape":"HomeEfsFileSystemCreation"},
         "VpcId":{"shape":"VpcId"}
       }
     },

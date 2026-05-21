@@ -2,6 +2,7 @@
   "version": "2.0",
   "service": "<p>Welcome to the Amazon Bedrock AgentCore Control plane API reference. Control plane actions configure, create, modify, and monitor Amazon Web Services resources.</p>",
   "operations": {
+    "AddDatasetExamples": "<p>Adds examples to the dataset's DRAFT.</p> <p><strong>Validation:</strong> All examples are validated against the dataset's schemaType before any writes occur. If any example fails validation, the entire batch is rejected with ValidationException — no examples are written (all-or-nothing semantics).</p> <p><strong>Asynchronous:</strong> Operates in-place on DRAFT. No version bump occurs. Use CreateDatasetVersion to publish DRAFT as a new numbered version.</p> <p><strong>State guard:</strong> Returns ConflictException (DATASET_NOT_READY) if the dataset status is not in {DRAFT, ACTIVE}.</p> <p><strong>Request size limit:</strong> Max 5 MB total request body. Max 1000 examples per call.</p>",
     "CreateAgentRuntime": "<p>Creates an Amazon Bedrock AgentCore Runtime.</p>",
     "CreateAgentRuntimeEndpoint": "<p>Creates an AgentCore Runtime endpoint.</p>",
     "CreateApiKeyCredentialProvider": "<p>Creates a new API key credential provider.</p>",
@@ -9,6 +10,8 @@
     "CreateBrowserProfile": "<p>Creates a browser profile in Amazon Bedrock AgentCore. A browser profile stores persistent browser data such as cookies, local storage, session storage, and browsing history that can be saved from browser sessions and reused in subsequent sessions.</p>",
     "CreateCodeInterpreter": "<p>Creates a custom code interpreter.</p>",
     "CreateConfigurationBundle": "<p>Creates a new configuration bundle resource. A configuration bundle stores versioned component configurations for agent evaluation workflows.</p>",
+    "CreateDataset": "<p>Creates a new Dataset resource asynchronously.</p> <p>Returns immediately with status CREATING. Poll GetDataset until status transitions to ACTIVE or CREATE_FAILED (with failureReason).</p>",
+    "CreateDatasetVersion": "<p>Publishes the current DRAFT as a new numbered version.</p> <p>Snapshots the DRAFT examples as the next version (1, 2, 3, ...). The DRAFT is preserved and remains editable after publishing. Returns immediately with status UPDATING. Poll GetDataset until status transitions to ACTIVE (draftStatus=UNMODIFIED) or UPDATE_FAILED.</p> <p><strong>State guard:</strong> Returns ConflictException (DATASET_NOT_READY) if status is in {CREATING, UPDATING, DELETING}, or DATASET_IN_FAILED_STATE if status is in {CREATE_FAILED, DELETE_FAILED}.</p> <p><strong>Quota:</strong> MAX_VERSIONS_PER_DATASET applies to published versions only (not DRAFT).</p>",
     "CreateEvaluator": "<p> Creates a custom evaluator for agent quality assessment. Custom evaluators can use either LLM-as-a-Judge configurations with user-defined prompts, rating scales, and model settings, or code-based configurations with customer-managed Lambda functions to evaluate agent performance at tool call, trace, or session levels. </p>",
     "CreateGateway": "<p>Creates a gateway for Amazon Bedrock Agent. A gateway serves as an integration point between your agent and external services.</p> <p>If you specify <code>CUSTOM_JWT</code> as the <code>authorizerType</code>, you must provide an <code>authorizerConfiguration</code>.</p>",
     "CreateGatewayRule": "<p>Creates a rule for a gateway. Rules define conditions and actions that control how requests are routed and processed through the gateway, including principal-based access control and path-based routing.</p>",
@@ -32,6 +35,8 @@
     "DeleteBrowserProfile": "<p>Deletes a browser profile.</p>",
     "DeleteCodeInterpreter": "<p>Deletes a custom code interpreter.</p>",
     "DeleteConfigurationBundle": "<p>Deletes a configuration bundle and all of its versions.</p>",
+    "DeleteDataset": "<p>Deletes a dataset version or an entire dataset (all versions + name claim). Asynchronous 202.</p> <p><strong>State transitions:</strong></p> <ul> <li>If <code>datasetVersion</code> is absent (full delete): status transitions to DELETING immediately.</li> <li>If <code>datasetVersion</code> is provided (version-specific delete): status transitions to UPDATING.</li> </ul> <p><strong>State guard (full delete):</strong> Returns ConflictException (DATASET_NOT_READY) if the dataset status is in {CREATING, UPDATING}. Deletion is allowed from ACTIVE, CREATE_FAILED, UPDATE_FAILED, and DELETE_FAILED states.</p> <p><strong>State guard (version-specific delete):</strong> Returns ConflictException (DATASET_NOT_READY) if the dataset status is not in {ACTIVE, CREATE_FAILED, UPDATE_FAILED}.</p> <p>Fails with ConflictException (REFERENCED_BY_EVAL_JOB) if referenced by an active evaluation job (full delete only).</p> <p>If the delete workflow fails after retries, status is set to DELETE_FAILED (full delete) or UPDATE_FAILED (version-specific delete). Calling DeleteDataset on a DELETE_FAILED dataset re-triggers the delete workflow (idempotent retry path).</p> <p><strong>Version parameter:</strong></p> <ul> <li>If <code>datasetVersion</code> is absent: deletes ALL versions and the Dataset record itself.</li> <li>If <code>datasetVersion</code> is provided: deletes only that specific DatasetVersion. Returns ResourceNotFoundException if the specified version does not exist.</li> </ul>",
+    "DeleteDatasetExamples": "<p>Deletes specific examples by ID from DRAFT.</p> <p><strong>Validation:</strong> All example IDs are validated before any deletes occur. If any ID does not exist in DRAFT, the entire batch is rejected with ResourceNotFoundException — no examples are deleted (all-or-nothing semantics).</p> <p><strong>Asynchronous:</strong> Operates in-place on DRAFT. No version bump occurs. Use CreateDatasetVersion to publish DRAFT as a new numbered version.</p> <p><strong>State guard:</strong> Returns ConflictException (DATASET_NOT_READY) if the dataset status is not in {DRAFT, ACTIVE}.</p>",
     "DeleteEvaluator": "<p> Deletes a custom evaluator. Builtin evaluators cannot be deleted. The evaluator must not be referenced by any active online evaluation configurations. </p>",
     "DeleteGateway": "<p>Deletes a gateway.</p>",
     "DeleteGatewayRule": "<p>Deletes a gateway rule.</p>",
@@ -57,6 +62,7 @@
     "GetCodeInterpreter": "<p>Gets information about a custom code interpreter.</p>",
     "GetConfigurationBundle": "<p>Gets the latest version of a configuration bundle. By default, returns the latest version on the mainline branch. Use <code>GetConfigurationBundleVersion</code> to retrieve a specific historical version.</p>",
     "GetConfigurationBundleVersion": "<p>Gets a specific version of a configuration bundle by its version identifier.</p>",
+    "GetDataset": "<p>Retrieves dataset metadata only.</p> <p>Use <code>?datasetVersion=DRAFT</code> or <code>?datasetVersion=N</code> to retrieve a specific version's metadata. If absent, defaults to DRAFT (the mutable working copy). Returns ResourceNotFoundException if the specified version is not found.</p> <p><strong>Initial state after CreateDataset:</strong> When CreateDataset completes successfully (status transitions to ACTIVE), only a DRAFT working copy exists. No published versions exist until CreateDatasetVersion is called. At this point draftStatus is MODIFIED because the DRAFT has content that has never been published.</p> <p><strong>Default version behavior:</strong> When <code>datasetVersion</code> is omitted, the operation returns the DRAFT working copy. To retrieve a specific published version, pass the version number as a string (e.g. <code>?datasetVersion=1</code>).</p> <p><strong>State guard:</strong> Allowed for all statuses including DELETING. Returns the dataset record with its current status so callers can observe the deletion in progress.</p> <p>For paginated example IDs use ListDatasetExamples.</p>",
     "GetEvaluator": "<p> Retrieves detailed information about an evaluator, including its configuration, status, and metadata. Works with both built-in and custom evaluators. </p>",
     "GetGateway": "<p>Retrieves information about a specific Gateway.</p>",
     "GetGatewayRule": "<p>Retrieves detailed information about a specific gateway rule.</p>",
@@ -88,6 +94,9 @@
     "ListCodeInterpreters": "<p>Lists all custom code interpreters in your account.</p>",
     "ListConfigurationBundleVersions": "<p>Lists all versions of a configuration bundle, with optional filtering by branch name or creation source.</p>",
     "ListConfigurationBundles": "<p>Lists all configuration bundles in the account.</p>",
+    "ListDatasetExamples": "<p>Returns paginated examples from the dataset.</p> <p><strong>Version-pinned pagination:</strong> The server embeds the resolved version in the <code>nextToken</code>. Once pagination begins, all subsequent pages are pinned to that version regardless of concurrent mutations or whether <code>datasetVersion</code> is passed on subsequent requests. The <code>datasetVersion</code> query parameter is only used for the first request (when <code>nextToken</code> is absent); if omitted, defaults to DRAFT.</p> <p><strong>State guard:</strong> Allowed for all statuses including DELETING.</p>",
+    "ListDatasetVersions": "<p>Lists all published versions of a dataset, sorted by version number descending (newest first). Does not include the DRAFT working copy.</p> <p><strong>State guard:</strong> Allowed for all statuses including DELETING.</p>",
+    "ListDatasets": "<p>Lists all datasets in the caller's account, paginated. No presigned URLs in list results.</p>",
     "ListEvaluators": "<p> Lists all available evaluators, including both builtin evaluators provided by the service and custom evaluators created by the user. </p>",
     "ListGatewayRules": "<p>Lists all rules for a gateway.</p>",
     "ListGatewayTargets": "<p>Lists all targets for a specific gateway.</p>",
@@ -121,6 +130,8 @@
     "UpdateAgentRuntimeEndpoint": "<p>Updates an existing Amazon Bedrock AgentCore Runtime endpoint.</p>",
     "UpdateApiKeyCredentialProvider": "<p>Updates an existing API key credential provider.</p>",
     "UpdateConfigurationBundle": "<p>Updates a configuration bundle by creating a new version with the specified changes. Each update creates a new version in the version history.</p>",
+    "UpdateDataset": "<p>Updates a dataset's metadata. Synchronous operation. Only provided fields are updated; omitted fields remain unchanged.</p> <p>To modify dataset content, use AddDatasetExamples, UpdateDatasetExamples, or DeleteDatasetExamples.</p> <p>Cannot update: name, schemaType, kmsKeyArn (immutable after creation).</p>",
+    "UpdateDatasetExamples": "<p>Updates multiple existing examples in-place on DRAFT.</p> <p><strong>Validation:</strong> All examples are validated against the dataset's schemaType before any writes occur. If any example fails validation, the entire batch is rejected with ValidationException — no examples are updated (all-or-nothing semantics).</p> <p><strong>Asynchronous:</strong> Operates in-place on DRAFT. No version bump occurs. Use CreateDatasetVersion to publish DRAFT as a new numbered version.</p> <p>Fails with ResourceNotFoundException if any exampleId does not exist in DRAFT. To add new examples, use AddDatasetExamples instead.</p> <p><strong>State guard:</strong> Returns ConflictException (DATASET_NOT_READY) if the dataset status is not in {DRAFT, ACTIVE}.</p> <p><strong>Request size limit:</strong> Max 5 MB total request body. Max 1000 examples per call.</p>",
     "UpdateEvaluator": "<p> Updates a custom evaluator's configuration, description, or evaluation level. Built-in evaluators cannot be updated. The evaluator must not be locked for modification. </p>",
     "UpdateGateway": "<p>Updates an existing gateway.</p>",
     "UpdateGatewayRule": "<p>Updates a gateway rule's priority, conditions, actions, or description.</p>",
@@ -173,6 +184,14 @@
       "refs": {
         "TokenExchangeGrantTypeConfigType$actorTokenContent": "<p>The content type for the actor token in the token exchange.</p>"
       }
+    },
+    "AddDatasetExamplesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AddDatasetExamplesResponse": {
+      "base": null,
+      "refs": {}
     },
     "AdditionalModelRequestFields": {
       "base": null,
@@ -913,12 +932,15 @@
     "ClientToken": {
       "base": null,
       "refs": {
+        "AddDatasetExamplesRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateBrowserProfileRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request but does not return an error.</p>",
         "CreateBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request but does not return an error.</p>",
         "CreateCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock AgentCore ignores the request but does not return an error.</p>",
         "CreateConfigurationBundleRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "CreateDatasetRequest$clientToken": "<p>Optional idempotency token.</p>",
+        "CreateDatasetVersionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateEvaluatorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayRuleRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -936,6 +958,7 @@
         "DeleteBrowserProfileRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "DeleteDatasetExamplesRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "DeleteHarnessRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeletePaymentConnectorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "DeletePaymentManagerRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -943,6 +966,8 @@
         "UpdateAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateConfigurationBundleRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "UpdateDatasetExamplesRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "UpdateDatasetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "UpdateEvaluatorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "UpdateHarnessRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateOnlineEvaluationConfigRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -1343,6 +1368,28 @@
       "base": null,
       "refs": {}
     },
+    "CreateDatasetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDatasetRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "CreateDatasetRequest$description": "<p> A description of the dataset. </p>"
+      }
+    },
+    "CreateDatasetResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDatasetVersionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDatasetVersionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateEvaluatorRequest": {
       "base": null,
       "refs": {}
@@ -1693,6 +1740,124 @@
         "UpdateOnlineEvaluationConfigRequest$dataSourceConfig": "<p> The updated data source configuration specifying CloudWatch log groups and service names to monitor. </p>"
       }
     },
+    "DataSourceType": {
+      "base": "<p>Source of examples to add to the dataset.</p>",
+      "refs": {
+        "AddDatasetExamplesRequest$source": "<p>Source of examples to add. Provide either inline examples or an S3 URI pointing to a JSONL file.</p>",
+        "CreateDatasetRequest$source": "<p>Source of initial examples. Provide either inline examples or an S3 URI pointing to a JSONL file.</p>"
+      }
+    },
+    "DatasetArn": {
+      "base": null,
+      "refs": {
+        "AddDatasetExamplesResponse$datasetArn": "<p> The Amazon Resource Name (ARN) of the dataset. </p>",
+        "CreateDatasetResponse$datasetArn": "<p> The Amazon Resource Name (ARN) of the created dataset. </p>",
+        "CreateDatasetVersionResponse$datasetArn": "<p> The Amazon Resource Name (ARN) of the dataset. </p>",
+        "DatasetSummary$datasetArn": "<p> The Amazon Resource Name (ARN) of the dataset. </p>",
+        "DeleteDatasetExamplesResponse$datasetArn": "<p> The Amazon Resource Name (ARN) of the dataset. </p>",
+        "DeleteDatasetResponse$datasetArn": "<p> The Amazon Resource Name (ARN) of the dataset. </p>",
+        "GetDatasetResponse$datasetArn": "<p> The Amazon Resource Name (ARN) of the dataset. </p>",
+        "ListDatasetExamplesResponse$datasetArn": "<p> The Amazon Resource Name (ARN) of the dataset. </p>",
+        "UpdateDatasetExamplesResponse$datasetArn": "<p> The Amazon Resource Name (ARN) of the dataset. </p>",
+        "UpdateDatasetResponse$datasetArn": "<p> The Amazon Resource Name (ARN) of the updated dataset. </p>"
+      }
+    },
+    "DatasetExampleList": {
+      "base": "<p>Each element is a free-form JSON document whose structure is defined by the dataset's <code>schemaType</code>. Validated against the declared schema at write time. If an <code>exampleId</code> string field is present it is used as the example identifier and removed from the persisted content; otherwise a UUID is generated automatically. <code>exampleId</code> must be a JSON string — numeric or other non-string types are rejected with a ValidationException.</p>",
+      "refs": {
+        "ListDatasetExamplesResponse$examples": "<p>Paginated example content. Each element is a JSON object containing at least an <code>exampleId</code> field plus the schema-specific content fields.</p>"
+      }
+    },
+    "DatasetId": {
+      "base": null,
+      "refs": {
+        "AddDatasetExamplesRequest$datasetId": "<p> The unique identifier of the dataset to add examples to. </p>",
+        "AddDatasetExamplesResponse$datasetId": "<p> The unique identifier of the dataset. </p>",
+        "CreateDatasetResponse$datasetId": "<p> The unique identifier of the created dataset. </p>",
+        "CreateDatasetVersionRequest$datasetId": "<p> The unique identifier of the dataset to publish a version for. </p>",
+        "CreateDatasetVersionResponse$datasetId": "<p> The unique identifier of the dataset. </p>",
+        "DatasetSummary$datasetId": "<p> The unique identifier of the dataset. </p>",
+        "DeleteDatasetExamplesRequest$datasetId": "<p> The unique identifier of the dataset. </p>",
+        "DeleteDatasetExamplesResponse$datasetId": "<p> The unique identifier of the dataset. </p>",
+        "DeleteDatasetRequest$datasetId": "<p> The unique identifier of the dataset to delete. </p>",
+        "DeleteDatasetResponse$datasetId": "<p> The unique identifier of the dataset. </p>",
+        "GetDatasetRequest$datasetId": "<p> The unique identifier of the dataset to retrieve. </p>",
+        "GetDatasetResponse$datasetId": "<p> The unique identifier of the dataset. </p>",
+        "ListDatasetExamplesRequest$datasetId": "<p> The unique identifier of the dataset. </p>",
+        "ListDatasetExamplesResponse$datasetId": "<p> The unique identifier of the dataset. </p>",
+        "ListDatasetVersionsRequest$datasetId": "<p> The unique identifier of the dataset. </p>",
+        "UpdateDatasetExamplesRequest$datasetId": "<p> The unique identifier of the dataset. </p>",
+        "UpdateDatasetExamplesResponse$datasetId": "<p> The unique identifier of the dataset. </p>",
+        "UpdateDatasetRequest$datasetId": "<p> The unique identifier of the dataset to update. </p>",
+        "UpdateDatasetResponse$datasetId": "<p> The unique identifier of the updated dataset. </p>"
+      }
+    },
+    "DatasetName": {
+      "base": null,
+      "refs": {
+        "CreateDatasetRequest$datasetName": "<p>Human-readable name for the dataset. Unique within the account (case-insensitive). Immutable after creation.</p>",
+        "DatasetSummary$datasetName": "<p> The name of the dataset. </p>",
+        "GetDatasetResponse$datasetName": "<p> The name of the dataset. </p>"
+      }
+    },
+    "DatasetSchemaType": {
+      "base": "<p>Format of a customer-provided source file.</p> <p><strong>JSONL</strong> (JSON Lines, one object per line) is the service's native ingestion and storage format — it can be streamed line-by-line without loading the entire file into memory, which is important as the row-count cap is extended.</p> <p><strong>JSON array (<code>[{...},{...}]</code>) is intentionally not supported</strong> at launch: it cannot be streamed (requires loading the full file into memory to parse), and all major eval frameworks (LangSmith, Ragas, DeepEval, Arize Phoenix) export as JSONL or CSV — not JSON arrays. Customers with JSON array files can Versioned schema type for dataset examples.</p> <p>Each value identifies both the source format and the version of that format's schema. Schema definitions (required/optional fields) are stored as constants in SchemaRegistry. The schemaType on a Dataset is immutable after creation.</p> <p>When a framework changes its format, a new version is added (e.g., RAGAS_V2) without breaking existing datasets using the old version. Content is always stored as-is.</p>",
+      "refs": {
+        "CreateDatasetRequest$schemaType": "<p>Versioned schema type governing the structure of examples. Immutable after creation.</p>",
+        "DatasetSummary$schemaType": "<p> The schema type of the dataset. </p>",
+        "GetDatasetResponse$schemaType": "<p>The schema type declared at create time. Immutable after creation.</p>"
+      }
+    },
+    "DatasetStatus": {
+      "base": "<p>Dataset lifecycle / operation status.</p> <p>Two-column status model: <code>DatasetStatus</code> tracks lifecycle state independently from <code>DraftStatus</code> which tracks publish synchronization.</p> <p>IN-FLIGHT states (busy — all writes blocked): CREATING — CreateDataset async ingestion in progress. UPDATING — Example mutation (Add/Update/Delete) or CreateDatasetVersion in progress. DELETING — Full or version-specific delete in progress.</p> <p>TERMINAL states (stable — operations allowed per guards below): ACTIVE — Dataset is stable. failureReason cleared. CREATE_FAILED — Initial ingestion failed. DRAFT record exists but has no examples. failureReason populated. UPDATE_FAILED — Last example mutation or CreateDatasetVersion failed. DRAFT may be partially modified. failureReason populated. DELETE_FAILED — Delete failed after retries. Dataset/S3 may be in inconsistent state. Sev-2 ticket filed (full-delete only). failureReason populated.</p> <p>State transitions: CreateDataset → CREATING → ACTIVE (draftStatus=MODIFIED) | CREATE_FAILED Add/Update/DeleteDatasetExamples → UPDATING → ACTIVE (draftStatus=MODIFIED) | UPDATE_FAILED CreateDatasetVersion → UPDATING → ACTIVE (draftStatus=UNMODIFIED) | UPDATE_FAILED DeleteDataset (version-specific) → DELETING → ACTIVE (draftStatus unchanged) | DELETE_FAILED DeleteDataset (full) → DELETING → (record deleted) | DELETE_FAILED [auto Sev-2]</p> <p>Operation guards (ConflictException codes): GetDataset / ListDatasetExamples: — Allowed for all statuses (no guard) UpdateDataset, AddDatasetExamples, DeleteDatasetExamples: — DATASET_NOT_READY if status in {CREATING, UPDATING, DELETING} — DATASET_IN_FAILED_STATE if status == DELETE_FAILED UpdateDatasetExamples: — DATASET_NOT_READY if status in {CREATING, UPDATING, DELETING} — DATASET_IN_FAILED_STATE if status in {CREATE_FAILED, DELETE_FAILED} CreateDatasetVersion: — DATASET_NOT_READY if status in {CREATING, UPDATING, DELETING} — DATASET_IN_FAILED_STATE if status in {CREATE_FAILED, DELETE_FAILED} DeleteDataset: — DATASET_NOT_READY if status in {CREATING, UPDATING, DELETING}</p>",
+      "refs": {
+        "AddDatasetExamplesResponse$status": "<p> The current status of the dataset. </p>",
+        "CreateDatasetResponse$status": "<p>Always CREATING immediately after this call. Poll GetDataset until status == ACTIVE (draftStatus=MODIFIED) or CREATE_FAILED.</p>",
+        "CreateDatasetVersionResponse$status": "<p>Always UPDATING immediately after this call. Poll GetDataset until status == ACTIVE (draftStatus=UNMODIFIED) or UPDATE_FAILED.</p>",
+        "DatasetSummary$status": "<p> The current status of the dataset. </p>",
+        "DeleteDatasetExamplesResponse$status": "<p> The current status of the dataset. </p>",
+        "DeleteDatasetResponse$status": "<p> The current status of the dataset after the delete request. </p>",
+        "GetDatasetResponse$status": "<p> The current status of the dataset. </p>",
+        "UpdateDatasetExamplesResponse$status": "<p> The current status of the dataset. </p>"
+      }
+    },
+    "DatasetSummary": {
+      "base": "<p> Summary information about a dataset. </p>",
+      "refs": {
+        "DatasetSummaryList$member": null
+      }
+    },
+    "DatasetSummaryList": {
+      "base": null,
+      "refs": {
+        "ListDatasetsResponse$datasets": "<p> The list of datasets. </p>"
+      }
+    },
+    "DatasetVersion": {
+      "base": "<p>Dataset version identifier. Accepts &quot;DRAFT&quot; or a non-negative integer string.</p> <p>&quot;DRAFT&quot; refers to the single mutable working copy of the dataset.</p> <ul> <li>Always present after CreateDataset ingestion completes.</li> <li>Content changes in-place when examples are added, updated, or deleted.</li> <li>NOT tracked as a DDB DatasetVersionItem — state lives in S3 (draft/manifest.json, draft/dataset.jsonl) and the DatasetItem.exampleCount field.</li> <li>Default for read operations when ?datasetVersion is absent.</li> </ul> <p>An integer string (e.g. &quot;1&quot;, &quot;2&quot;, &quot;3&quot;) refers to a published, immutable snapshot created by CreateDatasetVersion. Once created, a published version's content never changes. Stored as a DDB DatasetVersionItem (SK=VERSION#{zero-padded-N}).</p>",
+      "refs": {
+        "CreateDatasetVersionResponse$datasetVersion": "<p>The version being created.</p>",
+        "DatasetVersionSummary$datasetVersion": null,
+        "DeleteDatasetRequest$datasetVersion": "<p>Optional version to delete. Use &quot;DRAFT&quot; or omit to delete the draft. Returns ResourceNotFoundException if the specified version does not exist.</p>",
+        "DeleteDatasetResponse$datasetVersion": "<p>The version deleted.</p>",
+        "GetDatasetRequest$datasetVersion": "<p>Version to retrieve: &quot;DRAFT&quot; or a version number. Defaults to DRAFT if absent.</p>",
+        "GetDatasetResponse$datasetVersion": "<p>The resolved version: &quot;DRAFT&quot; (default) or the requested version number.</p>",
+        "ListDatasetExamplesRequest$datasetVersion": "<p>Version to paginate: &quot;DRAFT&quot; or a version number. Defaults to DRAFT if absent. Only used on the first request (when nextToken is absent). For subsequent pages, the version is extracted from the nextToken and this parameter is ignored.</p>",
+        "ListDatasetExamplesResponse$datasetVersion": "<p>The version returned.</p>"
+      }
+    },
+    "DatasetVersionSummary": {
+      "base": "<p> Summary information about a published dataset version. </p>",
+      "refs": {
+        "DatasetVersionSummaryList$member": null
+      }
+    },
+    "DatasetVersionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListDatasetVersionsResponse$versions": "<p> The list of published dataset versions. </p>"
+      }
+    },
     "DateTimestamp": {
       "base": null,
       "refs": {
@@ -1903,6 +2068,28 @@
       "refs": {}
     },
     "DeleteConfigurationBundleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDatasetExamplesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDatasetExamplesRequestExampleIdsList": {
+      "base": null,
+      "refs": {
+        "DeleteDatasetExamplesRequest$exampleIds": "<p> The IDs of the examples to delete. </p>"
+      }
+    },
+    "DeleteDatasetExamplesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDatasetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDatasetResponse": {
       "base": null,
       "refs": {}
     },
@@ -2160,6 +2347,19 @@
         "NumberValidation$maxValue": "<p>Maximum allowed value.</p>"
       }
     },
+    "DownloadUrl": {
+      "base": null,
+      "refs": {
+        "GetDatasetResponse$downloadUrl": "<p>Presigned S3 URL to download the consolidated dataset.jsonl file for the resolved version (DRAFT or published). TTL: 5 minutes. Omitted if the file does not yet exist (e.g. during CREATING) or on presign failure.</p>"
+      }
+    },
+    "DraftStatus": {
+      "base": "<p>Publish synchronization state of the DRAFT working copy.</p> <p>Tracks whether the current DRAFT content has been published as a version. Only authoritative when DatasetStatus == ACTIVE. Not meaningful during in-flight or failed states.</p> <p>Transitions: CreateDataset succeeds → MODIFIED (DRAFT has content with no published version yet) Add/Update/DeleteExamples succeed → MODIFIED (DRAFT differs from last published version) CreateDatasetVersion succeeds → UNMODIFIED (DRAFT matches the version just published)</p>",
+      "refs": {
+        "DatasetSummary$draftStatus": "<p>Publish synchronization state. Only authoritative when status == ACTIVE.</p>",
+        "GetDatasetResponse$draftStatus": "<p>Publish synchronization state. Only authoritative when status == ACTIVE. MODIFIED — DRAFT has unpublished changes (or no published versions yet). UNMODIFIED — DRAFT matches the latest published version exactly.</p>"
+      }
+    },
     "EfsAccessPointArn": {
       "base": null,
       "refs": {
@@ -2407,6 +2607,19 @@
       "base": null,
       "refs": {
         "EvaluatorSummary$evaluatorType": "<p> The type of evaluator, indicating whether it is a built-in evaluator provided by the service or a custom evaluator created by the user. </p>"
+      }
+    },
+    "ExampleId": {
+      "base": null,
+      "refs": {
+        "DeleteDatasetExamplesRequestExampleIdsList$member": null,
+        "ExampleIdList$member": null
+      }
+    },
+    "ExampleIdList": {
+      "base": null,
+      "refs": {
+        "AddDatasetExamplesResponse$exampleIds": "<p>IDs of all added examples (auto-generated UUIDs).</p>"
       }
     },
     "ExceptionLevel": {
@@ -2847,6 +3060,14 @@
       "refs": {}
     },
     "GetConfigurationBundleVersionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDatasetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDatasetResponse": {
       "base": null,
       "refs": {}
     },
@@ -3524,6 +3745,18 @@
         "ToolsDefinition$inlineContent": "<p>The JSON content containing the MCP tools definition, conforming to the MCP protocol specification.</p>"
       }
     },
+    "InlineExamplesSource": {
+      "base": "<p>Inline examples provided directly in the request body.</p>",
+      "refs": {
+        "DataSourceType$inlineExamples": "<p>Inline examples provided directly in the request body.</p>"
+      }
+    },
+    "InlineExamplesSourceExamplesList": {
+      "base": "<p>Each element is a free-form JSON document whose structure is defined by the dataset's <code>schemaType</code>. Validated against the declared schema at write time. If an <code>exampleId</code> string field is present it is used as the example identifier and removed from the persisted content; otherwise a UUID is generated automatically. <code>exampleId</code> must be a JSON string — numeric or other non-string types are rejected with a ValidationException.</p>",
+      "refs": {
+        "InlineExamplesSource$examples": "<p>Examples to add. Each example is assigned an auto-generated UUID.</p>"
+      }
+    },
     "InlinePayload": {
       "base": null,
       "refs": {
@@ -3623,6 +3856,7 @@
     "KmsKeyArn": {
       "base": null,
       "refs": {
+        "CreateDatasetRequest$kmsKeyArn": "<p>Optional AWS KMS key ARN for SSE-KMS on service S3 writes.</p>",
         "CreateEvaluatorRequest$kmsKeyArn": "<p> The Amazon Resource Name (ARN) of a customer managed KMS key to use for encrypting sensitive evaluator data, including instructions and rating scale. If you don't specify a KMS key, the evaluator data is encrypted with an Amazon Web Services owned key. Only symmetric encryption KMS keys are supported. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluations-encryption.html\">Encryption at rest for AgentCore Evaluations</a>. </p>",
         "CreateGatewayRequest$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt data associated with the gateway.</p>",
         "CreateGatewayResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt data associated with the gateway.</p>",
@@ -3630,6 +3864,7 @@
         "CreatePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "DeletePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "EvaluatorSummary$kmsKeyArn": "<p> The Amazon Resource Name (ARN) of the customer managed KMS key used to encrypt the evaluator's sensitive data. This field is only present for evaluators encrypted with a customer managed key. </p>",
+        "GetDatasetResponse$kmsKeyArn": "<p>AWS KMS key ARN used for SSE-KMS on service S3 writes, if configured.</p>",
         "GetEvaluatorResponse$kmsKeyArn": "<p> The Amazon Resource Name (ARN) of the customer managed KMS key used to encrypt the evaluator's sensitive data. This field is only present for evaluators encrypted with a customer managed key. </p>",
         "GetGatewayResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the gateway.</p>",
         "GetPolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
@@ -3789,6 +4024,60 @@
       }
     },
     "ListConfigurationBundlesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDatasetExamplesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDatasetExamplesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListDatasetExamplesRequest$maxResults": "<p>Maximum number of examples to return per page. Default: 1000. Min: 1, max: 1000. Response size is validated against 5 MB limit after reading. For bulk access to all examples, use the <code>downloadUrl</code> field from GetDataset.</p>"
+      }
+    },
+    "ListDatasetExamplesRequestNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListDatasetExamplesRequest$nextToken": "<p> The token for the next page of results. </p>"
+      }
+    },
+    "ListDatasetExamplesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDatasetVersionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDatasetVersionsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListDatasetVersionsRequest$maxResults": "<p> The maximum number of versions to return per page. </p>"
+      }
+    },
+    "ListDatasetVersionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDatasetsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDatasetsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListDatasetsRequest$maxResults": "<p> The maximum number of datasets to return per page. </p>"
+      }
+    },
+    "ListDatasetsRequestNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListDatasetsRequest$nextToken": "<p> The token for the next page of results. </p>"
+      }
+    },
+    "ListDatasetsResponse": {
       "base": null,
       "refs": {}
     },
@@ -4033,6 +4322,17 @@
       "refs": {
         "CloudWatchLogsInputConfigLogGroupNamesList$member": null,
         "CloudWatchOutputConfig$logGroupName": "<p> The name of the CloudWatch log group where evaluation results will be written. The log group will be created if it doesn't exist. </p>"
+      }
+    },
+    "Long": {
+      "base": null,
+      "refs": {
+        "AddDatasetExamplesResponse$addedCount": "<p> The number of examples added. </p>",
+        "DatasetSummary$exampleCount": "<p> The number of examples in the dataset. </p>",
+        "DatasetVersionSummary$exampleCount": "<p> The number of examples in this version. </p>",
+        "DeleteDatasetExamplesResponse$deletedCount": "<p> The number of examples deleted. </p>",
+        "GetDatasetResponse$exampleCount": "<p>Example count for DRAFT.</p>",
+        "UpdateDatasetExamplesResponse$updatedCount": "<p> The number of examples updated. </p>"
       }
     },
     "MCPGatewayConfiguration": {
@@ -5873,6 +6173,18 @@
         "S3Location$versionId": "<p>The version ID of the Amazon Amazon S3 object. If not specified, the latest version of the object is used.</p>"
       }
     },
+    "S3Source": {
+      "base": "<p>S3 location of a JSONL file containing dataset examples.</p>",
+      "refs": {
+        "DataSourceType$s3Source": "<p>S3 URI pointing to a JSONL file in the customer's bucket. The service reads this file using the caller's FAS credentials.</p>"
+      }
+    },
+    "S3Uri": {
+      "base": "<p>S3 URI string (s3://bucket/key).</p>",
+      "refs": {
+        "S3Source$s3Uri": "<p>S3 URI of the JSONL file (e.g. s3://my-bucket/path/to/examples.jsonl).</p>"
+      }
+    },
     "SalesforceOauth2ProviderConfigInput": {
       "base": "<p>Input configuration for a Salesforce OAuth2 provider.</p>",
       "refs": {
@@ -6078,7 +6390,10 @@
     "SensitiveJson": {
       "base": null,
       "refs": {
-        "HarnessInlineFunctionConfig$inputSchema": "<p>JSON Schema describing the tool's input parameters.</p>"
+        "DatasetExampleList$member": null,
+        "HarnessInlineFunctionConfig$inputSchema": "<p>JSON Schema describing the tool's input parameters.</p>",
+        "InlineExamplesSourceExamplesList$member": null,
+        "UpdateDatasetExamplesRequestExamplesList$member": null
       }
     },
     "SensitiveText": {
@@ -6285,6 +6600,7 @@
         "CreateOnlineEvaluationConfigResponse$failureReason": "<p> The reason for failure if the online evaluation configuration creation or execution failed. </p>",
         "CustomParameterMap$key": null,
         "CustomParameterMap$value": null,
+        "DatasetSummary$description": "<p> The description of the dataset. </p>",
         "DecryptionFailure$message": null,
         "DeleteMemoryStrategyInput$memoryStrategyId": "<p>The unique identifier of the memory strategy to delete.</p>",
         "EncryptionFailure$message": null,
@@ -6299,6 +6615,8 @@
         "GetAgentRuntimeResponse$failureReason": "<p>The reason for failure if the AgentCore Runtime is in a failed state.</p>",
         "GetBrowserResponse$failureReason": "<p>The reason for failure if the browser is in a failed state.</p>",
         "GetCodeInterpreterResponse$failureReason": "<p>The reason for failure if the code interpreter is in a failed state.</p>",
+        "GetDatasetResponse$description": "<p> The description of the dataset. </p>",
+        "GetDatasetResponse$failureReason": "<p>Populated when status is CREATE_FAILED, UPDATE_FAILED, or DELETE_FAILED.</p>",
         "GetOauth2CredentialProviderResponse$callbackUrl": "<p>Callback URL to register on the OAuth2 credential provider as an allowed callback URL. This URL is where the OAuth2 authorization server redirects users after they complete the authorization flow.</p>",
         "GetOauth2CredentialProviderResponse$failureReason": "<p>The reason for failure if the OAuth2 credential provider is in a failed state.</p>",
         "GetOnlineEvaluationConfigResponse$failureReason": "<p> The reason for failure if the online evaluation configuration execution failed. </p>",
@@ -6320,6 +6638,10 @@
         "ListConfigurationBundleVersionsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListConfigurationBundlesRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "ListConfigurationBundlesResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListDatasetExamplesResponse$nextToken": "<p> The token for the next page of results, or null if there are no more results. </p>",
+        "ListDatasetVersionsRequest$nextToken": "<p> The token for the next page of results. </p>",
+        "ListDatasetVersionsResponse$nextToken": "<p> The token for the next page of results, or null if there are no more results. </p>",
+        "ListDatasetsResponse$nextToken": "<p> The token for the next page of results, or null if there are no more results. </p>",
         "ListEvaluatorsRequest$nextToken": "<p> The pagination token from a previous request to retrieve the next page of results. </p>",
         "ListEvaluatorsResponse$nextToken": "<p> The pagination token to use in a subsequent request to retrieve the next page of results. </p>",
         "ListMemoriesInput$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -6562,6 +6884,7 @@
         "CreateBrowserRequest$tags": "<p>A map of tag keys and values to assign to the browser. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateCodeInterpreterRequest$tags": "<p>A map of tag keys and values to assign to the code interpreter. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateConfigurationBundleRequest$tags": "<p>A map of tag keys and values to assign to the configuration bundle. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
+        "CreateDatasetRequest$tags": "<p> A map of tag keys and values to assign to the dataset. </p>",
         "CreateEvaluatorRequest$tags": "<p>A map of tag keys and values to assign to an AgentCore Evaluator. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateGatewayRequest$tags": "<p>A map of key-value pairs to associate with the gateway as metadata tags.</p>",
         "CreateHarnessRequest$tags": "<p>Tags to apply to the harness resource.</p>",
@@ -6573,6 +6896,7 @@
         "CreatePaymentManagerResponse$tags": "<p>The tags associated with the created payment manager.</p>",
         "CreatePolicyEngineRequest$tags": "<p>A map of tag keys and values to assign to an AgentCore Policy. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateWorkloadIdentityRequest$tags": "<p>A map of tag keys and values to assign to the workload identity. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
+        "GetDatasetResponse$tags": "<p> The tags associated with the dataset. </p>",
         "GetPaymentCredentialProviderResponse$tags": "<p>The tags associated with the payment credential provider.</p>",
         "GetPaymentManagerResponse$tags": "<p>The tags associated with the payment manager.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags associated with the resource.</p>",
@@ -6763,12 +7087,20 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "AddDatasetExamplesResponse$updatedAt": "<p> The timestamp when the examples were added. </p>",
         "ApiKeyCredentialProviderItem$createdTime": "<p>The timestamp when the API key credential provider was created.</p>",
         "ApiKeyCredentialProviderItem$lastUpdatedTime": "<p>The timestamp when the API key credential provider was last updated.</p>",
         "ConfigurationBundleVersionSummary$versionCreatedAt": "<p>The timestamp when this version was created.</p>",
         "CreateConfigurationBundleResponse$createdAt": "<p>The timestamp when the configuration bundle was created.</p>",
+        "CreateDatasetResponse$createdAt": "<p> The timestamp when the dataset was created. </p>",
+        "CreateDatasetVersionResponse$createdAt": "<p> The timestamp when the version creation was initiated. </p>",
         "CreateEvaluatorResponse$createdAt": "<p> The timestamp when the evaluator was created. </p>",
         "CreateOnlineEvaluationConfigResponse$createdAt": "<p> The timestamp when the online evaluation configuration was created. </p>",
+        "DatasetSummary$createdAt": "<p> The timestamp when the dataset was created. </p>",
+        "DatasetSummary$updatedAt": "<p> The timestamp when the dataset was last updated. </p>",
+        "DatasetVersionSummary$createdAt": "<p> The timestamp when this version was published. </p>",
+        "DeleteDatasetExamplesResponse$updatedAt": "<p> The timestamp when the examples were deleted. </p>",
+        "DeleteDatasetResponse$updatedAt": "<p> The timestamp when the delete was initiated. </p>",
         "EvaluatorSummary$createdAt": "<p> The timestamp when the evaluator was created. </p>",
         "EvaluatorSummary$updatedAt": "<p> The timestamp when the evaluator was last updated. </p>",
         "GetApiKeyCredentialProviderResponse$createdTime": "<p>The timestamp when the API key credential provider was created.</p>",
@@ -6777,6 +7109,9 @@
         "GetConfigurationBundleResponse$updatedAt": "<p>The timestamp when the configuration bundle was last updated.</p>",
         "GetConfigurationBundleVersionResponse$createdAt": "<p>The timestamp when the configuration bundle was created.</p>",
         "GetConfigurationBundleVersionResponse$versionCreatedAt": "<p>The timestamp when this specific version was created.</p>",
+        "GetDatasetResponse$downloadUrlExpiresAt": "<p>Expiry timestamp for downloadUrl.</p>",
+        "GetDatasetResponse$createdAt": "<p> The timestamp when the dataset was created. </p>",
+        "GetDatasetResponse$updatedAt": "<p> The timestamp when the dataset was last updated. </p>",
         "GetEvaluatorResponse$createdAt": "<p> The timestamp when the evaluator was created. </p>",
         "GetEvaluatorResponse$updatedAt": "<p> The timestamp when the evaluator was last updated. </p>",
         "GetOauth2CredentialProviderResponse$createdTime": "<p>The timestamp when the OAuth2 credential provider was created.</p>",
@@ -6804,6 +7139,8 @@
         "UpdateApiKeyCredentialProviderResponse$createdTime": "<p>The timestamp when the API key credential provider was created.</p>",
         "UpdateApiKeyCredentialProviderResponse$lastUpdatedTime": "<p>The timestamp when the API key credential provider was last updated.</p>",
         "UpdateConfigurationBundleResponse$updatedAt": "<p>The timestamp when the configuration bundle was updated.</p>",
+        "UpdateDatasetExamplesResponse$updatedAt": "<p> The timestamp when the examples were updated. </p>",
+        "UpdateDatasetResponse$updatedAt": "<p> The timestamp when the dataset was updated. </p>",
         "UpdateEvaluatorResponse$updatedAt": "<p> The timestamp when the evaluator was last updated. </p>",
         "UpdateOauth2CredentialProviderResponse$createdTime": "<p>The timestamp when the OAuth2 credential provider was created.</p>",
         "UpdateOauth2CredentialProviderResponse$lastUpdatedTime": "<p>The timestamp when the OAuth2 credential provider was last updated.</p>",
@@ -7039,6 +7376,34 @@
       }
     },
     "UpdateConfigurationBundleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDatasetExamplesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDatasetExamplesRequestExamplesList": {
+      "base": "<p>Each element is a free-form JSON document whose structure is defined by the dataset's <code>schemaType</code>. Validated against the declared schema at write time. If an <code>exampleId</code> string field is present it is used as the example identifier and removed from the persisted content; otherwise a UUID is generated automatically. <code>exampleId</code> must be a JSON string — numeric or other non-string types are rejected with a ValidationException.</p>",
+      "refs": {
+        "UpdateDatasetExamplesRequest$examples": "<p>Examples to update. Each element is a JSON object containing a required <code>exampleId</code> string field identifying the existing example, plus the replacement fields. The <code>exampleId</code> is extracted and removed before persistence; the remaining document is validated against the dataset's schemaType. Max 1000 examples per call. Total request body must not exceed 5 MB.</p>"
+      }
+    },
+    "UpdateDatasetExamplesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDatasetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDatasetRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "UpdateDatasetRequest$description": "<p> The updated description for the dataset. </p>"
+      }
+    },
+    "UpdateDatasetResponse": {
       "base": null,
       "refs": {}
     },

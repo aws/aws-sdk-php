@@ -8570,6 +8570,14 @@
         "HolidayConfig$member": null
       }
     },
+    "HomeEfsFileSystemCreation": {
+      "base": "<p>Indicates whether a home EFS file system is created for the domain.</p>",
+      "refs": {
+        "CreateDomainRequest$HomeEfsFileSystemCreation": "<p>Indicates whether to create a home EFS file system for the domain. Defaults to <code>Enabled</code>. Set to <code>Disabled</code> to skip EFS creation and reduce domain creation time. You can enable EFS later by calling <code>UpdateDomain</code>.</p>",
+        "DescribeDomainResponse$HomeEfsFileSystemCreation": "<p>Indicates whether a home EFS file system is created for the domain.</p>",
+        "UpdateDomainRequest$HomeEfsFileSystemCreation": "<p>Indicates whether to create a home EFS file system for the domain. You can change from <code>Disabled</code> to <code>Enabled</code> to provision EFS on demand, but you cannot change from <code>Enabled</code> to <code>Disabled</code>.</p>"
+      }
+    },
     "HookParameters": {
       "base": null,
       "refs": {
@@ -14926,7 +14934,7 @@
     "PlatformIdentifier": {
       "base": null,
       "refs": {
-        "CreateNotebookInstanceInput$PlatformIdentifier": "<p>The platform identifier of the notebook instance runtime environment. The default value is <code>notebook-al2-v2</code>.</p>",
+        "CreateNotebookInstanceInput$PlatformIdentifier": "<p>The platform identifier of the notebook instance runtime environment. The default value is <code>notebook-al2023-v1</code>.</p>",
         "DescribeNotebookInstanceOutput$PlatformIdentifier": "<p>The platform identifier of the notebook instance runtime environment.</p>",
         "UpdateNotebookInstanceInput$PlatformIdentifier": "<p>The platform identifier of the notebook instance runtime environment.</p>"
       }
