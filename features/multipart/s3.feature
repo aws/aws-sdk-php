@@ -36,3 +36,18 @@ Feature: S3 Multipart Uploads
       | filename     |
       | the-file     |
       | the-?-file   |
+
+  Scenario: Copying a file preserves source metadata by default
+    Given I have an s3 client and an uploaded file named "meta-default" with metadata
+    When I call multipartCopy on "meta-default" to a new key in the same bucket
+    Then the copied file "meta-default-copy" should have the same metadata as "meta-default"
+
+  Scenario: Copying a file with REPLACE directive uses provided metadata
+    Given I have an s3 client and an uploaded file named "meta-replace" with metadata
+    When I call multipartCopy on "meta-replace" with metadata_directive "REPLACE" and custom metadata
+    Then the copied file "meta-replace-copy" should have the custom metadata
+
+  Scenario: Copying a file with REPLACE directive and no metadata strips metadata
+    Given I have an s3 client and an uploaded file named "meta-strip" with metadata
+    When I call multipartCopy on "meta-strip" with metadata_directive "REPLACE" and no metadata
+    Then the copied file "meta-strip-copy" should have no user-defined metadata

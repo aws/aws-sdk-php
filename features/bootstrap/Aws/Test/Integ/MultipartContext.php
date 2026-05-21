@@ -163,7 +163,159 @@ class MultipartContext implements Context, SnippetAcceptingContext
                 'Bucket' => self::getResourceName(),
                 'Key' => $filename . '-copy',
             ])['Body']->getContents()
-        );    }
+        );
+    }
+
+    /**
+     * @Given I have an s3 client and an uploaded file named :filename with metadata
+     */
+    public function iHaveAnS3ClientAndAnUploadedFileNamedWithMetadata($filename)
+    {
+        $this->s3Client = self::getSdk()->createS3();
+        $this->filename = $filename;
+        $this->s3Client->putObject([
+            'Bucket' => self::getResourceName(),
+            'Key' => $filename,
+            'Body' => 'foo',
+            'Metadata' => [
+                'test-key' => 'test-value',
+                'another-key' => 'another-value',
+            ],
+            'CacheControl' => 'max-age=3600',
+            'ContentDisposition' => 'attachment; filename="test.txt"',
+        ]);
+    }
+
+    /**
+     * @When I call multipartCopy on :filename with metadata_directive :directive and custom metadata
+     */
+    public function iCallMultipartCopyWithDirectiveAndCustomMetadata($filename, $directive)
+    {
+        $bucketName = self::getResourceName();
+        $source = '/' . $bucketName . '/' . $filename;
+
+        $copier = new MultipartCopy(
+            $this->s3Client,
+            $source,
+            [
+                'bucket' => $bucketName,
+                'key' => $filename . '-copy',
+                'metadata_directive' => $directive,
+                'params' => [
+                    'Metadata' => ['custom-key' => 'custom-value'],
+                    'ContentType' => 'text/plain',
+                ],
+            ]
+        );
+
+        try {
+            $this->result = $copier->copy();
+        } catch (MultipartUploadException $e) {
+            $this->s3Client->abortMultipartUpload($e->getState()->getId());
+            Assert::fail($e->getMessage());
+        }
+    }
+
+    /**
+     * @When I call multipartCopy on :filename with metadata_directive :directive and no metadata
+     */
+    public function iCallMultipartCopyWithDirectiveAndNoMetadata($filename, $directive)
+    {
+        $bucketName = self::getResourceName();
+        $source = '/' . $bucketName . '/' . $filename;
+
+        $copier = new MultipartCopy(
+            $this->s3Client,
+            $source,
+            [
+                'bucket' => $bucketName,
+                'key' => $filename . '-copy',
+                'metadata_directive' => $directive,
+            ]
+        );
+
+        try {
+            $this->result = $copier->copy();
+        } catch (MultipartUploadException $e) {
+            $this->s3Client->abortMultipartUpload($e->getState()->getId());
+            Assert::fail($e->getMessage());
+        }
+    }
+
+    /**
+     * @Then the copied file :destKey should have the same metadata as :sourceKey
+     */
+    public function theCopiedFileShouldHaveTheSameMetadataAs($destKey, $sourceKey)
+    {
+        $bucketName = self::getResourceName();
+
+        $sourceHead = $this->s3Client->headObject([
+            'Bucket' => $bucketName,
+            'Key' => $sourceKey,
+        ]);
+        $destHead = $this->s3Client->headObject([
+            'Bucket' => $bucketName,
+            'Key' => $destKey,
+        ]);
+
+        Assert::assertEquals(
+            $sourceHead['Metadata'],
+            $destHead['Metadata'],
+            'User-defined metadata should be preserved'
+        );
+        Assert::assertEquals(
+            $sourceHead['CacheControl'],
+            $destHead['CacheControl'],
+            'CacheControl should be preserved'
+        );
+        Assert::assertEquals(
+            $sourceHead['ContentDisposition'],
+            $destHead['ContentDisposition'],
+            'ContentDisposition should be preserved'
+        );
+    }
+
+    /**
+     * @Then the copied file :destKey should have the custom metadata
+     */
+    public function theCopiedFileShouldHaveTheCustomMetadata($destKey)
+    {
+        $bucketName = self::getResourceName();
+
+        $destHead = $this->s3Client->headObject([
+            'Bucket' => $bucketName,
+            'Key' => $destKey,
+        ]);
+
+        Assert::assertEquals(
+            ['custom-key' => 'custom-value'],
+            $destHead['Metadata'],
+            'Destination should have only the custom metadata'
+        );
+        Assert::assertEquals(
+            'text/plain',
+            $destHead['ContentType'],
+            'ContentType should be the user-provided value'
+        );
+    }
+
+    /**
+     * @Then the copied file :destKey should have no user-defined metadata
+     */
+    public function theCopiedFileShouldHaveNoUserDefinedMetadata($destKey)
+    {
+        $bucketName = self::getResourceName();
+
+        $destHead = $this->s3Client->headObject([
+            'Bucket' => $bucketName,
+            'Key' => $destKey,
+        ]);
+
+        Assert::assertEmpty(
+            $destHead['Metadata'],
+            'Destination should have no user-defined metadata'
+        );
+    }
 
     /**
      * @Given I have a non-seekable read stream

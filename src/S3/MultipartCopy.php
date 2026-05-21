@@ -9,7 +9,23 @@ use GuzzleHttp\Psr7;
 
 class MultipartCopy extends AbstractUploadManager
 {
-    use MultipartUploadingTrait;
+    use MultipartUploadingTrait {
+        getInitiateParams as private traitGetInitiateParams;
+    }
+
+    /**
+     * Metadata fields that can be copied from the source object
+     * to the destination during a multipart copy.
+     */
+    private static array $copyMetadataFields = [
+        'CacheControl',
+        'ContentDisposition',
+        'ContentEncoding',
+        'ContentLanguage',
+        'ContentType',
+        'Expires',
+        'Metadata',
+    ];
 
     /** @var string|array */
     private $source;
@@ -50,8 +66,18 @@ class MultipartCopy extends AbstractUploadManager
      *   of the multipart upload and that is used to resume a previous upload.
      *   When this option is provided, the `bucket`, `key`, and `part_size`
      *   options are ignored.
-     * - source_metadata: (Aws\ResultInterface) An object that represents the
-     *   result of executing a HeadObject command on the copy source.
+     * - metadata_directive: (string, default='COPY') Specifies whether to copy
+     *   source object metadata to the destination. Set to 'COPY' to
+     *   automatically forward metadata fields (Metadata, CacheControl,
+     *   ContentDisposition, ContentEncoding, ContentLanguage, ContentType,
+     *   Expires) from the source object. Set to 'REPLACE' to suppress automatic
+     *   metadata copying (you must then provide your own metadata via the
+     *   'params' option). User-provided values in 'params' always take
+     *   precedence over source metadata.
+     * - source_metadata: (Aws\ResultInterface) The result of a HeadObject call
+     *   on the copy source. If not provided, the SDK makes a HeadObject request
+     *   to obtain the source object's size and metadata. Providing this avoids
+     *   the extra request.
      * - display_progress: (boolean) Set true to track status in 1/8th increments
      *   for upload.
      *
@@ -177,6 +203,31 @@ class MultipartCopy extends AbstractUploadManager
     protected function extractETag(ResultInterface $result)
     {
         return $result->search('CopyPartResult.ETag');
+    }
+
+    protected function getInitiateParams()
+    {
+        $params = $this->traitGetInitiateParams();
+
+        $directive = strtoupper($this->config['metadata_directive'] ?? 'COPY');
+
+        if (!in_array($directive, ['COPY', 'REPLACE'], true)) {
+            throw new \InvalidArgumentException(
+                "Invalid metadata_directive value '$directive'."
+                . " Must be 'COPY' or 'REPLACE'."
+            );
+        }
+
+        if ($directive === 'COPY') {
+            $sourceMetadata = $this->getSourceMetadata();
+            foreach (self::$copyMetadataFields as $field) {
+                if (!isset($params[$field]) && !empty($sourceMetadata[$field])) {
+                    $params[$field] = $sourceMetadata[$field];
+                }
+            }
+        }
+
+        return $params;
     }
 
     protected function getSourceMimeType()
