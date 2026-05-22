@@ -14,6 +14,11 @@ use InvalidArgumentException;
 /**
  * Copies objects from one S3 location to another, utilizing a multipart copy
  * when appropriate.
+ *
+ * Makes a HeadObject call on the source to determine object size. Objects
+ * below the multipart threshold (default 5 GB) are copied with a single
+ * CopyObject call using MetadataDirective: COPY. Objects above the threshold
+ * use MultipartCopy, which also preserves source metadata by default.
  */
 class ObjectCopier implements PromisorInterface
 {
