@@ -21,16 +21,17 @@ jobs:
       AWS_SUPPRESS_PHP_DEPRECATION_WARNING: true
     steps:
       - name: Setup PHP with Xdebug
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
         with:
           coverage: xdebug
           php-version: '8.3'
           ini-values: xdebug.overload_var_dump=0, memory_limit=4G, phar.readonly=false
 
       - name: Checkout codebase
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Validate composer.json and composer.lock
         run: composer validate
@@ -42,7 +43,7 @@ jobs:
         run: vendor/bin/phpunit --testsuite=unit --coverage-clover=clover.xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
         with:
           file: ./clover.xml
           fail_ci_if_error: false
