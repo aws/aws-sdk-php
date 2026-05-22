@@ -1819,6 +1819,7 @@
         "codeRemediationTask":{"shape":"CodeRemediationTask"},
         "lastUpdatedBy":{"shape":"String"},
         "codeLocations":{"shape":"CodeLocationList"},
+        "verificationScript":{"shape":"VerificationScript"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -3299,6 +3300,26 @@
         "dnsTxt":{"shape":"DnsVerification"},
         "httpRoute":{"shape":"HttpVerification"}
       }
+    },
+    "VerificationScript":{
+      "type":"structure",
+      "members":{
+        "scriptType":{"shape":"String"},
+        "scriptUrl":{"shape":"String"},
+        "instructions":{"shape":"String"},
+        "envVars":{"shape":"VerificationScriptEnvVarList"}
+      }
+    },
+    "VerificationScriptEnvVar":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"String"},
+        "value":{"shape":"String"}
+      }
+    },
+    "VerificationScriptEnvVarList":{
+      "type":"list",
+      "member":{"shape":"VerificationScriptEnvVar"}
     },
     "VerifyTargetDomainInput":{
       "type":"structure",

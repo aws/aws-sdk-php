@@ -14067,7 +14067,7 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "LaunchTemplateName":{"shape":"LaunchTemplateName"},
+        "LaunchTemplateName":{"shape":"String"},
         "VersionDescription":{"shape":"VersionDescription"},
         "LaunchTemplateData":{"shape":"RequestLaunchTemplateData"},
         "Operator":{"shape":"OperatorRequest"},
@@ -41704,6 +41704,7 @@
       "required":["InstanceId"],
       "members":{
         "SourceDestCheck":{"shape":"AttributeBooleanValue"},
+        "EnclaveOptions":{"shape":"EnclaveOptionsRequest"},
         "DisableApiStop":{"shape":"AttributeBooleanValue"},
         "DryRun":{
           "shape":"Boolean",
@@ -41742,7 +41743,7 @@
           "locationName":"ramdisk"
         },
         "UserData":{
-          "shape":"BlobAttributeValue",
+          "shape":"SecureBlobAttributeValue",
           "locationName":"userData"
         },
         "InstanceInitiatedShutdownBehavior":{
@@ -50599,7 +50600,7 @@
           "locationName":"prefix"
         },
         "UploadPolicy":{
-          "shape":"Blob",
+          "shape":"SecureBlob",
           "locationName":"uploadPolicy"
         },
         "UploadPolicySignature":{
@@ -51434,6 +51435,19 @@
     "SecretArn":{
       "type":"string",
       "pattern":"^(?=.{20,2048}$)arn:aws[a-z-]*:secretsmanager:[a-z0-9-]+:\\d{12}:secret:[a-zA-Z0-9/_+=.@-]+"
+    },
+    "SecureBlob":{
+      "type":"blob",
+      "sensitive":true
+    },
+    "SecureBlobAttributeValue":{
+      "type":"structure",
+      "members":{
+        "Value":{
+          "shape":"SecureBlob",
+          "locationName":"value"
+        }
+      }
     },
     "SecurityGroup":{
       "type":"structure",

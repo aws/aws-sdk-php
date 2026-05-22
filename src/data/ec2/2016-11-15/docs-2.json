@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<fullname>Amazon Elastic Compute Cloud</fullname> <p>You can access the features of Amazon Elastic Compute Cloud (Amazon EC2) programmatically. For more information, see the <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide\">Amazon EC2 Developer Guide</a>.</p>",
+  "service": "<fullname>Amazon Elastic Compute Cloud</fullname> <p>This is the <i>Amazon EC2 API Reference</i>. It provides descriptions, API request parameters, and the XML response for each of the Amazon EC2 Query API actions. Note that the Amazon EC2 API includes actions for Amazon EC2 plus additional services, such as Amazon EBS and Amazon VPC.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p>To learn about using the Query API, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-low-level-api.html\">Using the API for Amazon EC2</a>.</p> </li> <li> <p>To learn about the permissions required to call an Amazon EC2 API action, see <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonec2.html\">Actions, resources, and condition keys for Amazon EC2</a>.</p> </li> <li> <p>To get the list of API actions by service and resource, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/OperationList-query.html\">Actions by service</a>.</p> </li> <li> <p>To get the alphabetical list of API actions, see .</p> </li> <li> <p>To get descriptions of the API error codes, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/errors-overview.html\">Error codes for the Amazon EC2 API</a>.</p> </li> </ul> <p>Alternatively, use one of the following methods to access the Amazon EC2 API, instead of using the Query API directly:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/cli/latest/reference/ec2/\">Amazon Web Services CLI Command Reference - ec2 commands</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/AWS_EC2.html\">CloudFormation - Amazon EC2 resource type reference</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/powershell/v5/reference/items/EC2_cmdlets.html\">Amazon Web Services Tools for PowerShell Cmdlet Reference - Amazon EC2 cmdlets</a> </p> </li> <li> <p> <a href=\"https://builder.aws.com/build/tools\">Amazon Web Services SDKs</a> </p> </li> </ul>",
   "operations": {
     "AcceptAddressTransfer": "<p>Accepts an Elastic IP address transfer. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html#using-instance-addressing-eips-transfer-accept\">Accept a transferred Elastic IP address</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "AcceptCapacityReservationBillingOwnership": "<p>Accepts a request to assign billing of the available capacity of a shared Capacity Reservation to your account. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/assign-billing.html\"> Billing assignment for shared Amazon EC2 Capacity Reservations</a>.</p>",
@@ -2328,14 +2328,12 @@
       "base": null,
       "refs": {
         "BlobAttributeValue$Value": null,
-        "ImportKeyPairRequest$PublicKeyMaterial": "<p>The public key.</p>",
-        "S3Storage$UploadPolicy": "<p>An Amazon S3 upload policy that gives Amazon EC2 permission to upload items into Amazon S3 on your behalf.</p>"
+        "ImportKeyPairRequest$PublicKeyMaterial": "<p>The public key.</p>"
       }
     },
     "BlobAttributeValue": {
       "base": null,
       "refs": {
-        "ModifyInstanceAttributeRequest$UserData": "<p>Changes the instance's user data to the specified value. User data must be base64-encoded. Depending on the tool or SDK that you're using, the base64-encoding might be performed for you. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-add-user-data.html\">Work with instance user data</a>.</p>"
       }
     },
     "BlockDeviceMapping": {
@@ -11445,6 +11443,7 @@
     "EnclaveOptionsRequest": {
       "base": "<p>Indicates whether the instance is enabled for Amazon Web Services Nitro Enclaves. For more information, see <a href=\"https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html\"> What is Amazon Web Services Nitro Enclaves?</a> in the <i>Amazon Web Services Nitro Enclaves User Guide</i>.</p>",
       "refs": {
+        "ModifyInstanceAttributeRequest$EnclaveOptions": "<p>Enables or disables the instance for Amazon Web Services Nitro Enclaves. For more information, see the <a href=\"https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html\">Amazon Web Services Nitro Enclaves User Guide</a>.</p>",
         "RunInstancesRequest$EnclaveOptions": "<p>Indicates whether the instance is enabled for Amazon Web Services Nitro Enclaves. For more information, see <a href=\"https://docs.aws.amazon.com/enclaves/latest/user/\">Amazon Web Services Nitro Enclaves User Guide</a>.</p> <p>You can't enable Amazon Web Services Nitro Enclaves and hibernation on the same instance.</p>"
       }
     },
@@ -17506,7 +17505,6 @@
     "LaunchTemplateName": {
       "base": null,
       "refs": {
-        "CreateLaunchTemplateRequest$LaunchTemplateName": "<p>A name for the launch template.</p>",
         "CreateLaunchTemplateVersionRequest$LaunchTemplateName": "<p>The name of the launch template.</p> <p>You must specify either the launch template ID or the launch template name, but not both.</p>",
         "DeleteLaunchTemplateRequest$LaunchTemplateName": "<p>The name of the launch template.</p> <p>You must specify either the launch template ID or the launch template name, but not both.</p>",
         "DeleteLaunchTemplateVersionsRequest$LaunchTemplateName": "<p>The name of the launch template.</p> <p>You must specify either the launch template ID or the launch template name, but not both.</p>",
@@ -18865,7 +18863,7 @@
       }
     },
     "ModifyInstanceAttributeUserDataRequest": {
-      "base": null,
+      "base": "<p>Describes Base64-encoded binary data.</p>",
       "refs": {
       }
     },
@@ -18873,7 +18871,7 @@
       "base": null,
       "refs": {
         "ModifyInstanceAttributeRequest$Value": "<p>A new value for the attribute. Use only with the <code>kernel</code>, <code>ramdisk</code>, <code>userData</code>, <code>disableApiTermination</code>, or <code>instanceInitiatedShutdownBehavior</code> attribute.</p>",
-        "ModifyInstanceAttributeUserDataRequest$Value": null
+        "ModifyInstanceAttributeUserDataRequest$Value": "<p>The value of the data.</p>"
       }
     },
     "ModifyInstanceCapacityReservationAttributesRequest": {
@@ -23699,6 +23697,19 @@
         "EnableInstanceSqlHaStandbyDetectionsRequest$SqlServerCredentials": "<p>The ARN of the Secrets Manager secret containing the SQL Server access credentials. The specified secret must contain valid SQL Server credentials for the specified instances. If not specified, deafult local user credentials will be used by the Amazon Web Services Systems Manager agent. To enable instances with different credentials, you must make separate requests.</p>"
       }
     },
+    "SecureBlob": {
+      "base": null,
+      "refs": {
+        "S3Storage$UploadPolicy": "<p>An Amazon S3 upload policy that gives Amazon EC2 permission to upload items into Amazon S3 on your behalf.</p>",
+        "SecureBlobAttributeValue$Value": null
+      }
+    },
+    "SecureBlobAttributeValue": {
+      "base": null,
+      "refs": {
+        "ModifyInstanceAttributeRequest$UserData": "<p>Changes the instance's user data to the specified value. User data must be base64-encoded. Depending on the tool or SDK that you're using, the base64-encoding might be performed for you. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-add-user-data.html\">Work with instance user data</a>.</p>"
+      }
+    },
     "SecurityGroup": {
       "base": "<p>Describes a security group.</p>",
       "refs": {
@@ -25049,6 +25060,7 @@
         "CreateIpamScopeRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateKeyPairRequest$KeyName": "<p>A unique name for the key pair.</p> <p>Constraints: Up to 255 ASCII characters</p>",
         "CreateLaunchTemplateRequest$ClientToken": "<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request. If a client token isn't specified, a randomly generated token is used in the request to ensure idempotency.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p> <p>Constraint: Maximum 128 ASCII characters.</p>",
+        "CreateLaunchTemplateRequest$LaunchTemplateName": "<p>A name for the launch template.</p>",
         "CreateLaunchTemplateVersionRequest$ClientToken": "<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request. If a client token isn't specified, a randomly generated token is used in the request to ensure idempotency.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p> <p>Constraint: Maximum 128 ASCII characters.</p>",
         "CreateLaunchTemplateVersionRequest$SourceVersion": "<p>The version of the launch template on which to base the new version. Snapshots applied to the block device mapping are ignored when creating a new version unless they are explicitly included.</p> <p>If you specify this parameter, the new version inherits the launch parameters from the source version. If you specify additional launch parameters for the new version, they overwrite any corresponding launch parameters inherited from the source version.</p> <p>If you omit this parameter, the new version contains only the launch parameters that you specify for the new version.</p>",
         "CreateLocalGatewayRouteRequest$DestinationCidrBlock": "<p>The CIDR range used for destination matches. Routing decisions are based on the most specific match.</p>",

@@ -1424,7 +1424,8 @@
         "GlueConnection$status": "<p>The status of the Amazon Web Services Glue connection.</p>",
         "GluePropertiesOutput$status": "<p>The status of a connection.</p>",
         "RedshiftPropertiesOutput$status": "<p>The status in the Amazon Redshift properties.</p>",
-        "S3PropertiesOutput$status": "<p>The status of the Amazon S3 connection.</p>"
+        "S3PropertiesOutput$status": "<p>The status of the Amazon S3 connection.</p>",
+        "VpcPropertiesOutput$status": "<p>The status of the VPC connection.</p>"
       }
     },
     "ConnectionSummaries": {
@@ -4608,7 +4609,8 @@
       "refs": {
         "PhysicalEndpoint$glueConnectionNames": "<p>The Amazon Web Services Glue connection names in the physical endpoint.</p>",
         "SparkGluePropertiesInput$glueConnectionNames": "<p>The Amazon Web Services Glue connection names in the Spark Amazon Web Services Glue properties. Specify either <code>glueConnectionName</code> or <code>glueConnectionNames</code>, but not both.</p>",
-        "SparkGluePropertiesOutput$glueConnectionNames": "<p>The Amazon Web Services Glue connection names in the Spark Amazon Web Services Glue properties.</p>"
+        "SparkGluePropertiesOutput$glueConnectionNames": "<p>The Amazon Web Services Glue connection names in the Spark Amazon Web Services Glue properties.</p>",
+        "VpcPropertiesOutput$glueConnectionNames": "<p>The Amazon Web Services Glue connection names associated with the VPC connection.</p>"
       }
     },
     "GlueConnectionPatch": {
@@ -7868,6 +7870,14 @@
       "base": null,
       "refs": {}
     },
+    "SecurityGroupId": {
+      "base": null,
+      "refs": {
+        "VpcPropertiesInput$securityGroupId": "<p>The security group ID of the VPC connection. Must match the pattern <code>^sg-[a-z0-9]+$</code>. Maximum length of 32.</p>",
+        "VpcPropertiesOutput$securityGroupId": "<p>The security group ID of the VPC connection.</p>",
+        "VpcPropertiesPatch$securityGroupId": "<p>The security group ID of the VPC connection.</p>"
+      }
+    },
     "SecurityGroupIdList": {
       "base": null,
       "refs": {
@@ -8596,7 +8606,8 @@
       "base": null,
       "refs": {
         "PhysicalConnectionRequirements$subnetId": "<p>The subnet ID of the physical connection requirements of a connection. </p>",
-        "SubnetIdList$member": null
+        "SubnetIdList$member": null,
+        "VpcConnectionSubnetIdList$member": null
       }
     },
     "SubnetIdList": {
@@ -9836,6 +9847,40 @@
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by the Amazon Web Services service.</p>",
       "refs": {}
+    },
+    "VpcConnectionSubnetIdList": {
+      "base": null,
+      "refs": {
+        "VpcPropertiesInput$subnetIds": "<p>The subnet IDs of the VPC connection. You can specify between 1 and 16 subnet IDs.</p>",
+        "VpcPropertiesOutput$subnetIds": "<p>The subnet IDs of the VPC connection.</p>",
+        "VpcPropertiesPatch$subnetIds": "<p>The subnet IDs of the VPC connection.</p>"
+      }
+    },
+    "VpcId": {
+      "base": null,
+      "refs": {
+        "VpcPropertiesInput$vpcId": "<p>The identifier of the VPC. Must match the pattern <code>^vpc-[a-z0-9]+$</code>. Maximum length of 32.</p>",
+        "VpcPropertiesOutput$vpcId": "<p>The identifier of the VPC.</p>",
+        "VpcPropertiesPatch$vpcId": "<p>The identifier of the VPC.</p>"
+      }
+    },
+    "VpcPropertiesInput": {
+      "base": "<p>The VPC connection properties used when creating a connection.</p>",
+      "refs": {
+        "ConnectionPropertiesInput$vpcProperties": "<p>The VPC properties of a connection.</p>"
+      }
+    },
+    "VpcPropertiesOutput": {
+      "base": "<p>The VPC connection properties returned in responses.</p>",
+      "refs": {
+        "ConnectionPropertiesOutput$vpcProperties": "<p>The VPC properties of a connection.</p>"
+      }
+    },
+    "VpcPropertiesPatch": {
+      "base": "<p>The VPC connection properties used when updating a connection.</p>",
+      "refs": {
+        "ConnectionPropertiesPatch$vpcProperties": "<p>The VPC properties of a connection properties patch.</p>"
+      }
     },
     "WorkflowsMwaaPropertiesInput": {
       "base": "<p>The Amazon MWAA properties.</p>",

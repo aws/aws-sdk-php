@@ -1,5 +1,59 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Adds `metadata_directive` configuration option to `MultipartCopy`. When set to `'COPY'` (the new default), source object metadata (Metadata, CacheControl, ContentDisposition, ContentEncoding, ContentLanguage, ContentType, Expires) is automatically preserved on the destination object. Set to `'REPLACE'` to suppress automatic metadata copying and provide your own via the `params` option. User-provided values in `params` always take precedence over source metadata.
+
+* `Aws\IoTWireless` - Adding new BDD representation of endpoint ruleset
+* `Aws\Invoicing` - Adds support for idempotency with a new ClientToken field for the CreateInvoiceUnit, DeleteInvoiceUnit, UpdateInvoiceUnit, DeleteProcurementPortalPreference, PutProcurementPortalPreference, and UpdateProcurementPortalPreferenceStatus APIs.
+* `Aws\DSQL` - Adding new BDD representation of endpoint ruleset
+* `Aws\KafkaConnect` - Adding new BDD representation of endpoint ruleset
+* `Aws\SecurityAgent` - Adds support for verification scripts on penetration test findings. Customers can now download executable scripts to independently reproduce confirmed vulnerabilities, with instructions and required environment variables provided for each finding.
+* `Aws\LicenseManagerLinuxSubscriptions` - Adding new BDD representation of endpoint ruleset
+* `Aws\DataZone` - Add support for VPC connection
+* `Aws\Bedrock` - Adding new BDD representation of endpoint ruleset
+* `Aws\NotificationsContacts` - Adding new BDD representation of endpoint ruleset
+* `Aws\MarketplaceDiscovery` - Adding new BDD representation of endpoint ruleset
+* `Aws\EC2` - The ModifyInstanceAttribute API now supports modification of EnclaveOptions for the instance as a typed parameter.
+* `Aws\GameLiftStreams` - Added new Gen6 stream classes based on the EC2 G6e instance family. These classes are designed for streaming high-fidelity, graphically demanding games and applications that benefit from additional GPU memory and performance.
+* `Aws\ApplicationSignals` - Adding new BDD representation of endpoint ruleset
+* `Aws\CodeStarNotifications` - Adding new BDD representation of endpoint ruleset
+* `Aws\RecycleBin` - Adding new BDD representation of endpoint ruleset
+* `Aws\BedrockAgentRuntime` - Adding new BDD representation of endpoint ruleset
+* `Aws\SESv2` - Adding new BDD representation of endpoint ruleset
+* `Aws\GeoPlaces` - Adding new BDD representation of endpoint ruleset
+* `Aws\NetworkFirewall` - Adding new BDD representation of endpoint ruleset
+* `Aws\FraudDetector` - Adding new BDD representation of endpoint ruleset
+* `Aws\Outposts` - Adding new BDD representation of endpoint ruleset
+* `Aws\PI` - Added ListPerformanceAnalysisReportRecommendations API to retrieve recommendations for a performance analysis report. Added analysis configuration support to CreatePerformanceAnalysisReport for enhanced analysis types such as vacuum analysis.
+* `Aws\Schemas` - Adding new BDD representation of endpoint ruleset
+* `Aws\PartnerCentralAccount` - Adding new BDD representation of endpoint ruleset
+* `Aws\LicenseManagerUserSubscriptions` - Adding new BDD representation of endpoint ruleset
+* `Aws\Panorama` - Adding new BDD representation of endpoint ruleset
+* `Aws\BCMPricingCalculator` - Adding new BDD representation of endpoint ruleset
+* `Aws\QConnect` - Added guardrail assessment results to inference spans in the ListSpans API. You can now see which AI Guardrail policies were evaluated, whether content was blocked or masked, and per-policy details for each Bedrock Converse call
+* `Aws\Neptunedata` - Adding new BDD representation of endpoint ruleset
+* `Aws\ForecastService` - Adding new BDD representation of endpoint ruleset
+* `Aws\BCMRecommendedActions` - Adding new BDD representation of endpoint ruleset
+* `Aws\EMRContainers` - Adding new BDD representation of endpoint ruleset
+* `Aws\SimSpaceWeaver` - Adding new BDD representation of endpoint ruleset
+* `Aws\B2bi` - Adding new BDD representation of endpoint ruleset
+* `Aws\GlueDataBrew` - Adding new BDD representation of endpoint ruleset
+* `Aws\ControlTower` - Adding new BDD representation of endpoint ruleset
+* `Aws\MigrationHubRefactorSpaces` - Adding new BDD representation of endpoint ruleset
+* `Aws\CustomerProfiles` - Adding new BDD representation of endpoint ruleset
+* `Aws\ForecastQueryService` - Adding new BDD representation of endpoint ruleset
+* `Aws\OAM` - Adding new BDD representation of endpoint ruleset
+* `Aws\FreeTier` - Adding new BDD representation of endpoint ruleset
+* `Aws\InternetMonitor` - Adding new BDD representation of endpoint ruleset
+* `Aws\S3Vectors` - Adding new BDD representation of endpoint ruleset
+* `Aws\SSOOIDC` - Adding new BDD representation of endpoint ruleset
+* `Aws\Tnb` - Adding new BDD representation of endpoint ruleset
+* `Aws\CloudControlApi` - Adding new BDD representation of endpoint ruleset
+* `Aws\IVSRealTime` - Adding new BDD representation of endpoint ruleset
+* `Aws\Repostspace` - Adding new BDD representation of endpoint ruleset
+* `Aws\AppConfig` - Adding new BDD representation of endpoint ruleset
+
 ## 3.381.6 - 2026-05-21
 
 * `Aws\NetworkManager` - Adding new BDD representation of endpoint ruleset

@@ -1937,6 +1937,11 @@
         "ValidationException$message": "<p>A summary of the validation failure.</p>",
         "ValidationExceptionField$path": "<p>A JSONPointer expression to the structure member whose value failed to satisfy the modeled constraint.</p>",
         "ValidationExceptionField$message": "<p>A detailed description of the validation failure.</p>",
+        "VerificationScript$scriptType": "<p>The type of script. Valid values are python and bash.</p>",
+        "VerificationScript$scriptUrl": "<p>URL to download the verification script.</p>",
+        "VerificationScript$instructions": "<p>Instructions for running the verification script, including prerequisites and how to interpret results.</p>",
+        "VerificationScriptEnvVar$name": "<p>The name of the environment variable.</p>",
+        "VerificationScriptEnvVar$value": "<p>The value of the environment variable.</p>",
         "VerifyTargetDomainOutput$domainName": "<p>The domain name of the target domain.</p>",
         "VerifyTargetDomainOutput$verificationStatusReason": "<p>The reason for the current target domain verification status.</p>"
       }
@@ -2276,6 +2281,24 @@
         "CreateTargetDomainOutput$verificationDetails": "<p>The verification details for the target domain, including the verification token and instructions.</p>",
         "TargetDomain$verificationDetails": "<p>The verification details for the target domain.</p>",
         "UpdateTargetDomainOutput$verificationDetails": "<p>The updated verification details for the target domain.</p>"
+      }
+    },
+    "VerificationScript": {
+      "base": "<p>Contains metadata for a verification script that can be used to reproduce a security finding.</p>",
+      "refs": {
+        "Finding$verificationScript": "<p>The verification script metadata for reproducing the finding, including download URL, instructions, and required environment variables.</p>"
+      }
+    },
+    "VerificationScriptEnvVar": {
+      "base": "<p>Represents an environment variable required to run a verification script.</p>",
+      "refs": {
+        "VerificationScriptEnvVarList$member": null
+      }
+    },
+    "VerificationScriptEnvVarList": {
+      "base": "<p>List of environment variables required to run a verification script.</p>",
+      "refs": {
+        "VerificationScript$envVars": "<p>The list of environment variables required to run the verification script.</p>"
       }
     },
     "VerifyTargetDomainInput": {

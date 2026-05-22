@@ -4452,6 +4452,14 @@
       "type":"list",
       "member":{"shape":"GroupingValue"}
     },
+    "GuardrailAction":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "BLOCKED",
+        "MASKED"
+      ]
+    },
     "GuardrailContentFilterConfig":{
       "type":"structure",
       "required":[
@@ -4591,6 +4599,35 @@
       ],
       "sensitive":true
     },
+    "GuardrailPolicyResult":{
+      "type":"structure",
+      "required":[
+        "policyType",
+        "action"
+      ],
+      "members":{
+        "policyType":{"shape":"GuardrailPolicyType"},
+        "action":{"shape":"GuardrailAction"},
+        "details":{"shape":"NonEmptyString"}
+      }
+    },
+    "GuardrailPolicyResultList":{
+      "type":"list",
+      "member":{"shape":"GuardrailPolicyResult"},
+      "max":50,
+      "min":0
+    },
+    "GuardrailPolicyType":{
+      "type":"string",
+      "enum":[
+        "CONTENT_FILTER",
+        "TOPIC",
+        "WORD",
+        "SENSITIVE_INFORMATION_PII",
+        "SENSITIVE_INFORMATION_REGEX",
+        "CONTEXTUAL_GROUNDING"
+      ]
+    },
     "GuardrailRegexConfig":{
       "type":"structure",
       "required":[
@@ -4634,6 +4671,13 @@
         "ANONYMIZE"
       ],
       "sensitive":true
+    },
+    "GuardrailSource":{
+      "type":"string",
+      "enum":[
+        "INPUT",
+        "OUTPUT"
+      ]
     },
     "GuardrailTopicConfig":{
       "type":"structure",
@@ -7502,7 +7546,8 @@
         "promptType":{"shape":"AIPromptType"},
         "promptName":{"shape":"Name"},
         "promptVersion":{"shape":"Integer"},
-        "timeToFirstTokenMs":{"shape":"Integer"}
+        "timeToFirstTokenMs":{"shape":"Integer"},
+        "guardrailAssessments":{"shape":"SpanGuardrailAssessmentList"}
       }
     },
     "SpanAttributesTemperatureFloat":{
@@ -7533,6 +7578,28 @@
     "SpanFinishReasonList":{
       "type":"list",
       "member":{"shape":"NonEmptyString"},
+      "max":10,
+      "min":0
+    },
+    "SpanGuardrailAssessment":{
+      "type":"structure",
+      "required":[
+        "guardrailId",
+        "guardrailName",
+        "source",
+        "action"
+      ],
+      "members":{
+        "guardrailId":{"shape":"NonEmptyString"},
+        "guardrailName":{"shape":"NonEmptyString"},
+        "source":{"shape":"GuardrailSource"},
+        "action":{"shape":"GuardrailAction"},
+        "policies":{"shape":"GuardrailPolicyResultList"}
+      }
+    },
+    "SpanGuardrailAssessmentList":{
+      "type":"list",
+      "member":{"shape":"SpanGuardrailAssessment"},
       "max":10,
       "min":0
     },

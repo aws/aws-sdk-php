@@ -5026,7 +5026,8 @@
         "mlflowProperties":{"shape":"MlflowPropertiesInput"},
         "workflowsMwaaProperties":{"shape":"WorkflowsMwaaPropertiesInput"},
         "workflowsServerlessProperties":{"shape":"WorkflowsServerlessPropertiesInput"},
-        "lakehouseProperties":{"shape":"LakehousePropertiesInput"}
+        "lakehouseProperties":{"shape":"LakehousePropertiesInput"},
+        "vpcProperties":{"shape":"VpcPropertiesInput"}
       },
       "union":true
     },
@@ -5045,7 +5046,8 @@
         "mlflowProperties":{"shape":"MlflowPropertiesOutput"},
         "workflowsMwaaProperties":{"shape":"WorkflowsMwaaPropertiesOutput"},
         "workflowsServerlessProperties":{"shape":"WorkflowsServerlessPropertiesOutput"},
-        "lakehouseProperties":{"shape":"LakehousePropertiesOutput"}
+        "lakehouseProperties":{"shape":"LakehousePropertiesOutput"},
+        "vpcProperties":{"shape":"VpcPropertiesOutput"}
       },
       "union":true
     },
@@ -5060,7 +5062,8 @@
         "s3Properties":{"shape":"S3PropertiesPatch"},
         "amazonQProperties":{"shape":"AmazonQPropertiesPatch"},
         "mlflowProperties":{"shape":"MlflowPropertiesPatch"},
-        "lakehouseProperties":{"shape":"LakehousePropertiesPatch"}
+        "lakehouseProperties":{"shape":"LakehousePropertiesPatch"},
+        "vpcProperties":{"shape":"VpcPropertiesPatch"}
       },
       "union":true
     },
@@ -5141,7 +5144,8 @@
         "VERTICA",
         "WORKFLOWS_MWAA",
         "AMAZON_Q",
-        "MLFLOW"
+        "MLFLOW",
+        "VPC"
       ]
     },
     "CreateAccountPoolInput":{
@@ -15584,6 +15588,12 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "SecurityGroupId":{
+      "type":"string",
+      "max":32,
+      "min":0,
+      "pattern":"sg-[a-z0-9]+"
+    },
     "SecurityGroupIdList":{
       "type":"list",
       "member":{"shape":"SecurityGroupIdListMemberString"},
@@ -18261,6 +18271,53 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "VpcConnectionSubnetIdList":{
+      "type":"list",
+      "member":{"shape":"SubnetId"},
+      "max":16,
+      "min":1
+    },
+    "VpcId":{
+      "type":"string",
+      "max":32,
+      "min":0,
+      "pattern":"vpc-[a-z0-9]+"
+    },
+    "VpcPropertiesInput":{
+      "type":"structure",
+      "required":[
+        "vpcId",
+        "subnetIds"
+      ],
+      "members":{
+        "vpcId":{"shape":"VpcId"},
+        "subnetIds":{"shape":"VpcConnectionSubnetIdList"},
+        "securityGroupId":{"shape":"SecurityGroupId"}
+      }
+    },
+    "VpcPropertiesOutput":{
+      "type":"structure",
+      "required":[
+        "vpcId",
+        "subnetIds",
+        "status"
+      ],
+      "members":{
+        "vpcId":{"shape":"VpcId"},
+        "subnetIds":{"shape":"VpcConnectionSubnetIdList"},
+        "status":{"shape":"ConnectionStatus"},
+        "securityGroupId":{"shape":"SecurityGroupId"},
+        "glueConnectionNames":{"shape":"GlueConnectionNames"}
+      }
+    },
+    "VpcPropertiesPatch":{
+      "type":"structure",
+      "members":{
+        "vpcId":{"shape":"VpcId"},
+        "subnetIds":{"shape":"VpcConnectionSubnetIdList"},
+        "securityGroupId":{"shape":"SecurityGroupId"}
+      }
     },
     "WorkflowsMwaaPropertiesInput":{
       "type":"structure",
