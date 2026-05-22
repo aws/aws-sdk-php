@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.382.0 - 2026-05-22
 
 * `Aws\S3` - Adds `metadata_directive` configuration option to `MultipartCopy`. When set to `'COPY'` (the new default), source object metadata (Metadata, CacheControl, ContentDisposition, ContentEncoding, ContentLanguage, ContentType, Expires) is automatically preserved on the destination object. Set to `'REPLACE'` to suppress automatic metadata copying and provide your own via the `params` option. User-provided values in `params` always take precedence over source metadata.
 
