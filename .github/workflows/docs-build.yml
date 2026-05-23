@@ -15,14 +15,16 @@ jobs:
     name: Build API documentation for PHP ${{ matrix.php-versions }}
     steps:
       - name: Setup PHP with JIT
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
         with:
           coverage: none
           php-version: ${{ matrix.php-versions }}
           ini-values: memory_limit=4G, phar.readonly=false, opcache.enable=1, opcache.enable_cli=1, opcache.jit=tracing, opcache.jit_buffer_size=128M
 
       - name: Checkout CodeBase
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Validate composer.json and composer.lock
         run: composer validate
