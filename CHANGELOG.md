@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.382.1 - 2026-05-26
 
 * `Aws\ResourceGroupsTaggingAPI` - The GetResources API now returns MissingTagKeys in ComplianceDetails, listing tag keys defined as required in the ReportRequiredTagBlock block of the effective tag policy that are absent from the resource.
 * `Aws\Billing` - Adding new BDD representation of endpoint ruleset
