@@ -203,6 +203,7 @@ class RetryMiddlewareV2
             }
             if ($value instanceof Exception || $value instanceof \Throwable) {
                 if (!$decider($attempts, $cmd, $value)) {
+                    $callback = null;
                     return Promise\Create::rejectionFor(
                         $this->bindStatsToReturn($value, $requestStats)
                     );
@@ -210,6 +211,7 @@ class RetryMiddlewareV2
             } elseif ($value instanceof ResultInterface
                 && !$decider($attempts, $cmd, $value)
             ) {
+                $callback = null;
                 return $this->bindStatsToReturn($value, $requestStats);
             }
 
