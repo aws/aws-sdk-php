@@ -542,6 +542,12 @@
         "KubernetesWorkloadDetails$Containers": "<p>Containers running as part of the Kubernetes workload.</p>"
       }
     },
+    "ContinuousScanDetails": {
+      "base": "<p>Contains information about the time range within the continuous backup in Amazon Web Services Backup to scan for a point-in-time recovery resource.</p>",
+      "refs": {
+        "RecoveryPoint$ContinuousScanDetails": "<p>Contains information about the time range within the continuous backup in Amazon Web Services Backup to scan.</p>"
+      }
+    },
     "CountByCoverageStatus": {
       "base": null,
       "refs": {
@@ -3385,6 +3391,12 @@
         "GetMalwareScanResponse$ScanConfiguration": "<p>Information about the scan configuration used for the malware scan.</p>"
       }
     },
+    "ScanConfigurationContinuousScanDetails": {
+      "base": "<p>Contains information about the time range within the continuous backup in Amazon Web Services Backup that was scanned for a point-in-time recovery resource.</p>",
+      "refs": {
+        "ScanConfigurationRecoveryPoint$ContinuousScanDetails": "<p>The time range within the continuous backup in Amazon Web Services Backup that was scanned for a point-in-time recovery resource.</p>"
+      }
+    },
     "ScanConfigurationRecoveryPoint": {
       "base": "<p>Contains information about the recovery point configuration used in the scan.</p>",
       "refs": {
@@ -4292,6 +4304,8 @@
       "base": null,
       "refs": {
         "AccountStatistics$LastGeneratedAt": "<p>The timestamp at which the finding for this account was last generated.</p>",
+        "ContinuousScanDetails$StartTime": "<p>The timestamp representing the start of the time range to scan. Reserved for internal use.</p>",
+        "ContinuousScanDetails$EndTime": "<p>The timestamp representing the end of the time range to scan.</p>",
         "CoverageResource$UpdatedAt": "<p>The timestamp at which the coverage details for the resource were last updated. This is in UTC format.</p>",
         "DateStatistics$Date": "<p>The timestamp when the total findings count is observed.</p> <p>For example, <code>Date</code> would look like <code>\"2024-09-05T17:00:00-07:00\"</code> whereas <code>LastGeneratedAt</code> would look like 2024-09-05T17:12:29-07:00\".</p>",
         "DateStatistics$LastGeneratedAt": "<p>The timestamp at which the last finding in the findings count, was generated.</p>",
@@ -4326,6 +4340,8 @@
         "S3BucketDetail$CreatedAt": "<p>The date and time the bucket was created at.</p>",
         "Scan$ScanStartTime": "<p>The timestamp of when the scan was triggered.</p>",
         "Scan$ScanEndTime": "<p>The timestamp of when the scan was finished.</p>",
+        "ScanConfigurationContinuousScanDetails$StartTime": "<p>The timestamp representing the start of the time range that was scanned.</p>",
+        "ScanConfigurationContinuousScanDetails$EndTime": "<p>The timestamp representing the end of the time range that was scanned.</p>",
         "Session$CreatedTime": "<p>The timestamp for when the session was created.</p> <p>In Amazon Web Services CloudTrail, you can find this value as <code>userIdentity.sessionContext.attributes.creationDate</code>.</p>",
         "SeverityStatistics$LastGeneratedAt": "<p>The timestamp at which a finding type for a specific severity was last generated.</p>",
         "Signal$CreatedAt": "<p>The timestamp when the first finding or activity related to this signal was observed.</p>",

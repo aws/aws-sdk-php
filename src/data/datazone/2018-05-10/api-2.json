@@ -8176,8 +8176,10 @@
         "manageAccessRoleArn":{"shape":"RoleArn"},
         "enabledRegions":{"shape":"EnabledRegionList"},
         "regionalParameters":{"shape":"RegionalParameterMap"},
+        "allowUserProvidedConfigurations":{"shape":"Boolean"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "resourceConfigurations":{"shape":"ResourceConfigurations"},
         "provisioningConfigurations":{"shape":"ProvisioningConfigurationList"}
       }
     },
@@ -9298,8 +9300,10 @@
         "manageAccessRoleArn":{"shape":"RoleArn"},
         "enabledRegions":{"shape":"EnabledRegionList"},
         "regionalParameters":{"shape":"RegionalParameterMap"},
+        "allowUserProvidedConfigurations":{"shape":"Boolean"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "resourceConfigurations":{"shape":"ResourceConfigurations"},
         "provisioningConfigurations":{"shape":"ProvisioningConfigurationList"}
       }
     },
@@ -14394,6 +14398,8 @@
         "environmentRolePermissionBoundary":{"shape":"PolicyArn"},
         "enabledRegions":{"shape":"EnabledRegionList"},
         "regionalParameters":{"shape":"RegionalParameterMap"},
+        "resourceConfigurations":{"shape":"PutResourceConfigurations"},
+        "allowUserProvidedConfigurations":{"shape":"Boolean"},
         "globalParameters":{"shape":"GlobalParameterMap"},
         "provisioningConfigurations":{"shape":"ProvisioningConfigurationList"}
       }
@@ -14412,10 +14418,37 @@
         "manageAccessRoleArn":{"shape":"RoleArn"},
         "enabledRegions":{"shape":"EnabledRegionList"},
         "regionalParameters":{"shape":"RegionalParameterMap"},
+        "allowUserProvidedConfigurations":{"shape":"Boolean"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "resourceConfigurations":{"shape":"ResourceConfigurations"},
         "provisioningConfigurations":{"shape":"ProvisioningConfigurationList"}
       }
+    },
+    "PutResourceConfiguration":{
+      "type":"structure",
+      "required":[
+        "name",
+        "region",
+        "parameters"
+      ],
+      "members":{
+        "name":{"shape":"PutResourceConfigurationNameString"},
+        "description":{"shape":"String"},
+        "region":{"shape":"RegionName"},
+        "parameters":{"shape":"ResourceConfigurationParameterMap"}
+      }
+    },
+    "PutResourceConfigurationNameString":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "PutResourceConfigurations":{
+      "type":"list",
+      "member":{"shape":"PutResourceConfiguration"},
+      "max":10,
+      "min":0
     },
     "QueryGraphInput":{
       "type":"structure",
@@ -14965,6 +14998,33 @@
         "value":{"shape":"String"},
         "type":{"shape":"String"}
       }
+    },
+    "ResourceConfiguration":{
+      "type":"structure",
+      "required":[
+        "identifier",
+        "name",
+        "region",
+        "parameters"
+      ],
+      "members":{
+        "identifier":{"shape":"String"},
+        "name":{"shape":"String"},
+        "description":{"shape":"String"},
+        "region":{"shape":"RegionName"},
+        "parameters":{"shape":"ResourceConfigurationParameterMap"}
+      }
+    },
+    "ResourceConfigurationParameterMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
+    "ResourceConfigurations":{
+      "type":"list",
+      "member":{"shape":"ResourceConfiguration"},
+      "max":10,
+      "min":0
     },
     "ResourceList":{
       "type":"list",

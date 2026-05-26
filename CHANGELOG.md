@@ -1,5 +1,61 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ResourceGroupsTaggingAPI` - The GetResources API now returns MissingTagKeys in ComplianceDetails, listing tag keys defined as required in the ReportRequiredTagBlock block of the effective tag policy that are absent from the resource.
+* `Aws\Billing` - Adding new BDD representation of endpoint ruleset
+* `Aws\Odb` - Adding new BDD representation of endpoint ruleset
+* `Aws\RolesAnywhere` - Adding new BDD representation of endpoint ruleset
+* `Aws\EMRServerless` - Adding new BDD representation of endpoint ruleset
+* `Aws\ControlCatalog` - Adding new BDD representation of endpoint ruleset
+* `Aws\MedicalImaging` - Adding new BDD representation of endpoint ruleset
+* `Aws\ChimeSDKMediaPipelines` - Adding new BDD representation of endpoint ruleset
+* `Aws\CleanRooms` - Adding new BDD representation of endpoint ruleset
+* `Aws\Pipes` - Adding new BDD representation of endpoint ruleset
+* `Aws\Batch` - Increase the maximum value of jobExecutionTimeoutMinutes to support longer job timeouts during compute environment infrastructure updates.
+* `Aws\Route53GlobalResolver` - Adding new BDD representation of endpoint ruleset
+* `Aws\GuardDuty` - Add malware scan support for Continuous Backups, also known as Point-In-Time Recovery Points (PITR).
+* `Aws\AIOps` - Adding new BDD representation of endpoint ruleset
+* `Aws\BedrockDataAutomation` - Adding new BDD representation of endpoint ruleset
+* `Aws\DevOpsGuru` - Adding new BDD representation of endpoint ruleset
+* `Aws\CodeConnections` - Adding new BDD representation of endpoint ruleset
+* `Aws\MarketplaceAgreement` - Adding new BDD representation of endpoint ruleset
+* `Aws\CleanRoomsML` - Adding new BDD representation of endpoint ruleset
+* `Aws\Scheduler` - Adding new BDD representation of endpoint ruleset
+* `Aws\ApplicationCostProfiler` - Adding new BDD representation of endpoint ruleset
+* `Aws\GreengrassV2` - Adding new BDD representation of endpoint ruleset
+* `Aws\IdentityStore` - Adding new BDD representation of endpoint ruleset
+* `Aws\Budgets` - AWS Budget Name Validation Documentation Updates.
+* `Aws\ResilienceHub` - Adding new BDD representation of endpoint ruleset
+* `Aws\KinesisVideoWebRTCStorage` - Adding new BDD representation of endpoint ruleset
+* `Aws\ConnectHealth` - Adding new BDD representation of endpoint ruleset
+* `Aws\S3Tables` - Adding new BDD representation of endpoint ruleset
+* `Aws\SSMQuickSetup` - Adding new BDD representation of endpoint ruleset
+* `Aws\OSIS` - Adding new BDD representation of endpoint ruleset
+* `Aws\Notifications` - Adding new BDD representation of endpoint ruleset
+* `Aws\BedrockAgentCoreControl` - Adding new BDD representation of endpoint ruleset
+* `Aws\ChimeSDKIdentity` - Adding new BDD representation of endpoint ruleset
+* `Aws\RedshiftServerless` - Adding new BDD representation of endpoint ruleset
+* `Aws\ivschat` - Adding new BDD representation of endpoint ruleset
+* `Aws\SagemakerEdgeManager` - Adding new BDD representation of endpoint ruleset
+* `Aws\ServiceQuotas` - Adding new BDD representation of endpoint ruleset
+* `Aws\WorkSpacesThinClient` - Adding new BDD representation of endpoint ruleset
+* `Aws\MediaPackageV2` - Adding new BDD representation of endpoint ruleset
+* `Aws\DataZone` - Added resourceConfigurations and allowUserProvidedConfigurations fields to environment blueprint configuration APIs, enabling customers who migrated from V1 to V2 domains to update resource configurations (such as lineage schedules) programmatically via the SDK.
+* `Aws\ObservabilityAdmin` - Adding new BDD representation of endpoint ruleset
+* `Aws\PcaConnectorScep` - Adding new BDD representation of endpoint ruleset
+* `Aws\PartnerCentralChannel` - Adding new BDD representation of endpoint ruleset
+* `Aws\ManagedBlockchainQuery` - Adding new BDD representation of endpoint ruleset
+* `Aws\BedrockAgentCore` - Adding new BDD representation of endpoint ruleset
+* `Aws\SageMakerGeospatial` - Adding new BDD representation of endpoint ruleset
+* `Aws\KeyspacesStreams` - Adding new BDD representation of endpoint ruleset
+* `Aws\AppRunner` - Adding new BDD representation of endpoint ruleset
+* `Aws\BCMDataExports` - Adding new BDD representation of endpoint ruleset
+* `Aws\Backup` - Launching S3 PITR malware scanning support for AWS Backup
+* `Aws\Evs` - Adding new BDD representation of endpoint ruleset
+* `Aws\ServiceDiscovery` - Adding new BDD representation of endpoint ruleset
+* `Aws\IoTManagedIntegrations` - Adding new BDD representation of endpoint ruleset
+
 ## 3.382.0 - 2026-05-22
 
 * `Aws\S3` - Adds `metadata_directive` configuration option to `MultipartCopy`. When set to `'COPY'` (the new default), source object metadata (Metadata, CacheControl, ContentDisposition, ContentEncoding, ContentLanguage, ContentType, Expires) is automatically preserved on the destination object. Set to `'REPLACE'` to suppress automatic metadata copying and provide your own via the `params` option. User-provided values in `params` always take precedence over source metadata.
