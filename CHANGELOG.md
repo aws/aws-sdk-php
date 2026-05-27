@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.382.2 - 2026-05-27
 
 * `Aws\Api` - Cast generated HTTP header values to strings and validate invalid header values.
 * `Aws\SavingsPlans` - Adding new BDD representation of endpoint ruleset
