@@ -66,7 +66,7 @@ class JsonRpcSerializer
         $headers = [
                 'X-Amz-Target' => $this->api->getMetadata('targetPrefix') . '.' . $operationName,
                 'Content-Type' => $this->contentType,
-                'Content-Length' => strlen($body)
+                'Content-Length' => (string) strlen($body)
         ];
 
         if ($endpoint instanceof RulesetEndpoint) {

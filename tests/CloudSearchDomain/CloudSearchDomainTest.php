@@ -40,6 +40,7 @@ class CloudSearchDomainTest extends TestCase
         $request = CloudSearchDomainClient::convertGetToPost($request);
         $this->assertSame('POST', $request->getMethod());
         $this->assertSame('application/x-www-form-urlencoded', $request->getHeaderLine('Content-Type'));
+        $this->assertSame(['7'], $request->getHeader('Content-Length'));
         $this->assertSame('7', $request->getHeaderLine('Content-Length'));
         $this->assertSame('foo=bar', (string)$request->getBody());
         $this->assertSame('', $request->getUri()->getQuery());

@@ -30,7 +30,7 @@ class RestXmlSerializer extends RestSerializer
     {
         $opts['headers']['Content-Type'] = 'application/xml';
         $body = $this->getXmlBody($member, $value);
-        $opts['headers']['Content-Length'] = strlen($body);
+        $opts['headers']['Content-Length'] = (string) strlen($body);
         $opts['body'] = $body;
     }
 

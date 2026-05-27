@@ -47,6 +47,7 @@ class QuerySerializerTest extends TestCase
         $request = $q($cmd);
         $this->assertSame('POST', $request->getMethod());
         $this->assertSame('http://foo.com/', (string) $request->getUri());
+        $this->assertSame(['25'], $request->getHeader('Content-Length'));
         $this->assertSame('Action=foo&Version=1&baz=', (string) $request->getBody());
     }
 

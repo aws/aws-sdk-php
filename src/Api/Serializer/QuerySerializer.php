@@ -61,7 +61,7 @@ class QuerySerializer
         }
         $body = http_build_query($body, '', '&', PHP_QUERY_RFC3986);
         $headers = [
-            'Content-Length' => strlen($body),
+            'Content-Length' => (string) strlen($body),
             'Content-Type'   => 'application/x-www-form-urlencoded'
         ];
         $requestUri = $operation['http']['requestUri'] ?? null;

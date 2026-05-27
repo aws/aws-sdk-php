@@ -76,7 +76,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
                         'InputStream' => $inputStream,
                     ]
                 ],
-                [ 'Content-Length' => [26] ],
+                [ 'Content-Length' => ['26'] ],
                 [ 'transfer-encoding' ],
             ],
             [
@@ -86,7 +86,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
                         'InputStream' => $inputStream,
                     ]
                 ],
-                [ 'Content-Length' => [26] ],
+                [ 'Content-Length' => ['26'] ],
                 [ 'transfer-encoding' ],
             ],
             [
@@ -96,7 +96,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
                         'InputStream' => $inputStream,
                     ]
                 ],
-                [ 'Content-Length' => [26] ],
+                [ 'Content-Length' => ['26'] ],
                 [ 'transfer-encoding' ],
             ],
         ];
