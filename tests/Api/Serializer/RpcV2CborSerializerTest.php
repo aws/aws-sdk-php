@@ -561,6 +561,6 @@ class RpcV2CborSerializerTest extends TestCase
             'rpc-v2-cbor',
             $request->getHeaderLine('Smithy-Protocol')
         );
-        $this->assertTrue($request->hasHeader('Content-Length'));
+        $this->assertSame([(string) strlen((string) $request->getBody())], $request->getHeader('Content-Length'));
     }
 }

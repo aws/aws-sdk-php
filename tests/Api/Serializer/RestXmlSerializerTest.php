@@ -80,6 +80,7 @@ class RestXmlSerializerTest extends TestCase
             'application/xml',
             $request->getHeaderLine('Content-Type')
         );
+        $this->assertSame([(string) strlen((string) $request->getBody())], $request->getHeader('Content-Length'));
     }
 
     /**

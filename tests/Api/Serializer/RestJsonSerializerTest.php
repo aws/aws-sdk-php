@@ -63,6 +63,18 @@ class RestJsonSerializerTest extends TestCase
                         'http' => ['method' => 'POST'],
                         'input' => ['shape' => 'BoolHeaderInput']
                     ],
+                    'intHeader' => [
+                        'http' => ['method' => 'POST'],
+                        'input' => ['shape' => 'IntHeaderInput']
+                    ],
+                    'nullHeader' => [
+                        'http' => ['method' => 'POST'],
+                        'input' => ['shape' => 'NullHeaderInput']
+                    ],
+                    'listHeader' => [
+                        'http' => ['method' => 'POST'],
+                        'input' => ['shape' => 'ListHeaderInput']
+                    ],
                     'requestUriOperation' =>[
                         'http' => [
                             'method' => 'POST',
@@ -182,9 +194,44 @@ class RestJsonSerializerTest extends TestCase
                             ],
                         ]
                     ],
+                    'IntHeaderInput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'int' => [
+                                'shape' => 'IntShape',
+                                'location' => 'header',
+                                'locationName' => 'Is-Int',
+                            ],
+                        ]
+                    ],
+                    'NullHeaderInput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'null' => [
+                                'shape' => 'BazShape',
+                                'location' => 'header',
+                                'locationName' => 'Is-Null',
+                            ],
+                        ]
+                    ],
+                    'ListHeaderInput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'list' => [
+                                'shape' => 'ListShape',
+                                'location' => 'header',
+                                'locationName' => 'Is-List',
+                            ],
+                        ]
+                    ],
                     'BlobShape' => ['type' => 'blob'],
                     'BazShape'  => ['type' => 'string'],
                     'BoolShape' => ['type' => 'boolean'],
+                    'IntShape' => ['type' => 'integer'],
+                    'ListShape' => [
+                        'type' => 'list',
+                        'member' => ['shape' => 'BazShape'],
+                    ],
                     'PathSegmentShape'  => ['type' => 'string'],
                 ]
             ],
@@ -223,6 +270,7 @@ class RestJsonSerializerTest extends TestCase
             'application/json',
             $request->getHeaderLine('Content-Type')
         );
+        $this->assertSame(['13'], $request->getHeader('Content-Length'));
     }
 
     public function testPreparesRequestsWithEndpointWithPath(): void
@@ -407,6 +455,38 @@ class RestJsonSerializerTest extends TestCase
             [true, 'true'],
             [false, 'false']
         ];
+    }
+
+    public function testSerializesIntegerHeaderValueToString(): void
+    {
+        $request = $this->getRequest('intHeader', ['int' => 5]);
+        $this->assertSame(['5'], $request->getHeader('Is-Int'));
+    }
+
+    public function testOmitsNullHeaderValue(): void
+    {
+        $request = $this->getRequest('nullHeader', ['null' => null]);
+        $this->assertFalse($request->hasHeader('Is-Null'));
+    }
+
+    public function testSerializesEmptyHeaderListToEmptyString(): void
+    {
+        $request = $this->getRequest('listHeader', ['list' => []]);
+        $this->assertSame([''], $request->getHeader('Is-List'));
+    }
+
+    public function testSerializesHeaderListValuesToStrings(): void
+    {
+        $request = $this->getRequest('listHeader', ['list' => ['foo', 5, true, false]]);
+        $this->assertSame(['foo', '5', '1', ''], $request->getHeader('Is-List'));
+    }
+
+    public function testRejectsInvalidHeaderListValue(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Header values must be scalar or an array of scalars.');
+
+        $this->getRequest('listHeader', ['list' => ['foo', null]]);
     }
 
     public function testDoesNotOverrideScheme(): void

@@ -49,6 +49,7 @@ class JsonRpcSerializerTest extends TestCase
             $request->getHeaderLine('Content-Type')
         );
         $this->assertSame('test.foo', $request->getHeaderLine('X-Amz-Target'));
+        $this->assertSame(['13'], $request->getHeader('Content-Length'));
         $this->assertSame('{"baz":"bam"}', (string) $request->getBody());
     }
 
