@@ -4795,7 +4795,8 @@
         "ml.p5.4xlarge",
         "ml.p5.48xlarge",
         "ml.p5e.48xlarge",
-        "ml.p5en.48xlarge"
+        "ml.p5en.48xlarge",
+        "ml.p6-b200.48xlarge"
       ]
     },
     "AIRecommendationInstanceTypeList":{
@@ -8035,6 +8036,13 @@
         "EventLevel":{"shape":"ClusterEventLevel"}
       }
     },
+    "ClusterFSxLustreDeletionPolicy":{
+      "type":"string",
+      "enum":[
+        "DeleteIfNotUsed",
+        "Keep"
+      ]
+    },
     "ClusterFsxLustreConfig":{
       "type":"structure",
       "required":[
@@ -8697,6 +8705,20 @@
       "max":100,
       "min":1
     },
+    "ClusterRestrictedInstanceGroupsConfig":{
+      "type":"structure",
+      "required":["SharedEnvironmentConfig"],
+      "members":{
+        "SharedEnvironmentConfig":{"shape":"ClusterSharedEnvironmentConfig"}
+      }
+    },
+    "ClusterRestrictedInstanceGroupsConfigOutput":{
+      "type":"structure",
+      "required":["SharedEnvironmentConfig"],
+      "members":{
+        "SharedEnvironmentConfig":{"shape":"ClusterSharedEnvironmentConfigDetails"}
+      }
+    },
     "ClusterSchedulerConfigArn":{
       "type":"string",
       "max":256,
@@ -8741,6 +8763,26 @@
     "ClusterSchedulerPriorityClassName":{
       "type":"string",
       "pattern":"[a-z0-9]([-a-z0-9]*[a-z0-9]){0,39}?"
+    },
+    "ClusterSharedEnvironmentConfig":{
+      "type":"structure",
+      "required":[
+        "FSxLustreDeletionPolicy",
+        "FSxLustreConfig"
+      ],
+      "members":{
+        "FSxLustreDeletionPolicy":{"shape":"ClusterFSxLustreDeletionPolicy"},
+        "FSxLustreConfig":{"shape":"FSxLustreConfig"}
+      }
+    },
+    "ClusterSharedEnvironmentConfigDetails":{
+      "type":"structure",
+      "members":{
+        "CurrentFSxLustreConfig":{"shape":"FSxLustreConfig"},
+        "DesiredFSxLustreConfig":{"shape":"FSxLustreConfig"},
+        "CurrentFSxLustreDeletionPolicy":{"shape":"ClusterFSxLustreDeletionPolicy"},
+        "DesiredFSxLustreDeletionPolicy":{"shape":"ClusterFSxLustreDeletionPolicy"}
+      }
     },
     "ClusterSlurmConfig":{
       "type":"structure",
@@ -9630,6 +9672,7 @@
         "ClusterName":{"shape":"ClusterName"},
         "InstanceGroups":{"shape":"ClusterInstanceGroupSpecifications"},
         "RestrictedInstanceGroups":{"shape":"ClusterRestrictedInstanceGroupSpecifications"},
+        "RestrictedInstanceGroupsConfig":{"shape":"ClusterRestrictedInstanceGroupsConfig"},
         "VpcConfig":{"shape":"VpcConfig"},
         "Tags":{"shape":"TagList"},
         "Orchestrator":{"shape":"ClusterOrchestrator"},
@@ -12645,6 +12688,7 @@
         "FailureMessage":{"shape":"String"},
         "InstanceGroups":{"shape":"ClusterInstanceGroupDetailsList"},
         "RestrictedInstanceGroups":{"shape":"ClusterRestrictedInstanceGroupDetailsList"},
+        "RestrictedInstanceGroupsConfig":{"shape":"ClusterRestrictedInstanceGroupsConfigOutput"},
         "VpcConfig":{"shape":"VpcConfig"},
         "Orchestrator":{"shape":"ClusterOrchestrator"},
         "TieredStorageConfig":{"shape":"ClusterTieredStorageConfig"},
@@ -26448,6 +26492,7 @@
         "TotalInstanceCount":{"shape":"TotalInstanceCount"},
         "Status":{"shape":"ReservedCapacityStatus"},
         "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "DurationHours":{"shape":"ReservedCapacityDurationHours"},
         "DurationMinutes":{"shape":"ReservedCapacityDurationMinutes"},
         "StartTime":{"shape":"Timestamp"},
@@ -30311,6 +30356,7 @@
         "ClusterName":{"shape":"ClusterNameOrArn"},
         "InstanceGroups":{"shape":"ClusterInstanceGroupSpecifications"},
         "RestrictedInstanceGroups":{"shape":"ClusterRestrictedInstanceGroupSpecifications"},
+        "RestrictedInstanceGroupsConfig":{"shape":"ClusterRestrictedInstanceGroupsConfig"},
         "TieredStorageConfig":{"shape":"ClusterTieredStorageConfig"},
         "NodeRecovery":{"shape":"ClusterNodeRecovery"},
         "InstanceGroupsToDelete":{"shape":"ClusterInstanceGroupsToDelete"},

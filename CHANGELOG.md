@@ -1,5 +1,61 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Cast generated HTTP header values to strings and validate invalid header values.
+* `Aws\SavingsPlans` - Adding new BDD representation of endpoint ruleset
+* `Aws\ComputeOptimizerAutomation` - Adding new BDD representation of endpoint ruleset
+* `Aws\MainframeModernization` - Adding new BDD representation of endpoint ruleset
+* `Aws\LocationService` - Adding new BDD representation of endpoint ruleset
+* `Aws\Omics` - Adding new BDD representation of endpoint ruleset
+* `Aws\SimpleDBv2` - Adding new BDD representation of endpoint ruleset
+* `Aws\WorkMailMessageFlow` - Adding new BDD representation of endpoint ruleset
+* `Aws\SupportApp` - Adding new BDD representation of endpoint ruleset
+* `Aws\EBS` - Adding new BDD representation of endpoint ruleset
+* `Aws\IoTDeviceAdvisor` - Adding new BDD representation of endpoint ruleset
+* `Aws\MarketplaceDeployment` - Adding new BDD representation of endpoint ruleset
+* `Aws\SageMaker` - Adds shared environment support for Restricted Instance Groups (RIGs) on SageMaker HyperPod, enabling cross-RIG workload scheduling and FSx sharing. This unlocks shared CPU-GPU environments needed for cost-efficient RL training (e.g., Nova Forge). Adds p6 instance support for recommendation jobs
+* `Aws\ECS` - Add support for Neuron device resource requirements for Amazon ECS
+* `Aws\ECRPublic` - Adding new BDD representation of endpoint ruleset
+* `Aws\SecurityIR` - Adding new BDD representation of endpoint ruleset
+* `Aws\IoTThingsGraph` - Adding new BDD representation of endpoint ruleset
+* `Aws\FIS` - Adding new BDD representation of endpoint ruleset
+* `Aws\EKSAuth` - Adding new BDD representation of endpoint ruleset
+* `Aws\ConnectCases` - Adding new BDD representation of endpoint ruleset
+* `Aws\SageMakerFeatureStoreRuntime` - Adding new BDD representation of endpoint ruleset
+* `Aws\DataExchange` - Adding new BDD representation of endpoint ruleset
+* `Aws\Organizations` - AWS Organizations now emits CloudTrail events (AccountJoinedOrganization, AccountDepartedOrganization) to the management account for membership changes, including join and departure method and timestamp.
+* `Aws\mgn` - Adding new BDD representation of endpoint ruleset
+* `Aws\EventBridge` - Adding new BDD representation of endpoint ruleset
+* `Aws\WellArchitected` - Adding new BDD representation of endpoint ruleset
+* `Aws\BedrockDataAutomation` - Matcher Fallback extends the CustomOutputConfiguration for the Document modality in DataAutomationProjects, enabling a fallback blueprint when no match is found. A FALLBACK match status is returned, improving the matching experience and guaranteeing customers always receive CustomOutputResults.
+* `Aws\PartnerCentralSelling` - Adding new BDD representation of endpoint ruleset
+* `Aws\CloudWatchRUM` - Adding new BDD representation of endpoint ruleset
+* `Aws\finspace` - Adding new BDD representation of endpoint ruleset
+* `Aws\SSMContacts` - Adding new BDD representation of endpoint ruleset
+* `Aws\NovaAct` - Adding new BDD representation of endpoint ruleset
+* `Aws\RTBFabric` - Adding new BDD representation of endpoint ruleset
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports Smart Subtitles, a new caption source that uses AWS Elemental Inference to automatically generate WebVTT and TTML captions from source audio. Available in English, Spanish, French, German, Italian, and Portuguese.
+* `Aws\ElementalInference` - Added support for smart subtitles in Elemental Inference, enabling automatic generation of subtitles for media content. Available in English, Spanish, French, German, Italian, and Portuguese.
+* `Aws\ComputeOptimizer` - Adding new BDD representation of endpoint ruleset
+* `Aws\DevOpsAgent` - Adding new BDD representation of endpoint ruleset
+* `Aws\PcaConnectorAd` - Adding new BDD representation of endpoint ruleset
+* `Aws\LaunchWizard` - Adding new BDD representation of endpoint ruleset
+* `Aws\IoTFleetWise` - Adding new BDD representation of endpoint ruleset
+* `Aws\BCMDashboards` - Adding new BDD representation of endpoint ruleset
+* `Aws\ResourceExplorer2` - Adding new BDD representation of endpoint ruleset
+* `Aws\DocDBElastic` - Adding new BDD representation of endpoint ruleset
+* `Aws\MPA` - Adding new BDD representation of endpoint ruleset
+* `Aws\PartnerCentralBenefits` - Adding new BDD representation of endpoint ruleset
+* `Aws\MemoryDB` - Adding new BDD representation of endpoint ruleset
+* `Aws\Inspector2` - Adding new BDD representation of endpoint ruleset
+* `Aws\WorkSpacesWeb` - Adding new BDD representation of endpoint ruleset
+* `Aws\OpenSearchService` - OpenSearch will now support multi-segment paths in JWKS URLs.
+* `Aws\imagebuilder` - Adding new BDD representation of endpoint ruleset
+* `Aws\SsmSap` - Adding new BDD representation of endpoint ruleset
+* `Aws\VoiceID` - Adding new BDD representation of endpoint ruleset
+* `Aws\PaymentCryptography` - Adding new BDD representation of endpoint ruleset
+
 ## 3.382.1 - 2026-05-26
 
 * `Aws\ResourceGroupsTaggingAPI` - The GetResources API now returns MissingTagKeys in ComplianceDetails, listing tag keys defined as required in the ReportRequiredTagBlock block of the effective tag policy that are absent from the resource.

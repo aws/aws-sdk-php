@@ -1931,7 +1931,8 @@
         "cpu":{"shape":"String"},
         "memory":{"shape":"String"},
         "memoryReservation":{"shape":"String"},
-        "gpuIds":{"shape":"GpuIds"}
+        "gpuIds":{"shape":"GpuIds"},
+        "neuronDeviceIds":{"shape":"NeuronDeviceIds"}
       }
     },
     "ContainerCondition":{
@@ -4705,6 +4706,10 @@
         "none"
       ]
     },
+    "NeuronDeviceIds":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "NoUpdateAvailableException":{
       "type":"structure",
       "members":{
@@ -4784,7 +4789,10 @@
     },
     "PlatformDeviceType":{
       "type":"string",
-      "enum":["GPU"]
+      "enum":[
+        "GPU",
+        "NEURON_DEVICE"
+      ]
     },
     "PlatformDevices":{
       "type":"list",
@@ -5092,7 +5100,8 @@
       "type":"string",
       "enum":[
         "GPU",
-        "InferenceAccelerator"
+        "InferenceAccelerator",
+        "NeuronDevice"
       ]
     },
     "Resources":{

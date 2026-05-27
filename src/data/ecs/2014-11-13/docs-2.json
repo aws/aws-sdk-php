@@ -2681,6 +2681,12 @@
         "TaskDefinition$networkMode": "<p>The Docker networking mode to use for the containers in the task. The valid values are <code>none</code>, <code>bridge</code>, <code>awsvpc</code>, and <code>host</code>. If no network mode is specified, the default is <code>bridge</code>.</p> <p>For Amazon ECS tasks on Fargate, the <code>awsvpc</code> network mode is required. For Amazon ECS tasks on Amazon EC2 Linux instances, any network mode can be used. For Amazon ECS tasks on Amazon EC2 Windows instances, <code>&lt;default&gt;</code> or <code>awsvpc</code> can be used. If the network mode is set to <code>none</code>, you cannot specify port mappings in your container definitions, and the tasks containers do not have external connectivity. The <code>host</code> and <code>awsvpc</code> network modes offer the highest networking performance for containers because they use the EC2 network stack instead of the virtualized network stack provided by the <code>bridge</code> mode.</p> <p>With the <code>host</code> and <code>awsvpc</code> network modes, exposed container ports are mapped directly to the corresponding host port (for the <code>host</code> network mode) or the attached elastic network interface port (for the <code>awsvpc</code> network mode), so you cannot take advantage of dynamic host port mappings. </p> <important> <p>When using the <code>host</code> network mode, you should not run containers using the root user (UID 0). It is considered best practice to use a non-root user.</p> </important> <p>If the network mode is <code>awsvpc</code>, the task is allocated an elastic network interface, and you must specify a <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_NetworkConfiguration.html\">NetworkConfiguration</a> value when you create a service or run a task with the task definition. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking.html\">Task Networking</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p> <p>If the network mode is <code>host</code>, you cannot run multiple instantiations of the same task on a single container instance when port mappings are used.</p>"
       }
     },
+    "NeuronDeviceIds": {
+      "base": null,
+      "refs": {
+        "Container$neuronDeviceIds": "<p>The IDs of each Neuron device assigned to the container.</p>"
+      }
+    },
     "NoUpdateAvailableException": {
       "base": "<p>There's no update available for this Amazon ECS container agent. This might be because the agent is already running the latest version or because it's so old that there's no update path to the current version.</p>",
       "refs": {}
@@ -2741,7 +2747,7 @@
       }
     },
     "PlatformDevice": {
-      "base": "<p>The devices that are available on the container instance. The only supported device type is a GPU.</p>",
+      "base": "<p>The devices that are available on the container instance. The supported device types are GPUs and Neuron devices.</p>",
       "refs": {
         "PlatformDevices$member": null
       }
@@ -2749,13 +2755,13 @@
     "PlatformDeviceType": {
       "base": null,
       "refs": {
-        "PlatformDevice$type": "<p>The type of device that's available on the container instance. The only supported value is <code>GPU</code>.</p>"
+        "PlatformDevice$type": "<p>The type of device that's available on the container instance. The supported values are <code>GPU</code> and <code>NEURON_DEVICE</code>.</p>"
       }
     },
     "PlatformDevices": {
       "base": null,
       "refs": {
-        "RegisterContainerInstanceRequest$platformDevices": "<p>The devices that are available on the container instance. The only supported device type is a GPU.</p>"
+        "RegisterContainerInstanceRequest$platformDevices": "<p>The devices that are available on the container instance. The supported device types are GPUs and Neuron devices.</p>"
       }
     },
     "PlatformTaskDefinitionIncompatibilityException": {
@@ -2939,7 +2945,7 @@
       "refs": {}
     },
     "ResourceRequirement": {
-      "base": "<p>The type and amount of a resource to assign to a container. The supported resource types are GPUs and Elastic Inference accelerators. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-gpu.html\">Working with GPUs on Amazon ECS</a> or <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-inference.html\">Working with Amazon Elastic Inference on Amazon ECS</a> in the <i>Amazon Elastic Container Service Developer Guide</i> </p>",
+      "base": "<p>The type and amount of a resource to assign to a container. The supported resource types are GPUs, Neuron devices, and Elastic Inference accelerators. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-gpu.html\">Working with GPUs on Amazon ECS</a> or <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-inference.html\">Working with Amazon Elastic Inference on Amazon ECS</a> in the <i>Amazon Elastic Container Service Developer Guide</i> </p>",
       "refs": {
         "ResourceRequirements$member": null
       }
@@ -2947,8 +2953,8 @@
     "ResourceRequirements": {
       "base": null,
       "refs": {
-        "ContainerDefinition$resourceRequirements": "<p>The type and amount of a resource to assign to a container. The only supported resource is a GPU.</p>",
-        "ContainerOverride$resourceRequirements": "<p>The type and amount of a resource to assign to a container, instead of the default value from the task definition. The only supported resource is a GPU.</p>"
+        "ContainerDefinition$resourceRequirements": "<p>The type and amount of a resource to assign to a container. The supported resources are GPUs and Neuron devices.</p>",
+        "ContainerOverride$resourceRequirements": "<p>The type and amount of a resource to assign to a container, instead of the default value from the task definition. The supported resources are GPUs and Neuron devices.</p>"
       }
     },
     "ResourceType": {
@@ -3778,10 +3784,11 @@
         "NetworkInterface$attachmentId": "<p>The attachment ID for the network interface.</p>",
         "NetworkInterface$privateIpv4Address": "<p>The private IPv4 address for the network interface.</p>",
         "NetworkInterface$ipv6Address": "<p>The private IPv6 address for the network interface.</p>",
+        "NeuronDeviceIds$member": null,
         "NoUpdateAvailableException$message": "<p> Message that describes the cause of the exception.</p>",
         "PlacementConstraint$expression": "<p>A cluster query language expression to apply to the constraint. The expression can have a maximum length of 2000 characters. You can't specify an expression if the constraint type is <code>distinctInstance</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cluster-query-language.html\">Cluster query language</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p>",
         "PlacementStrategy$field": "<p>The field to apply the placement strategy against. For the <code>spread</code> placement strategy, valid values are <code>instanceId</code> (or <code>host</code>, which has the same effect), or any platform or custom attribute that's applied to a container instance, such as <code>attribute:ecs.availability-zone</code>. For the <code>binpack</code> placement strategy, valid values are <code>cpu</code> and <code>memory</code>. For the <code>random</code> placement strategy, this field is not used.</p>",
-        "PlatformDevice$id": "<p>The ID for the GPUs on the container instance. The available GPU IDs can also be obtained on the container instance in the <code>/var/lib/ecs/gpu/nvidia_gpu_info.json</code> file.</p>",
+        "PlatformDevice$id": "<p>The ID for the GPU or Neuron device on the container instance. For GPUs, the available GPU IDs can also be obtained on the container instance in the <code>/var/lib/ecs/gpu/nvidia_gpu_info.json</code> file. For Neuron devices, the ID corresponds to the device index (for example, <code>0</code> for <code>/dev/neuron0</code>).</p>",
         "PlatformTaskDefinitionIncompatibilityException$message": "<p> Message that describes the cause of the exception.</p>",
         "PlatformUnknownException$message": "<p> Message that describes the cause of the exception.</p>",
         "PortMapping$name": "<p>The name that's used for the port mapping. This parameter is the name that you use in the <code>serviceConnectConfiguration</code> and the <code>vpcLatticeConfigurations</code> of a service. The name can include up to 64 characters. The characters can include lowercase letters, numbers, underscores (_), and hyphens (-). The name can't start with a hyphen.</p>",
@@ -3814,7 +3821,7 @@
         "ResourceIds$member": null,
         "ResourceInUseException$message": "<p> Message that describes the cause of the exception.</p>",
         "ResourceNotFoundException$message": "<p> Message that describes the cause of the exception.</p>",
-        "ResourceRequirement$value": "<p>The value for the specified resource type.</p> <p>When the type is <code>GPU</code>, the value is the number of physical <code>GPUs</code> the Amazon ECS container agent reserves for the container. The number of GPUs that's reserved for all containers in a task can't exceed the number of available GPUs on the container instance that the task is launched on.</p> <p>When the type is <code>InferenceAccelerator</code>, the <code>value</code> matches the <code>deviceName</code> for an <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_InferenceAccelerator.html\">InferenceAccelerator</a> specified in a task definition.</p>",
+        "ResourceRequirement$value": "<p>The value for the specified resource type.</p> <p>When the type is <code>GPU</code>, the value is the number of physical <code>GPUs</code> the Amazon ECS container agent reserves for the container. The number of GPUs that's reserved for all containers in a task can't exceed the number of available GPUs on the container instance that the task is launched on. You can also specify <code>ALL</code> to allocate all available GPUs on the instance to the container.</p> <p>When the type is <code>NeuronDevice</code>, the value must be <code>ALL</code>. This allocates all available Neuron devices on the instance to the container. Only one container in a task can specify <code>NeuronDevice</code> resources. This resource type is only supported on Managed Instances.</p> <p>When the type is <code>InferenceAccelerator</code>, the <code>value</code> matches the <code>deviceName</code> for an <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_InferenceAccelerator.html\">InferenceAccelerator</a> specified in a task definition.</p>",
         "Rollback$reason": "<p>The reason the rollback happened. For example, the circuit breaker initiated the rollback operation.</p>",
         "Rollback$serviceRevisionArn": "<p>The ARN of the service revision deployed as part of the rollback.</p>",
         "RunTaskRequest$cluster": "<p>The short name or full Amazon Resource Name (ARN) of the cluster to run your task on. If you do not specify a cluster, the default cluster is assumed.</p> <p>Each account receives a default cluster the first time you use the service, but you may also create other clusters.</p>",

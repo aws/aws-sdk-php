@@ -2871,7 +2871,8 @@
         "SrtOutputSettings$Destination": null,
         "AdditionalDestinations$Destination": "The destination location",
         "MediaPackageAdditionalDestinations$Destination": "The destination location",
-        "MediaConnectRouterOutputSettings$Destination": "Destination for this MediaConnect Router Output. The referenced OutputDestination must have MediaConnect Router settings configured."
+        "MediaConnectRouterOutputSettings$Destination": "Destination for this MediaConnect Router Output. The referenced OutputDestination must have MediaConnect Router settings configured.",
+        "__listOfOutputLocationRef$member": null
       }
     },
     "OutputLockingSettings": {
@@ -5314,7 +5315,10 @@
         "MediaConnectRouterOutputConnectionMap$Pipeline0": "The ARN of the MediaConnect Router Input connected to pipeline 0.",
         "MediaConnectRouterOutputConnectionMap$Pipeline1": "The ARN of the MediaConnect Router Input connected to pipeline 1.",
         "MediaConnectRouterOutputDestinationSettings$SecretArn": "ARN of the secret used to encrypt this input. Used only with the SECRETS_MANAGER encryption type.",
-        "MediaConnectRouterOutputConnection$RouterInputArn": "The ARN of the MediaConnect Router Input connected to this pipeline."
+        "MediaConnectRouterOutputConnection$RouterInputArn": "The ARN of the MediaConnect Router Input connected to this pipeline.",
+        "AudioFeedInput$AudioSelectorName": "The name of the audio selector in the channel that will be sent to the Elemental Inference feed input.",
+        "AudioFeedInput$FeedInput": "The name of the feed input on the Elemental Inference feed that will receive the audio from the specified audio selector.",
+        "SmartSubtitleSourceSettings$InferenceFeedOutput": "The name of the Elemental Inference feed output that supplies subtitle input into this caption selector."
       }
     },
     "__stringMax1000": {
@@ -7629,6 +7633,11 @@
         "OutputDestination$MediaConnectRouterSettings": "Destination settings for a MediaConnect Router output; one destination for each redundant encoder."
       }
     },
+    "__listOfOutputLocationRef": {
+      "base": null,
+      "refs": {
+      }
+    },
     "MediaConnectRouterOutputConnection": {
       "base": "Connection details for a single pipeline of a MediaConnect Router output.",
       "refs": {
@@ -7639,6 +7648,31 @@
       "base": "A map of output names to the MediaConnect Router connection for this pipeline.",
       "refs": {
         "PipelineDetail$MediaConnectRouterOutputConnectionMap": "A map of output names to the MediaConnect Router connection for this pipeline. Only present for channels with MediaConnect Router outputs."
+      }
+    },
+    "AudioFeedInput": {
+      "base": "Maps an audio selector in the channel to a feed input on the associated Elemental Inference feed.",
+      "refs": {
+        "__listOfAudioFeedInput$member": null
+      }
+    },
+    "CaptionSynchronizationMode": {
+      "base": "Controls how MediaLive synchronizes Elemental Inference generated subtitles with video output.\n\nvideo_aligned_captions - MediaLive delays video to ensure captions are synchronized with\n     audio and video.\nno_video_delay - MediaLive does not delay video for caption alignment. Captions output\n     timing is adjusted to align with video as captions become available.",
+      "refs": {
+        "SmartSubtitleSourceSettings$CaptionSynchronizationMode": "Controls whether MediaLive delays video to synchronize captions with audio and video output."
+      }
+    },
+    "SmartSubtitleSourceSettings": {
+      "base": "Smart Subtitle Source Settings",
+      "refs": {
+        "CaptionSelectorSettings$SmartSubtitleSourceSettings": null
+      }
+    },
+    "__listOfAudioFeedInput": {
+      "base": null,
+      "refs": {
+        "DescribeInferenceSettings$AudioFeedInputs": "A list of audio feed inputs that map audio selectors in the channel to feed inputs on the associated Elemental Inference feed.",
+        "InferenceSettings$AudioFeedInputs": "A list of audio feed inputs that map audio selectors in the channel to feed inputs on the associated Elemental Inference feed."
       }
     }
   },

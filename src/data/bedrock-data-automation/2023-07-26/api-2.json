@@ -919,7 +919,8 @@
     "CustomOutputConfiguration":{
       "type":"structure",
       "members":{
-        "blueprints":{"shape":"BlueprintItems"}
+        "blueprints":{"shape":"BlueprintItems"},
+        "document":{"shape":"DocumentCustomOutputConfiguration"}
       }
     },
     "DataAutomationLibrary":{
@@ -1262,6 +1263,12 @@
         "state":{"shape":"State"}
       }
     },
+    "DocumentCustomOutputConfiguration":{
+      "type":"structure",
+      "members":{
+        "fallbackBlueprints":{"shape":"FallbackBlueprintItems"}
+      }
+    },
     "DocumentExtractionGranularity":{
       "type":"structure",
       "members":{
@@ -1422,6 +1429,12 @@
       "members":{
         "eventBridgeEnabled":{"shape":"Boolean"}
       }
+    },
+    "FallbackBlueprintItems":{
+      "type":"list",
+      "member":{"shape":"BlueprintItem"},
+      "max":1,
+      "min":0
     },
     "GetBlueprintOptimizationStatusRequest":{
       "type":"structure",

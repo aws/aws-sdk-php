@@ -2098,6 +2098,7 @@
     "AvailabilityZoneId": {
       "base": null,
       "refs": {
+        "ReservedCapacitySummary$AvailabilityZoneId": "<p>The Availability Zone ID of the reserved capacity.</p>",
         "TrainingPlanExtension$AvailabilityZoneId": "<p>The Availability Zone ID of the extension.</p>"
       }
     },
@@ -3278,6 +3279,14 @@
         "ClusterEventSummaries$member": null
       }
     },
+    "ClusterFSxLustreDeletionPolicy": {
+      "base": "<p>The deletion policy for the Amazon FSx for Lustre file system used in the shared environment of restricted instance groups (RIG).</p>",
+      "refs": {
+        "ClusterSharedEnvironmentConfig$FSxLustreDeletionPolicy": "<p>The deletion policy for the Amazon FSx for Lustre file system in the shared environment.</p>",
+        "ClusterSharedEnvironmentConfigDetails$CurrentFSxLustreDeletionPolicy": "<p>The current deletion policy for the Amazon FSx for Lustre file system in the shared environment.</p>",
+        "ClusterSharedEnvironmentConfigDetails$DesiredFSxLustreDeletionPolicy": "<p>The desired deletion policy for the Amazon FSx for Lustre file system in the shared environment.</p>"
+      }
+    },
     "ClusterFsxLustreConfig": {
       "base": "<p>Defines the configuration for attaching an Amazon FSx for Lustre file system to instances in a SageMaker HyperPod cluster instance group.</p>",
       "refs": {
@@ -3784,6 +3793,19 @@
         "UpdateClusterRequest$RestrictedInstanceGroups": "<p>The specialized instance groups for training models like Amazon Nova to be created in the SageMaker HyperPod cluster.</p>"
       }
     },
+    "ClusterRestrictedInstanceGroupsConfig": {
+      "base": "<p>The configuration for the restricted instance groups (RIG) in the SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "CreateClusterRequest$RestrictedInstanceGroupsConfig": "<p>The configuration for the restricted instance groups (RIG) in the SageMaker HyperPod cluster.</p>",
+        "UpdateClusterRequest$RestrictedInstanceGroupsConfig": "<p>The configuration for the restricted instance groups (RIG) in the SageMaker HyperPod cluster.</p>"
+      }
+    },
+    "ClusterRestrictedInstanceGroupsConfigOutput": {
+      "base": "<p>The output configuration for the restricted instance groups (RIG) in the SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "DescribeClusterResponse$RestrictedInstanceGroupsConfig": "<p>The configuration for the restricted instance groups (RIG) in the SageMaker HyperPod cluster.</p>"
+      }
+    },
     "ClusterSchedulerConfigArn": {
       "base": null,
       "refs": {
@@ -3820,6 +3842,18 @@
       "base": null,
       "refs": {
         "PriorityClass$Name": "<p>Name of the priority class.</p>"
+      }
+    },
+    "ClusterSharedEnvironmentConfig": {
+      "base": "<p>The shared environment configuration for the restricted instance groups (RIG).</p>",
+      "refs": {
+        "ClusterRestrictedInstanceGroupsConfig$SharedEnvironmentConfig": "<p>The shared environment configuration for the restricted instance groups (RIG).</p>"
+      }
+    },
+    "ClusterSharedEnvironmentConfigDetails": {
+      "base": "<p>The shared environment configuration details for the restricted instance groups (RIG).</p>",
+      "refs": {
+        "ClusterRestrictedInstanceGroupsConfigOutput$SharedEnvironmentConfig": "<p>The shared environment configuration details for the restricted instance groups (RIG).</p>"
       }
     },
     "ClusterSlurmConfig": {
@@ -7843,6 +7877,9 @@
     "FSxLustreConfig": {
       "base": "<p>Configuration settings for an Amazon FSx for Lustre file system to be used with the cluster.</p>",
       "refs": {
+        "ClusterSharedEnvironmentConfig$FSxLustreConfig": "<p>Configuration settings for an Amazon FSx for Lustre file system in the shared environment.</p>",
+        "ClusterSharedEnvironmentConfigDetails$CurrentFSxLustreConfig": "<p>The current Amazon FSx for Lustre file system configuration in the shared environment.</p>",
+        "ClusterSharedEnvironmentConfigDetails$DesiredFSxLustreConfig": "<p>The desired Amazon FSx for Lustre file system configuration in the shared environment.</p>",
         "EnvironmentConfig$FSxLustreConfig": "<p>Configuration settings for an Amazon FSx for Lustre file system to be used with the cluster.</p>",
         "EnvironmentConfigDetails$FSxLustreConfig": "<p>Configuration settings for an Amazon FSx for Lustre file system to be used with the cluster.</p>"
       }
