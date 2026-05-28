@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.383.0 - 2026-05-28
 
 * `Aws\S3` - Updates `MultipartCopy` to fully align with `CopyObject` metadata directive behavior. When `$config['metadata_directive']` is set to `COPY` (default), source object metadata takes precedence over any matching values provided in `$config['params']`.
 * `Aws\ControlCatalog` - AWS Control Catalog - Added GovernedProviders response field and inclusion filter to GetControl and ListControls APIs to identify and filter by cloud provider. Added ParameterRequirementSummary response field indicating parameter requirements.
