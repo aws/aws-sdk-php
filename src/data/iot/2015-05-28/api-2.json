@@ -6223,6 +6223,12 @@
       "pattern":"[a-zA-Z0-9:_-]+",
       "sensitive":true
     },
+    "ConnectivityFilter":{
+      "type":"structure",
+      "members":{
+        "includeSocketInformation":{"shape":"FleetIndexingApiList"}
+      }
+    },
     "ConnectivityTimestamp":{"type":"long"},
     "ConsecutiveDatapointsToAlarm":{
       "type":"integer",
@@ -8880,6 +8886,7 @@
         "MQTT_KEEP_ALIVE_TIMEOUT",
         "SERVER_ERROR",
         "SERVER_INITIATED_DISCONNECT",
+        "API_INITIATED_DISCONNECT",
         "THROTTLED",
         "WEBSOCKET_TTL_EXPIRATION",
         "CUSTOMAUTH_TTL_EXPIRATION",
@@ -9229,6 +9236,14 @@
       "pattern":"([\\n\\t])|(\\r\\n)|(,)"
     },
     "Flag":{"type":"boolean"},
+    "FleetIndexingApi":{
+      "type":"string",
+      "enum":["GET_THING_CONNECTIVITY_DATA"]
+    },
+    "FleetIndexingApiList":{
+      "type":"list",
+      "member":{"shape":"FleetIndexingApi"}
+    },
     "FleetMetricArn":{"type":"string"},
     "FleetMetricDescription":{
       "type":"string",
@@ -9698,7 +9713,8 @@
           "shape":"ConnectivityApiThingName",
           "location":"uri",
           "locationName":"thingName"
-        }
+        },
+        "includeSocketInformation":{"shape":"Boolean"}
       }
     },
     "GetThingConnectivityDataResponse":{
@@ -9707,7 +9723,16 @@
         "thingName":{"shape":"ConnectivityApiThingName"},
         "connected":{"shape":"Boolean"},
         "timestamp":{"shape":"Timestamp"},
-        "disconnectReason":{"shape":"DisconnectReasonValue"}
+        "disconnectReason":{"shape":"DisconnectReasonValue"},
+        "sourceIp":{"shape":"SourceIp"},
+        "sourcePort":{"shape":"SourcePort"},
+        "targetIp":{"shape":"TargetIp"},
+        "targetPort":{"shape":"TargetPort"},
+        "vpcEndpointId":{"shape":"VpcEndpointId"},
+        "keepAliveDuration":{"shape":"KeepAliveDuration"},
+        "cleanSession":{"shape":"Boolean"},
+        "sessionExpiry":{"shape":"SessionExpiry"},
+        "clientId":{"shape":"ClientId"}
       }
     },
     "GetTopicRuleDestinationRequest":{
@@ -9909,7 +9934,8 @@
       "type":"structure",
       "members":{
         "namedShadowNames":{"shape":"NamedShadowNamesFilter"},
-        "geoLocations":{"shape":"GeoLocationsFilter"}
+        "geoLocations":{"shape":"GeoLocationsFilter"},
+        "connectivity":{"shape":"ConnectivityFilter"}
       }
     },
     "InlineDocument":{"type":"string"},
@@ -10312,6 +10338,7 @@
       "max":100,
       "min":1
     },
+    "KeepAliveDuration":{"type":"integer"},
     "Key":{"type":"string"},
     "KeyName":{
       "type":"string",
@@ -14103,6 +14130,7 @@
       "exception":true,
       "fault":true
     },
+    "SessionExpiry":{"type":"long"},
     "SetAsActive":{"type":"boolean"},
     "SetAsActiveFlag":{"type":"boolean"},
     "SetAsDefault":{"type":"boolean"},
@@ -14227,6 +14255,14 @@
         "ASCENDING",
         "DESCENDING"
       ]
+    },
+    "SourceIp":{
+      "type":"string",
+      "sensitive":true
+    },
+    "SourcePort":{
+      "type":"integer",
+      "sensitive":true
     },
     "SqlParseException":{
       "type":"structure",
@@ -14615,6 +14651,14 @@
         "LonLat"
       ]
     },
+    "TargetIp":{
+      "type":"string",
+      "sensitive":true
+    },
+    "TargetPort":{
+      "type":"integer",
+      "sensitive":true
+    },
     "TargetSelection":{
       "type":"string",
       "enum":[
@@ -14772,7 +14816,11 @@
       "members":{
         "connected":{"shape":"Boolean"},
         "timestamp":{"shape":"ConnectivityTimestamp"},
-        "disconnectReason":{"shape":"DisconnectReason"}
+        "disconnectReason":{"shape":"DisconnectReason"},
+        "keepAliveDuration":{"shape":"KeepAliveDuration"},
+        "cleanSession":{"shape":"Boolean"},
+        "sessionExpiry":{"shape":"SessionExpiry"},
+        "clientId":{"shape":"ClientId"}
       }
     },
     "ThingConnectivityIndexingMode":{
@@ -16148,6 +16196,10 @@
         "vpcId":{"shape":"VpcId"},
         "roleArn":{"shape":"AwsArn"}
       }
+    },
+    "VpcEndpointId":{
+      "type":"string",
+      "sensitive":true
     },
     "VpcId":{"type":"string"},
     "WaitingForDataCollectionChecksCount":{"type":"integer"},

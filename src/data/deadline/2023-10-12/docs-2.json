@@ -46,6 +46,7 @@
     "DeleteQueueFleetAssociation": "<p>Deletes a queue-fleet association.</p>",
     "DeleteQueueLimitAssociation": "<p>Removes the association between a queue and a limit. You must use the <code>UpdateQueueLimitAssociation</code> operation to set the status to <code>STOP_LIMIT_USAGE_AND_COMPLETE_TASKS</code> or <code>STOP_LIMIT_USAGE_AND_CANCEL_TASKS</code>. The status does not change immediately. Use the <code>GetQueueLimitAssociation</code> operation to see if the status changed to <code>STOPPED</code> before deleting the association.</p>",
     "DeleteStorageProfile": "<p>Deletes a storage profile.</p>",
+    "DeleteVolume": "<p>Deletes a persistent volume.</p>",
     "DeleteWorker": "<p>Deletes a worker.</p>",
     "DisassociateMemberFromFarm": "<p>Disassociates a member from a farm.</p>",
     "DisassociateMemberFromFleet": "<p>Disassociates a member from a fleet.</p>",
@@ -70,6 +71,7 @@
     "GetStorageProfile": "<p>Gets a storage profile.</p>",
     "GetStorageProfileForQueue": "<p>Gets a storage profile for a queue.</p>",
     "GetTask": "<p>Gets a task.</p>",
+    "GetVolume": "<p>Gets a persistent volume.</p>",
     "GetWorker": "<p>Gets a worker.</p>",
     "ListAvailableMeteredProducts": "<p>A list of the available metered products.</p>",
     "ListBudgets": "<p>A list of budgets in a farm.</p>",
@@ -99,6 +101,7 @@
     "ListStorageProfilesForQueue": "<p>Lists storage profiles for a queue.</p>",
     "ListTagsForResource": "<p>Lists tags for a resource.</p>",
     "ListTasks": "<p>Lists tasks for a job.</p>",
+    "ListVolumes": "<p>Lists the persistent volumes in a fleet.</p>",
     "ListWorkers": "<p>Lists workers.</p>",
     "PutMeteredProduct": "<p>Adds a metered product.</p>",
     "SearchJobs": "<p>Searches for jobs.</p>",
@@ -983,7 +986,7 @@
       "refs": {}
     },
     "CostScaleFactor": {
-      "base": "<p>A multiplier applied to calculated costs. Valid range is 0 to 100. Values less than 1.0 represent discounts, values greater than 1.0 represent markups, and a value of 1.0 represents no adjustment.</p>",
+      "base": null,
       "refs": {
         "CreateFarmRequest$costScaleFactor": "<p>A multiplier applied to the farm's calculated costs for usage data and budget tracking. A value less than 1 represents a discount, a value greater than 1 represents a premium, and a value of 1 represents no adjustment. The default value is 1.</p>",
         "GetFarmResponse$costScaleFactor": "<p>A multiplier applied to the farm's calculated costs for usage data and budget tracking. A value less than 1 represents a discount, a value greater than 1 represents a premium, and a value of 1 represents no adjustment.</p>",
@@ -1142,6 +1145,7 @@
         "GetStepResponse$createdAt": "<p>The date and time the resource was created.</p>",
         "GetStorageProfileResponse$createdAt": "<p>The date and time the resource was created.</p>",
         "GetTaskResponse$createdAt": "<p>The date and time the resource was created.</p>",
+        "GetVolumeResponse$createdAt": "<p>The date and time the resource was created.</p>",
         "GetWorkerResponse$createdAt": "<p>The date and time the resource was created.</p>",
         "JobSearchSummary$createdAt": "<p>The date and time the resource was created.</p>",
         "JobSummary$createdAt": "<p>The date and time the resource was created.</p>",
@@ -1350,6 +1354,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteVolumeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteVolumeResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteWorkerRequest": {
       "base": null,
       "refs": {}
@@ -1475,6 +1487,12 @@
       "base": null,
       "refs": {
         "Ec2EbsVolume$throughputMiB": "<p>The throughput per volume in MiB.</p>"
+      }
+    },
+    "EbsVolumeType": {
+      "base": "<p>The EBS volume type.</p>",
+      "refs": {
+        "GetVolumeResponse$volumeType": "<p>The EBS volume type.</p>"
       }
     },
     "Ec2EbsVolume": {
@@ -1665,6 +1683,7 @@
         "DeleteQueueLimitAssociationRequest$farmId": "<p>The unique identifier of the farm that contains the queue and limit to disassociate.</p>",
         "DeleteQueueRequest$farmId": "<p>The ID of the farm from which to remove the queue.</p>",
         "DeleteStorageProfileRequest$farmId": "<p>The farm ID of the farm from which to remove the storage profile.</p>",
+        "DeleteVolumeRequest$farmId": "<p>The farm ID of the farm that contains the fleet.</p>",
         "DeleteWorkerRequest$farmId": "<p>The farm ID of the worker to delete.</p>",
         "DisassociateMemberFromFarmRequest$farmId": "<p>The farm ID of the farm to disassociate from the member.</p>",
         "DisassociateMemberFromFleetRequest$farmId": "<p>The farm ID of the fleet to disassociate a member from.</p>",
@@ -1694,6 +1713,8 @@
         "GetStorageProfileForQueueRequest$farmId": "<p>The farm ID for the queue in storage profile.</p>",
         "GetStorageProfileRequest$farmId": "<p>The farm ID for the storage profile.</p>",
         "GetTaskRequest$farmId": "<p>The farm ID of the farm connected to the task.</p>",
+        "GetVolumeRequest$farmId": "<p>The farm ID of the farm that contains the fleet.</p>",
+        "GetVolumeResponse$farmId": "<p>The farm ID of the farm that contains the fleet.</p>",
         "GetWorkerRequest$farmId": "<p>The farm ID for the worker.</p>",
         "GetWorkerResponse$farmId": "<p>The farm ID.</p>",
         "JobMember$farmId": "<p>The farm ID.</p>",
@@ -1720,6 +1741,7 @@
         "ListStorageProfilesForQueueRequest$farmId": "<p>The farm ID of the queue's storage profile.</p>",
         "ListStorageProfilesRequest$farmId": "<p>The farm ID of the storage profile.</p>",
         "ListTasksRequest$farmId": "<p>The farm ID connected to the tasks.</p>",
+        "ListVolumesRequest$farmId": "<p>The farm ID of the farm that contains the fleet.</p>",
         "ListWorkersRequest$farmId": "<p>The farm ID connected to the workers.</p>",
         "QueueMember$farmId": "<p>The farm ID.</p>",
         "QueueSummary$farmId": "<p>The farm ID.</p>",
@@ -1743,6 +1765,7 @@
         "UpdateTaskRequest$farmId": "<p>The farm ID to update.</p>",
         "UpdateWorkerRequest$farmId": "<p>The farm ID to update.</p>",
         "UpdateWorkerScheduleRequest$farmId": "<p>The farm ID to update.</p>",
+        "VolumeSummary$farmId": "<p>The farm ID of the farm that contains the fleet.</p>",
         "WorkerSummary$farmId": "<p>The farm ID.</p>"
       }
     },
@@ -1870,6 +1893,7 @@
         "CreateWorkerRequest$fleetId": "<p>The fleet ID to connect to the worker.</p>",
         "DeleteFleetRequest$fleetId": "<p>The fleet ID of the fleet to delete.</p>",
         "DeleteQueueFleetAssociationRequest$fleetId": "<p>The fleet ID of the queue-fleet association.</p>",
+        "DeleteVolumeRequest$fleetId": "<p>The fleet ID of the fleet that contains the volume.</p>",
         "DeleteWorkerRequest$fleetId": "<p>The fleet ID of the worker to delete.</p>",
         "DisassociateMemberFromFleetRequest$fleetId": "<p>The fleet ID of the fleet to from which to disassociate a member.</p>",
         "FleetMember$fleetId": "<p>The fleet ID.</p>",
@@ -1879,11 +1903,14 @@
         "GetQueueFleetAssociationRequest$fleetId": "<p>The fleet ID for the queue-fleet association.</p>",
         "GetQueueFleetAssociationResponse$fleetId": "<p>The fleet ID for the queue-fleet association.</p>",
         "GetSessionResponse$fleetId": "<p>The fleet ID for the session.</p>",
+        "GetVolumeRequest$fleetId": "<p>The fleet ID of the fleet that contains the volume.</p>",
+        "GetVolumeResponse$fleetId": "<p>The fleet ID of the fleet that contains the volume.</p>",
         "GetWorkerRequest$fleetId": "<p>The fleet ID of the worker.</p>",
         "GetWorkerResponse$fleetId": "<p>The fleet ID.</p>",
         "ListFleetMembersRequest$fleetId": "<p>The fleet ID to include on the list.</p>",
         "ListQueueFleetAssociationsRequest$fleetId": "<p>The fleet ID for the queue-fleet association list.</p>",
         "ListSessionsForWorkerRequest$fleetId": "<p>The fleet ID for the session.</p>",
+        "ListVolumesRequest$fleetId": "<p>The fleet ID of the fleet that contains the volumes.</p>",
         "ListWorkersRequest$fleetId": "<p>The fleet ID of the workers.</p>",
         "QueueFleetAssociationSummary$fleetId": "<p>The fleet ID.</p>",
         "SearchWorkersRequestFleetIdsList$member": null,
@@ -1894,6 +1921,7 @@
         "UpdateQueueFleetAssociationRequest$fleetId": "<p>The fleet ID to update.</p>",
         "UpdateWorkerRequest$fleetId": "<p>The fleet ID to update.</p>",
         "UpdateWorkerScheduleRequest$fleetId": "<p>The fleet ID to update.</p>",
+        "VolumeSummary$fleetId": "<p>The fleet ID of the fleet that contains the volume.</p>",
         "WorkerSearchSummary$fleetId": "<p>The fleet ID.</p>",
         "WorkerSummary$fleetId": "<p>The fleet ID.</p>"
       }
@@ -2114,6 +2142,14 @@
     },
     "GetTaskResponse": {
       "base": null,
+      "refs": {}
+    },
+    "GetVolumeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetVolumeResponse": {
+      "base": "<p>Mixin that adds an optional ARN field to response structures. Apply to SummaryMixins (flows into Get, Summary, and BatchGet) and Create outputs.</p>",
       "refs": {}
     },
     "GetWorkerRequest": {
@@ -2352,7 +2388,7 @@
       }
     },
     "JobDescriptionOverride": {
-      "base": "<p>The input description for the job. Passing in an empty string removes any existing description.</p>",
+      "base": null,
       "refs": {
         "BatchUpdateJobItem$description": "<p>The description of the job to update.</p>",
         "CreateJobRequest$descriptionOverride": "<p>A custom description to override the job description derived from the job template.</p>",
@@ -2940,6 +2976,14 @@
       "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
       "refs": {}
     },
+    "ListVolumesRequest": {
+      "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
+      "refs": {}
+    },
+    "ListVolumesResponse": {
+      "base": "<p>Shared pagination field for List operation outputs (nextToken).</p>",
+      "refs": {}
+    },
     "ListWorkersRequest": {
       "base": "<p>Shared pagination fields for List operation inputs (nextToken + maxResults).</p>",
       "refs": {}
@@ -3072,6 +3116,7 @@
         "ListStorageProfilesForQueueRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListStorageProfilesRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListTasksRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
+        "ListVolumesRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListWorkersRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>"
       }
     },
@@ -3209,6 +3254,12 @@
         "MonitorSummaries$member": null
       }
     },
+    "MountPath": {
+      "base": null,
+      "refs": {
+        "PersistentVolumeConfiguration$mountPath": "<p>The file system path where the persistent volume is mounted on the worker instance.</p>"
+      }
+    },
     "NextItemOffset": {
       "base": null,
       "refs": {
@@ -3277,6 +3328,8 @@
         "ListStorageProfilesResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
         "ListTasksRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
         "ListTasksResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
+        "ListVolumesRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
+        "ListVolumesResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
         "ListWorkersRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
         "ListWorkersResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>"
       }
@@ -3357,6 +3410,40 @@
       "base": null,
       "refs": {
         "StartSessionsStatisticsAggregationRequest$period": "<p>The period to aggregate the statistics.</p>"
+      }
+    },
+    "PersistentVolumeConfiguration": {
+      "base": "<p>Specifies the persistent EBS volume configuration for workers in a service managed fleet.</p>",
+      "refs": {
+        "ServiceManagedEc2FleetConfiguration$persistentVolumeConfiguration": "<p>The persistent volume configuration for the service managed EC2 fleet.</p>"
+      }
+    },
+    "PersistentVolumeIops": {
+      "base": null,
+      "refs": {
+        "GetVolumeResponse$iops": "<p>The IOPS of the volume.</p>",
+        "PersistentVolumeConfiguration$iops": "<p>The IOPS per persistent volume. The default is 3000.</p>"
+      }
+    },
+    "PersistentVolumeSizeGiB": {
+      "base": null,
+      "refs": {
+        "GetVolumeResponse$sizeGiB": "<p>The volume size in GiB.</p>",
+        "PersistentVolumeConfiguration$sizeGiB": "<p>The persistent volume size in GiB. The default is 250.</p>",
+        "VolumeSummary$sizeGiB": "<p>The volume size in GiB.</p>"
+      }
+    },
+    "PersistentVolumeThroughputMiB": {
+      "base": null,
+      "refs": {
+        "GetVolumeResponse$throughputMiB": "<p>The throughput of the volume in MiB.</p>",
+        "PersistentVolumeConfiguration$throughputMiB": "<p>The throughput per persistent volume in MiB. The default is 125.</p>"
+      }
+    },
+    "PersistentVolumeTtlHours": {
+      "base": null,
+      "refs": {
+        "PersistentVolumeConfiguration$lastUsedTtlHours": "<p>The number of hours a persistent volume can remain unused before it is deleted. The default is 168 (7 days).</p>"
       }
     },
     "PortNumber": {
@@ -3634,9 +3721,9 @@
     "Region": {
       "base": null,
       "refs": {
-        "CreateMonitorRequest$identityCenterRegion": "<p>The AWS Region where IAM Identity Center is enabled. Required when IAM Identity Center is in a different Region than the monitor.</p>",
-        "GetMonitorResponse$identityCenterRegion": "<p>The AWS Region where IAM Identity Center is enabled.</p>",
-        "MonitorSummary$identityCenterRegion": "<p>The AWS Region where IAM Identity Center is enabled.</p>"
+        "CreateMonitorRequest$identityCenterRegion": "<p>The Region where IAM Identity Center is enabled. Required when IAM Identity Center is in a different Region than the monitor.</p>",
+        "GetMonitorResponse$identityCenterRegion": "<p>The Region where IAM Identity Center is enabled.</p>",
+        "MonitorSummary$identityCenterRegion": "<p>The Region where IAM Identity Center is enabled.</p>"
       }
     },
     "RequiredFileSystemLocationNames": {
@@ -4522,6 +4609,7 @@
         "GetJobResponse$lifecycleStatusMessage": "<p>A message that communicates the status of the life cycle for the job.</p>",
         "GetSessionsStatisticsAggregationResponse$statusMessage": "<p>A message that describes the status.</p>",
         "GetStepResponse$lifecycleStatusMessage": "<p>A message that describes the lifecycle status of the step.</p>",
+        "GetVolumeResponse$availabilityZoneId": "<p>The Availability Zone ID of the volume.</p>",
         "HostPropertiesResponse$ec2InstanceArn": "<p>The ARN of the host EC2 instance.</p>",
         "InternalServerErrorException$message": null,
         "JobAttachmentDetailsError$message": "<p>The error message detailing the error's cause.</p>",
@@ -4568,7 +4656,8 @@
         "UserJobsFirst$userIdentityId": "<p>The user's ID.</p>",
         "ValidationException$message": null,
         "ValidationExceptionField$name": "<p>The name of the validation exception.</p>",
-        "ValidationExceptionField$message": "<p>The error message for the validation exception.</p>"
+        "ValidationExceptionField$message": "<p>The error message for the validation exception.</p>",
+        "VolumeSummary$availabilityZoneId": "<p>The Availability Zone ID of the volume.</p>"
       }
     },
     "StringFilter": {
@@ -4871,6 +4960,9 @@
       "refs": {
         "BatchGetSessionActionItem$workerUpdatedAt": "<p>The date and time the resource was updated by a worker.</p>",
         "GetSessionActionResponse$workerUpdatedAt": "<p>The Linux timestamp of the date and time the session action was last updated.</p>",
+        "GetVolumeResponse$lastAssignedAt": "<p>The date and time the volume was last assigned to a worker.</p>",
+        "GetVolumeResponse$lastReleasedAt": "<p>The date and time the volume was last released from a worker.</p>",
+        "GetVolumeResponse$expiresAt": "<p>The date and time the volume expires and will be deleted.</p>",
         "SessionActionSummary$workerUpdatedAt": "<p>The Linux timestamp of the last date and time that the session action was updated.</p>"
       }
     },
@@ -5247,6 +5339,34 @@
         "ValidationException$reason": "<p>The reason that the request failed validation.</p>"
       }
     },
+    "VolumeId": {
+      "base": null,
+      "refs": {
+        "DeleteVolumeRequest$volumeId": "<p>The volume ID of the volume to delete.</p>",
+        "GetVolumeRequest$volumeId": "<p>The volume ID of the volume to retrieve.</p>",
+        "GetVolumeResponse$volumeId": "<p>The volume ID.</p>",
+        "VolumeSummary$volumeId": "<p>The volume ID.</p>"
+      }
+    },
+    "VolumeState": {
+      "base": "<p>The state of a persistent volume.</p>",
+      "refs": {
+        "GetVolumeResponse$state": "<p>The state of the volume.</p>",
+        "VolumeSummary$state": "<p>The state of the volume.</p>"
+      }
+    },
+    "VolumeSummaries": {
+      "base": null,
+      "refs": {
+        "ListVolumesResponse$volumes": "<p>The volumes on the list.</p>"
+      }
+    },
+    "VolumeSummary": {
+      "base": "<p>The summary of a persistent volume.</p>",
+      "refs": {
+        "VolumeSummaries$member": null
+      }
+    },
     "VpcConfiguration": {
       "base": "<p>The configuration options for a service managed fleet's VPC.</p>",
       "refs": {
@@ -5340,12 +5460,14 @@
         "CreateWorkerResponse$workerId": "<p>The worker ID.</p>",
         "DeleteWorkerRequest$workerId": "<p>The worker ID of the worker to delete.</p>",
         "GetSessionResponse$workerId": "<p>The worker ID for the session.</p>",
+        "GetVolumeResponse$attachedWorkerId": "<p>The worker ID of the worker the volume is attached to.</p>",
         "GetWorkerRequest$workerId": "<p>The worker ID.</p>",
         "GetWorkerResponse$workerId": "<p>The worker ID.</p>",
         "ListSessionsForWorkerRequest$workerId": "<p>The worker ID for the session.</p>",
         "SessionSummary$workerId": "<p>The worker ID.</p>",
         "UpdateWorkerRequest$workerId": "<p>The worker ID to update.</p>",
         "UpdateWorkerScheduleRequest$workerId": "<p>The worker ID to update.</p>",
+        "VolumeSummary$attachedWorkerId": "<p>The worker ID of the worker the volume is attached to.</p>",
         "WorkerSearchSummary$workerId": "<p>The worker ID.</p>",
         "WorkerSummary$workerId": "<p>The worker ID.</p>"
       }

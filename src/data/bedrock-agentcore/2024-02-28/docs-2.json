@@ -237,7 +237,9 @@
       "base": null,
       "refs": {
         "HarnessGeminiModelConfig$apiKeyArn": "<p>The ARN of your Gemini API key on AgentCore Identity.</p>",
-        "HarnessOpenAiModelConfig$apiKeyArn": "<p>The ARN of your OpenAI API key on AgentCore Identity.</p>"
+        "HarnessLiteLlmModelConfig$apiKeyArn": "<p>The ARN of the API key in AgentCore Identity for authenticating with the model provider.</p>",
+        "HarnessOpenAiModelConfig$apiKeyArn": "<p>The ARN of your OpenAI API key on AgentCore Identity.</p>",
+        "HarnessSkillGitAuth$credentialArn": "<p>The ARN of the credential in AgentCore Identity containing the password or personal access token.</p>"
       }
     },
     "ApiKeyType": {
@@ -312,7 +314,7 @@
       "refs": {}
     },
     "BatchEvaluationArn": {
-      "base": "<p>ARN for a batch evaluation</p>",
+      "base": "<p>The Amazon Resource Name (ARN) of a batch evaluation.</p>",
       "refs": {
         "BatchEvaluationSummary$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the batch evaluation.</p>",
         "DeleteBatchEvaluationResponse$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the deleted batch evaluation.</p>",
@@ -332,7 +334,7 @@
       }
     },
     "BatchEvaluationId": {
-      "base": "<p>Unique identifier for a batch evaluation (name-prefixed format)</p>",
+      "base": "<p>The unique identifier for a batch evaluation.</p>",
       "refs": {
         "BatchEvaluationSummary$batchEvaluationId": "<p>The unique identifier of the batch evaluation.</p>",
         "DeleteBatchEvaluationRequest$batchEvaluationId": "<p>The unique identifier of the batch evaluation to delete.</p>",
@@ -345,7 +347,7 @@
       }
     },
     "BatchEvaluationName": {
-      "base": "<p>Human-readable name for a batch evaluation</p>",
+      "base": "<p>A human-readable name for a batch evaluation.</p>",
       "refs": {
         "BatchEvaluationSummary$batchEvaluationName": "<p>The name of the batch evaluation.</p>",
         "GetBatchEvaluationResponse$batchEvaluationName": "<p>The name of the batch evaluation.</p>",
@@ -354,7 +356,7 @@
       }
     },
     "BatchEvaluationStatus": {
-      "base": null,
+      "base": "<p>The lifecycle status of a batch evaluation job.</p>",
       "refs": {
         "BatchEvaluationSummary$status": "<p>The current status of the batch evaluation.</p>",
         "DeleteBatchEvaluationResponse$status": "<p>The status of the batch evaluation deletion operation.</p>",
@@ -465,12 +467,6 @@
         "MouseMoveResult$status": "<p>The status of the action execution.</p>",
         "MouseScrollResult$status": "<p>The status of the action execution.</p>",
         "ScreenshotResult$status": "<p>The status of the action execution.</p>"
-      }
-    },
-    "BrowserArn": {
-      "base": null,
-      "refs": {
-        "HarnessAgentCoreBrowserConfig$browserArn": "<p>If not populated, the built-in Browser ARN is used.</p>"
       }
     },
     "BrowserEnterprisePolicies": {
@@ -650,7 +646,7 @@
       }
     },
     "CloudWatchLogsFilterOperator": {
-      "base": null,
+      "base": "<p>The comparison operator used to filter CloudWatch Logs entries.</p>",
       "refs": {
         "CloudWatchLogsFilter$operator": "<p>The comparison operator to use for filtering.</p>"
       }
@@ -664,7 +660,7 @@
     "CloudWatchLogsSource": {
       "base": "<p>The configuration for reading agent traces from CloudWatch Logs.</p>",
       "refs": {
-        "DataSourceConfig$cloudWatchLogs": "<p>Pull session spans from CloudWatch</p>"
+        "DataSourceConfig$cloudWatchLogs": "<p>Configuration for pulling agent session traces from CloudWatch Logs.</p>"
       }
     },
     "CloudWatchLogsSourceLogGroupNamesList": {
@@ -695,12 +691,6 @@
       "base": "<p>CloudWatch Logs destination for batch evaluation results.</p>",
       "refs": {
         "OutputConfig$cloudWatchConfig": "<p>The CloudWatch Logs configuration for writing evaluation results.</p>"
-      }
-    },
-    "CodeInterpreterArn": {
-      "base": null,
-      "refs": {
-        "HarnessAgentCoreCodeInterpreterConfig$codeInterpreterArn": "<p>If not populated, the built-in Code Interpreter ARN is used.</p>"
       }
     },
     "CodeInterpreterResult": {
@@ -898,7 +888,7 @@
     "Context": {
       "base": "<p> The contextual information associated with an evaluation, including span context details that identify the specific traces and sessions being evaluated within the agent's execution flow. </p>",
       "refs": {
-        "EvaluationReferenceInput$context": null,
+        "EvaluationReferenceInput$context": "<p> The span context that identifies which session or trace this reference input applies to, used for correlating ground truth with agent output. </p>",
         "EvaluationResultContent$context": "<p> The contextual information associated with this evaluation result, including span context details that identify the specific traces and sessions that were evaluated. </p>"
       }
     },
@@ -1124,7 +1114,9 @@
     "Document": {
       "base": null,
       "refs": {
-        "PayloadType$blob": "<p>The binary content of the payload.</p>"
+        "HarnessBedrockModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>",
+        "HarnessLiteLlmModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>",
+        "HarnessOpenAiModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>"
       }
     },
     "DomainPattern": {
@@ -1240,7 +1232,7 @@
       "base": "<p> The expected tool call trajectory for trajectory-based evaluation. </p>",
       "refs": {
         "EvaluationReferenceInput$expectedTrajectory": "<p> The expected tool call sequence for session-level trajectory evaluation. Contains a list of tool names representing the tools the agent is expected to invoke. </p>",
-        "InlineGroundTruth$expectedTrajectory": "<p>expectedTrajectory for evaluation, reuses common model EvaluationExpectedTrajectory</p>"
+        "InlineGroundTruth$expectedTrajectory": "<p>The expected tool call sequence for trajectory evaluation.</p>"
       }
     },
     "EvaluationExplanation": {
@@ -1275,7 +1267,7 @@
       }
     },
     "EvaluationReferenceInputs": {
-      "base": null,
+      "base": "<p> A list of reference inputs containing ground truth data for evaluation. </p>",
       "refs": {
         "EvaluateRequest$evaluationReferenceInputs": "<p> Ground truth data to compare against agent responses during evaluation. Allows to provide expected responses, assertions, and expected tool trajectories at different evaluation levels. Session-level reference inputs apply to the entire conversation, while trace-level reference inputs target specific request-response interactions identified by trace ID. </p>"
       }
@@ -1287,7 +1279,7 @@
       }
     },
     "EvaluationResults": {
-      "base": null,
+      "base": "<p> A list of evaluation results from the evaluators applied to the session. </p>",
       "refs": {
         "EvaluateResponse$evaluationResults": "<p> The detailed evaluation results containing scores, explanations, and metadata. Includes the evaluator information, numerical or categorical ratings based on the evaluator's rating scale, and token usage statistics for the evaluation process. </p>"
       }
@@ -1698,10 +1690,28 @@
         "InvokeHarnessRequest$harnessArn": "<p>The ARN of the harness to invoke.</p>"
       }
     },
+    "HarnessBedrockApiFormat": {
+      "base": null,
+      "refs": {
+        "HarnessBedrockModelConfig$apiFormat": "<p>The API format to use when calling the Bedrock provider.</p>"
+      }
+    },
     "HarnessBedrockModelConfig": {
       "base": "<p>Configuration for an Amazon Bedrock model provider.</p>",
       "refs": {
         "HarnessModelConfiguration$bedrockModelConfig": "<p>Configuration for an Amazon Bedrock model.</p>"
+      }
+    },
+    "HarnessBrowserArn": {
+      "base": "<p>Browser ARN for Harness tool configuration. Accepts both managed (aws.browser.v1) and custom browser ARNs.</p>",
+      "refs": {
+        "HarnessAgentCoreBrowserConfig$browserArn": "<p>If not populated, the built-in Browser ARN is used.</p>"
+      }
+    },
+    "HarnessCodeInterpreterArn": {
+      "base": "<p>Code Interpreter ARN for Harness tool configuration. Accepts both managed (aws.codeinterpreter.v1) and custom code interpreter ARNs.</p>",
+      "refs": {
+        "HarnessAgentCoreCodeInterpreterConfig$codeInterpreterArn": "<p>If not populated, the built-in Code Interpreter ARN is used.</p>"
       }
     },
     "HarnessContentBlock": {
@@ -1777,6 +1787,18 @@
         "HarnessInlineFunctionConfig$description": "<p>Description of what the tool does, provided to the model.</p>"
       }
     },
+    "HarnessLiteLlmApiBase": {
+      "base": null,
+      "refs": {
+        "HarnessLiteLlmModelConfig$apiBase": "<p>The base URL for the model provider's API endpoint.</p>"
+      }
+    },
+    "HarnessLiteLlmModelConfig": {
+      "base": "<p>Configuration for a LiteLLM model provider, enabling connection to third-party model providers.</p>",
+      "refs": {
+        "HarnessModelConfiguration$liteLlmModelConfig": "<p>The LiteLLM model configuration for connecting to third-party model providers.</p>"
+      }
+    },
     "HarnessMessage": {
       "base": "<p>A message in the conversation.</p>",
       "refs": {
@@ -1811,6 +1833,12 @@
       "base": "<p>Specification of which model to use.</p>",
       "refs": {
         "InvokeHarnessRequest$model": "<p>The model configuration to use for this invocation. If specified, overrides the harness default.</p>"
+      }
+    },
+    "HarnessOpenAiApiFormat": {
+      "base": null,
+      "refs": {
+        "HarnessOpenAiModelConfig$apiFormat": "<p>The API format to use when calling the OpenAI provider.</p>"
       }
     },
     "HarnessOpenAiModelConfig": {
@@ -1855,10 +1883,40 @@
         "HarnessSkills$member": null
       }
     },
+    "HarnessSkillGitAuth": {
+      "base": "<p>Authentication configuration for accessing a private git repository.</p>",
+      "refs": {
+        "HarnessSkillGitSource$auth": "<p>Authentication configuration for private repositories.</p>"
+      }
+    },
+    "HarnessSkillGitSource": {
+      "base": "<p>A git repository source for a skill.</p>",
+      "refs": {
+        "HarnessSkill$git": "<p>A git repository containing the skill.</p>"
+      }
+    },
+    "HarnessSkillGitUrl": {
+      "base": null,
+      "refs": {
+        "HarnessSkillGitSource$url": "<p>The HTTPS URL of the git repository.</p>"
+      }
+    },
     "HarnessSkillPath": {
       "base": null,
       "refs": {
         "HarnessSkill$path": "<p>The filesystem path to the skill definition.</p>"
+      }
+    },
+    "HarnessSkillS3Source": {
+      "base": "<p>An S3 source for a skill.</p>",
+      "refs": {
+        "HarnessSkill$s3": "<p>An S3 source containing the skill.</p>"
+      }
+    },
+    "HarnessSkillS3Uri": {
+      "base": null,
+      "refs": {
+        "HarnessSkillS3Source$uri": "<p>The S3 URI pointing to the skill directory (e.g., s3://bucket/skills/my-skill/).</p>"
       }
     },
     "HarnessSkills": {
@@ -2096,7 +2154,7 @@
     "InlineGroundTruth": {
       "base": "<p>Inline ground truth data containing assertions, expected trajectories, and per-turn expected responses.</p>",
       "refs": {
-        "GroundTruthSource$inline": "<p>Provide ground truth inline</p>"
+        "GroundTruthSource$inline": "<p>Inline ground truth data provided directly in the request.</p>"
       }
     },
     "InlineGroundTruthTurnsList": {
@@ -2304,6 +2362,12 @@
     "InvokeHarnessRequest": {
       "base": null,
       "refs": {}
+    },
+    "InvokeHarnessRequestRuntimeSessionIdString": {
+      "base": null,
+      "refs": {
+        "InvokeHarnessRequest$runtimeSessionId": "<p>The session ID for the invocation. Use the same session ID across requests to continue a conversation.</p>"
+      }
     },
     "InvokeHarnessResponse": {
       "base": null,
@@ -2593,6 +2657,7 @@
       "refs": {
         "HarnessBedrockModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per iteration.</p>",
         "HarnessGeminiModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per iteration.</p>",
+        "HarnessLiteLlmModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per iteration.</p>",
         "HarnessOpenAiModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per iteration.</p>"
       }
     },
@@ -2615,6 +2680,12 @@
       "base": null,
       "refs": {
         "MemoryContent$text": "<p>The text content of the memory record.</p>"
+      }
+    },
+    "MemoryDocument": {
+      "base": null,
+      "refs": {
+        "PayloadType$blob": "<p>The binary content of the payload.</p>"
       }
     },
     "MemoryId": {
@@ -2848,6 +2919,7 @@
       "refs": {
         "HarnessBedrockModelConfig$modelId": "<p>The Bedrock model ID.</p>",
         "HarnessGeminiModelConfig$modelId": "<p>The Gemini model ID.</p>",
+        "HarnessLiteLlmModelConfig$modelId": "<p>The LiteLLM model identifier (e.g., \"anthropic/claude-3-sonnet\").</p>",
         "HarnessOpenAiModelConfig$modelId": "<p>The OpenAI model ID.</p>"
       }
     },
@@ -3484,7 +3556,7 @@
       }
     },
     "RecommendationStatus": {
-      "base": null,
+      "base": "<p>The lifecycle status of a recommendation.</p>",
       "refs": {
         "DeleteRecommendationResponse$status": "<p>The status of the recommendation deletion operation.</p>",
         "GetRecommendationResponse$status": "<p>The current status of the recommendation.</p>",
@@ -3514,7 +3586,7 @@
       }
     },
     "RecommendationType": {
-      "base": null,
+      "base": "<p>The type of recommendation to generate.</p>",
       "refs": {
         "GetRecommendationResponse$type": "<p>The type of recommendation.</p>",
         "RecommendationSummary$type": "<p>The type of recommendation.</p>",
@@ -3683,7 +3755,7 @@
       "base": "<p>The exception that occurs when there is an error in the runtime client. This can happen due to network issues, invalid configuration, or other client-side problems. Check the error message for specific details about the error.</p>",
       "refs": {
         "InvokeAgentRuntimeCommandStreamOutput$runtimeClientError": null,
-        "InvokeHarnessStreamOutput$runtimeClientError": null
+        "InvokeHarnessStreamOutput$runtimeClientError": "<p>An error returned by the runtime container during agent execution.</p>"
       }
     },
     "S3Location": {
@@ -3898,7 +3970,6 @@
         "InvokeAgentRuntimeCommandResponse$runtimeSessionId": "<p>The unique identifier of the runtime session in which the command was executed.</p>",
         "InvokeAgentRuntimeResponse$runtimeSessionId": "<p>The identifier of the runtime session.</p>",
         "InvokeAgentRuntimeResponse$mcpSessionId": "<p>The identifier of the MCP session.</p>",
-        "InvokeHarnessRequest$runtimeSessionId": "<p>The session ID for the invocation. Use the same session ID across requests to continue a conversation.</p>",
         "ListEventsInput$sessionId": "<p>The identifier of the session for which to list events.</p>",
         "SessionSummary$sessionId": "<p>The unique identifier of the session.</p>",
         "StopRuntimeSessionResponse$runtimeSessionId": "<p>The ID of the session that you requested to stop.</p>"
@@ -4181,6 +4252,8 @@
         "HarnessReasoningContentBlockDelta$signature": "<p>Signature for the reasoning content.</p>",
         "HarnessReasoningTextBlock$text": "<p>The reasoning text.</p>",
         "HarnessReasoningTextBlock$signature": "<p>Signature for verifying the reasoning content.</p>",
+        "HarnessSkillGitAuth$username": "<p>Username for authentication. Defaults to 'oauth2' if not specified.</p>",
+        "HarnessSkillGitSource$path": "<p>Subdirectory within the repository containing the skill.</p>",
         "HarnessToolUseBlock$serverName": "<p>The name of the MCP server providing this tool.</p>",
         "HarnessToolUseBlockStart$serverName": "<p>The name of the MCP server providing this tool.</p>",
         "InvalidInputException$message": null,
@@ -4201,6 +4274,7 @@
         "InvokeAgentRuntimeResponse$contentType": "<p>The MIME type of the response data. This indicates how to interpret the response data. Common values include application/json for JSON data.</p>",
         "InvokeBrowserRequest$browserIdentifier": "<p>The unique identifier of the browser associated with the session. This must match the identifier used when creating the session with <code>StartBrowserSession</code>.</p>",
         "InvokeCodeInterpreterRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter associated with the session. This must match the identifier used when creating the session with <code>StartCodeInterpreterSession</code>.</p>",
+        "InvokeHarnessRequest$runtimeUserId": "<p>An identifier for the end user making the request. This value is passed through to the runtime container.</p>",
         "InvokeHarnessRequest$actorId": "<p>The actor ID for memory operations. Overrides the actor ID configured on the harness.</p>",
         "KeyList$member": null,
         "KeyPressArguments$key": "<p>The key name to press (for example, <code>enter</code>, <code>tab</code>, <code>escape</code>).</p>",
@@ -4427,6 +4501,7 @@
       "refs": {
         "HarnessBedrockModelConfig$temperature": "<p>The temperature to set when calling the model.</p>",
         "HarnessGeminiModelConfig$temperature": "<p>The temperature to set when calling the model.</p>",
+        "HarnessLiteLlmModelConfig$temperature": "<p>The temperature to set when calling the model.</p>",
         "HarnessOpenAiModelConfig$temperature": "<p>The temperature to set when calling the model.</p>"
       }
     },
@@ -4578,6 +4653,7 @@
       "refs": {
         "HarnessBedrockModelConfig$topP": "<p>The topP set when calling the model.</p>",
         "HarnessGeminiModelConfig$topP": "<p>The topP set when calling the model.</p>",
+        "HarnessLiteLlmModelConfig$topP": "<p>The topP set when calling the model.</p>",
         "HarnessOpenAiModelConfig$topP": "<p>The topP set when calling the model.</p>"
       }
     },

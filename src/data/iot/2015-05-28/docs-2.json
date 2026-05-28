@@ -1229,7 +1229,7 @@
     "BatchAcrossTopics": {
       "base": null,
       "refs": {
-        "BatchConfig$batchAcrossTopics": "<p>Whether to allow batching messages from different MQTT topics into a single HTTP request. By default, only messages from the same topic are batched together. The default value is <code>false</code>.</p>"
+        "BatchConfig$batchAcrossTopics": "<p>Whether to allow batching messages from different MQTT topics into a single HTTP request. By default, only messages from the same topic are batched together. The default value is <code>false</code>.</p> <note> <p>When <code>batchAcrossTopics</code> is enabled, the error payload format changes: the <code>topic</code> field moves from the top level to inside each entry in the <code>payloadsWithMetadata</code> array, since each message in the batch may originate from a different topic.</p> </note> <note> <p>Messages are always batched within the scope of the same account, rule name, target HTTP endpoint URL, and billing group. Messages that differ in any of these attributes are never combined into the same batch, regardless of the <code>batchAcrossTopics</code> setting.</p> </note>"
       }
     },
     "BatchConfig": {
@@ -1388,8 +1388,11 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "GetThingConnectivityDataRequest$includeSocketInformation": "<p>Specifies if socket information (sourcePort, targetPort, sourceIp, targetIp, vpcEndpointId) should be included in the GetThingConnectivityData response. Set to <code>true</code> to include socket information. Set to <code>false</code> to omit socket information. By default, this is set to <code>false</code>.</p>",
         "GetThingConnectivityDataResponse$connected": "<p>A Boolean that indicates the connectivity status.</p>",
+        "GetThingConnectivityDataResponse$cleanSession": "<p>Indicates whether the client is using a clean session. Returns <code>true</code> for clean sessions.</p>",
         "ThingConnectivity$connected": "<p>True if the thing is connected to the Amazon Web Services IoT Core service; false if it is not connected.</p>",
+        "ThingConnectivity$cleanSession": "<p>Indicates whether the client is using a clean session. Returns <code>true</code> for clean sessions.</p>",
         "ThingTypeMetadata$deprecated": "<p>Whether the thing type is deprecated. If <b>true</b>, no new things could be associated with this type.</p>"
       }
     },
@@ -1799,8 +1802,10 @@
       "base": null,
       "refs": {
         "DescribeThingResponse$defaultClientId": "<p>The default MQTT client ID. For a typical device, the thing name is also used as the default MQTT client ID. Although we don’t require a mapping between a thing's registry name and its use of MQTT client IDs, certificates, or shadow state, we recommend that you choose a thing name and use it as the MQTT client ID for the registry and the Device Shadow service.</p> <p>This lets you better organize your IoT fleet without removing the flexibility of the underlying device certificate model or shadows.</p>",
+        "GetThingConnectivityDataResponse$clientId": "<p>The unique identifier of the MQTT client.</p>",
         "ResourceIdentifier$clientId": "<p>The client ID.</p>",
-        "TestAuthorizationRequest$clientId": "<p>The MQTT client ID.</p>"
+        "TestAuthorizationRequest$clientId": "<p>The MQTT client ID.</p>",
+        "ThingConnectivity$clientId": "<p>The unique identifier of the MQTT client.</p>"
       }
     },
     "ClientProperties": {
@@ -2201,10 +2206,16 @@
         "GetThingConnectivityDataResponse$thingName": "<p>The name of your IoT thing.</p>"
       }
     },
+    "ConnectivityFilter": {
+      "base": "<p>Provides connectivity filter selections for the fleet indexing configuration.</p>",
+      "refs": {
+        "IndexingFilter$connectivity": "<p>Provides additional connectivity filter selections for the fleet indexing configuration.</p>"
+      }
+    },
     "ConnectivityTimestamp": {
       "base": null,
       "refs": {
-        "ThingConnectivity$timestamp": "<p>The epoch time (in milliseconds) when the thing last connected or disconnected. If the thing has been disconnected for approximately an hour, the time value might be missing.</p>"
+        "ThingConnectivity$timestamp": "<p>The epoch time (in milliseconds) when the thing last connected or disconnected. If the thing has been disconnected for approximately an hour, the time value might be missing. When you enable or update the indexing configuration, this value might be <code>0</code> (the Unix epoch time) for devices that have never connected or have been disconnected for more than an hour.</p>"
       }
     },
     "ConsecutiveDatapointsToAlarm": {
@@ -3504,13 +3515,13 @@
     "DisconnectReason": {
       "base": null,
       "refs": {
-        "ThingConnectivity$disconnectReason": "<p>The reason why the client is disconnected. If the thing has been disconnected for approximately an hour, the <code>disconnectReason</code> value might be missing.</p>"
+        "ThingConnectivity$disconnectReason": "<p>The reason why the client is disconnected. When you enable or update the indexing configuration, this value might be missing for devices that have never connected or have been disconnected for more than an hour.</p>"
       }
     },
     "DisconnectReasonValue": {
       "base": null,
       "refs": {
-        "GetThingConnectivityDataResponse$disconnectReason": "<p>The reason why the client is disconnecting.</p>"
+        "GetThingConnectivityDataResponse$disconnectReason": "<p>The reason why the client is disconnecting. When you enable or update the indexing configuration, this value might be <code>UNKNOWN</code> for devices that have never connected or have been disconnected for more than an hour.</p>"
       }
     },
     "DisplayName": {
@@ -3966,6 +3977,18 @@
       "base": null,
       "refs": {
         "AttributePayload$merge": "<p>Specifies whether the list of attributes provided in the <code>AttributePayload</code> is merged with the attributes stored in the registry, instead of overwriting them.</p> <p>To remove an attribute, call <code>UpdateThing</code> with an empty attribute value.</p> <note> <p>The <code>merge</code> attribute is only valid when calling <code>UpdateThing</code> or <code>UpdateThingGroup</code>.</p> </note>"
+      }
+    },
+    "FleetIndexingApi": {
+      "base": null,
+      "refs": {
+        "FleetIndexingApiList$member": null
+      }
+    },
+    "FleetIndexingApiList": {
+      "base": null,
+      "refs": {
+        "ConnectivityFilter$includeSocketInformation": "<p>A list of fleet indexing APIs for which to enable socket information retrieval. Currently, the only supported value is <code>GET_THING_CONNECTIVITY_DATA</code>.</p>"
       }
     },
     "FleetMetricArn": {
@@ -4839,6 +4862,13 @@
       "base": null,
       "refs": {
         "KafkaAction$headers": "<p>The list of Kafka headers that you specify.</p>"
+      }
+    },
+    "KeepAliveDuration": {
+      "base": null,
+      "refs": {
+        "GetThingConnectivityDataResponse$keepAliveDuration": "<p>The keep-alive interval in seconds that the client specified when establishing the connection.</p>",
+        "ThingConnectivity$keepAliveDuration": "<p>The keep-alive interval in seconds that the client specified when establishing the connection.</p>"
       }
     },
     "Key": {
@@ -7780,6 +7810,13 @@
       "base": "<p>The service is temporarily unavailable.</p>",
       "refs": {}
     },
+    "SessionExpiry": {
+      "base": null,
+      "refs": {
+        "GetThingConnectivityDataResponse$sessionExpiry": "<p>The session expiry interval in seconds for the MQTT client connection. This value indicates how long the session will remain active after the client disconnects.</p>",
+        "ThingConnectivity$sessionExpiry": "<p>The session expiry interval in seconds for the MQTT client connection. This value indicates how long the session will remain active after the client disconnects.</p>"
+      }
+    },
     "SetAsActive": {
       "base": null,
       "refs": {
@@ -7903,6 +7940,18 @@
       "refs": {
         "ListCommandExecutionsRequest$sortOrder": "<p>Specify whether to list the command executions that were created in the ascending or descending order. By default, the API returns all commands in the descending order based on the start time or completion time of the executions, that are determined by the <code>startTimeFilter</code> and <code>completeTimeFilter</code> parameters.</p>",
         "ListCommandsRequest$sortOrder": "<p>Specify whether to list the commands that you have created in the ascending or descending order. By default, the API returns all commands in the descending order based on the time that they were created.</p>"
+      }
+    },
+    "SourceIp": {
+      "base": null,
+      "refs": {
+        "GetThingConnectivityDataResponse$sourceIp": "<p>The IP address of the client that initiated the connection.</p>"
+      }
+    },
+    "SourcePort": {
+      "base": null,
+      "refs": {
+        "GetThingConnectivityDataResponse$sourcePort": "<p>The client's source port.</p>"
       }
     },
     "SqlParseException": {
@@ -8362,6 +8411,18 @@
       "base": null,
       "refs": {
         "GeoLocationTarget$order": "<p>The <code>order</code> of the geolocation target field. This field is optional. The default value is <code>LatLon</code>.</p>"
+      }
+    },
+    "TargetIp": {
+      "base": null,
+      "refs": {
+        "GetThingConnectivityDataResponse$targetIp": "<p>The IP address of the Amazon Web Services IoT Core endpoint that the client connected to.</p>"
+      }
+    },
+    "TargetPort": {
+      "base": null,
+      "refs": {
+        "GetThingConnectivityDataResponse$targetPort": "<p>The port number of the Amazon Web Services IoT Core endpoint that the client connected to.</p>"
       }
     },
     "TargetSelection": {
@@ -8898,7 +8959,7 @@
         "DetectMitigationActionExecution$executionEndDate": "<p> The date a mitigation action ended. </p>",
         "DetectMitigationActionsTaskSummary$taskStartTime": "<p> The date the task started. </p>",
         "DetectMitigationActionsTaskSummary$taskEndTime": "<p> The date the task ended. </p>",
-        "GetThingConnectivityDataResponse$timestamp": "<p>The timestamp of when the event occurred.</p>",
+        "GetThingConnectivityDataResponse$timestamp": "<p>The timestamp of when the event occurred. When you enable or update the indexing configuration, this value might be the Unix epoch time (0) for devices that have never connected or have been disconnected for more than an hour.</p>",
         "ListAuditFindingsRequest$startTime": "<p>A filter to limit results to those found after the specified time. You must specify either the startTime and endTime or the taskId, but not both.</p>",
         "ListAuditFindingsRequest$endTime": "<p>A filter to limit results to those found before the specified time. You must specify either the startTime and endTime or the taskId, but not both.</p>",
         "ListAuditMitigationActionsTasksRequest$startTime": "<p>Specify this filter to limit results to tasks that began on or after a specific date and time.</p>",
@@ -9658,6 +9719,12 @@
       "base": "<p>The summary of a virtual private cloud (VPC) destination.</p>",
       "refs": {
         "TopicRuleDestinationSummary$vpcDestinationSummary": "<p>Information about the virtual private cloud (VPC) connection.</p>"
+      }
+    },
+    "VpcEndpointId": {
+      "base": null,
+      "refs": {
+        "GetThingConnectivityDataResponse$vpcEndpointId": "<p>The ID of the VPC endpoint. Present for clients connected to Amazon Web Services IoT Core via a VPC endpoint.</p>"
       }
     },
     "VpcId": {

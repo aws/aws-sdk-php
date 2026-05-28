@@ -721,6 +721,7 @@
       "output":{"shape":"InvokeHarnessResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
+        {"shape":"RuntimeClientError"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
@@ -1682,10 +1683,6 @@
         "FAILED"
       ]
     },
-    "BrowserArn":{
-      "type":"string",
-      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:(aws|[0-9]{12}):browser(-custom)?/(aws\\.browser\\.v1|[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10})"
-    },
     "BrowserEnterprisePolicies":{
       "type":"list",
       "member":{"shape":"BrowserEnterprisePolicy"},
@@ -1919,10 +1916,6 @@
         "logGroupName":{"shape":"String"},
         "logStreamName":{"shape":"String"}
       }
-    },
-    "CodeInterpreterArn":{
-      "type":"string",
-      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:(aws|[0-9]{12}):code-interpreter(-custom)?/(aws\\.codeinterpreter\\.v1|[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10})"
     },
     "CodeInterpreterResult":{
       "type":"structure",
@@ -2621,8 +2614,7 @@
     "Document":{
       "type":"structure",
       "members":{},
-      "document":true,
-      "sensitive":true
+      "document":true
     },
     "DomainPattern":{
       "type":"string",
@@ -3589,13 +3581,13 @@
     "HarnessAgentCoreBrowserConfig":{
       "type":"structure",
       "members":{
-        "browserArn":{"shape":"BrowserArn"}
+        "browserArn":{"shape":"HarnessBrowserArn"}
       }
     },
     "HarnessAgentCoreCodeInterpreterConfig":{
       "type":"structure",
       "members":{
-        "codeInterpreterArn":{"shape":"CodeInterpreterArn"}
+        "codeInterpreterArn":{"shape":"HarnessCodeInterpreterArn"}
       }
     },
     "HarnessAgentCoreGatewayConfig":{
@@ -3620,6 +3612,14 @@
       "type":"string",
       "pattern":"arn:([^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:harness/[a-zA-Z][a-zA-Z0-9_]{0,39}-[a-zA-Z0-9]{10}"
     },
+    "HarnessBedrockApiFormat":{
+      "type":"string",
+      "enum":[
+        "converse_stream",
+        "responses",
+        "chat_completions"
+      ]
+    },
     "HarnessBedrockModelConfig":{
       "type":"structure",
       "required":["modelId"],
@@ -3627,8 +3627,18 @@
         "modelId":{"shape":"ModelId"},
         "maxTokens":{"shape":"MaxTokens"},
         "temperature":{"shape":"Temperature"},
-        "topP":{"shape":"TopP"}
+        "topP":{"shape":"TopP"},
+        "apiFormat":{"shape":"HarnessBedrockApiFormat"},
+        "additionalParams":{"shape":"Document"}
       }
+    },
+    "HarnessBrowserArn":{
+      "type":"string",
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:(aws|[0-9]{12}):browser(-custom)?/(aws\\.browser\\.v1|[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10})"
+    },
+    "HarnessCodeInterpreterArn":{
+      "type":"string",
+      "pattern":"arn:aws(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:(aws|[0-9]{12}):code-interpreter(-custom)?/(aws\\.codeinterpreter\\.v1|[a-zA-Z][a-zA-Z0-9_]{0,47}-[a-zA-Z0-9]{10})"
     },
     "HarnessContentBlock":{
       "type":"structure",
@@ -3742,6 +3752,25 @@
       "min":1,
       "sensitive":true
     },
+    "HarnessLiteLlmApiBase":{
+      "type":"string",
+      "max":16383,
+      "min":1,
+      "sensitive":true
+    },
+    "HarnessLiteLlmModelConfig":{
+      "type":"structure",
+      "required":["modelId"],
+      "members":{
+        "modelId":{"shape":"ModelId"},
+        "apiKeyArn":{"shape":"ApiKeyArn"},
+        "apiBase":{"shape":"HarnessLiteLlmApiBase"},
+        "maxTokens":{"shape":"MaxTokens"},
+        "temperature":{"shape":"Temperature"},
+        "topP":{"shape":"TopP"},
+        "additionalParams":{"shape":"Document"}
+      }
+    },
     "HarnessMessage":{
       "type":"structure",
       "required":[
@@ -3790,9 +3819,17 @@
       "members":{
         "bedrockModelConfig":{"shape":"HarnessBedrockModelConfig"},
         "openAiModelConfig":{"shape":"HarnessOpenAiModelConfig"},
-        "geminiModelConfig":{"shape":"HarnessGeminiModelConfig"}
+        "geminiModelConfig":{"shape":"HarnessGeminiModelConfig"},
+        "liteLlmModelConfig":{"shape":"HarnessLiteLlmModelConfig"}
       },
       "union":true
+    },
+    "HarnessOpenAiApiFormat":{
+      "type":"string",
+      "enum":[
+        "chat_completions",
+        "responses"
+      ]
     },
     "HarnessOpenAiModelConfig":{
       "type":"structure",
@@ -3805,7 +3842,9 @@
         "apiKeyArn":{"shape":"ApiKeyArn"},
         "maxTokens":{"shape":"MaxTokens"},
         "temperature":{"shape":"Temperature"},
-        "topP":{"shape":"TopP"}
+        "topP":{"shape":"TopP"},
+        "apiFormat":{"shape":"HarnessOpenAiApiFormat"},
+        "additionalParams":{"shape":"Document"}
       }
     },
     "HarnessReasoningContentBlock":{
@@ -3853,13 +3892,49 @@
     "HarnessSkill":{
       "type":"structure",
       "members":{
-        "path":{"shape":"HarnessSkillPath"}
+        "path":{"shape":"HarnessSkillPath"},
+        "s3":{"shape":"HarnessSkillS3Source"},
+        "git":{"shape":"HarnessSkillGitSource"}
       },
       "union":true
+    },
+    "HarnessSkillGitAuth":{
+      "type":"structure",
+      "required":["credentialArn"],
+      "members":{
+        "credentialArn":{"shape":"ApiKeyArn"},
+        "username":{"shape":"String"}
+      }
+    },
+    "HarnessSkillGitSource":{
+      "type":"structure",
+      "required":["url"],
+      "members":{
+        "url":{"shape":"HarnessSkillGitUrl"},
+        "path":{"shape":"String"},
+        "auth":{"shape":"HarnessSkillGitAuth"}
+      }
+    },
+    "HarnessSkillGitUrl":{
+      "type":"string",
+      "min":8,
+      "pattern":"https://.*"
     },
     "HarnessSkillPath":{
       "type":"string",
       "min":1
+    },
+    "HarnessSkillS3Source":{
+      "type":"structure",
+      "required":["uri"],
+      "members":{
+        "uri":{"shape":"HarnessSkillS3Uri"}
+      }
+    },
+    "HarnessSkillS3Uri":{
+      "type":"string",
+      "min":5,
+      "pattern":"s3://.*"
     },
     "HarnessSkills":{
       "type":"list",
@@ -4595,9 +4670,14 @@
           "locationName":"harnessArn"
         },
         "runtimeSessionId":{
-          "shape":"SessionId",
+          "shape":"InvokeHarnessRequestRuntimeSessionIdString",
           "location":"header",
           "locationName":"X-Amzn-Bedrock-AgentCore-Runtime-Session-Id"
+        },
+        "runtimeUserId":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Runtime-User-Id"
         },
         "messages":{"shape":"HarnessMessages"},
         "model":{"shape":"HarnessModelConfiguration"},
@@ -4610,6 +4690,12 @@
         "timeoutSeconds":{"shape":"Integer"},
         "actorId":{"shape":"String"}
       }
+    },
+    "InvokeHarnessRequestRuntimeSessionIdString":{
+      "type":"string",
+      "max":100,
+      "min":33,
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9-_]*"
     },
     "InvokeHarnessResponse":{
       "type":"structure",
@@ -5160,6 +5246,12 @@
       "min":1,
       "sensitive":true
     },
+    "MemoryDocument":{
+      "type":"structure",
+      "members":{},
+      "document":true,
+      "sensitive":true
+    },
     "MemoryId":{
       "type":"string",
       "min":12,
@@ -5678,7 +5770,7 @@
       "type":"structure",
       "members":{
         "conversational":{"shape":"Conversational"},
-        "blob":{"shape":"Document"}
+        "blob":{"shape":"MemoryDocument"}
       },
       "union":true
     },

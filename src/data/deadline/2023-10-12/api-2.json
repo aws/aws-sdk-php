@@ -853,6 +853,26 @@
       "endpoint":{"hostPrefix":"management."},
       "idempotent":true
     },
+    "DeleteVolume":{
+      "name":"DeleteVolume",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2023-10-12/farms/{farmId}/fleets/{fleetId}/volumes/{volumeId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteVolumeRequest"},
+      "output":{"shape":"DeleteVolumeResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"}
+      ],
+      "endpoint":{"hostPrefix":"management."},
+      "idempotent":true
+    },
     "DeleteWorker":{
       "name":"DeleteWorker",
       "http":{
@@ -1302,6 +1322,25 @@
       },
       "input":{"shape":"GetTaskRequest"},
       "output":{"shape":"GetTaskResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ],
+      "endpoint":{"hostPrefix":"management."},
+      "readonly":true
+    },
+    "GetVolume":{
+      "name":"GetVolume",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2023-10-12/farms/{farmId}/fleets/{fleetId}/volumes/{volumeId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetVolumeRequest"},
+      "output":{"shape":"GetVolumeResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerErrorException"},
@@ -1846,6 +1885,25 @@
       },
       "input":{"shape":"ListTasksRequest"},
       "output":{"shape":"ListTasksResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ],
+      "endpoint":{"hostPrefix":"management."},
+      "readonly":true
+    },
+    "ListVolumes":{
+      "name":"ListVolumes",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2023-10-12/farms/{farmId}/fleets/{fleetId}/volumes",
+        "responseCode":200
+      },
+      "input":{"shape":"ListVolumesRequest"},
+      "output":{"shape":"ListVolumesResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerErrorException"},
@@ -4784,6 +4842,35 @@
       "type":"structure",
       "members":{}
     },
+    "DeleteVolumeRequest":{
+      "type":"structure",
+      "required":[
+        "farmId",
+        "fleetId",
+        "volumeId"
+      ],
+      "members":{
+        "farmId":{
+          "shape":"FarmId",
+          "location":"uri",
+          "locationName":"farmId"
+        },
+        "fleetId":{
+          "shape":"FleetId",
+          "location":"uri",
+          "locationName":"fleetId"
+        },
+        "volumeId":{
+          "shape":"VolumeId",
+          "location":"uri",
+          "locationName":"volumeId"
+        }
+      }
+    },
+    "DeleteVolumeResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteWorkerRequest":{
       "type":"structure",
       "required":[
@@ -4987,6 +5074,10 @@
       "box":true,
       "max":1000,
       "min":125
+    },
+    "EbsVolumeType":{
+      "type":"string",
+      "enum":["gp3"]
     },
     "Ec2EbsVolume":{
       "type":"structure",
@@ -6228,6 +6319,60 @@
         "updatedBy":{"shape":"UpdatedBy"},
         "latestSessionActionId":{"shape":"SessionActionId"},
         "parameters":{"shape":"TaskParameters"}
+      }
+    },
+    "GetVolumeRequest":{
+      "type":"structure",
+      "required":[
+        "farmId",
+        "fleetId",
+        "volumeId"
+      ],
+      "members":{
+        "farmId":{
+          "shape":"FarmId",
+          "location":"uri",
+          "locationName":"farmId"
+        },
+        "fleetId":{
+          "shape":"FleetId",
+          "location":"uri",
+          "locationName":"fleetId"
+        },
+        "volumeId":{
+          "shape":"VolumeId",
+          "location":"uri",
+          "locationName":"volumeId"
+        }
+      }
+    },
+    "GetVolumeResponse":{
+      "type":"structure",
+      "required":[
+        "volumeId",
+        "farmId",
+        "fleetId",
+        "state",
+        "sizeGiB",
+        "availabilityZoneId",
+        "volumeType",
+        "createdAt"
+      ],
+      "members":{
+        "volumeId":{"shape":"VolumeId"},
+        "farmId":{"shape":"FarmId"},
+        "fleetId":{"shape":"FleetId"},
+        "state":{"shape":"VolumeState"},
+        "sizeGiB":{"shape":"PersistentVolumeSizeGiB"},
+        "availabilityZoneId":{"shape":"String"},
+        "attachedWorkerId":{"shape":"WorkerId"},
+        "volumeType":{"shape":"EbsVolumeType"},
+        "iops":{"shape":"PersistentVolumeIops"},
+        "throughputMiB":{"shape":"PersistentVolumeThroughputMiB"},
+        "createdAt":{"shape":"CreatedAt"},
+        "lastAssignedAt":{"shape":"Timestamp"},
+        "lastReleasedAt":{"shape":"Timestamp"},
+        "expiresAt":{"shape":"Timestamp"}
       }
     },
     "GetWorkerRequest":{
@@ -7833,6 +7978,43 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListVolumesRequest":{
+      "type":"structure",
+      "required":[
+        "farmId",
+        "fleetId"
+      ],
+      "members":{
+        "farmId":{
+          "shape":"FarmId",
+          "location":"uri",
+          "locationName":"farmId"
+        },
+        "fleetId":{
+          "shape":"FleetId",
+          "location":"uri",
+          "locationName":"fleetId"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListVolumesResponse":{
+      "type":"structure",
+      "required":["volumes"],
+      "members":{
+        "volumes":{"shape":"VolumeSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListWorkersRequest":{
       "type":"structure",
       "required":[
@@ -8074,6 +8256,11 @@
         "updatedBy":{"shape":"UpdatedBy"}
       }
     },
+    "MountPath":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
     "NextItemOffset":{
       "type":"integer",
       "box":true,
@@ -8176,6 +8363,41 @@
         "WEEKLY",
         "MONTHLY"
       ]
+    },
+    "PersistentVolumeConfiguration":{
+      "type":"structure",
+      "required":["mountPath"],
+      "members":{
+        "sizeGiB":{"shape":"PersistentVolumeSizeGiB"},
+        "iops":{"shape":"PersistentVolumeIops"},
+        "throughputMiB":{"shape":"PersistentVolumeThroughputMiB"},
+        "mountPath":{"shape":"MountPath"},
+        "lastUsedTtlHours":{"shape":"PersistentVolumeTtlHours"}
+      }
+    },
+    "PersistentVolumeIops":{
+      "type":"integer",
+      "box":true,
+      "max":80000,
+      "min":100
+    },
+    "PersistentVolumeSizeGiB":{
+      "type":"integer",
+      "box":true,
+      "max":65536,
+      "min":1
+    },
+    "PersistentVolumeThroughputMiB":{
+      "type":"integer",
+      "box":true,
+      "max":2000,
+      "min":125
+    },
+    "PersistentVolumeTtlHours":{
+      "type":"integer",
+      "box":true,
+      "max":8760,
+      "min":1
     },
     "PortNumber":{
       "type":"integer",
@@ -8862,6 +9084,7 @@
         "instanceMarketOptions":{"shape":"ServiceManagedEc2InstanceMarketOptions"},
         "vpcConfiguration":{"shape":"VpcConfiguration"},
         "storageProfileId":{"shape":"StorageProfileId"},
+        "persistentVolumeConfiguration":{"shape":"PersistentVolumeConfiguration"},
         "autoScalingConfiguration":{"shape":"ServiceManagedEc2AutoScalingConfiguration"}
       }
     },
@@ -10560,6 +10783,44 @@
         "FIELD_VALIDATION_FAILED",
         "OTHER"
       ]
+    },
+    "VolumeId":{
+      "type":"string",
+      "pattern":"volume-[0-9a-f]{32}"
+    },
+    "VolumeState":{
+      "type":"string",
+      "enum":[
+        "PENDING_CREATION",
+        "PENDING_ATTACHMENT",
+        "IN_USE",
+        "AVAILABLE",
+        "PENDING_DELETION"
+      ]
+    },
+    "VolumeSummaries":{
+      "type":"list",
+      "member":{"shape":"VolumeSummary"}
+    },
+    "VolumeSummary":{
+      "type":"structure",
+      "required":[
+        "volumeId",
+        "farmId",
+        "fleetId",
+        "state",
+        "sizeGiB",
+        "availabilityZoneId"
+      ],
+      "members":{
+        "volumeId":{"shape":"VolumeId"},
+        "farmId":{"shape":"FarmId"},
+        "fleetId":{"shape":"FleetId"},
+        "state":{"shape":"VolumeState"},
+        "sizeGiB":{"shape":"PersistentVolumeSizeGiB"},
+        "availabilityZoneId":{"shape":"String"},
+        "attachedWorkerId":{"shape":"WorkerId"}
+      }
     },
     "VpcConfiguration":{
       "type":"structure",

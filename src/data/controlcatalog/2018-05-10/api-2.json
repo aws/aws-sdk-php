@@ -224,7 +224,8 @@
     "ControlFilter":{
       "type":"structure",
       "members":{
-        "Implementations":{"shape":"ImplementationFilter"}
+        "Implementations":{"shape":"ImplementationFilter"},
+        "GovernedProviders":{"shape":"GovernedProviderFilterList"}
       }
     },
     "ControlMapping":{
@@ -256,8 +257,16 @@
       "type":"structure",
       "required":["Name"],
       "members":{
-        "Name":{"shape":"String"}
+        "Name":{"shape":"String"},
+        "Requirement":{"shape":"ControlParameterRequirement"}
       }
+    },
+    "ControlParameterRequirement":{
+      "type":"string",
+      "enum":[
+        "REQUIRED",
+        "OPTIONAL"
+      ]
     },
     "ControlParameters":{
       "type":"list",
@@ -301,9 +310,11 @@
         "Description":{"shape":"String"},
         "Behavior":{"shape":"ControlBehavior"},
         "Severity":{"shape":"ControlSeverity"},
+        "ParameterRequirementSummary":{"shape":"ParameterRequirementSummary"},
         "Implementation":{"shape":"ImplementationSummary"},
         "CreateTime":{"shape":"Timestamp"},
-        "GovernedResources":{"shape":"GovernedResources"}
+        "GovernedResources":{"shape":"GovernedResources"},
+        "GovernedProviders":{"shape":"GovernedProviders"}
       }
     },
     "Controls":{
@@ -397,14 +408,32 @@
         "Severity":{"shape":"ControlSeverity"},
         "RegionConfiguration":{"shape":"RegionConfiguration"},
         "Implementation":{"shape":"ImplementationDetails"},
+        "ParameterRequirementSummary":{"shape":"ParameterRequirementSummary"},
         "Parameters":{"shape":"ControlParameters"},
         "CreateTime":{"shape":"Timestamp"},
-        "GovernedResources":{"shape":"GovernedResources"}
+        "GovernedResources":{"shape":"GovernedResources"},
+        "GovernedProviders":{"shape":"GovernedProviders"}
       }
+    },
+    "GovernedProvider":{
+      "type":"string",
+      "max":64,
+      "min":2,
+      "pattern":"[A-Z]{2,64}"
+    },
+    "GovernedProviderFilterList":{
+      "type":"list",
+      "member":{"shape":"GovernedProvider"},
+      "max":1,
+      "min":1
+    },
+    "GovernedProviders":{
+      "type":"list",
+      "member":{"shape":"GovernedProvider"}
     },
     "GovernedResource":{
       "type":"string",
-      "pattern":"[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}"
+      "pattern":"[A-Za-z0-9][A-Za-z0-9.:/_-]{1,254}"
     },
     "GovernedResources":{
       "type":"list",
@@ -688,6 +717,14 @@
       "type":"string",
       "max":1024,
       "min":0
+    },
+    "ParameterRequirementSummary":{
+      "type":"string",
+      "enum":[
+        "REQUIRED",
+        "OPTIONAL",
+        "NONE"
+      ]
     },
     "RegionCode":{
       "type":"string",

@@ -1,5 +1,67 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Updates `MultipartCopy` to fully align with `CopyObject` metadata directive behavior. When `$config['metadata_directive']` is set to `COPY` (default), source object metadata takes precedence over any matching values provided in `$config['params']`.
+* `Aws\ControlCatalog` - AWS Control Catalog - Added GovernedProviders response field and inclusion filter to GetControl and ListControls APIs to identify and filter by cloud provider. Added ParameterRequirementSummary response field indicating parameter requirements.
+* `Aws\AugmentedAIRuntime` - Adding new BDD representation of endpoint ruleset
+* `Aws\BedrockRuntime` - Support system role in message
+* `Aws\PrometheusService` - Adding new BDD representation of endpoint ruleset
+* `Aws\Deadline` - Added support for persistent storage on Service-Managed Fleets, allowing customers to configure persistent storage that preserves data across worker sessions which reduces job startup times for workloads with large software installations or asset caches.
+* `Aws\SageMakerRuntime` - Adding new BDD representation of endpoint ruleset
+* `Aws\SocialMessaging` - Adding new BDD representation of endpoint ruleset
+* `Aws\S3Control` - Update the minimum value of MinStorageBytesPercentage in StorageLensPrefixLevel.SelectionCriteria from 0.1 to 1, aligning the model with the documented contract.
+* `Aws\IoTTwinMaker` - Adding new BDD representation of endpoint ruleset
+* `Aws\VerifiedPermissions` - Adding new BDD representation of endpoint ruleset
+* `Aws\CustomerProfiles` - BatchPutProfileObject API adds multiple profile objects to a domain of a given ObjectType in a single API call.
+* `Aws\BedrockAgentCoreControl` - Added Harness support for LiteLLM model configuration for third-party model providers. Added S3 and Git skill source types. Added Responses API format for OpenAI and Bedrock models. Added runtimeUserId parameter to InvokeHarness for end-user identification.
+* `Aws\CostOptimizationHub` - Adding new BDD representation of endpoint ruleset
+* `Aws\CodeGuruReviewer` - Adding new BDD representation of endpoint ruleset
+* `Aws\BackupSearch` - Adding new BDD representation of endpoint ruleset
+* `Aws\TimestreamInfluxDB` - Adding new BDD representation of endpoint ruleset
+* `Aws\IoT` - Adds new connectivity-related fields to Fleet Indexing API requests and responses.
+* `Aws\NeptuneGraph` - Adding new BDD representation of endpoint ruleset
+* `Aws\Wickr` - Adding new BDD representation of endpoint ruleset
+* `Aws\TrustedAdvisor` - Adding new BDD representation of endpoint ruleset
+* `Aws\Detective` - Adding new BDD representation of endpoint ruleset
+* `Aws\CloudFrontKeyValueStore` - Adding new BDD representation of endpoint ruleset
+* `Aws\GroundStation` - Adding new BDD representation of endpoint ruleset
+* `Aws\AccessAnalyzer` - Adding new BDD representation of endpoint ruleset
+* `Aws\KinesisVideoSignalingChannels` - Adding new BDD representation of endpoint ruleset
+* `Aws\SupplyChain` - Adding new BDD representation of endpoint ruleset
+* `Aws\MigrationHubStrategyRecommendations` - Adding new BDD representation of endpoint ruleset
+* `Aws\AppStream` - Amazon WorkSpaces Applications now supports BYOL (Bring Your Own License). This enables customers to import their own WorkSpaces images and use them in WorkSpaces Applications.
+* `Aws\Keyspaces` - Adding new BDD representation of endpoint ruleset
+* `Aws\Route53RecoveryControlConfig` - Adding new BDD representation of endpoint ruleset
+* `Aws\Braket` - Adding new BDD representation of endpoint ruleset
+* `Aws\IoTDataPlane` - Adding GetConnection, ListSubscriptions, and SendDirectMessage APIs to IoT Data Plane
+* `Aws\KinesisAnalyticsV2` - Adding new BDD representation of endpoint ruleset
+* `Aws\SecurityAgent` - Adding new BDD representation of endpoint ruleset
+* `Aws\SSMIncidents` - Adding new BDD representation of endpoint ruleset
+* `Aws\ChimeSDKMessaging` - Adding new BDD representation of endpoint ruleset
+* `Aws\Artifact` - Adding new BDD representation of endpoint ruleset
+* `Aws\BillingConductor` - Adding new BDD representation of endpoint ruleset
+* `Aws\NetworkMonitor` - Adding new BDD representation of endpoint ruleset
+* `Aws\AmplifyUIBuilder` - Adding new BDD representation of endpoint ruleset
+* `Aws\Signin` - Adding new BDD representation of endpoint ruleset
+* `Aws\GeoRoutes` - Adding new BDD representation of endpoint ruleset
+* `Aws\CodeStarconnections` - Adding new BDD representation of endpoint ruleset
+* `Aws\PinpointSMSVoiceV2` - Adding new BDD representation of endpoint ruleset
+* `Aws\ChimeSDKMeetings` - Adding new BDD representation of endpoint ruleset
+* `Aws\MarketplaceReporting` - Adding new BDD representation of endpoint ruleset
+* `Aws\Chatbot` - Adding new BDD representation of endpoint ruleset
+* `Aws\BedrockAgentCore` - Added Harness support for LiteLLM model configuration for third-party model providers. Added S3 and Git skill source types. Added Responses API format for OpenAI and Bedrock models. Added runtimeUserId and runtimeClientError to InvokeHarness.
+* `Aws\PCS` - This release adds support for configuring scaleDownIdleTimeInSeconds at the compute node group level, allowing customers to set different idle timeouts per node group. Previously this setting was only available at the cluster level.
+* `Aws\LookoutEquipment` - Adding new BDD representation of endpoint ruleset
+* `Aws\IVS` - Adding new BDD representation of endpoint ruleset
+* `Aws\Resiliencehubv2` - This is the initial SDK release for the next generation of Resilience Hub.
+* `Aws\RedshiftDataAPIService` - Adding new BDD representation of endpoint ruleset
+* `Aws\Bedrock` - Add support for ModelPackageArn in Bedrock's CreateCustomModel API
+* `Aws\ARCRegionSwitch` - Adding new BDD representation of endpoint ruleset
+* `Aws\FinSpaceData` - Adding new BDD representation of endpoint ruleset
+* `Aws\BedrockDataAutomationRuntime` - Adding new BDD representation of endpoint ruleset
+* `Aws\OpenSearchServerless` - Adds support for deletion protection on collections, ability to create NEXTGEN collection groups and autoscaling visibility for NEXTGEN collection groups
+
 ## 3.382.2 - 2026-05-27
 
 * `Aws\Api` - Cast generated HTTP header values to strings and validate invalid header values.

@@ -132,6 +132,12 @@
         "ControlParameters$member": null
       }
     },
+    "ControlParameterRequirement": {
+      "base": null,
+      "refs": {
+        "ControlParameter$Requirement": "<p>Indicates whether the parameter is required or optional when you enable the control.</p>"
+      }
+    },
     "ControlParameters": {
       "base": null,
       "refs": {
@@ -233,6 +239,26 @@
       "base": null,
       "refs": {}
     },
+    "GovernedProvider": {
+      "base": null,
+      "refs": {
+        "GovernedProviderFilterList$member": null,
+        "GovernedProviders$member": null
+      }
+    },
+    "GovernedProviderFilterList": {
+      "base": null,
+      "refs": {
+        "ControlFilter$GovernedProviders": "<p>A filter that narrows the results to controls that govern a specific provider's resources.</p>"
+      }
+    },
+    "GovernedProviders": {
+      "base": null,
+      "refs": {
+        "ControlSummary$GovernedProviders": "<p>A list of providers whose resources are governed by this control. For example, a value of <code>AWS</code> indicates that the control governs Amazon Web Services resources.</p>",
+        "GetControlResponse$GovernedProviders": "<p>A list of providers whose resources are governed by this control. For example, a value of <code>AWS</code> indicates that the control governs Amazon Web Services resources.</p>"
+      }
+    },
     "GovernedResource": {
       "base": null,
       "refs": {
@@ -242,8 +268,8 @@
     "GovernedResources": {
       "base": null,
       "refs": {
-        "ControlSummary$GovernedResources": "<p>A list of Amazon Web Services resource types that are governed by this control. This information helps you understand which controls can govern certain types of resources, and conversely, which resources are affected when the control is implemented. The resources are represented as Amazon Web Services CloudFormation resource types. If <code>GovernedResources</code> cannot be represented by available CloudFormation resource types, it’s returned as an empty list.</p>",
-        "GetControlResponse$GovernedResources": "<p>A list of Amazon Web Services resource types that are governed by this control. This information helps you understand which controls can govern certain types of resources, and conversely, which resources are affected when the control is implemented. The resources are represented as Amazon Web Services CloudFormation resource types. If <code>GovernedResources</code> cannot be represented by available CloudFormation resource types, it’s returned as an empty list.</p>"
+        "ControlSummary$GovernedResources": "<p>A list of resource types that are governed by this control. This information helps you understand which controls can govern certain types of resources, and conversely, which resources are affected when the control is implemented. For Amazon Web Services controls, the resources are represented as CloudFormation resource types. For non-Amazon Web Services controls, the resources are represented in a provider-specific format. If <code>GovernedResources</code> cannot be represented by available resource types, it’s returned as an empty list.</p>",
+        "GetControlResponse$GovernedResources": "<p>A list of resource types that are governed by this control. This information helps you understand which controls can govern certain types of resources, and conversely, which resources are affected when the control is implemented. For Amazon Web Services controls, the resources are represented as CloudFormation resource types. For non-Amazon Web Services controls, the resources are represented in a provider-specific format. If <code>GovernedResources</code> cannot be represented by available resource types, it’s returned as an empty list.</p>"
       }
     },
     "ImplementationDetails": {
@@ -436,6 +462,13 @@
         "ListDomainsResponse$NextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListObjectivesRequest$NextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListObjectivesResponse$NextToken": "<p>The pagination token that's used to fetch the next set of results.</p>"
+      }
+    },
+    "ParameterRequirementSummary": {
+      "base": null,
+      "refs": {
+        "ControlSummary$ParameterRequirementSummary": "<p>A summary that indicates whether the control requires parameters, accepts optional parameters, or does not support parameters. Use this field to determine whether you need to supply parameter values when you enable the control.</p>",
+        "GetControlResponse$ParameterRequirementSummary": "<p>A summary that indicates whether the control requires parameters, accepts optional parameters, or does not support parameters. Use this field to determine whether you need to supply parameter values when you enable the control.</p>"
       }
     },
     "RegionCode": {

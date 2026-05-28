@@ -327,7 +327,8 @@
         {"shape":"ResourceAlreadyExistsException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"IncompatibleImageException"},
-        {"shape":"DryRunOperationException"}
+        {"shape":"DryRunOperationException"},
+        {"shape":"InvalidParameterCombinationException"}
       ]
     },
     "CreateStack":{
@@ -2132,14 +2133,11 @@
     },
     "CreateImportedImageRequest":{
       "type":"structure",
-      "required":[
-        "Name",
-        "SourceAmiId",
-        "IamRoleArn"
-      ],
+      "required":["Name"],
       "members":{
         "Name":{"shape":"Name"},
         "SourceAmiId":{"shape":"PhotonAmiId"},
+        "WorkspaceImageId":{"shape":"WorkspaceImageId"},
         "IamRoleArn":{"shape":"Arn"},
         "Description":{"shape":"ImageImportDescription"},
         "DisplayName":{"shape":"ImageImportDisplayName"},
@@ -3044,7 +3042,8 @@
       "enum":[
         "EXPORTING",
         "COMPLETED",
-        "FAILED"
+        "FAILED",
+        "TIMED_OUT"
       ]
     },
     "ExportImageTasks":{
@@ -3378,7 +3377,8 @@
       "type":"string",
       "enum":[
         "CUSTOM",
-        "NATIVE"
+        "NATIVE",
+        "BYOL"
       ]
     },
     "IncompatibleImageException":{
@@ -4525,6 +4525,12 @@
         "SubnetIds":{"shape":"SubnetIdList"},
         "SecurityGroupIds":{"shape":"SecurityGroupIdList"}
       }
+    },
+    "WorkspaceImageId":{
+      "type":"string",
+      "max":67,
+      "min":12,
+      "pattern":"^wsi-[0-9a-z]{8,63}$"
     }
   }
 }

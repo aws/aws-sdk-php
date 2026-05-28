@@ -474,7 +474,9 @@
       "base": null,
       "refs": {
         "HarnessGeminiModelConfig$apiKeyArn": "<p>The ARN of your Gemini API key on AgentCore Identity.</p>",
-        "HarnessOpenAiModelConfig$apiKeyArn": "<p>The ARN of your OpenAI API key on AgentCore Identity.</p>"
+        "HarnessLiteLlmModelConfig$apiKeyArn": "<p>The ARN of the API key in AgentCore Identity for authenticating with the model provider.</p>",
+        "HarnessOpenAiModelConfig$apiKeyArn": "<p>The ARN of your OpenAI API key on AgentCore Identity.</p>",
+        "HarnessSkillGitAuth$credentialArn": "<p>The ARN of the credential in AgentCore Identity containing the password or personal access token.</p>"
       }
     },
     "ApiKeyCredentialLocation": {
@@ -691,8 +693,7 @@
       "refs": {
         "BrowserSummary$browserArn": "<p>The Amazon Resource Name (ARN) of the browser.</p>",
         "CreateBrowserResponse$browserArn": "<p>The Amazon Resource Name (ARN) of the created browser.</p>",
-        "GetBrowserResponse$browserArn": "<p>The Amazon Resource Name (ARN) of the browser.</p>",
-        "HarnessAgentCoreBrowserConfig$browserArn": "<p>If not populated, the built-in Browser ARN is used.</p>"
+        "GetBrowserResponse$browserArn": "<p>The Amazon Resource Name (ARN) of the browser.</p>"
       }
     },
     "BrowserEnterprisePolicies": {
@@ -1028,8 +1029,7 @@
       "refs": {
         "CodeInterpreterSummary$codeInterpreterArn": "<p>The Amazon Resource Name (ARN) of the code interpreter.</p>",
         "CreateCodeInterpreterResponse$codeInterpreterArn": "<p>The Amazon Resource Name (ARN) of the created code interpreter.</p>",
-        "GetCodeInterpreterResponse$codeInterpreterArn": "<p>The Amazon Resource Name (ARN) of the code interpreter.</p>",
-        "HarnessAgentCoreCodeInterpreterConfig$codeInterpreterArn": "<p>If not populated, the built-in Code Interpreter ARN is used.</p>"
+        "GetCodeInterpreterResponse$codeInterpreterArn": "<p>The Amazon Resource Name (ARN) of the code interpreter.</p>"
       }
     },
     "CodeInterpreterId": {
@@ -2330,7 +2330,10 @@
     "Document": {
       "base": null,
       "refs": {
-        "ComponentConfiguration$configuration": "<p>The configuration values as a flexible JSON document.</p>"
+        "ComponentConfiguration$configuration": "<p>The configuration values as a flexible JSON document.</p>",
+        "HarnessBedrockModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>",
+        "HarnessLiteLlmModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>",
+        "HarnessOpenAiModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>"
       }
     },
     "DomainName": {
@@ -3349,10 +3352,28 @@
         "HarnessSummary$arn": "<p>The ARN of the harness.</p>"
       }
     },
+    "HarnessBedrockApiFormat": {
+      "base": null,
+      "refs": {
+        "HarnessBedrockModelConfig$apiFormat": "<p>The API format to use when calling the Bedrock provider.</p>"
+      }
+    },
     "HarnessBedrockModelConfig": {
       "base": "<p>Configuration for an Amazon Bedrock model provider.</p>",
       "refs": {
         "HarnessModelConfiguration$bedrockModelConfig": "<p>Configuration for an Amazon Bedrock model.</p>"
+      }
+    },
+    "HarnessBrowserArn": {
+      "base": "<p>Browser ARN for Harness tool configuration. Accepts both managed (aws.browser.v1) and custom browser ARNs.</p>",
+      "refs": {
+        "HarnessAgentCoreBrowserConfig$browserArn": "<p>If not populated, the built-in Browser ARN is used.</p>"
+      }
+    },
+    "HarnessCodeInterpreterArn": {
+      "base": "<p>Code Interpreter ARN for Harness tool configuration. Accepts both managed (aws.codeinterpreter.v1) and custom code interpreter ARNs.</p>",
+      "refs": {
+        "HarnessAgentCoreCodeInterpreterConfig$codeInterpreterArn": "<p>If not populated, the built-in Code Interpreter ARN is used.</p>"
       }
     },
     "HarnessEnvironmentArtifact": {
@@ -3410,6 +3431,18 @@
         "HarnessInlineFunctionConfig$description": "<p>Description of what the tool does, provided to the model.</p>"
       }
     },
+    "HarnessLiteLlmApiBase": {
+      "base": null,
+      "refs": {
+        "HarnessLiteLlmModelConfig$apiBase": "<p>The base URL for the model provider's API endpoint.</p>"
+      }
+    },
+    "HarnessLiteLlmModelConfig": {
+      "base": "<p>Configuration for a LiteLLM model provider, enabling connection to third-party model providers.</p>",
+      "refs": {
+        "HarnessModelConfiguration$liteLlmModelConfig": "<p>The LiteLLM model configuration for connecting to third-party model providers.</p>"
+      }
+    },
     "HarnessMemoryConfiguration": {
       "base": "<p>The memory configuration for a harness.</p>",
       "refs": {
@@ -3432,6 +3465,12 @@
         "CreateHarnessRequest$harnessName": "<p>The name of the harness. Must start with a letter and contain only alphanumeric characters and underscores.</p>",
         "Harness$harnessName": "<p>The name of the Harness.</p>",
         "HarnessSummary$harnessName": "<p>The name of the harness.</p>"
+      }
+    },
+    "HarnessOpenAiApiFormat": {
+      "base": null,
+      "refs": {
+        "HarnessOpenAiModelConfig$apiFormat": "<p>The API format to use when calling the OpenAI provider.</p>"
       }
     },
     "HarnessOpenAiModelConfig": {
@@ -3458,10 +3497,40 @@
         "HarnessSkills$member": null
       }
     },
+    "HarnessSkillGitAuth": {
+      "base": "<p>Authentication configuration for accessing a private git repository.</p>",
+      "refs": {
+        "HarnessSkillGitSource$auth": "<p>Authentication configuration for private repositories.</p>"
+      }
+    },
+    "HarnessSkillGitSource": {
+      "base": "<p>A git repository source for a skill.</p>",
+      "refs": {
+        "HarnessSkill$git": "<p>A git repository containing the skill.</p>"
+      }
+    },
+    "HarnessSkillGitUrl": {
+      "base": null,
+      "refs": {
+        "HarnessSkillGitSource$url": "<p>The HTTPS URL of the git repository.</p>"
+      }
+    },
     "HarnessSkillPath": {
       "base": null,
       "refs": {
         "HarnessSkill$path": "<p>The filesystem path to the skill definition.</p>"
+      }
+    },
+    "HarnessSkillS3Source": {
+      "base": "<p>An S3 source for a skill.</p>",
+      "refs": {
+        "HarnessSkill$s3": "<p>An S3 source containing the skill.</p>"
+      }
+    },
+    "HarnessSkillS3Uri": {
+      "base": null,
+      "refs": {
+        "HarnessSkillS3Source$uri": "<p>The S3 URI pointing to the skill directory (e.g., s3://bucket/skills/my-skill/).</p>"
       }
     },
     "HarnessSkills": {
@@ -4431,6 +4500,7 @@
       "refs": {
         "HarnessBedrockModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per model call.</p>",
         "HarnessGeminiModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per model call.</p>",
+        "HarnessLiteLlmModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per iteration.</p>",
         "HarnessOpenAiModelConfig$maxTokens": "<p>The maximum number of tokens to allow in the generated response per model call.</p>"
       }
     },
@@ -4685,6 +4755,7 @@
         "BedrockEvaluatorModelConfig$modelId": "<p> The identifier of the Amazon Bedrock model to use for evaluation. Must be a supported foundation model available in your region. </p>",
         "HarnessBedrockModelConfig$modelId": "<p>The Bedrock model ID.</p>",
         "HarnessGeminiModelConfig$modelId": "<p>The Gemini model ID.</p>",
+        "HarnessLiteLlmModelConfig$modelId": "<p>The LiteLLM model identifier (e.g., \"anthropic/claude-3-sonnet\").</p>",
         "HarnessOpenAiModelConfig$modelId": "<p>The OpenAI model ID.</p>"
       }
     },
@@ -4942,7 +5013,7 @@
       "base": "<p>An OAuth credential provider for gateway authentication. This structure contains the configuration for authenticating with the target endpoint using OAuth.</p>",
       "refs": {
         "CredentialProvider$oauthCredentialProvider": "<p>The OAuth credential provider. This provider uses OAuth authentication to access the target endpoint.</p>",
-        "HarnessGatewayOutboundAuth$oauth": null
+        "HarnessGatewayOutboundAuth$oauth": "<p>Use OAuth credentials for outbound authentication to the gateway.</p>"
       }
     },
     "OAuthCredentialProviderArn": {
@@ -6630,6 +6701,8 @@
         "HarnessAgentCoreMemoryRetrievalConfigs$key": null,
         "HarnessAgentCoreRuntimeEnvironment$agentRuntimeName": "<p>The name of the underlying AgentCore Runtime.</p>",
         "HarnessAgentCoreRuntimeEnvironment$agentRuntimeId": "<p>The ID of the underlying AgentCore Runtime.</p>",
+        "HarnessSkillGitAuth$username": "<p>Username for authentication. Defaults to 'oauth2' if not specified.</p>",
+        "HarnessSkillGitSource$path": "<p>Subdirectory within the repository containing the skill.</p>",
         "HarnessSummarizationConfiguration$summarizationSystemPrompt": "<p>The system prompt used for generating summaries.</p>",
         "InvocationConfiguration$payloadDeliveryBucketName": "<p>The S3 bucket name for event payload delivery.</p>",
         "ListApiKeyCredentialProvidersRequest$nextToken": "<p>Pagination token.</p>",
@@ -7049,6 +7122,7 @@
       "refs": {
         "HarnessBedrockModelConfig$temperature": "<p>The temperature to set when calling the model.</p>",
         "HarnessGeminiModelConfig$temperature": "<p>The temperature to set when calling the model.</p>",
+        "HarnessLiteLlmModelConfig$temperature": "<p>The temperature to set when calling the model.</p>",
         "HarnessOpenAiModelConfig$temperature": "<p>The temperature to set when calling the model.</p>"
       }
     },
@@ -7090,6 +7164,7 @@
         "AddDatasetExamplesResponse$updatedAt": "<p> The timestamp when the examples were added. </p>",
         "ApiKeyCredentialProviderItem$createdTime": "<p>The timestamp when the API key credential provider was created.</p>",
         "ApiKeyCredentialProviderItem$lastUpdatedTime": "<p>The timestamp when the API key credential provider was last updated.</p>",
+        "ConfigurationBundleSummary$createdAt": "<p>The timestamp when the configuration bundle was created.</p>",
         "ConfigurationBundleVersionSummary$versionCreatedAt": "<p>The timestamp when this version was created.</p>",
         "CreateConfigurationBundleResponse$createdAt": "<p>The timestamp when the configuration bundle was created.</p>",
         "CreateDatasetResponse$createdAt": "<p> The timestamp when the dataset was created. </p>",
@@ -7245,6 +7320,7 @@
       "refs": {
         "HarnessBedrockModelConfig$topP": "<p>The topP set when calling the model.</p>",
         "HarnessGeminiModelConfig$topP": "<p>The topP set when calling the model.</p>",
+        "HarnessLiteLlmModelConfig$topP": "<p>The topP set when calling the model.</p>",
         "HarnessOpenAiModelConfig$topP": "<p>The topP set when calling the model.</p>"
       }
     },

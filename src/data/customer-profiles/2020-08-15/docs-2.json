@@ -5,6 +5,7 @@
     "AddProfileKey": "<p>Associates a new key value with a specific profile, such as a Contact Record ContactId.</p> <p>A profile object can have a single unique key and any number of additional keys that can be used to identify the profile that it belongs to.</p>",
     "BatchGetCalculatedAttributeForProfile": "<p>Fetch the possible attribute values given the attribute name.</p>",
     "BatchGetProfile": "<p>Get a batch of profiles.</p>",
+    "BatchPutProfileObject": "<p>Adds multiple profile objects to a domain of a given ObjectType in a single API call.</p> <p>When adding a specific profile object, like a Contact Record, an inferred profile can get created if it is not mapped to an existing profile. The resulting profile will only have a phone number populated in the standard ProfileObject. Any additional Contact Records with the same phone number will be mapped to the same inferred profile.</p> <p>When a ProfileObject is created and if a ProfileObjectType already exists for the ProfileObject, it will provide data to a standard profile depending on the ProfileObjectType definition.</p> <p>BatchPutProfileObject needs an ObjectType, which can be created using PutProfileObjectType.</p>",
     "CreateCalculatedAttributeDefinition": "<p>Creates a new calculated attribute definition. After creation, new object data ingested into Customer Profiles will be included in the calculated attribute, which can be retrieved for a profile using the <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_GetCalculatedAttributeForProfile.html\">GetCalculatedAttributeForProfile</a> API. Defining a calculated attribute makes it available for all profiles within a domain. Each calculated attribute can only reference one <code>ObjectType</code> and at most, two fields from that <code>ObjectType</code>.</p>",
     "CreateDomain": "<p>Creates a domain, which is a container for all customer data, such as customer profile attributes, object types, profile keys, and encryption keys. You can create multiple domains, and each domain can have multiple third-party integrations.</p> <p>Each Connect Customer instance can be associated with only one domain. Multiple Connect Customer instances can be associated with one domain.</p> <p>Use this API or <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UpdateDomain.html\">UpdateDomain</a> to enable <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_GetMatches.html\">identity resolution</a>: set <code>Matching</code> to true.</p> <p>To prevent cross-service impersonation when you call this API, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/cross-service-confused-deputy-prevention.html\">Cross-service confused deputy prevention</a> for sample policies that you should apply. </p> <note> <p>It is not possible to associate a Customer Profiles domain with an Amazon Connect Instance directly from the API. If you would like to create a domain and associate a Customer Profiles domain, use the Amazon Connect admin website. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-customer-profiles.html#enable-customer-profiles-step1\">Enable Customer Profiles</a>.</p> <p>Each Amazon Connect instance can be associated with only one domain. Multiple Amazon Connect instances can be associated with one domain.</p> </note>",
     "CreateDomainLayout": "<p>Creates the layout to view data for a specific domain. This API can only be invoked from the Amazon Connect admin website.</p>",
@@ -119,6 +120,10 @@
         "AdditionalSearchKey$KeyName": "<p>A searchable identifier of a customer profile.</p>",
         "BatchGetCalculatedAttributeForProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
         "BatchGetProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "BatchPutProfileObjectErrorItem$Id": "<p>The unique identifier of the item in the batch request that failed.</p>",
+        "BatchPutProfileObjectRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "BatchPutProfileObjectRequestItem$Id": "<p>A unique identifier for this item in the batch request. Used to correlate items in the response.</p>",
+        "BatchPutProfileObjectResponseItem$Id": "<p>The unique identifier of the item in the batch request.</p>",
         "ContactPreference$KeyName": "<p>A searchable, unique identifier of a customer profile.</p>",
         "CreateCalculatedAttributeDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateDomainLayoutRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -312,6 +317,12 @@
         "UpdateRecommenderRequest$DomainName": "<p>The unique name of the domain.</p>",
         "UpdateRecommenderRequest$RecommenderName": "<p>The name of the recommender to update.</p>",
         "UpdateRecommenderResponse$RecommenderName": "<p>The name of the recommender that was updated.</p>"
+      }
+    },
+    "responseCode": {
+      "base": null,
+      "refs": {
+        "BatchPutProfileObjectErrorItem$Code": "<p>The HTTP status code for the error.</p>"
       }
     },
     "AccessDeniedException": {
@@ -548,6 +559,50 @@
     "BatchGetProfileResponse": {
       "base": null,
       "refs": {}
+    },
+    "BatchPutProfileObjectErrorItem": {
+      "base": "<p>An item that failed to be added to the domain.</p>",
+      "refs": {
+        "BatchPutProfileObjectErrorList$member": null
+      }
+    },
+    "BatchPutProfileObjectErrorList": {
+      "base": null,
+      "refs": {
+        "BatchPutProfileObjectResponse$Failed": "<p>A list of items that failed to be added to the domain.</p>"
+      }
+    },
+    "BatchPutProfileObjectRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchPutProfileObjectRequestItem": {
+      "base": "<p>An item to add to the domain as part of a batch request.</p>",
+      "refs": {
+        "BatchPutProfileObjectRequestItemList$member": null
+      }
+    },
+    "BatchPutProfileObjectRequestItemList": {
+      "base": null,
+      "refs": {
+        "BatchPutProfileObjectRequest$Items": "<p>A list of items to add to the domain.</p>"
+      }
+    },
+    "BatchPutProfileObjectResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchPutProfileObjectResponseItem": {
+      "base": "<p>An item that was successfully added to the domain.</p>",
+      "refs": {
+        "BatchPutProfileObjectResponseList$member": null
+      }
+    },
+    "BatchPutProfileObjectResponseList": {
+      "base": null,
+      "refs": {
+        "BatchPutProfileObjectResponse$Successful": "<p>A list of items that were successfully added to the domain.</p>"
+      }
     },
     "Batches": {
       "base": null,
@@ -3711,16 +3766,16 @@
         "Period$MaxInvocationsPerProfile": "<p>The maximum allowed number of destination invocations per profile.</p>"
       }
     },
-    "maxSize24": {
-      "base": null,
-      "refs": {
-        "Period$Value": "<p>The amount of time of the specified unit.</p>"
-      }
-    },
     "maxSize500": {
       "base": null,
       "refs": {
         "GetProfileRecommendationsRequest$MaxResults": "<p>The maximum number of recommendations to return. The default value is 10.</p>"
+      }
+    },
+    "maxSize60": {
+      "base": null,
+      "refs": {
+        "Period$Value": "<p>The amount of time of the specified unit.</p>"
       }
     },
     "message": {
@@ -4042,6 +4097,7 @@
         "Attributes$value": null,
         "BatchGetCalculatedAttributeForProfileError$Code": "<p>Status code for why a specific profile and calculated attribute failed.</p>",
         "BatchGetProfileError$Code": "<p>Status code for why a specific profile failed.</p>",
+        "BatchPutProfileObjectResponseItem$ProfileObjectUniqueKey": "<p>The unique identifier of the profile object generated by the service.</p>",
         "CalculatedAttributeValue$IsDataPartial": "<p>Indicates whether the calculated attribute's value is based on partial data. If the data is partial, it is set to true.</p>",
         "CalculatedAttributeValue$Value": "<p>The value of the calculated attribute.</p>",
         "CandidateIdList$member": null,
@@ -4138,6 +4194,7 @@
     "stringifiedJson": {
       "base": null,
       "refs": {
+        "BatchPutProfileObjectRequestItem$Object": "<p>A string that is serialized from a JSON object.</p>",
         "GetProfileHistoryRecordResponse$Content": "<p>A string containing the customer profile, profile object, or profile key content.</p>",
         "ListProfileObjectsItem$Object": "<p>A JSON representation of a ProfileObject that belongs to a profile.</p>",
         "Objects$member": null,
@@ -4147,6 +4204,7 @@
     "text": {
       "base": null,
       "refs": {
+        "BatchPutProfileObjectErrorItem$Message": "<p>A message describing the error.</p>",
         "ColumnNamesList$member": null,
         "CreateUploadJobRequest$UniqueKey": "<p>The unique key columns for de-duping the profiles used to map data to the profile. </p>",
         "DomainObjectTypeField$Source": "<p>The expression that defines how to extract the field value from the source object.&gt;</p>",
@@ -4337,6 +4395,7 @@
       "base": null,
       "refs": {
         "BatchGetCalculatedAttributeForProfileRequest$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
+        "BatchPutProfileObjectRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "CalculatedAttributeValue$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
         "CalculatedCustomAttributes$key": null,
         "CreateCalculatedAttributeDefinitionRequest$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",

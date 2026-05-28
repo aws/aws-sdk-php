@@ -650,6 +650,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionRepostspace(array $args = [])
  * @method \Aws\ResilienceHub\ResilienceHubClient createResilienceHub(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionResilienceHub(array $args = [])
+ * @method \Aws\Resiliencehubv2\Resiliencehubv2Client createResiliencehubv2(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionResiliencehubv2(array $args = [])
  * @method \Aws\ResourceExplorer2\ResourceExplorer2Client createResourceExplorer2(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionResourceExplorer2(array $args = [])
  * @method \Aws\ResourceGroups\ResourceGroupsClient createResourceGroups(array $args = [])

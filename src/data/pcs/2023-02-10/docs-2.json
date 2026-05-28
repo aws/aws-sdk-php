@@ -227,6 +227,18 @@
         "CreateComputeNodeGroupRequest$slurmConfiguration": "<p>Additional options related to the Slurm scheduler.</p>"
       }
     },
+    "ComputeNodeGroupSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger": {
+      "base": null,
+      "refs": {
+        "ComputeNodeGroupSlurmConfigurationRequest$scaleDownIdleTimeInSeconds": "<p>The time (in seconds) before an idle node is scaled down. If not specified, the cluster-level setting applies. This overrides the cluster-level <code>scaleDownIdleTimeInSeconds</code> setting. A value of <code>-1</code> removes the override and applies the cluster-level setting to this compute node group. Requires Slurm version 25.11 or later.</p>"
+      }
+    },
+    "ComputeNodeGroupSlurmConfigurationScaleDownIdleTimeInSecondsInteger": {
+      "base": null,
+      "refs": {
+        "ComputeNodeGroupSlurmConfiguration$scaleDownIdleTimeInSeconds": "<p>The time (in seconds) before an idle node is scaled down. If not specified, the cluster-level setting applies. This overrides the cluster-level <code>scaleDownIdleTimeInSeconds</code> setting. A value of <code>-1</code> removes the override and applies the cluster-level setting to this compute node group. Requires Slurm version 25.11 or later.</p>"
+      }
+    },
     "ComputeNodeGroupStatus": {
       "base": null,
       "refs": {
@@ -916,6 +928,12 @@
       "base": "<p>Additional options related to the Slurm scheduler.</p>",
       "refs": {
         "UpdateComputeNodeGroupRequest$slurmConfiguration": "<p>Additional options related to the Slurm scheduler.</p>"
+      }
+    },
+    "UpdateComputeNodeGroupSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger": {
+      "base": null,
+      "refs": {
+        "UpdateComputeNodeGroupSlurmConfigurationRequest$scaleDownIdleTimeInSeconds": "<p>The time (in seconds) before an idle node is scaled down. If not specified, the cluster-level setting applies. This overrides the cluster-level <code>scaleDownIdleTimeInSeconds</code> setting. A value of <code>-1</code> removes the override and applies the cluster-level setting to this compute node group. Requires Slurm version 25.11 or later.</p>"
       }
     },
     "UpdateQueueRequest": {

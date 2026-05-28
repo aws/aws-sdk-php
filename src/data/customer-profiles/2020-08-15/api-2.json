@@ -63,6 +63,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "BatchPutProfileObject":{
+      "name":"BatchPutProfileObject",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/domains/{DomainName}/profiles/objects/batch-put-profile-object"
+      },
+      "input":{"shape":"BatchPutProfileObjectRequest"},
+      "output":{"shape":"BatchPutProfileObjectResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateCalculatedAttributeDefinition":{
       "name":"CreateCalculatedAttributeDefinition",
       "http":{
@@ -1754,6 +1770,11 @@
       "min":1,
       "pattern":"^[a-zA-Z0-9_-]+$"
     },
+    "responseCode":{
+      "type":"integer",
+      "max":599,
+      "min":200
+    },
     "AccessDeniedException":{
       "type":"structure",
       "members":{
@@ -2155,6 +2176,78 @@
         "Errors":{"shape":"BatchGetProfileErrorList"},
         "Profiles":{"shape":"ProfileList"}
       }
+    },
+    "BatchPutProfileObjectErrorItem":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Code"
+      ],
+      "members":{
+        "Id":{"shape":"name"},
+        "Code":{"shape":"responseCode"},
+        "Message":{"shape":"text"}
+      }
+    },
+    "BatchPutProfileObjectErrorList":{
+      "type":"list",
+      "member":{"shape":"BatchPutProfileObjectErrorItem"}
+    },
+    "BatchPutProfileObjectRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "ObjectTypeName",
+        "Items"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "ObjectTypeName":{"shape":"typeName"},
+        "Items":{"shape":"BatchPutProfileObjectRequestItemList"}
+      }
+    },
+    "BatchPutProfileObjectRequestItem":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Object"
+      ],
+      "members":{
+        "Id":{"shape":"name"},
+        "Object":{"shape":"stringifiedJson"}
+      }
+    },
+    "BatchPutProfileObjectRequestItemList":{
+      "type":"list",
+      "member":{"shape":"BatchPutProfileObjectRequestItem"},
+      "max":10,
+      "min":1
+    },
+    "BatchPutProfileObjectResponse":{
+      "type":"structure",
+      "members":{
+        "Successful":{"shape":"BatchPutProfileObjectResponseList"},
+        "Failed":{"shape":"BatchPutProfileObjectErrorList"}
+      }
+    },
+    "BatchPutProfileObjectResponseItem":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "ProfileObjectUniqueKey"
+      ],
+      "members":{
+        "Id":{"shape":"name"},
+        "ProfileObjectUniqueKey":{"shape":"string1To255"}
+      }
+    },
+    "BatchPutProfileObjectResponseList":{
+      "type":"list",
+      "member":{"shape":"BatchPutProfileObjectResponseItem"}
     },
     "Batches":{
       "type":"list",
@@ -6350,7 +6443,7 @@
       ],
       "members":{
         "Unit":{"shape":"PeriodUnit"},
-        "Value":{"shape":"maxSize24"},
+        "Value":{"shape":"maxSize60"},
         "MaxInvocationsPerProfile":{"shape":"maxSize1000"},
         "Unlimited":{"shape":"boolean"}
       }
@@ -6358,6 +6451,7 @@
     "PeriodUnit":{
       "type":"string",
       "enum":[
+        "MINUTES",
         "HOURS",
         "DAYS",
         "WEEKS",
@@ -8389,14 +8483,14 @@
       "max":1000,
       "min":1
     },
-    "maxSize24":{
-      "type":"integer",
-      "max":24,
-      "min":1
-    },
     "maxSize500":{
       "type":"integer",
       "max":500,
+      "min":1
+    },
+    "maxSize60":{
+      "type":"integer",
+      "max":60,
       "min":1
     },
     "message":{"type":"string"},
