@@ -310,7 +310,7 @@ class MultipartCopyTest extends TestCase
         $this->assertArrayNotHasKey('ContentDisposition', $initiateParams);
     }
 
-    public function testUserParamsOverrideSourceMetadata()
+    public function testSourceMetadataOverridesUserParamsWhenCopy()
     {
         $client = $this->getTestClient('s3');
         $url = 'http://foo.s3.amazonaws.com/bar';
@@ -344,10 +344,9 @@ class MultipartCopyTest extends TestCase
         ]);
         $uploader->upload();
 
-        // User-provided params should take precedence
-        $this->assertSame('text/plain', $initiateParams['ContentType']);
-        $this->assertSame(['user-key' => 'user-value'], $initiateParams['Metadata']);
-        // Source metadata that was NOT overridden should still be copied
+        // Source metadata takes precedence over user-provided params when directive is COPY
+        $this->assertSame('application/pdf', $initiateParams['ContentType']);
+        $this->assertSame(['source-key' => 'source-value'], $initiateParams['Metadata']);
         $this->assertSame('max-age=3600', $initiateParams['CacheControl']);
     }
 

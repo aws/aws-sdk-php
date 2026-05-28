@@ -13,6 +13,11 @@ class MultipartCopy extends AbstractUploadManager
         getInitiateParams as private traitGetInitiateParams;
     }
 
+    private const VALID_METADATA_DIRECTIVES = [
+        'COPY' => true,
+        'REPLACE' => true,
+    ];
+
     /**
      * Metadata fields that can be copied from the source object
      * to the destination during a multipart copy.
@@ -70,10 +75,10 @@ class MultipartCopy extends AbstractUploadManager
      *   source object metadata to the destination. Set to 'COPY' to
      *   automatically forward metadata fields (Metadata, CacheControl,
      *   ContentDisposition, ContentEncoding, ContentLanguage, ContentType,
-     *   Expires) from the source object. Set to 'REPLACE' to suppress automatic
-     *   metadata copying (you must then provide your own metadata via the
-     *   'params' option). User-provided values in 'params' always take
-     *   precedence over source metadata.
+     *   Expires) from the source object. When set to 'COPY', source metadata
+     *   takes precedence and any matching fields provided in 'params' are
+     *   ignored. Set to 'REPLACE' to suppress automatic metadata copying and
+     *   use your own values via the 'params' option.
      * - source_metadata: (Aws\ResultInterface) The result of a HeadObject call
      *   on the copy source. If not provided, the SDK makes a HeadObject request
      *   to obtain the source object's size and metadata. Providing this avoids
@@ -211,7 +216,7 @@ class MultipartCopy extends AbstractUploadManager
 
         $directive = strtoupper($this->config['metadata_directive'] ?? 'COPY');
 
-        if (!in_array($directive, ['COPY', 'REPLACE'], true)) {
+        if (!isset(self::VALID_METADATA_DIRECTIVES[$directive])) {
             throw new \InvalidArgumentException(
                 "Invalid metadata_directive value '$directive'."
                 . " Must be 'COPY' or 'REPLACE'."
@@ -221,7 +226,7 @@ class MultipartCopy extends AbstractUploadManager
         if ($directive === 'COPY') {
             $sourceMetadata = $this->getSourceMetadata();
             foreach (self::$copyMetadataFields as $field) {
-                if (!isset($params[$field]) && !empty($sourceMetadata[$field])) {
+                if (!empty($sourceMetadata[$field])) {
                     $params[$field] = $sourceMetadata[$field];
                 }
             }
