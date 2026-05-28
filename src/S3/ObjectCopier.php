@@ -17,8 +17,12 @@ use InvalidArgumentException;
  *
  * Makes a HeadObject call on the source to determine object size. Objects
  * below the multipart threshold (default 5 GB) are copied with a single
- * CopyObject call using MetadataDirective: COPY. Objects above the threshold
- * use MultipartCopy, which also preserves source metadata by default.
+ * CopyObject call using MetadataDirective: COPY.
+ * 
+ * Objects above the threshold use MultipartCopy, which preserves source metadata by default.
+ * When the multipart path is used with the default metadata_directive ('COPY'),
+ * metadata fields in 'params' (e.g. Metadata, ContentType, CacheControl)
+ * are overridden by the source object's values.
  */
 class ObjectCopier implements PromisorInterface
 {
