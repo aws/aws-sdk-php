@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.383.1 - 2026-05-29
 
 * `Aws\` - Fixed per-request cyclic references in retry and validation middleware that caused unbounded memory growth in long-lived processes making repeated API calls.
 * `Aws\GroundStation` - Adds support for Alpha-5 satellite number encoding in the Two-Line Element ephemeris format.
