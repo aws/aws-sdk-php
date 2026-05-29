@@ -192,6 +192,7 @@ class RetryMiddleware
 
             if ($isSuccess) {
                 $this->quotaManager->releaseQuota($capacityUsed);
+                $callback = null;
                 return $this->bindStatsToReturn($value, $requestStats);
             }
 
@@ -208,10 +209,12 @@ class RetryMiddleware
 
             if (!$isRetryable) {
                 if ($isError) {
+                    $callback = null;
                     return Promise\Create::rejectionFor(
                         $this->bindStatsToReturn($value, $requestStats)
                     );
                 }
+                $callback = null;
                 return $this->bindStatsToReturn($value, $requestStats);
             }
 
@@ -225,10 +228,12 @@ class RetryMiddleware
                     $value->setMaxRetriesExceeded();
                 }
                 if ($isError) {
+                    $callback = null;
                     return Promise\Create::rejectionFor(
                         $this->bindStatsToReturn($value, $requestStats)
                     );
                 }
+                $callback = null;
                 return $this->bindStatsToReturn($value, $requestStats);
             }
 
@@ -249,10 +254,12 @@ class RetryMiddleware
                 }
 
                 if ($isError) {
+                    $callback = null;
                     return Promise\Create::rejectionFor(
                         $this->bindStatsToReturn($value, $requestStats)
                     );
                 }
+                $callback = null;
                 return $this->bindStatsToReturn($value, $requestStats);
             }
             $capacityUsed = $acquired;
