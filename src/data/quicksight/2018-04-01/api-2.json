@@ -373,6 +373,25 @@
         {"shape":"ResourceUnavailableException"}
       ]
     },
+    "CreateOAuthClientApplication":{
+      "name":"CreateOAuthClientApplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/oauth-client-applications"
+      },
+      "input":{"shape":"CreateOAuthClientApplicationRequest"},
+      "output":{"shape":"CreateOAuthClientApplicationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceExistsException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "CreateRefreshSchedule":{
       "name":"CreateRefreshSchedule",
       "http":{
@@ -895,6 +914,23 @@
         {"shape":"PreconditionNotMetException"},
         {"shape":"InternalFailureException"},
         {"shape":"ResourceUnavailableException"}
+      ]
+    },
+    "DeleteOAuthClientApplication":{
+      "name":"DeleteOAuthClientApplication",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/oauth-client-applications/{OAuthClientApplicationId}"
+      },
+      "input":{"shape":"DeleteOAuthClientApplicationRequest"},
+      "output":{"shape":"DeleteOAuthClientApplicationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "DeleteRefreshSchedule":{
@@ -1776,6 +1812,22 @@
         {"shape":"ResourceUnavailableException"}
       ]
     },
+    "DescribeOAuthClientApplication":{
+      "name":"DescribeOAuthClientApplication",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/oauth-client-applications/{OAuthClientApplicationId}"
+      },
+      "input":{"shape":"DescribeOAuthClientApplicationRequest"},
+      "output":{"shape":"DescribeOAuthClientApplicationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "DescribeQPersonalizationConfiguration":{
       "name":"DescribeQPersonalizationConfiguration",
       "http":{
@@ -2601,6 +2653,23 @@
         {"shape":"PreconditionNotMetException"},
         {"shape":"InternalFailureException"},
         {"shape":"ResourceUnavailableException"}
+      ]
+    },
+    "ListOAuthClientApplications":{
+      "name":"ListOAuthClientApplications",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/oauth-client-applications"
+      },
+      "input":{"shape":"ListOAuthClientApplicationsRequest"},
+      "output":{"shape":"ListOAuthClientApplicationsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "ListRefreshSchedules":{
@@ -3771,6 +3840,24 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "UpdateOAuthClientApplication":{
+      "name":"UpdateOAuthClientApplication",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/oauth-client-applications/{OAuthClientApplicationId}"
+      },
+      "input":{"shape":"UpdateOAuthClientApplicationRequest"},
+      "output":{"shape":"UpdateOAuthClientApplicationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"}
       ]
@@ -8592,6 +8679,49 @@
         }
       }
     },
+    "CreateOAuthClientApplicationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "OAuthClientApplicationId",
+        "Name",
+        "OAuthClientAuthenticationType",
+        "ClientId",
+        "ClientSecret",
+        "OAuthTokenEndpointUrl"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "OAuthClientApplicationId":{"shape":"OAuthClientApplicationId"},
+        "Name":{"shape":"ResourceName"},
+        "OAuthClientAuthenticationType":{"shape":"OAuthClientAuthenticationType"},
+        "ClientId":{"shape":"OAuthClientId"},
+        "ClientSecret":{"shape":"OAuthClientSecret"},
+        "OAuthTokenEndpointUrl":{"shape":"OAuthTokenEndpointUrl"},
+        "OAuthAuthorizationEndpointUrl":{"shape":"OAuthAuthorizationEndpointUrl"},
+        "OAuthScopes":{"shape":"OAuthScopesString"},
+        "DataSourceType":{"shape":"DataSourceType"},
+        "IdentityProviderVpcConnectionProperties":{"shape":"VpcConnectionProperties"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateOAuthClientApplicationResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "OAuthClientApplicationId":{"shape":"OAuthClientApplicationId"},
+        "CreationStatus":{"shape":"ResourceStatus"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "CreateRefreshScheduleRequest":{
       "type":"structure",
       "required":[
@@ -11479,6 +11609,37 @@
         }
       }
     },
+    "DeleteOAuthClientApplicationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "OAuthClientApplicationId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "OAuthClientApplicationId":{
+          "shape":"OAuthClientApplicationId",
+          "location":"uri",
+          "locationName":"OAuthClientApplicationId"
+        }
+      }
+    },
+    "DeleteOAuthClientApplicationResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "OAuthClientApplicationId":{"shape":"OAuthClientApplicationId"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "DeleteRefreshScheduleRequest":{
       "type":"structure",
       "required":[
@@ -13214,6 +13375,36 @@
       "type":"structure",
       "members":{
         "Namespace":{"shape":"NamespaceInfoV2"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "DescribeOAuthClientApplicationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "OAuthClientApplicationId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "OAuthClientApplicationId":{
+          "shape":"OAuthClientApplicationId",
+          "location":"uri",
+          "locationName":"OAuthClientApplicationId"
+        }
+      }
+    },
+    "DescribeOAuthClientApplicationResponse":{
+      "type":"structure",
+      "members":{
+        "OAuthClientApplication":{"shape":"OAuthClientApplication"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -18444,6 +18635,40 @@
         }
       }
     },
+    "ListOAuthClientApplicationsRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListOAuthClientApplicationsResponse":{
+      "type":"structure",
+      "members":{
+        "OAuthClientApplications":{"shape":"OAuthClientApplicationSummaryList"},
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "ListRefreshSchedulesRequest":{
       "type":"structure",
       "required":[
@@ -19803,6 +20028,56 @@
         "FormatConfiguration":{"shape":"NumberFormatConfiguration"}
       }
     },
+    "OAuthAuthorizationEndpointUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^https://[^\\p{Cc}]+",
+      "sensitive":true
+    },
+    "OAuthClientApplication":{
+      "type":"structure",
+      "members":{
+        "OAuthClientApplicationId":{"shape":"OAuthClientApplicationId"},
+        "Name":{"shape":"ResourceName"},
+        "OAuthClientAuthenticationType":{"shape":"OAuthClientAuthenticationType"},
+        "OAuthTokenEndpointUrl":{"shape":"OAuthTokenEndpointUrl"},
+        "OAuthAuthorizationEndpointUrl":{"shape":"OAuthAuthorizationEndpointUrl"},
+        "OAuthScopes":{"shape":"OAuthScopesString"},
+        "DataSourceType":{"shape":"DataSourceType"},
+        "IdentityProviderVpcConnectionProperties":{"shape":"VpcConnectionProperties"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "Arn":{"shape":"Arn"}
+      }
+    },
+    "OAuthClientApplicationId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^/][^\\p{Cc}]*"
+    },
+    "OAuthClientApplicationSummary":{
+      "type":"structure",
+      "members":{
+        "OAuthClientApplicationId":{"shape":"OAuthClientApplicationId"},
+        "Name":{"shape":"ResourceName"},
+        "OAuthClientAuthenticationType":{"shape":"OAuthClientAuthenticationType"},
+        "DataSourceType":{"shape":"DataSourceType"},
+        "IdentityProviderVpcConnectionProperties":{"shape":"VpcConnectionProperties"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "Arn":{"shape":"Arn"}
+      }
+    },
+    "OAuthClientApplicationSummaryList":{
+      "type":"list",
+      "member":{"shape":"OAuthClientApplicationSummary"}
+    },
+    "OAuthClientAuthenticationType":{
+      "type":"string",
+      "enum":["TOKEN"]
+    },
     "OAuthClientCredentials":{
       "type":"structure",
       "members":{
@@ -19815,12 +20090,14 @@
       "type":"string",
       "max":256,
       "min":1,
+      "pattern":"[^\\p{Cc}]+",
       "sensitive":true
     },
     "OAuthClientSecret":{
       "type":"string",
       "max":2048,
       "min":1,
+      "pattern":"[^\\p{Cc}]+",
       "sensitive":true
     },
     "OAuthParameters":{
@@ -19838,6 +20115,19 @@
       "type":"string",
       "max":128,
       "min":1
+    },
+    "OAuthScopesString":{
+      "type":"string",
+      "max":4096,
+      "min":1,
+      "pattern":"[^\\p{Cc}]+"
+    },
+    "OAuthTokenEndpointUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^https://[^\\p{Cc}]+",
+      "sensitive":true
     },
     "OAuthUsername":{
       "type":"string",
@@ -27246,6 +27536,47 @@
       "type":"list",
       "member":{"shape":"ResourcePermission"},
       "max":100
+    },
+    "UpdateOAuthClientApplicationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "OAuthClientApplicationId",
+        "Name"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "OAuthClientApplicationId":{
+          "shape":"OAuthClientApplicationId",
+          "location":"uri",
+          "locationName":"OAuthClientApplicationId"
+        },
+        "Name":{"shape":"ResourceName"},
+        "ClientId":{"shape":"OAuthClientId"},
+        "ClientSecret":{"shape":"OAuthClientSecret"},
+        "OAuthTokenEndpointUrl":{"shape":"OAuthTokenEndpointUrl"},
+        "OAuthAuthorizationEndpointUrl":{"shape":"OAuthAuthorizationEndpointUrl"},
+        "OAuthScopes":{"shape":"OAuthScopesString"},
+        "DataSourceType":{"shape":"DataSourceType"},
+        "IdentityProviderVpcConnectionProperties":{"shape":"VpcConnectionProperties"}
+      }
+    },
+    "UpdateOAuthClientApplicationResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "OAuthClientApplicationId":{"shape":"OAuthClientApplicationId"},
+        "UpdateStatus":{"shape":"ResourceStatus"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
     },
     "UpdatePublicSharingSettingsRequest":{
       "type":"structure",

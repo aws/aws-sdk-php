@@ -21,6 +21,7 @@
     "CreateIAMPolicyAssignment": "<p>Creates an assignment with one specified IAM policy, identified by its Amazon Resource Name (ARN). This policy assignment is attached to the specified groups or users of Amazon Quick Sight. Assignment names are unique per Amazon Web Services account. To avoid overwriting rules in other namespaces, use assignment names that are unique.</p>",
     "CreateIngestion": "<p>Creates and starts a new SPICE ingestion for a dataset. You can manually refresh datasets in an Enterprise edition account 32 times in a 24-hour period. You can manually refresh datasets in a Standard edition account 8 times in a 24-hour period. Each 24-hour period is measured starting 24 hours before the current date and time.</p> <p>Any ingestions operating on tagged datasets inherit the same tags automatically for use in access control. For an example, see <a href=\"http://aws.amazon.com/premiumsupport/knowledge-center/iam-ec2-resource-tags/\">How do I create an IAM policy to control access to Amazon EC2 resources using tags?</a> in the Amazon Web Services Knowledge Center. Tags are visible on the tagged dataset, but not on the ingestion resource.</p>",
     "CreateNamespace": "<p>(Enterprise edition only) Creates a new namespace for you to use with Amazon Quick Sight.</p> <p>A namespace allows you to isolate the Quick Sight users and groups that are registered for that namespace. Users that access the namespace can share assets only with other users or groups in the same namespace. They can't see users and groups in other namespaces. You can create a namespace after your Amazon Web Services account is subscribed to Quick Sight. The namespace must be unique within the Amazon Web Services account. By default, there is a limit of 100 namespaces per Amazon Web Services account. To increase your limit, create a ticket with Amazon Web Services Support. </p>",
+    "CreateOAuthClientApplication": "<p>Creates an OAuthClientApplication.</p>",
     "CreateRefreshSchedule": "<p>Creates a refresh schedule for a dataset. You can create up to 5 different schedules for a single dataset.</p>",
     "CreateRoleMembership": "<p>Use <code>CreateRoleMembership</code> to add an existing Quick Sight group to an existing role.</p>",
     "CreateTemplate": "<p>Creates a template either from a <code>TemplateDefinition</code> or from an existing Quick Sight analysis or template. You can use the resulting template to create additional dashboards, templates, or analyses.</p> <p>A <i>template</i> is an entity in Quick Sight that encapsulates the metadata required to create an analysis and that you can use to create s dashboard. A template adds a layer of abstraction by using placeholders to replace the dataset associated with the analysis. You can use templates to create dashboards by replacing dataset placeholders with datasets that follow the same schema that was used to create the source analysis and template.</p>",
@@ -50,6 +51,7 @@
     "DeleteIAMPolicyAssignment": "<p>Deletes an existing IAM policy assignment.</p>",
     "DeleteIdentityPropagationConfig": "<p>Deletes all access scopes and authorized targets that are associated with a service from the Quick Sight IAM Identity Center application.</p> <p>This operation is only supported for Quick Sight accounts that use IAM Identity Center.</p>",
     "DeleteNamespace": "<p>Deletes a namespace and the users and groups that are associated with the namespace. This is an asynchronous process. Assets including dashboards, analyses, datasets and data sources are not deleted. To delete these assets, you use the API operations for the relevant asset. </p>",
+    "DeleteOAuthClientApplication": "<p>Deletes an OAuthClientApplication.</p>",
     "DeleteRefreshSchedule": "<p>Deletes a refresh schedule from a dataset.</p>",
     "DeleteRoleCustomPermission": "<p>Removes custom permissions from the role.</p>",
     "DeleteRoleMembership": "<p>Removes a group from a role.</p>",
@@ -101,6 +103,7 @@
     "DescribeIpRestriction": "<p>Provides a summary and status of IP rules.</p>",
     "DescribeKeyRegistration": "<p>Describes all customer managed key registrations in a Quick Sight account.</p>",
     "DescribeNamespace": "<p>Describes the current namespace.</p>",
+    "DescribeOAuthClientApplication": "<p>Describes an OAuthClientApplication.</p>",
     "DescribeQPersonalizationConfiguration": "<p>Describes a personalization configuration.</p>",
     "DescribeQuickSightQSearchConfiguration": "<p>Describes the state of a Quick Sight Q Search configuration.</p>",
     "DescribeRefreshSchedule": "<p>Provides a summary of a refresh schedule.</p>",
@@ -148,6 +151,7 @@
     "ListIdentityPropagationConfigs": "<p>Lists all services and authorized targets that the Quick Sight IAM Identity Center application can access.</p> <p>This operation is only supported for Quick Sight accounts that use IAM Identity Center.</p>",
     "ListIngestions": "<p>Lists the history of SPICE ingestions for a dataset. Limited to 5 TPS per user and 25 TPS per account.</p>",
     "ListNamespaces": "<p>Lists the namespaces for the specified Amazon Web Services account. This operation doesn't list deleted namespaces.</p>",
+    "ListOAuthClientApplications": "<p>Lists all OAuthClientApplications in the current Amazon Web Services Region that belong to this Amazon Web Services account.</p>",
     "ListRefreshSchedules": "<p>Lists the refresh schedules of a dataset. Each dataset can have up to 5 schedules. </p>",
     "ListRoleMemberships": "<p>Lists all groups that are associated with a role.</p>",
     "ListSelfUpgrades": "<p>Lists all self-upgrade requests for a Quick account.</p>",
@@ -214,6 +218,7 @@
     "UpdateIdentityPropagationConfig": "<p>Adds or updates services and authorized targets to configure what the Quick Sight IAM Identity Center application can access.</p> <p>This operation is only supported for Quick Sight accounts using IAM Identity Center</p>",
     "UpdateIpRestriction": "<p>Updates the content and status of IP rules. Traffic from a source is allowed when the source satisfies either the <code>IpRestrictionRule</code>, <code>VpcIdRestrictionRule</code>, or <code>VpcEndpointIdRestrictionRule</code>. To use this operation, you must provide the entire map of rules. You can use the <code>DescribeIpRestriction</code> operation to get the current rule map.</p>",
     "UpdateKeyRegistration": "<p>Updates a customer managed key in a Quick Sight account.</p>",
+    "UpdateOAuthClientApplication": "<p>Updates an OAuthClientApplication.</p>",
     "UpdatePublicSharingSettings": "<important> <p>This API controls public sharing settings for your entire Quick Sight account, affecting data security and access. When you enable public sharing:</p> <ul> <li> <p>Dashboards can be shared publicly</p> </li> <li> <p>This setting affects your entire Amazon Web Services account and all Quick Sight users</p> </li> </ul> <p> <b>Before proceeding:</b> Ensure you understand the security implications and have proper IAM permissions configured.</p> </important> <p>Use the <code>UpdatePublicSharingSettings</code> operation to turn on or turn off the public sharing settings of an Amazon Quick Sight dashboard.</p> <p>To use this operation, turn on session capacity pricing for your Amazon Quick Sight account.</p> <p>Before you can turn on public sharing on your account, make sure to give public sharing permissions to an administrative user in the Identity and Access Management (IAM) console. For more information on using IAM with Amazon Quick Sight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/security_iam_service-with-iam.html\">Using Quick with IAM</a> in the <i>Amazon Quick Sight User Guide</i>.</p>",
     "UpdateQPersonalizationConfiguration": "<p>Updates a personalization configuration.</p>",
     "UpdateQuickSightQSearchConfiguration": "<p>Updates the state of a Quick Sight Q Search configuration.</p>",
@@ -923,6 +928,7 @@
         "CreateIAMPolicyAssignmentResponse$PolicyArn": "<p>The ARN for the IAM policy that is applied to the Amazon Quick Sight users and groups specified in this assignment.</p>",
         "CreateIngestionResponse$Arn": "<p>The Amazon Resource Name (ARN) for the data ingestion.</p>",
         "CreateNamespaceResponse$Arn": "<p>The ARN of the Quick Sight namespace you created. </p>",
+        "CreateOAuthClientApplicationResponse$Arn": "<p>The Amazon Resource Name (ARN) of the OAuthClientApplication.</p>",
         "CreateRefreshScheduleResponse$Arn": "<p>The Amazon Resource Name (ARN) for the refresh schedule.</p>",
         "CreateTemplateResponse$Arn": "<p>The ARN for the template.</p>",
         "CreateTemplateResponse$VersionArn": "<p>The ARN for the template, including the version information of the first version.</p>",
@@ -960,6 +966,7 @@
         "DeleteDataSetResponse$Arn": "<p>The Amazon Resource Name (ARN) of the dataset.</p>",
         "DeleteDataSourceResponse$Arn": "<p>The Amazon Resource Name (ARN) of the data source that you deleted.</p>",
         "DeleteFolderResponse$Arn": "<p>The Amazon Resource Name of the deleted folder.</p>",
+        "DeleteOAuthClientApplicationResponse$Arn": "<p>The Amazon Resource Name (ARN) of the OAuthClientApplication that you deleted.</p>",
         "DeleteRefreshScheduleResponse$Arn": "<p>The Amazon Resource Name (ARN) for the refresh schedule.</p>",
         "DeleteTemplateAliasResponse$Arn": "<p>The Amazon Resource Name (ARN) of the template you want to delete.</p>",
         "DeleteTemplateResponse$Arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
@@ -1012,6 +1019,8 @@
         "LogicalTableSource$DataSetArn": "<p>The Amazon Resource Number (ARN) of the parent dataset.</p>",
         "MemberIdArnPair$MemberArn": "<p>The Amazon Resource Name (ARN) of the member.</p>",
         "NamespaceInfoV2$Arn": "<p>The namespace ARN.</p>",
+        "OAuthClientApplication$Arn": "<p>The Amazon Resource Name (ARN) of the OAuthClientApplication.</p>",
+        "OAuthClientApplicationSummary$Arn": "<p>The Amazon Resource Name (ARN) of the OAuthClientApplication.</p>",
         "ParentDataSet$DataSetArn": "<p>The Amazon Resource Name (ARN) of the parent dataset.</p>",
         "Path$member": null,
         "PluginVisual$PluginArn": "<p>The Amazon Resource Name (ARN) that reflects the plugin and version.</p>",
@@ -1069,6 +1078,7 @@
         "UpdateFolderResponse$Arn": "<p>The Amazon Resource Name (ARN) of the folder.</p>",
         "UpdateIAMPolicyAssignmentRequest$PolicyArn": "<p>The ARN for the IAM policy to apply to the Amazon Quick Sight users and groups specified in this assignment.</p>",
         "UpdateIAMPolicyAssignmentResponse$PolicyArn": "<p>The ARN for the IAM policy applied to the Amazon Quick Sight users and groups specified in this assignment.</p>",
+        "UpdateOAuthClientApplicationResponse$Arn": "<p>The Amazon Resource Name (ARN) of the OAuthClientApplication.</p>",
         "UpdateRefreshScheduleResponse$Arn": "<p>The Amazon Resource Name (ARN) for the refresh schedule.</p>",
         "UpdateTemplatePermissionsResponse$TemplateArn": "<p>The Amazon Resource Name (ARN) of the template.</p>",
         "UpdateTemplateResponse$Arn": "<p>The Amazon Resource Name (ARN) for the template.</p>",
@@ -1950,6 +1960,7 @@
         "CreateIAMPolicyAssignmentRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account where you want to assign an IAM policy to Amazon Quick Sight users or groups.</p>",
         "CreateIngestionRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "CreateNamespaceRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create the Quick Sight namespace in.</p>",
+        "CreateOAuthClientApplicationRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "CreateRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "CreateRoleMembershipRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "CreateTemplateAliasRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template that you creating an alias for.</p>",
@@ -1979,6 +1990,7 @@
         "DeleteIAMPolicyAssignmentRequest$AwsAccountId": "<p>The Amazon Web Services account ID where you want to delete the IAM policy assignment.</p>",
         "DeleteIdentityPropagationConfigRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that you want to delete an identity propagation configuration from.</p>",
         "DeleteNamespaceRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to delete the Quick Sight namespace from.</p>",
+        "DeleteOAuthClientApplicationRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DeleteRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DeleteRoleCustomPermissionRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "DeleteRoleMembershipRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
@@ -2036,6 +2048,7 @@
         "DescribeKeyRegistrationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the customer managed key registration that you want to describe.</p>",
         "DescribeKeyRegistrationResponse$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the customer managed key registration specified in the request.</p>",
         "DescribeNamespaceRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the Quick Sight namespace that you want to describe.</p>",
+        "DescribeOAuthClientApplicationRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DescribeQPersonalizationConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the personalization configuration that the user wants described.</p>",
         "DescribeQuickSightQSearchConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the Quick Sight Q Search configuration that the user wants described.</p>",
         "DescribeRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
@@ -2080,6 +2093,7 @@
         "ListIdentityPropagationConfigsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contain the identity propagation configurations of.</p>",
         "ListIngestionsRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "ListNamespacesRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the Quick Sight namespaces that you want to list.</p>",
+        "ListOAuthClientApplicationsRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "ListRefreshSchedulesRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "ListRoleMembershipsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "ListSelfUpgradesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the self-upgrade requests.</p>",
@@ -2143,6 +2157,7 @@
         "UpdateIpRestrictionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the IP rules.</p>",
         "UpdateIpRestrictionResponse$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the IP rules.</p>",
         "UpdateKeyRegistrationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the customer managed key registration that you want to update.</p>",
+        "UpdateOAuthClientApplicationRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "UpdatePublicSharingSettingsRequest$AwsAccountId": "<p>The Amazon Web Services account ID associated with your Amazon Quick Sight subscription.</p>",
         "UpdateQPersonalizationConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account account that contains the personalization configuration that the user wants to update.</p>",
         "UpdateQuickSightQSearchConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the Quick Sight Q Search configuration that you want to update.</p>",
@@ -4166,6 +4181,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateOAuthClientApplicationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateOAuthClientApplicationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateRefreshScheduleRequest": {
       "base": null,
       "refs": {}
@@ -5256,8 +5279,12 @@
       "base": null,
       "refs": {
         "CreateDataSourceRequest$Type": "<p>The type of the data source. To return a list of all data sources, use <code>ListDataSources</code>.</p> <p>Use <code>AMAZON_ELASTICSEARCH</code> for Amazon OpenSearch Service.</p>",
+        "CreateOAuthClientApplicationRequest$DataSourceType": "<p>The type of data source that the OAuthClientApplication is used with. Valid values are <code>SNOWFLAKE</code>.</p>",
         "DataSource$Type": "<p>The type of the data source. This type indicates which database engine the data source connects to.</p>",
-        "DataSourceSummary$Type": "<p>The type of the data source.</p>"
+        "DataSourceSummary$Type": "<p>The type of the data source.</p>",
+        "OAuthClientApplication$DataSourceType": "<p>The type of data source that the OAuthClientApplication is used with. Valid values are <code>SNOWFLAKE</code>.</p>",
+        "OAuthClientApplicationSummary$DataSourceType": "<p>The type of data source that the OAuthClientApplication is used with. Valid values are <code>SNOWFLAKE</code>.</p>",
+        "UpdateOAuthClientApplicationRequest$DataSourceType": "<p>The type of data source that the OAuthClientApplication is used with. Valid values are <code>SNOWFLAKE</code>.</p>"
       }
     },
     "DataStoriesConfigurations": {
@@ -5902,6 +5929,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteOAuthClientApplicationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteOAuthClientApplicationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteRefreshScheduleRequest": {
       "base": null,
       "refs": {}
@@ -6313,6 +6348,14 @@
       "refs": {}
     },
     "DescribeNamespaceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeOAuthClientApplicationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeOAuthClientApplicationResponse": {
       "base": null,
       "refs": {}
     },
@@ -9811,6 +9854,14 @@
       "base": null,
       "refs": {}
     },
+    "ListOAuthClientApplicationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOAuthClientApplicationsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListRefreshSchedulesRequest": {
       "base": null,
       "refs": {}
@@ -10151,6 +10202,7 @@
         "ListIAMPolicyAssignmentsForUserRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListIAMPolicyAssignmentsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListNamespacesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "ListOAuthClientApplicationsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListRoleMembershipsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListSelfUpgradesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListTemplateAliasesRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
@@ -10719,6 +10771,54 @@
         "MeasureField$NumericalMeasureField": "<p>The measure type field with numerical type columns.</p>"
       }
     },
+    "OAuthAuthorizationEndpointUrl": {
+      "base": null,
+      "refs": {
+        "CreateOAuthClientApplicationRequest$OAuthAuthorizationEndpointUrl": "<p>The authorization endpoint URL of the identity provider that is used to obtain authorization codes.</p>",
+        "OAuthClientApplication$OAuthAuthorizationEndpointUrl": "<p>The authorization endpoint URL of the identity provider that is used to obtain authorization codes.</p>",
+        "UpdateOAuthClientApplicationRequest$OAuthAuthorizationEndpointUrl": "<p>The authorization endpoint URL of the identity provider that is used to obtain authorization codes.</p>"
+      }
+    },
+    "OAuthClientApplication": {
+      "base": "<p>An OAuth client application that is used to authenticate connections to a data source through an OAuth identity provider.</p>",
+      "refs": {
+        "DescribeOAuthClientApplicationResponse$OAuthClientApplication": "<p>The information about the OAuthClientApplication.</p>"
+      }
+    },
+    "OAuthClientApplicationId": {
+      "base": null,
+      "refs": {
+        "CreateOAuthClientApplicationRequest$OAuthClientApplicationId": "<p>An ID for the OAuthClientApplication that you want to create. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "CreateOAuthClientApplicationResponse$OAuthClientApplicationId": "<p>The ID of the OAuthClientApplication. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "DeleteOAuthClientApplicationRequest$OAuthClientApplicationId": "<p>The ID of the OAuthClientApplication that you want to delete.</p>",
+        "DeleteOAuthClientApplicationResponse$OAuthClientApplicationId": "<p>The ID of the OAuthClientApplication. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "DescribeOAuthClientApplicationRequest$OAuthClientApplicationId": "<p>The ID of the OAuthClientApplication that you want to describe.</p>",
+        "OAuthClientApplication$OAuthClientApplicationId": "<p>The ID of the OAuthClientApplication. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "OAuthClientApplicationSummary$OAuthClientApplicationId": "<p>The ID of the OAuthClientApplication. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "UpdateOAuthClientApplicationRequest$OAuthClientApplicationId": "<p>The ID of the OAuthClientApplication that you want to update.</p>",
+        "UpdateOAuthClientApplicationResponse$OAuthClientApplicationId": "<p>The ID of the OAuthClientApplication. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>"
+      }
+    },
+    "OAuthClientApplicationSummary": {
+      "base": "<p>A summary of an OAuthClientApplication.</p>",
+      "refs": {
+        "OAuthClientApplicationSummaryList$member": null
+      }
+    },
+    "OAuthClientApplicationSummaryList": {
+      "base": null,
+      "refs": {
+        "ListOAuthClientApplicationsResponse$OAuthClientApplications": "<p>A list of OAuthClientApplication summaries.</p>"
+      }
+    },
+    "OAuthClientAuthenticationType": {
+      "base": null,
+      "refs": {
+        "CreateOAuthClientApplicationRequest$OAuthClientAuthenticationType": "<p>The authentication type to use for the OAuthClientApplication. This determines the OAuth 2.0 grant flow that is used when the data source connects to the identity provider. Valid values are <code>TOKEN</code>.</p>",
+        "OAuthClientApplication$OAuthClientAuthenticationType": "<p>The OAuth client authentication type used by the OAuthClientApplication. Valid values are <code>TOKEN</code>.</p>",
+        "OAuthClientApplicationSummary$OAuthClientAuthenticationType": "<p>The OAuth client authentication type used by the OAuthClientApplication. Valid values are <code>TOKEN</code>.</p>"
+      }
+    },
     "OAuthClientCredentials": {
       "base": "<p>The OAuth 2.0 client credentials used for authenticating a data source connection. Use this structure to provide a client ID, client secret, and username directly instead of referencing a secret stored in Amazon Secrets Manager. This structure supports data sources that use two-legged OAuth (2LO) authentication, such as Snowflake.</p>",
       "refs": {
@@ -10728,13 +10828,17 @@
     "OAuthClientId": {
       "base": null,
       "refs": {
-        "OAuthClientCredentials$ClientId": "<p>The client ID of the OAuth 2.0 application that is registered with the data source provider.</p>"
+        "CreateOAuthClientApplicationRequest$ClientId": "<p>The client ID of the OAuth application that is registered with the identity provider.</p>",
+        "OAuthClientCredentials$ClientId": "<p>The client ID of the OAuth 2.0 application that is registered with the data source provider.</p>",
+        "UpdateOAuthClientApplicationRequest$ClientId": "<p>The client ID of the OAuth application that is registered with the identity provider.</p>"
       }
     },
     "OAuthClientSecret": {
       "base": null,
       "refs": {
-        "OAuthClientCredentials$ClientSecret": "<p>The client secret of the OAuth 2.0 application that is registered with the data source provider.</p>"
+        "CreateOAuthClientApplicationRequest$ClientSecret": "<p>The client secret of the OAuth application that is registered with the identity provider.</p>",
+        "OAuthClientCredentials$ClientSecret": "<p>The client secret of the OAuth 2.0 application that is registered with the data source provider.</p>",
+        "UpdateOAuthClientApplicationRequest$ClientSecret": "<p>The client secret of the OAuth application that is registered with the identity provider.</p>"
       }
     },
     "OAuthParameters": {
@@ -10748,6 +10852,22 @@
       "base": null,
       "refs": {
         "OAuthParameters$OAuthScope": "<p>The OAuth scope.</p>"
+      }
+    },
+    "OAuthScopesString": {
+      "base": null,
+      "refs": {
+        "CreateOAuthClientApplicationRequest$OAuthScopes": "<p>The OAuth scopes that are requested when the OAuthClientApplication obtains an access token from the identity provider.</p>",
+        "OAuthClientApplication$OAuthScopes": "<p>The OAuth scopes that are requested when the OAuthClientApplication obtains an access token from the identity provider.</p>",
+        "UpdateOAuthClientApplicationRequest$OAuthScopes": "<p>The OAuth scopes that are requested when the OAuthClientApplication obtains an access token from the identity provider.</p>"
+      }
+    },
+    "OAuthTokenEndpointUrl": {
+      "base": null,
+      "refs": {
+        "CreateOAuthClientApplicationRequest$OAuthTokenEndpointUrl": "<p>The token endpoint URL of the identity provider that is used to obtain access tokens.</p>",
+        "OAuthClientApplication$OAuthTokenEndpointUrl": "<p>The token endpoint URL of the identity provider that is used to obtain access tokens.</p>",
+        "UpdateOAuthClientApplicationRequest$OAuthTokenEndpointUrl": "<p>The token endpoint URL of the identity provider that is used to obtain access tokens.</p>"
       }
     },
     "OAuthUsername": {
@@ -12369,16 +12489,20 @@
         "AssetBundleImportJobVPCConnectionOverrideParameters$Name": "<p>A new name for the VPC connection.</p>",
         "CreateDataSetRequest$Name": "<p>The display name for the dataset.</p>",
         "CreateDataSourceRequest$Name": "<p>A display name for the data source.</p>",
+        "CreateOAuthClientApplicationRequest$Name": "<p>The display name for the OAuthClientApplication.</p>",
         "CreateVPCConnectionRequest$Name": "<p>The display name for the VPC connection.</p>",
         "DataSet$Name": "<p>A display name for the dataset.</p>",
         "DataSetSummary$Name": "<p>A display name for the dataset.</p>",
         "DataSource$Name": "<p>A display name for the data source.</p>",
         "DataSourceSummary$Name": "<p>The name of the data source.</p>",
         "GeneratedAnswerResult$TopicName": "<p>The name of the topic.</p>",
+        "OAuthClientApplication$Name": "<p>The display name of the OAuthClientApplication.</p>",
+        "OAuthClientApplicationSummary$Name": "<p>The display name of the OAuthClientApplication.</p>",
         "TopicDetails$Name": "<p>The name of the topic.</p>",
         "TopicSummary$Name": "<p>The name of the topic.</p>",
         "UpdateDataSetRequest$Name": "<p>The display name for the dataset.</p>",
         "UpdateDataSourceRequest$Name": "<p>A display name for the data source.</p>",
+        "UpdateOAuthClientApplicationRequest$Name": "<p>The display name for the OAuthClientApplication.</p>",
         "UpdateVPCConnectionRequest$Name": "<p>The display name for the VPC connection.</p>",
         "VPCConnection$Name": "<p>The display name for the VPC connection.</p>",
         "VPCConnectionSummary$Name": "<p>The display name for the VPC connection.</p>"
@@ -12438,6 +12562,7 @@
         "CreateAnalysisResponse$CreationStatus": "<p>The status of the creation of the analysis. </p>",
         "CreateDashboardResponse$CreationStatus": "<p>The status of the dashboard creation request.</p>",
         "CreateDataSourceResponse$CreationStatus": "<p>The status of creating the data source.</p>",
+        "CreateOAuthClientApplicationResponse$CreationStatus": "<p>The status of creating the OAuthClientApplication.</p>",
         "CreateTemplateResponse$CreationStatus": "<p>The template creation status.</p>",
         "CreateThemeResponse$CreationStatus": "<p>The theme creation status.</p>",
         "DashboardVersion$Status": "<p>The HTTP status of the request.</p>",
@@ -12454,6 +12579,7 @@
         "UpdateAnalysisResponse$UpdateStatus": "<p>The update status of the last update that was made to the analysis.</p>",
         "UpdateDashboardResponse$CreationStatus": "<p>The creation status of the request.</p>",
         "UpdateDataSourceResponse$UpdateStatus": "<p>The update status of the data source's last update.</p>",
+        "UpdateOAuthClientApplicationResponse$UpdateStatus": "<p>The status of updating the OAuthClientApplication.</p>",
         "UpdateTemplateResponse$CreationStatus": "<p>The creation status of the template.</p>",
         "UpdateThemeResponse$CreationStatus": "<p>The creation status of the theme.</p>"
       }
@@ -14377,6 +14503,7 @@
         "CreateIAMPolicyAssignmentResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateIngestionResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateNamespaceResponse$Status": "<p>The HTTP status of the request.</p>",
+        "CreateOAuthClientApplicationResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateRoleMembershipResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateTemplateAliasResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -14404,6 +14531,7 @@
         "DeleteIAMPolicyAssignmentResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteIdentityPropagationConfigResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteNamespaceResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DeleteOAuthClientApplicationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteRoleCustomPermissionResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteRoleMembershipResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -14451,6 +14579,7 @@
         "DescribeIpRestrictionResponse$Status": "<p>The HTTP status of the request. </p>",
         "DescribeKeyRegistrationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeNamespaceResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DescribeOAuthClientApplicationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeQPersonalizationConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeQuickSightQSearchConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -14497,6 +14626,7 @@
         "ListIdentityPropagationConfigsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListIngestionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListNamespacesResponse$Status": "<p>The HTTP status of the request.</p>",
+        "ListOAuthClientApplicationsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListRefreshSchedulesResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListRoleMembershipsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListSelfUpgradesResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -14560,6 +14690,7 @@
         "UpdateIAMPolicyAssignmentResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateIdentityPropagationConfigResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateIpRestrictionResponse$Status": "<p>The HTTP status of the request. </p>",
+        "UpdateOAuthClientApplicationResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdatePublicSharingSettingsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateQPersonalizationConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateQuickSightQSearchConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -14649,6 +14780,7 @@
         "CreateIngestionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateNamespaceResponse$CapacityRegion": "<p>The Amazon Web Services Region; that you want to use for the free SPICE capacity for the new namespace. This is set to the region that you run CreateNamespace in. </p>",
         "CreateNamespaceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "CreateOAuthClientApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateRefreshScheduleResponse$ScheduleId": "<p>The ID of the refresh schedule.</p>",
         "CreateRoleMembershipResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -14688,6 +14820,7 @@
         "DeleteIAMPolicyAssignmentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteIdentityPropagationConfigResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteNamespaceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DeleteOAuthClientApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteRefreshScheduleRequest$ScheduleId": "<p>The ID of the refresh schedule.</p>",
         "DeleteRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteRefreshScheduleResponse$ScheduleId": "<p>The ID of the refresh schedule.</p>",
@@ -14745,6 +14878,7 @@
         "DescribeIngestionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeIpRestrictionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeNamespaceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeOAuthClientApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeQPersonalizationConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeQuickSightQSearchConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeRefreshScheduleRequest$ScheduleId": "<p>The ID of the refresh schedule.</p>",
@@ -14880,6 +15014,9 @@
         "ListNamespacesRequest$NextToken": "<p>A unique pagination token that can be used in a subsequent request. You will receive a pagination token in the response body of a previous <code>ListNameSpaces</code> API call if there is more data that can be returned. To receive the data, make another <code>ListNamespaces</code> API call with the returned token to retrieve the next page of data. Each token is valid for 24 hours. If you try to make a <code>ListNamespaces</code> API call with an expired token, you will receive a <code>HTTP 400 InvalidNextTokenException</code> error.</p>",
         "ListNamespacesResponse$NextToken": "<p>A unique pagination token that can be used in a subsequent request. Receiving <code>NextToken</code> in your response inticates that there is more data that can be returned. To receive the data, make another <code>ListNamespaces</code> API call with the returned token to retrieve the next page of data. Each token is valid for 24 hours. If you try to make a <code>ListNamespaces</code> API call with an expired token, you will receive a <code>HTTP 400 InvalidNextTokenException</code> error.</p>",
         "ListNamespacesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "ListOAuthClientApplicationsRequest$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
+        "ListOAuthClientApplicationsResponse$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
+        "ListOAuthClientApplicationsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListRefreshSchedulesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListRoleMembershipsRequest$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "ListRoleMembershipsResponse$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
@@ -15064,6 +15201,7 @@
         "UpdateIAMPolicyAssignmentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateIdentityPropagationConfigResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateIpRestrictionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateOAuthClientApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdatePublicSharingSettingsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateQPersonalizationConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateQuickSightQSearchConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -15598,6 +15736,7 @@
         "CreateDataSourceRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the data source.</p>",
         "CreateFolderRequest$Tags": "<p>Tags for the folder.</p>",
         "CreateNamespaceRequest$Tags": "<p>The tags that you want to associate with the namespace that you're creating.</p>",
+        "CreateOAuthClientApplicationRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the OAuthClientApplication.</p>",
         "CreateTemplateRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the resource.</p>",
         "CreateThemeRequest$Tags": "<p>A map of the key-value pairs for the resource tag or tags that you want to add to the resource.</p>",
         "CreateTopicRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags that are assigned to the dataset.</p>",
@@ -16043,6 +16182,10 @@
         "GetFlowMetadataOutput$LastUpdatedTime": "<p>The last time this flow was modified.</p>",
         "GetIdentityContextRequest$SessionExpiresAt": "<p>The timestamp at which the session will expire.</p>",
         "Ingestion$CreatedTime": "<p>The time that this ingestion started.</p>",
+        "OAuthClientApplication$CreatedTime": "<p>The time that the OAuthClientApplication was created.</p>",
+        "OAuthClientApplication$LastUpdatedTime": "<p>The time that the OAuthClientApplication was last updated.</p>",
+        "OAuthClientApplicationSummary$CreatedTime": "<p>The time that the OAuthClientApplication was created.</p>",
+        "OAuthClientApplicationSummary$LastUpdatedTime": "<p>The time that the OAuthClientApplication was last updated.</p>",
         "RefreshSchedule$StartAfterDateTime": "<p>Time after which the refresh schedule can be started, expressed in <code>YYYY-MM-DDTHH:MM:SS</code> format.</p>",
         "Template$LastUpdatedTime": "<p>Time when this was last updated.</p>",
         "Template$CreatedTime": "<p>Time when this was created.</p>",
@@ -17154,6 +17297,14 @@
         "UpdateDashboardPermissionsRequest$RevokeLinkPermissions": "<p>Revokes link permissions from all users in a defined namespace.</p>"
       }
     },
+    "UpdateOAuthClientApplicationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateOAuthClientApplicationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdatePublicSharingSettingsRequest": {
       "base": null,
       "refs": {}
@@ -17904,9 +18055,13 @@
       "refs": {
         "AssetBundleImportJobDataSourceOverrideParameters$VpcConnectionProperties": null,
         "CreateDataSourceRequest$VpcConnectionProperties": "<p>Use this parameter only when you want Amazon Quick Sight to use a VPC connection when connecting to your underlying source.</p>",
+        "CreateOAuthClientApplicationRequest$IdentityProviderVpcConnectionProperties": null,
         "DataSource$VpcConnectionProperties": "<p>The VPC connection information. You need to use this parameter only when you want Quick Sight to use a VPC connection when connecting to your underlying source.</p>",
+        "OAuthClientApplication$IdentityProviderVpcConnectionProperties": null,
+        "OAuthClientApplicationSummary$IdentityProviderVpcConnectionProperties": null,
         "OAuthParameters$IdentityProviderVpcConnectionProperties": null,
-        "UpdateDataSourceRequest$VpcConnectionProperties": "<p>Use this parameter only when you want Amazon Quick Sight to use a VPC connection when connecting to your underlying source.</p>"
+        "UpdateDataSourceRequest$VpcConnectionProperties": "<p>Use this parameter only when you want Amazon Quick Sight to use a VPC connection when connecting to your underlying source.</p>",
+        "UpdateOAuthClientApplicationRequest$IdentityProviderVpcConnectionProperties": null
       }
     },
     "VpcEndpointId": {

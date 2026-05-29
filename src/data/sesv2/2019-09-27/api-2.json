@@ -1027,7 +1027,8 @@
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"InvalidNextTokenException"}
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"NotFoundException"}
       ]
     },
     "ListTagsForResource":{
@@ -1376,7 +1377,22 @@
       "output":{"shape":"PutSuppressedDestinationResponse"},
       "errors":[
         {"shape":"BadRequestException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotFoundException"}
+      ]
+    },
+    "PutTenantSuppressionAttributes":{
+      "name":"PutTenantSuppressionAttributes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/tenant/suppression"
+      },
+      "input":{"shape":"PutTenantSuppressionAttributesRequest"},
+      "output":{"shape":"PutTenantSuppressionAttributesResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "SendBulkEmail":{
@@ -2227,7 +2243,8 @@
       "required":["TenantName"],
       "members":{
         "TenantName":{"shape":"TenantName"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "SuppressionAttributes":{"shape":"TenantSuppressionAttributes"}
       }
     },
     "CreateTenantResourceAssociationRequest":{
@@ -2253,7 +2270,8 @@
         "TenantArn":{"shape":"AmazonResourceName"},
         "CreatedTimestamp":{"shape":"Timestamp"},
         "Tags":{"shape":"TagList"},
-        "SendingStatus":{"shape":"SendingStatus"}
+        "SendingStatus":{"shape":"SendingStatus"},
+        "SuppressionAttributes":{"shape":"TenantSuppressionAttributes"}
       }
     },
     "CustomRedirectDomain":{"type":"string"},
@@ -2516,6 +2534,11 @@
           "shape":"EmailAddress",
           "location":"uri",
           "locationName":"EmailAddress"
+        },
+        "TenantName":{
+          "shape":"TenantName",
+          "location":"querystring",
+          "locationName":"TenantName"
         }
       }
     },
@@ -3550,6 +3573,11 @@
           "shape":"EmailAddress",
           "location":"uri",
           "locationName":"EmailAddress"
+        },
+        "TenantName":{
+          "shape":"TenantName",
+          "location":"querystring",
+          "locationName":"TenantName"
         }
       }
     },
@@ -4136,6 +4164,11 @@
     "ListSuppressedDestinationsRequest":{
       "type":"structure",
       "members":{
+        "TenantName":{
+          "shape":"TenantName",
+          "location":"querystring",
+          "locationName":"TenantName"
+        },
         "Reasons":{
           "shape":"SuppressionListReasons",
           "location":"querystring",
@@ -4681,6 +4714,7 @@
           "location":"uri",
           "locationName":"ConfigurationSetName"
         },
+        "SuppressionScope":{"shape":"SuppressionListScope"},
         "SuppressedReasons":{"shape":"SuppressionListReasons"},
         "ValidationOptions":{"shape":"SuppressionValidationOptions"}
       }
@@ -4888,10 +4922,24 @@
       ],
       "members":{
         "EmailAddress":{"shape":"EmailAddress"},
-        "Reason":{"shape":"SuppressionListReason"}
+        "Reason":{"shape":"SuppressionListReason"},
+        "TenantName":{"shape":"TenantName"}
       }
     },
     "PutSuppressedDestinationResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "PutTenantSuppressionAttributesRequest":{
+      "type":"structure",
+      "required":["TenantName"],
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "SuppressedReasons":{"shape":"SuppressionListReasons"},
+        "SuppressionScope":{"shape":"SuppressionListScope"}
+      }
+    },
+    "PutTenantSuppressionAttributesResponse":{
       "type":"structure",
       "members":{}
     },
@@ -5271,7 +5319,8 @@
         "EmailAddress":{"shape":"EmailAddress"},
         "Reason":{"shape":"SuppressionListReason"},
         "LastUpdateTime":{"shape":"Timestamp"},
-        "Attributes":{"shape":"SuppressedDestinationAttributes"}
+        "Attributes":{"shape":"SuppressedDestinationAttributes"},
+        "TenantName":{"shape":"TenantName"}
       }
     },
     "SuppressedDestinationAttributes":{
@@ -5353,10 +5402,18 @@
       "type":"list",
       "member":{"shape":"SuppressionListReason"}
     },
+    "SuppressionListScope":{
+      "type":"string",
+      "enum":[
+        "ACCOUNT",
+        "TENANT"
+      ]
+    },
     "SuppressionOptions":{
       "type":"structure",
       "members":{
         "SuppressedReasons":{"shape":"SuppressionListReasons"},
+        "SuppressionScope":{"shape":"SuppressionListScope"},
         "ValidationOptions":{"shape":"SuppressionValidationOptions"}
       }
     },
@@ -5430,7 +5487,8 @@
         "TenantArn":{"shape":"AmazonResourceName"},
         "CreatedTimestamp":{"shape":"Timestamp"},
         "Tags":{"shape":"TagList"},
-        "SendingStatus":{"shape":"SendingStatus"}
+        "SendingStatus":{"shape":"SendingStatus"},
+        "SuppressionAttributes":{"shape":"TenantSuppressionAttributes"}
       }
     },
     "TenantId":{"type":"string"},
@@ -5461,6 +5519,13 @@
     "TenantResourceList":{
       "type":"list",
       "member":{"shape":"TenantResource"}
+    },
+    "TenantSuppressionAttributes":{
+      "type":"structure",
+      "members":{
+        "SuppressedReasons":{"shape":"SuppressionListReasons"},
+        "SuppressionScope":{"shape":"SuppressionListScope"}
+      }
     },
     "TestRenderEmailTemplateRequest":{
       "type":"structure",

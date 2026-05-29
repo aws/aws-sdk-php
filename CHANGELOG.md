@@ -1,5 +1,59 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Fixed per-request cyclic references in retry and validation middleware that caused unbounded memory growth in long-lived processes making repeated API calls.
+* `Aws\GroundStation` - Adds support for Alpha-5 satellite number encoding in the Two-Line Element ephemeris format.
+* `Aws\PaymentCryptographyData` - Adding new BDD representation of endpoint ruleset
+* `Aws\Synthetics` - Adding new BDD representation of endpoint ruleset
+* `Aws\CodeDeploy` - Adding new BDD representation of endpoint ruleset
+* `Aws\QBusiness` - Adding new BDD representation of endpoint ruleset
+* `Aws\ARCZonalShift` - Adding new BDD representation of endpoint ruleset
+* `Aws\CloudHSM` - Adding new BDD representation of endpoint ruleset
+* `Aws\WorkspacesInstances` - Adding new BDD representation of endpoint ruleset
+* `Aws\CloudDirectory` - Adding new BDD representation of endpoint ruleset
+* `Aws\Budgets` - Adding new BDD representation of endpoint ruleset
+* `Aws\CloudHSMV2` - Adding new BDD representation of endpoint ruleset
+* `Aws\BackupGateway` - Adding new BDD representation of endpoint ruleset
+* `Aws\Omics` - Add engineSettings to StartRun and GetRun. Add profiles and profileParameterTemplates to GetWorkflow and GetWorkflowVersion.
+* `Aws\PersonalizeEvents` - Adding new BDD representation of endpoint ruleset
+* `Aws\MWAA` - Adding new BDD representation of endpoint ruleset
+* `Aws\EntityResolution` - Adding new BDD representation of endpoint ruleset
+* `Aws\Route53RecoveryCluster` - Adding new BDD representation of endpoint ruleset
+* `Aws\CodeBuild` - Adding new BDD representation of endpoint ruleset
+* `Aws\CloudTrail` - Adding new BDD representation of endpoint ruleset
+* `Aws\AutoScaling` - Adding new BDD representation of endpoint ruleset
+* `Aws\Athena` - Adding new BDD representation of endpoint ruleset
+* `Aws\WAFV2` - Adding new BDD representation of endpoint ruleset
+* `Aws\CodeCommit` - Adding new BDD representation of endpoint ruleset
+* `Aws\SSMGuiConnect` - Adding new BDD representation of endpoint ruleset
+* `Aws\LexRuntimeV2` - Adding new BDD representation of endpoint ruleset
+* `Aws\RDSDataService` - RDS Data API arrays (longValues, doubleValues, stringValues, booleanValues) in ExecuteStatement responses now correctly support null elements. Runtime change for JS v3 and .NET. Compile-time change for C plus plus, .NET, Kotlin, Rust. No impact for Java, Python, Ruby, PHP, Go.
+* `Aws\Proton` - Adding new BDD representation of endpoint ruleset
+* `Aws\Chime` - Adding new BDD representation of endpoint ruleset
+* `Aws\SESv2` - This release introduces support for Tenant Suppression Lists
+* `Aws\InspectorScan` - Adding new BDD representation of endpoint ruleset
+* `Aws\PCS` - Adding new BDD representation of endpoint ruleset
+* `Aws\Route53Resolver` - Added BatchCreateFirewallRule, BatchUpdateFirewallRule, BatchDeleteFirewallRule, and ListFirewallRuleTypes APIs. Added FirewallRuleType support to Firewall Rule APIs.
+* `Aws\MailManager` - Adding new BDD representation of endpoint ruleset
+* `Aws\NetworkFlowMonitor` - Adding new BDD representation of endpoint ruleset
+* `Aws\CloudSearchDomain` - Adding new BDD representation of endpoint ruleset
+* `Aws\drs` - Adding new BDD representation of endpoint ruleset
+* `Aws\ManagedGrafana` - Adding new BDD representation of endpoint ruleset
+* `Aws\CodeCatalyst` - Adding new BDD representation of endpoint ruleset
+* `Aws\BedrockAgentCoreControl` - Reference your own AWS Secrets Manager secrets when configuring credential providers, giving you control over encryption, rotation, and access policies instead of using service-managed secrets.
+* `Aws\QuickSight` - Adds support for creating, updating, describing, listing, and deleting an OAuthClientApplication resource, a new quicksight resource that allows customers to store OAuth configurations to connect to their databases via 3 Legged OAuth.
+* `Aws\ApplicationInsights` - Adding new BDD representation of endpoint ruleset
+* `Aws\LexModelsV2` - Adding new BDD representation of endpoint ruleset
+* `Aws\Bedrock` - Automated Reasoning checks - Added two build workflows for policies. Iterative Refine Policy uses AI to update policy definitions based on test results and feedback. Resolve Policy Ambiguities consolidates ambiguous variables in Automated Reasoning policies, a common source of ambiguous validation.
+* `Aws\DirectoryServiceData` - Adding new BDD representation of endpoint ruleset
+* `Aws\Account` - Adding new BDD representation of endpoint ruleset
+* `Aws\CloudSearch` - Adding new BDD representation of endpoint ruleset
+* `Aws\ConnectCampaignsV2` - Adding new BDD representation of endpoint ruleset
+* `Aws\ConnectContactLens` - Adding new BDD representation of endpoint ruleset
+* `Aws\AutoScalingPlans` - Adding new BDD representation of endpoint ruleset
+* `Aws\CodeGuruSecurity` - Adding new BDD representation of endpoint ruleset
+
 ## 3.383.0 - 2026-05-28
 
 * `Aws\S3` - Updates `MultipartCopy` to fully align with `CopyObject` metadata directive behavior. When `$config['metadata_directive']` is set to `COPY` (default), source object metadata takes precedence over any matching values provided in `$config['params']`.

@@ -741,6 +741,12 @@
         "GetAutomatedReasoningPolicyBuildWorkflowResponse$documentName": "<p>The name of the source document used in the build workflow.</p>"
       }
     },
+    "AutomatedReasoningPolicyBuildFeedback": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyIterativeRefinementContent$feedback": "<p>Optional feedback to guide the iterative refinement workflow. Provide specific instructions or constraints for policy refinement.</p>"
+      }
+    },
     "AutomatedReasoningPolicyBuildLog": {
       "base": "<p>Contains detailed logging information about the policy build process, including steps taken, decisions made, and any issues encountered.</p>",
       "refs": {
@@ -843,7 +849,8 @@
       "base": "<p>Represents a source document used in the policy build workflow, containing the content and metadata needed for policy generation.</p>",
       "refs": {
         "AutomatedReasoningPolicyBuildWorkflowDocumentList$member": null,
-        "AutomatedReasoningPolicyGenerateFidelityReportDocumentList$member": null
+        "AutomatedReasoningPolicyGenerateFidelityReportDocumentList$member": null,
+        "AutomatedReasoningPolicyIterativeRefinementDocumentList$member": null
       }
     },
     "AutomatedReasoningPolicyBuildWorkflowDocumentList": {
@@ -1281,6 +1288,18 @@
       "base": "<p>An annotation for processing and incorporating new content into an Automated Reasoning policy.</p>",
       "refs": {
         "AutomatedReasoningPolicyAnnotation$ingestContent": "<p>An operation to process and incorporate new content into the policy, extracting additional rules and concepts.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyIterativeRefinementContent": {
+      "base": "<p>Configuration for an iterative policy refinement workflow, including source documents to process and optional feedback to guide the refinement.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyWorkflowTypeContent$iterativeRefinementContent": "<p>Content configuration to start an iterative policy refinement workflow that uses generative AI to automatically make changes to the policy based on test results and the optional feedback provided.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyIterativeRefinementDocumentList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyIterativeRefinementContent$documents": "<p>Source documents used for iterative policy refinement. These documents provide context for refining the policy definition.</p>"
       }
     },
     "AutomatedReasoningPolicyJustificationList": {

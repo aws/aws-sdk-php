@@ -197,6 +197,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putEmailIdentityMailFromAttributesAsync(array $args = [])
  * @method \Aws\Result putSuppressedDestination(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putSuppressedDestinationAsync(array $args = [])
+ * @method \Aws\Result putTenantSuppressionAttributes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putTenantSuppressionAttributesAsync(array $args = [])
  * @method \Aws\Result sendBulkEmail(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendBulkEmailAsync(array $args = [])
  * @method \Aws\Result sendCustomVerificationEmail(array $args = [])

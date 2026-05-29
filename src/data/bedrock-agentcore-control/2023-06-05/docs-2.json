@@ -530,13 +530,6 @@
         "ListApiKeyCredentialProvidersResponse$credentialProviders": "<p>The list of API key credential providers.</p>"
       }
     },
-    "ApiKeyType": {
-      "base": null,
-      "refs": {
-        "CreateApiKeyCredentialProviderRequest$apiKey": "<p>The API key to use for authentication. This value is encrypted and stored securely.</p>",
-        "UpdateApiKeyCredentialProviderRequest$apiKey": "<p>The new API key to use for authentication. This value replaces the existing API key and is encrypted and stored securely.</p>"
-      }
-    },
     "ApiSchemaConfiguration": {
       "base": "<p>Configuration for API schema.</p>",
       "refs": {
@@ -917,19 +910,6 @@
         "SlackOauth2ProviderConfigOutput$clientId": "<p>The client ID for the Slack OAuth2 provider.</p>"
       }
     },
-    "ClientSecretType": {
-      "base": null,
-      "refs": {
-        "AtlassianOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Atlassian OAuth2 provider. This secret is assigned by Atlassian and used along with the client ID to authenticate your application.</p>",
-        "GithubOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the GitHub OAuth2 provider.</p>",
-        "GoogleOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Google OAuth2 provider.</p>",
-        "IncludedOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the supported OAuth2 provider. This secret is assigned by the OAuth2 provider and used along with the client ID to authenticate your application.</p>",
-        "LinkedinOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the LinkedIn OAuth2 provider. This secret is assigned by LinkedIn and used along with the client ID to authenticate your application.</p>",
-        "MicrosoftOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Microsoft OAuth2 provider.</p>",
-        "SalesforceOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Salesforce OAuth2 provider.</p>",
-        "SlackOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Slack OAuth2 provider.</p>"
-      }
-    },
     "ClientToken": {
       "base": null,
       "refs": {
@@ -1084,12 +1064,6 @@
         "CoinbaseCdpConfigurationOutput$apiKeyId": "<p>The API key identifier provided by Coinbase Developer Platform.</p>"
       }
     },
-    "CoinbaseCdpApiKeySecretType": {
-      "base": null,
-      "refs": {
-        "CoinbaseCdpConfigurationInput$apiKeySecret": "<p>The API key secret provided by Coinbase Developer Platform.</p>"
-      }
-    },
     "CoinbaseCdpConfigurationInput": {
       "base": "<p>Coinbase CDP configuration — credentials provided by Coinbase Developer Platform.</p>",
       "refs": {
@@ -1100,12 +1074,6 @@
       "base": "<p>Coinbase CDP configuration output with secret ARNs.</p>",
       "refs": {
         "PaymentProviderConfigurationOutput$coinbaseCdpConfiguration": "<p>The Coinbase CDP configuration.</p>"
-      }
-    },
-    "CoinbaseCdpWalletSecretType": {
-      "base": null,
-      "refs": {
-        "CoinbaseCdpConfigurationInput$walletSecret": "<p>The wallet secret provided by Coinbase Developer Platform.</p>"
       }
     },
     "ComponentConfiguration": {
@@ -1997,6 +1965,13 @@
       "base": "<p>Exception thrown when decryption of a secret fails.</p>",
       "refs": {}
     },
+    "DefaultApiKeyType": {
+      "base": null,
+      "refs": {
+        "CreateApiKeyCredentialProviderRequest$apiKey": "<p>The API key to use for authentication. This value is encrypted and stored securely.</p>",
+        "UpdateApiKeyCredentialProviderRequest$apiKey": "<p>The new API key to use for authentication. This value replaces the existing API key and is encrypted and stored securely.</p>"
+      }
+    },
     "DefaultClientIdType": {
       "base": null,
       "refs": {
@@ -2006,7 +1981,39 @@
     "DefaultClientSecretType": {
       "base": null,
       "refs": {
-        "CustomOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the custom OAuth2 provider.</p>"
+        "AtlassianOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Atlassian OAuth2 provider. This secret is assigned by Atlassian and used along with the client ID to authenticate your application.</p>",
+        "CustomOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the custom OAuth2 provider.</p>",
+        "GithubOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the GitHub OAuth2 provider.</p>",
+        "GoogleOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Google OAuth2 provider.</p>",
+        "IncludedOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the supported OAuth2 provider. This secret is assigned by the OAuth2 provider and used along with the client ID to authenticate your application.</p>",
+        "LinkedinOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the LinkedIn OAuth2 provider. This secret is assigned by LinkedIn and used along with the client ID to authenticate your application.</p>",
+        "MicrosoftOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Microsoft OAuth2 provider.</p>",
+        "SalesforceOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Salesforce OAuth2 provider.</p>",
+        "SlackOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Slack OAuth2 provider.</p>"
+      }
+    },
+    "DefaultCoinbaseCdpApiKeySecretType": {
+      "base": null,
+      "refs": {
+        "CoinbaseCdpConfigurationInput$apiKeySecret": "<p>The API key secret provided by Coinbase Developer Platform.</p>"
+      }
+    },
+    "DefaultCoinbaseCdpWalletSecretType": {
+      "base": null,
+      "refs": {
+        "CoinbaseCdpConfigurationInput$walletSecret": "<p>The wallet secret provided by Coinbase Developer Platform.</p>"
+      }
+    },
+    "DefaultStripePrivyAppSecretType": {
+      "base": null,
+      "refs": {
+        "StripePrivyConfigurationInput$appSecret": "<p>The app secret provided by Privy.</p>"
+      }
+    },
+    "DefaultStripePrivyAuthorizationPrivateKeyType": {
+      "base": null,
+      "refs": {
+        "StripePrivyConfigurationInput$authorizationPrivateKey": "<p>The authorization private key for the Stripe Privy integration.</p>"
       }
     },
     "Definition": {
@@ -6366,6 +6373,78 @@
         "Secret$secretArn": "<p>The Amazon Resource Name (ARN) of the secret in AWS Secrets Manager.</p>"
       }
     },
+    "SecretIdType": {
+      "base": null,
+      "refs": {
+        "SecretReference$secretId": "<p>The ID of the AWS Secrets Manager secret that stores the secret value.</p>"
+      }
+    },
+    "SecretJsonKeyType": {
+      "base": null,
+      "refs": {
+        "CoinbaseCdpConfigurationOutput$apiKeySecretJsonKey": "<p>The JSON key used to extract the API key secret value from the AWS Secrets Manager secret.</p>",
+        "CoinbaseCdpConfigurationOutput$walletSecretJsonKey": "<p>The JSON key used to extract the wallet secret value from the AWS Secrets Manager secret.</p>",
+        "CreateApiKeyCredentialProviderResponse$apiKeySecretJsonKey": "<p>The JSON key used to extract the API key value from the AWS Secrets Manager secret.</p>",
+        "CreateOauth2CredentialProviderResponse$clientSecretJsonKey": "<p>The JSON key used to extract the client secret value from the AWS Secrets Manager secret.</p>",
+        "GetApiKeyCredentialProviderResponse$apiKeySecretJsonKey": "<p>The JSON key used to extract the API key value from the AWS Secrets Manager secret.</p>",
+        "GetOauth2CredentialProviderResponse$clientSecretJsonKey": "<p>The JSON key used to extract the client secret value from the AWS Secrets Manager secret.</p>",
+        "SecretReference$jsonKey": "<p>The JSON key used to extract the secret value from the AWS Secrets Manager secret.</p>",
+        "StripePrivyConfigurationOutput$appSecretJsonKey": "<p>The JSON key used to extract the app secret value from the AWS Secrets Manager secret.</p>",
+        "StripePrivyConfigurationOutput$authorizationPrivateKeyJsonKey": "<p>The JSON key used to extract the authorization private key value from the AWS Secrets Manager secret.</p>",
+        "UpdateApiKeyCredentialProviderResponse$apiKeySecretJsonKey": "<p>The JSON key used to extract the API key value from the AWS Secrets Manager secret.</p>",
+        "UpdateOauth2CredentialProviderResponse$clientSecretJsonKey": "<p>The JSON key used to extract the client secret value from the AWS Secrets Manager secret.</p>"
+      }
+    },
+    "SecretReference": {
+      "base": "<p>Contains a reference to a secret stored in AWS Secrets Manager.</p>",
+      "refs": {
+        "AtlassianOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "CoinbaseCdpConfigurationInput$apiKeySecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the API key secret. This includes the secret ID and the JSON key used to extract the API key secret value from the secret. Required when <code>apiKeySecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "CoinbaseCdpConfigurationInput$walletSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the wallet secret. This includes the secret ID and the JSON key used to extract the wallet secret value from the secret. Required when <code>walletSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "CreateApiKeyCredentialProviderRequest$apiKeySecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the API key. This includes the secret ID and the JSON key used to extract the API key value from the secret. Required when <code>apiKeySecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "CustomOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "GithubOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "GoogleOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "IncludedOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "LinkedinOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "MicrosoftOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "SalesforceOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "SlackOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "StripePrivyConfigurationInput$appSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the app secret. This includes the secret ID and the JSON key used to extract the app secret value from the secret. Required when <code>appSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "StripePrivyConfigurationInput$authorizationPrivateKeyConfig": "<p>A reference to the AWS Secrets Manager secret that stores the authorization private key. This includes the secret ID and the JSON key used to extract the authorization private key value from the secret. Required when <code>authorizationPrivateKeySource</code> is set to <code>EXTERNAL</code>.</p>",
+        "UpdateApiKeyCredentialProviderRequest$apiKeySecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the API key. This includes the secret ID and the JSON key used to extract the API key value from the secret. Required when <code>apiKeySecretSource</code> is set to <code>EXTERNAL</code>.</p>"
+      }
+    },
+    "SecretSourceType": {
+      "base": null,
+      "refs": {
+        "AtlassianOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret for the Atlassian OAuth2 provider. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
+        "CoinbaseCdpConfigurationInput$apiKeySecretSource": "<p>The source type of the API key secret for the Coinbase Developer Platform. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
+        "CoinbaseCdpConfigurationInput$walletSecretSource": "<p>The source type of the wallet secret for the Coinbase Developer Platform. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
+        "CoinbaseCdpConfigurationOutput$apiKeySecretSource": "<p>The source type of the API key secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
+        "CoinbaseCdpConfigurationOutput$walletSecretSource": "<p>The source type of the wallet secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
+        "CreateApiKeyCredentialProviderRequest$apiKeySecretSource": "<p>The source type of the API key secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
+        "CreateApiKeyCredentialProviderResponse$apiKeySecretSource": "<p>The source type of the API key secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
+        "CreateOauth2CredentialProviderResponse$clientSecretSource": "<p>The source type of the client secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
+        "CustomOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
+        "GetApiKeyCredentialProviderResponse$apiKeySecretSource": "<p>The source type of the API key secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
+        "GetOauth2CredentialProviderResponse$clientSecretSource": "<p>The source type of the client secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
+        "GithubOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
+        "GoogleOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
+        "IncludedOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
+        "LinkedinOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
+        "MicrosoftOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
+        "SalesforceOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
+        "SlackOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
+        "StripePrivyConfigurationInput$appSecretSource": "<p>The source type of the app secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
+        "StripePrivyConfigurationInput$authorizationPrivateKeySource": "<p>The source type of the authorization private key. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
+        "StripePrivyConfigurationOutput$appSecretSource": "<p>The source type of the app secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
+        "StripePrivyConfigurationOutput$authorizationPrivateKeySource": "<p>The source type of the authorization private key. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
+        "UpdateApiKeyCredentialProviderRequest$apiKeySecretSource": "<p>The source type of the API key secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
+        "UpdateApiKeyCredentialProviderResponse$apiKeySecretSource": "<p>The source type of the API key secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
+        "UpdateOauth2CredentialProviderResponse$clientSecretSource": "<p>The source type of the client secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>"
+      }
+    },
     "SecretsManagerLocation": {
       "base": "<p>The Amazon Web Services Secrets Manager location configuration.</p>",
       "refs": {
@@ -6794,23 +6873,11 @@
         "StripePrivyConfigurationOutput$appId": "<p>The app ID provided by Privy.</p>"
       }
     },
-    "StripePrivyAppSecretType": {
-      "base": null,
-      "refs": {
-        "StripePrivyConfigurationInput$appSecret": "<p>The app secret provided by Privy.</p>"
-      }
-    },
     "StripePrivyAuthorizationIdType": {
       "base": null,
       "refs": {
         "StripePrivyConfigurationInput$authorizationId": "<p>The authorization ID for the Stripe Privy integration.</p>",
         "StripePrivyConfigurationOutput$authorizationId": "<p>The authorization ID for the Stripe Privy integration.</p>"
-      }
-    },
-    "StripePrivyAuthorizationPrivateKeyType": {
-      "base": null,
-      "refs": {
-        "StripePrivyConfigurationInput$authorizationPrivateKey": "<p>The authorization private key for the Stripe Privy integration.</p>"
       }
     },
     "StripePrivyConfigurationInput": {

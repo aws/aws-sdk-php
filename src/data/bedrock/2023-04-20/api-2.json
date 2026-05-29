@@ -2598,6 +2598,12 @@
       "min":0,
       "sensitive":true
     },
+    "AutomatedReasoningPolicyBuildFeedback":{
+      "type":"string",
+      "max":4000,
+      "min":0,
+      "sensitive":true
+    },
     "AutomatedReasoningPolicyBuildLog":{
       "type":"structure",
       "required":["entries"],
@@ -2813,7 +2819,9 @@
         "REFINE_POLICY",
         "IMPORT_POLICY",
         "GENERATE_FIDELITY_REPORT",
-        "GENERATE_POLICY_SCENARIOS"
+        "GENERATE_POLICY_SCENARIOS",
+        "RESOLVE_POLICY_AMBIGUITIES",
+        "ITERATIVELY_REFINE_POLICY"
       ]
     },
     "AutomatedReasoningPolicyConflictedRuleIdList":{
@@ -3195,6 +3203,20 @@
       "members":{
         "content":{"shape":"AutomatedReasoningPolicyAnnotationIngestContent"}
       }
+    },
+    "AutomatedReasoningPolicyIterativeRefinementContent":{
+      "type":"structure",
+      "required":["documents"],
+      "members":{
+        "documents":{"shape":"AutomatedReasoningPolicyIterativeRefinementDocumentList"},
+        "feedback":{"shape":"AutomatedReasoningPolicyBuildFeedback"}
+      }
+    },
+    "AutomatedReasoningPolicyIterativeRefinementDocumentList":{
+      "type":"list",
+      "member":{"shape":"AutomatedReasoningPolicyBuildWorkflowDocument"},
+      "max":5,
+      "min":1
     },
     "AutomatedReasoningPolicyJustificationList":{
       "type":"list",
@@ -3604,7 +3626,8 @@
       "members":{
         "documents":{"shape":"AutomatedReasoningPolicyBuildWorkflowDocumentList"},
         "policyRepairAssets":{"shape":"AutomatedReasoningPolicyBuildWorkflowRepairContent"},
-        "generateFidelityReportContent":{"shape":"AutomatedReasoningPolicyGenerateFidelityReportContent"}
+        "generateFidelityReportContent":{"shape":"AutomatedReasoningPolicyGenerateFidelityReportContent"},
+        "iterativeRefinementContent":{"shape":"AutomatedReasoningPolicyIterativeRefinementContent"}
       },
       "union":true
     },
