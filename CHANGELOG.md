@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.383.2 - 2026-06-01
 
 * `Aws\IoTEventsData` - Adding new BDD representation of endpoint ruleset
 * `Aws\KinesisAnalytics` - Adding new BDD representation of endpoint ruleset
