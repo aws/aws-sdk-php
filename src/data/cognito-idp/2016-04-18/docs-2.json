@@ -45,6 +45,7 @@
     "CreateUserPool": "<p>Creates a new Amazon Cognito user pool. This operation sets basic and advanced configuration options.</p> <important> <p>If you don't provide a value for an attribute, Amazon Cognito sets it to its default value.</p> </important> <note> <p>This action might generate an SMS text message. Starting June 1, 2021, US telecom carriers require you to register an origination phone number before you can send SMS messages to US phone numbers. If you use SMS text messages in Amazon Cognito, you must register a phone number with <a href=\"https://console.aws.amazon.com/pinpoint/home/\">Amazon Pinpoint</a>. Amazon Cognito uses the registered number automatically. Otherwise, Amazon Cognito users who must receive SMS messages might not be able to sign up, activate their accounts, or sign in.</p> <p>If you have never used SMS text messages with Amazon Cognito or any other Amazon Web Services service, Amazon Simple Notification Service might place your account in the SMS sandbox. In <i> <a href=\"https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html\">sandbox mode</a> </i>, you can send messages only to verified phone numbers. After you test your app while in the sandbox environment, you can move out of the sandbox and into production. For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-sms-settings.html\"> SMS message settings for Amazon Cognito user pools</a> in the <i>Amazon Cognito Developer Guide</i>.</p> </note> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "CreateUserPoolClient": "<p>Creates an app client in a user pool. This operation sets basic and advanced configuration options.</p> <p>Unlike app clients created in the console, Amazon Cognito doesn't automatically assign a branding style to app clients that you configure with this API operation. Managed login and classic hosted UI pages aren't available for your client until after you apply a branding style.</p> <important> <p>If you don't provide a value for an attribute, Amazon Cognito sets it to its default value.</p> </important> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "CreateUserPoolDomain": "<p>A user pool domain hosts managed login, an authorization server and web server for authentication in your application. This operation creates a new user pool prefix domain or custom domain and sets the managed login branding version. Set the branding version to <code>1</code> for hosted UI (classic) or <code>2</code> for managed login. When you choose a custom domain, you must provide an SSL certificate in the US East (N. Virginia) Amazon Web Services Region in your request.</p> <p>Your prefix domain might take up to one minute to take effect. Your custom domain is online within five minutes, but it can take up to one hour to distribute your SSL certificate.</p> <p>For more information about adding a custom domain to your user pool, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-add-custom-domain.html\">Configuring a user pool domain</a>.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
+    "CreateUserPoolReplica": "<p>Creates a replica of an existing user pool in a specified Amazon Web Services Region. The replica enables multi-region replication for high availability and disaster recovery. To create a replica, you must have permissions to create user pools in the target Region.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "DeleteGroup": "<p>Deletes a group from the specified user pool. When you delete a group, that group no longer contributes to users' <code>cognito:preferred_group</code> or <code>cognito:groups</code> claims, and no longer influence access-control decision that are based on group membership. For more information about user pool groups, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-user-groups.html\">Adding groups to a user pool</a>.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "DeleteIdentityProvider": "<p>Deletes a user pool identity provider (IdP). After you delete an IdP, users can no longer sign in to your user pool through that IdP. For more information about user pool IdPs, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-identity-federation.html\">Third-party IdP sign-in</a>.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "DeleteManagedLoginBranding": "<p>Deletes a managed login branding style. When you delete a style, you delete the branding association for an app client. When an app client doesn't have a style assigned, your managed login pages for that app client are nonfunctional until you create a new style or switch the domain branding version.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
@@ -56,6 +57,7 @@
     "DeleteUserPoolClient": "<p>Deletes a user pool app client. After you delete an app client, users can no longer sign in to the associated application.</p>",
     "DeleteUserPoolClientSecret": "<p>Deletes a specific client secret from a user pool app client. You cannot delete the last remaining secret for an app client.</p>",
     "DeleteUserPoolDomain": "<p>Given a user pool ID and domain identifier, deletes a user pool domain. After you delete a user pool domain, your managed login pages and authorization server are no longer available.</p>",
+    "DeleteUserPoolReplica": "<p>Deletes a secondary replica user pool. You can only delete replicas that are in the INACTIVE status. This operation must be called from the primary Region.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "DeleteWebAuthnCredential": "<p>Deletes a registered passkey, or WebAuthn, authenticator for the currently signed-in user.</p> <p>Authorize this action with a signed-in user's access token. It must include the scope <code>aws.cognito.signin.user.admin</code>.</p> <note> <p>Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you can't use IAM credentials to authorize requests, and you can't grant IAM permissions in policies. For more information about authorization models in Amazon Cognito, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a>.</p> </note>",
     "DescribeIdentityProvider": "<p>Given a user pool ID and identity provider (IdP) name, returns details about the IdP.</p>",
     "DescribeManagedLoginBranding": "<p>Given the ID of a managed login branding style, returns detailed information about the style.</p>",
@@ -92,6 +94,7 @@
     "ListUserImportJobs": "<p>Given a user pool ID, returns user import jobs and their details. Import jobs are retained in user pool configuration so that you can stage, stop, start, review, and delete them. For more information about user import, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-using-import-tool.html\">Importing users from a CSV file</a>.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "ListUserPoolClientSecrets": "<p>Lists all client secrets associated with a user pool app client. Returns metadata about the secrets. The response does not include pagination tokens as there are only 2 secrets at any given time and we return both with every ListUserPoolClientSecrets call. For security reasons, the response never reveals the actual secret value in ClientSecretValue.</p>",
     "ListUserPoolClients": "<p>Given a user pool ID, lists app clients. App clients are sets of rules for the access that you want a user pool to grant to one application. For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-client-apps.html\">App clients</a>.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
+    "ListUserPoolReplicas": "<p>Lists all replicas for a user pool, including both primary and secondary replicas. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "ListUserPools": "<p>Lists user pools and their details in the current Amazon Web Services account.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "ListUsers": "<p>Given a user pool ID, returns a list of users and their basic details in a user pool.</p> <p>This operation is eventually consistent. You might experience a delay before results are up-to-date. To validate the existence or configuration of an individual user, use <code>AdminGetUser</code>.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "ListUsersInGroup": "<p>Given a user pool ID and a group name, returns a list of users in the group. For more information about user pool groups, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-user-groups.html\">Adding groups to a user pool</a>.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
@@ -100,7 +103,7 @@
     "RespondToAuthChallenge": "<p>Some API operations in a user pool generate a challenge, like a prompt for an MFA code, for device authentication that bypasses MFA, or for a custom authentication challenge. A <code>RespondToAuthChallenge</code> API request provides the answer to that challenge, like a code or a secure remote password (SRP). The parameters of a response to an authentication challenge vary with the type of challenge.</p> <p>For more information about custom authentication challenges, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-lambda-challenge.html\">Custom authentication challenge Lambda triggers</a>.</p> <note> <p>Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you can't use IAM credentials to authorize requests, and you can't grant IAM permissions in policies. For more information about authorization models in Amazon Cognito, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a>.</p> </note> <note> <p>This action might generate an SMS text message. Starting June 1, 2021, US telecom carriers require you to register an origination phone number before you can send SMS messages to US phone numbers. If you use SMS text messages in Amazon Cognito, you must register a phone number with <a href=\"https://console.aws.amazon.com/pinpoint/home/\">Amazon Pinpoint</a>. Amazon Cognito uses the registered number automatically. Otherwise, Amazon Cognito users who must receive SMS messages might not be able to sign up, activate their accounts, or sign in.</p> <p>If you have never used SMS text messages with Amazon Cognito or any other Amazon Web Services service, Amazon Simple Notification Service might place your account in the SMS sandbox. In <i> <a href=\"https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html\">sandbox mode</a> </i>, you can send messages only to verified phone numbers. After you test your app while in the sandbox environment, you can move out of the sandbox and into production. For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-sms-settings.html\"> SMS message settings for Amazon Cognito user pools</a> in the <i>Amazon Cognito Developer Guide</i>.</p> </note>",
     "RevokeToken": "<p>Revokes all of the access tokens generated by, and at the same time as, the specified refresh token. After a token is revoked, you can't use the revoked token to access Amazon Cognito user APIs, or to authorize access to your resource server.</p> <note> <p>Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you can't use IAM credentials to authorize requests, and you can't grant IAM permissions in policies. For more information about authorization models in Amazon Cognito, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a>.</p> </note>",
     "SetLogDeliveryConfiguration": "<p>Sets up or modifies the logging configuration of a user pool. User pools can export user notification logs and, when threat protection is active, user-activity logs. For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/exporting-quotas-and-usage.html\">Exporting user pool logs</a>.</p>",
-    "SetRiskConfiguration": "<p>Configures threat protection for a user pool or app client. Sets configuration for the following.</p> <ul> <li> <p>Responses to risks with adaptive authentication</p> </li> <li> <p>Responses to vulnerable passwords with compromised-credentials detection</p> </li> <li> <p>Notifications to users who have had risky activity detected</p> </li> <li> <p>IP-address denylist and allowlist</p> </li> </ul> <p>To set the risk configuration for the user pool to defaults, send this request with only the <code>UserPoolId</code> parameter. To reset the threat protection settings of an app client to be inherited from the user pool, send <code>UserPoolId</code> and <code>ClientId</code> parameters only. To change threat protection to audit-only or off, update the value of <code>UserPoolAddOns</code> in an <code>UpdateUserPool</code> request. To activate this setting, your user pool must be on the <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/feature-plans-features-plus.html\"> Plus tier</a>.</p>",
+    "SetRiskConfiguration": "<p>Configures threat protection for a user pool or app client. Sets configuration for the following.</p> <ul> <li> <p>Responses to risks with adaptive authentication</p> </li> <li> <p>Responses to vulnerable passwords with compromised-credentials detection</p> </li> <li> <p>Notifications to users who have had risky activity detected</p> </li> <li> <p>IP-address denylist and allowlist</p> </li> </ul> <p>To set the risk configuration for the user pool to defaults, send this request with only the <code>UserPoolId</code> parameter. To reset the threat protection settings of an app client to be inherited from the user pool, send <code>UserPoolId</code> and <code>ClientId</code> parameters only. To change threat protection to audit-only or off, update the value of <code>UserPoolAddOns</code> in an <code>UpdateUserPool</code> request. To activate this setting, your user pool must be on the <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/feature-plans-features-plus.html\"> Plus tier</a>.</p> <p>In secondary regions for user pools with multi-region replication, only the <code>SourceARN</code> and <code>From</code> attributes of <code>NotifyConfiguration</code> can be modified to configure region-specific SES integration. All other risk configuration settings must match the existing values to maintain consistency across replicas.</p>",
     "SetUICustomization": "<p>Configures UI branding settings for domains with the hosted UI (classic) branding version. Your user pool must have a domain. Configure a domain with .</p> <p>Set the default configuration for all clients with a <code>ClientId</code> of <code>ALL</code>. When the <code>ClientId</code> value is an app client ID, the settings you pass in this request apply to that app client and override the default <code>ALL</code> configuration.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "SetUserMFAPreference": "<p>Set the user's multi-factor authentication (MFA) method preference, including which MFA factors are activated and if any are preferred. Only one factor can be set as preferred. The preferred MFA factor will be used to authenticate a user if multiple factors are activated. If multiple options are activated and no preference is set, a challenge to choose an MFA option will be returned during sign-in. If an MFA type is activated for a user, the user will be prompted for MFA during all sign-in attempts unless device tracking is turned on and the device has been trusted. If you want MFA to be applied selectively based on the assessed risk level of sign-in attempts, deactivate MFA for users and turn on Adaptive Authentication for the user pool.</p> <p>Authorize this action with a signed-in user's access token. It must include the scope <code>aws.cognito.signin.user.admin</code>.</p> <note> <p>Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you can't use IAM credentials to authorize requests, and you can't grant IAM permissions in policies. For more information about authorization models in Amazon Cognito, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a>.</p> </note>",
     "SetUserPoolMfaConfig": "<p>Sets user pool multi-factor authentication (MFA) and passkey configuration. For more information about user pool MFA, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-mfa.html\">Adding MFA</a>. For more information about WebAuthn passkeys see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-authentication-flow-methods.html#amazon-cognito-user-pools-authentication-flow-methods-passkey\">Authentication flows</a>.</p> <note> <p>This action might generate an SMS text message. Starting June 1, 2021, US telecom carriers require you to register an origination phone number before you can send SMS messages to US phone numbers. If you use SMS text messages in Amazon Cognito, you must register a phone number with <a href=\"https://console.aws.amazon.com/pinpoint/home/\">Amazon Pinpoint</a>. Amazon Cognito uses the registered number automatically. Otherwise, Amazon Cognito users who must receive SMS messages might not be able to sign up, activate their accounts, or sign in.</p> <p>If you have never used SMS text messages with Amazon Cognito or any other Amazon Web Services service, Amazon Simple Notification Service might place your account in the SMS sandbox. In <i> <a href=\"https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html\">sandbox mode</a> </i>, you can send messages only to verified phone numbers. After you test your app while in the sandbox environment, you can move out of the sandbox and into production. For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-sms-settings.html\"> SMS message settings for Amazon Cognito user pools</a> in the <i>Amazon Cognito Developer Guide</i>.</p> </note>",
@@ -119,9 +122,10 @@
     "UpdateResourceServer": "<p>Updates the name and scopes of a resource server. All other fields are read-only. For more information about resource servers, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html\">Access control with resource servers</a>.</p> <important> <p>If you don't provide a value for an attribute, it is set to the default value.</p> </important> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "UpdateTerms": "<p>Modifies existing terms documents for the requested app client. When Terms and conditions and Privacy policy documents are configured, the app client displays links to them in the sign-up page of managed login for the app client.</p> <p>You can provide URLs for terms documents in the languages that are supported by <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-managed-login.html#managed-login-localization\">managed login localization</a>. Amazon Cognito directs users to the terms documents for their current language, with fallback to <code>default</code> if no document exists for the language.</p> <p>Each request accepts one type of terms document and a map of language-to-link for that document type. You must provide both types of terms documents in at least one language before Amazon Cognito displays your terms documents. Supply each type in separate requests.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-managed-login.html#managed-login-terms-documents\">Terms documents</a>.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "UpdateUserAttributes": "<p>Updates the currently signed-in user's attributes. To delete an attribute from the user, submit the attribute in your API request with a blank value.</p> <p>For custom attributes, you must add a <code>custom:</code> prefix to the attribute name, for example <code>custom:department</code>.</p> <p>Authorize this action with a signed-in user's access token. It must include the scope <code>aws.cognito.signin.user.admin</code>.</p> <note> <p>Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you can't use IAM credentials to authorize requests, and you can't grant IAM permissions in policies. For more information about authorization models in Amazon Cognito, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a>.</p> </note> <note> <p>This action might generate an SMS text message. Starting June 1, 2021, US telecom carriers require you to register an origination phone number before you can send SMS messages to US phone numbers. If you use SMS text messages in Amazon Cognito, you must register a phone number with <a href=\"https://console.aws.amazon.com/pinpoint/home/\">Amazon Pinpoint</a>. Amazon Cognito uses the registered number automatically. Otherwise, Amazon Cognito users who must receive SMS messages might not be able to sign up, activate their accounts, or sign in.</p> <p>If you have never used SMS text messages with Amazon Cognito or any other Amazon Web Services service, Amazon Simple Notification Service might place your account in the SMS sandbox. In <i> <a href=\"https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html\">sandbox mode</a> </i>, you can send messages only to verified phone numbers. After you test your app while in the sandbox environment, you can move out of the sandbox and into production. For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-sms-settings.html\"> SMS message settings for Amazon Cognito user pools</a> in the <i>Amazon Cognito Developer Guide</i>.</p> </note>",
-    "UpdateUserPool": "<p>Updates the configuration of a user pool. To avoid setting parameters to Amazon Cognito defaults, construct this API request to pass the existing configuration of your user pool, modified to include the changes that you want to make.</p> <important> <p>With the exception of <code>UserPoolTier</code>, if you don't provide a value for an attribute, Amazon Cognito sets it to its default value.</p> </important> <note> <p>This action might generate an SMS text message. Starting June 1, 2021, US telecom carriers require you to register an origination phone number before you can send SMS messages to US phone numbers. If you use SMS text messages in Amazon Cognito, you must register a phone number with <a href=\"https://console.aws.amazon.com/pinpoint/home/\">Amazon Pinpoint</a>. Amazon Cognito uses the registered number automatically. Otherwise, Amazon Cognito users who must receive SMS messages might not be able to sign up, activate their accounts, or sign in.</p> <p>If you have never used SMS text messages with Amazon Cognito or any other Amazon Web Services service, Amazon Simple Notification Service might place your account in the SMS sandbox. In <i> <a href=\"https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html\">sandbox mode</a> </i>, you can send messages only to verified phone numbers. After you test your app while in the sandbox environment, you can move out of the sandbox and into production. For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-sms-settings.html\"> SMS message settings for Amazon Cognito user pools</a> in the <i>Amazon Cognito Developer Guide</i>.</p> </note> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
+    "UpdateUserPool": "<p>Updates the configuration of a user pool. To avoid setting parameters to Amazon Cognito defaults, construct this API request to pass the existing configuration of your user pool, modified to include the changes that you want to make.</p> <important> <p>If you don't provide a value for an attribute, Amazon Cognito sets it to its default value.</p> </important> <p>In secondary regions for user pools with multi-region replication, regional configurations for email, SMS, Lambda functions, and tags can be updated. Both global and regional settings must be provided as inputs, with global settings required to match existing values to maintain consistency across replicas.</p> <note> <p>This action might generate an SMS text message. Starting June 1, 2021, US telecom carriers require you to register an origination phone number before you can send SMS messages to US phone numbers. If you use SMS text messages in Amazon Cognito, you must register a phone number with <a href=\"https://console.aws.amazon.com/pinpoint/home/\">Amazon Pinpoint</a>. Amazon Cognito uses the registered number automatically. Otherwise, Amazon Cognito users who must receive SMS messages might not be able to sign up, activate their accounts, or sign in.</p> <p>If you have never used SMS text messages with Amazon Cognito or any other Amazon Web Services service, Amazon Simple Notification Service might place your account in the SMS sandbox. In <i> <a href=\"https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html\">sandbox mode</a> </i>, you can send messages only to verified phone numbers. After you test your app while in the sandbox environment, you can move out of the sandbox and into production. For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-sms-settings.html\"> SMS message settings for Amazon Cognito user pools</a> in the <i>Amazon Cognito Developer Guide</i>.</p> </note> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "UpdateUserPoolClient": "<p>Given a user pool app client ID, updates the configuration. To avoid setting parameters to Amazon Cognito defaults, construct this API request to pass the existing configuration of your app client, modified to include the changes that you want to make.</p> <important> <p>If you don't provide a value for an attribute, Amazon Cognito sets it to its default value.</p> </important> <p>Unlike app clients created in the console, Amazon Cognito doesn't automatically assign a branding style to app clients that you configure with this API operation. Managed login and classic hosted UI pages aren't available for your client until after you apply a branding style.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "UpdateUserPoolDomain": "<p>A user pool domain hosts managed login, an authorization server and web server for authentication in your application. This operation updates the branding version for user pool domains between <code>1</code> for hosted UI (classic) and <code>2</code> for managed login. It also updates the SSL certificate for user pool custom domains.</p> <p>Changes to the domain branding version take up to one minute to take effect for a prefix domain and up to five minutes for a custom domain.</p> <p>This operation doesn't change the name of your user pool domain. To change your domain, delete it with <code>DeleteUserPoolDomain</code> and create a new domain with <code>CreateUserPoolDomain</code>.</p> <p>You can pass the ARN of a new Certificate Manager certificate in this request. Typically, ACM certificates automatically renew and you user pool can continue to use the same ARN. But if you generate a new certificate for your custom domain name, replace the original configuration with the new ARN in this request.</p> <p>ACM certificates for custom domains must be in the US East (N. Virginia) Amazon Web Services Region. After you submit your request, Amazon Cognito requires up to 1 hour to distribute your new certificate to your custom domain.</p> <p>For more information about adding a custom domain to your user pool, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-add-custom-domain.html\">Configuring a user pool domain</a>.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
+    "UpdateUserPoolReplica": "<p>Updates replica-specific settings for a user pool replica. You can modify the status to activate or deactivate the replica. This request can be made in both primary and secondary regions of the user pool.</p> <note> <p>Amazon Cognito evaluates Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you must use IAM credentials to authorize requests, and you must grant yourself the corresponding IAM permission in a policy.</p> <p class=\"title\"> <b>Learn more</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html\">Signing Amazon Web Services API Requests</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a> </p> </li> </ul> </note>",
     "VerifySoftwareToken": "<p>Registers the current user's time-based one-time password (TOTP) authenticator with a code generated in their authenticator app from a private key that's supplied by your user pool. Marks the user's software token MFA status as \"verified\" if successful. The request takes an access token or a session string, but not both.</p> <note> <p>Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you can't use IAM credentials to authorize requests, and you can't grant IAM permissions in policies. For more information about authorization models in Amazon Cognito, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a>.</p> </note>",
     "VerifyUserAttribute": "<p>Submits a verification code for a signed-in user who has added or changed a value of an auto-verified attribute. When successful, the user's attribute becomes verified and the attribute <code>email_verified</code> or <code>phone_number_verified</code> becomes <code>true</code>.</p> <p> If your user pool requires verification before Amazon Cognito updates the attribute value, this operation updates the affected attribute to its pending value.</p> <p>Authorize this action with a signed-in user's access token. It must include the scope <code>aws.cognito.signin.user.admin</code>.</p> <note> <p>Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies in requests for this API operation. For this operation, you can't use IAM credentials to authorize requests, and you can't grant IAM permissions in policies. For more information about authorization models in Amazon Cognito, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html\">Using the Amazon Cognito user pools API and user pool endpoints</a>.</p> </note>"
   },
@@ -504,6 +508,7 @@
         "UntagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the user pool that the tags are assigned to.</p>",
         "UpdateGroupRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that you want to associate with the group. The role assignment contributes to the <code>cognito:roles</code> and <code>cognito:preferred_role</code> claims in group members' tokens.</p>",
         "UserImportJobType$CloudWatchLogsRoleArn": "<p>The role Amazon Resource Name (ARN) for the Amazon CloudWatch Logging role for the user import job. For more information, see \"Creating the CloudWatch Logs IAM Role\" in the Amazon Cognito Developer Guide.</p>",
+        "UserPoolReplicaType$UserPoolArn": "<p>The Amazon Resource Name (ARN) of the replica user pool.</p>",
         "UserPoolType$Arn": "<p>The Amazon Resource Name (ARN) of the user pool.</p>"
       }
     },
@@ -1095,6 +1100,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateUserPoolReplicaRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateUserPoolReplicaResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateUserPoolRequest": {
       "base": "<p>Represents the request to create a user pool.</p>",
       "refs": {}
@@ -1238,6 +1251,14 @@
       "refs": {}
     },
     "DeleteUserPoolDomainResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteUserPoolReplicaRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteUserPoolReplicaResponse": {
       "base": null,
       "refs": {}
     },
@@ -1575,6 +1596,18 @@
       "base": "<p>This exception is thrown when there is a code mismatch and the service fails to configure the software token TOTP multi-factor authentication (MFA).</p>",
       "refs": {}
     },
+    "EncryptionKeyArnType": {
+      "base": null,
+      "refs": {
+        "KeyConfigurationType$KmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used for encryption. If not specified, Amazon Web Services managed keys are used.</p>"
+      }
+    },
+    "EncryptionKeyType": {
+      "base": null,
+      "refs": {
+        "KeyConfigurationType$KeyType": "<p>The type of encryption key used for the user pool.</p> <dl> <dt>AWS_OWNED_KEY</dt> <dd> <p>A key owned by Amazon Web Services in Key Management Service.</p> </dd> <dt>CUSTOMER_MANAGED_KEY</dt> <dd> <p>A key managed by the customer in Key Management Service. You must use a multi-region key to enable multi-region replication for a user pool.</p> </dd> </dl>"
+      }
+    },
     "EventContextDataType": {
       "base": "<p>The context data that your application submitted in an authentication request with threat protection, as displayed in an <code>AdminListUserAuthEvents</code> response.</p>",
       "refs": {
@@ -1646,6 +1679,12 @@
       "base": null,
       "refs": {
         "ExplicitAuthFlowsListType$member": null
+      }
+    },
+    "FailoverType": {
+      "base": "<p>Specifies failover configuration for multi-region user pool domains. Contains settings for the secondary region and health check configuration.</p>",
+      "refs": {
+        "RoutingType$Failover": "<p>The failover configuration that specifies the secondary region and health check settings.</p>"
       }
     },
     "FeatureType": {
@@ -1838,6 +1877,12 @@
         "UpdateGroupResponse$Group": "<p>Contains the updated details of the group, including precedence, IAM role, and description.</p>"
       }
     },
+    "HealthCheckIdType": {
+      "base": null,
+      "refs": {
+        "FailoverType$PrimaryRoute53HealthCheckId": "<p>The ID of the Amazon Web Services Route53 healthcheck that controls routing. If the healthcheck is healthy, traffic will be routed to the primary replica, and if the healthcheck is unhealthy, traffic will be routed to the secondary region.</p>"
+      }
+    },
     "HexStringType": {
       "base": null,
       "refs": {
@@ -1981,6 +2026,28 @@
       "base": "<p>This exception is thrown when the user pool configuration is not valid.</p>",
       "refs": {}
     },
+    "IssuerConfigurationType": {
+      "base": "<p>Specifies the issuer configuration for a user pool. Contains settings that determine how tokens are issued and validated.</p>",
+      "refs": {
+        "CreateUserPoolRequest$IssuerConfiguration": "<p>The issuer configuration for the user pool. Specifies the issuer type for token generation.</p>",
+        "UpdateUserPoolRequest$IssuerConfiguration": "<p>The issuer configuration for the user pool. In secondary regions, this parameter must match the existing configuration and cannot be modified.</p>",
+        "UserPoolType$IssuerConfiguration": "<p>The issuer configuration for the user pool, including token issuing settings.</p>"
+      }
+    },
+    "IssuerType": {
+      "base": null,
+      "refs": {
+        "IssuerConfigurationType$Type": "<p>The type of issuer configuration. Determines the token issuing behavior for the user pool.</p> <dl> <dt>ORIGINAL</dt> <dd> <p>The original issuer configuration for user pools. The issuer URL is hosted in the user pool’s region and provides OIDC endpoints specific to that region.</p> <p>Original issuers have the format of <code>https://cognito-idp.[region].amazonaws.com/[userPoolId]</code> </p> </dd> <dt>UPDATED</dt> <dd> <p>Recommended for all user pools, including for multi-Region replication. Updated issuers host the same JWKS content in multiple regions, resulting in improved resilience and efficiency.</p> <p>Updated issuers have the format of <code>https://issuer-cognito-idp.[region].amazonaws.com/[userPoolId]</code>, where region is the primary Amazon Web Services Region of your user pool.</p> </dd> </dl>"
+      }
+    },
+    "KeyConfigurationType": {
+      "base": "<p>Specifies the key configuration for a user pool. Contains settings for encryption keys used to secure user pool data.</p>",
+      "refs": {
+        "CreateUserPoolRequest$KeyConfiguration": "<p>The key configuration for the user pool. Specifies the key type and KMS key ARN for encryption.</p>",
+        "UpdateUserPoolRequest$KeyConfiguration": "<p>The key configuration for the user pool. In secondary regions, this parameter must match the existing configuration and cannot be modified.</p>",
+        "UserPoolType$KeyConfiguration": "<p>The key configuration for the user pool, including encryption settings.</p>"
+      }
+    },
     "LambdaConfigType": {
       "base": "<p>A collection of user pool Lambda triggers. Amazon Cognito invokes triggers at several possible stages of user pool operations. Triggers can modify the outcome of the operations that invoked them.</p>",
       "refs": {
@@ -2108,6 +2175,14 @@
     },
     "ListUserPoolClientsResponse": {
       "base": "<p>Represents the response from the server that lists user pool clients.</p>",
+      "refs": {}
+    },
+    "ListUserPoolReplicasRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListUserPoolReplicasResponse": {
+      "base": null,
       "refs": {}
     },
     "ListUserPoolsRequest": {
@@ -2267,6 +2342,7 @@
         "MFAMethodNotFoundException$message": "<p>The message returned when Amazon Cognito throws an MFA method not found exception.</p>",
         "ManagedLoginBrandingExistsException$message": null,
         "NotAuthorizedException$message": "<p>The message returned when the Amazon Cognito service returns a not authorized exception.</p>",
+        "OperationNotEnabledException$message": null,
         "PasswordHistoryPolicyViolationException$message": null,
         "PasswordResetRequiredException$message": "<p>The message returned when a password reset is required.</p>",
         "PreconditionNotMetException$message": "<p>The message returned when a precondition is not met.</p>",
@@ -2344,6 +2420,10 @@
         "UserPoolClientType$AllowedOAuthFlows": "<p>The OAuth grant types that you want your app client to generate. To create an app client that generates client credentials grants, you must add <code>client_credentials</code> as the only allowed OAuth flow.</p> <dl> <dt>code</dt> <dd> <p>Use a code grant flow, which provides an authorization code as the response. This code can be exchanged for access tokens with the <code>/oauth2/token</code> endpoint.</p> </dd> <dt>implicit</dt> <dd> <p>Issue the access token (and, optionally, ID token, based on scopes) directly to your user.</p> </dd> <dt>client_credentials</dt> <dd> <p>Issue the access token from the <code>/oauth2/token</code> endpoint directly to a non-person user using a combination of the client ID and client secret.</p> </dd> </dl>"
       }
     },
+    "OperationNotEnabledException": {
+      "base": "<p>This exception is thrown when an operation is not available in the current region or for the current user pool configuration. This can occur when attempting to perform operations that are not supported in secondary replica regions.</p>",
+      "refs": {}
+    },
     "PaginationKey": {
       "base": null,
       "refs": {
@@ -2372,6 +2452,8 @@
         "ListResourceServersResponse$NextToken": "<p>The identifier that Amazon Cognito returned with the previous request to this operation. When you include a pagination token in your request, Amazon Cognito returns the next set of items in the list. By use of this token, you can paginate through the full list of items.</p>",
         "ListUserImportJobsRequest$PaginationToken": "<p>This API operation returns a limited number of results. The pagination token is an identifier that you can present in an additional API request with the same parameters. When you include the pagination token, Amazon Cognito returns the next set of items after the current list. Subsequent requests return a new pagination token. By use of this token, you can paginate through the full list of items.</p>",
         "ListUserImportJobsResponse$PaginationToken": "<p>The identifier that Amazon Cognito returned with the previous request to this operation. When you include a pagination token in your request, Amazon Cognito returns the next set of items in the list. By use of this token, you can paginate through the full list of items.</p>",
+        "ListUserPoolReplicasRequest$NextToken": "<p>A pagination token for retrieving the next page of results. If this parameter is omitted, the operation returns the first page of results.</p>",
+        "ListUserPoolReplicasResponse$NextToken": "<p>A pagination token for retrieving the next page of results. If this value is null, there are no more results to retrieve.</p>",
         "ListUserPoolsRequest$NextToken": "<p>This API operation returns a limited number of results. The pagination token is an identifier that you can present in an additional API request with the same parameters. When you include the pagination token, Amazon Cognito returns the next set of items after the current list. Subsequent requests return a new pagination token. By use of this token, you can paginate through the full list of items.</p>",
         "ListUserPoolsResponse$NextToken": "<p>The identifier that Amazon Cognito returned with the previous request to this operation. When you include a pagination token in your request, Amazon Cognito returns the next set of items in the list. By use of this token, you can paginate through the full list of items.</p>"
       }
@@ -2582,10 +2664,38 @@
         "SmsConfigurationType$SnsRegion": "<p>The Amazon Web Services Region to use with Amazon SNS integration. You can choose the same Region as your user pool, or a supported <b>Legacy Amazon SNS alternate Region</b>. </p> <p> Amazon Cognito resources in the Asia Pacific (Seoul) Amazon Web Services Region must use your Amazon SNS configuration in the Asia Pacific (Tokyo) Region. For more information, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-sms-settings.html\">SMS message settings for Amazon Cognito user pools</a>.</p>"
       }
     },
+    "RegionNameType": {
+      "base": null,
+      "refs": {
+        "CreateUserPoolReplicaRequest$RegionName": "<p>The Amazon Web Services Region where you want to create the replica user pool.</p>",
+        "DeleteUserPoolReplicaRequest$RegionName": "<p>The Amazon Web Services Region of the replica to delete.</p>",
+        "FailoverType$SecondaryRegion": "<p>The secondary Amazon Web Services Region to use for failover when the primary region becomes unavailable.</p>",
+        "UpdateUserPoolReplicaRequest$RegionName": "<p>The Amazon Web Services Region of the replica to update.</p>",
+        "UserPoolReplicaType$RegionName": "<p>The Amazon Web Services Region where the replica is located.</p>"
+      }
+    },
     "RelyingPartyIdType": {
       "base": null,
       "refs": {
         "WebAuthnConfigurationType$RelyingPartyId": "<p>Sets or displays the authentication domain, typically your user pool domain, that passkey providers must use as a relying party (RP) in their configuration.</p> <p>Under the following conditions, the passkey relying party ID must be the fully-qualified domain name of your custom domain:</p> <ul> <li> <p>The user pool is configured for passkey authentication.</p> </li> <li> <p>The user pool has a custom domain, whether or not it also has a prefix domain.</p> </li> <li> <p>Your application performs authentication with managed login or the classic hosted UI.</p> </li> </ul>"
+      }
+    },
+    "ReplicaRegionsType": {
+      "base": null,
+      "refs": {
+        "UserPoolDescriptionType$ReplicaRegions": "<p>A list of Amazon Web Services Regions where replicas of this user pool exist.</p>"
+      }
+    },
+    "ReplicaRoleType": {
+      "base": null,
+      "refs": {
+        "UserPoolReplicaType$Role": "<p>The role of the user pool replica that determines which API operations are enabled.</p> <dl> <dt>PRIMARY</dt> <dd> <p>The primary replica supports all end user and administrator operations.</p> </dd> <dt>SECONDARY</dt> <dd> <p>The secondary replica supports a limited set of end user and administrator operations. Generally, only administrator operations that set configurations specific to the replica, and only end-user operations that do not create or change attributes of a user are supported. </p> </dd> </dl>"
+      }
+    },
+    "ReplicaStatusType": {
+      "base": null,
+      "refs": {
+        "UserPoolReplicaType$Status": "<p>The current status of the replica.</p> <dl> <dt>CREATING</dt> <dd> <p>The replica is being created.</p> </dd> <dt>INACTIVE</dt> <dd> <p>The replica has been created, but is not accepting requests for end-users. Administrator configuration operations are supported.</p> </dd> <dt>ACTIVE</dt> <dd> <p>The replica is available for both end-user and administrator operations.</p> </dd> <dt>DELETING</dt> <dd> <p>The replica is being deleted.</p> </dd> </dl>"
       }
     },
     "ResendConfirmationCodeRequest": {
@@ -2711,6 +2821,16 @@
       "base": null,
       "refs": {
         "EventRiskType$RiskLevel": "<p>The risk level that adaptive authentication assessed for the authentication event.</p>"
+      }
+    },
+    "RoutingType": {
+      "base": "<p>Specifies routing configuration for user pool domains. Contains failover settings for multi-region deployments.</p>",
+      "refs": {
+        "CreateUserPoolDomainRequest$Routing": "<p>The configuration of routing for requests to the domain for replicas of a replicated user pool. The routing configuration is currently only supported for custom domains.</p>",
+        "CreateUserPoolDomainResponse$Routing": "<p>The routing configuration that was applied to the user pool domain.</p>",
+        "DomainDescriptionType$Routing": "<p>The routing configuration for the domain, including failover settings for multi-region deployments. Currently only <code>Failover</code> configurations are allowed.</p>",
+        "UpdateUserPoolDomainRequest$Routing": "<p>The routing configuration for the user pool domain. Specifies failover settings for multi-region deployments.</p>",
+        "UpdateUserPoolDomainResponse$Routing": "<p>The updated routing configuration for the user pool domain.</p>"
       }
     },
     "S3ArnType": {
@@ -3048,6 +3168,7 @@
         "ProviderDetailsType$value": null,
         "ProviderUserIdentifierType$ProviderAttributeName": "<p>The name of the provider attribute to link to, such as <code>NameID</code>.</p>",
         "ProviderUserIdentifierType$ProviderAttributeValue": "<p>The value of the provider attribute to link to, such as <code>xxxxx_account</code>.</p>",
+        "ReplicaRegionsType$member": null,
         "SignUpResponse$UserSub": "<p>The unique identifier of the new user, for example <code>a1b2c3d4-5678-90ab-cdef-EXAMPLE11111</code>.</p>",
         "SkippedIPRangeListType$member": null,
         "SmsConfigurationType$ExternalId": "<p>The external ID provides additional security for your IAM role. You can use an <code>ExternalId</code> with the IAM role that you use with Amazon SNS to send SMS messages for your user pool. If you provide an <code>ExternalId</code>, your Amazon Cognito user pool includes it in the request to assume your IAM role. You can configure the role trust policy to require that Amazon Cognito, and any principal, provide the <code>ExternalID</code>. If you use the Amazon Cognito Management Console to create a role for SMS multi-factor authentication (MFA), Amazon Cognito creates a role with the required permissions and a trust policy that demonstrates use of the <code>ExternalId</code>.</p> <p>For more information about the <code>ExternalId</code> of a role, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html\">How to use an external ID when granting access to your Amazon Web Services resources to a third party</a>.</p>",
@@ -3299,6 +3420,12 @@
       "base": null,
       "refs": {}
     },
+    "UpdateReplicaStatusType": {
+      "base": null,
+      "refs": {
+        "UpdateUserPoolReplicaRequest$Status": "<p>The status to set for the replica. Valid values are ACTIVE and INACTIVE.</p>"
+      }
+    },
     "UpdateResourceServerRequest": {
       "base": null,
       "refs": {}
@@ -3337,6 +3464,14 @@
     },
     "UpdateUserPoolDomainResponse": {
       "base": "<p>The UpdateUserPoolDomain response output.</p>",
+      "refs": {}
+    },
+    "UpdateUserPoolReplicaRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateUserPoolReplicaResponse": {
+      "base": null,
       "refs": {}
     },
     "UpdateUserPoolRequest": {
@@ -3510,6 +3645,7 @@
         "CreateUserImportJobRequest$UserPoolId": "<p>The ID of the user pool that you want to import users into.</p>",
         "CreateUserPoolClientRequest$UserPoolId": "<p>The ID of the user pool where you want to create an app client.</p>",
         "CreateUserPoolDomainRequest$UserPoolId": "<p>The ID of the user pool where you want to add a domain.</p>",
+        "CreateUserPoolReplicaRequest$UserPoolId": "<p>The ID of the user pool to replicate.</p>",
         "DeleteGroupRequest$UserPoolId": "<p>The ID of the user pool where you want to delete the group.</p>",
         "DeleteIdentityProviderRequest$UserPoolId": "<p>The ID of the user pool where you want to delete the identity provider.</p>",
         "DeleteManagedLoginBrandingRequest$UserPoolId": "<p>The ID of the user pool that contains the managed login branding style that you want to delete.</p>",
@@ -3518,6 +3654,7 @@
         "DeleteUserPoolClientRequest$UserPoolId": "<p>The ID of the user pool where you want to delete the client.</p>",
         "DeleteUserPoolClientSecretRequest$UserPoolId": "<p>The ID of the user pool that contains the app client.</p>",
         "DeleteUserPoolDomainRequest$UserPoolId": "<p>The ID of the user pool where you want to delete the domain.</p>",
+        "DeleteUserPoolReplicaRequest$UserPoolId": "<p>The ID of the user pool that contains the replica to delete.</p>",
         "DeleteUserPoolRequest$UserPoolId": "<p>The ID of the user pool that you want to delete.</p>",
         "DescribeIdentityProviderRequest$UserPoolId": "<p>The ID of the user pool that has the IdP that you want to describe..</p>",
         "DescribeManagedLoginBrandingByClientRequest$UserPoolId": "<p>The ID of the user pool that contains the app client where you want more information about the managed login branding style.</p>",
@@ -3546,6 +3683,7 @@
         "ListUserImportJobsRequest$UserPoolId": "<p>The ID of the user pool where you want to list import jobs.</p>",
         "ListUserPoolClientSecretsRequest$UserPoolId": "<p>The ID of the user pool that contains the app client.</p>",
         "ListUserPoolClientsRequest$UserPoolId": "<p>The ID of the user pool where you want to list user pool clients.</p>",
+        "ListUserPoolReplicasRequest$UserPoolId": "<p>The ID of the user pool for which to list replicas.</p>",
         "ListUsersInGroupRequest$UserPoolId": "<p>The ID of the user pool where you want to view the membership of the requested group.</p>",
         "ListUsersRequest$UserPoolId": "<p>The ID of the user pool where you want to display or search for users.</p>",
         "LogDeliveryConfigurationType$UserPoolId": "<p>The ID of the user pool where you configured logging.</p>",
@@ -3568,6 +3706,7 @@
         "UpdateTermsRequest$UserPoolId": "<p>The ID of the user pool that contains the terms that you want to update.</p>",
         "UpdateUserPoolClientRequest$UserPoolId": "<p>The ID of the user pool where you want to update the app client.</p>",
         "UpdateUserPoolDomainRequest$UserPoolId": "<p>The ID of the user pool that is associated with the domain you're updating.</p>",
+        "UpdateUserPoolReplicaRequest$UserPoolId": "<p>The ID of the user pool that contains the replica to update.</p>",
         "UpdateUserPoolRequest$UserPoolId": "<p>The ID of the user pool you want to update.</p>",
         "UserImportJobType$UserPoolId": "<p>The ID of the user pool that the users are being imported into.</p>",
         "UserPoolClientDescription$UserPoolId": "<p>The ID of the user pool that's associated with the app client.</p>",
@@ -3610,6 +3749,21 @@
         "UserPoolType$Policies": "<p>A list of user pool policies. Contains the policy that sets password-complexity requirements.</p>"
       }
     },
+    "UserPoolReplicaListType": {
+      "base": null,
+      "refs": {
+        "ListUserPoolReplicasResponse$UserPoolReplicas": "<p>A list of user pool replicas, including information about their status, role, and Region.</p>"
+      }
+    },
+    "UserPoolReplicaType": {
+      "base": "<p>Contains information about a replica user pool, including Region, status, role, and ARN.</p>",
+      "refs": {
+        "CreateUserPoolReplicaResponse$UserPoolReplica": "<p>Information about the created user pool replica, including its status and role.</p>",
+        "DeleteUserPoolReplicaResponse$UserPoolReplica": "<p>Information about the deleted user pool replica.</p>",
+        "UpdateUserPoolReplicaResponse$UserPoolReplica": "<p>Information about the updated user pool replica.</p>",
+        "UserPoolReplicaListType$member": null
+      }
+    },
     "UserPoolTaggingException": {
       "base": "<p>This exception is thrown when a user pool tag can't be set or updated.</p>",
       "refs": {}
@@ -3623,6 +3777,7 @@
     "UserPoolTagsType": {
       "base": null,
       "refs": {
+        "CreateUserPoolReplicaRequest$UserPoolTags": "<p>A map of tags to assign to the replica user pool. Each tag consists of a key and an optional value, both of which you define. You can maintain tags independently on replica user pools.</p>",
         "CreateUserPoolRequest$UserPoolTags": "<p>The tag keys and values to assign to the user pool. A tag is a label that you can use to categorize and manage user pools in different ways, such as by purpose, owner, environment, or other criteria.</p>",
         "ListTagsForResourceResponse$Tags": "<p>The tags that are assigned to the user pool.</p>",
         "TagResourceRequest$Tags": "<p>An array of tag keys and values that you want to assign to the user pool.</p>",

@@ -656,6 +656,52 @@
         "title": "Example user pool app client with email and username sign-in"
       }
     ],
+    "CreateUserPoolReplica": [
+      {
+        "input": {
+          "RegionName": "ap-south-1",
+          "UserPoolId": "us-east-1_abcd12345"
+        },
+        "output": {
+          "UserPoolReplica": {
+            "RegionName": "ap-south-1",
+            "Role": "SECONDARY",
+            "Status": "CREATING",
+            "UserPoolArn": "arn:aws:cognito-idp:ap-south-1:123456789012:userpool/us-east-1_abcd12345"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example creates a replica of a user pool in the ap-south-1 Region.",
+        "id": "example-create-a-replica-of-a-user-pool-in-a-new-region-1745281038615",
+        "title": "Example create a replica of a user pool in a new Region"
+      }
+    ],
+    "DeleteUserPoolReplica": [
+      {
+        "input": {
+          "RegionName": "us-east-2",
+          "UserPoolId": "us-west-2_abcd12345"
+        },
+        "output": {
+          "UserPoolReplica": {
+            "RegionName": "us-east-2",
+            "Role": "SECONDARY",
+            "Status": "DELETING",
+            "UserPoolArn": "arn:aws:cognito-idp:us-east-2:123456789012:userpool/us-west-2_abcd12345"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example deletes a user pool replica in the us-east-2 Region.",
+        "id": "example-delete-a-user-pool-replica-1745281451065",
+        "title": "Example delete a user pool replica"
+      }
+    ],
     "InitiateAuth": [
       {
         "input": {
@@ -692,6 +738,36 @@
         "description": "The following example signs in the user mytestuser with analytics data, client metadata, and user context data for advanced security.",
         "id": "example-username-and-password-sign-in-for-a-user-who-has-totp-mfa-1689887395219",
         "title": "Example username and password sign-in for a user who has TOTP MFA"
+      }
+    ],
+    "ListUserPoolReplicas": [
+      {
+        "input": {
+          "UserPoolId": "eu-north-1_abcd12345"
+        },
+        "output": {
+          "UserPoolReplicas": [
+            {
+              "RegionName": "ap-south-1",
+              "Role": "SECONDARY",
+              "Status": "CREATING",
+              "UserPoolArn": "arn:aws:cognito-idp:ap-south-1:123456789012:userpool/eu-north-1_abcd12345"
+            },
+            {
+              "RegionName": "eu-north-1",
+              "Role": "PRIMARY",
+              "Status": "ACTIVE",
+              "UserPoolArn": "arn:aws:cognito-idp:eu-north-1:123456789012:userpool/eu-north-1_abcd12345"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example lists the replicas of a user pool that has a replica in the ap-south-1 Region.",
+        "id": "example-list-the-replicas-of-a-user-pool-1745281209294",
+        "title": "Example list the replicas of a user pool"
       }
     ],
     "ListUsers": [
@@ -769,6 +845,30 @@
         "description": "This request submits a value for all possible parameters for ListUsers. By iterating the PaginationToken, you can page through and collect all users in a user pool.",
         "id": "a-listusers-request-for-the-next-3-users-whose-email-address-starts-with-testuser-1689977648246",
         "title": "A ListUsers request for the next 3 users whose email address starts with \"testuser.\""
+      }
+    ],
+    "UpdateUserPoolReplica": [
+      {
+        "input": {
+          "RegionName": "us-east-1",
+          "Status": "ACTIVE",
+          "UserPoolId": "ap-south-1_abcd12345"
+        },
+        "output": {
+          "UserPoolReplica": {
+            "RegionName": "us-east-1",
+            "Role": "SECONDARY",
+            "Status": "ACTIVE",
+            "UserPoolArn": "arn:aws:cognito-idp:us-east-1:123456789012:userpool/ap-south-1_abcd12345"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example sets the status of a user pool replica in the us-east-1 Region to ACTIVE.",
+        "id": "example-update-a-user-pool-replica-1745281323439",
+        "title": "Example update a user pool replica"
       }
     ]
   }

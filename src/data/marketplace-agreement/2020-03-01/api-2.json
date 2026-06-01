@@ -723,7 +723,8 @@
         "acceptor":{"shape":"Acceptor"},
         "proposer":{"shape":"Proposer"},
         "proposalSummary":{"shape":"ProposalSummary"},
-        "status":{"shape":"AgreementStatus"}
+        "status":{"shape":"AgreementStatus"},
+        "entitlements":{"shape":"EntitlementList"}
       }
     },
     "AgreementViewSummaryList":{
@@ -1148,6 +1149,16 @@
     "DocumentList":{
       "type":"list",
       "member":{"shape":"DocumentItem"}
+    },
+    "Entitlement":{
+      "type":"structure",
+      "members":{
+        "licenseArn":{"shape":"String"}
+      }
+    },
+    "EntitlementList":{
+      "type":"list",
+      "member":{"shape":"Entitlement"}
     },
     "EntitlementType":{
       "type":"string",

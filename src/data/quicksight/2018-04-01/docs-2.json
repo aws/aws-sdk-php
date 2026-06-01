@@ -8,12 +8,14 @@
     "CreateAccountCustomization": "<p>Creates Amazon Quick Sight customizations. Currently, you can add a custom default theme by using the <code>CreateAccountCustomization</code> or <code>UpdateAccountCustomization</code> API operation. To further customize Amazon Quick Sight by removing Amazon Quick Sight sample assets and videos for all new users, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/customizing-quicksight.html\">Customizing Quick Sight</a> in the <i>Amazon Quick Sight User Guide.</i> </p> <p>You can create customizations for your Amazon Web Services account or, if you specify a namespace, for a Quick Sight namespace instead. Customizations that apply to a namespace always override customizations that apply to an Amazon Web Services account. To find out which customizations apply, use the <code>DescribeAccountCustomization</code> API operation.</p> <p>Before you use the <code>CreateAccountCustomization</code> API operation to add a theme as the namespace default, make sure that you first share the theme with the namespace. If you don't share it with the namespace, the theme isn't visible to your users even if you make it the default theme. To check if the theme is shared, view the current permissions by using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeThemePermissions.html\">DescribeThemePermissions</a> </code> API operation. To share the theme, grant permissions by using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdateThemePermissions.html\">UpdateThemePermissions</a> </code> API operation. </p>",
     "CreateAccountSubscription": "<p>Creates an Amazon Quick Sight account, or subscribes to Amazon Quick Sight Q.</p> <p>The Amazon Web Services Region for the account is derived from what is configured in the CLI or SDK.</p> <p>Before you use this operation, make sure that you can connect to an existing Amazon Web Services account. If you don't have an Amazon Web Services account, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/setting-up-aws-sign-up.html\">Sign up for Amazon Web Services</a> in the <i>Amazon Quick Sight User Guide</i>. The person who signs up for Amazon Quick Sight needs to have the correct Identity and Access Management (IAM) permissions. For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/iam-policy-examples.html\">IAM Policy Examples for Amazon Quick Sight</a> in the <i>Amazon Quick Sight User Guide</i>.</p> <p>If your IAM policy includes both the <code>Subscribe</code> and <code>CreateAccountSubscription</code> actions, make sure that both actions are set to <code>Allow</code>. If either action is set to <code>Deny</code>, the <code>Deny</code> action prevails and your API call fails.</p> <p>You can't pass an existing IAM role to access other Amazon Web Services services using this API operation. To pass your existing IAM role to Amazon Quick Sight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/security_iam_service-with-iam.html#security-create-iam-role\">Passing IAM roles to Amazon Quick Sight</a> in the <i>Amazon Quick Sight User Guide</i>.</p> <p>You can't set default resource access on the new account from the Amazon Quick Sight API. Instead, add default resource access from the Amazon Quick Sight console. For more information about setting default resource access to Amazon Web Services services, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/scoping-policies-defaults.html\">Setting default resource access to Amazon Web Services services</a> in the <i>Amazon Quick Sight User Guide</i>.</p>",
     "CreateActionConnector": "<p>Creates an action connector that enables Amazon Quick Sight to connect to external services and perform actions. Action connectors support various authentication methods and can be configured with specific actions from supported connector types like Amazon S3, Salesforce, JIRA.</p>",
+    "CreateAgent": "<p>Creates an agent in Amazon QuickSight.</p>",
     "CreateAnalysis": "<p>Creates an analysis in Amazon Quick Sight. Analyses can be created either from a template or from an <code>AnalysisDefinition</code>.</p>",
     "CreateBrand": "<p>Creates an Quick Sight brand.</p>",
     "CreateCustomPermissions": "<p>Creates a custom permissions profile.</p>",
     "CreateDashboard": "<p>Creates a dashboard from either a template or directly with a <code>DashboardDefinition</code>. To first create a template, see the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_CreateTemplate.html\">CreateTemplate</a> </code> API operation.</p> <p>A dashboard is an entity in Amazon Quick Sight that identifies Amazon Quick Sight reports, created from analyses. You can share Amazon Quick Sight dashboards. With the right permissions, you can create scheduled email reports from them. If you have the correct permissions, you can create a dashboard from a template that exists in a different Amazon Web Services account.</p>",
     "CreateDataSet": "<p>Creates a dataset. This operation doesn't support datasets that include uploaded files as a source.</p>",
     "CreateDataSource": "<p>Creates a data source.</p>",
+    "CreateFlow": "<p>Creates a new flow in the specified Amazon Web Services account. Creates both a DRAFT and PUBLISHED (auto-published) version.</p> <p>This operation is idempotent. Supply a <code>ClientToken</code> to safely retry without creating duplicate resources.</p>",
     "CreateFolder": "<p>Creates an empty shared folder.</p>",
     "CreateFolderMembership": "<p>Adds an asset, such as a dashboard, analysis, or dataset into a folder.</p>",
     "CreateGroup": "<p>Use the <code>CreateGroup</code> operation to create a group in Quick Sight. You can create up to 10,000 groups in a namespace. If you want to create more than 10,000 groups in a namespace, contact Amazon Web Services Support.</p> <p>The permissions resource is <code>arn:aws:quicksight:&lt;your-region&gt;:<i>&lt;relevant-aws-account-id&gt;</i>:group/default/<i>&lt;group-name&gt;</i> </code>.</p> <p>The response is a group object.</p>",
@@ -24,6 +26,7 @@
     "CreateOAuthClientApplication": "<p>Creates an OAuthClientApplication.</p>",
     "CreateRefreshSchedule": "<p>Creates a refresh schedule for a dataset. You can create up to 5 different schedules for a single dataset.</p>",
     "CreateRoleMembership": "<p>Use <code>CreateRoleMembership</code> to add an existing Quick Sight group to an existing role.</p>",
+    "CreateSpace": "<p>Creates a new Amazon QuickSight space. A space is a collection of resources that can be used to organize and manage QuickSight assets.</p>",
     "CreateTemplate": "<p>Creates a template either from a <code>TemplateDefinition</code> or from an existing Quick Sight analysis or template. You can use the resulting template to create additional dashboards, templates, or analyses.</p> <p>A <i>template</i> is an entity in Quick Sight that encapsulates the metadata required to create an analysis and that you can use to create s dashboard. A template adds a layer of abstraction by using placeholders to replace the dataset associated with the analysis. You can use templates to create dashboards by replacing dataset placeholders with datasets that follow the same schema that was used to create the source analysis and template.</p>",
     "CreateTemplateAlias": "<p>Creates a template alias for a template.</p>",
     "CreateTheme": "<p>Creates a theme.</p> <p>A <i>theme</i> is set of configuration options for color and layout. Themes apply to analyses and dashboards. For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/themes-in-quicksight.html\">Using Themes in Amazon Quick Sight</a> in the <i>Amazon Quick Sight User Guide</i>.</p>",
@@ -35,6 +38,7 @@
     "DeleteAccountCustomization": "<important> <p>This API permanently deletes all Quick Sight customizations for the specified Amazon Web Services account and namespace. When you delete account customizations:</p> <ul> <li> <p>All customizations are removed including themes, branding, and visual settings</p> </li> <li> <p>This action cannot be undone through the API</p> </li> <li> <p>Users will see default Quick Sight styling after customizations are deleted</p> </li> </ul> <p> <b>Before proceeding:</b> Ensure you have backups of any custom themes or branding elements you may want to recreate.</p> </important> <p>Deletes all Amazon Quick Sight customizations for the specified Amazon Web Services account and Quick Sight namespace.</p>",
     "DeleteAccountSubscription": "<important> <p>Deleting your Quick Sight account subscription has permanent, irreversible consequences across all Amazon Web Services regions:</p> <ul> <li> <p>Global deletion – Running this operation from any single region will delete your Quick Sight account and all data in every Amazon Web Services region where you have Quick Sight resources.</p> </li> <li> <p>Complete data loss – All dashboards, analyses, datasets, data sources, and custom visuals will be permanently deleted across all regions.</p> </li> <li> <p>Embedded content failure – All embedded dashboards and visuals in your applications will immediately stop working and display errors to end users.</p> </li> <li> <p>Shared resources removed – All shared dashboards, folders, and resources will become inaccessible to other users and external recipients.</p> </li> <li> <p>User access terminated – All Quick Sight users in your account will lose access immediately, including authors, readers, and administrators.</p> </li> <li> <p> <b>No recovery possible</b> – Once deleted, your Quick Sight account and all associated data cannot be restored.</p> </li> </ul> <p>Consider exporting critical dashboards and data before proceeding with account deletion.</p> </important> <p>Use the <code>DeleteAccountSubscription</code> operation to delete an Quick Sight account. This operation will result in an error message if you have configured your account termination protection settings to <code>True</code>. To change this setting and delete your account, call the <code>UpdateAccountSettings</code> API and set the value of the <code>TerminationProtectionEnabled</code> parameter to <code>False</code>, then make another call to the <code>DeleteAccountSubscription</code> API.</p>",
     "DeleteActionConnector": "<p>Hard deletes an action connector, making it unrecoverable. This operation removes the connector and all its associated configurations. Any resources currently using this action connector will no longer be able to perform actions through it.</p>",
+    "DeleteAgent": "<p>Deletes an agent.</p>",
     "DeleteAnalysis": "<p>Deletes an analysis from Amazon Quick Sight. You can optionally include a recovery window during which you can restore the analysis. If you don't specify a recovery window value, the operation defaults to 30 days. Amazon Quick Sight attaches a <code>DeletionTime</code> stamp to the response that specifies the end of the recovery window. At the end of the recovery window, Amazon Quick Sight deletes the analysis permanently.</p> <p>At any time before recovery window ends, you can use the <code>RestoreAnalysis</code> API operation to remove the <code>DeletionTime</code> stamp and cancel the deletion of the analysis. The analysis remains visible in the API until it's deleted, so you can describe it but you can't make a template from it.</p> <p>An analysis that's scheduled for deletion isn't accessible in the Amazon Quick Sight console. To access it in the console, restore it. Deleting an analysis doesn't delete the dashboards that you publish from it.</p>",
     "DeleteBrand": "<important> <p>This API permanently deletes the specified Quick Sight brand. When you delete a brand:</p> <ul> <li> <p>The brand and all its associated branding elements are permanently removed</p> </li> <li> <p>Any applications or dashboards using this brand will revert to default styling</p> </li> <li> <p>This action cannot be undone through the API</p> </li> </ul> <p> <b>Before proceeding:</b> Verify that the brand is no longer needed and consider the impact on any applications currently using this brand.</p> </important> <p>Deletes an Quick Sight brand.</p>",
     "DeleteBrandAssignment": "<p>Deletes a brand assignment.</p>",
@@ -44,6 +48,7 @@
     "DeleteDataSetRefreshProperties": "<p>Deletes the dataset refresh properties of the dataset.</p>",
     "DeleteDataSource": "<p>Deletes the data source permanently. This operation breaks all the datasets that reference the deleted data source.</p>",
     "DeleteDefaultQBusinessApplication": "<p>Deletes a linked Amazon Q Business application from an Quick Sight account</p>",
+    "DeleteFlow": "<p>Permanently deletes a flow from the specified Amazon Web Services account. This operation cannot be undone.</p>",
     "DeleteFolder": "<p>Deletes an empty folder.</p>",
     "DeleteFolderMembership": "<p>Removes an asset, such as a dashboard, analysis, or dataset, from a folder.</p>",
     "DeleteGroup": "<p>Removes a user group from Amazon Quick Sight. </p>",
@@ -55,6 +60,7 @@
     "DeleteRefreshSchedule": "<p>Deletes a refresh schedule from a dataset.</p>",
     "DeleteRoleCustomPermission": "<p>Removes custom permissions from the role.</p>",
     "DeleteRoleMembership": "<p>Removes a group from a role.</p>",
+    "DeleteSpace": "<p>Deletes an Amazon QuickSight space.</p>",
     "DeleteTemplate": "<p>Deletes a template.</p>",
     "DeleteTemplateAlias": "<p>Deletes the item that the specified template alias points to. If you provide a specific alias, you delete the version of the template that the alias points to.</p>",
     "DeleteTheme": "<p>Deletes a theme.</p>",
@@ -71,6 +77,8 @@
     "DescribeAccountSubscription": "<p>Use the DescribeAccountSubscription operation to receive a description of an Quick Sight account's subscription. A successful API call returns an <code>AccountInfo</code> object that includes an account's name, subscription status, authentication type, edition, and notification email address.</p>",
     "DescribeActionConnector": "<p>Retrieves detailed information about an action connector, including its configuration, authentication settings, enabled actions, and current status.</p>",
     "DescribeActionConnectorPermissions": "<p>Retrieves the permissions configuration for an action connector, showing which users, groups, and namespaces have access and what operations they can perform.</p>",
+    "DescribeAgent": "<p>Describes an agent.</p>",
+    "DescribeAgentPermissions": "<p>Describes the resource permissions for an agent.</p>",
     "DescribeAnalysis": "<p>Provides a summary of the metadata for an analysis.</p>",
     "DescribeAnalysisDefinition": "<p>Provides a detailed description of the definition of an analysis.</p> <note> <p>If you do not need to know details about the content of an Analysis, for instance if you are trying to check the status of a recently created or updated Analysis, use the <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeAnalysis.html\"> <code>DescribeAnalysis</code> </a> instead. </p> </note>",
     "DescribeAnalysisPermissions": "<p>Provides the read and write permissions for an analysis.</p>",
@@ -93,6 +101,7 @@
     "DescribeDataSource": "<p>Describes a data source.</p>",
     "DescribeDataSourcePermissions": "<p>Describes the resource permissions for a data source.</p>",
     "DescribeDefaultQBusinessApplication": "<p>Describes a Amazon Q Business application that is linked to an Quick Sight account.</p>",
+    "DescribeFlow": "<p>Returns the full details of a flow for the latest version of the requested publish state.</p>",
     "DescribeFolder": "<p>Describes a folder.</p>",
     "DescribeFolderPermissions": "<p>Describes permissions for a folder.</p>",
     "DescribeFolderResolvedPermissions": "<p>Describes the folder resolved permissions. Permissions consists of both folder direct permissions and the inherited permissions from the ancestor folders.</p>",
@@ -109,6 +118,8 @@
     "DescribeRefreshSchedule": "<p>Provides a summary of a refresh schedule.</p>",
     "DescribeRoleCustomPermission": "<p>Describes all custom permissions that are mapped to a role.</p>",
     "DescribeSelfUpgradeConfiguration": "<p>Describes the self-upgrade configuration for a Quick account.</p>",
+    "DescribeSpace": "<p>Describes an Amazon QuickSight space.</p>",
+    "DescribeSpacePermissions": "<p>Describes the permissions for an Amazon QuickSight space.</p>",
     "DescribeTemplate": "<p>Describes a template's metadata.</p>",
     "DescribeTemplateAlias": "<p>Describes the template alias for a template.</p>",
     "DescribeTemplateDefinition": "<p>Provides a detailed description of the definition of a template.</p> <note> <p>If you do not need to know details about the content of a template, for instance if you are trying to check the status of a recently created or updated template, use the <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeTemplate.html\"> <code>DescribeTemplate</code> </a> instead. </p> </note>",
@@ -131,6 +142,7 @@
     "GetIdentityContext": "<p>Retrieves the identity context for a Quick Sight user in a specified namespace, allowing you to obtain identity tokens that can be used with identity-enhanced IAM role sessions to call identity-aware APIs.</p> <p>Currently, you can call the following APIs with identity-enhanced Credentials</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_StartDashboardSnapshotJob.html\">StartDashboardSnapshotJob</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeDashboardSnapshotJob.html\">DescribeDashboardSnapshotJob</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeDashboardSnapshotJobResult.html\">DescribeDashboardSnapshotJobResult</a> </p> </li> </ul> <p> <b>Supported Authentication Methods</b> </p> <p>This API supports Quick Sight native users, IAM federated users, and Active Directory users. For Quick Sight users authenticated by Amazon Web Services Identity Center, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-identity-enhanced-iam-role-sessions.html\">Identity Center documentation on identity-enhanced IAM role sessions</a>.</p> <p> <b>Supported Regions</b> </p> <p>The GetIdentityContext API works only in regions that support at least one of these identity types:</p> <ul> <li> <p>Amazon Quick Sight native identity</p> </li> <li> <p>IAM federated identity</p> </li> <li> <p>Active Directory</p> </li> </ul> <p>To use this API successfully, call it in the same region where your user's identity resides. For example, if your user's identity is in us-east-1, make the API call in us-east-1. For more information about managing identities in Amazon Quick Sight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/userguide/identity.html\">Identity and access management in Amazon Quick Sight</a> in the Amazon Quick Sight User Guide.</p> <p> <b>Getting Identity-Enhanced Credentials</b> </p> <p>To obtain identity-enhanced credentials, follow these steps:</p> <ul> <li> <p>Call the GetIdentityContext API to retrieve an identity token for the specified user.</p> </li> <li> <p>Use the identity token with the <a href=\"https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html\">STS AssumeRole API</a> to obtain identity-enhanced IAM role session credentials.</p> </li> </ul> <p> <b>Usage with STS AssumeRole</b> </p> <p>The identity token returned by this API should be used with the STS AssumeRole API to obtain credentials for an identity-enhanced IAM role session. When calling AssumeRole, include the identity token in the <code>ProvidedContexts</code> parameter with <code>ProviderArn</code> set to <code>arn:aws:iam::aws:contextProvider/QuickSight</code> and <code>ContextAssertion</code> set to the identity token received from this API.</p> <p>The assumed role must allow the <code>sts:SetContext</code> action in addition to <code>sts:AssumeRole</code> in its trust relationship policy. The trust policy should include both actions for the principal that will be assuming the role.</p>",
     "GetSessionEmbedUrl": "<p>Generates a session URL and authorization code that you can use to embed the Amazon Amazon Quick Sight console in your web server code. Use <code>GetSessionEmbedUrl</code> where you want to provide an authoring portal that allows users to create data sources, datasets, analyses, and dashboards. The users who access an embedded Amazon Quick Sight console need belong to the author or admin security cohort. If you want to restrict permissions to some of these features, add a custom permissions profile to the user with the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdateUser.html\">UpdateUser</a> </code> API operation. Use <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_RegisterUser.html\">RegisterUser</a> </code> API operation to add a new user with a custom permission profile attached. For more information, see the following sections in the <i>Amazon Quick User Guide</i>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics.html\">Embedding Analytics</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/customizing-permissions-to-the-quicksight-console.html\">Customizing Access to the Amazon Quick Console</a> </p> </li> </ul>",
     "ListActionConnectors": "<p>Lists all action connectors in the specified Amazon Web Services account. Returns summary information for each connector including its name, type, creation time, and status.</p>",
+    "ListAgents": "<p>Lists all agents in an Amazon QuickSight account.</p>",
     "ListAnalyses": "<p>Lists Amazon Quick Sight analyses that exist in the specified Amazon Web Services account.</p>",
     "ListAssetBundleExportJobs": "<p>Lists all asset bundle export jobs that have been taken place in the last 14 days. Jobs created more than 14 days ago are deleted forever and are not returned. If you are using the same job ID for multiple jobs, <code>ListAssetBundleExportJobs</code> only returns the most recent job that uses the repeated job ID.</p>",
     "ListAssetBundleImportJobs": "<p>Lists all asset bundle import jobs that have taken place in the last 14 days. Jobs created more than 14 days ago are deleted forever and are not returned. If you are using the same job ID for multiple jobs, <code>ListAssetBundleImportJobs</code> only returns the most recent job that uses the repeated job ID.</p>",
@@ -155,6 +167,8 @@
     "ListRefreshSchedules": "<p>Lists the refresh schedules of a dataset. Each dataset can have up to 5 schedules. </p>",
     "ListRoleMemberships": "<p>Lists all groups that are associated with a role.</p>",
     "ListSelfUpgrades": "<p>Lists all self-upgrade requests for a Quick account.</p>",
+    "ListSpaceResources": "<p>Lists the resources in an Amazon QuickSight space.</p>",
+    "ListSpaces": "<p>Lists all Amazon QuickSight spaces in an Amazon Web Services account.</p>",
     "ListTagsForResource": "<p>Lists the tags assigned to a resource.</p>",
     "ListTemplateAliases": "<p>Lists all the aliases of a template.</p>",
     "ListTemplateVersions": "<p>Lists all the versions of the templates in the current Amazon Quick Sight account.</p>",
@@ -173,6 +187,7 @@
     "RegisterUser": "<p>Creates an Amazon Quick Sight user whose identity is associated with the Identity and Access Management (IAM) identity or role specified in the request. When you register a new user from the Quick Sight API, Quick Sight generates a registration URL. The user accesses this registration URL to create their account. Quick Sight doesn't send a registration email to users who are registered from the Quick Sight API. If you want new users to receive a registration email, then add those users in the Quick Sight console. For more information on registering a new user in the Quick Sight console, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/managing-users.html#inviting-users\"> Inviting users to access Quick Sight</a>.</p>",
     "RestoreAnalysis": "<p>Restores an analysis.</p>",
     "SearchActionConnectors": "<p>Searches for action connectors in the specified Amazon Web Services account using filters. You can search by connector name, type, or user permissions.</p>",
+    "SearchAgents": "<p>Searches for agents based on specified filters.</p>",
     "SearchAnalyses": "<p>Searches for analyses that belong to the user specified in the filter.</p> <note> <p>This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.</p> </note>",
     "SearchDashboards": "<p>Searches for dashboards that belong to a user. </p> <note> <p>This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.</p> </note>",
     "SearchDataSets": "<p>Use the <code>SearchDataSets</code> operation to search for datasets that belong to an account.</p>",
@@ -180,6 +195,7 @@
     "SearchFlows": "<p>Search for the flows in an Amazon Web Services account.</p>",
     "SearchFolders": "<p>Searches the subfolders in a folder.</p>",
     "SearchGroups": "<p>Use the <code>SearchGroups</code> operation to search groups in a specified Quick Sight namespace using the supplied filters.</p>",
+    "SearchSpaces": "<p>Searches for Amazon QuickSight spaces that match the specified filters.</p>",
     "SearchTopics": "<p>Searches for any Q topic that exists in an Quick account.</p>",
     "StartAssetBundleExportJob": "<p>Starts an Asset Bundle export job.</p> <p>An Asset Bundle export job exports specified Amazon Quick Sight assets. You can also choose to export any asset dependencies in the same job. Export jobs run asynchronously and can be polled with a <code>DescribeAssetBundleExportJob</code> API call. When a job is successfully completed, a download URL that contains the exported assets is returned. The URL is valid for 5 minutes and can be refreshed with a <code>DescribeAssetBundleExportJob</code> API call. Each Amazon Quick Sight account can run up to 5 export jobs concurrently.</p> <p>The API caller must have the necessary permissions in their IAM role to access each resource before the resources can be exported.</p>",
     "StartAssetBundleImportJob": "<p>Starts an Asset Bundle import job.</p> <p>An Asset Bundle import job imports specified Amazon Quick Sight assets into an Amazon Quick Sight account. You can also choose to import a naming prefix and specified configuration overrides. The assets that are contained in the bundle file that you provide are used to create or update a new or existing asset in your Amazon Quick Sight account. Each Amazon Quick Sight account can run up to 5 import jobs concurrently.</p> <p>The API caller must have the necessary <code>\"create\"</code>, <code>\"describe\"</code>, and <code>\"update\"</code> permissions in their IAM role to access each resource type that is contained in the bundle file before the resources can be imported.</p>",
@@ -193,6 +209,8 @@
     "UpdateAccountSettings": "<p>Updates the Amazon Quick Sight settings in your Amazon Web Services account.</p>",
     "UpdateActionConnector": "<p>Updates an existing action connector with new configuration details, authentication settings, or enabled actions. You can modify the connector's name, description, authentication configuration, and which actions are enabled. For more information, <a href=\"https://docs.aws.amazon.com/quicksuite/latest/userguide/quick-action-auth.html\">https://docs.aws.amazon.com/quicksuite/latest/userguide/quick-action-auth.html</a>.</p>",
     "UpdateActionConnectorPermissions": "<p>Updates the permissions for an action connector by granting or revoking access for specific users and groups. You can control who can view, use, or manage the action connector.</p>",
+    "UpdateAgent": "<p>Updates an existing agent.</p>",
+    "UpdateAgentPermissions": "<p>Updates the resource permissions for an agent.</p>",
     "UpdateAnalysis": "<p>Updates an analysis in Amazon Quick Sight</p>",
     "UpdateAnalysisPermissions": "<p>Updates the read and write permissions for an analysis.</p>",
     "UpdateApplicationWithTokenExchangeGrant": "<p>Updates an Quick application with a token exchange grant. This operation only supports Quick applications that are registered with IAM Identity Center.</p>",
@@ -210,6 +228,7 @@
     "UpdateDataSource": "<p>Updates a data source.</p>",
     "UpdateDataSourcePermissions": "<p>Updates the permissions to a data source.</p>",
     "UpdateDefaultQBusinessApplication": "<p>Updates a Amazon Q Business application that is linked to a Quick Sight account.</p>",
+    "UpdateFlow": "<p>Updates an existing flow. Supply only the fields you want to change. Updates both DRAFT and PUBLISHED versions. When <code>FlowDefinition</code> is provided, all existing steps are replaced with the new definition.</p>",
     "UpdateFlowPermissions": "<p>Updates permissions against principals on a flow.</p>",
     "UpdateFolder": "<p>Updates the name of a folder.</p>",
     "UpdateFolderPermissions": "<p>Updates permissions of a folder.</p>",
@@ -227,6 +246,9 @@
     "UpdateSPICECapacityConfiguration": "<p>Updates the SPICE capacity configuration for a Quick Sight account.</p>",
     "UpdateSelfUpgrade": "<p>Updates a self-upgrade request for a Quick user by approving, denying, or verifying the request.</p>",
     "UpdateSelfUpgradeConfiguration": "<p>Updates the self-upgrade configuration for a Quick account.</p>",
+    "UpdateSpace": "<p>Updates the metadata of an Amazon QuickSight space.</p>",
+    "UpdateSpacePermissions": "<p>Updates the permissions for an Amazon QuickSight space.</p>",
+    "UpdateSpaceResources": "<p>Adds or removes resources from an Amazon QuickSight space.</p>",
     "UpdateTemplate": "<p>Updates a template from an existing Amazon Quick Sight analysis or another template.</p>",
     "UpdateTemplateAlias": "<p>Updates the template alias of a template.</p>",
     "UpdateTemplatePermissions": "<p>Updates the resource permissions for a template.</p>",
@@ -270,11 +292,15 @@
     "AccountId": {
       "base": null,
       "refs": {
+        "CreateFlowRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account where you want to create the flow.</p>",
+        "DeleteFlowRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the flow that you are deleting.</p>",
+        "DescribeFlowRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the flow that you are describing.</p>",
         "GetFlowMetadataInput$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the flow that you are getting metadata for.</p>",
         "GetFlowPermissionsInput$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the flow that you are getting permissions for.</p>",
         "ListFlowsInput$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the flow list that you are getting.</p>",
         "SearchFlowsInput$AwsAccountId": "<p>The ID of the Amazon Web Services account where you are searching for flows from.</p>",
-        "UpdateFlowPermissionsInput$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the flow you are updating permissions against.</p>"
+        "UpdateFlowPermissionsInput$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the flow you are updating permissions against.</p>",
+        "UpdateFlowRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the flow that you are updating.</p>"
       }
     },
     "AccountInfo": {
@@ -448,6 +474,128 @@
       "base": null,
       "refs": {
         "AdditionalNotes$Text": "<p>The additional notes text.</p>"
+      }
+    },
+    "Agent": {
+      "base": "<p>An agent resource in Amazon QuickSight that provides AI-powered conversational experiences.</p>",
+      "refs": {
+        "DescribeAgentResponse$Agent": "<p>The full details of the agent, including its configuration, status, and associations.</p>"
+      }
+    },
+    "AgentActionConnectorsList": {
+      "base": null,
+      "refs": {
+        "Agent$ActionConnectors": "<p>The Amazon Resource Names (ARNs) of the action connectors attached to the agent.</p>"
+      }
+    },
+    "AgentArn": {
+      "base": null,
+      "refs": {
+        "Agent$Arn": "<p>The Amazon Resource Name (ARN) of the agent.</p>",
+        "AgentSummary$Arn": "<p>The Amazon Resource Name (ARN) of the agent.</p>",
+        "CreateAgentResponse$Arn": "<p>The Amazon Resource Name (ARN) of the agent.</p>",
+        "DescribeAgentPermissionsResponse$Arn": "<p>The Amazon Resource Name (ARN) of the agent.</p>",
+        "UpdateAgentPermissionsResponse$Arn": "<p>The Amazon Resource Name (ARN) of the agent.</p>",
+        "UpdateAgentResponse$Arn": "<p>The Amazon Resource Name (ARN) of the agent.</p>"
+      }
+    },
+    "AgentDescription": {
+      "base": null,
+      "refs": {
+        "Agent$Description": "<p>A description of the agent.</p>",
+        "AgentSummary$Description": "<p>A description of the agent.</p>",
+        "CreateAgentRequest$Description": "<p>A description of the agent.</p>",
+        "UpdateAgentRequest$Description": "<p>A description of the agent.</p>"
+      }
+    },
+    "AgentId": {
+      "base": null,
+      "refs": {
+        "Agent$AgentId": "<p>The unique identifier for the agent.</p>",
+        "AgentSummary$AgentId": "<p>The unique identifier for the agent.</p>",
+        "CreateAgentRequest$AgentId": "<p>A unique identifier for the agent.</p>",
+        "CreateAgentResponse$AgentId": "<p>The unique identifier for the agent.</p>",
+        "DescribeAgentPermissionsRequest$AgentId": "<p>The unique identifier for the agent.</p>",
+        "DescribeAgentPermissionsResponse$AgentId": "<p>The unique identifier for the agent.</p>",
+        "DescribeAgentRequest$AgentId": "<p>The unique identifier for the agent.</p>",
+        "UpdateAgentPermissionsRequest$AgentId": "<p>The unique identifier for the agent.</p>",
+        "UpdateAgentPermissionsResponse$AgentId": "<p>The unique identifier for the agent.</p>",
+        "UpdateAgentRequest$AgentId": "<p>The unique identifier for the agent to update.</p>",
+        "UpdateAgentResponse$AgentId": "<p>The unique identifier for the agent.</p>"
+      }
+    },
+    "AgentLifecycle": {
+      "base": null,
+      "refs": {
+        "Agent$AgentLifecycle": "<p>The lifecycle state of the agent. Valid values are <code>PREVIEW</code> and <code>PUBLISHED</code>.</p>",
+        "CreateAgentRequest$AgentLifecycle": "<p>The lifecycle state of the agent. Valid values are <code>PREVIEW</code> and <code>PUBLISHED</code>.</p>"
+      }
+    },
+    "AgentName": {
+      "base": null,
+      "refs": {
+        "Agent$Name": "<p>The name of the agent.</p>",
+        "AgentSummary$Name": "<p>The name of the agent.</p>",
+        "CreateAgentRequest$Name": "<p>The name of the agent.</p>",
+        "CreateAgentResponse$AgentName": "<p>The name of the agent.</p>",
+        "UpdateAgentRequest$Name": "<p>The name of the agent.</p>"
+      }
+    },
+    "AgentOwnershipFilterAttribute": {
+      "base": null,
+      "refs": {
+        "AgentSearchFilter$Name": "<p>The name of the field to filter on.</p>"
+      }
+    },
+    "AgentSearchFilter": {
+      "base": "<p>A filter to apply when searching agents.</p>",
+      "refs": {
+        "AgentSearchFilterList$member": null
+      }
+    },
+    "AgentSearchFilterList": {
+      "base": null,
+      "refs": {
+        "SearchAgentsRequest$Filters": "<p>The filters to apply when searching agents.</p>"
+      }
+    },
+    "AgentSpacesList": {
+      "base": null,
+      "refs": {
+        "Agent$Spaces": "<p>The Amazon Resource Names (ARNs) of the spaces attached to the agent.</p>"
+      }
+    },
+    "AgentStatus": {
+      "base": null,
+      "refs": {
+        "Agent$AgentStatus": "<p>The status of the agent.</p>",
+        "CreateAgentResponse$AgentStatus": "<p>The status of the agent.</p>",
+        "UpdateAgentResponse$AgentStatus": "<p>The status of the agent.</p>"
+      }
+    },
+    "AgentSummaries": {
+      "base": null,
+      "refs": {
+        "ListAgentsResponse$AgentSummaries": "<p>A list of agent summaries.</p>"
+      }
+    },
+    "AgentSummary": {
+      "base": "<p>A summary of an agent, including its identifier, name, and metadata.</p>",
+      "refs": {
+        "AgentSummaries$member": null,
+        "AgentSummaryList$member": null
+      }
+    },
+    "AgentSummaryList": {
+      "base": null,
+      "refs": {
+        "SearchAgentsResponse$AgentSummaries": "<p>A list of agent summaries.</p>"
+      }
+    },
+    "AgentsMaxResults": {
+      "base": null,
+      "refs": {
+        "SearchAgentsRequest$MaxResults": "<p>The maximum number of results to return.</p>"
       }
     },
     "AggFunction": {
@@ -884,6 +1032,8 @@
         "ActionConnector$VpcConnectionArn": "<p>The ARN of the VPC connection used for secure connectivity to the external service.</p>",
         "ActionConnectorSummary$Arn": "<p>The Amazon Resource Name (ARN) of the action connector.</p>",
         "ActiveIAMPolicyAssignment$PolicyArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "AgentActionConnectorsList$member": null,
+        "AgentSpacesList$member": null,
         "Analysis$Arn": "<p>The Amazon Resource Name (ARN) of the analysis.</p>",
         "Analysis$ThemeArn": "<p>The ARN of the theme of the analysis.</p>",
         "AnalysisSourceTemplate$Arn": "<p>The Amazon Resource Name (ARN) of the source template of an analysis.</p>",
@@ -913,6 +1063,8 @@
         "CreateAccountCustomizationResponse$Arn": "<p>The Amazon Resource Name (ARN) for the customization that you created for this Amazon Web Services account.</p>",
         "CreateActionConnectorRequest$VpcConnectionArn": "<p>The ARN of the VPC connection to use for secure connectivity to the external service.</p>",
         "CreateActionConnectorResponse$Arn": "<p>The Amazon Resource Name (ARN) of the created action connector.</p>",
+        "CreateAgentRequestActionConnectorsList$member": null,
+        "CreateAgentRequestSpacesList$member": null,
         "CreateAnalysisRequest$ThemeArn": "<p>The ARN for the theme to apply to the analysis that you're creating. To see the theme in the Amazon Quick Sight console, make sure that you have access to it.</p>",
         "CreateAnalysisResponse$Arn": "<p>The ARN for the analysis.</p>",
         "CreateCustomPermissionsResponse$Arn": "<p>The Amazon Resource Name (ARN) of the custom permissions profile.</p>",
@@ -1030,6 +1182,7 @@
         "RowLevelPermissionDataSet$Arn": "<p>The Amazon Resource Name (ARN) of the dataset that contains permissions for RLS.</p>",
         "S3Source$DataSourceArn": "<p>The Amazon Resource Name (ARN) for the data source.</p>",
         "SaaSTable$DataSourceArn": "<p>The Amazon Resource Name (ARN) of the SaaS data source.</p>",
+        "SpaceQuickSightResourceDetails$resourceArn": "<p>The ARN of the QuickSight resource.</p>",
         "StartAssetBundleExportJobResponse$Arn": "<p>The Amazon Resource Name (ARN) for the export job.</p>",
         "StartAssetBundleImportJobResponse$Arn": "<p>The Amazon Resource Name (ARN) for the import job.</p>",
         "StartAutomationJobResponse$Arn": "<p>The Amazon Resource Name (ARN) of the automation job.</p>",
@@ -1057,6 +1210,10 @@
         "UpdateAccountCustomizationResponse$Arn": "<p>The Amazon Resource Name (ARN) for the updated customization for this Amazon Web Services account.</p>",
         "UpdateActionConnectorRequest$VpcConnectionArn": "<p>The updated ARN of the VPC connection to use for secure connectivity.</p>",
         "UpdateActionConnectorResponse$Arn": "<p>The Amazon Resource Name (ARN) of the updated action connector.</p>",
+        "UpdateAgentRequestActionConnectorsToAddList$member": null,
+        "UpdateAgentRequestActionConnectorsToRemoveList$member": null,
+        "UpdateAgentRequestSpacesToAddList$member": null,
+        "UpdateAgentRequestSpacesToRemoveList$member": null,
         "UpdateAnalysisPermissionsResponse$AnalysisArn": "<p>The Amazon Resource Name (ARN) of the analysis that you updated.</p>",
         "UpdateAnalysisRequest$ThemeArn": "<p>The Amazon Resource Name (ARN) for the theme to apply to the analysis that you're creating. To see the theme in the Amazon Quick Sight console, make sure that you have access to it.</p>",
         "UpdateAnalysisResponse$Arn": "<p>The ARN of the analysis that you're updating.</p>",
@@ -1947,6 +2104,7 @@
         "CreateAccountCustomizationResponse$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to customize Quick Sight for.</p>",
         "CreateAccountSubscriptionRequest$AwsAccountId": "<p>The Amazon Web Services account ID of the account that you're using to create your Quick Sight account.</p>",
         "CreateActionConnectorRequest$AwsAccountId": "<p>The Amazon Web Services account ID associated with the action connector.</p>",
+        "CreateAgentRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the agent.</p>",
         "CreateAnalysisRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account where you are creating an analysis.</p>",
         "CreateBrandRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand.</p>",
         "CreateCustomPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that you want to create the custom permissions profile in.</p>",
@@ -1963,6 +2121,7 @@
         "CreateOAuthClientApplicationRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "CreateRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "CreateRoleMembershipRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
+        "CreateSpaceRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the space.</p>",
         "CreateTemplateAliasRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template that you creating an alias for.</p>",
         "CreateTemplateRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. You use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "CreateThemeAliasRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the theme for the new theme alias.</p>",
@@ -1994,6 +2153,7 @@
         "DeleteRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DeleteRoleCustomPermissionRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "DeleteRoleMembershipRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
+        "DeleteSpaceRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the space.</p>",
         "DeleteTemplateAliasRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the item to delete.</p>",
         "DeleteTemplateRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template that you're deleting.</p>",
         "DeleteThemeAliasRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the theme alias to delete.</p>",
@@ -2011,6 +2171,8 @@
         "DescribeAccountSubscriptionRequest$AwsAccountId": "<p>The Amazon Web Services account ID associated with your Quick Sight account.</p>",
         "DescribeActionConnectorPermissionsRequest$AwsAccountId": "<p>The Amazon Web Services account ID that contains the action connector.</p>",
         "DescribeActionConnectorRequest$AwsAccountId": "<p>The Amazon Web Services account ID that contains the action connector.</p>",
+        "DescribeAgentPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the agent.</p>",
+        "DescribeAgentRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the agent.</p>",
         "DescribeAnalysisDefinitionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis. You must be using the Amazon Web Services account that the analysis is in.</p>",
         "DescribeAnalysisPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis whose permissions you're describing. You must be using the Amazon Web Services account that the analysis is in.</p>",
         "DescribeAnalysisRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis. You must be using the Amazon Web Services account that the analysis is in.</p>",
@@ -2054,6 +2216,8 @@
         "DescribeRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DescribeRoleCustomPermissionRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "DescribeSelfUpgradeConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the Quick self-upgrade configuration.</p>",
+        "DescribeSpacePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the space.</p>",
+        "DescribeSpaceRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the space.</p>",
         "DescribeTemplateAliasRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template alias that you're describing.</p>",
         "DescribeTemplateDefinitionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template. You must be using the Amazon Web Services account that the template is in.</p>",
         "DescribeTemplatePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template that you're describing.</p>",
@@ -2074,6 +2238,7 @@
         "GetSessionEmbedUrlRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account associated with your Amazon Quick Sight subscription.</p>",
         "IAMPolicyAssignment$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "ListActionConnectorsRequest$AwsAccountId": "<p>The Amazon Web Services account ID for which to list action connectors.</p>",
+        "ListAgentsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the agents.</p>",
         "ListAnalysesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analyses.</p>",
         "ListAssetBundleExportJobsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that the export jobs were executed in. </p>",
         "ListAssetBundleImportJobsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that the import jobs were executed in.</p>",
@@ -2097,6 +2262,8 @@
         "ListRefreshSchedulesRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "ListRoleMembershipsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "ListSelfUpgradesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the self-upgrade requests.</p>",
+        "ListSpaceResourcesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the space.</p>",
+        "ListSpacesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the spaces.</p>",
         "ListTemplateAliasesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template aliases that you're listing.</p>",
         "ListTemplateVersionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the templates that you're listing.</p>",
         "ListTemplatesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the templates that you're listing.</p>",
@@ -2114,12 +2281,14 @@
         "RegisterUserRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the user is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "RestoreAnalysisRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis.</p>",
         "SearchActionConnectorsRequest$AwsAccountId": "<p>The Amazon Web Services account ID in which to search for action connectors.</p>",
+        "SearchAgentsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the agents.</p>",
         "SearchAnalysesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analyses that you're searching for.</p>",
         "SearchDashboardsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the user whose dashboards you're searching for. </p>",
         "SearchDataSetsRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "SearchDataSourcesRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "SearchFoldersRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
         "SearchGroupsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
+        "SearchSpacesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the spaces.</p>",
         "SearchTopicsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want to find.</p>",
         "StartAssetBundleExportJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account to export assets from.</p>",
         "StartAssetBundleImportJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account to import assets into. </p>",
@@ -2132,6 +2301,8 @@
         "UpdateAccountSettingsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the Quick Sight settings that you want to list.</p>",
         "UpdateActionConnectorPermissionsRequest$AwsAccountId": "<p>The Amazon Web Services account ID that contains the action connector.</p>",
         "UpdateActionConnectorRequest$AwsAccountId": "<p>The Amazon Web Services account ID that contains the action connector to update.</p>",
+        "UpdateAgentPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the agent.</p>",
+        "UpdateAgentRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the agent.</p>",
         "UpdateAnalysisPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis whose permissions you're updating. You must be using the Amazon Web Services account that the analysis is in.</p>",
         "UpdateAnalysisRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis that you're updating.</p>",
         "UpdateApplicationWithTokenExchangeGrantRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account to be updated with a token exchange grant.</p>",
@@ -2166,6 +2337,9 @@
         "UpdateSPICECapacityConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the SPICE configuration that you want to update.</p>",
         "UpdateSelfUpgradeConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the Quick self-upgrade configuration that you want to update.</p>",
         "UpdateSelfUpgradeRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the self-upgrade request.</p>",
+        "UpdateSpacePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the space.</p>",
+        "UpdateSpaceRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the space.</p>",
+        "UpdateSpaceResourcesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the space.</p>",
         "UpdateTemplateAliasRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template alias that you're updating.</p>",
         "UpdateTemplatePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template.</p>",
         "UpdateTemplateRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template that you're updating.</p>",
@@ -3774,6 +3948,12 @@
         "TopicIRComparisonMethod$Type": "<p>The type for the <code>TopicIRComparisonMethod</code>.</p>"
       }
     },
+    "ComparisonOperator": {
+      "base": null,
+      "refs": {
+        "AgentSearchFilter$Operator": "<p>The comparison operator to use for the filter.</p>"
+      }
+    },
     "Computation": {
       "base": "<p>The computation union that is used in an insight visual.</p> <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>",
       "refs": {
@@ -4070,6 +4250,26 @@
       "base": null,
       "refs": {}
     },
+    "CreateAgentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAgentRequestActionConnectorsList": {
+      "base": null,
+      "refs": {
+        "CreateAgentRequest$ActionConnectors": "<p>The Amazon Resource Names (ARNs) of the action connectors to attach to the agent.</p>"
+      }
+    },
+    "CreateAgentRequestSpacesList": {
+      "base": null,
+      "refs": {
+        "CreateAgentRequest$Spaces": "<p>The Amazon Resource Names (ARNs) of the spaces to attach to the agent.</p>"
+      }
+    },
+    "CreateAgentResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateAnalysisRequest": {
       "base": null,
       "refs": {}
@@ -4122,6 +4322,20 @@
       "refs": {}
     },
     "CreateDataSourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateFlowRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateFlowRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateFlowRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+      }
+    },
+    "CreateFlowResponse": {
       "base": null,
       "refs": {}
     },
@@ -4202,6 +4416,14 @@
       "refs": {}
     },
     "CreateRoleMembershipResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSpaceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSpaceResponse": {
       "base": null,
       "refs": {}
     },
@@ -4457,6 +4679,31 @@
         "UpdateAccountCustomPermissionRequest$CustomPermissionsName": "<p>The name of the custom permissions profile that you want to apply to an account.</p>",
         "UpdateCustomPermissionsRequest$CustomPermissionsName": "<p>The name of the custom permissions profile that you want to update.</p>",
         "UpdateUserCustomPermissionRequest$CustomPermissionsName": "<p>The name of the custom permissions that you want to update.</p>"
+      }
+    },
+    "CustomPromptInput": {
+      "base": "<p>The custom prompt input for an agent. This is a union type that can be either an existing prompt profile or new prompt parameters.</p>",
+      "refs": {
+        "CreateAgentRequest$CustomPromptInput": "<p>The custom prompt configuration for the agent.</p>",
+        "UpdateAgentRequest$CustomPromptInput": "<p>The custom prompt configuration for the agent.</p>"
+      }
+    },
+    "CustomPromptInputParameters": {
+      "base": "<p>The parameters for configuring a custom prompt for an agent.</p>",
+      "refs": {
+        "CustomPromptInput$NewPrompt": "<p>New custom prompt parameters to configure for the agent.</p>"
+      }
+    },
+    "CustomPromptInterface": {
+      "base": "<p>The custom prompt interface configuration that defines how an agent's prompt is configured.</p>",
+      "refs": {
+        "Agent$CustomPromptInterface": "<p>The custom prompt interface configuration for the agent.</p>"
+      }
+    },
+    "CustomPromptProfile": {
+      "base": "<p>A reference to an existing custom prompt profile.</p>",
+      "refs": {
+        "CustomPromptInput$ExistingPrompt": "<p>An existing custom prompt profile to use for the agent.</p>"
       }
     },
     "CustomSql": {
@@ -5801,6 +6048,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteAgentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAgentResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteAnalysisRequest": {
       "base": null,
       "refs": {}
@@ -5870,6 +6125,14 @@
       "refs": {}
     },
     "DeleteDefaultQBusinessApplicationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteFlowRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteFlowResponse": {
       "base": null,
       "refs": {}
     },
@@ -5958,6 +6221,14 @@
       "refs": {}
     },
     "DeleteRoleMembershipResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSpaceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSpaceResponse": {
       "base": null,
       "refs": {}
     },
@@ -6092,6 +6363,22 @@
       "refs": {}
     },
     "DescribeActionConnectorResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAgentPermissionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAgentPermissionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAgentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAgentResponse": {
       "base": null,
       "refs": {}
     },
@@ -6271,6 +6558,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeFlowRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeFlowResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeFolderPermissionsRequest": {
       "base": null,
       "refs": {}
@@ -6396,6 +6691,22 @@
       "refs": {}
     },
     "DescribeSelfUpgradeConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeSpacePermissionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeSpacePermissionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeSpaceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeSpaceResponse": {
       "base": null,
       "refs": {}
     },
@@ -6678,6 +6989,7 @@
         "ParameterSliderControl$MaximumValue": "<p>The larger value that is displayed at the right of the slider.</p>",
         "ParameterSliderControl$MinimumValue": "<p>The smaller value that is displayed at the left of the slider.</p>",
         "ParameterSliderControl$StepSize": "<p>The number of increments that the slider bar is divided into.</p>",
+        "SpaceContributor$percentage": "<p>The percentage of total contributions made by the user.</p>",
         "TimeBasedForecastProperties$UpperBoundary": "<p>The upper boundary setup of a forecast computation.</p>",
         "TimeBasedForecastProperties$LowerBoundary": "<p>The lower boundary setup of a forecast computation.</p>",
         "WhatIfPointScenario$Value": "<p>The target value that you want to meet for the provided date.</p>",
@@ -6915,6 +7227,33 @@
       "base": "<p>An entry that appears when a <code>KeyRegistration</code> update to Quick Sight fails.</p>",
       "refs": {
         "FailedKeyRegistrationEntries$member": null
+      }
+    },
+    "FailedSpaceResourceOperation": {
+      "base": "<p>A resource operation that failed.</p>",
+      "refs": {
+        "FailedSpaceResourceOperations$member": null
+      }
+    },
+    "FailedSpaceResourceOperations": {
+      "base": null,
+      "refs": {
+        "UpdateSpaceResourcesResponse$FailedResourceOperations": "<p>A list of resource operations that failed.</p>"
+      }
+    },
+    "FailedToUpdateAssociation": {
+      "base": "<p>Information about a per-ARN failure when updating agent associations.</p>",
+      "refs": {
+        "FailedToUpdateAssociationList$member": null
+      }
+    },
+    "FailedToUpdateAssociationList": {
+      "base": null,
+      "refs": {
+        "UpdateAgentResponse$FailedToAddSpaces": "<p>A list of per-ARN failures from the spaces that were requested to be added.</p>",
+        "UpdateAgentResponse$FailedToRemoveSpaces": "<p>A list of per-ARN failures from the spaces that were requested to be removed.</p>",
+        "UpdateAgentResponse$FailedToAddActionConnectors": "<p>A list of per-ARN failures from the action connectors that were requested to be added.</p>",
+        "UpdateAgentResponse$FailedToRemoveActionConnectors": "<p>A list of per-ARN failures from the action connectors that were requested to be removed.</p>"
       }
     },
     "FieldBarSeriesItem": {
@@ -7346,20 +7685,40 @@
     "FlowDescription": {
       "base": null,
       "refs": {
+        "FlowDetail$Description": "<p>The description of the flow.</p>",
         "FlowSummary$Description": "<p>The description of the flow.</p>",
         "GetFlowMetadataOutput$Description": "<p>The description for the flow.</p>"
+      }
+    },
+    "FlowDescriptionInput": {
+      "base": null,
+      "refs": {
+        "CreateFlowRequest$Description": "<p>The description for the flow.</p>",
+        "UpdateFlowRequest$Description": "<p>Updated description for the flow. Omit to preserve the existing description.</p>"
+      }
+    },
+    "FlowDetail": {
+      "base": "<p>The full details of a flow, including its definition specifying the steps.</p>",
+      "refs": {
+        "DescribeFlowResponse$Flow": "<p>The full details of the flow.</p>"
       }
     },
     "FlowId": {
       "base": null,
       "refs": {
+        "CreateFlowResponse$FlowId": "<p>The unique identifier of the flow.</p>",
+        "DeleteFlowRequest$FlowId": "<p>The unique identifier of the flow to delete.</p>",
+        "DescribeFlowRequest$FlowId": "<p>The unique identifier of the flow.</p>",
+        "FlowDetail$FlowId": "<p>The unique identifier of the flow.</p>",
         "FlowSummary$FlowId": "<p>The unique identifier of the flow.</p>",
         "GetFlowMetadataInput$FlowId": "<p>The unique identifier of the flow.</p>",
         "GetFlowMetadataOutput$FlowId": "<p>The unique identifier of the flow.</p>",
         "GetFlowPermissionsInput$FlowId": "<p>The unique identifier of the flow to get permissions from.</p>",
         "GetFlowPermissionsOutput$FlowId": "<p>The unique identifier of the flow with permissions.</p>",
         "UpdateFlowPermissionsInput$FlowId": "<p>The unique identifier of the flow to update permissions for.</p>",
-        "UpdateFlowPermissionsOutput$FlowId": "<p>The unique identifier of the flow with updated permissions.</p>"
+        "UpdateFlowPermissionsOutput$FlowId": "<p>The unique identifier of the flow with updated permissions.</p>",
+        "UpdateFlowRequest$FlowId": "<p>The unique identifier of the flow to update.</p>",
+        "UpdateFlowResponse$FlowId": "<p>The unique identifier of the flow.</p>"
       }
     },
     "FlowMaxResults": {
@@ -7372,6 +7731,8 @@
     "FlowPublishState": {
       "base": null,
       "refs": {
+        "DescribeFlowRequest$PublishState": "<p>The publish state of the flow version to describe. Valid values are <code>DRAFT</code>, <code>PUBLISHED</code>, or <code>PENDING_APPROVAL</code>.</p>",
+        "FlowDetail$PublishState": "<p>The publish state of the flow. Valid values are <code>DRAFT</code>, <code>PUBLISHED</code>, or <code>PENDING_APPROVAL</code>.</p>",
         "FlowSummary$PublishState": "<p>The publish state for the flow. The valid values are <code>DRAFT</code>, <code>PUBLISHED</code>, or <code>PENDING_APPROVAL</code>.</p>",
         "GetFlowMetadataOutput$PublishState": "<p>The publish state for the flow. Valid values are <code>DRAFT</code>, <code>PUBLISHED</code>, or <code>PENDING_APPROVAL</code>.</p>"
       }
@@ -8710,6 +9071,15 @@
         "ConditionalFormattingCustomIconOptions$Icon": "<p>Determines the type of icon.</p>"
       }
     },
+    "IconId": {
+      "base": null,
+      "refs": {
+        "Agent$IconId": "<p>The icon identifier for the agent.</p>",
+        "AgentSummary$IconId": "<p>The icon identifier for the agent.</p>",
+        "CreateAgentRequest$IconId": "<p>The icon identifier for the agent.</p>",
+        "UpdateAgentRequest$IconId": "<p>The icon identifier for the agent.</p>"
+      }
+    },
     "Identifier": {
       "base": "<p>The definition for the identifier.</p>",
       "refs": {
@@ -9041,6 +9411,9 @@
         "GetFlowMetadataOutput$UserCount": "<p>The number of users who have used the flow.</p>",
         "GetFlowMetadataOutput$RunCount": "<p>The number of runs done for the flow.</p>",
         "RelativeDatesFilter$RelativeDateValue": "<p>The date value of the filter.</p>",
+        "SpaceDetails$consumedSourceDocCount": "<p>The number of consumed source documents.</p>",
+        "SpaceSummary$consumedSourceDocCount": "<p>The number of consumed source documents.</p>",
+        "SpaceSummary$resourcesCount": "<p>The number of resources in the space.</p>",
         "TopBottomFilter$Limit": "<p>The number of items to include in the top bottom filter results.</p>",
         "TopicIRComparisonMethod$WindowSize": "<p>The window size for the <code>TopicIRComparisonMethod</code>.</p>"
       }
@@ -9667,6 +10040,20 @@
       "base": null,
       "refs": {}
     },
+    "ListAgentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAgentsRequest$MaxResults": "<p>The maximum number of results to return.</p>"
+      }
+    },
+    "ListAgentsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListAnalysesRequest": {
       "base": null,
       "refs": {}
@@ -9886,6 +10273,22 @@
       "base": null,
       "refs": {}
     },
+    "ListSpaceResourcesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSpaceResourcesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSpacesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSpacesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {}
@@ -10074,7 +10477,10 @@
         "RowInfo$RowsDropped": "<p>The number of rows that were not ingested.</p>",
         "RowInfo$TotalRowsInDataset": "<p>The total number of rows in the dataset.</p>",
         "SelfUpgradeRequestDetail$CreationTime": "<p>The time when the self-upgrade request was created.</p>",
-        "SelfUpgradeRequestDetail$lastUpdateAttemptTime": "<p>The time of the last update attempt for the self-upgrade request.</p>"
+        "SelfUpgradeRequestDetail$lastUpdateAttemptTime": "<p>The time of the last update attempt for the self-upgrade request.</p>",
+        "SpaceContributor$rawFileSizeBytes": "<p>The raw file size in bytes contributed by the user.</p>",
+        "SpaceDetails$consumedSourceSize": "<p>The total consumed source size in bytes.</p>",
+        "SpaceSummary$consumedSourceSize": "<p>The total consumed source size in bytes.</p>"
       }
     },
     "LongFormatText": {
@@ -10177,6 +10583,12 @@
       "base": "<p>The parameters for MariaDB.</p>",
       "refs": {
         "DataSourceParameters$MariaDbParameters": "<p>The parameters for MariaDB.</p>"
+      }
+    },
+    "MaxContributors": {
+      "base": null,
+      "refs": {
+        "DescribeSpaceRequest$MaxContributors": "<p>The maximum number of contributors to include in the response.</p>"
       }
     },
     "MaxResults": {
@@ -10345,6 +10757,13 @@
       "base": null,
       "refs": {
         "MissingDataConfiguration$TreatmentOption": "<p>The treatment option that determines how missing data should be rendered. Choose from the following options:</p> <ul> <li> <p> <code>INTERPOLATE</code>: Interpolate missing values between the prior and the next known value.</p> </li> <li> <p> <code>SHOW_AS_ZERO</code>: Show missing values as the value <code>0</code>.</p> </li> <li> <p> <code>SHOW_AS_BLANK</code>: Display a blank space when rendering missing data.</p> </li> </ul>"
+      }
+    },
+    "ModelProfileId": {
+      "base": null,
+      "refs": {
+        "CustomPromptInterface$ModelProfileId": "<p>The identifier of the model profile.</p>",
+        "CustomPromptProfile$ModelProfileId": "<p>The identifier of the model profile.</p>"
       }
     },
     "MySqlParameters": {
@@ -10567,6 +10986,15 @@
       "base": "<p>The configuration that overrides the existing default values for a dataset parameter that is inherited from another dataset.</p>",
       "refs": {
         "OverrideDatasetParameterOperation$NewDefaultValues": "<p>The new default values for the parameter.</p>"
+      }
+    },
+    "NextToken": {
+      "base": null,
+      "refs": {
+        "ListSpacesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListSpacesResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "SearchSpacesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "SearchSpacesResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>"
       }
     },
     "NonEmptyString": {
@@ -11237,6 +11665,7 @@
     "PermissionsList": {
       "base": null,
       "refs": {
+        "CreateFlowRequest$Permissions": "<p>Initial permissions for the flow. If omitted, the flow is created without any permissions.</p>",
         "GetFlowPermissionsOutput$Permissions": "<p>A structure that contains the permissions for the flow.</p>",
         "UpdateFlowPermissionsOutput$Permissions": "<p>The permissions on the flow after they are updated.</p>"
       }
@@ -11804,6 +12233,46 @@
         "NamedEntityDefinition$PropertyUsage": "<p>The property usage. Valid values for this structure are <code>INHERIT</code>, <code>DIMENSION</code>, and <code>MEASURE</code>.</p>"
       }
     },
+    "PublicSpaceArn": {
+      "base": null,
+      "refs": {
+        "CreateSpaceResponse$spaceArn": "<p>The ARN of the space.</p>",
+        "DeleteSpaceResponse$spaceArn": "<p>The ARN of the space.</p>",
+        "DescribeSpacePermissionsResponse$spaceArn": "<p>The ARN of the space.</p>",
+        "DescribeSpaceResponse$spaceArn": "<p>The ARN of the space.</p>",
+        "ListSpaceResourcesResponse$spaceArn": "<p>The ARN of the space.</p>",
+        "ListSpacesResponse$spaceArn": "<p>The ARN of the space.</p>",
+        "SearchSpacesResponse$spaceArn": "<p>The ARN of the space.</p>",
+        "SpaceSummary$spaceArn": "<p>The ARN of the space.</p>",
+        "UpdateSpacePermissionsResponse$spaceArn": "<p>The ARN of the space.</p>",
+        "UpdateSpaceResourcesResponse$spaceArn": "<p>The ARN of the space.</p>",
+        "UpdateSpaceResponse$spaceArn": "<p>The ARN of the space.</p>"
+      }
+    },
+    "PublicSpaceId": {
+      "base": null,
+      "refs": {
+        "CreateSpaceRequest$SpaceId": "<p>The ID of the space. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "CreateSpaceResponse$spaceId": "<p>The ID of the space.</p>",
+        "DeleteSpaceRequest$SpaceId": "<p>The ID of the space that you want to delete.</p>",
+        "DeleteSpaceResponse$spaceId": "<p>The ID of the space.</p>",
+        "DescribeSpacePermissionsRequest$SpaceId": "<p>The ID of the space that you want to describe permissions for.</p>",
+        "DescribeSpacePermissionsResponse$spaceId": "<p>The ID of the space.</p>",
+        "DescribeSpaceRequest$SpaceId": "<p>The ID of the space that you want to describe.</p>",
+        "DescribeSpaceResponse$spaceId": "<p>The ID of the space.</p>",
+        "ListSpaceResourcesRequest$SpaceId": "<p>The ID of the space that you want to list resources for.</p>",
+        "ListSpaceResourcesResponse$spaceId": "<p>The ID of the space.</p>",
+        "ListSpacesResponse$spaceId": "<p>The ID of the space.</p>",
+        "SearchSpacesResponse$spaceId": "<p>The ID of the space.</p>",
+        "SpaceSummary$spaceId": "<p>The ID of the space.</p>",
+        "UpdateSpacePermissionsRequest$SpaceId": "<p>The ID of the space that you want to update permissions for.</p>",
+        "UpdateSpacePermissionsResponse$spaceId": "<p>The ID of the space.</p>",
+        "UpdateSpaceRequest$SpaceId": "<p>The ID of the space that you want to update.</p>",
+        "UpdateSpaceResourcesRequest$SpaceId": "<p>The ID of the space that you want to update resources for.</p>",
+        "UpdateSpaceResourcesResponse$spaceId": "<p>The ID of the space.</p>",
+        "UpdateSpaceResponse$spaceId": "<p>The ID of the space.</p>"
+      }
+    },
     "PurchaseMode": {
       "base": null,
       "refs": {
@@ -11882,6 +12351,13 @@
         "DescribeQuickSightQSearchConfigurationResponse$QSearchStatus": "<p>The status of Quick Sight Q Search configuration.</p>",
         "UpdateQuickSightQSearchConfigurationRequest$QSearchStatus": "<p>The status of the Quick Sight Q Search configuration that the user wants to update.</p>",
         "UpdateQuickSightQSearchConfigurationResponse$QSearchStatus": "<p>The status of the Quick Sight Q Search configuration.</p>"
+      }
+    },
+    "QbsAwsAccountId": {
+      "base": null,
+      "refs": {
+        "CustomPromptInterface$QbsAwsAccountId": "<p>The Amazon Web Services account ID for the Q Business service.</p>",
+        "CustomPromptProfile$QbsAwsAccountId": "<p>The Amazon Web Services account ID for the Q Business service.</p>"
       }
     },
     "Query": {
@@ -12516,6 +12992,8 @@
       "base": "<p>Permission for the resource.</p>",
       "refs": {
         "ResourcePermissionList$member": null,
+        "UpdateAgentPermissionsRequestGrantPermissionsList$member": null,
+        "UpdateAgentPermissionsRequestRevokePermissionsList$member": null,
         "UpdateLinkPermissionList$member": null,
         "UpdateResourcePermissionList$member": null
       }
@@ -12532,15 +13010,18 @@
         "CreateTemplateRequest$Permissions": "<p>A list of resource permissions to be set on the template. </p>",
         "CreateThemeRequest$Permissions": "<p>A valid grouping of resource permissions to apply to the new theme. </p>",
         "DescribeActionConnectorPermissionsResponse$Permissions": "<p>The list of permissions associated with the action connector, including the principals and their allowed actions.</p>",
+        "DescribeAgentPermissionsResponse$Permissions": "<p>The resource permissions for the agent.</p>",
         "DescribeDataSetPermissionsResponse$Permissions": "<p>A list of resource permissions on the dataset.</p>",
         "DescribeDataSourcePermissionsResponse$Permissions": "<p>A list of resource permissions on the data source.</p>",
         "DescribeFolderPermissionsResponse$Permissions": "<p>Information about the permissions on the folder.</p>",
         "DescribeFolderResolvedPermissionsResponse$Permissions": "<p>Information about the permissions for the folder.</p>",
+        "DescribeSpacePermissionsResponse$Permissions": "<p>A list of resource permissions for the space.</p>",
         "DescribeTopicPermissionsResponse$Permissions": "<p>A list of resource permissions that are configured to the topic.</p>",
         "LinkSharingConfiguration$Permissions": "<p>A structure that contains the permissions of a shareable link.</p>",
         "UpdateActionConnectorPermissionsRequest$GrantPermissions": "<p>The permissions to grant to users and groups for this action connector.</p>",
         "UpdateActionConnectorPermissionsRequest$RevokePermissions": "<p>The permissions to revoke from users and groups for this action connector.</p>",
         "UpdateActionConnectorPermissionsResponse$Permissions": "<p>The updated permissions configuration for the action connector.</p>",
+        "UpdateAgentPermissionsResponse$Permissions": "<p>The resource permissions for the agent.</p>",
         "UpdateDataSetPermissionsRequest$GrantPermissions": "<p>The resource permissions that you want to grant to the dataset.</p>",
         "UpdateDataSetPermissionsRequest$RevokePermissions": "<p>The resource permissions that you want to revoke from the dataset.</p>",
         "UpdateDataSourcePermissionsRequest$GrantPermissions": "<p>A list of resource permissions that you want to grant on the data source.</p>",
@@ -12548,6 +13029,9 @@
         "UpdateFolderPermissionsRequest$GrantPermissions": "<p>The permissions that you want to grant on a resource. Namespace ARNs are not supported <code>Principal</code> values for folder permissions.</p>",
         "UpdateFolderPermissionsRequest$RevokePermissions": "<p>The permissions that you want to revoke from a resource. Namespace ARNs are not supported <code>Principal</code> values for folder permissions.</p>",
         "UpdateFolderPermissionsResponse$Permissions": "<p>Information about the permissions for the folder.</p>",
+        "UpdateSpacePermissionsRequest$GrantPermissions": "<p>The permissions that you want to grant on the space.</p>",
+        "UpdateSpacePermissionsRequest$RevokePermissions": "<p>The permissions that you want to revoke from the space.</p>",
+        "UpdateSpacePermissionsResponse$permissions": "<p>The updated permissions for the space.</p>",
         "UpdateTopicPermissionsResponse$Permissions": "<p>A list of resource permissions on the topic.</p>"
       }
     },
@@ -12950,6 +13434,14 @@
       "base": null,
       "refs": {}
     },
+    "SearchAgentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchAgentsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "SearchAnalysesRequest": {
       "base": null,
       "refs": {}
@@ -13021,6 +13513,14 @@
       "refs": {}
     },
     "SearchGroupsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchSpacesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchSpacesResponse": {
       "base": null,
       "refs": {}
     },
@@ -13233,6 +13733,14 @@
         "TopicColumn$SemanticType": "<p>The semantic type of data contained in the column.</p>"
       }
     },
+    "SensitiveDocument": {
+      "base": null,
+      "refs": {
+        "CreateFlowRequest$FlowDefinition": "<p>The definition of the flow, specifying the steps and configurations. This is the flow definition in Quick Flow's internal format. The format is subject to change.</p> <note> <p>Always derive or depend on the flow definition from the <code>DescribeFlow</code> operation to ensure you are working with the latest format.</p> </note>",
+        "FlowDetail$FlowDefinition": "<p>The definition of the flow, specifying the steps and configurations. This is the flow definition in Quick Flow's internal format. The format is subject to change.</p>",
+        "UpdateFlowRequest$FlowDefinition": "<p>The definition of the flow, specifying the steps and configurations. This is the flow definition in Quick Flow's internal format. The format is subject to change. When provided, all existing steps are replaced. Omit to preserve the existing definition.</p> <note> <p>Always derive or depend on the flow definition from the <code>DescribeFlow</code> operation to ensure you are working with the latest format.</p> </note>"
+      }
+    },
     "SensitiveDouble": {
       "base": null,
       "refs": {
@@ -13315,6 +13823,12 @@
       "base": null,
       "refs": {
         "StringDefaultValueList$member": null
+      }
+    },
+    "SensitiveText": {
+      "base": null,
+      "refs": {
+        "CustomPromptInterface$promptSummary": "<p>A summary of the custom prompt configuration.</p>"
       }
     },
     "SensitiveTimestamp": {
@@ -14312,6 +14826,141 @@
         "DataPrepConfiguration$SourceTableMap": "<p>A map of source tables that provide information about underlying sources.</p>"
       }
     },
+    "SpaceContributor": {
+      "base": "<p>A contributor to an Amazon QuickSight space.</p>",
+      "refs": {
+        "SpaceContributorList$member": null
+      }
+    },
+    "SpaceContributorList": {
+      "base": null,
+      "refs": {
+        "DescribeSpaceResponse$Contributors": "<p>A list of contributors to the space.</p>"
+      }
+    },
+    "SpaceDescription": {
+      "base": null,
+      "refs": {
+        "CreateSpaceRequest$Description": "<p>A description of the space.</p>",
+        "SpaceDetails$description": "<p>The description of the space.</p>",
+        "SpaceSummary$description": "<p>The description of the space.</p>",
+        "UpdateSpaceRequest$Description": "<p>A new description for the space.</p>"
+      }
+    },
+    "SpaceDetails": {
+      "base": "<p>The details of an Amazon QuickSight space.</p>",
+      "refs": {
+        "DescribeSpaceResponse$Space": "<p>The details of the space.</p>"
+      }
+    },
+    "SpaceName": {
+      "base": null,
+      "refs": {
+        "CreateSpaceRequest$Name": "<p>A display name for the space.</p>",
+        "SpaceDetails$name": "<p>The display name of the space.</p>",
+        "SpaceSummary$name": "<p>The display name of the space.</p>",
+        "UpdateSpaceRequest$Name": "<p>A new display name for the space.</p>"
+      }
+    },
+    "SpaceQuickSightResource": {
+      "base": "<p>A QuickSight resource that is associated with a space.</p>",
+      "refs": {
+        "SpaceQuickSightResources$member": null
+      }
+    },
+    "SpaceQuickSightResourceDetails": {
+      "base": "<p>The details of a QuickSight resource in a space.</p>",
+      "refs": {
+        "FailedSpaceResourceOperation$ResourceDetails": "<p>The details of the resource.</p>",
+        "SpaceQuickSightResource$resourceDetails": "<p>The details of the QuickSight resource.</p>",
+        "SpaceResourceOperation$ResourceDetails": "<p>The details of the resource.</p>",
+        "SpaceResourceSummary$ResourceDetails": "<p>The details of the resource.</p>"
+      }
+    },
+    "SpaceQuickSightResourceType": {
+      "base": null,
+      "refs": {
+        "FailedSpaceResourceOperation$ResourceType": "<p>The type of the resource.</p>",
+        "SpaceQuickSightResource$resourceType": "<p>The type of the QuickSight resource.</p>",
+        "SpaceResourceOperation$ResourceType": "<p>The type of the resource.</p>",
+        "SpaceResourceSummary$ResourceType": "<p>The type of the resource.</p>"
+      }
+    },
+    "SpaceQuickSightResources": {
+      "base": null,
+      "refs": {
+        "SpaceDetails$resources": "<p>The resources in the space.</p>"
+      }
+    },
+    "SpaceQuickSightSearchFilterName": {
+      "base": null,
+      "refs": {
+        "SpaceQuicksightSearchFilter$name": "<p>The name of the filter field to use.</p>"
+      }
+    },
+    "SpaceQuicksightSearchFilter": {
+      "base": "<p>A filter to use when searching for spaces.</p>",
+      "refs": {
+        "SpaceQuicksightSearchFilters$member": null
+      }
+    },
+    "SpaceQuicksightSearchFilters": {
+      "base": null,
+      "refs": {
+        "SearchSpacesRequest$Filters": "<p>The filters to apply to the search.</p>"
+      }
+    },
+    "SpaceResourceOperation": {
+      "base": "<p>An operation to perform on a resource in a space.</p>",
+      "refs": {
+        "SpaceResourceOperations$member": null
+      }
+    },
+    "SpaceResourceOperations": {
+      "base": null,
+      "refs": {
+        "UpdateSpaceResourcesRequest$AddResources": "<p>A list of resources to add to the space.</p>",
+        "UpdateSpaceResourcesRequest$RemoveResources": "<p>A list of resources to remove from the space.</p>"
+      }
+    },
+    "SpaceResourceSummaries": {
+      "base": null,
+      "refs": {
+        "ListSpaceResourcesResponse$SpaceResources": "<p>A list of resource summaries in the space.</p>"
+      }
+    },
+    "SpaceResourceSummary": {
+      "base": "<p>A summary of a resource in a space.</p>",
+      "refs": {
+        "SpaceResourceSummaries$member": null
+      }
+    },
+    "SpaceSearchOperator": {
+      "base": null,
+      "refs": {
+        "SpaceQuicksightSearchFilter$operator": "<p>The comparison operator to use for the filter.</p>"
+      }
+    },
+    "SpaceSummaries": {
+      "base": null,
+      "refs": {
+        "ListSpacesResponse$SpaceSummaries": "<p>A list of space summaries.</p>",
+        "SearchSpacesResponse$SpaceSummaries": "<p>A list of space summaries that match the search criteria.</p>"
+      }
+    },
+    "SpaceSummary": {
+      "base": "<p>A summary of an Amazon QuickSight space.</p>",
+      "refs": {
+        "SpaceSummaries$member": null
+      }
+    },
+    "SpacesMaxResults": {
+      "base": null,
+      "refs": {
+        "ListSpacesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "SearchSpacesRequest$MaxResults": "<p>The maximum number of results to return.</p>"
+      }
+    },
     "Spacing": {
       "base": "<p>The configuration of spacing (often a margin or padding).</p>",
       "refs": {
@@ -14435,6 +15084,20 @@
       "base": null,
       "refs": {}
     },
+    "StarterPrompt": {
+      "base": null,
+      "refs": {
+        "StarterPromptList$member": null
+      }
+    },
+    "StarterPromptList": {
+      "base": null,
+      "refs": {
+        "Agent$StarterPrompts": "<p>A list of starter prompts that are displayed to users when they begin interacting with the agent.</p>",
+        "CreateAgentRequest$StarterPrompts": "<p>A list of starter prompts that are displayed to users when they begin interacting with the agent.</p>",
+        "UpdateAgentRequest$StarterPrompts": "<p>A list of starter prompts that are displayed to users when they begin interacting with the agent.</p>"
+      }
+    },
     "StatePersistenceConfigurations": {
       "base": "<p>The state perssitence configuration of an embedded dashboard.</p>",
       "refs": {
@@ -14496,6 +15159,7 @@
         "CreateDashboardResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateDataSetResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateDataSourceResponse$Status": "<p>The HTTP status of the request.</p>",
+        "CreateFlowResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateFolderMembershipResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateFolderResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateGroupMembershipResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -14524,6 +15188,7 @@
         "DeleteDataSetResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteDataSourceResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteDefaultQBusinessApplicationResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DeleteFlowResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteFolderMembershipResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteFolderResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteGroupMembershipResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -14569,6 +15234,7 @@
         "DescribeDataSourcePermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeDataSourceResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeDefaultQBusinessApplicationResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DescribeFlowResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeFolderPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeFolderResolvedPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeFolderResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -14684,6 +15350,7 @@
         "UpdateDataSourceResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateDefaultQBusinessApplicationResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateFlowPermissionsOutput$Status": "<p>The HTTP status of the request.</p>",
+        "UpdateFlowResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateFolderPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateFolderResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateGroupResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -14713,6 +15380,24 @@
         "UpdateVPCConnectionResponse$Status": "<p>The HTTP status of the request.</p>"
       }
     },
+    "StepAliasList": {
+      "base": null,
+      "refs": {
+        "FlowDetail$StepAliases": "<p>A list of step alias mappings for the flow.</p>"
+      }
+    },
+    "StepAliasMapping": {
+      "base": "<p>A mapping between a step identifier and its alias in a flow.</p>",
+      "refs": {
+        "StepAliasList$member": null
+      }
+    },
+    "StepId": {
+      "base": null,
+      "refs": {
+        "StepAliasMapping$StepId": "<p>The unique identifier of the step.</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
@@ -14728,6 +15413,9 @@
         "ActionConnectorError$Message": "<p>The error message describing what went wrong with the action connector.</p>",
         "ActionConnectorSearchFilter$Value": "<p>The value to compare against using the specified operator.</p>",
         "ActionList$member": null,
+        "Agent$Creator": "<p>The identity of the user who created the agent.</p>",
+        "Agent$ErrorMessage": "<p>An error message associated with the agent, if applicable.</p>",
+        "AgentSearchFilter$Value": "<p>The value to filter on.</p>",
         "AnalysisSearchFilter$Value": "<p>The value of the named item, in this case <code>QUICKSIGHT_USER</code>, that you want to use as a filter, for example <code>\"Value\"</code>. An example is <code>\"arn:aws:quicksight:us-east-1:1:user/default/UserName1\"</code>.</p>",
         "AssetBundleImportJobRefreshScheduleOverrideParameters$ScheduleId": "<p>A partial identifier for the specific <code>RefreshSchedule</code> resource being overridden. This structure is used together with the <code>DataSetId</code> structure.</p>",
         "AssetBundleImportJobResourceIdOverrideConfiguration$PrefixForAllResources": "<p>An option to request a CloudFormation variable for a prefix to be prepended to each resource's ID before import. The prefix is only added to the asset IDs and does not change the name of the asset.</p>",
@@ -14764,12 +15452,15 @@
         "CreateAccountSubscriptionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateActionConnectorResponse$ActionConnectorId": "<p>The unique identifier of the created action connector.</p>",
         "CreateActionConnectorResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "CreateAgentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateAnalysisResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateBrandResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateCustomPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateDashboardResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateDataSetResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateDataSourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "CreateFlowResponse$Arn": "<p>The Amazon Resource Name (ARN) of the flow.</p>",
+        "CreateFlowResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateFolderMembershipResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateFolderResponse$RequestId": "<p>The request ID for the newly created folder.</p>",
         "CreateGroupMembershipResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -14784,6 +15475,7 @@
         "CreateRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateRefreshScheduleResponse$ScheduleId": "<p>The ID of the refresh schedule.</p>",
         "CreateRoleMembershipResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "CreateSpaceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateTemplateAliasResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateTemplateResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateThemeAliasResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -14804,6 +15496,9 @@
         "DeleteAccountCustomizationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteAccountSubscriptionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteActionConnectorResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DeleteAgentRequest$AgentId": "<p>The unique identifier for the agent to delete.</p>",
+        "DeleteAgentRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the agent.</p>",
+        "DeleteAgentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteAnalysisResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteBrandAssignmentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteBrandResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -14813,6 +15508,7 @@
         "DeleteDataSetResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteDataSourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteDefaultQBusinessApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DeleteFlowResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteFolderMembershipResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteFolderResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteGroupMembershipResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -14826,6 +15522,7 @@
         "DeleteRefreshScheduleResponse$ScheduleId": "<p>The ID of the refresh schedule.</p>",
         "DeleteRoleCustomPermissionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteRoleMembershipResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DeleteSpaceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteTemplateAliasResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteTemplateResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteThemeAliasResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -14845,6 +15542,8 @@
         "DescribeActionConnectorPermissionsResponse$Arn": "<p>The Amazon Resource Name (ARN) of the action connector.</p>",
         "DescribeActionConnectorPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeActionConnectorResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeAgentPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeAgentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeAnalysisDefinitionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeAnalysisPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeAnalysisResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -14864,6 +15563,7 @@
         "DescribeDataSourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeDefaultQBusinessApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeDefaultQBusinessApplicationResponse$ApplicationId": "<p>The ID of the Amazon Q Business application that is linked to the Quick Sight account.</p>",
+        "DescribeFlowResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeFolderPermissionsRequest$NextToken": "<p>A pagination token for the next set of results.</p>",
         "DescribeFolderPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeFolderPermissionsResponse$NextToken": "<p>The pagination token for the next set of results, or null if there are no more results.</p>",
@@ -14885,6 +15585,8 @@
         "DescribeRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeRoleCustomPermissionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeSelfUpgradeConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeSpacePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeSpaceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeTemplateAliasResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeTemplateDefinitionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeTemplatePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -14904,7 +15606,14 @@
         "DomainNotWhitelistedException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
         "ErrorInfo$Message": "<p>Error message.</p>",
         "FailedKeyRegistrationEntry$KeyArn": "<p>The ARN of the KMS key that failed to update.</p>",
+        "FailedSpaceResourceOperation$ErrorMessage": "<p>The error message that describes why the operation failed.</p>",
+        "FailedToUpdateAssociation$Arn": "<p>The ARN that could not be added or removed.</p>",
+        "FailedToUpdateAssociation$ErrorMessage": "<p>A description of the failure.</p>",
+        "FailedToUpdateAssociation$ErrorCode": "<p>The error code for the failure.</p>",
         "FieldTooltipItem$Label": "<p>The label of the tooltip item.</p>",
+        "FlowDetail$Arn": "<p>The Amazon Resource Name (ARN) of the flow.</p>",
+        "FlowDetail$CreatedBy": "<p>The identifier of the principal who created the flow.</p>",
+        "FlowDetail$LastUpdatedBy": "<p>The identifier of the last principal who updated the flow.</p>",
         "FlowSummary$Arn": "<p>The Amazon Resource Name (ARN) of the flow.</p>",
         "FlowSummary$CreatedBy": "<p>The identifier of the principal who created the flow.</p>",
         "FlowSummary$LastUpdatedBy": "<p>The identifier of the last principal who updated the flow.</p>",
@@ -14956,6 +15665,9 @@
         "ListActionConnectorsRequest$NextToken": "<p>A pagination token to retrieve the next set of results. Use the token returned from a previous call to continue listing action connectors.</p>",
         "ListActionConnectorsResponse$NextToken": "<p>A pagination token to retrieve the next set of results. If null, there are no more results to retrieve.</p>",
         "ListActionConnectorsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "ListAgentsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListAgentsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "ListAgentsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListAnalysesRequest$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "ListAnalysesResponse$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "ListAnalysesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -15024,6 +15736,8 @@
         "ListSelfUpgradesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListSelfUpgradesResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListSelfUpgradesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "ListSpaceResourcesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "ListSpacesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListTagsForResourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListTemplateAliasesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListTemplateAliasesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -15107,6 +15821,9 @@
         "SearchActionConnectorsRequest$NextToken": "<p>A pagination token to retrieve the next set of results. Use the token returned from a previous call to continue searching.</p>",
         "SearchActionConnectorsResponse$NextToken": "<p>A pagination token to retrieve the next set of results. If null, there are no more results to retrieve.</p>",
         "SearchActionConnectorsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "SearchAgentsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "SearchAgentsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "SearchAgentsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "SearchAnalysesRequest$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "SearchAnalysesResponse$NextToken": "<p>A pagination token that can be used in a subsequent request. </p>",
         "SearchAnalysesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -15129,6 +15846,7 @@
         "SearchGroupsRequest$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "SearchGroupsResponse$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "SearchGroupsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "SearchSpacesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "SearchTopicsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "SearchTopicsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "SearchTopicsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -15145,11 +15863,19 @@
         "SnapshotJobErrorInfo$ErrorType": "<p>The error type.</p>",
         "SnapshotJobResultErrorInfo$ErrorMessage": "<p>The error message.</p>",
         "SnapshotJobResultErrorInfo$ErrorType": "<p>The error type.</p>",
+        "SpaceContributor$userName": "<p>The user name of the contributor.</p>",
+        "SpaceDetails$createdBy": "<p>The user who created the space.</p>",
+        "SpaceDetails$createdByArn": "<p>The ARN of the user who created the space.</p>",
+        "SpaceQuicksightSearchFilter$value": "<p>The value to use for the filter.</p>",
+        "SpaceResourceSummary$ResourceName": "<p>The name of the resource.</p>",
+        "SpaceSummary$createdBy": "<p>The user who created the space.</p>",
+        "SpaceSummary$createdByArn": "<p>The ARN of the user who created the space.</p>",
         "StartAutomationJobResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "StaticFileS3SourceOptions$BucketName": "<p>The name of the Amazon S3 bucket.</p>",
         "StaticFileS3SourceOptions$ObjectKey": "<p>The identifier of the static file in the Amazon S3 bucket.</p>",
         "StaticFileS3SourceOptions$Region": "<p>The Region of the Amazon S3 account that contains the bucket.</p>",
         "StaticFileUrlSourceOptions$Url": "<p>The URL to download the static file from.</p>",
+        "StepAliasMapping$StepAlias": "<p>The alias for the step.</p>",
         "StringList$member": null,
         "SubtotalOptions$CustomLabel": "<p>The custom label string for the subtotal cells.</p>",
         "SuccessfulKeyRegistrationEntry$KeyArn": "<p>The ARN of the KMS key that is associated with the <code>SuccessfulKeyRegistrationEntry</code> entry.</p>",
@@ -15175,6 +15901,8 @@
         "UpdateActionConnectorPermissionsResponse$Arn": "<p>The Amazon Resource Name (ARN) of the action connector.</p>",
         "UpdateActionConnectorPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateActionConnectorResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateAgentPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateAgentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateAnalysisPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateAnalysisResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateApplicationWithTokenExchangeGrantResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -15194,6 +15922,8 @@
         "UpdateDefaultQBusinessApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateFlowPermissionsOutput$Arn": "<p>The Amazon Resource Name (ARN) of the flow you are updating permissions against.</p>",
         "UpdateFlowPermissionsOutput$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateFlowResponse$Arn": "<p>The Amazon Resource Name (ARN) of the flow.</p>",
+        "UpdateFlowResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateFolderPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateFolderResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateGroupResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -15212,6 +15942,9 @@
         "UpdateSelfUpgradeConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateSelfUpgradeRequest$UpgradeRequestId": "<p>The ID of the self-upgrade request to update.</p>",
         "UpdateSelfUpgradeResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateSpacePermissionsResponse$requestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateSpaceResourcesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateSpaceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateTemplateAliasResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateTemplatePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateTemplateResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -15325,6 +16058,21 @@
         "StringParameterDeclaration$ValueWhenUnset": "<p>The configuration that defines the default value of a <code>String</code> parameter when a value has not been set.</p>"
       }
     },
+    "StyleDescription": {
+      "base": null,
+      "refs": {
+        "CustomPromptInputParameters$ResponseLength": "<p>Instructions for the desired response length.</p>",
+        "CustomPromptInputParameters$OutputStyle": "<p>Instructions for the desired output style.</p>",
+        "CustomPromptInputParameters$Identity": "<p>Instructions that define the agent's identity and persona.</p>",
+        "CustomPromptInputParameters$Tone": "<p>Instructions for the desired tone of responses.</p>",
+        "CustomPromptInputParameters$CustomInstructions": "<p>Custom instructions for the agent's behavior.</p>",
+        "CustomPromptInterface$ResponseLength": "<p>Instructions for the desired response length.</p>",
+        "CustomPromptInterface$OutputStyle": "<p>Instructions for the desired output style.</p>",
+        "CustomPromptInterface$Identity": "<p>Instructions that define the agent's identity and persona.</p>",
+        "CustomPromptInterface$Tone": "<p>Instructions for the desired tone of responses.</p>",
+        "CustomPromptInterface$CustomInstructions": "<p>Custom instructions for the agent's behavior.</p>"
+      }
+    },
     "StyledCellType": {
       "base": null,
       "refs": {
@@ -15344,6 +16092,13 @@
         "AssetBundleImportJobVPCConnectionOverrideParameters$SubnetIds": "<p>A list of new subnet IDs for the VPC connection you are importing. This field is required if you are importing the VPC connection from another Amazon Web Services account or Region.</p>",
         "CreateVPCConnectionRequest$SubnetIds": "<p>A list of subnet IDs for the VPC connection.</p>",
         "UpdateVPCConnectionRequest$SubnetIds": "<p>A list of subnet IDs for the VPC connection.</p>"
+      }
+    },
+    "SubscriptionId": {
+      "base": null,
+      "refs": {
+        "CustomPromptInterface$SubscriptionId": "<p>The subscription identifier.</p>",
+        "CustomPromptProfile$SubscriptionId": "<p>The subscription identifier.</p>"
       }
     },
     "SubtotalOptions": {
@@ -16134,6 +16889,10 @@
         "ActionConnector$LastUpdatedTime": "<p>The date and time when the action connector was last updated.</p>",
         "ActionConnectorSummary$CreatedTime": "<p>The date and time when the action connector was created.</p>",
         "ActionConnectorSummary$LastUpdatedTime": "<p>The date and time when the action connector was last updated.</p>",
+        "Agent$CreatedAt": "<p>The date and time that the agent was created.</p>",
+        "Agent$UpdatedAt": "<p>The date and time that the agent was last updated.</p>",
+        "AgentSummary$CreatedAt": "<p>The date and time that the agent was created.</p>",
+        "AgentSummary$UpdatedAt": "<p>The date and time that the agent was last updated.</p>",
         "Analysis$CreatedTime": "<p>The time that the analysis was created.</p>",
         "Analysis$LastUpdatedTime": "<p>The time that the analysis was last updated.</p>",
         "AnalysisSummary$CreatedTime": "<p>The time that the analysis was created.</p>",
@@ -16171,6 +16930,8 @@
         "DescribeDashboardSnapshotJobResponse$LastUpdatedTime": "<p> The time that the snapshot job status was last updated. </p>",
         "DescribeDashboardSnapshotJobResultResponse$CreatedTime": "<p>The time that a snapshot job was created.</p>",
         "DescribeDashboardSnapshotJobResultResponse$LastUpdatedTime": "<p>The time that a snapshot job status was last updated.</p>",
+        "FlowDetail$CreatedTime": "<p>The time this flow was created.</p>",
+        "FlowDetail$LastUpdatedTime": "<p>The last time this flow was modified.</p>",
         "FlowSummary$CreatedTime": "<p>The time this flow was created.</p>",
         "FlowSummary$LastUpdatedTime": "<p>The last time this flow was modified.</p>",
         "FlowSummary$LastPublishedAt": "<p>The last time this flow was published.</p>",
@@ -16187,6 +16948,11 @@
         "OAuthClientApplicationSummary$CreatedTime": "<p>The time that the OAuthClientApplication was created.</p>",
         "OAuthClientApplicationSummary$LastUpdatedTime": "<p>The time that the OAuthClientApplication was last updated.</p>",
         "RefreshSchedule$StartAfterDateTime": "<p>Time after which the refresh schedule can be started, expressed in <code>YYYY-MM-DDTHH:MM:SS</code> format.</p>",
+        "SpaceDetails$createdAt": "<p>The date and time that the space was created.</p>",
+        "SpaceDetails$updatedAt": "<p>The date and time that the space was last updated.</p>",
+        "SpaceResourceSummary$UpdatedAt": "<p>The date and time that the resource was last updated.</p>",
+        "SpaceSummary$updatedAt": "<p>The date and time that the space was last updated.</p>",
+        "SpaceSummary$createdAt": "<p>The date and time that the space was created.</p>",
         "Template$LastUpdatedTime": "<p>Time when this was last updated.</p>",
         "Template$CreatedTime": "<p>Time when this was created.</p>",
         "TemplateSummary$CreatedTime": "<p>The last time that this template was created.</p>",
@@ -16216,8 +16982,16 @@
     "Title": {
       "base": null,
       "refs": {
+        "FlowDetail$Name": "<p>The display name of the flow.</p>",
         "FlowSummary$Name": "<p>The display name of the flow.</p>",
         "GetFlowMetadataOutput$Name": "<p>A display name for the flow.</p>"
+      }
+    },
+    "TitleInput": {
+      "base": null,
+      "refs": {
+        "CreateFlowRequest$Name": "<p>The display name for the flow.</p>",
+        "UpdateFlowRequest$Name": "<p>Updated display name for the flow. Omit to preserve the existing name.</p>"
       }
     },
     "TokenProviderUrl": {
@@ -17078,6 +17852,58 @@
       "base": null,
       "refs": {}
     },
+    "UpdateAgentPermissionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentPermissionsRequestGrantPermissionsList": {
+      "base": null,
+      "refs": {
+        "UpdateAgentPermissionsRequest$GrantPermissions": "<p>The resource permissions that you want to grant on the agent.</p>"
+      }
+    },
+    "UpdateAgentPermissionsRequestRevokePermissionsList": {
+      "base": null,
+      "refs": {
+        "UpdateAgentPermissionsRequest$RevokePermissions": "<p>The resource permissions that you want to revoke from the agent.</p>"
+      }
+    },
+    "UpdateAgentPermissionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentRequestActionConnectorsToAddList": {
+      "base": null,
+      "refs": {
+        "UpdateAgentRequest$ActionConnectorsToAdd": "<p>The Amazon Resource Names (ARNs) of the action connectors to attach to the agent.</p>"
+      }
+    },
+    "UpdateAgentRequestActionConnectorsToRemoveList": {
+      "base": null,
+      "refs": {
+        "UpdateAgentRequest$ActionConnectorsToRemove": "<p>The Amazon Resource Names (ARNs) of the action connectors to detach from the agent.</p>"
+      }
+    },
+    "UpdateAgentRequestSpacesToAddList": {
+      "base": null,
+      "refs": {
+        "UpdateAgentRequest$SpacesToAdd": "<p>The Amazon Resource Names (ARNs) of the spaces to attach to the agent.</p>"
+      }
+    },
+    "UpdateAgentRequestSpacesToRemoveList": {
+      "base": null,
+      "refs": {
+        "UpdateAgentRequest$SpacesToRemove": "<p>The Amazon Resource Names (ARNs) of the spaces to detach from the agent.</p>"
+      }
+    },
+    "UpdateAgentResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateAnalysisPermissionsRequest": {
       "base": null,
       "refs": {}
@@ -17231,6 +18057,20 @@
       }
     },
     "UpdateFlowPermissionsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateFlowRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateFlowRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "UpdateFlowRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+      }
+    },
+    "UpdateFlowResponse": {
       "base": null,
       "refs": {}
     },
@@ -17389,6 +18229,30 @@
       "refs": {}
     },
     "UpdateSelfUpgradeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSpacePermissionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSpacePermissionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSpaceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSpaceResourcesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSpaceResourcesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSpaceResponse": {
       "base": null,
       "refs": {}
     },
@@ -18172,6 +19036,14 @@
       "base": "<p>The credentials for authenticating with a web proxy server.</p>",
       "refs": {
         "DataSourceCredentials$WebProxyCredentials": "<p>The credentials for connecting through a web proxy server.</p>"
+      }
+    },
+    "WelcomeMessage": {
+      "base": null,
+      "refs": {
+        "Agent$WelcomeMessage": "<p>The welcome message that is displayed when a user starts a conversation with the agent.</p>",
+        "CreateAgentRequest$WelcomeMessage": "<p>The welcome message that is displayed when a user starts a conversation with the agent.</p>",
+        "UpdateAgentRequest$WelcomeMessage": "<p>The welcome message that is displayed when a user starts a conversation with the agent.</p>"
       }
     },
     "WhatIfPointScenario": {

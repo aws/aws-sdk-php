@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>AWS Marketplace is a curated digital catalog that customers can use to find, buy, deploy, and manage third-party software, data, and services to build solutions and run their businesses. The AWS Marketplace Agreement Service provides an API interface that helps AWS Marketplace sellers and buyers manage their product-related agreements, including listing, searching, creating, and filtering agreements.</p> <p>To manage agreements in AWS Marketplace, you must ensure that your AWS Identity and Access Management (IAM) policies and roles are set up. The user must have the required policies/permissions that allow them to carry out the actions in AWS:</p> <ul> <li> <p> <code>DescribeAgreement</code> – Grants permission to users to obtain detailed meta data about any of their agreements.</p> </li> <li> <p> <code>GetAgreementTerms</code> – Grants permission to users to obtain details about the terms of an agreement.</p> </li> <li> <p> <code>SearchAgreements</code> – Grants permission to users to search through all their agreements.</p> </li> </ul>",
+  "service": "<p>AWS Marketplace is a curated digital catalog that customers can use to find, buy, deploy, and manage third-party software, data, and services to build solutions and run their businesses. The AWS Marketplace Agreement Service provides an API interface that helps AWS Marketplace sellers and buyers manage their product-related agreements, including listing, searching, creating, and filtering agreements.</p>",
   "operations": {
     "AcceptAgreementCancellationRequest": "<p>Allows buyers (acceptors) to accept a cancellation request that is in <code>PENDING_APPROVAL</code> status. Once accepted, the cancellation request transitions to <code>APPROVED</code> status and the agreement cancellation will be processed.</p> <note> <p>Only cancellation requests in <code>PENDING_APPROVAL</code> status can be accepted. A <code>ConflictException</code> is thrown if the cancellation request is in any other status.</p> </note>",
     "AcceptAgreementPaymentRequest": "<p>Allows buyers (acceptors) to accept a payment request that is in <code>PENDING_APPROVAL</code> status. Once accepted, the payment request transitions to <code>APPROVED</code> status and the charge will be processed. Buyers can optionally provide a purchase order reference for their internal tracking.</p> <note> <p>Only payment requests in <code>PENDING_APPROVAL</code> status can be accepted. A <code>ConflictException</code> is thrown if the payment request is in any other status.</p> </note>",
@@ -632,6 +632,18 @@
       "base": null,
       "refs": {
         "LegalTerm$documents": "<p>List of references to legal resources proposed to the buyers. An example is the EULA.</p>"
+      }
+    },
+    "Entitlement": {
+      "base": "<p>Represents an entitlement associated with an agreement.</p>",
+      "refs": {
+        "EntitlementList$member": null
+      }
+    },
+    "EntitlementList": {
+      "base": null,
+      "refs": {
+        "AgreementViewSummary$entitlements": "<p>A list of entitlements associated with the agreement.</p>"
       }
     },
     "EntitlementType": {
@@ -1306,6 +1318,7 @@
       "base": null,
       "refs": {
         "BatchCreateBillingAdjustmentError$message": "<p>A human-readable message describing the error.</p>",
+        "Entitlement$licenseArn": "<p>The Amazon Resource Name (ARN) of the AWS License Manager license associated with the entitlement.</p>",
         "GetBillingAdjustmentRequestOutput$description": "<p>The detailed description of the billing adjustment reason, if provided.</p>"
       }
     },
