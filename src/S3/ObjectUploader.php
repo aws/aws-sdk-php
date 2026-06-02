@@ -4,6 +4,7 @@ namespace Aws\S3;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\PromisorInterface;
 use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\FnStream;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -57,7 +58,7 @@ class ObjectUploader implements PromisorInterface
         $this->client = $client;
         $this->bucket = $bucket;
         $this->key = $key;
-        $this->body = Psr7\Utils::streamFor($body);
+        $this->body = $this->createStream($body);
         $this->acl = $acl;
         $this->options = $options + self::$defaults;
         // Handle "add_content_md5" option.
@@ -98,6 +99,33 @@ class ObjectUploader implements PromisorInterface
     public function upload()
     {
         return $this->promise()->wait();
+    }
+
+    /**
+     * Creates a stream from the provided body, ensuring that user-provided
+     * PHP stream resources are not closed when the stream is destructed.
+     *
+     * @param mixed $body
+     *
+     * @return StreamInterface
+     */
+    private function createStream($body): StreamInterface
+    {
+        $stream = Psr7\Utils::streamFor($body);
+
+        // When the user provides a raw PHP resource, we should not take
+        // ownership of it (i.e., we should not fclose it on destruct).
+        // Decorate with a no-op close to prevent the underlying Stream
+        // from closing the user's resource handle.
+        if (is_resource($body)) {
+            return FnStream::decorate($stream, [
+                'close' => function () use ($stream) {
+                    $stream->detach();
+                },
+            ]);
+        }
+
+        return $stream;
     }
 
     /**
