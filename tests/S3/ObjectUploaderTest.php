@@ -381,4 +381,70 @@ class ObjectUploaderTest extends TestCase
             restore_error_handler();
         }
     }
+
+    /**
+     * Tests that a user-provided PHP resource handle is NOT closed by
+     * ObjectUploader after the upload completes (PutObject path).
+     *
+     * Regression test for: https://github.com/aws/aws-sdk-php/issues/XXXX
+     * The cyclic reference fix (PR #3290) caused Stream::__destruct() to fire
+     * promptly, which closed user-provided resource handles.
+     */
+    public function testUploadDoesNotCloseUserProvidedResourceHandle()
+    {
+        $client = $this->getTestClient('S3');
+        $this->addMockResults($client, [new Result()]);
+
+        $fp = fopen('php://memory', 'r+');
+        fwrite($fp, 'Hello, World!');
+        fseek($fp, 0);
+
+        (new ObjectUploader($client, 'bucket', 'key', $fp))->upload();
+
+        $this->assertTrue(
+            is_resource($fp),
+            'User-provided resource handle should remain open after upload()'
+        );
+
+        // Clean up
+        fclose($fp);
+    }
+
+    /**
+     * Tests that a user-provided PHP resource handle is NOT closed by
+     * ObjectUploader after the upload completes (multipart path).
+     */
+    public function testMultipartUploadDoesNotCloseUserProvidedResourceHandle()
+    {
+        $client = $this->getTestClient('S3');
+        $this->addMockResults($client, [
+            new Result(['UploadId' => 'foo']),
+            new Result(['ETag' => 'bar']),
+            new Result(['ETag' => 'bar']),
+            new Result(['Location' => 'https://bucket.s3.amazonaws.com/key']),
+        ]);
+
+        // Create a resource with content larger than the multipart threshold
+        $fp = fopen('php://temp', 'r+');
+        $data = str_repeat('x', 6 * self::MB);
+        fwrite($fp, $data);
+        fseek($fp, 0);
+
+        (new ObjectUploader(
+            $client,
+            'bucket',
+            'key',
+            $fp,
+            'private',
+            ['mup_threshold' => 4 * self::MB]
+        ))->upload();
+
+        $this->assertTrue(
+            is_resource($fp),
+            'User-provided resource handle should remain open after multipart upload()'
+        );
+
+        // Clean up
+        fclose($fp);
+    }
 }
