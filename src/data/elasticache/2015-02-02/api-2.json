@@ -2334,7 +2334,8 @@
         "IpDiscovery":{"shape":"IpDiscovery"},
         "TransitEncryptionMode":{"shape":"TransitEncryptionMode"},
         "ClusterMode":{"shape":"ClusterMode"},
-        "ServerlessCacheSnapshotName":{"shape":"String"}
+        "ServerlessCacheSnapshotName":{"shape":"String"},
+        "Durability":{"shape":"Durability"}
       }
     },
     "CreateReplicationGroupResult":{
@@ -2935,6 +2936,15 @@
       },
       "exception":true
     },
+    "Durability":{
+      "type":"string",
+      "enum":[
+        "default",
+        "async",
+        "sync",
+        "disabled"
+      ]
+    },
     "EC2SecurityGroup":{
       "type":"structure",
       "members":{
@@ -2956,6 +2966,14 @@
         "Maximum":{"shape":"IntegerOptional"},
         "Minimum":{"shape":"IntegerOptional"}
       }
+    },
+    "EffectiveDurability":{
+      "type":"string",
+      "enum":[
+        "async",
+        "sync",
+        "disabled"
+      ]
     },
     "Endpoint":{
       "type":"structure",
@@ -3602,7 +3620,8 @@
         "IpDiscovery":{"shape":"IpDiscovery"},
         "TransitEncryptionEnabled":{"shape":"BooleanOptional"},
         "TransitEncryptionMode":{"shape":"TransitEncryptionMode"},
-        "ClusterMode":{"shape":"ClusterMode"}
+        "ClusterMode":{"shape":"ClusterMode"},
+        "Durability":{"shape":"Durability"}
       }
     },
     "ModifyReplicationGroupResult":{
@@ -4150,6 +4169,7 @@
         "AtRestEncryptionEnabled":{"shape":"BooleanOptional"},
         "MemberClustersOutpostArns":{"shape":"ReplicationGroupOutpostArnList"},
         "KmsKeyId":{"shape":"String"},
+        "StorageEncryptionType":{"shape":"StorageEncryptionType"},
         "ARN":{"shape":"String"},
         "UserGroupIds":{"shape":"UserGroupIdList"},
         "LogDeliveryConfigurations":{"shape":"LogDeliveryConfigurationList"},
@@ -4160,7 +4180,9 @@
         "IpDiscovery":{"shape":"IpDiscovery"},
         "TransitEncryptionMode":{"shape":"TransitEncryptionMode"},
         "ClusterMode":{"shape":"ClusterMode"},
-        "Engine":{"shape":"String"}
+        "Engine":{"shape":"String"},
+        "Durability":{"shape":"Durability"},
+        "EffectiveDurability":{"shape":"EffectiveDurability"}
       },
       "wrapper":true
     },
@@ -4430,6 +4452,7 @@
         "FullEngineVersion":{"shape":"String"},
         "CacheUsageLimits":{"shape":"CacheUsageLimits"},
         "KmsKeyId":{"shape":"String"},
+        "StorageEncryptionType":{"shape":"StorageEncryptionType"},
         "SecurityGroupIds":{"shape":"SecurityGroupIdsList"},
         "Endpoint":{"shape":"Endpoint"},
         "ReaderEndpoint":{"shape":"Endpoint"},
@@ -4655,7 +4678,8 @@
         "NodeSnapshots":{"shape":"NodeSnapshotList"},
         "KmsKeyId":{"shape":"String"},
         "ARN":{"shape":"String"},
-        "DataTiering":{"shape":"DataTieringStatus"}
+        "DataTiering":{"shape":"DataTieringStatus"},
+        "Durability":{"shape":"Durability"}
       },
       "wrapper":true
     },
@@ -4743,6 +4767,14 @@
       "members":{
         "ReplicationGroup":{"shape":"ReplicationGroup"}
       }
+    },
+    "StorageEncryptionType":{
+      "type":"string",
+      "enum":[
+        "none",
+        "sse-elasticache",
+        "sse-kms"
+      ]
     },
     "String":{"type":"string"},
     "Subnet":{

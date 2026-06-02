@@ -1823,7 +1823,8 @@
         "InstanceRequirements":{"shape":"InstanceRequirements"},
         "CapacityProviderScalingConfig":{"shape":"CapacityProviderScalingConfig"},
         "KmsKeyArn":{"shape":"KMSKeyArn"},
-        "LastModified":{"shape":"Timestamp"}
+        "LastModified":{"shape":"Timestamp"},
+        "PropagateTags":{"shape":"PropagateTags"}
       }
     },
     "CapacityProviderArn":{
@@ -2215,7 +2216,8 @@
         "InstanceRequirements":{"shape":"InstanceRequirements"},
         "CapacityProviderScalingConfig":{"shape":"CapacityProviderScalingConfig"},
         "KmsKeyArn":{"shape":"KMSKeyArnNonEmpty"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "PropagateTags":{"shape":"PropagateTags"}
       }
     },
     "CreateCapacityProviderResponse":{
@@ -5345,6 +5347,27 @@
       "min":12,
       "pattern":"o-[a-z0-9]{10,32}"
     },
+    "PropagateTags":{
+      "type":"structure",
+      "members":{
+        "Mode":{"shape":"PropagateTagsMode"},
+        "ExplicitTags":{"shape":"PropagateTagsExplicitTagsMap"}
+      }
+    },
+    "PropagateTagsExplicitTagsMap":{
+      "type":"map",
+      "key":{"shape":"TagKey"},
+      "value":{"shape":"TagValue"},
+      "max":40,
+      "min":0
+    },
+    "PropagateTagsMode":{
+      "type":"string",
+      "enum":[
+        "None",
+        "Explicit"
+      ]
+    },
     "ProvisionedConcurrencyConfigList":{
       "type":"list",
       "member":{"shape":"ProvisionedConcurrencyConfigListItem"}
@@ -6569,7 +6592,8 @@
           "location":"uri",
           "locationName":"CapacityProviderName"
         },
-        "CapacityProviderScalingConfig":{"shape":"CapacityProviderScalingConfig"}
+        "CapacityProviderScalingConfig":{"shape":"CapacityProviderScalingConfig"},
+        "PropagateTags":{"shape":"PropagateTags"}
       }
     },
     "UpdateCapacityProviderResponse":{

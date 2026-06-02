@@ -17,7 +17,7 @@
       "name":"CalculateIsolines",
       "http":{
         "method":"POST",
-        "requestUri":"/isolines",
+        "requestUri":"/v2/isolines",
         "responseCode":200
       },
       "input":{"shape":"CalculateIsolinesRequest"},
@@ -34,7 +34,7 @@
       "name":"CalculateRouteMatrix",
       "http":{
         "method":"POST",
-        "requestUri":"/route-matrix",
+        "requestUri":"/v2/route-matrix",
         "responseCode":200
       },
       "input":{"shape":"CalculateRouteMatrixRequest"},
@@ -51,7 +51,7 @@
       "name":"CalculateRoutes",
       "http":{
         "method":"POST",
-        "requestUri":"/routes",
+        "requestUri":"/v2/routes",
         "responseCode":200
       },
       "input":{"shape":"CalculateRoutesRequest"},
@@ -68,7 +68,7 @@
       "name":"OptimizeWaypoints",
       "http":{
         "method":"POST",
-        "requestUri":"/optimize-waypoints",
+        "requestUri":"/v2/optimize-waypoints",
         "responseCode":200
       },
       "input":{"shape":"OptimizeWaypointsRequest"},
@@ -85,7 +85,7 @@
       "name":"SnapToRoads",
       "http":{
         "method":"POST",
-        "requestUri":"/snap-to-roads",
+        "requestUri":"/v2/snap-to-roads",
         "responseCode":200
       },
       "input":{"shape":"SnapToRoadsRequest"},
@@ -412,6 +412,12 @@
       "min":0,
       "sensitive":true
     },
+    "EnergyKilowattHours":{
+      "type":"double",
+      "box":true,
+      "min":0.0,
+      "sensitive":true
+    },
     "GeometryFormat":{
       "type":"string",
       "enum":[
@@ -423,6 +429,11 @@
       "type":"double",
       "max":360.0,
       "min":0.0,
+      "sensitive":true
+    },
+    "HexColor":{
+      "type":"string",
+      "pattern":".*#[0-9A-Fa-f]{6}.*",
       "sensitive":true
     },
     "IndexList":{
@@ -1013,6 +1024,12 @@
       "min":2,
       "sensitive":true
     },
+    "PowerKilowatts":{
+      "type":"double",
+      "box":true,
+      "min":0.0,
+      "sensitive":true
+    },
     "RoadSnapHazardousCargoType":{
       "type":"string",
       "enum":[
@@ -1189,12 +1206,64 @@
         "Summary":{"shape":"RouteSummary"}
       }
     },
+    "RouteAccessPointDetails":{
+      "type":"structure",
+      "members":{
+        "Accessibility":{"shape":"RouteAccessibilityAvailabilityDetails"}
+      }
+    },
+    "RouteAccessibilityAttribute":{
+      "type":"string",
+      "enum":["Wheelchair"],
+      "sensitive":true
+    },
+    "RouteAccessibilityAttributeList":{
+      "type":"list",
+      "member":{"shape":"RouteAccessibilityAttribute"},
+      "max":1,
+      "min":0
+    },
+    "RouteAccessibilityAvailability":{
+      "type":"string",
+      "enum":[
+        "Available",
+        "Limited",
+        "Unavailable",
+        "Unknown"
+      ]
+    },
+    "RouteAccessibilityAvailabilityDetails":{
+      "type":"structure",
+      "members":{
+        "Wheelchair":{"shape":"RouteAccessibilityAvailability"}
+      }
+    },
     "RouteAllowOptions":{
       "type":"structure",
       "members":{
         "Hot":{"shape":"SensitiveBoolean"},
         "Hov":{"shape":"SensitiveBoolean"}
       }
+    },
+    "RouteAttribution":{
+      "type":"structure",
+      "required":["WebLink"],
+      "members":{
+        "AttributionType":{"shape":"RouteAttributionType"},
+        "WebLink":{"shape":"RouteWebLink"}
+      }
+    },
+    "RouteAttributionList":{
+      "type":"list",
+      "member":{"shape":"RouteAttribution"}
+    },
+    "RouteAttributionType":{
+      "type":"string",
+      "enum":[
+        "Disclaimer",
+        "Tariff"
+      ],
+      "sensitive":true
     },
     "RouteAvoidanceArea":{
       "type":"structure",
@@ -1287,6 +1356,14 @@
       "box":true,
       "min":1,
       "sensitive":true
+    },
+    "RouteChargeStepDetails":{
+      "type":"structure",
+      "members":{
+        "ArrivalCharge":{"shape":"EnergyKilowattHours"},
+        "ConsumablePower":{"shape":"PowerKilowatts"},
+        "DesiredCharge":{"shape":"EnergyKilowattHours"}
+      }
     },
     "RouteContinueHighwayStepDetails":{
       "type":"structure",
@@ -1635,6 +1712,97 @@
       "max":11,
       "min":0
     },
+    "RouteIntermodalEnabledLegs":{
+      "type":"string",
+      "enum":[
+        "FirstLeg",
+        "LastLeg",
+        "EntireRoute",
+        "None"
+      ],
+      "sensitive":true
+    },
+    "RouteIntermodalEnabledLegsList":{
+      "type":"list",
+      "member":{"shape":"RouteIntermodalEnabledLegs"},
+      "max":2,
+      "min":1
+    },
+    "RouteIntermodalOptions":{
+      "type":"structure",
+      "members":{
+        "AccessibilityAttributes":{"shape":"RouteAccessibilityAttributeList"},
+        "MaxTransfers":{"shape":"RouteIntermodalOptionsMaxTransfersInteger"},
+        "Pedestrian":{"shape":"RouteIntermodalPedestrianOptions"},
+        "Rental":{"shape":"RouteIntermodalRentalOptions"},
+        "Taxi":{"shape":"RouteIntermodalTaxiOptions"},
+        "Transit":{"shape":"RouteIntermodalTransitOptions"},
+        "Vehicle":{"shape":"RouteIntermodalVehicleOptions"}
+      }
+    },
+    "RouteIntermodalOptionsMaxTransfersInteger":{
+      "type":"integer",
+      "box":true,
+      "max":6,
+      "min":0
+    },
+    "RouteIntermodalPedestrianOptions":{
+      "type":"structure",
+      "members":{
+        "MaxDistance":{
+          "shape":"RouteIntermodalPedestrianOptionsMaxDistanceLong",
+          "box":true
+        },
+        "Speed":{
+          "shape":"RouteIntermodalPedestrianOptionsSpeedDouble",
+          "box":true
+        }
+      }
+    },
+    "RouteIntermodalPedestrianOptionsMaxDistanceLong":{
+      "type":"long",
+      "max":6000,
+      "min":0,
+      "sensitive":true
+    },
+    "RouteIntermodalPedestrianOptionsSpeedDouble":{
+      "type":"double",
+      "max":7.2,
+      "min":1.8,
+      "sensitive":true
+    },
+    "RouteIntermodalRentalOptions":{
+      "type":"structure",
+      "members":{
+        "AllowedModes":{"shape":"RouteRentalModeList"},
+        "EnabledFor":{"shape":"RouteIntermodalEnabledLegsList"},
+        "ExcludedModes":{"shape":"RouteRentalModeList"}
+      }
+    },
+    "RouteIntermodalTaxiOptions":{
+      "type":"structure",
+      "members":{
+        "AllowedModes":{"shape":"RouteTaxiModeList"},
+        "EnabledFor":{"shape":"RouteIntermodalEnabledLegsList"},
+        "ExcludedModes":{"shape":"RouteTaxiModeList"}
+      }
+    },
+    "RouteIntermodalTransitOptions":{
+      "type":"structure",
+      "members":{
+        "AllowedModes":{"shape":"RouteTransitModeList"},
+        "EnabledFor":{"shape":"RouteIntermodalEnabledLegsList"},
+        "ExcludedModes":{"shape":"RouteTransitModeList"}
+      }
+    },
+    "RouteIntermodalVehicleOptions":{
+      "type":"structure",
+      "members":{
+        "AllowedModes":{"shape":"RouteVehicleModeList"},
+        "EnabledFor":{"shape":"RouteIntermodalEnabledLegsList"},
+        "ExcludedModes":{"shape":"RouteVehicleModeList"}
+      }
+    },
     "RouteKeepStepDetails":{
       "type":"structure",
       "required":["Intersection"],
@@ -1659,7 +1827,10 @@
         "PedestrianLegDetails":{"shape":"RoutePedestrianLegDetails"},
         "TravelMode":{"shape":"RouteLegTravelMode"},
         "Type":{"shape":"RouteLegType"},
-        "VehicleLegDetails":{"shape":"RouteVehicleLegDetails"}
+        "VehicleLegDetails":{"shape":"RouteVehicleLegDetails"},
+        "RentalLegDetails":{"shape":"RouteRentalLegDetails"},
+        "TaxiLegDetails":{"shape":"RouteTaxiLegDetails"},
+        "TransitLegDetails":{"shape":"RouteTransitLegDetails"}
       }
     },
     "RouteLegAdditionalFeature":{
@@ -1673,14 +1844,17 @@
         "TravelStepInstructions",
         "TruckRoadTypes",
         "TypicalDuration",
-        "Zones"
+        "Zones",
+        "Bookings",
+        "IntermediateStops",
+        "NextDepartures"
       ],
       "sensitive":true
     },
     "RouteLegAdditionalFeatureList":{
       "type":"list",
       "member":{"shape":"RouteLegAdditionalFeature"},
-      "max":9,
+      "max":12,
       "min":0
     },
     "RouteLegGeometry":{
@@ -1702,7 +1876,21 @@
         "Pedestrian",
         "Scooter",
         "Truck",
-        "CarShuttleTrain"
+        "CarShuttleTrain",
+        "AerialTramway",
+        "Airplane",
+        "Bus",
+        "BusRapidTransit",
+        "CityTrain",
+        "FunicularRailway",
+        "HighSpeedTrain",
+        "IntercityTrain",
+        "InterregionalTrain",
+        "LightRail",
+        "Monorail",
+        "PrivateBus",
+        "RegionalTrain",
+        "Subway"
       ],
       "sensitive":true
     },
@@ -1711,7 +1899,10 @@
       "enum":[
         "Ferry",
         "Pedestrian",
-        "Vehicle"
+        "Vehicle",
+        "Rental",
+        "Taxi",
+        "Transit"
       ],
       "sensitive":true
     },
@@ -2245,6 +2436,30 @@
       "type":"list",
       "member":{"shape":"RoutePassThroughWaypoint"}
     },
+    "RoutePedestrianAfterTravelStep":{
+      "type":"structure",
+      "required":[
+        "Duration",
+        "Type"
+      ],
+      "members":{
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "Instruction":{"shape":"SensitiveString"},
+        "Type":{"shape":"RoutePedestrianAfterTravelStepType"}
+      }
+    },
+    "RoutePedestrianAfterTravelStepList":{
+      "type":"list",
+      "member":{"shape":"RoutePedestrianAfterTravelStep"}
+    },
+    "RoutePedestrianAfterTravelStepType":{
+      "type":"string",
+      "enum":["Wait"],
+      "sensitive":true
+    },
     "RoutePedestrianArrival":{
       "type":"structure",
       "required":["Place"],
@@ -2264,6 +2479,7 @@
     "RoutePedestrianLegDetails":{
       "type":"structure",
       "required":[
+        "AfterTravelSteps",
         "Arrival",
         "Departure",
         "Notices",
@@ -2272,6 +2488,7 @@
         "TravelSteps"
       ],
       "members":{
+        "AfterTravelSteps":{"shape":"RoutePedestrianAfterTravelStepList"},
         "Arrival":{"shape":"RoutePedestrianArrival"},
         "Departure":{"shape":"RoutePedestrianDeparture"},
         "Notices":{"shape":"RoutePedestrianNoticeList"},
@@ -2334,12 +2551,25 @@
       "type":"structure",
       "required":["Position"],
       "members":{
+        "AccessPointDetails":{"shape":"RouteAccessPointDetails"},
         "Name":{"shape":"SensitiveString"},
         "OriginalPosition":{"shape":"Position23"},
         "Position":{"shape":"Position23"},
         "SideOfStreet":{"shape":"RouteSideOfStreet"},
+        "StationDetails":{"shape":"RouteStationDetails"},
+        "Type":{"shape":"RoutePedestrianPlaceType"},
         "WaypointIndex":{"shape":"RoutePedestrianPlaceWaypointIndexInteger"}
       }
+    },
+    "RoutePedestrianPlaceType":{
+      "type":"string",
+      "enum":[
+        "AccessPoint",
+        "DockingStation",
+        "ParkingLot",
+        "Station"
+      ],
+      "sensitive":true
     },
     "RoutePedestrianPlaceWaypointIndexInteger":{
       "type":"integer",
@@ -2447,7 +2677,8 @@
         "RoundaboutExit",
         "RoundaboutPass",
         "Turn"
-      ]
+      ],
+      "sensitive":true
     },
     "RouteRampStepDetails":{
       "type":"structure",
@@ -2458,6 +2689,257 @@
         "TurnAngle":{"shape":"TurnAngle"},
         "TurnIntensity":{"shape":"RouteTurnIntensity"}
       }
+    },
+    "RouteRentalAfterTravelStep":{
+      "type":"structure",
+      "required":[
+        "Duration",
+        "Type"
+      ],
+      "members":{
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "Instruction":{"shape":"SensitiveString"},
+        "Type":{"shape":"RouteRentalAfterTravelStepType"}
+      }
+    },
+    "RouteRentalAfterTravelStepList":{
+      "type":"list",
+      "member":{"shape":"RouteRentalAfterTravelStep"}
+    },
+    "RouteRentalAfterTravelStepType":{
+      "type":"string",
+      "enum":["Park"],
+      "sensitive":true
+    },
+    "RouteRentalAgency":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"SensitiveString"},
+        "Url":{"shape":"SensitiveString"}
+      }
+    },
+    "RouteRentalArrival":{
+      "type":"structure",
+      "required":["Place"],
+      "members":{
+        "Place":{"shape":"RouteRentalPlace"},
+        "Time":{"shape":"TimestampWithTimezoneOffset"}
+      }
+    },
+    "RouteRentalBeforeTravelStep":{
+      "type":"structure",
+      "required":[
+        "Duration",
+        "Type"
+      ],
+      "members":{
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "Instruction":{"shape":"SensitiveString"},
+        "Type":{"shape":"RouteRentalBeforeTravelStepType"}
+      }
+    },
+    "RouteRentalBeforeTravelStepList":{
+      "type":"list",
+      "member":{"shape":"RouteRentalBeforeTravelStep"}
+    },
+    "RouteRentalBeforeTravelStepType":{
+      "type":"string",
+      "enum":["Setup"],
+      "sensitive":true
+    },
+    "RouteRentalDeparture":{
+      "type":"structure",
+      "required":["Place"],
+      "members":{
+        "Place":{"shape":"RouteRentalPlace"},
+        "Time":{"shape":"TimestampWithTimezoneOffset"}
+      }
+    },
+    "RouteRentalLegDetails":{
+      "type":"structure",
+      "required":[
+        "AfterTravelSteps",
+        "Agency",
+        "Arrival",
+        "Attributions",
+        "BeforeTravelSteps",
+        "BookingWebLinks",
+        "Departure",
+        "Transport",
+        "TravelSteps"
+      ],
+      "members":{
+        "AfterTravelSteps":{"shape":"RouteRentalAfterTravelStepList"},
+        "Agency":{"shape":"RouteRentalAgency"},
+        "Arrival":{"shape":"RouteRentalArrival"},
+        "Attributions":{"shape":"RouteAttributionList"},
+        "BeforeTravelSteps":{"shape":"RouteRentalBeforeTravelStepList"},
+        "BookingWebLinks":{"shape":"RouteWebLinkList"},
+        "Departure":{"shape":"RouteRentalDeparture"},
+        "Summary":{"shape":"RouteRentalSummary"},
+        "Transport":{"shape":"RouteRentalTransportModeDetails"},
+        "TravelSteps":{"shape":"RouteRentalTravelStepList"}
+      }
+    },
+    "RouteRentalMode":{
+      "type":"string",
+      "enum":[
+        "All",
+        "Car"
+      ],
+      "sensitive":true
+    },
+    "RouteRentalModeList":{
+      "type":"list",
+      "member":{"shape":"RouteRentalMode"},
+      "max":1,
+      "min":1
+    },
+    "RouteRentalOverviewSummary":{
+      "type":"structure",
+      "required":[
+        "Duration",
+        "Distance"
+      ],
+      "members":{
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "Distance":{
+          "shape":"DistanceMeters",
+          "box":true
+        }
+      }
+    },
+    "RouteRentalPlace":{
+      "type":"structure",
+      "required":["Position"],
+      "members":{
+        "AccessPointDetails":{"shape":"RouteAccessPointDetails"},
+        "Name":{"shape":"SensitiveString"},
+        "OriginalPosition":{"shape":"Position23"},
+        "Position":{"shape":"Position23"},
+        "StationDetails":{"shape":"RouteStationDetails"},
+        "Type":{"shape":"RouteRentalPlaceType"},
+        "WaypointIndex":{"shape":"RouteRentalPlaceWaypointIndexInteger"}
+      }
+    },
+    "RouteRentalPlaceType":{
+      "type":"string",
+      "enum":[
+        "AccessPoint",
+        "DockingStation",
+        "ParkingLot",
+        "Station"
+      ],
+      "sensitive":true
+    },
+    "RouteRentalPlaceWaypointIndexInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0,
+      "sensitive":true
+    },
+    "RouteRentalSummary":{
+      "type":"structure",
+      "members":{
+        "Overview":{"shape":"RouteRentalOverviewSummary"},
+        "TravelOnly":{"shape":"RouteRentalTravelOnlySummary"}
+      }
+    },
+    "RouteRentalTransportModeDetails":{
+      "type":"structure",
+      "required":["Mode"],
+      "members":{
+        "AvailableSeats":{"shape":"RouteRentalTransportModeDetailsAvailableSeatsInteger"},
+        "Category":{"shape":"SensitiveString"},
+        "Color":{"shape":"SensitiveString"},
+        "Engine":{"shape":"RouteEngineType"},
+        "LicensePlate":{"shape":"SensitiveString"},
+        "Mode":{"shape":"RouteRentalMode"},
+        "Model":{"shape":"SensitiveString"},
+        "Name":{"shape":"SensitiveString"},
+        "TextColor":{"shape":"SensitiveString"}
+      }
+    },
+    "RouteRentalTransportModeDetailsAvailableSeatsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0,
+      "sensitive":true
+    },
+    "RouteRentalTravelOnlySummary":{
+      "type":"structure",
+      "required":["Duration"],
+      "members":{
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        }
+      }
+    },
+    "RouteRentalTravelStep":{
+      "type":"structure",
+      "required":[
+        "Duration",
+        "Type"
+      ],
+      "members":{
+        "ContinueStepDetails":{"shape":"RouteContinueStepDetails"},
+        "Distance":{
+          "shape":"DistanceMeters",
+          "box":true
+        },
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "ExitStepDetails":{"shape":"RouteExitStepDetails"},
+        "GeometryOffset":{"shape":"RouteRentalTravelStepGeometryOffsetInteger"},
+        "Instruction":{"shape":"SensitiveString"},
+        "KeepStepDetails":{"shape":"RouteKeepStepDetails"},
+        "RampStepDetails":{"shape":"RouteRampStepDetails"},
+        "RoundaboutEnterStepDetails":{"shape":"RouteRoundaboutEnterStepDetails"},
+        "RoundaboutExitStepDetails":{"shape":"RouteRoundaboutExitStepDetails"},
+        "RoundaboutPassStepDetails":{"shape":"RouteRoundaboutPassStepDetails"},
+        "TurnStepDetails":{"shape":"RouteTurnStepDetails"},
+        "Type":{"shape":"RouteRentalTravelStepType"},
+        "UTurnStepDetails":{"shape":"RouteUTurnStepDetails"}
+      }
+    },
+    "RouteRentalTravelStepGeometryOffsetInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "RouteRentalTravelStepList":{
+      "type":"list",
+      "member":{"shape":"RouteRentalTravelStep"}
+    },
+    "RouteRentalTravelStepType":{
+      "type":"string",
+      "enum":[
+        "Arrive",
+        "Continue",
+        "Depart",
+        "Exit",
+        "Keep",
+        "Ramp",
+        "RoundaboutEnter",
+        "RoundaboutExit",
+        "RoundaboutPass",
+        "Turn",
+        "UTurn"
+      ],
+      "sensitive":true
     },
     "RouteResponseNotice":{
       "type":"structure",
@@ -2472,7 +2954,10 @@
       "enum":[
         "MainLanguageNotFound",
         "Other",
-        "TravelTimeExceedsDriverWorkHours"
+        "TravelTimeExceedsDriverWorkHours",
+        "TransitDataUnavailable",
+        "TransitRouteUnavailable",
+        "NoTransitStationsFound"
       ]
     },
     "RouteResponseNoticeList":{
@@ -2751,6 +3236,14 @@
       "max":3,
       "min":0
     },
+    "RouteStationDetails":{
+      "type":"structure",
+      "members":{
+        "Accessibility":{"shape":"RouteAccessibilityAvailabilityDetails"},
+        "PlatformName":{"shape":"SensitiveString"},
+        "ShortName":{"shape":"SensitiveString"}
+      }
+    },
     "RouteSteeringDirection":{
       "type":"string",
       "enum":[
@@ -2767,6 +3260,276 @@
         "Duration":{"shape":"DurationSeconds"},
         "Tolls":{"shape":"RouteTollSummary"}
       }
+    },
+    "RouteTaxiAfterTravelStep":{
+      "type":"structure",
+      "required":[
+        "Duration",
+        "Type"
+      ],
+      "members":{
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "Instruction":{"shape":"SensitiveString"},
+        "Type":{"shape":"RouteTaxiAfterTravelStepType"}
+      }
+    },
+    "RouteTaxiAfterTravelStepList":{
+      "type":"list",
+      "member":{"shape":"RouteTaxiAfterTravelStep"}
+    },
+    "RouteTaxiAfterTravelStepType":{
+      "type":"string",
+      "enum":["Park"],
+      "sensitive":true
+    },
+    "RouteTaxiAgency":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"SensitiveString"},
+        "Url":{"shape":"SensitiveString"}
+      }
+    },
+    "RouteTaxiArrival":{
+      "type":"structure",
+      "required":["Place"],
+      "members":{
+        "Place":{"shape":"RouteTaxiPlace"},
+        "Time":{"shape":"TimestampWithTimezoneOffset"}
+      }
+    },
+    "RouteTaxiBeforeTravelStep":{
+      "type":"structure",
+      "required":[
+        "Duration",
+        "Type"
+      ],
+      "members":{
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "Instruction":{"shape":"SensitiveString"},
+        "Type":{"shape":"RouteTaxiBeforeTravelStepType"}
+      }
+    },
+    "RouteTaxiBeforeTravelStepList":{
+      "type":"list",
+      "member":{"shape":"RouteTaxiBeforeTravelStep"}
+    },
+    "RouteTaxiBeforeTravelStepType":{
+      "type":"string",
+      "enum":["Wait"],
+      "sensitive":true
+    },
+    "RouteTaxiDeparture":{
+      "type":"structure",
+      "required":["Place"],
+      "members":{
+        "Place":{"shape":"RouteTaxiPlace"},
+        "Time":{"shape":"TimestampWithTimezoneOffset"}
+      }
+    },
+    "RouteTaxiLegDetails":{
+      "type":"structure",
+      "required":[
+        "AfterTravelSteps",
+        "Agency",
+        "Arrival",
+        "Attributions",
+        "BeforeTravelSteps",
+        "BookingWebLinks",
+        "Departure",
+        "Notices",
+        "Transport",
+        "TravelSteps"
+      ],
+      "members":{
+        "AfterTravelSteps":{"shape":"RouteTaxiAfterTravelStepList"},
+        "Agency":{"shape":"RouteTaxiAgency"},
+        "Arrival":{"shape":"RouteTaxiArrival"},
+        "Attributions":{"shape":"RouteAttributionList"},
+        "BeforeTravelSteps":{"shape":"RouteTaxiBeforeTravelStepList"},
+        "BookingWebLinks":{"shape":"RouteWebLinkList"},
+        "Departure":{"shape":"RouteTaxiDeparture"},
+        "Notices":{"shape":"RouteTaxiNoticeList"},
+        "Summary":{"shape":"RouteTaxiSummary"},
+        "Transport":{"shape":"RouteTaxiTransportModeDetails"},
+        "TravelSteps":{"shape":"RouteTaxiTravelStepList"}
+      }
+    },
+    "RouteTaxiMode":{
+      "type":"string",
+      "enum":[
+        "All",
+        "Car"
+      ],
+      "sensitive":true
+    },
+    "RouteTaxiModeList":{
+      "type":"list",
+      "member":{"shape":"RouteTaxiMode"},
+      "max":1,
+      "min":1
+    },
+    "RouteTaxiNotice":{
+      "type":"structure",
+      "required":["Code"],
+      "members":{
+        "Code":{"shape":"RouteTaxiNoticeCode"},
+        "Impact":{"shape":"RouteNoticeImpact"}
+      }
+    },
+    "RouteTaxiNoticeCode":{
+      "type":"string",
+      "enum":[
+        "AccuratePolylineUnavailable",
+        "Other"
+      ]
+    },
+    "RouteTaxiNoticeList":{
+      "type":"list",
+      "member":{"shape":"RouteTaxiNotice"}
+    },
+    "RouteTaxiOverviewSummary":{
+      "type":"structure",
+      "required":[
+        "Duration",
+        "Distance"
+      ],
+      "members":{
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "Distance":{
+          "shape":"DistanceMeters",
+          "box":true
+        }
+      }
+    },
+    "RouteTaxiPlace":{
+      "type":"structure",
+      "required":["Position"],
+      "members":{
+        "AccessPointDetails":{"shape":"RouteAccessPointDetails"},
+        "Name":{"shape":"SensitiveString"},
+        "OriginalPosition":{"shape":"Position23"},
+        "Position":{"shape":"Position23"},
+        "StationDetails":{"shape":"RouteStationDetails"},
+        "Type":{"shape":"RouteTaxiPlaceType"},
+        "WaypointIndex":{"shape":"RouteTaxiPlaceWaypointIndexInteger"}
+      }
+    },
+    "RouteTaxiPlaceType":{
+      "type":"string",
+      "enum":[
+        "AccessPoint",
+        "Station"
+      ],
+      "sensitive":true
+    },
+    "RouteTaxiPlaceWaypointIndexInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0,
+      "sensitive":true
+    },
+    "RouteTaxiSummary":{
+      "type":"structure",
+      "members":{
+        "Overview":{"shape":"RouteTaxiOverviewSummary"},
+        "TravelOnly":{"shape":"RouteTaxiTravelOnlySummary"}
+      }
+    },
+    "RouteTaxiTransportModeDetails":{
+      "type":"structure",
+      "required":["Mode"],
+      "members":{
+        "AvailableSeats":{"shape":"RouteTaxiTransportModeDetailsAvailableSeatsInteger"},
+        "Category":{"shape":"SensitiveString"},
+        "Color":{"shape":"SensitiveString"},
+        "Engine":{"shape":"RouteEngineType"},
+        "LicensePlate":{"shape":"SensitiveString"},
+        "Mode":{"shape":"RouteTaxiMode"},
+        "Model":{"shape":"SensitiveString"},
+        "Name":{"shape":"SensitiveString"},
+        "TextColor":{"shape":"SensitiveString"}
+      }
+    },
+    "RouteTaxiTransportModeDetailsAvailableSeatsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0,
+      "sensitive":true
+    },
+    "RouteTaxiTravelOnlySummary":{
+      "type":"structure",
+      "required":["Duration"],
+      "members":{
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        }
+      }
+    },
+    "RouteTaxiTravelStep":{
+      "type":"structure",
+      "required":[
+        "Duration",
+        "Type"
+      ],
+      "members":{
+        "ContinueStepDetails":{"shape":"RouteContinueStepDetails"},
+        "Distance":{
+          "shape":"DistanceMeters",
+          "box":true
+        },
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "ExitStepDetails":{"shape":"RouteExitStepDetails"},
+        "GeometryOffset":{"shape":"RouteTaxiTravelStepGeometryOffsetInteger"},
+        "Instruction":{"shape":"SensitiveString"},
+        "KeepStepDetails":{"shape":"RouteKeepStepDetails"},
+        "RampStepDetails":{"shape":"RouteRampStepDetails"},
+        "RoundaboutEnterStepDetails":{"shape":"RouteRoundaboutEnterStepDetails"},
+        "RoundaboutExitStepDetails":{"shape":"RouteRoundaboutExitStepDetails"},
+        "RoundaboutPassStepDetails":{"shape":"RouteRoundaboutPassStepDetails"},
+        "TurnStepDetails":{"shape":"RouteTurnStepDetails"},
+        "Type":{"shape":"RouteTaxiTravelStepType"},
+        "UTurnStepDetails":{"shape":"RouteUTurnStepDetails"}
+      }
+    },
+    "RouteTaxiTravelStepGeometryOffsetInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "RouteTaxiTravelStepList":{
+      "type":"list",
+      "member":{"shape":"RouteTaxiTravelStep"}
+    },
+    "RouteTaxiTravelStepType":{
+      "type":"string",
+      "enum":[
+        "Arrive",
+        "Continue",
+        "Depart",
+        "Exit",
+        "Keep",
+        "Ramp",
+        "RoundaboutEnter",
+        "RoundaboutExit",
+        "RoundaboutPass",
+        "Turn",
+        "UTurn"
+      ],
+      "sensitive":true
     },
     "RouteToll":{
       "type":"structure",
@@ -3015,6 +3778,477 @@
       "min":1,
       "sensitive":true
     },
+    "RouteTransitAfterTravelStep":{
+      "type":"structure",
+      "required":[
+        "Duration",
+        "Type"
+      ],
+      "members":{
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "Instruction":{"shape":"SensitiveString"},
+        "Type":{"shape":"RouteTransitAfterTravelStepType"}
+      }
+    },
+    "RouteTransitAfterTravelStepList":{
+      "type":"list",
+      "member":{"shape":"RouteTransitAfterTravelStep"}
+    },
+    "RouteTransitAfterTravelStepType":{
+      "type":"string",
+      "enum":["Deboard"],
+      "sensitive":true
+    },
+    "RouteTransitAgency":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"SensitiveString"},
+        "Url":{"shape":"SensitiveString"}
+      }
+    },
+    "RouteTransitArrival":{
+      "type":"structure",
+      "required":["Place"],
+      "members":{
+        "Delay":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "Place":{"shape":"RouteTransitPlace"},
+        "Status":{"shape":"RouteTransitTripStatus"},
+        "Time":{"shape":"TimestampWithTimezoneOffset"}
+      }
+    },
+    "RouteTransitBeforeTravelStep":{
+      "type":"structure",
+      "required":[
+        "Duration",
+        "Type"
+      ],
+      "members":{
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "Instruction":{"shape":"SensitiveString"},
+        "Type":{"shape":"RouteTransitBeforeTravelStepType"}
+      }
+    },
+    "RouteTransitBeforeTravelStepList":{
+      "type":"list",
+      "member":{"shape":"RouteTransitBeforeTravelStep"}
+    },
+    "RouteTransitBeforeTravelStepType":{
+      "type":"string",
+      "enum":["Board"],
+      "sensitive":true
+    },
+    "RouteTransitDeparture":{
+      "type":"structure",
+      "required":["Place"],
+      "members":{
+        "Delay":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "Place":{"shape":"RouteTransitPlace"},
+        "Status":{"shape":"RouteTransitTripStatus"},
+        "Time":{"shape":"TimestampWithTimezoneOffset"}
+      }
+    },
+    "RouteTransitIncident":{
+      "type":"structure",
+      "required":[
+        "Effect",
+        "Type"
+      ],
+      "members":{
+        "Description":{"shape":"SensitiveString"},
+        "Effect":{"shape":"RouteTransitIncidentEffect"},
+        "EndTime":{"shape":"TimestampWithTimezoneOffset"},
+        "StartTime":{"shape":"TimestampWithTimezoneOffset"},
+        "Type":{"shape":"RouteTransitIncidentType"},
+        "Url":{"shape":"SensitiveString"}
+      }
+    },
+    "RouteTransitIncidentEffect":{
+      "type":"string",
+      "enum":[
+        "Delayed",
+        "Detoured",
+        "Other",
+        "ServiceAdded",
+        "ServiceCancelled",
+        "ServiceModified",
+        "ServiceReduced",
+        "StopMoved"
+      ],
+      "sensitive":true
+    },
+    "RouteTransitIncidentList":{
+      "type":"list",
+      "member":{"shape":"RouteTransitIncident"}
+    },
+    "RouteTransitIncidentType":{
+      "type":"string",
+      "enum":[
+        "Accident",
+        "Construction",
+        "Demonstration",
+        "Holiday",
+        "Maintenance",
+        "MedicalEmergency",
+        "Other",
+        "PoliceActivity",
+        "Strike",
+        "TechnicalProblem",
+        "Weather"
+      ],
+      "sensitive":true
+    },
+    "RouteTransitIntermediateStop":{
+      "type":"structure",
+      "required":[
+        "Departure",
+        "Duration"
+      ],
+      "members":{
+        "Attributes":{"shape":"RouteTransitIntermediateStopAttributeList"},
+        "Departure":{"shape":"RouteTransitDeparture"},
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "GeometryOffset":{"shape":"RouteTransitIntermediateStopGeometryOffsetInteger"},
+        "Transport":{"shape":"RouteTransitTransportModeDetails"}
+      }
+    },
+    "RouteTransitIntermediateStopAttribute":{
+      "type":"string",
+      "enum":[
+        "NoEntry",
+        "NoExit"
+      ],
+      "sensitive":true
+    },
+    "RouteTransitIntermediateStopAttributeList":{
+      "type":"list",
+      "member":{"shape":"RouteTransitIntermediateStopAttribute"},
+      "max":2,
+      "min":0
+    },
+    "RouteTransitIntermediateStopGeometryOffsetInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "RouteTransitIntermediateStopList":{
+      "type":"list",
+      "member":{"shape":"RouteTransitIntermediateStop"}
+    },
+    "RouteTransitLegDetails":{
+      "type":"structure",
+      "required":[
+        "AfterTravelSteps",
+        "Arrival",
+        "Attributions",
+        "BeforeTravelSteps",
+        "BookingWebLinks",
+        "Departure",
+        "Incidents",
+        "IntermediateStops",
+        "NextDepartures",
+        "Notices",
+        "PassThroughWaypoints",
+        "Spans",
+        "Transport",
+        "TravelSteps"
+      ],
+      "members":{
+        "AfterTravelSteps":{"shape":"RouteTransitAfterTravelStepList"},
+        "Agency":{"shape":"RouteTransitAgency"},
+        "Arrival":{"shape":"RouteTransitArrival"},
+        "Attributions":{"shape":"RouteAttributionList"},
+        "BeforeTravelSteps":{"shape":"RouteTransitBeforeTravelStepList"},
+        "BookingWebLinks":{"shape":"RouteWebLinkList"},
+        "Departure":{"shape":"RouteTransitDeparture"},
+        "Incidents":{"shape":"RouteTransitIncidentList"},
+        "IntermediateStops":{"shape":"RouteTransitIntermediateStopList"},
+        "NextDepartures":{"shape":"RouteTransitNextDepartureList"},
+        "Notices":{"shape":"RouteTransitNoticeList"},
+        "PassThroughWaypoints":{"shape":"RoutePassThroughWaypointList"},
+        "Spans":{"shape":"RouteTransitSpanList"},
+        "Summary":{"shape":"RouteTransitSummary"},
+        "Transport":{"shape":"RouteTransitTransportModeDetails"},
+        "TravelSteps":{"shape":"RouteTransitTravelStepList"}
+      }
+    },
+    "RouteTransitMode":{
+      "type":"string",
+      "enum":[
+        "AerialTramway",
+        "Airplane",
+        "All",
+        "Bus",
+        "BusRapidTransit",
+        "CityTrain",
+        "Ferry",
+        "FunicularRailway",
+        "HighSpeedTrain",
+        "IntercityTrain",
+        "InterregionalTrain",
+        "LightRail",
+        "Monorail",
+        "PrivateBus",
+        "RegionalTrain",
+        "Subway"
+      ],
+      "sensitive":true
+    },
+    "RouteTransitModeList":{
+      "type":"list",
+      "member":{"shape":"RouteTransitMode"},
+      "max":15,
+      "min":1
+    },
+    "RouteTransitNextDeparture":{
+      "type":"structure",
+      "required":["Time"],
+      "members":{
+        "Delay":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "PlatformName":{"shape":"SensitiveString"},
+        "Status":{"shape":"RouteTransitTripStatus"},
+        "Time":{"shape":"TimestampWithTimezoneOffset"},
+        "Transport":{"shape":"RouteTransitTransportModeDetails"}
+      }
+    },
+    "RouteTransitNextDepartureList":{
+      "type":"list",
+      "member":{"shape":"RouteTransitNextDeparture"}
+    },
+    "RouteTransitNotice":{
+      "type":"structure",
+      "required":["Code"],
+      "members":{
+        "Code":{"shape":"RouteTransitNoticeCode"},
+        "Impact":{"shape":"RouteNoticeImpact"}
+      }
+    },
+    "RouteTransitNoticeCode":{
+      "type":"string",
+      "enum":[
+        "AccuratePolylineUnavailable",
+        "IntermediateStopsUnavailable",
+        "NoSchedule",
+        "Other",
+        "PotentialViolatedVehicleRestrictionUsage",
+        "ScheduledTimes",
+        "SeasonalClosure",
+        "ViolatedAvoidFerry",
+        "ViolatedAvoidRailFerry",
+        "ViolatedExcludedTransitMode",
+        "ViolatedVehicleRestriction",
+        "ViolatedAvoidAreas"
+      ]
+    },
+    "RouteTransitNoticeList":{
+      "type":"list",
+      "member":{"shape":"RouteTransitNotice"}
+    },
+    "RouteTransitOptions":{
+      "type":"structure",
+      "members":{
+        "AccessibilityAttributes":{"shape":"RouteAccessibilityAttributeList"},
+        "AllowedModes":{"shape":"RouteTransitModeList"},
+        "ExcludedModes":{"shape":"RouteTransitModeList"},
+        "MaxTransfers":{"shape":"RouteTransitOptionsMaxTransfersInteger"},
+        "Pedestrian":{"shape":"RouteTransitPedestrianOptions"}
+      }
+    },
+    "RouteTransitOptionsMaxTransfersInteger":{
+      "type":"integer",
+      "box":true,
+      "max":6,
+      "min":0
+    },
+    "RouteTransitOverviewSummary":{
+      "type":"structure",
+      "required":[
+        "Distance",
+        "Duration"
+      ],
+      "members":{
+        "Distance":{
+          "shape":"DistanceMeters",
+          "box":true
+        },
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        }
+      }
+    },
+    "RouteTransitPedestrianOptions":{
+      "type":"structure",
+      "members":{
+        "MaxDistance":{
+          "shape":"RouteTransitPedestrianOptionsMaxDistanceLong",
+          "box":true
+        },
+        "Speed":{
+          "shape":"RouteTransitPedestrianOptionsSpeedDouble",
+          "box":true
+        }
+      }
+    },
+    "RouteTransitPedestrianOptionsMaxDistanceLong":{
+      "type":"long",
+      "max":6000,
+      "sensitive":true
+    },
+    "RouteTransitPedestrianOptionsSpeedDouble":{
+      "type":"double",
+      "max":7.2,
+      "min":1.8,
+      "sensitive":true
+    },
+    "RouteTransitPlace":{
+      "type":"structure",
+      "required":["Position"],
+      "members":{
+        "Name":{"shape":"SensitiveString"},
+        "OriginalPosition":{"shape":"Position23"},
+        "Position":{"shape":"Position23"},
+        "StationDetails":{"shape":"RouteStationDetails"},
+        "Type":{"shape":"RouteTransitPlaceType"},
+        "WaypointIndex":{"shape":"RouteTransitPlaceWaypointIndexInteger"}
+      }
+    },
+    "RouteTransitPlaceType":{
+      "type":"string",
+      "enum":["Station"],
+      "sensitive":true
+    },
+    "RouteTransitPlaceWaypointIndexInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0,
+      "sensitive":true
+    },
+    "RouteTransitSpan":{
+      "type":"structure",
+      "members":{
+        "Country":{"shape":"CountryCode3"},
+        "Distance":{
+          "shape":"DistanceMeters",
+          "box":true
+        },
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "GeometryOffset":{"shape":"RouteTransitSpanGeometryOffsetInteger"},
+        "Names":{"shape":"LocalizedStringList"},
+        "Region":{"shape":"RouteTransitSpanRegionString"}
+      }
+    },
+    "RouteTransitSpanGeometryOffsetInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "RouteTransitSpanList":{
+      "type":"list",
+      "member":{"shape":"RouteTransitSpan"}
+    },
+    "RouteTransitSpanRegionString":{
+      "type":"string",
+      "max":3,
+      "min":0,
+      "sensitive":true
+    },
+    "RouteTransitSummary":{
+      "type":"structure",
+      "members":{
+        "Overview":{"shape":"RouteTransitOverviewSummary"},
+        "TravelOnly":{"shape":"RouteTransitTravelOnlySummary"}
+      }
+    },
+    "RouteTransitTransportModeDetails":{
+      "type":"structure",
+      "required":["Mode"],
+      "members":{
+        "Accessibility":{"shape":"RouteAccessibilityAvailabilityDetails"},
+        "Color":{"shape":"HexColor"},
+        "Headsign":{"shape":"SensitiveString"},
+        "LongRouteName":{"shape":"SensitiveString"},
+        "Mode":{"shape":"RouteTransitMode"},
+        "RouteName":{"shape":"SensitiveString"},
+        "ShortRouteName":{"shape":"SensitiveString"},
+        "TextColor":{"shape":"HexColor"}
+      }
+    },
+    "RouteTransitTravelOnlySummary":{
+      "type":"structure",
+      "required":["Duration"],
+      "members":{
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        }
+      }
+    },
+    "RouteTransitTravelStep":{
+      "type":"structure",
+      "required":[
+        "Duration",
+        "Type"
+      ],
+      "members":{
+        "Distance":{
+          "shape":"DistanceMeters",
+          "box":true
+        },
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "GeometryOffset":{"shape":"RouteTransitTravelStepGeometryOffsetInteger"},
+        "Instruction":{"shape":"SensitiveString"},
+        "Type":{"shape":"RouteTransitTravelStepType"}
+      }
+    },
+    "RouteTransitTravelStepGeometryOffsetInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "RouteTransitTravelStepList":{
+      "type":"list",
+      "member":{"shape":"RouteTransitTravelStep"}
+    },
+    "RouteTransitTravelStepType":{
+      "type":"string",
+      "enum":["Depart"],
+      "sensitive":true
+    },
+    "RouteTransitTripStatus":{
+      "type":"string",
+      "enum":[
+        "Added",
+        "Cancelled",
+        "Replaced",
+        "Scheduled"
+      ],
+      "sensitive":true
+    },
     "RouteTransponder":{
       "type":"structure",
       "members":{
@@ -3031,7 +4265,9 @@
         "Car",
         "Pedestrian",
         "Scooter",
-        "Truck"
+        "Truck",
+        "Intermodal",
+        "Transit"
       ]
     },
     "RouteTravelModeOptions":{
@@ -3040,7 +4276,9 @@
         "Car":{"shape":"RouteCarOptions"},
         "Pedestrian":{"shape":"RoutePedestrianOptions"},
         "Scooter":{"shape":"RouteScooterOptions"},
-        "Truck":{"shape":"RouteTruckOptions"}
+        "Truck":{"shape":"RouteTruckOptions"},
+        "Intermodal":{"shape":"RouteIntermodalOptions"},
+        "Transit":{"shape":"RouteTransitOptions"}
       }
     },
     "RouteTravelStepType":{
@@ -3171,6 +4409,31 @@
         "TurnIntensity":{"shape":"RouteTurnIntensity"}
       }
     },
+    "RouteVehicleAfterTravelStep":{
+      "type":"structure",
+      "required":[
+        "Duration",
+        "Type"
+      ],
+      "members":{
+        "ChargeStepDetails":{"shape":"RouteChargeStepDetails"},
+        "Duration":{
+          "shape":"DurationSeconds",
+          "box":true
+        },
+        "Instruction":{"shape":"SensitiveString"},
+        "Type":{"shape":"RouteVehicleAfterTravelStepType"}
+      }
+    },
+    "RouteVehicleAfterTravelStepList":{
+      "type":"list",
+      "member":{"shape":"RouteVehicleAfterTravelStep"}
+    },
+    "RouteVehicleAfterTravelStepType":{
+      "type":"string",
+      "enum":["Park"],
+      "sensitive":true
+    },
     "RouteVehicleArrival":{
       "type":"structure",
       "required":["Place"],
@@ -3231,6 +4494,7 @@
     "RouteVehicleLegDetails":{
       "type":"structure",
       "required":[
+        "AfterTravelSteps",
         "Arrival",
         "Departure",
         "Incidents",
@@ -3244,6 +4508,7 @@
         "Zones"
       ],
       "members":{
+        "AfterTravelSteps":{"shape":"RouteVehicleAfterTravelStepList"},
         "Arrival":{"shape":"RouteVehicleArrival"},
         "Departure":{"shape":"RouteVehicleDeparture"},
         "Incidents":{"shape":"RouteVehicleIncidentList"},
@@ -3269,6 +4534,20 @@
       "max":1,
       "min":1,
       "sensitive":true
+    },
+    "RouteVehicleMode":{
+      "type":"string",
+      "enum":[
+        "All",
+        "Car"
+      ],
+      "sensitive":true
+    },
+    "RouteVehicleModeList":{
+      "type":"list",
+      "member":{"shape":"RouteVehicleMode"},
+      "max":1,
+      "min":1
     },
     "RouteVehicleNotice":{
       "type":"structure",
@@ -3351,8 +4630,21 @@
         "OriginalPosition":{"shape":"Position23"},
         "Position":{"shape":"Position23"},
         "SideOfStreet":{"shape":"RouteSideOfStreet"},
-        "WaypointIndex":{"shape":"RouteVehiclePlaceWaypointIndexInteger"}
+        "WaypointIndex":{"shape":"RouteVehiclePlaceWaypointIndexInteger"},
+        "AccessPointDetails":{"shape":"RouteAccessPointDetails"},
+        "StationDetails":{"shape":"RouteStationDetails"},
+        "Type":{"shape":"RouteVehiclePlaceType"}
       }
+    },
+    "RouteVehiclePlaceType":{
+      "type":"string",
+      "enum":[
+        "AccessPoint",
+        "DockingStation",
+        "ParkingLot",
+        "Station"
+      ],
+      "sensitive":true
     },
     "RouteVehiclePlaceWaypointIndexInteger":{
       "type":"integer",
@@ -3535,6 +4827,29 @@
       "type":"long",
       "max":49999,
       "sensitive":true
+    },
+    "RouteWebLink":{
+      "type":"structure",
+      "required":["Description"],
+      "members":{
+        "AnchorText":{"shape":"SensitiveString"},
+        "Description":{"shape":"SensitiveString"},
+        "DeviceType":{"shape":"RouteWebLinkDeviceType"},
+        "Url":{"shape":"SensitiveString"}
+      }
+    },
+    "RouteWebLinkDeviceType":{
+      "type":"string",
+      "enum":[
+        "Android",
+        "Ios",
+        "Web"
+      ],
+      "sensitive":true
+    },
+    "RouteWebLinkList":{
+      "type":"list",
+      "member":{"shape":"RouteWebLink"}
     },
     "RouteWeightConstraint":{
       "type":"structure",

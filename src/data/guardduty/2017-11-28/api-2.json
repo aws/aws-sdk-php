@@ -8201,6 +8201,12 @@
         }
       }
     },
+    "RelatedFilePathsList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":25,
+      "min":1
+    },
     "RemoteAccountDetails":{
       "type":"structure",
       "members":{
@@ -8621,6 +8627,18 @@
         "ThreatFilePath":{
           "shape":"String",
           "locationName":"threatFilePath"
+        },
+        "FileOperation":{
+          "shape":"String",
+          "locationName":"fileOperation"
+        },
+        "FilePath":{
+          "shape":"String",
+          "locationName":"filePath"
+        },
+        "RelatedFilePaths":{
+          "shape":"RelatedFilePathsList",
+          "locationName":"relatedFilePaths"
         }
       }
     },

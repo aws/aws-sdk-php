@@ -3201,6 +3201,12 @@
         "Resource$RecoveryPointDetails": "<p>Contains details about the backup recovery point that was scanned.</p>"
       }
     },
+    "RelatedFilePathsList": {
+      "base": null,
+      "refs": {
+        "RuntimeContext$RelatedFilePaths": "<p>All file paths modified by the same process that triggered the finding, up to a maximum of 25 paths.</p>"
+      }
+    },
     "RemoteAccountDetails": {
       "base": "<p>Contains details about the remote Amazon Web Services account that made the API call.</p>",
       "refs": {
@@ -4023,6 +4029,7 @@
         "RecoveryPoint$BackupVaultName": "<p>The name of the Amazon Web Services Backup vault that contains the name of the recovery point to be scanned.</p>",
         "RecoveryPointDetails$RecoveryPointArn": "<p>The Amazon Resource Name (ARN) of the recovery point.</p>",
         "RecoveryPointDetails$BackupVaultName": "<p>The name of the backup vault containing the recovery point.</p>",
+        "RelatedFilePathsList$member": null,
         "RemoteAccountDetails$AccountId": "<p>The Amazon Web Services account ID of the remote API caller.</p>",
         "RemotePortDetails$PortName": "<p>The port name of the remote connection.</p>",
         "Resource$ResourceType": "<p>The type of Amazon Web Services resource.</p>",
@@ -4058,6 +4065,8 @@
         "RuntimeContext$ServiceName": "<p>Name of the security service that has been potentially disabled.</p>",
         "RuntimeContext$CommandLineExample": "<p>Example of the command line involved in the suspicious activity.</p>",
         "RuntimeContext$ThreatFilePath": "<p>The suspicious file path for which the threat intelligence details were found.</p>",
+        "RuntimeContext$FileOperation": "<p>Represents the type of file operation that triggered the finding, such as Write, Delete, Rename, Link, or Symlink.</p>",
+        "RuntimeContext$FilePath": "<p>The path of the sensitive file that was modified. Modification includes write, delete, rename, link, or symlink operations. This field is indexed for filtering.</p>",
         "S3Bucket$OwnerId": "<p>The owner ID of the associated S3Amazon S3bucket.</p>",
         "S3Bucket$EncryptionType": "<p>The type of encryption used for the Amazon S3 buckets and its objects. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html\">Protecting data with server-side encryption</a> in the <i>Amazon S3 User Guide</i>.</p>",
         "S3Bucket$EncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the encryption key that is used to encrypt the Amazon S3 bucket and its objects.</p>",

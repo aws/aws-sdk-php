@@ -1,0 +1,148 @@
+{
+  "version": "2.0",
+  "service": "<p>Agentic RFT Runtime Service - manages trajectory and transition data for reinforcement fine-tuning jobs.</p>",
+  "operations": {
+    "CompleteRollout": "<p>Marks a rollout as complete, indicating that no further turns will be appended to the trajectory. After calling this operation, the trajectory is sealed and eligible for reward submission via the UpdateReward operation.</p>",
+    "Sample": "<p>Sends an inference request to the model during a job execution. The request and response bodies are forwarded to and from the model without modification. Each turn (prompt and response) is captured for later use.</p>",
+    "SampleWithResponseStream": "<p>Sends a streaming inference request to the model during a job execution. Returns the response as a stream of payload chunks. Each turn is captured for later use.</p>",
+    "UpdateReward": "<p>Updates the reward values for a trajectory and transitions it to reward-received status, signaling that it is eligible for processing. Call this operation after CompleteRollout to provide the computed reward scores.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You do not have permission to perform this operation.</p>",
+      "refs": {}
+    },
+    "CompleteRolloutRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CompleteRolloutResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CompletionStatus": {
+      "base": "<p>Allowed target statuses for the CompleteTrajectory operation.</p>",
+      "refs": {
+        "CompleteRolloutRequest$Status": "<p>The target status for the trajectory. Defaults to READY if not specified. Set to FAILED if the rollout encountered an error and the trajectory should not be used for processing.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request conflicts with the current state of the resource.</p>",
+      "refs": {}
+    },
+    "Double": {
+      "base": null,
+      "refs": {
+        "DoubleList$member": null
+      }
+    },
+    "DoubleList": {
+      "base": null,
+      "refs": {
+        "UpdateRewardRequest$Rewards": "<p>The list of reward values to assign to this trajectory. Provide one reward value per turn in the trajectory.</p>"
+      }
+    },
+    "FailureReason": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$Message": null,
+        "ConflictException$Message": null,
+        "InternalServiceError$Message": null,
+        "ResourceNotFoundException$Message": null,
+        "ServiceQuotaExceededException$Message": null,
+        "ThrottlingException$Message": null,
+        "ValidationException$Message": null
+      }
+    },
+    "InferenceRequestBody": {
+      "base": "<p>Sensitive binary payload containing customer inference data.</p>",
+      "refs": {
+        "SampleRequest$Body": "<p>The raw inference request body in OpenAI-compatible JSON format.</p>",
+        "SampleWithResponseStreamRequest$Body": "<p>The raw inference request body in OpenAI-compatible JSON format.</p>"
+      }
+    },
+    "InferenceResponseBody": {
+      "base": "<p>Sensitive binary payload containing model inference response data.</p>",
+      "refs": {
+        "SampleResponse$Body": "<p>The raw inference response body from the model.</p>"
+      }
+    },
+    "InternalServiceError": {
+      "base": "<p>An internal service error occurred. Retry the request.</p>",
+      "refs": {}
+    },
+    "JobArn": {
+      "base": null,
+      "refs": {
+        "CompleteRolloutRequest$JobArn": "<p>The job ARN.</p>",
+        "SampleRequest$JobArn": "<p>The job ARN that identifies which model session to route the inference request to.</p>",
+        "SampleWithResponseStreamRequest$JobArn": "<p>The job ARN that identifies which model session to route the inference request to.</p>",
+        "UpdateRewardRequest$JobArn": "<p>The job ARN.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The specified resource was not found.</p>",
+      "refs": {}
+    },
+    "ResponseStream": {
+      "base": "<p>Streaming response body composed of successive payload chunks.</p>",
+      "refs": {
+        "SampleWithResponseStreamResponse$Body": "<p>The streaming response body, delivered as a series of PayloadPart events.</p>"
+      }
+    },
+    "SampleRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SampleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "SampleWithResponseStreamRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SampleWithResponseStreamResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>You have exceeded a service quota.</p>",
+      "refs": {}
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "CompleteRolloutRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "SampleResponse$ContentType": "<p>MIME type of the inference result.</p>",
+        "SampleWithResponseStreamResponse$ContentType": "<p>MIME type of the streaming inference result.</p>",
+        "UpdateRewardRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was throttled. Retry the request after a brief wait.</p>",
+      "refs": {}
+    },
+    "TrajectoryId": {
+      "base": null,
+      "refs": {
+        "CompleteRolloutRequest$TrajectoryId": "<p>The trajectory ID to mark as complete.</p>",
+        "SampleRequest$TrajectoryId": "<p>The trajectory ID for grouping turns into a single rollout. Each turn (prompt and response) is captured for later use.</p>",
+        "SampleWithResponseStreamRequest$TrajectoryId": "<p>The trajectory ID for grouping turns into a single rollout. Each turn is captured for later use.</p>",
+        "UpdateRewardRequest$TrajectoryId": "<p>The trajectory ID to update with reward values.</p>"
+      }
+    },
+    "UpdateRewardRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRewardResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ValidationException": {
+      "base": "<p>The request is not valid. Check the request syntax and parameters</p>",
+      "refs": {}
+    }
+  }
+}

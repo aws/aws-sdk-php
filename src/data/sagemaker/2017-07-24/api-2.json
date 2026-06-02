@@ -580,6 +580,20 @@
         {"shape":"ResourceLimitExceeded"}
       ]
     },
+    "CreateJob":{
+      "name":"CreateJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateJobRequest"},
+      "output":{"shape":"CreateJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
+      ]
+    },
     "CreateLabelingJob":{
       "name":"CreateLabelingJob",
       "http":{
@@ -1390,6 +1404,20 @@
         {"shape":"ResourceNotFound"}
       ]
     },
+    "DeleteJob":{
+      "name":"DeleteJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteJobRequest"},
+      "output":{"shape":"DeleteJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
+      ],
+      "idempotent":true
+    },
     "DeleteMlflowApp":{
       "name":"DeleteMlflowApp",
       "http":{
@@ -2146,6 +2174,32 @@
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
+    },
+    "DescribeJob":{
+      "name":"DescribeJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeJobRequest"},
+      "output":{"shape":"DescribeJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ],
+      "readonly":true
+    },
+    "DescribeJobSchemaVersion":{
+      "name":"DescribeJobSchemaVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeJobSchemaVersionRequest"},
+      "output":{"shape":"DescribeJobSchemaVersionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ],
+      "readonly":true
     },
     "DescribeLabelingJob":{
       "name":"DescribeLabelingJob",
@@ -3083,6 +3137,29 @@
       "input":{"shape":"ListInferenceRecommendationsJobsRequest"},
       "output":{"shape":"ListInferenceRecommendationsJobsResponse"}
     },
+    "ListJobSchemaVersions":{
+      "name":"ListJobSchemaVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListJobSchemaVersionsRequest"},
+      "output":{"shape":"ListJobSchemaVersionsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ],
+      "readonly":true
+    },
+    "ListJobs":{
+      "name":"ListJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListJobsRequest"},
+      "output":{"shape":"ListJobsResponse"},
+      "readonly":true
+    },
     "ListLabelingJobs":{
       "name":"ListLabelingJobs",
       "http":{
@@ -3834,6 +3911,18 @@
         "requestUri":"/"
       },
       "input":{"shape":"StopInferenceRecommendationsJobRequest"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
+    "StopJob":{
+      "name":"StopJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopJobRequest"},
+      "output":{"shape":"StopJobResponse"},
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
@@ -10313,6 +10402,31 @@
         "JobArn":{"shape":"RecommendationJobArn"}
       }
     },
+    "CreateJobRequest":{
+      "type":"structure",
+      "required":[
+        "JobName",
+        "RoleArn",
+        "JobCategory",
+        "JobConfigSchemaVersion",
+        "JobConfigDocument"
+      ],
+      "members":{
+        "JobName":{"shape":"JobName"},
+        "RoleArn":{"shape":"RoleArn"},
+        "JobCategory":{"shape":"JobCategory"},
+        "JobConfigSchemaVersion":{"shape":"JobSchemaVersion"},
+        "JobConfigDocument":{"shape":"JobConfigDocument"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateJobResponse":{
+      "type":"structure",
+      "required":["JobArn"],
+      "members":{
+        "JobArn":{"shape":"JobArn"}
+      }
+    },
     "CreateLabelingJobRequest":{
       "type":"structure",
       "required":[
@@ -11933,6 +12047,21 @@
       "members":{
         "InferenceExperimentArn":{"shape":"InferenceExperimentArn"}
       }
+    },
+    "DeleteJobRequest":{
+      "type":"structure",
+      "required":[
+        "JobName",
+        "JobCategory"
+      ],
+      "members":{
+        "JobName":{"shape":"JobName"},
+        "JobCategory":{"shape":"JobCategory"}
+      }
+    },
+    "DeleteJobResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteMlflowAppRequest":{
       "type":"structure",
@@ -13573,6 +13702,69 @@
         "StoppingConditions":{"shape":"RecommendationJobStoppingConditions"},
         "InferenceRecommendations":{"shape":"InferenceRecommendations"},
         "EndpointPerformances":{"shape":"EndpointPerformances"}
+      }
+    },
+    "DescribeJobRequest":{
+      "type":"structure",
+      "required":[
+        "JobName",
+        "JobCategory"
+      ],
+      "members":{
+        "JobName":{"shape":"JobName"},
+        "JobCategory":{"shape":"JobCategory"}
+      }
+    },
+    "DescribeJobResponse":{
+      "type":"structure",
+      "required":[
+        "JobName",
+        "JobArn",
+        "RoleArn",
+        "JobCategory",
+        "JobConfigSchemaVersion",
+        "CreationTime",
+        "LastModifiedTime",
+        "JobStatus",
+        "SecondaryStatus",
+        "SecondaryStatusTransitions"
+      ],
+      "members":{
+        "JobName":{"shape":"JobName"},
+        "JobArn":{"shape":"JobArn"},
+        "RoleArn":{"shape":"RoleArn"},
+        "JobCategory":{"shape":"JobCategory"},
+        "JobConfigSchemaVersion":{"shape":"JobSchemaVersion"},
+        "JobConfigDocument":{"shape":"JobConfigDocument"},
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "JobStatus":{"shape":"JobStatus"},
+        "SecondaryStatus":{"shape":"JobSecondaryStatus"},
+        "SecondaryStatusTransitions":{"shape":"JobSecondaryStatusTransitions"},
+        "FailureReason":{"shape":"FailureReason"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "DescribeJobSchemaVersionRequest":{
+      "type":"structure",
+      "required":["JobCategory"],
+      "members":{
+        "JobCategory":{"shape":"JobCategory"},
+        "JobConfigSchemaVersion":{"shape":"JobSchemaVersion"}
+      }
+    },
+    "DescribeJobSchemaVersionResponse":{
+      "type":"structure",
+      "required":[
+        "JobCategory",
+        "JobConfigSchemaVersion",
+        "JobConfigSchema"
+      ],
+      "members":{
+        "JobCategory":{"shape":"JobCategory"},
+        "JobConfigSchemaVersion":{"shape":"JobSchemaVersion"},
+        "JobConfigSchema":{"shape":"JobConfigDocument"}
       }
     },
     "DescribeLabelingJobRequest":{
@@ -18794,10 +18986,47 @@
       "max":256,
       "min":1
     },
+    "JobArn":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:(aws[a-z\\-]*):sagemaker:[a-z0-9\\-]+:[0-9]{12}:job/[a-zA-Z0-9]+/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+    },
+    "JobCategory":{
+      "type":"string",
+      "enum":[
+        "AgentRFT",
+        "AgentRFTEvaluation"
+      ]
+    },
+    "JobConfigDocument":{
+      "type":"string",
+      "max":262144,
+      "min":1
+    },
+    "JobConfigSchemaVersionSummary":{
+      "type":"structure",
+      "required":["JobConfigSchemaVersion"],
+      "members":{
+        "JobConfigSchemaVersion":{"shape":"JobSchemaVersion"}
+      }
+    },
+    "JobConfigSchemas":{
+      "type":"list",
+      "member":{"shape":"JobConfigSchemaVersionSummary"},
+      "max":100,
+      "min":0
+    },
     "JobDurationInSeconds":{
       "type":"integer",
       "box":true,
       "min":1
+    },
+    "JobName":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "JobReferenceCode":{
       "type":"string",
@@ -18809,6 +19038,97 @@
       "max":255,
       "min":1,
       "pattern":".+"
+    },
+    "JobSchemaVersion":{
+      "type":"string",
+      "max":16,
+      "min":5,
+      "pattern":"\\d+\\.\\d+\\.\\d+"
+    },
+    "JobSecondaryStatus":{
+      "type":"string",
+      "enum":[
+        "Starting",
+        "Downloading",
+        "Training",
+        "Uploading",
+        "Stopping",
+        "Stopped",
+        "MaxRuntimeExceeded",
+        "Interrupted",
+        "Failed",
+        "Completed",
+        "Restarting",
+        "Pending",
+        "Evaluating",
+        "Deleting",
+        "DeleteFailed"
+      ]
+    },
+    "JobSecondaryStatusTransition":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "StartTime"
+      ],
+      "members":{
+        "Status":{"shape":"JobSecondaryStatus"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "StatusMessage":{"shape":"String"}
+      }
+    },
+    "JobSecondaryStatusTransitions":{
+      "type":"list",
+      "member":{"shape":"JobSecondaryStatusTransition"},
+      "max":100,
+      "min":0
+    },
+    "JobStatus":{
+      "type":"string",
+      "enum":[
+        "InProgress",
+        "Completed",
+        "Failed",
+        "Stopping",
+        "Stopped",
+        "Deleting",
+        "DeleteFailed"
+      ]
+    },
+    "JobStepMetadata":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"String1024"}
+      }
+    },
+    "JobSummaries":{
+      "type":"list",
+      "member":{"shape":"JobSummary"},
+      "max":100,
+      "min":0
+    },
+    "JobSummary":{
+      "type":"structure",
+      "required":[
+        "JobArn",
+        "JobName",
+        "JobCategory",
+        "JobStatus",
+        "JobSecondaryStatus",
+        "CreationTime",
+        "LastModifiedTime"
+      ],
+      "members":{
+        "JobArn":{"shape":"JobArn"},
+        "JobName":{"shape":"JobName"},
+        "JobCategory":{"shape":"JobCategory"},
+        "JobStatus":{"shape":"JobStatus"},
+        "JobSecondaryStatus":{"shape":"JobSecondaryStatus"},
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"}
+      }
     },
     "JobType":{
       "type":"string",
@@ -20216,6 +20536,48 @@
         "CreationTime",
         "Status"
       ]
+    },
+    "ListJobSchemaVersionsRequest":{
+      "type":"structure",
+      "required":["JobCategory"],
+      "members":{
+        "JobCategory":{"shape":"JobCategory"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListJobSchemaVersionsResponse":{
+      "type":"structure",
+      "required":["JobConfigSchemas"],
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "JobConfigSchemas":{"shape":"JobConfigSchemas"}
+      }
+    },
+    "ListJobsRequest":{
+      "type":"structure",
+      "required":["JobCategory"],
+      "members":{
+        "JobCategory":{"shape":"JobCategory"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"},
+        "CreationTimeAfter":{"shape":"Timestamp"},
+        "CreationTimeBefore":{"shape":"Timestamp"},
+        "LastModifiedTimeAfter":{"shape":"Timestamp"},
+        "LastModifiedTimeBefore":{"shape":"Timestamp"},
+        "NameContains":{"shape":"NameContains"},
+        "SortBy":{"shape":"SortBy"},
+        "SortOrder":{"shape":"SortOrder"},
+        "StatusEquals":{"shape":"JobStatus"}
+      }
+    },
+    "ListJobsResponse":{
+      "type":"structure",
+      "required":["JobSummaries"],
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "JobSummaries":{"shape":"JobSummaries"}
+      }
     },
     "ListLabelingJobsForWorkteamRequest":{
       "type":"structure",
@@ -24429,7 +24791,8 @@
         "BedrockProvisionedModelThroughput":{"shape":"BedrockProvisionedModelThroughputMetadata"},
         "BedrockModelImport":{"shape":"BedrockModelImportMetadata"},
         "InferenceComponent":{"shape":"InferenceComponentMetadata"},
-        "Lineage":{"shape":"LineageMetadata"}
+        "Lineage":{"shape":"LineageMetadata"},
+        "Job":{"shape":"JobStepMetadata"}
       }
     },
     "PipelineExecutionSummary":{
@@ -28104,6 +28467,21 @@
       "members":{
         "JobName":{"shape":"RecommendationJobName"}
       }
+    },
+    "StopJobRequest":{
+      "type":"structure",
+      "required":[
+        "JobName",
+        "JobCategory"
+      ],
+      "members":{
+        "JobName":{"shape":"JobName"},
+        "JobCategory":{"shape":"JobCategory"}
+      }
+    },
+    "StopJobResponse":{
+      "type":"structure",
+      "members":{}
     },
     "StopLabelingJobRequest":{
       "type":"structure",

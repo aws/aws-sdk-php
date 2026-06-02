@@ -48,6 +48,7 @@
     "CreateInferenceComponent": "<p>Creates an inference component, which is a SageMaker AI hosting object that you can use to deploy a model to an endpoint. In the inference component settings, you specify the model, the endpoint, and how the model utilizes the resources that the endpoint hosts. You can optimize resource utilization by tailoring how the required CPU cores, accelerators, and memory are allocated. You can deploy multiple inference components to an endpoint, where each inference component contains one model and the resource utilization needs for that individual model. After you deploy an inference component, you can directly invoke the associated model when you use the InvokeEndpoint API action.</p>",
     "CreateInferenceExperiment": "<p> Creates an inference experiment using the configurations specified in the request. </p> <p> Use this API to setup and schedule an experiment to compare model variants on a Amazon SageMaker inference endpoint. For more information about inference experiments, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/shadow-tests.html\">Shadow tests</a>. </p> <p> Amazon SageMaker begins your experiment at the scheduled time and routes traffic to your endpoint's model variants based on your specified configuration. </p> <p> While the experiment is in progress or after it has concluded, you can view metrics that compare your model variants. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/shadow-tests-view-monitor-edit.html\">View, monitor, and edit shadow tests</a>. </p>",
     "CreateInferenceRecommendationsJob": "<p>Starts a recommendation job. You can create either an instance recommendation or load test job.</p>",
+    "CreateJob": "<p>Creates a model customization job in Amazon SageMaker. A job runs a workload based on the job category and configuration you provide. You specify the job category, a schema-versioned configuration document, and an IAM role that grants Amazon SageMaker permission to access resources on your behalf.</p> <p>Use the <code>AgentRFT</code> category to fine-tune a model using multi-turn reinforcement learning with reward signals. Use the <code>AgentRFTEvaluation</code> category to evaluate a fine-tuned or base model by running multi-turn rollouts against a held-out prompt dataset and computing metrics such as pass@k and mean reward.</p> <p>Before creating a job, call <code>ListJobSchemaVersions</code> and <code>DescribeJobSchemaVersion</code> to retrieve the configuration schema for your job category. The <code>JobConfigDocument</code> must conform to the schema specified by <code>JobConfigSchemaVersion</code>.</p> <p>The following operations are related to <code>CreateJob</code>:</p> <ul> <li> <p> <code>DescribeJob</code> </p> </li> <li> <p> <code>ListJobs</code> </p> </li> <li> <p> <code>StopJob</code> </p> </li> <li> <p> <code>DeleteJob</code> </p> </li> <li> <p> <code>ListJobSchemaVersions</code> </p> </li> <li> <p> <code>DescribeJobSchemaVersion</code> </p> </li> </ul>",
     "CreateLabelingJob": "<p>Creates a job that uses workers to label the data objects in your input dataset. You can use the labeled data to train machine learning models. </p> <p>You can select your workforce from one of three providers:</p> <ul> <li> <p>A private workforce that you create. It can include employees, contractors, and outside experts. Use a private workforce when want the data to stay within your organization or when a specific set of skills is required.</p> </li> <li> <p>One or more vendors that you select from the Amazon Web Services Marketplace. Vendors provide expertise in specific areas. </p> </li> <li> <p>The Amazon Mechanical Turk workforce. This is the largest workforce, but it should only be used for public data or data that has been stripped of any personally identifiable information.</p> </li> </ul> <p>You can also use <i>automated data labeling</i> to reduce the number of data objects that need to be labeled by a human. Automated data labeling uses <i>active learning</i> to determine if a data object can be labeled by machine or if it needs to be sent to a human worker. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-automated-labeling.html\">Using Automated Data Labeling</a>.</p> <p>The data objects to be labeled are contained in an Amazon S3 bucket. You create a <i>manifest file</i> that describes the location of each object. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-data.html\">Using Input and Output Data</a>.</p> <p>The output can be used as the manifest file for another labeling job or as training data for your machine learning models.</p> <p>You can use this operation to create a static labeling job or a streaming labeling job. A static labeling job stops if all data objects in the input manifest file identified in <code>ManifestS3Uri</code> have been labeled. A streaming labeling job runs perpetually until it is manually stopped, or remains idle for 10 days. You can send new data objects to an active (<code>InProgress</code>) streaming labeling job in real time. To learn how to create a static labeling job, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-create-labeling-job-api.html\">Create a Labeling Job (API) </a> in the Amazon SageMaker Developer Guide. To learn how to create a streaming labeling job, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-streaming-create-job.html\">Create a Streaming Labeling Job</a>.</p>",
     "CreateMlflowApp": "<p>Creates an MLflow Tracking Server using a general purpose Amazon S3 bucket as the artifact store.</p>",
     "CreateMlflowTrackingServer": "<p>Creates an MLflow Tracking Server using a general purpose Amazon S3 bucket as the artifact store. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/mlflow-create-tracking-server.html\">Create an MLflow Tracking Server</a>.</p>",
@@ -116,6 +117,7 @@
     "DeleteImageVersion": "<p>Deletes a version of a SageMaker AI image. The container image the version represents isn't deleted.</p>",
     "DeleteInferenceComponent": "<p>Deletes an inference component.</p>",
     "DeleteInferenceExperiment": "<p>Deletes an inference experiment.</p> <note> <p> This operation does not delete your endpoint, variants, or any underlying resources. This operation only deletes the metadata of your experiment. </p> </note>",
+    "DeleteJob": "<p>Deletes a job. This operation is idempotent. If the job is currently running, you must stop it before deleting it by calling <code>StopJob</code>.</p> <p>The following operations are related to <code>DeleteJob</code>:</p> <ul> <li> <p> <code>CreateJob</code> </p> </li> <li> <p> <code>StopJob</code> </p> </li> <li> <p> <code>DescribeJob</code> </p> </li> </ul>",
     "DeleteMlflowApp": "<p>Deletes an MLflow App.</p>",
     "DeleteMlflowTrackingServer": "<p>Deletes an MLflow Tracking Server. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/mlflow-cleanup.html.html\">Clean up MLflow resources</a>.</p>",
     "DeleteModel": "<p>Deletes a model. The <code>DeleteModel</code> API deletes only the model entry that was created in SageMaker when you called the <code>CreateModel</code> API. It does not delete model artifacts, inference code, or the IAM role that you specified when creating the model. </p>",
@@ -183,6 +185,8 @@
     "DescribeInferenceComponent": "<p>Returns information about an inference component.</p>",
     "DescribeInferenceExperiment": "<p>Returns details about an inference experiment.</p>",
     "DescribeInferenceRecommendationsJob": "<p>Provides the results of the Inference Recommender job. One or more recommendation jobs are returned.</p>",
+    "DescribeJob": "<p>Returns detailed information about a job, including its current status, secondary status, configuration, and timestamps. Use <code>SecondaryStatus</code> for granular progress tracking and <code>SecondaryStatusTransitions</code> to see the full history of status changes with timestamps.</p> <p>The following operations are related to <code>DescribeJob</code>:</p> <ul> <li> <p> <code>CreateJob</code> </p> </li> <li> <p> <code>ListJobs</code> </p> </li> <li> <p> <code>StopJob</code> </p> </li> <li> <p> <code>DeleteJob</code> </p> </li> </ul>",
+    "DescribeJobSchemaVersion": "<p>Returns the JSON schema for a specified job category and schema version. Use this schema to validate your <code>JobConfigDocument</code> before calling <code>CreateJob</code>. If you don't specify a schema version, the latest version is returned. The schema defines required fields, allowed values, and constraints for the job configuration.</p> <p>The following operations are related to <code>DescribeJobSchemaVersion</code>:</p> <ul> <li> <p> <code>ListJobSchemaVersions</code> </p> </li> <li> <p> <code>CreateJob</code> </p> </li> </ul>",
     "DescribeLabelingJob": "<p>Gets information about a labeling job.</p>",
     "DescribeLineageGroup": "<p>Provides a list of properties for the requested lineage group. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/xaccount-lineage-tracking.html\"> Cross-Account Lineage Tracking </a> in the <i>Amazon SageMaker Developer Guide</i>.</p>",
     "DescribeMlflowApp": "<p>Returns information about an MLflow App.</p>",
@@ -272,6 +276,8 @@
     "ListInferenceExperiments": "<p>Returns the list of all inference experiments.</p>",
     "ListInferenceRecommendationsJobSteps": "<p>Returns a list of the subtasks for an Inference Recommender job.</p> <p>The supported subtasks are benchmarks, which evaluate the performance of your model on different instance types.</p>",
     "ListInferenceRecommendationsJobs": "<p>Lists recommendation jobs that satisfy various filters.</p>",
+    "ListJobSchemaVersions": "<p>Lists available configuration schema versions for a specified job category. Use the schema versions with <code>DescribeJobSchemaVersion</code> to retrieve the full schema document.</p> <p>The following operations are related to <code>ListJobSchemaVersions</code>:</p> <ul> <li> <p> <code>DescribeJobSchemaVersion</code> </p> </li> <li> <p> <code>CreateJob</code> </p> </li> </ul>",
+    "ListJobs": "<p>Lists jobs in a specified category. You can filter results by creation time, last modified time, name, and status. Results are sorted by the field you specify in <code>SortBy</code>. Use pagination to retrieve large result sets efficiently.</p> <p>The following operations are related to <code>ListJobs</code>:</p> <ul> <li> <p> <code>CreateJob</code> </p> </li> <li> <p> <code>DescribeJob</code> </p> </li> </ul>",
     "ListLabelingJobs": "<p>Gets a list of labeling jobs.</p>",
     "ListLabelingJobsForWorkteam": "<p>Gets a list of labeling jobs assigned to a specified work team.</p>",
     "ListLineageGroups": "<p>A list of lineage groups shared with your Amazon Web Services account. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/xaccount-lineage-tracking.html\"> Cross-Account Lineage Tracking </a> in the <i>Amazon SageMaker Developer Guide</i>.</p>",
@@ -344,6 +350,7 @@
     "StopHyperParameterTuningJob": "<p>Stops a running hyperparameter tuning job and all running training jobs that the tuning job launched.</p> <p>All model artifacts output from the training jobs are stored in Amazon Simple Storage Service (Amazon S3). All data that the training jobs write to Amazon CloudWatch Logs are still available in CloudWatch. After the tuning job moves to the <code>Stopped</code> state, it releases all reserved resources for the tuning job.</p>",
     "StopInferenceExperiment": "<p>Stops an inference experiment.</p>",
     "StopInferenceRecommendationsJob": "<p>Stops an Inference Recommender job.</p>",
+    "StopJob": "<p>Stops a running job. When you call <code>StopJob</code>, Amazon SageMaker sets the job status to <code>Stopping</code>. After the job stops, the status changes to <code>Stopped</code>. Partial results may be available in the output location if the job was in progress. To delete a stopped job, call <code>DeleteJob</code>.</p> <p>The following operations are related to <code>StopJob</code>:</p> <ul> <li> <p> <code>CreateJob</code> </p> </li> <li> <p> <code>DescribeJob</code> </p> </li> <li> <p> <code>DeleteJob</code> </p> </li> </ul>",
     "StopLabelingJob": "<p>Stops a running labeling job. A job that is stopped cannot be restarted. Any results obtained before the job is stopped are placed in the Amazon S3 output bucket.</p>",
     "StopMlflowTrackingServer": "<p>Programmatically stop an MLflow Tracking Server.</p>",
     "StopMonitoringSchedule": "<p>Stops a previously started monitoring schedule.</p>",
@@ -4727,6 +4734,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateJobResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateLabelingJobRequest": {
       "base": null,
       "refs": {}
@@ -5594,6 +5609,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteJobResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteMlflowAppRequest": {
       "base": null,
       "refs": {}
@@ -6137,6 +6160,22 @@
       "refs": {}
     },
     "DescribeInferenceRecommendationsJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeJobResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeJobSchemaVersionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeJobSchemaVersionResponse": {
       "base": null,
       "refs": {}
     },
@@ -7941,6 +7980,7 @@
         "DescribeImageVersionResponse$FailureReason": "<p>When a create or delete operation fails, the reason for the failure.</p>",
         "DescribeInferenceComponentOutput$FailureReason": "<p>If the inference component status is <code>Failed</code>, the reason for the failure.</p>",
         "DescribeInferenceRecommendationsJobResponse$FailureReason": "<p>If the job fails, provides information why the job failed.</p>",
+        "DescribeJobResponse$FailureReason": "<p>If the job failed, the reason it failed.</p>",
         "DescribeLabelingJobResponse$FailureReason": "<p>If the job failed, the reason that it failed. </p>",
         "DescribeModelCardExportJobResponse$FailureReason": "<p>The failure reason if the model export job fails.</p>",
         "DescribeMonitoringScheduleResponse$FailureReason": "<p>A string, up to one KB in size, that contains the reason a monitoring job failed, if it failed.</p>",
@@ -10277,10 +10317,64 @@
         "TimeSeriesConfig$ItemIdentifierAttributeName": "<p>The name of the column that represents the set of item identifiers for which you want to predict the target value.</p>"
       }
     },
+    "JobArn": {
+      "base": null,
+      "refs": {
+        "CreateJobResponse$JobArn": "<p>The Amazon Resource Name (ARN) of the job.</p>",
+        "DescribeJobResponse$JobArn": "<p>The Amazon Resource Name (ARN) of the job.</p>",
+        "JobSummary$JobArn": "<p>The Amazon Resource Name (ARN) of the job.</p>"
+      }
+    },
+    "JobCategory": {
+      "base": null,
+      "refs": {
+        "CreateJobRequest$JobCategory": "<p>The category of the job. The category determines the type of workload that the job runs.</p>",
+        "DeleteJobRequest$JobCategory": "<p>The category of the job to delete.</p>",
+        "DescribeJobRequest$JobCategory": "<p>The category of the job.</p>",
+        "DescribeJobResponse$JobCategory": "<p>The category of the job.</p>",
+        "DescribeJobSchemaVersionRequest$JobCategory": "<p>The category of the job schema to describe.</p>",
+        "DescribeJobSchemaVersionResponse$JobCategory": "<p>The category of the job schema.</p>",
+        "JobSummary$JobCategory": "<p>The category of the job.</p>",
+        "ListJobSchemaVersionsRequest$JobCategory": "<p>The category of job schemas to list.</p>",
+        "ListJobsRequest$JobCategory": "<p>The category of jobs to list.</p>",
+        "StopJobRequest$JobCategory": "<p>The category of the job to stop.</p>"
+      }
+    },
+    "JobConfigDocument": {
+      "base": null,
+      "refs": {
+        "CreateJobRequest$JobConfigDocument": "<p>The JSON configuration document for the job. The document must conform to the schema specified by <code>JobConfigSchemaVersion</code>. Use <code>DescribeJobSchemaVersion</code> to retrieve the schema for validation.</p>",
+        "DescribeJobResponse$JobConfigDocument": "<p>The JSON configuration document for the job.</p>",
+        "DescribeJobSchemaVersionResponse$JobConfigSchema": "<p>The JSON schema document that defines the structure of the job configuration.</p>"
+      }
+    },
+    "JobConfigSchemaVersionSummary": {
+      "base": "<p>Provides summary information about a job configuration schema version.</p>",
+      "refs": {
+        "JobConfigSchemas$member": null
+      }
+    },
+    "JobConfigSchemas": {
+      "base": null,
+      "refs": {
+        "ListJobSchemaVersionsResponse$JobConfigSchemas": "<p>An array of <code>JobConfigSchemaVersionSummary</code> objects listing the available schema versions.</p>"
+      }
+    },
     "JobDurationInSeconds": {
       "base": null,
       "refs": {
         "RecommendationJobInputConfig$JobDurationInSeconds": "<p>Specifies the maximum duration of the job, in seconds. The maximum value is 18,000 seconds.</p>"
+      }
+    },
+    "JobName": {
+      "base": null,
+      "refs": {
+        "CreateJobRequest$JobName": "<p>The name of the job. The name must be unique within your account and Amazon Web Services Region.</p>",
+        "DeleteJobRequest$JobName": "<p>The name of the job to delete.</p>",
+        "DescribeJobRequest$JobName": "<p>The name of the job to describe.</p>",
+        "DescribeJobResponse$JobName": "<p>The name of the job.</p>",
+        "JobSummary$JobName": "<p>The name of the job.</p>",
+        "StopJobRequest$JobName": "<p>The name of the job to stop.</p>"
       }
     },
     "JobReferenceCode": {
@@ -10294,6 +10388,62 @@
       "base": null,
       "refs": {
         "ListLabelingJobsForWorkteamRequest$JobReferenceCodeContains": "<p>A filter the limits jobs to only the ones whose job reference code contains the specified string.</p>"
+      }
+    },
+    "JobSchemaVersion": {
+      "base": null,
+      "refs": {
+        "CreateJobRequest$JobConfigSchemaVersion": "<p>The version of the configuration schema to use for the job configuration document. Use <code>ListJobSchemaVersions</code> to get available schema versions for a job category.</p>",
+        "DescribeJobResponse$JobConfigSchemaVersion": "<p>The schema version used for the job configuration document.</p>",
+        "DescribeJobSchemaVersionRequest$JobConfigSchemaVersion": "<p>The version of the schema to retrieve. If not specified, the latest version is returned.</p>",
+        "DescribeJobSchemaVersionResponse$JobConfigSchemaVersion": "<p>The version of the schema.</p>",
+        "JobConfigSchemaVersionSummary$JobConfigSchemaVersion": "<p>The version of the job configuration schema.</p>"
+      }
+    },
+    "JobSecondaryStatus": {
+      "base": null,
+      "refs": {
+        "DescribeJobResponse$SecondaryStatus": "<p>The detailed secondary status of the job, providing more granular information about the job's progress. Secondary statuses may change between releases.</p>",
+        "JobSecondaryStatusTransition$Status": "<p>The secondary status of the job at this transition point.</p>",
+        "JobSummary$JobSecondaryStatus": "<p>The secondary status of the job, providing more granular information about the job's progress. Secondary statuses may change between releases.</p>"
+      }
+    },
+    "JobSecondaryStatusTransition": {
+      "base": "<p>Represents a secondary status transition for a job. Jobs progress through multiple secondary statuses during execution. Each transition records the status, start time, optional end time, and an optional message with additional details.</p>",
+      "refs": {
+        "JobSecondaryStatusTransitions$member": null
+      }
+    },
+    "JobSecondaryStatusTransitions": {
+      "base": null,
+      "refs": {
+        "DescribeJobResponse$SecondaryStatusTransitions": "<p>A list of secondary status transitions for the job, with timestamps and optional status messages.</p>"
+      }
+    },
+    "JobStatus": {
+      "base": null,
+      "refs": {
+        "DescribeJobResponse$JobStatus": "<p>The current status of the job.</p>",
+        "JobSummary$JobStatus": "<p>The current status of the job.</p>",
+        "ListJobsRequest$StatusEquals": "<p>A filter that returns only jobs with the specified status.</p>"
+      }
+    },
+    "JobStepMetadata": {
+      "base": "<p>Metadata for a SageMaker job step.</p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$Job": "<p>The metadata for a SageMaker job used in a pipeline execution step.</p>"
+      }
+    },
+    "JobSummaries": {
+      "base": null,
+      "refs": {
+        "ListJobsResponse$JobSummaries": "<p>An array of <code>JobSummary</code> objects that provide summary information about the jobs.</p>"
+      }
+    },
+    "JobSummary": {
+      "base": "<p>Provides summary information about a job, returned by the <code>ListJobs</code> operation. Use <code>DescribeJob</code> to get full details for a specific job.</p>",
+      "refs": {
+        "JobSummaries$member": null
       }
     },
     "JobType": {
@@ -11153,6 +11303,22 @@
         "ListInferenceRecommendationsJobsRequest$SortBy": "<p>The parameter by which to sort the results.</p>"
       }
     },
+    "ListJobSchemaVersionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListJobSchemaVersionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListJobsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListJobsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListLabelingJobsForWorkteamRequest": {
       "base": null,
       "refs": {}
@@ -11836,6 +12002,8 @@
         "ListInferenceExperimentsRequest$MaxResults": "<p>The maximum number of results to select.</p>",
         "ListInferenceRecommendationsJobStepsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListInferenceRecommendationsJobsRequest$MaxResults": "<p>The maximum number of recommendations to return in the response.</p>",
+        "ListJobSchemaVersionsRequest$MaxResults": "<p>The maximum number of schema versions to return in the response. The default value is 5.</p>",
+        "ListJobsRequest$MaxResults": "<p>The maximum number of jobs to return in the response. The default value is 50.</p>",
         "ListLabelingJobsForWorkteamRequest$MaxResults": "<p>The maximum number of labeling jobs to return in each page of the response.</p>",
         "ListLabelingJobsRequest$MaxResults": "<p>The maximum number of labeling jobs to return in each page of the response.</p>",
         "ListLineageGroupsRequest$MaxResults": "<p>The maximum number of endpoints to return in the response. This value defaults to 10.</p>",
@@ -13559,6 +13727,7 @@
         "ListHyperParameterTuningJobsRequest$NameContains": "<p>A string in the tuning job name. This filter returns only tuning jobs whose name contains the specified string.</p>",
         "ListInferenceExperimentsRequest$NameContains": "<p>Selects inference experiments whose names contain this name.</p>",
         "ListInferenceRecommendationsJobsRequest$NameContains": "<p>A string in the job name. This filter returns only recommendations whose name contains the specified string.</p>",
+        "ListJobsRequest$NameContains": "<p>A string in the job name to filter results. Only jobs whose name contains the specified string are returned.</p>",
         "ListLabelingJobsRequest$NameContains": "<p>A string in the labeling job name. This filter returns only labeling jobs whose name contains the specified string.</p>",
         "ListModelBiasJobDefinitionsRequest$NameContains": "<p>Filter for model bias jobs whose name contains a specified string.</p>",
         "ListModelExplainabilityJobDefinitionsRequest$NameContains": "<p>Filter for model explainability jobs whose name contains a specified string.</p>",
@@ -13721,6 +13890,10 @@
         "ListInferenceRecommendationsJobStepsResponse$NextToken": "<p>A token that you can specify in your next request to return more results from the list.</p>",
         "ListInferenceRecommendationsJobsRequest$NextToken": "<p>If the response to a previous <code>ListInferenceRecommendationsJobsRequest</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of recommendations, use the token in the next request.</p>",
         "ListInferenceRecommendationsJobsResponse$NextToken": "<p>A token for getting the next set of recommendations, if there are any.</p>",
+        "ListJobSchemaVersionsRequest$NextToken": "<p>If the previous response was truncated, this token retrieves the next set of results.</p>",
+        "ListJobSchemaVersionsResponse$NextToken": "<p>If the response is truncated, this token retrieves the next set of results.</p>",
+        "ListJobsRequest$NextToken": "<p>If the previous response was truncated, this token retrieves the next set of results.</p>",
+        "ListJobsResponse$NextToken": "<p>If the response is truncated, this token retrieves the next set of results.</p>",
         "ListLabelingJobsForWorkteamRequest$NextToken": "<p>If the result of the previous <code>ListLabelingJobsForWorkteam</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of labeling jobs, use the token in the next request.</p>",
         "ListLabelingJobsForWorkteamResponse$NextToken": "<p>If the response is truncated, SageMaker returns this token. To retrieve the next set of labeling jobs, use it in the subsequent request.</p>",
         "ListLabelingJobsRequest$NextToken": "<p>If the result of the previous <code>ListLabelingJobs</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of labeling jobs, use the token in the next request.</p>",
@@ -16471,6 +16644,7 @@
         "CreateImageRequest$RoleArn": "<p>The ARN of an IAM role that enables Amazon SageMaker AI to perform tasks on your behalf.</p>",
         "CreateInferenceExperimentRequest$RoleArn": "<p> The ARN of the IAM role that Amazon SageMaker can assume to access model artifacts and container images, and manage Amazon SageMaker Inference endpoints for model deployment. </p>",
         "CreateInferenceRecommendationsJobRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that enables Amazon SageMaker to perform tasks on your behalf.</p>",
+        "CreateJobRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Amazon SageMaker assumes to perform the job. The role must have the necessary permissions to access the resources required by the job configuration.</p>",
         "CreateLabelingJobRequest$RoleArn": "<p>The Amazon Resource Number (ARN) that Amazon SageMaker assumes to perform tasks on your behalf during data labeling. You must grant this role the necessary permissions so that Amazon SageMaker can successfully complete data labeling.</p>",
         "CreateMlflowAppRequest$RoleArn": "<p>The Amazon Resource Name (ARN) for an IAM role in your account that the MLflow App uses to access the artifact store in Amazon S3. The role should have the <code>AmazonS3FullAccess</code> permission.</p>",
         "CreateMlflowTrackingServerRequest$RoleArn": "<p>The Amazon Resource Name (ARN) for an IAM role in your account that the MLflow Tracking Server uses to access the artifact store in Amazon S3. The role should have <code>AmazonS3FullAccess</code> permissions. For more information on IAM permissions for tracking server creation, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/mlflow-create-tracking-server-iam.html\">Set up IAM permissions for MLflow</a>.</p>",
@@ -16500,6 +16674,7 @@
         "DescribeImageResponse$RoleArn": "<p>The ARN of the IAM role that enables Amazon SageMaker AI to perform tasks on your behalf.</p>",
         "DescribeInferenceExperimentResponse$RoleArn": "<p> The ARN of the IAM role that Amazon SageMaker can assume to access model artifacts and container images, and manage Amazon SageMaker Inference endpoints for model deployment. </p>",
         "DescribeInferenceRecommendationsJobResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) role you provided when you initiated the job.</p>",
+        "DescribeJobResponse$RoleArn": "<p>The ARN of the IAM role associated with the job.</p>",
         "DescribeLabelingJobResponse$RoleArn": "<p>The Amazon Resource Name (ARN) that SageMaker assumes to perform tasks on your behalf during data labeling.</p>",
         "DescribeMlflowAppResponse$RoleArn": "<p>The Amazon Resource Name (ARN) for an IAM role in your account that the MLflow App uses to access the artifact store in Amazon S3.</p>",
         "DescribeMlflowTrackingServerResponse$RoleArn": "<p>The Amazon Resource Name (ARN) for an IAM role in your account that the described MLflow Tracking Server uses to access the artifact store in Amazon S3.</p>",
@@ -17250,6 +17425,7 @@
     "SortBy": {
       "base": null,
       "refs": {
+        "ListJobsRequest$SortBy": "<p>The field to sort results by.</p>",
         "ListLabelingJobsRequest$SortBy": "<p>The field to sort results by. The default is <code>CreationTime</code>.</p>",
         "ListProcessingJobsRequest$SortBy": "<p>The field to sort results by. The default is <code>CreationTime</code>.</p>",
         "ListTrainingJobsRequest$SortBy": "<p>The field to sort results by. The default is <code>CreationTime</code>.</p>",
@@ -17324,6 +17500,7 @@
         "ListHyperParameterTuningJobsRequest$SortOrder": "<p>The sort order for results. The default is <code>Ascending</code>.</p>",
         "ListInferenceExperimentsRequest$SortOrder": "<p>The direction of sorting (ascending or descending).</p>",
         "ListInferenceRecommendationsJobsRequest$SortOrder": "<p>The sort order for the results.</p>",
+        "ListJobsRequest$SortOrder": "<p>The sort order for results. Valid values are <code>Ascending</code> and <code>Descending</code>.</p>",
         "ListLabelingJobsForWorkteamRequest$SortOrder": "<p>The sort order for results. The default is <code>Ascending</code>.</p>",
         "ListLabelingJobsRequest$SortOrder": "<p>The sort order for results. The default is <code>Ascending</code>.</p>",
         "ListLineageGroupsRequest$SortOrder": "<p>The sort order for the results. The default is <code>Ascending</code>.</p>",
@@ -17742,6 +17919,14 @@
       "base": null,
       "refs": {}
     },
+    "StopJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopJobResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StopLabelingJobRequest": {
       "base": null,
       "refs": {}
@@ -17891,6 +18076,7 @@
         "InstanceMetadata$FailureMessage": "<p>An error message describing why the instance creation or update failed, if applicable.</p>",
         "InstanceMetadata$LcsExecutionState": "<p>The execution state of the Lifecycle Script (LCS) for the instance.</p>",
         "InstanceRequirementsEniConfiguration$CustomerEni": "<p>The ID of the customer-managed Elastic Network Interface (ENI) associated with the instance type category.</p>",
+        "JobSecondaryStatusTransition$StatusMessage": "<p>A detailed message about the status transition.</p>",
         "ListMlflowAppsRequest$DefaultForDomainId": "<p>Filter for MLflow Apps with the specified default SageMaker Domain ID.</p>",
         "ListProcessingJobsRequest$NameContains": "<p>A string in the processing job name. This filter returns only processing jobs whose name contains the specified string.</p>",
         "ModelCard$ModelId": "<p>The unique name (ID) of the model.</p>",
@@ -17960,6 +18146,7 @@
         "DescribeSpaceResponse$Url": "<p>Returns the URL of the space. If the space is created with Amazon Web Services IAM Identity Center (Successor to Amazon Web Services Single Sign-On) authentication, users can navigate to the URL after appending the respective redirect parameter for the application type to be federated through Amazon Web Services IAM Identity Center.</p> <p>The following application types are supported:</p> <ul> <li> <p>Studio Classic: <code>&amp;redirect=JupyterServer</code> </p> </li> <li> <p>JupyterLab: <code>&amp;redirect=JupyterLab</code> </p> </li> <li> <p>Code Editor, based on Code-OSS, Visual Studio Code - Open Source: <code>&amp;redirect=CodeEditor</code> </p> </li> </ul>",
         "DomainDetails$Url": "<p>The domain's URL.</p>",
         "EMRStepMetadata$LogFilePath": "<p>The path to the log file where the cluster step's failure root cause is recorded.</p>",
+        "JobStepMetadata$Arn": "<p>The Amazon Resource Name (ARN) of the SageMaker job that was run by this step execution.</p>",
         "OutputParameter$Value": "<p>The value of the output parameter.</p>",
         "Parameter$Value": "<p>The literal value for the parameter.</p>",
         "PartnerAppArguments$value": null,
@@ -18300,6 +18487,7 @@
         "CreateInferenceComponentInput$Tags": "<p>A list of key-value pairs associated with the model. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services resources</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "CreateInferenceExperimentRequest$Tags": "<p> Array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/ARG/latest/userguide/tagging.html\">Tagging your Amazon Web Services Resources</a>. </p>",
         "CreateInferenceRecommendationsJobRequest$Tags": "<p>The metadata that you apply to Amazon Web Services resources to help you categorize and organize them. Each tag consists of a key and a value, both of which you define. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a> in the Amazon Web Services General Reference.</p>",
+        "CreateJobRequest$Tags": "<p>An array of key-value pairs to apply to the job as tags. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p>",
         "CreateLabelingJobRequest$Tags": "<p>An array of key/value pairs. For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html#allocation-what\">Using Cost Allocation Tags</a> in the <i>Amazon Web Services Billing and Cost Management User Guide</i>.</p>",
         "CreateMlflowAppRequest$Tags": "<p>Tags consisting of key-value pairs used to manage metadata for the MLflow App.</p>",
         "CreateMlflowTrackingServerRequest$Tags": "<p>Tags consisting of key-value pairs used to manage metadata for the tracking server.</p>",
@@ -18331,6 +18519,7 @@
         "DescribeAIBenchmarkJobResponse$Tags": "<p>The tags associated with the benchmark job.</p>",
         "DescribeAIRecommendationJobResponse$Tags": "<p>The tags associated with the recommendation job.</p>",
         "DescribeAIWorkloadConfigResponse$Tags": "<p>The tags associated with the AI workload configuration.</p>",
+        "DescribeJobResponse$Tags": "<p>The tags associated with the job.</p>",
         "DescribeLabelingJobResponse$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p>",
         "Endpoint$Tags": "<p>A list of the tags associated with the endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services resources</a> in the <i>Amazon Web Services General Reference Guide</i>.</p>",
         "Experiment$Tags": "<p>The list of tags that are associated with the experiment. You can use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API to search on the tags.</p>",
@@ -18752,6 +18941,9 @@
         "DescribeInferenceExperimentResponse$CompletionTime": "<p> The timestamp at which the inference experiment was completed. </p>",
         "DescribeInferenceExperimentResponse$LastModifiedTime": "<p>The timestamp at which you last modified the inference experiment.</p>",
         "DescribeInferenceRecommendationsJobResponse$CompletionTime": "<p>A timestamp that shows when the job completed.</p>",
+        "DescribeJobResponse$CreationTime": "<p>The date and time that the job was created.</p>",
+        "DescribeJobResponse$LastModifiedTime": "<p>The date and time that the job was last modified.</p>",
+        "DescribeJobResponse$EndTime": "<p>The date and time that the job ended.</p>",
         "DescribeLabelingJobResponse$CreationTime": "<p>The date and time that the labeling job was created.</p>",
         "DescribeLabelingJobResponse$LastModifiedTime": "<p>The date and time that the labeling job was last updated.</p>",
         "DescribeLineageGroupResponse$CreationTime": "<p>The creation time of lineage group.</p>",
@@ -18859,6 +19051,11 @@
         "InferenceExperimentSummary$CompletionTime": "<p>The timestamp at which the inference experiment was completed.</p>",
         "InferenceExperimentSummary$LastModifiedTime": "<p>The timestamp when you last modified the inference experiment.</p>",
         "InferenceRecommendationsJob$CompletionTime": "<p>A timestamp that shows when the job completed.</p>",
+        "JobSecondaryStatusTransition$StartTime": "<p>The date and time that the status transition started.</p>",
+        "JobSecondaryStatusTransition$EndTime": "<p>The date and time that the status transition ended.</p>",
+        "JobSummary$CreationTime": "<p>The date and time that the job was created.</p>",
+        "JobSummary$LastModifiedTime": "<p>The date and time that the job was last modified.</p>",
+        "JobSummary$EndTime": "<p>The date and time that the job ended.</p>",
         "LabelingJobForWorkteamSummary$CreationTime": "<p>The date and time that the labeling job was created.</p>",
         "LabelingJobSummary$CreationTime": "<p>The date and time that the job was created (timestamp).</p>",
         "LabelingJobSummary$LastModifiedTime": "<p>The date and time that the job was last modified (timestamp).</p>",
@@ -18953,6 +19150,10 @@
         "ListInferenceExperimentsRequest$CreationTimeBefore": "<p>Selects inference experiments which were created before this timestamp.</p>",
         "ListInferenceExperimentsRequest$LastModifiedTimeAfter": "<p>Selects inference experiments which were last modified after this timestamp.</p>",
         "ListInferenceExperimentsRequest$LastModifiedTimeBefore": "<p>Selects inference experiments which were last modified before this timestamp.</p>",
+        "ListJobsRequest$CreationTimeAfter": "<p>A filter that returns only jobs created after the specified time.</p>",
+        "ListJobsRequest$CreationTimeBefore": "<p>A filter that returns only jobs created before the specified time.</p>",
+        "ListJobsRequest$LastModifiedTimeAfter": "<p>A filter that returns only jobs modified after the specified time.</p>",
+        "ListJobsRequest$LastModifiedTimeBefore": "<p>A filter that returns only jobs modified before the specified time.</p>",
         "ListLabelingJobsForWorkteamRequest$CreationTimeAfter": "<p>A filter that returns only labeling jobs created after the specified time (timestamp).</p>",
         "ListLabelingJobsForWorkteamRequest$CreationTimeBefore": "<p>A filter that returns only labeling jobs created before the specified time (timestamp).</p>",
         "ListLabelingJobsRequest$CreationTimeAfter": "<p>A filter that returns only labeling jobs created after the specified time (timestamp).</p>",

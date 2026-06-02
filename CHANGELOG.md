@@ -1,5 +1,55 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Prevents resources provided to `ObjectUploader` from being closed by Guzzle.
+* `Aws\MediaConvert` - Adding new BDD representation of endpoint ruleset
+* `Aws\EC2` - Amazon EC2 now supports self-service cancellation of future-dated Capacity Reservations. A cancellation charge applies based on remaining commitment. Customers can generate a cancellation quote to review charges before confirming.
+* `Aws\Shield` - Adding new BDD representation of endpoint ruleset
+* `Aws\SecretsManager` - Adding new BDD representation of endpoint ruleset
+* `Aws\Neptune` - Adding new BDD representation of endpoint ruleset
+* `Aws\Pinpoint` - Adding new BDD representation of endpoint ruleset
+* `Aws\SageMaker` - Amazon SageMaker Job is a new service to help you manage various workloads related to model fine tuning, evaluation etc. Two job categories are supported today, AgentRFT for multi-turn agentic reinforcement fine tuning, and AgentRFTEvaluation for evaluating base model or trained model from AgentRFT.
+* `Aws\Polly` - Adding new BDD representation of endpoint ruleset
+* `Aws\SagemakerJobRuntime` - Amazon SageMaker Job Runtime is a new service for managing trajectory data during multi-turn customization jobs. It provides APIs to send inference requests to models during job execution, mark rollouts as complete, and submit reward values for training trajectories.
+* `Aws\SFN` - Adding new BDD representation of endpoint ruleset
+* `Aws\ElastiCache` - Amazon ElastiCache for Valkey now supports durability. This new capability is enabled through a Multi-AZ transactional log, enabling fast recovery and restart during failures.
+* `Aws\TranscribeService` - Release new Language locales including am-ET, es-MX, fa-AF, ht-HT, jv-ID, km-KH, my-MM, sq-AL, ne-NP. The commit shows past locales that have already been release which include cy-gb, ga-ie, gd-gb.
+* `Aws\GeoRoutes` - Added Transit and Intermodal travel modes to CalculateRoutes. Plan routes using public transit (bus, subway, train, ferry) or combine transit with driving, taxi, and rental car segments in a single multi-modal route.
+* `Aws\MigrationHub` - Adding new BDD representation of endpoint ruleset
+* `Aws\MarketplaceMetering` - Adding new BDD representation of endpoint ruleset
+* `Aws\STS` - Adding new BDD representation of endpoint ruleset
+* `Aws\Transfer` - Adding new BDD representation of endpoint ruleset
+* `Aws\ManagedBlockchain` - Adding new BDD representation of endpoint ruleset
+* `Aws\MediaStore` - Adding new BDD representation of endpoint ruleset
+* `Aws\PI` - Adding new BDD representation of endpoint ruleset
+* `Aws\Route53Domains` - Adding new BDD representation of endpoint ruleset
+* `Aws\KeyspacesStreams` - Added iterator description to the GetRecords API response for Amazon Keyspaces Change Data Capture (CDC) streams, enabling consumers to track their current position within the stream.
+* `Aws\Route53` - Adding new BDD representation of endpoint ruleset
+* `Aws\SSO` - Adding new BDD representation of endpoint ruleset
+* `Aws\IoT` - Fleet indexing documentation update
+* `Aws\RAM` - Adding new BDD representation of endpoint ruleset
+* `Aws\MTurk` - Adding new BDD representation of endpoint ruleset
+* `Aws\Lambda` - Adds configuration for tag propagation to Lambda-managed resources.
+* `Aws\CloudWatch` - Adding new BDD representation of endpoint ruleset
+* `Aws\PinpointEmail` - Adding new BDD representation of endpoint ruleset
+* `Aws\Redshift` - Adding new BDD representation of endpoint ruleset
+* `Aws\GuardDuty` - Amazon GuardDuty Runtime Monitoring now supports 3 new SensitiveFileModified finding types (Persistence, PrivilegeEscalation, DefenseEvasion) that detect when security-sensitive system files are modified on EC2 instances or containers, indicating potential compromise through file tampering.
+* `Aws\SSM` - Adding new BDD representation of endpoint ruleset
+* `Aws\XRay` - Adding new BDD representation of endpoint ruleset
+* `Aws\S3` - Adding new BDD representation of endpoint ruleset
+* `Aws\SWF` - Adding new BDD representation of endpoint ruleset
+* `Aws\StorageGateway` - Adding new BDD representation of endpoint ruleset
+* `Aws\MediaLive` - Adding new BDD representation of endpoint ruleset
+* `Aws\LexRuntimeService` - Adding new BDD representation of endpoint ruleset
+* `Aws\Snowball` - Adding new BDD representation of endpoint ruleset
+* `Aws\ResourceGroupsTaggingAPI` - Adding new BDD representation of endpoint ruleset
+* `Aws\Rekognition` - Adding new BDD representation of endpoint ruleset
+* `Aws\ServiceCatalog` - Adding new BDD representation of endpoint ruleset
+* `Aws\SQS` - Adding new BDD representation of endpoint ruleset
+* `Aws\PersonalizeRuntime` - Adding new BDD representation of endpoint ruleset
+* `Aws\WAF` - Adding new BDD representation of endpoint ruleset
+
 ## 3.383.2 - 2026-06-01
 
 * `Aws\IoTEventsData` - Adding new BDD representation of endpoint ruleset

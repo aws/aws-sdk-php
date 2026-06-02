@@ -2618,6 +2618,26 @@
         "AddPermissionRequest$PrincipalOrgID": "<p>The identifier for your organization in Organizations. Use this to grant permissions to all the Amazon Web Services accounts under this organization.</p>"
       }
     },
+    "PropagateTags": {
+      "base": "<p>Configuration for tag propagation to managed resources launched by the capacity provider.</p>",
+      "refs": {
+        "CapacityProvider$PropagateTags": null,
+        "CreateCapacityProviderRequest$PropagateTags": "<p>The tag propagation configuration for the capacity provider. Specifies tags to apply to managed resources at launch.</p>",
+        "UpdateCapacityProviderRequest$PropagateTags": null
+      }
+    },
+    "PropagateTagsExplicitTagsMap": {
+      "base": null,
+      "refs": {
+        "PropagateTags$ExplicitTags": "<p>A list of tags to apply to managed resources when <code>Mode</code> is set to <code>Explicit</code>. You can specify up to 40 tags.</p>"
+      }
+    },
+    "PropagateTagsMode": {
+      "base": null,
+      "refs": {
+        "PropagateTags$Mode": "<p>The tag propagation mode. Set to <code>Explicit</code> to propagate the tags specified in <code>ExplicitTags</code> to managed resources. Set to <code>None</code> to disable tag propagation.</p>"
+      }
+    },
     "ProvisionedConcurrencyConfigList": {
       "base": null,
       "refs": {
@@ -3373,6 +3393,7 @@
     "TagKey": {
       "base": null,
       "refs": {
+        "PropagateTagsExplicitTagsMap$key": null,
         "TagKeyList$member": null,
         "Tags$key": null
       }
@@ -3390,6 +3411,7 @@
     "TagValue": {
       "base": null,
       "refs": {
+        "PropagateTagsExplicitTagsMap$value": null,
         "Tags$value": null
       }
     },

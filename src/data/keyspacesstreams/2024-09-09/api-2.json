@@ -112,7 +112,8 @@
       "type":"structure",
       "members":{
         "changeRecords":{"shape":"RecordList"},
-        "nextShardIterator":{"shape":"ShardIterator"}
+        "nextShardIterator":{"shape":"ShardIterator"},
+        "iteratorDescription":{"shape":"IteratorDescription"}
       }
     },
     "GetShardIteratorInput":{
@@ -181,6 +182,19 @@
       },
       "exception":true,
       "fault":true
+    },
+    "IteratorDescription":{
+      "type":"structure",
+      "members":{
+        "iteratorPosition":{"shape":"IteratorPosition"}
+      }
+    },
+    "IteratorPosition":{
+      "type":"string",
+      "enum":[
+        "AT_TIP",
+        "BEHIND_TIP"
+      ]
     },
     "KeyspaceName":{
       "type":"string",

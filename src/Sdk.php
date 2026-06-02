@@ -714,6 +714,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSageMakerRuntime(array $args = [])
  * @method \Aws\SagemakerEdgeManager\SagemakerEdgeManagerClient createSagemakerEdgeManager(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSagemakerEdgeManager(array $args = [])
+ * @method \Aws\SagemakerJobRuntime\SagemakerJobRuntimeClient createSagemakerJobRuntime(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionSagemakerJobRuntime(array $args = [])
  * @method \Aws\SavingsPlans\SavingsPlansClient createSavingsPlans(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSavingsPlans(array $args = [])
  * @method \Aws\Scheduler\SchedulerClient createScheduler(array $args = [])
