@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.384.0 - 2026-06-02
 
 * `Aws\S3` - Prevents resources provided to `ObjectUploader` from being closed by Guzzle.
 * `Aws\MediaConvert` - Adding new BDD representation of endpoint ruleset
