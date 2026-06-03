@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.384.1 - 2026-06-03
 
 * `Aws\GeoRoutes` - Add "standardRegionalEndpoints" back to fix 'Could not connect to the endpoint URL'
 
