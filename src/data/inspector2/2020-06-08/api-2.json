@@ -3481,13 +3481,15 @@
       "type":"structure",
       "required":["scanMode"],
       "members":{
-        "scanMode":{"shape":"Ec2ScanMode"}
+        "scanMode":{"shape":"Ec2ScanMode"},
+        "activateVMScanner":{"shape":"Boolean"}
       }
     },
     "Ec2ConfigurationState":{
       "type":"structure",
       "members":{
-        "scanModeState":{"shape":"Ec2ScanModeState"}
+        "scanModeState":{"shape":"Ec2ScanModeState"},
+        "vmScannerState":{"shape":"VMScannerState"}
       }
     },
     "Ec2DeepInspectionStatus":{
@@ -5949,7 +5951,8 @@
       "type":"string",
       "enum":[
         "EC2_SSM_AGENT_BASED",
-        "EC2_AGENTLESS"
+        "EC2_AGENTLESS",
+        "EC2_INSPECTOR_AGENT_BASED"
       ]
     },
     "ScanStatus":{
@@ -6872,6 +6875,22 @@
     "UsageValue":{
       "type":"double",
       "min":0
+    },
+    "VMScannerState":{
+      "type":"structure",
+      "members":{
+        "activated":{"shape":"Boolean"},
+        "activatedAt":{"shape":"DateTimeTimestamp"},
+        "status":{"shape":"VMScannerStatus"}
+      }
+    },
+    "VMScannerStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCESS",
+        "PENDING",
+        "FAILED"
+      ]
     },
     "ValidationException":{
       "type":"structure",

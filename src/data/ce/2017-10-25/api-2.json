@@ -751,7 +751,8 @@
       "type":"string",
       "enum":[
         "MAX_SAVINGS",
-        "CUSTOM_COMMITMENT"
+        "CUSTOM_COMMITMENT",
+        "TARGET_AVERAGE_COVERAGE"
       ]
     },
     "Anomalies":{
@@ -3164,7 +3165,8 @@
         "AnalysisType":{"shape":"AnalysisType"},
         "SavingsPlansToAdd":{"shape":"SavingsPlansToAdd"},
         "SavingsPlansToExclude":{"shape":"SavingsPlansToExclude"},
-        "LookBackTimePeriod":{"shape":"DateInterval"}
+        "LookBackTimePeriod":{"shape":"DateInterval"},
+        "SavingsPlansTargetCoverage":{"shape":"SavingsPlansTargetCoverage"}
       }
     },
     "SavingsPlansPurchaseAnalysisDetails":{
@@ -3262,6 +3264,11 @@
         "NetSavings":{"shape":"GenericString"},
         "OnDemandCostEquivalent":{"shape":"GenericString"}
       }
+    },
+    "SavingsPlansTargetCoverage":{
+      "type":"integer",
+      "max":100,
+      "min":10
     },
     "SavingsPlansToAdd":{
       "type":"list",

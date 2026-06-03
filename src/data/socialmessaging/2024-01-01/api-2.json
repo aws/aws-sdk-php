@@ -31,6 +31,26 @@
         {"shape":"DependencyException"}
       ]
     },
+    "CreateWhatsAppFlow":{
+      "name":"CreateWhatsAppFlow",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/whatsapp/flow/create",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateWhatsAppFlowInput"},
+      "output":{"shape":"CreateWhatsAppFlowOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ]
+    },
     "CreateWhatsAppMessageTemplate":{
       "name":"CreateWhatsAppMessageTemplate",
       "http":{
@@ -45,6 +65,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
         {"shape":"ThrottledRequestException"},
         {"shape":"InternalServiceException"},
         {"shape":"DependencyException"}
@@ -64,6 +85,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
         {"shape":"ThrottledRequestException"},
         {"shape":"InternalServiceException"},
         {"shape":"DependencyException"}
@@ -83,10 +105,32 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
         {"shape":"ThrottledRequestException"},
         {"shape":"InternalServiceException"},
         {"shape":"DependencyException"}
       ]
+    },
+    "DeleteWhatsAppFlow":{
+      "name":"DeleteWhatsAppFlow",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/whatsapp/flow",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteWhatsAppFlowInput"},
+      "output":{"shape":"DeleteWhatsAppFlowOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ],
+      "idempotent":true
     },
     "DeleteWhatsAppMessageMedia":{
       "name":"DeleteWhatsAppMessageMedia",
@@ -123,11 +167,32 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
         {"shape":"ThrottledRequestException"},
         {"shape":"InternalServiceException"},
         {"shape":"DependencyException"}
       ],
       "idempotent":true
+    },
+    "DeprecateWhatsAppFlow":{
+      "name":"DeprecateWhatsAppFlow",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/whatsapp/flow/deprecate",
+        "responseCode":200
+      },
+      "input":{"shape":"DeprecateWhatsAppFlowInput"},
+      "output":{"shape":"DeprecateWhatsAppFlowOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ]
     },
     "DisassociateWhatsAppBusinessAccount":{
       "name":"DisassociateWhatsAppBusinessAccount",
@@ -188,6 +253,48 @@
       ],
       "readonly":true
     },
+    "GetWhatsAppFlow":{
+      "name":"GetWhatsAppFlow",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/whatsapp/flow",
+        "responseCode":200
+      },
+      "input":{"shape":"GetWhatsAppFlowInput"},
+      "output":{"shape":"GetWhatsAppFlowOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ],
+      "readonly":true
+    },
+    "GetWhatsAppFlowPreview":{
+      "name":"GetWhatsAppFlowPreview",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/whatsapp/flow/preview",
+        "responseCode":200
+      },
+      "input":{"shape":"GetWhatsAppFlowPreviewInput"},
+      "output":{"shape":"GetWhatsAppFlowPreviewOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ],
+      "readonly":true
+    },
     "GetWhatsAppMessageMedia":{
       "name":"GetWhatsAppMessageMedia",
       "http":{
@@ -222,6 +329,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
         {"shape":"ThrottledRequestException"},
         {"shape":"InternalServiceException"},
         {"shape":"DependencyException"}
@@ -265,6 +373,48 @@
       ],
       "readonly":true
     },
+    "ListWhatsAppFlowAssets":{
+      "name":"ListWhatsAppFlowAssets",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/whatsapp/flow/assets",
+        "responseCode":200
+      },
+      "input":{"shape":"ListWhatsAppFlowAssetsInput"},
+      "output":{"shape":"ListWhatsAppFlowAssetsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ],
+      "readonly":true
+    },
+    "ListWhatsAppFlows":{
+      "name":"ListWhatsAppFlows",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/whatsapp/flow/list",
+        "responseCode":200
+      },
+      "input":{"shape":"ListWhatsAppFlowsInput"},
+      "output":{"shape":"ListWhatsAppFlowsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ],
+      "readonly":true
+    },
     "ListWhatsAppMessageTemplates":{
       "name":"ListWhatsAppMessageTemplates",
       "http":{
@@ -279,6 +429,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
         {"shape":"ThrottledRequestException"},
         {"shape":"InternalServiceException"},
         {"shape":"DependencyException"}
@@ -299,6 +450,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
         {"shape":"ThrottledRequestException"},
         {"shape":"InternalServiceException"},
         {"shape":"DependencyException"}
@@ -314,6 +466,26 @@
       },
       "input":{"shape":"PostWhatsAppMessageMediaInput"},
       "output":{"shape":"PostWhatsAppMessageMediaOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ]
+    },
+    "PublishWhatsAppFlow":{
+      "name":"PublishWhatsAppFlow",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/whatsapp/flow/publish",
+        "responseCode":200
+      },
+      "input":{"shape":"PublishWhatsAppFlowInput"},
+      "output":{"shape":"PublishWhatsAppFlowOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -396,6 +568,46 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "UpdateWhatsAppFlow":{
+      "name":"UpdateWhatsAppFlow",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/whatsapp/flow/update",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateWhatsAppFlowInput"},
+      "output":{"shape":"UpdateWhatsAppFlowOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ]
+    },
+    "UpdateWhatsAppFlowAssets":{
+      "name":"UpdateWhatsAppFlowAssets",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/whatsapp/flow/assets/update",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateWhatsAppFlowAssetsInput"},
+      "output":{"shape":"UpdateWhatsAppFlowAssetsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
+        {"shape":"ThrottledRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"DependencyException"}
+      ]
+    },
     "UpdateWhatsAppMessageTemplate":{
       "name":"UpdateWhatsAppMessageTemplate",
       "http":{
@@ -410,6 +622,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParametersException"},
+        {"shape":"AccessDeniedByMetaException"},
         {"shape":"ThrottledRequestException"},
         {"shape":"InternalServiceException"},
         {"shape":"DependencyException"}
@@ -495,6 +708,29 @@
       "type":"integer",
       "box":true
     },
+    "CreateWhatsAppFlowInput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "flowName",
+        "categories"
+      ],
+      "members":{
+        "id":{"shape":"LinkedWhatsAppBusinessAccountId"},
+        "flowName":{"shape":"MetaFlowName"},
+        "categories":{"shape":"MetaFlowCategoryList"},
+        "flowJson":{"shape":"MetaFlowJsonBlob"},
+        "publish":{"shape":"Boolean"},
+        "cloneFlowId":{"shape":"MetaFlowId"}
+      }
+    },
+    "CreateWhatsAppFlowOutput":{
+      "type":"structure",
+      "members":{
+        "flowId":{"shape":"MetaFlowId"},
+        "validationErrors":{"shape":"ValidationErrorList"}
+      }
+    },
     "CreateWhatsAppMessageTemplateFromLibraryInput":{
       "type":"structure",
       "required":[
@@ -550,6 +786,29 @@
     "DeleteAllLanguages":{
       "type":"boolean",
       "box":true
+    },
+    "DeleteWhatsAppFlowInput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "flowId"
+      ],
+      "members":{
+        "id":{
+          "shape":"LinkedWhatsAppBusinessAccountId",
+          "location":"querystring",
+          "locationName":"id"
+        },
+        "flowId":{
+          "shape":"MetaFlowId",
+          "location":"querystring",
+          "locationName":"flowId"
+        }
+      }
+    },
+    "DeleteWhatsAppFlowOutput":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteWhatsAppMessageMediaInput":{
       "type":"structure",
@@ -618,6 +877,21 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "DeprecateWhatsAppFlowInput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "flowId"
+      ],
+      "members":{
+        "id":{"shape":"LinkedWhatsAppBusinessAccountId"},
+        "flowId":{"shape":"MetaFlowId"}
+      }
+    },
+    "DeprecateWhatsAppFlowOutput":{
+      "type":"structure",
+      "members":{}
     },
     "DisassociateWhatsAppBusinessAccountInput":{
       "type":"structure",
@@ -691,6 +965,82 @@
       "members":{
         "phoneNumber":{"shape":"WhatsAppPhoneNumberDetail"},
         "linkedWhatsAppBusinessAccountId":{"shape":"LinkedWhatsAppBusinessAccountId"}
+      }
+    },
+    "GetWhatsAppFlowInput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "flowId"
+      ],
+      "members":{
+        "id":{
+          "shape":"LinkedWhatsAppBusinessAccountId",
+          "location":"querystring",
+          "locationName":"id"
+        },
+        "flowId":{
+          "shape":"MetaFlowId",
+          "location":"querystring",
+          "locationName":"flowId"
+        }
+      }
+    },
+    "GetWhatsAppFlowOutput":{
+      "type":"structure",
+      "required":[
+        "flowId",
+        "flowName",
+        "flowStatus"
+      ],
+      "members":{
+        "flowId":{"shape":"MetaFlowId"},
+        "flowName":{"shape":"MetaFlowName"},
+        "flowStatus":{"shape":"MetaFlowStatus"},
+        "categories":{"shape":"MetaFlowCategoryList"},
+        "validationErrors":{"shape":"ValidationErrorList"},
+        "jsonVersion":{"shape":"MetaFlowJsonVersion"},
+        "dataApiVersion":{"shape":"MetaFlowDataApiVersion"},
+        "endpointUri":{"shape":"MetaFlowEndpointUri"},
+        "preview":{"shape":"MetaFlowPreviewInfo"},
+        "whatsAppBusinessAccount":{"shape":"MetaFlowWhatsAppBusinessAccountInfo"},
+        "application":{"shape":"MetaFlowApplicationInfo"},
+        "healthStatus":{"shape":"MetaFlowHealthStatus"}
+      }
+    },
+    "GetWhatsAppFlowPreviewInput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "flowId"
+      ],
+      "members":{
+        "id":{
+          "shape":"LinkedWhatsAppBusinessAccountId",
+          "location":"querystring",
+          "locationName":"id"
+        },
+        "flowId":{
+          "shape":"MetaFlowId",
+          "location":"querystring",
+          "locationName":"flowId"
+        },
+        "invalidate":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"invalidate"
+        }
+      }
+    },
+    "GetWhatsAppFlowPreviewOutput":{
+      "type":"structure",
+      "required":[
+        "flowId",
+        "preview"
+      ],
+      "members":{
+        "flowId":{"shape":"MetaFlowId"},
+        "preview":{"shape":"MetaFlowPreviewInfo"}
       }
     },
     "GetWhatsAppMessageMediaInput":{
@@ -946,6 +1296,72 @@
         "tags":{"shape":"TagList"}
       }
     },
+    "ListWhatsAppFlowAssetsInput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "flowId"
+      ],
+      "members":{
+        "id":{
+          "shape":"LinkedWhatsAppBusinessAccountId",
+          "location":"querystring",
+          "locationName":"id"
+        },
+        "flowId":{
+          "shape":"MetaFlowId",
+          "location":"querystring",
+          "locationName":"flowId"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListWhatsAppFlowAssetsOutput":{
+      "type":"structure",
+      "required":["flowAssets"],
+      "members":{
+        "flowAssets":{"shape":"MetaFlowAssetList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListWhatsAppFlowsInput":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"LinkedWhatsAppBusinessAccountId",
+          "location":"querystring",
+          "locationName":"id"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListWhatsAppFlowsOutput":{
+      "type":"structure",
+      "required":["flows"],
+      "members":{
+        "flows":{"shape":"MetaFlowSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListWhatsAppMessageTemplatesInput":{
       "type":"structure",
       "required":["id"],
@@ -1004,6 +1420,232 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "MetaFlowApplicationId":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "MetaFlowApplicationInfo":{
+      "type":"structure",
+      "required":[
+        "name",
+        "id"
+      ],
+      "members":{
+        "link":{"shape":"MetaFlowApplicationLink"},
+        "name":{"shape":"MetaFlowApplicationName"},
+        "id":{"shape":"MetaFlowApplicationId"}
+      }
+    },
+    "MetaFlowApplicationLink":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "MetaFlowApplicationName":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "MetaFlowAsset":{
+      "type":"structure",
+      "required":[
+        "name",
+        "assetType",
+        "downloadUrl"
+      ],
+      "members":{
+        "name":{"shape":"MetaFlowAssetName"},
+        "assetType":{"shape":"MetaFlowAssetType"},
+        "downloadUrl":{"shape":"MetaFlowAssetDownloadUrl"}
+      }
+    },
+    "MetaFlowAssetDownloadUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "MetaFlowAssetList":{
+      "type":"list",
+      "member":{"shape":"MetaFlowAsset"}
+    },
+    "MetaFlowAssetName":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "MetaFlowAssetType":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
+    "MetaFlowCategory":{
+      "type":"string",
+      "enum":[
+        "SIGN_UP",
+        "SIGN_IN",
+        "APPOINTMENT_BOOKING",
+        "LEAD_GENERATION",
+        "SHOPPING",
+        "CONTACT_US",
+        "CUSTOMER_SUPPORT",
+        "SURVEY",
+        "OTHER"
+      ]
+    },
+    "MetaFlowCategoryList":{
+      "type":"list",
+      "member":{"shape":"MetaFlowCategory"},
+      "max":9,
+      "min":1
+    },
+    "MetaFlowDataApiVersion":{
+      "type":"string",
+      "max":10,
+      "min":1
+    },
+    "MetaFlowEndpointUri":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "MetaFlowHealthEntity":{
+      "type":"structure",
+      "required":[
+        "entityType",
+        "id",
+        "canSendMessage"
+      ],
+      "members":{
+        "entityType":{"shape":"MetaFlowHealthEntityType"},
+        "id":{"shape":"String"},
+        "canSendMessage":{"shape":"MetaFlowHealthStatusAvailability"}
+      }
+    },
+    "MetaFlowHealthEntityList":{
+      "type":"list",
+      "member":{"shape":"MetaFlowHealthEntity"}
+    },
+    "MetaFlowHealthEntityType":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
+    "MetaFlowHealthStatus":{
+      "type":"structure",
+      "required":["canSendMessage"],
+      "members":{
+        "canSendMessage":{"shape":"MetaFlowHealthStatusAvailability"},
+        "entities":{"shape":"MetaFlowHealthEntityList"}
+      }
+    },
+    "MetaFlowHealthStatusAvailability":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
+    "MetaFlowId":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[0-9]+"
+    },
+    "MetaFlowJsonBlob":{
+      "type":"blob",
+      "max":10485760,
+      "min":1
+    },
+    "MetaFlowJsonVersion":{
+      "type":"string",
+      "max":10,
+      "min":1
+    },
+    "MetaFlowName":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "MetaFlowPreviewInfo":{
+      "type":"structure",
+      "required":[
+        "previewUrl",
+        "expiresAt"
+      ],
+      "members":{
+        "previewUrl":{"shape":"MetaFlowPreviewUrl"},
+        "expiresAt":{"shape":"MetaFlowTimestamp"}
+      }
+    },
+    "MetaFlowPreviewUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "MetaFlowStatus":{
+      "type":"string",
+      "max":20,
+      "min":1
+    },
+    "MetaFlowSummary":{
+      "type":"structure",
+      "required":[
+        "flowId",
+        "flowName",
+        "flowStatus",
+        "flowCategories",
+        "validationErrors"
+      ],
+      "members":{
+        "flowId":{"shape":"MetaFlowId"},
+        "flowName":{"shape":"MetaFlowName"},
+        "flowStatus":{"shape":"MetaFlowStatus"},
+        "flowCategories":{"shape":"MetaFlowCategoryList"},
+        "validationErrors":{"shape":"ValidationErrorList"}
+      }
+    },
+    "MetaFlowSummaryList":{
+      "type":"list",
+      "member":{"shape":"MetaFlowSummary"}
+    },
+    "MetaFlowTimestamp":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
+    "MetaFlowValidationError":{
+      "type":"string",
+      "max":1048576,
+      "min":0
+    },
+    "MetaFlowWabaCurrency":{
+      "type":"string",
+      "max":10,
+      "min":1
+    },
+    "MetaFlowWabaTemplateNamespace":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "MetaFlowWabaTimezoneId":{
+      "type":"string",
+      "max":10,
+      "min":1
+    },
+    "MetaFlowWhatsAppBusinessAccountInfo":{
+      "type":"structure",
+      "required":[
+        "id",
+        "name"
+      ],
+      "members":{
+        "id":{"shape":"WhatsAppBusinessAccountId"},
+        "name":{"shape":"WhatsAppBusinessAccountName"},
+        "currency":{"shape":"MetaFlowWabaCurrency"},
+        "timezoneId":{"shape":"MetaFlowWabaTimezoneId"},
+        "messageTemplateNamespace":{"shape":"MetaFlowWabaTemplateNamespace"}
+      }
     },
     "MetaIndustries":{
       "type":"list",
@@ -1194,6 +1836,21 @@
       "members":{
         "mediaId":{"shape":"WhatsAppMediaId"}
       }
+    },
+    "PublishWhatsAppFlowInput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "flowId"
+      ],
+      "members":{
+        "id":{"shape":"LinkedWhatsAppBusinessAccountId"},
+        "flowId":{"shape":"MetaFlowId"}
+      }
+    },
+    "PublishWhatsAppFlowOutput":{
+      "type":"structure",
+      "members":{}
     },
     "PutWhatsAppBusinessAccountEventDestinationsInput":{
       "type":"structure",
@@ -1407,6 +2064,42 @@
         "statusCode":{"shape":"Integer"}
       }
     },
+    "UpdateWhatsAppFlowAssetsInput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "flowId",
+        "flowJson"
+      ],
+      "members":{
+        "id":{"shape":"LinkedWhatsAppBusinessAccountId"},
+        "flowId":{"shape":"MetaFlowId"},
+        "flowJson":{"shape":"MetaFlowJsonBlob"}
+      }
+    },
+    "UpdateWhatsAppFlowAssetsOutput":{
+      "type":"structure",
+      "members":{
+        "validationErrors":{"shape":"ValidationErrorList"}
+      }
+    },
+    "UpdateWhatsAppFlowInput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "flowId"
+      ],
+      "members":{
+        "id":{"shape":"LinkedWhatsAppBusinessAccountId"},
+        "flowId":{"shape":"MetaFlowId"},
+        "flowName":{"shape":"MetaFlowName"},
+        "categories":{"shape":"MetaFlowCategoryList"}
+      }
+    },
+    "UpdateWhatsAppFlowOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "UpdateWhatsAppMessageTemplateInput":{
       "type":"structure",
       "required":["id"],
@@ -1424,6 +2117,10 @@
     "UpdateWhatsAppMessageTemplateOutput":{
       "type":"structure",
       "members":{}
+    },
+    "ValidationErrorList":{
+      "type":"list",
+      "member":{"shape":"MetaFlowValidationError"}
     },
     "ValidationException":{
       "type":"structure",

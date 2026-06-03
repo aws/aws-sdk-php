@@ -6516,6 +6516,11 @@
       "max":100,
       "min":1
     },
+    "AiAgentId":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
     "AiAgentInfo":{
       "type":"structure",
       "members":{
@@ -6524,14 +6529,42 @@
         "AiAgentEscalated":{"shape":"Boolean"}
       }
     },
+    "AiAgentSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"AiAgentId"},
+        "VersionNumber":{
+          "shape":"AiAgentVersionNumber",
+          "box":true
+        },
+        "AiAgentEscalated":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "AiUseCase":{"shape":"AiUseCase"}
+      }
+    },
+    "AiAgentSearchCriteriaList":{
+      "type":"list",
+      "member":{"shape":"AiAgentSearchCriteria"},
+      "max":1,
+      "min":0
+    },
     "AiAgentVersionId":{
       "type":"string",
       "max":128,
       "min":0
     },
+    "AiAgentVersionNumber":{"type":"integer"},
     "AiAgents":{
       "type":"list",
       "member":{"shape":"AiAgentInfo"}
+    },
+    "AiAgentsCriteria":{
+      "type":"structure",
+      "members":{
+        "Criteria":{"shape":"AiAgentSearchCriteriaList"}
+      }
     },
     "AiUseCase":{
       "type":"string",
@@ -8778,7 +8811,8 @@
         "Name":{"shape":"Name"},
         "RoutingCriteria":{"shape":"RoutingCriteria"},
         "Tags":{"shape":"ContactTagMap"},
-        "GlobalResiliencyMetadata":{"shape":"GlobalResiliencyMetadata"}
+        "GlobalResiliencyMetadata":{"shape":"GlobalResiliencyMetadata"},
+        "AiAgentInfo":{"shape":"ContactSearchSummaryAiAgentInfoList"}
       }
     },
     "ContactSearchSummaryAgentInfo":{
@@ -8787,6 +8821,21 @@
         "Id":{"shape":"AgentResourceId"},
         "ConnectedToAgentTimestamp":{"shape":"timestamp"}
       }
+    },
+    "ContactSearchSummaryAiAgentInfo":{
+      "type":"structure",
+      "members":{
+        "AiAgentVersionId":{"shape":"AiAgentVersionId"},
+        "AiAgentEscalated":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "AiUseCase":{"shape":"AiUseCase"}
+      }
+    },
+    "ContactSearchSummaryAiAgentInfoList":{
+      "type":"list",
+      "member":{"shape":"ContactSearchSummaryAiAgentInfo"}
     },
     "ContactSearchSummaryQueueInfo":{
       "type":"structure",
@@ -21743,7 +21792,8 @@
         "SearchableContactAttributes":{"shape":"SearchableContactAttributes"},
         "SearchableSegmentAttributes":{"shape":"SearchableSegmentAttributes"},
         "ActiveRegions":{"shape":"ActiveRegionList"},
-        "ContactTags":{"shape":"ControlPlaneTagFilter"}
+        "ContactTags":{"shape":"ControlPlaneTagFilter"},
+        "AiAgents":{"shape":"AiAgentsCriteria"}
       }
     },
     "SearchDataTablesRequest":{

@@ -1,5 +1,41 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudTrailData` - Adding new BDD representation of endpoint ruleset
+* `Aws\ApplicationAutoScaling` - Adding new BDD representation of endpoint ruleset
+* `Aws\SES` - Adding new BDD representation of endpoint ruleset
+* `Aws\Kinesis` - Adding new BDD representation of endpoint ruleset
+* `Aws\Firehose` - Adding new BDD representation of endpoint ruleset
+* `Aws\ResourceGroups` - Adding new BDD representation of endpoint ruleset
+* `Aws\CloudWatchLogs` - Adding new BDD representation of endpoint ruleset
+* `Aws\DAX` - Adding new BDD representation of endpoint ruleset
+* `Aws\ApiGatewayManagementApi` - Adding new BDD representation of endpoint ruleset
+* `Aws\Route53Profiles` - Adding new BDD representation of endpoint ruleset
+* `Aws\SocialMessaging` - Adding support for WhatsApp flow APIs and adding AccessDeniedByMetaException for Template APIs
+* `Aws\IoTSecureTunneling` - Adding new BDD representation of endpoint ruleset
+* `Aws\ARCRegionSwitch` - ARC Region Switch now supports three new execution blocks for multi-Region database workloads-Amazon Aurora Serverless scaling, Amazon Aurora Provisioned scaling, and Amazon Neptune Global Database failover.
+* `Aws\DirectConnect` - Adding new BDD representation of endpoint ruleset
+* `Aws\IoTEvents` - Adding new BDD representation of endpoint ruleset
+* `Aws\WAFRegional` - Adding new BDD representation of endpoint ruleset
+* `Aws\CloudFront` - Adding new BDD representation of endpoint ruleset
+* `Aws\PinpointSMSVoice` - Adding new BDD representation of endpoint ruleset
+* `Aws\ComputeOptimizer` - This release lets customers extend the lookback period for Amazon EBS volume and Amazon ECS rightsizing recommendations to 32 days.
+* `Aws\LakeFormation` - Adding new BDD representation of endpoint ruleset
+* `Aws\S3Outposts` - Adding new BDD representation of endpoint ruleset
+* `Aws\ConnectWisdomService` - Adding new BDD representation of endpoint ruleset
+* `Aws\VPCLattice` - Adding new BDD representation of endpoint ruleset
+* `Aws\Macie2` - Adding new BDD representation of endpoint ruleset
+* `Aws\Inspector2` - Inspector support for enhanced scanning
+* `Aws\Connect` - SearchContacts Connect API now supports filtering contacts by the AI Agents involved in handling them
+* `Aws\AppFabric` - Adding new BDD representation of endpoint ruleset
+* `Aws\CostExplorer` - Added support for target-coverage-based Savings Plans purchase analysis. The StartCommitmentPurchaseAnalysis API now accepts a new TARGET AVERAGE COVERAGE value for AnalysisType, as well as an optional SavingsPlansTargetCoverage field in SavingsPlansPurchaseAnalysisConfiguration
+* `Aws\ConnectCampaignService` - Adding new BDD representation of endpoint ruleset
+* `Aws\SnowDeviceManagement` - Adding new BDD representation of endpoint ruleset
+* `Aws\AppConfigData` - Adding new BDD representation of endpoint ruleset
+* `Aws\SecurityLake` - Adding new BDD representation of endpoint ruleset
+* `Aws\RDS` - Adding new BDD representation of endpoint ruleset
+
 ## 3.384.1 - 2026-06-03
 
 * `Aws\GeoRoutes` - Add "standardRegionalEndpoints" back to fix 'Could not connect to the endpoint URL'
