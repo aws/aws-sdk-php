@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GeoRoutes` - Add "standardRegionalEndpoints" back to fix 'Could not connect to the endpoint URL'
+
 ## 3.384.0 - 2026-06-02
 
 * `Aws\S3` - Prevents resources provided to `ObjectUploader` from being closed by Guzzle.
