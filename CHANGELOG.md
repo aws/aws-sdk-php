@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.384.2 - 2026-06-03
 
 * `Aws\CloudTrailData` - Adding new BDD representation of endpoint ruleset
 * `Aws\ApplicationAutoScaling` - Adding new BDD representation of endpoint ruleset
