@@ -111,6 +111,7 @@
     "GetCrawlerMetrics": "<p>Retrieves metrics about specified crawlers.</p>",
     "GetCrawlers": "<p>Retrieves metadata for all crawlers defined in the customer account.</p>",
     "GetCustomEntityType": "<p>Retrieves the details of a custom pattern by specifying its name.</p>",
+    "GetDashboardUrl": "<p>Retrieves the URL for the Spark monitoring dashboard for a Glue resource.</p>",
     "GetDataCatalogEncryptionSettings": "<p>Retrieves the security configuration for a specified catalog.</p>",
     "GetDataQualityModel": "<p>Retrieve the training status of the model along with more information (CompletedOn, StartedOn, FailureReason).</p>",
     "GetDataQualityModelResult": "<p>Retrieve a statistic's predictions for a given Profile ID.</p>",
@@ -152,6 +153,7 @@
     "GetSecurityConfiguration": "<p>Retrieves a specified security configuration.</p>",
     "GetSecurityConfigurations": "<p>Retrieves a list of all security configurations.</p>",
     "GetSession": "<p>Retrieves the session.</p>",
+    "GetSessionEndpoint": "<p>Returns the Spark Connect endpoint URL and authentication token for an interactive session.</p>",
     "GetStatement": "<p>Retrieves the statement.</p>",
     "GetTable": "<p>Retrieves the <code>Table</code> definition in a Data Catalog for a specified table.</p>",
     "GetTableOptimizer": "<p>Returns the configuration of all optimizers associated with a specified table.</p>",
@@ -4847,6 +4849,14 @@
       "base": null,
       "refs": {}
     },
+    "GetDashboardUrlRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDashboardUrlResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetDataCatalogEncryptionSettingsRequest": {
       "base": null,
       "refs": {}
@@ -5173,6 +5183,14 @@
       "base": null,
       "refs": {}
     },
+    "GetSessionEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSessionEndpointResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetSessionRequest": {
       "base": null,
       "refs": {}
@@ -5385,6 +5403,12 @@
         "UntagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource from which to remove the tags.</p>",
         "UpdateRegistryResponse$RegistryArn": "<p>The Amazon Resource name (ARN) of the updated registry.</p>",
         "UpdateSchemaResponse$SchemaArn": "<p>The Amazon Resource Name (ARN) of the schema.</p>"
+      }
+    },
+    "GlueResourceType": {
+      "base": null,
+      "refs": {
+        "GetDashboardUrlRequest$ResourceType": "<p>The type of the resource. Valid values are <code>SESSION</code> and <code>JOB</code>.</p>"
       }
     },
     "GlueSchema": {
@@ -7501,6 +7525,7 @@
         "GetCustomEntityTypeRequest$Name": "<p>The name of the custom pattern that you want to retrieve.</p>",
         "GetCustomEntityTypeResponse$Name": "<p>The name of the custom pattern that you retrieved.</p>",
         "GetCustomEntityTypeResponse$RegexString": "<p>A regular expression string that is used for detecting sensitive data in a custom pattern.</p>",
+        "GetDashboardUrlRequest$ResourceId": "<p>The unique identifier of the resource for which to retrieve the dashboard URL.</p>",
         "GetDataQualityResultResponse$RulesetName": "<p>The name of the ruleset associated with the data quality result.</p>",
         "GetDataQualityResultResponse$JobName": "<p>The job name associated with the data quality result, if any.</p>",
         "GetDataQualityRuleRecommendationRunResponse$CreatedRulesetName": "<p>The name of the ruleset that was created by the run.</p>",
@@ -7522,6 +7547,7 @@
         "GetPartitionsRequest$DatabaseName": "<p>The name of the catalog database where the partitions reside.</p>",
         "GetPartitionsRequest$TableName": "<p>The name of the partitions' table.</p>",
         "GetSecurityConfigurationRequest$Name": "<p>The name of the security configuration to retrieve.</p>",
+        "GetSessionEndpointRequest$SessionId": "<p>The unique identifier of the interactive session.</p>",
         "GetSessionRequest$Id": "<p>The ID of the session. </p>",
         "GetStatementRequest$SessionId": "<p>The Session ID of the statement.</p>",
         "GetTableOptimizerRequest$DatabaseName": "<p>The name of the database in the catalog in which the table resides.</p>",
@@ -8293,7 +8319,8 @@
     "OrchestrationMessageString": {
       "base": null,
       "refs": {
-        "JobRun$StateDetail": "<p>This field holds details that pertain to the state of a job run. The field is nullable.</p> <p>For example, when a job run is in a WAITING state as a result of job run queuing, the field has the reason why the job run is in that state.</p>"
+        "JobRun$StateDetail": "<p>This field holds details that pertain to the state of a job run. The field is nullable.</p> <p>For example, when a job run is in a WAITING state as a result of job run queuing, the field has the reason why the job run is in that state.</p>",
+        "SessionBusyException$Message": "<p>A message describing the problem.</p>"
       }
     },
     "OrchestrationNameString": {
@@ -8309,6 +8336,7 @@
         "CreateSessionRequest$RequestOrigin": "<p>The origin of the request. </p>",
         "DeleteSessionRequest$RequestOrigin": "<p>The name of the origin of the delete session request.</p>",
         "GetBlueprintRunRequest$BlueprintName": "<p>The name of the blueprint.</p>",
+        "GetDashboardUrlRequest$RequestOrigin": "<p>The origin of the request. </p>",
         "GetSessionRequest$RequestOrigin": "<p>The origin of the request. </p>",
         "GetStatementRequest$RequestOrigin": "<p>The origin of the request.</p>",
         "ListSessionsRequest$RequestOrigin": "<p>The origin of the request. </p>",
@@ -9906,6 +9934,18 @@
         "GetEntityRecordsRequest$SelectedFields": "<p> List of fields that we want to fetch as part of preview data.</p>"
       }
     },
+    "SensitiveString": {
+      "base": null,
+      "refs": {
+        "SessionEndpoint$AuthToken": "<p>The authentication token to include in requests to the Spark Connect endpoint.</p>"
+      }
+    },
+    "SensitiveUrl": {
+      "base": null,
+      "refs": {
+        "GetDashboardUrlResponse$Url": "<p>The URL for the Spark monitoring dashboard.</p>"
+      }
+    },
     "Separator": {
       "base": null,
       "refs": {
@@ -9926,11 +9966,21 @@
         "SessionList$member": null
       }
     },
+    "SessionBusyException": {
+      "base": "<p>The session is currently busy processing another request and cannot accept new operations.</p>",
+      "refs": {}
+    },
     "SessionCommand": {
       "base": "<p>The <code>SessionCommand</code> that runs the job.</p>",
       "refs": {
         "CreateSessionRequest$Command": "<p>The <code>SessionCommand</code> that runs the job. </p>",
         "Session$Command": "<p>The command object.See SessionCommand.</p>"
+      }
+    },
+    "SessionEndpoint": {
+      "base": "<p>Contains the Spark Connect endpoint details for an interactive session, including the URL and authentication credentials.</p>",
+      "refs": {
+        "GetSessionEndpointResponse$SparkConnect": "<p>The Spark Connect endpoint details for the session.</p>"
       }
     },
     "SessionIdList": {
@@ -9949,6 +9999,13 @@
       "base": null,
       "refs": {
         "Session$Status": "<p>The session status. </p>"
+      }
+    },
+    "SessionType": {
+      "base": null,
+      "refs": {
+        "CreateSessionRequest$SessionType": "<p>The type of session to create.</p>",
+        "Session$SessionType": "<p>The type of the session.</p>"
       }
     },
     "SettingSource": {
@@ -10062,6 +10119,12 @@
       "base": null,
       "refs": {
         "SourceTableConfig$Fields": "<p>A list of fields used for column-level filtering. Currently unsupported.</p>"
+      }
+    },
+    "SparkConnectEndpointUrl": {
+      "base": null,
+      "refs": {
+        "SessionEndpoint$Url": "<p>The Spark Connect endpoint URL for the session.</p>"
       }
     },
     "SparkConnectorSource": {
@@ -11094,6 +11157,7 @@
         "SecurityConfiguration$CreatedTimeStamp": "<p>The time at which this security configuration was created.</p>",
         "Session$CreatedOn": "<p>The time and date when the session was created.</p>",
         "Session$CompletedOn": "<p>The date and time that this session is completed.</p>",
+        "SessionEndpoint$AuthTokenExpirationTime": "<p>The time at which the authentication token expires.</p>",
         "UsageProfileDefinition$CreatedOn": "<p>The date and time when the usage profile was created.</p>",
         "UsageProfileDefinition$LastModifiedOn": "<p>The date and time when the usage profile was last modified.</p>",
         "Workflow$CreatedOn": "<p>The date and time when the workflow was created.</p>",

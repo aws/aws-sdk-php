@@ -3234,6 +3234,13 @@
         "RetentionConfiguration$RetentionPeriodInDays": "<p>Number of days Config stores your historical information.</p> <note> <p>Currently, only applicable to the configuration item history.</p> </note>"
       }
     },
+    "RuleEvaluationVisibility": {
+      "base": null,
+      "refs": {
+        "ConfigRule$RuleEvaluationVisibility": "<p>Indicates whether you can get <a>Evaluation</a>s for the Config rule. You can get <a>Evaluation</a>s for the Amazon Web Services Config rule if this value is <code>EXTERNAL</code>. You cannot get <a>Evaluation</a>s for the Amazon Web Services Config rule if this value is <code>INTERNAL</code>.</p>",
+        "DescribeConfigRulesFilters$RuleEvaluationVisibility": "<p>Filters the results by <code>RuleEvaluationVisibility</code>.</p>"
+      }
+    },
     "RuleLimit": {
       "base": null,
       "refs": {
@@ -3302,6 +3309,12 @@
       "base": null,
       "refs": {
         "AggregatorFilterServicePrincipal$Value": "<p>Comma-separated list of service principals for the linked Amazon Web Services services to filter your aggregated service-linked configuration recorders.</p>"
+      }
+    },
+    "ServicePrincipals": {
+      "base": null,
+      "refs": {
+        "Scope$ServicePrincipals": "<p>The service principals of the Amazon Web Services services for the rule.</p> <note> <p>The field is populated only if the service-linked rule is created by a service. The field is empty if you create your own rule.</p> </note>"
       }
     },
     "SortBy": {
@@ -3528,7 +3541,8 @@
         "OrganizationCustomPolicyRuleMetadataNoPolicy$TagKeyScope": "<p>One part of a key-value pair that make up a tag. A key is a general label that acts like a category for more specific tag values.</p>",
         "OrganizationCustomRuleMetadata$TagKeyScope": "<p>One part of a key-value pair that make up a tag. A key is a general label that acts like a category for more specific tag values. </p>",
         "OrganizationManagedRuleMetadata$TagKeyScope": "<p>One part of a key-value pair that make up a tag. A key is a general label that acts like a category for more specific tag values. </p>",
-        "Scope$TagKey": "<p>The tag key that is applied to only those Amazon Web Services resources that you want to trigger an evaluation for the rule.</p>"
+        "Scope$TagKey": "<p>The tag key that is applied to only those Amazon Web Services resources that you want to trigger an evaluation for the rule.</p>",
+        "ServicePrincipals$member": null
       }
     },
     "StringWithCharLimit256": {

@@ -13969,7 +13969,8 @@
         "ModelCardVersion":{
           "shape":"Integer",
           "box":true
-        }
+        },
+        "IncludedData":{"shape":"IncludedData"}
       }
     },
     "DescribeModelCardResponse":{
@@ -14093,7 +14094,8 @@
       "type":"structure",
       "required":["ModelPackageName"],
       "members":{
-        "ModelPackageName":{"shape":"VersionedArnOrName"}
+        "ModelPackageName":{"shape":"VersionedArnOrName"},
+        "IncludedData":{"shape":"IncludedData"}
       }
     },
     "DescribeModelPackageOutput":{
@@ -18041,6 +18043,13 @@
       "type":"boolean",
       "box":true
     },
+    "IncludedData":{
+      "type":"string",
+      "enum":[
+        "AllData",
+        "MetadataOnly"
+      ]
+    },
     "InferenceComponentArn":{
       "type":"string",
       "max":2048,
@@ -18985,6 +18994,25 @@
       "type":"string",
       "max":256,
       "min":1
+    },
+    "Job":{
+      "type":"structure",
+      "members":{
+        "JobName":{"shape":"JobName"},
+        "JobArn":{"shape":"JobArn"},
+        "RoleArn":{"shape":"RoleArn"},
+        "JobCategory":{"shape":"JobCategory"},
+        "JobConfigSchemaVersion":{"shape":"JobSchemaVersion"},
+        "JobConfigDocument":{"shape":"JobConfigDocument"},
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "JobStatus":{"shape":"JobStatus"},
+        "SecondaryStatus":{"shape":"JobSecondaryStatus"},
+        "SecondaryStatusTransitions":{"shape":"JobSecondaryStatusTransitions"},
+        "FailureReason":{"shape":"FailureReason"},
+        "Tags":{"shape":"TagList"}
+      }
     },
     "JobArn":{
       "type":"string",
@@ -27064,7 +27092,8 @@
         "Project",
         "HyperParameterTuningJob",
         "ModelCard",
-        "PipelineVersion"
+        "PipelineVersion",
+        "Job"
       ]
     },
     "ResponseMIMEType":{
@@ -27507,7 +27536,8 @@
         "Project":{"shape":"Project"},
         "HyperParameterTuningJob":{"shape":"HyperParameterTuningJobSearchEntity"},
         "ModelCard":{"shape":"ModelCard"},
-        "Model":{"shape":"ModelDashboardModel"}
+        "Model":{"shape":"ModelDashboardModel"},
+        "Job":{"shape":"Job"}
       }
     },
     "SearchRequest":{

@@ -766,7 +766,8 @@
         {"shape":"InvalidInputException"},
         {"shape":"ValidationException"},
         {"shape":"AlreadyExistsException"},
-        {"shape":"ResourceNumberLimitExceededException"}
+        {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"OperationNotSupportedException"}
       ]
     },
     "CreateTable":{
@@ -1767,6 +1768,23 @@
         {"shape":"OperationTimeoutException"}
       ]
     },
+    "GetDashboardUrl":{
+      "name":"GetDashboardUrl",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDashboardUrlRequest"},
+      "output":{"shape":"GetDashboardUrlResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"OperationNotSupportedException"},
+        {"shape":"InternalServiceException"}
+      ],
+      "readonly":true
+    },
     "GetDataCatalogEncryptionSettings":{
       "name":"GetDataCatalogEncryptionSettings",
       "http":{
@@ -2406,6 +2424,25 @@
         {"shape":"OperationTimeoutException"},
         {"shape":"InvalidInputException"}
       ]
+    },
+    "GetSessionEndpoint":{
+      "name":"GetSessionEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetSessionEndpointRequest"},
+      "output":{"shape":"GetSessionEndpointResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationNotSupportedException"},
+        {"shape":"IllegalSessionStateException"}
+      ],
+      "readonly":true
     },
     "GetStatement":{
       "name":"GetStatement",
@@ -3337,6 +3374,8 @@
         {"shape":"InvalidInputException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"OperationNotSupportedException"},
+        {"shape":"SessionBusyException"},
         {"shape":"IllegalSessionStateException"}
       ]
     },
@@ -7376,7 +7415,8 @@
         "SecurityConfiguration":{"shape":"NameString"},
         "GlueVersion":{"shape":"GlueVersionString"},
         "Tags":{"shape":"TagsMap"},
-        "RequestOrigin":{"shape":"OrchestrationNameString"}
+        "RequestOrigin":{"shape":"OrchestrationNameString"},
+        "SessionType":{"shape":"SessionType"}
       }
     },
     "CreateSessionResponse":{
@@ -9963,6 +10003,25 @@
         "ContextWords":{"shape":"ContextWords"}
       }
     },
+    "GetDashboardUrlRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceId",
+        "ResourceType"
+      ],
+      "members":{
+        "ResourceId":{"shape":"NameString"},
+        "ResourceType":{"shape":"GlueResourceType"},
+        "RequestOrigin":{"shape":"OrchestrationNameString"}
+      }
+    },
+    "GetDashboardUrlResponse":{
+      "type":"structure",
+      "required":["Url"],
+      "members":{
+        "Url":{"shape":"SensitiveUrl"}
+      }
+    },
     "GetDataCatalogEncryptionSettingsRequest":{
       "type":"structure",
       "members":{
@@ -10712,6 +10771,20 @@
         "NextToken":{"shape":"GenericString"}
       }
     },
+    "GetSessionEndpointRequest":{
+      "type":"structure",
+      "required":["SessionId"],
+      "members":{
+        "SessionId":{"shape":"NameString"}
+      }
+    },
+    "GetSessionEndpointResponse":{
+      "type":"structure",
+      "required":["SparkConnect"],
+      "members":{
+        "SparkConnect":{"shape":"SessionEndpoint"}
+      }
+    },
     "GetSessionRequest":{
       "type":"structure",
       "required":["Id"],
@@ -11151,6 +11224,13 @@
       "max":10240,
       "min":1,
       "pattern":"arn:aws(-(cn|us-gov|iso(-[bef])?))?:glue:.*"
+    },
+    "GlueResourceType":{
+      "type":"string",
+      "enum":[
+        "JOB",
+        "SESSION"
+      ]
     },
     "GlueSchema":{
       "type":"structure",
@@ -15516,6 +15596,16 @@
       "max":1000,
       "min":1
     },
+    "SensitiveString":{
+      "type":"string",
+      "max":16384,
+      "sensitive":true
+    },
+    "SensitiveUrl":{
+      "type":"string",
+      "max":40000,
+      "sensitive":true
+    },
     "Separator":{
       "type":"string",
       "enum":[
@@ -15556,14 +15646,35 @@
         "ExecutionTime":{"shape":"NullableDouble"},
         "DPUSeconds":{"shape":"NullableDouble"},
         "IdleTimeout":{"shape":"IdleTimeout"},
-        "ProfileName":{"shape":"NameString"}
+        "ProfileName":{"shape":"NameString"},
+        "SessionType":{"shape":"SessionType"}
       }
+    },
+    "SessionBusyException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"OrchestrationMessageString"}
+      },
+      "exception":true
     },
     "SessionCommand":{
       "type":"structure",
       "members":{
         "Name":{"shape":"NameString"},
         "PythonVersion":{"shape":"PythonVersionString"}
+      }
+    },
+    "SessionEndpoint":{
+      "type":"structure",
+      "required":[
+        "Url",
+        "AuthToken",
+        "AuthTokenExpirationTime"
+      ],
+      "members":{
+        "Url":{"shape":"SparkConnectEndpointUrl"},
+        "AuthToken":{"shape":"SensitiveString"},
+        "AuthTokenExpirationTime":{"shape":"TimestampValue"}
       }
     },
     "SessionIdList":{
@@ -15583,6 +15694,13 @@
         "TIMEOUT",
         "STOPPING",
         "STOPPED"
+      ]
+    },
+    "SessionType":{
+      "type":"string",
+      "enum":[
+        "LIVY",
+        "SPARK_CONNECT"
       ]
     },
     "SettingSource":{
@@ -15734,6 +15852,11 @@
     "SourceTableFieldsList":{
       "type":"list",
       "member":{"shape":"String128"}
+    },
+    "SparkConnectEndpointUrl":{
+      "type":"string",
+      "max":2048,
+      "pattern":"^sc://.*$"
     },
     "SparkConnectorSource":{
       "type":"structure",

@@ -40,6 +40,7 @@
     "StopStream": "<p>Disconnects the incoming RTMPS stream for the specified channel. Can be used in conjunction with <a>DeleteStreamKey</a> to prevent further streaming to a channel.</p> <note> <p>Many streaming client-software libraries automatically reconnect a dropped RTMPS session, so to stop the stream permanently, you may want to first revoke the <code>streamKey</code> attached to the channel.</p> </note>",
     "TagResource": "<p>Adds or updates tags for the Amazon Web Services resource with the specified ARN.</p>",
     "UntagResource": "<p>Removes tags from the resource with the specified ARN.</p>",
+    "UpdateAdConfiguration": "<p>Updates a specified ad configuration.</p>",
     "UpdateChannel": "<p>Updates a channel's configuration. Live channels cannot be updated. You must stop the ongoing stream, update the channel, and restart the stream for the changes to take effect.</p>",
     "UpdatePlaybackRestrictionPolicy": "<p>Updates a specified playback restriction policy.</p>"
   },
@@ -58,7 +59,8 @@
       "base": "<p>Object specifying a configuration for a server-side advertising insertion (which can be triggered with the operation).</p>",
       "refs": {
         "CreateAdConfigurationResponse$adConfiguration": "<p/>",
-        "GetAdConfigurationResponse$adConfiguration": "<p/>"
+        "GetAdConfigurationResponse$adConfiguration": "<p/>",
+        "UpdateAdConfigurationResponse$adConfiguration": "<p>Object specifying the updated ad configuration.</p>"
       }
     },
     "AdConfigurationArn": {
@@ -67,7 +69,8 @@
         "AdConfiguration$arn": "<p>Ad configuration ARN.</p>",
         "AdConfigurationSummary$arn": "<p>Ad configuration ARN.</p>",
         "DeleteAdConfigurationRequest$arn": "<p>ARN of the ad configuration to be deleted.</p>",
-        "GetAdConfigurationRequest$arn": "<p>ARN of the ad configuration to be retrieved.</p>"
+        "GetAdConfigurationRequest$arn": "<p>ARN of the ad configuration to be retrieved.</p>",
+        "UpdateAdConfigurationRequest$arn": "<p>ARN of the ad configuration to be updated.</p>"
       }
     },
     "AdConfigurationList": {
@@ -81,7 +84,8 @@
       "refs": {
         "AdConfiguration$name": "<p>Ad configuration name. Defaults to “”.</p>",
         "AdConfigurationSummary$name": "<p>Ad configuration name. Defaults to “”.</p>",
-        "CreateAdConfigurationRequest$name": "<p>Ad configuration name. Defaults to “”.</p>"
+        "CreateAdConfigurationRequest$name": "<p>Ad configuration name. Defaults to “”.</p>",
+        "UpdateAdConfigurationRequest$name": "<p>Ad configuration name. The value does not need to be unique.</p>"
       }
     },
     "AdConfigurationSummary": {
@@ -93,7 +97,7 @@
     "AdDurationSeconds": {
       "base": null,
       "refs": {
-        "InsertAdBreakRequest$durationSeconds": "<p>Maximum duration of the ad break, in seconds.</p>"
+        "InsertAdBreakRequest$durationSeconds": "<p>Duration of the ad break, in seconds.</p>"
       }
     },
     "AudioConfiguration": {
@@ -290,10 +294,10 @@
     "ChannelType": {
       "base": null,
       "refs": {
-        "Channel$type": "<p>Channel type, which determines the allowable resolution and bitrate. <i>If you exceed the allowable input resolution or bitrate, the stream probably will disconnect immediately.</i> Default: <code>STANDARD</code>. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/LowLatencyAPIReference/channel-types.html\">Channel Types</a>.</p>",
-        "ChannelSummary$type": "<p>Channel type, which determines the allowable resolution and bitrate. <i>If you exceed the allowable input resolution or bitrate, the stream probably will disconnect immediately.</i> Default: <code>STANDARD</code>. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/LowLatencyAPIReference/channel-types.html\">Channel Types</a>.</p>",
-        "CreateChannelRequest$type": "<p>Channel type, which determines the allowable resolution and bitrate. <i>If you exceed the allowable input resolution or bitrate, the stream probably will disconnect immediately.</i> Default: <code>STANDARD</code>. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/LowLatencyAPIReference/channel-types.html\">Channel Types</a>.</p>",
-        "UpdateChannelRequest$type": "<p>Channel type, which determines the allowable resolution and bitrate. <i>If you exceed the allowable input resolution or bitrate, the stream probably will disconnect immediately.</i> Default: <code>STANDARD</code>. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/LowLatencyAPIReference/channel-types.html\">Channel Types</a>.</p>"
+        "Channel$type": "<p>Channel type, which determines the allowable resolution and bitrate. <i>If you exceed the allowable input resolution or bitrate, the stream probably will disconnect immediately.</i> Default: <code>STANDARD</code>. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/channel-types.html\">Channel Types</a>.</p>",
+        "ChannelSummary$type": "<p>Channel type, which determines the allowable resolution and bitrate. <i>If you exceed the allowable input resolution or bitrate, the stream probably will disconnect immediately.</i> Default: <code>STANDARD</code>. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/channel-types.html\">Channel Types</a>.</p>",
+        "CreateChannelRequest$type": "<p>Channel type, which determines the allowable resolution and bitrate. <i>If you exceed the allowable input resolution or bitrate, the stream probably will disconnect immediately.</i> Default: <code>STANDARD</code>. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/channel-types.html\">Channel Types</a>.</p>",
+        "UpdateChannelRequest$type": "<p>Channel type, which determines the allowable resolution and bitrate. <i>If you exceed the allowable input resolution or bitrate, the stream probably will disconnect immediately.</i> Default: <code>STANDARD</code>. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/channel-types.html\">Channel Types</a>.</p>"
       }
     },
     "Channels": {
@@ -654,9 +658,10 @@
     "MediaTailorPlaybackConfigurationsList": {
       "base": null,
       "refs": {
-        "AdConfiguration$mediaTailorPlaybackConfigurations": "<p>List of integration configurations with media tailor resources.</p>",
-        "AdConfigurationSummary$mediaTailorPlaybackConfigurations": "<p>List of integration configurations with media tailor resources.</p>",
-        "CreateAdConfigurationRequest$mediaTailorPlaybackConfigurations": "<p>List of integration configurations with media tailor resources.</p>"
+        "AdConfiguration$mediaTailorPlaybackConfigurations": "<p>List of integration configurations with MediaTailor resources. The first item in the list is the default playback configuration used for the ad configuration. To select a different configuration per viewing session, see <a href=\"https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/private-channels-generate-tokens.html\">Generate and Sign IVS Playback Tokens</a>.</p>",
+        "AdConfigurationSummary$mediaTailorPlaybackConfigurations": "<p>List of integration configurations with MediaTailor resources. The first item in the list is the default playback configuration used for the ad configuration. To select a different configuration per viewing session, see <a href=\"https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/private-channels-generate-tokens.html\">Generate and Sign IVS Playback Tokens</a>.</p>",
+        "CreateAdConfigurationRequest$mediaTailorPlaybackConfigurations": "<p>List of integration configurations with MediaTailor resources. The first item in the list is the default playback configuration used for the ad configuration. To select a different configuration per viewing session, see <a href=\"https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/private-channels-generate-tokens.html\">Generate and Sign IVS Playback Tokens</a>.</p>",
+        "UpdateAdConfigurationRequest$mediaTailorPlaybackConfigurations": "<p>List of integration configurations with MediaTailor resources. The first item in the list is the default playback configuration used for the ad configuration. To select a different configuration per viewing session, see <a href=\"https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/private-channels-generate-tokens.html\">Generate and Sign IVS Playback Tokens</a>.</p>"
       }
     },
     "MultitrackInputConfiguration": {
@@ -1382,6 +1387,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateAdConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAdConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateChannelRequest": {
       "base": null,
       "refs": {}
@@ -1449,7 +1462,7 @@
         "PendingVerification$exceptionMessage": "<p> Your account is pending verification. </p>",
         "ResourceNotFoundException$exceptionMessage": "<p>Request references a resource which does not exist.</p>",
         "ServiceQuotaExceededException$exceptionMessage": "<p>Request would cause a service quota to be exceeded.</p>",
-        "ServiceUnavailable$exceptionMessage": "<p/>",
+        "ServiceUnavailable$exceptionMessage": "<p>The service is temporarily unavailable.</p>",
         "StreamUnavailable$exceptionMessage": "<p>The stream is temporarily unavailable.</p>",
         "ThrottlingException$exceptionMessage": "<p>Request was denied due to request throttling.</p>",
         "ValidationException$exceptionMessage": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>"

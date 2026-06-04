@@ -561,7 +561,7 @@
         "DescribeConnectorEntityRequest$connectorProfileName": "<p> The name of the connector profile. The name is unique for each <code>ConnectorProfile</code> in the Amazon Web Services account. </p>",
         "DestinationFlowConfig$connectorProfileName": "<p> The name of the connector profile. This name must be unique for each connector profile in the Amazon Web Services account. </p>",
         "ListConnectorEntitiesRequest$connectorProfileName": "<p> The name of the connector profile. The name is unique for each <code>ConnectorProfile</code> in the Amazon Web Services account, and is used to query the downstream connector. </p>",
-        "ResetConnectorMetadataCacheRequest$connectorProfileName": "<p>The name of the connector profile that you want to reset cached metadata for.</p> <p>You can omit this parameter if you're resetting the cache for any of the following connectors: Amazon Connect, Amazon EventBridge, Amazon Lookout for Metrics, Amazon S3, or Upsolver. If you're resetting the cache for any other connector, you must include this parameter in your request.</p>",
+        "ResetConnectorMetadataCacheRequest$connectorProfileName": "<p>The name of the connector profile that you want to reset cached metadata for.</p> <p>You can omit this parameter if you're resetting the cache for any of the following connectors: Connect Customer, Amazon EventBridge, Amazon Lookout for Metrics, Amazon S3, or Upsolver. If you're resetting the cache for any other connector, you must include this parameter in your request.</p>",
         "SourceFlowConfig$connectorProfileName": "<p> The name of the connector profile. This name must be unique for each connector profile in the Amazon Web Services account. </p>",
         "UpdateConnectorProfileRequest$connectorProfileName": "<p> The name of the connector profile and is unique for each <code>ConnectorProfile</code> in the Amazon Web Services account. </p>"
       }
@@ -659,7 +659,7 @@
         "FlowDefinition$sourceConnectorType": "<p> Specifies the source connector type, such as Salesforce, Amazon S3, Amplitude, and so on. </p>",
         "FlowDefinition$destinationConnectorType": "<p> Specifies the destination connector type, such as Salesforce, Amazon S3, Amplitude, and so on. </p>",
         "ListConnectorEntitiesRequest$connectorType": "<p> The type of connector, such as Salesforce, Amplitude, and so on. </p>",
-        "ResetConnectorMetadataCacheRequest$connectorType": "<p>The type of connector to reset cached metadata for.</p> <p>You must include this parameter in your request if you're resetting the cache for any of the following connectors: Amazon Connect, Amazon EventBridge, Amazon Lookout for Metrics, Amazon S3, or Upsolver. If you're resetting the cache for any other connector, you can omit this parameter from your request. </p>",
+        "ResetConnectorMetadataCacheRequest$connectorType": "<p>The type of connector to reset cached metadata for.</p> <p>You must include this parameter in your request if you're resetting the cache for any of the following connectors: Connect Customer, Amazon EventBridge, Amazon Lookout for Metrics, Amazon S3, or Upsolver. If you're resetting the cache for any other connector, you can omit this parameter from your request. </p>",
         "SourceFlowConfig$connectorType": "<p> The type of connector, such as Salesforce, Amplitude, and so on. </p>"
       }
     },
@@ -790,15 +790,15 @@
       }
     },
     "CustomerProfilesDestinationProperties": {
-      "base": "<p> The properties that are applied when Amazon Connect Customer Profiles is used as a destination. </p>",
+      "base": "<p> The properties that are applied when Connect Customer Customer Profiles is used as a destination. </p>",
       "refs": {
-        "DestinationConnectorProperties$CustomerProfiles": "<p> The properties required to query Amazon Connect Customer Profiles. </p>"
+        "DestinationConnectorProperties$CustomerProfiles": "<p> The properties required to query Connect Customer Customer Profiles. </p>"
       }
     },
     "CustomerProfilesMetadata": {
-      "base": "<p> The connector metadata specific to Amazon Connect Customer Profiles. </p>",
+      "base": "<p> The connector metadata specific to Connect Customer Customer Profiles. </p>",
       "refs": {
-        "ConnectorMetadata$CustomerProfiles": "<p> The connector metadata specific to Amazon Connect Customer Profiles. </p>"
+        "ConnectorMetadata$CustomerProfiles": "<p> The connector metadata specific to Connect Customer Customer Profiles. </p>"
       }
     },
     "DataApiRoleArn": {
@@ -1017,7 +1017,7 @@
     "DomainName": {
       "base": null,
       "refs": {
-        "CustomerProfilesDestinationProperties$domainName": "<p> The unique name of the Amazon Connect Customer Profiles domain. </p>"
+        "CustomerProfilesDestinationProperties$domainName": "<p> The unique name of the Connect Customer Customer Profiles domain. </p>"
       }
     },
     "Double": {
@@ -1748,7 +1748,7 @@
     "ObjectTypeName": {
       "base": null,
       "refs": {
-        "CustomerProfilesDestinationProperties$objectTypeName": "<p> The object specified in the Amazon Connect Customer Profiles flow destination. </p>"
+        "CustomerProfilesDestinationProperties$objectTypeName": "<p> The object specified in the Connect Customer Customer Profiles flow destination. </p>"
       }
     },
     "Operator": {
