@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.384.3 - 2026-06-04
 
 * `Aws\MediaPackageVod` - Adding new BDD representation of endpoint ruleset
 * `Aws\SNS` - Adding new BDD representation of endpoint ruleset
