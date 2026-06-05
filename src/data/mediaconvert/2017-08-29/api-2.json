@@ -2057,6 +2057,10 @@
           "shape": "__string",
           "locationName": "languageCode"
         },
+        "ObjectCount": {
+          "shape": "__integer",
+          "locationName": "objectCount"
+        },
         "SampleRate": {
           "shape": "__integer",
           "locationName": "sampleRate"
@@ -3015,9 +3019,9 @@
     "CmafEncryptionSettings": {
       "type": "structure",
       "members": {
-        "ClearLead": {
-          "shape": "HlsClearLead",
-          "locationName": "clearLead"
+        "ClearLeadSegments": {
+          "shape": "__integerMin1Max9999",
+          "locationName": "clearLeadSegments"
         },
         "ConstantInitializationVector": {
           "shape": "__stringMin32Max32Pattern09aFAF32",
@@ -3103,6 +3107,10 @@
           "shape": "CmafImageBasedTrickPlaySettings",
           "locationName": "imageBasedTrickPlaySettings"
         },
+        "ImageBasedTrickPlayVariants": {
+          "shape": "__listOfCmafImageBasedTrickPlayVariant",
+          "locationName": "imageBasedTrickPlayVariants"
+        },
         "ManifestCompression": {
           "shape": "CmafManifestCompression",
           "locationName": "manifestCompression"
@@ -3175,10 +3183,40 @@
         "NONE",
         "THUMBNAIL",
         "THUMBNAIL_AND_FULLFRAME",
-        "ADVANCED"
+        "ADVANCED",
+        "VARIANTS"
       ]
     },
     "CmafImageBasedTrickPlaySettings": {
+      "type": "structure",
+      "members": {
+        "IntervalCadence": {
+          "shape": "CmafIntervalCadence",
+          "locationName": "intervalCadence"
+        },
+        "ThumbnailHeight": {
+          "shape": "__integerMin2Max4096",
+          "locationName": "thumbnailHeight"
+        },
+        "ThumbnailInterval": {
+          "shape": "__doubleMin0Max2147483647",
+          "locationName": "thumbnailInterval"
+        },
+        "ThumbnailWidth": {
+          "shape": "__integerMin8Max4096",
+          "locationName": "thumbnailWidth"
+        },
+        "TileHeight": {
+          "shape": "__integerMin1Max2048",
+          "locationName": "tileHeight"
+        },
+        "TileWidth": {
+          "shape": "__integerMin1Max512",
+          "locationName": "tileWidth"
+        }
+      }
+    },
+    "CmafImageBasedTrickPlayVariant": {
       "type": "structure",
       "members": {
         "IntervalCadence": {
@@ -3481,6 +3519,7 @@
         "AC3",
         "EAC3",
         "FLAC",
+        "MP2",
         "MP3",
         "OPUS",
         "PCM",
@@ -3524,6 +3563,10 @@
           "shape": "ColorPrimaries",
           "locationName": "colorPrimaries"
         },
+        "ContentLightLevel": {
+          "shape": "ContentLightLevel",
+          "locationName": "contentLightLevel"
+        },
         "Height": {
           "shape": "__integer",
           "locationName": "height"
@@ -3539,6 +3582,10 @@
         "Profile": {
           "shape": "__string",
           "locationName": "profile"
+        },
+        "Rotation": {
+          "shape": "__integer",
+          "locationName": "rotation"
         },
         "ScanType": {
           "shape": "__string",
@@ -3788,6 +3835,19 @@
         "RAW",
         "Y4M"
       ]
+    },
+    "ContentLightLevel": {
+      "type": "structure",
+      "members": {
+        "MaxContentLightLevel": {
+          "shape": "__integer",
+          "locationName": "maxContentLightLevel"
+        },
+        "MaxFrameAverageLightLevel": {
+          "shape": "__integer",
+          "locationName": "maxFrameAverageLightLevel"
+        }
+      }
     },
     "CopyProtectionAction": {
       "type": "string",
@@ -4121,6 +4181,10 @@
           "shape": "DashIsoImageBasedTrickPlaySettings",
           "locationName": "imageBasedTrickPlaySettings"
         },
+        "ImageBasedTrickPlayVariants": {
+          "shape": "__listOfDashIsoImageBasedTrickPlayVariant",
+          "locationName": "imageBasedTrickPlayVariants"
+        },
         "MinBufferTime": {
           "shape": "__integerMin0Max2147483647",
           "locationName": "minBufferTime"
@@ -4176,7 +4240,8 @@
         "NONE",
         "THUMBNAIL",
         "THUMBNAIL_AND_FULLFRAME",
-        "ADVANCED"
+        "ADVANCED",
+        "VARIANTS"
       ]
     },
     "DashIsoImageBasedTrickPlaySettings": {
@@ -4188,6 +4253,35 @@
         },
         "ThumbnailHeight": {
           "shape": "__integerMin1Max4096",
+          "locationName": "thumbnailHeight"
+        },
+        "ThumbnailInterval": {
+          "shape": "__doubleMin0Max2147483647",
+          "locationName": "thumbnailInterval"
+        },
+        "ThumbnailWidth": {
+          "shape": "__integerMin8Max4096",
+          "locationName": "thumbnailWidth"
+        },
+        "TileHeight": {
+          "shape": "__integerMin1Max2048",
+          "locationName": "tileHeight"
+        },
+        "TileWidth": {
+          "shape": "__integerMin1Max512",
+          "locationName": "tileWidth"
+        }
+      }
+    },
+    "DashIsoImageBasedTrickPlayVariant": {
+      "type": "structure",
+      "members": {
+        "IntervalCadence": {
+          "shape": "DashIsoIntervalCadence",
+          "locationName": "intervalCadence"
+        },
+        "ThumbnailHeight": {
+          "shape": "__integerMin2Max4096",
           "locationName": "thumbnailHeight"
         },
         "ThumbnailInterval": {
@@ -5537,7 +5631,8 @@
         "mxf",
         "wave",
         "avi",
-        "mpegts"
+        "mpegts",
+        "mpegps"
       ]
     },
     "FrameCaptureSettings": {
@@ -6739,6 +6834,19 @@
         }
       }
     },
+    "HdrMetadata": {
+      "type": "structure",
+      "members": {
+        "ContentLightLevel": {
+          "shape": "ContentLightLevel",
+          "locationName": "contentLightLevel"
+        },
+        "MasteringDisplayColorVolume": {
+          "shape": "MasteringDisplayColorVolume",
+          "locationName": "masteringDisplayColorVolume"
+        }
+      }
+    },
     "HlsAdMarkers": {
       "type": "string",
       "enum": [
@@ -6816,13 +6924,6 @@
       "enum": [
         "LARGE_SEGMENTS",
         "MATCH_VIDEO"
-      ]
-    },
-    "HlsClearLead": {
-      "type": "string",
-      "enum": [
-        "ENABLED",
-        "DISABLED"
       ]
     },
     "HlsClientCache": {
@@ -6956,6 +7057,10 @@
           "shape": "HlsImageBasedTrickPlaySettings",
           "locationName": "imageBasedTrickPlaySettings"
         },
+        "ImageBasedTrickPlayVariants": {
+          "shape": "__listOfHlsImageBasedTrickPlayVariant",
+          "locationName": "imageBasedTrickPlayVariants"
+        },
         "ManifestCompression": {
           "shape": "HlsManifestCompression",
           "locationName": "manifestCompression"
@@ -7040,10 +7145,40 @@
         "NONE",
         "THUMBNAIL",
         "THUMBNAIL_AND_FULLFRAME",
-        "ADVANCED"
+        "ADVANCED",
+        "VARIANTS"
       ]
     },
     "HlsImageBasedTrickPlaySettings": {
+      "type": "structure",
+      "members": {
+        "IntervalCadence": {
+          "shape": "HlsIntervalCadence",
+          "locationName": "intervalCadence"
+        },
+        "ThumbnailHeight": {
+          "shape": "__integerMin2Max4096",
+          "locationName": "thumbnailHeight"
+        },
+        "ThumbnailInterval": {
+          "shape": "__doubleMin0Max2147483647",
+          "locationName": "thumbnailInterval"
+        },
+        "ThumbnailWidth": {
+          "shape": "__integerMin8Max4096",
+          "locationName": "thumbnailWidth"
+        },
+        "TileHeight": {
+          "shape": "__integerMin1Max2048",
+          "locationName": "tileHeight"
+        },
+        "TileWidth": {
+          "shape": "__integerMin1Max512",
+          "locationName": "tileWidth"
+        }
+      }
+    },
+    "HlsImageBasedTrickPlayVariant": {
       "type": "structure",
       "members": {
         "IntervalCadence": {
@@ -9042,6 +9177,51 @@
         "VideoPid": {
           "shape": "__integerMin32Max8182",
           "locationName": "videoPid"
+        }
+      }
+    },
+    "MasteringDisplayColorVolume": {
+      "type": "structure",
+      "members": {
+        "BluePrimaryX": {
+          "shape": "__integer",
+          "locationName": "bluePrimaryX"
+        },
+        "BluePrimaryY": {
+          "shape": "__integer",
+          "locationName": "bluePrimaryY"
+        },
+        "GreenPrimaryX": {
+          "shape": "__integer",
+          "locationName": "greenPrimaryX"
+        },
+        "GreenPrimaryY": {
+          "shape": "__integer",
+          "locationName": "greenPrimaryY"
+        },
+        "MaxLuminance": {
+          "shape": "__long",
+          "locationName": "maxLuminance"
+        },
+        "MinLuminance": {
+          "shape": "__long",
+          "locationName": "minLuminance"
+        },
+        "RedPrimaryX": {
+          "shape": "__integer",
+          "locationName": "redPrimaryX"
+        },
+        "RedPrimaryY": {
+          "shape": "__integer",
+          "locationName": "redPrimaryY"
+        },
+        "WhitePointX": {
+          "shape": "__integer",
+          "locationName": "whitePointX"
+        },
+        "WhitePointY": {
+          "shape": "__integer",
+          "locationName": "whitePointY"
         }
       }
     },
@@ -12336,6 +12516,10 @@
           "shape": "FrameRate",
           "locationName": "frameRate"
         },
+        "HdrMetadata": {
+          "shape": "HdrMetadata",
+          "locationName": "hdrMetadata"
+        },
         "Height": {
           "shape": "__integer",
           "locationName": "height"
@@ -12343,6 +12527,10 @@
         "MatrixCoefficients": {
           "shape": "MatrixCoefficients",
           "locationName": "matrixCoefficients"
+        },
+        "Rotation": {
+          "shape": "__integer",
+          "locationName": "rotation"
         },
         "TransferCharacteristics": {
           "shape": "TransferCharacteristics",
@@ -13450,6 +13638,11 @@
       "min": 1,
       "max": 86400000
     },
+    "__integerMin1Max9999": {
+      "type": "integer",
+      "min": 1,
+      "max": 9999
+    },
     "__integerMin2000Max30000": {
       "type": "integer",
       "min": 2000,
@@ -13707,6 +13900,12 @@
         "shape": "CmafAdditionalManifest"
       }
     },
+    "__listOfCmafImageBasedTrickPlayVariant": {
+      "type": "list",
+      "member": {
+        "shape": "CmafImageBasedTrickPlayVariant"
+      }
+    },
     "__listOfColorConversion3DLUTSetting": {
       "type": "list",
       "member": {
@@ -13717,6 +13916,12 @@
       "type": "list",
       "member": {
         "shape": "DashAdditionalManifest"
+      }
+    },
+    "__listOfDashIsoImageBasedTrickPlayVariant": {
+      "type": "list",
+      "member": {
+        "shape": "DashIsoImageBasedTrickPlayVariant"
       }
     },
     "__listOfElementalInferenceFeature": {
@@ -13765,6 +13970,12 @@
       "type": "list",
       "member": {
         "shape": "HlsCaptionLanguageMapping"
+      }
+    },
+    "__listOfHlsImageBasedTrickPlayVariant": {
+      "type": "list",
+      "member": {
+        "shape": "HlsImageBasedTrickPlayVariant"
       }
     },
     "__listOfHopDestination": {

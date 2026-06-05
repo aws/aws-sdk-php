@@ -561,6 +561,33 @@
         "AICapacityReservationConfig$MlReservationArns": "<p>The list of ML reservation ARNs to use.</p>"
       }
     },
+    "AIMlflowConfig": {
+      "base": "<p>The MLflow tracking configuration for logging metrics and parameters to a SageMaker managed MLflow tracking server.</p>",
+      "refs": {
+        "AIBenchmarkOutputConfig$MlflowConfig": "<p>The MLflow tracking configuration for the job. If you don't specify this parameter, MLflow tracking is disabled.</p>",
+        "AIBenchmarkOutputResult$MlflowConfig": "<p>The MLflow tracking configuration for the job.</p>",
+        "AIRecommendationOutputConfig$MlflowConfig": "<p>The MLflow tracking configuration for the job. If you don't specify this parameter, MLflow tracking is disabled.</p>",
+        "AIRecommendationOutputResult$MlflowConfig": "<p>The MLflow tracking configuration for the job.</p>"
+      }
+    },
+    "AIMlflowExperimentName": {
+      "base": null,
+      "refs": {
+        "AIMlflowConfig$MlflowExperimentName": "<p>The MLflow experiment name used for tracking.</p>"
+      }
+    },
+    "AIMlflowResourceArn": {
+      "base": null,
+      "refs": {
+        "AIMlflowConfig$MlflowResourceArn": "<p>The Amazon Resource Name (ARN) of the SageMaker managed MLflow resource.</p>"
+      }
+    },
+    "AIMlflowRunName": {
+      "base": null,
+      "refs": {
+        "AIMlflowConfig$MlflowRunName": "<p>The MLflow run name used for tracking.</p>"
+      }
+    },
     "AIModelSource": {
       "base": "<p>The source of the model for an AI recommendation job. This is a union type.</p>",
       "refs": {

@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\QuickSight` - Adds support for Knowledge Base APIs and Index Capacity API
+* `Aws\PaymentCryptography` - Adds CloudFormation support for resource-based policies on AWS Payment Cryptography keys.
+* `Aws\MediaConvert` - Adds support for configurable number of Clear Lead segments at the beginning of encrypted output. Adds support for multiple trickplay variants.
+* `Aws\DynamoDB` - Adding new BDD representation of endpoint ruleset
+* `Aws\EMRServerless` - Adds support for updating max capacity and custom fields while application is started
+* `Aws\SageMaker` - This release adds support for MLflow experiment tracking in SageMaker inference optimization. CreateAIRecommendationJob and CreateAIBenchmarkJob now accept an optional OutputConfig.MlflowConfig (MLflow App ARN, experiment, run name) to stream benchmark metrics and artifacts to your own MLflow App.
+
 ## 3.384.3 - 2026-06-04
 
 * `Aws\MediaPackageVod` - Adding new BDD representation of endpoint ruleset

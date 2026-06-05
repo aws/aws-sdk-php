@@ -29,6 +29,25 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "BatchDeleteKnowledgeBase":{
+      "name":"BatchDeleteKnowledgeBase",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/accounts/{AwsAccountId}/knowledge-bases/batch-delete",
+        "responseCode":202
+      },
+      "input":{"shape":"BatchDeleteKnowledgeBaseRequest"},
+      "output":{"shape":"BatchDeleteKnowledgeBaseResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "BatchDeleteTopicReviewedAnswer":{
       "name":"BatchDeleteTopicReviewedAnswer",
       "http":{
@@ -994,6 +1013,27 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "DeleteKnowledgeBase":{
+      "name":"DeleteKnowledgeBase",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/accounts/{AwsAccountId}/knowledge-bases/{KnowledgeBaseId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteKnowledgeBaseRequest"},
+      "output":{"shape":"DeleteKnowledgeBaseResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
       ]
     },
     "DeleteNamespace":{
@@ -1967,6 +2007,48 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DescribeKnowledgeBase":{
+      "name":"DescribeKnowledgeBase",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/accounts/{AwsAccountId}/knowledge-bases/{KnowledgeBaseId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeKnowledgeBaseRequest"},
+      "output":{"shape":"DescribeKnowledgeBaseResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "DescribeKnowledgeBasePermissions":{
+      "name":"DescribeKnowledgeBasePermissions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/accounts/{AwsAccountId}/knowledge-bases/{KnowledgeBaseId}/permissions",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeKnowledgeBasePermissionsRequest"},
+      "output":{"shape":"DescribeKnowledgeBasePermissionsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "DescribeNamespace":{
       "name":"DescribeNamespace",
       "http":{
@@ -2864,6 +2946,25 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "ListKnowledgeBases":{
+      "name":"ListKnowledgeBases",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/accounts/{AwsAccountId}/knowledge-bases/",
+        "responseCode":200
+      },
+      "input":{"shape":"ListKnowledgeBasesRequest"},
+      "output":{"shape":"ListKnowledgeBasesResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "ListNamespaces":{
       "name":"ListNamespaces",
       "http":{
@@ -3201,6 +3302,24 @@
         {"shape":"ResourceUnavailableException"}
       ]
     },
+    "ListUsersIndexCapacity":{
+      "name":"ListUsersIndexCapacity",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{awsAccountId}/quick-index/user-capacity",
+        "responseCode":200
+      },
+      "input":{"shape":"ListUsersIndexCapacityRequest"},
+      "output":{"shape":"ListUsersIndexCapacityResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListVPCConnections":{
       "name":"ListVPCConnections",
       "http":{
@@ -3449,6 +3568,26 @@
         {"shape":"InternalFailureException"},
         {"shape":"ResourceUnavailableException"}
       ]
+    },
+    "SearchKnowledgeBases":{
+      "name":"SearchKnowledgeBases",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/accounts/{AwsAccountId}/search/knowledge-bases",
+        "responseCode":200
+      },
+      "input":{"shape":"SearchKnowledgeBasesRequest"},
+      "output":{"shape":"SearchKnowledgeBasesResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "SearchSpaces":{
       "name":"SearchSpaces",
@@ -4206,6 +4345,28 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "UpdateKnowledgeBasePermissions":{
+      "name":"UpdateKnowledgeBasePermissions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/accounts/{AwsAccountId}/knowledge-bases/{KnowledgeBaseId}/permissions",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateKnowledgeBasePermissionsRequest"},
+      "output":{"shape":"UpdateKnowledgeBasePermissionsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
     },
     "UpdateOAuthClientApplication":{
       "name":"UpdateOAuthClientApplication",
@@ -6454,6 +6615,20 @@
         "ValueForMultipleValues":{"shape":"String"}
       }
     },
+    "AudioExtractionConfiguration":{
+      "type":"structure",
+      "required":["audioExtractionStatus"],
+      "members":{
+        "audioExtractionStatus":{"shape":"AudioExtractionStatus"}
+      }
+    },
+    "AudioExtractionStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "AuroraParameters":{
       "type":"structure",
       "required":[
@@ -6899,6 +7074,76 @@
         },
         "RequestId":{"shape":"String"}
       }
+    },
+    "BatchDeleteKnowledgeBaseFailure":{
+      "type":"structure",
+      "required":[
+        "KnowledgeBaseId",
+        "ErrorCode",
+        "ErrorMessage"
+      ],
+      "members":{
+        "KnowledgeBaseId":{"shape":"KnowledgeBaseId"},
+        "ErrorCode":{"shape":"String"},
+        "ErrorMessage":{"shape":"String"}
+      }
+    },
+    "BatchDeleteKnowledgeBaseFailureList":{
+      "type":"list",
+      "member":{"shape":"BatchDeleteKnowledgeBaseFailure"}
+    },
+    "BatchDeleteKnowledgeBaseRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "KnowledgeBaseIds"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"KbAwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "KnowledgeBaseIds":{"shape":"BatchDeleteKnowledgeBaseRequestKnowledgeBaseIdsList"}
+      }
+    },
+    "BatchDeleteKnowledgeBaseRequestKnowledgeBaseIdsList":{
+      "type":"list",
+      "member":{"shape":"KnowledgeBaseId"},
+      "max":10,
+      "min":1
+    },
+    "BatchDeleteKnowledgeBaseResponse":{
+      "type":"structure",
+      "required":[
+        "Deleted",
+        "Errors"
+      ],
+      "members":{
+        "Deleted":{"shape":"BatchDeleteKnowledgeBaseSuccessList"},
+        "Errors":{"shape":"BatchDeleteKnowledgeBaseFailureList"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "box":true,
+          "location":"statusCode"
+        }
+      }
+    },
+    "BatchDeleteKnowledgeBaseSuccess":{
+      "type":"structure",
+      "required":[
+        "KnowledgeBaseId",
+        "KnowledgeBaseArn"
+      ],
+      "members":{
+        "KnowledgeBaseId":{"shape":"KnowledgeBaseId"},
+        "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"}
+      }
+    },
+    "BatchDeleteKnowledgeBaseSuccessList":{
+      "type":"list",
+      "member":{"shape":"BatchDeleteKnowledgeBaseSuccess"}
     },
     "BatchDeleteTopicReviewedAnswerRequest":{
       "type":"structure",
@@ -7587,6 +7832,23 @@
     "CapabilityState":{
       "type":"string",
       "enum":["DENY"]
+    },
+    "CapacityBytesRangeFilter":{
+      "type":"structure",
+      "members":{
+        "minBytes":{"shape":"CapacityBytesRangeFilterMinBytesLong"},
+        "maxBytes":{"shape":"CapacityBytesRangeFilterMaxBytesLong"}
+      }
+    },
+    "CapacityBytesRangeFilterMaxBytesLong":{
+      "type":"long",
+      "box":true,
+      "min":1
+    },
+    "CapacityBytesRangeFilterMinBytesLong":{
+      "type":"long",
+      "box":true,
+      "min":1
     },
     "CascadingControlConfiguration":{
       "type":"structure",
@@ -10895,6 +11157,16 @@
       "max":1,
       "min":1
     },
+    "DataSetStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "UPDATING",
+        "ACTIVE",
+        "FAILED",
+        "DELETING"
+      ]
+    },
     "DataSetStringComparisonFilterCondition":{
       "type":"structure",
       "required":["Operator"],
@@ -11007,6 +11279,12 @@
         "ErrorInfo":{"shape":"DataSourceErrorInfo"},
         "SecretArn":{"shape":"SecretArn"}
       }
+    },
+    "DataSourceArn":{
+      "type":"string",
+      "max":1284,
+      "min":0,
+      "pattern":"arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[^/].{0,1023}"
     },
     "DataSourceCredentials":{
       "type":"structure",
@@ -12374,6 +12652,42 @@
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "DeleteKnowledgeBaseRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "KnowledgeBaseId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"KbAwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "KnowledgeBaseId":{
+          "shape":"KnowledgeBaseId",
+          "location":"uri",
+          "locationName":"KnowledgeBaseId"
+        }
+      }
+    },
+    "DeleteKnowledgeBaseResponse":{
+      "type":"structure",
+      "required":[
+        "KnowledgeBaseArn",
+        "KnowledgeBaseId"
+      ],
+      "members":{
+        "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
+        "KnowledgeBaseId":{"shape":"KnowledgeBaseId"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "box":true,
           "location":"statusCode"
         }
       }
@@ -14276,6 +14590,75 @@
         "Status":{"shape":"StatusCode"}
       }
     },
+    "DescribeKnowledgeBasePermissionsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "KnowledgeBaseId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"KbAwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "KnowledgeBaseId":{
+          "shape":"KnowledgeBaseId",
+          "location":"uri",
+          "locationName":"KnowledgeBaseId"
+        }
+      }
+    },
+    "DescribeKnowledgeBasePermissionsResponse":{
+      "type":"structure",
+      "required":[
+        "KnowledgeBaseArn",
+        "KnowledgeBaseId"
+      ],
+      "members":{
+        "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
+        "KnowledgeBaseId":{"shape":"KnowledgeBaseId"},
+        "Permissions":{"shape":"ResourcePermissionList"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "box":true,
+          "location":"statusCode"
+        }
+      }
+    },
+    "DescribeKnowledgeBaseRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "KnowledgeBaseId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"KbAwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "KnowledgeBaseId":{
+          "shape":"KnowledgeBaseId",
+          "location":"uri",
+          "locationName":"KnowledgeBaseId"
+        }
+      }
+    },
+    "DescribeKnowledgeBaseResponse":{
+      "type":"structure",
+      "required":["KnowledgeBase"],
+      "members":{
+        "KnowledgeBase":{"shape":"KnowledgeBase"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "box":true,
+          "location":"statusCode"
+        }
+      }
+    },
     "DescribeNamespaceRequest":{
       "type":"structure",
       "required":[
@@ -15879,6 +16262,11 @@
         "DisplayOptions":{"shape":"TextFieldControlDisplayOptions"},
         "ControlTitleFormatText":{"shape":"ControlTitleFormatText"}
       }
+    },
+    "FilterValue":{
+      "type":"string",
+      "max":256,
+      "min":0
     },
     "FilterVisualScope":{
       "type":"string",
@@ -17852,6 +18240,20 @@
         "MENU"
       ]
     },
+    "ImageExtractionConfiguration":{
+      "type":"structure",
+      "required":["imageExtractionStatus"],
+      "members":{
+        "imageExtractionStatus":{"shape":"ImageExtractionStatus"}
+      }
+    },
+    "ImageExtractionStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "ImageInteractionOptions":{
       "type":"structure",
       "members":{
@@ -18235,6 +18637,10 @@
       "member":{"shape":"IntegerParameter"},
       "max":100
     },
+    "IntegerValue":{
+      "type":"integer",
+      "box":true
+    },
     "IntegerValueWhenUnsetConfiguration":{
       "type":"structure",
       "members":{
@@ -18559,6 +18965,42 @@
         "VERTICAL"
       ]
     },
+    "KbAwsAccountId":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"[0-9]*"
+    },
+    "KbIngestionId":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[0-9a-zA-Z-_=.+]+"
+    },
+    "KbIngestionStatus":{
+      "type":"string",
+      "enum":[
+        "QUEUED",
+        "RUNNING",
+        "FAILED",
+        "COMPLETED",
+        "INCOMPLETE",
+        "CANCELLED",
+        "CANCELLING",
+        "TIMEOUT"
+      ]
+    },
+    "KbTemplate":{
+      "type":"structure",
+      "members":{},
+      "document":true
+    },
+    "KbTemplateConfiguration":{
+      "type":"structure",
+      "members":{
+        "template":{"shape":"KbTemplate"}
+      }
+    },
     "KeyPairCredentials":{
       "type":"structure",
       "required":[
@@ -18574,6 +19016,187 @@
     "KeyRegistration":{
       "type":"list",
       "member":{"shape":"RegisteredCustomerManagedKey"}
+    },
+    "KnowledgeBase":{
+      "type":"structure",
+      "required":[
+        "KnowledgeBaseArn",
+        "KnowledgeBaseId",
+        "Name",
+        "Status",
+        "DataSourceArn",
+        "KnowledgeBaseConfiguration"
+      ],
+      "members":{
+        "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
+        "KnowledgeBaseId":{"shape":"KnowledgeBaseId"},
+        "Name":{"shape":"KnowledgeBaseName"},
+        "Status":{"shape":"DataSetStatus"},
+        "DataSourceArn":{"shape":"DataSourceArn"},
+        "KnowledgeBaseConfiguration":{"shape":"KnowledgeBaseConfiguration"},
+        "MediaExtractionConfiguration":{"shape":"MediaExtractionConfiguration"},
+        "Type":{"shape":"String"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "Description":{"shape":"KnowledgeBaseDescription"},
+        "IsEmailNotificationOptedForIngestionFailures":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "FirstCompletedIngestionSummary":{"shape":"KnowledgeBaseIngestionSummary"},
+        "FirstIncompleteIngestionSummary":{"shape":"KnowledgeBaseIngestionSummary"},
+        "LatestIngestionSummary":{"shape":"KnowledgeBaseIngestionSummary"},
+        "KnowledgeBaseSizeBytes":{
+          "shape":"Long",
+          "box":true
+        },
+        "DocumentCount":{
+          "shape":"Long",
+          "box":true
+        },
+        "PrimaryOwnerArn":{"shape":"String"},
+        "PrimaryOwnerUsername":{"shape":"SensitiveString"}
+      }
+    },
+    "KnowledgeBaseArn":{
+      "type":"string",
+      "max":1284,
+      "min":0,
+      "pattern":"arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[^/].{0,1023}"
+    },
+    "KnowledgeBaseConfiguration":{
+      "type":"structure",
+      "members":{
+        "templateConfiguration":{"shape":"KbTemplateConfiguration"},
+        "eventEnabled":{
+          "shape":"Boolean",
+          "box":true
+        }
+      },
+      "sensitive":true
+    },
+    "KnowledgeBaseDescription":{
+      "type":"string",
+      "max":1000,
+      "min":0,
+      "pattern":"\\P{C}*"
+    },
+    "KnowledgeBaseId":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[0-9a-zA-Z-_=.+]+"
+    },
+    "KnowledgeBaseIngestionSummary":{
+      "type":"structure",
+      "required":[
+        "IngestionId",
+        "IngestionStatus"
+      ],
+      "members":{
+        "IngestionId":{"shape":"KbIngestionId"},
+        "IngestionStatus":{"shape":"KbIngestionStatus"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"}
+      }
+    },
+    "KnowledgeBaseName":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"[\\p{L}\\p{N}][\\p{L}\\p{N} _\\-\\.]*"
+    },
+    "KnowledgeBaseSearchFilter":{
+      "type":"structure",
+      "required":[
+        "name",
+        "operator",
+        "value"
+      ],
+      "members":{
+        "name":{"shape":"KnowledgeBaseSearchFilterName"},
+        "operator":{"shape":"KnowledgeBaseSearchOperator"},
+        "value":{"shape":"String"}
+      }
+    },
+    "KnowledgeBaseSearchFilterName":{
+      "type":"string",
+      "enum":[
+        "KNOWLEDGE_BASE_ID",
+        "KNOWLEDGE_BASE_NAME",
+        "DIRECT_QUICKSIGHT_OWNER",
+        "DIRECT_QUICKSIGHT_VIEWER_OR_OWNER",
+        "DIRECT_QUICKSIGHT_SOLE_OWNER",
+        "KNOWLEDGE_BASE_SIZE_BYTES",
+        "PRIMARY_OWNER"
+      ]
+    },
+    "KnowledgeBaseSearchFilters":{
+      "type":"list",
+      "member":{"shape":"KnowledgeBaseSearchFilter"},
+      "max":5,
+      "min":1
+    },
+    "KnowledgeBaseSearchOperator":{
+      "type":"string",
+      "enum":[
+        "STRING_EQUALS",
+        "STRING_LIKE",
+        "GREATER_THAN_OR_EQUALS",
+        "LESS_THAN_OR_EQUALS"
+      ]
+    },
+    "KnowledgeBaseSortBy":{
+      "type":"structure",
+      "required":[
+        "sortByField",
+        "sortOrder"
+      ],
+      "members":{
+        "sortByField":{"shape":"KnowledgeBaseSortByField"},
+        "sortOrder":{"shape":"SortOrder"}
+      }
+    },
+    "KnowledgeBaseSortByField":{
+      "type":"string",
+      "enum":[
+        "KNOWLEDGE_BASE_SIZE_BYTES",
+        "CREATED_AT"
+      ]
+    },
+    "KnowledgeBaseSummaries":{
+      "type":"list",
+      "member":{"shape":"KnowledgeBaseSummary"}
+    },
+    "KnowledgeBaseSummary":{
+      "type":"structure",
+      "required":[
+        "KnowledgeBaseArn",
+        "KnowledgeBaseId",
+        "Name",
+        "Status",
+        "DataSourceArn"
+      ],
+      "members":{
+        "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
+        "KnowledgeBaseId":{"shape":"KnowledgeBaseId"},
+        "Name":{"shape":"KnowledgeBaseName"},
+        "Status":{"shape":"DataSetStatus"},
+        "DataSourceArn":{"shape":"DataSourceArn"},
+        "Type":{"shape":"String"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "KnowledgeBaseSizeBytes":{
+          "shape":"Long",
+          "box":true
+        },
+        "DocumentCount":{
+          "shape":"Long",
+          "box":true
+        },
+        "PrimaryOwnerArn":{"shape":"String"},
+        "PrimaryOwnerUsername":{"shape":"SensitiveString"}
+      }
     },
     "LabelOptions":{
       "type":"structure",
@@ -19691,6 +20314,42 @@
         }
       }
     },
+    "ListKnowledgeBasesRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"KbAwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListKnowledgeBasesResponse":{
+      "type":"structure",
+      "required":["KnowledgeBaseSummaries"],
+      "members":{
+        "KnowledgeBaseSummaries":{"shape":"KnowledgeBaseSummaries"},
+        "NextToken":{"shape":"NextToken"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "box":true,
+          "location":"statusCode"
+        }
+      }
+    },
     "ListNamespacesRequest":{
       "type":"structure",
       "required":["AwsAccountId"],
@@ -20355,6 +21014,37 @@
         }
       }
     },
+    "ListUsersIndexCapacityRequest":{
+      "type":"structure",
+      "required":["awsAccountId"],
+      "members":{
+        "awsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"awsAccountId"
+        },
+        "namespace":{"shape":"Namespace"},
+        "filters":{"shape":"UserIndexCapacityFilters"},
+        "sortBy":{"shape":"UserIndexCapacitySortBy"},
+        "sortOrder":{"shape":"UserIndexCapacitySortOrder"},
+        "maxResults":{"shape":"ListUsersIndexCapacityRequestMaxResultsInteger"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListUsersIndexCapacityRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListUsersIndexCapacityResponse":{
+      "type":"structure",
+      "members":{
+        "users":{"shape":"UserIndexCapacityList"},
+        "nextToken":{"shape":"String"},
+        "requestId":{"shape":"String"}
+      }
+    },
     "ListUsersRequest":{
       "type":"structure",
       "required":[
@@ -20538,6 +21228,10 @@
       "max":2048,
       "min":1
     },
+    "LongValue":{
+      "type":"long",
+      "box":true
+    },
     "Longitude":{
       "type":"double",
       "max":1800,
@@ -20677,6 +21371,14 @@
       "type":"list",
       "member":{"shape":"MeasureField"},
       "max":200
+    },
+    "MediaExtractionConfiguration":{
+      "type":"structure",
+      "members":{
+        "imageExtractionConfiguration":{"shape":"ImageExtractionConfiguration"},
+        "audioExtractionConfiguration":{"shape":"AudioExtractionConfiguration"},
+        "videoExtractionConfiguration":{"shape":"VideoExtractionConfiguration"}
+      }
     },
     "MemberIdArnPair":{
       "type":"structure",
@@ -24144,6 +24846,38 @@
         }
       }
     },
+    "SearchKnowledgeBasesRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"KbAwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        },
+        "Filters":{"shape":"KnowledgeBaseSearchFilters"},
+        "SortBy":{"shape":"KnowledgeBaseSortBy"}
+      }
+    },
+    "SearchKnowledgeBasesResponse":{
+      "type":"structure",
+      "required":["KnowledgeBaseSummaries"],
+      "members":{
+        "KnowledgeBaseSummaries":{"shape":"KnowledgeBaseSummaries"},
+        "NextToken":{"shape":"NextToken"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "box":true,
+          "location":"statusCode"
+        }
+      }
+    },
     "SearchSpacesRequest":{
       "type":"structure",
       "required":[
@@ -25282,6 +26016,13 @@
       }
     },
     "SortDirection":{
+      "type":"string",
+      "enum":[
+        "ASC",
+        "DESC"
+      ]
+    },
+    "SortOrder":{
       "type":"string",
       "enum":[
         "ASC",
@@ -29208,6 +29949,45 @@
         "RequestId":{"shape":"NonEmptyString"}
       }
     },
+    "UpdateKnowledgeBasePermissionsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "KnowledgeBaseId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"KbAwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "KnowledgeBaseId":{
+          "shape":"KnowledgeBaseId",
+          "location":"uri",
+          "locationName":"KnowledgeBaseId"
+        },
+        "GrantPermissions":{"shape":"ResourcePermissionList"},
+        "RevokePermissions":{"shape":"ResourcePermissionList"}
+      }
+    },
+    "UpdateKnowledgeBasePermissionsResponse":{
+      "type":"structure",
+      "required":[
+        "KnowledgeBaseArn",
+        "KnowledgeBaseId"
+      ],
+      "members":{
+        "KnowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
+        "KnowledgeBaseId":{"shape":"KnowledgeBaseId"},
+        "Permissions":{"shape":"ResourcePermissionList"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "box":true,
+          "location":"statusCode"
+        }
+      }
+    },
     "UpdateLinkPermissionList":{
       "type":"list",
       "member":{"shape":"ResourcePermission"},
@@ -30088,6 +30868,47 @@
       },
       "union":true
     },
+    "UserIndexCapacity":{
+      "type":"structure",
+      "members":{
+        "userArn":{"shape":"String"},
+        "userName":{"shape":"String"},
+        "email":{"shape":"String"},
+        "role":{"shape":"String"},
+        "totalCapacityBytes":{"shape":"LongValue"},
+        "totalKBCapacityBytes":{"shape":"LongValue"},
+        "totalSpaceCapacityBytes":{"shape":"LongValue"},
+        "kbCount":{"shape":"IntegerValue"},
+        "spaceCount":{"shape":"IntegerValue"}
+      }
+    },
+    "UserIndexCapacityFilter":{
+      "type":"structure",
+      "members":{
+        "userNameOrEmail":{"shape":"UserNameOrEmailFilter"},
+        "totalCapacityBytes":{"shape":"CapacityBytesRangeFilter"}
+      },
+      "union":true
+    },
+    "UserIndexCapacityFilters":{
+      "type":"list",
+      "member":{"shape":"UserIndexCapacityFilter"}
+    },
+    "UserIndexCapacityList":{
+      "type":"list",
+      "member":{"shape":"UserIndexCapacity"}
+    },
+    "UserIndexCapacitySortBy":{
+      "type":"string",
+      "enum":["TOTAL_CAPACITY_BYTES"]
+    },
+    "UserIndexCapacitySortOrder":{
+      "type":"string",
+      "enum":[
+        "ASC",
+        "DESC"
+      ]
+    },
     "UserList":{
       "type":"list",
       "member":{"shape":"User"}
@@ -30096,6 +30917,13 @@
       "type":"string",
       "min":1,
       "pattern":"[\\u0020-\\u00FF]+"
+    },
+    "UserNameOrEmailFilter":{
+      "type":"structure",
+      "required":["prefix"],
+      "members":{
+        "prefix":{"shape":"FilterValue"}
+      }
     },
     "UserRole":{
       "type":"string",
@@ -30224,6 +31052,28 @@
         "MIDDLE",
         "BOTTOM",
         "AUTO"
+      ]
+    },
+    "VideoExtractionConfiguration":{
+      "type":"structure",
+      "required":["videoExtractionStatus"],
+      "members":{
+        "videoExtractionStatus":{"shape":"VideoExtractionStatus"},
+        "videoExtractionType":{"shape":"VideoExtractionType"}
+      }
+    },
+    "VideoExtractionStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "VideoExtractionType":{
+      "type":"string",
+      "enum":[
+        "AUDIO_TRANSCRIPTION_ONLY",
+        "VISUAL_CONTENT_AND_AUDIO_TRANSCRIPTION"
       ]
     },
     "Visibility":{

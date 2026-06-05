@@ -3,6 +3,7 @@
   "service": "<fullname>Amazon Quick API Reference</fullname> <p>Amazon Quick Sight is a fully managed, serverless business intelligence service for the Amazon Web Services Cloud that makes it easy to extend data and insights to every user in your organization. This API reference contains documentation for a programming interface that you can use to manage Amazon Quick Sight. </p>",
   "operations": {
     "BatchCreateTopicReviewedAnswer": "<p>Creates new reviewed answers for a Q Topic.</p>",
+    "BatchDeleteKnowledgeBase": "<p>Deletes one or more knowledge bases.</p>",
     "BatchDeleteTopicReviewedAnswer": "<p>Deletes reviewed answers for Q Topic.</p>",
     "CancelIngestion": "<p>Cancels an ongoing ingestion of data into SPICE.</p>",
     "CreateAccountCustomization": "<p>Creates Amazon Quick Sight customizations. Currently, you can add a custom default theme by using the <code>CreateAccountCustomization</code> or <code>UpdateAccountCustomization</code> API operation. To further customize Amazon Quick Sight by removing Amazon Quick Sight sample assets and videos for all new users, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/customizing-quicksight.html\">Customizing Quick Sight</a> in the <i>Amazon Quick Sight User Guide.</i> </p> <p>You can create customizations for your Amazon Web Services account or, if you specify a namespace, for a Quick Sight namespace instead. Customizations that apply to a namespace always override customizations that apply to an Amazon Web Services account. To find out which customizations apply, use the <code>DescribeAccountCustomization</code> API operation.</p> <p>Before you use the <code>CreateAccountCustomization</code> API operation to add a theme as the namespace default, make sure that you first share the theme with the namespace. If you don't share it with the namespace, the theme isn't visible to your users even if you make it the default theme. To check if the theme is shared, view the current permissions by using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeThemePermissions.html\">DescribeThemePermissions</a> </code> API operation. To share the theme, grant permissions by using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdateThemePermissions.html\">UpdateThemePermissions</a> </code> API operation. </p>",
@@ -55,6 +56,7 @@
     "DeleteGroupMembership": "<p>Removes a user from a group so that the user is no longer a member of the group.</p>",
     "DeleteIAMPolicyAssignment": "<p>Deletes an existing IAM policy assignment.</p>",
     "DeleteIdentityPropagationConfig": "<p>Deletes all access scopes and authorized targets that are associated with a service from the Quick Sight IAM Identity Center application.</p> <p>This operation is only supported for Quick Sight accounts that use IAM Identity Center.</p>",
+    "DeleteKnowledgeBase": "<p>Deletes a knowledge base.</p>",
     "DeleteNamespace": "<p>Deletes a namespace and the users and groups that are associated with the namespace. This is an asynchronous process. Assets including dashboards, analyses, datasets and data sources are not deleted. To delete these assets, you use the API operations for the relevant asset. </p>",
     "DeleteOAuthClientApplication": "<p>Deletes an OAuthClientApplication.</p>",
     "DeleteRefreshSchedule": "<p>Deletes a refresh schedule from a dataset.</p>",
@@ -111,6 +113,8 @@
     "DescribeIngestion": "<p>Describes a SPICE ingestion.</p>",
     "DescribeIpRestriction": "<p>Provides a summary and status of IP rules.</p>",
     "DescribeKeyRegistration": "<p>Describes all customer managed key registrations in a Quick Sight account.</p>",
+    "DescribeKnowledgeBase": "<p>Describes a knowledge base.</p>",
+    "DescribeKnowledgeBasePermissions": "<p>Describes the resource permissions for a knowledge base.</p>",
     "DescribeNamespace": "<p>Describes the current namespace.</p>",
     "DescribeOAuthClientApplication": "<p>Describes an OAuthClientApplication.</p>",
     "DescribeQPersonalizationConfiguration": "<p>Describes a personalization configuration.</p>",
@@ -162,6 +166,7 @@
     "ListIAMPolicyAssignmentsForUser": "<p>Lists all of the IAM policy assignments, including the Amazon Resource Names (ARNs), for the IAM policies assigned to the specified user and group, or groups that the user belongs to.</p>",
     "ListIdentityPropagationConfigs": "<p>Lists all services and authorized targets that the Quick Sight IAM Identity Center application can access.</p> <p>This operation is only supported for Quick Sight accounts that use IAM Identity Center.</p>",
     "ListIngestions": "<p>Lists the history of SPICE ingestions for a dataset. Limited to 5 TPS per user and 25 TPS per account.</p>",
+    "ListKnowledgeBases": "<p>Lists all knowledge bases in an Amazon QuickSight account.</p>",
     "ListNamespaces": "<p>Lists the namespaces for the specified Amazon Web Services account. This operation doesn't list deleted namespaces.</p>",
     "ListOAuthClientApplications": "<p>Lists all OAuthClientApplications in the current Amazon Web Services Region that belong to this Amazon Web Services account.</p>",
     "ListRefreshSchedules": "<p>Lists the refresh schedules of a dataset. Each dataset can have up to 5 schedules. </p>",
@@ -181,6 +186,7 @@
     "ListTopics": "<p>Lists all of the topics within an account.</p>",
     "ListUserGroups": "<p>Lists the Amazon Quick Sight groups that an Amazon Quick Sight user is a member of.</p>",
     "ListUsers": "<p>Returns a list of all of the Amazon Quick Sight users belonging to this account. </p>",
+    "ListUsersIndexCapacity": "<p>Lists per-user index capacity consumption for an account.</p>",
     "ListVPCConnections": "<p>Lists all of the VPC connections in the current set Amazon Web Services Region of an Amazon Web Services account.</p>",
     "PredictQAResults": "<p>Predicts existing visuals or generates new visuals to answer a given query.</p> <p>This API uses <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation.html\">trusted identity propagation</a> to ensure that an end user is authenticated and receives the embed URL that is specific to that user. The IAM Identity Center application that the user has logged into needs to have <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-using-customermanagedapps-specify-trusted-apps.html\">trusted Identity Propagation enabled for Quick</a> with the scope value set to <code>quicksight:read</code>. Before you use this action, make sure that you have configured the relevant Quick resource and permissions.</p> <p>We recommend enabling the <code>QSearchStatus</code> API to unlock the full potential of <code>PredictQnA</code>. When <code>QSearchStatus</code> is enabled, it first checks the specified dashboard for any existing visuals that match the question. If no matching visuals are found, <code>PredictQnA</code> uses generative Q&amp;A to provide an answer. To update the <code>QSearchStatus</code>, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdateQuickSightQSearchConfiguration.html\">UpdateQuickSightQSearchConfiguration</a>.</p>",
     "PutDataSetRefreshProperties": "<p>Creates or updates the dataset refresh properties for the dataset.</p>",
@@ -195,6 +201,7 @@
     "SearchFlows": "<p>Search for the flows in an Amazon Web Services account.</p>",
     "SearchFolders": "<p>Searches the subfolders in a folder.</p>",
     "SearchGroups": "<p>Use the <code>SearchGroups</code> operation to search groups in a specified Quick Sight namespace using the supplied filters.</p>",
+    "SearchKnowledgeBases": "<p>Searches for a subset of knowledge bases based on specified filters.</p>",
     "SearchSpaces": "<p>Searches for Amazon QuickSight spaces that match the specified filters.</p>",
     "SearchTopics": "<p>Searches for any Q topic that exists in an Quick account.</p>",
     "StartAssetBundleExportJob": "<p>Starts an Asset Bundle export job.</p> <p>An Asset Bundle export job exports specified Amazon Quick Sight assets. You can also choose to export any asset dependencies in the same job. Export jobs run asynchronously and can be polled with a <code>DescribeAssetBundleExportJob</code> API call. When a job is successfully completed, a download URL that contains the exported assets is returned. The URL is valid for 5 minutes and can be refreshed with a <code>DescribeAssetBundleExportJob</code> API call. Each Amazon Quick Sight account can run up to 5 export jobs concurrently.</p> <p>The API caller must have the necessary permissions in their IAM role to access each resource before the resources can be exported.</p>",
@@ -237,6 +244,7 @@
     "UpdateIdentityPropagationConfig": "<p>Adds or updates services and authorized targets to configure what the Quick Sight IAM Identity Center application can access.</p> <p>This operation is only supported for Quick Sight accounts using IAM Identity Center</p>",
     "UpdateIpRestriction": "<p>Updates the content and status of IP rules. Traffic from a source is allowed when the source satisfies either the <code>IpRestrictionRule</code>, <code>VpcIdRestrictionRule</code>, or <code>VpcEndpointIdRestrictionRule</code>. To use this operation, you must provide the entire map of rules. You can use the <code>DescribeIpRestriction</code> operation to get the current rule map.</p>",
     "UpdateKeyRegistration": "<p>Updates a customer managed key in a Quick Sight account.</p>",
+    "UpdateKnowledgeBasePermissions": "<p>Updates the resource permissions for a knowledge base.</p>",
     "UpdateOAuthClientApplication": "<p>Updates an OAuthClientApplication.</p>",
     "UpdatePublicSharingSettings": "<important> <p>This API controls public sharing settings for your entire Quick Sight account, affecting data security and access. When you enable public sharing:</p> <ul> <li> <p>Dashboards can be shared publicly</p> </li> <li> <p>This setting affects your entire Amazon Web Services account and all Quick Sight users</p> </li> </ul> <p> <b>Before proceeding:</b> Ensure you understand the security implications and have proper IAM permissions configured.</p> </important> <p>Use the <code>UpdatePublicSharingSettings</code> operation to turn on or turn off the public sharing settings of an Amazon Quick Sight dashboard.</p> <p>To use this operation, turn on session capacity pricing for your Amazon Quick Sight account.</p> <p>Before you can turn on public sharing on your account, make sure to give public sharing permissions to an administrative user in the Identity and Access Management (IAM) console. For more information on using IAM with Amazon Quick Sight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/security_iam_service-with-iam.html\">Using Quick with IAM</a> in the <i>Amazon Quick Sight User Guide</i>.</p>",
     "UpdateQPersonalizationConfiguration": "<p>Updates a personalization configuration.</p>",
@@ -1980,6 +1988,18 @@
         "AggregationFunction$AttributeAggregationFunction": "<p>Aggregation for attributes.</p>"
       }
     },
+    "AudioExtractionConfiguration": {
+      "base": "<p>The configuration for audio extraction from knowledge base documents.</p>",
+      "refs": {
+        "MediaExtractionConfiguration$audioExtractionConfiguration": "<p>The configuration for audio extraction.</p>"
+      }
+    },
+    "AudioExtractionStatus": {
+      "base": null,
+      "refs": {
+        "AudioExtractionConfiguration$audioExtractionStatus": "<p>The status of audio extraction. Valid values are ENABLED and DISABLED.</p>"
+      }
+    },
     "AuroraParameters": {
       "base": "<p>Parameters for Amazon Aurora.</p>",
       "refs": {
@@ -2274,6 +2294,7 @@
         "ListTopicReviewedAnswersRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that containd the reviewed answers that you want listed.</p>",
         "ListTopicsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topics that you want to list.</p>",
         "ListUserGroupsRequest$AwsAccountId": "<p>The Amazon Web Services account ID that the user is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
+        "ListUsersIndexCapacityRequest$awsAccountId": "<p>The ID of the Amazon Web Services account that contains the index capacity data.</p>",
         "ListUsersRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the user is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "ListVPCConnectionsRequest$AwsAccountId": "<p>The Amazon Web Services account ID of the account that contains the VPC connections that you want to list.</p>",
         "PredictQAResultsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that the user wants to execute Predict QA results in.</p>",
@@ -2554,6 +2575,44 @@
       "base": null,
       "refs": {}
     },
+    "BatchDeleteKnowledgeBaseFailure": {
+      "base": "<p>Information about a knowledge base that failed to be deleted in a batch operation.</p>",
+      "refs": {
+        "BatchDeleteKnowledgeBaseFailureList$member": null
+      }
+    },
+    "BatchDeleteKnowledgeBaseFailureList": {
+      "base": null,
+      "refs": {
+        "BatchDeleteKnowledgeBaseResponse$Errors": "<p>A list of knowledge bases that failed to be deleted.</p>"
+      }
+    },
+    "BatchDeleteKnowledgeBaseRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDeleteKnowledgeBaseRequestKnowledgeBaseIdsList": {
+      "base": null,
+      "refs": {
+        "BatchDeleteKnowledgeBaseRequest$KnowledgeBaseIds": "<p>A list of knowledge base identifiers to delete.</p>"
+      }
+    },
+    "BatchDeleteKnowledgeBaseResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDeleteKnowledgeBaseSuccess": {
+      "base": "<p>Information about a knowledge base that was successfully deleted in a batch operation.</p>",
+      "refs": {
+        "BatchDeleteKnowledgeBaseSuccessList$member": null
+      }
+    },
+    "BatchDeleteKnowledgeBaseSuccessList": {
+      "base": null,
+      "refs": {
+        "BatchDeleteKnowledgeBaseResponse$Deleted": "<p>A list of knowledge bases that were successfully deleted.</p>"
+      }
+    },
     "BatchDeleteTopicReviewedAnswerRequest": {
       "base": null,
       "refs": {}
@@ -2716,6 +2775,8 @@
         "GutterStyle$Show": "<p>This Boolean value controls whether to display a gutter space between sheet tiles. </p>",
         "IdentityCenterConfiguration$EnableIdentityPropagation": "<p>A Boolean option that controls whether Trusted Identity Propagation should be used.</p>",
         "JoinKeyProperties$UniqueKey": "<p>A value that indicates that a row in a table is uniquely identified by the columns in a join key. This is used by Quick Sight to optimize query performance.</p>",
+        "KnowledgeBase$IsEmailNotificationOptedForIngestionFailures": "<p>Indicates whether email notifications are enabled for ingestion failures.</p>",
+        "KnowledgeBaseConfiguration$eventEnabled": "<p>Indicates whether event notifications are enabled for the knowledge base.</p>",
         "MarginStyle$Show": "<p>This Boolean value controls whether to display sheet margins.</p>",
         "NestedFilter$IncludeInnerSet": "<p>A boolean condition to include or exclude the subset that is defined by the values of the nested inner filter.</p>",
         "NumericRangeFilter$IncludeMinimum": "<p>Determines whether the minimum value in the filter value range should be included in the filtered results.</p>",
@@ -3204,6 +3265,24 @@
         "Capabilities$GenerateAnalyses": "<p>The ability to generate analysis using AI</p>",
         "Capabilities$Story": "<p>The ability to perform Story-related actions.</p>",
         "Capabilities$Scenario": "<p>The ability to perform Scenario-related actions.</p>"
+      }
+    },
+    "CapacityBytesRangeFilter": {
+      "base": "<p>A filter that matches users by total capacity range in bytes.</p>",
+      "refs": {
+        "UserIndexCapacityFilter$totalCapacityBytes": "<p>Filter users by total capacity range in bytes.</p>"
+      }
+    },
+    "CapacityBytesRangeFilterMaxBytesLong": {
+      "base": null,
+      "refs": {
+        "CapacityBytesRangeFilter$maxBytes": "<p>The maximum capacity in bytes (inclusive). At least one of minBytes or maxBytes is required.</p>"
+      }
+    },
+    "CapacityBytesRangeFilterMinBytesLong": {
+      "base": null,
+      "refs": {
+        "CapacityBytesRangeFilter$minBytes": "<p>The minimum capacity in bytes (inclusive). At least one of minBytes or maxBytes is required.</p>"
       }
     },
     "CascadingControlConfiguration": {
@@ -5359,6 +5438,13 @@
         "SemanticModelConfiguration$SemanticMetadata": "<p>The dataset-level semantic metadata, including a description and custom instructions.</p>"
       }
     },
+    "DataSetStatus": {
+      "base": null,
+      "refs": {
+        "KnowledgeBase$Status": "<p>The status of the knowledge base.</p>",
+        "KnowledgeBaseSummary$Status": "<p>The status of the knowledge base.</p>"
+      }
+    },
     "DataSetStringComparisonFilterCondition": {
       "base": "<p>A filter condition that compares string values using operators like <code>EQUALS</code>, <code>CONTAINS</code>, or <code>STARTS_WITH</code>.</p>",
       "refs": {
@@ -5448,6 +5534,13 @@
       "refs": {
         "DataSourceList$member": null,
         "DescribeDataSourceResponse$DataSource": "<p>The information on the data source.</p>"
+      }
+    },
+    "DataSourceArn": {
+      "base": null,
+      "refs": {
+        "KnowledgeBase$DataSourceArn": "<p>The ARN of the data source associated with the knowledge base.</p>",
+        "KnowledgeBaseSummary$DataSourceArn": "<p>The ARN of the data source associated with the knowledge base.</p>"
       }
     },
     "DataSourceCredentials": {
@@ -6184,6 +6277,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteKnowledgeBaseRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteKnowledgeBaseResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteNamespaceRequest": {
       "base": null,
       "refs": {}
@@ -6635,6 +6736,22 @@
       "refs": {}
     },
     "DescribeKeyRegistrationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeKnowledgeBasePermissionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeKnowledgeBasePermissionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeKnowledgeBaseRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeKnowledgeBaseResponse": {
       "base": null,
       "refs": {}
     },
@@ -7662,6 +7779,12 @@
       "base": "<p>A control to display a text box that is used to enter a single entry.</p>",
       "refs": {
         "FilterControl$TextField": "<p>A control to display a text box that is used to enter a single entry.</p>"
+      }
+    },
+    "FilterValue": {
+      "base": null,
+      "refs": {
+        "UserNameOrEmailFilter$prefix": "<p>The prefix to match against username or email (starts-with match).</p>"
       }
     },
     "FilterVisualScope": {
@@ -9196,6 +9319,18 @@
         "ImageCustomAction$Trigger": "<p>The trigger of the <code>VisualCustomAction</code>.</p> <p>Valid values are defined as follows:</p> <ul> <li> <p> <code>CLICK</code>: Initiates a custom action by a left pointer click on a data point.</p> </li> <li> <p> <code>MENU</code>: Initiates a custom action by right pointer click from the menu.</p> </li> </ul>"
       }
     },
+    "ImageExtractionConfiguration": {
+      "base": "<p>The configuration for image extraction from knowledge base documents.</p>",
+      "refs": {
+        "MediaExtractionConfiguration$imageExtractionConfiguration": "<p>The configuration for image extraction.</p>"
+      }
+    },
+    "ImageExtractionStatus": {
+      "base": null,
+      "refs": {
+        "ImageExtractionConfiguration$imageExtractionStatus": "<p>The status of image extraction. Valid values are ENABLED and DISABLED.</p>"
+      }
+    },
     "ImageInteractionOptions": {
       "base": "<p>The general image interactions setup for image publish options.</p>",
       "refs": {
@@ -9474,6 +9609,13 @@
         "Parameters$IntegerParameters": "<p>The parameters that have a data type of integer.</p>"
       }
     },
+    "IntegerValue": {
+      "base": null,
+      "refs": {
+        "UserIndexCapacity$kbCount": "<p>The number of knowledge bases owned by the user.</p>",
+        "UserIndexCapacity$spaceCount": "<p>The number of spaces owned by the user.</p>"
+      }
+    },
     "IntegerValueWhenUnsetConfiguration": {
       "base": "<p>A parameter declaration for the <code>Integer</code> data type.</p> <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>",
       "refs": {
@@ -9712,6 +9854,42 @@
         "KPIVisualStandardLayout$Type": "<p>The standard layout type.</p>"
       }
     },
+    "KbAwsAccountId": {
+      "base": null,
+      "refs": {
+        "BatchDeleteKnowledgeBaseRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>",
+        "DeleteKnowledgeBaseRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>",
+        "DescribeKnowledgeBasePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>",
+        "DescribeKnowledgeBaseRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>",
+        "ListKnowledgeBasesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>",
+        "SearchKnowledgeBasesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>",
+        "UpdateKnowledgeBasePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the knowledge base.</p>"
+      }
+    },
+    "KbIngestionId": {
+      "base": null,
+      "refs": {
+        "KnowledgeBaseIngestionSummary$IngestionId": "<p>The unique identifier for the ingestion job.</p>"
+      }
+    },
+    "KbIngestionStatus": {
+      "base": null,
+      "refs": {
+        "KnowledgeBaseIngestionSummary$IngestionStatus": "<p>The status of the ingestion job.</p>"
+      }
+    },
+    "KbTemplate": {
+      "base": null,
+      "refs": {
+        "KbTemplateConfiguration$template": "<p>The template document that defines the knowledge base behavior.</p>"
+      }
+    },
+    "KbTemplateConfiguration": {
+      "base": "<p>The template configuration for a knowledge base.</p>",
+      "refs": {
+        "KnowledgeBaseConfiguration$templateConfiguration": "<p>The template configuration for the knowledge base.</p>"
+      }
+    },
     "KeyPairCredentials": {
       "base": "<p>The combination of username, private key and passphrase that are used as credentials.</p>",
       "refs": {
@@ -9723,6 +9901,116 @@
       "refs": {
         "DescribeKeyRegistrationResponse$KeyRegistration": "<p>A list of <code>RegisteredCustomerManagedKey</code> objects in a Quick Sight account.</p>",
         "UpdateKeyRegistrationRequest$KeyRegistration": "<p>A list of <code>RegisteredCustomerManagedKey</code> objects to be updated to the Quick Sight account.</p>"
+      }
+    },
+    "KnowledgeBase": {
+      "base": "<p>A knowledge base resource that provides data from connected sources for AI-powered experiences in Amazon QuickSight.</p>",
+      "refs": {
+        "DescribeKnowledgeBaseResponse$KnowledgeBase": "<p>The knowledge base.</p>"
+      }
+    },
+    "KnowledgeBaseArn": {
+      "base": null,
+      "refs": {
+        "BatchDeleteKnowledgeBaseSuccess$KnowledgeBaseArn": "<p>The ARN of the successfully deleted knowledge base.</p>",
+        "DeleteKnowledgeBaseResponse$KnowledgeBaseArn": "<p>The ARN of the deleted knowledge base.</p>",
+        "DescribeKnowledgeBasePermissionsResponse$KnowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
+        "KnowledgeBase$KnowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
+        "KnowledgeBaseSummary$KnowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
+        "UpdateKnowledgeBasePermissionsResponse$KnowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>"
+      }
+    },
+    "KnowledgeBaseConfiguration": {
+      "base": "<p>The configuration settings for a knowledge base.</p>",
+      "refs": {
+        "KnowledgeBase$KnowledgeBaseConfiguration": "<p>The configuration settings for the knowledge base.</p>"
+      }
+    },
+    "KnowledgeBaseDescription": {
+      "base": null,
+      "refs": {
+        "KnowledgeBase$Description": "<p>The description of the knowledge base.</p>"
+      }
+    },
+    "KnowledgeBaseId": {
+      "base": null,
+      "refs": {
+        "BatchDeleteKnowledgeBaseFailure$KnowledgeBaseId": "<p>The unique identifier of the knowledge base that failed to be deleted.</p>",
+        "BatchDeleteKnowledgeBaseRequestKnowledgeBaseIdsList$member": null,
+        "BatchDeleteKnowledgeBaseSuccess$KnowledgeBaseId": "<p>The unique identifier of the successfully deleted knowledge base.</p>",
+        "DeleteKnowledgeBaseRequest$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
+        "DeleteKnowledgeBaseResponse$KnowledgeBaseId": "<p>The ID of the deleted knowledge base.</p>",
+        "DescribeKnowledgeBasePermissionsRequest$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
+        "DescribeKnowledgeBasePermissionsResponse$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
+        "DescribeKnowledgeBaseRequest$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
+        "KnowledgeBase$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
+        "KnowledgeBaseSummary$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
+        "UpdateKnowledgeBasePermissionsRequest$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>",
+        "UpdateKnowledgeBasePermissionsResponse$KnowledgeBaseId": "<p>The unique identifier for the knowledge base.</p>"
+      }
+    },
+    "KnowledgeBaseIngestionSummary": {
+      "base": "<p>A summary of an ingestion job for a knowledge base.</p>",
+      "refs": {
+        "KnowledgeBase$FirstCompletedIngestionSummary": "<p>A summary of the first completed ingestion for the knowledge base.</p>",
+        "KnowledgeBase$FirstIncompleteIngestionSummary": "<p>A summary of the first incomplete ingestion for the knowledge base.</p>",
+        "KnowledgeBase$LatestIngestionSummary": "<p>A summary of the most recent ingestion for the knowledge base.</p>"
+      }
+    },
+    "KnowledgeBaseName": {
+      "base": null,
+      "refs": {
+        "KnowledgeBase$Name": "<p>The name of the knowledge base.</p>",
+        "KnowledgeBaseSummary$Name": "<p>The name of the knowledge base.</p>"
+      }
+    },
+    "KnowledgeBaseSearchFilter": {
+      "base": "<p>A filter to apply when searching knowledge bases.</p>",
+      "refs": {
+        "KnowledgeBaseSearchFilters$member": null
+      }
+    },
+    "KnowledgeBaseSearchFilterName": {
+      "base": null,
+      "refs": {
+        "KnowledgeBaseSearchFilter$name": "<p>The name of the field to filter on.</p>"
+      }
+    },
+    "KnowledgeBaseSearchFilters": {
+      "base": null,
+      "refs": {
+        "SearchKnowledgeBasesRequest$Filters": "<p>The filters to apply when searching knowledge bases.</p>"
+      }
+    },
+    "KnowledgeBaseSearchOperator": {
+      "base": null,
+      "refs": {
+        "KnowledgeBaseSearchFilter$operator": "<p>The comparison operator to use for the filter.</p>"
+      }
+    },
+    "KnowledgeBaseSortBy": {
+      "base": "<p>The sort configuration for searching knowledge bases.</p>",
+      "refs": {
+        "SearchKnowledgeBasesRequest$SortBy": "<p>The sort configuration for the search results.</p>"
+      }
+    },
+    "KnowledgeBaseSortByField": {
+      "base": null,
+      "refs": {
+        "KnowledgeBaseSortBy$sortByField": "<p>The field to sort by.</p>"
+      }
+    },
+    "KnowledgeBaseSummaries": {
+      "base": null,
+      "refs": {
+        "ListKnowledgeBasesResponse$KnowledgeBaseSummaries": "<p>A list of knowledge base summaries.</p>",
+        "SearchKnowledgeBasesResponse$KnowledgeBaseSummaries": "<p>A list of knowledge base summaries.</p>"
+      }
+    },
+    "KnowledgeBaseSummary": {
+      "base": "<p>A summary of a knowledge base, including its identifier, name, status, and metadata.</p>",
+      "refs": {
+        "KnowledgeBaseSummaries$member": null
       }
     },
     "LabelOptions": {
@@ -10233,6 +10521,14 @@
       "base": null,
       "refs": {}
     },
+    "ListKnowledgeBasesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListKnowledgeBasesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListNamespacesRequest": {
       "base": null,
       "refs": {}
@@ -10377,6 +10673,20 @@
       "base": null,
       "refs": {}
     },
+    "ListUsersIndexCapacityRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListUsersIndexCapacityRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListUsersIndexCapacityRequest$maxResults": "<p>The maximum number of results to return per page.</p>"
+      }
+    },
+    "ListUsersIndexCapacityResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListUsersRequest": {
       "base": null,
       "refs": {}
@@ -10471,6 +10781,10 @@
         "Ingestion$IngestionTimeInSeconds": "<p>The time that this ingestion took, measured in seconds.</p>",
         "Ingestion$IngestionSizeInBytes": "<p>The size of the data ingested, in bytes.</p>",
         "ItemsLimitConfiguration$ItemsLimit": "<p>The limit on how many items of a field are showed in the chart. For example, the number of slices that are displayed in a pie chart.</p>",
+        "KnowledgeBase$KnowledgeBaseSizeBytes": "<p>The size of the knowledge base in bytes.</p>",
+        "KnowledgeBase$DocumentCount": "<p>The number of documents in the knowledge base.</p>",
+        "KnowledgeBaseSummary$KnowledgeBaseSizeBytes": "<p>The size of the knowledge base in bytes.</p>",
+        "KnowledgeBaseSummary$DocumentCount": "<p>The number of documents in the knowledge base.</p>",
         "PaginationConfiguration$PageSize": "<p>Indicates how many items render in one page.</p>",
         "PluginVisualItemsLimitConfiguration$ItemsLimit": "<p>Determines how many values are be fetched at once.</p>",
         "RowInfo$RowsIngested": "<p>The number of rows that were ingested.</p>",
@@ -10525,6 +10839,14 @@
       "base": null,
       "refs": {
         "LongFormatText$RichText": "<p>Rich text. Examples of rich text include bold, underline, and italics.</p>"
+      }
+    },
+    "LongValue": {
+      "base": null,
+      "refs": {
+        "UserIndexCapacity$totalCapacityBytes": "<p>The total index capacity consumed by the user in bytes.</p>",
+        "UserIndexCapacity$totalKBCapacityBytes": "<p>The total index capacity consumed by the user's knowledge bases in bytes.</p>",
+        "UserIndexCapacity$totalSpaceCapacityBytes": "<p>The total index capacity consumed by the user's spaces in bytes.</p>"
       }
     },
     "Longitude": {
@@ -10613,6 +10935,7 @@
         "ListGroupsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListIAMPolicyAssignmentsForUserRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListIAMPolicyAssignmentsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
+        "ListKnowledgeBasesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListNamespacesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListOAuthClientApplicationsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListRoleMembershipsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
@@ -10633,6 +10956,7 @@
         "SearchDataSourcesRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "SearchFoldersRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "SearchGroupsRequest$MaxResults": "<p>The maximum number of results to return from this request.</p>",
+        "SearchKnowledgeBasesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "SearchTopicsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>"
       }
     },
@@ -10707,6 +11031,12 @@
         "ScatterPlotUnaggregatedFieldWells$Size": "<p>The size field well of a scatter plot.</p>",
         "TableAggregatedFieldWells$Values": "<p>The values field well for a pivot table. Values are aggregated based on group by fields.</p>",
         "WaterfallChartAggregatedFieldWells$Values": "<p>The value field wells of a waterfall visual.</p>"
+      }
+    },
+    "MediaExtractionConfiguration": {
+      "base": "<p>The configuration for media extraction from knowledge base documents.</p>",
+      "refs": {
+        "KnowledgeBase$MediaExtractionConfiguration": "<p>The media extraction configuration for the knowledge base.</p>"
       }
     },
     "MemberIdArnPair": {
@@ -10868,6 +11198,7 @@
         "ListRoleMembershipsRequest$Namespace": "<p>The namespace that includes the role.</p>",
         "ListSelfUpgradesRequest$Namespace": "<p>The Quick namespace for the self-upgrade requests.</p>",
         "ListUserGroupsRequest$Namespace": "<p>The namespace. Currently, you should set this to <code>default</code>.</p>",
+        "ListUsersIndexCapacityRequest$namespace": "<p>The namespace to scope the user search to. Required when the userNameOrEmail filter is present.</p>",
         "ListUsersRequest$Namespace": "<p>The namespace. Currently, you should set this to <code>default</code>.</p>",
         "NamespaceInfoV2$Name": "<p>The name of the error.</p>",
         "RegisterUserRequest$Namespace": "<p>The namespace. Currently, you should set this to <code>default</code>.</p>",
@@ -10991,8 +11322,12 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "ListKnowledgeBasesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListKnowledgeBasesResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListSpacesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListSpacesResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "SearchKnowledgeBasesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "SearchKnowledgeBasesResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "SearchSpacesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "SearchSpacesResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>"
       }
@@ -13015,6 +13350,7 @@
         "DescribeDataSourcePermissionsResponse$Permissions": "<p>A list of resource permissions on the data source.</p>",
         "DescribeFolderPermissionsResponse$Permissions": "<p>Information about the permissions on the folder.</p>",
         "DescribeFolderResolvedPermissionsResponse$Permissions": "<p>Information about the permissions for the folder.</p>",
+        "DescribeKnowledgeBasePermissionsResponse$Permissions": "<p>The resource permissions for the knowledge base.</p>",
         "DescribeSpacePermissionsResponse$Permissions": "<p>A list of resource permissions for the space.</p>",
         "DescribeTopicPermissionsResponse$Permissions": "<p>A list of resource permissions that are configured to the topic.</p>",
         "LinkSharingConfiguration$Permissions": "<p>A structure that contains the permissions of a shareable link.</p>",
@@ -13029,6 +13365,9 @@
         "UpdateFolderPermissionsRequest$GrantPermissions": "<p>The permissions that you want to grant on a resource. Namespace ARNs are not supported <code>Principal</code> values for folder permissions.</p>",
         "UpdateFolderPermissionsRequest$RevokePermissions": "<p>The permissions that you want to revoke from a resource. Namespace ARNs are not supported <code>Principal</code> values for folder permissions.</p>",
         "UpdateFolderPermissionsResponse$Permissions": "<p>Information about the permissions for the folder.</p>",
+        "UpdateKnowledgeBasePermissionsRequest$GrantPermissions": "<p>The resource permissions that you want to grant on the knowledge base.</p>",
+        "UpdateKnowledgeBasePermissionsRequest$RevokePermissions": "<p>The resource permissions that you want to revoke from the knowledge base.</p>",
+        "UpdateKnowledgeBasePermissionsResponse$Permissions": "<p>The resource permissions for the knowledge base.</p>",
         "UpdateSpacePermissionsRequest$GrantPermissions": "<p>The permissions that you want to grant on the space.</p>",
         "UpdateSpacePermissionsRequest$RevokePermissions": "<p>The permissions that you want to revoke from the space.</p>",
         "UpdateSpacePermissionsResponse$permissions": "<p>The updated permissions for the space.</p>",
@@ -13516,6 +13855,14 @@
       "base": null,
       "refs": {}
     },
+    "SearchKnowledgeBasesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchKnowledgeBasesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "SearchSpacesRequest": {
       "base": null,
       "refs": {}
@@ -13803,6 +14150,8 @@
         "DataFieldBarSeriesItem$FieldValue": "<p>Field value of the field that you are setting the series configuration for.</p>",
         "DataFieldComboSeriesItem$FieldValue": "<p>Field value of the field that you are setting the series configuration for.</p>",
         "DataFieldSeriesItem$FieldValue": "<p>The field value of the field that you are setting the axis binding to.</p>",
+        "KnowledgeBase$PrimaryOwnerUsername": "<p>The username of the primary owner of the knowledge base.</p>",
+        "KnowledgeBaseSummary$PrimaryOwnerUsername": "<p>The username of the primary owner of the knowledge base.</p>",
         "SemanticType$TruthyCellValue": "<p>The semantic type truthy cell value.</p>",
         "SemanticType$FalseyCellValue": "<p>The semantic type falsey cell value.</p>",
         "SensitiveStringList$member": null,
@@ -14814,6 +15163,12 @@
         "FieldSort$Direction": "<p>The sort direction. Choose one of the following options:</p> <ul> <li> <p> <code>ASC</code>: Ascending</p> </li> <li> <p> <code>DESC</code>: Descending</p> </li> </ul>"
       }
     },
+    "SortOrder": {
+      "base": null,
+      "refs": {
+        "KnowledgeBaseSortBy$sortOrder": "<p>The sort order (ascending or descending).</p>"
+      }
+    },
     "SourceTable": {
       "base": "<p>A source table that provides initial data from either a physical table or parent dataset.</p>",
       "refs": {
@@ -15149,6 +15504,7 @@
       "base": null,
       "refs": {
         "BatchCreateTopicReviewedAnswerResponse$Status": "<p>The HTTP status of the request.</p>",
+        "BatchDeleteKnowledgeBaseResponse$Status": "<p>The HTTP status of the request.</p>",
         "BatchDeleteTopicReviewedAnswerResponse$Status": "<p>The HTTP status of the request.</p>",
         "CancelIngestionResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateAccountCustomizationResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -15195,6 +15551,7 @@
         "DeleteGroupResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteIAMPolicyAssignmentResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteIdentityPropagationConfigResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DeleteKnowledgeBaseResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteNamespaceResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteOAuthClientApplicationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -15244,6 +15601,8 @@
         "DescribeIngestionResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeIpRestrictionResponse$Status": "<p>The HTTP status of the request. </p>",
         "DescribeKeyRegistrationResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DescribeKnowledgeBasePermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DescribeKnowledgeBaseResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeNamespaceResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeOAuthClientApplicationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeQPersonalizationConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -15291,6 +15650,7 @@
         "ListIAMPolicyAssignmentsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListIdentityPropagationConfigsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListIngestionsResponse$Status": "<p>The HTTP status of the request.</p>",
+        "ListKnowledgeBasesResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListNamespacesResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListOAuthClientApplicationsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListRefreshSchedulesResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -15321,6 +15681,7 @@
         "SearchFlowsOutput$Status": "<p>The HTTP status of the request.</p>",
         "SearchFoldersResponse$Status": "<p>The HTTP status of the request.</p>",
         "SearchGroupsResponse$Status": "<p>The HTTP status of the request.</p>",
+        "SearchKnowledgeBasesResponse$Status": "<p>The HTTP status of the request.</p>",
         "SearchTopicsResponse$Status": "<p>The HTTP status of the request.</p>",
         "StartAssetBundleExportJobResponse$Status": "<p>The HTTP status of the response.</p>",
         "StartAssetBundleImportJobResponse$Status": "<p>The HTTP status of the response.</p>",
@@ -15357,6 +15718,7 @@
         "UpdateIAMPolicyAssignmentResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateIdentityPropagationConfigResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateIpRestrictionResponse$Status": "<p>The HTTP status of the request. </p>",
+        "UpdateKnowledgeBasePermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateOAuthClientApplicationResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdatePublicSharingSettingsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateQPersonalizationConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -15424,6 +15786,9 @@
         "AuthorizedTargetsList$member": null,
         "AxisLabelOptions$CustomLabel": "<p>The text for the axis label.</p>",
         "BatchCreateTopicReviewedAnswerResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "BatchDeleteKnowledgeBaseFailure$ErrorCode": "<p>The error code for the deletion failure.</p>",
+        "BatchDeleteKnowledgeBaseFailure$ErrorMessage": "<p>The error message for the deletion failure.</p>",
+        "BatchDeleteKnowledgeBaseResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "BatchDeleteTopicReviewedAnswerResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CancelIngestionRequest$DataSetId": "<p>The ID of the dataset used in the ingestion.</p>",
         "CancelIngestionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -15515,6 +15880,7 @@
         "DeleteGroupResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteIAMPolicyAssignmentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteIdentityPropagationConfigResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DeleteKnowledgeBaseResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteNamespaceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteOAuthClientApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteRefreshScheduleRequest$ScheduleId": "<p>The ID of the refresh schedule.</p>",
@@ -15577,6 +15943,8 @@
         "DescribeIngestionRequest$DataSetId": "<p>The ID of the dataset used in the ingestion.</p>",
         "DescribeIngestionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeIpRestrictionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeKnowledgeBasePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeKnowledgeBaseResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeNamespaceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeOAuthClientApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeQPersonalizationConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -15659,6 +16027,11 @@
         "InvalidParameterValueException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
         "InvalidRequestException$Message": null,
         "InvalidRequestException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
+        "KnowledgeBase$Type": "<p>The type of the knowledge base.</p>",
+        "KnowledgeBase$PrimaryOwnerArn": "<p>The ARN of the primary owner of the knowledge base.</p>",
+        "KnowledgeBaseSearchFilter$value": "<p>The value to filter on.</p>",
+        "KnowledgeBaseSummary$Type": "<p>The type of the knowledge base.</p>",
+        "KnowledgeBaseSummary$PrimaryOwnerArn": "<p>The ARN of the primary owner of the knowledge base.</p>",
         "LabelOptions$CustomLabel": "<p>The text for the label.</p>",
         "LimitExceededException$Message": null,
         "LimitExceededException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
@@ -15723,6 +16096,7 @@
         "ListIngestionsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListIngestionsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListIngestionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "ListKnowledgeBasesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListNamespacesRequest$NextToken": "<p>A unique pagination token that can be used in a subsequent request. You will receive a pagination token in the response body of a previous <code>ListNameSpaces</code> API call if there is more data that can be returned. To receive the data, make another <code>ListNamespaces</code> API call with the returned token to retrieve the next page of data. Each token is valid for 24 hours. If you try to make a <code>ListNamespaces</code> API call with an expired token, you will receive a <code>HTTP 400 InvalidNextTokenException</code> error.</p>",
         "ListNamespacesResponse$NextToken": "<p>A unique pagination token that can be used in a subsequent request. Receiving <code>NextToken</code> in your response inticates that there is more data that can be returned. To receive the data, make another <code>ListNamespaces</code> API call with the returned token to retrieve the next page of data. Each token is valid for 24 hours. If you try to make a <code>ListNamespaces</code> API call with an expired token, you will receive a <code>HTTP 400 InvalidNextTokenException</code> error.</p>",
         "ListNamespacesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -15765,6 +16139,9 @@
         "ListUserGroupsRequest$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "ListUserGroupsResponse$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "ListUserGroupsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "ListUsersIndexCapacityRequest$nextToken": "<p>The token for the next set of results, received from a previous call.</p>",
+        "ListUsersIndexCapacityResponse$nextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListUsersIndexCapacityResponse$requestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListUsersRequest$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "ListUsersResponse$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "ListUsersResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -15846,6 +16223,7 @@
         "SearchGroupsRequest$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "SearchGroupsResponse$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "SearchGroupsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "SearchKnowledgeBasesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "SearchSpacesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "SearchTopicsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "SearchTopicsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
@@ -15931,6 +16309,7 @@
         "UpdateIAMPolicyAssignmentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateIdentityPropagationConfigResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateIpRestrictionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateKnowledgeBasePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateOAuthClientApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdatePublicSharingSettingsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateQPersonalizationConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -15968,6 +16347,10 @@
         "User$ExternalLoginFederationProviderType": "<p>The type of supported external login provider that provides identity to let the user federate into Quick Sight with an associated IAM role. The type can be one of the following.</p> <ul> <li> <p> <code>COGNITO</code>: Amazon Cognito. The provider URL is cognito-identity.amazonaws.com.</p> </li> <li> <p> <code>CUSTOM_OIDC</code>: Custom OpenID Connect (OIDC) provider.</p> </li> </ul>",
         "User$ExternalLoginFederationProviderUrl": "<p>The URL of the external login provider.</p>",
         "User$ExternalLoginId": "<p>The identity ID for the user in the external login provider.</p>",
+        "UserIndexCapacity$userArn": "<p>The ARN of the user.</p>",
+        "UserIndexCapacity$userName": "<p>The username of the user.</p>",
+        "UserIndexCapacity$email": "<p>The email address of the user.</p>",
+        "UserIndexCapacity$role": "<p>The role of the user.</p>",
         "VPCConnection$VPCId": "<p>The Amazon EC2 VPC ID associated with the VPC connection.</p>",
         "VPCConnection$RoleArn": "<p>The ARN of the IAM role associated with the VPC connection.</p>",
         "VPCConnectionSummary$VPCId": "<p>The Amazon EC2 VPC ID associated with the VPC connection.</p>",
@@ -16943,6 +17326,12 @@
         "GetFlowMetadataOutput$LastUpdatedTime": "<p>The last time this flow was modified.</p>",
         "GetIdentityContextRequest$SessionExpiresAt": "<p>The timestamp at which the session will expire.</p>",
         "Ingestion$CreatedTime": "<p>The time that this ingestion started.</p>",
+        "KnowledgeBase$CreatedAt": "<p>The date and time that the knowledge base was created.</p>",
+        "KnowledgeBase$UpdatedAt": "<p>The date and time that the knowledge base was last updated.</p>",
+        "KnowledgeBaseIngestionSummary$StartTime": "<p>The start time of the ingestion job.</p>",
+        "KnowledgeBaseIngestionSummary$EndTime": "<p>The end time of the ingestion job.</p>",
+        "KnowledgeBaseSummary$CreatedAt": "<p>The date and time that the knowledge base was created.</p>",
+        "KnowledgeBaseSummary$UpdatedAt": "<p>The date and time that the knowledge base was last updated.</p>",
         "OAuthClientApplication$CreatedTime": "<p>The time that the OAuthClientApplication was created.</p>",
         "OAuthClientApplication$LastUpdatedTime": "<p>The time that the OAuthClientApplication was last updated.</p>",
         "OAuthClientApplicationSummary$CreatedTime": "<p>The time that the OAuthClientApplication was created.</p>",
@@ -18130,6 +18519,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateKnowledgeBasePermissionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateKnowledgeBasePermissionsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateLinkPermissionList": {
       "base": null,
       "refs": {
@@ -18385,6 +18782,42 @@
         "GetIdentityContextRequest$UserIdentifier": "<p>The identifier for the user whose identity context you want to retrieve.</p>"
       }
     },
+    "UserIndexCapacity": {
+      "base": "<p>A summary of a user's index capacity consumption.</p>",
+      "refs": {
+        "UserIndexCapacityList$member": null
+      }
+    },
+    "UserIndexCapacityFilter": {
+      "base": "<p>A filter for user index capacity queries. Only one filter type can be specified per request.</p>",
+      "refs": {
+        "UserIndexCapacityFilters$member": null
+      }
+    },
+    "UserIndexCapacityFilters": {
+      "base": null,
+      "refs": {
+        "ListUsersIndexCapacityRequest$filters": "<p>Filters to apply. Only one filter is supported per request. The userNameOrEmail and totalCapacityBytes filters are mutually exclusive.</p>"
+      }
+    },
+    "UserIndexCapacityList": {
+      "base": null,
+      "refs": {
+        "ListUsersIndexCapacityResponse$users": "<p>The list of users with their index capacity metrics.</p>"
+      }
+    },
+    "UserIndexCapacitySortBy": {
+      "base": "<p>The field to sort user index capacity results by.</p>",
+      "refs": {
+        "ListUsersIndexCapacityRequest$sortBy": "<p>The field to sort results by.</p>"
+      }
+    },
+    "UserIndexCapacitySortOrder": {
+      "base": "<p>The sort order for user index capacity results.</p>",
+      "refs": {
+        "ListUsersIndexCapacityRequest$sortOrder": "<p>The sort order for results. Defaults to DESC if not specified.</p>"
+      }
+    },
     "UserList": {
       "base": null,
       "refs": {
@@ -18404,6 +18837,12 @@
         "UpdateUserCustomPermissionRequest$UserName": "<p>The username of the user that you want to update custom permissions for.</p>",
         "UpdateUserRequest$UserName": "<p>The Amazon Quick Sight user name that you want to update.</p>",
         "User$UserName": "<p>The user's user name. This value is required if you are registering a user that will be managed in Quick Sight. In the output, the value for <code>UserName</code> is <code>N/A</code> when the value for <code>IdentityType</code> is <code>IAM</code> and the corresponding IAM user is deleted.</p>"
+      }
+    },
+    "UserNameOrEmailFilter": {
+      "base": "<p>A filter that matches users by username or email prefix.</p>",
+      "refs": {
+        "UserIndexCapacityFilter$userNameOrEmail": "<p>Filter users by username or email prefix.</p>"
       }
     },
     "UserRole": {
@@ -18556,6 +18995,24 @@
       "base": null,
       "refs": {
         "TableCellStyle$VerticalTextAlignment": "<p>The vertical text alignment (top, middle, bottom) for the table cells.</p>"
+      }
+    },
+    "VideoExtractionConfiguration": {
+      "base": "<p>The configuration for video extraction from knowledge base documents.</p>",
+      "refs": {
+        "MediaExtractionConfiguration$videoExtractionConfiguration": "<p>The configuration for video extraction.</p>"
+      }
+    },
+    "VideoExtractionStatus": {
+      "base": null,
+      "refs": {
+        "VideoExtractionConfiguration$videoExtractionStatus": "<p>The status of video extraction. Valid values are ENABLED and DISABLED.</p>"
+      }
+    },
+    "VideoExtractionType": {
+      "base": null,
+      "refs": {
+        "VideoExtractionConfiguration$videoExtractionType": "<p>The type of video extraction to perform.</p>"
       }
     },
     "Visibility": {

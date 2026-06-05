@@ -4667,7 +4667,8 @@
       "type":"structure",
       "required":["S3OutputLocation"],
       "members":{
-        "S3OutputLocation":{"shape":"S3Uri"}
+        "S3OutputLocation":{"shape":"S3Uri"},
+        "MlflowConfig":{"shape":"AIMlflowConfig"}
       }
     },
     "AIBenchmarkOutputResult":{
@@ -4675,7 +4676,8 @@
       "required":["S3OutputLocation"],
       "members":{
         "S3OutputLocation":{"shape":"S3Uri"},
-        "CloudWatchLogs":{"shape":"AICloudWatchLogsList"}
+        "CloudWatchLogs":{"shape":"AICloudWatchLogsList"},
+        "MlflowConfig":{"shape":"AIMlflowConfig"}
       }
     },
     "AIBenchmarkTarget":{
@@ -4741,6 +4743,33 @@
     "AIMlReservationArnList":{
       "type":"list",
       "member":{"shape":"AIMlReservationArn"}
+    },
+    "AIMlflowConfig":{
+      "type":"structure",
+      "required":["MlflowResourceArn"],
+      "members":{
+        "MlflowResourceArn":{"shape":"AIMlflowResourceArn"},
+        "MlflowExperimentName":{"shape":"AIMlflowExperimentName"},
+        "MlflowRunName":{"shape":"AIMlflowRunName"}
+      }
+    },
+    "AIMlflowExperimentName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\-_./]+"
+    },
+    "AIMlflowResourceArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:mlflow-(app|tracking-server)/.*"
+    },
+    "AIMlflowRunName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\-_./]+"
     },
     "AIModelSource":{
       "type":"structure",
@@ -4978,7 +5007,8 @@
       "type":"structure",
       "members":{
         "S3OutputLocation":{"shape":"S3Uri"},
-        "ModelPackageGroupIdentifier":{"shape":"AIResourceIdentifier"}
+        "ModelPackageGroupIdentifier":{"shape":"AIResourceIdentifier"},
+        "MlflowConfig":{"shape":"AIMlflowConfig"}
       }
     },
     "AIRecommendationOutputResult":{
@@ -4986,7 +5016,8 @@
       "required":["S3OutputLocation"],
       "members":{
         "S3OutputLocation":{"shape":"S3Uri"},
-        "ModelPackageGroupIdentifier":{"shape":"AIResourceIdentifier"}
+        "ModelPackageGroupIdentifier":{"shape":"AIResourceIdentifier"},
+        "MlflowConfig":{"shape":"AIMlflowConfig"}
       }
     },
     "AIRecommendationPerformanceMetric":{
