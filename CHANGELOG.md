@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.384.4 - 2026-06-05
 
 * `Aws\QuickSight` - Adds support for Knowledge Base APIs and Index Capacity API
 * `Aws\PaymentCryptography` - Adds CloudFormation support for resource-based policies on AWS Payment Cryptography keys.
