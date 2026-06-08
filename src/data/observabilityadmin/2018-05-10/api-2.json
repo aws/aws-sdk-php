@@ -797,7 +797,8 @@
       "members":{
         "Region":{"shape":"Region"},
         "Account":{"shape":"AccountIdentifier"},
-        "DestinationLogsConfiguration":{"shape":"DestinationLogsConfiguration"}
+        "DestinationLogsConfiguration":{"shape":"DestinationLogsConfiguration"},
+        "DestinationMetricsConfiguration":{"shape":"DestinationMetricsConfiguration"}
       }
     },
     "CentralizationRuleSource":{
@@ -806,7 +807,8 @@
       "members":{
         "Regions":{"shape":"Regions"},
         "Scope":{"shape":"SourceFilterString"},
-        "SourceLogsConfiguration":{"shape":"SourceLogsConfiguration"}
+        "SourceLogsConfiguration":{"shape":"SourceLogsConfiguration"},
+        "SourceMetricsConfiguration":{"shape":"SourceMetricsConfiguration"}
       }
     },
     "CentralizationRuleSummaries":{
@@ -1021,6 +1023,12 @@
         "LogsEncryptionConfiguration":{"shape":"LogsEncryptionConfiguration"},
         "BackupConfiguration":{"shape":"LogsBackupConfiguration"},
         "LogGroupNameConfiguration":{"shape":"LogGroupNameConfiguration"}
+      }
+    },
+    "DestinationMetricsConfiguration":{
+      "type":"structure",
+      "members":{
+        "BackupConfiguration":{"shape":"MetricsBackupConfiguration"}
       }
     },
     "DestinationType":{
@@ -1534,6 +1542,18 @@
       "type":"long",
       "box":true
     },
+    "MetricsBackupConfiguration":{
+      "type":"structure",
+      "required":["Region"],
+      "members":{
+        "Region":{"shape":"Region"}
+      }
+    },
+    "MetricsFilterString":{
+      "type":"string",
+      "max":2000,
+      "min":1
+    },
     "MskEnhancedMonitoringLevel":{
       "type":"string",
       "enum":[
@@ -1773,6 +1793,12 @@
         "LogGroupSelectionCriteria":{"shape":"LogsFilterString"},
         "DataSourceSelectionCriteria":{"shape":"DataSourceFilterString"},
         "EncryptedLogGroupStrategy":{"shape":"EncryptedLogGroupStrategy"}
+      }
+    },
+    "SourceMetricsConfiguration":{
+      "type":"structure",
+      "members":{
+        "MetricsSelectionCriteria":{"shape":"MetricsFilterString"}
       }
     },
     "Sources":{

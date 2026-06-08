@@ -257,6 +257,12 @@
         "dbInstanceClass":{"shape":"String"}
       }
     },
+    "DocumentDbCluster":{
+      "type":"structure",
+      "members":{
+        "costCalculation":{"shape":"ResourceCostCalculation"}
+      }
+    },
     "Double":{
       "type":"double",
       "box":true
@@ -280,6 +286,12 @@
         "monthlyRecurringCost":{"shape":"String"},
         "numberOfCapacityUnitsToPurchase":{"shape":"String"},
         "capacityUnits":{"shape":"String"}
+      }
+    },
+    "DynamoDbTable":{
+      "type":"structure",
+      "members":{
+        "costCalculation":{"shape":"ResourceCostCalculation"}
       }
     },
     "EbsVolume":{
@@ -403,6 +415,12 @@
     "EfficiencyMetricsByGroupList":{
       "type":"list",
       "member":{"shape":"EfficiencyMetricsByGroup"}
+    },
+    "ElastiCacheCluster":{
+      "type":"structure",
+      "members":{
+        "costCalculation":{"shape":"ResourceCostCalculation"}
+      }
     },
     "ElastiCacheReservedInstances":{
       "type":"structure",
@@ -580,7 +598,7 @@
     "ListEfficiencyMetricsRequestMaxResultsInteger":{
       "type":"integer",
       "box":true,
-      "max":100,
+      "max":1000,
       "min":0
     },
     "ListEfficiencyMetricsResponse":{
@@ -674,6 +692,12 @@
         "All",
         "None"
       ]
+    },
+    "MemoryDbCluster":{
+      "type":"structure",
+      "members":{
+        "costCalculation":{"shape":"ResourceCostCalculation"}
+      }
     },
     "MemoryDbReservedInstances":{
       "type":"structure",
@@ -978,7 +1002,13 @@
         "auroraDbClusterStorage":{"shape":"AuroraDbClusterStorage"},
         "dynamoDbReservedCapacity":{"shape":"DynamoDbReservedCapacity"},
         "memoryDbReservedInstances":{"shape":"MemoryDbReservedInstances"},
-        "natGateway":{"shape":"NatGateway"}
+        "natGateway":{"shape":"NatGateway"},
+        "dynamoDbTable":{"shape":"DynamoDbTable"},
+        "elastiCacheCluster":{"shape":"ElastiCacheCluster"},
+        "memoryDbCluster":{"shape":"MemoryDbCluster"},
+        "documentDbCluster":{"shape":"DocumentDbCluster"},
+        "workSpaces":{"shape":"WorkSpaces"},
+        "sageMakerEndpoint":{"shape":"SageMakerEndpoint"}
       },
       "union":true
     },
@@ -1030,7 +1060,13 @@
         "AuroraDbClusterStorage",
         "DynamoDbReservedCapacity",
         "MemoryDbReservedInstances",
-        "NatGateway"
+        "NatGateway",
+        "DynamoDBTable",
+        "ElastiCacheCluster",
+        "MemoryDBCluster",
+        "DocumentDBCluster",
+        "WorkSpaces",
+        "SageMakerEndpoint"
       ]
     },
     "ResourceTypeList":{
@@ -1038,6 +1074,12 @@
       "member":{"shape":"ResourceType"},
       "max":100,
       "min":1
+    },
+    "SageMakerEndpoint":{
+      "type":"structure",
+      "members":{
+        "costCalculation":{"shape":"ResourceCostCalculation"}
+      }
     },
     "SageMakerSavingsPlans":{
       "type":"structure",
@@ -1222,6 +1264,12 @@
         "FieldValidationFailed",
         "Other"
       ]
+    },
+    "WorkSpaces":{
+      "type":"structure",
+      "members":{
+        "costCalculation":{"shape":"ResourceCostCalculation"}
+      }
     }
   }
 }

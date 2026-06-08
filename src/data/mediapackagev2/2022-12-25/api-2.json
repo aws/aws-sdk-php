@@ -841,6 +841,7 @@
         "ProgramInformation":{"shape":"DashProgramInformation"},
         "DvbSettings":{"shape":"DashDvbSettings"},
         "Compactness":{"shape":"DashCompactness"},
+        "AudioTimelinePattern":{"shape":"DashAudioTimelinePattern"},
         "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"},
         "UriPathType":{"shape":"UriPathType"},
         "AvailabilityStartTimeConfiguration":{"shape":"DashAvailabilityStartTimeConfiguration"}
@@ -1118,6 +1119,13 @@
       "member":{"shape":"CustomAdType"},
       "max":25,
       "min":0
+    },
+    "DashAudioTimelinePattern":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "PATTERNED"
+      ]
     },
     "DashAvailabilityStartTimeConfiguration":{
       "type":"structure",
@@ -1712,6 +1720,7 @@
         "ProgramInformation":{"shape":"DashProgramInformation"},
         "DvbSettings":{"shape":"DashDvbSettings"},
         "Compactness":{"shape":"DashCompactness"},
+        "AudioTimelinePattern":{"shape":"DashAudioTimelinePattern"},
         "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"},
         "UriPathType":{"shape":"UriPathType"},
         "AvailabilityStartTimeConfiguration":{"shape":"DashAvailabilityStartTimeConfiguration"}
@@ -2624,7 +2633,9 @@
         "PROVIDER_PROMO",
         "DISTRIBUTOR_PROMO",
         "PROVIDER_AD_BLOCK",
-        "DISTRIBUTOR_AD_BLOCK"
+        "DISTRIBUTOR_AD_BLOCK",
+        "CONTENT_IDENTIFICATION",
+        "CALL_AD_SERVER"
       ]
     },
     "ScteFilterList":{

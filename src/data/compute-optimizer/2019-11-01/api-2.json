@@ -1440,6 +1440,22 @@
         "UtilizationMetricsActiveConnectionCountMaximum",
         "UtilizationMetricsPacketsInFromSourceMaximum",
         "UtilizationMetricsPacketsInFromDestinationMaximum",
+        "UtilizationMetricsConsumedReadCapacityUnitsSum",
+        "UtilizationMetricsConsumedWriteCapacityUnitsSum",
+        "UtilizationMetricsNewConnectionsSum",
+        "UtilizationMetricsEngineCPUUtilizationMaximum",
+        "UtilizationMetricsCacheHitsSum",
+        "UtilizationMetricsCacheMissesSum",
+        "UtilizationMetricsKeyspaceHitsSum",
+        "UtilizationMetricsKeyspaceMissesSum",
+        "UtilizationMetricsIsIdleMinimum",
+        "UtilizationMetricsUserConnectedSum",
+        "UtilizationMetricsInvocationsSum",
+        "UtilizationMetricsGetTypeCmdsSum",
+        "UtilizationMetricsSetTypeCmdsSum",
+        "UtilizationMetricsElastiCacheProcessingUnitsSum",
+        "UtilizationMetricsCurrConnectionsSum",
+        "UtilizationMetricsDatabaseConnectionsSum",
         "Finding",
         "FindingDescription",
         "Tags"
@@ -2161,6 +2177,23 @@
         "False"
       ]
     },
+    "IdleDimension":{
+      "type":"structure",
+      "members":{
+        "key":{"shape":"IdleDimensionKey"},
+        "values":{"shape":"IdleDimensionValues"}
+      }
+    },
+    "IdleDimensionKey":{"type":"string"},
+    "IdleDimensionValue":{"type":"string"},
+    "IdleDimensionValues":{
+      "type":"list",
+      "member":{"shape":"IdleDimensionValue"}
+    },
+    "IdleDimensions":{
+      "type":"list",
+      "member":{"shape":"IdleDimension"}
+    },
     "IdleEstimatedMonthlySavings":{
       "type":"structure",
       "members":{
@@ -2197,7 +2230,23 @@
         "VolumeWriteOpsPerSecond",
         "ActiveConnectionCount",
         "PacketsInFromSource",
-        "PacketsInFromDestination"
+        "PacketsInFromDestination",
+        "ConsumedReadCapacityUnits",
+        "ConsumedWriteCapacityUnits",
+        "ConsumedChangeDataCaptureUnits",
+        "NewConnections",
+        "EngineCPUUtilization",
+        "CacheHits",
+        "CacheMisses",
+        "KeyspaceHits",
+        "KeyspaceMisses",
+        "IsIdle",
+        "UserConnected",
+        "Invocations",
+        "GetTypeCmds",
+        "SetTypeCmds",
+        "ElastiCacheProcessingUnits",
+        "CurrConnections"
       ]
     },
     "IdleRecommendation":{
@@ -2256,7 +2305,13 @@
         "EBSVolume",
         "ECSService",
         "RDSDBInstance",
-        "NatGateway"
+        "NatGateway",
+        "DynamoDBTable",
+        "ElastiCacheCluster",
+        "MemoryDBCluster",
+        "DocumentDBCluster",
+        "WorkSpaces",
+        "SageMakerEndpoint"
       ]
     },
     "IdleRecommendations":{
@@ -2293,7 +2348,8 @@
       "members":{
         "name":{"shape":"IdleMetricName"},
         "statistic":{"shape":"MetricStatistic"},
-        "value":{"shape":"MetricValue"}
+        "value":{"shape":"MetricValue"},
+        "dimensions":{"shape":"IdleDimensions"}
       }
     },
     "IdleUtilizationMetrics":{
@@ -3376,7 +3432,13 @@
         "RdsDBInstance",
         "RdsDBInstanceStorage",
         "AuroraDBClusterStorage",
-        "NatGateway"
+        "NatGateway",
+        "DynamoDBTable",
+        "ElastiCacheCluster",
+        "MemoryDBCluster",
+        "DocumentDBCluster",
+        "WorkSpaces",
+        "SageMakerEndpoint"
       ]
     },
     "RecommendationSources":{
