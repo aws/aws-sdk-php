@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.384.5 - 2026-06-08
 
 * `Aws\TaxSettings` - Adds support for additional tax information fields for Philippines, Belgium, Chile, France, Poland, and Italy in the Tax Settings API.
 * `Aws\Omics` - StartRunBatch API - Add EngineSettings
