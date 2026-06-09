@@ -829,11 +829,10 @@ EOXML;
         array $retrySettings
     )
     {
-        $networkingError = $this->getMockBuilder(RequestException::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getHandlerContext'])
-            ->getMock();
-        $networkingError->method('getHandlerContext')->willReturn([]);
+        $networkingError = new RequestException(
+            'networking error',
+            new Psr7\Request('GET', 'http://www.example.com')
+        );
 
         $retries = $retrySettings['max_attempts'] - 1;
         $client = new S3Client([
@@ -870,11 +869,10 @@ EOXML;
     {
         $this->expectExceptionMessageMatches("/CompleteMultipartUpload/");
         $this->expectException(\Aws\S3\Exception\S3Exception::class);
-        $networkingError = $this->getMockBuilder(RequestException::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getHandlerContext'])
-            ->getMock();
-        $networkingError->method('getHandlerContext')->willReturn([]);
+        $networkingError = new RequestException(
+            'networking error',
+            new Psr7\Request('GET', 'http://www.example.com')
+        );
 
         $retries = $retrySettings['max_attempts'];
         $client = new S3Client([
@@ -910,11 +908,10 @@ EOXML;
     #[DataProvider('clientRetrySettingsProvider')]
     public function testErrorsWithUnparseableBodiesCanBeRetried($retrySettings)
     {
-        $networkingError = $this->getMockBuilder(RequestException::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getHandlerContext'])
-            ->getMock();
-        $networkingError->method('getHandlerContext')->willReturn([]);
+        $networkingError = new RequestException(
+            'networking error',
+            new Psr7\Request('GET', 'http://www.example.com')
+        );
 
         $retries = $retrySettings['max_attempts'];
         $client = new S3Client([

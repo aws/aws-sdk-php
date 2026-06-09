@@ -10,6 +10,7 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Sdk;
+use Aws\Test\CreatesGuzzleExceptionsTrait;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
@@ -24,6 +25,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(InstanceProfileProvider::class)]
 class InstanceProfileProviderTest extends TestCase
 {
+    use CreatesGuzzleExceptionsTrait;
+
     private $originalEnv = [];
     private $tempFiles = [];
     private $capturedUri = null;
@@ -165,7 +168,7 @@ class InstanceProfileProviderTest extends TestCase
                             $request
                         );
                     } else {
-                        $exception = new RequestException(
+                        $exception = self::createRequestException(
                             '401 Unauthorized - Valid unexpired token required',
                             $request,
                             new Response(401)
@@ -257,7 +260,7 @@ class InstanceProfileProviderTest extends TestCase
                         )
                     );
                 } else {
-                    $exception = new RequestException(
+                    $exception = self::createRequestException(
                         '404 Not Found',
                         // Needed for different interfaces in Guzzle V5 & V6
                         new $requestClass(
@@ -377,12 +380,12 @@ class InstanceProfileProviderTest extends TestCase
         $putRequest = new $requestClass('PUT', '/latest/meta-data/foo');
         $throttledResponse = new $responseClass(503);
 
-        $getThrottleException = new RequestException(
+        $getThrottleException = self::createRequestException(
             '503 ThrottlingException',
             $getRequest,
             $throttledResponse
         );
-        $putThrottleException = new RequestException(
+        $putThrottleException = self::createRequestException(
             '503 ThrottlingException',
             $putRequest,
             $throttledResponse
@@ -604,35 +607,35 @@ class InstanceProfileProviderTest extends TestCase
             new Response(200, [], Psr7\Utils::streamFor('{'))
         );
         $rejectionThrottleToken = Promise\Create::rejectionFor([
-            'exception' => new RequestException(
+            'exception' => self::createRequestException(
                 '503 ThrottlingException',
                 $putRequest,
                 new $responseClass(503)
             )
         ]);
         $rejectionProfile = Promise\Create::rejectionFor([
-            'exception' => new RequestException(
+            'exception' => self::createRequestException(
                 '401 Unathorized',
                 $getRequest,
                 new $responseClass(401)
             )
         ]);
         $rejectionThrottleProfile = Promise\Create::rejectionFor([
-            'exception' => new RequestException(
+            'exception' => self::createRequestException(
                 '503 ThrottlingException',
                 $getRequest,
                 new $responseClass(503)
             )
         ]);
         $rejectionCreds = Promise\Create::rejectionFor([
-            'exception' => new RequestException(
+            'exception' => self::createRequestException(
                 '401 Unathorized',
                 $getRequest,
                 new $responseClass(401)
             )
         ]);
         $rejectionThrottleCreds = Promise\Create::rejectionFor([
-            'exception' => new RequestException(
+            'exception' => self::createRequestException(
                 '503 ThrottlingException',
                 $getRequest,
                 new $responseClass(503)
@@ -855,7 +858,7 @@ class InstanceProfileProviderTest extends TestCase
             ) {
                 if ($reqNumber === 1) {
                     return Promise\Create::rejectionFor([
-                        'exception' => new RequestException('404 Not Found',
+                        'exception' => self::createRequestException('404 Not Found',
                             $putRequest,
                             new $responseClass(404)
                         )
@@ -868,7 +871,7 @@ class InstanceProfileProviderTest extends TestCase
             }
             if ($request->getMethod() === 'GET') {
                 return Promise\Create::rejectionFor([
-                    'exception' => new RequestException(
+                    'exception' => self::createRequestException(
                         '401 Unauthorized - Valid unexpired token required',
                         $getRequest,
                         new $responseClass(401)
@@ -1150,14 +1153,14 @@ class InstanceProfileProviderTest extends TestCase
         $putRequest = new $requestClass('PUT', '/latest/meta-data/foo');
 
         $profileRejection500 = Promise\Create::rejectionFor([
-            'exception' => new RequestException(
+            'exception' => self::createRequestException(
                 '500 internal server error',
                 $putRequest,
                 new $responseClass(500)
             )
         ]);
         $credsRejection500 = Promise\Create::rejectionFor([
-            'exception' => new RequestException(
+            'exception' => self::createRequestException(
                 '500 internal server error',
                 $getRequest,
                 new $responseClass(500)
@@ -1338,14 +1341,14 @@ class InstanceProfileProviderTest extends TestCase
         $mockHandler = function (RequestInterface $request) use (&$firstTokenTry, $mockToken, $TOKEN_HEADER_KEY) {
             $fnRejectionTokenNotProvided = function () use ($mockToken, $TOKEN_HEADER_KEY, $request) {
                 return Promise\Create::rejectionFor(
-                    ['exception' => new RequestException("Token with value $mockToken is expected as header $TOKEN_HEADER_KEY", $request, new Response(400))]
+                    ['exception' => self::createRequestException("Token with value $mockToken is expected as header $TOKEN_HEADER_KEY", $request, new Response(400))]
                 );
             };
             if ($request->getMethod() === 'PUT' && $request->getUri()->getPath() === '/latest/api/token') {
                 if ($firstTokenTry) {
                     $firstTokenTry = false;
 
-                    return Promise\Create::rejectionFor(['exception' => new RequestException("Unexpected error!", $request, new Response(401))]);
+                    return Promise\Create::rejectionFor(['exception' => self::createRequestException("Unexpected error!", $request, new Response(401))]);
                 } else {
                     return Promise\Create::promiseFor(new Response(200, [], Psr7\Utils::streamFor($mockToken)));
                 }
