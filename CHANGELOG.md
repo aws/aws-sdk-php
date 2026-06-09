@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.384.6 - 2026-06-09
 
 * `Aws\IoTSiteWise` - Adding new BDD representation of endpoint ruleset
 * `Aws\Outposts` - Added AWS Outposts APIs for self-service Outposts quoting and ordering. New operations include CreateQuote, GetQuote, UpdateQuote, DeleteQuote, ListQuotes, and ListOrderableInstanceTypes.
