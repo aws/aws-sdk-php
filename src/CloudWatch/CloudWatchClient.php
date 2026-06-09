@@ -6,6 +6,8 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with the **Amazon CloudWatch** service.
  *
+ * @method \Aws\Result associateDatasetKmsKey(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise associateDatasetKmsKeyAsync(array $args = [])
  * @method \Aws\Result deleteAlarmMuteRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAlarmMuteRuleAsync(array $args = [])
  * @method \Aws\Result deleteAlarms(array $args = [])
@@ -34,6 +36,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise disableAlarmActionsAsync(array $args = [])
  * @method \Aws\Result disableInsightRules(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disableInsightRulesAsync(array $args = [])
+ * @method \Aws\Result disassociateDatasetKmsKey(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateDatasetKmsKeyAsync(array $args = [])
  * @method \Aws\Result enableAlarmActions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise enableAlarmActionsAsync(array $args = [])
  * @method \Aws\Result enableInsightRules(array $args = [])
@@ -42,6 +46,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getAlarmMuteRuleAsync(array $args = [])
  * @method \Aws\Result getDashboard(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDashboardAsync(array $args = [])
+ * @method \Aws\Result getDataset(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getDatasetAsync(array $args = [])
  * @method \Aws\Result getInsightRuleReport(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getInsightRuleReportAsync(array $args = [])
  * @method \Aws\Result getMetricData(array $args = [])

@@ -49,6 +49,61 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "CreateAutonomousDatabase":{
+      "name":"CreateAutonomousDatabase",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateAutonomousDatabaseInput"},
+      "output":{"shape":"CreateAutonomousDatabaseOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "CreateAutonomousDatabaseBackup":{
+      "name":"CreateAutonomousDatabaseBackup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateAutonomousDatabaseBackupInput"},
+      "output":{"shape":"CreateAutonomousDatabaseBackupOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "CreateAutonomousDatabaseWallet":{
+      "name":"CreateAutonomousDatabaseWallet",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateAutonomousDatabaseWalletInput"},
+      "output":{"shape":"CreateAutonomousDatabaseWalletOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "CreateCloudAutonomousVmCluster":{
       "name":"CreateCloudAutonomousVmCluster",
       "http":{
@@ -131,6 +186,42 @@
       },
       "input":{"shape":"CreateOdbPeeringConnectionInput"},
       "output":{"shape":"CreateOdbPeeringConnectionOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteAutonomousDatabase":{
+      "name":"DeleteAutonomousDatabase",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteAutonomousDatabaseInput"},
+      "output":{"shape":"DeleteAutonomousDatabaseOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteAutonomousDatabaseBackup":{
+      "name":"DeleteAutonomousDatabaseBackup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteAutonomousDatabaseBackupInput"},
+      "output":{"shape":"DeleteAutonomousDatabaseBackupOutput"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -243,6 +334,74 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "FailoverAutonomousDatabase":{
+      "name":"FailoverAutonomousDatabase",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"FailoverAutonomousDatabaseInput"},
+      "output":{"shape":"FailoverAutonomousDatabaseOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetAutonomousDatabase":{
+      "name":"GetAutonomousDatabase",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAutonomousDatabaseInput"},
+      "output":{"shape":"GetAutonomousDatabaseOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "GetAutonomousDatabaseBackup":{
+      "name":"GetAutonomousDatabaseBackup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAutonomousDatabaseBackupInput"},
+      "output":{"shape":"GetAutonomousDatabaseBackupOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "GetAutonomousDatabaseWalletDetails":{
+      "name":"GetAutonomousDatabaseWalletDetails",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAutonomousDatabaseWalletDetailsInput"},
+      "output":{"shape":"GetAutonomousDatabaseWalletDetailsOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
     },
     "GetCloudAutonomousVmCluster":{
       "name":"GetCloudAutonomousVmCluster",
@@ -411,6 +570,105 @@
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
+    },
+    "ListAutonomousDatabaseBackups":{
+      "name":"ListAutonomousDatabaseBackups",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAutonomousDatabaseBackupsInput"},
+      "output":{"shape":"ListAutonomousDatabaseBackupsOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListAutonomousDatabaseCharacterSets":{
+      "name":"ListAutonomousDatabaseCharacterSets",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAutonomousDatabaseCharacterSetsInput"},
+      "output":{"shape":"ListAutonomousDatabaseCharacterSetsOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListAutonomousDatabaseClones":{
+      "name":"ListAutonomousDatabaseClones",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAutonomousDatabaseClonesInput"},
+      "output":{"shape":"ListAutonomousDatabaseClonesOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListAutonomousDatabasePeers":{
+      "name":"ListAutonomousDatabasePeers",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAutonomousDatabasePeersInput"},
+      "output":{"shape":"ListAutonomousDatabasePeersOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListAutonomousDatabaseVersions":{
+      "name":"ListAutonomousDatabaseVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAutonomousDatabaseVersionsInput"},
+      "output":{"shape":"ListAutonomousDatabaseVersionsOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
+    "ListAutonomousDatabases":{
+      "name":"ListAutonomousDatabases",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAutonomousDatabasesInput"},
+      "output":{"shape":"ListAutonomousDatabasesOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
     },
     "ListAutonomousVirtualMachines":{
       "name":"ListAutonomousVirtualMachines",
@@ -608,6 +866,23 @@
       ],
       "readonly":true
     },
+    "RebootAutonomousDatabase":{
+      "name":"RebootAutonomousDatabase",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RebootAutonomousDatabaseInput"},
+      "output":{"shape":"RebootAutonomousDatabaseOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "RebootDbNode":{
       "name":"RebootDbNode",
       "http":{
@@ -619,6 +894,57 @@
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "RestoreAutonomousDatabase":{
+      "name":"RestoreAutonomousDatabase",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RestoreAutonomousDatabaseInput"},
+      "output":{"shape":"RestoreAutonomousDatabaseOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "ShrinkAutonomousDatabase":{
+      "name":"ShrinkAutonomousDatabase",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ShrinkAutonomousDatabaseInput"},
+      "output":{"shape":"ShrinkAutonomousDatabaseOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "StartAutonomousDatabase":{
+      "name":"StartAutonomousDatabase",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartAutonomousDatabaseInput"},
+      "output":{"shape":"StartAutonomousDatabaseOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
@@ -640,6 +966,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "StopAutonomousDatabase":{
+      "name":"StopAutonomousDatabase",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopAutonomousDatabaseInput"},
+      "output":{"shape":"StopAutonomousDatabaseOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "StopDbNode":{
       "name":"StopDbNode",
       "http":{
@@ -651,6 +994,23 @@
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "SwitchoverAutonomousDatabase":{
+      "name":"SwitchoverAutonomousDatabase",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SwitchoverAutonomousDatabaseInput"},
+      "output":{"shape":"SwitchoverAutonomousDatabaseOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
@@ -682,6 +1042,40 @@
         {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
+    },
+    "UpdateAutonomousDatabase":{
+      "name":"UpdateAutonomousDatabase",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateAutonomousDatabaseInput"},
+      "output":{"shape":"UpdateAutonomousDatabaseOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "UpdateAutonomousDatabaseBackup":{
+      "name":"UpdateAutonomousDatabaseBackup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateAutonomousDatabaseBackupInput"},
+      "output":{"shape":"UpdateAutonomousDatabaseBackupOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
     },
     "UpdateCloudExadataInfrastructure":{
       "name":"UpdateCloudExadataInfrastructure",
@@ -762,6 +1156,11 @@
       },
       "exception":true
     },
+    "Arn":{
+      "type":"string",
+      "max":2048,
+      "min":20
+    },
     "AssociateIamRoleToResourceInput":{
       "type":"structure",
       "required":[
@@ -779,11 +1178,415 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso-[a-z]?|aws-iso):odb:[a-z0-9-]+:\\d{12}:(?:cloud-vm-cluster|cloud-autonomous-vm-cluster)/[a-z0-9-_]+"
+      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso-[a-z]?|aws-iso):odb:[a-z0-9-]+:\\d{12}:(?:cloud-vm-cluster|cloud-autonomous-vm-cluster|exadb-vm-cluster)/[a-z0-9-_]+"
     },
     "AssociateIamRoleToResourceOutput":{
       "type":"structure",
       "members":{}
+    },
+    "AutonomousDatabase":{
+      "type":"structure",
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"},
+        "autonomousDatabaseArn":{"shape":"ResourceArn"},
+        "ociResourceAnchorName":{"shape":"String"},
+        "percentProgress":{"shape":"Float"},
+        "ocid":{"shape":"String"},
+        "ociUrl":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "dbName":{"shape":"String"},
+        "sourceId":{"shape":"String"},
+        "status":{"shape":"AutonomousDatabaseResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "databaseType":{"shape":"DatabaseType"},
+        "dbVersion":{"shape":"String"},
+        "dbWorkload":{"shape":"DbWorkload"},
+        "characterSet":{"shape":"String"},
+        "ncharacterSet":{"shape":"String"},
+        "databaseEdition":{"shape":"DatabaseEdition"},
+        "licenseModel":{"shape":"LicenseModel"},
+        "openMode":{"shape":"OpenMode"},
+        "permissionLevel":{"shape":"PermissionLevel"},
+        "isMtlsConnectionRequired":{"shape":"Boolean"},
+        "autonomousMaintenanceScheduleType":{"shape":"AutonomousMaintenanceScheduleType"},
+        "netServicesArchitecture":{"shape":"NetServicesArchitecture"},
+        "availableUpgradeVersions":{"shape":"StringList"},
+        "byolComputeCountLimit":{"shape":"Integer"},
+        "connectionStringDetails":{"shape":"AutonomousDatabaseConnectionStrings"},
+        "serviceConsoleUrl":{"shape":"String"},
+        "sqlWebDeveloperUrl":{"shape":"String"},
+        "customerContacts":{"shape":"CustomerContacts"},
+        "apexDetails":{"shape":"AutonomousDatabaseApex"},
+        "standbyDb":{"shape":"DatabaseStandbySummary"},
+        "localStandbyDb":{"shape":"DatabaseStandbySummary"},
+        "dataSafeStatus":{"shape":"DataSafeStatus"},
+        "databaseManagementStatus":{"shape":"DatabaseManagementStatus"},
+        "operationsInsightsStatus":{"shape":"OperationsInsightsStatus"},
+        "availabilityZone":{"shape":"String"},
+        "availabilityZoneId":{"shape":"String"},
+        "maintenanceTargetComponent":{"shape":"String"},
+        "connectionUrls":{"shape":"AutonomousDatabaseConnectionUrls"},
+        "dbToolsDetails":{"shape":"DatabaseToolList"},
+        "scheduledOperations":{"shape":"ScheduledOperationDetailsList"},
+        "resourcePoolLeaderId":{"shape":"String"},
+        "computeCount":{"shape":"Float"},
+        "computeModel":{"shape":"ComputeModel"},
+        "cpuCoreCount":{"shape":"Integer"},
+        "memoryPerOracleComputeUnitInGBs":{"shape":"Integer"},
+        "provisionableCpus":{"shape":"IntegerList"},
+        "isAutoScalingEnabled":{"shape":"Boolean"},
+        "dataStorageSizeInTBs":{"shape":"Double"},
+        "dataStorageSizeInGBs":{"shape":"Integer"},
+        "usedDataStorageSizeInTBs":{"shape":"Double"},
+        "usedDataStorageSizeInGBs":{"shape":"Integer"},
+        "actualUsedDataStorageSizeInTBs":{"shape":"Double"},
+        "allocatedStorageSizeInTBs":{"shape":"Double"},
+        "inMemoryAreaInGBs":{"shape":"Integer"},
+        "isAutoScalingForStorageEnabled":{"shape":"Boolean"},
+        "odbNetworkId":{"shape":"ResourceId"},
+        "odbNetworkArn":{"shape":"ResourceArn"},
+        "privateEndpoint":{"shape":"String"},
+        "privateEndpointIp":{"shape":"String"},
+        "privateEndpointLabel":{"shape":"String"},
+        "allowlistedIps":{"shape":"StringList"},
+        "standbyAllowlistedIps":{"shape":"StringList"},
+        "standbyAllowlistedIpsSource":{"shape":"StandbyAllowlistedIpsSource"},
+        "isLocalDataGuardEnabled":{"shape":"Boolean"},
+        "isRemoteDataGuardEnabled":{"shape":"Boolean"},
+        "localDisasterRecoveryType":{"shape":"DisasterRecoveryType"},
+        "role":{"shape":"DataGuardRole"},
+        "peerDbIds":{"shape":"StringList"},
+        "failedDataRecoveryInSeconds":{"shape":"Integer"},
+        "localAdgAutoFailoverMaxDataLossLimit":{"shape":"Integer"},
+        "remoteDisasterRecoveryConfiguration":{"shape":"DisasterRecoveryConfiguration"},
+        "isRefreshableClone":{"shape":"Boolean"},
+        "refreshableMode":{"shape":"RefreshableMode"},
+        "refreshableStatus":{"shape":"RefreshableStatus"},
+        "autoRefreshFrequencyInSeconds":{"shape":"Integer"},
+        "autoRefreshPointLagInSeconds":{"shape":"Integer"},
+        "isReconnectCloneEnabled":{"shape":"Boolean"},
+        "cloneTableSpaceList":{"shape":"IntegerList"},
+        "backupRetentionPeriodInDays":{"shape":"Integer"},
+        "longTermBackupSchedule":{"shape":"LongTermBackupSchedule"},
+        "isBackupRetentionLocked":{"shape":"Boolean"},
+        "totalBackupStorageSizeInGBs":{"shape":"Double"},
+        "resourcePoolSummary":{"shape":"ResourcePoolSummary"},
+        "encryptionSummary":{"shape":"EncryptionSummary"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "timeOfLastBackup":{"shape":"SyntheticTimestamp_date_time"},
+        "timeMaintenanceBegin":{"shape":"SyntheticTimestamp_date_time"},
+        "timeMaintenanceEnd":{"shape":"SyntheticTimestamp_date_time"},
+        "timeLocalDataGuardEnabled":{"shape":"SyntheticTimestamp_date_time"},
+        "timeDataGuardRoleChanged":{"shape":"SyntheticTimestamp_date_time"},
+        "timeOfLastSwitchover":{"shape":"SyntheticTimestamp_date_time"},
+        "timeOfLastFailover":{"shape":"SyntheticTimestamp_date_time"},
+        "timeOfLastRefresh":{"shape":"SyntheticTimestamp_date_time"},
+        "timeOfLastRefreshPoint":{"shape":"SyntheticTimestamp_date_time"},
+        "timeOfNextRefresh":{"shape":"SyntheticTimestamp_date_time"},
+        "timeOfAutoRefreshStart":{"shape":"SyntheticTimestamp_date_time"},
+        "timeDeletionOfFreeAutonomousDatabase":{"shape":"SyntheticTimestamp_date_time"},
+        "timeReclamationOfFreeAutonomousDatabase":{"shape":"SyntheticTimestamp_date_time"},
+        "timeDisasterRecoveryRoleChanged":{"shape":"SyntheticTimestamp_date_time"},
+        "timeUntilReconnectCloneEnabled":{"shape":"SyntheticTimestamp_date_time"},
+        "nextLongTermBackupTimeStamp":{"shape":"SyntheticTimestamp_date_time"},
+        "timeUndeleted":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "AutonomousDatabaseApex":{
+      "type":"structure",
+      "members":{
+        "apexVersion":{"shape":"String"},
+        "ordsVersion":{"shape":"String"}
+      }
+    },
+    "AutonomousDatabaseBackup":{
+      "type":"structure",
+      "members":{
+        "autonomousDatabaseBackupId":{"shape":"ResourceId"},
+        "autonomousDatabaseBackupArn":{"shape":"ResourceArn"},
+        "autonomousDatabaseId":{"shape":"ResourceId"},
+        "ocid":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "dbVersion":{"shape":"String"},
+        "status":{"shape":"AutonomousDatabaseBackupStatus"},
+        "statusReason":{"shape":"String"},
+        "isAutomatic":{"shape":"Boolean"},
+        "retentionPeriodInDays":{"shape":"Integer"},
+        "sizeInTBs":{"shape":"Double"},
+        "timeAvailableTill":{"shape":"SyntheticTimestamp_date_time"},
+        "timeStarted":{"shape":"SyntheticTimestamp_date_time"},
+        "timeEnded":{"shape":"SyntheticTimestamp_date_time"},
+        "type":{"shape":"AutonomousDatabaseBackupType"}
+      }
+    },
+    "AutonomousDatabaseBackupList":{
+      "type":"list",
+      "member":{"shape":"AutonomousDatabaseBackupSummary"}
+    },
+    "AutonomousDatabaseBackupStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "CREATING",
+        "UPDATING",
+        "DELETING",
+        "FAILED"
+      ]
+    },
+    "AutonomousDatabaseBackupSummary":{
+      "type":"structure",
+      "members":{
+        "autonomousDatabaseBackupId":{"shape":"ResourceId"},
+        "autonomousDatabaseBackupArn":{"shape":"ResourceArn"},
+        "autonomousDatabaseId":{"shape":"ResourceId"},
+        "ocid":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "dbVersion":{"shape":"String"},
+        "status":{"shape":"AutonomousDatabaseBackupStatus"},
+        "statusReason":{"shape":"String"},
+        "isAutomatic":{"shape":"Boolean"},
+        "retentionPeriodInDays":{"shape":"Integer"},
+        "sizeInTBs":{"shape":"Double"},
+        "timeAvailableTill":{"shape":"SyntheticTimestamp_date_time"},
+        "timeStarted":{"shape":"SyntheticTimestamp_date_time"},
+        "timeEnded":{"shape":"SyntheticTimestamp_date_time"},
+        "type":{"shape":"AutonomousDatabaseBackupType"}
+      }
+    },
+    "AutonomousDatabaseBackupType":{
+      "type":"string",
+      "enum":[
+        "INCREMENTAL",
+        "FULL",
+        "LONGTERM",
+        "VIRTUAL_FULL",
+        "CUMULATIVE_INCREMENTAL",
+        "ROLL_FORWARD_IMAGE_COPY"
+      ]
+    },
+    "AutonomousDatabaseCharacterSetList":{
+      "type":"list",
+      "member":{"shape":"AutonomousDatabaseCharacterSetSummary"}
+    },
+    "AutonomousDatabaseCharacterSetSummary":{
+      "type":"structure",
+      "members":{
+        "characterSet":{"shape":"String"}
+      }
+    },
+    "AutonomousDatabaseConnectionStrings":{
+      "type":"structure",
+      "members":{
+        "allConnectionStrings":{"shape":"DatabaseConnectionStringMap"},
+        "dedicated":{"shape":"String"},
+        "high":{"shape":"String"},
+        "medium":{"shape":"String"},
+        "low":{"shape":"String"},
+        "profiles":{"shape":"DatabaseConnectionStringProfileList"}
+      }
+    },
+    "AutonomousDatabaseConnectionUrls":{
+      "type":"structure",
+      "members":{
+        "apexUrl":{"shape":"String"},
+        "databaseTransformsUrl":{"shape":"String"},
+        "graphStudioUrl":{"shape":"String"},
+        "machineLearningNotebookUrl":{"shape":"String"},
+        "machineLearningUserManagementUrl":{"shape":"String"},
+        "mongoDbUrl":{"shape":"String"},
+        "ordsUrl":{"shape":"String"},
+        "spatialStudioUrl":{"shape":"String"},
+        "sqlDevWebUrl":{"shape":"String"}
+      }
+    },
+    "AutonomousDatabaseList":{
+      "type":"list",
+      "member":{"shape":"AutonomousDatabaseSummary"}
+    },
+    "AutonomousDatabasePeerList":{
+      "type":"list",
+      "member":{"shape":"AutonomousDatabasePeerSummary"}
+    },
+    "AutonomousDatabasePeerSummary":{
+      "type":"structure",
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceId"},
+        "autonomousDatabaseArn":{"shape":"ResourceArn"},
+        "ocid":{"shape":"String"},
+        "region":{"shape":"String"}
+      }
+    },
+    "AutonomousDatabaseResourceStatus":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "FAILED",
+        "PROVISIONING",
+        "TERMINATED",
+        "TERMINATING",
+        "UPDATING",
+        "MAINTENANCE_IN_PROGRESS",
+        "STOPPING",
+        "STOPPED",
+        "STARTING",
+        "UNAVAILABLE",
+        "RESTORE_IN_PROGRESS",
+        "RESTORE_FAILED",
+        "BACKUP_IN_PROGRESS",
+        "SCALE_IN_PROGRESS",
+        "AVAILABLE_NEEDS_ATTENTION",
+        "RESTARTING",
+        "RECREATING",
+        "ROLE_CHANGE_IN_PROGRESS",
+        "UPGRADING",
+        "INACCESSIBLE",
+        "STANDBY"
+      ]
+    },
+    "AutonomousDatabaseSummary":{
+      "type":"structure",
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"},
+        "autonomousDatabaseArn":{"shape":"ResourceArn"},
+        "ociResourceAnchorName":{"shape":"String"},
+        "percentProgress":{"shape":"Float"},
+        "ocid":{"shape":"String"},
+        "ociUrl":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "dbName":{"shape":"String"},
+        "sourceId":{"shape":"String"},
+        "status":{"shape":"AutonomousDatabaseResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "databaseType":{"shape":"DatabaseType"},
+        "dbVersion":{"shape":"String"},
+        "dbWorkload":{"shape":"DbWorkload"},
+        "characterSet":{"shape":"String"},
+        "ncharacterSet":{"shape":"String"},
+        "databaseEdition":{"shape":"DatabaseEdition"},
+        "licenseModel":{"shape":"LicenseModel"},
+        "openMode":{"shape":"OpenMode"},
+        "permissionLevel":{"shape":"PermissionLevel"},
+        "isMtlsConnectionRequired":{"shape":"Boolean"},
+        "autonomousMaintenanceScheduleType":{"shape":"AutonomousMaintenanceScheduleType"},
+        "netServicesArchitecture":{"shape":"NetServicesArchitecture"},
+        "availableUpgradeVersions":{"shape":"StringList"},
+        "byolComputeCountLimit":{"shape":"Integer"},
+        "connectionStringDetails":{"shape":"AutonomousDatabaseConnectionStrings"},
+        "serviceConsoleUrl":{"shape":"String"},
+        "sqlWebDeveloperUrl":{"shape":"String"},
+        "customerContacts":{"shape":"CustomerContacts"},
+        "apexDetails":{"shape":"AutonomousDatabaseApex"},
+        "standbyDb":{"shape":"DatabaseStandbySummary"},
+        "localStandbyDb":{"shape":"DatabaseStandbySummary"},
+        "dataSafeStatus":{"shape":"DataSafeStatus"},
+        "databaseManagementStatus":{"shape":"DatabaseManagementStatus"},
+        "operationsInsightsStatus":{"shape":"OperationsInsightsStatus"},
+        "availabilityZone":{"shape":"String"},
+        "availabilityZoneId":{"shape":"String"},
+        "maintenanceTargetComponent":{"shape":"String"},
+        "connectionUrls":{"shape":"AutonomousDatabaseConnectionUrls"},
+        "dbToolsDetails":{"shape":"DatabaseToolList"},
+        "scheduledOperations":{"shape":"ScheduledOperationDetailsList"},
+        "resourcePoolLeaderId":{"shape":"String"},
+        "computeCount":{"shape":"Float"},
+        "computeModel":{"shape":"ComputeModel"},
+        "cpuCoreCount":{"shape":"Integer"},
+        "memoryPerOracleComputeUnitInGBs":{"shape":"Integer"},
+        "provisionableCpus":{"shape":"IntegerList"},
+        "isAutoScalingEnabled":{"shape":"Boolean"},
+        "dataStorageSizeInTBs":{"shape":"Double"},
+        "dataStorageSizeInGBs":{"shape":"Integer"},
+        "usedDataStorageSizeInTBs":{"shape":"Double"},
+        "usedDataStorageSizeInGBs":{"shape":"Integer"},
+        "actualUsedDataStorageSizeInTBs":{"shape":"Double"},
+        "allocatedStorageSizeInTBs":{"shape":"Double"},
+        "inMemoryAreaInGBs":{"shape":"Integer"},
+        "isAutoScalingForStorageEnabled":{"shape":"Boolean"},
+        "odbNetworkId":{"shape":"ResourceId"},
+        "odbNetworkArn":{"shape":"ResourceArn"},
+        "privateEndpoint":{"shape":"String"},
+        "privateEndpointIp":{"shape":"String"},
+        "privateEndpointLabel":{"shape":"String"},
+        "allowlistedIps":{"shape":"StringList"},
+        "standbyAllowlistedIps":{"shape":"StringList"},
+        "standbyAllowlistedIpsSource":{"shape":"StandbyAllowlistedIpsSource"},
+        "isLocalDataGuardEnabled":{"shape":"Boolean"},
+        "isRemoteDataGuardEnabled":{"shape":"Boolean"},
+        "localDisasterRecoveryType":{"shape":"DisasterRecoveryType"},
+        "role":{"shape":"DataGuardRole"},
+        "peerDbIds":{"shape":"StringList"},
+        "failedDataRecoveryInSeconds":{"shape":"Integer"},
+        "localAdgAutoFailoverMaxDataLossLimit":{"shape":"Integer"},
+        "remoteDisasterRecoveryConfiguration":{"shape":"DisasterRecoveryConfiguration"},
+        "isRefreshableClone":{"shape":"Boolean"},
+        "refreshableMode":{"shape":"RefreshableMode"},
+        "refreshableStatus":{"shape":"RefreshableStatus"},
+        "autoRefreshFrequencyInSeconds":{"shape":"Integer"},
+        "autoRefreshPointLagInSeconds":{"shape":"Integer"},
+        "isReconnectCloneEnabled":{"shape":"Boolean"},
+        "cloneTableSpaceList":{"shape":"IntegerList"},
+        "backupRetentionPeriodInDays":{"shape":"Integer"},
+        "longTermBackupSchedule":{"shape":"LongTermBackupSchedule"},
+        "isBackupRetentionLocked":{"shape":"Boolean"},
+        "totalBackupStorageSizeInGBs":{"shape":"Double"},
+        "resourcePoolSummary":{"shape":"ResourcePoolSummary"},
+        "encryptionSummary":{"shape":"EncryptionSummary"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "timeOfLastBackup":{"shape":"SyntheticTimestamp_date_time"},
+        "timeMaintenanceBegin":{"shape":"SyntheticTimestamp_date_time"},
+        "timeMaintenanceEnd":{"shape":"SyntheticTimestamp_date_time"},
+        "timeLocalDataGuardEnabled":{"shape":"SyntheticTimestamp_date_time"},
+        "timeDataGuardRoleChanged":{"shape":"SyntheticTimestamp_date_time"},
+        "timeOfLastSwitchover":{"shape":"SyntheticTimestamp_date_time"},
+        "timeOfLastFailover":{"shape":"SyntheticTimestamp_date_time"},
+        "timeOfLastRefresh":{"shape":"SyntheticTimestamp_date_time"},
+        "timeOfLastRefreshPoint":{"shape":"SyntheticTimestamp_date_time"},
+        "timeOfNextRefresh":{"shape":"SyntheticTimestamp_date_time"},
+        "timeOfAutoRefreshStart":{"shape":"SyntheticTimestamp_date_time"},
+        "timeDeletionOfFreeAutonomousDatabase":{"shape":"SyntheticTimestamp_date_time"},
+        "timeReclamationOfFreeAutonomousDatabase":{"shape":"SyntheticTimestamp_date_time"},
+        "timeDisasterRecoveryRoleChanged":{"shape":"SyntheticTimestamp_date_time"},
+        "timeUntilReconnectCloneEnabled":{"shape":"SyntheticTimestamp_date_time"},
+        "nextLongTermBackupTimeStamp":{"shape":"SyntheticTimestamp_date_time"},
+        "timeUndeleted":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "AutonomousDatabaseVersionList":{
+      "type":"list",
+      "member":{"shape":"AutonomousDatabaseVersionSummary"}
+    },
+    "AutonomousDatabaseVersionSummary":{
+      "type":"structure",
+      "members":{
+        "dbWorkload":{"shape":"DbWorkload"},
+        "details":{"shape":"String"},
+        "version":{"shape":"String"}
+      }
+    },
+    "AutonomousDatabaseWalletDetails":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"AutonomousDatabaseWalletStatus"},
+        "timeRotated":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "AutonomousDatabaseWalletFile":{
+      "type":"blob",
+      "sensitive":true
+    },
+    "AutonomousDatabaseWalletStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "UPDATING"
+      ]
+    },
+    "AutonomousMaintenanceScheduleType":{
+      "type":"string",
+      "enum":[
+        "EARLY",
+        "REGULAR"
+      ]
     },
     "AutonomousVirtualMachineList":{
       "type":"list",
@@ -807,9 +1610,58 @@
         "ociResourceAnchorName":{"shape":"String"}
       }
     },
+    "AwsEncryptionKeyConfiguration":{
+      "type":"structure",
+      "members":{
+        "iamRoleArn":{"shape":"RoleArn"},
+        "externalIdType":{"shape":"ExternalIdType"},
+        "kmsKeyId":{"shape":"KmsKeyIdOrArn"}
+      }
+    },
+    "AwsEncryptionKeyConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "iamRoleArn":{"shape":"RoleArn"},
+        "externalIdType":{"shape":"ExternalIdType"},
+        "kmsKeyId":{"shape":"KmsKeyIdOrArn"}
+      }
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
+    },
+    "CloneToRefreshableConfiguration":{
+      "type":"structure",
+      "required":["sourceAutonomousDatabaseId"],
+      "members":{
+        "sourceAutonomousDatabaseId":{"shape":"ResourceIdOrArn"},
+        "refreshableMode":{"shape":"RefreshableMode"},
+        "autoRefreshFrequencyInSeconds":{"shape":"CloneToRefreshableConfigurationAutoRefreshFrequencyInSecondsInteger"},
+        "autoRefreshPointLagInSeconds":{"shape":"CloneToRefreshableConfigurationAutoRefreshPointLagInSecondsInteger"},
+        "timeOfAutoRefreshStart":{"shape":"SyntheticTimestamp_date_time"},
+        "openMode":{"shape":"OpenMode"},
+        "cloneType":{"shape":"CloneType"}
+      }
+    },
+    "CloneToRefreshableConfigurationAutoRefreshFrequencyInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":604800,
+      "min":3600
+    },
+    "CloneToRefreshableConfigurationAutoRefreshPointLagInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":604800,
+      "min":0
+    },
+    "CloneType":{
+      "type":"string",
+      "enum":[
+        "FULL",
+        "METADATA",
+        "PARTIAL"
+      ]
     },
     "CloudAutonomousVmCluster":{
       "type":"structure",
@@ -1148,6 +2000,12 @@
         "iamRoles":{"shape":"IamRoleList"}
       }
     },
+    "ClusterName":{
+      "type":"string",
+      "max":11,
+      "min":1,
+      "pattern":"[a-zA-Z][a-zA-Z0-9-]*"
+    },
     "ComputeModel":{
       "type":"string",
       "enum":[
@@ -1168,6 +2026,194 @@
         "resourceType":{"shape":"String"}
       },
       "exception":true
+    },
+    "CreateAutonomousDatabaseBackupInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"},
+        "displayName":{"shape":"ResourceDisplayName"},
+        "retentionPeriodInDays":{"shape":"CreateAutonomousDatabaseBackupInputRetentionPeriodInDaysInteger"},
+        "clientToken":{
+          "shape":"CreateAutonomousDatabaseBackupInputClientTokenString",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"RequestTagMap"}
+      }
+    },
+    "CreateAutonomousDatabaseBackupInputClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":8,
+      "pattern":"[a-zA-Z0-9_\\/.=-]+"
+    },
+    "CreateAutonomousDatabaseBackupInputRetentionPeriodInDaysInteger":{
+      "type":"integer",
+      "box":true,
+      "max":3650,
+      "min":90
+    },
+    "CreateAutonomousDatabaseBackupOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseBackupId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "autonomousDatabaseBackupId":{"shape":"String"}
+      }
+    },
+    "CreateAutonomousDatabaseInput":{
+      "type":"structure",
+      "members":{
+        "odbNetworkId":{"shape":"ResourceIdOrArn"},
+        "displayName":{"shape":"ResourceDisplayName"},
+        "dbName":{"shape":"CreateAutonomousDatabaseInputDbNameString"},
+        "adminPassword":{"shape":"CreateAutonomousDatabaseInputAdminPasswordString"},
+        "computeCount":{"shape":"CreateAutonomousDatabaseInputComputeCountDouble"},
+        "dataStorageSizeInTBs":{"shape":"CreateAutonomousDatabaseInputDataStorageSizeInTBsInteger"},
+        "dataStorageSizeInGBs":{"shape":"CreateAutonomousDatabaseInputDataStorageSizeInGBsInteger"},
+        "dbWorkload":{"shape":"DbWorkload"},
+        "isAutoScalingEnabled":{"shape":"Boolean"},
+        "isAutoScalingForStorageEnabled":{"shape":"Boolean"},
+        "licenseModel":{"shape":"LicenseModel"},
+        "characterSet":{"shape":"CreateAutonomousDatabaseInputCharacterSetString"},
+        "ncharacterSet":{"shape":"CreateAutonomousDatabaseInputNcharacterSetString"},
+        "dbVersion":{"shape":"CreateAutonomousDatabaseInputDbVersionString"},
+        "databaseEdition":{"shape":"DatabaseEdition"},
+        "standbyAllowlistedIpsSource":{"shape":"StandbyAllowlistedIpsSource"},
+        "autonomousMaintenanceScheduleType":{"shape":"AutonomousMaintenanceScheduleType"},
+        "backupRetentionPeriodInDays":{"shape":"Integer"},
+        "byolComputeCountLimit":{"shape":"CreateAutonomousDatabaseInputByolComputeCountLimitDouble"},
+        "cpuCoreCount":{"shape":"CreateAutonomousDatabaseInputCpuCoreCountInteger"},
+        "customerContactsToSendToOCI":{"shape":"CustomerContacts"},
+        "privateEndpointIp":{"shape":"String"},
+        "privateEndpointLabel":{"shape":"String"},
+        "resourcePoolLeaderId":{"shape":"ResourceIdOrArn"},
+        "resourcePoolSummary":{"shape":"ResourcePoolSummary"},
+        "scheduledOperations":{"shape":"ScheduledOperationDetailsList"},
+        "standbyAllowlistedIps":{"shape":"StringList"},
+        "allowlistedIps":{"shape":"StringList"},
+        "transportableTablespace":{"shape":"TransportableTablespace"},
+        "isBackupRetentionLocked":{"shape":"Boolean"},
+        "isLocalDataGuardEnabled":{"shape":"Boolean"},
+        "isMtlsConnectionRequired":{"shape":"Boolean"},
+        "dbToolsDetails":{"shape":"DatabaseToolList"},
+        "source":{"shape":"SourceType"},
+        "sourceConfiguration":{"shape":"SourceConfiguration"},
+        "encryptionKeyProvider":{"shape":"EncryptionKeyProviderInput"},
+        "encryptionKeyConfiguration":{"shape":"EncryptionKeyConfigurationInput"},
+        "clientToken":{
+          "shape":"CreateAutonomousDatabaseInputClientTokenString",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"RequestTagMap"}
+      }
+    },
+    "CreateAutonomousDatabaseInputAdminPasswordString":{
+      "type":"string",
+      "max":30,
+      "min":12,
+      "sensitive":true
+    },
+    "CreateAutonomousDatabaseInputByolComputeCountLimitDouble":{
+      "type":"double",
+      "box":true,
+      "min":2
+    },
+    "CreateAutonomousDatabaseInputCharacterSetString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "CreateAutonomousDatabaseInputClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":8,
+      "pattern":"[a-zA-Z0-9_\\/.=-]+"
+    },
+    "CreateAutonomousDatabaseInputComputeCountDouble":{
+      "type":"double",
+      "box":true,
+      "max":512,
+      "min":0.1
+    },
+    "CreateAutonomousDatabaseInputCpuCoreCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":128,
+      "min":1
+    },
+    "CreateAutonomousDatabaseInputDataStorageSizeInGBsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":393216,
+      "min":20
+    },
+    "CreateAutonomousDatabaseInputDataStorageSizeInTBsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":384,
+      "min":1
+    },
+    "CreateAutonomousDatabaseInputDbNameString":{
+      "type":"string",
+      "max":30,
+      "min":1
+    },
+    "CreateAutonomousDatabaseInputDbVersionString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "CreateAutonomousDatabaseInputNcharacterSetString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "CreateAutonomousDatabaseOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "status":{"shape":"AutonomousDatabaseResourceStatus"},
+        "statusReason":{"shape":"String"}
+      }
+    },
+    "CreateAutonomousDatabaseWalletInput":{
+      "type":"structure",
+      "required":[
+        "autonomousDatabaseId",
+        "password"
+      ],
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"},
+        "walletType":{"shape":"WalletType"},
+        "password":{"shape":"CreateAutonomousDatabaseWalletInputPasswordString"},
+        "clientToken":{
+          "shape":"CreateAutonomousDatabaseWalletInputClientTokenString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateAutonomousDatabaseWalletInputClientTokenString":{
+      "type":"string",
+      "max":64,
+      "min":8,
+      "pattern":"[a-zA-Z0-9_\\/.=-]+"
+    },
+    "CreateAutonomousDatabaseWalletInputPasswordString":{
+      "type":"string",
+      "min":8,
+      "sensitive":true
+    },
+    "CreateAutonomousDatabaseWalletOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseWalletFile"],
+      "members":{
+        "autonomousDatabaseWalletFile":{"shape":"AutonomousDatabaseWalletFile"}
+      }
     },
     "CreateCloudAutonomousVmClusterInput":{
       "type":"structure",
@@ -1347,10 +2393,10 @@
         "cpuCoreCount":{"shape":"CreateCloudVmClusterInputCpuCoreCountInteger"},
         "displayName":{"shape":"ResourceDisplayName"},
         "giVersion":{"shape":"CreateCloudVmClusterInputGiVersionString"},
-        "hostname":{"shape":"CreateCloudVmClusterInputHostnameString"},
+        "hostname":{"shape":"Hostname"},
         "sshPublicKeys":{"shape":"StringList"},
         "odbNetworkId":{"shape":"ResourceIdOrArn"},
-        "clusterName":{"shape":"CreateCloudVmClusterInputClusterNameString"},
+        "clusterName":{"shape":"ClusterName"},
         "dataCollectionOptions":{"shape":"DataCollectionOptions"},
         "dataStorageSizeInTBs":{"shape":"Double"},
         "dbNodeStorageSizeInGBs":{"shape":"Integer"},
@@ -1375,12 +2421,6 @@
       "min":8,
       "pattern":"[a-zA-Z0-9_\\/.=-]+"
     },
-    "CreateCloudVmClusterInputClusterNameString":{
-      "type":"string",
-      "max":11,
-      "min":1,
-      "pattern":"[a-zA-Z][a-zA-Z0-9-]*"
-    },
     "CreateCloudVmClusterInputCpuCoreCountInteger":{
       "type":"integer",
       "box":true,
@@ -1391,12 +2431,6 @@
       "type":"string",
       "max":255,
       "min":1
-    },
-    "CreateCloudVmClusterInputHostnameString":{
-      "type":"string",
-      "max":12,
-      "min":1,
-      "pattern":"[a-zA-Z][a-zA-Z0-9-]*[a-zA-Z0-9]"
     },
     "CreateCloudVmClusterInputScanListenerPortTcpInteger":{
       "type":"integer",
@@ -1535,6 +2569,25 @@
         "odbPeeringConnectionId":{"shape":"String"}
       }
     },
+    "CrossRegionDataGuardConfiguration":{
+      "type":"structure",
+      "required":["sourceAutonomousDatabaseArn"],
+      "members":{
+        "sourceAutonomousDatabaseArn":{"shape":"Arn"}
+      }
+    },
+    "CrossRegionDisasterRecoveryConfiguration":{
+      "type":"structure",
+      "required":[
+        "sourceAutonomousDatabaseArn",
+        "remoteDisasterRecoveryType"
+      ],
+      "members":{
+        "sourceAutonomousDatabaseArn":{"shape":"Arn"},
+        "remoteDisasterRecoveryType":{"shape":"DisasterRecoveryType"},
+        "isReplicateAutomaticBackups":{"shape":"Boolean"}
+      }
+    },
     "CrossRegionS3RestoreSourcesAccess":{
       "type":"structure",
       "members":{
@@ -1570,6 +2623,112 @@
         "isHealthMonitoringEnabled":{"shape":"Boolean"},
         "isIncidentLogsEnabled":{"shape":"Boolean"}
       }
+    },
+    "DataGuardRole":{
+      "type":"string",
+      "enum":[
+        "PRIMARY",
+        "STANDBY",
+        "DISABLED_STANDBY",
+        "BACKUP_COPY",
+        "SNAPSHOT_STANDBY"
+      ]
+    },
+    "DataSafeStatus":{
+      "type":"string",
+      "enum":[
+        "REGISTERING",
+        "REGISTERED",
+        "DEREGISTERING",
+        "NOT_REGISTERED",
+        "FAILED"
+      ]
+    },
+    "DatabaseCloneConfiguration":{
+      "type":"structure",
+      "required":[
+        "sourceAutonomousDatabaseId",
+        "cloneType"
+      ],
+      "members":{
+        "sourceAutonomousDatabaseId":{"shape":"ResourceIdOrArn"},
+        "cloneType":{"shape":"CloneType"}
+      }
+    },
+    "DatabaseConnectionStringMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
+    "DatabaseConnectionStringProfile":{
+      "type":"structure",
+      "members":{
+        "consumerGroup":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "hostFormat":{"shape":"String"},
+        "isRegional":{"shape":"Boolean"},
+        "protocol":{"shape":"String"},
+        "sessionMode":{"shape":"String"},
+        "syntaxFormat":{"shape":"String"},
+        "tlsAuthentication":{"shape":"String"},
+        "value":{"shape":"String"}
+      }
+    },
+    "DatabaseConnectionStringProfileList":{
+      "type":"list",
+      "member":{"shape":"DatabaseConnectionStringProfile"}
+    },
+    "DatabaseEdition":{
+      "type":"string",
+      "enum":[
+        "STANDARD_EDITION",
+        "ENTERPRISE_EDITION"
+      ]
+    },
+    "DatabaseManagementStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLING",
+        "ENABLED",
+        "DISABLING",
+        "NOT_ENABLED",
+        "FAILED_ENABLING",
+        "FAILED_DISABLING"
+      ]
+    },
+    "DatabaseStandbySummary":{
+      "type":"structure",
+      "members":{
+        "availabilityDomain":{"shape":"String"},
+        "lagTimeInSeconds":{"shape":"Integer"},
+        "status":{"shape":"AutonomousDatabaseResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "maintenanceTargetComponent":{"shape":"String"},
+        "timeDataGuardRoleChanged":{"shape":"SyntheticTimestamp_date_time"},
+        "timeDisasterRecoveryRoleChanged":{"shape":"SyntheticTimestamp_date_time"},
+        "timeMaintenanceBegin":{"shape":"SyntheticTimestamp_date_time"},
+        "timeMaintenanceEnd":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "DatabaseTool":{
+      "type":"structure",
+      "members":{
+        "isEnabled":{"shape":"Boolean"},
+        "name":{"shape":"String"},
+        "computeCount":{"shape":"Double"},
+        "maxIdleTimeInMinutes":{"shape":"Integer"}
+      }
+    },
+    "DatabaseToolList":{
+      "type":"list",
+      "member":{"shape":"DatabaseTool"}
+    },
+    "DatabaseType":{
+      "type":"string",
+      "enum":[
+        "REGULAR",
+        "CLONE"
+      ]
     },
     "DayOfWeek":{
       "type":"structure",
@@ -1796,6 +2955,37 @@
         "areServerTypesSupported":{"shape":"Boolean"}
       }
     },
+    "DbWorkload":{
+      "type":"string",
+      "enum":[
+        "OLTP",
+        "AJD",
+        "APEX",
+        "LH"
+      ]
+    },
+    "DeleteAutonomousDatabaseBackupInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseBackupId"],
+      "members":{
+        "autonomousDatabaseBackupId":{"shape":"ResourceId"}
+      }
+    },
+    "DeleteAutonomousDatabaseBackupOutput":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteAutonomousDatabaseInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"}
+      }
+    },
+    "DeleteAutonomousDatabaseOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteCloudAutonomousVmClusterInput":{
       "type":"structure",
       "required":["cloudAutonomousVmClusterId"],
@@ -1872,11 +3062,27 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso-[a-z]?|aws-iso):odb:[a-z0-9-]+:\\d{12}:(?:cloud-vm-cluster|cloud-autonomous-vm-cluster)/[a-z0-9-_]+"
+      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso-[a-z]?|aws-iso):odb:[a-z0-9-]+:\\d{12}:(?:cloud-vm-cluster|cloud-autonomous-vm-cluster|exadb-vm-cluster)/[a-z0-9-_]+"
     },
     "DisassociateIamRoleFromResourceOutput":{
       "type":"structure",
       "members":{}
+    },
+    "DisasterRecoveryConfiguration":{
+      "type":"structure",
+      "members":{
+        "disasterRecoveryType":{"shape":"DisasterRecoveryType"},
+        "isReplicateAutomaticBackups":{"shape":"Boolean"},
+        "isSnapshotStandby":{"shape":"Boolean"},
+        "timeSnapshotStandbyEnabledTill":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "DisasterRecoveryType":{
+      "type":"string",
+      "enum":[
+        "ADG",
+        "BACKUP_BASED"
+      ]
     },
     "DiskRedundancy":{
       "type":"string",
@@ -1889,6 +3095,45 @@
       "type":"double",
       "box":true
     },
+    "EncryptionKeyConfiguration":{
+      "type":"structure",
+      "members":{
+        "awsEncryptionKey":{"shape":"AwsEncryptionKeyConfiguration"},
+        "ociEncryptionKey":{"shape":"OciEncryptionKeyConfiguration"},
+        "okvEncryptionKey":{"shape":"OkvEncryptionKeyConfiguration"}
+      },
+      "union":true
+    },
+    "EncryptionKeyConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "awsEncryptionKey":{"shape":"AwsEncryptionKeyConfigurationInput"}
+      },
+      "union":true
+    },
+    "EncryptionKeyProvider":{
+      "type":"string",
+      "enum":[
+        "ORACLE_MANAGED",
+        "AWS_KMS",
+        "OKV",
+        "OCI"
+      ]
+    },
+    "EncryptionKeyProviderInput":{
+      "type":"string",
+      "enum":[
+        "ORACLE_MANAGED",
+        "AWS_KMS"
+      ]
+    },
+    "EncryptionSummary":{
+      "type":"structure",
+      "members":{
+        "encryptionKeyProvider":{"shape":"EncryptionKeyProvider"},
+        "encryptionKeyConfiguration":{"shape":"EncryptionKeyConfiguration"}
+      }
+    },
     "ExadataIormConfig":{
       "type":"structure",
       "members":{
@@ -1898,9 +3143,76 @@
         "objective":{"shape":"Objective"}
       }
     },
+    "ExternalIdType":{
+      "type":"string",
+      "enum":[
+        "database_ocid",
+        "compartment_ocid",
+        "tenant_ocid"
+      ]
+    },
+    "FailoverAutonomousDatabaseInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"},
+        "peerDbArn":{"shape":"ResourceArn"}
+      }
+    },
+    "FailoverAutonomousDatabaseOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "status":{"shape":"AutonomousDatabaseResourceStatus"},
+        "statusReason":{"shape":"String"}
+      }
+    },
     "Float":{
       "type":"float",
       "box":true
+    },
+    "GetAutonomousDatabaseBackupInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseBackupId"],
+      "members":{
+        "autonomousDatabaseBackupId":{"shape":"ResourceId"}
+      }
+    },
+    "GetAutonomousDatabaseBackupOutput":{
+      "type":"structure",
+      "members":{
+        "autonomousDatabaseBackup":{"shape":"AutonomousDatabaseBackup"}
+      }
+    },
+    "GetAutonomousDatabaseInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"}
+      }
+    },
+    "GetAutonomousDatabaseOutput":{
+      "type":"structure",
+      "required":["autonomousDatabase"],
+      "members":{
+        "autonomousDatabase":{"shape":"AutonomousDatabase"}
+      }
+    },
+    "GetAutonomousDatabaseWalletDetailsInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"}
+      }
+    },
+    "GetAutonomousDatabaseWalletDetailsOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseWalletDetails"],
+      "members":{
+        "autonomousDatabaseWalletDetails":{"shape":"AutonomousDatabaseWalletDetails"}
+      }
     },
     "GetCloudAutonomousVmClusterInput":{
       "type":"structure",
@@ -1999,7 +3311,11 @@
         "status":{"shape":"OciOnboardingStatus"},
         "existingTenancyActivationLink":{"shape":"String"},
         "newTenancyActivationLink":{"shape":"String"},
-        "ociIdentityDomain":{"shape":"OciIdentityDomain"}
+        "ociIdentityDomain":{"shape":"OciIdentityDomain"},
+        "autonomousDatabaseOciIntegrationIamRoles":{"shape":"OciIamRoleList"},
+        "linkedOciTenancyId":{"shape":"String"},
+        "linkedOciCompartmentId":{"shape":"String"},
+        "subscriptionErrors":{"shape":"SubscriptionErrors"}
       }
     },
     "GetOdbNetworkInput":{
@@ -2037,6 +3353,12 @@
       "members":{
         "version":{"shape":"String"}
       }
+    },
+    "Hostname":{
+      "type":"string",
+      "max":12,
+      "min":1,
+      "pattern":"[a-zA-Z][a-zA-Z0-9-]*[a-zA-Z0-9]"
     },
     "HoursOfDay":{
       "type":"list",
@@ -2081,6 +3403,10 @@
       "type":"integer",
       "box":true
     },
+    "IntegerList":{
+      "type":"list",
+      "member":{"shape":"Integer"}
+    },
     "InternalServerException":{
       "type":"structure",
       "required":["message"],
@@ -2111,12 +3437,184 @@
         "kmsPolicyDocument":{"shape":"String"}
       }
     },
+    "KmsKeyIdOrArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_:./-]+"
+    },
     "LicenseModel":{
       "type":"string",
       "enum":[
         "BRING_YOUR_OWN_LICENSE",
         "LICENSE_INCLUDED"
       ]
+    },
+    "ListAutonomousDatabaseBackupsInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "maxResults":{"shape":"ListAutonomousDatabaseBackupsInputMaxResultsInteger"},
+        "nextToken":{"shape":"ListAutonomousDatabaseBackupsInputNextTokenString"},
+        "autonomousDatabaseId":{"shape":"ResourceId"},
+        "status":{"shape":"AutonomousDatabaseBackupStatus"},
+        "type":{"shape":"AutonomousDatabaseBackupType"}
+      }
+    },
+    "ListAutonomousDatabaseBackupsInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListAutonomousDatabaseBackupsInputNextTokenString":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
+    "ListAutonomousDatabaseBackupsOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseBackups"],
+      "members":{
+        "nextToken":{"shape":"String"},
+        "autonomousDatabaseBackups":{"shape":"AutonomousDatabaseBackupList"}
+      }
+    },
+    "ListAutonomousDatabaseCharacterSetsInput":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"ListAutonomousDatabaseCharacterSetsInputMaxResultsInteger"},
+        "nextToken":{"shape":"ListAutonomousDatabaseCharacterSetsInputNextTokenString"},
+        "characterSetType":{"shape":"characterSetType"}
+      }
+    },
+    "ListAutonomousDatabaseCharacterSetsInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListAutonomousDatabaseCharacterSetsInputNextTokenString":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
+    "ListAutonomousDatabaseCharacterSetsOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseCharacterSets"],
+      "members":{
+        "nextToken":{"shape":"String"},
+        "autonomousDatabaseCharacterSets":{"shape":"AutonomousDatabaseCharacterSetList"}
+      }
+    },
+    "ListAutonomousDatabaseClonesInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "maxResults":{"shape":"ListAutonomousDatabaseClonesInputMaxResultsInteger"},
+        "nextToken":{"shape":"ListAutonomousDatabaseClonesInputNextTokenString"},
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"}
+      }
+    },
+    "ListAutonomousDatabaseClonesInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListAutonomousDatabaseClonesInputNextTokenString":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
+    "ListAutonomousDatabaseClonesOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseClones"],
+      "members":{
+        "nextToken":{"shape":"String"},
+        "autonomousDatabaseClones":{"shape":"AutonomousDatabaseList"}
+      }
+    },
+    "ListAutonomousDatabasePeersInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "maxResults":{"shape":"ListAutonomousDatabasePeersInputMaxResultsInteger"},
+        "nextToken":{"shape":"ListAutonomousDatabasePeersInputNextTokenString"},
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"}
+      }
+    },
+    "ListAutonomousDatabasePeersInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListAutonomousDatabasePeersInputNextTokenString":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
+    "ListAutonomousDatabasePeersOutput":{
+      "type":"structure",
+      "required":["autonomousDatabasePeers"],
+      "members":{
+        "nextToken":{"shape":"String"},
+        "autonomousDatabasePeers":{"shape":"AutonomousDatabasePeerList"}
+      }
+    },
+    "ListAutonomousDatabaseVersionsInput":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"ListAutonomousDatabaseVersionsInputMaxResultsInteger"},
+        "nextToken":{"shape":"ListAutonomousDatabaseVersionsInputNextTokenString"},
+        "dbWorkload":{"shape":"DbWorkload"}
+      }
+    },
+    "ListAutonomousDatabaseVersionsInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListAutonomousDatabaseVersionsInputNextTokenString":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
+    "ListAutonomousDatabaseVersionsOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseVersions"],
+      "members":{
+        "nextToken":{"shape":"String"},
+        "autonomousDatabaseVersions":{"shape":"AutonomousDatabaseVersionList"}
+      }
+    },
+    "ListAutonomousDatabasesInput":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"ListAutonomousDatabasesInputMaxResultsInteger"},
+        "nextToken":{"shape":"ListAutonomousDatabasesInputNextTokenString"}
+      }
+    },
+    "ListAutonomousDatabasesInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListAutonomousDatabasesInputNextTokenString":{
+      "type":"string",
+      "max":8192,
+      "min":1
+    },
+    "ListAutonomousDatabasesOutput":{
+      "type":"structure",
+      "required":["autonomousDatabases"],
+      "members":{
+        "nextToken":{"shape":"String"},
+        "autonomousDatabases":{"shape":"AutonomousDatabaseList"}
+      }
     },
     "ListAutonomousVirtualMachinesInput":{
       "type":"structure",
@@ -2460,6 +3958,21 @@
         "tags":{"shape":"ResponseTagMap"}
       }
     },
+    "LongTermBackupSchedule":{
+      "type":"structure",
+      "members":{
+        "isDisabled":{"shape":"Boolean"},
+        "repeatCadence":{"shape":"RepeatCadence"},
+        "retentionPeriodInDays":{"shape":"LongTermBackupScheduleRetentionPeriodInDaysInteger"},
+        "timeOfBackup":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "LongTermBackupScheduleRetentionPeriodInDaysInteger":{
+      "type":"integer",
+      "box":true,
+      "max":3650,
+      "min":90
+    },
     "MaintenanceWindow":{
       "type":"structure",
       "members":{
@@ -2545,6 +4058,13 @@
       "type":"list",
       "member":{"shape":"Month"}
     },
+    "NetServicesArchitecture":{
+      "type":"string",
+      "enum":[
+        "DEDICATED",
+        "SHARED"
+      ]
+    },
     "Objective":{
       "type":"string",
       "enum":[
@@ -2554,6 +4074,10 @@
         "HIGH_THROUGHPUT",
         "LOW_LATENCY"
       ]
+    },
+    "OciAwsIntegration":{
+      "type":"string",
+      "enum":["KmsTde"]
     },
     "OciDnsForwardingConfig":{
       "type":"structure",
@@ -2570,6 +4094,40 @@
     "OciDnsForwardingConfigList":{
       "type":"list",
       "member":{"shape":"OciDnsForwardingConfig"}
+    },
+    "OciEncryptionKeyConfiguration":{
+      "type":"structure",
+      "required":[
+        "kmsKeyId",
+        "vaultId"
+      ],
+      "members":{
+        "kmsKeyId":{"shape":"OciEncryptionKeyConfigurationKmsKeyIdString"},
+        "vaultId":{"shape":"OciEncryptionKeyConfigurationVaultIdString"}
+      }
+    },
+    "OciEncryptionKeyConfigurationKmsKeyIdString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "OciEncryptionKeyConfigurationVaultIdString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "OciIamRole":{
+      "type":"structure",
+      "members":{
+        "iamRoleArn":{"shape":"RoleArn"},
+        "awsIntegration":{"shape":"OciAwsIntegration"}
+      }
+    },
+    "OciIamRoleList":{
+      "type":"list",
+      "member":{"shape":"OciIamRole"},
+      "max":10,
+      "min":0
     },
     "OciIdentityDomain":{
       "type":"structure",
@@ -2777,6 +4335,40 @@
         "percentProgress":{"shape":"Float"}
       }
     },
+    "OkvEncryptionKeyConfiguration":{
+      "type":"structure",
+      "required":[
+        "certificateDirectoryName",
+        "directoryName",
+        "okvKmsKey",
+        "okvUri"
+      ],
+      "members":{
+        "certificateDirectoryName":{"shape":"String"},
+        "certificateId":{"shape":"String"},
+        "directoryName":{"shape":"String"},
+        "okvKmsKey":{"shape":"String"},
+        "okvUri":{"shape":"String"}
+      }
+    },
+    "OpenMode":{
+      "type":"string",
+      "enum":[
+        "READ_ONLY",
+        "READ_WRITE"
+      ]
+    },
+    "OperationsInsightsStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLING",
+        "ENABLED",
+        "DISABLING",
+        "NOT_ENABLED",
+        "FAILED_ENABLING",
+        "FAILED_DISABLING"
+      ]
+    },
     "PatchingModeType":{
       "type":"string",
       "enum":[
@@ -2804,6 +4396,27 @@
       "type":"list",
       "member":{"shape":"PeeredCidr"}
     },
+    "PermissionLevel":{
+      "type":"string",
+      "enum":[
+        "RESTRICTED",
+        "UNRESTRICTED"
+      ]
+    },
+    "PointInTimeRestoreConfiguration":{
+      "type":"structure",
+      "required":[
+        "sourceAutonomousDatabaseId",
+        "cloneType"
+      ],
+      "members":{
+        "sourceAutonomousDatabaseId":{"shape":"ResourceIdOrArn"},
+        "cloneType":{"shape":"CloneType"},
+        "timestamp":{"shape":"SyntheticTimestamp_date_time"},
+        "useLatestAvailableBackupTimestamp":{"shape":"Boolean"},
+        "cloneTableSpaceList":{"shape":"IntegerList"}
+      }
+    },
     "PolicyDocument":{
       "type":"string",
       "max":20480,
@@ -2815,6 +4428,24 @@
         "NO_PREFERENCE",
         "CUSTOM_PREFERENCE"
       ]
+    },
+    "RebootAutonomousDatabaseInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"},
+        "isOnlineReboot":{"shape":"Boolean"}
+      }
+    },
+    "RebootAutonomousDatabaseOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "status":{"shape":"AutonomousDatabaseResourceStatus"},
+        "statusReason":{"shape":"String"}
+      }
     },
     "RebootDbNodeInput":{
       "type":"structure",
@@ -2835,6 +4466,29 @@
         "status":{"shape":"DbNodeResourceStatus"},
         "statusReason":{"shape":"String"}
       }
+    },
+    "RefreshableMode":{
+      "type":"string",
+      "enum":[
+        "AUTOMATIC",
+        "MANUAL"
+      ]
+    },
+    "RefreshableStatus":{
+      "type":"string",
+      "enum":[
+        "REFRESHING",
+        "NOT_REFRESHING"
+      ]
+    },
+    "RepeatCadence":{
+      "type":"string",
+      "enum":[
+        "ONE_TIME",
+        "WEEKLY",
+        "MONTHLY",
+        "YEARLY"
+      ]
     },
     "RequestTagMap":{
       "type":"map",
@@ -2885,6 +4539,17 @@
       },
       "exception":true
     },
+    "ResourcePoolSummary":{
+      "type":"structure",
+      "members":{
+        "isDisabled":{"shape":"Boolean"},
+        "poolSize":{"shape":"Integer"},
+        "poolStorageSizeInTBs":{"shape":"Integer"},
+        "availableStorageCapacityInTBs":{"shape":"Double"},
+        "totalComputeCapacity":{"shape":"Integer"},
+        "availableComputeCapacity":{"shape":"Integer"}
+      }
+    },
     "ResourceStatus":{
       "type":"string",
       "enum":[
@@ -2904,6 +4569,39 @@
       "max":200,
       "min":0
     },
+    "RestoreAutonomousDatabaseInput":{
+      "type":"structure",
+      "required":[
+        "autonomousDatabaseId",
+        "timestamp"
+      ],
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"},
+        "timestamp":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "RestoreAutonomousDatabaseOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "status":{"shape":"AutonomousDatabaseResourceStatus"},
+        "statusReason":{"shape":"String"}
+      }
+    },
+    "RestoreFromBackupConfiguration":{
+      "type":"structure",
+      "required":[
+        "autonomousDatabaseBackupId",
+        "cloneType"
+      ],
+      "members":{
+        "autonomousDatabaseBackupId":{"shape":"ResourceIdOrArn"},
+        "cloneType":{"shape":"CloneType"},
+        "cloneTableSpaceList":{"shape":"IntegerList"}
+      }
+    },
     "RoleArn":{
       "type":"string",
       "max":2048,
@@ -2918,6 +4616,19 @@
         "domainName":{"shape":"String"},
         "s3PolicyDocument":{"shape":"String"}
       }
+    },
+    "ScheduledOperationDetails":{
+      "type":"structure",
+      "required":["dayOfWeek"],
+      "members":{
+        "dayOfWeek":{"shape":"DayOfWeek"},
+        "scheduledStartTime":{"shape":"String"},
+        "scheduledStopTime":{"shape":"String"}
+      }
+    },
+    "ScheduledOperationDetailsList":{
+      "type":"list",
+      "member":{"shape":"ScheduledOperationDetails"}
     },
     "SensitiveString":{
       "type":"string",
@@ -2959,6 +4670,72 @@
         "AMPERE_FLEX_A1"
       ]
     },
+    "ShrinkAutonomousDatabaseInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"}
+      }
+    },
+    "ShrinkAutonomousDatabaseOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "status":{"shape":"AutonomousDatabaseResourceStatus"},
+        "statusReason":{"shape":"String"}
+      }
+    },
+    "SourceConfiguration":{
+      "type":"structure",
+      "members":{
+        "databaseClone":{"shape":"DatabaseCloneConfiguration"},
+        "restoreFromBackup":{"shape":"RestoreFromBackupConfiguration"},
+        "pointInTimeRestore":{"shape":"PointInTimeRestoreConfiguration"},
+        "crossRegionDataGuard":{"shape":"CrossRegionDataGuardConfiguration"},
+        "crossRegionDisasterRecovery":{"shape":"CrossRegionDisasterRecoveryConfiguration"},
+        "cloneToRefreshable":{"shape":"CloneToRefreshableConfiguration"}
+      },
+      "union":true
+    },
+    "SourceType":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "DATABASE",
+        "BACKUP_FROM_ID",
+        "BACKUP_FROM_TIMESTAMP",
+        "CROSS_REGION_DATAGUARD",
+        "CROSS_REGION_DISASTER_RECOVERY",
+        "CLONE_TO_REFRESHABLE"
+      ]
+    },
+    "StandbyAllowlistedIpsSource":{
+      "type":"string",
+      "enum":[
+        "PRIMARY",
+        "SEPARATE",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "StartAutonomousDatabaseInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"}
+      }
+    },
+    "StartAutonomousDatabaseOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "status":{"shape":"AutonomousDatabaseResourceStatus"},
+        "statusReason":{"shape":"String"}
+      }
+    },
     "StartDbNodeInput":{
       "type":"structure",
       "required":[
@@ -2976,6 +4753,23 @@
       "members":{
         "dbNodeId":{"shape":"String"},
         "status":{"shape":"DbNodeResourceStatus"},
+        "statusReason":{"shape":"String"}
+      }
+    },
+    "StopAutonomousDatabaseInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"}
+      }
+    },
+    "StopAutonomousDatabaseOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "status":{"shape":"AutonomousDatabaseResourceStatus"},
         "statusReason":{"shape":"String"}
       }
     },
@@ -3015,9 +4809,37 @@
         "stsPolicyDocument":{"shape":"String"}
       }
     },
+    "SubscriptionError":{
+      "type":"structure",
+      "members":{
+        "errorMessage":{"shape":"String"}
+      }
+    },
+    "SubscriptionErrors":{
+      "type":"list",
+      "member":{"shape":"SubscriptionError"}
+    },
     "SupportedAwsIntegration":{
       "type":"string",
       "enum":["KmsTde"]
+    },
+    "SwitchoverAutonomousDatabaseInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"},
+        "peerDbArn":{"shape":"ResourceArn"}
+      }
+    },
+    "SwitchoverAutonomousDatabaseOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "status":{"shape":"AutonomousDatabaseResourceStatus"},
+        "statusReason":{"shape":"String"}
+      }
     },
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",
@@ -3075,6 +4897,12 @@
       },
       "exception":true
     },
+    "TransportableTablespace":{
+      "type":"structure",
+      "members":{
+        "ttsBundleUrl":{"shape":"String"}
+      }
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -3089,6 +4917,158 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{}
+    },
+    "UpdateAutonomousDatabaseBackupInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseBackupId"],
+      "members":{
+        "autonomousDatabaseBackupId":{"shape":"ResourceId"},
+        "retentionPeriodInDays":{"shape":"UpdateAutonomousDatabaseBackupInputRetentionPeriodInDaysInteger"}
+      }
+    },
+    "UpdateAutonomousDatabaseBackupInputRetentionPeriodInDaysInteger":{
+      "type":"integer",
+      "box":true,
+      "max":3650,
+      "min":90
+    },
+    "UpdateAutonomousDatabaseBackupOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseBackupId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "autonomousDatabaseBackupId":{"shape":"String"}
+      }
+    },
+    "UpdateAutonomousDatabaseInput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"ResourceIdOrArn"},
+        "adminPassword":{"shape":"UpdateAutonomousDatabaseInputAdminPasswordString"},
+        "computeCount":{"shape":"UpdateAutonomousDatabaseInputComputeCountDouble"},
+        "cpuCoreCount":{"shape":"UpdateAutonomousDatabaseInputCpuCoreCountInteger"},
+        "dataStorageSizeInTBs":{"shape":"UpdateAutonomousDatabaseInputDataStorageSizeInTBsInteger"},
+        "dataStorageSizeInGBs":{"shape":"UpdateAutonomousDatabaseInputDataStorageSizeInGBsInteger"},
+        "displayName":{"shape":"ResourceDisplayName"},
+        "dbName":{"shape":"UpdateAutonomousDatabaseInputDbNameString"},
+        "dbVersion":{"shape":"UpdateAutonomousDatabaseInputDbVersionString"},
+        "dbWorkload":{"shape":"DbWorkload"},
+        "dbToolsDetails":{"shape":"DatabaseToolList"},
+        "databaseEdition":{"shape":"DatabaseEdition"},
+        "licenseModel":{"shape":"LicenseModel"},
+        "isAutoScalingEnabled":{"shape":"Boolean"},
+        "isAutoScalingForStorageEnabled":{"shape":"Boolean"},
+        "isBackupRetentionLocked":{"shape":"Boolean"},
+        "isLocalDataGuardEnabled":{"shape":"Boolean"},
+        "isMtlsConnectionRequired":{"shape":"Boolean"},
+        "isRefreshableClone":{"shape":"Boolean"},
+        "isDisconnectPeer":{"shape":"Boolean"},
+        "backupRetentionPeriodInDays":{"shape":"UpdateAutonomousDatabaseInputBackupRetentionPeriodInDaysInteger"},
+        "byolComputeCountLimit":{"shape":"UpdateAutonomousDatabaseInputByolComputeCountLimitDouble"},
+        "localAdgAutoFailoverMaxDataLossLimit":{"shape":"UpdateAutonomousDatabaseInputLocalAdgAutoFailoverMaxDataLossLimitInteger"},
+        "autonomousMaintenanceScheduleType":{"shape":"AutonomousMaintenanceScheduleType"},
+        "customerContactsToSendToOCI":{"shape":"CustomerContacts"},
+        "scheduledOperations":{"shape":"ScheduledOperationDetailsList"},
+        "longTermBackupSchedule":{"shape":"LongTermBackupSchedule"},
+        "openMode":{"shape":"OpenMode"},
+        "permissionLevel":{"shape":"PermissionLevel"},
+        "refreshableMode":{"shape":"RefreshableMode"},
+        "privateEndpointIp":{"shape":"String"},
+        "privateEndpointLabel":{"shape":"String"},
+        "peerDbId":{"shape":"ResourceIdOrArn"},
+        "resourcePoolLeaderId":{"shape":"ResourceIdOrArn"},
+        "resourcePoolSummary":{"shape":"ResourcePoolSummary"},
+        "standbyAllowlistedIpsSource":{"shape":"StandbyAllowlistedIpsSource"},
+        "standbyAllowlistedIps":{"shape":"StringList"},
+        "allowlistedIps":{"shape":"StringList"},
+        "autoRefreshFrequencyInSeconds":{"shape":"UpdateAutonomousDatabaseInputAutoRefreshFrequencyInSecondsInteger"},
+        "autoRefreshPointLagInSeconds":{"shape":"UpdateAutonomousDatabaseInputAutoRefreshPointLagInSecondsInteger"},
+        "timeOfAutoRefreshStart":{"shape":"SyntheticTimestamp_date_time"},
+        "encryptionKeyProvider":{"shape":"EncryptionKeyProviderInput"},
+        "encryptionKeyConfiguration":{"shape":"EncryptionKeyConfigurationInput"}
+      }
+    },
+    "UpdateAutonomousDatabaseInputAdminPasswordString":{
+      "type":"string",
+      "max":30,
+      "min":12,
+      "sensitive":true
+    },
+    "UpdateAutonomousDatabaseInputAutoRefreshFrequencyInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":604800,
+      "min":3600
+    },
+    "UpdateAutonomousDatabaseInputAutoRefreshPointLagInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":604800,
+      "min":0
+    },
+    "UpdateAutonomousDatabaseInputBackupRetentionPeriodInDaysInteger":{
+      "type":"integer",
+      "box":true,
+      "max":60,
+      "min":1
+    },
+    "UpdateAutonomousDatabaseInputByolComputeCountLimitDouble":{
+      "type":"double",
+      "box":true,
+      "min":2
+    },
+    "UpdateAutonomousDatabaseInputComputeCountDouble":{
+      "type":"double",
+      "box":true,
+      "max":512,
+      "min":0.1
+    },
+    "UpdateAutonomousDatabaseInputCpuCoreCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":128,
+      "min":1
+    },
+    "UpdateAutonomousDatabaseInputDataStorageSizeInGBsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":393216,
+      "min":20
+    },
+    "UpdateAutonomousDatabaseInputDataStorageSizeInTBsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":384,
+      "min":1
+    },
+    "UpdateAutonomousDatabaseInputDbNameString":{
+      "type":"string",
+      "max":30,
+      "min":1
+    },
+    "UpdateAutonomousDatabaseInputDbVersionString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "UpdateAutonomousDatabaseInputLocalAdgAutoFailoverMaxDataLossLimitInteger":{
+      "type":"integer",
+      "box":true,
+      "max":3600,
+      "min":0
+    },
+    "UpdateAutonomousDatabaseOutput":{
+      "type":"structure",
+      "required":["autonomousDatabaseId"],
+      "members":{
+        "autonomousDatabaseId":{"shape":"String"},
+        "displayName":{"shape":"String"},
+        "status":{"shape":"AutonomousDatabaseResourceStatus"},
+        "statusReason":{"shape":"String"}
+      }
     },
     "UpdateCloudExadataInfrastructureInput":{
       "type":"structure",
@@ -3198,6 +5178,13 @@
       "type":"string",
       "enum":["SERVICENETWORK"]
     },
+    "WalletType":{
+      "type":"string",
+      "enum":[
+        "REGIONAL",
+        "INSTANCE"
+      ]
+    },
     "WeeksOfMonth":{
       "type":"list",
       "member":{"shape":"Integer"}
@@ -3208,6 +5195,13 @@
         "status":{"shape":"ManagedResourceStatus"},
         "cidr":{"shape":"String"}
       }
+    },
+    "characterSetType":{
+      "type":"string",
+      "enum":[
+        "DATABASE",
+        "NATIONAL"
+      ]
     }
   }
 }

@@ -4,17 +4,26 @@
   "operations": {
     "AcceptMarketplaceRegistration": "<p>Registers the Amazon Web Services Marketplace token for your Amazon Web Services account to activate your Oracle Database@Amazon Web Services subscription.</p>",
     "AssociateIamRoleToResource": "<p>Associates an Amazon Web Services Identity and Access Management (IAM) service role with a specified resource to enable Amazon Web Services service integration.</p>",
+    "CreateAutonomousDatabase": "<p>Creates a new Autonomous Database.</p>",
+    "CreateAutonomousDatabaseBackup": "<p>Creates a new backup of the specified Autonomous Database.</p>",
+    "CreateAutonomousDatabaseWallet": "<p>Creates a new wallet for the specified Autonomous Database.</p>",
     "CreateCloudAutonomousVmCluster": "<p>Creates a new Autonomous VM cluster in the specified Exadata infrastructure.</p>",
     "CreateCloudExadataInfrastructure": "<p>Creates an Exadata infrastructure.</p>",
     "CreateCloudVmCluster": "<p>Creates a VM cluster on the specified Exadata infrastructure.</p>",
     "CreateOdbNetwork": "<p>Creates an ODB network.</p>",
     "CreateOdbPeeringConnection": "<p>Creates a peering connection between an ODB network and a VPC.</p> <p>A peering connection enables private connectivity between the networks for application-tier communication.</p>",
+    "DeleteAutonomousDatabase": "<p>Deletes the specified Autonomous Database.</p>",
+    "DeleteAutonomousDatabaseBackup": "<p>Deletes the specified Autonomous Database backup.</p>",
     "DeleteCloudAutonomousVmCluster": "<p>Deletes an Autonomous VM cluster.</p>",
     "DeleteCloudExadataInfrastructure": "<p>Deletes the specified Exadata infrastructure. Before you use this operation, make sure to delete all of the VM clusters that are hosted on this Exadata infrastructure.</p>",
     "DeleteCloudVmCluster": "<p>Deletes the specified VM cluster.</p>",
     "DeleteOdbNetwork": "<p>Deletes the specified ODB network.</p>",
     "DeleteOdbPeeringConnection": "<p>Deletes an ODB peering connection.</p> <p>When you delete an ODB peering connection, the underlying VPC peering connection is also deleted.</p>",
     "DisassociateIamRoleFromResource": "<p>Disassociates an Amazon Web Services Identity and Access Management (IAM) service role from a specified resource to disable Amazon Web Services service integration.</p>",
+    "FailoverAutonomousDatabase": "<p>Initiates a failover of the specified Autonomous Database to a standby peer database.</p>",
+    "GetAutonomousDatabase": "<p>Gets information about a specific Autonomous Database.</p>",
+    "GetAutonomousDatabaseBackup": "<p>Gets information about a specific Autonomous Database backup.</p>",
+    "GetAutonomousDatabaseWalletDetails": "<p>Gets the wallet details for the specified Autonomous Database.</p>",
     "GetCloudAutonomousVmCluster": "<p>Gets information about a specific Autonomous VM cluster.</p>",
     "GetCloudExadataInfrastructure": "<p>Returns information about the specified Exadata infrastructure.</p>",
     "GetCloudExadataInfrastructureUnallocatedResources": "<p>Retrieves information about unallocated resources in a specified Cloud Exadata Infrastructure.</p>",
@@ -25,6 +34,12 @@
     "GetOdbNetwork": "<p>Returns information about the specified ODB network.</p>",
     "GetOdbPeeringConnection": "<p>Retrieves information about an ODB peering connection.</p>",
     "InitializeService": "<p>Initializes the ODB service for the first time in an account.</p>",
+    "ListAutonomousDatabaseBackups": "<p>Lists the backups of the specified Autonomous Database.</p>",
+    "ListAutonomousDatabaseCharacterSets": "<p>Lists the available character sets for Autonomous Databases.</p>",
+    "ListAutonomousDatabaseClones": "<p>Lists the clones of the specified Autonomous Database.</p>",
+    "ListAutonomousDatabasePeers": "<p>Lists the peer databases of the specified Autonomous Database.</p>",
+    "ListAutonomousDatabaseVersions": "<p>Lists the available Oracle Database software versions for Autonomous Databases.</p>",
+    "ListAutonomousDatabases": "<p>Returns information about the Autonomous Databases owned by your Amazon Web Services account in the current Amazon Web Services Region.</p>",
     "ListAutonomousVirtualMachines": "<p>Lists all Autonomous VMs in an Autonomous VM cluster.</p>",
     "ListCloudAutonomousVmClusters": "<p>Lists all Autonomous VM clusters in a specified Cloud Exadata infrastructure.</p>",
     "ListCloudExadataInfrastructures": "<p>Returns information about the Exadata infrastructures owned by your Amazon Web Services account.</p>",
@@ -37,11 +52,19 @@
     "ListOdbPeeringConnections": "<p>Lists all ODB peering connections or those associated with a specific ODB network.</p>",
     "ListSystemVersions": "<p>Returns information about the system versions that are available for a VM cluster for the specified <code>giVersion</code> and <code>shape</code>.</p>",
     "ListTagsForResource": "<p>Returns information about the tags applied to this resource.</p>",
+    "RebootAutonomousDatabase": "<p>Reboots the specified Autonomous Database.</p>",
     "RebootDbNode": "<p>Reboots the specified DB node in a VM cluster.</p>",
+    "RestoreAutonomousDatabase": "<p>Restores the specified Autonomous Database to a point in time.</p>",
+    "ShrinkAutonomousDatabase": "<p>Shrinks the storage of the specified Autonomous Database to reclaim unused space.</p>",
+    "StartAutonomousDatabase": "<p>Starts the specified Autonomous Database.</p>",
     "StartDbNode": "<p>Starts the specified DB node in a VM cluster.</p>",
+    "StopAutonomousDatabase": "<p>Stops the specified Autonomous Database.</p>",
     "StopDbNode": "<p>Stops the specified DB node in a VM cluster.</p>",
+    "SwitchoverAutonomousDatabase": "<p>Performs a switchover of the specified Autonomous Database to a standby peer database.</p>",
     "TagResource": "<p>Applies tags to the specified resource.</p>",
     "UntagResource": "<p>Removes tags from the specified resource.</p>",
+    "UpdateAutonomousDatabase": "<p>Updates the properties of an Autonomous Database.</p>",
+    "UpdateAutonomousDatabaseBackup": "<p>Updates the properties of an Autonomous Database backup.</p>",
     "UpdateCloudExadataInfrastructure": "<p>Updates the properties of an Exadata infrastructure resource.</p>",
     "UpdateOdbNetwork": "<p>Updates properties of a specified ODB network.</p>",
     "UpdateOdbPeeringConnection": "<p>Modifies the settings of an Oracle Database@Amazon Web Services peering connection. You can update the display name and add or remove CIDR blocks from the peering connection.</p>"
@@ -72,6 +95,13 @@
       "base": "<p>You don't have sufficient access to perform this action. Make sure you have the required permissions and try again.</p>",
       "refs": {}
     },
+    "Arn": {
+      "base": null,
+      "refs": {
+        "CrossRegionDataGuardConfiguration$sourceAutonomousDatabaseArn": "<p>The Amazon Resource Name (ARN) of the source Autonomous Database for the cross-Region Oracle Data Guard configuration.</p>",
+        "CrossRegionDisasterRecoveryConfiguration$sourceAutonomousDatabaseArn": "<p>The Amazon Resource Name (ARN) of the source Autonomous Database for the cross-Region disaster recovery configuration.</p>"
+      }
+    },
     "AssociateIamRoleToResourceInput": {
       "base": null,
       "refs": {}
@@ -86,6 +116,160 @@
       "base": null,
       "refs": {}
     },
+    "AutonomousDatabase": {
+      "base": "<p>Information about an Autonomous Database.</p>",
+      "refs": {
+        "GetAutonomousDatabaseOutput$autonomousDatabase": "<p>The details of the requested Autonomous Database.</p>"
+      }
+    },
+    "AutonomousDatabaseApex": {
+      "base": "<p>The Oracle Application Express (APEX) details for an Autonomous Database.</p>",
+      "refs": {
+        "AutonomousDatabase$apexDetails": "<p>The Oracle Application Express (APEX) details for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$apexDetails": "<p>The Oracle Application Express (APEX) details for the Autonomous Database.</p>"
+      }
+    },
+    "AutonomousDatabaseBackup": {
+      "base": "<p>Information about an Autonomous Database backup.</p>",
+      "refs": {
+        "GetAutonomousDatabaseBackupOutput$autonomousDatabaseBackup": "<p>The details of the requested Autonomous Database backup.</p>"
+      }
+    },
+    "AutonomousDatabaseBackupList": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseBackupsOutput$autonomousDatabaseBackups": "<p>The list of Autonomous Database backups along with their properties.</p>"
+      }
+    },
+    "AutonomousDatabaseBackupStatus": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabaseBackup$status": "<p>The current status of the Autonomous Database backup.</p>",
+        "AutonomousDatabaseBackupSummary$status": "<p>The current status of the Autonomous Database backup.</p>",
+        "ListAutonomousDatabaseBackupsInput$status": "<p>The status of the Autonomous Database backups to return results for.</p>"
+      }
+    },
+    "AutonomousDatabaseBackupSummary": {
+      "base": "<p>A summary of an Autonomous Database backup.</p>",
+      "refs": {
+        "AutonomousDatabaseBackupList$member": null
+      }
+    },
+    "AutonomousDatabaseBackupType": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabaseBackup$type": "<p>The type of the Autonomous Database backup.</p>",
+        "AutonomousDatabaseBackupSummary$type": "<p>The type of the Autonomous Database backup.</p>",
+        "ListAutonomousDatabaseBackupsInput$type": "<p>The type of the Autonomous Database backups to return results for.</p>"
+      }
+    },
+    "AutonomousDatabaseCharacterSetList": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseCharacterSetsOutput$autonomousDatabaseCharacterSets": "<p>The list of available Autonomous Database character sets.</p>"
+      }
+    },
+    "AutonomousDatabaseCharacterSetSummary": {
+      "base": "<p>A summary of an available character set for Autonomous Databases.</p>",
+      "refs": {
+        "AutonomousDatabaseCharacterSetList$member": null
+      }
+    },
+    "AutonomousDatabaseConnectionStrings": {
+      "base": "<p>The connection strings used to connect to an Autonomous Database.</p>",
+      "refs": {
+        "AutonomousDatabase$connectionStringDetails": "<p>The connection string details for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$connectionStringDetails": "<p>The connection string details for the Autonomous Database.</p>"
+      }
+    },
+    "AutonomousDatabaseConnectionUrls": {
+      "base": "<p>The connection URLs for accessing tools and services for an Autonomous Database.</p>",
+      "refs": {
+        "AutonomousDatabase$connectionUrls": "<p>The connection URLs for accessing tools and services for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$connectionUrls": "<p>The connection URLs for accessing tools and services for the Autonomous Database.</p>"
+      }
+    },
+    "AutonomousDatabaseList": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseClonesOutput$autonomousDatabaseClones": "<p>The list of Autonomous Database clones along with their properties.</p>",
+        "ListAutonomousDatabasesOutput$autonomousDatabases": "<p>The list of Autonomous Databases along with their properties.</p>"
+      }
+    },
+    "AutonomousDatabasePeerList": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabasePeersOutput$autonomousDatabasePeers": "<p>The list of peer databases for the Autonomous Database.</p>"
+      }
+    },
+    "AutonomousDatabasePeerSummary": {
+      "base": "<p>A summary of a peer database of an Autonomous Database.</p>",
+      "refs": {
+        "AutonomousDatabasePeerList$member": null
+      }
+    },
+    "AutonomousDatabaseResourceStatus": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$status": "<p>The current status of the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$status": "<p>The current status of the Autonomous Database.</p>",
+        "CreateAutonomousDatabaseOutput$status": "<p>The current status of the Autonomous Database.</p>",
+        "DatabaseStandbySummary$status": "<p>The current status of the standby Autonomous Database.</p>",
+        "FailoverAutonomousDatabaseOutput$status": "<p>The current status of the Autonomous Database after the failover operation.</p>",
+        "RebootAutonomousDatabaseOutput$status": "<p>The current status of the Autonomous Database after the reboot operation.</p>",
+        "RestoreAutonomousDatabaseOutput$status": "<p>The current status of the Autonomous Database after the restore operation.</p>",
+        "ShrinkAutonomousDatabaseOutput$status": "<p>The current status of the Autonomous Database after the shrink operation.</p>",
+        "StartAutonomousDatabaseOutput$status": "<p>The current status of the Autonomous Database after the start operation.</p>",
+        "StopAutonomousDatabaseOutput$status": "<p>The current status of the Autonomous Database after the stop operation.</p>",
+        "SwitchoverAutonomousDatabaseOutput$status": "<p>The current status of the Autonomous Database after the switchover operation.</p>",
+        "UpdateAutonomousDatabaseOutput$status": "<p>The current status of the Autonomous Database.</p>"
+      }
+    },
+    "AutonomousDatabaseSummary": {
+      "base": "<p>A summary of an Autonomous Database.</p>",
+      "refs": {
+        "AutonomousDatabaseList$member": null
+      }
+    },
+    "AutonomousDatabaseVersionList": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseVersionsOutput$autonomousDatabaseVersions": "<p>The list of available Autonomous Database software versions.</p>"
+      }
+    },
+    "AutonomousDatabaseVersionSummary": {
+      "base": "<p>A summary of an available Oracle Database software version for Autonomous Databases.</p>",
+      "refs": {
+        "AutonomousDatabaseVersionList$member": null
+      }
+    },
+    "AutonomousDatabaseWalletDetails": {
+      "base": "<p>The wallet details for an Autonomous Database.</p>",
+      "refs": {
+        "GetAutonomousDatabaseWalletDetailsOutput$autonomousDatabaseWalletDetails": "<p>The wallet details for the Autonomous Database.</p>"
+      }
+    },
+    "AutonomousDatabaseWalletFile": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseWalletOutput$autonomousDatabaseWalletFile": "<p>The generated wallet file for the Autonomous Database, returned as a compressed archive.</p>"
+      }
+    },
+    "AutonomousDatabaseWalletStatus": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabaseWalletDetails$status": "<p>The current status of the Autonomous Database wallet.</p>"
+      }
+    },
+    "AutonomousMaintenanceScheduleType": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$autonomousMaintenanceScheduleType": "<p>The maintenance schedule type for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$autonomousMaintenanceScheduleType": "<p>The maintenance schedule type for the Autonomous Database.</p>",
+        "CreateAutonomousDatabaseInput$autonomousMaintenanceScheduleType": "<p>The maintenance schedule type for the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$autonomousMaintenanceScheduleType": "<p>The maintenance schedule type for the Autonomous Database.</p>"
+      }
+    },
     "AutonomousVirtualMachineList": {
       "base": null,
       "refs": {
@@ -98,26 +282,104 @@
         "AutonomousVirtualMachineList$member": null
       }
     },
+    "AwsEncryptionKeyConfiguration": {
+      "base": "<p>The configuration of the Amazon Web Services Key Management Service (KMS) encryption key used for an Autonomous Database.</p>",
+      "refs": {
+        "EncryptionKeyConfiguration$awsEncryptionKey": "<p>The configuration of the Amazon Web Services Key Management Service (KMS) encryption key.</p>"
+      }
+    },
+    "AwsEncryptionKeyConfigurationInput": {
+      "base": "<p>The configuration of the Amazon Web Services Key Management Service (KMS) encryption key to use for an Autonomous Database.</p>",
+      "refs": {
+        "EncryptionKeyConfigurationInput$awsEncryptionKey": "<p>The configuration of the Amazon Web Services Key Management Service (KMS) encryption key to use.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
+        "AutonomousDatabase$isMtlsConnectionRequired": "<p>Indicates whether mutual TLS (mTLS) authentication is required to connect to the Autonomous Database.</p>",
+        "AutonomousDatabase$isAutoScalingEnabled": "<p>Indicates whether automatic scaling of the compute resources is enabled for the Autonomous Database.</p>",
+        "AutonomousDatabase$isAutoScalingForStorageEnabled": "<p>Indicates whether automatic scaling of the storage is enabled for the Autonomous Database.</p>",
+        "AutonomousDatabase$isLocalDataGuardEnabled": "<p>Indicates whether local Oracle Data Guard is enabled for the Autonomous Database.</p>",
+        "AutonomousDatabase$isRemoteDataGuardEnabled": "<p>Indicates whether remote Oracle Data Guard is enabled for the Autonomous Database.</p>",
+        "AutonomousDatabase$isRefreshableClone": "<p>Indicates whether the Autonomous Database is a refreshable clone.</p>",
+        "AutonomousDatabase$isReconnectCloneEnabled": "<p>Indicates whether reconnecting the refreshable clone to its source Autonomous Database is enabled.</p>",
+        "AutonomousDatabase$isBackupRetentionLocked": "<p>Indicates whether the backup retention period of the Autonomous Database is locked.</p>",
+        "AutonomousDatabaseBackup$isAutomatic": "<p>Indicates whether the backup was created automatically.</p>",
+        "AutonomousDatabaseBackupSummary$isAutomatic": "<p>Indicates whether the backup was created automatically.</p>",
+        "AutonomousDatabaseSummary$isMtlsConnectionRequired": "<p>Indicates whether mutual TLS (mTLS) authentication is required to connect to the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$isAutoScalingEnabled": "<p>Indicates whether automatic scaling of the compute resources is enabled for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$isAutoScalingForStorageEnabled": "<p>Indicates whether automatic scaling of the storage is enabled for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$isLocalDataGuardEnabled": "<p>Indicates whether local Oracle Data Guard is enabled for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$isRemoteDataGuardEnabled": "<p>Indicates whether remote Oracle Data Guard is enabled for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$isRefreshableClone": "<p>Indicates whether the Autonomous Database is a refreshable clone.</p>",
+        "AutonomousDatabaseSummary$isReconnectCloneEnabled": "<p>Indicates whether reconnecting the refreshable clone to its source Autonomous Database is enabled.</p>",
+        "AutonomousDatabaseSummary$isBackupRetentionLocked": "<p>Indicates whether the backup retention period of the Autonomous Database is locked.</p>",
         "CloudAutonomousVmCluster$isMtlsEnabledVmCluster": "<p>Indicates whether mutual TLS (mTLS) authentication is enabled for the Autonomous VM cluster.</p>",
         "CloudAutonomousVmClusterSummary$isMtlsEnabledVmCluster": "<p>Indicates if mutual TLS (mTLS) authentication is enabled for the Autonomous VM cluster.</p>",
         "CloudVmCluster$isLocalBackupEnabled": "<p>Indicates whether database backups to local Exadata storage is enabled for the VM cluster.</p>",
         "CloudVmCluster$isSparseDiskgroupEnabled": "<p>Indicates whether the VM cluster is configured with a sparse disk group.</p>",
         "CloudVmClusterSummary$isLocalBackupEnabled": "<p>Indicates whether database backups to local Exadata storage is enabled for the VM cluster.</p>",
         "CloudVmClusterSummary$isSparseDiskgroupEnabled": "<p>Indicates whether the VM cluster is configured with a sparse disk group.</p>",
+        "CreateAutonomousDatabaseInput$isAutoScalingEnabled": "<p>Specifies whether to enable automatic scaling of the compute resources for the Autonomous Database.</p>",
+        "CreateAutonomousDatabaseInput$isAutoScalingForStorageEnabled": "<p>Specifies whether to enable automatic scaling of the storage for the Autonomous Database.</p>",
+        "CreateAutonomousDatabaseInput$isBackupRetentionLocked": "<p>Specifies whether to lock the backup retention period of the Autonomous Database to prevent it from being shortened.</p>",
+        "CreateAutonomousDatabaseInput$isLocalDataGuardEnabled": "<p>Specifies whether to enable local Oracle Data Guard for the Autonomous Database.</p>",
+        "CreateAutonomousDatabaseInput$isMtlsConnectionRequired": "<p>Specifies whether mutual TLS (mTLS) authentication is required to connect to the Autonomous Database.</p>",
         "CreateCloudAutonomousVmClusterInput$isMtlsEnabledVmCluster": "<p>Specifies whether to enable mutual TLS (mTLS) authentication for the Autonomous VM cluster.</p>",
         "CreateCloudVmClusterInput$isLocalBackupEnabled": "<p>Specifies whether to enable database backups to local Exadata storage for the VM cluster.</p>",
         "CreateCloudVmClusterInput$isSparseDiskgroupEnabled": "<p>Specifies whether to create a sparse disk group for the VM cluster.</p>",
+        "CrossRegionDisasterRecoveryConfiguration$isReplicateAutomaticBackups": "<p>Indicates whether automatic backups are replicated to the disaster recovery database.</p>",
         "DataCollectionOptions$isDiagnosticsEventsEnabled": "<p>Indicates whether diagnostic collection is enabled for the VM cluster.</p>",
         "DataCollectionOptions$isHealthMonitoringEnabled": "<p>Indicates whether health monitoring is enabled for the VM cluster.</p>",
         "DataCollectionOptions$isIncidentLogsEnabled": "<p>Indicates whether incident logs are enabled for the cloud VM cluster.</p>",
+        "DatabaseConnectionStringProfile$isRegional": "<p>Indicates whether the connection string profile is regional.</p>",
+        "DatabaseTool$isEnabled": "<p>Indicates whether the database management tool is enabled.</p>",
         "DbSystemShapeSummary$areServerTypesSupported": "<p>Indicates whether the hardware system model supports configurable database and server storage types.</p>",
         "DeleteOdbNetworkInput$deleteAssociatedResources": "<p>Specifies whether to delete associated OCI networking resources along with the ODB network.</p>",
+        "DisasterRecoveryConfiguration$isReplicateAutomaticBackups": "<p>Indicates whether automatic backups are replicated to the disaster recovery database.</p>",
+        "DisasterRecoveryConfiguration$isSnapshotStandby": "<p>Indicates whether the standby database is a snapshot standby.</p>",
         "InitializeServiceInput$ociIdentityDomain": "<p>The Oracle Cloud Infrastructure (OCI) identity domain configuration for service initialization.</p>",
+        "LongTermBackupSchedule$isDisabled": "<p>Indicates whether the long-term backup schedule is disabled.</p>",
         "MaintenanceWindow$isCustomActionTimeoutEnabled": "<p>Indicates whether custom action timeout is enabled for the maintenance window.</p>",
-        "MaintenanceWindow$skipRu": "<p>Indicates whether to skip release updates during maintenance.</p>"
+        "MaintenanceWindow$skipRu": "<p>Indicates whether to skip release updates during maintenance.</p>",
+        "PointInTimeRestoreConfiguration$useLatestAvailableBackupTimestamp": "<p>Indicates whether to use the latest available backup timestamp for the restore.</p>",
+        "RebootAutonomousDatabaseInput$isOnlineReboot": "<p>Specifies whether to perform an online reboot of the Autonomous Database without interrupting active connections.</p>",
+        "ResourcePoolSummary$isDisabled": "<p>Indicates whether the resource pool is disabled.</p>",
+        "UpdateAutonomousDatabaseInput$isAutoScalingEnabled": "<p>Specifies whether to enable automatic scaling of the compute resources for the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$isAutoScalingForStorageEnabled": "<p>Specifies whether to enable automatic scaling of the storage for the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$isBackupRetentionLocked": "<p>Specifies whether to lock the backup retention period of the Autonomous Database to prevent it from being shortened.</p>",
+        "UpdateAutonomousDatabaseInput$isLocalDataGuardEnabled": "<p>Specifies whether to enable local Oracle Data Guard for the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$isMtlsConnectionRequired": "<p>Specifies whether mutual TLS (mTLS) authentication is required to connect to the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$isRefreshableClone": "<p>Specifies whether the Autonomous Database is a refreshable clone.</p>",
+        "UpdateAutonomousDatabaseInput$isDisconnectPeer": "<p>Specifies whether to disconnect the Autonomous Database from its peer database.</p>"
+      }
+    },
+    "CloneToRefreshableConfiguration": {
+      "base": "<p>The configuration for creating an Autonomous Database as a refreshable clone.</p>",
+      "refs": {
+        "SourceConfiguration$cloneToRefreshable": "<p>The configuration for creating the Autonomous Database as a refreshable clone.</p>"
+      }
+    },
+    "CloneToRefreshableConfigurationAutoRefreshFrequencyInSecondsInteger": {
+      "base": null,
+      "refs": {
+        "CloneToRefreshableConfiguration$autoRefreshFrequencyInSeconds": "<p>The frequency, in seconds, at which the refreshable clone is automatically refreshed.</p>"
+      }
+    },
+    "CloneToRefreshableConfigurationAutoRefreshPointLagInSecondsInteger": {
+      "base": null,
+      "refs": {
+        "CloneToRefreshableConfiguration$autoRefreshPointLagInSeconds": "<p>The time lag, in seconds, between the refreshable clone and its source database.</p>"
+      }
+    },
+    "CloneType": {
+      "base": null,
+      "refs": {
+        "CloneToRefreshableConfiguration$cloneType": "<p>The type of clone to create.</p>",
+        "DatabaseCloneConfiguration$cloneType": "<p>The type of clone to create, either a full clone, a metadata clone, or a partial clone.</p>",
+        "PointInTimeRestoreConfiguration$cloneType": "<p>The type of clone to create from the point-in-time restore.</p>",
+        "RestoreFromBackupConfiguration$cloneType": "<p>The type of clone to create from the backup.</p>"
       }
     },
     "CloudAutonomousVmCluster": {
@@ -192,9 +454,17 @@
         "CloudVmClusterList$member": null
       }
     },
+    "ClusterName": {
+      "base": null,
+      "refs": {
+        "CreateCloudVmClusterInput$clusterName": "<p>A name for the Grid Infrastructure cluster. The name isn't case sensitive.</p>"
+      }
+    },
     "ComputeModel": {
       "base": null,
       "refs": {
+        "AutonomousDatabase$computeModel": "<p>The compute model of the Autonomous Database, either ECPU or OCPU.</p>",
+        "AutonomousDatabaseSummary$computeModel": "<p>The compute model of the Autonomous Database, either ECPU or OCPU.</p>",
         "CloudAutonomousVmCluster$computeModel": "<p>The compute model of the Autonomous VM cluster: ECPU or OCPU.</p>",
         "CloudAutonomousVmClusterSummary$computeModel": "<p>The compute model of the Autonomous VM cluster: ECPU or OCPU.</p>",
         "CloudExadataInfrastructure$computeModel": "<p>The OCI model compute model used when you create or clone an instance: ECPU or OCPU. An ECPU is an abstracted measure of compute resources. ECPUs are based on the number of cores elastically allocated from a pool of compute and storage servers. An OCPU is a legacy physical measure of compute resources. OCPUs are based on the physical core of a processor with hyper-threading enabled. </p>",
@@ -208,6 +478,120 @@
     },
     "ConflictException": {
       "base": "<p>Occurs when a conflict with the current status of your resource. Fix any inconsistencies with your resource and try again.</p>",
+      "refs": {}
+    },
+    "CreateAutonomousDatabaseBackupInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAutonomousDatabaseBackupInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseBackupInput$clientToken": "<p>A client-provided token to ensure the idempotency of the request.</p>"
+      }
+    },
+    "CreateAutonomousDatabaseBackupInputRetentionPeriodInDaysInteger": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseBackupInput$retentionPeriodInDays": "<p>The retention period, in days, for the Autonomous Database backup.</p>"
+      }
+    },
+    "CreateAutonomousDatabaseBackupOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAutonomousDatabaseInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAutonomousDatabaseInputAdminPasswordString": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseInput$adminPassword": "<p>The password for the <code>ADMIN</code> user of the Autonomous Database.</p>"
+      }
+    },
+    "CreateAutonomousDatabaseInputByolComputeCountLimitDouble": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseInput$byolComputeCountLimit": "<p>The maximum number of compute resources that you can allocate to the Autonomous Database under the bring-your-own-license (BYOL) model.</p>"
+      }
+    },
+    "CreateAutonomousDatabaseInputCharacterSetString": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseInput$characterSet": "<p>The character set to use for the Autonomous Database.</p>"
+      }
+    },
+    "CreateAutonomousDatabaseInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseInput$clientToken": "<p>A client-provided token to ensure the idempotency of the request.</p>"
+      }
+    },
+    "CreateAutonomousDatabaseInputComputeCountDouble": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseInput$computeCount": "<p>The compute capacity, in number of Elastic CPUs (ECPUs) or Oracle CPUs (OCPUs), to assign to the Autonomous Database.</p>"
+      }
+    },
+    "CreateAutonomousDatabaseInputCpuCoreCountInteger": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseInput$cpuCoreCount": "<p>The number of CPU cores to allocate to the Autonomous Database.</p>"
+      }
+    },
+    "CreateAutonomousDatabaseInputDataStorageSizeInGBsInteger": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseInput$dataStorageSizeInGBs": "<p>The size, in gigabytes (GB), of the data volume to allocate for the Autonomous Database.</p>"
+      }
+    },
+    "CreateAutonomousDatabaseInputDataStorageSizeInTBsInteger": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseInput$dataStorageSizeInTBs": "<p>The size, in terabytes (TB), of the data volume to allocate for the Autonomous Database.</p>"
+      }
+    },
+    "CreateAutonomousDatabaseInputDbNameString": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseInput$dbName": "<p>The name of the Autonomous Database. The name must begin with an alphabetic character and can contain a maximum of 30 alphanumeric characters. Special characters are not permitted. The name must be unique in the Amazon Web Services account.</p>"
+      }
+    },
+    "CreateAutonomousDatabaseInputDbVersionString": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseInput$dbVersion": "<p>The Oracle Database software version to use for the Autonomous Database.</p>"
+      }
+    },
+    "CreateAutonomousDatabaseInputNcharacterSetString": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseInput$ncharacterSet": "<p>The national character set to use for the Autonomous Database.</p>"
+      }
+    },
+    "CreateAutonomousDatabaseOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAutonomousDatabaseWalletInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAutonomousDatabaseWalletInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseWalletInput$clientToken": "<p>A client-provided token to ensure the idempotency of the request.</p>"
+      }
+    },
+    "CreateAutonomousDatabaseWalletInputPasswordString": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseWalletInput$password": "<p>The password to encrypt the keys inside the wallet.</p>"
+      }
+    },
+    "CreateAutonomousDatabaseWalletOutput": {
+      "base": null,
       "refs": {}
     },
     "CreateCloudAutonomousVmClusterInput": {
@@ -326,12 +710,6 @@
         "CreateCloudVmClusterInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, the Amazon Web Services SDK automatically generates a client token and uses it for the request to ensure idempotency. The client token is valid for up to 24 hours after it's first used.</p>"
       }
     },
-    "CreateCloudVmClusterInputClusterNameString": {
-      "base": null,
-      "refs": {
-        "CreateCloudVmClusterInput$clusterName": "<p>A name for the Grid Infrastructure cluster. The name isn't case sensitive.</p>"
-      }
-    },
     "CreateCloudVmClusterInputCpuCoreCountInteger": {
       "base": null,
       "refs": {
@@ -342,12 +720,6 @@
       "base": null,
       "refs": {
         "CreateCloudVmClusterInput$giVersion": "<p>A valid software version of Oracle Grid Infrastructure (GI). To get the list of valid values, use the <code>ListGiVersions</code> operation and specify the shape of the Exadata infrastructure.</p> <p>Example: <code>19.0.0.0</code> </p>"
-      }
-    },
-    "CreateCloudVmClusterInputHostnameString": {
-      "base": null,
-      "refs": {
-        "CreateCloudVmClusterInput$hostname": "<p>The host name for the VM cluster.</p> <p>Constraints:</p> <ul> <li> <p>Can't be \"localhost\" or \"hostname\".</p> </li> <li> <p>Can't contain \"-version\".</p> </li> <li> <p>The maximum length of the combined hostname and domain is 63 characters.</p> </li> <li> <p>The hostname must be unique within the subnet.</p> </li> </ul>"
       }
     },
     "CreateCloudVmClusterInputScanListenerPortTcpInteger": {
@@ -436,6 +808,18 @@
       "base": null,
       "refs": {}
     },
+    "CrossRegionDataGuardConfiguration": {
+      "base": "<p>The configuration for creating an Autonomous Database as a cross-Region Oracle Data Guard peer.</p>",
+      "refs": {
+        "SourceConfiguration$crossRegionDataGuard": "<p>The configuration for creating the Autonomous Database as a cross-Region Oracle Data Guard peer.</p>"
+      }
+    },
+    "CrossRegionDisasterRecoveryConfiguration": {
+      "base": "<p>The configuration for creating an Autonomous Database as a cross-Region disaster recovery peer.</p>",
+      "refs": {
+        "SourceConfiguration$crossRegionDisasterRecovery": "<p>The configuration for creating the Autonomous Database as a cross-Region disaster recovery peer.</p>"
+      }
+    },
     "CrossRegionS3RestoreSourcesAccess": {
       "base": "<p>The configuration access for the cross-Region Amazon S3 database restore source for the ODB network.</p>",
       "refs": {
@@ -463,9 +847,13 @@
     "CustomerContacts": {
       "base": null,
       "refs": {
+        "AutonomousDatabase$customerContacts": "<p>The list of customer contacts that receive operational notifications from Oracle for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$customerContacts": "<p>The list of customer contacts that receive operational notifications from Oracle for the Autonomous Database.</p>",
         "CloudExadataInfrastructure$customerContactsToSendToOCI": "<p>The email addresses of contacts to receive notification from Oracle about maintenance updates for the Exadata infrastructure.</p>",
         "CloudExadataInfrastructureSummary$customerContactsToSendToOCI": "<p>The email addresses of contacts to receive notification from Oracle about maintenance updates for the Exadata infrastructure.</p>",
-        "CreateCloudExadataInfrastructureInput$customerContactsToSendToOCI": "<p>The email addresses of contacts to receive notification from Oracle about maintenance updates for the Exadata infrastructure.</p>"
+        "CreateAutonomousDatabaseInput$customerContactsToSendToOCI": "<p>The list of customer contacts to receive operational notifications from Oracle Cloud Infrastructure (OCI) for the Autonomous Database.</p>",
+        "CreateCloudExadataInfrastructureInput$customerContactsToSendToOCI": "<p>The email addresses of contacts to receive notification from Oracle about maintenance updates for the Exadata infrastructure.</p>",
+        "UpdateAutonomousDatabaseInput$customerContactsToSendToOCI": "<p>The list of customer contacts to receive operational notifications from OCI for the Autonomous Database.</p>"
       }
     },
     "DataCollectionOptions": {
@@ -476,10 +864,96 @@
         "CreateCloudVmClusterInput$dataCollectionOptions": "<p>The set of preferences for the various diagnostic collection options for the VM cluster.</p>"
       }
     },
+    "DataGuardRole": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$role": "<p>The Oracle Data Guard role of the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$role": "<p>The Oracle Data Guard role of the Autonomous Database.</p>"
+      }
+    },
+    "DataSafeStatus": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$dataSafeStatus": "<p>The status of the Oracle Data Safe registration for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$dataSafeStatus": "<p>The status of the Oracle Data Safe registration for the Autonomous Database.</p>"
+      }
+    },
+    "DatabaseCloneConfiguration": {
+      "base": "<p>The configuration for creating an Autonomous Database as a clone of an existing database.</p>",
+      "refs": {
+        "SourceConfiguration$databaseClone": "<p>The configuration for creating the Autonomous Database as a clone of an existing database.</p>"
+      }
+    },
+    "DatabaseConnectionStringMap": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabaseConnectionStrings$allConnectionStrings": "<p>The list of all connection strings that you can use to connect to the Autonomous Database.</p>"
+      }
+    },
+    "DatabaseConnectionStringProfile": {
+      "base": "<p>A connection string profile for an Autonomous Database.</p>",
+      "refs": {
+        "DatabaseConnectionStringProfileList$member": null
+      }
+    },
+    "DatabaseConnectionStringProfileList": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabaseConnectionStrings$profiles": "<p>The list of connection string profiles for the Autonomous Database.</p>"
+      }
+    },
+    "DatabaseEdition": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$databaseEdition": "<p>The Oracle Database edition of the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$databaseEdition": "<p>The Oracle Database edition of the Autonomous Database.</p>",
+        "CreateAutonomousDatabaseInput$databaseEdition": "<p>The Oracle Database edition to apply to the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$databaseEdition": "<p>The Oracle Database edition to apply to the Autonomous Database.</p>"
+      }
+    },
+    "DatabaseManagementStatus": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$databaseManagementStatus": "<p>The status of Oracle Database Management for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$databaseManagementStatus": "<p>The status of Oracle Database Management for the Autonomous Database.</p>"
+      }
+    },
+    "DatabaseStandbySummary": {
+      "base": "<p>A summary of a standby Autonomous Database in an Oracle Data Guard configuration.</p>",
+      "refs": {
+        "AutonomousDatabase$standbyDb": "<p>The details of the standby Autonomous Database in a cross-Region Oracle Data Guard configuration.</p>",
+        "AutonomousDatabase$localStandbyDb": "<p>The details of the local standby Autonomous Database in an Oracle Data Guard configuration.</p>",
+        "AutonomousDatabaseSummary$standbyDb": "<p>The details of the standby Autonomous Database in a cross-Region Oracle Data Guard configuration.</p>",
+        "AutonomousDatabaseSummary$localStandbyDb": "<p>The details of the local standby Autonomous Database in an Oracle Data Guard configuration.</p>"
+      }
+    },
+    "DatabaseTool": {
+      "base": "<p>Information about a database management tool for an Autonomous Database.</p>",
+      "refs": {
+        "DatabaseToolList$member": null
+      }
+    },
+    "DatabaseToolList": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$dbToolsDetails": "<p>The list of database management tools enabled for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$dbToolsDetails": "<p>The list of database management tools enabled for the Autonomous Database.</p>",
+        "CreateAutonomousDatabaseInput$dbToolsDetails": "<p>The list of database management tools to enable for the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$dbToolsDetails": "<p>The list of database management tools to enable for the Autonomous Database.</p>"
+      }
+    },
+    "DatabaseType": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$databaseType": "<p>The type of the Autonomous Database, either a regular database or a clone.</p>",
+        "AutonomousDatabaseSummary$databaseType": "<p>The type of the Autonomous Database, either a regular database or a clone.</p>"
+      }
+    },
     "DayOfWeek": {
       "base": "<p>An enumeration of days of the week used for scheduling maintenance windows.</p>",
       "refs": {
-        "DaysOfWeek$member": null
+        "DaysOfWeek$member": null,
+        "ScheduledOperationDetails$dayOfWeek": "<p>The day of the week on which the scheduled operation occurs.</p>"
       }
     },
     "DayOfWeekName": {
@@ -584,6 +1058,33 @@
         "DbSystemShapeList$member": null
       }
     },
+    "DbWorkload": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$dbWorkload": "<p>The intended use of the Autonomous Database, such as transaction processing, data warehouse, JSON database, or APEX.</p>",
+        "AutonomousDatabaseSummary$dbWorkload": "<p>The intended use of the Autonomous Database, such as transaction processing, data warehouse, JSON database, or APEX.</p>",
+        "AutonomousDatabaseVersionSummary$dbWorkload": "<p>The intended use of the Autonomous Database that the version supports, such as transaction processing, data warehouse, JSON database, or APEX.</p>",
+        "CreateAutonomousDatabaseInput$dbWorkload": "<p>The intended use of the Autonomous Database, such as transaction processing, data warehouse, JSON database, or APEX.</p>",
+        "ListAutonomousDatabaseVersionsInput$dbWorkload": "<p>The intended use of the Autonomous Database to return versions for, such as transaction processing, data warehouse, JSON database, or APEX.</p>",
+        "UpdateAutonomousDatabaseInput$dbWorkload": "<p>The intended use of the Autonomous Database, such as transaction processing, data warehouse, JSON database, or APEX.</p>"
+      }
+    },
+    "DeleteAutonomousDatabaseBackupInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAutonomousDatabaseBackupOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAutonomousDatabaseInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAutonomousDatabaseOutput": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteCloudAutonomousVmClusterInput": {
       "base": null,
       "refs": {}
@@ -638,6 +1139,22 @@
       "base": null,
       "refs": {}
     },
+    "DisasterRecoveryConfiguration": {
+      "base": "<p>The disaster recovery configuration for an Autonomous Database.</p>",
+      "refs": {
+        "AutonomousDatabase$remoteDisasterRecoveryConfiguration": "<p>The configuration of the remote disaster recovery for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$remoteDisasterRecoveryConfiguration": "<p>The configuration of the remote disaster recovery for the Autonomous Database.</p>"
+      }
+    },
+    "DisasterRecoveryType": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$localDisasterRecoveryType": "<p>The type of local disaster recovery configured for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$localDisasterRecoveryType": "<p>The type of local disaster recovery configured for the Autonomous Database.</p>",
+        "CrossRegionDisasterRecoveryConfiguration$remoteDisasterRecoveryType": "<p>The type of remote disaster recovery to configure, either Autonomous Data Guard or backup-based.</p>",
+        "DisasterRecoveryConfiguration$disasterRecoveryType": "<p>The type of disaster recovery configured for the Autonomous Database.</p>"
+      }
+    },
     "DiskRedundancy": {
       "base": null,
       "refs": {
@@ -648,6 +1165,18 @@
     "Double": {
       "base": null,
       "refs": {
+        "AutonomousDatabase$dataStorageSizeInTBs": "<p>The size, in terabytes (TB), of the data volume allocated for the Autonomous Database.</p>",
+        "AutonomousDatabase$usedDataStorageSizeInTBs": "<p>The amount of data storage currently in use by the Autonomous Database, in TB.</p>",
+        "AutonomousDatabase$actualUsedDataStorageSizeInTBs": "<p>The actual amount of data storage currently in use by the Autonomous Database, in TB.</p>",
+        "AutonomousDatabase$allocatedStorageSizeInTBs": "<p>The amount of storage currently allocated to the Autonomous Database, in TB.</p>",
+        "AutonomousDatabase$totalBackupStorageSizeInGBs": "<p>The total amount of backup storage used by the Autonomous Database, in GB.</p>",
+        "AutonomousDatabaseBackup$sizeInTBs": "<p>The size of the Autonomous Database backup, in terabytes (TB).</p>",
+        "AutonomousDatabaseBackupSummary$sizeInTBs": "<p>The size of the Autonomous Database backup, in terabytes (TB).</p>",
+        "AutonomousDatabaseSummary$dataStorageSizeInTBs": "<p>The size, in terabytes (TB), of the data volume allocated for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$usedDataStorageSizeInTBs": "<p>The amount of data storage currently in use by the Autonomous Database, in TB.</p>",
+        "AutonomousDatabaseSummary$actualUsedDataStorageSizeInTBs": "<p>The actual amount of data storage currently in use by the Autonomous Database, in TB.</p>",
+        "AutonomousDatabaseSummary$allocatedStorageSizeInTBs": "<p>The amount of storage currently allocated to the Autonomous Database, in TB.</p>",
+        "AutonomousDatabaseSummary$totalBackupStorageSizeInGBs": "<p>The total amount of backup storage used by the Autonomous Database, in GB.</p>",
         "CloudAutonomousVmCluster$autonomousDataStorageSizeInTBs": "<p>The data storage size allocated for Autonomous Databases in the Autonomous VM cluster, in TB.</p>",
         "CloudAutonomousVmCluster$availableAutonomousDataStorageSizeInTBs": "<p>The available data storage space for Autonomous Databases in the Autonomous VM cluster, in TB.</p>",
         "CloudAutonomousVmCluster$dataStorageSizeInGBs": "<p>The total data storage allocated to the Autonomous VM cluster, in GB.</p>",
@@ -666,7 +1195,42 @@
         "CloudExadataInfrastructureUnallocatedResources$exadataStorageInTBs": "<p>The amount of unallocated Exadata storage available, in terabytes (TB).</p>",
         "CloudVmCluster$dataStorageSizeInTBs": "<p>The size of the data disk group, in terabytes (TB), that's allocated for the VM cluster.</p>",
         "CloudVmClusterSummary$dataStorageSizeInTBs": "<p>The size of the data disk group, in terabytes (TB), that's allocated for the VM cluster.</p>",
-        "CreateCloudVmClusterInput$dataStorageSizeInTBs": "<p>The size of the data disk group, in terabytes (TBs), to allocate for the VM cluster.</p>"
+        "CreateCloudVmClusterInput$dataStorageSizeInTBs": "<p>The size of the data disk group, in terabytes (TBs), to allocate for the VM cluster.</p>",
+        "DatabaseTool$computeCount": "<p>The compute capacity allocated to the database management tool.</p>",
+        "ResourcePoolSummary$availableStorageCapacityInTBs": "<p>The available storage capacity in the resource pool, in TB.</p>"
+      }
+    },
+    "EncryptionKeyConfiguration": {
+      "base": "<p>The configuration of the encryption key used for an Autonomous Database. This is a union, so only one of the following members can be specified.</p>",
+      "refs": {
+        "EncryptionSummary$encryptionKeyConfiguration": "<p>The configuration of the encryption key used for the Autonomous Database.</p>"
+      }
+    },
+    "EncryptionKeyConfigurationInput": {
+      "base": "<p>The configuration of the encryption key to use for an Autonomous Database. This is a union, so only one of the following members can be specified.</p>",
+      "refs": {
+        "CreateAutonomousDatabaseInput$encryptionKeyConfiguration": "<p>The configuration of the encryption key to use for the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$encryptionKeyConfiguration": "<p>The configuration of the encryption key to use for the Autonomous Database.</p>"
+      }
+    },
+    "EncryptionKeyProvider": {
+      "base": null,
+      "refs": {
+        "EncryptionSummary$encryptionKeyProvider": "<p>The provider of the encryption key used for the Autonomous Database.</p>"
+      }
+    },
+    "EncryptionKeyProviderInput": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseInput$encryptionKeyProvider": "<p>The provider of the encryption key to use for the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$encryptionKeyProvider": "<p>The provider of the encryption key to use for the Autonomous Database.</p>"
+      }
+    },
+    "EncryptionSummary": {
+      "base": "<p>The encryption configuration for an Autonomous Database.</p>",
+      "refs": {
+        "AutonomousDatabase$encryptionSummary": "<p>The encryption configuration for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$encryptionSummary": "<p>The encryption configuration for the Autonomous Database.</p>"
       }
     },
     "ExadataIormConfig": {
@@ -676,9 +1240,28 @@
         "CloudVmClusterSummary$iormConfigCache": null
       }
     },
+    "ExternalIdType": {
+      "base": null,
+      "refs": {
+        "AwsEncryptionKeyConfiguration$externalIdType": "<p>The type of external identifier associated with the encryption key.</p>",
+        "AwsEncryptionKeyConfigurationInput$externalIdType": "<p>The type of external identifier associated with the encryption key.</p>"
+      }
+    },
+    "FailoverAutonomousDatabaseInput": {
+      "base": null,
+      "refs": {}
+    },
+    "FailoverAutonomousDatabaseOutput": {
+      "base": null,
+      "refs": {}
+    },
     "Float": {
       "base": null,
       "refs": {
+        "AutonomousDatabase$percentProgress": "<p>The progress of the current operation on the Autonomous Database, as a percentage.</p>",
+        "AutonomousDatabase$computeCount": "<p>The compute capacity, in number of Elastic CPUs (ECPUs) or Oracle CPUs (OCPUs), assigned to the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$percentProgress": "<p>The progress of the current operation on the Autonomous Database, as a percentage.</p>",
+        "AutonomousDatabaseSummary$computeCount": "<p>The compute capacity, in number of Elastic CPUs (ECPUs) or Oracle CPUs (OCPUs), assigned to the Autonomous Database.</p>",
         "CloudAutonomousVmCluster$percentProgress": "<p>The progress of the current operation on the Autonomous VM cluster, as a percentage.</p>",
         "CloudAutonomousVmCluster$autonomousDataStoragePercentage": "<p>The percentage of data storage currently in use for Autonomous Databases in the Autonomous VM cluster.</p>",
         "CloudAutonomousVmCluster$availableCpus": "<p>The number of CPU cores available for allocation to Autonomous Databases.</p>",
@@ -702,6 +1285,30 @@
         "OdbPeeringConnection$percentProgress": "<p>The percentage progress of the ODB peering connection creation or deletion.</p>",
         "OdbPeeringConnectionSummary$percentProgress": "<p>The percentage progress of the ODB peering connection creation or deletion.</p>"
       }
+    },
+    "GetAutonomousDatabaseBackupInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAutonomousDatabaseBackupOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAutonomousDatabaseInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAutonomousDatabaseOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAutonomousDatabaseWalletDetailsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAutonomousDatabaseWalletDetailsOutput": {
+      "base": null,
+      "refs": {}
     },
     "GetCloudAutonomousVmClusterInput": {
       "base": null,
@@ -787,6 +1394,12 @@
         "GiVersionList$member": null
       }
     },
+    "Hostname": {
+      "base": null,
+      "refs": {
+        "CreateCloudVmClusterInput$hostname": "<p>The host name for the VM cluster.</p> <p>Constraints:</p> <ul> <li> <p>Can't be \"localhost\" or \"hostname\".</p> </li> <li> <p>Can't contain \"-version\".</p> </li> <li> <p>The maximum length of the combined hostname and domain is 63 characters.</p> </li> <li> <p>The hostname must be unique within the subnet.</p> </li> </ul>"
+      }
+    },
     "HoursOfDay": {
       "base": null,
       "refs": {
@@ -825,6 +1438,30 @@
     "Integer": {
       "base": null,
       "refs": {
+        "AutonomousDatabase$byolComputeCountLimit": "<p>The maximum number of compute resources that you can allocate to the Autonomous Database under the bring-your-own-license (BYOL) model.</p>",
+        "AutonomousDatabase$cpuCoreCount": "<p>The number of CPU cores allocated to the Autonomous Database.</p>",
+        "AutonomousDatabase$memoryPerOracleComputeUnitInGBs": "<p>The amount of memory allocated per Oracle Compute Unit, in GB.</p>",
+        "AutonomousDatabase$dataStorageSizeInGBs": "<p>The size, in gigabytes (GB), of the data volume allocated for the Autonomous Database.</p>",
+        "AutonomousDatabase$usedDataStorageSizeInGBs": "<p>The amount of data storage currently in use by the Autonomous Database, in GB.</p>",
+        "AutonomousDatabase$inMemoryAreaInGBs": "<p>The size of the in-memory area of the Autonomous Database, in GB.</p>",
+        "AutonomousDatabase$failedDataRecoveryInSeconds": "<p>The amount of time, in seconds, that the data in the Autonomous Database is behind the data in the primary database.</p>",
+        "AutonomousDatabase$localAdgAutoFailoverMaxDataLossLimit": "<p>The maximum data loss limit, in seconds, for automatic failover to the local Oracle Data Guard standby database.</p>",
+        "AutonomousDatabase$autoRefreshFrequencyInSeconds": "<p>The frequency, in seconds, at which the refreshable clone Autonomous Database is automatically refreshed.</p>",
+        "AutonomousDatabase$autoRefreshPointLagInSeconds": "<p>The time lag, in seconds, between the refreshable clone and its source Autonomous Database.</p>",
+        "AutonomousDatabase$backupRetentionPeriodInDays": "<p>The retention period, in days, for automatic backups of the Autonomous Database.</p>",
+        "AutonomousDatabaseBackup$retentionPeriodInDays": "<p>The retention period, in days, for the Autonomous Database backup.</p>",
+        "AutonomousDatabaseBackupSummary$retentionPeriodInDays": "<p>The retention period, in days, for the Autonomous Database backup.</p>",
+        "AutonomousDatabaseSummary$byolComputeCountLimit": "<p>The maximum number of compute resources that you can allocate to the Autonomous Database under the bring-your-own-license (BYOL) model.</p>",
+        "AutonomousDatabaseSummary$cpuCoreCount": "<p>The number of CPU cores allocated to the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$memoryPerOracleComputeUnitInGBs": "<p>The amount of memory allocated per Oracle Compute Unit, in GB.</p>",
+        "AutonomousDatabaseSummary$dataStorageSizeInGBs": "<p>The size, in gigabytes (GB), of the data volume allocated for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$usedDataStorageSizeInGBs": "<p>The amount of data storage currently in use by the Autonomous Database, in GB.</p>",
+        "AutonomousDatabaseSummary$inMemoryAreaInGBs": "<p>The size of the in-memory area of the Autonomous Database, in GB.</p>",
+        "AutonomousDatabaseSummary$failedDataRecoveryInSeconds": "<p>The amount of time, in seconds, that the data in the Autonomous Database is behind the data in the primary database.</p>",
+        "AutonomousDatabaseSummary$localAdgAutoFailoverMaxDataLossLimit": "<p>The maximum data loss limit, in seconds, for automatic failover to the local Oracle Data Guard standby database.</p>",
+        "AutonomousDatabaseSummary$autoRefreshFrequencyInSeconds": "<p>The frequency, in seconds, at which the refreshable clone Autonomous Database is automatically refreshed.</p>",
+        "AutonomousDatabaseSummary$autoRefreshPointLagInSeconds": "<p>The time lag, in seconds, between the refreshable clone and its source Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$backupRetentionPeriodInDays": "<p>The retention period, in days, for automatic backups of the Autonomous Database.</p>",
         "AutonomousVirtualMachineSummary$cpuCoreCount": "<p>The number of CPU cores allocated to this Autonomous VM.</p>",
         "AutonomousVirtualMachineSummary$memorySizeInGBs": "<p>The amount of memory allocated to this Autonomous VM, in gigabytes (GB).</p>",
         "AutonomousVirtualMachineSummary$dbNodeStorageSizeInGBs": "<p>The amount of storage allocated to this Autonomous Virtual Machine, in gigabytes (GB).</p>",
@@ -895,10 +1532,13 @@
         "CloudVmClusterSummary$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GB), that's allocated for the VM cluster.</p>",
         "CloudVmClusterSummary$nodeCount": "<p>The number of nodes in the VM cluster.</p>",
         "CloudVmClusterSummary$storageSizeInGBs": "<p>The amount of local node storage, in gigabytes (GB), that's allocated to the VM cluster.</p>",
+        "CreateAutonomousDatabaseInput$backupRetentionPeriodInDays": "<p>The retention period, in days, for automatic backups of the Autonomous Database.</p>",
         "CreateCloudExadataInfrastructureInput$computeCount": "<p>The number of database servers for the Exadata infrastructure. Valid values for this parameter depend on the shape. To get information about the minimum and maximum values, use the <code>ListDbSystemShapes</code> operation.</p>",
         "CreateCloudExadataInfrastructureInput$storageCount": "<p>The number of storage servers to activate for this Exadata infrastructure. Valid values for this parameter depend on the shape. To get information about the minimum and maximum values, use the <code>ListDbSystemShapes</code> operation.</p>",
         "CreateCloudVmClusterInput$dbNodeStorageSizeInGBs": "<p>The amount of local node storage, in gigabytes (GBs), to allocate for the VM cluster.</p>",
         "CreateCloudVmClusterInput$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GBs), to allocate for the VM cluster.</p>",
+        "DatabaseStandbySummary$lagTimeInSeconds": "<p>The time lag, in seconds, between the standby database and the primary database.</p>",
+        "DatabaseTool$maxIdleTimeInMinutes": "<p>The maximum amount of time, in minutes, that the database management tool can be idle before it is shut down.</p>",
         "DbIormConfig$share": "<p>The relative priority of this database.</p>",
         "DbNode$cpuCoreCount": "<p>Number of CPU cores enabled on the DB node.</p>",
         "DbNode$dbNodeStorageSizeInGBs": "<p>The amount of local node storage, in gigabytes (GBs), that's allocated on the DB node.</p>",
@@ -943,9 +1583,25 @@
         "DbSystemShapeSummary$minimumNodeCount": "<p>The minimum number of compute servers that are available for the shape.</p>",
         "DbSystemShapeSummary$runtimeMinimumCoreCount": "<p>The runtime minimum number of CPU cores that can be enabled for the shape.</p>",
         "HoursOfDay$member": null,
+        "IntegerList$member": null,
         "InternalServerException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request after an internal server error.</p>",
+        "ResourcePoolSummary$poolSize": "<p>The number of Autonomous Databases that the resource pool can contain.</p>",
+        "ResourcePoolSummary$poolStorageSizeInTBs": "<p>The total storage size of the resource pool, in terabytes (TB).</p>",
+        "ResourcePoolSummary$totalComputeCapacity": "<p>The total compute capacity of the resource pool.</p>",
+        "ResourcePoolSummary$availableComputeCapacity": "<p>The available compute capacity in the resource pool.</p>",
         "ThrottlingException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request after being throttled.</p>",
         "WeeksOfMonth$member": null
+      }
+    },
+    "IntegerList": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$provisionableCpus": "<p>The list of CPU core counts that you can provision for the Autonomous Database.</p>",
+        "AutonomousDatabase$cloneTableSpaceList": "<p>The list of tablespace identifiers to clone for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$provisionableCpus": "<p>The list of CPU core counts that you can provision for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$cloneTableSpaceList": "<p>The list of tablespace identifiers to clone for the Autonomous Database.</p>",
+        "PointInTimeRestoreConfiguration$cloneTableSpaceList": "<p>The list of tablespace identifiers to clone from the point-in-time restore.</p>",
+        "RestoreFromBackupConfiguration$cloneTableSpaceList": "<p>The list of tablespace identifiers to clone from the backup.</p>"
       }
     },
     "InternalServerException": {
@@ -964,16 +1620,147 @@
         "ManagedServices$kmsAccess": "<p>The Amazon Web Services Key Management Service (KMS) access configuration.</p>"
       }
     },
+    "KmsKeyIdOrArn": {
+      "base": null,
+      "refs": {
+        "AwsEncryptionKeyConfiguration$kmsKeyId": "<p>The identifier or ARN of the Amazon Web Services KMS key used for encryption.</p>",
+        "AwsEncryptionKeyConfigurationInput$kmsKeyId": "<p>The identifier or ARN of the Amazon Web Services KMS key to use for encryption.</p>"
+      }
+    },
     "LicenseModel": {
       "base": null,
       "refs": {
+        "AutonomousDatabase$licenseModel": "<p>The Oracle license model that applies to the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$licenseModel": "<p>The Oracle license model that applies to the Autonomous Database.</p>",
         "CloudAutonomousVmCluster$licenseModel": "<p>The Oracle license model that applies to the Autonomous VM cluster.</p>",
         "CloudAutonomousVmClusterSummary$licenseModel": "<p>The Oracle license model that applies to the Autonomous VM cluster.</p>",
         "CloudVmCluster$licenseModel": "<p>The Oracle license model applied to the VM cluster.</p>",
         "CloudVmClusterSummary$licenseModel": "<p>The Oracle license model applied to the VM cluster.</p>",
+        "CreateAutonomousDatabaseInput$licenseModel": "<p>The Oracle license model to apply to the Autonomous Database.</p>",
         "CreateCloudAutonomousVmClusterInput$licenseModel": "<p>The Oracle license model to apply to the Autonomous VM cluster.</p>",
-        "CreateCloudVmClusterInput$licenseModel": "<p>The Oracle license model to apply to the VM cluster.</p> <p>Default: <code>LICENSE_INCLUDED</code> </p>"
+        "CreateCloudVmClusterInput$licenseModel": "<p>The Oracle license model to apply to the VM cluster.</p> <p>Default: <code>LICENSE_INCLUDED</code> </p>",
+        "UpdateAutonomousDatabaseInput$licenseModel": "<p>The Oracle license model to apply to the Autonomous Database.</p>"
       }
+    },
+    "ListAutonomousDatabaseBackupsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutonomousDatabaseBackupsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseBackupsInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p>"
+      }
+    },
+    "ListAutonomousDatabaseBackupsInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseBackupsInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListAutonomousDatabaseBackupsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutonomousDatabaseCharacterSetsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutonomousDatabaseCharacterSetsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseCharacterSetsInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p>"
+      }
+    },
+    "ListAutonomousDatabaseCharacterSetsInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseCharacterSetsInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListAutonomousDatabaseCharacterSetsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutonomousDatabaseClonesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutonomousDatabaseClonesInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseClonesInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p>"
+      }
+    },
+    "ListAutonomousDatabaseClonesInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseClonesInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListAutonomousDatabaseClonesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutonomousDatabasePeersInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutonomousDatabasePeersInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabasePeersInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p>"
+      }
+    },
+    "ListAutonomousDatabasePeersInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabasePeersInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListAutonomousDatabasePeersOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutonomousDatabaseVersionsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutonomousDatabaseVersionsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseVersionsInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p>"
+      }
+    },
+    "ListAutonomousDatabaseVersionsInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseVersionsInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListAutonomousDatabaseVersionsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutonomousDatabasesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutonomousDatabasesInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabasesInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p>"
+      }
+    },
+    "ListAutonomousDatabasesInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabasesInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListAutonomousDatabasesOutput": {
+      "base": null,
+      "refs": {}
     },
     "ListAutonomousVirtualMachinesInput": {
       "base": null,
@@ -1233,6 +2020,20 @@
       "base": null,
       "refs": {}
     },
+    "LongTermBackupSchedule": {
+      "base": "<p>The long-term backup schedule for an Autonomous Database.</p>",
+      "refs": {
+        "AutonomousDatabase$longTermBackupSchedule": "<p>The long-term backup schedule for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$longTermBackupSchedule": "<p>The long-term backup schedule for the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$longTermBackupSchedule": "<p>The long-term backup schedule for the Autonomous Database.</p>"
+      }
+    },
+    "LongTermBackupScheduleRetentionPeriodInDaysInteger": {
+      "base": null,
+      "refs": {
+        "LongTermBackupSchedule$retentionPeriodInDays": "<p>The retention period, in days, for long-term backups.</p>"
+      }
+    },
     "MaintenanceWindow": {
       "base": "<p>The scheduling details for the maintenance window. Patching and system updates take place during the maintenance window.</p>",
       "refs": {
@@ -1299,10 +2100,23 @@
         "MaintenanceWindow$months": "<p>The months when maintenance can be performed.</p>"
       }
     },
+    "NetServicesArchitecture": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$netServicesArchitecture": "<p>The Oracle Net Services architecture of the Autonomous Database, either dedicated or shared.</p>",
+        "AutonomousDatabaseSummary$netServicesArchitecture": "<p>The Oracle Net Services architecture of the Autonomous Database, either dedicated or shared.</p>"
+      }
+    },
     "Objective": {
       "base": null,
       "refs": {
         "ExadataIormConfig$objective": "<p>The current value for the IORM objective. The default is AUTO.</p>"
+      }
+    },
+    "OciAwsIntegration": {
+      "base": null,
+      "refs": {
+        "OciIamRole$awsIntegration": "<p>The Amazon Web Services integration configuration settings for the Amazon Web Services Identity and Access Management (IAM) service role.</p>"
       }
     },
     "OciDnsForwardingConfig": {
@@ -1322,6 +2136,36 @@
       "refs": {
         "OdbNetwork$ociDnsForwardingConfigs": "<p>The DNS resolver endpoint in OCI for forwarding DNS queries for the ociPrivateZone domain.</p>",
         "OdbNetworkSummary$ociDnsForwardingConfigs": "<p>The DNS resolver endpoint in OCI for forwarding DNS queries for the ociPrivateZone domain.</p>"
+      }
+    },
+    "OciEncryptionKeyConfiguration": {
+      "base": "<p>The configuration of the Oracle Cloud Infrastructure (OCI) Vault encryption key used for an Autonomous Database.</p>",
+      "refs": {
+        "EncryptionKeyConfiguration$ociEncryptionKey": "<p>The configuration of the Oracle Cloud Infrastructure (OCI) Vault encryption key.</p>"
+      }
+    },
+    "OciEncryptionKeyConfigurationKmsKeyIdString": {
+      "base": null,
+      "refs": {
+        "OciEncryptionKeyConfiguration$kmsKeyId": "<p>The Oracle Cloud Identifier (OCID) of the OCI Vault key to use for encryption.</p>"
+      }
+    },
+    "OciEncryptionKeyConfigurationVaultIdString": {
+      "base": null,
+      "refs": {
+        "OciEncryptionKeyConfiguration$vaultId": "<p>The Oracle Cloud Identifier (OCID) of the OCI Vault that contains the encryption key.</p>"
+      }
+    },
+    "OciIamRole": {
+      "base": "<p>Information about an Amazon Web Services Identity and Access Management (IAM) service role used for Autonomous Database integration with Oracle Cloud Infrastructure (OCI).</p>",
+      "refs": {
+        "OciIamRoleList$member": null
+      }
+    },
+    "OciIamRoleList": {
+      "base": null,
+      "refs": {
+        "GetOciOnboardingStatusOutput$autonomousDatabaseOciIntegrationIamRoles": "<p>The list of Amazon Web Services Identity and Access Management (IAM) service roles used for Autonomous Database integration with Oracle Cloud Infrastructure (OCI).</p>"
       }
     },
     "OciIdentityDomain": {
@@ -1468,6 +2312,28 @@
         "OdbPeeringConnectionList$member": null
       }
     },
+    "OkvEncryptionKeyConfiguration": {
+      "base": "<p>The configuration of the Oracle Key Vault (OKV) encryption key used for an Autonomous Database.</p>",
+      "refs": {
+        "EncryptionKeyConfiguration$okvEncryptionKey": "<p>The configuration of the Oracle Key Vault (OKV) encryption key.</p>"
+      }
+    },
+    "OpenMode": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$openMode": "<p>The mode in which the Autonomous Database is open, either read-only or read/write.</p>",
+        "AutonomousDatabaseSummary$openMode": "<p>The mode in which the Autonomous Database is open, either read-only or read/write.</p>",
+        "CloneToRefreshableConfiguration$openMode": "<p>The mode in which to open the refreshable clone, either read-only or read/write.</p>",
+        "UpdateAutonomousDatabaseInput$openMode": "<p>The mode in which to open the Autonomous Database, either read-only or read/write.</p>"
+      }
+    },
+    "OperationsInsightsStatus": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$operationsInsightsStatus": "<p>The status of Oracle Operations Insights for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$operationsInsightsStatus": "<p>The status of Oracle Operations Insights for the Autonomous Database.</p>"
+      }
+    },
     "PatchingModeType": {
       "base": null,
       "refs": {
@@ -1502,6 +2368,20 @@
         "UpdateOdbPeeringConnectionInput$peerNetworkCidrsToBeRemoved": "<p>A list of CIDR blocks to remove from the peering connection. The CIDR blocks must currently exist in the peering connection.</p>"
       }
     },
+    "PermissionLevel": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$permissionLevel": "<p>The permission level of the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$permissionLevel": "<p>The permission level of the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$permissionLevel": "<p>The permission level of the Autonomous Database.</p>"
+      }
+    },
+    "PointInTimeRestoreConfiguration": {
+      "base": "<p>The configuration for creating an Autonomous Database by restoring to a point in time.</p>",
+      "refs": {
+        "SourceConfiguration$pointInTimeRestore": "<p>The configuration for creating the Autonomous Database by restoring to a point in time.</p>"
+      }
+    },
     "PolicyDocument": {
       "base": null,
       "refs": {
@@ -1519,6 +2399,14 @@
         "MaintenanceWindow$preference": "<p>The preference for the maintenance window scheduling.</p>"
       }
     },
+    "RebootAutonomousDatabaseInput": {
+      "base": null,
+      "refs": {}
+    },
+    "RebootAutonomousDatabaseOutput": {
+      "base": null,
+      "refs": {}
+    },
     "RebootDbNodeInput": {
       "base": null,
       "refs": {}
@@ -1527,9 +2415,33 @@
       "base": null,
       "refs": {}
     },
+    "RefreshableMode": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$refreshableMode": "<p>The refresh mode of the refreshable clone Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$refreshableMode": "<p>The refresh mode of the refreshable clone Autonomous Database.</p>",
+        "CloneToRefreshableConfiguration$refreshableMode": "<p>The refresh mode of the refreshable clone, either automatic or manual.</p>",
+        "UpdateAutonomousDatabaseInput$refreshableMode": "<p>The refresh mode of the refreshable clone Autonomous Database.</p>"
+      }
+    },
+    "RefreshableStatus": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$refreshableStatus": "<p>The refresh status of the refreshable clone Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$refreshableStatus": "<p>The refresh status of the refreshable clone Autonomous Database.</p>"
+      }
+    },
+    "RepeatCadence": {
+      "base": null,
+      "refs": {
+        "LongTermBackupSchedule$repeatCadence": "<p>The cadence at which long-term backups are taken.</p>"
+      }
+    },
     "RequestTagMap": {
       "base": null,
       "refs": {
+        "CreateAutonomousDatabaseBackupInput$tags": "<p>The list of resource tags to apply to the Autonomous Database backup. Each tag is a key-value pair with no predefined name, type, or namespace.</p>",
+        "CreateAutonomousDatabaseInput$tags": "<p>The list of resource tags to apply to the Autonomous Database. Each tag is a key-value pair with no predefined name, type, or namespace.</p>",
         "CreateCloudAutonomousVmClusterInput$tags": "<p>Free-form tags for this resource. Each tag is a key-value pair with no predefined name, type, or namespace.</p>",
         "CreateCloudExadataInfrastructureInput$tags": "<p>The list of resource tags to apply to the Exadata infrastructure.</p>",
         "CreateCloudVmClusterInput$tags": "<p>The list of resource tags to apply to the VM cluster.</p>",
@@ -1541,6 +2453,13 @@
     "ResourceArn": {
       "base": null,
       "refs": {
+        "AutonomousDatabase$autonomousDatabaseArn": "<p>The Amazon Resource Name (ARN) of the Autonomous Database.</p>",
+        "AutonomousDatabase$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network associated with the Autonomous Database.</p>",
+        "AutonomousDatabaseBackup$autonomousDatabaseBackupArn": "<p>The Amazon Resource Name (ARN) of the Autonomous Database backup.</p>",
+        "AutonomousDatabaseBackupSummary$autonomousDatabaseBackupArn": "<p>The Amazon Resource Name (ARN) of the Autonomous Database backup.</p>",
+        "AutonomousDatabasePeerSummary$autonomousDatabaseArn": "<p>The Amazon Resource Name (ARN) of the peer Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$autonomousDatabaseArn": "<p>The Amazon Resource Name (ARN) of the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network associated with the Autonomous Database.</p>",
         "CloudAutonomousVmCluster$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network associated with this Autonomous VM cluster.</p>",
         "CloudAutonomousVmCluster$cloudExadataInfrastructureArn": "<p>The Amazon Resource Name (ARN) of the Cloud Exadata Infrastructure containing this Autonomous VM cluster.</p>",
         "CloudAutonomousVmClusterSummary$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network associated with this Autonomous VM cluster.</p>",
@@ -1551,9 +2470,11 @@
         "CloudVmClusterSummary$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network associated with this VM cluster.</p>",
         "DbNode$dbNodeArn": "<p>The Amazon Resource Name (ARN) of the DB node.</p>",
         "DbNodeSummary$dbNodeArn": "<p>The Amazon Resource Name (ARN) of the DB node.</p>",
+        "FailoverAutonomousDatabaseInput$peerDbArn": "<p>The Amazon Resource Name (ARN) of the peer Autonomous Database to fail over to.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to list tags for.</p>",
         "ManagedServices$serviceNetworkArn": "<p>The Amazon Resource Name (ARN) of the service network.</p>",
         "ManagedServices$resourceGatewayArn": "<p>The Amazon Resource Name (ARN) of the resource gateway.</p>",
+        "SwitchoverAutonomousDatabaseInput$peerDbArn": "<p>The Amazon Resource Name (ARN) of the peer Autonomous Database to switch over to.</p>",
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to apply tags to.</p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to remove tags from.</p>"
       }
@@ -1563,11 +2484,14 @@
       "refs": {
         "CloudAutonomousVmCluster$displayName": "<p>The display name of the Autonomous VM cluster.</p>",
         "CloudAutonomousVmClusterSummary$displayName": "<p>The user-friendly name for the Autonomous VM cluster.</p>",
+        "CreateAutonomousDatabaseBackupInput$displayName": "<p>The user-friendly name for the Autonomous Database backup.</p>",
+        "CreateAutonomousDatabaseInput$displayName": "<p>The user-friendly name for the Autonomous Database. The name does not have to be unique.</p>",
         "CreateCloudAutonomousVmClusterInput$displayName": "<p>The display name for the Autonomous VM cluster. The name does not need to be unique.</p>",
         "CreateCloudExadataInfrastructureInput$displayName": "<p>A user-friendly name for the Exadata infrastructure.</p>",
         "CreateCloudVmClusterInput$displayName": "<p>A user-friendly name for the VM cluster.</p>",
         "CreateOdbNetworkInput$displayName": "<p>A user-friendly name for the ODB network.</p>",
         "CreateOdbPeeringConnectionInput$displayName": "<p>The display name for the ODB peering connection.</p>",
+        "UpdateAutonomousDatabaseInput$displayName": "<p>The new user-friendly name for the Autonomous Database.</p>",
         "UpdateOdbNetworkInput$displayName": "<p>The new user-friendly name of the ODB network.</p>",
         "UpdateOdbPeeringConnectionInput$displayName": "<p>A new display name for the peering connection.</p>"
       }
@@ -1575,6 +2499,13 @@
     "ResourceId": {
       "base": null,
       "refs": {
+        "AutonomousDatabase$odbNetworkId": "<p>The unique identifier of the ODB network associated with the Autonomous Database.</p>",
+        "AutonomousDatabaseBackup$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup.</p>",
+        "AutonomousDatabaseBackup$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that the backup was created from.</p>",
+        "AutonomousDatabaseBackupSummary$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup.</p>",
+        "AutonomousDatabaseBackupSummary$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that the backup was created from.</p>",
+        "AutonomousDatabasePeerSummary$autonomousDatabaseId": "<p>The unique identifier of the peer Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$odbNetworkId": "<p>The unique identifier of the ODB network associated with the Autonomous Database.</p>",
         "AutonomousVirtualMachineSummary$autonomousVirtualMachineId": "<p>The unique identifier of the Autonomous VM.</p>",
         "AutonomousVirtualMachineSummary$dbServerId": "<p>The unique identifier of the database server hosting this Autonomous VM.</p>",
         "CloudAutonomousVmCluster$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster.</p>",
@@ -1588,13 +2519,16 @@
         "DbNodeSummary$dbServerId": "<p>The unique identifier of the database server that's associated with the DB node.</p>",
         "DbServer$dbServerId": "<p>The unique identifier for the database server.</p>",
         "DbServerSummary$dbServerId": "<p>The unique identifier of the database server.</p>",
+        "DeleteAutonomousDatabaseBackupInput$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup to delete.</p>",
         "DeleteCloudAutonomousVmClusterInput$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster to delete.</p>",
         "DeleteCloudVmClusterInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster to delete.</p>",
+        "GetAutonomousDatabaseBackupInput$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup to retrieve information about.</p>",
         "GetCloudAutonomousVmClusterInput$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster to retrieve information about.</p>",
         "GetCloudVmClusterInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster.</p>",
         "GetDbNodeInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster that contains the DB node.</p>",
         "GetDbNodeInput$dbNodeId": "<p>The unique identifier of the DB node to retrieve information about.</p>",
         "GetDbServerInput$dbServerId": "<p>The unique identifier of the database server to retrieve information about.</p>",
+        "ListAutonomousDatabaseBackupsInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database whose backups you want to list.</p>",
         "ListAutonomousVirtualMachinesInput$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster whose virtual machines you're listing.</p>",
         "ListDbNodesInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster.</p>",
         "RebootDbNodeInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster that contains the DB node to reboot.</p>",
@@ -1603,7 +2537,8 @@
         "StartDbNodeInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster that contains the DB node to start.</p>",
         "StartDbNodeInput$dbNodeId": "<p>The unique identifier of the DB node to start.</p>",
         "StopDbNodeInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster that contains the DB node to stop.</p>",
-        "StopDbNodeInput$dbNodeId": "<p>The unique identifier of the DB node to stop.</p>"
+        "StopDbNodeInput$dbNodeId": "<p>The unique identifier of the DB node to stop.</p>",
+        "UpdateAutonomousDatabaseBackupInput$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup to update.</p>"
       }
     },
     "ResourceIdList": {
@@ -1616,6 +2551,9 @@
     "ResourceIdOrArn": {
       "base": null,
       "refs": {
+        "AutonomousDatabase$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database.</p>",
+        "CloneToRefreshableConfiguration$sourceAutonomousDatabaseId": "<p>The unique identifier of the source Autonomous Database to create the refreshable clone from.</p>",
         "CloudAutonomousVmCluster$odbNetworkId": "<p>The unique identifier of the ODB network associated with this Autonomous VM cluster.</p>",
         "CloudAutonomousVmCluster$cloudExadataInfrastructureId": "<p>The unique identifier of the Cloud Exadata Infrastructure containing this Autonomous VM cluster.</p>",
         "CloudAutonomousVmClusterSummary$odbNetworkId": "<p>The unique identifier of the ODB network associated with this Autonomous VM cluster.</p>",
@@ -1625,20 +2563,31 @@
         "CloudExadataInfrastructureUnallocatedResources$cloudExadataInfrastructureId": "<p>The unique identifier of the Cloud Exadata infrastructure.</p>",
         "CloudVmCluster$odbNetworkId": "<p>The unique identifier of the ODB network for the VM cluster.</p>",
         "CloudVmClusterSummary$odbNetworkId": "<p>The unique identifier of the ODB network for the VM cluster.</p>",
+        "CreateAutonomousDatabaseBackupInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to back up.</p>",
+        "CreateAutonomousDatabaseInput$odbNetworkId": "<p>The unique identifier of the ODB network to be used for the Autonomous Database.</p>",
+        "CreateAutonomousDatabaseInput$resourcePoolLeaderId": "<p>The unique identifier of the resource pool leader Autonomous Database.</p>",
+        "CreateAutonomousDatabaseWalletInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to create a wallet for.</p>",
         "CreateCloudAutonomousVmClusterInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure where the VM cluster will be created.</p>",
         "CreateCloudAutonomousVmClusterInput$odbNetworkId": "<p>The unique identifier of the ODB network to be used for the VM cluster.</p>",
         "CreateCloudVmClusterInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure for this VM cluster.</p>",
         "CreateCloudVmClusterInput$odbNetworkId": "<p>The unique identifier of the ODB network for the VM cluster.</p>",
         "CreateOdbPeeringConnectionInput$odbNetworkId": "<p>The unique identifier of the ODB network that initiates the peering connection.</p>",
         "CreateOdbPeeringConnectionInput$peerNetworkId": "<p>The unique identifier of the peer network. This can be either a VPC ID or another ODB network ID.</p>",
+        "DatabaseCloneConfiguration$sourceAutonomousDatabaseId": "<p>The unique identifier of the source Autonomous Database to clone.</p>",
+        "DeleteAutonomousDatabaseInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to delete.</p>",
         "DeleteCloudExadataInfrastructureInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure to delete.</p>",
         "DeleteOdbNetworkInput$odbNetworkId": "<p>The unique identifier of the ODB network to delete.</p>",
         "DeleteOdbPeeringConnectionInput$odbPeeringConnectionId": "<p>The unique identifier of the ODB peering connection to delete.</p>",
+        "FailoverAutonomousDatabaseInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to fail over.</p>",
+        "GetAutonomousDatabaseInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to retrieve information about.</p>",
+        "GetAutonomousDatabaseWalletDetailsInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to retrieve wallet details for.</p>",
         "GetCloudExadataInfrastructureInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure.</p>",
         "GetCloudExadataInfrastructureUnallocatedResourcesInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Cloud Exadata infrastructure for which to retrieve unallocated resources.</p>",
         "GetDbServerInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Oracle Exadata infrastructure that contains the database server.</p>",
         "GetOdbNetworkInput$odbNetworkId": "<p>The unique identifier of the ODB network.</p>",
         "GetOdbPeeringConnectionInput$odbPeeringConnectionId": "<p>The unique identifier of the ODB peering connection to retrieve information about.</p>",
+        "ListAutonomousDatabaseClonesInput$autonomousDatabaseId": "<p>The unique identifier of the source Autonomous Database whose clones you want to list.</p>",
+        "ListAutonomousDatabasePeersInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database whose peer databases you want to list.</p>",
         "ListCloudAutonomousVmClustersInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Cloud Exadata Infrastructure that hosts the Autonomous VM clusters to be listed.</p>",
         "ListCloudVmClustersInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Oracle Exadata infrastructure.</p>",
         "ListDbServersInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Oracle Exadata infrastructure.</p>",
@@ -1647,6 +2596,17 @@
         "OdbNetworkSummary$odbNetworkId": "<p>The unique identifier of the ODB network.</p>",
         "OdbPeeringConnection$odbPeeringConnectionId": "<p>The unique identifier of the ODB peering connection. A sample ID is <code>odbpcx-abcdefgh12345678</code>.</p>",
         "OdbPeeringConnectionSummary$odbPeeringConnectionId": "<p>The unique identifier of the ODB peering connection. A sample ID is <code>odbpcx-abcdefgh12345678</code>.</p>",
+        "PointInTimeRestoreConfiguration$sourceAutonomousDatabaseId": "<p>The unique identifier of the source Autonomous Database to restore from.</p>",
+        "RebootAutonomousDatabaseInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to reboot.</p>",
+        "RestoreAutonomousDatabaseInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to restore.</p>",
+        "RestoreFromBackupConfiguration$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup to restore from.</p>",
+        "ShrinkAutonomousDatabaseInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to shrink.</p>",
+        "StartAutonomousDatabaseInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to start.</p>",
+        "StopAutonomousDatabaseInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to stop.</p>",
+        "SwitchoverAutonomousDatabaseInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to switch over.</p>",
+        "UpdateAutonomousDatabaseInput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database to update.</p>",
+        "UpdateAutonomousDatabaseInput$peerDbId": "<p>The unique identifier of the peer Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$resourcePoolLeaderId": "<p>The unique identifier of the resource pool leader Autonomous Database.</p>",
         "UpdateCloudExadataInfrastructureInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure to update.</p>",
         "UpdateOdbNetworkInput$odbNetworkId": "<p>The unique identifier of the ODB network to update.</p>",
         "UpdateOdbPeeringConnectionInput$odbPeeringConnectionId": "<p>The identifier of the Oracle Database@Amazon Web Services peering connection to update.</p>"
@@ -1655,6 +2615,15 @@
     "ResourceNotFoundException": {
       "base": "<p>The operation tried to access a resource that doesn't exist. Make sure you provided the correct resource and try again.</p>",
       "refs": {}
+    },
+    "ResourcePoolSummary": {
+      "base": "<p>The configuration of a resource pool for an Autonomous Database.</p>",
+      "refs": {
+        "AutonomousDatabase$resourcePoolSummary": "<p>The configuration of the resource pool for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$resourcePoolSummary": "<p>The configuration of the resource pool for the Autonomous Database.</p>",
+        "CreateAutonomousDatabaseInput$resourcePoolSummary": "<p>The configuration of the resource pool for the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$resourcePoolSummary": "<p>The configuration of the resource pool for the Autonomous Database.</p>"
+      }
     },
     "ResourceStatus": {
       "base": null,
@@ -1666,6 +2635,7 @@
         "CloudExadataInfrastructureSummary$status": "<p>The current status of the Exadata infrastructure.</p>",
         "CloudVmCluster$status": "<p>The current status of the VM cluster.</p>",
         "CloudVmClusterSummary$status": "<p>The current status of the VM cluster.</p>",
+        "CreateAutonomousDatabaseBackupOutput$status": "<p>The current status of the Autonomous Database backup.</p>",
         "CreateCloudAutonomousVmClusterOutput$status": "<p>The current status of the Autonomous VM cluster creation process.</p>",
         "CreateCloudExadataInfrastructureOutput$status": "<p>The current status of the Exadata infrastructure.</p>",
         "CreateCloudVmClusterOutput$status": "<p>The current status of the VM cluster.</p>",
@@ -1678,6 +2648,7 @@
         "OdbNetworkSummary$status": "<p>The current status of the ODB network.</p>",
         "OdbPeeringConnection$status": "<p>The status of the ODB peering connection.</p>",
         "OdbPeeringConnectionSummary$status": "<p>The status of the ODB peering connection.</p>",
+        "UpdateAutonomousDatabaseBackupOutput$status": "<p>The current status of the Autonomous Database backup.</p>",
         "UpdateCloudExadataInfrastructureOutput$status": "<p>The current status of the Exadata infrastructure after the update operation.</p>",
         "UpdateOdbNetworkOutput$status": "<p>The current status of the ODB network.</p>",
         "UpdateOdbPeeringConnectionOutput$status": "<p>The status of the peering connection update operation.</p>"
@@ -1689,18 +2660,50 @@
         "ListTagsForResourceResponse$tags": "<p>The list of tags applied to the resource.</p>"
       }
     },
+    "RestoreAutonomousDatabaseInput": {
+      "base": null,
+      "refs": {}
+    },
+    "RestoreAutonomousDatabaseOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "RestoreFromBackupConfiguration": {
+      "base": "<p>The configuration for creating an Autonomous Database by restoring from a backup.</p>",
+      "refs": {
+        "SourceConfiguration$restoreFromBackup": "<p>The configuration for creating the Autonomous Database by restoring from a backup.</p>"
+      }
+    },
     "RoleArn": {
       "base": null,
       "refs": {
         "AssociateIamRoleToResourceInput$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) service role to associate with the resource.</p>",
+        "AwsEncryptionKeyConfiguration$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) role that grants access to the KMS key.</p>",
+        "AwsEncryptionKeyConfigurationInput$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) role that grants access to the KMS key.</p>",
         "DisassociateIamRoleFromResourceInput$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) service role to disassociate from the resource.</p>",
-        "IamRole$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) service role.</p>"
+        "IamRole$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) service role.</p>",
+        "OciIamRole$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Identity and Access Management (IAM) service role.</p>"
       }
     },
     "S3Access": {
       "base": "<p>The configuration for Amazon S3 access from the ODB network.</p>",
       "refs": {
         "ManagedServices$s3Access": "<p>The Amazon S3 access configuration.</p>"
+      }
+    },
+    "ScheduledOperationDetails": {
+      "base": "<p>The scheduled start and stop times for an Autonomous Database on a specific day of the week.</p>",
+      "refs": {
+        "ScheduledOperationDetailsList$member": null
+      }
+    },
+    "ScheduledOperationDetailsList": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$scheduledOperations": "<p>The list of scheduled start and stop times for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$scheduledOperations": "<p>The list of scheduled start and stop times for the Autonomous Database.</p>",
+        "CreateAutonomousDatabaseInput$scheduledOperations": "<p>The list of scheduled start and stop times for the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$scheduledOperations": "<p>The list of scheduled start and stop times for the Autonomous Database.</p>"
       }
     },
     "SensitiveString": {
@@ -1732,11 +2735,56 @@
         "DbSystemShapeSummary$shapeType": "<p>The shape type. This property is determined by the CPU hardware.</p>"
       }
     },
+    "ShrinkAutonomousDatabaseInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ShrinkAutonomousDatabaseOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "SourceConfiguration": {
+      "base": "<p>The configuration details for the source used to create an Autonomous Database. This is a union, so only one of the following members can be specified.</p>",
+      "refs": {
+        "CreateAutonomousDatabaseInput$sourceConfiguration": "<p>The configuration details for the source used to create the Autonomous Database.</p>"
+      }
+    },
+    "SourceType": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseInput$source": "<p>The source from which to create the Autonomous Database, such as a clone, backup, or cross-Region copy.</p>"
+      }
+    },
+    "StandbyAllowlistedIpsSource": {
+      "base": null,
+      "refs": {
+        "AutonomousDatabase$standbyAllowlistedIpsSource": "<p>The source of the allowlisted IP addresses for the standby Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$standbyAllowlistedIpsSource": "<p>The source of the allowlisted IP addresses for the standby Autonomous Database.</p>",
+        "CreateAutonomousDatabaseInput$standbyAllowlistedIpsSource": "<p>The source of the allowlisted IP addresses for the standby Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$standbyAllowlistedIpsSource": "<p>The source of the allowlisted IP addresses for the standby Autonomous Database.</p>"
+      }
+    },
+    "StartAutonomousDatabaseInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartAutonomousDatabaseOutput": {
+      "base": null,
+      "refs": {}
+    },
     "StartDbNodeInput": {
       "base": null,
       "refs": {}
     },
     "StartDbNodeOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "StopAutonomousDatabaseInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StopAutonomousDatabaseOutput": {
       "base": null,
       "refs": {}
     },
@@ -1753,6 +2801,72 @@
       "refs": {
         "AcceptMarketplaceRegistrationInput$marketplaceRegistrationToken": "<p>The registration token that's generated by Amazon Web Services Marketplace and sent to Oracle Database@Amazon Web Services.</p>",
         "AccessDeniedException$message": null,
+        "AutonomousDatabase$ociResourceAnchorName": "<p>The name of the Oracle Cloud Infrastructure (OCI) resource anchor associated with the Autonomous Database.</p>",
+        "AutonomousDatabase$ocid": "<p>The Oracle Cloud Identifier (OCID) of the Autonomous Database.</p>",
+        "AutonomousDatabase$ociUrl": "<p>The URL for accessing the OCI console page for the Autonomous Database.</p>",
+        "AutonomousDatabase$displayName": "<p>The user-friendly name of the Autonomous Database.</p>",
+        "AutonomousDatabase$dbName": "<p>The name of the Autonomous Database.</p>",
+        "AutonomousDatabase$sourceId": "<p>The unique identifier of the source from which the Autonomous Database was created.</p>",
+        "AutonomousDatabase$statusReason": "<p>Additional information about the current status of the Autonomous Database, if applicable.</p>",
+        "AutonomousDatabase$dbVersion": "<p>The Oracle Database software version of the Autonomous Database.</p>",
+        "AutonomousDatabase$characterSet": "<p>The character set of the Autonomous Database.</p>",
+        "AutonomousDatabase$ncharacterSet": "<p>The national character set of the Autonomous Database.</p>",
+        "AutonomousDatabase$serviceConsoleUrl": "<p>The URL for accessing the Oracle service console for the Autonomous Database.</p>",
+        "AutonomousDatabase$sqlWebDeveloperUrl": "<p>The URL for accessing Oracle SQL Developer Web for the Autonomous Database.</p>",
+        "AutonomousDatabase$availabilityZone": "<p>The Availability Zone where the Autonomous Database is located.</p>",
+        "AutonomousDatabase$availabilityZoneId": "<p>The unique identifier of the Availability Zone where the Autonomous Database is located.</p>",
+        "AutonomousDatabase$maintenanceTargetComponent": "<p>The component on the Autonomous Database that the current maintenance is being applied to.</p>",
+        "AutonomousDatabase$resourcePoolLeaderId": "<p>The unique identifier of the resource pool leader Autonomous Database.</p>",
+        "AutonomousDatabase$privateEndpoint": "<p>The private endpoint for the Autonomous Database.</p>",
+        "AutonomousDatabase$privateEndpointIp": "<p>The private endpoint IP address for the Autonomous Database.</p>",
+        "AutonomousDatabase$privateEndpointLabel": "<p>The private endpoint label for the Autonomous Database.</p>",
+        "AutonomousDatabaseApex$apexVersion": "<p>The Oracle Application Express (APEX) version of the Autonomous Database.</p>",
+        "AutonomousDatabaseApex$ordsVersion": "<p>The Oracle REST Data Services (ORDS) version of the Autonomous Database.</p>",
+        "AutonomousDatabaseBackup$ocid": "<p>The Oracle Cloud Identifier (OCID) of the Autonomous Database backup.</p>",
+        "AutonomousDatabaseBackup$displayName": "<p>The user-friendly name of the Autonomous Database backup.</p>",
+        "AutonomousDatabaseBackup$dbVersion": "<p>The Oracle Database software version of the Autonomous Database backup.</p>",
+        "AutonomousDatabaseBackup$statusReason": "<p>Additional information about the current status of the Autonomous Database backup, if applicable.</p>",
+        "AutonomousDatabaseBackupSummary$ocid": "<p>The Oracle Cloud Identifier (OCID) of the Autonomous Database backup.</p>",
+        "AutonomousDatabaseBackupSummary$displayName": "<p>The user-friendly name of the Autonomous Database backup.</p>",
+        "AutonomousDatabaseBackupSummary$dbVersion": "<p>The Oracle Database software version of the Autonomous Database backup.</p>",
+        "AutonomousDatabaseBackupSummary$statusReason": "<p>Additional information about the current status of the Autonomous Database backup, if applicable.</p>",
+        "AutonomousDatabaseCharacterSetSummary$characterSet": "<p>The name of the character set.</p>",
+        "AutonomousDatabaseConnectionStrings$dedicated": "<p>The connection string for connecting to the Autonomous Database with a dedicated service.</p>",
+        "AutonomousDatabaseConnectionStrings$high": "<p>The connection string for the high-priority database service.</p>",
+        "AutonomousDatabaseConnectionStrings$medium": "<p>The connection string for the medium-priority database service.</p>",
+        "AutonomousDatabaseConnectionStrings$low": "<p>The connection string for the low-priority database service.</p>",
+        "AutonomousDatabaseConnectionUrls$apexUrl": "<p>The URL for accessing Oracle Application Express (APEX) for the Autonomous Database.</p>",
+        "AutonomousDatabaseConnectionUrls$databaseTransformsUrl": "<p>The URL for accessing Oracle Database Transforms for the Autonomous Database.</p>",
+        "AutonomousDatabaseConnectionUrls$graphStudioUrl": "<p>The URL for accessing Oracle Graph Studio for the Autonomous Database.</p>",
+        "AutonomousDatabaseConnectionUrls$machineLearningNotebookUrl": "<p>The URL for accessing the Oracle Machine Learning notebook for the Autonomous Database.</p>",
+        "AutonomousDatabaseConnectionUrls$machineLearningUserManagementUrl": "<p>The URL for accessing Oracle Machine Learning user management for the Autonomous Database.</p>",
+        "AutonomousDatabaseConnectionUrls$mongoDbUrl": "<p>The URL for accessing the MongoDB API for the Autonomous Database.</p>",
+        "AutonomousDatabaseConnectionUrls$ordsUrl": "<p>The URL for accessing Oracle REST Data Services (ORDS) for the Autonomous Database.</p>",
+        "AutonomousDatabaseConnectionUrls$spatialStudioUrl": "<p>The URL for accessing Oracle Spatial Studio for the Autonomous Database.</p>",
+        "AutonomousDatabaseConnectionUrls$sqlDevWebUrl": "<p>The URL for accessing Oracle SQL Developer Web for the Autonomous Database.</p>",
+        "AutonomousDatabasePeerSummary$ocid": "<p>The Oracle Cloud Identifier (OCID) of the peer Autonomous Database.</p>",
+        "AutonomousDatabasePeerSummary$region": "<p>The Amazon Web Services Region where the peer Autonomous Database is located.</p>",
+        "AutonomousDatabaseSummary$ociResourceAnchorName": "<p>The name of the Oracle Cloud Infrastructure (OCI) resource anchor associated with the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$ocid": "<p>The Oracle Cloud Identifier (OCID) of the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$ociUrl": "<p>The URL for accessing the OCI console page for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$displayName": "<p>The user-friendly name of the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$dbName": "<p>The name of the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$sourceId": "<p>The unique identifier of the source from which the Autonomous Database was created.</p>",
+        "AutonomousDatabaseSummary$statusReason": "<p>Additional information about the current status of the Autonomous Database, if applicable.</p>",
+        "AutonomousDatabaseSummary$dbVersion": "<p>The Oracle Database software version of the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$characterSet": "<p>The character set of the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$ncharacterSet": "<p>The national character set of the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$serviceConsoleUrl": "<p>The URL for accessing the Oracle service console for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$sqlWebDeveloperUrl": "<p>The URL for accessing Oracle SQL Developer Web for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$availabilityZone": "<p>The Availability Zone where the Autonomous Database is located.</p>",
+        "AutonomousDatabaseSummary$availabilityZoneId": "<p>The unique identifier of the Availability Zone where the Autonomous Database is located.</p>",
+        "AutonomousDatabaseSummary$maintenanceTargetComponent": "<p>The component on the Autonomous Database that the current maintenance is being applied to.</p>",
+        "AutonomousDatabaseSummary$resourcePoolLeaderId": "<p>The unique identifier of the resource pool leader Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$privateEndpoint": "<p>The private endpoint for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$privateEndpointIp": "<p>The private endpoint IP address for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$privateEndpointLabel": "<p>The private endpoint label for the Autonomous Database.</p>",
+        "AutonomousDatabaseVersionSummary$details": "<p>Additional details about the Autonomous Database software version.</p>",
+        "AutonomousDatabaseVersionSummary$version": "<p>The Oracle Database software version.</p>",
         "AutonomousVirtualMachineSummary$statusReason": "<p>Additional information about the current status of the Autonomous VM, if applicable.</p>",
         "AutonomousVirtualMachineSummary$vmName": "<p>The name of the Autonomous VM.</p>",
         "AutonomousVirtualMachineSummary$dbServerDisplayName": "<p>The display name of the database server hosting this Autonomous VM.</p>",
@@ -1852,6 +2966,14 @@
         "ConflictException$message": null,
         "ConflictException$resourceId": "<p>The identifier of the resource that caused the conflict.</p>",
         "ConflictException$resourceType": "<p>The type of resource that caused the conflict.</p>",
+        "CreateAutonomousDatabaseBackupOutput$displayName": "<p>The user-friendly name of the Autonomous Database backup that was created.</p>",
+        "CreateAutonomousDatabaseBackupOutput$statusReason": "<p>Additional information about the current status of the Autonomous Database backup, if applicable.</p>",
+        "CreateAutonomousDatabaseBackupOutput$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup that was created.</p>",
+        "CreateAutonomousDatabaseInput$privateEndpointIp": "<p>The private endpoint IP address for the Autonomous Database.</p>",
+        "CreateAutonomousDatabaseInput$privateEndpointLabel": "<p>The private endpoint label for the Autonomous Database.</p>",
+        "CreateAutonomousDatabaseOutput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that was created.</p>",
+        "CreateAutonomousDatabaseOutput$displayName": "<p>The user-friendly name of the Autonomous Database that was created.</p>",
+        "CreateAutonomousDatabaseOutput$statusReason": "<p>Additional information about the current status of the Autonomous Database, if applicable.</p>",
         "CreateCloudAutonomousVmClusterOutput$displayName": "<p>The display name of the created Autonomous VM cluster.</p>",
         "CreateCloudAutonomousVmClusterOutput$statusReason": "<p>Additional information about the current status of the Autonomous VM cluster creation process, if applicable.</p>",
         "CreateCloudAutonomousVmClusterOutput$cloudAutonomousVmClusterId": "<p>The unique identifier of the created Autonomous VM cluster.</p>",
@@ -1868,6 +2990,20 @@
         "CreateOdbPeeringConnectionOutput$statusReason": "<p>The reason for the current status of the ODB peering connection.</p>",
         "CreateOdbPeeringConnectionOutput$odbPeeringConnectionId": "<p>The unique identifier of the ODB peering connection.</p>",
         "CrossRegionS3RestoreSourcesAccess$region": "<p>The Amazon Web Services Region for cross-Region Amazon S3 restore access.</p>",
+        "DatabaseConnectionStringMap$key": null,
+        "DatabaseConnectionStringMap$value": null,
+        "DatabaseConnectionStringProfile$consumerGroup": "<p>The consumer group associated with the connection string profile.</p>",
+        "DatabaseConnectionStringProfile$displayName": "<p>The user-friendly name of the connection string profile.</p>",
+        "DatabaseConnectionStringProfile$hostFormat": "<p>The host name format used in the connection string.</p>",
+        "DatabaseConnectionStringProfile$protocol": "<p>The protocol used by the connection string profile.</p>",
+        "DatabaseConnectionStringProfile$sessionMode": "<p>The session mode of the connection string profile.</p>",
+        "DatabaseConnectionStringProfile$syntaxFormat": "<p>The syntax format of the connection string profile.</p>",
+        "DatabaseConnectionStringProfile$tlsAuthentication": "<p>The TLS authentication method used by the connection string profile.</p>",
+        "DatabaseConnectionStringProfile$value": "<p>The connection string value of the profile.</p>",
+        "DatabaseStandbySummary$availabilityDomain": "<p>The availability domain of the standby Autonomous Database.</p>",
+        "DatabaseStandbySummary$statusReason": "<p>Additional information about the current status of the standby Autonomous Database, if applicable.</p>",
+        "DatabaseStandbySummary$maintenanceTargetComponent": "<p>The component on the standby Autonomous Database that the current maintenance is being applied to.</p>",
+        "DatabaseTool$name": "<p>The name of the database management tool.</p>",
         "DbIormConfig$dbName": "<p>The database name. For the default DbPlan, the dbName is <code>default</code>.</p>",
         "DbIormConfig$flashCacheLimit": "<p>The flash cache limit for this database. This value is internally configured based on the share value assigned to the database.</p>",
         "DbNode$statusReason": "<p>Additional information about the status of the DB node.</p>",
@@ -1919,13 +3055,24 @@
         "DbSystemShapeSummary$shapeFamily": "<p>The family of the shape.</p>",
         "DbSystemShapeSummary$name": "<p>The name of the shape.</p>",
         "ExadataIormConfig$lifecycleDetails": "<p>Additional information about the current lifecycleState.</p>",
+        "FailoverAutonomousDatabaseOutput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that was failed over.</p>",
+        "FailoverAutonomousDatabaseOutput$displayName": "<p>The user-friendly name of the Autonomous Database.</p>",
+        "FailoverAutonomousDatabaseOutput$statusReason": "<p>Additional information about the status of the Autonomous Database after the failover operation.</p>",
         "GetOciOnboardingStatusOutput$existingTenancyActivationLink": "<p>The existing OCI tenancy activation link for your Amazon Web Services account.</p>",
         "GetOciOnboardingStatusOutput$newTenancyActivationLink": "<p>A new OCI tenancy activation link for your Amazon Web Services account.</p>",
+        "GetOciOnboardingStatusOutput$linkedOciTenancyId": "<p>The unique identifier of the Oracle Cloud Infrastructure (OCI) tenancy that is linked to your Amazon Web Services account.</p>",
+        "GetOciOnboardingStatusOutput$linkedOciCompartmentId": "<p>The unique identifier of the Oracle Cloud Infrastructure (OCI) compartment that is linked to your Amazon Web Services account.</p>",
         "GiVersionSummary$version": "<p>The GI software version.</p>",
         "IamRole$statusReason": "<p>Additional information about the current status of the Amazon Web Services Identity and Access Management (IAM) service role, if applicable.</p>",
         "InternalServerException$message": null,
         "KmsAccess$domainName": "<p>The domain name for Amazon Web Services Key Management Service (KMS) access configuration.</p>",
         "KmsAccess$kmsPolicyDocument": "<p>The Amazon Web Services Key Management Service (KMS) policy document that defines permissions for key usage.</p>",
+        "ListAutonomousDatabaseBackupsOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "ListAutonomousDatabaseCharacterSetsOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "ListAutonomousDatabaseClonesOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "ListAutonomousDatabasePeersOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "ListAutonomousDatabaseVersionsOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "ListAutonomousDatabasesOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "ListAutonomousVirtualMachinesOutput$nextToken": "<p>The pagination token from which to continue listing.</p>",
         "ListCloudAutonomousVmClustersOutput$nextToken": "<p>The pagination token to continue listing from.</p>",
         "ListCloudExadataInfrastructuresOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
@@ -1967,28 +3114,63 @@
         "OdbPeeringConnectionSummary$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network that initiated the peering connection.</p>",
         "OdbPeeringConnectionSummary$peerNetworkArn": "<p>The Amazon Resource Name (ARN) of the peer network.</p>",
         "OdbPeeringConnectionSummary$odbPeeringConnectionType": "<p>The type of the ODB peering connection.</p> <p>Valid Values: <code>ODB-VPC | ODB-ODB</code> </p>",
+        "OkvEncryptionKeyConfiguration$certificateDirectoryName": "<p>The name of the directory that contains the Oracle Key Vault (OKV) certificate.</p>",
+        "OkvEncryptionKeyConfiguration$certificateId": "<p>The identifier of the Oracle Key Vault (OKV) certificate.</p>",
+        "OkvEncryptionKeyConfiguration$directoryName": "<p>The name of the directory where the Oracle Key Vault (OKV) configuration is stored.</p>",
+        "OkvEncryptionKeyConfiguration$okvKmsKey": "<p>The identifier of the Oracle Key Vault (OKV) key to use for encryption.</p>",
+        "OkvEncryptionKeyConfiguration$okvUri": "<p>The URI of the Oracle Key Vault (OKV) server.</p>",
+        "RebootAutonomousDatabaseOutput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that was rebooted.</p>",
+        "RebootAutonomousDatabaseOutput$displayName": "<p>The user-friendly name of the Autonomous Database.</p>",
+        "RebootAutonomousDatabaseOutput$statusReason": "<p>Additional information about the status of the Autonomous Database after the reboot operation.</p>",
         "RebootDbNodeOutput$dbNodeId": "<p>The unique identifier of the DB node that was rebooted.</p>",
         "RebootDbNodeOutput$statusReason": "<p>Additional information about the status of the DB node after the reboot operation.</p>",
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$resourceId": "<p>The identifier of the resource that was not found.</p>",
         "ResourceNotFoundException$resourceType": "<p>The type of resource that was not found.</p>",
+        "RestoreAutonomousDatabaseOutput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that was restored.</p>",
+        "RestoreAutonomousDatabaseOutput$displayName": "<p>The user-friendly name of the Autonomous Database.</p>",
+        "RestoreAutonomousDatabaseOutput$statusReason": "<p>Additional information about the status of the Autonomous Database after the restore operation.</p>",
         "S3Access$domainName": "<p>The domain name for the Amazon S3 access.</p>",
         "S3Access$s3PolicyDocument": "<p>The endpoint policy for the Amazon S3 access.</p>",
+        "ScheduledOperationDetails$scheduledStartTime": "<p>The scheduled start time for the Autonomous Database, in UTC.</p>",
+        "ScheduledOperationDetails$scheduledStopTime": "<p>The scheduled stop time for the Autonomous Database, in UTC.</p>",
         "ServiceNetworkEndpoint$vpcEndpointId": "<p>The identifier of the VPC endpoint.</p>",
         "ServiceQuotaExceededException$message": null,
         "ServiceQuotaExceededException$resourceId": "<p>The identifier of the resource that exceeded the service quota.</p>",
         "ServiceQuotaExceededException$resourceType": "<p>The type of resource that exceeded the service quota.</p>",
         "ServiceQuotaExceededException$quotaCode": "<p>The unqiue identifier of the service quota that was exceeded.</p>",
+        "ShrinkAutonomousDatabaseOutput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that was shrunk.</p>",
+        "ShrinkAutonomousDatabaseOutput$displayName": "<p>The user-friendly name of the Autonomous Database.</p>",
+        "ShrinkAutonomousDatabaseOutput$statusReason": "<p>Additional information about the status of the Autonomous Database after the shrink operation.</p>",
+        "StartAutonomousDatabaseOutput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that was started.</p>",
+        "StartAutonomousDatabaseOutput$displayName": "<p>The user-friendly name of the Autonomous Database.</p>",
+        "StartAutonomousDatabaseOutput$statusReason": "<p>Additional information about the status of the Autonomous Database after the start operation.</p>",
         "StartDbNodeOutput$dbNodeId": "<p>The unique identifier of the DB node that was started.</p>",
         "StartDbNodeOutput$statusReason": "<p>Additional information about the status of the DB node after the start operation.</p>",
+        "StopAutonomousDatabaseOutput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that was stopped.</p>",
+        "StopAutonomousDatabaseOutput$displayName": "<p>The user-friendly name of the Autonomous Database.</p>",
+        "StopAutonomousDatabaseOutput$statusReason": "<p>Additional information about the status of the Autonomous Database after the stop operation.</p>",
         "StopDbNodeOutput$dbNodeId": "<p>The unique identifier of the DB node that was stopped.</p>",
         "StopDbNodeOutput$statusReason": "<p>Additional information about the status of the DB node after the stop operation.</p>",
         "StringList$member": null,
         "StsAccess$domainName": "<p>The domain name for Amazon Web Services Security Token Service (STS) access configuration.</p>",
         "StsAccess$stsPolicyDocument": "<p>The Amazon Web Services Security Token Service (STS) policy document that defines permissions for token service usage.</p>",
+        "SubscriptionError$errorMessage": "<p>A human-readable message that describes the subscription error.</p>",
+        "SwitchoverAutonomousDatabaseOutput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that was switched over.</p>",
+        "SwitchoverAutonomousDatabaseOutput$displayName": "<p>The user-friendly name of the Autonomous Database.</p>",
+        "SwitchoverAutonomousDatabaseOutput$statusReason": "<p>Additional information about the status of the Autonomous Database after the switchover operation.</p>",
         "SystemVersionSummary$giVersion": "<p>The version of GI software.</p>",
         "SystemVersionSummary$shape": "<p>The Exadata hardware model.</p>",
         "ThrottlingException$message": null,
+        "TransportableTablespace$ttsBundleUrl": "<p>The URL of the transportable tablespace bundle to use when creating the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseBackupOutput$displayName": "<p>The user-friendly name of the Autonomous Database backup.</p>",
+        "UpdateAutonomousDatabaseBackupOutput$statusReason": "<p>Additional information about the current status of the Autonomous Database backup, if applicable.</p>",
+        "UpdateAutonomousDatabaseBackupOutput$autonomousDatabaseBackupId": "<p>The unique identifier of the Autonomous Database backup that was updated.</p>",
+        "UpdateAutonomousDatabaseInput$privateEndpointIp": "<p>The private endpoint IP address for the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$privateEndpointLabel": "<p>The private endpoint label for the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseOutput$autonomousDatabaseId": "<p>The unique identifier of the Autonomous Database that was updated.</p>",
+        "UpdateAutonomousDatabaseOutput$displayName": "<p>The user-friendly name of the Autonomous Database that was updated.</p>",
+        "UpdateAutonomousDatabaseOutput$statusReason": "<p>Additional information about the current status of the Autonomous Database, if applicable.</p>",
         "UpdateCloudExadataInfrastructureOutput$displayName": "<p>The user-friendly name of the updated Exadata infrastructure.</p>",
         "UpdateCloudExadataInfrastructureOutput$statusReason": "<p>Additional information about the status of the Exadata infrastructure after the update operation.</p>",
         "UpdateCloudExadataInfrastructureOutput$cloudExadataInfrastructureId": "<p>The unique identifier of the updated Exadata infrastructure.</p>",
@@ -2007,6 +3189,14 @@
     "StringList": {
       "base": null,
       "refs": {
+        "AutonomousDatabase$availableUpgradeVersions": "<p>The list of Oracle Database software versions to which the Autonomous Database can be upgraded.</p>",
+        "AutonomousDatabase$allowlistedIps": "<p>The list of IP addresses that are allowed to access the Autonomous Database.</p>",
+        "AutonomousDatabase$standbyAllowlistedIps": "<p>The list of IP addresses that are allowed to access the standby Autonomous Database.</p>",
+        "AutonomousDatabase$peerDbIds": "<p>The list of unique identifiers of the peer Autonomous Databases.</p>",
+        "AutonomousDatabaseSummary$availableUpgradeVersions": "<p>The list of Oracle Database software versions to which the Autonomous Database can be upgraded.</p>",
+        "AutonomousDatabaseSummary$allowlistedIps": "<p>The list of IP addresses that are allowed to access the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$standbyAllowlistedIps": "<p>The list of IP addresses that are allowed to access the standby Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$peerDbIds": "<p>The list of unique identifiers of the peer Autonomous Databases.</p>",
         "CloudAutonomousVmCluster$dbServers": "<p>The list of database servers associated with the Autonomous VM cluster.</p>",
         "CloudAutonomousVmClusterSummary$dbServers": "<p>The list of database servers associated with the Autonomous VM cluster.</p>",
         "CloudVmCluster$dbServers": "<p>The list of database servers for the VM cluster.</p>",
@@ -2015,6 +3205,8 @@
         "CloudVmClusterSummary$dbServers": "<p>The list of database servers for the VM cluster.</p>",
         "CloudVmClusterSummary$scanIpIds": "<p>The OCID of the SCAN IP addresses that are associated with the VM cluster.</p>",
         "CloudVmClusterSummary$vipIds": "<p>The virtual IP (VIP) addresses that are associated with the VM cluster. Oracle's Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the VM cluster to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster.</p>",
+        "CreateAutonomousDatabaseInput$standbyAllowlistedIps": "<p>The list of IP addresses that are allowed to access the standby Autonomous Database.</p>",
+        "CreateAutonomousDatabaseInput$allowlistedIps": "<p>The list of IP addresses that are allowed to access the Autonomous Database.</p>",
         "CreateCloudAutonomousVmClusterInput$dbServers": "<p>The list of database servers to be used for the Autonomous VM cluster.</p>",
         "CreateCloudVmClusterInput$sshPublicKeys": "<p>The public key portion of one or more key pairs used for SSH access to the VM cluster.</p>",
         "CreateCloudVmClusterInput$dbServers": "<p>The list of database servers for the VM cluster.</p>",
@@ -2035,6 +3227,8 @@
         "S3Access$ipv4Addresses": "<p>The IPv4 addresses for the Amazon S3 access.</p>",
         "StsAccess$ipv4Addresses": "<p>The IPv4 addresses allowed for Amazon Web Services Security Token Service (STS) access.</p>",
         "SystemVersionSummary$systemVersions": "<p>The Exadata system versions that are compatible with the specified Exadata shape and GI version.</p>",
+        "UpdateAutonomousDatabaseInput$standbyAllowlistedIps": "<p>The list of IP addresses that are allowed to access the standby Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$allowlistedIps": "<p>The list of IP addresses that are allowed to access the Autonomous Database.</p>",
         "UpdateOdbNetworkInput$peeredCidrsToBeAdded": "<p>The list of CIDR ranges from the peered VPC that allow access to the ODB network.</p>",
         "UpdateOdbNetworkInput$peeredCidrsToBeRemoved": "<p>The list of CIDR ranges from the peered VPC to remove from the ODB network.</p>",
         "UpdateOdbNetworkInput$crossRegionS3RestoreSourcesToEnable": "<p>The cross-Region Amazon S3 restore sources to enable for the ODB network.</p>",
@@ -2047,6 +3241,18 @@
         "ManagedServices$stsAccess": "<p>The Amazon Web Services Security Token Service (STS) access configuration.</p>"
       }
     },
+    "SubscriptionError": {
+      "base": "<p>Information about an error that occurred during the subscription process.</p>",
+      "refs": {
+        "SubscriptionErrors$member": null
+      }
+    },
+    "SubscriptionErrors": {
+      "base": null,
+      "refs": {
+        "GetOciOnboardingStatusOutput$subscriptionErrors": "<p>The list of errors that occurred during the subscription process for your Amazon Web Services account, if any.</p>"
+      }
+    },
     "SupportedAwsIntegration": {
       "base": null,
       "refs": {
@@ -2055,9 +3261,61 @@
         "IamRole$awsIntegration": "<p>The Amazon Web Services integration configuration settings for the Amazon Web Services Identity and Access Management (IAM) service role.</p>"
       }
     },
+    "SwitchoverAutonomousDatabaseInput": {
+      "base": null,
+      "refs": {}
+    },
+    "SwitchoverAutonomousDatabaseOutput": {
+      "base": null,
+      "refs": {}
+    },
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
+        "AutonomousDatabase$createdAt": "<p>The date and time when the Autonomous Database was created.</p>",
+        "AutonomousDatabase$timeOfLastBackup": "<p>The date and time of the last backup of the Autonomous Database.</p>",
+        "AutonomousDatabase$timeMaintenanceBegin": "<p>The date and time when the next maintenance of the Autonomous Database begins.</p>",
+        "AutonomousDatabase$timeMaintenanceEnd": "<p>The date and time when the next maintenance of the Autonomous Database ends.</p>",
+        "AutonomousDatabase$timeLocalDataGuardEnabled": "<p>The date and time when local Oracle Data Guard was enabled for the Autonomous Database.</p>",
+        "AutonomousDatabase$timeDataGuardRoleChanged": "<p>The date and time when the Oracle Data Guard role of the Autonomous Database last changed.</p>",
+        "AutonomousDatabase$timeOfLastSwitchover": "<p>The date and time of the last switchover operation for the Autonomous Database.</p>",
+        "AutonomousDatabase$timeOfLastFailover": "<p>The date and time of the last failover operation for the Autonomous Database.</p>",
+        "AutonomousDatabase$timeOfLastRefresh": "<p>The date and time of the last refresh of the refreshable clone Autonomous Database.</p>",
+        "AutonomousDatabase$timeOfLastRefreshPoint": "<p>The date and time as of which the data in the refreshable clone Autonomous Database is current.</p>",
+        "AutonomousDatabase$timeOfNextRefresh": "<p>The date and time of the next scheduled refresh of the refreshable clone Autonomous Database.</p>",
+        "AutonomousDatabase$timeOfAutoRefreshStart": "<p>The date and time at which the automatic refresh of the refreshable clone Autonomous Database starts.</p>",
+        "AutonomousDatabase$timeDeletionOfFreeAutonomousDatabase": "<p>The date and time when the inactive Always Free Autonomous Database is scheduled to be automatically deleted.</p>",
+        "AutonomousDatabase$timeReclamationOfFreeAutonomousDatabase": "<p>The date and time when the Always Free Autonomous Database is scheduled to be stopped because of inactivity.</p>",
+        "AutonomousDatabase$timeDisasterRecoveryRoleChanged": "<p>The date and time when the disaster recovery role of the Autonomous Database last changed.</p>",
+        "AutonomousDatabase$timeUntilReconnectCloneEnabled": "<p>The date and time until which reconnecting the refreshable clone to its source Autonomous Database is allowed.</p>",
+        "AutonomousDatabase$nextLongTermBackupTimeStamp": "<p>The date and time of the next scheduled long-term backup of the Autonomous Database.</p>",
+        "AutonomousDatabase$timeUndeleted": "<p>The date and time when the Autonomous Database was restored after deletion.</p>",
+        "AutonomousDatabaseBackup$timeAvailableTill": "<p>The date and time until which the Autonomous Database backup is available for restore.</p>",
+        "AutonomousDatabaseBackup$timeStarted": "<p>The date and time when the Autonomous Database backup started.</p>",
+        "AutonomousDatabaseBackup$timeEnded": "<p>The date and time when the Autonomous Database backup ended.</p>",
+        "AutonomousDatabaseBackupSummary$timeAvailableTill": "<p>The date and time until which the Autonomous Database backup is available for restore.</p>",
+        "AutonomousDatabaseBackupSummary$timeStarted": "<p>The date and time when the Autonomous Database backup started.</p>",
+        "AutonomousDatabaseBackupSummary$timeEnded": "<p>The date and time when the Autonomous Database backup ended.</p>",
+        "AutonomousDatabaseSummary$createdAt": "<p>The date and time when the Autonomous Database was created.</p>",
+        "AutonomousDatabaseSummary$timeOfLastBackup": "<p>The date and time of the last backup of the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$timeMaintenanceBegin": "<p>The date and time when the next maintenance of the Autonomous Database begins.</p>",
+        "AutonomousDatabaseSummary$timeMaintenanceEnd": "<p>The date and time when the next maintenance of the Autonomous Database ends.</p>",
+        "AutonomousDatabaseSummary$timeLocalDataGuardEnabled": "<p>The date and time when local Oracle Data Guard was enabled for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$timeDataGuardRoleChanged": "<p>The date and time when the Oracle Data Guard role of the Autonomous Database last changed.</p>",
+        "AutonomousDatabaseSummary$timeOfLastSwitchover": "<p>The date and time of the last switchover operation for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$timeOfLastFailover": "<p>The date and time of the last failover operation for the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$timeOfLastRefresh": "<p>The date and time of the last refresh of the refreshable clone Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$timeOfLastRefreshPoint": "<p>The date and time as of which the data in the refreshable clone Autonomous Database is current.</p>",
+        "AutonomousDatabaseSummary$timeOfNextRefresh": "<p>The date and time of the next scheduled refresh of the refreshable clone Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$timeOfAutoRefreshStart": "<p>The date and time at which the automatic refresh of the refreshable clone Autonomous Database starts.</p>",
+        "AutonomousDatabaseSummary$timeDeletionOfFreeAutonomousDatabase": "<p>The date and time when the inactive Always Free Autonomous Database is scheduled to be automatically deleted.</p>",
+        "AutonomousDatabaseSummary$timeReclamationOfFreeAutonomousDatabase": "<p>The date and time when the Always Free Autonomous Database is scheduled to be stopped because of inactivity.</p>",
+        "AutonomousDatabaseSummary$timeDisasterRecoveryRoleChanged": "<p>The date and time when the disaster recovery role of the Autonomous Database last changed.</p>",
+        "AutonomousDatabaseSummary$timeUntilReconnectCloneEnabled": "<p>The date and time until which reconnecting the refreshable clone to its source Autonomous Database is allowed.</p>",
+        "AutonomousDatabaseSummary$nextLongTermBackupTimeStamp": "<p>The date and time of the next scheduled long-term backup of the Autonomous Database.</p>",
+        "AutonomousDatabaseSummary$timeUndeleted": "<p>The date and time when the Autonomous Database was restored after deletion.</p>",
+        "AutonomousDatabaseWalletDetails$timeRotated": "<p>The date and time when the Autonomous Database wallet was last rotated.</p>",
+        "CloneToRefreshableConfiguration$timeOfAutoRefreshStart": "<p>The date and time at which the automatic refresh of the refreshable clone starts.</p>",
         "CloudAutonomousVmCluster$createdAt": "<p>The date and time when the Autonomous VM cluster was created.</p>",
         "CloudAutonomousVmCluster$timeDatabaseSslCertificateExpires": "<p>The expiration date and time of the database SSL certificate.</p>",
         "CloudAutonomousVmCluster$timeOrdsCertificateExpires": "<p>The expiration date and time of the Oracle REST Data Services (ORDS) certificate.</p>",
@@ -2068,14 +3326,23 @@
         "CloudExadataInfrastructureSummary$createdAt": "<p>The date and time when the Exadata infrastructure was created.</p>",
         "CloudVmCluster$createdAt": "<p>The date and time when the VM cluster was created.</p>",
         "CloudVmClusterSummary$createdAt": "<p>The date and time when the VM cluster was created.</p>",
+        "DatabaseStandbySummary$timeDataGuardRoleChanged": "<p>The date and time when the Oracle Data Guard role of the standby database last changed.</p>",
+        "DatabaseStandbySummary$timeDisasterRecoveryRoleChanged": "<p>The date and time when the disaster recovery role of the standby database last changed.</p>",
+        "DatabaseStandbySummary$timeMaintenanceBegin": "<p>The date and time when the next maintenance of the standby database begins.</p>",
+        "DatabaseStandbySummary$timeMaintenanceEnd": "<p>The date and time when the next maintenance of the standby database ends.</p>",
         "DbNode$createdAt": "<p>The date and time when the DB node was created.</p>",
         "DbNodeSummary$createdAt": "<p>The date and time when the DB node was created.</p>",
         "DbServer$createdAt": "<p>The date and time when the database server was created.</p>",
         "DbServerSummary$createdAt": "<p>The date and time when the database server was created.</p>",
+        "DisasterRecoveryConfiguration$timeSnapshotStandbyEnabledTill": "<p>The date and time until which the snapshot standby database remains enabled.</p>",
+        "LongTermBackupSchedule$timeOfBackup": "<p>The date and time at which the long-term backup is taken.</p>",
         "OdbNetwork$createdAt": "<p>The date and time when the ODB network was created.</p>",
         "OdbNetworkSummary$createdAt": "<p>The date and time when the ODB network was created.</p>",
         "OdbPeeringConnection$createdAt": "<p>The timestamp when the ODB peering connection was created.</p>",
-        "OdbPeeringConnectionSummary$createdAt": "<p>The timestamp when the ODB peering connection was created.</p>"
+        "OdbPeeringConnectionSummary$createdAt": "<p>The timestamp when the ODB peering connection was created.</p>",
+        "PointInTimeRestoreConfiguration$timestamp": "<p>The date and time to which to restore the Autonomous Database.</p>",
+        "RestoreAutonomousDatabaseInput$timestamp": "<p>The date and time to which to restore the Autonomous Database.</p>",
+        "UpdateAutonomousDatabaseInput$timeOfAutoRefreshStart": "<p>The date and time at which the automatic refresh of the refreshable clone Autonomous Database starts.</p>"
       }
     },
     "SystemVersionList": {
@@ -2123,11 +3390,111 @@
       "base": "<p>The request was denied due to request throttling.</p>",
       "refs": {}
     },
+    "TransportableTablespace": {
+      "base": "<p>The transportable tablespace configuration used when creating an Autonomous Database.</p>",
+      "refs": {
+        "CreateAutonomousDatabaseInput$transportableTablespace": "<p>The transportable tablespace configuration to use when creating the Autonomous Database.</p>"
+      }
+    },
     "UntagResourceRequest": {
       "base": null,
       "refs": {}
     },
     "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAutonomousDatabaseBackupInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAutonomousDatabaseBackupInputRetentionPeriodInDaysInteger": {
+      "base": null,
+      "refs": {
+        "UpdateAutonomousDatabaseBackupInput$retentionPeriodInDays": "<p>The retention period, in days, for the Autonomous Database backup.</p>"
+      }
+    },
+    "UpdateAutonomousDatabaseBackupOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAutonomousDatabaseInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAutonomousDatabaseInputAdminPasswordString": {
+      "base": null,
+      "refs": {
+        "UpdateAutonomousDatabaseInput$adminPassword": "<p>The new password for the <code>ADMIN</code> user of the Autonomous Database.</p>"
+      }
+    },
+    "UpdateAutonomousDatabaseInputAutoRefreshFrequencyInSecondsInteger": {
+      "base": null,
+      "refs": {
+        "UpdateAutonomousDatabaseInput$autoRefreshFrequencyInSeconds": "<p>The frequency, in seconds, at which the refreshable clone Autonomous Database is automatically refreshed.</p>"
+      }
+    },
+    "UpdateAutonomousDatabaseInputAutoRefreshPointLagInSecondsInteger": {
+      "base": null,
+      "refs": {
+        "UpdateAutonomousDatabaseInput$autoRefreshPointLagInSeconds": "<p>The time lag, in seconds, between the refreshable clone and its source Autonomous Database.</p>"
+      }
+    },
+    "UpdateAutonomousDatabaseInputBackupRetentionPeriodInDaysInteger": {
+      "base": null,
+      "refs": {
+        "UpdateAutonomousDatabaseInput$backupRetentionPeriodInDays": "<p>The retention period, in days, for automatic backups of the Autonomous Database.</p>"
+      }
+    },
+    "UpdateAutonomousDatabaseInputByolComputeCountLimitDouble": {
+      "base": null,
+      "refs": {
+        "UpdateAutonomousDatabaseInput$byolComputeCountLimit": "<p>The maximum number of compute resources that you can allocate to the Autonomous Database under the bring-your-own-license (BYOL) model.</p>"
+      }
+    },
+    "UpdateAutonomousDatabaseInputComputeCountDouble": {
+      "base": null,
+      "refs": {
+        "UpdateAutonomousDatabaseInput$computeCount": "<p>The compute capacity, in number of ECPUs or OCPUs, to assign to the Autonomous Database.</p>"
+      }
+    },
+    "UpdateAutonomousDatabaseInputCpuCoreCountInteger": {
+      "base": null,
+      "refs": {
+        "UpdateAutonomousDatabaseInput$cpuCoreCount": "<p>The number of CPU cores to allocate to the Autonomous Database.</p>"
+      }
+    },
+    "UpdateAutonomousDatabaseInputDataStorageSizeInGBsInteger": {
+      "base": null,
+      "refs": {
+        "UpdateAutonomousDatabaseInput$dataStorageSizeInGBs": "<p>The size, in gigabytes (GB), of the data volume to allocate for the Autonomous Database.</p>"
+      }
+    },
+    "UpdateAutonomousDatabaseInputDataStorageSizeInTBsInteger": {
+      "base": null,
+      "refs": {
+        "UpdateAutonomousDatabaseInput$dataStorageSizeInTBs": "<p>The size, in terabytes (TB), of the data volume to allocate for the Autonomous Database.</p>"
+      }
+    },
+    "UpdateAutonomousDatabaseInputDbNameString": {
+      "base": null,
+      "refs": {
+        "UpdateAutonomousDatabaseInput$dbName": "<p>The new name of the Autonomous Database.</p>"
+      }
+    },
+    "UpdateAutonomousDatabaseInputDbVersionString": {
+      "base": null,
+      "refs": {
+        "UpdateAutonomousDatabaseInput$dbVersion": "<p>The Oracle Database software version to use for the Autonomous Database.</p>"
+      }
+    },
+    "UpdateAutonomousDatabaseInputLocalAdgAutoFailoverMaxDataLossLimitInteger": {
+      "base": null,
+      "refs": {
+        "UpdateAutonomousDatabaseInput$localAdgAutoFailoverMaxDataLossLimit": "<p>The maximum data loss limit, in seconds, for automatic failover to the local Oracle Data Guard standby database.</p>"
+      }
+    },
+    "UpdateAutonomousDatabaseOutput": {
       "base": null,
       "refs": {}
     },
@@ -2183,6 +3550,12 @@
         "ServiceNetworkEndpoint$vpcEndpointType": "<p>The type of the VPC endpoint.</p>"
       }
     },
+    "WalletType": {
+      "base": null,
+      "refs": {
+        "CreateAutonomousDatabaseWalletInput$walletType": "<p>The type of wallet to create, either a regional wallet or an instance wallet.</p>"
+      }
+    },
     "WeeksOfMonth": {
       "base": null,
       "refs": {
@@ -2193,6 +3566,12 @@
       "base": "<p>The configuration for Zero-ETL access from the ODB network.</p>",
       "refs": {
         "ManagedServices$zeroEtlAccess": "<p>The Zero-ETL access configuration.</p>"
+      }
+    },
+    "characterSetType": {
+      "base": null,
+      "refs": {
+        "ListAutonomousDatabaseCharacterSetsInput$characterSetType": "<p>The type of character set to return results for, either the database character set or the national character set.</p>"
       }
     }
   }

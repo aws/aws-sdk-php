@@ -746,6 +746,23 @@
       ],
       "readonly":true
     },
+    "GetAccountDataRetention":{
+      "name":"GetAccountDataRetention",
+      "http":{
+        "method":"GET",
+        "requestUri":"/data-retention",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAccountDataRetentionRequest"},
+      "output":{"shape":"GetAccountDataRetentionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
+    },
     "GetAdvancedPromptOptimizationJob":{
       "name":"GetAdvancedPromptOptimizationJob",
       "http":{
@@ -1594,6 +1611,23 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
       ]
+    },
+    "PutAccountDataRetention":{
+      "name":"PutAccountDataRetention",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/data-retention",
+        "responseCode":200
+      },
+      "input":{"shape":"PutAccountDataRetentionRequest"},
+      "output":{"shape":"PutAccountDataRetentionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
     },
     "PutEnforcedGuardrailConfiguration":{
       "name":"PutEnforcedGuardrailConfiguration",
@@ -4579,6 +4613,15 @@
         "lastModifiedTime":{"shape":"Timestamp"}
       }
     },
+    "DataRetentionMode":{
+      "type":"string",
+      "enum":[
+        "default",
+        "none",
+        "provider_data_share",
+        "inherit"
+      ]
+    },
     "DeleteAutomatedReasoningPolicyBuildWorkflowRequest":{
       "type":"structure",
       "required":[
@@ -5434,6 +5477,18 @@
         "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
         "kbInferenceConfig":{"shape":"KbInferenceConfig"},
         "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"}
+      }
+    },
+    "GetAccountDataRetentionRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "GetAccountDataRetentionResponse":{
+      "type":"structure",
+      "required":["mode"],
+      "members":{
+        "mode":{"shape":"DataRetentionMode"},
+        "updatedAt":{"shape":"Timestamp"}
       }
     },
     "GetAdvancedPromptOptimizationJobRequest":{
@@ -9072,6 +9127,21 @@
         "commitmentExpirationTime":{"shape":"Timestamp"},
         "creationTime":{"shape":"Timestamp"},
         "lastModifiedTime":{"shape":"Timestamp"}
+      }
+    },
+    "PutAccountDataRetentionRequest":{
+      "type":"structure",
+      "required":["mode"],
+      "members":{
+        "mode":{"shape":"DataRetentionMode"}
+      }
+    },
+    "PutAccountDataRetentionResponse":{
+      "type":"structure",
+      "required":["mode"],
+      "members":{
+        "mode":{"shape":"DataRetentionMode"},
+        "updatedAt":{"shape":"Timestamp"}
       }
     },
     "PutEnforcedGuardrailConfigurationRequest":{

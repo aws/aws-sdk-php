@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoTSiteWise` - Adding new BDD representation of endpoint ruleset
+* `Aws\Outposts` - Added AWS Outposts APIs for self-service Outposts quoting and ordering. New operations include CreateQuote, GetQuote, UpdateQuote, DeleteQuote, ListQuotes, and ListOrderableInstanceTypes.
+* `Aws\BedrockAgentCore` - Add RetryableConflictException (HTTP 409) to InvokeAgentRuntimeCommand and GetAgentCard to prevent orphaned VMs during concurrent session access. The SDK automatically retries this exception with backoff. Enforcement is not yet active and will be enabled in a future service update.
+* `Aws\EC2` - Added TagFieldSpecifications to CreateFlowLogs and DescribeFlowLogs APIs. Customers can now specify tag keys in their Flow Logs subscriptions to capture associated EC2 resource tag values in their logs, enabling tag-based visibility.
+* `Aws\DynamoDBStreams` - Adding new BDD representation of endpoint ruleset
+* `Aws\TimestreamQuery` - Adding new BDD representation of endpoint ruleset
+* `Aws\Odb` - Releases Autonomous Database Serverless APIs, autonomousDatabaseOciIntegrationIamRoles, linkedOciTenancyId, linkedOciCompartmentId, and subscriptionErrors fields in GetOciOnboardingStatus API response.
+* `Aws\Bedrock` - Adds support for the Amazon Bedrock account-level data retention APIs PutAccountDataRetention and GetAccountDataRetention.
+* `Aws\MarketplaceCommerceAnalytics` - Adding new BDD representation of endpoint ruleset
+* `Aws\CloudWatch` - This release adds the APIs (AssociateDatasetKmsKey, DisassociateDatasetKmsKey, GetDataset) to manage encryption at rest for OpenTelemetry metrics in CloudWatch using AWS KMS customer managed keys.
+* `Aws\TimestreamWrite` - Adding new BDD representation of endpoint ruleset
+
 ## 3.384.5 - 2026-06-08
 
 * `Aws\TaxSettings` - Adds support for additional tax information fields for Philippines, Belgium, Chile, France, Poland, and Italy in the Tax Settings API.

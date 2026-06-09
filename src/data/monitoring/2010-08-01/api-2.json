@@ -21,6 +21,25 @@
     "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "AssociateDatasetKmsKey":{
+      "name":"AssociateDatasetKmsKey",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateDatasetKmsKeyInput"},
+      "output":{
+        "shape":"AssociateDatasetKmsKeyOutput",
+        "resultWrapper":"AssociateDatasetKmsKeyResult"
+      },
+      "errors":[
+        {"shape":"KmsAccessDeniedException"},
+        {"shape":"KmsKeyNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"KmsKeyDisabledException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "DeleteAlarmMuteRule":{
       "name":"DeleteAlarmMuteRule",
       "http":{
@@ -224,6 +243,23 @@
         {"shape":"MissingRequiredParameterException"}
       ]
     },
+    "DisassociateDatasetKmsKey":{
+      "name":"DisassociateDatasetKmsKey",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateDatasetKmsKeyInput"},
+      "output":{
+        "shape":"DisassociateDatasetKmsKeyOutput",
+        "resultWrapper":"DisassociateDatasetKmsKeyResult"
+      },
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "EnableAlarmActions":{
       "name":"EnableAlarmActions",
       "http":{
@@ -280,6 +316,22 @@
         {"shape":"DashboardNotFoundError"},
         {"shape":"InternalServiceFault"}
       ]
+    },
+    "GetDataset":{
+      "name":"GetDataset",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDatasetInput"},
+      "output":{
+        "shape":"GetDatasetOutput",
+        "resultWrapper":"GetDatasetResult"
+      },
+      "errors":[
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
     },
     "GetInsightRuleReport":{
       "name":"GetInsightRuleReport",
@@ -946,6 +998,21 @@
       "max":1600,
       "min":1
     },
+    "AssociateDatasetKmsKeyInput":{
+      "type":"structure",
+      "required":[
+        "DatasetIdentifier",
+        "KmsKeyArn"
+      ],
+      "members":{
+        "DatasetIdentifier":{"shape":"DatasetIdentifier"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
+    "AssociateDatasetKmsKeyOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "AttributeName":{
       "type":"string",
       "max":255,
@@ -1155,6 +1222,24 @@
     "DatapointsToAlarm":{
       "type":"integer",
       "min":1
+    },
+    "DatasetArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:[a-zA-Z0-9-]+:cloudwatch:[a-zA-Z0-9-]*:\\d{12}:dataset/default"
+    },
+    "DatasetId":{
+      "type":"string",
+      "max":7,
+      "min":7,
+      "pattern":"default"
+    },
+    "DatasetIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"(default|arn:[a-zA-Z0-9-]+:cloudwatch:[a-zA-Z0-9-]*:\\d{12}:dataset/default)"
     },
     "DeleteAlarmMuteRuleInput":{
       "type":"structure",
@@ -1412,6 +1497,17 @@
         "Failures":{"shape":"BatchFailures"}
       }
     },
+    "DisassociateDatasetKmsKeyInput":{
+      "type":"structure",
+      "required":["DatasetIdentifier"],
+      "members":{
+        "DatasetIdentifier":{"shape":"DatasetIdentifier"}
+      }
+    },
+    "DisassociateDatasetKmsKeyOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "Duration":{
       "type":"string",
       "max":50,
@@ -1575,6 +1671,25 @@
         "DashboardArn":{"shape":"DashboardArn"},
         "DashboardBody":{"shape":"DashboardBody"},
         "DashboardName":{"shape":"DashboardName"}
+      }
+    },
+    "GetDatasetInput":{
+      "type":"structure",
+      "required":["DatasetIdentifier"],
+      "members":{
+        "DatasetIdentifier":{"shape":"DatasetIdentifier"}
+      }
+    },
+    "GetDatasetOutput":{
+      "type":"structure",
+      "required":[
+        "DatasetId",
+        "Arn"
+      ],
+      "members":{
+        "DatasetId":{"shape":"DatasetId"},
+        "Arn":{"shape":"DatasetArn"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "GetInsightRuleReportInput":{
@@ -1924,6 +2039,36 @@
       },
       "exception":true,
       "synthetic":true
+    },
+    "KmsAccessDeniedException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "KmsKeyArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:[a-zA-Z0-9-]+:kms:[a-zA-Z0-9-]+:\\d{12}:key/[a-f0-9-]+"
+    },
+    "KmsKeyDisabledException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "KmsKeyNotFoundException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
     },
     "LabelOptions":{
       "type":"structure",
@@ -2898,6 +3043,7 @@
       "min":1
     },
     "StrictEntityValidation":{"type":"boolean"},
+    "String":{"type":"string"},
     "SuppressorPeriod":{"type":"integer"},
     "Tag":{
       "type":"structure",

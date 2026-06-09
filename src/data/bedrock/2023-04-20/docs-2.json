@@ -40,6 +40,7 @@
     "DeleteResourcePolicy": "<p>Deletes a previously created Bedrock resource policy.</p>",
     "DeregisterMarketplaceModelEndpoint": "<p>Deregisters an endpoint for a model from Amazon Bedrock Marketplace. This operation removes the endpoint's association with Amazon Bedrock but does not delete the underlying Amazon SageMaker endpoint.</p>",
     "ExportAutomatedReasoningPolicyVersion": "<p>Exports the policy definition for an Automated Reasoning policy version. Returns the complete policy definition including rules, variables, and custom variable types in a structured format.</p>",
+    "GetAccountDataRetention": "<p>Returns the account-wide data retention mode for Amazon Bedrock.</p>",
     "GetAdvancedPromptOptimizationJob": "<p>Gets information about an advanced prompt optimization job.</p>",
     "GetAutomatedReasoningPolicy": "<p>Retrieves details about an Automated Reasoning policy or policy version. Returns information including the policy definition, metadata, and timestamps.</p>",
     "GetAutomatedReasoningPolicyAnnotations": "<p>Retrieves the current annotations for an Automated Reasoning policy build workflow. Annotations contain corrections to the rules, variables and types to be applied to the policy.</p>",
@@ -88,6 +89,7 @@
     "ListPromptRouters": "<p>Retrieves a list of prompt routers.</p>",
     "ListProvisionedModelThroughputs": "<p>Lists the Provisioned Throughputs in the account. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListTagsForResource": "<p>List the tags associated with the specified resource.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "PutAccountDataRetention": "<p>Sets the account-wide data retention mode for Amazon Bedrock.</p>",
     "PutEnforcedGuardrailConfiguration": "<p>Sets the account-level enforced guardrail configuration.</p>",
     "PutModelInvocationLoggingConfiguration": "<p>Set the configuration values for model invocation logging.</p>",
     "PutResourcePolicy": "<p>Adds a resource policy for a Bedrock resource.</p>",
@@ -2161,6 +2163,14 @@
         "StatusDetails$dataProcessingDetails": "<p>The status details for the data processing sub-task of the job.</p>"
       }
     },
+    "DataRetentionMode": {
+      "base": "<p>The data retention mode for the account. Valid values are:</p> <ul> <li> <p> <code>default</code> – The standard data handling for the model applies.</p> </li> <li> <p> <code>none</code> – Zero data retention.</p> </li> <li> <p> <code>provider_data_share</code> – Data may be shared with the model provider.</p> </li> <li> <p> <code>inherit</code> – No data retention mode is set at this scope.</p> </li> </ul>",
+      "refs": {
+        "GetAccountDataRetentionResponse$mode": "<p>The data retention mode configured for the account.</p>",
+        "PutAccountDataRetentionRequest$mode": "<p>The data retention mode to set for the account.</p>",
+        "PutAccountDataRetentionResponse$mode": "<p>The data retention mode set for the account.</p>"
+      }
+    },
     "DeleteAutomatedReasoningPolicyBuildWorkflowRequest": {
       "base": null,
       "refs": {}
@@ -2798,6 +2808,14 @@
       "refs": {
         "KnowledgeBaseRetrieveAndGenerateConfiguration$generationConfiguration": "<p>Contains configurations details for response generation based on retrieved text chunks.</p>"
       }
+    },
+    "GetAccountDataRetentionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAccountDataRetentionResponse": {
+      "base": null,
+      "refs": {}
     },
     "GetAdvancedPromptOptimizationJobRequest": {
       "base": "<p>Get Advanced Prompt Optimization Job Request</p>",
@@ -5054,6 +5072,14 @@
         "ProvisionedModelSummaries$member": null
       }
     },
+    "PutAccountDataRetentionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutAccountDataRetentionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "PutEnforcedGuardrailConfigurationRequest": {
       "base": null,
       "refs": {}
@@ -5749,6 +5775,7 @@
         "FoundationModelLifecycle$endOfLifeTime": "<p>Time when the model is no longer available for use</p>",
         "FoundationModelLifecycle$legacyTime": "<p>Time when the model enters legacy state. Models in legacy state can still be used, but users should plan to transition to an Active model before the end of life time</p>",
         "FoundationModelLifecycle$publicExtendedAccessTime": "<p>Public extended access portion of the legacy period, when users should expect higher pricing</p>",
+        "GetAccountDataRetentionResponse$updatedAt": "<p>The time at which the data retention mode was last updated.</p>",
         "GetAdvancedPromptOptimizationJobResponse$creationTime": "<p>The time at which the advanced prompt optimization job was created.</p>",
         "GetAdvancedPromptOptimizationJobResponse$lastModifiedTime": "<p>The time at which the advanced prompt optimization job was last modified.</p>",
         "GetAutomatedReasoningPolicyAnnotationsResponse$updatedAt": "<p>The timestamp when the annotations were last updated.</p>",
@@ -5825,6 +5852,7 @@
         "ProvisionedModelSummary$commitmentExpirationTime": "<p>The timestamp for when the commitment term of the Provisioned Throughput expires.</p>",
         "ProvisionedModelSummary$creationTime": "<p>The time that the Provisioned Throughput was created. </p>",
         "ProvisionedModelSummary$lastModifiedTime": "<p>The time that the Provisioned Throughput was last modified. </p>",
+        "PutAccountDataRetentionResponse$updatedAt": "<p>The time at which the data retention mode was last updated.</p>",
         "PutEnforcedGuardrailConfigurationResponse$updatedAt": "<p>Timestamp.</p>",
         "TrainingDetails$creationTime": "<p>The start time of the training sub-task of the job.</p>",
         "TrainingDetails$lastModifiedTime": "<p>The latest update to the training sub-task of the job.</p>",

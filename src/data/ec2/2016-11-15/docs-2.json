@@ -20661,7 +20661,6 @@
         "PlacementGroup$Operator": "<p>The service provider that manages the Placement Group.</p>",
         "ResponseLaunchTemplateData$Operator": "<p>The entity that manages the launch template.</p>",
         "Volume$Operator": "<p>The service provider that manages the volume.</p>",
-        "VolumeModification$Operator": null,
         "VolumeRecycleBinInfo$Operator": "<p>The service provider that manages the volume.</p>",
         "VolumeStatusItem$Operator": "<p>The service provider that manages the resource.</p>"
       }
@@ -27608,6 +27607,43 @@
         "DescribeTagsResult$Tags": "<p>The tags.</p>"
       }
     },
+    "TagFieldSpecificationListRequest": {
+      "base": null,
+      "refs": {
+        "CreateFlowLogsRequest$TagFieldSpecifications": "<p>The tag configuration associated with the Flow Logs Amazon EC2 Tags feature fields in your custom log format.</p>"
+      }
+    },
+    "TagFieldSpecificationListResponse": {
+      "base": null,
+      "refs": {
+        "FlowLog$TagFieldSpecifications": "<p>The tag configuration associated with the Flow Logs Amazon EC2 Tags feature fields in your custom log format.</p>"
+      }
+    },
+    "TagFieldSpecificationRequest": {
+      "base": "<p>A single resource's tag configuration associated with the Flow Logs Amazon EC2 Tags feature fields in your custom log format.</p>",
+      "refs": {
+        "TagFieldSpecificationListRequest$member": null
+      }
+    },
+    "TagFieldSpecificationResponse": {
+      "base": "<p>A single resource's tag configuration associated with the Flow Logs Amazon EC2 Tags feature fields in your custom log format.</p>",
+      "refs": {
+        "TagFieldSpecificationListResponse$member": null
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagKeyList$member": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "TagFieldSpecificationRequest$TagKeys": "<p>The tag keys on your tagged resources to be displayed by the Flow Logs Amazon EC2 Tags feature fields in your custom log format.</p>",
+        "TagFieldSpecificationResponse$TagKeys": "<p>The tag keys on your tagged resources to be displayed by the Flow Logs Amazon EC2 Tags feature fields in your custom log format.</p>"
+      }
+    },
     "TagList": {
       "base": null,
       "refs": {
@@ -27876,6 +27912,13 @@
       "base": null,
       "refs": {
         "ResourceIdList$member": null
+      }
+    },
+    "TaggableResourceType": {
+      "base": null,
+      "refs": {
+        "TagFieldSpecificationRequest$ResourceType": "<p>The resource type for the tag keys associated with the Flow Logs Amazon EC2 Tags feature fields in your custom log format.</p>",
+        "TagFieldSpecificationResponse$ResourceType": "<p>The resource type for the tag keys associated with the Flow Logs Amazon EC2 Tags feature fields in your custom log format.</p>"
       }
     },
     "TargetCapacitySpecification": {

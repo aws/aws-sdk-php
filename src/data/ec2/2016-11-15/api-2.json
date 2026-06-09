@@ -13101,10 +13101,7 @@
     },
     "CreateCapacityReservationFleetRequest":{
       "type":"structure",
-      "required":[
-        "InstanceTypeSpecifications",
-        "TotalTargetCapacity"
-      ],
+      "required":["TotalTargetCapacity"],
       "members":{
         "AllocationStrategy":{"shape":"String"},
         "ClientToken":{
@@ -13647,7 +13644,11 @@
           "locationName":"TagSpecification"
         },
         "MaxAggregationInterval":{"shape":"Integer"},
-        "DestinationOptions":{"shape":"DestinationOptionsRequest"}
+        "DestinationOptions":{"shape":"DestinationOptionsRequest"},
+        "TagFieldSpecifications":{
+          "shape":"TagFieldSpecificationListRequest",
+          "locationName":"TagFieldSpecification"
+        }
       }
     },
     "CreateFlowLogsResult":{
@@ -29048,6 +29049,10 @@
         "DestinationOptions":{
           "shape":"DestinationOptionsResponse",
           "locationName":"destinationOptions"
+        },
+        "TagFieldSpecifications":{
+          "shape":"TagFieldSpecificationListResponse",
+          "locationName":"tagFieldSpecificationSet"
         }
       }
     },
@@ -54203,6 +54208,61 @@
         "locationName":"item"
       }
     },
+    "TagFieldSpecificationListRequest":{
+      "type":"list",
+      "member":{
+        "shape":"TagFieldSpecificationRequest",
+        "locationName":"item"
+      },
+      "max":3,
+      "min":1
+    },
+    "TagFieldSpecificationListResponse":{
+      "type":"list",
+      "member":{
+        "shape":"TagFieldSpecificationResponse",
+        "locationName":"item"
+      },
+      "max":3,
+      "min":1
+    },
+    "TagFieldSpecificationRequest":{
+      "type":"structure",
+      "members":{
+        "ResourceType":{"shape":"TaggableResourceType"},
+        "TagKeys":{
+          "shape":"TagKeyList",
+          "locationName":"TagKey"
+        }
+      }
+    },
+    "TagFieldSpecificationResponse":{
+      "type":"structure",
+      "members":{
+        "ResourceType":{
+          "shape":"TaggableResourceType",
+          "locationName":"resourceType"
+        },
+        "TagKeys":{
+          "shape":"TagKeyList",
+          "locationName":"tagKeySet"
+        }
+      }
+    },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{
+        "shape":"TagKey",
+        "locationName":"item"
+      },
+      "max":2,
+      "min":1
+    },
     "TagList":{
       "type":"list",
       "member":{
@@ -54231,6 +54291,14 @@
       }
     },
     "TaggableResourceId":{"type":"string"},
+    "TaggableResourceType":{
+      "type":"string",
+      "enum":[
+        "network-interface",
+        "instance",
+        "auto-scaling-group"
+      ]
+    },
     "TargetCapacitySpecification":{
       "type":"structure",
       "members":{
@@ -58394,10 +58462,6 @@
         "EndTime":{
           "shape":"DateTime",
           "locationName":"endTime"
-        },
-        "Operator":{
-          "shape":"OperatorResponse",
-          "locationName":"operator"
         }
       }
     },
