@@ -2,7 +2,14 @@
   "version": "2.0",
   "service": "<p>AWS Sign-In manages authentication for AWS services. This service provides secure authentication flows for accessing AWS resources from the console and developer tools.</p>",
   "operations": {
-    "CreateOAuth2Token": "<p>CreateOAuth2Token API</p> <p>Path: /v1/token Request Method: POST Content-Type: application/json or application/x-www-form-urlencoded</p> <p>This API implements OAuth 2.0 flows for AWS Sign-In CLI clients, supporting both:</p> <ol> <li>Authorization code redemption (grant_type=authorization_code) - NOT idempotent</li> <li>Token refresh (grant_type=refresh_token) - Idempotent within token validity window</li> </ol> <p>The operation behavior is determined by the grant_type parameter in the request body:</p> <p><strong>Authorization Code Flow (NOT Idempotent):</strong></p> <ul> <li>JSON or form-encoded body with client_id, grant_type=authorization_code, code, redirect_uri, code_verifier</li> <li>Returns access_token, token_type, expires_in, refresh_token, and id_token</li> <li>Each authorization code can only be used ONCE for security (prevents replay attacks)</li> </ul> <p><strong>Token Refresh Flow (Idempotent):</strong></p> <ul> <li>JSON or form-encoded body with client_id, grant_type=refresh_token, refresh_token</li> <li>Returns access_token, token_type, expires_in, and refresh_token (no id_token)</li> <li>Multiple calls with same refresh_token return consistent results within validity window</li> </ul> <p>Authentication and authorization:</p> <ul> <li>Confidential clients: sigv4 signing required with signin:ExchangeToken permissions</li> <li>CLI clients (public): authn/authz skipped based on client_id &amp; grant_type</li> </ul> <p>Note: This operation cannot be marked as @idempotent because it handles both idempotent (token refresh) and non-idempotent (auth code redemption) flows in a single endpoint.</p>"
+    "CreateOAuth2Token": "<p>CreateOAuth2Token API</p> <p>Path: /v1/token Request Method: POST Content-Type: application/json or application/x-www-form-urlencoded</p> <p>This API implements OAuth 2.0 flows for AWS Sign-In CLI clients, supporting both:</p> <ol> <li>Authorization code redemption (grant_type=authorization_code) - NOT idempotent</li> <li>Token refresh (grant_type=refresh_token) - Idempotent within token validity window</li> </ol> <p>The operation behavior is determined by the grant_type parameter in the request body:</p> <p><strong>Authorization Code Flow (NOT Idempotent):</strong></p> <ul> <li>JSON or form-encoded body with client_id, grant_type=authorization_code, code, redirect_uri, code_verifier</li> <li>Returns access_token, token_type, expires_in, refresh_token, and id_token</li> <li>Each authorization code can only be used ONCE for security (prevents replay attacks)</li> </ul> <p><strong>Token Refresh Flow (Idempotent):</strong></p> <ul> <li>JSON or form-encoded body with client_id, grant_type=refresh_token, refresh_token</li> <li>Returns access_token, token_type, expires_in, and refresh_token (no id_token)</li> <li>Multiple calls with same refresh_token return consistent results within validity window</li> </ul> <p>Authentication and authorization:</p> <ul> <li>Confidential clients: sigv4 signing required with signin:ExchangeToken permissions</li> <li>CLI clients (public): authn/authz skipped based on client_id &amp; grant_type</li> </ul> <p>Note: This operation cannot be marked as @idempotent because it handles both idempotent (token refresh) and non-idempotent (auth code redemption) flows in a single endpoint.</p>",
+    "DeleteConsoleAuthorizationConfiguration": "<p>Delete console authorization configuration with automatic scope detection</p>",
+    "DeleteResourcePermissionStatement": "<p>Remove a permission statement from the account's SignIn resource-based policy</p>",
+    "GetConsoleAuthorizationConfiguration": "<p>Get console authorization configuration with automatic scope detection</p>",
+    "GetResourcePolicy": "<p>Retrieve the account's consolidated SignIn resource-based policy</p>",
+    "ListResourcePermissionStatements": "<p>Retrieve all permission statements in the account's SignIn resource-based policy</p>",
+    "PutConsoleAuthorizationConfiguration": "<p>Enable console authorization configuration with automatic scope detection</p>",
+    "PutResourcePermissionStatement": "<p>Create a permission statement in the account's SignIn resource-based policy</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -21,16 +28,66 @@
         "CreateOAuth2TokenRequestBody$code": "<p>The authorization code received from /v1/authorize Required only when grant_type=authorization_code</p>"
       }
     },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "DeleteConsoleAuthorizationConfigurationOutput$consoleAuthorizationEnabled": "<p>Whether console authorization is enabled</p>",
+        "GetConsoleAuthorizationConfigurationOutput$consoleAuthorizationEnabled": "<p>Whether console authorization is enabled</p>",
+        "PutConsoleAuthorizationConfigurationOutput$consoleAuthorizationEnabled": "<p>Whether console authorization is enabled</p>"
+      }
+    },
     "ClientId": {
       "base": "<p>Client identifier pattern for AWS Sign-In devtools clients</p> <p>The ARN used by client as part of Sign-In onboarding. Expected values:</p> <ul> <li>arn:aws:signin:::devtools/cross-device (for cross-device devtools login)</li> <li>arn:aws:signin:::devtools/same-device (for same-device devtools login)</li> </ul> <p>This will be finalized after consulting with UX as this is visible to end customer.</p>",
       "refs": {
         "CreateOAuth2TokenRequestBody$clientId": "<p>The client identifier (ARN) used during Sign-In onboarding Required for both authorization code and refresh token flows</p>"
       }
     },
+    "ClientToken": {
+      "base": "<p>Idempotency token</p>",
+      "refs": {
+        "DeleteResourcePermissionStatementInput$clientToken": "<p>Idempotency token for the request</p>",
+        "PutResourcePermissionStatementInput$clientToken": "<p>Idempotency token for the request</p>"
+      }
+    },
     "CodeVerifier": {
       "base": "<p>PKCE code verifier for OAuth 2.0 security</p> <p>PKCE code verifier to prove possession of the original code challenge. Used to prevent authorization code interception attacks in public clients. Must be 43-128 characters using unreserved characters [A-Z] / [a-z] / [0-9] / &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / &quot;~&quot;</p>",
       "refs": {
         "CreateOAuth2TokenRequestBody$codeVerifier": "<p>PKCE code verifier to prove possession of the original code challenge Required only when grant_type=authorization_code</p>"
+      }
+    },
+    "Condition": {
+      "base": "<p>Condition mapping of keys to values</p>",
+      "refs": {
+        "ConditionBlock$value": null
+      }
+    },
+    "ConditionBlock": {
+      "base": "<p>Condition block for policy statements</p>",
+      "refs": {
+        "PermissionStatementSummary$condition": "<p>Condition block for the permission statement</p>",
+        "PolicyStatement$condition": "<p>Condition block for the statement</p>"
+      }
+    },
+    "ConditionType": {
+      "base": "<p>Condition type identifier</p>",
+      "refs": {
+        "ConditionBlock$key": null
+      }
+    },
+    "ConditionValues": {
+      "base": "<p>List of condition values</p>",
+      "refs": {
+        "Condition$value": null
+      }
+    },
+    "ConflictException": {
+      "base": "<p>Error thrown when request conflicts with current state</p> <p>HTTP Status Code: 409 Conflict</p> <p>Used when the request conflicts with the current state of the resource</p>",
+      "refs": {}
+    },
+    "ConsolePermissionMaxResults": {
+      "base": "<p>Maximum number of results for list operations</p>",
+      "refs": {
+        "ListResourcePermissionStatementsInput$maxResults": "<p>Maximum number of results to return</p>"
       }
     },
     "CreateOAuth2TokenRequest": {
@@ -53,11 +110,49 @@
         "CreateOAuth2TokenResponse$tokenOutput": "<p>Flattened token operation outputs The specific response fields depend on the grant_type used in the request</p>"
       }
     },
+    "DeleteConsoleAuthorizationConfigurationInput": {
+      "base": "<p>Input for DeleteConsoleAuthorizationConfiguration operation</p>",
+      "refs": {}
+    },
+    "DeleteConsoleAuthorizationConfigurationOutput": {
+      "base": "<p>Output for DeleteConsoleAuthorizationConfiguration operation</p>",
+      "refs": {}
+    },
+    "DeleteResourcePermissionStatementInput": {
+      "base": "<p>Input for DeleteResourcePermissionStatement operation</p>",
+      "refs": {}
+    },
+    "DeleteResourcePermissionStatementOutput": {
+      "base": "<p>Output for DeleteResourcePermissionStatement operation</p>",
+      "refs": {}
+    },
+    "ExcludedPrincipal": {
+      "base": "<p>Principal to exclude from permission statements</p>",
+      "refs": {
+        "PutResourcePermissionStatementInput$excludedPrincipal": "<p>Principal to exclude from the permission statement</p>"
+      }
+    },
     "ExpiresIn": {
       "base": "<p>Time to expiry in seconds</p> <p>The time to expiry in seconds, for these purposes will be at most 900 (15 minutes).</p>",
       "refs": {
         "CreateOAuth2TokenResponseBody$expiresIn": "<p>Time to expiry in seconds (maximum 900) Present for both authorization code redemption and token refresh</p>"
       }
+    },
+    "GetConsoleAuthorizationConfigurationInput": {
+      "base": "<p>Input for GetConsoleAuthorizationConfiguration operation</p>",
+      "refs": {}
+    },
+    "GetConsoleAuthorizationConfigurationOutput": {
+      "base": "<p>Output for GetConsoleAuthorizationConfiguration operation</p>",
+      "refs": {}
+    },
+    "GetResourcePolicyInput": {
+      "base": "<p>Input for GetResourcePolicy operation</p>",
+      "refs": {}
+    },
+    "GetResourcePolicyOutput": {
+      "base": "<p>Output for GetResourcePolicy operation</p>",
+      "refs": {}
     },
     "GrantType": {
       "base": "<p>OAuth 2.0 grant type parameter</p> <p>For auth code redemption: Must be &quot;authorization_code&quot; For token refresh: Must be &quot;refresh_token&quot;</p> <p>Based on client_id &amp; grant_type, authn/authz is skipped for CLI endpoints.</p>",
@@ -75,14 +170,84 @@
       "base": "<p>Error thrown when an internal server error occurs</p> <p>HTTP Status Code: 500 Internal Server Error</p> <p>Used for unexpected server-side errors that prevent request processing.</p>",
       "refs": {}
     },
+    "ListResourcePermissionStatementsInput": {
+      "base": "<p>Input for ListResourcePermissionStatements operation</p>",
+      "refs": {}
+    },
+    "ListResourcePermissionStatementsOutput": {
+      "base": "<p>Output for ListResourcePermissionStatements operation</p>",
+      "refs": {}
+    },
+    "NextToken": {
+      "base": "<p>Pagination token</p>",
+      "refs": {
+        "ListResourcePermissionStatementsInput$nextToken": "<p>Token for pagination</p>",
+        "ListResourcePermissionStatementsOutput$nextToken": "<p>Token for next page of results</p>"
+      }
+    },
     "OAuth2ErrorCode": {
       "base": "<p>OAuth 2.0 error codes returned by the server</p> <p>Standard OAuth 2.0 error codes used in error responses to indicate the specific type of error that occurred during token operations.</p>",
       "refs": {
         "AccessDeniedException$error": "<p>OAuth 2.0 error code indicating the specific type of access denial Can be TOKEN_EXPIRED, AUTHCODE_EXPIRED, USER_CREDENTIALS_CHANGED, or INSUFFICIENT_PERMISSIONS</p>",
+        "ConflictException$error": "<p>OAuth 2.0 error code indicating conflict Will be CONFLICT</p>",
         "InternalServerException$error": "<p>OAuth 2.0 error code indicating server error Will be SERVER_ERROR for internal server errors</p>",
+        "ResourceNotFoundException$error": "<p>OAuth 2.0 error code indicating resource not found Will be RESOURCE_NOT_FOUND</p>",
+        "ServiceQuotaExceededException$error": "<p>OAuth 2.0 error code indicating service quota exceeded Will be SERVICE_QUOTA_EXCEEDED</p>",
         "TooManyRequestsError$error": "<p>OAuth 2.0 error code indicating the specific type of error Will be INVALID_REQUEST for rate limiting scenarios</p>",
         "ValidationException$error": "<p>OAuth 2.0 error code indicating validation failure Will be INVALID_REQUEST for validation errors</p>"
       }
+    },
+    "PermissionStatementSummaries": {
+      "base": null,
+      "refs": {
+        "ListResourcePermissionStatementsOutput$permissionStatements": "<p>List of permission statement summaries</p>"
+      }
+    },
+    "PermissionStatementSummary": {
+      "base": "<p>Summary of a permission statement</p>",
+      "refs": {
+        "PermissionStatementSummaries$member": null
+      }
+    },
+    "PolicyActions": {
+      "base": "<p>List of policy actions</p>",
+      "refs": {
+        "PolicyStatement$action": "<p>Actions the statement controls</p>"
+      }
+    },
+    "PolicyStatement": {
+      "base": "<p>Individual policy statement within a resource-based policy</p>",
+      "refs": {
+        "PolicyStatements$member": null
+      }
+    },
+    "PolicyStatements": {
+      "base": null,
+      "refs": {
+        "SigninResourceBasedPolicy$statement": "<p>Policy statements</p>"
+      }
+    },
+    "Principal": {
+      "base": "<p>IAM principal identifier</p>",
+      "refs": {
+        "PolicyStatement$principal": "<p>Principal the statement applies to</p>"
+      }
+    },
+    "PutConsoleAuthorizationConfigurationInput": {
+      "base": "<p>Input for PutConsoleAuthorizationConfiguration operation</p>",
+      "refs": {}
+    },
+    "PutConsoleAuthorizationConfigurationOutput": {
+      "base": "<p>Output for PutConsoleAuthorizationConfiguration operation</p>",
+      "refs": {}
+    },
+    "PutResourcePermissionStatementInput": {
+      "base": "<p>Input for PutResourcePermissionStatement operation</p>",
+      "refs": {}
+    },
+    "PutResourcePermissionStatementOutput": {
+      "base": "<p>Output for PutResourcePermissionStatement operation</p>",
+      "refs": {}
     },
     "RedirectUri": {
       "base": "<p>Redirect URI for OAuth 2.0 flow validation</p> <p>The same redirect URI used in the authorization request. This must match exactly what was sent in the original authorization request for security validation.</p>",
@@ -97,6 +262,53 @@
         "CreateOAuth2TokenResponseBody$refreshToken": "<p>Encrypted refresh token with cnf.jkt (SHA-256 thumbprint of presented jwk) Always present in responses (required for both flows)</p>"
       }
     },
+    "RequestedRegion": {
+      "base": "<p>AWS region identifier for VPC and VPC endpoint pairing</p>",
+      "refs": {
+        "PutResourcePermissionStatementInput$requestedRegion": "<p>AWS region where the VPC and VPC endpoint reside Required when sourceVpc or signinSourceVpce/consoleSourceVpce is provided</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>Error thrown when requested resource is not found</p> <p>HTTP Status Code: 404 Not Found</p> <p>Used when the specified resource does not exist</p>",
+      "refs": {}
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>Error thrown when service quota is exceeded</p> <p>HTTP Status Code: 402 Payment Required (used as quota exceeded indicator)</p> <p>Used when the request would cause a service quota to be exceeded</p>",
+      "refs": {}
+    },
+    "SigninResourceBasedPolicy": {
+      "base": "<p>SignIn resource-based policy document</p>",
+      "refs": {
+        "GetResourcePolicyOutput$signinResourceBasedPolicy": "<p>The account's SignIn resource-based policy</p>"
+      }
+    },
+    "SourceIp": {
+      "base": "<p>Source IP address for access control</p>",
+      "refs": {
+        "PutResourcePermissionStatementInput$sourceIp": "<p>Source IP address</p>"
+      }
+    },
+    "SourceVpc": {
+      "base": "<p>VPC identifier for network-based access control</p>",
+      "refs": {
+        "PutResourcePermissionStatementInput$sourceVpc": "<p>VPC identifier to restrict console access</p>"
+      }
+    },
+    "SourceVpce": {
+      "base": "<p>VPC endpoint identifier</p>",
+      "refs": {
+        "PutResourcePermissionStatementInput$signinSourceVpce": "<p>SignIn VPC endpoint identifier</p>",
+        "PutResourcePermissionStatementInput$consoleSourceVpce": "<p>Console VPC endpoint identifier</p>"
+      }
+    },
+    "StatementId": {
+      "base": "<p>Unique identifier for a permission statement</p>",
+      "refs": {
+        "DeleteResourcePermissionStatementInput$statementId": "<p>Unique identifier of the permission statement to delete</p>",
+        "PermissionStatementSummary$sid": "<p>Unique identifier for the permission statement</p>",
+        "PutResourcePermissionStatementOutput$statementId": "<p>Unique identifier for the created permission statement</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
@@ -104,9 +316,34 @@
         "AccessToken$accessKeyId": "<p>AWS access key ID for temporary credentials</p>",
         "AccessToken$secretAccessKey": "<p>AWS secret access key for temporary credentials</p>",
         "AccessToken$sessionToken": "<p>AWS session token for temporary credentials</p>",
+        "Condition$key": null,
+        "ConditionValues$member": null,
+        "ConflictException$message": "<p>Detailed message explaining the conflict Provides specific information about what caused the conflict</p>",
+        "DeleteConsoleAuthorizationConfigurationOutput$scope": "<p>Authorization scope</p>",
+        "GetConsoleAuthorizationConfigurationOutput$scope": "<p>Authorization scope</p>",
         "InternalServerException$message": "<p>Detailed message explaining the server error May include error details for debugging purposes</p>",
+        "PolicyActions$member": null,
+        "PolicyStatement$effect": "<p>Effect of the policy statement (Allow/Deny)</p>",
+        "PolicyStatement$resource": "<p>Resource the statement applies to</p>",
+        "Principal$key": null,
+        "Principal$value": null,
+        "PutConsoleAuthorizationConfigurationOutput$scope": "<p>Authorization scope</p>",
+        "ResourceNotFoundException$message": "<p>Detailed message explaining which resource was not found Provides specific information about the missing resource</p>",
+        "ServiceQuotaExceededException$message": "<p>Detailed message explaining which quota was exceeded Provides specific information about the limit and current usage</p>",
+        "SigninResourceBasedPolicy$version": "<p>Policy version</p>",
         "TooManyRequestsError$message": "<p>Detailed message about the rate limiting May include retry-after information or rate limit details</p>",
         "ValidationException$message": "<p>Detailed message explaining the validation failure Provides specific information about which validation failed</p>"
+      }
+    },
+    "TargetId": {
+      "base": "<p>Target account identifier for console authorization</p>",
+      "refs": {
+        "DeleteConsoleAuthorizationConfigurationInput$targetId": "<p>Target account identifier</p>",
+        "DeleteConsoleAuthorizationConfigurationOutput$targetId": "<p>Target account identifier</p>",
+        "GetConsoleAuthorizationConfigurationInput$targetId": "<p>Target account identifier</p>",
+        "GetConsoleAuthorizationConfigurationOutput$targetId": "<p>Target account identifier</p>",
+        "PutConsoleAuthorizationConfigurationInput$targetId": "<p>Target account identifier</p>",
+        "PutConsoleAuthorizationConfigurationOutput$targetId": "<p>Target account identifier</p>"
       }
     },
     "TokenType": {
@@ -122,6 +359,12 @@
     "ValidationException": {
       "base": "<p>Error thrown when request validation fails</p> <p>HTTP Status Code: 400 Bad Request</p> <p>Used for request validation errors such as malformed parameters, missing required fields, or invalid parameter values.</p>",
       "refs": {}
+    },
+    "VpcSourceIp": {
+      "base": "<p>Source IP address within a VPC</p>",
+      "refs": {
+        "PutResourcePermissionStatementInput$vpcSourceIp": "<p>Source IP address within VPC</p>"
+      }
     }
   }
 }

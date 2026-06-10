@@ -346,6 +346,15 @@
       "input":{"shape":"AttachClassicLinkVpcRequest"},
       "output":{"shape":"AttachClassicLinkVpcResult"}
     },
+    "AttachImageWatermark":{
+      "name":"AttachImageWatermark",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AttachImageWatermarkRequest"},
+      "output":{"shape":"AttachImageWatermarkResult"}
+    },
     "AttachInternetGateway":{
       "name":"AttachInternetGateway",
       "http":{
@@ -4092,6 +4101,15 @@
       },
       "input":{"shape":"DetachClassicLinkVpcRequest"},
       "output":{"shape":"DetachClassicLinkVpcResult"}
+    },
+    "DetachImageWatermark":{
+      "name":"DetachImageWatermark",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DetachImageWatermarkRequest"},
+      "output":{"shape":"DetachImageWatermarkResult"}
     },
     "DetachInternetGateway":{
       "name":"DetachInternetGateway",
@@ -9055,6 +9073,27 @@
         "Return":{
           "shape":"Boolean",
           "locationName":"return"
+        }
+      }
+    },
+    "AttachImageWatermarkRequest":{
+      "type":"structure",
+      "required":[
+        "ImageId",
+        "WatermarkName"
+      ],
+      "members":{
+        "ImageId":{"shape":"ImageId"},
+        "WatermarkName":{"shape":"ImageWatermarkNameRequest"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "AttachImageWatermarkResult":{
+      "type":"structure",
+      "members":{
+        "WatermarkKey":{
+          "shape":"String",
+          "locationName":"watermarkKey"
         }
       }
     },
@@ -24929,6 +24968,27 @@
         }
       }
     },
+    "DetachImageWatermarkRequest":{
+      "type":"structure",
+      "required":[
+        "ImageId",
+        "WatermarkKey"
+      ],
+      "members":{
+        "ImageId":{"shape":"ImageId"},
+        "WatermarkKey":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DetachImageWatermarkResult":{
+      "type":"structure",
+      "members":{
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
+        }
+      }
+    },
     "DetachInternetGatewayRequest":{
       "type":"structure",
       "required":[
@@ -32007,6 +32067,10 @@
           "shape":"Boolean",
           "locationName":"freeTierEligible"
         },
+        "ImageWatermarks":{
+          "shape":"ImageWatermarkList",
+          "locationName":"imageWatermarkSet"
+        },
         "ImageId":{
           "shape":"String",
           "locationName":"imageId"
@@ -32317,6 +32381,10 @@
         "IsPublic":{
           "shape":"Boolean",
           "locationName":"isPublic"
+        },
+        "ImageWatermarks":{
+          "shape":"ImageWatermarkList",
+          "locationName":"imageWatermarkSet"
         }
       }
     },
@@ -32638,6 +32706,43 @@
     "ImageUsageResourceTypeRequestList":{
       "type":"list",
       "member":{"shape":"ImageUsageResourceTypeRequest"}
+    },
+    "ImageWatermark":{
+      "type":"structure",
+      "members":{
+        "WatermarkKey":{
+          "shape":"String",
+          "locationName":"watermarkKey"
+        },
+        "SourceImageRegion":{
+          "shape":"String",
+          "locationName":"sourceImageRegion"
+        },
+        "SourceImageId":{
+          "shape":"String",
+          "locationName":"sourceImageId"
+        },
+        "SourceImageCreationTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"sourceImageCreationTime"
+        },
+        "WatermarkCreationTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"watermarkCreationTime"
+        }
+      }
+    },
+    "ImageWatermarkList":{
+      "type":"list",
+      "member":{
+        "shape":"ImageWatermark",
+        "locationName":"item"
+      }
+    },
+    "ImageWatermarkNameRequest":{
+      "type":"string",
+      "max":128,
+      "min":3
     },
     "ImdsSupportValues":{
       "type":"string",

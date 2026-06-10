@@ -2537,6 +2537,13 @@
       "max":100.0,
       "min":0.0
     },
+    "DaemonIpcMode":{
+      "type":"string",
+      "enum":[
+        "none",
+        "shared"
+      ]
+    },
     "DaemonLinuxParameters":{
       "type":"structure",
       "members":{
@@ -2559,6 +2566,13 @@
         "message":{"shape":"String"}
       },
       "exception":true
+    },
+    "DaemonPidMode":{
+      "type":"string",
+      "enum":[
+        "none",
+        "shared"
+      ]
     },
     "DaemonPropagateTags":{
       "type":"string",
@@ -2641,7 +2655,9 @@
         "status":{"shape":"DaemonTaskDefinitionStatus"},
         "registeredAt":{"shape":"Timestamp"},
         "deleteRequestedAt":{"shape":"Timestamp"},
-        "registeredBy":{"shape":"String"}
+        "registeredBy":{"shape":"String"},
+        "pidMode":{"shape":"DaemonPidMode"},
+        "ipcMode":{"shape":"DaemonIpcMode"}
       }
     },
     "DaemonTaskDefinitionRevisionFilter":{
@@ -4979,7 +4995,9 @@
         "cpu":{"shape":"String"},
         "memory":{"shape":"String"},
         "volumes":{"shape":"DaemonVolumeList"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "pidMode":{"shape":"DaemonPidMode"},
+        "ipcMode":{"shape":"DaemonIpcMode"}
       }
     },
     "RegisterDaemonTaskDefinitionResponse":{

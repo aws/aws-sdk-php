@@ -39,6 +39,7 @@
     "AssociateTrunkInterface": "<p>Associates a branch network interface with a trunk network interface.</p> <p>Before you create the association, use <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateNetworkInterface.html\">CreateNetworkInterface</a> command and set the interface type to <code>trunk</code>. You must also create a network interface for each branch network interface that you want to associate with the trunk network interface.</p>",
     "AssociateVpcCidrBlock": "<p>Associates a CIDR block with your VPC. You can associate a secondary IPv4 CIDR block, an Amazon-provided IPv6 CIDR block, or an IPv6 CIDR block from an IPv6 address pool that you provisioned through bring your own IP addresses (<a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html\">BYOIP</a>).</p> <p>You must specify one of the following in the request: an IPv4 CIDR block, an IPv6 pool, or an Amazon-provided IPv6 CIDR block.</p> <p>For more information about associating CIDR blocks with your VPC and applicable restrictions, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-ip-addressing.html\">IP addressing for your VPCs and subnets</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "AttachClassicLinkVpc": "<note> <p>This action is deprecated.</p> </note> <p>Links an EC2-Classic instance to a ClassicLink-enabled VPC through one or more of the VPC security groups. You cannot link an EC2-Classic instance to more than one VPC at a time. You can only link an instance that's in the <code>running</code> state. An instance is automatically unlinked from a VPC when it's stopped - you can link it to the VPC again when you restart it.</p> <p>After you've linked an instance, you cannot change the VPC security groups that are associated with it. To change the security groups, you must first unlink the instance, and then link it again.</p> <p>Linking your instance to a VPC is sometimes referred to as <i>attaching</i> your instance.</p>",
+    "AttachImageWatermark": "<p>Attaches a watermark to a non-public AMI. The watermark is a structured identifier that automatically propagates to all derivative images created through <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html\">CreateImage</a>, <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CopyImage.html\">CopyImage</a>, and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateRestoreImageTask.html\">CreateRestoreImageTask</a>.</p> <p>Only the AMI owner can attach watermarks. Watermarks cannot be added to public AMIs.</p>",
     "AttachInternetGateway": "<p>Attaches an internet gateway or a virtual private gateway to a VPC, enabling connectivity between the internet and the VPC. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html\">Internet gateways</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "AttachNetworkInterface": "<p>Attaches a network interface to an instance.</p>",
     "AttachVerifiedAccessTrustProvider": "<p>Attaches the specified Amazon Web Services Verified Access trust provider to the specified Amazon Web Services Verified Access instance.</p>",
@@ -458,6 +459,7 @@
     "DescribeVpnConnections": "<p>Describes one or more of your VPN connections.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html\">Amazon Web Services Site-to-Site VPN</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p>",
     "DescribeVpnGateways": "<p>Describes one or more of your virtual private gateways.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html\">Amazon Web Services Site-to-Site VPN</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p>",
     "DetachClassicLinkVpc": "<note> <p>This action is deprecated.</p> </note> <p>Unlinks (detaches) a linked EC2-Classic instance from a VPC. After the instance has been unlinked, the VPC security groups are no longer associated with it. An instance is automatically unlinked from a VPC when it's stopped.</p>",
+    "DetachImageWatermark": "<p>Removes a watermark from the specified AMI. This is an idempotent operation. It succeeds even if the watermark does not exist on the image.</p> <p>Removing a watermark from an image does not affect derivative images that already carry the watermark.</p> <p>Only the AMI owner can detach watermarks.</p>",
     "DetachInternetGateway": "<p>Detaches an internet gateway from a VPC, disabling connectivity between the internet and the VPC. The VPC must not contain any running instances with Elastic IP addresses or public IPv4 addresses.</p>",
     "DetachNetworkInterface": "<p>Detaches a network interface from an instance.</p>",
     "DetachVerifiedAccessTrustProvider": "<p>Detaches the specified Amazon Web Services Verified Access trust provider from the specified Amazon Web Services Verified Access instance.</p>",
@@ -1849,6 +1851,16 @@
       "refs": {
       }
     },
+    "AttachImageWatermarkRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AttachImageWatermarkResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "AttachInternetGatewayRequest": {
       "base": null,
       "refs": {
@@ -2437,6 +2449,7 @@
         "AssociateVpcCidrBlockRequest$AmazonProvidedIpv6CidrBlock": "<p>Requests an Amazon-provided IPv6 CIDR block with a /56 prefix length for the VPC. You cannot specify the range of IPv6 addresses or the size of the CIDR block.</p>",
         "AttachClassicLinkVpcRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AttachClassicLinkVpcResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
+        "AttachImageWatermarkRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AttachInternetGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AttachNetworkInterfaceRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AttachVerifiedAccessTrustProviderRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2941,6 +2954,8 @@
         "DestinationOptionsResponse$PerHourPartition": "<p>Indicates whether to partition the flow log per hour.</p>",
         "DetachClassicLinkVpcRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DetachClassicLinkVpcResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
+        "DetachImageWatermarkRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DetachImageWatermarkResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "DetachInternetGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DetachNetworkInterfaceRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DetachNetworkInterfaceRequest$Force": "<p>Specifies whether to force a detachment.</p> <note> <ul> <li> <p>Use the <code>Force</code> parameter only as a last resort to detach a network interface from a failed instance. </p> </li> <li> <p>If you use the <code>Force</code> parameter to detach a network interface, you might not be able to attach a different network interface to the same index on the instance without first stopping and starting the instance.</p> </li> <li> <p>If you force the detachment of a network interface, the <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html\">instance metadata</a> might not get updated. This means that the attributes associated with the detached network interface might still be visible. The instance metadata will get updated when you stop and start the instance.</p> </li> </ul> </note>",
@@ -10178,6 +10193,16 @@
       "refs": {
       }
     },
+    "DetachImageWatermarkRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DetachImageWatermarkResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DetachInternetGatewayRequest": {
       "base": null,
       "refs": {
@@ -13789,6 +13814,7 @@
     "ImageId": {
       "base": null,
       "refs": {
+        "AttachImageWatermarkRequest$ImageId": "<p>The ID of the AMI.</p>",
         "CancelImageLaunchPermissionRequest$ImageId": "<p>The ID of the AMI that was shared with your Amazon Web Services account.</p>",
         "CreateImageUsageReportRequest$ImageId": "<p>The ID of the image to report on.</p>",
         "CreateReplaceRootVolumeTaskRequest$ImageId": "<p>The ID of the AMI to use to restore the root volume. The specified AMI must have the same product code, billing information, architecture type, and virtualization type as that of the instance.</p> <p>If you want to restore the replacement volume from a specific snapshot, or if you want to restore it to its launch state, omit this parameter.</p>",
@@ -13798,6 +13824,7 @@
         "DescribeImageAttributeRequest$ImageId": "<p>The ID of the AMI.</p>",
         "DescribeImageReferencesImageIdStringList$member": null,
         "DescribeImageUsageReportsImageIdStringList$member": null,
+        "DetachImageWatermarkRequest$ImageId": "<p>The ID of the AMI.</p>",
         "DisableFastLaunchRequest$ImageId": "<p>Specify the ID of the image for which to disable Windows fast launch.</p>",
         "DisableFastLaunchResult$ImageId": "<p>The ID of the image for which Windows fast launch was disabled.</p>",
         "DisableImageDeprecationRequest$ImageId": "<p>The ID of the AMI.</p>",
@@ -14095,6 +14122,25 @@
       "base": null,
       "refs": {
         "CreateImageUsageReportRequest$ResourceTypes": "<p>The resource types to include in the report.</p>"
+      }
+    },
+    "ImageWatermark": {
+      "base": "<p>Describes a watermark attached to an AMI.</p>",
+      "refs": {
+        "ImageWatermarkList$member": null
+      }
+    },
+    "ImageWatermarkList": {
+      "base": null,
+      "refs": {
+        "Image$ImageWatermarks": "<p>The watermarks attached to the AMI.</p>",
+        "ImageMetadata$ImageWatermarks": "<p>The watermarks attached to the AMI.</p>"
+      }
+    },
+    "ImageWatermarkNameRequest": {
+      "base": null,
+      "refs": {
+        "AttachImageWatermarkRequest$WatermarkName": "<p>The name for the watermark. Combined with the caller's account ID to form the <code>WatermarkKey</code> (<code>accountId:watermarkName</code>).</p> <p>Constraints: 3-128 alphanumeric characters, parentheses (()), square brackets ([]), spaces ( ), periods (.), slashes (/), dashes (-), single quotes ('), at-signs (@), or underscores(_)</p>"
       }
     },
     "ImdsSupportValues": {
@@ -18770,6 +18816,8 @@
         "ImageUsageReport$CreationTime": "<p>The date and time when the report was created.</p>",
         "ImageUsageReport$ExpirationTime": "<p>The date and time when Amazon EC2 will delete the report (30 days after the report was created).</p>",
         "ImageUsageReportEntry$ReportCreationTime": "<p>The date and time the report creation was initiated.</p>",
+        "ImageWatermark$SourceImageCreationTime": "<p>The creation date of the source AMI, in the following format: <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>.<i>ssssss</i>+<i>HH</i>:<i>MM</i>.</p>",
+        "ImageWatermark$WatermarkCreationTime": "<p>The date and time the watermark was attached to the AMI, in the following format: <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>.<i>ssssss</i>+<i>HH</i>:<i>MM</i>.</p>",
         "Instance$UsageOperationUpdateTime": "<p>The time that the usage operation was last updated.</p>",
         "InstanceImageMetadata$LaunchTime": "<p>The time the instance was launched.</p>",
         "InstanceSecondaryInterfaceAttachment$AttachTime": "<p>The timestamp when the attachment was created.</p>",
@@ -24868,6 +24916,7 @@
         "AssociatedTargetNetwork$NetworkId": "<p>The ID of the subnet.</p>",
         "AssociationStatus$Message": "<p>A message about the status of the target network association, if applicable.</p>",
         "AthenaIntegration$IntegrationResultS3DestinationArn": "<p>The location in Amazon S3 to store the generated CloudFormation template.</p>",
+        "AttachImageWatermarkResult$WatermarkKey": "<p>The watermark identifier, in <code>accountId:watermarkName</code> format (for example, <code>123456789012:approvedAmi</code>).</p>",
         "AttachNetworkInterfaceResult$AttachmentId": "<p>The ID of the network interface attachment.</p>",
         "AttachVerifiedAccessTrustProviderRequest$ClientToken": "<p>A unique, case-sensitive token that you provide to ensure idempotency of your modification request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "AttachVolumeRequest$Device": "<p>The device name (for example, <code>/dev/sdh</code> or <code>xvdh</code>).</p>",
@@ -25618,6 +25667,7 @@
         "DescribeVpcPeeringConnectionsResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "DescribeVpcsRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
         "DescribeVpcsResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "DetachImageWatermarkRequest$WatermarkKey": "<p>The watermark key to remove, in <code>accountId:watermarkName</code> format (for example, <code>123456789012:approvedAmi</code>).</p>",
         "DetachVerifiedAccessTrustProviderRequest$ClientToken": "<p>A unique, case-sensitive token that you provide to ensure idempotency of your modification request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "DetachVolumeRequest$Device": "<p>The device name.</p>",
         "DeviceOptions$TenantId": "<p>The ID of the tenant application with the device-identity provider.</p>",
@@ -25950,6 +26000,9 @@
         "ImageUsageReportUserIdStringList$member": null,
         "ImageUsageResourceTypeOption$OptionName": "<p>The name of the option.</p>",
         "ImageUsageResourceTypeOptionRequest$OptionName": "<p>The name of the option.</p> <p>Valid value: <code>version-depth</code> - The number of launch template versions to check.</p>",
+        "ImageWatermark$WatermarkKey": "<p>The watermark identifier, in <code>accountId:watermarkName</code> format (for example, <code>123456789012:approvedAmi</code>). The <code>accountId</code> portion is the Amazon Web Services account ID of the watermark creator. The <code>watermarkName</code> portion is customer-provided.</p>",
+        "ImageWatermark$SourceImageRegion": "<p>The Region where the watermark was originally attached.</p>",
+        "ImageWatermark$SourceImageId": "<p>The ID of the AMI to which the watermark was originally attached.</p>",
         "ImportClientVpnClientCertificateRevocationListRequest$CertificateRevocationList": "<p>The client certificate revocation list file. For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/cvpn-working-certificates.html#cvpn-working-certificates-generate\">Generate a Client Certificate Revocation List</a> in the <i>Client VPN Administrator Guide</i>.</p>",
         "ImportImageLicenseConfigurationRequest$LicenseConfigurationArn": "<p>The ARN of a license configuration.</p>",
         "ImportImageLicenseConfigurationResponse$LicenseConfigurationArn": "<p>The ARN of a license configuration.</p>",

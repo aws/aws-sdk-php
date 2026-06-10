@@ -1056,6 +1056,13 @@
         "DaemonDeploymentConfiguration$drainPercent": "<p>The percentage of container instances to drain simultaneously during a daemon deployment. Valid values are between 0.0 and 100.0.</p>"
       }
     },
+    "DaemonIpcMode": {
+      "base": null,
+      "refs": {
+        "DaemonTaskDefinition$ipcMode": "<p>The IPC namespace mode for the daemon. A value of <code>shared</code> means the daemon shares the IPC namespace with co-located tasks, allowing communication through POSIX shared memory, semaphores, and message queues. A value of <code>none</code> means the daemon has its own isolated IPC namespace.</p>",
+        "RegisterDaemonTaskDefinitionRequest$ipcMode": "<p>The IPC namespace mode for the daemon. When set to <code>shared</code>, the daemon shares the IPC namespace with co-located tasks on the same container instance, allowing communication through POSIX shared memory, semaphores, and message queues. When set to <code>none</code>, the daemon gets its own isolated IPC namespace. The default is <code>none</code>.</p>"
+      }
+    },
     "DaemonLinuxParameters": {
       "base": "<p>The Linux-specific options that are applied to the daemon container, such as Linux kernel capabilities.</p>",
       "refs": {
@@ -1069,6 +1076,13 @@
     "DaemonNotFoundException": {
       "base": "<p>The specified daemon wasn't found. You can view your available daemons with <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_ListDaemons.html\">ListDaemons</a>. Amazon ECS daemons are cluster specific and Region specific.</p>",
       "refs": {}
+    },
+    "DaemonPidMode": {
+      "base": null,
+      "refs": {
+        "DaemonTaskDefinition$pidMode": "<p>The process namespace mode for the daemon. A value of <code>shared</code> means the daemon shares the PID namespace with co-located tasks, giving it visibility into application processes. A value of <code>none</code> means the daemon has its own isolated PID namespace.</p>",
+        "RegisterDaemonTaskDefinitionRequest$pidMode": "<p>The process namespace mode for the daemon. When set to <code>shared</code>, the daemon shares the PID namespace with co-located tasks on the same container instance, giving the daemon visibility into application processes. When set to <code>none</code>, the daemon gets its own isolated PID namespace. The default is <code>none</code>.</p>"
+      }
     },
     "DaemonPropagateTags": {
       "base": null,

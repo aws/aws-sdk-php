@@ -5008,7 +5008,9 @@
       "type": "string",
       "enum": [
         "ITU_1770_1",
-        "ITU_1770_2"
+        "ITU_1770_2",
+        "ITU_1770_3",
+        "ITU_1770_4"
       ]
     },
     "AudioNormalizationAlgorithmControl": {
@@ -5031,6 +5033,14 @@
         "TargetLkfs": {
           "shape": "__doubleMinNegative59Max0",
           "locationName": "targetLkfs"
+        },
+        "PeakCalculation": {
+          "shape": "AudioNormalizationPeakCalculation",
+          "locationName": "peakCalculation"
+        },
+        "PeakLimiterThreshold": {
+          "shape": "__doubleMinNegative8Max0",
+          "locationName": "peakLimiterThreshold"
         }
       }
     },
@@ -5077,6 +5087,10 @@
         "Pid": {
           "shape": "__integerMin0Max8191",
           "locationName": "pid"
+        },
+        "Pids": {
+          "shape": "__listOfAudioPid",
+          "locationName": "pids"
         }
       },
       "required": [
@@ -5142,6 +5156,10 @@
         "Track": {
           "shape": "__integerMin1",
           "locationName": "track"
+        },
+        "PremixSettings": {
+          "shape": "AudioPreMixerSettings",
+          "locationName": "premixSettings"
         }
       },
       "required": [
@@ -25758,6 +25776,69 @@
       "type": "list",
       "member": {
         "shape": "AudioFeedInput"
+      }
+    },
+    "AudioNormalizationPeakCalculation": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "TRUE_PEAK"
+      ]
+    },
+    "AudioPid": {
+      "type": "structure",
+      "members": {
+        "DolbyEDecode": {
+          "shape": "AudioDolbyEDecode",
+          "locationName": "dolbyEDecode"
+        },
+        "Pid": {
+          "shape": "__integerMin0Max8191",
+          "locationName": "pid"
+        },
+        "PremixSettings": {
+          "shape": "AudioPreMixerSettings",
+          "locationName": "premixSettings"
+        }
+      },
+      "required": [
+        "Pid"
+      ]
+    },
+    "AudioPreMixerSettings": {
+      "type": "structure",
+      "members": {
+        "AudioNormalizationSettings": {
+          "shape": "AudioNormalizationSettings",
+          "locationName": "audioNormalizationSettings"
+        },
+        "Channels": {
+          "shape": "__integerMin1Max16",
+          "locationName": "channels"
+        },
+        "GainDb": {
+          "shape": "__doubleMinNegative60Max60",
+          "locationName": "gainDb"
+        },
+        "RemixSettings": {
+          "shape": "RemixSettings",
+          "locationName": "remixSettings"
+        }
+      }
+    },
+    "__doubleMinNegative100Max0": {
+      "type": "double"
+    },
+    "__doubleMinNegative60Max60": {
+      "type": "double"
+    },
+    "__doubleMinNegative8Max0": {
+      "type": "double"
+    },
+    "__listOfAudioPid": {
+      "type": "list",
+      "member": {
+        "shape": "AudioPid"
       }
     }
   }

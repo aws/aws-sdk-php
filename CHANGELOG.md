@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConnectHealth` - Add support for MedicalScribeBinaryAudioEvent in the Medical Scribe streaming input. This new event type lets you send audio as a raw binary payload instead of a base64-encoded value
+* `Aws\SageMaker` - Add support for G6e instances (ml.g6e.xlarge through ml.g6e.48xlarge) on Amazon SageMaker Notebook Instances.
+* `Aws\Lightsail` - This release adds support for Asia Pacific (Hong Kong) (ap-east-1), Europe (Spain) (eu-south-2) and South America (Sao Paulo) (sa-east-1) Regions.
+* `Aws\ECS` - Amazon ECS Managed Daemon task definitions now support pidMode and ipcMode parameters. Set shared to allow daemons to share PID or IPC namespaces with co-located tasks on Managed Instances, enabling process tracing and shared memory communication.
+* `Aws\Signin` - AWS Sign-In now allows customers to control access to the AWS Management Console using resource-based policies. With this release customers can restrict console access based on network perimeters such as VPC IDs, VPC endpoints, and IP addresses.
+* `Aws\EC2` - This release adds support for AMI Watermark which a structured identifier that helps in tracking AMI provenance
+* `Aws\MediaLive` - Adding premixer settings to pid and track audio inputs in MediaLIve to allow greater control over mixing audio from multiple source streams including support for AudioPidSelectors made up of multiple audio PIDs.
+* `Aws\PrometheusService` - Adds supports for out-of-order sample ingestion (default 1-minute window) and a configurable rule query offset to reduce data loss and improve alerting accuracy.
+
 ## 3.384.6 - 2026-06-09
 
 * `Aws\IoTSiteWise` - Adding new BDD representation of endpoint ruleset
