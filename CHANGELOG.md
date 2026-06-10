@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.384.7 - 2026-06-10
 
 * `Aws\ConnectHealth` - Add support for MedicalScribeBinaryAudioEvent in the Medical Scribe streaming input. This new event type lets you send audio as a raw binary payload instead of a base64-encoded value
 * `Aws\SageMaker` - Add support for G6e instances (ml.g6e.xlarge through ml.g6e.48xlarge) on Amazon SageMaker Notebook Instances.
