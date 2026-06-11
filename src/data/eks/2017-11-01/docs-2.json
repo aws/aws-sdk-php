@@ -1072,6 +1072,18 @@
         "Update$errors": "<p>Any errors associated with a <code>Failed</code> update.</p>"
       }
     },
+    "EtcdPlacementRequest": {
+      "base": "<p>The placement configuration for the etcd instances of your local Amazon EKS cluster on an Amazon Web Services Outpost. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-outposts-capacity-considerations.html\">Capacity considerations</a> in the <i>Amazon EKS User Guide</i>.</p>",
+      "refs": {
+        "OutpostConfigRequest$etcdPlacement": "<p>An object representing the placement configuration for the etcd instances of your local Amazon EKS cluster on an Amazon Web Services Outpost. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-outposts-capacity-considerations.html\">Capacity considerations</a> in the <i>Amazon EKS User Guide</i>.</p>"
+      }
+    },
+    "EtcdPlacementResponse": {
+      "base": "<p>The placement configuration for the etcd instances of your local Amazon EKS cluster on an Amazon Web Services Outpost. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-outposts-capacity-considerations.html\">Capacity considerations</a> in the <i>Amazon EKS User Guide</i>.</p>",
+      "refs": {
+        "OutpostConfigResponse$etcdPlacement": "<p>An object representing the placement configuration for the etcd instances of your local Amazon EKS cluster on an Amazon Web Services Outpost. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-outposts-capacity-considerations.html\">Capacity considerations</a> in the <i>Amazon EKS User Guide</i>.</p>"
+      }
+    },
     "FargateProfile": {
       "base": "<p>An object representing an Fargate profile.</p>",
       "refs": {
@@ -1789,6 +1801,15 @@
       "base": "<p>The service is unavailable. Back off and retry the operation.</p>",
       "refs": {}
     },
+    "SpreadLevel": {
+      "base": null,
+      "refs": {
+        "ControlPlanePlacementRequest$spreadLevel": "<p>Optional parameter to specify the placement group spread level for control plane instances. If not provided, Amazon EKS will deploy control plane instances without a placement group.</p>",
+        "ControlPlanePlacementResponse$spreadLevel": "<p>The spread level used with the placement group for control plane instances on your local Amazon EKS cluster on Amazon Web Services Outposts.</p>",
+        "EtcdPlacementRequest$spreadLevel": "<p>Optional parameter to specify the placement group spread level for etcd instances. If not provided, Amazon EKS will deploy etcd instances without a placement group.</p>",
+        "EtcdPlacementResponse$spreadLevel": "<p>The spread level used with the placement group for etcd instances on your local Amazon EKS cluster on Amazon Web Services Outposts.</p>"
+      }
+    },
     "SsoIdentity": {
       "base": "<p>An IAM Identity CenterIAM; Identity Center identity (user or group) that can be assigned permissions in a capability.</p>",
       "refs": {
@@ -2133,8 +2154,10 @@
         "OidcIdentityProviderConfigRequest$usernamePrefix": "<p>The prefix that is prepended to username claims to prevent clashes with existing names. If you do not provide this field, and <code>username</code> is a value other than <code>email</code>, the prefix defaults to <code>issuerurl#</code>. You can use the value <code>-</code> to disable all prefixing.</p>",
         "OidcIdentityProviderConfigRequest$groupsClaim": "<p>The JWT claim that the provider uses to return your groups.</p>",
         "OidcIdentityProviderConfigRequest$groupsPrefix": "<p>The prefix that is prepended to group claims to prevent clashes with existing names (such as <code>system:</code> groups). For example, the value<code> oidc:</code> will create group names like <code>oidc:engineering</code> and <code>oidc:infra</code>.</p>",
-        "OutpostConfigRequest$controlPlaneInstanceType": "<p>The Amazon EC2 instance type that you want to use for your local Amazon EKS cluster on Outposts. Choose an instance type based on the number of nodes that your cluster will have. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-outposts-capacity-considerations.html\">Capacity considerations</a> in the <i>Amazon EKS User Guide</i>.</p> <p>The instance type that you specify is used for all Kubernetes control plane instances. The instance type can't be changed after cluster creation. The control plane is not automatically scaled by Amazon EKS.</p> <p> </p>",
-        "OutpostConfigResponse$controlPlaneInstanceType": "<p>The Amazon EC2 instance type used for the control plane. The instance type is the same for all control plane instances.</p>",
+        "OutpostConfigRequest$controlPlaneInstanceType": "<p>The Amazon EC2 instance type for the Kubernetes control plane instances of your local Amazon EKS cluster on Amazon Web Services Outposts. This instance type applies to all control plane instances and cannot be changed after cluster creation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-outposts-capacity-considerations.html\">Capacity considerations</a> in the <i>Amazon EKS User Guide</i>.</p> <p> </p>",
+        "OutpostConfigRequest$etcdInstanceType": "<p>The Amazon EC2 instance type for etcd instances of your local Amazon EKS cluster on Amazon Web Services Outposts. This instance type applies to all etcd instances and cannot be changed after cluster creation.</p>",
+        "OutpostConfigResponse$controlPlaneInstanceType": "<p>The Amazon EC2 instance type for the Kubernetes control plane instances of your local Amazon EKS cluster on Amazon Web Services Outposts. The instance type is the same for all control plane instances.</p>",
+        "OutpostConfigResponse$etcdInstanceType": "<p>The Amazon EC2 instance type for etcd instances of your local Amazon EKS cluster on Amazon Web Services Outposts. The instance type is the same for all etcd instances.</p>",
         "PodIdentityAssociation$clusterName": "<p>The name of the cluster that the association is in.</p>",
         "PodIdentityAssociation$namespace": "<p>The name of the Kubernetes namespace inside the cluster to create the association in. The service account and the Pods that use the service account must be in this namespace.</p>",
         "PodIdentityAssociation$serviceAccount": "<p>The name of the Kubernetes service account inside the cluster to associate the IAM credentials with.</p>",

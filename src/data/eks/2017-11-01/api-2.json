@@ -1794,13 +1794,15 @@
     "ControlPlanePlacementRequest":{
       "type":"structure",
       "members":{
-        "groupName":{"shape":"String"}
+        "groupName":{"shape":"String"},
+        "spreadLevel":{"shape":"SpreadLevel"}
       }
     },
     "ControlPlanePlacementResponse":{
       "type":"structure",
       "members":{
-        "groupName":{"shape":"String"}
+        "groupName":{"shape":"String"},
+        "spreadLevel":{"shape":"SpreadLevel"}
       }
     },
     "ControlPlaneScalingConfig":{
@@ -2894,6 +2896,18 @@
       "type":"list",
       "member":{"shape":"ErrorDetail"}
     },
+    "EtcdPlacementRequest":{
+      "type":"structure",
+      "members":{
+        "spreadLevel":{"shape":"SpreadLevel"}
+      }
+    },
+    "EtcdPlacementResponse":{
+      "type":"structure",
+      "members":{
+        "spreadLevel":{"shape":"SpreadLevel"}
+      }
+    },
     "FargateProfile":{
       "type":"structure",
       "members":{
@@ -3900,7 +3914,9 @@
       "members":{
         "outpostArns":{"shape":"StringList"},
         "controlPlaneInstanceType":{"shape":"String"},
-        "controlPlanePlacement":{"shape":"ControlPlanePlacementRequest"}
+        "controlPlanePlacement":{"shape":"ControlPlanePlacementRequest"},
+        "etcdInstanceType":{"shape":"String"},
+        "etcdPlacement":{"shape":"EtcdPlacementRequest"}
       }
     },
     "OutpostConfigResponse":{
@@ -3912,7 +3928,9 @@
       "members":{
         "outpostArns":{"shape":"StringList"},
         "controlPlaneInstanceType":{"shape":"String"},
-        "controlPlanePlacement":{"shape":"ControlPlanePlacementResponse"}
+        "controlPlanePlacement":{"shape":"ControlPlanePlacementResponse"},
+        "etcdInstanceType":{"shape":"String"},
+        "etcdPlacement":{"shape":"EtcdPlacementResponse"}
       }
     },
     "PercentCapacity":{
@@ -4121,6 +4139,13 @@
       "error":{"httpStatusCode":503},
       "exception":true,
       "fault":true
+    },
+    "SpreadLevel":{
+      "type":"string",
+      "enum":[
+        "host",
+        "rack"
+      ]
     },
     "SsoIdentity":{
       "type":"structure",

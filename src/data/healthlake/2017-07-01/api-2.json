@@ -209,6 +209,23 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "UpdateFHIRDatastore":{
+      "name":"UpdateFHIRDatastore",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateFHIRDatastoreRequest"},
+      "output":{"shape":"UpdateFHIRDatastoreResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
     }
   },
   "shapes":{
@@ -224,6 +241,23 @@
       "max":1011,
       "min":1,
       "pattern":"^arn:aws((-us-gov)|(-iso)|(-iso-b)|(-cn))?:healthlake:[a-z0-9-]+:\\d{12}:datastore\\/fhir\\/.{32}"
+    },
+    "AnalyticsConfiguration":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"AnalyticsStatus"}
+      }
+    },
+    "AnalyticsStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "ENABLING",
+        "DISABLED",
+        "DISABLING",
+        "PAUSING",
+        "PAUSED"
+      ]
     },
     "AuthorizationStrategy":{
       "type":"string",
@@ -337,7 +371,10 @@
         "SseConfiguration":{"shape":"SseConfiguration"},
         "PreloadDataConfig":{"shape":"PreloadDataConfig"},
         "IdentityProviderConfiguration":{"shape":"IdentityProviderConfiguration"},
-        "ErrorCause":{"shape":"ErrorCause"}
+        "ErrorCause":{"shape":"ErrorCause"},
+        "NlpConfiguration":{"shape":"NlpConfiguration"},
+        "AnalyticsConfiguration":{"shape":"AnalyticsConfiguration"},
+        "ProfileConfiguration":{"shape":"ProfileConfiguration"}
       }
     },
     "DatastorePropertiesList":{
@@ -351,8 +388,14 @@
         "ACTIVE",
         "DELETING",
         "DELETED",
-        "CREATE_FAILED"
+        "CREATE_FAILED",
+        "UPDATING",
+        "UPDATE_FAILED"
       ]
+    },
+    "DefaultProfiles":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "DeleteFHIRDatastoreRequest":{
       "type":"structure",
@@ -682,6 +725,21 @@
       "max":8192,
       "pattern":"\\p{ASCII}{0,8192}"
     },
+    "NlpConfiguration":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"NlpStatus"}
+      }
+    },
+    "NlpStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED",
+        "ENABLING",
+        "DISABLING"
+      ]
+    },
     "OutputDataConfig":{
       "type":"structure",
       "members":{
@@ -699,6 +757,12 @@
     "PreloadDataType":{
       "type":"string",
       "enum":["SYNTHEA"]
+    },
+    "ProfileConfiguration":{
+      "type":"structure",
+      "members":{
+        "DefaultProfiles":{"shape":"DefaultProfiles"}
+      }
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -870,6 +934,25 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{}
+    },
+    "UpdateFHIRDatastoreRequest":{
+      "type":"structure",
+      "required":["DatastoreId"],
+      "members":{
+        "DatastoreId":{"shape":"DatastoreId"},
+        "DatastoreName":{"shape":"DatastoreName"},
+        "AnalyticsConfiguration":{"shape":"AnalyticsConfiguration"},
+        "NlpConfiguration":{"shape":"NlpConfiguration"},
+        "ProfileConfiguration":{"shape":"ProfileConfiguration"},
+        "IdentityProviderConfiguration":{"shape":"IdentityProviderConfiguration"}
+      }
+    },
+    "UpdateFHIRDatastoreResponse":{
+      "type":"structure",
+      "required":["DatastoreProperties"],
+      "members":{
+        "DatastoreProperties":{"shape":"DatastoreProperties"}
+      }
     },
     "ValidationException":{
       "type":"structure",

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Support` - Adding new BDD representation of endpoint ruleset
+* `Aws\BedrockAgentCoreControl` - Supports deterministic metadata for AgentCore Memory
+* `Aws\HealthLake` - Adds the UpdateFHIRDatastore API and adds analytics, NLP, and profile configuration support to CreateFHIRDatastore and DescribeFHIRDatastore.
+* `Aws\BedrockAgentCore` - Adds support to perform cross account data plane actions on an AgentCore Memory resource
+* `Aws\Neptune` - Amazon Neptune now supports IPv6 dual-stack networking. You can create and manage Neptune DB clusters accessible over both IPv4 and IPv6 by specifying NetworkType as DUAL in CreateDBCluster, ModifyDBCluster, RestoreDBClusterFromSnapshot, and RestoreDBClusterToPointInTime API operations
+* `Aws\Omics` - Adds support for workflowName in the ListRuns API response.
+* `Aws\EKS` - Introduce new CreateCluster parameters for Amazon EKS local clusters on AWS Outposts. Added etcdInstanceType for configuring the EC2 instance type for dedicated etcd instances, and spreadLevel for configuring the placement group spread level for Kubernetes control plane and etcd instances.
+
 ## 3.384.7 - 2026-06-10
 
 * `Aws\ConnectHealth` - Add support for MedicalScribeBinaryAudioEvent in the Medical Scribe streaming input. This new event type lets you send audio as a raw binary payload instead of a base64-encoded value

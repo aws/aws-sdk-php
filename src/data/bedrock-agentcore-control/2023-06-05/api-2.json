@@ -4947,7 +4947,7 @@
     },
     "CustomEvaluatorArn":{
       "type":"string",
-      "pattern":"arn:aws:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:evaluator\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+      "pattern":"arn:aws[a-zA-Z-]*:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:evaluator\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
     },
     "CustomEvaluatorName":{
       "type":"string",
@@ -6156,7 +6156,7 @@
     },
     "EvaluatorArn":{
       "type":"string",
-      "pattern":"arn:aws:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:evaluator\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}$|^arn:aws:bedrock-agentcore:::evaluator/Builtin.[a-zA-Z0-9_-]+"
+      "pattern":"arn:aws[a-zA-Z-]*:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:evaluator\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}$|^arn:aws[a-zA-Z-]*:bedrock-agentcore:::evaluator/Builtin.[a-zA-Z0-9_-]+"
     },
     "EvaluatorConfig":{
       "type":"structure",
@@ -6287,6 +6287,13 @@
         "customExtractionConfiguration":{"shape":"CustomExtractionConfiguration"}
       },
       "union":true
+    },
+    "ExtractionType":{
+      "type":"string",
+      "enum":[
+        "LLM_INFERRED",
+        "STRICTLY_CONSISTENT"
+      ]
     },
     "FilesystemConfiguration":{
       "type":"structure",
@@ -9874,7 +9881,8 @@
         "CREATING",
         "ACTIVE",
         "FAILED",
-        "DELETING"
+        "DELETING",
+        "UPDATING"
       ]
     },
     "MemoryStrategy":{
@@ -10011,6 +10019,7 @@
       "members":{
         "key":{"shape":"MetadataKey"},
         "type":{"shape":"MetadataValueType"},
+        "extractionType":{"shape":"ExtractionType"},
         "extractionConfig":{"shape":"ExtractionConfig"}
       }
     },
@@ -10392,7 +10401,7 @@
     },
     "OnlineEvaluationConfigArn":{
       "type":"string",
-      "pattern":"arn:aws:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:online-evaluation-config\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+      "pattern":"arn:aws[a-zA-Z-]*:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:online-evaluation-config\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
     },
     "OnlineEvaluationConfigId":{
       "type":"string",

@@ -14,7 +14,8 @@
     "StartFHIRExportJob": "<p>Start a FHIR export job.</p>",
     "StartFHIRImportJob": "<p>Start importing bulk FHIR data into an ACTIVE data store. The import job imports FHIR data found in the <code>InputDataConfig</code> object and stores processing results in the <code>JobOutputDataConfig</code> object.</p>",
     "TagResource": "<p>Add a user-specifed key and value tag to a data store.</p>",
-    "UntagResource": "<p>Remove a user-specifed key and value tag from a data store.</p>"
+    "UntagResource": "<p>Remove a user-specifed key and value tag from a data store.</p>",
+    "UpdateFHIRDatastore": "<para>Update the properties of a FHIR-enabled data store.</para>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -27,6 +28,19 @@
         "ListTagsForResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the data store to which tags are being added.</p>",
         "TagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) that grants access to the data store tags are being added to.</p>",
         "UntagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the data store from which tags are being removed.</p>"
+      }
+    },
+    "AnalyticsConfiguration": {
+      "base": "<para>The analytics configuration for a data store.</para>",
+      "refs": {
+        "DatastoreProperties$AnalyticsConfiguration": "<para>The analytics configuration for the data store.</para>",
+        "UpdateFHIRDatastoreRequest$AnalyticsConfiguration": "<para>The analytics configuration for the data store.</para>"
+      }
+    },
+    "AnalyticsStatus": {
+      "base": null,
+      "refs": {
+        "AnalyticsConfiguration$Status": "<para>The status of the analytics configuration.</para>"
       }
     },
     "AuthorizationStrategy": {
@@ -111,7 +125,8 @@
         "StartFHIRExportJobRequest$DatastoreId": "<p>The data store identifier from which files are being exported.</p>",
         "StartFHIRExportJobResponse$DatastoreId": "<p>The data store identifier from which files are being exported.</p>",
         "StartFHIRImportJobRequest$DatastoreId": "<p>The data store identifier.</p>",
-        "StartFHIRImportJobResponse$DatastoreId": "<p>The data store identifier.</p>"
+        "StartFHIRImportJobResponse$DatastoreId": "<p>The data store identifier.</p>",
+        "UpdateFHIRDatastoreRequest$DatastoreId": "<para>The data store identifier.</para>"
       }
     },
     "DatastoreName": {
@@ -119,14 +134,16 @@
       "refs": {
         "CreateFHIRDatastoreRequest$DatastoreName": "<p>The data store name (user-generated).</p>",
         "DatastoreFilter$DatastoreName": "<p>Filter data store results by name.</p>",
-        "DatastoreProperties$DatastoreName": "<p>The data store name.</p>"
+        "DatastoreProperties$DatastoreName": "<p>The data store name.</p>",
+        "UpdateFHIRDatastoreRequest$DatastoreName": "<para>The data store name.</para>"
       }
     },
     "DatastoreProperties": {
       "base": "<p>The data store properties.</p>",
       "refs": {
         "DatastorePropertiesList$member": null,
-        "DescribeFHIRDatastoreResponse$DatastoreProperties": "<p>The data store properties.</p>"
+        "DescribeFHIRDatastoreResponse$DatastoreProperties": "<p>The data store properties.</p>",
+        "UpdateFHIRDatastoreResponse$DatastoreProperties": "<para>The data store properties.</para>"
       }
     },
     "DatastorePropertiesList": {
@@ -142,6 +159,12 @@
         "DatastoreFilter$DatastoreStatus": "<p>Filter data store results by status.</p>",
         "DatastoreProperties$DatastoreStatus": "<p>The data store status.</p>",
         "DeleteFHIRDatastoreResponse$DatastoreStatus": "<p>The data store status.</p>"
+      }
+    },
+    "DefaultProfiles": {
+      "base": null,
+      "refs": {
+        "ProfileConfiguration$DefaultProfiles": "<para>The list of default profiles for the data store.</para>"
       }
     },
     "DeleteFHIRDatastoreRequest": {
@@ -252,7 +275,8 @@
       "base": "<p>The identity provider configuration selected when the data store was created.</p>",
       "refs": {
         "CreateFHIRDatastoreRequest$IdentityProviderConfiguration": "<p>The identity provider configuration to use for the data store.</p>",
-        "DatastoreProperties$IdentityProviderConfiguration": "<p>The identity provider selected during data store creation.</p>"
+        "DatastoreProperties$IdentityProviderConfiguration": "<p>The identity provider selected during data store creation.</p>",
+        "UpdateFHIRDatastoreRequest$IdentityProviderConfiguration": "<para>The identity provider configuration for the data store.</para>"
       }
     },
     "ImportJobProperties": {
@@ -388,6 +412,19 @@
         "ListFHIRImportJobsResponse$NextToken": "<p>The pagination token used to identify the next page of results to return.</p>"
       }
     },
+    "NlpConfiguration": {
+      "base": "<para>The natural language processing (NLP) configuration for a data store.</para>",
+      "refs": {
+        "DatastoreProperties$NlpConfiguration": "<para>The natural language processing (NLP) configuration for the data store.</para>",
+        "UpdateFHIRDatastoreRequest$NlpConfiguration": "<para>The NLP configuration for the data store.</para>"
+      }
+    },
+    "NlpStatus": {
+      "base": null,
+      "refs": {
+        "NlpConfiguration$Status": "<para>The status of the NLP configuration.</para>"
+      }
+    },
     "OutputDataConfig": {
       "base": "<p>The output data configuration supplied when the export job was created.</p>",
       "refs": {
@@ -408,6 +445,13 @@
       "base": null,
       "refs": {
         "PreloadDataConfig$PreloadDataType": "<p>The type of preloaded data. Only Synthea preloaded data is supported.</p>"
+      }
+    },
+    "ProfileConfiguration": {
+      "base": "<para>The profile configuration for a data store.</para>",
+      "refs": {
+        "DatastoreProperties$ProfileConfiguration": "<para>The profile configuration for the data store.</para>",
+        "UpdateFHIRDatastoreRequest$ProfileConfiguration": "<para>The profile configuration for the data store.</para>"
       }
     },
     "ResourceNotFoundException": {
@@ -456,6 +500,7 @@
         "AccessDeniedException$Message": null,
         "ConflictException$Message": null,
         "DatastoreProperties$DatastoreEndpoint": "<p>The AWS endpoint for the data store.</p>",
+        "DefaultProfiles$member": null,
         "InternalServerException$Message": null,
         "ResourceNotFoundException$Message": null,
         "ThrottlingException$Message": null,
@@ -528,6 +573,14 @@
       "refs": {}
     },
     "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateFHIRDatastoreRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateFHIRDatastoreResponse": {
       "base": null,
       "refs": {}
     },
