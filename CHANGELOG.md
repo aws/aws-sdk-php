@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.384.8 - 2026-06-11
 
 * `Aws\Support` - Adding new BDD representation of endpoint ruleset
 * `Aws\BedrockAgentCoreControl` - Supports deterministic metadata for AgentCore Memory
