@@ -1371,6 +1371,28 @@
       "type":"list",
       "member":{"shape":"ActorSummary"}
     },
+    "AffectedSession":{
+      "type":"structure",
+      "required":[
+        "sessionId",
+        "explanation",
+        "fixType",
+        "recommendation",
+        "failureSpans"
+      ],
+      "members":{
+        "sessionId":{"shape":"String"},
+        "explanation":{"shape":"String"},
+        "fixType":{"shape":"String"},
+        "recommendation":{"shape":"String"},
+        "failureSpans":{"shape":"FailureSpanDetailList"}
+      }
+    },
+    "AffectedSessionList":{
+      "type":"list",
+      "member":{"shape":"AffectedSession"},
+      "min":0
+    },
     "AgentCard":{
       "type":"structure",
       "members":{},
@@ -1395,7 +1417,8 @@
       "type":"structure",
       "members":{
         "sessionSpans":{"shape":"Spans"},
-        "cloudwatchLogs":{"shape":"CloudWatchLogsTraceConfig"}
+        "cloudwatchLogs":{"shape":"CloudWatchLogsTraceConfig"},
+        "batchEvaluation":{"shape":"BatchEvaluationTraceConfig"}
       },
       "union":true
     },
@@ -1572,14 +1595,23 @@
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "description":{"shape":"BatchEvaluationDescription"},
         "evaluators":{"shape":"EvaluatorList"},
+        "insights":{"shape":"InsightList"},
         "evaluationResults":{"shape":"EvaluationJobResults"},
         "errorDetails":{"shape":"ErrorDetailsList"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "BatchEvaluationSummaryList":{
       "type":"list",
       "member":{"shape":"BatchEvaluationSummary"}
+    },
+    "BatchEvaluationTraceConfig":{
+      "type":"structure",
+      "required":["batchEvaluationArn"],
+      "members":{
+        "batchEvaluationArn":{"shape":"BatchEvaluationArn"}
+      }
     },
     "BatchUpdateMemoryRecordsInput":{
       "type":"structure",
@@ -2046,7 +2078,7 @@
     },
     "ConfigurationBundleArn":{
       "type":"string",
-      "pattern":"arn:aws:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:configuration-bundle/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+      "pattern":"arn:aws[a-zA-Z-]*:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:configuration-bundle/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
     },
     "ConfigurationBundleRef":{
       "type":"structure",
@@ -2205,7 +2237,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreateABTestResponse":{
@@ -2399,7 +2432,8 @@
     "DataSourceConfig":{
       "type":"structure",
       "members":{
-        "cloudWatchLogs":{"shape":"CloudWatchLogsSource"}
+        "cloudWatchLogs":{"shape":"CloudWatchLogsSource"},
+        "onlineEvaluationConfigSource":{"shape":"OnlineEvaluationConfigSource"}
       },
       "union":true
     },
@@ -2841,7 +2875,7 @@
     },
     "EvaluatorArn":{
       "type":"string",
-      "pattern":"arn:aws:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:evaluator\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}$|^arn:aws:bedrock-agentcore:::evaluator/Builtin.[a-zA-Z0-9_-]+"
+      "pattern":"arn:aws[a-zA-Z-]*:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:evaluator\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}$|^arn:aws[a-zA-Z-]*:bedrock-agentcore:::evaluator/Builtin.[a-zA-Z0-9_-]+"
     },
     "EvaluatorId":{
       "type":"string",
@@ -2942,6 +2976,53 @@
       "max":5,
       "min":1
     },
+    "ExecutionSummaryAffectedSession":{
+      "type":"structure",
+      "required":[
+        "sessionId",
+        "approachTaken",
+        "finalOutcome"
+      ],
+      "members":{
+        "sessionId":{"shape":"String"},
+        "approachTaken":{"shape":"String"},
+        "finalOutcome":{"shape":"String"}
+      }
+    },
+    "ExecutionSummaryAffectedSessionList":{
+      "type":"list",
+      "member":{"shape":"ExecutionSummaryAffectedSession"},
+      "min":0
+    },
+    "ExecutionSummaryCluster":{
+      "type":"structure",
+      "required":[
+        "clusterId",
+        "name",
+        "description",
+        "affectedSessionCount",
+        "affectedSessions"
+      ],
+      "members":{
+        "clusterId":{"shape":"Integer"},
+        "name":{"shape":"String"},
+        "description":{"shape":"String"},
+        "affectedSessionCount":{"shape":"Integer"},
+        "affectedSessions":{"shape":"ExecutionSummaryAffectedSessionList"}
+      }
+    },
+    "ExecutionSummaryClusterList":{
+      "type":"list",
+      "member":{"shape":"ExecutionSummaryCluster"},
+      "min":0
+    },
+    "ExecutionSummaryClusteringResultContent":{
+      "type":"structure",
+      "required":["executionSummaries"],
+      "members":{
+        "executionSummaries":{"shape":"ExecutionSummaryClusterList"}
+      }
+    },
     "ExternalProxy":{
       "type":"structure",
       "required":[
@@ -3007,6 +3088,75 @@
     "ExtractionJobStatus":{
       "type":"string",
       "enum":["FAILED"]
+    },
+    "FailureAnalysisResultContent":{
+      "type":"structure",
+      "required":["failures"],
+      "members":{
+        "failures":{"shape":"FailureCategoryClusterList"}
+      }
+    },
+    "FailureCategoryCluster":{
+      "type":"structure",
+      "required":[
+        "clusterId",
+        "name",
+        "description",
+        "affectedSessionCount",
+        "subCategories"
+      ],
+      "members":{
+        "clusterId":{"shape":"Integer"},
+        "name":{"shape":"String"},
+        "description":{"shape":"String"},
+        "affectedSessionCount":{"shape":"Integer"},
+        "subCategories":{"shape":"FailureSubCategoryClusterList"}
+      }
+    },
+    "FailureCategoryClusterList":{
+      "type":"list",
+      "member":{"shape":"FailureCategoryCluster"},
+      "min":0
+    },
+    "FailureSpanDetail":{
+      "type":"structure",
+      "required":[
+        "spanId",
+        "traceId",
+        "signals"
+      ],
+      "members":{
+        "spanId":{"shape":"String"},
+        "traceId":{"shape":"String"},
+        "signals":{"shape":"InsightsFailureSignalList"}
+      }
+    },
+    "FailureSpanDetailList":{
+      "type":"list",
+      "member":{"shape":"FailureSpanDetail"},
+      "min":0
+    },
+    "FailureSubCategoryCluster":{
+      "type":"structure",
+      "required":[
+        "clusterId",
+        "name",
+        "description",
+        "affectedSessionCount",
+        "rootCauses"
+      ],
+      "members":{
+        "clusterId":{"shape":"Integer"},
+        "name":{"shape":"String"},
+        "description":{"shape":"String"},
+        "affectedSessionCount":{"shape":"Integer"},
+        "rootCauses":{"shape":"RootCauseClusterList"}
+      }
+    },
+    "FailureSubCategoryClusterList":{
+      "type":"list",
+      "member":{"shape":"FailureSubCategoryCluster"},
+      "min":0
     },
     "FilterInput":{
       "type":"structure",
@@ -3152,12 +3302,17 @@
         "status":{"shape":"BatchEvaluationStatus"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "evaluators":{"shape":"EvaluatorList"},
+        "insights":{"shape":"InsightList"},
         "dataSourceConfig":{"shape":"DataSourceConfig"},
         "outputConfig":{"shape":"OutputConfig"},
         "evaluationResults":{"shape":"EvaluationJobResults"},
+        "failureAnalysisResult":{"shape":"FailureAnalysisResultContent"},
+        "userIntentResult":{"shape":"UserIntentClusteringResultContent"},
+        "executionSummaryResult":{"shape":"ExecutionSummaryClusteringResultContent"},
         "errorDetails":{"shape":"ErrorDetailsList"},
         "description":{"shape":"BatchEvaluationDescription"},
-        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "GetBrowserSessionRequest":{
@@ -3432,7 +3587,8 @@
         "status":{"shape":"RecommendationStatus"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "recommendationResult":{"shape":"RecommendationResult"}
+        "recommendationResult":{"shape":"RecommendationResult"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "GetResourceApiKeyRequest":{
@@ -4228,6 +4384,78 @@
       "type":"list",
       "member":{"shape":"InputContentBlock"}
     },
+    "Insight":{
+      "type":"structure",
+      "required":["insightId"],
+      "members":{
+        "insightId":{"shape":"InsightId"}
+      }
+    },
+    "InsightId":{
+      "type":"string",
+      "pattern":"(Builtin\\.[a-zA-Z0-9._-]+|[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10})"
+    },
+    "InsightList":{
+      "type":"list",
+      "member":{"shape":"Insight"},
+      "max":10,
+      "min":0
+    },
+    "InsightsFailureCategory":{
+      "type":"string",
+      "enum":[
+        "execution-error-category-authentication",
+        "execution-error-category-resource-not-found",
+        "execution-error-category-service-errors",
+        "execution-error-category-rate-limiting",
+        "execution-error-category-formatting",
+        "execution-error-category-timeout",
+        "execution-error-category-resource-exhaustion",
+        "execution-error-category-environment",
+        "execution-error-category-tool-schema",
+        "task-instruction-category-non-compliance",
+        "task-instruction-category-problem-id",
+        "incorrect-actions-category-tool-selection",
+        "incorrect-actions-category-poor-information-retrieval",
+        "incorrect-actions-category-clarification",
+        "incorrect-actions-category-inappropriate-info-request",
+        "context-handling-error-category-context-handling-failures",
+        "hallucination-category-hall-capabilities",
+        "hallucination-category-hall-misunderstand",
+        "hallucination-category-hall-usage",
+        "hallucination-category-hall-history",
+        "hallucination-category-hall-params",
+        "hallucination-category-fabricate-tool-outputs",
+        "repetitive-behavior-category-repetition-tool",
+        "repetitive-behavior-category-repetition-info",
+        "repetitive-behavior-category-step-repetition",
+        "orchestration-related-errors-category-reasoning-mismatch",
+        "orchestration-related-errors-category-goal-deviation",
+        "orchestration-related-errors-category-premature-termination",
+        "orchestration-related-errors-category-unaware-termination",
+        "llm-output-category-nonsensical",
+        "configuration-mismatch-category-tool-definition",
+        "coding-use-case-specific-failure-types-category-edge-case-oversights",
+        "coding-use-case-specific-failure-types-category-dependency-issues"
+      ]
+    },
+    "InsightsFailureSignal":{
+      "type":"structure",
+      "required":[
+        "category",
+        "evidence",
+        "confidence"
+      ],
+      "members":{
+        "category":{"shape":"InsightsFailureCategory"},
+        "evidence":{"shape":"String"},
+        "confidence":{"shape":"Double"}
+      }
+    },
+    "InsightsFailureSignalList":{
+      "type":"list",
+      "member":{"shape":"InsightsFailureSignal"}
+    },
     "InstrumentBalanceToken":{
       "type":"string",
       "enum":["USDC"]
@@ -4790,6 +5018,12 @@
         "status":{"shape":"BrowserActionStatus"},
         "error":{"shape":"String"}
       }
+    },
+    "KmsKeyArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws(|-cn|-us-gov):kms:[a-zA-Z0-9-]*:[0-9]{12}:key/[a-zA-Z0-9-]{36}"
     },
     "LanguageRuntime":{
       "type":"string",
@@ -5745,7 +5979,15 @@
     },
     "OnlineEvaluationConfigArn":{
       "type":"string",
-      "pattern":"arn:aws:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:online-evaluation-config\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+      "pattern":"arn:aws[a-zA-Z-]*:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:online-evaluation-config\\/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+    },
+    "OnlineEvaluationConfigSource":{
+      "type":"structure",
+      "required":["onlineEvaluationConfigArn"],
+      "members":{
+        "onlineEvaluationConfigArn":{"shape":"OnlineEvaluationConfigArn"},
+        "sessionFilterConfig":{"shape":"SessionFilterConfig"}
+      }
     },
     "OperatorType":{
       "type":"string",
@@ -6176,6 +6418,11 @@
         "evaluatorArn":{"shape":"EvaluatorArn"}
       }
     },
+    "RecommendationExplanation":{
+      "type":"string",
+      "max":4096,
+      "min":0
+    },
     "RecommendationId":{
       "type":"string",
       "pattern":"[0-9a-zA-Z_-]{1,48}-[0-9A-Z]{10}"
@@ -6471,6 +6718,30 @@
       "min":1,
       "pattern":"arn:aws(-[^:]+)?:iam::([0-9]{12})?:role/.+"
     },
+    "RootCauseCluster":{
+      "type":"structure",
+      "required":[
+        "clusterId",
+        "name",
+        "rootCause",
+        "recommendation",
+        "affectedSessionCount",
+        "affectedSessions"
+      ],
+      "members":{
+        "clusterId":{"shape":"Integer"},
+        "name":{"shape":"String"},
+        "rootCause":{"shape":"String"},
+        "recommendation":{"shape":"String"},
+        "affectedSessionCount":{"shape":"Integer"},
+        "affectedSessions":{"shape":"AffectedSessionList"}
+      }
+    },
+    "RootCauseClusterList":{
+      "type":"list",
+      "member":{"shape":"RootCauseCluster"},
+      "min":0
+    },
     "RuntimeClientError":{
       "type":"structure",
       "members":{
@@ -6699,6 +6970,8 @@
     },
     "ServiceName":{
       "type":"string",
+      "max":256,
+      "min":1,
       "pattern":"[a-zA-Z0-9._-]+"
     },
     "ServiceNameList":{
@@ -6843,18 +7116,27 @@
       "members":{
         "batchEvaluationName":{"shape":"BatchEvaluationName"},
         "evaluators":{"shape":"StartBatchEvaluationRequestEvaluatorsList"},
+        "insights":{"shape":"StartBatchEvaluationRequestInsightsList"},
         "dataSourceConfig":{"shape":"DataSourceConfig"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
         "evaluationMetadata":{"shape":"EvaluationMetadata"},
+        "tags":{"shape":"TagsMap"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
         "description":{"shape":"BatchEvaluationDescription"}
       }
     },
     "StartBatchEvaluationRequestEvaluatorsList":{
       "type":"list",
       "member":{"shape":"Evaluator"},
+      "max":10,
+      "min":0
+    },
+    "StartBatchEvaluationRequestInsightsList":{
+      "type":"list",
+      "member":{"shape":"Insight"},
       "max":10,
       "min":0
     },
@@ -6872,9 +7154,12 @@
         "batchEvaluationArn":{"shape":"BatchEvaluationArn"},
         "batchEvaluationName":{"shape":"BatchEvaluationName"},
         "evaluators":{"shape":"EvaluatorList"},
+        "insights":{"shape":"InsightList"},
         "status":{"shape":"BatchEvaluationStatus"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "outputConfig":{"shape":"OutputConfig"},
+        "tags":{"shape":"TagsMap"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
         "description":{"shape":"BatchEvaluationDescription"}
       }
     },
@@ -7024,10 +7309,12 @@
         "description":{"shape":"RecommendationDescription"},
         "type":{"shape":"RecommendationType"},
         "recommendationConfig":{"shape":"RecommendationConfig"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "tags":{"shape":"TagsMap"}
       }
     },
     "StartRecommendationResponse":{
@@ -7371,8 +7658,7 @@
       "type":"structure",
       "required":[
         "systemPrompt",
-        "agentTraces",
-        "evaluationConfig"
+        "agentTraces"
       ],
       "members":{
         "systemPrompt":{"shape":"SystemPromptConfig"},
@@ -7385,6 +7671,7 @@
       "members":{
         "recommendedSystemPrompt":{"shape":"SystemPromptText"},
         "configurationBundle":{"shape":"RecommendationResultConfigurationBundle"},
+        "explanation":{"shape":"RecommendationExplanation"},
         "errorCode":{"shape":"RecommendationErrorCode"},
         "errorMessage":{"shape":"RecommendationErrorMessage"}
       }
@@ -7394,6 +7681,25 @@
       "max":20000,
       "min":1,
       "sensitive":true
+    },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*"
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*"
+    },
+    "TagsMap":{
+      "type":"map",
+      "key":{"shape":"TagKey"},
+      "value":{"shape":"TagValue"},
+      "max":50,
+      "min":0
     },
     "TargetName":{
       "type":"string",
@@ -7533,7 +7839,8 @@
       "required":["toolName"],
       "members":{
         "toolName":{"shape":"RecommendationToolName"},
-        "recommendedToolDescription":{"shape":"ToolDescriptionText"}
+        "recommendedToolDescription":{"shape":"ToolDescriptionText"},
+        "explanation":{"shape":"RecommendationExplanation"}
       }
     },
     "ToolDescriptionRecommendationConfig":{
@@ -7747,6 +8054,55 @@
         "userId":{"shape":"UserIdType"}
       },
       "union":true
+    },
+    "UserIntentAffectedSession":{
+      "type":"structure",
+      "required":[
+        "sessionId",
+        "userMessages"
+      ],
+      "members":{
+        "sessionId":{"shape":"String"},
+        "userMessages":{"shape":"UserIntentList"}
+      }
+    },
+    "UserIntentAffectedSessionList":{
+      "type":"list",
+      "member":{"shape":"UserIntentAffectedSession"},
+      "min":0
+    },
+    "UserIntentCluster":{
+      "type":"structure",
+      "required":[
+        "clusterId",
+        "name",
+        "description",
+        "affectedSessionCount",
+        "affectedSessions"
+      ],
+      "members":{
+        "clusterId":{"shape":"Integer"},
+        "name":{"shape":"String"},
+        "description":{"shape":"String"},
+        "affectedSessionCount":{"shape":"Integer"},
+        "affectedSessions":{"shape":"UserIntentAffectedSessionList"}
+      }
+    },
+    "UserIntentClusterList":{
+      "type":"list",
+      "member":{"shape":"UserIntentCluster"},
+      "min":0
+    },
+    "UserIntentClusteringResultContent":{
+      "type":"structure",
+      "required":["userIntents"],
+      "members":{
+        "userIntents":{"shape":"UserIntentClusterList"}
+      }
+    },
+    "UserIntentList":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "UserTokenType":{
       "type":"string",

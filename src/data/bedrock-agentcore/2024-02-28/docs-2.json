@@ -201,6 +201,18 @@
         "ListActorsOutput$actorSummaries": "<p>The list of actor summaries.</p>"
       }
     },
+    "AffectedSession": {
+      "base": "<p>A session affected by a detected failure pattern, including root cause details.</p>",
+      "refs": {
+        "AffectedSessionList$member": null
+      }
+    },
+    "AffectedSessionList": {
+      "base": null,
+      "refs": {
+        "RootCauseCluster$affectedSessions": "<p>The list of sessions affected by this root cause.</p>"
+      }
+    },
     "AgentCard": {
       "base": null,
       "refs": {
@@ -317,6 +329,7 @@
       "base": "<p>The Amazon Resource Name (ARN) of a batch evaluation.</p>",
       "refs": {
         "BatchEvaluationSummary$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the batch evaluation.</p>",
+        "BatchEvaluationTraceConfig$batchEvaluationArn": "<p>The ARN of the completed batch evaluation to use as the trace source.</p>",
         "DeleteBatchEvaluationResponse$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the deleted batch evaluation.</p>",
         "GetBatchEvaluationResponse$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the batch evaluation.</p>",
         "StartBatchEvaluationResponse$batchEvaluationArn": "<p>The Amazon Resource Name (ARN) of the created batch evaluation.</p>",
@@ -375,6 +388,12 @@
       "base": null,
       "refs": {
         "ListBatchEvaluationsResponse$batchEvaluations": "<p>The list of batch evaluation summaries.</p>"
+      }
+    },
+    "BatchEvaluationTraceConfig": {
+      "base": "<p>Configuration for using a batch evaluation as the source of agent traces for recommendations.</p>",
+      "refs": {
+        "AgentTracesConfig$batchEvaluation": "<p>Use a completed batch evaluation as the source of agent traces.</p>"
       }
     },
     "BatchUpdateMemoryRecordsInput": {
@@ -1141,6 +1160,7 @@
         "EvaluationResultContent$value": "<p> The numerical score assigned by the evaluator according to its configured rating scale. For numerical scales, this is a decimal value within the defined range. This field is not allowed for categorical scales. </p>",
         "EvaluatorStatistics$averageScore": "<p>The average score across all evaluated sessions for this evaluator.</p>",
         "FilterValue$doubleValue": "<p>A numeric value for numerical filtering and comparisons.</p>",
+        "InsightsFailureSignal$confidence": "<p>The confidence score of the failure detection.</p>",
         "MemoryRecordMetadataValue$numberValue": "<p>A numeric value.</p>",
         "MemoryRecordSummary$score": "<p>The relevance score of the memory record when returned as part of a search result. Higher values indicate greater relevance to the search query.</p>",
         "ToolResultStructuredContent$executionTime": "<p>The execution time of the tool operation in milliseconds.</p>",
@@ -1303,7 +1323,7 @@
       }
     },
     "Evaluator": {
-      "base": "<p>An evaluator to run against sessions.</p>",
+      "base": "<p>An evaluator to run against sessions</p>",
       "refs": {
         "EvaluatorList$member": null,
         "StartBatchEvaluationRequestEvaluatorsList$member": null
@@ -1410,6 +1430,36 @@
         "FilterInput$eventMetadata": "<p>Event metadata filter criteria to apply when retrieving events.</p>"
       }
     },
+    "ExecutionSummaryAffectedSession": {
+      "base": "<p>A session associated with an execution summary cluster.</p>",
+      "refs": {
+        "ExecutionSummaryAffectedSessionList$member": null
+      }
+    },
+    "ExecutionSummaryAffectedSessionList": {
+      "base": null,
+      "refs": {
+        "ExecutionSummaryCluster$affectedSessions": "<p>The list of sessions with this execution pattern.</p>"
+      }
+    },
+    "ExecutionSummaryCluster": {
+      "base": "<p>A cluster of similar execution patterns identified across sessions.</p>",
+      "refs": {
+        "ExecutionSummaryClusterList$member": null
+      }
+    },
+    "ExecutionSummaryClusterList": {
+      "base": null,
+      "refs": {
+        "ExecutionSummaryClusteringResultContent$executionSummaries": "<p>The list of execution summary clusters identified across analyzed sessions.</p>"
+      }
+    },
+    "ExecutionSummaryClusteringResultContent": {
+      "base": "<p>Customer-facing execution summary clustering result written to S3.</p>",
+      "refs": {
+        "GetBatchEvaluationResponse$executionSummaryResult": null
+      }
+    },
     "ExternalProxy": {
       "base": "<p>Configuration for a customer-managed external proxy server. Includes server location, optional domain-based routing patterns, and authentication credentials.</p>",
       "refs": {
@@ -1457,6 +1507,48 @@
       "refs": {
         "ExtractionJobFilterInput$status": "<p>The status of the extraction job. If specified, only extraction jobs with this status are returned.</p>",
         "ExtractionJobMetadata$status": "<p>The current status of the extraction job.</p>"
+      }
+    },
+    "FailureAnalysisResultContent": {
+      "base": "<p>Unified customer-facing clustering result written to S3.</p>",
+      "refs": {
+        "GetBatchEvaluationResponse$failureAnalysisResult": null
+      }
+    },
+    "FailureCategoryCluster": {
+      "base": "<p>A top-level failure category identified by clustering similar failure patterns across sessions.</p>",
+      "refs": {
+        "FailureCategoryClusterList$member": null
+      }
+    },
+    "FailureCategoryClusterList": {
+      "base": null,
+      "refs": {
+        "FailureAnalysisResultContent$failures": "<p>The list of failure category clusters identified across analyzed sessions.</p>"
+      }
+    },
+    "FailureSpanDetail": {
+      "base": "<p>Details about a specific span where a failure was detected.</p>",
+      "refs": {
+        "FailureSpanDetailList$member": null
+      }
+    },
+    "FailureSpanDetailList": {
+      "base": null,
+      "refs": {
+        "AffectedSession$failureSpans": "<p>The list of spans where failures were detected in this session.</p>"
+      }
+    },
+    "FailureSubCategoryCluster": {
+      "base": "<p>A subcategory of failures within a top-level failure category.</p>",
+      "refs": {
+        "FailureSubCategoryClusterList$member": null
+      }
+    },
+    "FailureSubCategoryClusterList": {
+      "base": null,
+      "refs": {
+        "FailureCategoryCluster$subCategories": "<p>The list of failure subcategories within this category.</p>"
       }
     },
     "FilterInput": {
@@ -2175,6 +2267,45 @@
         "ToolArguments$content": "<p>The content for the tool operation.</p>"
       }
     },
+    "Insight": {
+      "base": "<p>A reference to an insight analysis to run against sessions.</p>",
+      "refs": {
+        "InsightList$member": null,
+        "StartBatchEvaluationRequestInsightsList$member": null
+      }
+    },
+    "InsightId": {
+      "base": "<p>Canonical insight identifiers using the Builtin.Insight.* naming convention. Used by BatchEvaluate, InternalEvaluate, and ServiceEngineEvaluate flows.</p>",
+      "refs": {
+        "Insight$insightId": null
+      }
+    },
+    "InsightList": {
+      "base": null,
+      "refs": {
+        "BatchEvaluationSummary$insights": "<p>The list of insight analyses applied during the batch evaluation.</p>",
+        "GetBatchEvaluationResponse$insights": "<p>The list of insight analyses applied during the batch evaluation.</p>",
+        "StartBatchEvaluationResponse$insights": "<p>The list of insight analyses applied during the batch evaluation.</p>"
+      }
+    },
+    "InsightsFailureCategory": {
+      "base": "<p>Failure category taxonomy for agent session insights. Values must stay in sync with the category registry in AgentCoreLens (amzn_agentcore_lens.config.failure_detection.FAILURE_CATEGORIES).</p>",
+      "refs": {
+        "InsightsFailureSignal$category": null
+      }
+    },
+    "InsightsFailureSignal": {
+      "base": "<p>A signal indicating a detected failure within a span.</p>",
+      "refs": {
+        "InsightsFailureSignalList$member": null
+      }
+    },
+    "InsightsFailureSignalList": {
+      "base": null,
+      "refs": {
+        "FailureSpanDetail$signals": "<p>The failure signals detected in this span.</p>"
+      }
+    },
     "InstrumentBalanceToken": {
       "base": "<p>Supported tokens for instrument balance queries. Only tokens supported for X402 payments are returned.</p>",
       "refs": {
@@ -2194,6 +2325,12 @@
         "EvaluationJobResults$numberOfSessionsIgnored": "<p>The number of sessions that were ignored during evaluation.</p>",
         "EvaluatorSummary$totalEvaluated": "<p>The total number of sessions evaluated by this evaluator.</p>",
         "EvaluatorSummary$totalFailed": "<p>The total number of sessions that failed evaluation by this evaluator.</p>",
+        "ExecutionSummaryCluster$clusterId": "<p>The unique identifier of the execution summary cluster.</p>",
+        "ExecutionSummaryCluster$affectedSessionCount": "<p>The number of sessions with this execution pattern.</p>",
+        "FailureCategoryCluster$clusterId": "<p>The unique identifier of the failure category cluster.</p>",
+        "FailureCategoryCluster$affectedSessionCount": "<p>The number of sessions affected by this failure category.</p>",
+        "FailureSubCategoryCluster$clusterId": "<p>The unique identifier of the failure subcategory cluster.</p>",
+        "FailureSubCategoryCluster$affectedSessionCount": "<p>The number of sessions affected by this failure subcategory.</p>",
         "HarnessContentBlockDeltaEvent$contentBlockIndex": "<p>The index of the content block being updated.</p>",
         "HarnessContentBlockStartEvent$contentBlockIndex": "<p>The index of the content block within the message.</p>",
         "HarnessContentBlockStopEvent$contentBlockIndex": "<p>The index of the content block that ended.</p>",
@@ -2217,11 +2354,15 @@
         "MouseScrollArguments$y": "<p>The Y coordinate on screen where the scroll occurs.</p>",
         "PaymentSession$expiryTimeInMinutes": "<p>The session expiry time in minutes.</p>",
         "PaymentSessionSummary$expiryTimeInMinutes": "<p>The session expiry time in minutes.</p>",
+        "RootCauseCluster$clusterId": "<p>The unique identifier of the root cause cluster.</p>",
+        "RootCauseCluster$affectedSessionCount": "<p>The number of sessions affected by this root cause.</p>",
         "TokenBalance$decimals": "<p>Number of decimal places for the token (e.g., 6 for USDC).</p>",
         "TokenUsage$inputTokens": "<p> The number of tokens consumed for input processing during the evaluation. Includes tokens from the evaluation prompt, agent traces, and any additional context provided to the evaluator model. </p>",
         "TokenUsage$outputTokens": "<p> The number of tokens generated by the evaluator model in its response. Includes tokens for the score, explanation, and any additional output produced during the evaluation process. </p>",
         "TokenUsage$totalTokens": "<p> The total number of tokens consumed during the evaluation, calculated as the sum of input and output tokens. Used for cost calculation and rate limiting within the service limits. </p>",
         "ToolResultStructuredContent$exitCode": "<p>The exit code from the tool execution.</p>",
+        "UserIntentCluster$clusterId": "<p>The unique identifier of the user intent cluster.</p>",
+        "UserIntentCluster$affectedSessionCount": "<p>The number of sessions with this user intent.</p>",
         "VariantResult$sampleSize": "<p>The number of sessions evaluated for this variant.</p>"
       }
     },
@@ -2437,6 +2578,17 @@
       "base": "<p>The result of a key type action.</p>",
       "refs": {
         "BrowserActionResult$keyType": "<p>The result of a key type action.</p>"
+      }
+    },
+    "KmsKeyArn": {
+      "base": null,
+      "refs": {
+        "BatchEvaluationSummary$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt evaluation data.</p>",
+        "GetBatchEvaluationResponse$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt evaluation data.</p>",
+        "GetRecommendationResponse$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt recommendation data.</p>",
+        "StartBatchEvaluationRequest$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt evaluation data. If provided, customer data is encrypted at rest with the specified key.</p>",
+        "StartBatchEvaluationResponse$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt evaluation data.</p>",
+        "StartRecommendationRequest$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt recommendation data. If provided, customer data is encrypted at rest with the specified key.</p>"
       }
     },
     "LanguageRuntime": {
@@ -3146,7 +3298,14 @@
       "base": null,
       "refs": {
         "ABTestEvaluationConfig$onlineEvaluationConfigArn": "<p>The Amazon Resource Name (ARN) of a single online evaluation configuration to use for both variants.</p>",
+        "OnlineEvaluationConfigSource$onlineEvaluationConfigArn": "<p>The Amazon Resource Name (ARN) of the online evaluation configuration to use as the session source.</p>",
         "PerVariantOnlineEvaluationConfig$onlineEvaluationConfigArn": "<p>The Amazon Resource Name (ARN) of the online evaluation configuration for this variant.</p>"
+      }
+    },
+    "OnlineEvaluationConfigSource": {
+      "base": "<p>A reference to an existing online evaluation configuration to use as the data source for batch evaluation.</p>",
+      "refs": {
+        "DataSourceConfig$onlineEvaluationConfigSource": "<p>Reference an existing OnlineEvaluationConfig as session source</p>"
       }
     },
     "OperatorType": {
@@ -3522,6 +3681,13 @@
         "RecommendationEvaluationConfigEvaluatorsList$member": null
       }
     },
+    "RecommendationExplanation": {
+      "base": null,
+      "refs": {
+        "SystemPromptRecommendationResult$explanation": "<p>An explanation of why the recommendation was generated and what patterns were identified in the agent traces.</p>",
+        "ToolDescriptionOutput$explanation": "<p>An explanation of why the recommendation was generated for this tool and what patterns were identified in the agent traces.</p>"
+      }
+    },
     "RecommendationId": {
       "base": null,
       "refs": {
@@ -3751,6 +3917,18 @@
         "UpdateABTestRequest$roleArn": "<p>The updated IAM role ARN.</p>"
       }
     },
+    "RootCauseCluster": {
+      "base": "<p>A cluster of similar root causes identified within a failure subcategory.</p>",
+      "refs": {
+        "RootCauseClusterList$member": null
+      }
+    },
+    "RootCauseClusterList": {
+      "base": null,
+      "refs": {
+        "FailureSubCategoryCluster$rootCauses": "<p>The list of root cause clusters identified within this subcategory.</p>"
+      }
+    },
     "RuntimeClientError": {
       "base": "<p>The exception that occurs when there is an error in the runtime client. This can happen due to network issues, invalid configuration, or other client-side problems. Check the error message for specific details about the error.</p>",
       "refs": {
@@ -3956,7 +4134,8 @@
     "SessionFilterConfig": {
       "base": "<p>A time range filter for selecting sessions. Specifies the start and end times to narrow down which sessions are included.</p>",
       "refs": {
-        "CloudWatchFilterConfig$timeRange": "<p>The time range filter for selecting sessions to evaluate.</p>"
+        "CloudWatchFilterConfig$timeRange": "<p>The time range filter for selecting sessions to evaluate.</p>",
+        "OnlineEvaluationConfigSource$sessionFilterConfig": "<p>Optional session filter configuration to narrow down which sessions from the online evaluation configuration to include.</p>"
       }
     },
     "SessionId": {
@@ -4072,6 +4251,12 @@
       "base": null,
       "refs": {
         "StartBatchEvaluationRequest$evaluators": "<p>The list of evaluators to apply during the batch evaluation. Can include both built-in evaluators and custom evaluators. Maximum of 10 evaluators.</p>"
+      }
+    },
+    "StartBatchEvaluationRequestInsightsList": {
+      "base": null,
+      "refs": {
+        "StartBatchEvaluationRequest$insights": "<p>The list of insight analyses to run against sessions during the batch evaluation. Maximum of 10 insights.</p>"
       }
     },
     "StartBatchEvaluationResponse": {
@@ -4205,6 +4390,10 @@
     "String": {
       "base": null,
       "refs": {
+        "AffectedSession$sessionId": "<p>The unique identifier of the affected session.</p>",
+        "AffectedSession$explanation": "<p>An explanation of how the failure manifested in this session.</p>",
+        "AffectedSession$fixType": "<p>The type of fix recommended for this failure.</p>",
+        "AffectedSession$recommendation": "<p>The specific fix recommendation for this session.</p>",
         "Amount$value": "<p>The numeric value of the amount.</p>",
         "BatchCreateMemoryRecordsInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotent processing of the batch request.</p>",
         "BrowserSessionSummary$browserIdentifier": "<p>The unique identifier of the browser associated with the session. This identifier specifies which browser environment is used for the session.</p>",
@@ -4231,6 +4420,11 @@
         "EvaluationResultContent$label": "<p> The categorical label assigned by the evaluator when using a categorical rating scale. This provides a human-readable description of the evaluation result (e.g., \"Excellent\", \"Good\", \"Poor\") corresponding to the numerical value. For numerical scales, this field is optional and provides a natural language explanation of what the value means (e.g., value 0.5 = \"Somewhat Helpful\"). </p>",
         "EvaluatorMetric$evaluatorArn": "<p>The Amazon Resource Name (ARN) of the evaluator.</p>",
         "EvaluatorSummary$evaluatorId": "<p>The unique identifier of the evaluator.</p>",
+        "ExecutionSummaryAffectedSession$sessionId": "<p>The unique identifier of the session.</p>",
+        "ExecutionSummaryAffectedSession$approachTaken": "<p>The approach taken by the agent during this session.</p>",
+        "ExecutionSummaryAffectedSession$finalOutcome": "<p>The final outcome of the session.</p>",
+        "ExecutionSummaryCluster$name": "<p>The name of the execution pattern cluster.</p>",
+        "ExecutionSummaryCluster$description": "<p>A description of the execution pattern.</p>",
         "ExtractionJob$jobId": "<p>The unique identifier of the extraction job.</p>",
         "ExtractionJobFilterInput$strategyId": "<p>The memory strategy identifier to filter extraction jobs by. If specified, only extraction jobs with this strategy ID are returned.</p>",
         "ExtractionJobFilterInput$sessionId": "<p>The unique identifier of the session. If specified, only extraction jobs with this session ID are returned.</p>",
@@ -4240,6 +4434,12 @@
         "ExtractionJobMetadata$strategyId": "<p>The identifier of the memory strategy for this extraction job.</p>",
         "ExtractionJobMetadata$sessionId": "<p>The identifier of the session for this extraction job.</p>",
         "ExtractionJobMetadata$actorId": "<p>The identifier of the actor for this extraction job.</p>",
+        "FailureCategoryCluster$name": "<p>The name of the failure category.</p>",
+        "FailureCategoryCluster$description": "<p>A description of the failure category pattern.</p>",
+        "FailureSpanDetail$spanId": "<p>The unique identifier of the span where the failure occurred.</p>",
+        "FailureSpanDetail$traceId": "<p>The trace identifier associated with the failure span.</p>",
+        "FailureSubCategoryCluster$name": "<p>The name of the failure subcategory.</p>",
+        "FailureSubCategoryCluster$description": "<p>A description of the failure subcategory pattern.</p>",
         "GetABTestResponse$currentRunId": "<p>The identifier of the current run of the A/B test.</p>",
         "GetAgentCardRequest$agentRuntimeArn": "<p>The ARN of the AgentCore Runtime agent for which you want to get the A2A agent card.</p>",
         "GetAgentCardRequest$qualifier": "<p>Optional qualifier to specify an agent alias, such as <code>prod</code>code&gt; or <code>dev</code>. If you don't provide a value, the DEFAULT alias is used. </p>",
@@ -4256,6 +4456,7 @@
         "HarnessSkillGitSource$path": "<p>Subdirectory within the repository containing the skill.</p>",
         "HarnessToolUseBlock$serverName": "<p>The name of the MCP server providing this tool.</p>",
         "HarnessToolUseBlockStart$serverName": "<p>The name of the MCP server providing this tool.</p>",
+        "InsightsFailureSignal$evidence": "<p>The evidence supporting the failure detection.</p>",
         "InvalidInputException$message": null,
         "InvokeAgentRuntimeCommandRequest$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime on which to execute the command. This identifies the specific agent runtime environment where the command will run.</p>",
         "InvokeAgentRuntimeCommandRequest$qualifier": "<p>The qualifier to use for the agent runtime. This is an endpoint name that points to a specific version. If not specified, Amazon Bedrock AgentCore uses the default endpoint of the agent runtime.</p>",
@@ -4298,6 +4499,9 @@
         "ResourceContent$mimeType": "<p>The MIME type of the resource content.</p>",
         "ResourceContent$text": "<p>The text resource content.</p>",
         "RetryableConflictException$message": null,
+        "RootCauseCluster$name": "<p>The name of the root cause cluster.</p>",
+        "RootCauseCluster$rootCause": "<p>The root cause explanation for this cluster of failures.</p>",
+        "RootCauseCluster$recommendation": "<p>The recommended fix for this root cause.</p>",
         "SaveBrowserSessionProfileRequest$browserIdentifier": "<p>The unique identifier of the browser associated with the session from which to save the profile.</p>",
         "SaveBrowserSessionProfileResponse$browserIdentifier": "<p>The unique identifier of the browser associated with the session from which the profile was saved.</p>",
         "ScreenshotResult$error": "<p>The error message. Present only when the action failed.</p>",
@@ -4329,6 +4533,10 @@
         "ToolResultStructuredContent$stderr": "<p>The standard error output from the tool execution.</p>",
         "UpdateBrowserStreamRequest$browserIdentifier": "<p>The identifier of the browser.</p>",
         "UpdateBrowserStreamResponse$browserIdentifier": "<p>The identifier of the browser.</p>",
+        "UserIntentAffectedSession$sessionId": "<p>The unique identifier of the session.</p>",
+        "UserIntentCluster$name": "<p>The name of the user intent cluster.</p>",
+        "UserIntentCluster$description": "<p>A description of the user intent pattern.</p>",
+        "UserIntentList$member": null,
         "ValidationException$message": null,
         "ValidationExceptionField$name": "<p>The name of the field.</p>",
         "ValidationExceptionField$message": "<p>A message describing why this field failed validation.</p>",
@@ -4470,6 +4678,27 @@
       "refs": {
         "SystemPromptConfig$text": "<p>The system prompt text provided inline.</p>",
         "SystemPromptRecommendationResult$recommendedSystemPrompt": "<p>The optimized system prompt text generated by the recommendation.</p>"
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagsMap$key": null
+      }
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "TagsMap$value": null
+      }
+    },
+    "TagsMap": {
+      "base": null,
+      "refs": {
+        "CreateABTestRequest$tags": "<p>A map of tag keys and values to associate with the A/B test.</p>",
+        "StartBatchEvaluationRequest$tags": "<p>A map of tag keys and values to associate with the batch evaluation.</p>",
+        "StartBatchEvaluationResponse$tags": "<p>The tags associated with the batch evaluation.</p>",
+        "StartRecommendationRequest$tags": "<p>A map of tag keys and values to associate with the recommendation.</p>"
       }
     },
     "TargetName": {
@@ -4726,6 +4955,42 @@
       "base": "<p>The OAuth2.0 token or user ID that was used to generate the workload access token used for initiating the user authorization flow to retrieve OAuth2.0 tokens.</p>",
       "refs": {
         "CompleteResourceTokenAuthRequest$userIdentifier": "<p>The OAuth2.0 token or user ID that was used to generate the workload access token used for initiating the user authorization flow to retrieve OAuth2.0 tokens.</p>"
+      }
+    },
+    "UserIntentAffectedSession": {
+      "base": "<p>A session associated with a user intent cluster.</p>",
+      "refs": {
+        "UserIntentAffectedSessionList$member": null
+      }
+    },
+    "UserIntentAffectedSessionList": {
+      "base": null,
+      "refs": {
+        "UserIntentCluster$affectedSessions": "<p>The list of sessions with this user intent.</p>"
+      }
+    },
+    "UserIntentCluster": {
+      "base": "<p>A cluster of similar user intents identified across sessions.</p>",
+      "refs": {
+        "UserIntentClusterList$member": null
+      }
+    },
+    "UserIntentClusterList": {
+      "base": null,
+      "refs": {
+        "UserIntentClusteringResultContent$userIntents": "<p>The list of user intent clusters identified across analyzed sessions.</p>"
+      }
+    },
+    "UserIntentClusteringResultContent": {
+      "base": "<p>Customer-facing user intent clustering result written to S3.</p>",
+      "refs": {
+        "GetBatchEvaluationResponse$userIntentResult": null
+      }
+    },
+    "UserIntentList": {
+      "base": null,
+      "refs": {
+        "UserIntentAffectedSession$userMessages": "<p>The user messages from this session that contributed to the intent cluster.</p>"
       }
     },
     "UserTokenType": {

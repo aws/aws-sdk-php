@@ -65,6 +65,11 @@
     }
   },
   "shapes":{
+    "AsyncBodyBlob":{
+      "type":"blob",
+      "max":128000,
+      "sensitive":true
+    },
     "BodyBlob":{
       "type":"blob",
       "max":6291456,
@@ -152,10 +157,7 @@
     },
     "InvokeEndpointAsyncInput":{
       "type":"structure",
-      "required":[
-        "EndpointName",
-        "InputLocation"
-      ],
+      "required":["EndpointName"],
       "members":{
         "EndpointName":{
           "shape":"EndpointName",
@@ -206,8 +208,10 @@
           "shape":"InvocationTimeoutSecondsHeader",
           "location":"header",
           "locationName":"X-Amzn-SageMaker-InvocationTimeoutSeconds"
-        }
-      }
+        },
+        "Body":{"shape":"AsyncBodyBlob"}
+      },
+      "payload":"Body"
     },
     "InvokeEndpointAsyncOutput":{
       "type":"structure",

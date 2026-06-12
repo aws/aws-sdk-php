@@ -9,10 +9,12 @@
     "CreateBacklogTask": "<p>Creates a new backlog task in the specified agent space</p>",
     "CreateChat": "<p>Creates a new chat execution in the specified agent space</p>",
     "CreatePrivateConnection": "<p>Creates a Private Connection to a target resource.</p>",
+    "CreateTrigger": "<p>Creates a new Trigger in the specified agent space</p>",
     "DeleteAgentSpace": "<p>Deletes an AgentSpace. This operation is idempotent and returns a 204 No Content response on success.</p>",
     "DeleteAsset": "<p>Deletes an asset and all its files from the specified agent space</p>",
     "DeleteAssetFile": "<p>Deletes a file from an asset</p>",
     "DeletePrivateConnection": "<p>Deletes a Private Connection. The deletion is asynchronous and returns DELETE_IN_PROGRESS status.</p>",
+    "DeleteTrigger": "<p>Deletes a Trigger from the specified agent space</p>",
     "DeregisterService": "<p>Deregister a service</p>",
     "DescribePrivateConnection": "<p>Retrieves details of an existing Private Connection.</p>",
     "DisableOperatorApp": "<p>Disable the Operator App for the specified AgentSpace</p>",
@@ -28,6 +30,7 @@
     "GetOperatorApp": "<p>Get the full auth configuration of operator including any enabled auth flow</p>",
     "GetRecommendation": "<p>Retrieves a specific recommendation by its ID</p>",
     "GetService": "<p>Retrieves given service by it's unique identifier</p>",
+    "GetTrigger": "<p>Gets a Trigger from the specified agent space</p>",
     "ListAgentSpaces": "<p>Lists all AgentSpaces with optional pagination.</p>",
     "ListAssetFiles": "<p>Lists files in an asset</p>",
     "ListAssetTypes": "<p>Lists the supported asset types</p>",
@@ -44,6 +47,7 @@
     "ListRecommendations": "<p>Lists recommendations for the specified agent space</p>",
     "ListServices": "<p>List a list of registered service on the account level.</p>",
     "ListTagsForResource": "<p>Lists tags for the specified AWS DevOps Agent resource.</p>",
+    "ListTriggers": "<p>Lists Triggers in the specified agent space</p>",
     "ListWebhooks": "<p>List all webhooks for given Association</p>",
     "RegisterService": "<p>This operation registers the specified service</p>",
     "SendMessage": "<p>Sends a chat message and streams the response for the specified agent space execution</p>",
@@ -58,6 +62,7 @@
     "UpdateOperatorAppIdpConfig": "<p>Update the external Identity Provider configuration for the Operator App</p>",
     "UpdatePrivateConnectionCertificate": "<p>Updates the certificate associated with a Private Connection.</p>",
     "UpdateRecommendation": "<p>Updates an existing recommendation with new content, status, or metadata</p>",
+    "UpdateTrigger": "<p>Updates the status of an existing Trigger</p>",
     "ValidateAwsAssociations": "<p>Validates an aws association and set status and returns a 204 No Content response on success.</p>"
   },
   "shapes": {
@@ -108,9 +113,11 @@
         "CreateAssetRequest$agentSpaceId": "<p>The unique identifier for the agent space where the asset will be created</p>",
         "CreateBacklogTaskRequest$agentSpaceId": "<p>The unique identifier for the agent space where the task will be created</p>",
         "CreateChatRequest$agentSpaceId": null,
+        "CreateTriggerRequest$agentSpaceId": null,
         "DeleteAgentSpaceInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "DeleteAssetFileRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
         "DeleteAssetRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
+        "DeleteTriggerRequest$agentSpaceId": null,
         "DisableOperatorAppInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "DisassociateServiceInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "EnableOperatorAppInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
@@ -123,6 +130,7 @@
         "GetBacklogTaskRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the task</p>",
         "GetOperatorAppInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "GetRecommendationRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the recommendation</p>",
+        "GetTriggerRequest$agentSpaceId": null,
         "ListAssetFilesRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
         "ListAssetVersionsRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
         "ListAssetsRequest$agentSpaceId": "<p>The unique identifier for the agent space to list assets from</p>",
@@ -135,8 +143,10 @@
         "ListPendingMessagesRequest$agentSpaceId": null,
         "ListPendingMessagesResponse$agentSpaceId": null,
         "ListRecommendationsRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the recommendations</p>",
+        "ListTriggersRequest$agentSpaceId": null,
         "ListWebhooksInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "SendMessageRequest$agentSpaceId": "<p>The agent space identifier</p>",
+        "Trigger$agentSpaceId": null,
         "UpdateAgentSpaceInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "UpdateAssetFileRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
         "UpdateAssetRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
@@ -146,6 +156,7 @@
         "UpdateOperatorAppIdpConfigInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "UpdateOperatorAppIdpConfigOutput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "UpdateRecommendationRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the recommendation</p>",
+        "UpdateTriggerRequest$agentSpaceId": null,
         "ValidateAwsAssociationsInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>"
       }
     },
@@ -527,6 +538,20 @@
       "base": "<p>Output containing the newly created Private Connection summary.</p>",
       "refs": {}
     },
+    "CreateTriggerRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateTriggerRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateTriggerRequest$clientToken": "<p>A unique, case-sensitive identifier used for idempotent Trigger creation</p>"
+      }
+    },
+    "CreateTriggerResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CustomHeaderName": {
       "base": "<p>HTTP header name. Allows alphanumeric characters, hyphens, and underscores.</p>",
       "refs": {
@@ -601,6 +626,14 @@
     },
     "DeletePrivateConnectionOutput": {
       "base": "<p>Output containing the status of the Private Connection deletion.</p>",
+      "refs": {}
+    },
+    "DeleteTriggerRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTriggerResponse": {
+      "base": null,
       "refs": {}
     },
     "DeregisterServiceInput": {
@@ -892,6 +925,14 @@
     },
     "GetServiceOutput": {
       "base": "<p>Output containing the requested service details.</p>",
+      "refs": {}
+    },
+    "GetTriggerRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTriggerResponse": {
+      "base": null,
       "refs": {}
     },
     "GitHubConfiguration": {
@@ -1353,6 +1394,20 @@
       "base": null,
       "refs": {}
     },
+    "ListTriggersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTriggersRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListTriggersRequest$maxResults": "<p>The maximum number of results to return in a single response</p>"
+      }
+    },
+    "ListTriggersResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListWebhooksInput": {
       "base": "<p>Input for listing service webhooks within an association.</p>",
       "refs": {}
@@ -1756,7 +1811,9 @@
         "ListJournalRecordsRequest$nextToken": "<p>Token for retrieving the next page of results</p>",
         "ListRecommendationsRequest$nextToken": "<p>Token for retrieving the next page of results</p>",
         "ListServicesInput$nextToken": "<p>Token for the next page of results.</p>",
-        "ListServicesOutput$nextToken": "<p>Token to retrieve the next page of results, if there are more results.</p>"
+        "ListServicesOutput$nextToken": "<p>Token to retrieve the next page of results, if there are more results.</p>",
+        "ListTriggersRequest$nextToken": "<p>Pagination token from a previous response to retrieve the next page of results</p>",
+        "ListTriggersResponse$nextToken": null
       }
     },
     "OAuthAdditionalStepDetails": {
@@ -2149,11 +2206,13 @@
         "CreateChatResponse$executionId": "<p>The unique identifier for the created execution</p>",
         "DeleteAssetFileRequest$assetId": "<p>The unique identifier of the asset containing the file</p>",
         "DeleteAssetRequest$assetId": "<p>The unique identifier of the asset to delete</p>",
+        "DeleteTriggerRequest$triggerId": null,
         "GetAssetContentRequest$assetId": "<p>The unique identifier of the asset</p>",
         "GetAssetFileRequest$assetId": "<p>The unique identifier of the asset containing the file</p>",
         "GetAssetRequest$assetId": "<p>The unique identifier of the asset to retrieve</p>",
         "GetBacklogTaskRequest$taskId": "<p>The unique identifier of the task to retrieve</p>",
         "GetRecommendationRequest$recommendationId": "<p>The unique identifier for the recommendation to retrieve</p>",
+        "GetTriggerRequest$triggerId": null,
         "ListAssetFilesRequest$assetId": "<p>The unique identifier of the asset whose files to list</p>",
         "ListAssetVersionsRequest$assetId": "<p>The unique identifier of the asset whose versions to list</p>",
         "ListChatsRequest$userId": "<p>The user identifier to list chats for. This field is deprecated and will be ignored — the service resolves user identity from the authenticated session.</p>",
@@ -2166,10 +2225,12 @@
         "ReferenceInput$associationId": "<p>Association identifier of the external system</p>",
         "SendMessageRequest$userId": "<p>User identifier. This field is deprecated and will be ignored — the service resolves user identity from the authenticated session.</p>",
         "TaskFilter$primaryTaskId": "<p>Filter by primary task ID to get linked tasks</p>",
+        "Trigger$triggerId": null,
         "UpdateAssetFileRequest$assetId": "<p>The unique identifier of the asset containing the file</p>",
         "UpdateAssetRequest$assetId": "<p>The unique identifier of the asset to update</p>",
         "UpdateBacklogTaskRequest$taskId": "<p>The unique identifier of the task to update</p>",
-        "UpdateRecommendationRequest$recommendationId": "<p>The unique identifier for the recommendation to update</p>"
+        "UpdateRecommendationRequest$recommendationId": "<p>The unique identifier for the recommendation to update</p>",
+        "UpdateTriggerRequest$triggerId": null
       }
     },
     "ResourceNotFoundException": {
@@ -2185,6 +2246,18 @@
         "RegisteredAzureIdentityDetails$webIdentityRoleArn": "<p>The role ARN to be assumed by DevOps Agent for requesting Web Identity Token.</p>",
         "RegisteredMCPServerSigV4Details$mcpRoleArn": null,
         "SourceAwsConfiguration$assumableRoleArn": "<p>Role ARN to be assumed by AIDevOps to operate on behalf of customer.</p>"
+      }
+    },
+    "ScheduleCondition": {
+      "base": "<p>Schedule-based condition that fires the Trigger</p>",
+      "refs": {
+        "TriggerCondition$schedule": "<p>Time-based firing condition</p>"
+      }
+    },
+    "ScheduleExpression": {
+      "base": null,
+      "refs": {
+        "ScheduleCondition$expression": "<p>The schedule expression</p>"
       }
     },
     "SchedulerState": {
@@ -2762,7 +2835,54 @@
         "CreateChatResponse$createdAt": "<p>Timestamp when the chat was created</p>",
         "ListAssetsRequest$updatedAfter": "<p>Filter results to only assets updated after this timestamp</p>",
         "ListAssetsRequest$updatedBefore": "<p>Filter results to only assets updated before this timestamp</p>",
-        "ListPendingMessagesResponse$createdAt": "<p>Timestamp when the pending messages were created.</p>"
+        "ListPendingMessagesResponse$createdAt": "<p>Timestamp when the pending messages were created.</p>",
+        "Trigger$createdAt": "<p>Timestamp when this Trigger was created</p>",
+        "Trigger$updatedAt": "<p>Timestamp when this Trigger was last updated</p>"
+      }
+    },
+    "Trigger": {
+      "base": "<p>A Trigger fires on a schedule and invokes an agent</p>",
+      "refs": {
+        "CreateTriggerResponse$trigger": "<p>The Trigger object</p>",
+        "GetTriggerResponse$trigger": "<p>The Trigger object</p>",
+        "TriggerList$member": null,
+        "UpdateTriggerResponse$trigger": "<p>The Trigger object</p>"
+      }
+    },
+    "TriggerAction": {
+      "base": null,
+      "refs": {
+        "CreateTriggerRequest$action": "<p>The action the new Trigger performs when it fires</p>",
+        "Trigger$action": "<p>The action this Trigger performs when it fires</p>"
+      }
+    },
+    "TriggerCondition": {
+      "base": "<p>Defines the firing condition for a Trigger</p>",
+      "refs": {
+        "CreateTriggerRequest$condition": "<p>The condition that fires the new Trigger</p>",
+        "Trigger$condition": "<p>The condition that fires this Trigger</p>"
+      }
+    },
+    "TriggerList": {
+      "base": null,
+      "refs": {
+        "ListTriggersResponse$items": "<p>The list of Triggers</p>"
+      }
+    },
+    "TriggerStatus": {
+      "base": null,
+      "refs": {
+        "CreateTriggerRequest$status": "<p>The initial status of the Trigger</p>",
+        "ListTriggersRequest$status": "<p>Filter results to Triggers in this status</p>",
+        "Trigger$status": "<p>The status of this Trigger</p>",
+        "UpdateTriggerRequest$status": "<p>The new status for the Trigger</p>"
+      }
+    },
+    "TriggerType": {
+      "base": null,
+      "refs": {
+        "CreateTriggerRequest$type": "<p>How the new Trigger fires</p>",
+        "Trigger$type": "<p>How this Trigger fires</p>"
       }
     },
     "UntagResourceRequest": {
@@ -2861,6 +2981,20 @@
     },
     "UpdateRecommendationResponse": {
       "base": "<p>Response structure containing the updated recommendation</p>",
+      "refs": {}
+    },
+    "UpdateTriggerRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTriggerRequestClientTokenString": {
+      "base": null,
+      "refs": {
+        "UpdateTriggerRequest$clientToken": "<p>A unique, case-sensitive identifier used for idempotent Trigger update</p>"
+      }
+    },
+    "UpdateTriggerResponse": {
+      "base": null,
       "refs": {}
     },
     "UsageMetric": {

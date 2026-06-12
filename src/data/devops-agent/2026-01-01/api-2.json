@@ -170,6 +170,28 @@
       "endpoint":{"hostPrefix":"cp."},
       "idempotent":true
     },
+    "CreateTrigger":{
+      "name":"CreateTrigger",
+      "http":{
+        "method":"POST",
+        "requestUri":"/trigger/agent-space/{agentSpaceId}/triggers",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateTriggerRequest"},
+      "output":{"shape":"CreateTriggerResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ContentSizeExceededException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"}
+      ],
+      "endpoint":{"hostPrefix":"dp."}
+    },
     "DeleteAgentSpace":{
       "name":"DeleteAgentSpace",
       "http":{
@@ -261,6 +283,28 @@
       ],
       "endpoint":{"hostPrefix":"cp."},
       "idempotent":true
+    },
+    "DeleteTrigger":{
+      "name":"DeleteTrigger",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/trigger/agent-space/{agentSpaceId}/triggers/{triggerId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteTriggerRequest"},
+      "output":{"shape":"DeleteTriggerResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ContentSizeExceededException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"}
+      ],
+      "endpoint":{"hostPrefix":"dp."}
     },
     "DeregisterService":{
       "name":"DeregisterService",
@@ -605,6 +649,29 @@
         {"shape":"InvalidParameterException"}
       ],
       "endpoint":{"hostPrefix":"cp."},
+      "readonly":true
+    },
+    "GetTrigger":{
+      "name":"GetTrigger",
+      "http":{
+        "method":"GET",
+        "requestUri":"/trigger/agent-space/{agentSpaceId}/triggers/{triggerId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTriggerRequest"},
+      "output":{"shape":"GetTriggerResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ContentSizeExceededException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"}
+      ],
+      "endpoint":{"hostPrefix":"dp."},
       "readonly":true
     },
     "ListAgentSpaces":{
@@ -968,6 +1035,29 @@
       "endpoint":{"hostPrefix":"cp."},
       "readonly":true
     },
+    "ListTriggers":{
+      "name":"ListTriggers",
+      "http":{
+        "method":"GET",
+        "requestUri":"/trigger/agent-space/{agentSpaceId}/triggers",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTriggersRequest"},
+      "output":{"shape":"ListTriggersResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ContentSizeExceededException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"}
+      ],
+      "endpoint":{"hostPrefix":"dp."},
+      "readonly":true
+    },
     "ListWebhooks":{
       "name":"ListWebhooks",
       "http":{
@@ -1266,6 +1356,29 @@
       },
       "input":{"shape":"UpdateRecommendationRequest"},
       "output":{"shape":"UpdateRecommendationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ContentSizeExceededException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"}
+      ],
+      "endpoint":{"hostPrefix":"dp."},
+      "idempotent":true
+    },
+    "UpdateTrigger":{
+      "name":"UpdateTrigger",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/trigger/agent-space/{agentSpaceId}/triggers/{triggerId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateTriggerRequest"},
+      "output":{"shape":"UpdateTriggerResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ContentSizeExceededException"},
@@ -1946,6 +2059,42 @@
         "tags":{"shape":"Tags"}
       }
     },
+    "CreateTriggerRequest":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "type",
+        "condition",
+        "action"
+      ],
+      "members":{
+        "agentSpaceId":{
+          "shape":"AgentSpaceId",
+          "location":"uri",
+          "locationName":"agentSpaceId"
+        },
+        "type":{"shape":"TriggerType"},
+        "condition":{"shape":"TriggerCondition"},
+        "action":{"shape":"TriggerAction"},
+        "status":{"shape":"TriggerStatus"},
+        "clientToken":{
+          "shape":"CreateTriggerRequestClientTokenString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateTriggerRequestClientTokenString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "CreateTriggerResponse":{
+      "type":"structure",
+      "required":["trigger"],
+      "members":{
+        "trigger":{"shape":"Trigger"}
+      }
+    },
     "CustomHeaderName":{
       "type":"string",
       "max":256,
@@ -2086,6 +2235,29 @@
         "name":{"shape":"PrivateConnectionName"},
         "status":{"shape":"PrivateConnectionStatus"}
       }
+    },
+    "DeleteTriggerRequest":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "triggerId"
+      ],
+      "members":{
+        "agentSpaceId":{
+          "shape":"AgentSpaceId",
+          "location":"uri",
+          "locationName":"agentSpaceId"
+        },
+        "triggerId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"triggerId"
+        }
+      }
+    },
+    "DeleteTriggerResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeregisterServiceInput":{
       "type":"structure",
@@ -2634,6 +2806,32 @@
       "members":{
         "service":{"shape":"RegisteredService"},
         "tags":{"shape":"Tags"}
+      }
+    },
+    "GetTriggerRequest":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "triggerId"
+      ],
+      "members":{
+        "agentSpaceId":{
+          "shape":"AgentSpaceId",
+          "location":"uri",
+          "locationName":"agentSpaceId"
+        },
+        "triggerId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"triggerId"
+        }
+      }
+    },
+    "GetTriggerResponse":{
+      "type":"structure",
+      "required":["trigger"],
+      "members":{
+        "trigger":{"shape":"Trigger"}
       }
     },
     "GitHubConfiguration":{
@@ -3488,6 +3686,46 @@
       "required":["tags"],
       "members":{
         "tags":{"shape":"Tags"}
+      }
+    },
+    "ListTriggersRequest":{
+      "type":"structure",
+      "required":["agentSpaceId"],
+      "members":{
+        "agentSpaceId":{
+          "shape":"AgentSpaceId",
+          "location":"uri",
+          "locationName":"agentSpaceId"
+        },
+        "status":{
+          "shape":"TriggerStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListTriggersRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListTriggersRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListTriggersResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"TriggerList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListWebhooksInput":{
@@ -4482,6 +4720,18 @@
       "min":1,
       "pattern":"arn:aws:iam::\\d{12}:role/[a-zA-Z0-9+=,.@_/-]+"
     },
+    "ScheduleCondition":{
+      "type":"structure",
+      "required":["expression"],
+      "members":{
+        "expression":{"shape":"ScheduleExpression"}
+      }
+    },
+    "ScheduleExpression":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "SchedulerState":{
       "type":"string",
       "enum":[
@@ -5066,6 +5316,55 @@
       "retryable":{"throttling":false}
     },
     "Timestamp":{"type":"timestamp"},
+    "Trigger":{
+      "type":"structure",
+      "required":[
+        "triggerId",
+        "agentSpaceId",
+        "type",
+        "condition",
+        "action",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "triggerId":{"shape":"ResourceId"},
+        "agentSpaceId":{"shape":"AgentSpaceId"},
+        "type":{"shape":"TriggerType"},
+        "condition":{"shape":"TriggerCondition"},
+        "action":{"shape":"TriggerAction"},
+        "status":{"shape":"TriggerStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "TriggerAction":{
+      "type":"structure",
+      "members":{},
+      "document":true
+    },
+    "TriggerCondition":{
+      "type":"structure",
+      "members":{
+        "schedule":{"shape":"ScheduleCondition"}
+      },
+      "union":true
+    },
+    "TriggerList":{
+      "type":"list",
+      "member":{"shape":"Trigger"}
+    },
+    "TriggerStatus":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "TriggerType":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -5373,6 +5672,42 @@
       "required":["recommendation"],
       "members":{
         "recommendation":{"shape":"Recommendation"}
+      }
+    },
+    "UpdateTriggerRequest":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "triggerId"
+      ],
+      "members":{
+        "agentSpaceId":{
+          "shape":"AgentSpaceId",
+          "location":"uri",
+          "locationName":"agentSpaceId"
+        },
+        "triggerId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"triggerId"
+        },
+        "status":{"shape":"TriggerStatus"},
+        "clientToken":{
+          "shape":"UpdateTriggerRequestClientTokenString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateTriggerRequestClientTokenString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "UpdateTriggerResponse":{
+      "type":"structure",
+      "required":["trigger"],
+      "members":{
+        "trigger":{"shape":"Trigger"}
       }
     },
     "UsageMetric":{

@@ -980,6 +980,27 @@
         "OutputConfig$cloudWatchConfig": "<p> The CloudWatch configuration for writing evaluation results to CloudWatch logs with embedded metric format. </p>"
       }
     },
+    "ClusteringConfig": {
+      "base": "<p>Configuration for periodic batch evaluation clustering, specifying how often clustering jobs run.</p>",
+      "refs": {
+        "CreateOnlineEvaluationConfigRequest$clusteringConfig": "<p>Configuration for periodic batch evaluation clustering of insight results.</p>",
+        "GetOnlineEvaluationConfigResponse$clusteringConfig": "<p>The clustering configuration for periodic batch evaluation.</p>",
+        "OnlineEvaluationConfigSummary$clusteringConfig": "<p>The clustering configuration for periodic batch evaluation.</p>",
+        "UpdateOnlineEvaluationConfigRequest$clusteringConfig": "<p>The updated clustering configuration for periodic batch evaluation.</p>"
+      }
+    },
+    "ClusteringFrequency": {
+      "base": null,
+      "refs": {
+        "ClusteringFrequencyList$member": null
+      }
+    },
+    "ClusteringFrequencyList": {
+      "base": null,
+      "refs": {
+        "ClusteringConfig$frequencies": "<p>The list of frequencies at which clustering batch evaluations are triggered.</p>"
+      }
+    },
     "Code": {
       "base": "<p>The source code configuration that specifies the location and details of the code to be executed.</p>",
       "refs": {
@@ -3846,6 +3867,27 @@
         "McpToolSchemaConfiguration$inlinePayload": "<p>The inline payload containing the MCP tool schema definition.</p>"
       }
     },
+    "Insight": {
+      "base": "<p>A reference to an insight analysis to run against sessions.</p>",
+      "refs": {
+        "InsightList$member": null
+      }
+    },
+    "InsightId": {
+      "base": "<p>Canonical insight identifiers using the Builtin.Insight.* naming convention. Used by BatchEvaluate, InternalEvaluate, and ServiceEngineEvaluate flows.</p>",
+      "refs": {
+        "Insight$insightId": null
+      }
+    },
+    "InsightList": {
+      "base": null,
+      "refs": {
+        "CreateOnlineEvaluationConfigRequest$insights": "<p>The list of insight types to run against agent sessions.</p>",
+        "GetOnlineEvaluationConfigResponse$insights": "<p>The list of insight types configured for this evaluation.</p>",
+        "OnlineEvaluationConfigSummary$insights": "<p>The list of insight types configured for this evaluation.</p>",
+        "UpdateOnlineEvaluationConfigRequest$insights": "<p>The updated list of insight types to run against agent sessions.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -3938,6 +3980,7 @@
     "KmsKeyArn": {
       "base": null,
       "refs": {
+        "CreateConfigurationBundleRequest$kmsKeyArn": "<p>Optional KMS key ARN for encrypting component configurations.</p>",
         "CreateDatasetRequest$kmsKeyArn": "<p> Optional KMS key ARN for server-side encryption on service Amazon S3 writes. </p>",
         "CreateEvaluatorRequest$kmsKeyArn": "<p> The Amazon Resource Name (ARN) of a customer managed KMS key to use for encrypting sensitive evaluator data, including instructions and rating scale. If you don't specify a KMS key, the evaluator data is encrypted with an Amazon Web Services owned key. Only symmetric encryption KMS keys are supported. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluations-encryption.html\">Encryption at rest for AgentCore Evaluations</a>. </p>",
         "CreateGatewayRequest$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt data associated with the gateway.</p>",
@@ -3946,6 +3989,8 @@
         "CreatePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "DeletePolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "EvaluatorSummary$kmsKeyArn": "<p> The Amazon Resource Name (ARN) of the customer managed KMS key used to encrypt the evaluator's sensitive data. This field is only present for evaluators encrypted with a customer managed key. </p>",
+        "GetConfigurationBundleResponse$kmsKeyArn": "<p>KMS key ARN used to encrypt component configurations, if CMK was provided.</p>",
+        "GetConfigurationBundleVersionResponse$kmsKeyArn": "<p>KMS key ARN used to encrypt component configurations, if CMK was provided.</p>",
         "GetDatasetResponse$kmsKeyArn": "<p> KMS key ARN used for server-side encryption on service Amazon S3 writes, if configured. </p>",
         "GetEvaluatorResponse$kmsKeyArn": "<p> The Amazon Resource Name (ARN) of the customer managed KMS key used to encrypt the evaluator's sensitive data. This field is only present for evaluators encrypted with a customer managed key. </p>",
         "GetGatewayResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the gateway.</p>",
@@ -3954,6 +3999,7 @@
         "KmsConfiguration$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key.</p>",
         "PolicyEngine$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "PolicyEngineSummary$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
+        "UpdateConfigurationBundleRequest$kmsKeyArn": "<p>Optional KMS key ARN for encrypting component configurations. If provided, components will be encrypted with this key. If the bundle already has a KMS key, this rotates to the new key.</p>",
         "UpdateEvaluatorRequest$kmsKeyArn": "<p> The Amazon Resource Name (ARN) of a customer managed KMS key to use for encrypting sensitive evaluator data. Specify a new key ARN to rotate the encryption key, or specify a key ARN to add encryption to an evaluator that was previously created without one. When you rotate to a new key, the service decrypts the existing data with the old key and re-encrypts it with the new key. Only symmetric encryption KMS keys are supported. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluations-encryption.html\">Encryption at rest for AgentCore Evaluations</a>. </p>",
         "UpdateGatewayRequest$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the gateway.</p>",
         "UpdateGatewayResponse$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the gateway.</p>",

@@ -5787,6 +5787,7 @@
       "base": "<p>Defines the partitioning specification for an Iceberg table, determining how table data will be organized and partitioned for optimal query performance.</p>",
       "refs": {
         "CreateIcebergTableInput$PartitionSpec": "<p>The partitioning specification that defines how the Iceberg table data will be organized and partitioned for optimal query performance.</p>",
+        "IcebergPartitionSpecList$member": null,
         "IcebergTableUpdate$PartitionSpec": "<p>The updated partitioning specification that defines how the table data should be reorganized and partitioned.</p>"
       }
     },
@@ -5794,6 +5795,12 @@
       "base": null,
       "refs": {
         "IcebergPartitionSpec$Fields": "<p>The list of partition fields that define how the table data should be partitioned, including source fields and their transformations.</p>"
+      }
+    },
+    "IcebergPartitionSpecList": {
+      "base": null,
+      "refs": {
+        "IcebergTableMetadata$PartitionSpecs": "<p>The list of partition specifications that have been associated with the Iceberg table over its history, supporting partition evolution.</p>"
       }
     },
     "IcebergRetentionConfiguration": {
@@ -5812,7 +5819,14 @@
       "base": "<p>Defines the schema structure for an Iceberg table, including field definitions, data types, and schema metadata.</p>",
       "refs": {
         "CreateIcebergTableInput$Schema": "<p>The schema definition that specifies the structure, field types, and metadata for the Iceberg table.</p>",
+        "IcebergSchemaList$member": null,
         "IcebergTableUpdate$Schema": "<p>The updated schema definition for the Iceberg table, specifying any changes to field structure, data types, or schema metadata.</p>"
+      }
+    },
+    "IcebergSchemaList": {
+      "base": null,
+      "refs": {
+        "IcebergTableMetadata$Schemas": "<p>The list of schemas that have been associated with the Iceberg table over its history, supporting schema evolution.</p>"
       }
     },
     "IcebergSortDirection": {
@@ -5831,6 +5845,7 @@
       "base": "<p>Defines the sort order specification for an Iceberg table, determining how data should be ordered within partitions to optimize query performance.</p>",
       "refs": {
         "CreateIcebergTableInput$WriteOrder": "<p>The sort order specification that defines how data should be ordered within each partition to optimize query performance.</p>",
+        "IcebergSortOrderList$member": null,
         "IcebergTableUpdate$SortOrder": "<p>The updated sort order specification that defines how data should be ordered within partitions for optimal query performance.</p>"
       }
     },
@@ -5838,6 +5853,12 @@
       "base": null,
       "refs": {
         "IcebergSortOrder$Fields": "<p>The list of fields and their sort directions that define the ordering criteria for the Iceberg table data.</p>"
+      }
+    },
+    "IcebergSortOrderList": {
+      "base": null,
+      "refs": {
+        "IcebergTableMetadata$SortOrders": "<p>The list of sort order specifications that have been associated with the Iceberg table over its history.</p>"
       }
     },
     "IcebergStructField": {
@@ -5856,6 +5877,12 @@
       "base": null,
       "refs": {
         "IcebergSchema$Type": "<p>The root type of the schema structure, typically \"struct\" for Iceberg table schemas.</p>"
+      }
+    },
+    "IcebergTableMetadata": {
+      "base": "<p>The Apache Iceberg table metadata, including format version, table identifier, schemas, partition specifications, sort orders, and table properties. This structure captures the current state of an Iceberg table's metadata as managed by the Glue Data Catalog.</p>",
+      "refs": {
+        "Table$IcebergTableMetadata": "<p>The latest Apache Iceberg table metadata for the table, including format version, schemas, partition specifications, and sort orders. This field is populated for Iceberg tables and reflects the current state of the table's Iceberg metadata.</p>"
       }
     },
     "IcebergTableUpdate": {
@@ -6025,6 +6052,11 @@
         "IcebergSortField$SourceId": "<p>The identifier of the source field from the table schema that this sort field is based on.</p>",
         "IcebergSortOrder$OrderId": "<p>The unique identifier for this sort order specification within the Iceberg table's metadata.</p>",
         "IcebergStructField$Id": "<p>The unique identifier assigned to this field within the Iceberg table schema, used for schema evolution and field tracking.</p>",
+        "IcebergTableMetadata$CurrentSchemaId": "<p>The identifier of the schema that is currently active for the Iceberg table. Matches an entry in <code>Schemas</code>.</p>",
+        "IcebergTableMetadata$LastColumnId": "<p>The highest column identifier that has been assigned in the Iceberg table's schema, used to ensure unique IDs as new columns are added.</p>",
+        "IcebergTableMetadata$DefaultSpecId": "<p>The identifier of the partition specification that is currently used by default when writing new data to the Iceberg table.</p>",
+        "IcebergTableMetadata$LastPartitionId": "<p>The highest partition field identifier that has been assigned across the table's partition specifications.</p>",
+        "IcebergTableMetadata$DefaultSortOrderId": "<p>The identifier of the sort order that is currently used by default when writing new data to the Iceberg table.</p>",
         "IntegerList$member": null,
         "StorageDescriptor$NumberOfBuckets": "<p>Must be specified if the table contains any dimension columns.</p>"
       }
@@ -6928,6 +6960,7 @@
       "base": null,
       "refs": {
         "CreateIcebergTableInput$Location": "<p>The S3 location where the Iceberg table data will be stored.</p>",
+        "IcebergTableMetadata$Location": "<p>The base S3 location where the Iceberg table's data and metadata files are stored.</p>",
         "IcebergTableUpdate$Location": "<p>The updated S3 location where the Iceberg table data will be stored.</p>",
         "LocationStringList$member": null,
         "StorageDescriptor$Location": "<p>The physical location of the table. By default, this takes the form of the warehouse location, followed by the database location in the warehouse, followed by the table name.</p>"
@@ -10618,6 +10651,7 @@
       "refs": {
         "CreateIcebergTableInput$Properties": "<p>Key-value pairs of additional table properties and configuration settings for the Iceberg table.</p>",
         "IcebergEncryptedKey$Properties": "<p>A string to string map of additional metadata used by the table's encryption scheme. These properties provide additional context and configuration for the encryption key implementation.</p>",
+        "IcebergTableMetadata$Properties": "<p>A map of key-value pairs that define table-level properties and configuration settings for the Iceberg table.</p>",
         "IcebergTableUpdate$Properties": "<p>Updated key-value pairs of table properties and configuration settings for the Iceberg table.</p>"
       }
     },
@@ -10646,6 +10680,7 @@
     "TableAttributesList": {
       "base": null,
       "refs": {
+        "GetTableRequest$AttributesToGet": "<p>Specifies the table fields returned by the <code>GetTable</code> call. This parameter doesn't accept an empty list.</p> <p>The following are the valid combinations of values:</p> <ul> <li> <p> <code>DEFAULT</code> - Returns the Hive-style table definition only.</p> </li> <li> <p> <code>LATEST_ICEBERG_METADATA</code> - Returns only the latest Apache Iceberg table metadata.</p> </li> <li> <p> <code>DEFAULT</code>, <code>LATEST_ICEBERG_METADATA</code> - Returns both the Hive-style table definition and the latest Apache Iceberg table metadata.</p> </li> </ul>",
         "GetTablesRequest$AttributesToGet": "<p> Specifies the table fields returned by the <code>GetTables</code> call. This parameter doesn’t accept an empty list. The request must include <code>NAME</code>.</p> <p>The following are the valid combinations of values:</p> <ul> <li> <p> <code>NAME</code> - Names of all tables in the database.</p> </li> <li> <p> <code>NAME</code>, <code>TABLE_TYPE</code> - Names of all tables and the table types.</p> </li> </ul>"
       }
     },
@@ -10659,6 +10694,12 @@
       "base": null,
       "refs": {
         "BatchDeleteTableResponse$Errors": "<p>A list of errors encountered in attempting to delete the specified tables.</p>"
+      }
+    },
+    "TableIdString": {
+      "base": null,
+      "refs": {
+        "IcebergTableMetadata$TableUuid": "<p>The unique identifier (UUID) for the Iceberg table, assigned when the table is created and used to track the table across metadata updates.</p>"
       }
     },
     "TableIdentifier": {
@@ -11919,6 +11960,7 @@
         "DeleteTableVersionRequest$VersionId": "<p>The ID of the table version to be deleted. A <code>VersionID</code> is a string representation of an integer. Each version is incremented by 1.</p>",
         "GetTableVersionRequest$VersionId": "<p>The ID value of the table version to be retrieved. A <code>VersionID</code> is a string representation of an integer. Each version is incremented by 1. </p>",
         "IcebergInput$Version": "<p>The table version for the Iceberg table. Defaults to 2.</p>",
+        "IcebergTableMetadata$FormatVersion": "<p>The Apache Iceberg table format version, such as <code>1</code> or <code>2</code>. Determines the set of features and on-disk layout supported by the table.</p>",
         "Table$VersionId": "<p>The ID of the table version.</p>",
         "TableVersion$VersionId": "<p>The ID value that identifies this table version. A <code>VersionId</code> is a string representation of an integer. Each version is incremented by 1.</p>",
         "TableVersionError$VersionId": "<p>The ID value of the version in question. A <code>VersionID</code> is a string representation of an integer. Each version is incremented by 1.</p>",

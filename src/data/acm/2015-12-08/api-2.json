@@ -427,7 +427,12 @@
     "CertificateOptions":{
       "type":"structure",
       "members":{
-        "CertificateTransparencyLoggingPreference":{"shape":"CertificateTransparencyLoggingPreference"},
+        "CertificateTransparencyLoggingPreference":{
+          "shape":"CertificateTransparencyLoggingPreference",
+          "deprecated":true,
+          "deprecatedMessage":"Certificate transparency logging opt-out is no longer available.",
+          "deprecatedSince":"12th June 2026"
+        },
         "Export":{"shape":"CertificateExport"}
       }
     },
@@ -490,6 +495,9 @@
     },
     "CertificateTransparencyLoggingPreference":{
       "type":"string",
+      "deprecated":true,
+      "deprecatedMessage":"Certificate transparency logging opt-out is no longer available.",
+      "deprecatedSince":"12th June 2026",
       "enum":[
         "ENABLED",
         "DISABLED"

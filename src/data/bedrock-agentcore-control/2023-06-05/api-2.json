@@ -3520,6 +3520,27 @@
         "logGroupName":{"shape":"LogGroupName"}
       }
     },
+    "ClusteringConfig":{
+      "type":"structure",
+      "required":["frequencies"],
+      "members":{
+        "frequencies":{"shape":"ClusteringFrequencyList"}
+      }
+    },
+    "ClusteringFrequency":{
+      "type":"string",
+      "enum":[
+        "DAILY",
+        "WEEKLY",
+        "MONTHLY"
+      ]
+    },
+    "ClusteringFrequencyList":{
+      "type":"list",
+      "member":{"shape":"ClusteringFrequency"},
+      "max":3,
+      "min":0
+    },
     "Code":{
       "type":"structure",
       "members":{
@@ -3701,7 +3722,7 @@
     },
     "ConfigurationBundleArn":{
       "type":"string",
-      "pattern":"arn:aws:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:configuration-bundle/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
+      "pattern":"arn:aws[a-zA-Z-]*:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:configuration-bundle/[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10}"
     },
     "ConfigurationBundleDescription":{
       "type":"string",
@@ -4071,6 +4092,7 @@
         "branchName":{"shape":"BranchName"},
         "commitMessage":{"shape":"CreateConfigurationBundleRequestCommitMessageString"},
         "createdBy":{"shape":"VersionCreatedBySource"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -4475,7 +4497,6 @@
         "onlineEvaluationConfigName",
         "rule",
         "dataSourceConfig",
-        "evaluators",
         "evaluationExecutionRoleArn",
         "enableOnCreate"
       ],
@@ -4489,6 +4510,8 @@
         "rule":{"shape":"Rule"},
         "dataSourceConfig":{"shape":"DataSourceConfig"},
         "evaluators":{"shape":"EvaluatorList"},
+        "insights":{"shape":"InsightList"},
+        "clusteringConfig":{"shape":"ClusteringConfig"},
         "evaluationExecutionRoleArn":{"shape":"RoleArn"},
         "enableOnCreate":{"shape":"Boolean"},
         "tags":{"shape":"TagsMap"}
@@ -6192,7 +6215,7 @@
       "type":"list",
       "member":{"shape":"EvaluatorReference"},
       "max":10,
-      "min":1
+      "min":0
     },
     "EvaluatorModelConfig":{
       "type":"structure",
@@ -6911,7 +6934,8 @@
         "components":{"shape":"ComponentConfigurationMap"},
         "lineageMetadata":{"shape":"VersionLineageMetadata"},
         "createdAt":{"shape":"Timestamp"},
-        "updatedAt":{"shape":"Timestamp"}
+        "updatedAt":{"shape":"Timestamp"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "GetConfigurationBundleVersionRequest":{
@@ -6953,7 +6977,8 @@
         "components":{"shape":"ComponentConfigurationMap"},
         "lineageMetadata":{"shape":"VersionLineageMetadata"},
         "createdAt":{"shape":"Timestamp"},
-        "versionCreatedAt":{"shape":"Timestamp"}
+        "versionCreatedAt":{"shape":"Timestamp"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "GetDatasetRequest":{
@@ -7275,7 +7300,6 @@
         "onlineEvaluationConfigName",
         "rule",
         "dataSourceConfig",
-        "evaluators",
         "status",
         "executionStatus",
         "createdAt",
@@ -7289,6 +7313,8 @@
         "rule":{"shape":"Rule"},
         "dataSourceConfig":{"shape":"DataSourceConfig"},
         "evaluators":{"shape":"EvaluatorList"},
+        "insights":{"shape":"InsightList"},
+        "clusteringConfig":{"shape":"ClusteringConfig"},
         "outputConfig":{"shape":"OutputConfig"},
         "evaluationExecutionRoleArn":{"shape":"RoleArn"},
         "status":{"shape":"OnlineEvaluationConfigStatus"},
@@ -8496,6 +8522,23 @@
       "type":"string",
       "sensitive":true
     },
+    "Insight":{
+      "type":"structure",
+      "required":["insightId"],
+      "members":{
+        "insightId":{"shape":"InsightId"}
+      }
+    },
+    "InsightId":{
+      "type":"string",
+      "pattern":"(Builtin\\.[a-zA-Z0-9._-]+|[a-zA-Z][a-zA-Z0-9-_]{0,99}-[a-zA-Z0-9]{10})"
+    },
+    "InsightList":{
+      "type":"list",
+      "member":{"shape":"Insight"},
+      "max":10,
+      "min":0
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -9656,8 +9699,6 @@
     },
     "LogGroupName":{
       "type":"string",
-      "max":512,
-      "min":1,
       "pattern":"[.\\-_/#A-Za-z0-9]+"
     },
     "Long":{
@@ -10439,7 +10480,9 @@
         "executionStatus":{"shape":"OnlineEvaluationExecutionStatus"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
-        "failureReason":{"shape":"String"}
+        "failureReason":{"shape":"String"},
+        "insights":{"shape":"InsightList"},
+        "clusteringConfig":{"shape":"ClusteringConfig"}
       }
     },
     "OnlineEvaluationConfigSummaryList":{
@@ -12795,7 +12838,8 @@
         "parentVersionIds":{"shape":"ConfigurationBundleVersionList"},
         "branchName":{"shape":"BranchName"},
         "commitMessage":{"shape":"UpdateConfigurationBundleRequestCommitMessageString"},
-        "createdBy":{"shape":"VersionCreatedBySource"}
+        "createdBy":{"shape":"VersionCreatedBySource"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "UpdateConfigurationBundleRequestCommitMessageString":{
@@ -13222,6 +13266,8 @@
         "rule":{"shape":"Rule"},
         "dataSourceConfig":{"shape":"DataSourceConfig"},
         "evaluators":{"shape":"EvaluatorList"},
+        "insights":{"shape":"InsightList"},
+        "clusteringConfig":{"shape":"ClusteringConfig"},
         "evaluationExecutionRoleArn":{"shape":"RoleArn"},
         "executionStatus":{"shape":"OnlineEvaluationExecutionStatus"}
       }

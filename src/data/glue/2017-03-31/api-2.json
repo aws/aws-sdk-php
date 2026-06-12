@@ -10854,7 +10854,8 @@
         "TransactionId":{"shape":"TransactionIdString"},
         "QueryAsOfTime":{"shape":"Timestamp"},
         "AuditContext":{"shape":"AuditContext"},
-        "IncludeStatusDetails":{"shape":"BooleanNullable"}
+        "IncludeStatusDetails":{"shape":"BooleanNullable"},
+        "AttributesToGet":{"shape":"TableAttributesList"}
       }
     },
     "GetTableResponse":{
@@ -11527,6 +11528,10 @@
       "type":"list",
       "member":{"shape":"IcebergPartitionField"}
     },
+    "IcebergPartitionSpecList":{
+      "type":"list",
+      "member":{"shape":"IcebergPartitionSpec"}
+    },
     "IcebergRetentionConfiguration":{
       "type":"structure",
       "members":{
@@ -11556,6 +11561,10 @@
         "Type":{"shape":"IcebergStructTypeEnum"},
         "Fields":{"shape":"IcebergStructFieldList"}
       }
+    },
+    "IcebergSchemaList":{
+      "type":"list",
+      "member":{"shape":"IcebergSchema"}
     },
     "IcebergSortDirection":{
       "type":"string",
@@ -11594,6 +11603,10 @@
       "type":"list",
       "member":{"shape":"IcebergSortField"}
     },
+    "IcebergSortOrderList":{
+      "type":"list",
+      "member":{"shape":"IcebergSortOrder"}
+    },
     "IcebergStructField":{
       "type":"structure",
       "required":[
@@ -11619,6 +11632,23 @@
     "IcebergStructTypeEnum":{
       "type":"string",
       "enum":["struct"]
+    },
+    "IcebergTableMetadata":{
+      "type":"structure",
+      "members":{
+        "FormatVersion":{"shape":"VersionString"},
+        "TableUuid":{"shape":"TableIdString"},
+        "Location":{"shape":"LocationString"},
+        "Properties":{"shape":"StringToStringMap"},
+        "Schemas":{"shape":"IcebergSchemaList"},
+        "CurrentSchemaId":{"shape":"Integer"},
+        "LastColumnId":{"shape":"Integer"},
+        "PartitionSpecs":{"shape":"IcebergPartitionSpecList"},
+        "DefaultSpecId":{"shape":"Integer"},
+        "LastPartitionId":{"shape":"Integer"},
+        "SortOrders":{"shape":"IcebergSortOrderList"},
+        "DefaultSortOrderId":{"shape":"Integer"}
+      }
     },
     "IcebergTableUpdate":{
       "type":"structure",
@@ -16570,6 +16600,7 @@
         "ViewDefinition":{"shape":"ViewDefinition"},
         "IsMultiDialectView":{"shape":"NullableBoolean"},
         "IsMaterializedView":{"shape":"NullableBoolean"},
+        "IcebergTableMetadata":{"shape":"IcebergTableMetadata"},
         "Status":{"shape":"TableStatus"}
       }
     },
@@ -16577,7 +16608,9 @@
       "type":"string",
       "enum":[
         "NAME",
-        "TABLE_TYPE"
+        "TABLE_TYPE",
+        "DEFAULT",
+        "LATEST_ICEBERG_METADATA"
       ]
     },
     "TableAttributesList":{
@@ -16594,6 +16627,11 @@
     "TableErrors":{
       "type":"list",
       "member":{"shape":"TableError"}
+    },
+    "TableIdString":{
+      "type":"string",
+      "max":100,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
     },
     "TableIdentifier":{
       "type":"structure",
