@@ -745,9 +745,26 @@ class CredentialProvider
             $config['preferStaticCredentials'] = true;
             $sourceCredentials = null;
             if (!empty($roleProfile['source_profile'])){
-                $sourceCredentials = call_user_func(
-                    CredentialProvider::ini($sourceProfileName, $filename, $config)
-                )->wait();
+                $sourceProfile = $profiles[$sourceProfileName];
+                if (!empty($sourceProfile['login_session'])) {
+                    // Source profile uses aws login (console credentials)
+                    $region = $sourceProfile['region']
+                        ?? $config['region']
+                        ?? getEnv(self::ENV_REGION)
+                        ?: null;
+                    $sourceCredentials = call_user_func(
+                        CredentialProvider::login($sourceProfileName, ['region' => $region])
+                    )->wait();
+                } elseif (!empty($sourceProfile['sso_session']) || !empty($sourceProfile['sso_start_url'])) {
+                    // Source profile uses SSO credentials
+                    $sourceCredentials = call_user_func(
+                        CredentialProvider::sso($sourceProfileName, $filename, $config)
+                    )->wait();
+                } else {
+                    $sourceCredentials = call_user_func(
+                        CredentialProvider::ini($sourceProfileName, $filename, $config)
+                    )->wait();
+                }
             } else {
                 $sourceCredentials = self::getCredentialsFromSource(
                     $profileName,

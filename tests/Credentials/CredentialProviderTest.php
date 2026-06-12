@@ -1088,6 +1088,76 @@ EOT;
         call_user_func(CredentialProvider::ini())->wait();
     }
 
+    public function testCreatesFromRoleArnWithLoginSessionSourceProfile(): void
+    {
+        $awsDir = $this->createAwsHome();
+
+        // Config file with a profile that has role_arn pointing to a login_session source_profile
+        $ini = <<<EOT
+[profile project-monitor]
+role_arn = arn:aws:iam::012345678910:role/project-monitor
+source_profile = aszeremi-local
+region = us-east-1
+[profile aszeremi-local]
+login_session = arn:aws:iam::123456789012:user/aszeremi-local
+region = us-east-1
+EOT;
+        file_put_contents($awsDir . '/config', $ini);
+
+        // Create login cache directory and token file for aszeremi-local
+        $cacheDir = $awsDir . '/login/cache';
+        mkdir($cacheDir, 0777, true);
+
+        $sessionHash = hash('sha256', trim('arn:aws:iam::123456789012:user/aszeremi-local'));
+        $tokenFile = $cacheDir . '/' . $sessionHash . '.json';
+
+        $expiration = (new DateTimeResult('+1 hour'))->format('Y-m-d\TH:i:s\Z');
+        $tokenData = json_encode([
+            'accessToken' => [
+                'accessKeyId' => 'loginSourceKey',
+                'secretAccessKey' => 'loginSourceSecret',
+                'sessionToken' => 'loginSourceToken',
+                'accountId' => '123456789012',
+                'expiresAt' => $expiration
+            ],
+            'tokenType' => 'aws_sigv4',
+            'refreshToken' => 'testRefreshToken',
+            'idToken' => 'testIdToken',
+            'clientId' => 'arn:aws:signin:::devtools/same-device',
+            'dpopKey' => '-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIFDZHUzOG1Pzq+6F0mjMlOSp1syN9LRPBuHMoCFXTcXhoAoGCCqGSM49
+AwEHoUQDQgAE9qhj+KtcdHj1kVgwxWWWw++tqoh7H7UHs7oXh8jBbgF47rrYGC+t
+djiIaHK3dBvvdE7MGj5HsepzLm3Kj91bqA==
+-----END EC PRIVATE KEY-----'
+        ]);
+        file_put_contents($tokenFile, $tokenData);
+
+        $result = [
+            'Credentials' => [
+                'AccessKeyId' => 'assumedKey',
+                'SecretAccessKey' => 'assumedSecret',
+                'SessionToken' => 'assumedToken',
+                'Expiration' => DateTimeResult::fromEpoch(time() + 10)
+            ],
+        ];
+
+        $sts = $this->getTestClient('Sts');
+        $this->addMockResults($sts, [new Result($result)]);
+
+        $config = [
+            'stsClient' => $sts,
+            'region' => 'us-east-1',
+        ];
+
+        $creds = call_user_func(
+            CredentialProvider::ini('project-monitor', $awsDir . '/config', $config)
+        )->wait();
+
+        $this->assertSame('assumedKey', $creds->getAccessKeyId());
+        $this->assertSame('assumedSecret', $creds->getSecretKey());
+        $this->assertSame('assumedToken', $creds->getSecurityToken());
+    }
+
     public function testLegacySsoProfileProvider(): void
     {
         $awsDir = $this->createAwsHome();
