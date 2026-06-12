@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.384.9 - 2026-06-12
 
 * `Aws\BedrockAgentCoreControl` - Added tagging and CMK support for optimizations and an insights feature to identify failure patterns, extract user intents, and summarize execution behavior
 * `Aws\DevOpsAgent` - Adds support for Trigger CRUD APIs (CreateTrigger, GetTrigger, UpdateTrigger, DeleteTrigger, ListTriggers) for managing schedule-based automation triggers in DevOps Agent agent spaces.
