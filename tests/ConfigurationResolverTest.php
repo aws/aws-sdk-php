@@ -224,6 +224,76 @@ EOT;
         unlink($dir . '/config');
     }
 
+    public static function iniFileWithPrefixedProfileProvider(): array
+    {
+        $boolIniFile = <<<EOT
+[profile custom]
+foo_configuration_option = false
+[default]
+foo_configuration_option = true
+EOT;
+
+        $intIniFile = <<<EOT
+[profile custom]
+foo_configuration_option = 25
+[default]
+foo_configuration_option = 15
+EOT;
+
+        $stringIniFile = <<<EOT
+[profile custom]
+foo_configuration_option = experimental
+[default]
+foo_configuration_option = standard
+EOT;
+
+        return [
+            [$boolIniFile, 'bool', false],
+            [$intIniFile, 'int', 25],
+            [$stringIniFile, 'string', 'experimental'],
+        ];
+    }
+
+    /**
+     * A non-default profile is written as [profile <name>] in the config file.
+     * The old resolver looked up the bare section name and returned null for
+     * these, which is the bug this covers. assertSame also locks in the
+     * INI_SCANNER_TYPED coercion (bool/int stay typed, string stays string).
+     */
+    #[DataProvider('iniFileWithPrefixedProfileProvider')]
+    public function testResolvesFromIniFileWithPrefixedProfile($iniFile, $type, $expected)
+    {
+        $dir = $this->clearEnv();
+        file_put_contents($dir . '/config', $iniFile);
+        putenv('HOME=' . dirname($dir));
+        putenv(ConfigurationResolver::ENV_PROFILE . '=custom');
+        $result = ConfigurationResolver::ini(self::$configurationKey, $type);
+        $this->assertSame($expected, $result);
+        unlink($dir . '/config');
+    }
+
+    /**
+     * When both the canonical [profile custom] and a bare [custom] section
+     * exist, the prefixed section wins; the bare form is only a lenient
+     * fallback for hand-written files.
+     */
+    public function testPrefixedProfileTakesPrecedenceOverBareSection()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[profile custom]
+foo_configuration_option = prefixed
+[custom]
+foo_configuration_option = bare
+EOT;
+        file_put_contents($dir . '/config', $ini);
+        putenv('HOME=' . dirname($dir));
+        putenv(ConfigurationResolver::ENV_PROFILE . '=custom');
+        $result = ConfigurationResolver::ini(self::$configurationKey, 'string');
+        $this->assertSame('prefixed', $result);
+        unlink($dir . '/config');
+    }
+
     public function testEnsuresIniFileExists()
     {
         $this->clearEnv();
@@ -379,6 +449,42 @@ EOT;
             . 'ENDPOINT_URL'
             . '='
         );
+    }
+
+    /**
+     * Same subsection resolution as testResolvesServiceIni, but the profile
+     * that references the services section is a non-default [profile custom].
+     * The old resolver read $data[$profile] without the prefix, so this path
+     * was never exercised for a named profile.
+     */
+    public function testResolvesServiceIniForPrefixedProfile()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[profile custom]
+services = my-services
+
+[services my-services]
+s3 = 
+  endpoint_url = https://exmaple.com
+EOT;
+        file_put_contents($dir . '/config', $ini);
+        putenv('HOME=' . dirname($dir));
+        putenv(ConfigurationResolver::ENV_PROFILE . '=custom');
+        $result = ConfigurationResolver::resolve(
+            'endpoint_url_s3',
+            '',
+            'string',
+            [
+                'ini_resolver_options' => [
+                    'section' => 'services',
+                    'subsection' => 's3',
+                    'key' => 'endpoint_url'
+                ]
+            ]
+        );
+        $this->assertSame('https://exmaple.com', $result);
+        unlink($dir . '/config');
     }
 
     #[DataProvider('duplicateIniFileProvider')]
