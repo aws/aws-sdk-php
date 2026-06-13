@@ -745,9 +745,24 @@ class CredentialProvider
             $config['preferStaticCredentials'] = true;
             $sourceCredentials = null;
             if (!empty($roleProfile['source_profile'])){
-                $sourceCredentials = call_user_func(
-                    CredentialProvider::ini($sourceProfileName, $filename, $config)
-                )->wait();
+                $sourceProfile = $profiles[$sourceProfileName];
+                if (isset($sourceProfile['login_session'])) {
+                    // Profile was configured by `aws login` - use login credential provider
+                    $sourceCredentials = call_user_func(
+                        CredentialProvider::login($sourceProfileName, $config)
+                    )->wait();
+                } elseif (isset($sourceProfile['sso_session'])
+                    || isset($sourceProfile['sso_start_url'])
+                ) {
+                    // Profile uses SSO - use sso credential provider
+                    $sourceCredentials = call_user_func(
+                        CredentialProvider::sso($sourceProfileName, $filename, $config)
+                    )->wait();
+                } else {
+                    $sourceCredentials = call_user_func(
+                        CredentialProvider::ini($sourceProfileName, $filename, $config)
+                    )->wait();
+                }
             } else {
                 $sourceCredentials = self::getCredentialsFromSource(
                     $profileName,
