@@ -26,6 +26,7 @@ class MultipartContext implements Context, SnippetAcceptingContext
 
     const MB = 1048576;
     const RESOURCE_POSTFIX = 'php-integration-multipart-test';
+    const VERSIONED_RESOURCE_POSTFIX = 'php-integration-multipart-versioned';
 
     private static $tempFile;
     /** @var StreamInterface */
@@ -36,6 +37,8 @@ class MultipartContext implements Context, SnippetAcceptingContext
     private $s3Client;
     /** @var string */
     private $filename;
+    /** @var string|null Captured VersionId for the @versioned scenarios. */
+    private $originalVersionId;
 
     /**
      * @Given I have a seekable read stream
@@ -89,7 +92,7 @@ class MultipartContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @When /^I upload the stream to S3 with a checksum algorithm of "(crc32|sha256|sha1)"$/
+     * @When /^I upload the stream to S3 with a checksum algorithm of "(CRC32|SHA256|SHA1|crc32|sha256|sha1)"$/
      */
     public function iUploadTheStreamToS3WithAChecksumAlgorithmOf($checksumAlgorithm)
     {
@@ -98,15 +101,12 @@ class MultipartContext implements Context, SnippetAcceptingContext
             'bucket' => self::getResourceName(),
             'key' => get_class($this->stream) . $checksumAlgorithm,
             'before_initiate' => function (CommandInterface $command) use ($checksumAlgorithm) {
-                // $command is a CreateMultipartUpload operation
                 $command['ChecksumAlgorithm'] = $checksumAlgorithm;
             },
             'before_upload' => function (CommandInterface $command) use ($checksumAlgorithm) {
-                // $command is an UploadPart operation
                 $command['ChecksumAlgorithm'] = $checksumAlgorithm;
             },
             'before_complete' => function (CommandInterface $command) use ($checksumAlgorithm) {
-                // $command is a CompleteMultipartUpload operation
                 $command['ChecksumAlgorithm'] = $checksumAlgorithm;
             },
         ]);
@@ -187,12 +187,6 @@ class MultipartContext implements Context, SnippetAcceptingContext
      */
     public function theResultShouldContainA($key)
     {
-        if (strpos($key, "Checksum") === 0) {
-            $algorithm = substr($key, strlen("Checksum"));
-            $formattedAlgorithm = strtoupper($algorithm);
-            $key = "Checksum" . $formattedAlgorithm;
-        }
-
         Assert::assertArrayHasKey($key, $this->result);
     }
 
@@ -429,5 +423,637 @@ class MultipartContext implements Context, SnippetAcceptingContext
         }
 
         return $bucketName;
+    }
+
+    private static function getVersionedResourceName()
+    {
+        static $bucketName;
+
+        if (empty($bucketName)) {
+            $bucketName = self::getResourcePrefix() . self::VERSIONED_RESOURCE_POSTFIX;
+        }
+
+        return $bucketName;
+    }
+
+    // ---------- Caller-supplied Metadata does not trigger REPLACE ----------
+
+    /**
+     * @When I call multipartCopy on :filename with caller-supplied Metadata only
+     */
+    public function iCallMultipartCopyWithCallerSuppliedMetadataOnly($filename)
+    {
+        $bucketName = self::getResourceName();
+        $copier = new MultipartCopy(
+            $this->s3Client,
+            '/' . $bucketName . '/' . $filename,
+            [
+                'bucket' => $bucketName,
+                'key'    => $filename . '-copy',
+                'params' => [
+                    'Metadata' => ['caller-key' => 'caller-value'],
+                ],
+            ]
+        );
+        $this->runCopy($copier);
+    }
+
+    /**
+     * @Then the copied file :destKey should have the source's CacheControl
+     */
+    public function theCopiedFileShouldHaveSourceCacheControl($destKey)
+    {
+        $head = $this->headObject(self::getResourceName(), $destKey);
+        Assert::assertSame(
+            'max-age=3600',
+            $head['CacheControl'] ?? '',
+            "Destination must inherit source's CacheControl when no explicit "
+            . "metadata_directive is set."
+        );
+    }
+
+    /**
+     * @When I call multipartCopy on :filename with caller-supplied Tagging :tagging only
+     */
+    public function iCallMultipartCopyOnWithCallerSuppliedTaggingOnly($filename, $tagging)
+    {
+        $bucketName = self::getResourceName();
+        $copier = new MultipartCopy(
+            $this->s3Client,
+            '/' . $bucketName . '/' . $filename,
+            [
+                'bucket' => $bucketName,
+                'key'    => $filename . '-copy',
+                'params' => ['Tagging' => $tagging],
+            ]
+        );
+        $this->runCopy($copier);
+    }
+
+    // ---------- Tags fixtures and assertions ----------
+
+    /**
+     * @Given I have an s3 client and an uploaded file named :filename with tags
+     */
+    public function iHaveAnS3ClientAndAnUploadedFileNamedWithTags($filename)
+    {
+        $this->s3Client = self::getSdk()->createS3();
+        $this->filename = $filename;
+        $bucket = self::getResourceName();
+        $this->s3Client->putObject([
+            'Bucket' => $bucket,
+            'Key'    => $filename,
+            'Body'   => 'foo',
+        ]);
+        $this->s3Client->waitUntil('ObjectExists', [
+            'Bucket' => $bucket,
+            'Key'    => $filename,
+        ]);
+        $this->s3Client->putObjectTagging([
+            'Bucket' => $bucket,
+            'Key'    => $filename,
+            'Tagging' => ['TagSet' => $this->fixtureTagSet()],
+        ]);
+    }
+
+    /**
+     * @Given I have an s3 client and an uploaded file named :filename with metadata and tags
+     */
+    public function iHaveAnS3ClientAndAnUploadedFileNamedWithMetadataAndTags($filename)
+    {
+        $this->iHaveAnS3ClientAndAnUploadedFileNamedWithMetadata($filename);
+        $this->s3Client->waitUntil('ObjectExists', [
+            'Bucket' => self::getResourceName(),
+            'Key'    => $filename,
+        ]);
+        $this->s3Client->putObjectTagging([
+            'Bucket' => self::getResourceName(),
+            'Key'    => $filename,
+            'Tagging' => ['TagSet' => $this->fixtureTagSet()],
+        ]);
+    }
+
+    /**
+     * @When I call multipartCopy on :filename with copy_props :copyProps
+     */
+    public function iCallMultipartCopyOnWithCopyProps($filename, $copyProps)
+    {
+        $bucket = self::getResourceName();
+        $copier = new MultipartCopy(
+            $this->s3Client,
+            '/' . $bucket . '/' . $filename,
+            [
+                'bucket'     => $bucket,
+                'key'        => $filename . '-copy',
+                'copy_props' => $copyProps,
+            ]
+        );
+        $this->runCopy($copier);
+    }
+
+    /**
+     * @When I call multipartCopy on :filename with copy_props :copyProps and tags_directive :tagsDir
+     */
+    public function iCallMultipartCopyOnWithCopyPropsAndTagsDirective($filename, $copyProps, $tagsDir)
+    {
+        $bucket = self::getResourceName();
+        $copier = new MultipartCopy(
+            $this->s3Client,
+            '/' . $bucket . '/' . $filename,
+            [
+                'bucket'         => $bucket,
+                'key'            => $filename . '-copy',
+                'copy_props'     => $copyProps,
+                'tags_directive' => $tagsDir,
+            ]
+        );
+        $this->runCopy($copier);
+    }
+
+    /**
+     * @When I call multipartCopy on :filename with tags_directive :tagsDir and tagging :tagging
+     */
+    public function iCallMultipartCopyOnWithTagsDirectiveAndTagging($filename, $tagsDir, $tagging)
+    {
+        $bucket = self::getResourceName();
+        $copier = new MultipartCopy(
+            $this->s3Client,
+            '/' . $bucket . '/' . $filename,
+            [
+                'bucket'         => $bucket,
+                'key'            => $filename . '-copy',
+                'tags_directive' => $tagsDir,
+                'params'         => ['Tagging' => $tagging],
+            ]
+        );
+        $this->runCopy($copier);
+    }
+
+    /**
+     * @Then the copied file :destKey should have the same tags as :sourceKey
+     */
+    public function theCopiedFileShouldHaveTheSameTagsAs($destKey, $sourceKey)
+    {
+        $bucket = self::getResourceName();
+        $this->s3Client->waitUntil('ObjectExists', ['Bucket' => $bucket, 'Key' => $destKey]);
+
+        $sourceTags = $this->normalizeTagSet(
+            $this->s3Client->getObjectTagging(['Bucket' => $bucket, 'Key' => $sourceKey])['TagSet'] ?? []
+        );
+        $destTags = $this->normalizeTagSet(
+            $this->s3Client->getObjectTagging(['Bucket' => $bucket, 'Key' => $destKey])['TagSet'] ?? []
+        );
+        Assert::assertEquals(
+            $sourceTags,
+            $destTags,
+            'Destination tags should match source tags'
+        );
+    }
+
+    /**
+     * @Then the copied file :destKey should have tags :tagging
+     */
+    public function theCopiedFileShouldHaveTags($destKey, $tagging)
+    {
+        $bucket = self::getResourceName();
+        $this->s3Client->waitUntil('ObjectExists', ['Bucket' => $bucket, 'Key' => $destKey]);
+
+        $expected = $this->normalizeTagSet($this->parseTaggingQueryString($tagging));
+        $actual = $this->normalizeTagSet(
+            $this->s3Client->getObjectTagging(['Bucket' => $bucket, 'Key' => $destKey])['TagSet'] ?? []
+        );
+        Assert::assertEquals($expected, $actual, 'Destination tags should match expected');
+    }
+
+    /**
+     * @Then the copied file :destKey should have no tags
+     */
+    public function theCopiedFileShouldHaveNoTags($destKey)
+    {
+        $bucket = self::getResourceName();
+        $this->s3Client->waitUntil('ObjectExists', ['Bucket' => $bucket, 'Key' => $destKey]);
+        $tagSet = $this->s3Client->getObjectTagging(['Bucket' => $bucket, 'Key' => $destKey])['TagSet'] ?? [];
+        Assert::assertSame([], $tagSet, 'Destination should have no tags');
+    }
+
+    // ---------- Annotations fixtures and assertions ----------
+
+    /**
+     * @Given I have an s3 client and an uploaded file named :filename with annotations
+     */
+    public function iHaveAnS3ClientAndAnUploadedFileNamedWithAnnotations($filename)
+    {
+        $this->s3Client = self::getSdk()->createS3();
+        $this->filename = $filename;
+        $bucket = self::getResourceName();
+        $this->s3Client->putObject([
+            'Bucket' => $bucket,
+            'Key'    => $filename,
+            'Body'   => 'foo',
+        ]);
+        $this->s3Client->waitUntil('ObjectExists', ['Bucket' => $bucket, 'Key' => $filename]);
+
+        foreach ($this->fixtureAnnotations() as $name => $payload) {
+            $this->s3Client->putObjectAnnotation([
+                'Bucket'            => $bucket,
+                'Key'               => $filename,
+                'AnnotationName'    => $name,
+                'AnnotationPayload' => $payload,
+            ]);
+        }
+    }
+
+    /**
+     * @When I call multipartCopy on :filename with copy_props :copyProps and annotations_directive :annotDir
+     */
+    public function iCallMultipartCopyOnWithCopyPropsAndAnnotationsDirective($filename, $copyProps, $annotDir)
+    {
+        $bucket = self::getResourceName();
+        $copier = new MultipartCopy(
+            $this->s3Client,
+            '/' . $bucket . '/' . $filename,
+            [
+                'bucket'                => $bucket,
+                'key'                   => $filename . '-copy',
+                'copy_props'            => $copyProps,
+                'annotations_directive' => $annotDir,
+            ]
+        );
+        $this->runCopy($copier);
+    }
+
+    /**
+     * @Then the copied file :destKey should have the same annotations as :sourceKey
+     */
+    public function theCopiedFileShouldHaveTheSameAnnotationsAs($destKey, $sourceKey)
+    {
+        $bucket = self::getResourceName();
+        $this->s3Client->waitUntil('ObjectExists', ['Bucket' => $bucket, 'Key' => $destKey]);
+
+        $sourceNames = $this->listAllAnnotationNames($bucket, $sourceKey);
+        $destNames   = $this->listAllAnnotationNames($bucket, $destKey);
+        sort($sourceNames);
+        sort($destNames);
+        Assert::assertEquals($sourceNames, $destNames, 'Annotation names should match');
+
+        foreach ($sourceNames as $name) {
+            $sourceBody = (string) $this->s3Client->getObjectAnnotation([
+                'Bucket'         => $bucket,
+                'Key'            => $sourceKey,
+                'AnnotationName' => $name,
+            ])['AnnotationPayload'];
+            $destBody = (string) $this->s3Client->getObjectAnnotation([
+                'Bucket'         => $bucket,
+                'Key'            => $destKey,
+                'AnnotationName' => $name,
+            ])['AnnotationPayload'];
+            Assert::assertSame(
+                $sourceBody,
+                $destBody,
+                "Annotation '$name' body should match"
+            );
+        }
+    }
+
+    /**
+     * @Then the copied file :destKey should have no annotations
+     */
+    public function theCopiedFileShouldHaveNoAnnotations($destKey)
+    {
+        $bucket = self::getResourceName();
+        $this->s3Client->waitUntil('ObjectExists', ['Bucket' => $bucket, 'Key' => $destKey]);
+        $names = $this->listAllAnnotationNames($bucket, $destKey);
+        Assert::assertSame([], $names, 'Destination should have no annotations');
+    }
+
+    // ---------- Versioning scenarios ----------
+
+    /**
+     * @Given I have a versioning-enabled bucket
+     */
+    public function iHaveAVersioningEnabledBucket()
+    {
+        // The bucket itself is created by the @BeforeFeature @versioned hook.
+        // This step just binds the client and ensures versioning is on.
+        $this->s3Client = self::getSdk()->createS3();
+        $this->s3Client->putBucketVersioning([
+            'Bucket' => self::getVersionedResourceName(),
+            'VersioningConfiguration' => ['Status' => 'Enabled'],
+        ]);
+    }
+
+    /**
+     * @Given I have an uploaded file named :filename in the versioned bucket with body :body
+     */
+    public function iHaveAnUploadedFileInTheVersionedBucketWithBody($filename, $body)
+    {
+        $bucket = self::getVersionedResourceName();
+        $put = $this->s3Client->putObject([
+            'Bucket' => $bucket,
+            'Key'    => $filename,
+            'Body'   => $body,
+        ]);
+        $this->originalVersionId = $put['VersionId'] ?? null;
+        Assert::assertNotEmpty(
+            $this->originalVersionId,
+            'Versioning-enabled bucket must return a VersionId on putObject'
+        );
+        $this->filename = $filename;
+        $this->s3Client->waitUntil('ObjectExists', ['Bucket' => $bucket, 'Key' => $filename]);
+    }
+
+    /**
+     * @Given I overwrite :filename in the versioned bucket with body :body
+     */
+    public function iOverwriteInTheVersionedBucketWithBody($filename, $body)
+    {
+        $this->s3Client->putObject([
+            'Bucket' => self::getVersionedResourceName(),
+            'Key'    => $filename,
+            'Body'   => $body,
+        ]);
+    }
+
+    /**
+     * @When I call multipartCopy on the original version of :filename in the versioned bucket
+     */
+    public function iCallMultipartCopyOnTheOriginalVersionInTheVersionedBucket($filename)
+    {
+        $bucket = self::getVersionedResourceName();
+        $copier = new MultipartCopy(
+            $this->s3Client,
+            [
+                'source_bucket'     => $bucket,
+                'source_key'        => $filename,
+                'source_version_id' => $this->originalVersionId,
+            ],
+            [
+                'bucket' => $bucket,
+                'key'    => $filename . '-copy',
+            ]
+        );
+        $this->runCopy($copier);
+    }
+
+    /**
+     * @Then the copied file :destKey should contain :body
+     */
+    public function theCopiedFileShouldContain($destKey, $body)
+    {
+        $bucket = self::getVersionedResourceName();
+        $this->s3Client->waitUntil('ObjectExists', ['Bucket' => $bucket, 'Key' => $destKey]);
+        $contents = $this->s3Client->getObject([
+            'Bucket' => $bucket,
+            'Key'    => $destKey,
+        ])['Body']->getContents();
+        Assert::assertSame($body, $contents);
+    }
+
+    // ---------- Lifecycle for the versioned bucket ----------
+
+    /**
+     * @BeforeScenario @versioned
+     *
+     * Scoped to scenarios rather than the feature because the @versioned tag
+     * lives on individual scenarios, not the feature header.
+     */
+    public static function createVersionedTestBucket()
+    {
+        $client = self::getSdk()->createS3();
+        $bucket = self::getResourcePrefix() . self::VERSIONED_RESOURCE_POSTFIX;
+
+        // Probe with HeadBucket; create on 404. Avoids the deprecated
+        // doesBucketExist helper.
+        try {
+            $client->headBucket(['Bucket' => $bucket]);
+        } catch (\Aws\S3\Exception\S3Exception $e) {
+            if ($e->getStatusCode() === 404) {
+                $client->createBucket(['Bucket' => $bucket]);
+                $client->waitUntil('BucketExists', ['Bucket' => $bucket]);
+            } else {
+                throw $e;
+            }
+        }
+        $client->putBucketVersioning([
+            'Bucket' => $bucket,
+            'VersioningConfiguration' => ['Status' => 'Enabled'],
+        ]);
+    }
+
+    /**
+     * @AfterScenario @versioned
+     *
+     * Best-effort cleanup of a versioning-enabled bucket. S3 won't allow
+     * deleteBucket while there are object versions, delete markers, or
+     * in-progress multipart uploads, so we drain each in turn and tolerate
+     * per-page failures rather than aborting on the first transient error.
+     */
+    public static function deleteVersionedTestBucket()
+    {
+        $client = self::getSdk()->createS3();
+        $bucket = self::getResourcePrefix() . self::VERSIONED_RESOURCE_POSTFIX;
+
+        // 1) Abort any in-progress multipart uploads left behind by failed scenarios.
+        try {
+            $token = null;
+            $idToken = null;
+            do {
+                $params = ['Bucket' => $bucket];
+                if ($token   !== null) $params['KeyMarker']      = $token;
+                if ($idToken !== null) $params['UploadIdMarker'] = $idToken;
+                $uploads = $client->listMultipartUploads($params);
+
+                foreach ($uploads['Uploads'] ?? [] as $u) {
+                    try {
+                        $client->abortMultipartUpload([
+                            'Bucket'   => $bucket,
+                            'Key'      => $u['Key'],
+                            'UploadId' => $u['UploadId'],
+                        ]);
+                    } catch (\Throwable $ignored) {
+                        // continue draining
+                    }
+                }
+                $token   = $uploads['NextKeyMarker']      ?? null;
+                $idToken = $uploads['NextUploadIdMarker'] ?? null;
+            } while (!empty($token) || !empty($idToken));
+        } catch (\Throwable $ignored) {
+            // listing MPUs failed; proceed to version cleanup anyway
+        }
+
+        // 2) Delete all object versions and delete markers, page by page.
+        $token = null;
+        $idToken = null;
+        do {
+            try {
+                $params = ['Bucket' => $bucket];
+                if ($token   !== null) $params['KeyMarker']       = $token;
+                if ($idToken !== null) $params['VersionIdMarker'] = $idToken;
+                $page = $client->listObjectVersions($params);
+
+                $toDelete = [];
+                foreach ($page['Versions'] ?? [] as $v) {
+                    $toDelete[] = ['Key' => $v['Key'], 'VersionId' => $v['VersionId']];
+                }
+                foreach ($page['DeleteMarkers'] ?? [] as $m) {
+                    $toDelete[] = ['Key' => $m['Key'], 'VersionId' => $m['VersionId']];
+                }
+                if (!empty($toDelete)) {
+                    try {
+                        $client->deleteObjects([
+                            'Bucket' => $bucket,
+                            'Delete' => ['Objects' => $toDelete],
+                        ]);
+                    } catch (\Throwable $ignored) {
+                        // continue with the next page
+                    }
+                }
+                $token   = $page['NextKeyMarker']       ?? null;
+                $idToken = $page['NextVersionIdMarker'] ?? null;
+            } catch (\Throwable $listErr) {
+                // can't list further; bail to deleteBucket attempt
+                $token = null;
+                $idToken = null;
+            }
+        } while (!empty($token) || !empty($idToken));
+
+        // 3) Delete the bucket. Retry once after a short pause for eventual
+        // consistency on the version cleanup.
+        try {
+            $client->deleteBucket(['Bucket' => $bucket]);
+            $client->waitUntil('BucketNotExists', ['Bucket' => $bucket]);
+        } catch (\Throwable $first) {
+            usleep(500_000);
+            try {
+                $client->deleteBucket(['Bucket' => $bucket]);
+                $client->waitUntil('BucketNotExists', ['Bucket' => $bucket]);
+            } catch (\Throwable $second) {
+                // Surface the failure so CI flags the leak but don't abort
+                // suite teardown.
+                fwrite(
+                    STDERR,
+                    "WARNING: failed to delete versioned test bucket {$bucket}: "
+                    . $second->getMessage() . "\n"
+                );
+            }
+        }
+    }
+
+    // ---------- Internal helpers ----------
+
+    /**
+     * Runs a configured MultipartCopy and stores the result. On failure,
+     * makes a best-effort attempt to abort any in-flight upload, then surfaces
+     * the full exception chain as an Assert::fail message.
+     *
+     * Catches \Throwable rather than only MultipartUploadException so that
+     * Phase-1/Phase-3 failures (S3Exception from constructor, RuntimeException
+     * from annotation partial-failure) get the same framed message treatment.
+     */
+    private function runCopy(MultipartCopy $copier): void
+    {
+        try {
+            $this->result = $copier->copy();
+        } catch (\Throwable $e) {
+            $this->bestEffortAbortUpload($e);
+
+            $message = "=====\n";
+            $cur = $e;
+            while ($cur) {
+                $message .= get_class($cur) . ': ' . $cur->getMessage() . "\n";
+                $cur = $cur->getPrevious();
+            }
+            $message .= "=====\n";
+            Assert::fail($message);
+        }
+    }
+
+    /**
+     * If the failure carries an MPU state with a real UploadId, attempt to
+     * abort it. Swallows any secondary failure from the abort itself so the
+     * original error is what gets reported.
+     */
+    private function bestEffortAbortUpload(\Throwable $e): void
+    {
+        if (!$e instanceof MultipartUploadException) {
+            return;
+        }
+        $id = $e->getState()->getId();
+        if (empty($id['UploadId'])) {
+            return; // failed before initiate; nothing to abort
+        }
+        try {
+            $this->s3Client->abortMultipartUpload($id);
+        } catch (\Throwable $ignored) {
+            // best-effort
+        }
+    }
+
+    private function headObject(string $bucket, string $key): array
+    {
+        $this->s3Client->waitUntil('ObjectExists', ['Bucket' => $bucket, 'Key' => $key]);
+        return $this->s3Client->headObject(['Bucket' => $bucket, 'Key' => $key])->toArray();
+    }
+
+    /**
+     * Sorts a TagSet by Key for stable comparisons.
+     *
+     * @param array $tagSet List of ['Key' => ..., 'Value' => ...] pairs.
+     * @return array
+     */
+    private function normalizeTagSet(array $tagSet): array
+    {
+        usort($tagSet, fn ($a, $b) => strcmp($a['Key'], $b['Key']));
+        return $tagSet;
+    }
+
+    private function parseTaggingQueryString(string $tagging): array
+    {
+        $tagSet = [];
+        foreach (explode('&', $tagging) as $pair) {
+            if ($pair === '') continue;
+            $parts = explode('=', $pair, 2);
+            $tagSet[] = [
+                'Key'   => urldecode($parts[0]),
+                'Value' => urldecode($parts[1] ?? ''),
+            ];
+        }
+        return $tagSet;
+    }
+
+    /**
+     * Pages through ListObjectAnnotations on the source/dest object and returns
+     * the flat list of annotation names.
+     */
+    private function listAllAnnotationNames(string $bucket, string $key): array
+    {
+        $names = [];
+        foreach ($this->s3Client->getPaginator(
+            'ListObjectAnnotations',
+            ['Bucket' => $bucket, 'Key' => $key]
+        ) as $page) {
+            foreach ($page['Annotations'] ?? [] as $entry) {
+                if (!empty($entry['AnnotationName'])) {
+                    $names[] = $entry['AnnotationName'];
+                }
+            }
+        }
+        return $names;
+    }
+
+    private function fixtureTagSet(): array
+    {
+        return [
+            ['Key' => 'Project', 'Value' => 'X'],
+            ['Key' => 'Env',     'Value' => 'test'],
+        ];
+    }
+
+    private function fixtureAnnotations(): array
+    {
+        return [
+            'note-1' => 'BODY-A',
+            'note-2' => 'BODY-B',
+        ];
     }
 }

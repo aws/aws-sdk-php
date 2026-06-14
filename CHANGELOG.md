@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.385.0 - 2026-06-16
+
+* `Aws\S3` - Added support for copying tags and annotations to the destination object in `MultipartCopy`. Set `copy_props` to `default` to copy metadata, tags, and annotations. Set `tags_directive` and `annotations_directive` to override individually. Tag and annotation work runs only when explicitly opted in to preserve backwards compatibility.
+
 ## 3.384.11 - 2026-06-16
 
 * `Aws\S3` - Added support for annotations. You can now attach up to 1000 annotations (up to 1 MB each) directly to objects and create, retrieve, list, and delete them using new annotation APIs. Also added support for configuring an annotation table in S3 Metadata.
