@@ -1138,6 +1138,25 @@
       ],
       "idempotent":true
     },
+    "DeleteLineageEvent":{
+      "name":"DeleteLineageEvent",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v2/domains/{domainIdentifier}/lineage/events/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteLineageEventInput"},
+      "output":{"shape":"DeleteLineageEventOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "DeleteListing":{
       "name":"DeleteListing",
       "http":{
@@ -7479,6 +7498,33 @@
     "DeleteGlossaryTermOutput":{
       "type":"structure",
       "members":{}
+    },
+    "DeleteLineageEventInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"LineageEventIdentifier",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "DeleteLineageEventOutput":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"LineageEventIdentifier"},
+        "domainId":{"shape":"DomainId"},
+        "processingStatus":{"shape":"LineageEventProcessingStatus"}
+      }
     },
     "DeleteListingInput":{
       "type":"structure",

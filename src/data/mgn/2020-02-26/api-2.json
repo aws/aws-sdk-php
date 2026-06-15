@@ -2037,7 +2037,8 @@
         "useFipsEndpoint":{"shape":"Boolean"},
         "tags":{"shape":"TagsMap"},
         "internetProtocol":{"shape":"InternetProtocol"},
-        "storeSnapshotOnLocalZone":{"shape":"Boolean"}
+        "storeSnapshotOnLocalZone":{"shape":"Boolean"},
+        "storageConfiguration":{"shape":"StorageConfiguration"}
       }
     },
     "CreateWaveRequest":{
@@ -2075,7 +2076,9 @@
         "FAILED_TO_CONNECT_AGENT_TO_REPLICATION_SERVER",
         "FAILED_TO_START_DATA_TRANSFER",
         "UNSUPPORTED_VM_CONFIGURATION",
-        "LAST_SNAPSHOT_JOB_FAILED"
+        "LAST_SNAPSHOT_JOB_FAILED",
+        "FAILED_TO_SETUP_FSX_PROXY",
+        "FAILED_TO_CREATE_FSX_SNAPSHOT"
       ]
     },
     "DataReplicationInfo":{
@@ -2135,7 +2138,8 @@
         "ATTACH_STAGING_DISKS",
         "PAIR_REPLICATION_SERVER_WITH_AGENT",
         "CONNECT_AGENT_TO_REPLICATION_SERVER",
-        "START_DATA_TRANSFER"
+        "START_DATA_TRANSFER",
+        "SETUP_FSX_PROXY"
       ]
     },
     "DataReplicationInitiationStepStatus":{
@@ -2635,6 +2639,23 @@
       "type":"float",
       "box":true
     },
+    "FqdnForActionFramework":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_](([a-zA-Z0-9_\\-]{0,61}[a-zA-Z0-9_])?\\.)+[a-zA-Z]{2,63}$|^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$|^(?:[A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}"
+    },
+    "FsxOntapConfiguration":{
+      "type":"structure",
+      "required":[
+        "storageVirtualMachineId",
+        "credentialsSecretArn"
+      ],
+      "members":{
+        "storageVirtualMachineId":{"shape":"StorageVirtualMachineId"},
+        "credentialsSecretArn":{"shape":"SecretArn"}
+      }
+    },
     "GetLaunchConfigurationRequest":{
       "type":"structure",
       "required":["sourceServerID"],
@@ -3010,6 +3031,37 @@
       "max":65536,
       "min":0
     },
+    "LastKnownCheck":{
+      "type":"structure",
+      "members":{
+        "type":{"shape":"LastKnownCheckType"},
+        "name":{"shape":"BoundedString"},
+        "status":{"shape":"LastKnownCheckStatus"},
+        "error":{"shape":"BoundedString"},
+        "checkedAt":{"shape":"Timestamp"}
+      }
+    },
+    "LastKnownCheckStatus":{
+      "type":"string",
+      "enum":[
+        "PASSED",
+        "FAILED",
+        "PENDING"
+      ]
+    },
+    "LastKnownCheckType":{
+      "type":"string",
+      "enum":[
+        "EC2",
+        "FSx"
+      ]
+    },
+    "LastKnownChecksList":{
+      "type":"list",
+      "member":{"shape":"LastKnownCheck"},
+      "max":10,
+      "min":0
+    },
     "LaunchConfiguration":{
       "type":"structure",
       "members":{
@@ -3100,7 +3152,9 @@
       "members":{
         "ec2InstanceID":{"shape":"EC2InstanceID"},
         "jobID":{"shape":"JobID"},
-        "firstBoot":{"shape":"FirstBoot"}
+        "firstBoot":{"shape":"FirstBoot"},
+        "lastKnownChecks":{"shape":"LastKnownChecksList"},
+        "lastKnownFsxChecksStatus":{"shape":"LastKnownCheckStatus"}
       }
     },
     "Licensing":{
@@ -4486,7 +4540,8 @@
         "stagingAreaTags":{"shape":"TagsMap"},
         "useFipsEndpoint":{"shape":"Boolean"},
         "internetProtocol":{"shape":"InternetProtocol"},
-        "storeSnapshotOnLocalZone":{"shape":"Boolean"}
+        "storeSnapshotOnLocalZone":{"shape":"Boolean"},
+        "storageConfiguration":{"shape":"StorageConfiguration"}
       }
     },
     "ReplicationConfigurationDataPlaneRouting":{
@@ -4531,7 +4586,8 @@
         "ST1",
         "STANDARD",
         "GP3",
-        "IO2"
+        "IO2",
+        "FSX_ONTAP"
       ]
     },
     "ReplicationConfigurationReplicatedDisks":{
@@ -4561,7 +4617,8 @@
         "useFipsEndpoint":{"shape":"Boolean"},
         "tags":{"shape":"TagsMap"},
         "internetProtocol":{"shape":"InternetProtocol"},
-        "storeSnapshotOnLocalZone":{"shape":"Boolean"}
+        "storeSnapshotOnLocalZone":{"shape":"Boolean"},
+        "storageConfiguration":{"shape":"StorageConfiguration"}
       }
     },
     "ReplicationConfigurationTemplateID":{
@@ -4694,7 +4751,7 @@
     },
     "SecretArn":{
       "type":"string",
-      "max":100,
+      "max":256,
       "min":20,
       "pattern":"arn:[\\w-]+:secretsmanager:([a-z]{2}-(gov-)?[a-z]+-\\d{1})?:(\\d{12})?:secret:(.+)"
     },
@@ -5241,6 +5298,27 @@
         "accountID":{"shape":"AccountID"}
       }
     },
+    "StorageConfiguration":{
+      "type":"structure",
+      "required":["storageType"],
+      "members":{
+        "storageType":{"shape":"StorageType"},
+        "fsxOntapConfiguration":{"shape":"FsxOntapConfiguration"}
+      }
+    },
+    "StorageType":{
+      "type":"string",
+      "enum":[
+        "EBS",
+        "FSX_ONTAP"
+      ]
+    },
+    "StorageVirtualMachineId":{
+      "type":"string",
+      "max":21,
+      "min":21,
+      "pattern":"(svm-[0-9a-f]{17,})"
+    },
     "StrictlyPositiveInteger":{
       "type":"integer",
       "box":true,
@@ -5590,7 +5668,8 @@
         "useFipsEndpoint":{"shape":"Boolean"},
         "accountID":{"shape":"AccountID"},
         "internetProtocol":{"shape":"InternetProtocol"},
-        "storeSnapshotOnLocalZone":{"shape":"Boolean"}
+        "storeSnapshotOnLocalZone":{"shape":"Boolean"},
+        "storageConfiguration":{"shape":"StorageConfiguration"}
       }
     },
     "UpdateReplicationConfigurationTemplateRequest":{
@@ -5613,7 +5692,8 @@
         "stagingAreaTags":{"shape":"TagsMap"},
         "useFipsEndpoint":{"shape":"Boolean"},
         "internetProtocol":{"shape":"InternetProtocol"},
-        "storeSnapshotOnLocalZone":{"shape":"Boolean"}
+        "storeSnapshotOnLocalZone":{"shape":"Boolean"},
+        "storageConfiguration":{"shape":"StorageConfiguration"}
       }
     },
     "UpdateSourceServerReplicationTypeRequest":{
@@ -5634,7 +5714,10 @@
       "members":{
         "accountID":{"shape":"AccountID"},
         "sourceServerID":{"shape":"SourceServerID"},
-        "connectorAction":{"shape":"SourceServerConnectorAction"}
+        "connectorAction":{"shape":"SourceServerConnectorAction"},
+        "userProvidedID":{"shape":"UserProvidedId"},
+        "fqdnForActionFramework":{"shape":"FqdnForActionFramework"},
+        "platform":{"shape":"OperatingSystemString"}
       }
     },
     "UpdateWaveRequest":{

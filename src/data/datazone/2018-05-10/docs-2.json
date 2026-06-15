@@ -59,6 +59,7 @@
     "DeleteFormType": "<p>Deletes and metadata form type in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The form type must exist in the domain. </p> </li> <li> <p>The form type must not be in use by any asset types or assets.</p> </li> <li> <p>The domain must be valid and accessible.</p> </li> <li> <p>User must have delete permissions on the form type.</p> </li> <li> <p>Any dependencies (such as linked asset types) must be removed first.</p> </li> </ul>",
     "DeleteGlossary": "<p>Deletes a business glossary in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The glossary must be in DISABLED state. </p> </li> <li> <p>The glossary must not have any glossary terms associated with it.</p> </li> <li> <p>The glossary must exist in the specified domain.</p> </li> <li> <p>The caller must have the <code>datazone:DeleteGlossary</code> permission in the domain and glossary.</p> </li> <li> <p>Glossary should not be linked to any active metadata forms.</p> </li> </ul>",
     "DeleteGlossaryTerm": "<p>Deletes a business glossary term in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>Glossary term must exist and be active. </p> </li> <li> <p>The term must not be linked to other assets or child terms.</p> </li> <li> <p>Caller must have delete permissions in the domain/glossary.</p> </li> <li> <p>Ensure all associations (such as to assets or parent terms) are removed before deletion.</p> </li> </ul>",
+    "DeleteLineageEvent": "<p>Deletes the specified lineage event.</p>",
     "DeleteListing": "<p>Deletes a listing (a record of an asset at a given time).</p>",
     "DeleteNotebook": "<p>Deletes a <a href=\"https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/notebooks.html\">notebook</a> in Amazon SageMaker Unified Studio.</p>",
     "DeleteProject": "<p>Deletes a project in Amazon DataZone. </p>",
@@ -2488,6 +2489,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteLineageEventInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteLineageEventOutput": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteListingInput": {
       "base": null,
       "refs": {}
@@ -2867,6 +2876,8 @@
         "DeleteFormTypeInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the metadata form type is deleted.</p>",
         "DeleteGlossaryInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the business glossary is deleted.</p>",
         "DeleteGlossaryTermInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the business glossary term is deleted.</p>",
+        "DeleteLineageEventInput$domainIdentifier": "<p>The ID of the domain.</p>",
+        "DeleteLineageEventOutput$domainId": "<p>The ID of the domain.</p>",
         "DeleteListingInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain.</p>",
         "DeleteNotebookInput$domainIdentifier": "<p>The identifier of the Amazon SageMaker Unified Studio domain in which the notebook exists.</p>",
         "DeleteProjectInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the project is deleted.</p>",
@@ -5156,6 +5167,8 @@
     "LineageEventIdentifier": {
       "base": null,
       "refs": {
+        "DeleteLineageEventInput$identifier": "<p>The ID of the lineage event.</p>",
+        "DeleteLineageEventOutput$id": "<p>The ID of the lineage event.</p>",
         "GetLineageEventInput$identifier": "<p>The ID of the lineage event.</p>",
         "GetLineageEventOutput$id": "<p>The ID of the lineage event.</p>",
         "LineageEventSummary$id": "<p>The ID of the data lineage event.</p>",
@@ -5165,6 +5178,7 @@
     "LineageEventProcessingStatus": {
       "base": null,
       "refs": {
+        "DeleteLineageEventOutput$processingStatus": "<p>The progressing status of the lineage event.</p>",
         "GetLineageEventOutput$processingStatus": "<p>The progressing status of the lineage event.</p>",
         "LineageEventSummary$processingStatus": "<p>The processing status of the data lineage event.</p>",
         "LineageInfo$eventStatus": "<p>The data lineage event status.</p>",

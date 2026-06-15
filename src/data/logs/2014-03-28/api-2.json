@@ -1704,6 +1704,7 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
@@ -2198,6 +2199,7 @@
         "scheduleExpression":{"shape":"ScheduleExpression"},
         "timezone":{"shape":"ScheduleTimezone"},
         "startTimeOffset":{"shape":"StartTimeOffset"},
+        "endTimeOffset":{"shape":"EndTimeOffset"},
         "destinationConfiguration":{"shape":"DestinationConfiguration"},
         "scheduleStartTime":{"shape":"Timestamp"},
         "scheduleEndTime":{"shape":"Timestamp"},
@@ -3088,6 +3090,7 @@
       "type":"string",
       "max":256
     },
+    "EndTimeOffset":{"type":"long"},
     "Entity":{
       "type":"structure",
       "members":{
@@ -3681,8 +3684,10 @@
         "scheduleExpression":{"shape":"ScheduleExpression"},
         "timezone":{"shape":"ScheduleTimezone"},
         "startTimeOffset":{"shape":"StartTimeOffset"},
+        "endTimeOffset":{"shape":"EndTimeOffset"},
         "destinationConfiguration":{"shape":"DestinationConfiguration"},
         "state":{"shape":"ScheduledQueryState"},
+        "scheduleType":{"shape":"ScheduleType"},
         "lastTriggeredTime":{"shape":"Timestamp"},
         "lastExecutionStatus":{"shape":"ExecutionStatus"},
         "scheduleStartTime":{"shape":"Timestamp"},
@@ -4118,7 +4123,8 @@
       "members":{
         "maxResults":{"shape":"ListScheduledQueriesMaxResults"},
         "nextToken":{"shape":"NextToken"},
-        "state":{"shape":"ScheduledQueryState"}
+        "state":{"shape":"ScheduledQueryState"},
+        "scheduleType":{"shape":"ScheduleType"}
       }
     },
     "ListScheduledQueriesResponse":{
@@ -5610,6 +5616,13 @@
       "type":"string",
       "min":1
     },
+    "ScheduleType":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER_MANAGED",
+        "AWS_MANAGED"
+      ]
+    },
     "ScheduledQueryDescription":{
       "type":"string",
       "max":1024
@@ -5634,7 +5647,8 @@
     },
     "ScheduledQueryIdentifier":{
       "type":"string",
-      "pattern":"[\\w#+=/:,.@-]*"
+      "max":300,
+      "min":1
     },
     "ScheduledQueryLogGroupIdentifiers":{
       "type":"list",
@@ -5644,9 +5658,8 @@
     },
     "ScheduledQueryName":{
       "type":"string",
-      "max":255,
-      "min":1,
-      "pattern":"^[a-zA-Z0-9_\\-/.#]+$"
+      "max":300,
+      "min":1
     },
     "ScheduledQueryState":{
       "type":"string",
@@ -5661,6 +5674,7 @@
         "scheduledQueryArn":{"shape":"Arn"},
         "name":{"shape":"ScheduledQueryName"},
         "state":{"shape":"ScheduledQueryState"},
+        "scheduleType":{"shape":"ScheduleType"},
         "lastTriggeredTime":{"shape":"Timestamp"},
         "lastExecutionStatus":{"shape":"ExecutionStatus"},
         "scheduleExpression":{"shape":"ScheduleExpression"},
@@ -6329,6 +6343,7 @@
         "scheduleExpression":{"shape":"ScheduleExpression"},
         "timezone":{"shape":"ScheduleTimezone"},
         "startTimeOffset":{"shape":"StartTimeOffset"},
+        "endTimeOffset":{"shape":"EndTimeOffset"},
         "destinationConfiguration":{"shape":"DestinationConfiguration"},
         "scheduleStartTime":{"shape":"Timestamp"},
         "scheduleEndTime":{"shape":"Timestamp"},
@@ -6348,8 +6363,10 @@
         "scheduleExpression":{"shape":"ScheduleExpression"},
         "timezone":{"shape":"ScheduleTimezone"},
         "startTimeOffset":{"shape":"StartTimeOffset"},
+        "endTimeOffset":{"shape":"EndTimeOffset"},
         "destinationConfiguration":{"shape":"DestinationConfiguration"},
         "state":{"shape":"ScheduledQueryState"},
+        "scheduleType":{"shape":"ScheduleType"},
         "lastTriggeredTime":{"shape":"Timestamp"},
         "lastExecutionStatus":{"shape":"ExecutionStatus"},
         "scheduleStartTime":{"shape":"Timestamp"},

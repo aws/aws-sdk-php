@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\mgn` - AWS Transform for VMware now supports Amazon FSx for NetApp ONTAP as a target storage. Customers can migrate source server disks directly to FSx for NetApp ONTAP iSCSI LUNs. Target storage is configurable per source server, and compute, network, and storage migrate together in coordinated waves.
+* `Aws\DataZone` - Adds support for deleting lineage events in Amazon DataZone.
+* `Aws\RDS` - Adding support for RDS SQL Server BYOM and DB2 Community Edition
+* `Aws\WAFV2` - AWS WAF now supports AI traffic monetization for CloudFront. Configure payment networks and pricing on your web ACL, use the new Monetize rule action to charge AI agents via x402, and monitor revenue with new GetRevenueStatisticsSummary, GetRevenueStatistics, and ListSettlementRecords APIs.
+* `Aws\WorkSpaces` - Added a validation for null check for ImageIds in DescribeWorkspaceImages API request parameters.
+* `Aws\CloudWatchLogs` - Added endTimeOffset parameter to Scheduled Queries APIs (Create, Update, Get) enabling bounded time window configuration. Introduced scheduleType filter (CUSTOMER MANAGED, AWS MANAGED) for ListScheduledQueries and exposed it in Get and Update responses.
+* `Aws\BedrockRuntime` - InvokeGuardrailChecks API evaluates prompts and responses against safety checks (content filters, prompt attacks, sensitive info) without creating guardrail resources. It's a detect-only API, returning numeric scores so you can build adaptive logic as per your application.
+
 ## 3.384.9 - 2026-06-12
 
 * `Aws\BedrockAgentCoreControl` - Added tagging and CMK support for optimizations and an insights feature to identify failure patterns, extract user intents, and summarize execution behavior

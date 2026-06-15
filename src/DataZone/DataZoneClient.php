@@ -119,6 +119,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteGlossaryAsync(array $args = [])
  * @method \Aws\Result deleteGlossaryTerm(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteGlossaryTermAsync(array $args = [])
+ * @method \Aws\Result deleteLineageEvent(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteLineageEventAsync(array $args = [])
  * @method \Aws\Result deleteListing(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteListingAsync(array $args = [])
  * @method \Aws\Result deleteNotebook(array $args = [])
