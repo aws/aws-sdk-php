@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.384.10 - 2026-06-15
 
 * `Aws\mgn` - AWS Transform for VMware now supports Amazon FSx for NetApp ONTAP as a target storage. Customers can migrate source server disks directly to FSx for NetApp ONTAP iSCSI LUNs. Target storage is configurable per source server, and compute, network, and storage migrate together in coordinated waves.
 * `Aws\DataZone` - Adds support for deleting lineage events in Amazon DataZone.
