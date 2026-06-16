@@ -5769,7 +5769,13 @@
         "ml.r6id.16xlarge",
         "ml.r6id.24xlarge",
         "ml.r6id.32xlarge",
-        "ml.p5.4xlarge"
+        "ml.p5.4xlarge",
+        "ml.g7e.2xlarge",
+        "ml.g7e.4xlarge",
+        "ml.g7e.8xlarge",
+        "ml.g7e.12xlarge",
+        "ml.g7e.24xlarge",
+        "ml.g7e.48xlarge"
       ]
     },
     "AppLifecycleManagement":{
@@ -9377,7 +9383,8 @@
         "Environment":{"shape":"EnvironmentMap"},
         "ModelPackageName":{"shape":"VersionedArnOrName"},
         "InferenceSpecificationName":{"shape":"InferenceSpecificationName"},
-        "MultiModelConfig":{"shape":"MultiModelConfig"}
+        "MultiModelConfig":{"shape":"MultiModelConfig"},
+        "ContainerMetricsConfig":{"shape":"ContainerMetricsConfig"}
       }
     },
     "ContainerDefinitionList":{
@@ -9409,6 +9416,12 @@
       "max":255,
       "min":0,
       "pattern":"[\\S]+"
+    },
+    "ContainerMetricsConfig":{
+      "type":"structure",
+      "members":{
+        "MetricsEndpoints":{"shape":"MetricsEndpointList"}
+      }
     },
     "ContainerMode":{
       "type":"string",
@@ -15687,6 +15700,10 @@
     },
     "EnableCaching":{"type":"boolean"},
     "EnableCapture":{"type":"boolean"},
+    "EnableDetailedObservability":{
+      "type":"boolean",
+      "box":true
+    },
     "EnableEnhancedMetrics":{
       "type":"boolean",
       "box":true
@@ -18127,7 +18144,8 @@
       "members":{
         "Image":{"shape":"ContainerImage"},
         "ArtifactUrl":{"shape":"Url"},
-        "Environment":{"shape":"EnvironmentMap"}
+        "Environment":{"shape":"EnvironmentMap"},
+        "ContainerMetricsConfig":{"shape":"ContainerMetricsConfig"}
       }
     },
     "InferenceComponentContainerSpecificationSummary":{
@@ -18135,7 +18153,8 @@
       "members":{
         "DeployedImage":{"shape":"DeployedImage"},
         "ArtifactUrl":{"shape":"Url"},
-        "Environment":{"shape":"EnvironmentMap"}
+        "Environment":{"shape":"EnvironmentMap"},
+        "ContainerMetricsConfig":{"shape":"ContainerMetricsConfig"}
       }
     },
     "InferenceComponentCopyCount":{
@@ -22002,8 +22021,29 @@
       "type":"structure",
       "members":{
         "EnableEnhancedMetrics":{"shape":"EnableEnhancedMetrics"},
+        "EnableDetailedObservability":{"shape":"EnableDetailedObservability"},
         "MetricPublishFrequencyInSeconds":{"shape":"MetricPublishFrequencyInSeconds"}
       }
+    },
+    "MetricsEndpoint":{
+      "type":"structure",
+      "required":["MetricsEndpointPath"],
+      "members":{
+        "MetricsEndpointPath":{"shape":"MetricsEndpointPath"},
+        "MetricPublishFrequencyInSeconds":{"shape":"MetricPublishFrequencyInSeconds"}
+      }
+    },
+    "MetricsEndpointList":{
+      "type":"list",
+      "member":{"shape":"MetricsEndpoint"},
+      "max":1,
+      "min":0
+    },
+    "MetricsEndpointPath":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"/(?!.*\\.\\.)[a-zA-Z0-9/_.\\-]+"
     },
     "MetricsSource":{
       "type":"structure",

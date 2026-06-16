@@ -274,6 +274,23 @@
       ],
       "readonly":true
     },
+    "GetProspectingFromEngagementTask":{
+      "name":"GetProspectingFromEngagementTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetProspectingFromEngagementTaskRequest"},
+      "output":{"shape":"GetProspectingFromEngagementTaskResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "GetResourceSnapshot":{
       "name":"GetResourceSnapshot",
       "http":{
@@ -461,6 +478,22 @@
       ],
       "readonly":true
     },
+    "ListProspectingFromEngagementTasks":{
+      "name":"ListProspectingFromEngagementTasks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListProspectingFromEngagementTasksRequest"},
+      "output":{"shape":"ListProspectingFromEngagementTasksResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ],
+      "readonly":true
+    },
     "ListResourceSnapshotJobs":{
       "name":"ListResourceSnapshotJobs",
       "http":{
@@ -615,6 +648,24 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "StartProspectingFromEngagementTask":{
+      "name":"StartProspectingFromEngagementTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartProspectingFromEngagementTaskRequest"},
+      "output":{"shape":"StartProspectingFromEngagementTaskResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
     },
     "StartResourceSnapshotJob":{
       "name":"StartResourceSnapshotJob",
@@ -1053,7 +1104,9 @@
       "members":{
         "NextBestActions":{"shape":"String"},
         "EngagementScore":{"shape":"EngagementScore"},
-        "AwsProductsSpendInsightsBySource":{"shape":"AwsProductsSpendInsightsBySource"}
+        "AwsProductsSpendInsightsBySource":{"shape":"AwsProductsSpendInsightsBySource"},
+        "OpportunityQuality":{"shape":"OpportunityQuality"},
+        "Recommendations":{"shape":"RecommendationList"}
       }
     },
     "AwsOpportunityLifeCycle":{
@@ -1133,7 +1186,8 @@
         "InvolvementTypeChangeReason":{"shape":"InvolvementTypeChangeReason"},
         "RelatedEntityIds":{"shape":"AwsOpportunityRelatedEntities"},
         "Customer":{"shape":"AwsOpportunityCustomer"},
-        "Project":{"shape":"AwsOpportunityProject"}
+        "Project":{"shape":"AwsOpportunityProject"},
+        "CosellMotion":{"shape":"String"}
       }
     },
     "AwsOpportunityTeamMembersList":{
@@ -2069,6 +2123,10 @@
       "pattern":"[0-9]{9}",
       "sensitive":true
     },
+    "EligibleProgramsList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "Email":{
       "type":"string",
       "pattern":"(?=.{0,80}$)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
@@ -2099,7 +2157,8 @@
       "type":"structure",
       "members":{
         "CustomerProject":{"shape":"CustomerProjectsContext"},
-        "Lead":{"shape":"LeadContext"}
+        "Lead":{"shape":"LeadContext"},
+        "ProspectingResult":{"shape":"ProspectingResult"}
       },
       "union":true
     },
@@ -2107,7 +2166,8 @@
       "type":"string",
       "enum":[
         "CustomerProject",
-        "Lead"
+        "Lead",
+        "ProspectingResult"
       ]
     },
     "EngagementContextTypeList":{
@@ -2170,6 +2230,12 @@
     "EngagementIdentifier":{
       "type":"string",
       "pattern":"eng-[0-9a-z]{14}"
+    },
+    "EngagementIdentifierList":{
+      "type":"list",
+      "member":{"shape":"EngagementIdentifier"},
+      "max":100,
+      "min":0
     },
     "EngagementIdentifiers":{
       "type":"list",
@@ -2267,6 +2333,28 @@
       "max":100,
       "min":1
     },
+    "EngagementProspectingResult":{
+      "type":"structure",
+      "required":[
+        "EngagementIdentifier",
+        "Status"
+      ],
+      "members":{
+        "EngagementIdentifier":{"shape":"EngagementIdentifier"},
+        "EngagementContextId":{"shape":"EngagementProspectingResultEngagementContextIdString"},
+        "Status":{"shape":"ProspectingTaskStatus"},
+        "ReasonCode":{"shape":"String"},
+        "Message":{"shape":"String"}
+      }
+    },
+    "EngagementProspectingResultEngagementContextIdString":{
+      "type":"string",
+      "pattern":"ctx-[0-9a-z]{14}"
+    },
+    "EngagementProspectingResultList":{
+      "type":"list",
+      "member":{"shape":"EngagementProspectingResult"}
+    },
     "EngagementResourceAssociationSummary":{
       "type":"structure",
       "required":["Catalog"],
@@ -2289,6 +2377,11 @@
         "Medium",
         "Low"
       ]
+    },
+    "EngagementScoreLevel":{
+      "type":"string",
+      "max":255,
+      "min":0
     },
     "EngagementSort":{
       "type":"structure",
@@ -2401,6 +2494,7 @@
         "RelatedEntityIds":{"shape":"AwsOpportunityRelatedEntities"},
         "Customer":{"shape":"AwsOpportunityCustomer"},
         "Project":{"shape":"AwsOpportunityProject"},
+        "CosellMotion":{"shape":"String"},
         "Catalog":{"shape":"CatalogIdentifier"}
       }
     },
@@ -2513,6 +2607,35 @@
     "GetOpportunityResponsePartnerOpportunityIdentifierString":{
       "type":"string",
       "pattern":"(?s).{0,64}"
+    },
+    "GetProspectingFromEngagementTaskRequest":{
+      "type":"structure",
+      "required":[
+        "Catalog",
+        "TaskIdentifier"
+      ],
+      "members":{
+        "Catalog":{"shape":"CatalogIdentifier"},
+        "TaskIdentifier":{"shape":"ProspectingTaskIdentifier"}
+      }
+    },
+    "GetProspectingFromEngagementTaskResponse":{
+      "type":"structure",
+      "required":[
+        "TaskId",
+        "TaskArn",
+        "TaskName",
+        "StartTime",
+        "Engagements"
+      ],
+      "members":{
+        "TaskId":{"shape":"ProspectingTaskIdentifier"},
+        "TaskArn":{"shape":"ProspectingTaskArn"},
+        "TaskName":{"shape":"TaskName"},
+        "StartTime":{"shape":"DateTime"},
+        "EndTime":{"shape":"DateTime"},
+        "Engagements":{"shape":"EngagementProspectingResultList"}
+      }
     },
     "GetResourceSnapshotJobRequest":{
       "type":"structure",
@@ -2716,6 +2839,7 @@
         "Interactions"
       ],
       "members":{
+        "Insights":{"shape":"LeadInsights"},
         "QualificationStatus":{"shape":"LeadQualificationStatus"},
         "Customer":{"shape":"LeadCustomer"},
         "Interactions":{"shape":"LeadInteractionList"}
@@ -2734,6 +2858,12 @@
         "Address":{"shape":"AddressSummary"},
         "AwsMaturity":{"shape":"AwsMaturity"},
         "MarketSegment":{"shape":"MarketSegment"}
+      }
+    },
+    "LeadInsights":{
+      "type":"structure",
+      "members":{
+        "LeadReadinessScore":{"shape":"String"}
       }
     },
     "LeadInteraction":{
@@ -3170,6 +3300,32 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "ListProspectingFromEngagementTasksRequest":{
+      "type":"structure",
+      "required":["Catalog"],
+      "members":{
+        "Catalog":{"shape":"CatalogIdentifier"},
+        "MaxResults":{"shape":"PageSize"},
+        "NextToken":{"shape":"String"},
+        "TaskIdentifier":{"shape":"TaskIdentifierList"},
+        "TaskName":{"shape":"TaskNameList"},
+        "StartAfter":{"shape":"DateTime"},
+        "StartBefore":{"shape":"DateTime"},
+        "Sort":{"shape":"ProspectingFromEngagementTaskSort"}
+      }
+    },
+    "ListProspectingFromEngagementTasksResponse":{
+      "type":"structure",
+      "required":["TaskSummaries"],
+      "members":{
+        "NextToken":{"shape":"ListProspectingFromEngagementTasksResponseNextTokenString"},
+        "TaskSummaries":{"shape":"ProspectingTaskSummaryList"}
+      }
+    },
+    "ListProspectingFromEngagementTasksResponseNextTokenString":{
+      "type":"string",
+      "pattern":"(?s).{1,2048}"
+    },
     "ListResourceSnapshotJobsRequest":{
       "type":"structure",
       "required":["Catalog"],
@@ -3426,6 +3582,19 @@
         "Partner Referral"
       ]
     },
+    "OpportunityQuality":{
+      "type":"structure",
+      "members":{
+        "Score":{"shape":"OpportunityQualityScoreInteger"},
+        "Trend":{"shape":"String"}
+      }
+    },
+    "OpportunityQualityScoreInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":0
+    },
     "OpportunitySort":{
       "type":"structure",
       "required":[
@@ -3636,6 +3805,151 @@
       "pattern":"(?s).{0,255}",
       "sensitive":true
     },
+    "ProspectingAccountName":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
+    "ProspectingCompanySize":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
+    "ProspectingFromEngagementTaskSort":{
+      "type":"structure",
+      "required":[
+        "SortOrder",
+        "SortBy"
+      ],
+      "members":{
+        "SortOrder":{"shape":"SortOrder"},
+        "SortBy":{"shape":"ProspectingFromEngagementTaskSortName"}
+      }
+    },
+    "ProspectingFromEngagementTaskSortName":{
+      "type":"string",
+      "enum":[
+        "StartTime",
+        "TaskName",
+        "FailedEngagementCount"
+      ]
+    },
+    "ProspectingGeo":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
+    "ProspectingInsights":{
+      "type":"structure",
+      "members":{
+        "MarketplaceEngagementScore":{"shape":"EngagementScoreLevel"},
+        "SolutionScore":{"shape":"String"},
+        "SolutionCategory":{"shape":"String"},
+        "SolutionSubCategory":{"shape":"String"}
+      }
+    },
+    "ProspectingPublicProfileSummary":{
+      "type":"string",
+      "max":5000,
+      "min":0
+    },
+    "ProspectingRegion":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
+    "ProspectingResult":{
+      "type":"structure",
+      "members":{
+        "Aws":{"shape":"ProspectingResultAws"}
+      }
+    },
+    "ProspectingResultAws":{
+      "type":"structure",
+      "members":{
+        "StartTime":{"shape":"DateTime"},
+        "EndTime":{"shape":"DateTime"},
+        "TaskId":{"shape":"ProspectingTaskIdentifier"},
+        "TaskArn":{"shape":"TaskArn"},
+        "TaskName":{"shape":"TaskName"},
+        "Customer":{"shape":"ProspectingResultCustomer"},
+        "Insights":{"shape":"ProspectingInsights"}
+      }
+    },
+    "ProspectingResultCustomer":{
+      "type":"structure",
+      "members":{
+        "AccountName":{"shape":"ProspectingAccountName"},
+        "Geo":{"shape":"ProspectingGeo"},
+        "Region":{"shape":"ProspectingRegion"},
+        "SubRegion":{"shape":"ProspectingSubRegion"},
+        "Country":{"shape":"CountryCode"},
+        "Industry":{"shape":"Industry"},
+        "SubIndustry":{"shape":"ProspectingSubIndustry"},
+        "Segment":{"shape":"ProspectingSegment"},
+        "CompanySize":{"shape":"ProspectingCompanySize"},
+        "EligiblePrograms":{"shape":"EligibleProgramsList"},
+        "PublicProfileSummary":{"shape":"ProspectingPublicProfileSummary"}
+      }
+    },
+    "ProspectingSegment":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
+    "ProspectingSubIndustry":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
+    "ProspectingSubRegion":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
+    "ProspectingTaskArn":{
+      "type":"string",
+      "pattern":"arn:aws:partnercentral-selling:.*:.*:catalog/.*/task/task-[0-9a-z]{14}"
+    },
+    "ProspectingTaskIdentifier":{
+      "type":"string",
+      "pattern":"task-[0-9a-z]{14}"
+    },
+    "ProspectingTaskStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
+    "ProspectingTaskSummary":{
+      "type":"structure",
+      "required":[
+        "TaskId",
+        "TaskArn",
+        "TaskName",
+        "StartTime",
+        "TotalEngagementCount",
+        "CompletedEngagementCount",
+        "FailedEngagementCount"
+      ],
+      "members":{
+        "TaskId":{"shape":"ProspectingTaskIdentifier"},
+        "TaskArn":{"shape":"ProspectingTaskArn"},
+        "TaskName":{"shape":"TaskName"},
+        "StartTime":{"shape":"DateTime"},
+        "EndTime":{"shape":"DateTime"},
+        "TotalEngagementCount":{"shape":"Integer"},
+        "CompletedEngagementCount":{"shape":"Integer"},
+        "FailedEngagementCount":{"shape":"Integer"}
+      }
+    },
+    "ProspectingTaskSummaryList":{
+      "type":"list",
+      "member":{"shape":"ProspectingTaskSummary"}
+    },
     "PutSellingSystemSettingsRequest":{
       "type":"structure",
       "required":["Catalog"],
@@ -3703,6 +4017,27 @@
     "ReceiverResponsibilityList":{
       "type":"list",
       "member":{"shape":"ReceiverResponsibility"}
+    },
+    "Recommendation":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Details"
+      ],
+      "members":{
+        "Type":{"shape":"String"},
+        "Details":{"shape":"String"},
+        "Attributes":{"shape":"RecommendationAttributeMap"}
+      }
+    },
+    "RecommendationAttributeMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
+    "RecommendationList":{
+      "type":"list",
+      "member":{"shape":"Recommendation"}
     },
     "RejectEngagementInvitationRequest":{
       "type":"structure",
@@ -4104,6 +4439,43 @@
         "ContextId":{"shape":"ContextIdentifier"}
       }
     },
+    "StartProspectingFromEngagementTaskRequest":{
+      "type":"structure",
+      "required":[
+        "Catalog",
+        "Identifiers",
+        "TaskName",
+        "ClientToken"
+      ],
+      "members":{
+        "Catalog":{"shape":"CatalogIdentifier"},
+        "Identifiers":{"shape":"EngagementIdentifierList"},
+        "TaskName":{"shape":"TaskName"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartProspectingFromEngagementTaskResponse":{
+      "type":"structure",
+      "required":[
+        "Identifiers",
+        "TaskName",
+        "StartTime",
+        "TaskStatus"
+      ],
+      "members":{
+        "Identifiers":{"shape":"EngagementIdentifierList"},
+        "TaskName":{"shape":"TaskName"},
+        "Message":{"shape":"String"},
+        "ReasonCode":{"shape":"String"},
+        "StartTime":{"shape":"DateTime"},
+        "TaskId":{"shape":"ProspectingTaskIdentifier"},
+        "TaskArn":{"shape":"ProspectingTaskArn"},
+        "TaskStatus":{"shape":"ProspectingTaskStatus"}
+      }
+    },
     "StartResourceSnapshotJobRequest":{
       "type":"structure",
       "required":[
@@ -4210,11 +4582,28 @@
       "type":"string",
       "pattern":".*task-[0-9a-z]{13}"
     },
+    "TaskIdentifierList":{
+      "type":"list",
+      "member":{"shape":"ProspectingTaskIdentifier"},
+      "max":10,
+      "min":0
+    },
     "TaskIdentifiers":{
       "type":"list",
       "member":{"shape":"TaskArnOrIdentifier"},
       "max":10,
       "min":1
+    },
+    "TaskName":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "TaskNameList":{
+      "type":"list",
+      "member":{"shape":"TaskName"},
+      "max":10,
+      "min":0
     },
     "TaskStatus":{
       "type":"string",
@@ -4256,7 +4645,8 @@
       "type":"structure",
       "members":{
         "Lead":{"shape":"UpdateLeadContext"},
-        "CustomerProject":{"shape":"CustomerProjectsContext"}
+        "CustomerProject":{"shape":"CustomerProjectsContext"},
+        "ProspectingResult":{"shape":"ProspectingResult"}
       },
       "union":true
     },
@@ -4300,7 +4690,8 @@
       "members":{
         "QualificationStatus":{"shape":"LeadQualificationStatus"},
         "Customer":{"shape":"LeadCustomer"},
-        "Interaction":{"shape":"LeadInteraction"}
+        "Interaction":{"shape":"LeadInteraction"},
+        "Insights":{"shape":"LeadInsights"}
       }
     },
     "UpdateOpportunityRequest":{

@@ -2192,7 +2192,9 @@
         "Qtype":{"shape":"Qtype"},
         "DnsThreatProtection":{"shape":"DnsThreatProtection"},
         "ConfidenceThreshold":{"shape":"ConfidenceThreshold"},
-        "FirewallRuleType":{"shape":"FirewallRuleType"}
+        "FirewallRuleType":{"shape":"FirewallRuleType"},
+        "Status":{"shape":"FirewallRuleStatus"},
+        "StatusMessage":{"shape":"FirewallRuleStatusMessage"}
       }
     },
     "FirewallRuleGroup":{
@@ -2268,9 +2270,21 @@
         "UPDATING"
       ]
     },
+    "FirewallRuleStatus":{
+      "type":"string",
+      "max":32
+    },
+    "FirewallRuleStatusMessage":{
+      "type":"string",
+      "max":1024
+    },
     "FirewallRuleType":{
       "type":"structure",
       "members":{
+        "PartnerThreatProtection":{
+          "shape":"PartnerThreatProtectionConfig",
+          "box":true
+        },
         "FirewallAdvancedContentCategory":{
           "shape":"FirewallAdvancedContentCategoryConfig",
           "box":true
@@ -2291,7 +2305,11 @@
         "RuleType":{"shape":"RuleTypeName"},
         "Value":{"shape":"RuleTypeValue"},
         "DisplayName":{"shape":"DisplayName"},
-        "Description":{"shape":"RuleTypeDescription"}
+        "Description":{"shape":"RuleTypeDescription"},
+        "SubscriptionInfo":{
+          "shape":"SubscriptionInfo",
+          "box":true
+        }
       }
     },
     "FirewallRuleTypeDefinitions":{
@@ -2603,6 +2621,7 @@
       "enum":[
         "CREATING",
         "FAILED_CREATION",
+        "FAILED_CREATION_INSUFFICIENT_EC2_CAPACITY_IN_OUTPOST",
         "ATTACHING",
         "ATTACHED",
         "REMAP_DETACHING",
@@ -3153,12 +3172,28 @@
       "type":"string",
       "max":4096
     },
+    "PartnerThreatProtectionConfig":{
+      "type":"structure",
+      "required":["Partner"],
+      "members":{
+        "Partner":{"shape":"PartnerValue"}
+      }
+    },
+    "PartnerValue":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "Port":{
       "type":"integer",
       "max":65535,
       "min":0
     },
     "Priority":{"type":"integer"},
+    "ProductId":{
+      "type":"string",
+      "max":256
+    },
     "Protocol":{
       "type":"string",
       "enum":[
@@ -3591,6 +3626,13 @@
       "type":"string",
       "max":32,
       "min":1
+    },
+    "SubscriptionInfo":{
+      "type":"structure",
+      "members":{
+        "VendorName":{"shape":"VendorName"},
+        "ProductId":{"shape":"ProductId"}
+      }
     },
     "Tag":{
       "type":"structure",
@@ -4045,6 +4087,10 @@
         "Message":{"shape":"ExceptionMessage"}
       },
       "exception":true
+    },
+    "VendorName":{
+      "type":"string",
+      "max":256
     }
   }
 }

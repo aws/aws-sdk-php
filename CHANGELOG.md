@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Added support for annotations. You can now attach up to 1000 annotations (up to 1 MB each) directly to objects and create, retrieve, list, and delete them using new annotation APIs. Also added support for configuring an annotation table in S3 Metadata.
+* `Aws\DirectConnect` - Added VIF rate limiting support for AWS Direct Connect, allowing customers to set bandwidth allocations on virtual interfaces to manage traffic on dedicated connections.
+* `Aws\Route53Resolver` - Adds supports for PartnerManagedRules
+* `Aws\PartnerCentralSelling` - Added Prospecting APIs to convert engagements into AI-enriched leads with scoring insights. Extended Engagement APIs with ProspectingResult and Lead contexts. Added CoSell Scoring to GetAwsOpportunitySummary- quality score, trend, agent-driven recommendations, and engagement classification.
+* `Aws\S3Vectors` - Amazon S3 Vectors now supports paginated QueryVectors requests, returning up to 10,000 results per query.
+* `Aws\Outposts` - Adds support for creating an order from quotes.
+* `Aws\SageMaker` - Add EnableDetailedObservability to Endpoint MetricsConfig. Publishes GPU, host, and framework-native inference metrics to CloudWatch with per-inference-component, availability-zone, and instance dimensions. Adds Inference Component provisioning lifecycle and multi-AZ placement metrics.
+
 ## 3.384.10 - 2026-06-15
 
 * `Aws\mgn` - AWS Transform for VMware now supports Amazon FSx for NetApp ONTAP as a target storage. Customers can migrate source server disks directly to FSx for NetApp ONTAP iSCSI LUNs. Target storage is configurable per source server, and compute, network, and storage migrate together in coordinated waves.

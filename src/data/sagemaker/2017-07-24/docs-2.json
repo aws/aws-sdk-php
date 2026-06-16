@@ -4350,6 +4350,14 @@
         "TrainingSpecification$TrainingImage": "<p>The Amazon ECR registry path of the Docker image that contains the training algorithm.</p>"
       }
     },
+    "ContainerMetricsConfig": {
+      "base": "<p>The configuration for container-level metrics scraping. Use this configuration to specify a custom metrics endpoint path and publishing frequency for container metrics. When <code>EnableDetailedObservability</code> is set to <code>True</code> in <code>MetricsConfig</code>, metrics are scraped from the container's Prometheus endpoint. If this configuration is not provided, the default path <code>/metrics</code> on port <code>8080</code> is used with a default publishing frequency of <code>60</code> seconds. For first-party and Deep Learning Containers (DLC), the endpoint path is determined automatically and this configuration is optional.</p>",
+      "refs": {
+        "ContainerDefinition$ContainerMetricsConfig": "<p>The configuration for container metrics scraping. Specifies the metrics endpoint path and publishing frequency. If not specified when <code>EnableDetailedObservability</code> is <code>True</code>, the default path <code>/metrics</code> on port <code>8080</code> is used. For first-party and Deep Learning Containers (DLC), the endpoint path is determined automatically and this configuration is optional.</p>",
+        "InferenceComponentContainerSpecification$ContainerMetricsConfig": "<p>The configuration for container metrics scraping. Specifies the metrics endpoint path and publishing frequency for the inference component's container. If not specified when <code>EnableDetailedObservability</code> is <code>True</code>, the default path <code>/metrics</code> on port <code>8080</code> is used. For first-party and Deep Learning Containers (DLC), the endpoint path is determined automatically and this configuration is optional.</p>",
+        "InferenceComponentContainerSpecificationSummary$ContainerMetricsConfig": "<p>The container metrics scraping configuration for this inference component, including the metrics endpoint path and publishing frequency.</p>"
+      }
+    },
     "ContainerMode": {
       "base": null,
       "refs": {
@@ -6784,7 +6792,7 @@
       }
     },
     "DomainId": {
-      "base": "<p>Types duplicated from IronmanApiServiceModel for federation. These types are defined in other service directories and are not available via IronmanApiServiceCommonModel.</p>",
+      "base": null,
       "refs": {
         "AppDetails$DomainId": "<p>The domain ID.</p>",
         "CreateAppRequest$DomainId": "<p>The domain ID.</p>",
@@ -7176,6 +7184,12 @@
       "refs": {
         "DataCaptureConfig$EnableCapture": "<p>Whether data capture should be enabled or disabled (defaults to enabled).</p>",
         "DataCaptureConfigSummary$EnableCapture": "<p>Whether data capture is enabled or disabled.</p>"
+      }
+    },
+    "EnableDetailedObservability": {
+      "base": null,
+      "refs": {
+        "MetricsConfig$EnableDetailedObservability": "<p>Indicates whether detailed observability is enabled for the endpoint. When set to <code>True</code>, the following metrics are published at the configured frequency:</p> <ul> <li> <p>Container-level inference metrics scraped from the container's Prometheus endpoint (such as request latency, error counts, and throughput). Available metrics vary by framework.</p> </li> <li> <p>Per-GPU metrics (utilization, memory, and temperature) attributed to individual inference components.</p> </li> <li> <p>Per-instance host metrics (CPU, memory, and disk utilization).</p> </li> <li> <p>Inference component placement metrics (copy count per Availability Zone).</p> </li> </ul> <p>For first-party and Deep Learning Containers (DLC), the Prometheus endpoint path is determined automatically. For Bring-Your-Own-Container (BYOC) cases, you can optionally set <code>ContainerMetricsConfig</code> to specify a custom endpoint path. If not specified, the default path <code>/metrics</code> on port <code>8080</code> is used.</p> <p>When set to <code>False</code>, these additional metrics are not published. Standard invocation and utilization metrics controlled by <code>EnableEnhancedMetrics</code> are unaffected.</p> <p>The default value for new endpoint configurations is <code>True</code>. For existing endpoint configurations created before this feature, the value is <code>False</code> unless explicitly set.</p>"
       }
     },
     "EnableEnhancedMetrics": {
@@ -10353,9 +10367,9 @@
       }
     },
     "Job": {
-      "base": "<p>Search shape for Job. Mirrors DescribeJobResponse fields. If you update DescribeJobResponse, update this structure as well.</p>",
+      "base": "<p>The properties of a job returned by the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API.</p>",
       "refs": {
-        "SearchRecord$Job": null
+        "SearchRecord$Job": "<p>The properties of a job.</p>"
       }
     },
     "JobArn": {
@@ -12237,7 +12251,8 @@
     "MetricPublishFrequencyInSeconds": {
       "base": null,
       "refs": {
-        "MetricsConfig$MetricPublishFrequencyInSeconds": "<p>The interval, in seconds, at which metrics are published to Amazon CloudWatch. Defaults to <code>60</code>. Valid values: <code>10</code>, <code>30</code>, <code>60</code>, <code>120</code>, <code>180</code>, <code>240</code>, <code>300</code>. When <code>EnableEnhancedMetrics</code> is set to <code>False</code>, this interval applies to utilization metrics only; invocation metrics continue to be published at the default 60-second interval. When <code>EnableEnhancedMetrics</code> is set to <code>True</code>, this interval applies to both utilization and invocation metrics.</p>"
+        "MetricsConfig$MetricPublishFrequencyInSeconds": "<p>The interval, in seconds, at which metrics are published to Amazon CloudWatch. Defaults to <code>60</code>. Valid values: <code>10</code>, <code>30</code>, <code>60</code>, <code>120</code>, <code>180</code>, <code>240</code>, <code>300</code>.</p> <p>When <code>EnableEnhancedMetrics</code> is set to <code>False</code>, this interval applies to utilization metrics only. Invocation metrics continue to be published at the default 60-second interval. When <code>EnableEnhancedMetrics</code> is set to <code>True</code>, this interval applies to both utilization and invocation metrics.</p> <p>When <code>EnableDetailedObservability</code> is set to <code>True</code>, this interval applies to per-GPU metrics, per-instance host metrics, container metrics, and fleet-level inference component lifecycle and placement metrics.</p>",
+        "MetricsEndpoint$MetricPublishFrequencyInSeconds": "<p>The interval, in seconds, at which container metrics scraped from the endpoint are published to Amazon CloudWatch. Valid values: <code>10</code>, <code>30</code>, <code>60</code>, <code>120</code>, <code>180</code>, <code>240</code>, <code>300</code>. Defaults to <code>60</code>.</p>"
       }
     },
     "MetricRegex": {
@@ -12271,6 +12286,24 @@
         "CreateEndpointConfigInput$MetricsConfig": "<p>The configuration parameters for utilization metrics.</p>",
         "DescribeEndpointConfigOutput$MetricsConfig": "<p>The configuration parameters for utilization metrics.</p>",
         "DescribeEndpointOutput$MetricsConfig": "<p>The configuration parameters for utilization metrics.</p>"
+      }
+    },
+    "MetricsEndpoint": {
+      "base": "<p>Specifies a metrics endpoint for a container, including the path where the container exposes Prometheus-formatted metrics and the frequency at which to publish them to Amazon CloudWatch.</p>",
+      "refs": {
+        "MetricsEndpointList$member": null
+      }
+    },
+    "MetricsEndpointList": {
+      "base": "<p>A list of metrics endpoints for a container.</p>",
+      "refs": {
+        "ContainerMetricsConfig$MetricsEndpoints": "<p>A list of metrics endpoints to scrape from the container. Each endpoint specifies the path where the container exposes Prometheus-formatted metrics and the frequency at which to publish them. You can specify a maximum of 1 endpoint.</p>"
+      }
+    },
+    "MetricsEndpointPath": {
+      "base": "<p>Per-container Prometheus metrics scraping configuration</p>",
+      "refs": {
+        "MetricsEndpoint$MetricsEndpointPath": "<p>The path to the metrics endpoint exposed by the container. For example, <code>/metrics</code> or <code>/server/metrics</code>. The path must start with <code>/</code> and can contain alphanumeric characters, forward slashes, underscores, hyphens, and periods. Maximum length is 256 characters. If not specified, defaults to <code>/metrics</code>.</p>"
       }
     },
     "MetricsSource": {
