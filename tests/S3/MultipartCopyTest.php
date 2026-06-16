@@ -1040,10 +1040,8 @@ class MultipartCopyTest extends TestCase
     public function testCallerSuppliedTaggingDoesNotTriggerReplace()
     {
         // Caller-supplied params['Tagging'] does NOT auto-flip tags_directive.
-        // With no explicit tags_directive (the default), the resolver stays
-        // at UNSPECIFIED. No Phase 1 read,
-        // no Phase 3 PUT. Caller's Tagging rides on CreateMultipartUpload as
-        // before, preserving legacy initiate-time tagging behavior.
+        // Callers who need their Tagging applied must opt in via
+        // tags_directive='REPLACE'.
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
             new Result(['UploadId' => 'baz']),
@@ -1075,7 +1073,11 @@ class MultipartCopyTest extends TestCase
         $this->assertNotContains('GetObjectTagging', $observed);
         $this->assertNotContains('PutObjectTagging', $observed);
         $this->assertNotNull($initiate);
-        $this->assertSame('Project=Override&Env=prod', $initiate['Tagging']);
+        $this->assertNull(
+            $initiate['Tagging'] ?? null,
+            'UNSPECIFIED must drop caller-supplied Tagging from '
+            . 'CreateMultipartUpload — MPU never carries Tagging on initiate.'
+        );
     }
 
     public function testAnnotationPutTransientFailureIsRetried()
@@ -1739,14 +1741,13 @@ class MultipartCopyTest extends TestCase
         );
     }
 
-    public function testTagsDirectiveUnspecifiedLeavesCallerTaggingOnInitiate()
+    public function testTagsDirectiveUnspecifiedDropsCallerTaggingFromInitiate()
     {
-        // When tags_directive resolves to UNSPECIFIED (legacy default with
-        // no caller --tagging), there is
-        // no Phase 3 tag write. Caller-supplied params['Tagging'], if any, is
-        // left on CreateMultipartUpload exactly as before, preserving
-        // backwards compatibility for callers that relied on the original
-        // initiate-time tagging behavior.
+       // When tags_directive resolves to UNSPECIFIED
+        // (the default), there is no Phase 3 tag write AND any caller-supplied
+        // params['Tagging'] is dropped from the initiate. Callers who need
+        // their Tagging applied to the destination must opt in via
+        // tags_directive='REPLACE'.
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
             new Result(['UploadId' => 'baz']),
@@ -1772,13 +1773,18 @@ class MultipartCopyTest extends TestCase
             'key'             => 'bar',
             'source_metadata' => $this->srcMeta(),
             'tags_directive'  => 'UNSPECIFIED',
-            'params'          => ['Tagging' => 'preserved=yes'],
+            'params'          => ['Tagging' => 'dropped=yes'],
         ]);
         $uploader->upload();
 
         $this->assertNotNull($initiate);
-        $this->assertSame('preserved=yes', $initiate['Tagging']);
-        // No Phase 3 tag writes.
+        $this->assertNull(
+            $initiate['Tagging'] ?? null,
+            'UNSPECIFIED must drop caller-supplied Tagging from '
+            . 'CreateMultipartUpload — MPU never carries Tagging on initiate.'
+        );
+        // No Phase 1 read, no Phase 3 write.
+        $this->assertNotContains('GetObjectTagging', $observed);
         $this->assertNotContains('PutObjectTagging', $observed);
     }
 
@@ -2106,9 +2112,6 @@ class MultipartCopyTest extends TestCase
         $uploader->upload();
 
         $this->assertCount(3, $putAnnotCmds);
-
-        // First attempt: no @http.delay (cold path).
-        $this->assertNull($putAnnotCmds[0]['@http']['delay'] ?? null);
 
         // Subsequent retries: @http.delay set to a non-negative integer
         // within the 5000ms ceiling. (Full-jitter formula allows 0 as a

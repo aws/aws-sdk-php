@@ -115,11 +115,11 @@ class MultipartCopy extends AbstractUploadManager
      *   and any matching caller-supplied fields are dropped. When 'REPLACE',
      *   no source metadata is read and caller-supplied params are used as-is.
      * - tags_directive: (string, default='UNSPECIFIED') 'UNSPECIFIED', 'COPY',
-     *   or 'REPLACE'. UNSPECIFIED means no tag work. COPY reads source tags
-     *   via GetObjectTagging and writes to the destination via
-     *   PutObjectTagging after CompleteMultipartUpload. REPLACE skips the
-     *   read and writes caller-supplied `params['Tagging']` to the
-     *   destination.
+     *   or 'REPLACE'. UNSPECIFIED means no tag work and any caller-supplied
+     *   `params['Tagging']` is dropped. COPY reads source tags via GetObjectTagging
+     *   and writes them to the destination via PutObjectTagging after
+     *   CompleteMultipartUpload. REPLACE skips the read and writes
+     *   caller-supplied `params['Tagging']` to the destination.
      * - annotations_directive: (string, default='UNSPECIFIED') 'UNSPECIFIED',
      *   'COPY', or 'EXCLUDE'. UNSPECIFIED and EXCLUDE both skip annotation
      *   work. COPY reads source annotations via ListObjectAnnotations and
@@ -417,13 +417,11 @@ class MultipartCopy extends AbstractUploadManager
             }
         }
 
-        // Tags are written separately in Phase 3 to avoid x-amz-tagging header bloat.
-        $tagsDir = $this->resolveTagsDirective();
-        if ($tagsDir === self::TAGS_DIRECTIVE_COPY
-            || $tagsDir === self::TAGS_DIRECTIVE_REPLACE
-        ) {
-            unset($params['Tagging']);
-        }
+        // When tags_directive is UNSPECIFIED, no tag work
+        // happens at all and any caller-supplied
+        // params['Tagging'] is dropped here too — callers who need their
+        // tags applied must opt in via tags_directive='REPLACE'.
+        unset($params['Tagging']);
 
         return $params;
     }

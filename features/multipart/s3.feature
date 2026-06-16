@@ -66,7 +66,7 @@ Feature: S3 Multipart Uploads
   Scenario: Caller-supplied Tagging does not trigger REPLACE
     Given I have an s3 client and an uploaded file named "tags-no-auto" with tags
     When I call multipartCopy on "tags-no-auto" with caller-supplied Tagging "k=v&Project=X" only
-    Then the copied file "tags-no-auto-copy" should have tags "k=v&Project=X"
+    Then the copied file "tags-no-auto-copy" should have no tags
 
   @s3annotations
   Scenario: tags_directive=COPY copies tags to the destination
