@@ -19,9 +19,9 @@ trait MultipartUploadingTrait
      * @param string            $uploadId Upload ID for the multipart upload.
      * @param array             $config   Optional config to retain on the
      *                                    state. Pass the directive keys
-     *                                    (`copy_props`, `metadata_directive`,
+     *                                    (`metadata_directive`,
      *                                    `tags_directive`,
-     *                                    `annotations_directive`, etc.) the
+     *                                    `annotations_directive`) the
      *                                    original copy was launched with so
      *                                    a resumed `MultipartCopy` replays
      *                                    Phase 3 with the same behavior. The

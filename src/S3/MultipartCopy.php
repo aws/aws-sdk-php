@@ -26,17 +26,6 @@ class MultipartCopy extends AbstractUploadManager
         'REPLACE' => true,
     ];
 
-    // copy_props presets: caller-facing top-level switch.
-    private const COPY_PROPS_NONE               = 'none';
-    private const COPY_PROPS_METADATA_DIRECTIVE = 'metadata-directive';
-    private const COPY_PROPS_DEFAULT            = 'default';
-
-    private const VALID_COPY_PROPS = [
-        self::COPY_PROPS_NONE               => true,
-        self::COPY_PROPS_METADATA_DIRECTIVE => true,
-        self::COPY_PROPS_DEFAULT            => true,
-    ];
-
     private const TAGS_DIRECTIVE_UNSPECIFIED = 'UNSPECIFIED';
     private const TAGS_DIRECTIVE_COPY        = 'COPY';
     private const TAGS_DIRECTIVE_REPLACE     = 'REPLACE';
@@ -118,36 +107,24 @@ class MultipartCopy extends AbstractUploadManager
      *   of the multipart upload and that is used to resume a previous upload.
      *   When this option is provided, the `bucket`, `key`, and `part_size`
      *   options are ignored.
-     * - copy_props: (string, default='metadata-directive') Top-level preset that
-     *   resolves defaults for metadata_directive, tags_directive, and
-     *   annotations_directive. Explicit values for those directives take
-     *   precedence. Values:
-     *     - 'none': nothing is copied. Resolves metadata_directive=REPLACE,
-     *       tags_directive=UNSPECIFIED, annotations_directive=EXCLUDE.
-     *     - 'metadata-directive': legacy default. Resolves metadata_directive=COPY,
-     *       tags_directive=UNSPECIFIED, annotations_directive=UNSPECIFIED.
-     *     - 'default': metadata, tags, and annotations are all copied.
-     *       Resolves metadata_directive=COPY, tags_directive=COPY,
-     *       annotations_directive=COPY.
-     * - metadata_directive: (string) 'COPY' or 'REPLACE'. Defaults to COPY,
-     *   except when `copy_props` is 'none' (then REPLACE). Caller-supplied
-     *   `params['Metadata']` does NOT change the directive — set this option
-     *   explicitly to opt into REPLACE. When 'COPY', source metadata fields
-     *   (Metadata, CacheControl, ContentDisposition, ContentEncoding,
-     *   ContentLanguage, ContentType, Expires) are forwarded and any
-     *   matching caller-supplied fields are dropped. When 'REPLACE', no
-     *   source metadata is read and caller-supplied params are used as-is.
-     * - tags_directive: (string) 'UNSPECIFIED', 'COPY', or 'REPLACE'.
-     *   Defaults derived from `copy_props`. UNSPECIFIED means no tag work.
-     *   COPY reads source tags via GetObjectTagging and writes to the
-     *   destination via PutObjectTagging after CompleteMultipartUpload.
-     *   REPLACE skips the read and writes caller-supplied `params['Tagging']`
-     *   to the destination.
-     * - annotations_directive: (string) 'UNSPECIFIED', 'COPY', or 'EXCLUDE'.
-     *   Defaults derived from `copy_props`. UNSPECIFIED and EXCLUDE both
-     *   skip annotation work. COPY reads source annotations via
-     *   ListObjectAnnotations and per-name GetObjectAnnotation, then writes
-     *   them to the destination via per-name PutObjectAnnotation.
+     * - metadata_directive: (string, default='COPY') 'COPY' or 'REPLACE'.
+     *   Caller-supplied `params['Metadata']` does NOT change the directive,
+     *   set this option explicitly to opt into REPLACE. When 'COPY', source
+     *   metadata fields (Metadata, CacheControl, ContentDisposition,
+     *   ContentEncoding, ContentLanguage, ContentType, Expires) are forwarded
+     *   and any matching caller-supplied fields are dropped. When 'REPLACE',
+     *   no source metadata is read and caller-supplied params are used as-is.
+     * - tags_directive: (string, default='UNSPECIFIED') 'UNSPECIFIED', 'COPY',
+     *   or 'REPLACE'. UNSPECIFIED means no tag work. COPY reads source tags
+     *   via GetObjectTagging and writes to the destination via
+     *   PutObjectTagging after CompleteMultipartUpload. REPLACE skips the
+     *   read and writes caller-supplied `params['Tagging']` to the
+     *   destination.
+     * - annotations_directive: (string, default='UNSPECIFIED') 'UNSPECIFIED',
+     *   'COPY', or 'EXCLUDE'. UNSPECIFIED and EXCLUDE both skip annotation
+     *   work. COPY reads source annotations via ListObjectAnnotations and
+     *   per-name GetObjectAnnotation, then writes them to the destination
+     *   via per-name PutObjectAnnotation.
      * - source_metadata: (Aws\ResultInterface) The result of a HeadObject call
      *   on the copy source. If not provided, the SDK makes a HeadObject request
      *   to obtain the source object's size and metadata. Providing this avoids
@@ -851,34 +828,12 @@ class MultipartCopy extends AbstractUploadManager
 
     /**
      * @return string
-     * @throws \InvalidArgumentException
-     */
-    private function resolveCopyProps(): string
-    {
-        $value = $this->config['copy_props'] ?? self::COPY_PROPS_METADATA_DIRECTIVE;
-        if (!isset(self::VALID_COPY_PROPS[$value])) {
-            throw new \InvalidArgumentException(
-                "Invalid copy_props value '$value'. Must be one of: "
-                . implode(', ', array_keys(self::VALID_COPY_PROPS)) . '.'
-            );
-        }
-
-        return $value;
-    }
-
-    /**
-     * @return string
      */
     private function resolveMetadataDirective(): string
     {
         $explicit = $this->config['metadata_directive'] ?? null;
         if ($explicit !== null) {
             return strtoupper((string) $explicit);
-        }
-
-        // copy_props=none implies REPLACE.
-        if ($this->resolveCopyProps() === self::COPY_PROPS_NONE) {
-            return 'REPLACE';
         }
 
         return 'COPY';
@@ -891,22 +846,19 @@ class MultipartCopy extends AbstractUploadManager
     private function resolveTagsDirective(): string
     {
         $explicit = $this->config['tags_directive'] ?? null;
-        if ($explicit !== null) {
-            $value = strtoupper((string) $explicit);
-            if (!isset(self::VALID_TAGS_DIRECTIVES[$value])) {
-                throw new \InvalidArgumentException(
-                    "Invalid tags_directive value '$value'. Must be one of: "
-                    . implode(', ', array_keys(self::VALID_TAGS_DIRECTIVES)) . '.'
-                );
-            }
-
-            return $value;
+        if ($explicit === null) {
+            return self::TAGS_DIRECTIVE_UNSPECIFIED;
         }
 
-        return match ($this->resolveCopyProps()) {
-            self::COPY_PROPS_DEFAULT => self::TAGS_DIRECTIVE_COPY,
-            default => self::TAGS_DIRECTIVE_UNSPECIFIED,
-        };
+        $value = strtoupper((string) $explicit);
+        if (!isset(self::VALID_TAGS_DIRECTIVES[$value])) {
+            throw new \InvalidArgumentException(
+                "Invalid tags_directive value '$value'. Must be one of: "
+                . implode(', ', array_keys(self::VALID_TAGS_DIRECTIVES)) . '.'
+            );
+        }
+
+        return $value;
     }
 
     /**
@@ -916,23 +868,19 @@ class MultipartCopy extends AbstractUploadManager
     private function resolveAnnotationsDirective(): string
     {
         $explicit = $this->config['annotations_directive'] ?? null;
-        if ($explicit !== null) {
-            $value = strtoupper((string) $explicit);
-            if (!isset(self::VALID_ANNOTATIONS_DIRECTIVES[$value])) {
-                throw new \InvalidArgumentException(
-                    "Invalid annotations_directive value '$value'. Must be one of: "
-                    . implode(', ', array_keys(self::VALID_ANNOTATIONS_DIRECTIVES)) . '.'
-                );
-            }
-
-            return $value;
+        if ($explicit === null) {
+            return self::ANNOTATIONS_DIRECTIVE_UNSPECIFIED;
         }
 
-        return match ($this->resolveCopyProps()) {
-            self::COPY_PROPS_DEFAULT => self::ANNOTATIONS_DIRECTIVE_COPY,
-            self::COPY_PROPS_NONE => self::ANNOTATIONS_DIRECTIVE_EXCLUDE,
-            default => self::ANNOTATIONS_DIRECTIVE_UNSPECIFIED,
-        };
+        $value = strtoupper((string) $explicit);
+        if (!isset(self::VALID_ANNOTATIONS_DIRECTIVES[$value])) {
+            throw new \InvalidArgumentException(
+                "Invalid annotations_directive value '$value'. Must be one of: "
+                . implode(', ', array_keys(self::VALID_ANNOTATIONS_DIRECTIVES)) . '.'
+            );
+        }
+
+        return $value;
     }
 
     /**

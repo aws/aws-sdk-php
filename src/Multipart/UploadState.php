@@ -47,10 +47,10 @@ class UploadState
     /**
      * @var array Subset of upload-manager config retained for resume flows.
      *
-     * Carries the original caller's directives (e.g. `copy_props`,
-     * `metadata_directive`, `tags_directive`, `annotations_directive`) so a
-     * later `getStateFromService(...) → new MultipartCopy(['state' => $s])`
-     * can replay Phase 3 correctly without the caller having to re-specify.
+     * Carries the original caller's directives (`metadata_directive`,
+     * `tags_directive`, `annotations_directive`) so a later
+     * `getStateFromService(...) → new MultipartCopy(['state' => $s])` can
+     * replay Phase 3 correctly without the caller having to re-specify.
      */
     private array $config = [];
 

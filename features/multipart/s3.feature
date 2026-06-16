@@ -69,19 +69,19 @@ Feature: S3 Multipart Uploads
     Then the copied file "tags-no-auto-copy" should have tags "k=v&Project=X"
 
   @s3annotations
-  Scenario: copy_props=default copies tags to the destination
+  Scenario: tags_directive=COPY copies tags to the destination
     Given I have an s3 client and an uploaded file named "tags-default" with tags
-    When I call multipartCopy on "tags-default" with copy_props "default"
+    When I call multipartCopy on "tags-default" with tags_directive "COPY"
     Then the copied file "tags-default-copy" should have the same tags as "tags-default"
 
-  Scenario: copy_props=metadata-directive does not copy tags
+  Scenario: Default directives skip tag copying
     Given I have an s3 client and an uploaded file named "tags-skip" with tags
-    When I call multipartCopy on "tags-skip" with copy_props "metadata-directive"
+    When I call multipartCopy on "tags-skip" to a new key in the same bucket
     Then the copied file "tags-skip-copy" should have no tags
 
-  Scenario: copy_props=none strips metadata and tags
+  Scenario: REPLACE+UNSPECIFIED+EXCLUDE strips metadata and tags
     Given I have an s3 client and an uploaded file named "none-strip" with metadata and tags
-    When I call multipartCopy on "none-strip" with copy_props "none"
+    When I call multipartCopy on "none-strip" with metadata_directive "REPLACE" and tags_directive "UNSPECIFIED" and annotations_directive "EXCLUDE"
     Then the copied file "none-strip-copy" should have no user-defined metadata
     And the copied file "none-strip-copy" should have no tags
 
@@ -90,25 +90,20 @@ Feature: S3 Multipart Uploads
     When I call multipartCopy on "tags-replace" with tags_directive "REPLACE" and tagging "Project=Override&Env=prod"
     Then the copied file "tags-replace-copy" should have tags "Project=Override&Env=prod"
 
-  Scenario: tags_directive=COPY explicitly enables tag copying under metadata-directive copy_props
-    Given I have an s3 client and an uploaded file named "tags-explicit" with tags
-    When I call multipartCopy on "tags-explicit" with copy_props "metadata-directive" and tags_directive "COPY"
-    Then the copied file "tags-explicit-copy" should have the same tags as "tags-explicit"
-
 
   # TODO: re-enable once concurrent PutObjectAnnotation behavior enabled.
   # Tracking: <ticket-id>. ETA: <date>.
   # @s3annotations
-  # Scenario: copy_props=default copies annotations to the destination
+  # Scenario: annotations_directive=COPY copies annotations to the destination
   #   Given I have an s3 client and an uploaded file named "annot-default" with annotations
-  #   When I call multipartCopy on "annot-default" with copy_props "default"
+  #   When I call multipartCopy on "annot-default" with annotations_directive "COPY"
   #   Then the copied file "annot-default-copy" should have the same annotations as "annot-default"
 
 
   @s3annotations
-  Scenario: annotations_directive=EXCLUDE skips annotation copying under copy_props=default
+  Scenario: annotations_directive=EXCLUDE skips annotation copying
     Given I have an s3 client and an uploaded file named "annot-exclude" with annotations
-    When I call multipartCopy on "annot-exclude" with copy_props "default" and annotations_directive "EXCLUDE"
+    When I call multipartCopy on "annot-exclude" with annotations_directive "EXCLUDE"
     Then the copied file "annot-exclude-copy" should have no annotations
 
   @versioned

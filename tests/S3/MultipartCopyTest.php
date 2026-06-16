@@ -630,7 +630,7 @@ class MultipartCopyTest extends TestCase
         $this->assertArrayNotHasKey('Metadata', $initiateParams);
     }
 
-    public function testCopyPropsDefaultIssuesTagAndAnnotationCalls()
+    public function testCopyDirectivesIssueTagAndAnnotationCalls()
     {
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
@@ -666,7 +666,8 @@ class MultipartCopyTest extends TestCase
             'bucket'          => 'foo',
             'key'             => 'bar',
             'source_metadata' => $this->srcMeta(),
-            'copy_props'      => 'default',
+            'tags_directive'        => 'COPY',
+            'annotations_directive' => 'COPY',
         ]);
         $uploader->upload();
 
@@ -678,7 +679,7 @@ class MultipartCopyTest extends TestCase
         $this->assertSame(2, $counts['PutObjectAnnotation']);
     }
 
-    public function testCopyPropsDefaultPropagatesSourceTagsToDestination()
+    public function testTagsDirectiveCopyPropagatesSourceTagsToDestination()
     {
         $client = $this->getTestClient('s3');
         $tagSet = [['Key' => 'Project', 'Value' => 'X'], ['Key' => 'Env', 'Value' => 'prod']];
@@ -707,7 +708,8 @@ class MultipartCopyTest extends TestCase
             'bucket'          => 'foo',
             'key'             => 'bar',
             'source_metadata' => $this->srcMeta(),
-            'copy_props'      => 'default',
+            'tags_directive'        => 'COPY',
+            'annotations_directive' => 'COPY',
         ]);
         $uploader->upload();
 
@@ -718,7 +720,7 @@ class MultipartCopyTest extends TestCase
         $this->assertSame('dst-version', $putTaggingParams['VersionId']);
     }
 
-    public function testCopyPropsDefaultSkipsTaggingWhenSourceHasNoTags()
+    public function testTagsDirectiveCopySkipsPutTaggingWhenSourceHasNoTags()
     {
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
@@ -744,7 +746,8 @@ class MultipartCopyTest extends TestCase
             'bucket'          => 'foo',
             'key'             => 'bar',
             'source_metadata' => $this->srcMeta(),
-            'copy_props'      => 'default',
+            'tags_directive'        => 'COPY',
+            'annotations_directive' => 'COPY',
         ]);
         $uploader->upload();
 
@@ -752,7 +755,7 @@ class MultipartCopyTest extends TestCase
         $this->assertSame(0, $putTaggingCount);
     }
 
-    public function testCopyPropsDefaultPropagatesAnnotationsToDestination()
+    public function testAnnotationsDirectiveCopyPropagatesAnnotationsToDestination()
     {
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
@@ -781,7 +784,8 @@ class MultipartCopyTest extends TestCase
             'bucket'          => 'foo',
             'key'             => 'bar',
             'source_metadata' => $this->srcMeta(),
-            'copy_props'      => 'default',
+            'tags_directive'        => 'COPY',
+            'annotations_directive' => 'COPY',
         ]);
         $uploader->upload();
 
@@ -794,7 +798,7 @@ class MultipartCopyTest extends TestCase
         $this->assertSame('dst-etag',     $putAnnot['ObjectIfMatch']);
     }
 
-    public function testCopyPropsMetadataDirectiveSkipsTagsAndAnnotations()
+    public function testDefaultDirectivesSkipTagsAndAnnotations()
     {
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
@@ -816,7 +820,6 @@ class MultipartCopyTest extends TestCase
             'bucket'          => 'foo',
             'key'             => 'bar',
             'source_metadata' => $this->srcMeta(),
-            'copy_props'      => 'metadata-directive',
         ]);
         $uploader->upload();
 
@@ -827,9 +830,9 @@ class MultipartCopyTest extends TestCase
         $this->assertArrayNotHasKey('PutObjectAnnotation', $counts);
     }
 
-    public function testCopyPropsDefaultIsNotImpliedByOmittingTheConfig()
+    public function testOmittingDirectivesPreservesLegacyDefault()
     {
-        // No copy_props supplied. Must behave like the legacy default
+        // No directives supplied. Must behave like the legacy default
         // (no Phase 1 tag/annotation reads, no Phase 3 writes).
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
@@ -859,7 +862,7 @@ class MultipartCopyTest extends TestCase
         $this->assertArrayNotHasKey('ListObjectAnnotations', $counts);
     }
 
-    public function testCopyPropsNoneForcesReplaceAndSkipsAuxReads()
+    public function testReplaceUnspecifiedExcludeSkipsAuxReadsAndForcesReplace()
     {
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
@@ -891,14 +894,16 @@ class MultipartCopyTest extends TestCase
                 'Expires'            => 'Thu, 01 Dec 2025 16:00:00 GMT',
                 'Metadata'           => ['source-key' => 'source-value'],
             ]),
-            'copy_props'      => 'none',
+            'metadata_directive'    => 'REPLACE',
+            'tags_directive'        => 'UNSPECIFIED',
+            'annotations_directive' => 'EXCLUDE',
             'before_initiate' => function ($cmd) use (&$initiateParams) {
                 $initiateParams = $cmd->toArray();
             },
         ]);
         $uploader->upload();
 
-        // copy_props=none resolves metadata_directive to REPLACE. None of the
+        // metadata_directive=REPLACE means none of the
         // source-side fields get folded into the initiate.
         $this->assertArrayNotHasKey('MetadataDirective', $initiateParams);
         $this->assertArrayNotHasKey('CacheControl',       $initiateParams);
@@ -910,27 +915,10 @@ class MultipartCopyTest extends TestCase
         // ContentType is still set by the trait via getSourceMimeType.
         $this->assertSame('application/pdf', $initiateParams['ContentType']);
 
-        // Phase 1 aux reads are skipped under copy_props=none.
+        // Phase 1 aux reads are skipped when both directives opt out.
         $counts = array_count_values($observed);
         $this->assertArrayNotHasKey('GetObjectTagging',      $counts);
         $this->assertArrayNotHasKey('ListObjectAnnotations', $counts);
-    }
-
-    public function testInvalidCopyPropsThrows()
-    {
-        $client = $this->getTestClient('s3');
-        $this->addMockResults($client, [new Result(['UploadId' => 'baz'])]);
-
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid copy_props value 'bogus'");
-
-        $uploader = new MultipartCopy($client, '/bucket/key', [
-            'bucket'          => 'foo',
-            'key'             => 'bar',
-            'source_metadata' => $this->srcMeta(),
-            'copy_props'      => 'bogus',
-        ]);
-        $uploader->upload();
     }
 
     public function testVersionIdAndETagFromHeadObjectArePinnedOnUploadPartCopy()
@@ -1033,7 +1021,8 @@ class MultipartCopyTest extends TestCase
             'bucket'          => 'foo',
             'key'             => 'bar',
             'source_metadata' => $this->srcMeta(),
-            'copy_props'      => 'default',
+            'tags_directive'        => 'COPY',
+            'annotations_directive' => 'COPY',
         ]);
         $uploader->upload();
 
@@ -1051,8 +1040,8 @@ class MultipartCopyTest extends TestCase
     public function testCallerSuppliedTaggingDoesNotTriggerReplace()
     {
         // Caller-supplied params['Tagging'] does NOT auto-flip tags_directive.
-        // With no explicit tags_directive and copy_props=metadata-directive
-        // (the default), the resolver stays at UNSPECIFIED. No Phase 1 read,
+        // With no explicit tags_directive (the default), the resolver stays
+        // at UNSPECIFIED. No Phase 1 read,
         // no Phase 3 PUT. Caller's Tagging rides on CreateMultipartUpload as
         // before, preserving legacy initiate-time tagging behavior.
         $client = $this->getTestClient('s3');
@@ -1123,7 +1112,8 @@ class MultipartCopyTest extends TestCase
             'bucket'          => 'foo',
             'key'             => 'bar',
             'source_metadata' => $this->srcMeta(),
-            'copy_props'      => 'default',
+            'tags_directive'        => 'COPY',
+            'annotations_directive' => 'COPY',
         ]);
         $uploader->upload();
 
@@ -1166,7 +1156,8 @@ class MultipartCopyTest extends TestCase
                 'bucket'          => 'foo',
                 'key'             => 'bar',
                 'source_metadata' => $this->srcMeta(),
-                'copy_props'      => 'default',
+                'tags_directive'        => 'COPY',
+                'annotations_directive' => 'COPY',
             ]);
             $uploader->upload();
             $this->fail('Expected MultipartCopyAnnotationException');
@@ -1247,7 +1238,8 @@ class MultipartCopyTest extends TestCase
                 'bucket'          => 'foo',
                 'key'             => 'bar',
                 'source_metadata' => $this->srcMeta(),
-                'copy_props'      => 'default',
+                'tags_directive'        => 'COPY',
+                'annotations_directive' => 'COPY',
             ]);
             $uploader->upload();
         } finally {
@@ -1313,7 +1305,7 @@ class MultipartCopyTest extends TestCase
 
     public function testGetObjectTagging403AbortsBeforeMultipartUploadInitiates()
     {
-        // Under copy_props=default, GetObjectTagging and ListObjectAnnotations
+        // Under tags_directive=COPY + annotations_directive=COPY, GetObjectTagging and ListObjectAnnotations
         // run concurrently in Phase 1 (Promise\Utils::all). The 403 on
         // GetObjectTagging fails the whole Phase-1 stage, surfacing as
         // MultipartUploadException, but ListObjectAnnotations is dispatched
@@ -1347,7 +1339,8 @@ class MultipartCopyTest extends TestCase
                 'bucket'          => 'foo',
                 'key'             => 'bar',
                 'source_metadata' => $this->srcMeta(),
-                'copy_props'      => 'default',
+                'tags_directive'        => 'COPY',
+                'annotations_directive' => 'COPY',
             ]);
             $uploader->upload();
         } finally {
@@ -1390,7 +1383,8 @@ class MultipartCopyTest extends TestCase
                 'bucket'          => 'foo',
                 'key'             => 'bar',
                 'source_metadata' => $this->srcMeta(),
-                'copy_props'      => 'default',
+                'tags_directive'        => 'COPY',
+                'annotations_directive' => 'COPY',
             ]);
             $uploader->upload();
             $this->fail('Expected MultipartCopyAnnotationException for 412');
@@ -1404,10 +1398,10 @@ class MultipartCopyTest extends TestCase
 
     // ----- Directive permutations (tags_directive / annotations_directive) -----
 
-    public function testTagsDirectiveCopyExplicitlyEnablesTagPhasesUnderMetadataDirectiveCopyProps()
+    public function testTagsDirectiveCopyExplicitlyEnablesTagPhases()
     {
-        // copy_props=metadata-directive normally skips tags. Explicit
-        // tags_directive=COPY overrides and runs the tag phases.
+        // With no tags_directive, tags are skipped. Explicit
+        // tags_directive=COPY enables the tag phases.
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
             new Result(['TagSet' => [['Key' => 'A', 'Value' => '1']]]),        // GetObjectTagging
@@ -1431,7 +1425,6 @@ class MultipartCopyTest extends TestCase
             'bucket'          => 'foo',
             'key'             => 'bar',
             'source_metadata' => $this->srcMeta(),
-            'copy_props'      => 'metadata-directive',
             'tags_directive'  => 'COPY',
         ]);
         $uploader->upload();
@@ -1484,9 +1477,9 @@ class MultipartCopyTest extends TestCase
         );
     }
 
-    public function testAnnotationsDirectiveExcludeSkipsAnnotationCallsUnderCopyPropsDefault()
+    public function testAnnotationsDirectiveExcludeOverridesCopy()
     {
-        // copy_props=default would normally enable annotations.
+        // annotations_directive=COPY would enable annotations.
         // Explicit annotations_directive=EXCLUDE turns them off.
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
@@ -1510,13 +1503,13 @@ class MultipartCopyTest extends TestCase
             'bucket'                => 'foo',
             'key'                   => 'bar',
             'source_metadata'       => $this->srcMeta(),
-            'copy_props'            => 'default',
+            'tags_directive'        => 'COPY',
             'annotations_directive' => 'EXCLUDE',
         ]);
         $uploader->upload();
 
         $counts = array_count_values($observed);
-        // Tags still run (copy_props=default).
+        // Tags still run (tags_directive=COPY).
         $this->assertSame(1, $counts['GetObjectTagging']);
         // Annotations are excluded.
         $this->assertArrayNotHasKey('ListObjectAnnotations', $counts);
@@ -1524,7 +1517,7 @@ class MultipartCopyTest extends TestCase
         $this->assertArrayNotHasKey('PutObjectAnnotation',   $counts);
     }
 
-    public function testCopyPropsNoneResolvesAnnotationsDirectiveToExclude()
+    public function testAnnotationsDirectiveExcludeSkipsAnnotationCalls()
     {
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
@@ -1546,7 +1539,9 @@ class MultipartCopyTest extends TestCase
             'bucket'          => 'foo',
             'key'             => 'bar',
             'source_metadata' => $this->srcMeta(),
-            'copy_props'      => 'none',
+            'metadata_directive'    => 'REPLACE',
+            'tags_directive'        => 'UNSPECIFIED',
+            'annotations_directive' => 'EXCLUDE',
         ]);
         $uploader->upload();
 
@@ -1650,9 +1645,9 @@ class MultipartCopyTest extends TestCase
         );
     }
 
-    public function testCopyPropsDefaultDoesNotForwardTaggingToCreateMultipartUpload()
+    public function testTagsDirectiveCopyDoesNotForwardTaggingToCreateMultipartUpload()
     {
-        // Under copy_props=default, tags_directive resolves to COPY. Even
+        // Under tags_directive=COPY, even
         // though the source-tag set is fetched and PUT in Phase 3, no Tagging
         // value should ever ride along on CreateMultipartUpload.
         $client = $this->getTestClient('s3');
@@ -1681,7 +1676,8 @@ class MultipartCopyTest extends TestCase
             'bucket'          => 'foo',
             'key'             => 'bar',
             'source_metadata' => $this->srcMeta(),
-            'copy_props'      => 'default',
+            'tags_directive'        => 'COPY',
+            'annotations_directive' => 'COPY',
         ]);
         $uploader->upload();
 
@@ -1746,7 +1742,7 @@ class MultipartCopyTest extends TestCase
     public function testTagsDirectiveUnspecifiedLeavesCallerTaggingOnInitiate()
     {
         // When tags_directive resolves to UNSPECIFIED (legacy default with
-        // no caller --tagging and copy_props=metadata-directive), there is
+        // no caller --tagging), there is
         // no Phase 3 tag write. Caller-supplied params['Tagging'], if any, is
         // left on CreateMultipartUpload exactly as before, preserving
         // backwards compatibility for callers that relied on the original
@@ -1786,7 +1782,7 @@ class MultipartCopyTest extends TestCase
         $this->assertNotContains('PutObjectTagging', $observed);
     }
 
-    public function testResumePathReplaysPhase3WhenStateRetainsCopyProps()
+    public function testResumePathReplaysPhase3WhenStateRetainsDirectives()
     {
         // A resumed MultipartCopy honors the original
         // launch's directives without the caller having to re-specify them
@@ -1826,21 +1822,21 @@ class MultipartCopyTest extends TestCase
             }
         ));
 
-        // Caller resumes from a state launched with copy_props=default.
-        // The resume call passes ONLY 'state', no copy_props.
+        // Caller resumes from a state launched with COPY directives.
+        // The resume call passes ONLY 'state'.
         $state = MultipartCopy::getStateFromService(
             $client,
             'foo',
             'bar',
             'baz',
-            ['copy_props' => 'default']
+            ['tags_directive' => 'COPY', 'annotations_directive' => 'COPY']
         );
         $uploader = new MultipartCopy($client, '/srcbucket/srckey', [
             'state' => $state,
         ]);
         $uploader->upload();
 
-        // Phase 3 ran end-to-end as if copy_props=default were on the resume call.
+        // Phase 3 ran end-to-end as if the COPY directives were re-supplied.
         $counts = array_count_values($observed);
         $this->assertSame(1, $counts['GetObjectTagging']);
         $this->assertSame(1, $counts['PutObjectTagging']);
@@ -1853,7 +1849,7 @@ class MultipartCopyTest extends TestCase
     {
         // The caller's resume-time directives win over what the state
         // remembers, so a resumed copy can opt out of Phase 3 even if the
-        // original launch was copy_props=default.
+        // original launch had COPY directives.
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
             // getStateFromService → ListParts
@@ -1884,12 +1880,13 @@ class MultipartCopyTest extends TestCase
             'foo',
             'bar',
             'baz',
-            ['copy_props' => 'default']
+            ['tags_directive' => 'COPY', 'annotations_directive' => 'COPY']
         );
         // Override on resume: switch to legacy default with no Phase 3 work.
         $uploader = new MultipartCopy($client, '/srcbucket/srckey', [
-            'state'      => $state,
-            'copy_props' => 'metadata-directive',
+            'state'                 => $state,
+            'tags_directive'        => 'UNSPECIFIED',
+            'annotations_directive' => 'UNSPECIFIED',
         ]);
         $uploader->upload();
 
@@ -1936,7 +1933,8 @@ class MultipartCopyTest extends TestCase
             'bucket'          => 'foo',
             'key'             => 'bar',
             'source_metadata' => $this->srcMeta(),
-            'copy_props'      => 'default',
+            'tags_directive'        => 'COPY',
+            'annotations_directive' => 'COPY',
         ]);
         $uploader->upload();
 
@@ -1979,7 +1977,8 @@ class MultipartCopyTest extends TestCase
         $uploader = new MultipartCopy($client, '/srcbucket/srckey', [
             'bucket'     => 'foo',
             'key'        => 'bar',
-            'copy_props' => 'default',
+            'tags_directive'        => 'COPY',
+            'annotations_directive' => 'COPY',
         ]);
         $uploader->upload();
 
@@ -2033,7 +2032,8 @@ class MultipartCopyTest extends TestCase
                 'bucket'          => 'foo',
                 'key'             => 'bar',
                 'source_metadata' => $this->srcMeta(),
-                'copy_props'      => 'default',
+                'tags_directive'        => 'COPY',
+                'annotations_directive' => 'COPY',
             ]);
             $uploader->upload();
         } finally {
@@ -2100,7 +2100,8 @@ class MultipartCopyTest extends TestCase
             'bucket'          => 'foo',
             'key'             => 'bar',
             'source_metadata' => $this->srcMeta(),
-            'copy_props'      => 'default',
+            'tags_directive'        => 'COPY',
+            'annotations_directive' => 'COPY',
         ]);
         $uploader->upload();
 
@@ -2160,7 +2161,8 @@ class MultipartCopyTest extends TestCase
             'bucket'          => 'foo',
             'key'             => 'bar',
             'source_metadata' => $this->srcMeta(),
-            'copy_props'      => 'default',
+            'tags_directive'        => 'COPY',
+            'annotations_directive' => 'COPY',
         ]);
         $uploader->upload();
 

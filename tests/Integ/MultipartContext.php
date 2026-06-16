@@ -534,27 +534,9 @@ class MultipartContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @When I call multipartCopy on :filename with copy_props :copyProps
+     * @When I call multipartCopy on :filename with tags_directive :tagsDir
      */
-    public function iCallMultipartCopyOnWithCopyProps($filename, $copyProps)
-    {
-        $bucket = self::getResourceName();
-        $copier = new MultipartCopy(
-            $this->s3Client,
-            '/' . $bucket . '/' . $filename,
-            [
-                'bucket'     => $bucket,
-                'key'        => $filename . '-copy',
-                'copy_props' => $copyProps,
-            ]
-        );
-        $this->runCopy($copier);
-    }
-
-    /**
-     * @When I call multipartCopy on :filename with copy_props :copyProps and tags_directive :tagsDir
-     */
-    public function iCallMultipartCopyOnWithCopyPropsAndTagsDirective($filename, $copyProps, $tagsDir)
+    public function iCallMultipartCopyOnWithTagsDirective($filename, $tagsDir)
     {
         $bucket = self::getResourceName();
         $copier = new MultipartCopy(
@@ -563,8 +545,31 @@ class MultipartContext implements Context, SnippetAcceptingContext
             [
                 'bucket'         => $bucket,
                 'key'            => $filename . '-copy',
-                'copy_props'     => $copyProps,
                 'tags_directive' => $tagsDir,
+            ]
+        );
+        $this->runCopy($copier);
+    }
+
+    /**
+     * @When I call multipartCopy on :filename with metadata_directive :metaDir and tags_directive :tagsDir and annotations_directive :annotDir
+     */
+    public function iCallMultipartCopyOnWithAllThreeDirectives(
+        $filename,
+        $metaDir,
+        $tagsDir,
+        $annotDir
+    ) {
+        $bucket = self::getResourceName();
+        $copier = new MultipartCopy(
+            $this->s3Client,
+            '/' . $bucket . '/' . $filename,
+            [
+                'bucket'                => $bucket,
+                'key'                   => $filename . '-copy',
+                'metadata_directive'    => $metaDir,
+                'tags_directive'        => $tagsDir,
+                'annotations_directive' => $annotDir,
             ]
         );
         $this->runCopy($copier);
@@ -664,9 +669,9 @@ class MultipartContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @When I call multipartCopy on :filename with copy_props :copyProps and annotations_directive :annotDir
+     * @When I call multipartCopy on :filename with annotations_directive :annotDir
      */
-    public function iCallMultipartCopyOnWithCopyPropsAndAnnotationsDirective($filename, $copyProps, $annotDir)
+    public function iCallMultipartCopyOnWithAnnotationsDirective($filename, $annotDir)
     {
         $bucket = self::getResourceName();
         $copier = new MultipartCopy(
@@ -675,7 +680,6 @@ class MultipartContext implements Context, SnippetAcceptingContext
             [
                 'bucket'                => $bucket,
                 'key'                   => $filename . '-copy',
-                'copy_props'            => $copyProps,
                 'annotations_directive' => $annotDir,
             ]
         );
