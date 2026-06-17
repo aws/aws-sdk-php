@@ -2219,11 +2219,7 @@
     },
     "CreateExpressGatewayServiceRequest":{
       "type":"structure",
-      "required":[
-        "executionRoleArn",
-        "infrastructureRoleArn",
-        "primaryContainer"
-      ],
+      "required":["infrastructureRoleArn"],
       "members":{
         "executionRoleArn":{"shape":"String"},
         "infrastructureRoleArn":{"shape":"String"},
@@ -2236,7 +2232,8 @@
         "cpu":{"shape":"String"},
         "memory":{"shape":"String"},
         "scalingTarget":{"shape":"ExpressGatewayScalingTarget"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "taskDefinitionArn":{"shape":"String"}
       }
     },
     "CreateExpressGatewayServiceResponse":{
@@ -3569,6 +3566,7 @@
         "serviceRevisionArn":{"shape":"String"},
         "executionRoleArn":{"shape":"String"},
         "taskRoleArn":{"shape":"String"},
+        "taskDefinitionArn":{"shape":"String"},
         "cpu":{"shape":"String"},
         "memory":{"shape":"String"},
         "networkConfiguration":{"shape":"ExpressGatewayServiceNetworkConfiguration"},
@@ -6392,7 +6390,8 @@
         "networkConfiguration":{"shape":"ExpressGatewayServiceNetworkConfiguration"},
         "cpu":{"shape":"String"},
         "memory":{"shape":"String"},
-        "scalingTarget":{"shape":"ExpressGatewayScalingTarget"}
+        "scalingTarget":{"shape":"ExpressGatewayScalingTarget"},
+        "taskDefinitionArn":{"shape":"String"}
       }
     },
     "UpdateExpressGatewayServiceResponse":{

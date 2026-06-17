@@ -16,7 +16,8 @@
     "CreateGateway": "<p>Creates a gateway for Amazon Bedrock Agent. A gateway serves as an integration point between your agent and external services.</p> <p>If you specify <code>CUSTOM_JWT</code> as the <code>authorizerType</code>, you must provide an <code>authorizerConfiguration</code>.</p>",
     "CreateGatewayRule": "<p>Creates a rule for a gateway. Rules define conditions and actions that control how requests are routed and processed through the gateway, including principal-based access control and path-based routing.</p>",
     "CreateGatewayTarget": "<p>Creates a target for a gateway. A target defines an endpoint that the gateway can connect to.</p>",
-    "CreateHarness": "<p>Operation to create a Harness.</p>",
+    "CreateHarness": "<p>Operation to create a harness.</p>",
+    "CreateHarnessEndpoint": "<p>Operation to create a harness endpoint.</p>",
     "CreateMemory": "<p>Creates a new Amazon Bedrock AgentCore Memory resource.</p>",
     "CreateOauth2CredentialProvider": "<p>Creates a new OAuth2 credential provider.</p>",
     "CreateOnlineEvaluationConfig": "<p> Creates an online evaluation configuration for continuous monitoring of agent performance. Online evaluation automatically samples live traffic from CloudWatch logs at specified rates and applies evaluators to assess agent quality in production. </p>",
@@ -42,6 +43,7 @@
     "DeleteGatewayRule": "<p>Deletes a gateway rule.</p>",
     "DeleteGatewayTarget": "<p>Deletes a gateway target.</p> <p>You cannot delete a target that is in a pending authorization state (<code>CREATE_PENDING_AUTH</code>, <code>UPDATE_PENDING_AUTH</code>, or <code>SYNCHRONIZE_PENDING_AUTH</code>). Wait for the authorization to complete or fail before deleting the target.</p>",
     "DeleteHarness": "<p>Operation to delete a Harness.</p>",
+    "DeleteHarnessEndpoint": "<p>Operation to delete a harness endpoint.</p>",
     "DeleteMemory": "<p>Deletes an Amazon Bedrock AgentCore Memory resource.</p>",
     "DeleteOauth2CredentialProvider": "<p>Deletes an OAuth2 credential provider.</p>",
     "DeleteOnlineEvaluationConfig": "<p> Deletes an online evaluation configuration and stops any ongoing evaluation processes associated with it. </p>",
@@ -67,7 +69,8 @@
     "GetGateway": "<p>Retrieves information about a specific Gateway.</p>",
     "GetGatewayRule": "<p>Retrieves detailed information about a specific gateway rule.</p>",
     "GetGatewayTarget": "<p>Retrieves information about a specific gateway target.</p>",
-    "GetHarness": "<p>Operation to get a single Harness.</p>",
+    "GetHarness": "<p>Operation to get a single harness.</p>",
+    "GetHarnessEndpoint": "<p>Operation to get a single harness endpoint.</p>",
     "GetMemory": "<p>Retrieve an existing Amazon Bedrock AgentCore Memory resource.</p>",
     "GetOauth2CredentialProvider": "<p>Retrieves information about an OAuth2 credential provider.</p>",
     "GetOnlineEvaluationConfig": "<p> Retrieves detailed information about an online evaluation configuration, including its rules, data sources, evaluators, and execution status. </p>",
@@ -101,7 +104,9 @@
     "ListGatewayRules": "<p>Lists all rules for a gateway.</p>",
     "ListGatewayTargets": "<p>Lists all targets for a specific gateway.</p>",
     "ListGateways": "<p>Lists all gateways in the account.</p>",
-    "ListHarnesses": "<p>Operation to list Harnesses.</p>",
+    "ListHarnessEndpoints": "<p>Operation to list the endpoints of a harness.</p>",
+    "ListHarnessVersions": "<p>Operation to list the versions of a Harness.</p>",
+    "ListHarnesses": "<p>Operation to list harnesses.</p>",
     "ListMemories": "<p>Lists the available Amazon Bedrock AgentCore Memory resources in the current Amazon Web Services Region.</p>",
     "ListOauth2CredentialProviders": "<p>Lists all OAuth2 credential providers in your account.</p>",
     "ListOnlineEvaluationConfigs": "<p> Lists all online evaluation configurations in the account, providing summary information about each configuration's status and settings. </p>",
@@ -136,7 +141,8 @@
     "UpdateGateway": "<p>Updates an existing gateway.</p>",
     "UpdateGatewayRule": "<p>Updates a gateway rule's priority, conditions, actions, or description.</p>",
     "UpdateGatewayTarget": "<p>Updates an existing gateway target.</p> <p>You cannot update a target that is in a pending authorization state (<code>CREATE_PENDING_AUTH</code>, <code>UPDATE_PENDING_AUTH</code>, or <code>SYNCHRONIZE_PENDING_AUTH</code>). Wait for the authorization to complete or fail before updating the target.</p>",
-    "UpdateHarness": "<p>Operation to update a Harness.</p>",
+    "UpdateHarness": "<p>Operation to update a harness.</p>",
+    "UpdateHarnessEndpoint": "<p>Operation to update a harness endpoint.</p>",
     "UpdateMemory": "<p>Update an Amazon Bedrock AgentCore Memory resource memory.</p>",
     "UpdateOauth2CredentialProvider": "<p>Updates an existing OAuth2 credential provider.</p>",
     "UpdateOnlineEvaluationConfig": "<p> Updates an online evaluation configuration's settings, including rules, data sources, evaluators, and execution status. Changes take effect immediately for ongoing evaluations. </p>",
@@ -434,6 +440,12 @@
         "StringValidation$allowedValues": "<p>Allowed values for this STRING field.</p>"
       }
     },
+    "AllowedWorkloadConfiguration": {
+      "base": "<p>The configuration that restricts which workloads in the request's identity chain are allowed to invoke the target, identified by their hosting environments and workload identities. At launch, this is supported only for AgentCore Runtime targets, and the allowed workloads are AgentCore Gateways.</p>",
+      "refs": {
+        "CustomJWTAuthorizerConfiguration$allowedWorkloadConfiguration": "<p>The configuration that restricts which workloads in the request's identity chain are allowed to invoke the target, identified by their hosting environments and workload identities. At launch, this is supported only for AgentCore Runtime targets, and the allowed workloads are AgentCore Gateways.</p>"
+      }
+    },
     "ApiGatewayTargetConfiguration": {
       "base": "<p>The configuration for an Amazon API Gateway target.</p>",
       "refs": {
@@ -533,6 +545,7 @@
     "ApiSchemaConfiguration": {
       "base": "<p>Configuration for API schema.</p>",
       "refs": {
+        "HttpApiSchemaConfiguration$source": null,
         "McpTargetConfiguration$openApiSchema": "<p>The OpenAPI schema for the Model Context Protocol target. This schema defines the API structure of the target.</p>",
         "McpTargetConfiguration$smithyModel": "<p>The Smithy model for the Model Context Protocol target. This model defines the API structure of the target using the Smithy specification.</p>"
       }
@@ -556,6 +569,8 @@
         "KinesisResource$dataStreamArn": "<p>ARN of the Kinesis Data Stream.</p>",
         "Memory$encryptionKeyArn": "<p>The ARN of the KMS key used to encrypt the memory.</p>",
         "Memory$memoryExecutionRoleArn": "<p>The ARN of the IAM role that provides permissions for the memory.</p>",
+        "Memory$managedByResourceArn": "<p>ARN of the resource managing this memory (e.g. a harness). When set, strategy modifications and deletion are only allowed through the managing resource.</p>",
+        "MemorySummary$managedByResourceArn": "<p>ARN of the resource managing this memory (e.g. a harness). Null if not managed.</p>",
         "ModifyInvocationConfigurationInput$topicArn": "<p>The updated ARN of the SNS topic for job notifications.</p>",
         "UpdateMemoryInput$memoryExecutionRoleArn": "<p>The ARN of the IAM role that provides permissions for the AgentCore Memory resource.</p>"
       }
@@ -578,6 +593,7 @@
         "CreateGatewayTargetResponse$authorizationData": "<p>OAuth2 authorization data for the created gateway target. This data is returned when a target is configured with a credential provider with authorization code grant type and requires user federation.</p>",
         "GatewayTarget$authorizationData": "<p>OAuth2 authorization data for the gateway target. This data is returned when a target is configured with a credential provider with authorization code grant type and requires user federation.</p>",
         "GetGatewayTargetResponse$authorizationData": "<p>OAuth2 authorization data for the gateway target. This data is returned when a target is configured with a credential provider with authorization code grant type and requires user federation.</p>",
+        "TargetSummary$authorizationData": null,
         "UpdateGatewayTargetResponse$authorizationData": "<p>OAuth2 authorization data for the updated gateway target. This data is returned when a target is configured with a credential provider with authorization code grant type and requires user federation.</p>"
       }
     },
@@ -640,6 +656,7 @@
         "DeleteResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to delete the resource policy.</p>",
         "GetResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to retrieve the resource policy.</p>",
         "HarnessAgentCoreRuntimeEnvironment$agentRuntimeArn": "<p>The ARN of the underlying AgentCore Runtime.</p>",
+        "HostingEnvironment$arn": "<p>The Amazon Resource Name (ARN) of the hosting environment.</p>",
         "ListPoliciesRequest$targetResourceScope": "<p>Optional filter to list policies that apply to a specific resource scope or resource type. This helps narrow down policy results to those relevant for particular Amazon Web Services resources, agent tools, or operational contexts within the policy engine ecosystem.</p>",
         "ListPolicySummariesRequest$targetResourceScope": "<p>Optional filter to list policy summaries that apply to a specific resource scope or resource type. This helps narrow down results to those relevant for particular Amazon Web Services resources, agent tools, or operational contexts within the policy engine ecosystem.</p>",
         "PutResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to create or update the resource policy.</p>",
@@ -658,11 +675,14 @@
         "ApprovalConfiguration$autoApproval": "<p>Whether registry records are auto-approved. When set to <code>true</code>, records are automatically approved upon creation. When set to <code>false</code> (the default), records require explicit approval for security purposes.</p>",
         "BrowserSigningConfigInput$enabled": "<p>Specifies whether browser signing is enabled. When enabled, the browser will cryptographically sign HTTP requests to identify itself as an AI agent to bot control vendors.</p>",
         "BrowserSigningConfigOutput$enabled": "<p>Indicates whether browser signing is currently enabled for cryptographic agent identification using HTTP message signatures.</p>",
+        "ConnectorParameterOverride$visible": "<p>Whether this parameter is visible to the agent. If not specified, uses the service default.</p>",
         "CreateOnlineEvaluationConfigRequest$enableOnCreate": "<p> Whether to enable the online evaluation configuration immediately upon creation. If true, evaluation begins automatically. </p>",
+        "DeleteHarnessRequest$deleteManagedMemory": "<p>Whether to delete the managed memory on harness deletion. Default: true. If false, the memory is disassociated and becomes a regular customer-owned resource.</p>",
         "EvaluatorSummary$lockedForModification": "<p> Whether the evaluator is locked for modification due to being referenced by active online evaluation configurations. </p>",
         "FilterValue$booleanValue": "<p> The boolean value for true/false filtering conditions. </p>",
         "GetEvaluatorResponse$lockedForModification": "<p> Whether the evaluator is locked for modification due to being referenced by active online evaluation configurations. </p>",
         "InterceptorInputConfiguration$passRequestHeaders": "<p>Indicates whether to pass request headers as input into the interceptor. When set to true, request headers will be passed.</p>",
+        "ProviderPrefix$strip": "<p>Whether clients can omit the provider prefix from model IDs. If <code>true</code>, the gateway accepts model IDs without the prefix and restores the full prefixed form before forwarding to the provider. The default is <code>false</code>.</p>",
         "RecordingConfig$enabled": "<p>Indicates whether recording is enabled for the browser. When set to true, browser sessions are recorded.</p>",
         "RuntimeMetadataConfiguration$requireMMDSV2": "<p>Enables MMDSv2 (microVM Metadata Service Version 2) requirement for the agent runtime. When set to <code>true</code>, the runtime microVM will only accept MMDSv2 requests.</p>",
         "StreamingConfiguration$enableResponseStreaming": "<p>Indicates whether response streaming is enabled for the gateway. When set to <code>true</code>, the gateway streams responses from targets back to the client.</p>",
@@ -926,6 +946,7 @@
         "CreateGatewayRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayRuleRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayTargetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "CreateHarnessEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateHarnessRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateOnlineEvaluationConfigRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreatePaymentConnectorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -940,6 +961,7 @@
         "DeleteBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteDatasetExamplesRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "DeleteHarnessEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteHarnessRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeletePaymentConnectorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "DeletePaymentManagerRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -950,6 +972,7 @@
         "UpdateDatasetExamplesRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "UpdateDatasetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "UpdateEvaluatorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "UpdateHarnessEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateHarnessRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateOnlineEvaluationConfigRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "UpdatePaymentConnectorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -1258,6 +1281,60 @@
       "base": "<p>This exception is thrown when there is a conflict performing an operation</p>",
       "refs": {}
     },
+    "ConnectorConfiguration": {
+      "base": "<p>Configuration for a single tool within a connector.</p>",
+      "refs": {
+        "ConnectorConfigurations$member": null
+      }
+    },
+    "ConnectorConfigurationDescriptionString": {
+      "base": null,
+      "refs": {
+        "ConnectorConfiguration$description": "<p>An agent-facing description override for this tool.</p>"
+      }
+    },
+    "ConnectorConfigurationNameString": {
+      "base": null,
+      "refs": {
+        "ConnectorConfiguration$name": "<p>The tool or operation name (for example, <code>retrieve</code> or <code>webSearch</code>).</p>"
+      }
+    },
+    "ConnectorConfigurations": {
+      "base": null,
+      "refs": {
+        "ConnectorTargetConfiguration$configurations": "<p>A list of per-tool configurations for the connector.</p>"
+      }
+    },
+    "ConnectorId": {
+      "base": null,
+      "refs": {
+        "ConnectorSource$connectorId": "<p>The identifier for the connector integration (for example, <code>bedrock-knowledge-bases</code>).</p>"
+      }
+    },
+    "ConnectorParameterOverride": {
+      "base": "<p>Specifies a parameter override for a connector tool, allowing you to control parameter visibility and descriptions.</p>",
+      "refs": {
+        "ConnectorParameterOverrides$member": null
+      }
+    },
+    "ConnectorParameterOverrides": {
+      "base": null,
+      "refs": {
+        "ConnectorConfiguration$parameterOverrides": "<p>Parameters to expose to the agent at runtime, with optional description overrides.</p>"
+      }
+    },
+    "ConnectorSource": {
+      "base": "<p>The source identifying the connector integration.</p>",
+      "refs": {
+        "ConnectorTargetConfiguration$source": "<p>The source configuration identifying which connector to use.</p>"
+      }
+    },
+    "ConnectorTargetConfiguration": {
+      "base": "<p>Configuration for a connector integration target. Connectors provide pre-built integrations with Amazon Web Services services and third-party tools.</p>",
+      "refs": {
+        "McpTargetConfiguration$connector": "<p>The connector integration configuration for the Model Context Protocol target. This configuration defines how the gateway uses a pre-built connector to communicate with the target.</p>"
+      }
+    },
     "ConsolidationConfiguration": {
       "base": "<p>Contains consolidation configuration information for a memory strategy.</p>",
       "refs": {
@@ -1408,6 +1485,14 @@
       "refs": {}
     },
     "CreateGatewayTargetResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateHarnessEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateHarnessEndpointResponse": {
       "base": null,
       "refs": {}
     },
@@ -1721,6 +1806,15 @@
         "ModifyReflectionConfiguration$customReflectionConfiguration": "<p>The updated custom reflection configuration.</p>"
       }
     },
+    "CustomTransformConfiguration": {
+      "base": "<p>The configuration for custom transformations applied to requests and responses through the gateway. This structure defines how the gateway transforms data.</p>",
+      "refs": {
+        "CreateGatewayResponse$customTransformConfiguration": "<p>The custom transformation configuration for the gateway. This configuration defines how the gateway transforms requests and responses.</p>",
+        "GetGatewayResponse$customTransformConfiguration": "<p>The custom transformation configuration for the gateway. This configuration defines how the gateway transforms requests and responses.</p>",
+        "UpdateGatewayRequest$customTransformConfiguration": "<p>The updated custom transformation configuration for the gateway. This configuration defines how the gateway transforms requests and responses.</p>",
+        "UpdateGatewayResponse$customTransformConfiguration": "<p>The custom transformation configuration for the gateway. This configuration defines how the gateway transforms requests and responses.</p>"
+      }
+    },
     "DataSourceConfig": {
       "base": "<p> The configuration that specifies where to read agent traces for online evaluation. </p>",
       "refs": {
@@ -1930,10 +2024,14 @@
         "GetRegistryRecordResponse$updatedAt": "<p>The timestamp when the registry record was last updated.</p>",
         "GetRegistryResponse$createdAt": "<p>The timestamp when the registry was created.</p>",
         "GetRegistryResponse$updatedAt": "<p>The timestamp when the registry was last updated.</p>",
-        "Harness$createdAt": "<p>The createdAt time of the Harness.</p>",
-        "Harness$updatedAt": "<p>The updatedAt time of the Harness.</p>",
+        "Harness$createdAt": "<p>The createdAt time of the harness.</p>",
+        "Harness$updatedAt": "<p>The updatedAt time of the harness.</p>",
+        "HarnessEndpoint$createdAt": "<p>The timestamp when the endpoint was created.</p>",
+        "HarnessEndpoint$updatedAt": "<p>The timestamp when the endpoint was last updated.</p>",
         "HarnessSummary$createdAt": "<p>The timestamp when the harness was created.</p>",
         "HarnessSummary$updatedAt": "<p>The timestamp when the harness was last updated.</p>",
+        "HarnessVersionSummary$createdAt": "<p>The timestamp when this harness version was created.</p>",
+        "HarnessVersionSummary$updatedAt": "<p>The timestamp when this harness version was last updated.</p>",
         "PaymentConnectorSummary$lastUpdatedAt": "<p>The timestamp when the payment connector was last updated.</p>",
         "PaymentManagerSummary$createdAt": "<p>The timestamp when the payment manager was created.</p>",
         "PaymentManagerSummary$lastUpdatedAt": "<p>The timestamp when the payment manager was last updated.</p>",
@@ -1958,6 +2056,7 @@
         "SubmitRegistryRecordForApprovalResponse$updatedAt": "<p>The timestamp when the record was last updated.</p>",
         "TargetSummary$createdAt": "<p>The timestamp when the target was created.</p>",
         "TargetSummary$updatedAt": "<p>The timestamp when the target was last updated.</p>",
+        "TargetSummary$lastSynchronizedAt": "<p>The timestamp when the target was last synchronized.</p>",
         "UpdateAgentRuntimeEndpointResponse$createdAt": "<p>The timestamp when the AgentCore Runtime endpoint was created.</p>",
         "UpdateAgentRuntimeEndpointResponse$lastUpdatedAt": "<p>The timestamp when the AgentCore Runtime endpoint was last updated.</p>",
         "UpdateAgentRuntimeResponse$createdAt": "<p>The timestamp when the AgentCore Runtime was created.</p>",
@@ -2150,6 +2249,14 @@
       "refs": {}
     },
     "DeleteGatewayTargetResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteHarnessEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteHarnessEndpointResponse": {
       "base": null,
       "refs": {}
     },
@@ -2359,6 +2466,7 @@
       "base": null,
       "refs": {
         "ComponentConfiguration$configuration": "<p>The configuration values as a flexible JSON document.</p>",
+        "ConnectorConfiguration$parameterValues": "<p>Parameters to set as fixed or default values when provisioning this tool.</p>",
         "HarnessBedrockModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>",
         "HarnessLiteLlmModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>",
         "HarnessOpenAiModelConfig$additionalParams": "<p>Provider-specific parameters passed through to the model provider unchanged.</p>"
@@ -2403,6 +2511,12 @@
         "FilesystemConfiguration$efsAccessPoint": "<p>Configuration for an Amazon EFS access point to mount into the AgentCore Runtime.</p>"
       }
     },
+    "EnabledConnectors": {
+      "base": null,
+      "refs": {
+        "ConnectorTargetConfiguration$enabled": "<p>A list of tool names to enable from this connector. If absent, all tools provided by the connector are enabled.</p>"
+      }
+    },
     "EncryptionFailure": {
       "base": "<p>Exception thrown when encryption of a secret fails.</p>",
       "refs": {}
@@ -2426,6 +2540,20 @@
         "UpdateAgentRuntimeEndpointRequest$endpointName": "<p>The name of the AgentCore Runtime endpoint to update.</p>"
       }
     },
+    "EnforcementMode": {
+      "base": "<p>The enforcement mode for a policy. Run this policy in <code>LOG_ONLY</code> mode to collect data on how it affects your application. Once you are satisfied with the data gathered, switch the policy to <code>ACTIVE</code>.</p>",
+      "refs": {
+        "CreatePolicyRequest$enforcementMode": "<p>The enforcement mode for the policy. Run this policy in <code>LOG_ONLY</code> mode to collect data on how it affects your application. Once you are satisfied with the data gathered, switch the policy to <code>ACTIVE</code>. Defaults to <code>ACTIVE</code>.</p>",
+        "CreatePolicyResponse$enforcementMode": "<p>The enforcement mode of the created policy.</p>",
+        "DeletePolicyResponse$enforcementMode": "<p>The enforcement mode of the deleted policy.</p>",
+        "GetPolicyResponse$enforcementMode": "<p>The current enforcement mode of the policy.</p>",
+        "GetPolicySummaryResponse$enforcementMode": "<p>The current enforcement mode of the policy.</p>",
+        "Policy$enforcementMode": "<p>The current enforcement mode of the policy.</p>",
+        "PolicySummary$enforcementMode": "<p>The current enforcement mode of the policy.</p>",
+        "UpdatePolicyRequest$enforcementMode": "<p>The enforcement mode for the policy. Run this policy in <code>LOG_ONLY</code> mode to collect data on how it affects your application. Once you are satisfied with the data gathered, switch the policy to <code>ACTIVE</code>. If you omit this field, the policy's existing enforcement mode is unchanged.</p>",
+        "UpdatePolicyResponse$enforcementMode": "<p>The current enforcement mode of the updated policy.</p>"
+      }
+    },
     "EnvironmentVariableKey": {
       "base": null,
       "refs": {
@@ -2444,7 +2572,7 @@
         "CreateAgentRuntimeRequest$environmentVariables": "<p>Environment variables to set in the AgentCore Runtime environment.</p>",
         "CreateHarnessRequest$environmentVariables": "<p>Environment variables to set in the harness runtime environment.</p>",
         "GetAgentRuntimeResponse$environmentVariables": "<p>Environment variables set in the AgentCore Runtime environment.</p>",
-        "Harness$environmentVariables": "<p>Environment variables exposed in the environment in which the Harness operates.</p>",
+        "Harness$environmentVariables": "<p>Environment variables exposed in the environment in which the harness operates.</p>",
         "UpdateAgentRuntimeRequest$environmentVariables": "<p>Updated environment variables to set in the AgentCore Runtime environment.</p>",
         "UpdateHarnessRequest$environmentVariables": "<p>Environment variables to set in the harness runtime environment. If specified, this replaces all existing environment variables. If not specified, the existing value is retained.</p>"
       }
@@ -3140,6 +3268,14 @@
       "base": null,
       "refs": {}
     },
+    "GetHarnessEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetHarnessEndpointResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetHarnessRequest": {
       "base": null,
       "refs": {}
@@ -3309,7 +3445,7 @@
       }
     },
     "Harness": {
-      "base": "<p>Representation of a Harness.</p>",
+      "base": "<p>Representation of a harness.</p>",
       "refs": {
         "CreateHarnessResponse$harness": "<p>The harness that was created.</p>",
         "DeleteHarnessResponse$harness": "<p>The harness that was deleted.</p>",
@@ -3375,15 +3511,28 @@
       "base": null,
       "refs": {
         "CreateHarnessRequest$allowedTools": "<p>The tools that the agent is allowed to use. Supports glob patterns such as * for all tools, @builtin for all built-in tools, or @serverName/toolName for specific MCP server tools.</p>",
-        "Harness$allowedTools": "<p>The allowed tools of the Harness. All tools are allowed by default.</p>",
+        "Harness$allowedTools": "<p>The allowed tools of the harness. All tools are allowed by default.</p>",
         "UpdateHarnessRequest$allowedTools": "<p>The tools that the agent is allowed to use. If specified, this replaces all existing allowed tools. If not specified, the existing value is retained.</p>"
       }
     },
     "HarnessArn": {
       "base": null,
       "refs": {
-        "Harness$arn": "<p>The ARN of the Harness.</p>",
-        "HarnessSummary$arn": "<p>The ARN of the harness.</p>"
+        "Harness$arn": "<p>The ARN of the harness.</p>",
+        "HarnessSummary$arn": "<p>The ARN of the harness.</p>",
+        "HarnessVersionSummary$arn": "<p>The ARN of the harness.</p>"
+      }
+    },
+    "HarnessAwsSkillPath": {
+      "base": null,
+      "refs": {
+        "HarnessAwsSkillPaths$member": null
+      }
+    },
+    "HarnessAwsSkillPaths": {
+      "base": null,
+      "refs": {
+        "HarnessSkillAwsSkillsSource$paths": "<p>Optionally filter allowed skills with glob syntax, e.g., ['core-skills/*'].</p>"
       }
     },
     "HarnessBedrockApiFormat": {
@@ -3408,6 +3557,58 @@
       "base": "<p>Code Interpreter ARN for Harness tool configuration. Accepts both managed (aws.codeinterpreter.v1) and custom code interpreter ARNs.</p>",
       "refs": {
         "HarnessAgentCoreCodeInterpreterConfig$codeInterpreterArn": "<p>If not populated, the built-in Code Interpreter ARN is used.</p>"
+      }
+    },
+    "HarnessDisabledMemoryConfiguration": {
+      "base": "<p>Explicitly opt out of memory.</p>",
+      "refs": {
+        "HarnessMemoryConfiguration$disabled": "<p>Explicitly opt out of memory.</p>"
+      }
+    },
+    "HarnessEndpoint": {
+      "base": "<p>Representation of a harness endpoint. An endpoint is a named, stable reference to a specific version of a harness that callers invoke, allowing the underlying version to be updated without changing how the agent is invoked.</p>",
+      "refs": {
+        "CreateHarnessEndpointResponse$endpoint": "<p>The endpoint that was created.</p>",
+        "DeleteHarnessEndpointResponse$endpoint": "<p>The endpoint that was deleted.</p>",
+        "GetHarnessEndpointResponse$endpoint": "<p>The endpoint resource.</p>",
+        "HarnessEndpoints$member": null,
+        "UpdateHarnessEndpointResponse$endpoint": "<p>The updated endpoint.</p>"
+      }
+    },
+    "HarnessEndpointArn": {
+      "base": null,
+      "refs": {
+        "HarnessEndpoint$arn": "<p>The ARN of the endpoint.</p>"
+      }
+    },
+    "HarnessEndpointDescription": {
+      "base": null,
+      "refs": {
+        "CreateHarnessEndpointRequest$description": "<p>A description of the endpoint.</p>",
+        "HarnessEndpoint$description": "<p>The description of the endpoint.</p>",
+        "UpdateHarnessEndpointRequest$description": "<p>A description of the endpoint. If not specified, the existing value is retained.</p>"
+      }
+    },
+    "HarnessEndpointName": {
+      "base": null,
+      "refs": {
+        "CreateHarnessEndpointRequest$endpointName": "<p>The name of the endpoint. Must start with a letter and contain only alphanumeric characters and underscores.</p>",
+        "DeleteHarnessEndpointRequest$endpointName": "<p>The name of the endpoint to delete.</p>",
+        "GetHarnessEndpointRequest$endpointName": "<p>The name of the endpoint to retrieve.</p>",
+        "HarnessEndpoint$endpointName": "<p>The name of the endpoint.</p>",
+        "UpdateHarnessEndpointRequest$endpointName": "<p>The name of the endpoint to update.</p>"
+      }
+    },
+    "HarnessEndpointStatus": {
+      "base": null,
+      "refs": {
+        "HarnessEndpoint$status": "<p>The status of the endpoint.</p>"
+      }
+    },
+    "HarnessEndpoints": {
+      "base": null,
+      "refs": {
+        "ListHarnessEndpointsResponse$endpoints": "<p>The list of harness endpoints.</p>"
       }
     },
     "HarnessEnvironmentArtifact": {
@@ -3446,10 +3647,18 @@
     "HarnessId": {
       "base": null,
       "refs": {
+        "CreateHarnessEndpointRequest$harnessId": "<p>The ID of the harness to create an endpoint for.</p>",
+        "DeleteHarnessEndpointRequest$harnessId": "<p>The ID of the harness that the endpoint belongs to.</p>",
         "DeleteHarnessRequest$harnessId": "<p>The ID of the harness to delete.</p>",
+        "GetHarnessEndpointRequest$harnessId": "<p>The ID of the harness that the endpoint belongs to.</p>",
         "GetHarnessRequest$harnessId": "<p>The ID of the harness to retrieve.</p>",
-        "Harness$harnessId": "<p>The ID of the Harness.</p>",
+        "Harness$harnessId": "<p>The ID of the harness.</p>",
+        "HarnessEndpoint$harnessId": "<p>The ID of the harness that the endpoint belongs to.</p>",
         "HarnessSummary$harnessId": "<p>The ID of the harness.</p>",
+        "HarnessVersionSummary$harnessId": "<p>The ID of the harness.</p>",
+        "ListHarnessEndpointsRequest$harnessId": "<p>The ID of the harness whose endpoints are listed.</p>",
+        "ListHarnessVersionsRequest$harnessId": "<p>The ID of the harness whose versions are listed.</p>",
+        "UpdateHarnessEndpointRequest$harnessId": "<p>The ID of the harness that the endpoint belongs to.</p>",
         "UpdateHarnessRequest$harnessId": "<p>The ID of the harness to update.</p>"
       }
     },
@@ -3477,6 +3686,30 @@
         "HarnessModelConfiguration$liteLlmModelConfig": "<p>The LiteLLM model configuration for connecting to third-party model providers.</p>"
       }
     },
+    "HarnessManagedMemoryConfiguration": {
+      "base": "<p>Configuration for managed memory creation.</p>",
+      "refs": {
+        "HarnessMemoryConfiguration$managedMemoryConfiguration": "<p>Harness creates and manages a memory resource in the customer's account.</p>"
+      }
+    },
+    "HarnessManagedMemoryConfigurationEventExpiryDurationInteger": {
+      "base": null,
+      "refs": {
+        "HarnessManagedMemoryConfiguration$eventExpiryDuration": "<p>Event retention in days. Defaults to 30.</p>"
+      }
+    },
+    "HarnessManagedMemoryStrategyList": {
+      "base": null,
+      "refs": {
+        "HarnessManagedMemoryConfiguration$strategies": "<p>Strategy types to enable. Defaults to [SEMANTIC, SUMMARIZATION].</p>"
+      }
+    },
+    "HarnessManagedMemoryStrategyType": {
+      "base": null,
+      "refs": {
+        "HarnessManagedMemoryStrategyList$member": null
+      }
+    },
     "HarnessMemoryConfiguration": {
       "base": "<p>The memory configuration for a harness.</p>",
       "refs": {
@@ -3497,8 +3730,10 @@
       "base": null,
       "refs": {
         "CreateHarnessRequest$harnessName": "<p>The name of the harness. Must start with a letter and contain only alphanumeric characters and underscores.</p>",
-        "Harness$harnessName": "<p>The name of the Harness.</p>",
-        "HarnessSummary$harnessName": "<p>The name of the harness.</p>"
+        "Harness$harnessName": "<p>The name of the harness.</p>",
+        "HarnessEndpoint$harnessName": "<p>The name of the harness that the endpoint belongs to.</p>",
+        "HarnessSummary$harnessName": "<p>The name of the harness.</p>",
+        "HarnessVersionSummary$harnessName": "<p>The name of the harness.</p>"
       }
     },
     "HarnessOpenAiApiFormat": {
@@ -3529,6 +3764,12 @@
       "base": "<p>A skill available to the agent.</p>",
       "refs": {
         "HarnessSkills$member": null
+      }
+    },
+    "HarnessSkillAwsSkillsSource": {
+      "base": "<p>Passed to show that AWS Skills should be included.</p>",
+      "refs": {
+        "HarnessSkill$awsSkills": "<p>AWS Skills baked into the harness's underlying Runtime.</p>"
       }
     },
     "HarnessSkillGitAuth": {
@@ -3571,7 +3812,7 @@
       "base": null,
       "refs": {
         "CreateHarnessRequest$skills": "<p>The skills available to the agent. Skills are bundles of files that the agent can pull into its context on demand.</p>",
-        "Harness$skills": "<p>The skills of the Harness.</p>",
+        "Harness$skills": "<p>The skills of the harness.</p>",
         "UpdateHarnessRequest$skills": "<p>The skills available to the agent. If specified, this replaces all existing skills. If not specified, the existing value is retained.</p>"
       }
     },
@@ -3584,8 +3825,9 @@
     "HarnessStatus": {
       "base": null,
       "refs": {
-        "Harness$status": "<p>The status of the Harness.</p>",
-        "HarnessSummary$status": "<p>The current status of the harness.</p>"
+        "Harness$status": "<p>The status of the harness.</p>",
+        "HarnessSummary$status": "<p>The current status of the harness.</p>",
+        "HarnessVersionSummary$status": "<p>The status of this harness version.</p>"
       }
     },
     "HarnessSummaries": {
@@ -3616,7 +3858,7 @@
       "base": null,
       "refs": {
         "CreateHarnessRequest$systemPrompt": "<p>The system prompt that defines the agent's behavior and instructions.</p>",
-        "Harness$systemPrompt": "<p>The system prompt of the Harness.</p>",
+        "Harness$systemPrompt": "<p>The system prompt of the harness.</p>",
         "UpdateHarnessRequest$systemPrompt": "<p>The system prompt that defines the agent's behavior. If not specified, the existing value is retained.</p>"
       }
     },
@@ -3648,7 +3890,7 @@
       "base": null,
       "refs": {
         "CreateHarnessRequest$tools": "<p>The tools available to the agent, such as remote MCP servers, AgentCore Gateway, AgentCore Browser, Code Interpreter, or inline functions.</p>",
-        "Harness$tools": "<p>The tools of the Harness.</p>",
+        "Harness$tools": "<p>The tools of the harness.</p>",
         "UpdateHarnessRequest$tools": "<p>The tools available to the agent. If specified, this replaces all existing tools. If not specified, the existing value is retained.</p>"
       }
     },
@@ -3672,10 +3914,54 @@
         "HarnessTruncationConfiguration$config": "<p>The strategy-specific configuration.</p>"
       }
     },
+    "HarnessVersion": {
+      "base": null,
+      "refs": {
+        "CreateHarnessEndpointRequest$targetVersion": "<p>The harness version that the endpoint points to and serves invocations from.</p>",
+        "GetHarnessRequest$harnessVersion": "<p>Specific version of the harness to retrieve. If omitted, returns the current Harness configuration, including its status.</p>",
+        "Harness$harnessVersion": "<p>The version of the harness. Incremented on every successful UpdateHarness.</p>",
+        "HarnessEndpoint$liveVersion": "<p>The harness version that the endpoint is currently serving.</p>",
+        "HarnessEndpoint$targetVersion": "<p>The harness version that the endpoint points to. While an update is in progress, this can differ from the live version until the endpoint finishes transitioning.</p>",
+        "HarnessSummary$harnessVersion": "<p>The latest version of the harness.</p>",
+        "HarnessVersionSummary$harnessVersion": "<p>The version of the harness that this summary describes.</p>",
+        "UpdateHarnessEndpointRequest$targetVersion": "<p>The harness version that the endpoint points to. If not specified, the existing value is retained.</p>"
+      }
+    },
+    "HarnessVersionSummaries": {
+      "base": null,
+      "refs": {
+        "ListHarnessVersionsResponse$harnessVersions": "<p>The list of harness version summaries.</p>"
+      }
+    },
+    "HarnessVersionSummary": {
+      "base": "<p>Summary information about a single version of a harness.</p>",
+      "refs": {
+        "HarnessVersionSummaries$member": null
+      }
+    },
     "HeaderName": {
       "base": null,
       "refs": {
         "RequestHeaderAllowlist$member": null
+      }
+    },
+    "HostingEnvironment": {
+      "base": "<p>A hosting environment whose workloads are allowed to invoke the target. At launch, the only supported hosting environment is AgentCore Gateway.</p>",
+      "refs": {
+        "HostingEnvironmentListType$member": null
+      }
+    },
+    "HostingEnvironmentListType": {
+      "base": null,
+      "refs": {
+        "AllowedWorkloadConfiguration$hostingEnvironments": "<p>The list of hosting environments whose workloads are allowed to invoke the target. At launch, the only supported hosting environment is AgentCore Gateway.</p>"
+      }
+    },
+    "HttpApiSchemaConfiguration": {
+      "base": "<p>The API schema configuration for an HTTP target. This schema defines the API structure that the target exposes.</p>",
+      "refs": {
+        "PassthroughTargetConfiguration$schema": "<p>The API schema configuration that defines the structure of the passthrough target's API.</p>",
+        "RuntimeTargetConfiguration$schema": "<p>The API schema configuration that defines the structure of the runtime target's API.</p>"
       }
     },
     "HttpHeaderKey": {
@@ -3837,6 +4123,55 @@
         "InferenceConfiguration$topP": "<p> The top-p sampling parameter that controls the diversity of the model's responses by limiting the cumulative probability of token choices. </p>"
       }
     },
+    "InferenceConnectorId": {
+      "base": null,
+      "refs": {
+        "InferenceConnectorSource$connectorId": "<p>The identifier for the inference connector (for example, <code>bedrock-mantle</code>, <code>openai</code>, or <code>anthropic</code>).</p>"
+      }
+    },
+    "InferenceConnectorSource": {
+      "base": "<p>The source identifying the inference connector.</p>",
+      "refs": {
+        "InferenceConnectorTargetConfiguration$source": "<p>The source configuration identifying which inference connector to use.</p>"
+      }
+    },
+    "InferenceConnectorTargetConfiguration": {
+      "base": "<p>The configuration for a connector-based inference target. This configuration uses a built-in connector that provides predefined rules for a large language model (LLM) provider.</p>",
+      "refs": {
+        "InferenceTargetConfiguration$connector": "<p>The connector-based inference configuration. Use this option to route requests to an LLM provider through a built-in connector that includes predefined provider rules.</p>"
+      }
+    },
+    "InferenceOperationConfiguration": {
+      "base": "<p>The configuration for a specific inference operation, including its request path and the models that the operation supports.</p>",
+      "refs": {
+        "InferenceOperationConfigurations$member": null
+      }
+    },
+    "InferenceOperationConfigurations": {
+      "base": null,
+      "refs": {
+        "InferenceProviderTargetConfiguration$operations": "<p>A list of per-operation configurations that map request paths to the models supported for each operation.</p>"
+      }
+    },
+    "InferenceOperationPath": {
+      "base": null,
+      "refs": {
+        "InferenceOperationConfiguration$path": "<p>The request path for this operation (for example, <code>/v1/messages</code> or <code>/v1/responses</code>).</p>",
+        "InferenceOperationConfiguration$providerPath": "<p>The provider path to forward requests to, if it differs from the request path. For example, <code>/anthropic/v1/messages</code> when the provider expects a different path than the client-facing <code>/v1/messages</code>.</p>"
+      }
+    },
+    "InferenceProviderTargetConfiguration": {
+      "base": "<p>The configuration for a provider-based inference target. This configuration explicitly defines the endpoint, model mapping, and operations used to route requests to a large language model (LLM) provider.</p>",
+      "refs": {
+        "InferenceTargetConfiguration$provider": "<p>The provider-based inference configuration. Use this option to explicitly configure the endpoint, model mapping, and operations for an LLM provider.</p>"
+      }
+    },
+    "InferenceTargetConfiguration": {
+      "base": "<p>The configuration for an inference target. An inference target routes requests to a large language model (LLM) provider, either through a built-in connector or an explicitly configured provider.</p>",
+      "refs": {
+        "TargetConfiguration$inference": "<p>The inference configuration for the target. This configuration routes requests to a large language model (LLM) provider.</p>"
+      }
+    },
     "InlineContent": {
       "base": null,
       "refs": {
@@ -3868,7 +4203,7 @@
       }
     },
     "Insight": {
-      "base": "<p>A reference to an insight analysis to run against sessions.</p>",
+      "base": "<p>A reference to an insight analysis to run against sessions during evaluation. Insights provide deeper analysis beyond individual evaluator scores, including failure detection, user intent clustering, and execution summarization.</p>",
       "refs": {
         "InsightList$member": null
       }
@@ -3876,7 +4211,7 @@
     "InsightId": {
       "base": "<p>Canonical insight identifiers using the Builtin.Insight.* naming convention. Used by BatchEvaluate, InternalEvaluate, and ServiceEngineEvaluate flows.</p>",
       "refs": {
-        "Insight$insightId": null
+        "Insight$insightId": "<p>The unique identifier of the insight to run.</p>"
       }
     },
     "InsightList": {
@@ -3920,6 +4255,30 @@
       "base": "<p>The input configuration of the interceptor.</p>",
       "refs": {
         "GatewayInterceptorConfiguration$inputConfiguration": "<p>The configuration for the input of the interceptor. This field specifies how the input to the interceptor is constructed</p>"
+      }
+    },
+    "InterceptorPayloadExclusion": {
+      "base": null,
+      "refs": {
+        "InterceptorPayloadExclusionSelector$field": "<p>The field to exclude from the interceptor input.</p>"
+      }
+    },
+    "InterceptorPayloadExclusionSelector": {
+      "base": "<p>A selector that identifies a payload field to exclude from the interceptor input.</p>",
+      "refs": {
+        "InterceptorPayloadExclusionSelectorList$member": null
+      }
+    },
+    "InterceptorPayloadExclusionSelectorList": {
+      "base": null,
+      "refs": {
+        "InterceptorPayloadFilter$exclude": "<p>The list of selectors that identify payload fields to exclude from the interceptor input.</p>"
+      }
+    },
+    "InterceptorPayloadFilter": {
+      "base": "<p>The filter that controls which fields of the request or response payload are included in the input to the interceptor.</p>",
+      "refs": {
+        "InterceptorInputConfiguration$payloadFilter": "<p>The filter that determines which parts of the request or response payload are passed as input to the interceptor.</p>"
       }
     },
     "InternalServerException": {
@@ -3996,6 +4355,7 @@
         "GetGatewayResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the gateway.</p>",
         "GetPolicyEngineResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "GetPolicyEngineSummaryResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
+        "HarnessManagedMemoryConfiguration$encryptionKeyArn": "<p>Customer-managed KMS key. Defaults to AWS-owned key. Not updatable after creation.</p>",
         "KmsConfiguration$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key.</p>",
         "PolicyEngine$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
         "PolicyEngineSummary$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the policy engine data.</p>",
@@ -4028,6 +4388,7 @@
       "base": null,
       "refs": {
         "LambdaInterceptorConfiguration$arn": "<p>The arn of the lambda function to be invoked for the interceptor.</p>",
+        "LambdaTransformConfiguration$arn": "<p>The Amazon Resource Name (ARN) of the Lambda function. This function is invoked by the gateway to transform data.</p>",
         "McpLambdaTargetConfiguration$lambdaArn": "<p>The Amazon Resource Name (ARN) of the Lambda function. This function is invoked by the gateway to communicate with the target.</p>"
       }
     },
@@ -4035,6 +4396,12 @@
       "base": "<p>The lambda configuration for the interceptor</p>",
       "refs": {
         "InterceptorConfiguration$lambda": "<p>The details of the lambda function used for the interceptor.</p>"
+      }
+    },
+    "LambdaTransformConfiguration": {
+      "base": "<p>The Lambda configuration for custom transformations. This structure defines the Lambda function that the gateway invokes to transform data.</p>",
+      "refs": {
+        "CustomTransformConfiguration$lambda": "<p>The Lambda configuration for custom transformations. This configuration defines how the gateway uses a Lambda function to transform data.</p>"
       }
     },
     "LifecycleConfiguration": {
@@ -4247,6 +4614,22 @@
       "base": null,
       "refs": {}
     },
+    "ListHarnessEndpointsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListHarnessEndpointsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListHarnessVersionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListHarnessVersionsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListHarnessesRequest": {
       "base": null,
       "refs": {}
@@ -4424,7 +4807,8 @@
     "ListingMode": {
       "base": null,
       "refs": {
-        "McpServerTargetConfiguration$listingMode": "<p>The listing mode for the MCP server target configuration. MCP resources for default targets are cached at the control plane for faster access. MCP resources for dynamic targets will be dynamically retrieved when listing tools.</p>"
+        "McpServerTargetConfiguration$listingMode": "<p>The listing mode for the MCP server target configuration. MCP resources for default targets are cached at the control plane for faster access. MCP resources for dynamic targets will be dynamically retrieved when listing tools.</p>",
+        "TargetSummary$listingMode": "<p>The listing mode for the target. MCP resources for <code>DEFAULT</code> targets are cached at the control plane for faster access. MCP resources for <code>DYNAMIC</code> targets are retrieved dynamically when listing tools.</p>"
       }
     },
     "LlmAsAJudgeEvaluatorConfig": {
@@ -4540,6 +4924,8 @@
         "ListBrowserProfilesRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListBrowsersRequest$maxResults": "<p>The maximum number of results to return in a single call. The default value is 10. The maximum value is 50.</p>",
         "ListCodeInterpretersRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
+        "ListHarnessEndpointsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "ListHarnessVersionsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListHarnessesRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListPaymentConnectorsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListPaymentManagersRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
@@ -4635,6 +5021,7 @@
       "base": null,
       "refs": {
         "HarnessAgentCoreMemoryConfiguration$arn": "<p>The ARN of the AgentCore Memory resource.</p>",
+        "HarnessManagedMemoryConfiguration$arn": "<p>The ARN of the managed AgentCore Memory resource. Read-only on Get, ignored on Create/Update input.</p>",
         "Memory$arn": "<p>The Amazon Resource Name (ARN) of the memory.</p>",
         "MemorySummary$arn": "<p>The Amazon Resource Name (ARN) of the memory.</p>"
       }
@@ -4808,6 +5195,18 @@
         "Oauth2ProviderConfigOutput$microsoftOauth2ProviderConfig": "<p>The output configuration for a Microsoft OAuth2 provider.</p>"
       }
     },
+    "ModelEntries": {
+      "base": null,
+      "refs": {
+        "InferenceOperationConfiguration$models": "<p>The list of models supported for this operation.</p>"
+      }
+    },
+    "ModelEntry": {
+      "base": "<p>A model entry that specifies a model supported for an inference operation.</p>",
+      "refs": {
+        "ModelEntries$member": null
+      }
+    },
     "ModelId": {
       "base": null,
       "refs": {
@@ -4816,6 +5215,18 @@
         "HarnessGeminiModelConfig$modelId": "<p>The Gemini model ID.</p>",
         "HarnessLiteLlmModelConfig$modelId": "<p>The LiteLLM model identifier (e.g., \"anthropic/claude-3-sonnet\").</p>",
         "HarnessOpenAiModelConfig$modelId": "<p>The OpenAI model ID.</p>"
+      }
+    },
+    "ModelMapping": {
+      "base": "<p>The configuration that translates model IDs between client-facing names and provider model IDs.</p>",
+      "refs": {
+        "InferenceProviderTargetConfiguration$modelMapping": "<p>The configuration that translates client-facing model IDs to the model IDs expected by the provider.</p>"
+      }
+    },
+    "ModelPattern": {
+      "base": null,
+      "refs": {
+        "ModelEntry$model": "<p>The model ID or glob pattern that identifies the model (for example, <code>anthropic.claude-opus-*</code> or <code>openai.gpt-oss-*</code>).</p>"
       }
     },
     "ModifyConsolidationConfiguration": {
@@ -4976,6 +5387,10 @@
         "ListBrowsersResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListCodeInterpretersRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListCodeInterpretersResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListHarnessEndpointsRequest$nextToken": "<p>The token for the next set of results.</p>",
+        "ListHarnessEndpointsResponse$nextToken": "<p>The token for the next set of results.</p>",
+        "ListHarnessVersionsRequest$nextToken": "<p>The token for the next set of results.</p>",
+        "ListHarnessVersionsResponse$nextToken": "<p>The token for the next set of results.</p>",
         "ListHarnessesRequest$nextToken": "<p>The token for the next set of results.</p>",
         "ListHarnessesResponse$nextToken": "<p>The token for the next set of results.</p>",
         "ListPaymentConnectorsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
@@ -5250,6 +5665,25 @@
       "base": null,
       "refs": {
         "StrategyConfiguration$type": "<p>The type of override for the strategy configuration.</p>"
+      }
+    },
+    "PassthroughEndpoint": {
+      "base": null,
+      "refs": {
+        "InferenceProviderTargetConfiguration$endpoint": "<p>The HTTPS endpoint of the inference provider that the gateway forwards requests to.</p>",
+        "PassthroughTargetConfiguration$endpoint": "<p>The HTTPS endpoint that the gateway forwards requests to for this passthrough target.</p>"
+      }
+    },
+    "PassthroughProtocolType": {
+      "base": null,
+      "refs": {
+        "PassthroughTargetConfiguration$protocolType": "<p>The application protocol the passthrough target implements. Required for passthrough targets.</p>"
+      }
+    },
+    "PassthroughTargetConfiguration": {
+      "base": "<p>The configuration for an HTTP passthrough target. A passthrough target forwards requests directly to an external HTTP endpoint.</p>",
+      "refs": {
+        "HttpTargetConfiguration$passthrough": "<p>The passthrough configuration for the HTTP target. A passthrough target forwards requests directly to an external HTTP endpoint.</p>"
       }
     },
     "PaymentConnectorId": {
@@ -5636,6 +6070,12 @@
         "UpdatePolicyResponse$name": "<p>The name of the updated policy.</p>"
       }
     },
+    "PolicyStatement": {
+      "base": "<p>An AgentCore policy statement, which supports plain Cedar policies as well as guardrails definitions.</p>",
+      "refs": {
+        "PolicyDefinition$policy": "<p>An AgentCore policy statement that defines the access control rules. The statement can be a Cedar policy or a guardrails definition.</p>"
+      }
+    },
     "PolicyStatus": {
       "base": null,
       "refs": {
@@ -5762,6 +6202,18 @@
         "CreateAgentRuntimeRequest$protocolConfiguration": null,
         "GetAgentRuntimeResponse$protocolConfiguration": null,
         "UpdateAgentRuntimeRequest$protocolConfiguration": null
+      }
+    },
+    "ProviderPrefix": {
+      "base": "<p>The configuration that controls how a provider prefix is applied to model IDs during translation.</p>",
+      "refs": {
+        "ModelMapping$providerPrefix": "<p>The provider prefix configuration used for model ID translation.</p>"
+      }
+    },
+    "ProviderPrefixSeparatorString": {
+      "base": null,
+      "refs": {
+        "ProviderPrefix$separator": "<p>The single character that separates the provider prefix from the model name (for example, <code>.</code>). The default is <code>.</code>.</p>"
       }
     },
     "PutResourcePolicyRequest": {
@@ -6189,7 +6641,7 @@
         "GetGatewayResponse$roleArn": "<p>The IAM role ARN that provides permissions for the gateway.</p>",
         "GetOnlineEvaluationConfigResponse$evaluationExecutionRoleArn": "<p> The Amazon Resource Name (ARN) of the IAM role used for evaluation execution. </p>",
         "GetPaymentManagerResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the payment manager.</p>",
-        "Harness$executionRoleArn": "<p>IAM role the Harness assumes when running.</p>",
+        "Harness$executionRoleArn": "<p>IAM role the harness assumes when running.</p>",
         "PaymentManagerSummary$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the payment manager.</p>",
         "UpdateAgentRuntimeRequest$roleArn": "<p>The updated IAM role ARN that provides permissions for the AgentCore Runtime.</p>",
         "UpdateGatewayRequest$roleArn": "<p>The updated IAM role ARN that provides permissions for the gateway.</p>",
@@ -6405,96 +6857,96 @@
       }
     },
     "Secret": {
-      "base": "<p>Contains information about a secret in AWS Secrets Manager.</p>",
+      "base": "<p>Contains information about a secret in Amazon Web Services Secrets Manager.</p>",
       "refs": {
         "CoinbaseCdpConfigurationOutput$apiKeySecretArn": null,
         "CoinbaseCdpConfigurationOutput$walletSecretArn": null,
         "CreateApiKeyCredentialProviderResponse$apiKeySecretArn": "<p>The Amazon Resource Name (ARN) of the secret containing the API key.</p>",
-        "CreateOauth2CredentialProviderResponse$clientSecretArn": "<p>The Amazon Resource Name (ARN) of the client secret in AWS Secrets Manager.</p>",
-        "GetApiKeyCredentialProviderResponse$apiKeySecretArn": "<p>The Amazon Resource Name (ARN) of the API key secret in AWS Secrets Manager.</p>",
-        "GetOauth2CredentialProviderResponse$clientSecretArn": "<p>The Amazon Resource Name (ARN) of the client secret in AWS Secrets Manager.</p>",
+        "CreateOauth2CredentialProviderResponse$clientSecretArn": "<p>The Amazon Resource Name (ARN) of the client secret in Amazon Web Services Secrets Manager.</p>",
+        "GetApiKeyCredentialProviderResponse$apiKeySecretArn": "<p>The Amazon Resource Name (ARN) of the API key secret in Amazon Web Services Secrets Manager.</p>",
+        "GetOauth2CredentialProviderResponse$clientSecretArn": "<p>The Amazon Resource Name (ARN) of the client secret in Amazon Web Services Secrets Manager.</p>",
         "StripePrivyConfigurationOutput$appSecretArn": null,
         "StripePrivyConfigurationOutput$authorizationPrivateKeyArn": null,
-        "UpdateApiKeyCredentialProviderResponse$apiKeySecretArn": "<p>The Amazon Resource Name (ARN) of the API key secret in AWS Secrets Manager.</p>",
-        "UpdateOauth2CredentialProviderResponse$clientSecretArn": "<p>The Amazon Resource Name (ARN) of the client secret in AWS Secrets Manager.</p>"
+        "UpdateApiKeyCredentialProviderResponse$apiKeySecretArn": "<p>The Amazon Resource Name (ARN) of the API key secret in Amazon Web Services Secrets Manager.</p>",
+        "UpdateOauth2CredentialProviderResponse$clientSecretArn": "<p>The Amazon Resource Name (ARN) of the client secret in Amazon Web Services Secrets Manager.</p>"
       }
     },
     "SecretArn": {
       "base": null,
       "refs": {
-        "Secret$secretArn": "<p>The Amazon Resource Name (ARN) of the secret in AWS Secrets Manager.</p>"
+        "Secret$secretArn": "<p>The Amazon Resource Name (ARN) of the secret in Amazon Web Services Secrets Manager.</p>"
       }
     },
     "SecretIdType": {
       "base": null,
       "refs": {
-        "SecretReference$secretId": "<p>The ID of the AWS Secrets Manager secret that stores the secret value.</p>"
+        "SecretReference$secretId": "<p>The ID of the Amazon Web Services Secrets Manager secret that stores the secret value.</p>"
       }
     },
     "SecretJsonKeyType": {
       "base": null,
       "refs": {
-        "CoinbaseCdpConfigurationOutput$apiKeySecretJsonKey": "<p>The JSON key used to extract the API key secret value from the AWS Secrets Manager secret.</p>",
-        "CoinbaseCdpConfigurationOutput$walletSecretJsonKey": "<p>The JSON key used to extract the wallet secret value from the AWS Secrets Manager secret.</p>",
-        "CreateApiKeyCredentialProviderResponse$apiKeySecretJsonKey": "<p>The JSON key used to extract the API key value from the AWS Secrets Manager secret.</p>",
-        "CreateOauth2CredentialProviderResponse$clientSecretJsonKey": "<p>The JSON key used to extract the client secret value from the AWS Secrets Manager secret.</p>",
-        "GetApiKeyCredentialProviderResponse$apiKeySecretJsonKey": "<p>The JSON key used to extract the API key value from the AWS Secrets Manager secret.</p>",
-        "GetOauth2CredentialProviderResponse$clientSecretJsonKey": "<p>The JSON key used to extract the client secret value from the AWS Secrets Manager secret.</p>",
-        "SecretReference$jsonKey": "<p>The JSON key used to extract the secret value from the AWS Secrets Manager secret.</p>",
-        "StripePrivyConfigurationOutput$appSecretJsonKey": "<p>The JSON key used to extract the app secret value from the AWS Secrets Manager secret.</p>",
-        "StripePrivyConfigurationOutput$authorizationPrivateKeyJsonKey": "<p>The JSON key used to extract the authorization private key value from the AWS Secrets Manager secret.</p>",
-        "UpdateApiKeyCredentialProviderResponse$apiKeySecretJsonKey": "<p>The JSON key used to extract the API key value from the AWS Secrets Manager secret.</p>",
-        "UpdateOauth2CredentialProviderResponse$clientSecretJsonKey": "<p>The JSON key used to extract the client secret value from the AWS Secrets Manager secret.</p>"
+        "CoinbaseCdpConfigurationOutput$apiKeySecretJsonKey": "<p>The JSON key used to extract the API key secret value from the Amazon Web Services Secrets Manager secret.</p>",
+        "CoinbaseCdpConfigurationOutput$walletSecretJsonKey": "<p>The JSON key used to extract the wallet secret value from the Amazon Web Services Secrets Manager secret.</p>",
+        "CreateApiKeyCredentialProviderResponse$apiKeySecretJsonKey": "<p>The JSON key used to extract the API key value from the Amazon Web Services Secrets Manager secret.</p>",
+        "CreateOauth2CredentialProviderResponse$clientSecretJsonKey": "<p>The JSON key used to extract the client secret value from the Amazon Web Services Secrets Manager secret.</p>",
+        "GetApiKeyCredentialProviderResponse$apiKeySecretJsonKey": "<p>The JSON key used to extract the API key value from the Amazon Web Services Secrets Manager secret.</p>",
+        "GetOauth2CredentialProviderResponse$clientSecretJsonKey": "<p>The JSON key used to extract the client secret value from the Amazon Web Services Secrets Manager secret.</p>",
+        "SecretReference$jsonKey": "<p>The JSON key used to extract the secret value from the Amazon Web Services Secrets Manager secret.</p>",
+        "StripePrivyConfigurationOutput$appSecretJsonKey": "<p>The JSON key used to extract the app secret value from the Amazon Web Services Secrets Manager secret.</p>",
+        "StripePrivyConfigurationOutput$authorizationPrivateKeyJsonKey": "<p>The JSON key used to extract the authorization private key value from the Amazon Web Services Secrets Manager secret.</p>",
+        "UpdateApiKeyCredentialProviderResponse$apiKeySecretJsonKey": "<p>The JSON key used to extract the API key value from the Amazon Web Services Secrets Manager secret.</p>",
+        "UpdateOauth2CredentialProviderResponse$clientSecretJsonKey": "<p>The JSON key used to extract the client secret value from the Amazon Web Services Secrets Manager secret.</p>"
       }
     },
     "SecretReference": {
-      "base": "<p>Contains a reference to a secret stored in AWS Secrets Manager.</p>",
+      "base": "<p>Contains a reference to a secret stored in Amazon Web Services Secrets Manager.</p>",
       "refs": {
-        "AtlassianOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
-        "CoinbaseCdpConfigurationInput$apiKeySecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the API key secret. This includes the secret ID and the JSON key used to extract the API key secret value from the secret. Required when <code>apiKeySecretSource</code> is set to <code>EXTERNAL</code>.</p>",
-        "CoinbaseCdpConfigurationInput$walletSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the wallet secret. This includes the secret ID and the JSON key used to extract the wallet secret value from the secret. Required when <code>walletSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
-        "CreateApiKeyCredentialProviderRequest$apiKeySecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the API key. This includes the secret ID and the JSON key used to extract the API key value from the secret. Required when <code>apiKeySecretSource</code> is set to <code>EXTERNAL</code>.</p>",
-        "CustomOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
-        "GithubOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
-        "GoogleOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
-        "IncludedOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
-        "LinkedinOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
-        "MicrosoftOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
-        "SalesforceOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
-        "SlackOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
-        "StripePrivyConfigurationInput$appSecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the app secret. This includes the secret ID and the JSON key used to extract the app secret value from the secret. Required when <code>appSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
-        "StripePrivyConfigurationInput$authorizationPrivateKeyConfig": "<p>A reference to the AWS Secrets Manager secret that stores the authorization private key. This includes the secret ID and the JSON key used to extract the authorization private key value from the secret. Required when <code>authorizationPrivateKeySource</code> is set to <code>EXTERNAL</code>.</p>",
-        "UpdateApiKeyCredentialProviderRequest$apiKeySecretConfig": "<p>A reference to the AWS Secrets Manager secret that stores the API key. This includes the secret ID and the JSON key used to extract the API key value from the secret. Required when <code>apiKeySecretSource</code> is set to <code>EXTERNAL</code>.</p>"
+        "AtlassianOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the Amazon Web Services Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "CoinbaseCdpConfigurationInput$apiKeySecretConfig": "<p>A reference to the Amazon Web Services Secrets Manager secret that stores the API key secret. This includes the secret ID and the JSON key used to extract the API key secret value from the secret. Required when <code>apiKeySecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "CoinbaseCdpConfigurationInput$walletSecretConfig": "<p>A reference to the Amazon Web Services Secrets Manager secret that stores the wallet secret. This includes the secret ID and the JSON key used to extract the wallet secret value from the secret. Required when <code>walletSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "CreateApiKeyCredentialProviderRequest$apiKeySecretConfig": "<p>A reference to the Amazon Web Services Secrets Manager secret that stores the API key. This includes the secret ID and the JSON key used to extract the API key value from the secret. Required when <code>apiKeySecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "CustomOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the Amazon Web Services Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "GithubOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the Amazon Web Services Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "GoogleOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the Amazon Web Services Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "IncludedOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the Amazon Web Services Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "LinkedinOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the Amazon Web Services Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "MicrosoftOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the Amazon Web Services Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "SalesforceOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the Amazon Web Services Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "SlackOauth2ProviderConfigInput$clientSecretConfig": "<p>A reference to the Amazon Web Services Secrets Manager secret that stores the client secret. This includes the secret ID and the JSON key used to extract the client secret value from the secret. Required when <code>clientSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "StripePrivyConfigurationInput$appSecretConfig": "<p>A reference to the Amazon Web Services Secrets Manager secret that stores the app secret. This includes the secret ID and the JSON key used to extract the app secret value from the secret. Required when <code>appSecretSource</code> is set to <code>EXTERNAL</code>.</p>",
+        "StripePrivyConfigurationInput$authorizationPrivateKeyConfig": "<p>A reference to the Amazon Web Services Secrets Manager secret that stores the authorization private key. This includes the secret ID and the JSON key used to extract the authorization private key value from the secret. Required when <code>authorizationPrivateKeySource</code> is set to <code>EXTERNAL</code>.</p>",
+        "UpdateApiKeyCredentialProviderRequest$apiKeySecretConfig": "<p>A reference to the Amazon Web Services Secrets Manager secret that stores the API key. This includes the secret ID and the JSON key used to extract the API key value from the secret. Required when <code>apiKeySecretSource</code> is set to <code>EXTERNAL</code>.</p>"
       }
     },
     "SecretSourceType": {
       "base": null,
       "refs": {
-        "AtlassianOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret for the Atlassian OAuth2 provider. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
-        "CoinbaseCdpConfigurationInput$apiKeySecretSource": "<p>The source type of the API key secret for the Coinbase Developer Platform. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
-        "CoinbaseCdpConfigurationInput$walletSecretSource": "<p>The source type of the wallet secret for the Coinbase Developer Platform. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
-        "CoinbaseCdpConfigurationOutput$apiKeySecretSource": "<p>The source type of the API key secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
-        "CoinbaseCdpConfigurationOutput$walletSecretSource": "<p>The source type of the wallet secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
-        "CreateApiKeyCredentialProviderRequest$apiKeySecretSource": "<p>The source type of the API key secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
-        "CreateApiKeyCredentialProviderResponse$apiKeySecretSource": "<p>The source type of the API key secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
-        "CreateOauth2CredentialProviderResponse$clientSecretSource": "<p>The source type of the client secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
-        "CustomOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
-        "GetApiKeyCredentialProviderResponse$apiKeySecretSource": "<p>The source type of the API key secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
-        "GetOauth2CredentialProviderResponse$clientSecretSource": "<p>The source type of the client secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
-        "GithubOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
-        "GoogleOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
-        "IncludedOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
-        "LinkedinOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
-        "MicrosoftOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
-        "SalesforceOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
-        "SlackOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
-        "StripePrivyConfigurationInput$appSecretSource": "<p>The source type of the app secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
-        "StripePrivyConfigurationInput$authorizationPrivateKeySource": "<p>The source type of the authorization private key. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
-        "StripePrivyConfigurationOutput$appSecretSource": "<p>The source type of the app secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
-        "StripePrivyConfigurationOutput$authorizationPrivateKeySource": "<p>The source type of the authorization private key. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
-        "UpdateApiKeyCredentialProviderRequest$apiKeySecretSource": "<p>The source type of the API key secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in AWS Secrets Manager.</p>",
-        "UpdateApiKeyCredentialProviderResponse$apiKeySecretSource": "<p>The source type of the API key secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>",
-        "UpdateOauth2CredentialProviderResponse$clientSecretSource": "<p>The source type of the client secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in AWS Secrets Manager.</p>"
+        "AtlassianOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret for the Atlassian OAuth2 provider. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
+        "CoinbaseCdpConfigurationInput$apiKeySecretSource": "<p>The source type of the API key secret for the Coinbase Developer Platform. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
+        "CoinbaseCdpConfigurationInput$walletSecretSource": "<p>The source type of the wallet secret for the Coinbase Developer Platform. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
+        "CoinbaseCdpConfigurationOutput$apiKeySecretSource": "<p>The source type of the API key secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in Amazon Web Services Secrets Manager.</p>",
+        "CoinbaseCdpConfigurationOutput$walletSecretSource": "<p>The source type of the wallet secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in Amazon Web Services Secrets Manager.</p>",
+        "CreateApiKeyCredentialProviderRequest$apiKeySecretSource": "<p>The source type of the API key secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
+        "CreateApiKeyCredentialProviderResponse$apiKeySecretSource": "<p>The source type of the API key secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in Amazon Web Services Secrets Manager.</p>",
+        "CreateOauth2CredentialProviderResponse$clientSecretSource": "<p>The source type of the client secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in Amazon Web Services Secrets Manager.</p>",
+        "CustomOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
+        "GetApiKeyCredentialProviderResponse$apiKeySecretSource": "<p>The source type of the API key secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in Amazon Web Services Secrets Manager.</p>",
+        "GetOauth2CredentialProviderResponse$clientSecretSource": "<p>The source type of the client secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in Amazon Web Services Secrets Manager.</p>",
+        "GithubOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
+        "GoogleOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
+        "IncludedOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
+        "LinkedinOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
+        "MicrosoftOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
+        "SalesforceOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
+        "SlackOauth2ProviderConfigInput$clientSecretSource": "<p>The source type of the client secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
+        "StripePrivyConfigurationInput$appSecretSource": "<p>The source type of the app secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
+        "StripePrivyConfigurationInput$authorizationPrivateKeySource": "<p>The source type of the authorization private key. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
+        "StripePrivyConfigurationOutput$appSecretSource": "<p>The source type of the app secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in Amazon Web Services Secrets Manager.</p>",
+        "StripePrivyConfigurationOutput$authorizationPrivateKeySource": "<p>The source type of the authorization private key. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in Amazon Web Services Secrets Manager.</p>",
+        "UpdateApiKeyCredentialProviderRequest$apiKeySecretSource": "<p>The source type of the API key secret. Use <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if you manage the secret yourself in Amazon Web Services Secrets Manager.</p>",
+        "UpdateApiKeyCredentialProviderResponse$apiKeySecretSource": "<p>The source type of the API key secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in Amazon Web Services Secrets Manager.</p>",
+        "UpdateOauth2CredentialProviderResponse$clientSecretSource": "<p>The source type of the client secret. Either <code>MANAGED</code> if the secret is managed by the service, or <code>EXTERNAL</code> if managed by the user in Amazon Web Services Secrets Manager.</p>"
       }
     },
     "SecretsManagerLocation": {
@@ -6706,7 +7158,8 @@
     "Statement": {
       "base": null,
       "refs": {
-        "CedarPolicy$statement": "<p>The Cedar policy statement that defines the authorization logic. This statement follows Cedar syntax and specifies principals, actions, resources, and conditions that determine when access should be allowed or denied.</p>"
+        "CedarPolicy$statement": "<p>The Cedar policy statement that defines the authorization logic. This statement follows Cedar syntax and specifies principals, actions, resources, and conditions that determine when access should be allowed or denied.</p>",
+        "PolicyStatement$statement": "<p>The body of the AgentCore policy statement. Contains the policy logic, which can be a Cedar policy or a guardrails definition.</p>"
       }
     },
     "StaticOverride": {
@@ -6755,6 +7208,24 @@
         "UpdateGatewayTargetResponse$statusReasons": "<p>The reasons for the current status of the updated gateway target.</p>"
       }
     },
+    "StickinessConfiguration": {
+      "base": "<p>The configuration for session-sticky routing to a target. Session stickiness routes requests that share a session identifier to the same target.</p>",
+      "refs": {
+        "PassthroughTargetConfiguration$stickinessConfiguration": "<p>The session stickiness configuration for the passthrough target. This configuration routes requests within the same session to the same target.</p>"
+      }
+    },
+    "StickinessConfigurationIdentifierString": {
+      "base": null,
+      "refs": {
+        "StickinessConfiguration$identifier": "<p>The expression that identifies where to extract the session identifier from the request (for example, <code>$context.header.x-session-id</code>).</p>"
+      }
+    },
+    "StickinessTimeout": {
+      "base": null,
+      "refs": {
+        "StickinessConfiguration$timeout": "<p>The session stickiness timeout, in seconds. After this duration of inactivity, the session affinity expires. Valid values range from 1 to 86400.</p>"
+      }
+    },
     "StrategyConfiguration": {
       "base": "<p>Contains configuration information for a memory strategy.</p>",
       "refs": {
@@ -6798,6 +7269,8 @@
         "ApiGatewayToolOverride$path": "<p>Resource path in the REST API (e.g., <code>/pets</code>). Must explicitly match an existing path in the REST API.</p>",
         "CategoricalScaleDefinition$definition": "<p> The description that explains what this categorical rating represents and when it should be used. </p>",
         "ConcurrentModificationException$message": null,
+        "ConnectorParameterOverride$path": "<p>A JSON Pointer path identifying the parameter (for example, <code>/numberOfResults</code> or <code>/filter</code>).</p>",
+        "ConnectorParameterOverride$description": "<p>An agent-facing description override for this parameter.</p>",
         "CreateOauth2CredentialProviderResponse$callbackUrl": "<p>Callback URL to register on the OAuth2 credential provider as an allowed callback URL. This URL is where the OAuth2 authorization server redirects users after they complete the authorization flow.</p>",
         "CreateOnlineEvaluationConfigResponse$failureReason": "<p> The reason for failure if the online evaluation configuration creation or execution failed. </p>",
         "CustomParameterMap$key": null,
@@ -6805,6 +7278,7 @@
         "DatasetSummary$description": "<p> The description of the dataset. </p>",
         "DecryptionFailure$message": null,
         "DeleteMemoryStrategyInput$memoryStrategyId": "<p>The unique identifier of the memory strategy to delete.</p>",
+        "EnabledConnectors$member": null,
         "EncryptionFailure$message": null,
         "EpisodicConsolidationOverride$modelId": "<p>The model ID used for the consolidation step of the episodic memory strategy.</p>",
         "EpisodicExtractionOverride$modelId": "<p>The model ID used for the extraction step of the episodic memory strategy.</p>",
@@ -6832,9 +7306,11 @@
         "HarnessAgentCoreMemoryRetrievalConfigs$key": null,
         "HarnessAgentCoreRuntimeEnvironment$agentRuntimeName": "<p>The name of the underlying AgentCore Runtime.</p>",
         "HarnessAgentCoreRuntimeEnvironment$agentRuntimeId": "<p>The ID of the underlying AgentCore Runtime.</p>",
+        "HarnessEndpoint$failureReason": "<p>The reason the endpoint's last create or update operation failed.</p>",
         "HarnessSkillGitAuth$username": "<p>Username for authentication. Defaults to 'oauth2' if not specified.</p>",
         "HarnessSkillGitSource$path": "<p>Subdirectory within the repository containing the skill.</p>",
         "HarnessSummarizationConfiguration$summarizationSystemPrompt": "<p>The system prompt used for generating summaries.</p>",
+        "HarnessVersionSummary$failureReason": "<p>Reason why the create or update operation for this harness version failed.</p>",
         "InvocationConfiguration$payloadDeliveryBucketName": "<p>The S3 bucket name for event payload delivery.</p>",
         "ListApiKeyCredentialProvidersRequest$nextToken": "<p>Pagination token.</p>",
         "ListApiKeyCredentialProvidersResponse$nextToken": "<p>Pagination token for the next page of results.</p>",
@@ -7079,6 +7555,7 @@
         "CreateDatasetRequest$tags": "<p> A map of tag keys and values to assign to the dataset. </p>",
         "CreateEvaluatorRequest$tags": "<p>A map of tag keys and values to assign to an AgentCore Evaluator. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateGatewayRequest$tags": "<p>A map of key-value pairs to associate with the gateway as metadata tags.</p>",
+        "CreateHarnessEndpointRequest$tags": "<p>Tags to apply to the endpoint resource.</p>",
         "CreateHarnessRequest$tags": "<p>Tags to apply to the harness resource.</p>",
         "CreateMemoryInput$tags": "<p>A map of tag keys and values to assign to an AgentCore Memory. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateOauth2CredentialProviderRequest$tags": "<p>A map of tag keys and values to assign to the OAuth2 credential provider. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
@@ -7234,6 +7711,12 @@
       "base": null,
       "refs": {
         "TargetTrafficSplitEntry$weight": "<p>The percentage of traffic to route to this variant.</p>"
+      }
+    },
+    "TargetType": {
+      "base": null,
+      "refs": {
+        "TargetSummary$targetType": "<p>The type of the target.</p>"
       }
     },
     "Temperature": {
@@ -7634,6 +8117,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateHarnessEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateHarnessEndpointResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateHarnessRequest": {
       "base": null,
       "refs": {}
@@ -7982,6 +8473,29 @@
         "ManagedVpcResource$vpcIdentifier": "<p>The ID of the VPC that contains your private resource.</p>"
       }
     },
+    "WafConfiguration": {
+      "base": "<p>The Amazon Web Services WAF configuration for the gateway. This configuration controls how the gateway behaves when the associated web ACL cannot be evaluated.</p>",
+      "refs": {
+        "CreateGatewayResponse$wafConfiguration": "<p>The Amazon Web Services WAF configuration for the gateway.</p>",
+        "GetGatewayResponse$wafConfiguration": "<p>The Amazon Web Services WAF configuration for the gateway.</p>",
+        "UpdateGatewayRequest$wafConfiguration": "<p>The updated Amazon Web Services WAF configuration for the gateway.</p>",
+        "UpdateGatewayResponse$wafConfiguration": "<p>The Amazon Web Services WAF configuration for the gateway.</p>"
+      }
+    },
+    "WafFailureMode": {
+      "base": null,
+      "refs": {
+        "WafConfiguration$failureMode": "<p>The failure mode that determines how the gateway handles requests when Amazon Web Services WAF is unreachable or times out. Valid values include:</p> <ul> <li> <p> <code>FAIL_CLOSE</code> - The gateway blocks requests when Amazon Web Services WAF cannot be evaluated.</p> </li> <li> <p> <code>FAIL_OPEN</code> - The gateway allows requests when Amazon Web Services WAF cannot be evaluated.</p> </li> </ul>"
+      }
+    },
+    "WebAclArn": {
+      "base": null,
+      "refs": {
+        "CreateGatewayResponse$webAclArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services WAF web ACL associated with the gateway.</p>",
+        "GetGatewayResponse$webAclArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services WAF web ACL associated with the gateway.</p>",
+        "UpdateGatewayResponse$webAclArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services WAF web ACL associated with the gateway.</p>"
+      }
+    },
     "WeightedOverride": {
       "base": "<p>A weighted configuration bundle override that splits traffic between multiple bundle versions.</p>",
       "refs": {
@@ -8029,6 +8543,12 @@
         "ListWorkloadIdentitiesResponse$workloadIdentities": "<p>The list of workload identities.</p>"
       }
     },
+    "WorkloadIdentityNameListType": {
+      "base": null,
+      "refs": {
+        "AllowedWorkloadConfiguration$workloadIdentities": "<p>The list of workload identities that are allowed to invoke the target.</p>"
+      }
+    },
     "WorkloadIdentityNameType": {
       "base": null,
       "refs": {
@@ -8039,6 +8559,7 @@
         "GetWorkloadIdentityResponse$name": "<p>The name of the workload identity.</p>",
         "UpdateWorkloadIdentityRequest$name": "<p>The name of the workload identity to update.</p>",
         "UpdateWorkloadIdentityResponse$name": "<p>The name of the workload identity.</p>",
+        "WorkloadIdentityNameListType$member": null,
         "WorkloadIdentityType$name": "<p>The name of the workload identity.</p>"
       }
     },

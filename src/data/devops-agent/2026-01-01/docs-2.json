@@ -113,11 +113,11 @@
         "CreateAssetRequest$agentSpaceId": "<p>The unique identifier for the agent space where the asset will be created</p>",
         "CreateBacklogTaskRequest$agentSpaceId": "<p>The unique identifier for the agent space where the task will be created</p>",
         "CreateChatRequest$agentSpaceId": null,
-        "CreateTriggerRequest$agentSpaceId": null,
+        "CreateTriggerRequest$agentSpaceId": "<p>The unique identifier for the agent space where the Trigger will be created</p>",
         "DeleteAgentSpaceInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "DeleteAssetFileRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
         "DeleteAssetRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
-        "DeleteTriggerRequest$agentSpaceId": null,
+        "DeleteTriggerRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the Trigger</p>",
         "DisableOperatorAppInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "DisassociateServiceInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "EnableOperatorAppInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
@@ -130,7 +130,7 @@
         "GetBacklogTaskRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the task</p>",
         "GetOperatorAppInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "GetRecommendationRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the recommendation</p>",
-        "GetTriggerRequest$agentSpaceId": null,
+        "GetTriggerRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the Trigger</p>",
         "ListAssetFilesRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
         "ListAssetVersionsRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
         "ListAssetsRequest$agentSpaceId": "<p>The unique identifier for the agent space to list assets from</p>",
@@ -143,10 +143,10 @@
         "ListPendingMessagesRequest$agentSpaceId": null,
         "ListPendingMessagesResponse$agentSpaceId": null,
         "ListRecommendationsRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the recommendations</p>",
-        "ListTriggersRequest$agentSpaceId": null,
+        "ListTriggersRequest$agentSpaceId": "<p>The unique identifier for the agent space whose Triggers should be listed</p>",
         "ListWebhooksInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "SendMessageRequest$agentSpaceId": "<p>The agent space identifier</p>",
-        "Trigger$agentSpaceId": null,
+        "Trigger$agentSpaceId": "<p>The agent space this Trigger belongs to</p>",
         "UpdateAgentSpaceInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "UpdateAssetFileRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
         "UpdateAssetRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the asset</p>",
@@ -156,7 +156,7 @@
         "UpdateOperatorAppIdpConfigInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "UpdateOperatorAppIdpConfigOutput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>",
         "UpdateRecommendationRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the recommendation</p>",
-        "UpdateTriggerRequest$agentSpaceId": null,
+        "UpdateTriggerRequest$agentSpaceId": "<p>The unique identifier for the agent space containing the Trigger</p>",
         "ValidateAwsAssociationsInput$agentSpaceId": "<p>The unique identifier of the AgentSpace</p>"
       }
     },
@@ -190,10 +190,16 @@
       }
     },
     "AssetContent": {
-      "base": "<p>Content for an asset, either a single file or a zip bundle</p>",
+      "base": "<p>Content for an asset: a single file, a zip bundle, or a source URL to import from</p>",
       "refs": {
-        "CreateAssetRequest$content": "<p>The content for the asset. Provide a single file or a zip bundle.</p>",
-        "UpdateAssetRequest$content": "<p>Optional content to set or replace. A single file adds or replaces one file; a zip replaces all files.</p>"
+        "CreateAssetRequest$content": "<p>The content for the asset. Provide a single file, a zip bundle, or a sourceUrl to import from an external source.</p>",
+        "UpdateAssetRequest$content": "<p>Optional content update. A single file adds or replaces one file; a zip replaces all files; a sourceUrl re-syncs from the original source.</p>"
+      }
+    },
+    "AssetContentUrl": {
+      "base": "<p>URL to a source repository or directory containing asset content</p>",
+      "refs": {
+        "AssetSourceUrlContent$url": "<p>The source URL to import asset content from</p>"
       }
     },
     "AssetFile": {
@@ -265,6 +271,12 @@
       "base": null,
       "refs": {
         "ListAssetsResponse$items": "<p>The list of assets for the agent space</p>"
+      }
+    },
+    "AssetSourceUrlContent": {
+      "base": "<p>Content for an asset sourced from an external URL.</p>",
+      "refs": {
+        "AssetContent$sourceUrl": "<p>A source URL to import asset content from</p>"
       }
     },
     "AssetType": {
@@ -348,6 +360,14 @@
         "UpdateAssociationOutput$association": null
       }
     },
+    "AssociationCapabilities": {
+      "base": "<p>Per-capability enablement for the AWS DevOps Agent. Absent capability = disabled.</p>",
+      "refs": {
+        "AssociateServiceInput$capabilities": "<p>Enabled capabilities for this association.</p>",
+        "Association$capabilities": "<p>Enabled capabilities for this association.</p>",
+        "UpdateAssociationInput$capabilities": "<p>Enabled capabilities for this association.</p>"
+      }
+    },
     "AssociationId": {
       "base": "<p>Unique identifier for a service association within an AgentSpace</p>",
       "refs": {
@@ -413,9 +433,22 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "CapabilityConfiguration$enabled": "<p>Whether the capability is enabled.</p>",
         "MCPServerOAuth3LOConfig$supportCodeChallenge": "<p>Whether the service supports PKCE (Proof Key for Code Exchange) for enhanced security during the OAuth flow.</p>",
         "SendMessageContentBlockStopEvent$last": "<p>Whether this is the final content block in the response</p>",
         "Task$hasLinkedTasks": "<p>Indicates if this task has other tasks linked to it</p>"
+      }
+    },
+    "CapabilityConfiguration": {
+      "base": "<p>Capability configuration for the AWS DevOps Agent.</p>",
+      "refs": {
+        "AssociationCapabilities$value": null
+      }
+    },
+    "CapabilityType": {
+      "base": "<p>AWS DevOps Agent capability types representing the set of automated capabilities that can be enabled per association.</p>",
+      "refs": {
+        "AssociationCapabilities$key": null
       }
     },
     "CertificateString": {
@@ -451,6 +484,7 @@
         "MCPServerOAuth3LOConfig$clientId": "<p>OAuth client ID for authenticating with the service.</p>",
         "MCPServerOAuthClientCredentialsConfig$clientId": "<p>OAuth client ID for authenticating with the service.</p>",
         "PagerDutyOAuthClientCredentialsConfig$clientId": "<p>OAuth client ID for authenticating with the service.</p>",
+        "RemoteAgentOAuthClientCredentialsConfig$clientId": "<p>OAuth client ID for authenticating with the service.</p>",
         "ServiceNowOAuthClientCredentialsConfig$clientId": "<p>OAuth client ID for authenticating with the service.</p>"
       }
     },
@@ -458,9 +492,9 @@
       "base": "<p>Client secret for service authentication.</p>",
       "refs": {
         "DynatraceOAuthClientCredentialsConfig$clientSecret": "<p>OAuth client secret for authenticating with the service.</p>",
-        "MCPServerOAuth3LOConfig$clientSecret": "<p>OAuth client secret for authenticating with the service. Required for confidential clients or when PKCE is not supported. Optional for public clients using PKCE.</p>",
         "MCPServerOAuthClientCredentialsConfig$clientSecret": "<p>OAuth client secret for authenticating with the service.</p>",
         "PagerDutyOAuthClientCredentialsConfig$clientSecret": "<p>OAuth client secret for authenticating with the service.</p>",
+        "RemoteAgentOAuthClientCredentialsConfig$clientSecret": "<p>OAuth client secret for authenticating with the service.</p>",
         "ServiceNowOAuthClientCredentialsConfig$clientSecret": "<p>OAuth client secret for authenticating with the service.</p>"
       }
     },
@@ -539,7 +573,7 @@
       "refs": {}
     },
     "CreateTriggerRequest": {
-      "base": null,
+      "base": "<p>Request structure for creating a new Trigger</p>",
       "refs": {}
     },
     "CreateTriggerRequestClientTokenString": {
@@ -549,7 +583,7 @@
       }
     },
     "CreateTriggerResponse": {
-      "base": null,
+      "base": "<p>Response structure for creating a new Trigger</p>",
       "refs": {}
     },
     "CustomHeaderName": {
@@ -629,11 +663,11 @@
       "refs": {}
     },
     "DeleteTriggerRequest": {
-      "base": null,
+      "base": "<p>Request structure for deleting a Trigger</p>",
       "refs": {}
     },
     "DeleteTriggerResponse": {
-      "base": null,
+      "base": "<p>Response structure for deleting a Trigger</p>",
       "refs": {}
     },
     "DeregisterServiceInput": {
@@ -792,6 +826,7 @@
         "MCPServerOAuth3LOConfig$exchangeParameters": "<p>OAuth token exchange parameters for authenticating with the service.</p>",
         "MCPServerOAuthClientCredentialsConfig$exchangeParameters": "<p>OAuth token exchange parameters for authenticating with the service.</p>",
         "PagerDutyOAuthClientCredentialsConfig$exchangeParameters": "<p>OAuth token exchange parameters for authenticating with the service.</p>",
+        "RemoteAgentOAuthClientCredentialsConfig$exchangeParameters": "<p>OAuth token exchange parameters for authenticating with the service.</p>",
         "ServiceNowOAuthClientCredentialsConfig$exchangeParameters": "<p>OAuth token exchange parameters for authenticating with the service.</p>"
       }
     },
@@ -928,11 +963,11 @@
       "refs": {}
     },
     "GetTriggerRequest": {
-      "base": null,
+      "base": "<p>Request structure for getting a Trigger</p>",
       "refs": {}
     },
     "GetTriggerResponse": {
-      "base": null,
+      "base": "<p>Response structure for getting a Trigger</p>",
       "refs": {}
     },
     "GitHubConfiguration": {
@@ -1395,7 +1430,7 @@
       "refs": {}
     },
     "ListTriggersRequest": {
-      "base": null,
+      "base": "<p>Request structure for listing Triggers in an agent space</p>",
       "refs": {}
     },
     "ListTriggersRequestMaxResultsInteger": {
@@ -1405,7 +1440,7 @@
       }
     },
     "ListTriggersResponse": {
-      "base": null,
+      "base": "<p>Response structure for listing Triggers</p>",
       "refs": {}
     },
     "ListWebhooksInput": {
@@ -1605,6 +1640,12 @@
       "base": null,
       "refs": {
         "MCPServerOAuth3LOConfig$clientName": "<p>User friendly OAuth client name specified by end user.</p>"
+      }
+    },
+    "MCPServerOAuth3LOConfigClientSecretString": {
+      "base": "<p>Client secret for service authentication.</p>",
+      "refs": {
+        "MCPServerOAuth3LOConfig$clientSecret": "<p>OAuth client secret for authenticating with the service. Required for confidential clients or when PKCE is not supported. Optional for public clients using PKCE.</p>"
       }
     },
     "MCPServerOAuth3LOConfigExchangeUrlString": {
@@ -1813,7 +1854,7 @@
         "ListServicesInput$nextToken": "<p>Token for the next page of results.</p>",
         "ListServicesOutput$nextToken": "<p>Token to retrieve the next page of results, if there are more results.</p>",
         "ListTriggersRequest$nextToken": "<p>Pagination token from a previous response to retrieve the next page of results</p>",
-        "ListTriggersResponse$nextToken": null
+        "ListTriggersResponse$nextToken": "<p>Pagination token to retrieve the next page of results</p>"
       }
     },
     "OAuthAdditionalStepDetails": {
@@ -2142,6 +2183,36 @@
         "AdditionalServiceDetails$pagerduty": "<p>Pagerduty service details.</p>"
       }
     },
+    "RegisteredRemoteAgentDetails": {
+      "base": "<p>Details specific to a registered token-based remote A2A agent.</p>",
+      "refs": {
+        "AdditionalServiceDetails$remoteagent": "<p>Remote A2A agent-specific service details (token-based auth).</p>"
+      }
+    },
+    "RegisteredRemoteAgentDetailsDescriptionString": {
+      "base": "<p>Description field</p>",
+      "refs": {
+        "RegisteredRemoteAgentDetails$description": null
+      }
+    },
+    "RegisteredRemoteAgentSigV4Details": {
+      "base": "<p>Details specific to a registered SigV4-authenticated remote A2A agent.</p>",
+      "refs": {
+        "AdditionalServiceDetails$remoteagentsigv4": "<p>Remote A2A agent-specific service details (SigV4 auth).</p>"
+      }
+    },
+    "RegisteredRemoteAgentSigV4DetailsDescriptionString": {
+      "base": "<p>Description field</p>",
+      "refs": {
+        "RegisteredRemoteAgentSigV4Details$description": null
+      }
+    },
+    "RegisteredRemoteAgentSigV4DetailsServiceString": {
+      "base": null,
+      "refs": {
+        "RegisteredRemoteAgentSigV4Details$service": "<p>The AWS service name for SigV4 signing.</p>"
+      }
+    },
     "RegisteredService": {
       "base": "<p>Represents a registered service with its configuration and accessible resources.</p>",
       "refs": {
@@ -2165,6 +2236,150 @@
       "base": "<p>Details specific to a registered Slack workspace.</p>",
       "refs": {
         "AdditionalServiceDetails$slack": "<p>Slack-specific service details.</p>"
+      }
+    },
+    "RemoteAgentAPIKeyConfig": {
+      "base": "<p>API key configuration for remote A2A agent.</p>",
+      "refs": {
+        "RemoteAgentAuthorizationConfig$apiKey": "<p>Remote agent configuration with API key authentication.</p>"
+      }
+    },
+    "RemoteAgentAPIKeyConfigApiKeyHeaderString": {
+      "base": null,
+      "refs": {
+        "RemoteAgentAPIKeyConfig$apiKeyHeader": "<p>HTTP header name to send the API key in requests to the service.</p>"
+      }
+    },
+    "RemoteAgentAPIKeyConfigApiKeyNameString": {
+      "base": null,
+      "refs": {
+        "RemoteAgentAPIKeyConfig$apiKeyName": "<p>User friendly API key name specified by end user.</p>"
+      }
+    },
+    "RemoteAgentAPIKeyConfigApiKeyValueString": {
+      "base": "<p>API Key Value for service.</p>",
+      "refs": {
+        "RemoteAgentAPIKeyConfig$apiKeyValue": "<p>API key value for authenticating with the service.</p>"
+      }
+    },
+    "RemoteAgentAuthorizationConfig": {
+      "base": "<p>Authorization configuration for remote A2A agents with token-based auth (API key, OAuth, bearer token).</p>",
+      "refs": {
+        "RemoteAgentServiceDetails$authorizationConfig": "<p>Remote agent authorization configuration.</p>"
+      }
+    },
+    "RemoteAgentAuthorizationMethod": {
+      "base": "<p>Supported authorization methods for remote A2A agents.</p>",
+      "refs": {
+        "RegisteredRemoteAgentDetails$authorizationMethod": "<p>The authorization method used by the remote agent.</p>"
+      }
+    },
+    "RemoteAgentBearerTokenConfig": {
+      "base": "<p>Bearer token configuration for remote A2A agent (RFC 6750).</p>",
+      "refs": {
+        "RemoteAgentAuthorizationConfig$bearerToken": "<p>Remote agent configuration with Bearer token (RFC 6750).</p>"
+      }
+    },
+    "RemoteAgentBearerTokenConfigAuthorizationHeaderString": {
+      "base": null,
+      "refs": {
+        "RemoteAgentBearerTokenConfig$authorizationHeader": "<p>HTTP header name to send the bearer token in requests to the service. Defaults to 'Authorization' per RFC 6750.</p>"
+      }
+    },
+    "RemoteAgentBearerTokenConfigTokenNameString": {
+      "base": null,
+      "refs": {
+        "RemoteAgentBearerTokenConfig$tokenName": "<p>User friendly bearer token name specified by end user.</p>"
+      }
+    },
+    "RemoteAgentBearerTokenConfigTokenValueString": {
+      "base": "<p>Token value for authentication.</p>",
+      "refs": {
+        "RemoteAgentBearerTokenConfig$tokenValue": "<p>Bearer token value in alphanumeric for authenticating with the service.</p>"
+      }
+    },
+    "RemoteAgentConfiguration": {
+      "base": "<p>Configuration for token-based remote A2A agent integration.</p>",
+      "refs": {
+        "ServiceConfiguration$remoteagent": "<p>Remote A2A agent integration configuration (token-based auth).</p>"
+      }
+    },
+    "RemoteAgentEndpoint": {
+      "base": "<p>HTTPS endpoint URL for a remote A2A agent.</p>",
+      "refs": {
+        "RegisteredRemoteAgentDetails$endpoint": null,
+        "RegisteredRemoteAgentSigV4Details$endpoint": null,
+        "RemoteAgentServiceDetails$endpoint": null,
+        "RemoteAgentSigV4ServiceDetails$endpoint": null
+      }
+    },
+    "RemoteAgentName": {
+      "base": "<p>Name identifier for a remote A2A agent.</p>",
+      "refs": {
+        "RegisteredRemoteAgentDetails$name": null,
+        "RegisteredRemoteAgentSigV4Details$name": null,
+        "RemoteAgentServiceDetails$name": null,
+        "RemoteAgentSigV4ServiceDetails$name": null
+      }
+    },
+    "RemoteAgentOAuthClientCredentialsConfig": {
+      "base": "<p>OAuth client credentials configuration for remote A2A agent.</p>",
+      "refs": {
+        "RemoteAgentAuthorizationConfig$oAuthClientCredentials": "<p>Remote agent configuration with OAuth client credentials.</p>"
+      }
+    },
+    "RemoteAgentOAuthClientCredentialsConfigClientNameString": {
+      "base": null,
+      "refs": {
+        "RemoteAgentOAuthClientCredentialsConfig$clientName": "<p>User friendly OAuth client name specified by end user.</p>"
+      }
+    },
+    "RemoteAgentOAuthClientCredentialsConfigExchangeUrlString": {
+      "base": null,
+      "refs": {
+        "RemoteAgentOAuthClientCredentialsConfig$exchangeUrl": "<p>OAuth token exchange URL.</p>"
+      }
+    },
+    "RemoteAgentServiceDetails": {
+      "base": "<p>Complete service details for token-based remote A2A agent integration.</p>",
+      "refs": {
+        "ServiceDetails$remoteagent": "<p>Remote A2A agent service details (token-based auth).</p>"
+      }
+    },
+    "RemoteAgentServiceDetailsDescriptionString": {
+      "base": "<p>Description field</p>",
+      "refs": {
+        "RemoteAgentServiceDetails$description": null
+      }
+    },
+    "RemoteAgentSigV4AuthorizationConfig": {
+      "base": "<p>SigV4 authorization configuration for remote A2A agent.</p>",
+      "refs": {
+        "RemoteAgentSigV4ServiceDetails$authorizationConfig": "<p>Remote agent SigV4 authorization configuration.</p>"
+      }
+    },
+    "RemoteAgentSigV4AuthorizationConfigServiceString": {
+      "base": null,
+      "refs": {
+        "RemoteAgentSigV4AuthorizationConfig$service": "<p>The AWS service name for SigV4 signing.</p>"
+      }
+    },
+    "RemoteAgentSigV4Configuration": {
+      "base": "<p>Configuration for SigV4-authenticated remote A2A agent integration.</p>",
+      "refs": {
+        "ServiceConfiguration$remoteagentsigv4": "<p>Remote A2A agent integration configuration (SigV4 auth).</p>"
+      }
+    },
+    "RemoteAgentSigV4ServiceDetails": {
+      "base": "<p>Complete service details for SigV4-authenticated remote A2A agent integration.</p>",
+      "refs": {
+        "ServiceDetails$remoteagentsigv4": "<p>Remote A2A agent service details (SigV4 auth).</p>"
+      }
+    },
+    "RemoteAgentSigV4ServiceDetailsDescriptionString": {
+      "base": "<p>Description field</p>",
+      "refs": {
+        "RemoteAgentSigV4ServiceDetails$description": null
       }
     },
     "ResourceConfigDnsResolution": {
@@ -2206,13 +2421,13 @@
         "CreateChatResponse$executionId": "<p>The unique identifier for the created execution</p>",
         "DeleteAssetFileRequest$assetId": "<p>The unique identifier of the asset containing the file</p>",
         "DeleteAssetRequest$assetId": "<p>The unique identifier of the asset to delete</p>",
-        "DeleteTriggerRequest$triggerId": null,
+        "DeleteTriggerRequest$triggerId": "<p>The unique identifier of the Trigger to delete</p>",
         "GetAssetContentRequest$assetId": "<p>The unique identifier of the asset</p>",
         "GetAssetFileRequest$assetId": "<p>The unique identifier of the asset containing the file</p>",
         "GetAssetRequest$assetId": "<p>The unique identifier of the asset to retrieve</p>",
         "GetBacklogTaskRequest$taskId": "<p>The unique identifier of the task to retrieve</p>",
         "GetRecommendationRequest$recommendationId": "<p>The unique identifier for the recommendation to retrieve</p>",
-        "GetTriggerRequest$triggerId": null,
+        "GetTriggerRequest$triggerId": "<p>The unique identifier of the Trigger to retrieve</p>",
         "ListAssetFilesRequest$assetId": "<p>The unique identifier of the asset whose files to list</p>",
         "ListAssetVersionsRequest$assetId": "<p>The unique identifier of the asset whose versions to list</p>",
         "ListChatsRequest$userId": "<p>The user identifier to list chats for. This field is deprecated and will be ignored — the service resolves user identity from the authenticated session.</p>",
@@ -2225,12 +2440,12 @@
         "ReferenceInput$associationId": "<p>Association identifier of the external system</p>",
         "SendMessageRequest$userId": "<p>User identifier. This field is deprecated and will be ignored — the service resolves user identity from the authenticated session.</p>",
         "TaskFilter$primaryTaskId": "<p>Filter by primary task ID to get linked tasks</p>",
-        "Trigger$triggerId": null,
+        "Trigger$triggerId": "<p>The unique identifier for this Trigger</p>",
         "UpdateAssetFileRequest$assetId": "<p>The unique identifier of the asset containing the file</p>",
         "UpdateAssetRequest$assetId": "<p>The unique identifier of the asset to update</p>",
         "UpdateBacklogTaskRequest$taskId": "<p>The unique identifier of the task to update</p>",
         "UpdateRecommendationRequest$recommendationId": "<p>The unique identifier for the recommendation to update</p>",
-        "UpdateTriggerRequest$triggerId": null
+        "UpdateTriggerRequest$triggerId": "<p>The unique identifier of the Trigger to update</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -2242,9 +2457,13 @@
       "refs": {
         "AWSConfiguration$assumableRoleArn": "<p>Role ARN to be assumed by AIDevOps to operate on behalf of customer.</p>",
         "EnableOperatorAppInput$operatorAppRoleArn": "<p>The IAM role end users assume to access AIDevOps APIs</p>",
+        "GitHubConfiguration$runtimeRoleArn": "<p>Optional role ARN that AIDevOps assumes at runtime for automatic verification testing and VPC connectivity on this association.</p>",
+        "GitLabConfiguration$runtimeRoleArn": "<p>Optional role ARN that AIDevOps assumes at runtime for automatic verification testing and VPC connectivity on this association.</p>",
         "MCPServerSigV4AuthorizationConfig$mcpRoleArn": "<p>IAM role ARN to assume for SigV4 signing. Optional — when omitted, credentials are resolved at runtime via a monitor account association.</p>",
         "RegisteredAzureIdentityDetails$webIdentityRoleArn": "<p>The role ARN to be assumed by DevOps Agent for requesting Web Identity Token.</p>",
         "RegisteredMCPServerSigV4Details$mcpRoleArn": null,
+        "RegisteredRemoteAgentSigV4Details$roleArn": null,
+        "RemoteAgentSigV4AuthorizationConfig$roleArn": null,
         "SourceAwsConfiguration$assumableRoleArn": "<p>Role ARN to be assumed by AIDevOps to operate on behalf of customer.</p>"
       }
     },
@@ -2255,7 +2474,7 @@
       }
     },
     "ScheduleExpression": {
-      "base": null,
+      "base": "<p>Schedule expression used by a TIME_BASED Trigger</p>",
       "refs": {
         "ScheduleCondition$expression": "<p>The schedule expression</p>"
       }
@@ -2271,7 +2490,8 @@
       "base": "<p>List of OAuth scopes.</p>",
       "refs": {
         "MCPServerOAuth3LOConfig$scopes": "<p>OAuth scopes for 3LO authentication. The service will always request scope offline_access.</p>",
-        "MCPServerOAuthClientCredentialsConfig$scopes": "<p>OAuth scopes for 3LO authentication. The service will always request scope offline_access.</p>"
+        "MCPServerOAuthClientCredentialsConfig$scopes": "<p>OAuth scopes for 3LO authentication. The service will always request scope offline_access.</p>",
+        "RemoteAgentOAuthClientCredentialsConfig$scopes": "<p>OAuth scopes for authentication.</p>"
       }
     },
     "SecurityGroupId": {
@@ -2480,7 +2700,9 @@
       "base": "<p>AWS region identifier or wildcard (*) for SigV4a multi-region signing.</p>",
       "refs": {
         "MCPServerSigV4AuthorizationConfig$region": "<p>AWS region for SigV4 signing. Use '*' for SigV4a multi-region signing.</p>",
-        "RegisteredMCPServerSigV4Details$region": "<p>AWS region for SigV4 signing. Use '*' for SigV4a multi-region signing.</p>"
+        "RegisteredMCPServerSigV4Details$region": "<p>AWS region for SigV4 signing. Use '*' for SigV4a multi-region signing.</p>",
+        "RegisteredRemoteAgentSigV4Details$region": null,
+        "RemoteAgentSigV4AuthorizationConfig$region": null
       }
     },
     "SlackChannel": {
@@ -2627,6 +2849,7 @@
         "RegisteredMCPServerDetails$endpoint": "<p>The MCP server endpoint URL.</p>",
         "RegisteredMCPServerDetails$apiKeyHeader": "<p>If the MCP server uses API key authentication, these details are provided.</p>",
         "RegisteredNewRelicDetails$accountId": "<p>The NewRelic account ID.</p>",
+        "RegisteredRemoteAgentDetails$apiKeyHeader": "<p>If the remote agent uses API key authentication, the header name.</p>",
         "RegisteredSlackServiceDetails$teamId": "<p>The Slack team ID.</p>",
         "RegisteredSlackServiceDetails$teamName": "<p>The Slack team name.</p>",
         "ResourceNotFoundException$message": "<p>Detailed error message describing which resource was not found.</p>",
@@ -2637,7 +2860,7 @@
         "SendMessageContentBlockStopEvent$text": "<p>The accumulated complete content text</p>",
         "SendMessageContext$currentPage": "<p>The current page or view the user is on</p>",
         "SendMessageContext$lastMessage": "<p>The ID of the last message in the conversation</p>",
-        "SendMessageContext$userActionResponse": "<p>Response to a UI prompt (not a text conversation message)</p>",
+        "SendMessageContext$userActionResponse": "<p>Response to a UI prompt (not a text conversation message). Operator App SDK clients set this to the control-string sentinel `\"APPROVAL_ACTION\"` when the request is resuming a paused tool call after an operator approval decision; in that case the structured decision context lives on the sibling `approvalAction` member and the chat agent reads from there. Preserved as a String for back-compat: pre-typed-approval clients still encode arbitrary UI-prompt responses as JSON in this field, and the chat agent parses them out during the transition.</p>",
         "SendMessageJsonDelta$partialJson": "<p>Partial JSON string</p>",
         "SendMessageResponseCompletedEvent$responseId": "<p>The response ID</p>",
         "SendMessageResponseCreatedEvent$responseId": "<p>The response ID</p>",
@@ -2850,7 +3073,7 @@
       }
     },
     "TriggerAction": {
-      "base": null,
+      "base": "<p>Action a Trigger performs when it fires</p>",
       "refs": {
         "CreateTriggerRequest$action": "<p>The action the new Trigger performs when it fires</p>",
         "Trigger$action": "<p>The action this Trigger performs when it fires</p>"
@@ -2864,13 +3087,13 @@
       }
     },
     "TriggerList": {
-      "base": null,
+      "base": "<p>List of Triggers</p>",
       "refs": {
         "ListTriggersResponse$items": "<p>The list of Triggers</p>"
       }
     },
     "TriggerStatus": {
-      "base": null,
+      "base": "<p>The status of a Trigger</p>",
       "refs": {
         "CreateTriggerRequest$status": "<p>The initial status of the Trigger</p>",
         "ListTriggersRequest$status": "<p>Filter results to Triggers in this status</p>",
@@ -2879,7 +3102,7 @@
       }
     },
     "TriggerType": {
-      "base": null,
+      "base": "<p>How a Trigger is fired</p>",
       "refs": {
         "CreateTriggerRequest$type": "<p>How the new Trigger fires</p>",
         "Trigger$type": "<p>How this Trigger fires</p>"
@@ -2984,7 +3207,7 @@
       "refs": {}
     },
     "UpdateTriggerRequest": {
-      "base": null,
+      "base": "<p>Request structure for updating a Trigger</p>",
       "refs": {}
     },
     "UpdateTriggerRequestClientTokenString": {
@@ -2994,7 +3217,7 @@
       }
     },
     "UpdateTriggerResponse": {
-      "base": null,
+      "base": "<p>Response structure for updating a Trigger</p>",
       "refs": {}
     },
     "UsageMetric": {

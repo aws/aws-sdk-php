@@ -1462,7 +1462,9 @@
         "azureidentity":{"shape":"RegisteredAzureIdentityDetails"},
         "mcpservergrafana":{"shape":"RegisteredGrafanaServerDetails"},
         "pagerduty":{"shape":"RegisteredPagerDutyDetails"},
-        "mcpserversigv4":{"shape":"RegisteredMCPServerSigV4Details"}
+        "mcpserversigv4":{"shape":"RegisteredMCPServerSigV4Details"},
+        "remoteagent":{"shape":"RegisteredRemoteAgentDetails"},
+        "remoteagentsigv4":{"shape":"RegisteredRemoteAgentSigV4Details"}
       },
       "union":true
     },
@@ -1533,9 +1535,16 @@
       "type":"structure",
       "members":{
         "file":{"shape":"AssetFileContent"},
-        "zip":{"shape":"AssetZipContent"}
+        "zip":{"shape":"AssetZipContent"},
+        "sourceUrl":{"shape":"AssetSourceUrlContent"}
       },
       "union":true
+    },
+    "AssetContentUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"https://.*"
     },
     "AssetFile":{
       "type":"structure",
@@ -1584,7 +1593,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"[a-zA-Z0-9_./-]+"
+      "pattern":"[a-zA-Z0-9_./ ()-]+"
     },
     "AssetFileSummary":{
       "type":"structure",
@@ -1620,6 +1629,13 @@
     "AssetList":{
       "type":"list",
       "member":{"shape":"Asset"}
+    },
+    "AssetSourceUrlContent":{
+      "type":"structure",
+      "required":["url"],
+      "members":{
+        "url":{"shape":"AssetContentUrl"}
+      }
     },
     "AssetType":{
       "type":"string",
@@ -1701,7 +1717,8 @@
           "locationName":"agentSpaceId"
         },
         "serviceId":{"shape":"ServiceId"},
-        "configuration":{"shape":"ServiceConfiguration"}
+        "configuration":{"shape":"ServiceConfiguration"},
+        "capabilities":{"shape":"AssociationCapabilities"}
       }
     },
     "AssociateServiceOutput":{
@@ -1729,8 +1746,14 @@
         "status":{"shape":"ValidationStatus"},
         "associationId":{"shape":"AssociationId"},
         "serviceId":{"shape":"ServiceId"},
-        "configuration":{"shape":"ServiceConfiguration"}
+        "configuration":{"shape":"ServiceConfiguration"},
+        "capabilities":{"shape":"AssociationCapabilities"}
       }
+    },
+    "AssociationCapabilities":{
+      "type":"map",
+      "key":{"shape":"CapabilityType"},
+      "value":{"shape":"CapabilityConfiguration"}
     },
     "AssociationId":{
       "type":"string",
@@ -1787,6 +1810,19 @@
     "Boolean":{
       "type":"boolean",
       "box":true
+    },
+    "CapabilityConfiguration":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"Boolean"}
+      }
+    },
+    "CapabilityType":{
+      "type":"string",
+      "enum":[
+        "RELEASE_READINESS_REVIEW",
+        "RELEASE_READINESS_REVIEW_AUTOMATED_TESTING"
+      ]
     },
     "CertificateString":{
       "type":"string",
@@ -2847,7 +2883,8 @@
         "repoId":{"shape":"String"},
         "owner":{"shape":"String"},
         "ownerType":{"shape":"GithubRepoOwnerType"},
-        "instanceIdentifier":{"shape":"String"}
+        "instanceIdentifier":{"shape":"String"},
+        "runtimeRoleArn":{"shape":"RoleArn"}
       }
     },
     "GitLabConfiguration":{
@@ -2859,7 +2896,8 @@
       "members":{
         "projectId":{"shape":"String"},
         "projectPath":{"shape":"String"},
-        "instanceIdentifier":{"shape":"String"}
+        "instanceIdentifier":{"shape":"String"},
+        "runtimeRoleArn":{"shape":"RoleArn"}
       }
     },
     "GitLabDetails":{
@@ -3944,7 +3982,7 @@
         "returnToEndpoint":{"shape":"MCPServerOAuth3LOConfigReturnToEndpointString"},
         "authorizationUrl":{"shape":"MCPServerOAuth3LOConfigAuthorizationUrlString"},
         "exchangeUrl":{"shape":"MCPServerOAuth3LOConfigExchangeUrlString"},
-        "clientSecret":{"shape":"ClientSecret"},
+        "clientSecret":{"shape":"MCPServerOAuth3LOConfigClientSecretString"},
         "supportCodeChallenge":{"shape":"Boolean"},
         "scopes":{"shape":"Scopes"}
       }
@@ -3958,6 +3996,13 @@
       "max":100,
       "min":1,
       "pattern":"[\\p{L}\\p{N}\\p{Z}._-]+"
+    },
+    "MCPServerOAuth3LOConfigClientSecretString":{
+      "type":"string",
+      "max":512,
+      "min":0,
+      "pattern":"[\\S]*",
+      "sensitive":true
     },
     "MCPServerOAuth3LOConfigExchangeUrlString":{
       "type":"string",
@@ -4289,7 +4334,9 @@
         "mcpserver",
         "mcpserversplunk",
         "azureidentity",
-        "mcpserversigv4"
+        "mcpserversigv4",
+        "remoteagent",
+        "remoteagentsigv4"
       ]
     },
     "Priority":{
@@ -4640,6 +4687,57 @@
         "scopes":{"shape":"PagerDutyScopesList"}
       }
     },
+    "RegisteredRemoteAgentDetails":{
+      "type":"structure",
+      "required":[
+        "name",
+        "endpoint",
+        "authorizationMethod"
+      ],
+      "members":{
+        "name":{"shape":"RemoteAgentName"},
+        "endpoint":{"shape":"RemoteAgentEndpoint"},
+        "description":{"shape":"RegisteredRemoteAgentDetailsDescriptionString"},
+        "authorizationMethod":{"shape":"RemoteAgentAuthorizationMethod"},
+        "apiKeyHeader":{"shape":"String"}
+      }
+    },
+    "RegisteredRemoteAgentDetailsDescriptionString":{
+      "type":"string",
+      "max":500,
+      "min":0,
+      "pattern":"[\\p{L}\\p{N}\\p{P}\\p{S}\\p{Z}]+",
+      "sensitive":true
+    },
+    "RegisteredRemoteAgentSigV4Details":{
+      "type":"structure",
+      "required":[
+        "name",
+        "endpoint",
+        "region",
+        "service"
+      ],
+      "members":{
+        "name":{"shape":"RemoteAgentName"},
+        "endpoint":{"shape":"RemoteAgentEndpoint"},
+        "description":{"shape":"RegisteredRemoteAgentSigV4DetailsDescriptionString"},
+        "region":{"shape":"SigV4Region"},
+        "service":{"shape":"RegisteredRemoteAgentSigV4DetailsServiceString"},
+        "roleArn":{"shape":"RoleArn"}
+      }
+    },
+    "RegisteredRemoteAgentSigV4DetailsDescriptionString":{
+      "type":"string",
+      "max":500,
+      "min":0,
+      "pattern":"[\\p{L}\\p{N}\\p{P}\\p{S}\\p{Z}]+",
+      "sensitive":true
+    },
+    "RegisteredRemoteAgentSigV4DetailsServiceString":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
     "RegisteredService":{
       "type":"structure",
       "required":[
@@ -4676,6 +4774,180 @@
         "teamId":{"shape":"String"},
         "teamName":{"shape":"String"}
       }
+    },
+    "RemoteAgentAPIKeyConfig":{
+      "type":"structure",
+      "required":[
+        "apiKeyName",
+        "apiKeyValue",
+        "apiKeyHeader"
+      ],
+      "members":{
+        "apiKeyName":{"shape":"RemoteAgentAPIKeyConfigApiKeyNameString"},
+        "apiKeyValue":{"shape":"RemoteAgentAPIKeyConfigApiKeyValueString"},
+        "apiKeyHeader":{"shape":"RemoteAgentAPIKeyConfigApiKeyHeaderString"}
+      }
+    },
+    "RemoteAgentAPIKeyConfigApiKeyHeaderString":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9-_]+"
+    },
+    "RemoteAgentAPIKeyConfigApiKeyNameString":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9_\\s-]+"
+    },
+    "RemoteAgentAPIKeyConfigApiKeyValueString":{
+      "type":"string",
+      "min":1,
+      "pattern":"[!-~]([ \\t]*[!-~])*",
+      "sensitive":true
+    },
+    "RemoteAgentAuthorizationConfig":{
+      "type":"structure",
+      "members":{
+        "apiKey":{"shape":"RemoteAgentAPIKeyConfig"},
+        "oAuthClientCredentials":{"shape":"RemoteAgentOAuthClientCredentialsConfig"},
+        "bearerToken":{"shape":"RemoteAgentBearerTokenConfig"}
+      },
+      "union":true
+    },
+    "RemoteAgentAuthorizationMethod":{
+      "type":"string",
+      "enum":[
+        "oauth-client-credentials",
+        "api-key",
+        "bearer-token"
+      ]
+    },
+    "RemoteAgentBearerTokenConfig":{
+      "type":"structure",
+      "required":[
+        "tokenName",
+        "tokenValue"
+      ],
+      "members":{
+        "tokenName":{"shape":"RemoteAgentBearerTokenConfigTokenNameString"},
+        "tokenValue":{"shape":"RemoteAgentBearerTokenConfigTokenValueString"},
+        "authorizationHeader":{"shape":"RemoteAgentBearerTokenConfigAuthorizationHeaderString"}
+      }
+    },
+    "RemoteAgentBearerTokenConfigAuthorizationHeaderString":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9-]+"
+    },
+    "RemoteAgentBearerTokenConfigTokenNameString":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9_\\s-]+"
+    },
+    "RemoteAgentBearerTokenConfigTokenValueString":{
+      "type":"string",
+      "pattern":"[\\S]+",
+      "sensitive":true
+    },
+    "RemoteAgentConfiguration":{
+      "type":"structure",
+      "members":{}
+    },
+    "RemoteAgentEndpoint":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"https://[a-zA-Z0-9.-]+(?::[0-9]+)?(?:/.*)?"
+    },
+    "RemoteAgentName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "RemoteAgentOAuthClientCredentialsConfig":{
+      "type":"structure",
+      "required":[
+        "clientId",
+        "clientSecret",
+        "exchangeUrl"
+      ],
+      "members":{
+        "clientName":{"shape":"RemoteAgentOAuthClientCredentialsConfigClientNameString"},
+        "clientId":{"shape":"ClientId"},
+        "exchangeParameters":{"shape":"ExchangeParameters"},
+        "clientSecret":{"shape":"ClientSecret"},
+        "exchangeUrl":{"shape":"RemoteAgentOAuthClientCredentialsConfigExchangeUrlString"},
+        "scopes":{"shape":"Scopes"}
+      }
+    },
+    "RemoteAgentOAuthClientCredentialsConfigClientNameString":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[\\p{L}\\p{N}\\p{Z}._-]+"
+    },
+    "RemoteAgentOAuthClientCredentialsConfigExchangeUrlString":{
+      "type":"string",
+      "pattern":"https://[a-zA-Z0-9.-]+(?::[0-9]+)?(?:/.*)?"
+    },
+    "RemoteAgentServiceDetails":{
+      "type":"structure",
+      "required":[
+        "name",
+        "endpoint",
+        "authorizationConfig"
+      ],
+      "members":{
+        "name":{"shape":"RemoteAgentName"},
+        "endpoint":{"shape":"RemoteAgentEndpoint"},
+        "description":{"shape":"RemoteAgentServiceDetailsDescriptionString"},
+        "authorizationConfig":{"shape":"RemoteAgentAuthorizationConfig"}
+      }
+    },
+    "RemoteAgentServiceDetailsDescriptionString":{
+      "type":"string",
+      "max":500,
+      "min":0,
+      "pattern":"[\\p{L}\\p{N}\\p{P}\\p{S}\\p{Z}]+",
+      "sensitive":true
+    },
+    "RemoteAgentSigV4AuthorizationConfig":{
+      "type":"structure",
+      "required":[
+        "region",
+        "service"
+      ],
+      "members":{
+        "region":{"shape":"SigV4Region"},
+        "service":{"shape":"RemoteAgentSigV4AuthorizationConfigServiceString"},
+        "roleArn":{"shape":"RoleArn"}
+      }
+    },
+    "RemoteAgentSigV4AuthorizationConfigServiceString":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "RemoteAgentSigV4Configuration":{
+      "type":"structure",
+      "members":{}
+    },
+    "RemoteAgentSigV4ServiceDetails":{
+      "type":"structure",
+      "required":[
+        "name",
+        "endpoint",
+        "authorizationConfig"
+      ],
+      "members":{
+        "name":{"shape":"RemoteAgentName"},
+        "endpoint":{"shape":"RemoteAgentEndpoint"},
+        "description":{"shape":"RemoteAgentSigV4ServiceDetailsDescriptionString"},
+        "authorizationConfig":{"shape":"RemoteAgentSigV4AuthorizationConfig"}
+      }
+    },
+    "RemoteAgentSigV4ServiceDetailsDescriptionString":{
+      "type":"string",
+      "max":500,
+      "min":0,
+      "pattern":"[\\p{L}\\p{N}\\p{P}\\p{S}\\p{Z}]+",
+      "sensitive":true
     },
     "ResourceConfigDnsResolution":{
       "type":"string",
@@ -4940,7 +5212,9 @@
         "mcpserver",
         "mcpserversplunk",
         "azureidentity",
-        "mcpserversigv4"
+        "mcpserversigv4",
+        "remoteagent",
+        "remoteagentsigv4"
       ]
     },
     "ServiceConfiguration":{
@@ -4962,7 +5236,9 @@
         "azuredevops":{"shape":"AzureDevOpsConfiguration"},
         "mcpservergrafana":{"shape":"MCPServerGrafanaConfiguration"},
         "pagerduty":{"shape":"PagerDutyConfiguration"},
-        "mcpserversigv4":{"shape":"MCPServerSigV4Configuration"}
+        "mcpserversigv4":{"shape":"MCPServerSigV4Configuration"},
+        "remoteagent":{"shape":"RemoteAgentConfiguration"},
+        "remoteagentsigv4":{"shape":"RemoteAgentSigV4Configuration"}
       },
       "union":true
     },
@@ -4980,7 +5256,9 @@
         "mcpservergrafana":{"shape":"GrafanaServiceDetails"},
         "pagerduty":{"shape":"PagerDutyDetails"},
         "azureidentity":{"shape":"RegisteredAzureIdentityDetails"},
-        "mcpserversigv4":{"shape":"MCPServerSigV4ServiceDetails"}
+        "mcpserversigv4":{"shape":"MCPServerSigV4ServiceDetails"},
+        "remoteagent":{"shape":"RemoteAgentServiceDetails"},
+        "remoteagentsigv4":{"shape":"RemoteAgentSigV4ServiceDetails"}
       },
       "union":true
     },
@@ -5299,7 +5577,9 @@
       "type":"string",
       "enum":[
         "INVESTIGATION",
-        "EVALUATION"
+        "EVALUATION",
+        "RELEASE_READINESS_REVIEW",
+        "RELEASE_TESTING"
       ]
     },
     "ThrottlingException":{
@@ -5511,7 +5791,8 @@
           "location":"uri",
           "locationName":"associationId"
         },
-        "configuration":{"shape":"ServiceConfiguration"}
+        "configuration":{"shape":"ServiceConfiguration"},
+        "capabilities":{"shape":"AssociationCapabilities"}
       }
     },
     "UpdateAssociationOutput":{

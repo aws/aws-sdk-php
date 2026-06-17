@@ -14,6 +14,23 @@
     "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "AssociateGlossaryTerms":{
+      "name":"AssociateGlossaryTerms",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateGlossaryTermsRequest"},
+      "output":{"shape":"AssociateGlossaryTermsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "BatchCreatePartition":{
       "name":"BatchCreatePartition",
       "http":{
@@ -160,6 +177,22 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"InvalidInputException"}
+      ]
+    },
+    "BatchGetIterableForms":{
+      "name":"BatchGetIterableForms",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchGetIterableFormsRequest"},
+      "output":{"shape":"BatchGetIterableFormsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "BatchGetJobs":{
@@ -536,6 +569,41 @@
         {"shape":"ResourceNumberLimitExceededException"}
       ]
     },
+    "CreateGlossary":{
+      "name":"CreateGlossary",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateGlossaryRequest"},
+      "output":{"shape":"CreateGlossaryResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AlreadyExistsException"}
+      ]
+    },
+    "CreateGlossaryTerm":{
+      "name":"CreateGlossaryTerm",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateGlossaryTermRequest"},
+      "output":{"shape":"CreateGlossaryTermResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AlreadyExistsException"}
+      ]
+    },
     "CreateGlueIdentityCenterConfiguration":{
       "name":"CreateGlueIdentityCenterConfiguration",
       "http":{
@@ -881,6 +949,55 @@
         {"shape":"ConcurrentModificationException"}
       ]
     },
+    "DeleteAsset":{
+      "name":"DeleteAsset",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteAssetRequest"},
+      "output":{"shape":"DeleteAssetResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "DeleteAssetType":{
+      "name":"DeleteAssetType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteAssetTypeRequest"},
+      "output":{"shape":"DeleteAssetTypeResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "DeleteAttachment":{
+      "name":"DeleteAttachment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteAttachmentRequest"},
+      "output":{"shape":"DeleteAttachmentResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "DeleteBlueprint":{
       "name":"DeleteBlueprint",
       "http":{
@@ -1080,6 +1197,56 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"InvalidInputException"}
+      ]
+    },
+    "DeleteFormType":{
+      "name":"DeleteFormType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteFormTypeRequest"},
+      "output":{"shape":"DeleteFormTypeResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "DeleteGlossary":{
+      "name":"DeleteGlossary",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteGlossaryRequest"},
+      "output":{"shape":"DeleteGlossaryResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ConflictException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "DeleteGlossaryTerm":{
+      "name":"DeleteGlossaryTerm",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteGlossaryTermRequest"},
+      "output":{"shape":"DeleteGlossaryTermResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "DeleteGlueIdentityCenterConfiguration":{
@@ -1490,6 +1657,55 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"InternalServiceException"},
         {"shape":"InvalidInputException"}
+      ]
+    },
+    "DisassociateGlossaryTerms":{
+      "name":"DisassociateGlossaryTerms",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateGlossaryTermsRequest"},
+      "output":{"shape":"DisassociateGlossaryTermsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetAsset":{
+      "name":"GetAsset",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAssetInput"},
+      "output":{"shape":"GetAssetOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidInputException"}
+      ]
+    },
+    "GetAssetType":{
+      "name":"GetAssetType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAssetTypeRequest"},
+      "output":{"shape":"GetAssetTypeResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetBlueprint":{
@@ -1985,6 +2201,52 @@
         {"shape":"ValidationException"},
         {"shape":"FederationSourceException"},
         {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetFormType":{
+      "name":"GetFormType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetFormTypeRequest"},
+      "output":{"shape":"GetFormTypeResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetGlossary":{
+      "name":"GetGlossary",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetGlossaryRequest"},
+      "output":{"shape":"GetGlossaryResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetGlossaryTerm":{
+      "name":"GetGlossaryTerm",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetGlossaryTermRequest"},
+      "output":{"shape":"GetGlossaryTermResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetGlueIdentityCenterConfiguration":{
@@ -2769,6 +3031,21 @@
         {"shape":"OperationTimeoutException"}
       ]
     },
+    "ListAssetTypes":{
+      "name":"ListAssetTypes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAssetTypesRequest"},
+      "output":{"shape":"ListAssetTypesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListBlueprints":{
       "name":"ListBlueprints",
       "http":{
@@ -2965,6 +3242,51 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "ListFormTypes":{
+      "name":"ListFormTypes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListFormTypesRequest"},
+      "output":{"shape":"ListFormTypesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListGlossaries":{
+      "name":"ListGlossaries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListGlossariesRequest"},
+      "output":{"shape":"ListGlossariesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListGlossaryTerms":{
+      "name":"ListGlossaryTerms",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListGlossaryTermsRequest"},
+      "output":{"shape":"ListGlossaryTermsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListIntegrationResourceProperties":{
       "name":"ListIntegrationResourceProperties",
       "http":{
@@ -2980,6 +3302,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"EntityNotFoundException"},
         {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"}
+      ]
+    },
+    "ListIterableForms":{
+      "name":"ListIterableForms",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListIterableFormsRequest"},
+      "output":{"shape":"ListIterableFormsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InvalidInputException"}
       ]
     },
@@ -3186,6 +3524,56 @@
         {"shape":"InvalidInputException"}
       ]
     },
+    "PutAsset":{
+      "name":"PutAsset",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutAssetRequest"},
+      "output":{"shape":"PutAssetResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "PutAssetType":{
+      "name":"PutAssetType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutAssetTypeRequest"},
+      "output":{"shape":"PutAssetTypeResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "PutAttachment":{
+      "name":"PutAttachment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutAttachmentRequest"},
+      "output":{"shape":"PutAttachmentResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "PutDataCatalogEncryptionSettings":{
       "name":"PutDataCatalogEncryptionSettings",
       "http":{
@@ -3212,6 +3600,22 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"InvalidInputException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "PutFormType":{
+      "name":"PutFormType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutFormTypeRequest"},
+      "output":{"shape":"PutFormTypeResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "PutResourcePolicy":{
@@ -3377,6 +3781,21 @@
         {"shape":"OperationNotSupportedException"},
         {"shape":"SessionBusyException"},
         {"shape":"IllegalSessionStateException"}
+      ]
+    },
+    "Search":{
+      "name":"Search",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SearchInput"},
+      "output":{"shape":"SearchOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "SearchTables":{
@@ -4012,6 +4431,42 @@
         {"shape":"ValidationException"}
       ]
     },
+    "UpdateGlossary":{
+      "name":"UpdateGlossary",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateGlossaryRequest"},
+      "output":{"shape":"UpdateGlossaryResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AlreadyExistsException"}
+      ]
+    },
+    "UpdateGlossaryTerm":{
+      "name":"UpdateGlossaryTerm",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateGlossaryTermRequest"},
+      "output":{"shape":"UpdateGlossaryTermResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AlreadyExistsException"}
+      ]
+    },
     "UpdateGlueIdentityCenterConfiguration":{
       "name":"UpdateGlueIdentityCenterConfiguration",
       "http":{
@@ -4543,6 +4998,91 @@
       "max":2048,
       "min":20
     },
+    "AssetDescription":{"type":"string"},
+    "AssetFormEntry":{
+      "type":"structure",
+      "members":{
+        "FormTypeId":{"shape":"FormTypeId"},
+        "Content":{"shape":"FormContent"}
+      }
+    },
+    "AssetFormKey":{"type":"string"},
+    "AssetFormMap":{
+      "type":"map",
+      "key":{"shape":"AssetFormKey"},
+      "value":{"shape":"AssetFormEntry"}
+    },
+    "AssetId":{
+      "type":"string",
+      "max":1087,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\-\\:\\/\\.\\_\\*]+"
+    },
+    "AssetName":{"type":"string"},
+    "AssetTypeFormKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^(?![0-9_])\\w+$|^_\\w*[a-zA-Z0-9]\\w*$"
+    },
+    "AssetTypeFormReference":{
+      "type":"structure",
+      "required":["FormTypeIdentifier"],
+      "members":{
+        "FormTypeIdentifier":{"shape":"FormTypeId"}
+      }
+    },
+    "AssetTypeFormsMap":{
+      "type":"map",
+      "key":{"shape":"AssetTypeFormKey"},
+      "value":{"shape":"AssetTypeFormReference"},
+      "max":100,
+      "min":1
+    },
+    "AssetTypeId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "AssetTypeItem":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"AssetTypeId"},
+        "Name":{"shape":"AssetTypeName"}
+      }
+    },
+    "AssetTypeItemList":{
+      "type":"list",
+      "member":{"shape":"AssetTypeItem"}
+    },
+    "AssetTypeName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^(?![0-9_])\\w+$|^_\\w*[a-zA-Z0-9]\\w*$"
+    },
+    "AssociateGlossaryTermsRequest":{
+      "type":"structure",
+      "required":[
+        "Identifier",
+        "GlossaryTermIdentifiers"
+      ],
+      "members":{
+        "Identifier":{"shape":"AssetId"},
+        "GlossaryTermIdentifiers":{"shape":"GlossaryTermIdList"},
+        "ClientToken":{
+          "shape":"HashString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "AssociateGlossaryTermsResponse":{
+      "type":"structure",
+      "members":{
+        "Identifier":{"shape":"AssetId"},
+        "GlossaryTerms":{"shape":"GlossaryTermIdList"}
+      }
+    },
     "AthenaConnectorSource":{
       "type":"structure",
       "required":[
@@ -4561,6 +5101,12 @@
         "SchemaName":{"shape":"EnclosedInStringProperty"},
         "OutputSchemas":{"shape":"GlueSchemas"}
       }
+    },
+    "AttachmentName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-zA-Z][a-zA-Z0-9_]*$"
     },
     "AttemptCount":{"type":"integer"},
     "AuditColumnNamesList":{
@@ -4895,6 +5441,26 @@
       "members":{
         "DevEndpoints":{"shape":"DevEndpointList"},
         "DevEndpointsNotFound":{"shape":"DevEndpointNames"}
+      }
+    },
+    "BatchGetIterableFormsRequest":{
+      "type":"structure",
+      "required":[
+        "AssetIdentifier",
+        "IterableFormName",
+        "ItemIdentifiers"
+      ],
+      "members":{
+        "AssetIdentifier":{"shape":"AssetId"},
+        "IterableFormName":{"shape":"IterableFormName"},
+        "ItemIdentifiers":{"shape":"ItemIdentifierList"}
+      }
+    },
+    "BatchGetIterableFormsResponse":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"IterableFormItemList"},
+        "Errors":{"shape":"ItemErrorList"}
       }
     },
     "BatchGetJobsRequest":{
@@ -7060,6 +7626,53 @@
         "Arguments":{"shape":"MapValue"}
       }
     },
+    "CreateGlossaryRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"GlossaryName"},
+        "Description":{"shape":"MetadataDescription"},
+        "ClientToken":{
+          "shape":"HashString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateGlossaryResponse":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"GlossaryId"},
+        "Name":{"shape":"GlossaryName"},
+        "Description":{"shape":"MetadataDescription"}
+      }
+    },
+    "CreateGlossaryTermRequest":{
+      "type":"structure",
+      "required":[
+        "GlossaryIdentifier",
+        "Name"
+      ],
+      "members":{
+        "GlossaryIdentifier":{"shape":"GlossaryId"},
+        "Name":{"shape":"GlossaryTermName"},
+        "ShortDescription":{"shape":"GlossaryShortDescription"},
+        "LongDescription":{"shape":"GlossaryLongDescription"},
+        "ClientToken":{
+          "shape":"HashString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateGlossaryTermResponse":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"GlossaryTermId"},
+        "GlossaryId":{"shape":"GlossaryId"},
+        "Name":{"shape":"GlossaryTermName"},
+        "ShortDescription":{"shape":"GlossaryShortDescription"},
+        "LongDescription":{"shape":"GlossaryLongDescription"}
+      }
+    },
     "CreateGlueIdentityCenterConfigurationRequest":{
       "type":"structure",
       "required":["InstanceArn"],
@@ -7553,6 +8166,7 @@
         "RowTag":{"shape":"RowTag"}
       }
     },
+    "CreatedAt":{"type":"timestamp"},
     "CreatedTimestamp":{"type":"string"},
     "CredentialKey":{
       "type":"string",
@@ -8257,6 +8871,45 @@
       "min":1,
       "pattern":".*[^<>&'\"].*"
     },
+    "DeleteAssetRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"AssetId"}
+      }
+    },
+    "DeleteAssetResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteAssetTypeRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"AssetTypeId"}
+      }
+    },
+    "DeleteAssetTypeResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteAttachmentRequest":{
+      "type":"structure",
+      "required":[
+        "Identifier",
+        "AttachmentName"
+      ],
+      "members":{
+        "Identifier":{"shape":"AssetId"},
+        "AttachmentName":{"shape":"AttachmentName"}
+      }
+    },
+    "DeleteAttachmentResponse":{
+      "type":"structure",
+      "members":{
+        "Identifier":{"shape":"AssetId"}
+      }
+    },
     "DeleteBehavior":{
       "type":"string",
       "enum":[
@@ -8437,6 +9090,39 @@
       }
     },
     "DeleteDevEndpointResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteFormTypeRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"FormTypeId"}
+      }
+    },
+    "DeleteFormTypeResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteGlossaryRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"GlossaryId"}
+      }
+    },
+    "DeleteGlossaryResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteGlossaryTermRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"GlossaryTermId"}
+      }
+    },
+    "DeleteGlossaryTermResponse":{
       "type":"structure",
       "members":{}
     },
@@ -8983,6 +9669,28 @@
         "UpdateBehavior":{"shape":"UpdateCatalogBehavior"},
         "Table":{"shape":"EnclosedInStringProperty"},
         "Database":{"shape":"EnclosedInStringProperty"}
+      }
+    },
+    "DisassociateGlossaryTermsRequest":{
+      "type":"structure",
+      "required":[
+        "Identifier",
+        "GlossaryTermIdentifiers"
+      ],
+      "members":{
+        "Identifier":{"shape":"AssetId"},
+        "GlossaryTermIdentifiers":{"shape":"GlossaryTermIdList"},
+        "ClientToken":{
+          "shape":"HashString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "DisassociateGlossaryTermsResponse":{
+      "type":"structure",
+      "members":{
+        "Identifier":{"shape":"AssetId"},
+        "GlossaryTerms":{"shape":"GlossaryTermIdList"}
       }
     },
     "DisplayName":{
@@ -9652,6 +10360,34 @@
         "JobRunId":{"shape":"HashString"}
       }
     },
+    "FormContent":{"type":"string"},
+    "FormTypeId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "FormTypeItem":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"FormTypeId"},
+        "Name":{"shape":"FormTypeName"}
+      }
+    },
+    "FormTypeItemList":{
+      "type":"list",
+      "member":{"shape":"FormTypeItem"}
+    },
+    "FormTypeName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[A-Z]\\w*$"
+    },
+    "FormTypeSchema":{
+      "type":"string",
+      "max":100000,
+      "min":1
+    },
     "FormatString":{
       "type":"string",
       "max":128,
@@ -9686,6 +10422,47 @@
       "value":{"shape":"GenericString"}
     },
     "GenericString":{"type":"string"},
+    "GetAssetInput":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"AssetId"}
+      }
+    },
+    "GetAssetOutput":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "AssetTypeId"
+      ],
+      "members":{
+        "Id":{"shape":"AssetId"},
+        "Name":{"shape":"AssetName"},
+        "Description":{"shape":"AssetDescription"},
+        "CreatedAt":{"shape":"CreatedAt"},
+        "UpdatedAt":{"shape":"UpdatedAt"},
+        "AssetTypeId":{"shape":"AssetTypeId"},
+        "GlossaryTerms":{"shape":"GlossaryTermIdList"},
+        "Forms":{"shape":"AssetFormMap"},
+        "Attachments":{"shape":"AssetFormMap"},
+        "IterableForms":{"shape":"IterableFormMap"}
+      }
+    },
+    "GetAssetTypeRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"AssetTypeId"}
+      }
+    },
+    "GetAssetTypeResponse":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"AssetTypeId"},
+        "Name":{"shape":"AssetTypeName"},
+        "Forms":{"shape":"AssetTypeFormsMap"}
+      }
+    },
     "GetBlueprintRequest":{
       "type":"structure",
       "required":["Name"],
@@ -10265,6 +11042,53 @@
       "members":{
         "Records":{"shape":"Records"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetFormTypeRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"FormTypeId"}
+      }
+    },
+    "GetFormTypeResponse":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"FormTypeId"},
+        "Name":{"shape":"FormTypeName"},
+        "Schema":{"shape":"FormTypeSchema"}
+      }
+    },
+    "GetGlossaryRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"GlossaryId"}
+      }
+    },
+    "GetGlossaryResponse":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"GlossaryId"},
+        "Name":{"shape":"GlossaryName"},
+        "Description":{"shape":"MetadataDescription"}
+      }
+    },
+    "GetGlossaryTermRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"GlossaryTermId"}
+      }
+    },
+    "GetGlossaryTermResponse":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"GlossaryTermId"},
+        "GlossaryId":{"shape":"GlossaryId"},
+        "Name":{"shape":"GlossaryTermName"},
+        "ShortDescription":{"shape":"GlossaryShortDescription"},
+        "LongDescription":{"shape":"GlossaryLongDescription"}
       }
     },
     "GetGlueIdentityCenterConfigurationRequest":{
@@ -11189,6 +12013,58 @@
         "NextToken":{"shape":"GenericString"}
       }
     },
+    "GlossaryId":{"type":"string"},
+    "GlossaryItem":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"GlossaryId"},
+        "Name":{"shape":"GlossaryName"},
+        "Description":{"shape":"MetadataDescription"}
+      }
+    },
+    "GlossaryItemList":{
+      "type":"list",
+      "member":{"shape":"GlossaryItem"}
+    },
+    "GlossaryLongDescription":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
+    "GlossaryName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "GlossaryShortDescription":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "GlossaryTermId":{"type":"string"},
+    "GlossaryTermIdList":{
+      "type":"list",
+      "member":{"shape":"GlossaryTermId"},
+      "max":10,
+      "min":1
+    },
+    "GlossaryTermItem":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"GlossaryTermId"},
+        "Name":{"shape":"GlossaryTermName"},
+        "ShortDescription":{"shape":"GlossaryShortDescription"}
+      }
+    },
+    "GlossaryTermItemList":{
+      "type":"list",
+      "member":{"shape":"GlossaryTermItem"}
+    },
+    "GlossaryTermName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "GlueEncryptionException":{
       "type":"structure",
       "members":{
@@ -12036,6 +12912,79 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
+    "ItemDescription":{"type":"string"},
+    "ItemError":{
+      "type":"structure",
+      "members":{
+        "ItemIdentifier":{"shape":"ItemIdentifier"},
+        "Code":{"shape":"ItemErrorCode"},
+        "Message":{"shape":"ItemErrorMessage"}
+      }
+    },
+    "ItemErrorCode":{"type":"string"},
+    "ItemErrorList":{
+      "type":"list",
+      "member":{"shape":"ItemError"}
+    },
+    "ItemErrorMessage":{"type":"string"},
+    "ItemId":{"type":"string"},
+    "ItemIdentifier":{
+      "type":"string",
+      "max":1087,
+      "min":1
+    },
+    "ItemIdentifierList":{
+      "type":"list",
+      "member":{"shape":"ItemIdentifier"},
+      "max":100,
+      "min":1
+    },
+    "ItemName":{"type":"string"},
+    "IterableFormEntry":{
+      "type":"structure",
+      "members":{
+        "FormTypeId":{"shape":"FormTypeId"}
+      }
+    },
+    "IterableFormItem":{
+      "type":"structure",
+      "members":{
+        "ItemId":{"shape":"ItemId"},
+        "ItemName":{"shape":"ItemName"},
+        "GlossaryTerms":{"shape":"GlossaryTermIdList"},
+        "Forms":{"shape":"AssetFormMap"},
+        "Attachments":{"shape":"AssetFormMap"}
+      }
+    },
+    "IterableFormItemList":{
+      "type":"list",
+      "member":{"shape":"IterableFormItem"}
+    },
+    "IterableFormKey":{"type":"string"},
+    "IterableFormListItem":{
+      "type":"structure",
+      "members":{
+        "ItemId":{"shape":"ItemId"},
+        "ItemName":{"shape":"ItemName"},
+        "Description":{"shape":"ItemDescription"},
+        "GlossaryTerms":{"shape":"GlossaryTermIdList"}
+      }
+    },
+    "IterableFormListItemList":{
+      "type":"list",
+      "member":{"shape":"IterableFormListItem"}
+    },
+    "IterableFormMap":{
+      "type":"map",
+      "key":{"shape":"IterableFormKey"},
+      "value":{"shape":"IterableFormEntry"}
+    },
+    "IterableFormName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-zA-Z][a-zA-Z0-9_]*(::[a-zA-Z][a-zA-Z0-9_]*)?$"
+    },
     "JDBCConnectionType":{
       "type":"string",
       "enum":[
@@ -12605,6 +13554,20 @@
         "CrawlerLineageSettings":{"shape":"CrawlerLineageSettings"}
       }
     },
+    "ListAssetTypesRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"PageSize"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListAssetTypesResponse":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"AssetTypeItemList"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
     "ListBlueprintsRequest":{
       "type":"structure",
       "members":{
@@ -12823,6 +13786,51 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListFormTypesRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"PageSize"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListFormTypesResponse":{
+      "type":"structure",
+      "required":["Items"],
+      "members":{
+        "Items":{"shape":"FormTypeItemList"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListGlossariesRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"PageSize"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListGlossariesResponse":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"GlossaryItemList"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListGlossaryTermsRequest":{
+      "type":"structure",
+      "required":["GlossaryIdentifier"],
+      "members":{
+        "GlossaryIdentifier":{"shape":"GlossaryId"},
+        "MaxResults":{"shape":"PageSize"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListGlossaryTermsResponse":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"GlossaryTermItemList"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
     "ListIntegrationResourcePropertiesRequest":{
       "type":"structure",
       "members":{
@@ -12836,6 +13844,26 @@
       "members":{
         "IntegrationResourcePropertyList":{"shape":"IntegrationResourcePropertyList"},
         "Marker":{"shape":"String1024"}
+      }
+    },
+    "ListIterableFormsRequest":{
+      "type":"structure",
+      "required":[
+        "AssetIdentifier",
+        "IterableFormName"
+      ],
+      "members":{
+        "AssetIdentifier":{"shape":"AssetId"},
+        "IterableFormName":{"shape":"IterableFormName"},
+        "MaxResults":{"shape":"PageSize"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListIterableFormsResponse":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"IterableFormListItemList"},
+        "NextToken":{"shape":"Token"}
       }
     },
     "ListJobsRequest":{
@@ -13311,6 +14339,22 @@
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
     },
     "MessageString":{"type":"string"},
+    "MetadataDescription":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "MetadataFormContent":{
+      "type":"string",
+      "max":300000,
+      "min":0
+    },
+    "MetadataFormTypeIdentifier":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^(?![\\.:])([\\w.]+(::))?[A-Z]\\w*$"
+    },
     "MetadataInfo":{
       "type":"structure",
       "members":{
@@ -14314,6 +15358,94 @@
       "member":{"shape":"GenericString"},
       "max":5
     },
+    "PutAssetRequest":{
+      "type":"structure",
+      "required":[
+        "AssetTypeId",
+        "Identifier",
+        "Name",
+        "Forms"
+      ],
+      "members":{
+        "AssetTypeId":{"shape":"AssetTypeId"},
+        "Identifier":{"shape":"AssetId"},
+        "Name":{"shape":"AssetName"},
+        "Description":{"shape":"AssetDescription"},
+        "Forms":{"shape":"AssetFormMap"},
+        "ClientToken":{
+          "shape":"HashString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "PutAssetResponse":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Name"
+      ],
+      "members":{
+        "Id":{"shape":"AssetId"},
+        "Name":{"shape":"AssetName"},
+        "Description":{"shape":"AssetDescription"},
+        "CreatedAt":{"shape":"CreatedAt"},
+        "Forms":{"shape":"AssetFormMap"}
+      }
+    },
+    "PutAssetTypeRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Forms"
+      ],
+      "members":{
+        "Name":{"shape":"AssetTypeName"},
+        "Forms":{"shape":"AssetTypeFormsMap"},
+        "ClientToken":{
+          "shape":"HashString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "PutAssetTypeResponse":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"AssetTypeId"},
+        "Name":{"shape":"AssetTypeName"},
+        "Forms":{"shape":"AssetTypeFormsMap"}
+      }
+    },
+    "PutAttachmentRequest":{
+      "type":"structure",
+      "required":[
+        "AssetIdentifier",
+        "AttachmentName",
+        "Content",
+        "FormTypeId"
+      ],
+      "members":{
+        "AssetIdentifier":{"shape":"AssetId"},
+        "IterableFormName":{"shape":"IterableFormName"},
+        "ItemIdentifier":{"shape":"ItemIdentifier"},
+        "AttachmentName":{"shape":"AttachmentName"},
+        "Content":{"shape":"MetadataFormContent"},
+        "FormTypeId":{"shape":"MetadataFormTypeIdentifier"},
+        "ClientToken":{
+          "shape":"HashString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "PutAttachmentResponse":{
+      "type":"structure",
+      "members":{
+        "AssetId":{"shape":"AssetId"},
+        "IterableFormName":{"shape":"IterableFormName"},
+        "ItemIdentifier":{"shape":"ItemIdentifier"},
+        "AttachmentName":{"shape":"AttachmentName"},
+        "FormTypeId":{"shape":"MetadataFormTypeIdentifier"}
+      }
+    },
     "PutDataCatalogEncryptionSettingsRequest":{
       "type":"structure",
       "required":["DataCatalogEncryptionSettings"],
@@ -14340,6 +15472,29 @@
     "PutDataQualityProfileAnnotationResponse":{
       "type":"structure",
       "members":{}
+    },
+    "PutFormTypeRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Schema"
+      ],
+      "members":{
+        "Name":{"shape":"FormTypeName"},
+        "Schema":{"shape":"FormTypeSchema"},
+        "ClientToken":{
+          "shape":"HashString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "PutFormTypeResponse":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"FormTypeId"},
+        "Name":{"shape":"FormTypeName"},
+        "Schema":{"shape":"FormTypeSchema"}
+      }
     },
     "PutResourcePolicyRequest":{
       "type":"structure",
@@ -15537,9 +16692,146 @@
       "type":"string",
       "max":400000
     },
+    "SearchAttribute":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "SearchAttributeFilter":{
+      "type":"structure",
+      "required":[
+        "Attribute",
+        "Operator"
+      ],
+      "members":{
+        "Attribute":{"shape":"SearchAttribute"},
+        "Operator":{"shape":"SearchFilterOperator"},
+        "Value":{"shape":"SearchFilterValue"}
+      }
+    },
+    "SearchFilterClause":{
+      "type":"structure",
+      "members":{
+        "AndAllFilters":{"shape":"SearchFilterClauseList"},
+        "OrAnyFilters":{"shape":"SearchFilterClauseList"},
+        "AttributeFilter":{"shape":"SearchAttributeFilter"},
+        "MapFilter":{"shape":"SearchMapFilter"}
+      },
+      "union":true
+    },
+    "SearchFilterClauseList":{
+      "type":"list",
+      "member":{"shape":"SearchFilterClause"},
+      "max":10,
+      "min":1
+    },
+    "SearchFilterLongValue":{"type":"long"},
+    "SearchFilterOperator":{
+      "type":"string",
+      "enum":[
+        "equals",
+        "greaterThan",
+        "greaterThanOrEquals",
+        "lessThan",
+        "lessThanOrEquals",
+        "notExists"
+      ]
+    },
+    "SearchFilterStringValue":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
+    "SearchFilterValue":{
+      "type":"structure",
+      "members":{
+        "StringValue":{"shape":"SearchFilterStringValue"},
+        "LongValue":{"shape":"SearchFilterLongValue"}
+      },
+      "union":true
+    },
+    "SearchInput":{
+      "type":"structure",
+      "members":{
+        "SearchText":{"shape":"SearchText"},
+        "MaxResults":{"shape":"SearchMaxResults"},
+        "NextToken":{"shape":"SearchNextToken"},
+        "Sort":{"shape":"SearchSort"},
+        "FilterClause":{"shape":"SearchFilterClause"}
+      }
+    },
+    "SearchMapFilter":{
+      "type":"structure",
+      "required":[
+        "Attribute",
+        "Key",
+        "Value"
+      ],
+      "members":{
+        "Attribute":{"shape":"SearchAttribute"},
+        "Key":{"shape":"SearchMapKey"},
+        "Value":{"shape":"SearchMapFilterValue"}
+      }
+    },
+    "SearchMapFilterValue":{
+      "type":"structure",
+      "members":{
+        "StringValue":{"shape":"SearchFilterStringValue"}
+      },
+      "union":true
+    },
+    "SearchMapKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "SearchMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "SearchNextToken":{"type":"string"},
+    "SearchOutput":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"SearchResultItemList"},
+        "NextToken":{"shape":"SearchNextToken"}
+      }
+    },
     "SearchPropertyPredicates":{
       "type":"list",
       "member":{"shape":"PropertyPredicate"}
+    },
+    "SearchResultItem":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"AssetId"},
+        "AssetName":{"shape":"SearchResultName"},
+        "AssetDescription":{"shape":"AssetDescription"},
+        "UpdatedAt":{"shape":"UpdatedAt"},
+        "AssetTypeId":{"shape":"AssetTypeId"}
+      }
+    },
+    "SearchResultItemList":{
+      "type":"list",
+      "member":{"shape":"SearchResultItem"}
+    },
+    "SearchResultName":{"type":"string"},
+    "SearchSort":{
+      "type":"structure",
+      "required":["Attribute"],
+      "members":{
+        "Attribute":{"shape":"SearchAttribute"},
+        "Order":{"shape":"SearchSortOrder"}
+      }
+    },
+    "SearchSortOrder":{
+      "type":"string",
+      "enum":[
+        "ASCENDING",
+        "DESCENDING"
+      ]
     },
     "SearchTablesRequest":{
       "type":"structure",
@@ -15560,6 +16852,11 @@
         "NextToken":{"shape":"Token"},
         "TableList":{"shape":"TableList"}
       }
+    },
+    "SearchText":{
+      "type":"string",
+      "max":1000,
+      "min":1
     },
     "SecretArn":{
       "type":"string",
@@ -17526,6 +18823,51 @@
       "type":"structure",
       "members":{}
     },
+    "UpdateGlossaryRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"GlossaryId"},
+        "Name":{"shape":"GlossaryName"},
+        "Description":{"shape":"MetadataDescription"},
+        "ClientToken":{
+          "shape":"HashString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateGlossaryResponse":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"GlossaryId"},
+        "Name":{"shape":"GlossaryName"},
+        "Description":{"shape":"MetadataDescription"}
+      }
+    },
+    "UpdateGlossaryTermRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{"shape":"GlossaryTermId"},
+        "Name":{"shape":"GlossaryTermName"},
+        "ShortDescription":{"shape":"GlossaryShortDescription"},
+        "LongDescription":{"shape":"GlossaryLongDescription"},
+        "ClientToken":{
+          "shape":"HashString",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateGlossaryTermResponse":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"GlossaryTermId"},
+        "GlossaryId":{"shape":"GlossaryId"},
+        "Name":{"shape":"GlossaryTermName"},
+        "ShortDescription":{"shape":"GlossaryShortDescription"},
+        "LongDescription":{"shape":"GlossaryLongDescription"}
+      }
+    },
     "UpdateGlueIdentityCenterConfigurationRequest":{
       "type":"structure",
       "members":{
@@ -17865,6 +19207,7 @@
         "RowTag":{"shape":"RowTag"}
       }
     },
+    "UpdatedAt":{"type":"timestamp"},
     "UpdatedTimestamp":{"type":"string"},
     "UpsertRedshiftTargetOptions":{
       "type":"structure",

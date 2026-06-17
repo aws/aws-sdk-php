@@ -1323,7 +1323,7 @@
       }
     },
     "Evaluator": {
-      "base": "<p>An evaluator to run against sessions</p>",
+      "base": "<p>An evaluator to run against sessions during batch evaluation.</p>",
       "refs": {
         "EvaluatorList$member": null,
         "StartBatchEvaluationRequestEvaluatorsList$member": null
@@ -1455,9 +1455,9 @@
       }
     },
     "ExecutionSummaryClusteringResultContent": {
-      "base": "<p>Customer-facing execution summary clustering result written to S3.</p>",
+      "base": "<p>The execution summary clustering result containing grouped execution patterns identified across evaluated sessions.</p>",
       "refs": {
-        "GetBatchEvaluationResponse$executionSummaryResult": null
+        "GetBatchEvaluationResponse$executionSummaryResult": "<p>The execution summary clustering results from insights, containing grouped execution patterns across evaluated sessions.</p>"
       }
     },
     "ExternalProxy": {
@@ -1510,9 +1510,9 @@
       }
     },
     "FailureAnalysisResultContent": {
-      "base": "<p>Unified customer-facing clustering result written to S3.</p>",
+      "base": "<p>The failure analysis clustering result containing categorized failure clusters with root causes and remediation recommendations.</p>",
       "refs": {
-        "GetBatchEvaluationResponse$failureAnalysisResult": null
+        "GetBatchEvaluationResponse$failureAnalysisResult": "<p>The failure analysis results from insights, containing categorized failure clusters with root causes and recommendations.</p>"
       }
     },
     "FailureCategoryCluster": {
@@ -1782,6 +1782,18 @@
         "InvokeHarnessRequest$harnessArn": "<p>The ARN of the harness to invoke.</p>"
       }
     },
+    "HarnessAwsSkillPath": {
+      "base": null,
+      "refs": {
+        "HarnessAwsSkillPaths$member": null
+      }
+    },
+    "HarnessAwsSkillPaths": {
+      "base": null,
+      "refs": {
+        "HarnessSkillAwsSkillsSource$paths": "<p>Optionally filter allowed skills with glob syntax, e.g., ['core-skills/*'].</p>"
+      }
+    },
     "HarnessBedrockApiFormat": {
       "base": null,
       "refs": {
@@ -1853,6 +1865,12 @@
       "refs": {
         "HarnessMessage$role": "<p>The role of the message sender.</p>",
         "HarnessMessageStartEvent$role": "<p>The role of the message sender.</p>"
+      }
+    },
+    "HarnessEndpointName": {
+      "base": null,
+      "refs": {
+        "InvokeHarnessRequest$qualifier": "<p>The endpoint name to invoke. If omitted, the DEFAULT endpoint is used.</p>"
       }
     },
     "HarnessGatewayOutboundAuth": {
@@ -1973,6 +1991,12 @@
       "base": "<p>A skill available to the agent.</p>",
       "refs": {
         "HarnessSkills$member": null
+      }
+    },
+    "HarnessSkillAwsSkillsSource": {
+      "base": "<p>Passed to show that AWS Skills should be included.</p>",
+      "refs": {
+        "HarnessSkill$awsSkills": "<p>AWS Skills baked into the Harness's underlying Runtime.</p>"
       }
     },
     "HarnessSkillGitAuth": {
@@ -2268,7 +2292,7 @@
       }
     },
     "Insight": {
-      "base": "<p>A reference to an insight analysis to run against sessions.</p>",
+      "base": "<p>A reference to an insight analysis to run against sessions during batch evaluation. Insights provide deeper analysis beyond individual evaluator scores, including failure detection, user intent clustering, and execution summarization.</p>",
       "refs": {
         "InsightList$member": null,
         "StartBatchEvaluationRequestInsightsList$member": null
@@ -2277,7 +2301,7 @@
     "InsightId": {
       "base": "<p>Canonical insight identifiers using the Builtin.Insight.* naming convention. Used by BatchEvaluate, InternalEvaluate, and ServiceEngineEvaluate flows.</p>",
       "refs": {
-        "Insight$insightId": null
+        "Insight$insightId": "<p>The unique identifier of the insight to run.</p>"
       }
     },
     "InsightList": {
@@ -2291,7 +2315,7 @@
     "InsightsFailureCategory": {
       "base": "<p>Failure category taxonomy for agent session insights. Values must stay in sync with the category registry in AgentCoreLens (amzn_agentcore_lens.config.failure_detection.FAILURE_CATEGORIES).</p>",
       "refs": {
-        "InsightsFailureSignal$category": null
+        "InsightsFailureSignal$category": "<p>The failure category classification for this signal.</p>"
       }
     },
     "InsightsFailureSignal": {
@@ -4135,7 +4159,7 @@
       "base": "<p>A time range filter for selecting sessions. Specifies the start and end times to narrow down which sessions are included.</p>",
       "refs": {
         "CloudWatchFilterConfig$timeRange": "<p>The time range filter for selecting sessions to evaluate.</p>",
-        "OnlineEvaluationConfigSource$sessionFilterConfig": "<p>Optional session filter configuration to narrow down which sessions from the online evaluation configuration to include.</p>"
+        "OnlineEvaluationConfigSource$timeRange": "<p>Optional session filter configuration to narrow down which sessions from the online evaluation configuration to include.</p>"
       }
     },
     "SessionId": {
@@ -4982,9 +5006,9 @@
       }
     },
     "UserIntentClusteringResultContent": {
-      "base": "<p>Customer-facing user intent clustering result written to S3.</p>",
+      "base": "<p>The user intent clustering result containing grouped user intents identified across evaluated sessions.</p>",
       "refs": {
-        "GetBatchEvaluationResponse$userIntentResult": null
+        "GetBatchEvaluationResponse$userIntentResult": "<p>The user intent clustering results from insights, containing grouped user intents across evaluated sessions.</p>"
       }
     },
     "UserIntentList": {

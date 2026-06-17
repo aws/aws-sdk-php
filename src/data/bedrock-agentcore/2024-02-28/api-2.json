@@ -722,6 +722,7 @@
       "input":{"shape":"InvokeHarnessRequest"},
       "output":{"shape":"InvokeHarnessResponse"},
       "errors":[
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"AccessDeniedException"},
         {"shape":"RuntimeClientError"},
         {"shape":"ValidationException"},
@@ -3770,6 +3771,16 @@
       "type":"string",
       "pattern":"arn:([^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:harness/[a-zA-Z][a-zA-Z0-9_]{0,39}-[a-zA-Z0-9]{10}"
     },
+    "HarnessAwsSkillPath":{
+      "type":"string",
+      "max":4096,
+      "min":1,
+      "pattern":"([^*?\\[\\]]|\\*)+"
+    },
+    "HarnessAwsSkillPaths":{
+      "type":"list",
+      "member":{"shape":"HarnessAwsSkillPath"}
+    },
     "HarnessBedrockApiFormat":{
       "type":"string",
       "enum":[
@@ -3868,6 +3879,10 @@
         "user",
         "assistant"
       ]
+    },
+    "HarnessEndpointName":{
+      "type":"string",
+      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,47}"
     },
     "HarnessGatewayOutboundAuth":{
       "type":"structure",
@@ -4052,9 +4067,16 @@
       "members":{
         "path":{"shape":"HarnessSkillPath"},
         "s3":{"shape":"HarnessSkillS3Source"},
-        "git":{"shape":"HarnessSkillGitSource"}
+        "git":{"shape":"HarnessSkillGitSource"},
+        "awsSkills":{"shape":"HarnessSkillAwsSkillsSource"}
       },
       "union":true
+    },
+    "HarnessSkillAwsSkillsSource":{
+      "type":"structure",
+      "members":{
+        "paths":{"shape":"HarnessAwsSkillPaths"}
+      }
     },
     "HarnessSkillGitAuth":{
       "type":"structure",
@@ -4076,7 +4098,7 @@
     "HarnessSkillGitUrl":{
       "type":"string",
       "min":8,
-      "pattern":"https://.*"
+      "pattern":"https://[^#@]+"
     },
     "HarnessSkillPath":{
       "type":"string",
@@ -4436,7 +4458,8 @@
         "llm-output-category-nonsensical",
         "configuration-mismatch-category-tool-definition",
         "coding-use-case-specific-failure-types-category-edge-case-oversights",
-        "coding-use-case-specific-failure-types-category-dependency-issues"
+        "coding-use-case-specific-failure-types-category-dependency-issues",
+        "other"
       ]
     },
     "InsightsFailureSignal":{
@@ -4898,6 +4921,11 @@
           "shape":"HarnessArn",
           "location":"querystring",
           "locationName":"harnessArn"
+        },
+        "qualifier":{
+          "shape":"HarnessEndpointName",
+          "location":"querystring",
+          "locationName":"qualifier"
         },
         "runtimeSessionId":{
           "shape":"InvokeHarnessRequestRuntimeSessionIdString",
@@ -5986,7 +6014,7 @@
       "required":["onlineEvaluationConfigArn"],
       "members":{
         "onlineEvaluationConfigArn":{"shape":"OnlineEvaluationConfigArn"},
-        "sessionFilterConfig":{"shape":"SessionFilterConfig"}
+        "timeRange":{"shape":"SessionFilterConfig"}
       }
     },
     "OperatorType":{

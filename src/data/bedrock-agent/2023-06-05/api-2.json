@@ -457,6 +457,25 @@
       ],
       "idempotent":true
     },
+    "DeleteResourcePolicy":{
+      "name":"DeleteResourcePolicy",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/resourcepolicy/{resourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteResourcePolicyRequest"},
+      "output":{"shape":"DeleteResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "DisassociateAgentCollaborator":{
       "name":"DisassociateAgentCollaborator",
       "http":{
@@ -739,6 +758,24 @@
       },
       "input":{"shape":"GetPromptRequest"},
       "output":{"shape":"GetPromptResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "GetResourcePolicy":{
+      "name":"GetResourcePolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/resourcepolicy/{resourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetResourcePolicyRequest"},
+      "output":{"shape":"GetResourcePolicyResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -1073,6 +1110,25 @@
         {"shape":"ServiceQuotaExceededException"}
       ]
     },
+    "PutResourcePolicy":{
+      "name":"PutResourcePolicy",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/resourcepolicy/{resourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"PutResourcePolicyRequest"},
+      "output":{"shape":"PutResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "StartIngestionJob":{
       "name":"StartIngestionJob",
       "http":{
@@ -1371,6 +1427,17 @@
         "payload":{"shape":"Payload"}
       },
       "union":true
+    },
+    "AccessControlAccess":{
+      "type":"string",
+      "enum":[
+        "ALLOW",
+        "DENY"
+      ]
+    },
+    "AccessControlPrincipalType":{
+      "type":"string",
+      "enum":["USER"]
     },
     "AccessDeniedException":{
       "type":"structure",
@@ -1949,6 +2016,13 @@
       "member":{"shape":"AudioConfiguration"},
       "max":1,
       "min":1
+    },
+    "AudioExtractionConfiguration":{
+      "type":"structure",
+      "required":["audioExtractionStatus"],
+      "members":{
+        "audioExtractionStatus":{"shape":"EnabledOrDisabledState"}
+      }
     },
     "AudioSegmentationConfiguration":{
       "type":"structure",
@@ -2753,6 +2827,7 @@
       "required":["type"],
       "members":{
         "type":{"shape":"DataSourceType"},
+        "managedKnowledgeBaseConnectorConfiguration":{"shape":"ManagedKnowledgeBaseConnectorConfiguration"},
         "s3Configuration":{"shape":"S3DataSourceConfiguration"},
         "webConfiguration":{"shape":"WebDataSourceConfiguration"},
         "confluenceConfiguration":{"shape":"ConfluenceDataSourceConfiguration"},
@@ -2765,7 +2840,10 @@
       "enum":[
         "AVAILABLE",
         "DELETING",
-        "DELETE_UNSUCCESSFUL"
+        "DELETE_UNSUCCESSFUL",
+        "CREATING",
+        "UPDATING",
+        "FAILED"
       ]
     },
     "DataSourceSummaries":{
@@ -2799,7 +2877,8 @@
         "SALESFORCE",
         "SHAREPOINT",
         "CUSTOM",
-        "REDSHIFT_METADATA"
+        "REDSHIFT_METADATA",
+        "MANAGED_KNOWLEDGE_BASE_CONNECTOR"
       ]
     },
     "DateTimestamp":{
@@ -3133,6 +3212,44 @@
         "version":{"shape":"NumericalVersion"}
       }
     },
+    "DeleteResourcePolicyRequest":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{
+          "shape":"ResourceArn",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "expectedRevisionId":{
+          "shape":"RevisionId",
+          "location":"querystring",
+          "locationName":"expectedRevisionId"
+        }
+      }
+    },
+    "DeleteResourcePolicyResponse":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{"shape":"ResourceArn"},
+        "revisionId":{"shape":"RevisionId"}
+      }
+    },
+    "DeletionProtectionConfiguration":{
+      "type":"structure",
+      "required":["deletionProtectionStatus"],
+      "members":{
+        "deletionProtectionStatus":{"shape":"EnabledOrDisabledState"},
+        "deletionProtectionThreshold":{"shape":"DeletionProtectionConfigurationDeletionProtectionThresholdInteger"}
+      }
+    },
+    "DeletionProtectionConfigurationDeletionProtectionThresholdInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":0
+    },
     "Description":{
       "type":"string",
       "max":200,
@@ -3212,6 +3329,30 @@
       "members":{},
       "document":true
     },
+    "DocumentAccessControlEntry":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type",
+        "access"
+      ],
+      "members":{
+        "name":{"shape":"DocumentAccessControlEntryNameString"},
+        "type":{"shape":"AccessControlPrincipalType"},
+        "access":{"shape":"AccessControlAccess"}
+      },
+      "sensitive":true
+    },
+    "DocumentAccessControlEntryNameString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "DocumentAccessControlList":{
+      "type":"list",
+      "member":{"shape":"DocumentAccessControlEntry"},
+      "min":1
+    },
     "DocumentContent":{
       "type":"structure",
       "required":["dataSourceType"],
@@ -3242,7 +3383,8 @@
       "members":{
         "type":{"shape":"MetadataSourceType"},
         "inlineAttributes":{"shape":"DocumentMetadataInlineAttributesList"},
-        "s3Location":{"shape":"CustomS3Location"}
+        "s3Location":{"shape":"CustomS3Location"},
+        "accessControlList":{"shape":"DocumentAccessControlList"}
       }
     },
     "DocumentMetadataInlineAttributesList":{
@@ -3309,11 +3451,25 @@
         "bedrockEmbeddingModelConfiguration":{"shape":"BedrockEmbeddingModelConfiguration"}
       }
     },
+    "EmbeddingModelType":{
+      "type":"string",
+      "enum":[
+        "CUSTOM",
+        "MANAGED"
+      ]
+    },
     "EnabledMemoryTypes":{
       "type":"list",
       "member":{"shape":"MemoryType"},
       "max":1,
       "min":1
+    },
+    "EnabledOrDisabledState":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "EnrichmentStrategyConfiguration":{
       "type":"structure",
@@ -3400,6 +3556,7 @@
     "FixedSizeChunkingConfigurationMaxTokensInteger":{
       "type":"integer",
       "box":true,
+      "max":8192,
       "min":1
     },
     "FixedSizeChunkingConfigurationOverlapPercentageInteger":{
@@ -4394,6 +4551,33 @@
         "updatedAt":{"shape":"DateTimestamp"}
       }
     },
+    "GetResourcePolicyRequest":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{
+          "shape":"ResourceArn",
+          "location":"uri",
+          "locationName":"resourceArn"
+        }
+      }
+    },
+    "GetResourcePolicyResponse":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "policy",
+        "revisionId"
+      ],
+      "members":{
+        "resourceArn":{"shape":"ResourceArn"},
+        "policy":{
+          "shape":"ResourcePolicy",
+          "jsonvalue":true
+        },
+        "revisionId":{"shape":"RevisionId"}
+      }
+    },
     "GraphArn":{
       "type":"string",
       "max":255,
@@ -4460,6 +4644,13 @@
     "Id":{
       "type":"string",
       "pattern":"[0-9a-zA-Z]{10}"
+    },
+    "ImageExtractionConfiguration":{
+      "type":"structure",
+      "required":["imageExtractionStatus"],
+      "members":{
+        "imageExtractionStatus":{"shape":"EnabledOrDisabledState"}
+      }
     },
     "IncludeExclude":{
       "type":"string",
@@ -4623,7 +4814,8 @@
         "numberOfModifiedDocumentsIndexed":{"shape":"PrimitiveLong"},
         "numberOfMetadataDocumentsModified":{"shape":"PrimitiveLong"},
         "numberOfDocumentsDeleted":{"shape":"PrimitiveLong"},
-        "numberOfDocumentsFailed":{"shape":"PrimitiveLong"}
+        "numberOfDocumentsFailed":{"shape":"PrimitiveLong"},
+        "numberOfDocumentsSkipped":{"shape":"PrimitiveLong"}
       }
     },
     "IngestionJobStatus":{
@@ -4799,6 +4991,7 @@
       "members":{
         "type":{"shape":"KnowledgeBaseType"},
         "vectorKnowledgeBaseConfiguration":{"shape":"VectorKnowledgeBaseConfiguration"},
+        "managedKnowledgeBaseConfiguration":{"shape":"ManagedKnowledgeBaseConfiguration"},
         "kendraKnowledgeBaseConfiguration":{"shape":"KendraKnowledgeBaseConfiguration"},
         "sqlKnowledgeBaseConfiguration":{"shape":"SqlKnowledgeBaseConfiguration"}
       }
@@ -4900,7 +5093,8 @@
         "DELETING",
         "UPDATING",
         "FAILED",
-        "DELETE_UNSUCCESSFUL"
+        "DELETE_UNSUCCESSFUL",
+        "UPDATE_UNSUCCESSFUL"
       ]
     },
     "KnowledgeBaseStorageType":{
@@ -4947,7 +5141,8 @@
       "enum":[
         "VECTOR",
         "KENDRA",
-        "SQL"
+        "SQL",
+        "MANAGED"
       ]
     },
     "LambdaArn":{
@@ -5404,6 +5599,23 @@
         "cause":{"shape":"ErrorMessage"}
       }
     },
+    "ManagedKnowledgeBaseConfiguration":{
+      "type":"structure",
+      "members":{
+        "embeddingModelType":{"shape":"EmbeddingModelType"},
+        "embeddingModelArn":{"shape":"BedrockEmbeddingModelArn"},
+        "embeddingModelConfiguration":{"shape":"EmbeddingModelConfiguration"},
+        "serverSideEncryptionConfiguration":{"shape":"ServerSideEncryptionConfiguration"}
+      }
+    },
+    "ManagedKnowledgeBaseConnectorConfiguration":{
+      "type":"structure",
+      "members":{
+        "deletionProtectionConfiguration":{"shape":"DeletionProtectionConfiguration"},
+        "mediaExtractionConfiguration":{"shape":"MediaExtractionConfiguration"},
+        "connectorParameters":{"shape":"Document"}
+      }
+    },
     "MaxRecentSessions":{
       "type":"integer",
       "box":true,
@@ -5419,6 +5631,14 @@
       "type":"integer",
       "box":true,
       "min":0
+    },
+    "MediaExtractionConfiguration":{
+      "type":"structure",
+      "members":{
+        "imageExtractionConfiguration":{"shape":"ImageExtractionConfiguration"},
+        "audioExtractionConfiguration":{"shape":"AudioExtractionConfiguration"},
+        "videoExtractionConfiguration":{"shape":"VideoExtractionConfiguration"}
+      }
     },
     "MemoryConfiguration":{
       "type":"structure",
@@ -5897,7 +6117,8 @@
       "type":"string",
       "enum":[
         "BEDROCK_FOUNDATION_MODEL",
-        "BEDROCK_DATA_AUTOMATION"
+        "BEDROCK_DATA_AUTOMATION",
+        "SMART_PARSING"
       ]
     },
     "PatternObjectFilter":{
@@ -6295,6 +6516,36 @@
       "min":1,
       "pattern":"((([0-9a-zA-Z][_-]?){1,63})|(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:provisioned-model/[a-z0-9]{12}))"
     },
+    "PutResourcePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "policy"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"ResourceArn",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "policy":{
+          "shape":"ResourcePolicy",
+          "jsonvalue":true
+        },
+        "expectedRevisionId":{"shape":"RevisionId"}
+      }
+    },
+    "PutResourcePolicyResponse":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "revisionId"
+      ],
+      "members":{
+        "resourceArn":{"shape":"ResourceArn"},
+        "revisionId":{"shape":"RevisionId"}
+      }
+    },
     "QueryEngineType":{
       "type":"string",
       "enum":["REDSHIFT"]
@@ -6614,6 +6865,12 @@
       },
       "union":true
     },
+    "ResourceArn":{
+      "type":"string",
+      "max":1011,
+      "min":20,
+      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:knowledge-base/[0-9a-zA-Z]+"
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -6624,6 +6881,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ResourcePolicy":{
+      "type":"string",
+      "max":20480,
+      "min":1,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+"
     },
     "RetrievalFlowNodeConfiguration":{
       "type":"structure",
@@ -6645,6 +6908,11 @@
         "s3":{"shape":"RetrievalFlowNodeS3Configuration"}
       },
       "union":true
+    },
+    "RevisionId":{
+      "type":"string",
+      "max":255,
+      "min":1
     },
     "S3BucketArn":{
       "type":"string",
@@ -6801,6 +7069,7 @@
     "SemanticChunkingConfigurationMaxTokensInteger":{
       "type":"integer",
       "box":true,
+      "max":8192,
       "min":1
     },
     "ServerSideEncryptionConfiguration":{
@@ -7901,6 +8170,13 @@
       "member":{"shape":"VideoConfiguration"},
       "max":1,
       "min":1
+    },
+    "VideoExtractionConfiguration":{
+      "type":"structure",
+      "required":["videoExtractionStatus"],
+      "members":{
+        "videoExtractionStatus":{"shape":"EnabledOrDisabledState"}
+      }
     },
     "VideoSegmentationConfiguration":{
       "type":"structure",

@@ -30,6 +30,25 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "BatchCreateSecurityRequirements":{
+      "name":"BatchCreateSecurityRequirements",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchCreateSecurityRequirements",
+        "responseCode":201
+      },
+      "input":{"shape":"BatchCreateSecurityRequirementsInput"},
+      "output":{"shape":"BatchCreateSecurityRequirementsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "BatchDeleteCodeReviews":{
       "name":"BatchDeleteCodeReviews",
       "http":{
@@ -49,6 +68,34 @@
       },
       "input":{"shape":"BatchDeletePentestsInput"},
       "output":{"shape":"BatchDeletePentestsOutput"}
+    },
+    "BatchDeleteSecurityRequirements":{
+      "name":"BatchDeleteSecurityRequirements",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchDeleteSecurityRequirements",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchDeleteSecurityRequirementsInput"},
+      "output":{"shape":"BatchDeleteSecurityRequirementsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "BatchDeleteThreatModels":{
+      "name":"BatchDeleteThreatModels",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchDeleteThreatModels",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchDeleteThreatModelsInput"},
+      "output":{"shape":"BatchDeleteThreatModelsOutput"}
     },
     "BatchGetAgentSpaces":{
       "name":"BatchGetAgentSpaces",
@@ -148,6 +195,24 @@
       "input":{"shape":"BatchGetPentestsInput"},
       "output":{"shape":"BatchGetPentestsOutput"}
     },
+    "BatchGetSecurityRequirements":{
+      "name":"BatchGetSecurityRequirements",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchGetSecurityRequirements",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetSecurityRequirementsInput"},
+      "output":{"shape":"BatchGetSecurityRequirementsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "BatchGetTargetDomains":{
       "name":"BatchGetTargetDomains",
       "http":{
@@ -158,6 +223,65 @@
       "input":{"shape":"BatchGetTargetDomainsInput"},
       "output":{"shape":"BatchGetTargetDomainsOutput"},
       "readonly":true
+    },
+    "BatchGetThreatModelJobTasks":{
+      "name":"BatchGetThreatModelJobTasks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchGetThreatModelJobTasks",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetThreatModelJobTasksInput"},
+      "output":{"shape":"BatchGetThreatModelJobTasksOutput"},
+      "readonly":true
+    },
+    "BatchGetThreatModelJobs":{
+      "name":"BatchGetThreatModelJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchGetThreatModelJobs",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetThreatModelJobsInput"},
+      "output":{"shape":"BatchGetThreatModelJobsOutput"}
+    },
+    "BatchGetThreatModels":{
+      "name":"BatchGetThreatModels",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchGetThreatModels",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetThreatModelsInput"},
+      "output":{"shape":"BatchGetThreatModelsOutput"}
+    },
+    "BatchGetThreats":{
+      "name":"BatchGetThreats",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchGetThreats",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetThreatsInput"},
+      "output":{"shape":"BatchGetThreatsOutput"}
+    },
+    "BatchUpdateSecurityRequirements":{
+      "name":"BatchUpdateSecurityRequirements",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchUpdateSecurityRequirements",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchUpdateSecurityRequirementsInput"},
+      "output":{"shape":"BatchUpdateSecurityRequirementsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
     },
     "CreateAgentSpace":{
       "name":"CreateAgentSpace",
@@ -227,6 +351,42 @@
       "input":{"shape":"CreatePentestInput"},
       "output":{"shape":"CreatePentestOutput"}
     },
+    "CreatePrivateConnection":{
+      "name":"CreatePrivateConnection",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreatePrivateConnection",
+        "responseCode":201
+      },
+      "input":{"shape":"CreatePrivateConnectionInput"},
+      "output":{"shape":"CreatePrivateConnectionOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "CreateSecurityRequirementPack":{
+      "name":"CreateSecurityRequirementPack",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateSecurityRequirementPack",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateSecurityRequirementPackInput"},
+      "output":{"shape":"CreateSecurityRequirementPackOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "CreateTargetDomain":{
       "name":"CreateTargetDomain",
       "http":{
@@ -236,6 +396,26 @@
       },
       "input":{"shape":"CreateTargetDomainInput"},
       "output":{"shape":"CreateTargetDomainOutput"}
+    },
+    "CreateThreat":{
+      "name":"CreateThreat",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateThreat",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateThreatInput"},
+      "output":{"shape":"CreateThreatOutput"}
+    },
+    "CreateThreatModel":{
+      "name":"CreateThreatModel",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateThreatModel",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateThreatModelInput"},
+      "output":{"shape":"CreateThreatModelOutput"}
     },
     "DeleteAgentSpace":{
       "name":"DeleteAgentSpace",
@@ -304,6 +484,44 @@
       "input":{"shape":"DeleteMembershipRequest"},
       "output":{"shape":"DeleteMembershipResponse"}
     },
+    "DeletePrivateConnection":{
+      "name":"DeletePrivateConnection",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeletePrivateConnection",
+        "responseCode":200
+      },
+      "input":{"shape":"DeletePrivateConnectionInput"},
+      "output":{"shape":"DeletePrivateConnectionOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteSecurityRequirementPack":{
+      "name":"DeleteSecurityRequirementPack",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteSecurityRequirementPack",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteSecurityRequirementPackInput"},
+      "output":{"shape":"DeleteSecurityRequirementPackOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "DeleteTargetDomain":{
       "name":"DeleteTargetDomain",
       "http":{
@@ -314,6 +532,24 @@
       "input":{"shape":"DeleteTargetDomainInput"},
       "output":{"shape":"DeleteTargetDomainOutput"},
       "idempotent":true
+    },
+    "DescribePrivateConnection":{
+      "name":"DescribePrivateConnection",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DescribePrivateConnection",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribePrivateConnectionInput"},
+      "output":{"shape":"DescribePrivateConnectionOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "GetApplication":{
       "name":"GetApplication",
@@ -360,6 +596,43 @@
         {"shape":"AccessDeniedException"}
       ],
       "readonly":true
+    },
+    "GetSecurityRequirementPack":{
+      "name":"GetSecurityRequirementPack",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetSecurityRequirementPack",
+        "responseCode":200
+      },
+      "input":{"shape":"GetSecurityRequirementPackInput"},
+      "output":{"shape":"GetSecurityRequirementPackOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ImportSecurityRequirements":{
+      "name":"ImportSecurityRequirements",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ImportSecurityRequirements",
+        "responseCode":201
+      },
+      "input":{"shape":"ImportSecurityRequirementsInput"},
+      "output":{"shape":"ImportSecurityRequirementsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
     },
     "InitiateProviderRegistration":{
       "name":"InitiateProviderRegistration",
@@ -544,6 +817,58 @@
       "input":{"shape":"ListPentestsInput"},
       "output":{"shape":"ListPentestsOutput"}
     },
+    "ListPrivateConnections":{
+      "name":"ListPrivateConnections",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListPrivateConnections",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPrivateConnectionsInput"},
+      "output":{"shape":"ListPrivateConnectionsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListSecurityRequirementPacks":{
+      "name":"ListSecurityRequirementPacks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListSecurityRequirementPacks",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSecurityRequirementPacksInput"},
+      "output":{"shape":"ListSecurityRequirementPacksOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListSecurityRequirements":{
+      "name":"ListSecurityRequirements",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListSecurityRequirements",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSecurityRequirementsInput"},
+      "output":{"shape":"ListSecurityRequirementsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -564,6 +889,50 @@
       },
       "input":{"shape":"ListTargetDomainsInput"},
       "output":{"shape":"ListTargetDomainsOutput"},
+      "readonly":true
+    },
+    "ListThreatModelJobTasks":{
+      "name":"ListThreatModelJobTasks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListThreatModelJobTasks",
+        "responseCode":200
+      },
+      "input":{"shape":"ListThreatModelJobTasksInput"},
+      "output":{"shape":"ListThreatModelJobTasksOutput"},
+      "readonly":true
+    },
+    "ListThreatModelJobs":{
+      "name":"ListThreatModelJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListThreatModelJobs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListThreatModelJobsInput"},
+      "output":{"shape":"ListThreatModelJobsOutput"},
+      "readonly":true
+    },
+    "ListThreatModels":{
+      "name":"ListThreatModels",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListThreatModels",
+        "responseCode":200
+      },
+      "input":{"shape":"ListThreatModelsInput"},
+      "output":{"shape":"ListThreatModelsOutput"},
+      "readonly":true
+    },
+    "ListThreats":{
+      "name":"ListThreats",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListThreats",
+        "responseCode":200
+      },
+      "input":{"shape":"ListThreatsInput"},
+      "output":{"shape":"ListThreatsOutput"},
       "readonly":true
     },
     "StartCodeRemediation":{
@@ -596,6 +965,16 @@
       "input":{"shape":"StartPentestJobInput"},
       "output":{"shape":"StartPentestJobOutput"}
     },
+    "StartThreatModelJob":{
+      "name":"StartThreatModelJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StartThreatModelJob",
+        "responseCode":200
+      },
+      "input":{"shape":"StartThreatModelJobInput"},
+      "output":{"shape":"StartThreatModelJobOutput"}
+    },
     "StopCodeReviewJob":{
       "name":"StopCodeReviewJob",
       "http":{
@@ -615,6 +994,16 @@
       },
       "input":{"shape":"StopPentestJobInput"},
       "output":{"shape":"StopPentestJobOutput"}
+    },
+    "StopThreatModelJob":{
+      "name":"StopThreatModelJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StopThreatModelJob",
+        "responseCode":200
+      },
+      "input":{"shape":"StopThreatModelJobInput"},
+      "output":{"shape":"StopThreatModelJobOutput"}
     },
     "TagResource":{
       "name":"TagResource",
@@ -706,6 +1095,42 @@
       "input":{"shape":"UpdatePentestInput"},
       "output":{"shape":"UpdatePentestOutput"}
     },
+    "UpdatePrivateConnectionCertificate":{
+      "name":"UpdatePrivateConnectionCertificate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdatePrivateConnectionCertificate",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdatePrivateConnectionCertificateInput"},
+      "output":{"shape":"UpdatePrivateConnectionCertificateOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "UpdateSecurityRequirementPack":{
+      "name":"UpdateSecurityRequirementPack",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateSecurityRequirementPack",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateSecurityRequirementPackInput"},
+      "output":{"shape":"UpdateSecurityRequirementPackOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "UpdateTargetDomain":{
       "name":"UpdateTargetDomain",
       "http":{
@@ -715,6 +1140,26 @@
       },
       "input":{"shape":"UpdateTargetDomainInput"},
       "output":{"shape":"UpdateTargetDomainOutput"}
+    },
+    "UpdateThreat":{
+      "name":"UpdateThreat",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateThreat",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateThreatInput"},
+      "output":{"shape":"UpdateThreatOutput"}
+    },
+    "UpdateThreatModel":{
+      "name":"UpdateThreatModel",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateThreatModel",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateThreatModelInput"},
+      "output":{"shape":"UpdateThreatModelOutput"}
     },
     "VerifyTargetDomain":{
       "name":"VerifyTargetDomain",
@@ -750,6 +1195,10 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "AccessToken":{
+      "type":"string",
+      "sensitive":true
     },
     "AccessType":{
       "type":"string",
@@ -951,6 +1400,54 @@
         "AWS_INTERNAL"
       ]
     },
+    "BatchCreateSecurityRequirementResult":{
+      "type":"structure",
+      "required":[
+        "packId",
+        "name",
+        "description",
+        "domain",
+        "evaluation",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"},
+        "name":{"shape":"SecurityRequirementName"},
+        "description":{"shape":"String"},
+        "domain":{"shape":"String"},
+        "evaluation":{"shape":"String"},
+        "remediation":{"shape":"String"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "BatchCreateSecurityRequirementResultList":{
+      "type":"list",
+      "member":{"shape":"BatchCreateSecurityRequirementResult"}
+    },
+    "BatchCreateSecurityRequirementsInput":{
+      "type":"structure",
+      "required":[
+        "packId",
+        "securityRequirements"
+      ],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"},
+        "securityRequirements":{"shape":"CreateSecurityRequirementEntryList"}
+      }
+    },
+    "BatchCreateSecurityRequirementsOutput":{
+      "type":"structure",
+      "required":[
+        "securityRequirements",
+        "errors"
+      ],
+      "members":{
+        "securityRequirements":{"shape":"BatchCreateSecurityRequirementResultList"},
+        "errors":{"shape":"BatchSecurityRequirementErrors"}
+      }
+    },
     "BatchDeleteCodeReviewsInput":{
       "type":"structure",
       "required":[
@@ -985,6 +1482,46 @@
       "members":{
         "deleted":{"shape":"PentestList"},
         "failed":{"shape":"DeletePentestFailureList"}
+      }
+    },
+    "BatchDeleteSecurityRequirementsInput":{
+      "type":"structure",
+      "required":[
+        "packId",
+        "securityRequirementNames"
+      ],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"},
+        "securityRequirementNames":{"shape":"SecurityRequirementNameList"}
+      }
+    },
+    "BatchDeleteSecurityRequirementsOutput":{
+      "type":"structure",
+      "required":[
+        "deletedSecurityRequirementNames",
+        "errors"
+      ],
+      "members":{
+        "deletedSecurityRequirementNames":{"shape":"SecurityRequirementNameList"},
+        "errors":{"shape":"BatchSecurityRequirementErrors"}
+      }
+    },
+    "BatchDeleteThreatModelsInput":{
+      "type":"structure",
+      "required":[
+        "threatModelIds",
+        "agentSpaceId"
+      ],
+      "members":{
+        "threatModelIds":{"shape":"ThreatModelIdList"},
+        "agentSpaceId":{"shape":"String"}
+      }
+    },
+    "BatchDeleteThreatModelsOutput":{
+      "type":"structure",
+      "members":{
+        "deleted":{"shape":"ThreatModelIdList"},
+        "failed":{"shape":"DeleteThreatModelFailureList"}
       }
     },
     "BatchGetAgentSpacesInput":{
@@ -1145,6 +1682,54 @@
         "notFound":{"shape":"PentestIdList"}
       }
     },
+    "BatchGetSecurityRequirementResult":{
+      "type":"structure",
+      "required":[
+        "packId",
+        "name",
+        "description",
+        "domain",
+        "evaluation",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"},
+        "name":{"shape":"SecurityRequirementName"},
+        "description":{"shape":"String"},
+        "domain":{"shape":"String"},
+        "evaluation":{"shape":"String"},
+        "remediation":{"shape":"String"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "BatchGetSecurityRequirementResultList":{
+      "type":"list",
+      "member":{"shape":"BatchGetSecurityRequirementResult"}
+    },
+    "BatchGetSecurityRequirementsInput":{
+      "type":"structure",
+      "required":[
+        "packId",
+        "securityRequirementNames"
+      ],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"},
+        "securityRequirementNames":{"shape":"SecurityRequirementNameList"}
+      }
+    },
+    "BatchGetSecurityRequirementsOutput":{
+      "type":"structure",
+      "required":[
+        "securityRequirements",
+        "errors"
+      ],
+      "members":{
+        "securityRequirements":{"shape":"BatchGetSecurityRequirementResultList"},
+        "errors":{"shape":"BatchSecurityRequirementErrors"}
+      }
+    },
     "BatchGetTargetDomainsInput":{
       "type":"structure",
       "required":["targetDomainIds"],
@@ -1159,6 +1744,166 @@
         "notFound":{"shape":"TargetDomainIdList"}
       }
     },
+    "BatchGetThreatModelJobTasksInput":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "threatModelJobTaskIds"
+      ],
+      "members":{
+        "agentSpaceId":{"shape":"String"},
+        "threatModelJobTaskIds":{"shape":"TaskIdList"}
+      }
+    },
+    "BatchGetThreatModelJobTasksOutput":{
+      "type":"structure",
+      "members":{
+        "threatModelJobTasks":{"shape":"ThreatModelJobTaskList"},
+        "notFound":{"shape":"TaskIdList"}
+      }
+    },
+    "BatchGetThreatModelJobsInput":{
+      "type":"structure",
+      "required":[
+        "threatModelJobIds",
+        "agentSpaceId"
+      ],
+      "members":{
+        "threatModelJobIds":{"shape":"ThreatModelJobIdList"},
+        "agentSpaceId":{"shape":"String"}
+      }
+    },
+    "BatchGetThreatModelJobsOutput":{
+      "type":"structure",
+      "members":{
+        "threatModelJobs":{"shape":"ThreatModelJobList"},
+        "notFound":{"shape":"ThreatModelJobIdList"}
+      }
+    },
+    "BatchGetThreatModelsInput":{
+      "type":"structure",
+      "required":[
+        "threatModelIds",
+        "agentSpaceId"
+      ],
+      "members":{
+        "threatModelIds":{"shape":"ThreatModelIdList"},
+        "agentSpaceId":{"shape":"String"}
+      }
+    },
+    "BatchGetThreatModelsOutput":{
+      "type":"structure",
+      "members":{
+        "threatModels":{"shape":"ThreatModelList"},
+        "notFound":{"shape":"ThreatModelIdList"}
+      }
+    },
+    "BatchGetThreatsInput":{
+      "type":"structure",
+      "required":[
+        "threatIds",
+        "agentSpaceId"
+      ],
+      "members":{
+        "threatIds":{"shape":"ThreatIdList"},
+        "agentSpaceId":{"shape":"String"}
+      }
+    },
+    "BatchGetThreatsOutput":{
+      "type":"structure",
+      "members":{
+        "threats":{"shape":"ThreatList"},
+        "notFound":{"shape":"ThreatIdList"}
+      }
+    },
+    "BatchSecurityRequirementError":{
+      "type":"structure",
+      "required":[
+        "securityRequirementName",
+        "code",
+        "message"
+      ],
+      "members":{
+        "securityRequirementName":{"shape":"SecurityRequirementName"},
+        "code":{"shape":"String"},
+        "message":{"shape":"String"}
+      }
+    },
+    "BatchSecurityRequirementErrors":{
+      "type":"list",
+      "member":{"shape":"BatchSecurityRequirementError"}
+    },
+    "BatchUpdateSecurityRequirementsInput":{
+      "type":"structure",
+      "required":[
+        "packId",
+        "securityRequirements"
+      ],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"},
+        "securityRequirements":{"shape":"UpdateSecurityRequirementEntryList"}
+      }
+    },
+    "BatchUpdateSecurityRequirementsOutput":{
+      "type":"structure",
+      "required":[
+        "updatedSecurityRequirementNames",
+        "errors"
+      ],
+      "members":{
+        "updatedSecurityRequirementNames":{"shape":"SecurityRequirementNameList"},
+        "errors":{"shape":"BatchSecurityRequirementErrors"}
+      }
+    },
+    "BitbucketInstallationId":{"type":"string"},
+    "BitbucketIntegrationInput":{
+      "type":"structure",
+      "required":[
+        "installationId",
+        "workspace",
+        "code",
+        "state"
+      ],
+      "members":{
+        "installationId":{"shape":"BitbucketInstallationId"},
+        "workspace":{"shape":"BitbucketWorkspace"},
+        "code":{"shape":"AuthCode"},
+        "state":{"shape":"CsrfState"}
+      }
+    },
+    "BitbucketRepositoryMetadata":{
+      "type":"structure",
+      "required":[
+        "name",
+        "providerResourceId",
+        "workspace"
+      ],
+      "members":{
+        "name":{"shape":"ProviderResourceName"},
+        "providerResourceId":{"shape":"ProviderResourceId"},
+        "workspace":{"shape":"BitbucketWorkspace"},
+        "accessType":{"shape":"AccessType"}
+      }
+    },
+    "BitbucketRepositoryResource":{
+      "type":"structure",
+      "required":[
+        "name",
+        "workspace"
+      ],
+      "members":{
+        "name":{"shape":"ProviderResourceName"},
+        "workspace":{"shape":"BitbucketWorkspace"}
+      }
+    },
+    "BitbucketResourceCapabilities":{
+      "type":"structure",
+      "members":{
+        "leaveComments":{"shape":"Boolean"},
+        "remediateCode":{"shape":"Boolean"}
+      }
+    },
+    "BitbucketWorkspace":{"type":"string"},
     "Blob":{"type":"blob"},
     "Boolean":{
       "type":"boolean",
@@ -1174,6 +1919,17 @@
     "CategoryList":{
       "type":"list",
       "member":{"shape":"Category"}
+    },
+    "CertificateChain":{
+      "type":"string",
+      "sensitive":true
+    },
+    "CleanUpStrategy":{
+      "type":"string",
+      "enum":[
+        "BEST_EFFORT_DELETE",
+        "RETAIN_ALL"
+      ]
     },
     "CloudWatchLog":{
       "type":"structure",
@@ -1248,6 +2004,7 @@
         "serviceRole":{"shape":"ServiceRole"},
         "logConfig":{"shape":"CloudWatchLog"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
+        "validationMode":{"shape":"ValidationMode"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -1401,6 +2158,63 @@
       },
       "exception":true
     },
+    "ConfluenceDocumentMetadata":{
+      "type":"structure",
+      "required":[
+        "name",
+        "providerResourceId",
+        "spaceKey",
+        "pageId"
+      ],
+      "members":{
+        "name":{"shape":"ProviderResourceName"},
+        "providerResourceId":{"shape":"ProviderResourceId"},
+        "spaceKey":{"shape":"String"},
+        "pageId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "spaceTitle":{"shape":"String"}
+      }
+    },
+    "ConfluenceDocumentResource":{
+      "type":"structure",
+      "required":[
+        "name",
+        "spaceKey",
+        "pageId"
+      ],
+      "members":{
+        "name":{"shape":"ProviderResourceName"},
+        "spaceKey":{"shape":"String"},
+        "pageId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "spaceTitle":{"shape":"String"}
+      }
+    },
+    "ConfluenceInstallationId":{"type":"string"},
+    "ConfluenceIntegrationInput":{
+      "type":"structure",
+      "required":[
+        "installationId",
+        "code",
+        "state",
+        "siteUrl"
+      ],
+      "members":{
+        "installationId":{"shape":"ConfluenceInstallationId"},
+        "code":{"shape":"AuthCode"},
+        "state":{"shape":"CsrfState"},
+        "siteUrl":{"shape":"ConfluenceSiteUrl"}
+      }
+    },
+    "ConfluenceResourceCapabilities":{
+      "type":"structure",
+      "members":{
+        "fetchDocument":{"shape":"Boolean"},
+        "createDocument":{"shape":"Boolean"},
+        "updateDocument":{"shape":"Boolean"}
+      }
+    },
+    "ConfluenceSiteUrl":{"type":"string"},
     "ContextType":{
       "type":"string",
       "enum":[
@@ -1470,7 +2284,8 @@
         "assets":{"shape":"Assets"},
         "serviceRole":{"shape":"ServiceRole"},
         "logConfig":{"shape":"CloudWatchLog"},
-        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"}
+        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
+        "validationMode":{"shape":"ValidationMode"}
       }
     },
     "CreateCodeReviewOutput":{
@@ -1485,7 +2300,8 @@
         "serviceRole":{"shape":"ServiceRole"},
         "logConfig":{"shape":"CloudWatchLog"},
         "agentSpaceId":{"shape":"String"},
-        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"}
+        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
+        "validationMode":{"shape":"ValidationMode"}
       }
     },
     "CreateIntegrationInput":{
@@ -1500,7 +2316,8 @@
         "input":{"shape":"ProviderInput"},
         "integrationDisplayName":{"shape":"String"},
         "kmsKeyId":{"shape":"KmsKeyId"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "privateConnectionName":{"shape":"PrivateConnectionName"}
       }
     },
     "CreateIntegrationOutput":{
@@ -1545,7 +2362,8 @@
         "logConfig":{"shape":"CloudWatchLog"},
         "vpcConfig":{"shape":"VpcConfig"},
         "networkTrafficConfig":{"shape":"NetworkTrafficConfig"},
-        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"}
+        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
+        "disableManagedSkills":{"shape":"SkillTypeList"}
       }
     },
     "CreatePentestOutput":{
@@ -1560,6 +2378,82 @@
         "serviceRole":{"shape":"ServiceRole"},
         "logConfig":{"shape":"CloudWatchLog"},
         "agentSpaceId":{"shape":"String"}
+      }
+    },
+    "CreatePrivateConnectionInput":{
+      "type":"structure",
+      "required":[
+        "privateConnectionName",
+        "mode"
+      ],
+      "members":{
+        "privateConnectionName":{"shape":"PrivateConnectionName"},
+        "mode":{"shape":"PrivateConnectionMode"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreatePrivateConnectionOutput":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type",
+        "status"
+      ],
+      "members":{
+        "name":{"shape":"PrivateConnectionName"},
+        "type":{"shape":"PrivateConnectionType"},
+        "status":{"shape":"PrivateConnectionStatus"},
+        "resourceGatewayId":{"shape":"ResourceGatewayId"},
+        "hostAddress":{"shape":"HostAddress"},
+        "vpcId":{"shape":"PrivateConnectionVpcId"},
+        "resourceConfigurationId":{"shape":"ResourceConfigurationId"},
+        "certificateExpiryTime":{"shape":"SyntheticTimestamp_date_time"},
+        "dnsResolution":{"shape":"ResourceConfigDnsResolution"},
+        "failureMessage":{"shape":"String"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateSecurityRequirementEntry":{
+      "type":"structure",
+      "required":[
+        "name",
+        "description",
+        "domain",
+        "evaluation"
+      ],
+      "members":{
+        "name":{"shape":"SecurityRequirementName"},
+        "description":{"shape":"String"},
+        "domain":{"shape":"String"},
+        "evaluation":{"shape":"String"},
+        "remediation":{"shape":"String"}
+      }
+    },
+    "CreateSecurityRequirementEntryList":{
+      "type":"list",
+      "member":{"shape":"CreateSecurityRequirementEntry"}
+    },
+    "CreateSecurityRequirementPackInput":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"SecurityRequirementPackName"},
+        "description":{"shape":"String"},
+        "status":{"shape":"SecurityRequirementPackStatus"},
+        "kmsKeyId":{"shape":"KmsKeyId"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateSecurityRequirementPackOutput":{
+      "type":"structure",
+      "required":[
+        "packId",
+        "status"
+      ],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"},
+        "status":{"shape":"SecurityRequirementPackStatus"},
+        "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "CreateTargetDomainInput":{
@@ -1589,6 +2483,95 @@
         "verificationDetails":{"shape":"VerificationDetails"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "verifiedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "CreateThreatInput":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "threatJobId"
+      ],
+      "members":{
+        "agentSpaceId":{"shape":"String"},
+        "threatJobId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "statement":{"shape":"String"},
+        "severity":{"shape":"ThreatSeverity"},
+        "comments":{"shape":"String"},
+        "stride":{"shape":"StrideCategoryList"},
+        "threatSource":{"shape":"String"},
+        "prerequisites":{"shape":"String"},
+        "threatAction":{"shape":"String"},
+        "threatImpact":{"shape":"String"},
+        "impactedGoal":{"shape":"StringList"},
+        "impactedAssets":{"shape":"StringList"},
+        "anchor":{"shape":"ThreatAnchorShape"},
+        "evidence":{"shape":"ThreatEvidenceList"},
+        "recommendation":{"shape":"String"}
+      }
+    },
+    "CreateThreatModelInput":{
+      "type":"structure",
+      "required":[
+        "title",
+        "agentSpaceId",
+        "serviceRole"
+      ],
+      "members":{
+        "title":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "description":{"shape":"String"},
+        "assets":{"shape":"Assets"},
+        "scopeDocs":{"shape":"DocumentList"},
+        "serviceRole":{"shape":"ServiceRole"},
+        "logConfig":{"shape":"CloudWatchLog"},
+        "reportDestination":{"shape":"ReportDestination"}
+      }
+    },
+    "CreateThreatModelOutput":{
+      "type":"structure",
+      "required":["threatModelId"],
+      "members":{
+        "threatModelId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "description":{"shape":"String"},
+        "assets":{"shape":"Assets"},
+        "scopeDocs":{"shape":"DocumentList"},
+        "serviceRole":{"shape":"ServiceRole"},
+        "logConfig":{"shape":"CloudWatchLog"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "CreateThreatOutput":{
+      "type":"structure",
+      "required":[
+        "threatId",
+        "threatJobId"
+      ],
+      "members":{
+        "threatId":{"shape":"String"},
+        "threatJobId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "statement":{"shape":"String"},
+        "severity":{"shape":"ThreatSeverity"},
+        "status":{"shape":"ThreatStatus"},
+        "comments":{"shape":"String"},
+        "stride":{"shape":"StrideCategoryList"},
+        "threatSource":{"shape":"String"},
+        "prerequisites":{"shape":"String"},
+        "threatAction":{"shape":"String"},
+        "threatImpact":{"shape":"String"},
+        "impactedGoal":{"shape":"StringList"},
+        "impactedAssets":{"shape":"StringList"},
+        "anchor":{"shape":"ThreatAnchorShape"},
+        "evidence":{"shape":"ThreatEvidenceList"},
+        "recommendation":{"shape":"String"},
+        "createdBy":{"shape":"ThreatActor"},
+        "updatedBy":{"shape":"ThreatActor"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "CsrfState":{"type":"string"},
@@ -1694,6 +2677,45 @@
       "type":"list",
       "member":{"shape":"DeletePentestFailure"}
     },
+    "DeletePrivateConnectionInput":{
+      "type":"structure",
+      "required":["privateConnectionName"],
+      "members":{
+        "privateConnectionName":{"shape":"PrivateConnectionName"}
+      }
+    },
+    "DeletePrivateConnectionOutput":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type",
+        "status"
+      ],
+      "members":{
+        "name":{"shape":"PrivateConnectionName"},
+        "type":{"shape":"PrivateConnectionType"},
+        "status":{"shape":"PrivateConnectionStatus"},
+        "resourceGatewayId":{"shape":"ResourceGatewayId"},
+        "hostAddress":{"shape":"HostAddress"},
+        "vpcId":{"shape":"PrivateConnectionVpcId"},
+        "resourceConfigurationId":{"shape":"ResourceConfigurationId"},
+        "certificateExpiryTime":{"shape":"SyntheticTimestamp_date_time"},
+        "dnsResolution":{"shape":"ResourceConfigDnsResolution"},
+        "failureMessage":{"shape":"String"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "DeleteSecurityRequirementPackInput":{
+      "type":"structure",
+      "required":["packId"],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"}
+      }
+    },
+    "DeleteSecurityRequirementPackOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteTargetDomainInput":{
       "type":"structure",
       "required":["targetDomainId"],
@@ -1706,6 +2728,52 @@
       "members":{
         "targetDomainId":{"shape":"TargetDomainId"}
       }
+    },
+    "DeleteThreatModelFailure":{
+      "type":"structure",
+      "members":{
+        "threatModelId":{"shape":"String"},
+        "reason":{"shape":"String"}
+      }
+    },
+    "DeleteThreatModelFailureList":{
+      "type":"list",
+      "member":{"shape":"DeleteThreatModelFailure"}
+    },
+    "DescribePrivateConnectionInput":{
+      "type":"structure",
+      "required":["privateConnectionName"],
+      "members":{
+        "privateConnectionName":{"shape":"PrivateConnectionName"}
+      }
+    },
+    "DescribePrivateConnectionOutput":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type",
+        "status"
+      ],
+      "members":{
+        "name":{"shape":"PrivateConnectionName"},
+        "type":{"shape":"PrivateConnectionType"},
+        "status":{"shape":"PrivateConnectionStatus"},
+        "resourceGatewayId":{"shape":"ResourceGatewayId"},
+        "hostAddress":{"shape":"HostAddress"},
+        "vpcId":{"shape":"PrivateConnectionVpcId"},
+        "resourceConfigurationId":{"shape":"ResourceConfigurationId"},
+        "certificateExpiryTime":{"shape":"SyntheticTimestamp_date_time"},
+        "dnsResolution":{"shape":"ResourceConfigDnsResolution"},
+        "failureMessage":{"shape":"String"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "DiffSource":{
+      "type":"structure",
+      "members":{
+        "s3Uri":{"shape":"String"}
+      },
+      "union":true
     },
     "DiscoveredEndpoint":{
       "type":"structure",
@@ -1741,7 +2809,8 @@
       "type":"structure",
       "members":{
         "s3Location":{"shape":"String"},
-        "artifactId":{"shape":"String"}
+        "artifactId":{"shape":"String"},
+        "integratedDocument":{"shape":"IntegratedDocument"}
       }
     },
     "DocumentList":{
@@ -1815,11 +2884,14 @@
         "riskScore":{"shape":"String"},
         "reasoning":{"shape":"String"},
         "confidence":{"shape":"ConfidenceLevel"},
+        "validationStatus":{"shape":"ValidationStatus"},
         "attackScript":{"shape":"String"},
         "codeRemediationTask":{"shape":"CodeRemediationTask"},
         "lastUpdatedBy":{"shape":"String"},
+        "customerNote":{"shape":"String"},
         "codeLocations":{"shape":"CodeLocationList"},
         "verificationScript":{"shape":"VerificationScript"},
+        "alignmentRationale":{"shape":"String"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -1859,6 +2931,7 @@
         "riskType":{"shape":"String"},
         "riskLevel":{"shape":"RiskLevel"},
         "confidence":{"shape":"ConfidenceLevel"},
+        "validationStatus":{"shape":"ValidationStatus"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -1938,6 +3011,38 @@
         "provider":{"shape":"Provider"},
         "providerType":{"shape":"ProviderType"},
         "displayName":{"shape":"String"},
+        "kmsKeyId":{"shape":"KmsKeyId"},
+        "targetUrl":{"shape":"TargetUrl"},
+        "privateConnectionName":{"shape":"PrivateConnectionName"}
+      }
+    },
+    "GetSecurityRequirementPackInput":{
+      "type":"structure",
+      "required":["packId"],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"}
+      }
+    },
+    "GetSecurityRequirementPackOutput":{
+      "type":"structure",
+      "required":[
+        "packId",
+        "name",
+        "managementType",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"},
+        "name":{"shape":"SecurityRequirementPackName"},
+        "description":{"shape":"String"},
+        "vendorName":{"shape":"String"},
+        "managementType":{"shape":"ManagementType"},
+        "status":{"shape":"SecurityRequirementPackStatus"},
+        "importStatus":{"shape":"SecurityRequirementPackImportStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
         "kmsKeyId":{"shape":"KmsKeyId"}
       }
     },
@@ -1950,7 +3055,9 @@
       "members":{
         "code":{"shape":"AuthCode"},
         "state":{"shape":"CsrfState"},
-        "organizationName":{"shape":"String"}
+        "organizationName":{"shape":"String"},
+        "targetUrl":{"shape":"TargetUrl"},
+        "installationId":{"shape":"String"}
       }
     },
     "GitHubOwner":{"type":"string"},
@@ -1986,6 +3093,60 @@
         "remediateCode":{"shape":"Boolean"}
       }
     },
+    "GitLabIntegrationInput":{
+      "type":"structure",
+      "required":[
+        "accessToken",
+        "tokenType"
+      ],
+      "members":{
+        "accessToken":{"shape":"AccessToken"},
+        "targetUrl":{"shape":"TargetUrl"},
+        "tokenType":{"shape":"GitLabTokenType"},
+        "groupId":{"shape":"String"}
+      }
+    },
+    "GitLabNamespace":{"type":"string"},
+    "GitLabRepositoryMetadata":{
+      "type":"structure",
+      "required":[
+        "name",
+        "providerResourceId",
+        "namespace"
+      ],
+      "members":{
+        "name":{"shape":"ProviderResourceName"},
+        "providerResourceId":{"shape":"ProviderResourceId"},
+        "namespace":{"shape":"GitLabNamespace"},
+        "accessType":{"shape":"AccessType"}
+      }
+    },
+    "GitLabRepositoryResource":{
+      "type":"structure",
+      "required":[
+        "name",
+        "namespace"
+      ],
+      "members":{
+        "name":{"shape":"ProviderResourceName"},
+        "namespace":{"shape":"GitLabNamespace"}
+      }
+    },
+    "GitLabResourceCapabilities":{
+      "type":"structure",
+      "members":{
+        "leaveComments":{"shape":"Boolean"},
+        "remediateCode":{"shape":"Boolean"}
+      }
+    },
+    "GitLabTokenType":{
+      "type":"string",
+      "enum":[
+        "PERSONAL",
+        "GROUP"
+      ]
+    },
+    "HostAddress":{"type":"string"},
     "HttpVerification":{
       "type":"structure",
       "members":{
@@ -2006,6 +3167,35 @@
       }
     },
     "IdCInstanceArn":{"type":"string"},
+    "ImportSecurityRequirementsInput":{
+      "type":"structure",
+      "required":[
+        "packId",
+        "input"
+      ],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"},
+        "input":{"shape":"ImportSource"}
+      }
+    },
+    "ImportSecurityRequirementsOutput":{
+      "type":"structure",
+      "required":[
+        "packId",
+        "importStatus"
+      ],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"},
+        "importStatus":{"shape":"SecurityRequirementPackImportStatus"}
+      }
+    },
+    "ImportSource":{
+      "type":"structure",
+      "members":{
+        "documents":{"shape":"SecurityRequirementArtifactList"}
+      },
+      "union":true
+    },
     "InitiateProviderRegistrationInput":{
       "type":"structure",
       "required":["provider"],
@@ -2028,6 +3218,17 @@
       "type":"integer",
       "box":true
     },
+    "IntegratedDocument":{
+      "type":"structure",
+      "required":[
+        "integrationId",
+        "resourceId"
+      ],
+      "members":{
+        "integrationId":{"shape":"String"},
+        "resourceId":{"shape":"String"}
+      }
+    },
     "IntegratedRepository":{
       "type":"structure",
       "required":[
@@ -2046,7 +3247,10 @@
     "IntegratedResource":{
       "type":"structure",
       "members":{
-        "githubRepository":{"shape":"GitHubRepositoryResource"}
+        "githubRepository":{"shape":"GitHubRepositoryResource"},
+        "gitlabRepository":{"shape":"GitLabRepositoryResource"},
+        "bitbucketRepository":{"shape":"BitbucketRepositoryResource"},
+        "confluenceDocument":{"shape":"ConfluenceDocumentResource"}
       },
       "union":true
     },
@@ -2065,7 +3269,10 @@
     "IntegratedResourceMetadata":{
       "type":"structure",
       "members":{
-        "githubRepository":{"shape":"GitHubRepositoryMetadata"}
+        "githubRepository":{"shape":"GitHubRepositoryMetadata"},
+        "gitlabRepository":{"shape":"GitLabRepositoryMetadata"},
+        "bitbucketRepository":{"shape":"BitbucketRepositoryMetadata"},
+        "confluenceDocument":{"shape":"ConfluenceDocumentMetadata"}
       },
       "union":true
     },
@@ -2108,7 +3315,9 @@
         "installationId":{"shape":"String"},
         "provider":{"shape":"Provider"},
         "providerType":{"shape":"ProviderType"},
-        "displayName":{"shape":"String"}
+        "displayName":{"shape":"String"},
+        "targetUrl":{"shape":"TargetUrl"},
+        "privateConnectionName":{"shape":"PrivateConnectionName"}
       }
     },
     "IntegrationSummaryList":{
@@ -2124,6 +3333,14 @@
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "IpAddressType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "IPV6",
+        "DUAL_STACK"
+      ]
     },
     "JobStatus":{
       "type":"string",
@@ -2398,6 +3615,61 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListPrivateConnectionsInput":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListPrivateConnectionsOutput":{
+      "type":"structure",
+      "required":["privateConnections"],
+      "members":{
+        "privateConnections":{"shape":"PrivateConnectionList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListSecurityRequirementPackFilter":{
+      "type":"structure",
+      "members":{
+        "managementType":{"shape":"ManagementType"},
+        "status":{"shape":"SecurityRequirementPackStatus"}
+      }
+    },
+    "ListSecurityRequirementPacksInput":{
+      "type":"structure",
+      "members":{
+        "filter":{"shape":"ListSecurityRequirementPackFilter"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListSecurityRequirementPacksOutput":{
+      "type":"structure",
+      "required":["securityRequirementPackSummaries"],
+      "members":{
+        "securityRequirementPackSummaries":{"shape":"SecurityRequirementPackSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListSecurityRequirementsInput":{
+      "type":"structure",
+      "required":["packId"],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListSecurityRequirementsOutput":{
+      "type":"structure",
+      "required":["securityRequirementSummaries"],
+      "members":{
+        "securityRequirementSummaries":{"shape":"SecurityRequirementSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListTagsForResourceInput":{
       "type":"structure",
       "required":["resourceArn"],
@@ -2429,6 +3701,82 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListThreatModelJobTasksInput":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "threatModelJobId"
+      ],
+      "members":{
+        "agentSpaceId":{"shape":"String"},
+        "maxResults":{"shape":"MaxResults"},
+        "threatModelJobId":{"shape":"String"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListThreatModelJobTasksOutput":{
+      "type":"structure",
+      "members":{
+        "threatModelJobTaskSummaries":{"shape":"ThreatModelJobTaskSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListThreatModelJobsInput":{
+      "type":"structure",
+      "required":[
+        "threatModelId",
+        "agentSpaceId"
+      ],
+      "members":{
+        "maxResults":{"shape":"MaxResults"},
+        "threatModelId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListThreatModelJobsOutput":{
+      "type":"structure",
+      "members":{
+        "threatModelJobSummaries":{"shape":"ThreatModelJobSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListThreatModelsInput":{
+      "type":"structure",
+      "required":["agentSpaceId"],
+      "members":{
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"},
+        "agentSpaceId":{"shape":"String"}
+      }
+    },
+    "ListThreatModelsOutput":{
+      "type":"structure",
+      "members":{
+        "threatModelSummaries":{"shape":"ThreatModelSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListThreatsInput":{
+      "type":"structure",
+      "required":[
+        "threatJobId",
+        "agentSpaceId"
+      ],
+      "members":{
+        "threatJobId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListThreatsOutput":{
+      "type":"structure",
+      "members":{
+        "threats":{"shape":"ThreatSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "Location":{"type":"string"},
     "LogGroupArn":{"type":"string"},
     "LogGroupArns":{
@@ -2445,6 +3793,17 @@
     "LogType":{
       "type":"string",
       "enum":["CLOUDWATCH"]
+    },
+    "ManagementType":{
+      "type":"string",
+      "enum":[
+        "AWS_MANAGED",
+        "CUSTOMER_MANAGED"
+      ]
+    },
+    "MaxIpv4AddressesPerEni":{
+      "type":"integer",
+      "box":true
     },
     "MaxResults":{
       "type":"integer",
@@ -2555,6 +3914,8 @@
         "vpcConfig":{"shape":"VpcConfig"},
         "networkTrafficConfig":{"shape":"NetworkTrafficConfig"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
+        "cleanUpStrategy":{"shape":"CleanUpStrategy"},
+        "disableManagedSkills":{"shape":"SkillTypeList"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -2587,6 +3948,8 @@
         "errorInformation":{"shape":"ErrorInformation"},
         "integratedRepositories":{"shape":"IntegratedRepositoryList"},
         "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
+        "cleanUpStrategy":{"shape":"CleanUpStrategy"},
+        "disableManagedSkills":{"shape":"SkillTypeList"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
@@ -2641,21 +4004,99 @@
       "type":"list",
       "member":{"shape":"PentestSummary"}
     },
+    "PortRange":{"type":"string"},
+    "PortRanges":{
+      "type":"list",
+      "member":{"shape":"PortRange"}
+    },
+    "PrivateConnectionList":{
+      "type":"list",
+      "member":{"shape":"PrivateConnectionSummary"}
+    },
+    "PrivateConnectionMode":{
+      "type":"structure",
+      "members":{
+        "serviceManaged":{"shape":"ServiceManagedInput"},
+        "selfManaged":{"shape":"SelfManagedInput"}
+      },
+      "union":true
+    },
+    "PrivateConnectionName":{"type":"string"},
+    "PrivateConnectionSecurityGroupId":{"type":"string"},
+    "PrivateConnectionSecurityGroupIds":{
+      "type":"list",
+      "member":{"shape":"PrivateConnectionSecurityGroupId"}
+    },
+    "PrivateConnectionStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "CREATE_IN_PROGRESS",
+        "CREATE_FAILED",
+        "DELETE_IN_PROGRESS",
+        "DELETE_FAILED"
+      ]
+    },
+    "PrivateConnectionSubnetId":{"type":"string"},
+    "PrivateConnectionSubnetIds":{
+      "type":"list",
+      "member":{"shape":"PrivateConnectionSubnetId"}
+    },
+    "PrivateConnectionSummary":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type",
+        "status"
+      ],
+      "members":{
+        "name":{"shape":"PrivateConnectionName"},
+        "type":{"shape":"PrivateConnectionType"},
+        "status":{"shape":"PrivateConnectionStatus"},
+        "resourceGatewayId":{"shape":"ResourceGatewayId"},
+        "hostAddress":{"shape":"HostAddress"},
+        "vpcId":{"shape":"PrivateConnectionVpcId"},
+        "resourceConfigurationId":{"shape":"ResourceConfigurationId"},
+        "certificateExpiryTime":{"shape":"SyntheticTimestamp_date_time"},
+        "dnsResolution":{"shape":"ResourceConfigDnsResolution"},
+        "failureMessage":{"shape":"String"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "PrivateConnectionType":{
+      "type":"string",
+      "enum":[
+        "SERVICE_MANAGED",
+        "SELF_MANAGED"
+      ]
+    },
+    "PrivateConnectionVpcId":{"type":"string"},
     "Provider":{
       "type":"string",
-      "enum":["GITHUB"]
+      "enum":[
+        "GITHUB",
+        "GITLAB",
+        "BITBUCKET",
+        "CONFLUENCE"
+      ]
     },
     "ProviderInput":{
       "type":"structure",
       "members":{
-        "github":{"shape":"GitHubIntegrationInput"}
+        "github":{"shape":"GitHubIntegrationInput"},
+        "gitlab":{"shape":"GitLabIntegrationInput"},
+        "bitbucket":{"shape":"BitbucketIntegrationInput"},
+        "confluence":{"shape":"ConfluenceIntegrationInput"}
       },
       "union":true
     },
     "ProviderResourceCapabilities":{
       "type":"structure",
       "members":{
-        "github":{"shape":"GitHubResourceCapabilities"}
+        "github":{"shape":"GitHubResourceCapabilities"},
+        "gitlab":{"shape":"GitLabResourceCapabilities"},
+        "bitbucket":{"shape":"BitbucketResourceCapabilities"},
+        "confluence":{"shape":"ConfluenceResourceCapabilities"}
       },
       "union":true
     },
@@ -2668,7 +4109,29 @@
         "DOCUMENTATION"
       ]
     },
+    "ReportDestination":{
+      "type":"structure",
+      "required":[
+        "integrationId",
+        "containerId"
+      ],
+      "members":{
+        "integrationId":{"shape":"String"},
+        "containerId":{"shape":"String"},
+        "parentId":{"shape":"String"},
+        "documentId":{"shape":"String"}
+      }
+    },
     "ResourceArn":{"type":"string"},
+    "ResourceConfigDnsResolution":{
+      "type":"string",
+      "enum":[
+        "PUBLIC",
+        "IN_VPC"
+      ]
+    },
+    "ResourceConfigurationId":{"type":"string"},
+    "ResourceGatewayId":{"type":"string"},
     "ResourceNotFoundException":{
       "type":"structure",
       "required":["message"],
@@ -2683,7 +4146,10 @@
     },
     "ResourceType":{
       "type":"string",
-      "enum":["CODE_REPOSITORY"]
+      "enum":[
+        "CODE_REPOSITORY",
+        "DOCUMENT"
+      ]
     },
     "RiskLevel":{
       "type":"string",
@@ -2749,8 +4215,159 @@
       "type":"list",
       "member":{"shape":"SecurityGroupArn"}
     },
+    "SecurityRequirementArtifact":{
+      "type":"structure",
+      "required":[
+        "name",
+        "format",
+        "content"
+      ],
+      "members":{
+        "name":{"shape":"SecurityRequirementArtifactName"},
+        "format":{"shape":"SecurityRequirementArtifactFormat"},
+        "content":{"shape":"SecurityRequirementDocumentContent"}
+      }
+    },
+    "SecurityRequirementArtifactFormat":{
+      "type":"string",
+      "enum":[
+        "MD",
+        "PDF",
+        "TXT",
+        "DOCX",
+        "DOC"
+      ]
+    },
+    "SecurityRequirementArtifactList":{
+      "type":"list",
+      "member":{"shape":"SecurityRequirementArtifact"}
+    },
+    "SecurityRequirementArtifactName":{"type":"string"},
+    "SecurityRequirementDocumentContent":{
+      "type":"blob",
+      "sensitive":true
+    },
+    "SecurityRequirementName":{"type":"string"},
+    "SecurityRequirementNameList":{
+      "type":"list",
+      "member":{"shape":"SecurityRequirementName"}
+    },
+    "SecurityRequirementPackId":{"type":"string"},
+    "SecurityRequirementPackImportStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "IN_PROGRESS",
+        "FAILED",
+        "COMPLETED"
+      ]
+    },
+    "SecurityRequirementPackName":{"type":"string"},
+    "SecurityRequirementPackStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "SecurityRequirementPackSummary":{
+      "type":"structure",
+      "required":[
+        "packId",
+        "name",
+        "managementType",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"},
+        "name":{"shape":"SecurityRequirementPackName"},
+        "description":{"shape":"String"},
+        "vendorName":{"shape":"String"},
+        "managementType":{"shape":"ManagementType"},
+        "status":{"shape":"SecurityRequirementPackStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "SecurityRequirementPackSummaryList":{
+      "type":"list",
+      "member":{"shape":"SecurityRequirementPackSummary"}
+    },
+    "SecurityRequirementSummary":{
+      "type":"structure",
+      "required":[
+        "packId",
+        "name",
+        "description",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"},
+        "name":{"shape":"SecurityRequirementName"},
+        "description":{"shape":"String"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "SecurityRequirementSummaryList":{
+      "type":"list",
+      "member":{"shape":"SecurityRequirementSummary"}
+    },
+    "SelfManagedInput":{
+      "type":"structure",
+      "required":["resourceConfigurationId"],
+      "members":{
+        "resourceConfigurationId":{"shape":"ResourceConfigurationId"},
+        "certificate":{"shape":"CertificateChain"}
+      }
+    },
     "SensitiveEmail":{"type":"string"},
+    "ServiceManagedInput":{
+      "type":"structure",
+      "required":[
+        "hostAddress",
+        "vpcId",
+        "subnetIds"
+      ],
+      "members":{
+        "hostAddress":{"shape":"HostAddress"},
+        "vpcId":{"shape":"PrivateConnectionVpcId"},
+        "subnetIds":{"shape":"PrivateConnectionSubnetIds"},
+        "securityGroupIds":{"shape":"PrivateConnectionSecurityGroupIds"},
+        "ipAddressType":{"shape":"IpAddressType"},
+        "ipv4AddressesPerEni":{"shape":"MaxIpv4AddressesPerEni"},
+        "portRanges":{"shape":"PortRanges"},
+        "certificate":{"shape":"CertificateChain"},
+        "dnsResolution":{"shape":"ResourceConfigDnsResolution"}
+      }
+    },
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":402,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "ServiceRole":{"type":"string"},
+    "SkillType":{
+      "type":"string",
+      "enum":[
+        "FINDING_PERSONALIZATION",
+        "LOGIN_OPTIMIZATION"
+      ]
+    },
+    "SkillTypeList":{
+      "type":"list",
+      "member":{"shape":"SkillType"}
+    },
     "SourceCodeRepository":{
       "type":"structure",
       "members":{
@@ -2786,7 +4403,8 @@
       ],
       "members":{
         "agentSpaceId":{"shape":"String"},
-        "codeReviewId":{"shape":"String"}
+        "codeReviewId":{"shape":"String"},
+        "diffSource":{"shape":"DiffSource"}
       }
     },
     "StartCodeReviewJobOutput":{
@@ -2828,6 +4446,30 @@
         "agentSpaceId":{"shape":"String"}
       }
     },
+    "StartThreatModelJobInput":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "threatModelId"
+      ],
+      "members":{
+        "agentSpaceId":{"shape":"String"},
+        "threatModelId":{"shape":"String"}
+      }
+    },
+    "StartThreatModelJobOutput":{
+      "type":"structure",
+      "required":["threatModelJobId"],
+      "members":{
+        "title":{"shape":"String"},
+        "status":{"shape":"JobStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "threatModelId":{"shape":"String"},
+        "threatModelJobId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"}
+      }
+    },
     "Step":{
       "type":"structure",
       "members":{
@@ -2847,7 +4489,8 @@
         "PREFLIGHT",
         "STATIC_ANALYSIS",
         "PENTEST",
-        "FINALIZING"
+        "FINALIZING",
+        "VALIDATION"
       ]
     },
     "StepStatus":{
@@ -2890,7 +4533,41 @@
       "type":"structure",
       "members":{}
     },
+    "StopThreatModelJobInput":{
+      "type":"structure",
+      "required":[
+        "agentSpaceId",
+        "threatModelJobId"
+      ],
+      "members":{
+        "agentSpaceId":{"shape":"String"},
+        "threatModelJobId":{"shape":"String"}
+      }
+    },
+    "StopThreatModelJobOutput":{
+      "type":"structure",
+      "members":{}
+    },
+    "StrideCategory":{
+      "type":"string",
+      "enum":[
+        "SPOOFING",
+        "TAMPERING",
+        "REPUDIATION",
+        "INFORMATION_DISCLOSURE",
+        "DENIAL_OF_SERVICE",
+        "ELEVATION_OF_PRIVILEGE"
+      ]
+    },
+    "StrideCategoryList":{
+      "type":"list",
+      "member":{"shape":"StrideCategory"}
+    },
     "String":{"type":"string"},
+    "StringList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "SubnetArn":{"type":"string"},
     "SubnetArns":{
       "type":"list",
@@ -2980,6 +4657,7 @@
       "type":"list",
       "member":{"shape":"TargetDomainSummary"}
     },
+    "TargetUrl":{"type":"string"},
     "Task":{
       "type":"structure",
       "required":["taskId"],
@@ -3035,6 +4713,238 @@
     "TaskSummaryList":{
       "type":"list",
       "member":{"shape":"TaskSummary"}
+    },
+    "Threat":{
+      "type":"structure",
+      "members":{
+        "threatId":{"shape":"String"},
+        "threatJobId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "statement":{"shape":"String"},
+        "severity":{"shape":"ThreatSeverity"},
+        "status":{"shape":"ThreatStatus"},
+        "comments":{"shape":"String"},
+        "threatSource":{"shape":"String"},
+        "prerequisites":{"shape":"String"},
+        "threatAction":{"shape":"String"},
+        "threatImpact":{"shape":"String"},
+        "impactedGoal":{"shape":"StringList"},
+        "impactedAssets":{"shape":"StringList"},
+        "anchor":{"shape":"ThreatAnchorShape"},
+        "evidence":{"shape":"ThreatEvidenceList"},
+        "stride":{"shape":"StrideCategoryList"},
+        "recommendation":{"shape":"String"},
+        "createdBy":{"shape":"ThreatActor"},
+        "updatedBy":{"shape":"ThreatActor"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "ThreatActor":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER",
+        "AGENT"
+      ]
+    },
+    "ThreatAnchorShape":{
+      "type":"structure",
+      "members":{
+        "kind":{"shape":"String"},
+        "id":{"shape":"String"},
+        "packageId":{"shape":"String"}
+      }
+    },
+    "ThreatEvidenceList":{
+      "type":"list",
+      "member":{"shape":"ThreatEvidenceShape"}
+    },
+    "ThreatEvidenceShape":{
+      "type":"structure",
+      "members":{
+        "packageId":{"shape":"String"},
+        "path":{"shape":"String"}
+      }
+    },
+    "ThreatIdList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "ThreatList":{
+      "type":"list",
+      "member":{"shape":"Threat"}
+    },
+    "ThreatModel":{
+      "type":"structure",
+      "required":[
+        "threatModelId",
+        "agentSpaceId",
+        "title",
+        "assets"
+      ],
+      "members":{
+        "threatModelId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "description":{"shape":"String"},
+        "assets":{"shape":"Assets"},
+        "scopeDocs":{"shape":"DocumentList"},
+        "serviceRole":{"shape":"ServiceRole"},
+        "logConfig":{"shape":"CloudWatchLog"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "ThreatModelIdList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "ThreatModelJob":{
+      "type":"structure",
+      "members":{
+        "threatModelJobId":{"shape":"String"},
+        "threatModelId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "status":{"shape":"JobStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "executionStartTime":{"shape":"SyntheticTimestamp_date_time"},
+        "executionEndTime":{"shape":"SyntheticTimestamp_date_time"},
+        "sourceCode":{"shape":"SourceCodeRepositoryList"},
+        "integratedRepositories":{"shape":"IntegratedRepositoryList"},
+        "documents":{"shape":"DocumentList"},
+        "scopeDocs":{"shape":"DocumentList"},
+        "errorInformation":{"shape":"ErrorInformation"},
+        "systemOverview":{"shape":"String"}
+      }
+    },
+    "ThreatModelJobIdList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "ThreatModelJobList":{
+      "type":"list",
+      "member":{"shape":"ThreatModelJob"}
+    },
+    "ThreatModelJobSummary":{
+      "type":"structure",
+      "required":[
+        "threatModelJobId",
+        "threatModelId"
+      ],
+      "members":{
+        "threatModelJobId":{"shape":"String"},
+        "threatModelId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "status":{"shape":"JobStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "ThreatModelJobSummaryList":{
+      "type":"list",
+      "member":{"shape":"ThreatModelJobSummary"}
+    },
+    "ThreatModelJobTask":{
+      "type":"structure",
+      "required":["taskId"],
+      "members":{
+        "taskId":{"shape":"String"},
+        "threatModelId":{"shape":"String"},
+        "threatModelJobId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "description":{"shape":"String"},
+        "executionStatus":{"shape":"TaskExecutionStatus"},
+        "logsLocation":{"shape":"LogLocation"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "ThreatModelJobTaskList":{
+      "type":"list",
+      "member":{"shape":"ThreatModelJobTask"}
+    },
+    "ThreatModelJobTaskSummary":{
+      "type":"structure",
+      "required":["taskId"],
+      "members":{
+        "taskId":{"shape":"String"},
+        "threatModelId":{"shape":"String"},
+        "threatModelJobId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "executionStatus":{"shape":"TaskExecutionStatus"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "ThreatModelJobTaskSummaryList":{
+      "type":"list",
+      "member":{"shape":"ThreatModelJobTaskSummary"}
+    },
+    "ThreatModelList":{
+      "type":"list",
+      "member":{"shape":"ThreatModel"}
+    },
+    "ThreatModelSummary":{
+      "type":"structure",
+      "required":[
+        "threatModelId",
+        "agentSpaceId",
+        "title"
+      ],
+      "members":{
+        "threatModelId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "ThreatModelSummaryList":{
+      "type":"list",
+      "member":{"shape":"ThreatModelSummary"}
+    },
+    "ThreatSeverity":{
+      "type":"string",
+      "enum":[
+        "CRITICAL",
+        "HIGH",
+        "MEDIUM",
+        "LOW",
+        "INFO"
+      ]
+    },
+    "ThreatStatus":{
+      "type":"string",
+      "enum":[
+        "OPEN",
+        "RESOLVED",
+        "DISMISSED"
+      ]
+    },
+    "ThreatSummary":{
+      "type":"structure",
+      "members":{
+        "threatId":{"shape":"String"},
+        "threatJobId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "statement":{"shape":"String"},
+        "severity":{"shape":"ThreatSeverity"},
+        "status":{"shape":"ThreatStatus"},
+        "stride":{"shape":"StrideCategoryList"},
+        "createdBy":{"shape":"ThreatActor"},
+        "updatedBy":{"shape":"ThreatActor"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "ThreatSummaryList":{
+      "type":"list",
+      "member":{"shape":"ThreatSummary"}
     },
     "ThrottlingException":{
       "type":"structure",
@@ -3131,7 +5041,8 @@
         "assets":{"shape":"Assets"},
         "serviceRole":{"shape":"ServiceRole"},
         "logConfig":{"shape":"CloudWatchLog"},
-        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"}
+        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
+        "validationMode":{"shape":"ValidationMode"}
       }
     },
     "UpdateCodeReviewOutput":{
@@ -3146,7 +5057,8 @@
         "serviceRole":{"shape":"ServiceRole"},
         "logConfig":{"shape":"CloudWatchLog"},
         "agentSpaceId":{"shape":"String"},
-        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"}
+        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
+        "validationMode":{"shape":"ValidationMode"}
       }
     },
     "UpdateFindingInput":{
@@ -3158,8 +5070,15 @@
       "members":{
         "findingId":{"shape":"String"},
         "agentSpaceId":{"shape":"String"},
+        "name":{"shape":"String"},
+        "description":{"shape":"String"},
+        "riskType":{"shape":"String"},
         "riskLevel":{"shape":"RiskLevel"},
-        "status":{"shape":"FindingStatus"}
+        "riskScore":{"shape":"String"},
+        "attackScript":{"shape":"String"},
+        "reasoning":{"shape":"String"},
+        "status":{"shape":"FindingStatus"},
+        "customerNote":{"shape":"String"}
       }
     },
     "UpdateFindingOutput":{
@@ -3199,7 +5118,8 @@
         "logConfig":{"shape":"CloudWatchLog"},
         "vpcConfig":{"shape":"VpcConfig"},
         "networkTrafficConfig":{"shape":"NetworkTrafficConfig"},
-        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"}
+        "codeRemediationStrategy":{"shape":"CodeRemediationStrategy"},
+        "disableManagedSkills":{"shape":"SkillTypeList"}
       }
     },
     "UpdatePentestOutput":{
@@ -3214,6 +5134,73 @@
         "serviceRole":{"shape":"ServiceRole"},
         "logConfig":{"shape":"CloudWatchLog"},
         "agentSpaceId":{"shape":"String"}
+      }
+    },
+    "UpdatePrivateConnectionCertificateInput":{
+      "type":"structure",
+      "required":[
+        "privateConnectionName",
+        "certificate"
+      ],
+      "members":{
+        "privateConnectionName":{"shape":"PrivateConnectionName"},
+        "certificate":{"shape":"CertificateChain"}
+      }
+    },
+    "UpdatePrivateConnectionCertificateOutput":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type",
+        "status"
+      ],
+      "members":{
+        "name":{"shape":"PrivateConnectionName"},
+        "type":{"shape":"PrivateConnectionType"},
+        "status":{"shape":"PrivateConnectionStatus"},
+        "resourceGatewayId":{"shape":"ResourceGatewayId"},
+        "hostAddress":{"shape":"HostAddress"},
+        "vpcId":{"shape":"PrivateConnectionVpcId"},
+        "resourceConfigurationId":{"shape":"ResourceConfigurationId"},
+        "certificateExpiryTime":{"shape":"SyntheticTimestamp_date_time"},
+        "dnsResolution":{"shape":"ResourceConfigDnsResolution"},
+        "failureMessage":{"shape":"String"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "UpdateSecurityRequirementEntry":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"SecurityRequirementName"},
+        "description":{"shape":"String"},
+        "domain":{"shape":"String"},
+        "evaluation":{"shape":"String"},
+        "remediation":{"shape":"String"}
+      }
+    },
+    "UpdateSecurityRequirementEntryList":{
+      "type":"list",
+      "member":{"shape":"UpdateSecurityRequirementEntry"}
+    },
+    "UpdateSecurityRequirementPackInput":{
+      "type":"structure",
+      "required":["packId"],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"},
+        "name":{"shape":"SecurityRequirementPackName"},
+        "description":{"shape":"String"},
+        "status":{"shape":"SecurityRequirementPackStatus"}
+      }
+    },
+    "UpdateSecurityRequirementPackOutput":{
+      "type":"structure",
+      "required":["packId"],
+      "members":{
+        "packId":{"shape":"SecurityRequirementPackId"},
+        "name":{"shape":"SecurityRequirementPackName"},
+        "description":{"shape":"String"},
+        "status":{"shape":"SecurityRequirementPackStatus"}
       }
     },
     "UpdateTargetDomainInput":{
@@ -3242,6 +5229,94 @@
         "verificationDetails":{"shape":"VerificationDetails"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "verifiedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "UpdateThreatInput":{
+      "type":"structure",
+      "required":[
+        "threatId",
+        "agentSpaceId"
+      ],
+      "members":{
+        "threatId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "status":{"shape":"ThreatStatus"},
+        "comments":{"shape":"String"},
+        "statement":{"shape":"String"},
+        "severity":{"shape":"ThreatSeverity"},
+        "threatSource":{"shape":"String"},
+        "prerequisites":{"shape":"String"},
+        "threatAction":{"shape":"String"},
+        "threatImpact":{"shape":"String"},
+        "impactedGoal":{"shape":"StringList"},
+        "impactedAssets":{"shape":"StringList"},
+        "anchor":{"shape":"ThreatAnchorShape"},
+        "evidence":{"shape":"ThreatEvidenceList"},
+        "recommendation":{"shape":"String"}
+      }
+    },
+    "UpdateThreatModelInput":{
+      "type":"structure",
+      "required":[
+        "threatModelId",
+        "agentSpaceId"
+      ],
+      "members":{
+        "threatModelId":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "description":{"shape":"String"},
+        "assets":{"shape":"Assets"},
+        "scopeDocs":{"shape":"DocumentList"},
+        "serviceRole":{"shape":"ServiceRole"},
+        "logConfig":{"shape":"CloudWatchLog"}
+      }
+    },
+    "UpdateThreatModelOutput":{
+      "type":"structure",
+      "required":["threatModelId"],
+      "members":{
+        "threatModelId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "agentSpaceId":{"shape":"String"},
+        "description":{"shape":"String"},
+        "assets":{"shape":"Assets"},
+        "scopeDocs":{"shape":"DocumentList"},
+        "serviceRole":{"shape":"ServiceRole"},
+        "logConfig":{"shape":"CloudWatchLog"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "UpdateThreatOutput":{
+      "type":"structure",
+      "required":[
+        "threatId",
+        "threatJobId"
+      ],
+      "members":{
+        "threatId":{"shape":"String"},
+        "threatJobId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "statement":{"shape":"String"},
+        "severity":{"shape":"ThreatSeverity"},
+        "status":{"shape":"ThreatStatus"},
+        "comments":{"shape":"String"},
+        "stride":{"shape":"StrideCategoryList"},
+        "threatSource":{"shape":"String"},
+        "prerequisites":{"shape":"String"},
+        "threatAction":{"shape":"String"},
+        "threatImpact":{"shape":"String"},
+        "impactedGoal":{"shape":"StringList"},
+        "impactedAssets":{"shape":"StringList"},
+        "anchor":{"shape":"ThreatAnchorShape"},
+        "evidence":{"shape":"ThreatEvidenceList"},
+        "recommendation":{"shape":"String"},
+        "createdBy":{"shape":"ThreatActor"},
+        "updatedBy":{"shape":"ThreatActor"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "UriList":{
@@ -3292,6 +5367,23 @@
     "ValidationExceptionFieldList":{
       "type":"list",
       "member":{"shape":"ValidationExceptionField"}
+    },
+    "ValidationMode":{
+      "type":"string",
+      "enum":[
+        "DISABLED",
+        "SIMULATED"
+      ]
+    },
+    "ValidationStatus":{
+      "type":"string",
+      "enum":[
+        "CONFIRMED",
+        "NOT_REPRODUCED",
+        "VALIDATION_FAILED",
+        "VALIDATING",
+        "NOT_VALIDATED"
+      ]
     },
     "VerificationDetails":{
       "type":"structure",
