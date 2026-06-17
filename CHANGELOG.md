@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.385.1 - 2026-06-17
 
 * `Aws\Configuration` - Fixes issue where profiles other than default are not discovered in the ini file due to a missing profile prefix in the lookup.
 * `Aws\BedrockAgentRuntime` - Adds new AgenticRetrieveStream API for managed knowledge bases to use conversation history and autonomously plan for multi-hop multi-KB reasoning with built-in evaluation and access-control. Updates Retrieve API for access-control-based filtering for managed knowledge bases.
