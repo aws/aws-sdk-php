@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.385.2 - 2026-06-18
 
 * `Aws\Batch` - Adds Support for ordered allocation strategies- BEST-FIT-PROGRESSIVE-ORDERED or SPOT-CAPACITY-OPTIMIZED-PRIORITIZED
 * `Aws\CloudWatchLogs` - Added optional startFromHead parameter to FilterLogEvents enabling descending timestamp order (newest first) when set to false. Default true preserves existing ascending order. Reverse sorting requires a startTime on or after Jan 1, 2024.
