@@ -2615,9 +2615,47 @@
         "InstanceRequirementsRequest$memoryMiB": "<p>The minimum and maximum amount of memory in mebibytes (MiB) for the instance types. Amazon ECS selects instance types that have memory within this range.</p>"
       }
     },
+    "MetricConfiguration": {
+      "base": "<p>The configuration for a specific set of metrics to collect for a service.</p>",
+      "refs": {
+        "MetricConfigurationList$member": null
+      }
+    },
+    "MetricConfigurationList": {
+      "base": null,
+      "refs": {
+        "MonitoringConfiguration$metricConfigurations": "<p>The list of metric configurations for the service monitoring.</p>"
+      }
+    },
+    "MetricName": {
+      "base": null,
+      "refs": {
+        "MetricNamesList$member": null
+      }
+    },
+    "MetricNamesList": {
+      "base": null,
+      "refs": {
+        "MetricConfiguration$metricNames": "<p>The list of metric names to configure. The supported metric names are <code>CPUUtilization</code> and <code>MemoryUtilization</code>.</p>"
+      }
+    },
+    "MetricResolutionSeconds": {
+      "base": null,
+      "refs": {
+        "MetricConfiguration$resolutionSeconds": "<p>The resolution, in seconds, at which to collect the metrics. The valid values are <code>20</code> and <code>60</code>.</p>"
+      }
+    },
     "MissingVersionException": {
       "base": "<p>Amazon ECS can't determine the current version of the Amazon ECS container agent on the container instance and doesn't have enough information to proceed with an update. This could be because the agent running on the container instance is a previous or custom version that doesn't use our version information.</p>",
       "refs": {}
+    },
+    "MonitoringConfiguration": {
+      "base": "<p>The optional monitoring configuration for a service, which defines the resolution for the service-level <code>CPUUtilization</code> and <code>MemoryUtilization</code> Amazon CloudWatch metrics. When not specified, Amazon ECS uses the default resolution of <code>60</code> seconds.</p>",
+      "refs": {
+        "CreateServiceRequest$monitoring": "<p>The optional monitoring configuration for the service, which defines the resolution for the service-level <code>CPUUtilization</code> and <code>MemoryUtilization</code> Amazon CloudWatch metrics. When not specified, Amazon ECS uses the default resolution of <code>60</code> seconds.</p>",
+        "ServiceRevision$monitoring": "<p>The optional monitoring configuration for the service, which defines the resolution for the service-level <code>CPUUtilization</code> and <code>MemoryUtilization</code> Amazon CloudWatch metrics. When not specified, Amazon ECS uses the default resolution of <code>60</code> seconds.</p>",
+        "UpdateServiceRequest$monitoring": "<p>The optional monitoring configuration for the service, which defines the resolution for the service-level <code>CPUUtilization</code> and <code>MemoryUtilization</code> Amazon CloudWatch metrics. When not specified, Amazon ECS uses the default resolution of <code>60</code> seconds.</p>"
+      }
     },
     "MountPoint": {
       "base": "<p>The details for a volume mount point that's used in a container definition.</p>",

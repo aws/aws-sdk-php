@@ -288,6 +288,43 @@
         "description": "This example creates a service with a blue/green deployment strategy that includes a pause lifecycle hook at the POST_PRODUCTION_TRAFFIC_SHIFT stage. The deployment will pause at that stage until you explicitly continue or roll back using the ContinueServiceDeployment API, or until the 60-minute timeout expires and triggers a rollback.",
         "id": "example-3",
         "title": "To create a service with a pause lifecycle hook"
+      },
+      {
+        "input": {
+          "desiredCount": 2,
+          "monitoring": {
+            "metricConfigurations": [
+              {
+                "metricNames": [
+                  "CPUUtilization",
+                  "MemoryUtilization"
+                ],
+                "resolutionSeconds": 20
+              }
+            ]
+          },
+          "serviceName": "ecs-monitored-service",
+          "taskDefinition": "my-app:1"
+        },
+        "output": {
+          "service": {
+            "clusterArn": "arn:aws:ecs:us-east-1:012345678910:cluster/default",
+            "deploymentConfiguration": {
+              "maximumPercent": 200,
+              "minimumHealthyPercent": 100
+            },
+            "desiredCount": 2,
+            "pendingCount": 0,
+            "runningCount": 0,
+            "serviceArn": "arn:aws:ecs:us-east-1:012345678910:service/default/ecs-monitored-service",
+            "serviceName": "ecs-monitored-service",
+            "status": "ACTIVE",
+            "taskDefinition": "arn:aws:ecs:us-east-1:012345678910:task-definition/my-app:1"
+          }
+        },
+        "description": "This example creates a service with a monitoring configuration that sets 20-second resolution for CPUUtilization and MemoryUtilization CloudWatch metrics. The monitoring configuration is not returned in the CreateService response. Use DescribeServiceRevisions to view the monitoring configuration.",
+        "id": "example-4",
+        "title": "To create a service with a monitoring configuration"
       }
     ],
     "CreateTaskSet": [
@@ -1121,6 +1158,42 @@
         "description": "This example describes a service revision with the specified ARN",
         "id": "example-1",
         "title": "To describe a service revision "
+      },
+      {
+        "input": {
+          "serviceRevisionArns": [
+            "arn:aws:ecs:us-east-1:012345678910:service-revision/default/ecs-monitored-service/8675309012345678901"
+          ]
+        },
+        "output": {
+          "failures": [],
+          "serviceRevisions": [
+            {
+              "clusterArn": "arn:aws:ecs:us-east-1:012345678910:cluster/default",
+              "createdAt": "2026-06-10T12:00:00.00Z",
+              "launchType": "FARGATE",
+              "monitoring": {
+                "metricConfigurations": [
+                  {
+                    "metricNames": [
+                      "CPUUtilization",
+                      "MemoryUtilization"
+                    ],
+                    "resolutionSeconds": 20
+                  }
+                ]
+              },
+              "platformFamily": "DockerLinux",
+              "platformVersion": "1.4.0",
+              "serviceArn": "arn:aws:ecs:us-east-1:012345678910:service/default/ecs-monitored-service",
+              "serviceRevisionArn": "arn:aws:ecs:us-east-1:012345678910:service-revision/default/ecs-monitored-service/8675309012345678901",
+              "taskDefinition": "arn:aws:ecs:us-east-1:012345678910:task-definition/my-app:1"
+            }
+          ]
+        },
+        "description": "This example describes a service revision that has a monitoring configuration with 20-second resolution for CPUUtilization and MemoryUtilization CloudWatch metrics.",
+        "id": "example-2",
+        "title": "To describe a service revision with a monitoring configuration"
       }
     ],
     "DescribeServices": [
@@ -2886,6 +2959,26 @@
         "description": "This example updates the my-blue-green-service service to add a pause lifecycle hook at the POST_PRODUCTION_TRAFFIC_SHIFT stage. The deployment will pause at that stage until you explicitly continue or roll back using the ContinueServiceDeployment API, or until the 30-minute timeout expires and triggers a continue.",
         "id": "example-3",
         "title": "To update a service to add a pause lifecycle hook"
+      },
+      {
+        "input": {
+          "monitoring": {
+            "metricConfigurations": [
+              {
+                "metricNames": [
+                  "CPUUtilization",
+                  "MemoryUtilization"
+                ],
+                "resolutionSeconds": 20
+              }
+            ]
+          },
+          "service": "ecs-monitored-service"
+        },
+        "output": {},
+        "description": "This example updates a service to add a monitoring configuration that sets 20-second resolution for CPUUtilization and MemoryUtilization CloudWatch metrics. The monitoring configuration is not returned in the UpdateService response. Use DescribeServiceRevisions to view the monitoring configuration.",
+        "id": "example-4",
+        "title": "To update a service with a monitoring configuration"
       }
     ],
     "UpdateServicePrimaryTaskSet": [

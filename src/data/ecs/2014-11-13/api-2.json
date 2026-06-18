@@ -2285,7 +2285,8 @@
         "enableExecuteCommand":{"shape":"Boolean"},
         "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
         "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"},
-        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"}
+        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"},
+        "monitoring":{"shape":"MonitoringConfiguration"}
       }
     },
     "CreateServiceResponse":{
@@ -4638,12 +4639,52 @@
         "max":{"shape":"BoxedInteger"}
       }
     },
+    "MetricConfiguration":{
+      "type":"structure",
+      "required":[
+        "metricNames",
+        "resolutionSeconds"
+      ],
+      "members":{
+        "metricNames":{"shape":"MetricNamesList"},
+        "resolutionSeconds":{"shape":"MetricResolutionSeconds"}
+      }
+    },
+    "MetricConfigurationList":{
+      "type":"list",
+      "member":{"shape":"MetricConfiguration"},
+      "max":5,
+      "min":0
+    },
+    "MetricName":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "MetricNamesList":{
+      "type":"list",
+      "member":{"shape":"MetricName"},
+      "max":5,
+      "min":1
+    },
+    "MetricResolutionSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":60,
+      "min":20
+    },
     "MissingVersionException":{
       "type":"structure",
       "members":{
         "message":{"shape":"String"}
       },
       "exception":true
+    },
+    "MonitoringConfiguration":{
+      "type":"structure",
+      "members":{
+        "metricConfigurations":{"shape":"MetricConfigurationList"}
+      }
     },
     "MountPoint":{
       "type":"structure",
@@ -5595,7 +5636,8 @@
         "createdAt":{"shape":"Timestamp"},
         "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"},
         "resolvedConfiguration":{"shape":"ResolvedConfiguration"},
-        "ecsManagedResources":{"shape":"ECSManagedResources"}
+        "ecsManagedResources":{"shape":"ECSManagedResources"},
+        "monitoring":{"shape":"MonitoringConfiguration"}
       }
     },
     "ServiceRevisionLoadBalancer":{
@@ -6465,7 +6507,8 @@
         "serviceRegistries":{"shape":"ServiceRegistries"},
         "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
         "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"},
-        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"}
+        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"},
+        "monitoring":{"shape":"MonitoringConfiguration"}
       }
     },
     "UpdateServiceResponse":{

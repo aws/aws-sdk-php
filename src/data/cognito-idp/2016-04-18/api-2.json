@@ -3981,7 +3981,8 @@
       "type":"structure",
       "required":["CertificateArn"],
       "members":{
-        "CertificateArn":{"shape":"ArnType"}
+        "CertificateArn":{"shape":"ArnType"},
+        "SecurityPolicy":{"shape":"SecurityPolicyType"}
       }
     },
     "CustomEmailLambdaVersionConfigType":{
@@ -6162,6 +6163,14 @@
       "min":1,
       "pattern":"[\\w+=/]+",
       "sensitive":true
+    },
+    "SecurityPolicyType":{
+      "type":"string",
+      "enum":[
+        "TLS_V1",
+        "TLS_V1_2_2021",
+        "TLS_V1_3_2025"
+      ]
     },
     "SessionType":{
       "type":"string",

@@ -7992,6 +7992,24 @@
       "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:cluster/[a-z0-9]{12}"
     },
+    "ClusterAutoPatchConfig":{
+      "type":"structure",
+      "required":["PatchingStrategy"],
+      "members":{
+        "PatchingStrategy":{"shape":"ClusterPatchingStrategy"},
+        "PatchSchedule":{"shape":"ClusterPatchSchedule"},
+        "DeploymentConfig":{"shape":"DeploymentConfiguration"}
+      }
+    },
+    "ClusterAutoPatchConfigDetails":{
+      "type":"structure",
+      "members":{
+        "PatchingStrategy":{"shape":"ClusterPatchingStrategy"},
+        "CurrentPatchSchedule":{"shape":"ClusterPatchScheduleDetails"},
+        "DesiredPatchSchedule":{"shape":"ClusterPatchScheduleDetails"},
+        "DeploymentConfig":{"shape":"DeploymentConfiguration"}
+      }
+    },
     "ClusterAutoScalerType":{
       "type":"string",
       "enum":["Karpenter"]
@@ -8199,7 +8217,9 @@
       "type":"string",
       "enum":[
         "UpToDate",
-        "UpdateAvailable"
+        "UpdateAvailable",
+        "SecurityUpdateRequired",
+        "EndOfLife"
       ]
     },
     "ClusterInstanceCount":{
@@ -8228,8 +8248,11 @@
         "TrainingPlanStatus":{"shape":"InstanceGroupTrainingPlanStatus"},
         "OverrideVpcConfig":{"shape":"VpcConfig"},
         "ScheduledUpdateConfig":{"shape":"ScheduledUpdateConfig"},
+        "AutoPatchConfig":{"shape":"ClusterAutoPatchConfigDetails"},
         "CurrentImageId":{"shape":"ImageId"},
         "DesiredImageId":{"shape":"ImageId"},
+        "CurrentImageReleaseVersion":{"shape":"ImageReleaseVersion"},
+        "DesiredImageReleaseVersion":{"shape":"ImageReleaseVersion"},
         "ImageVersionStatus":{"shape":"ClusterImageVersionStatus"},
         "ActiveOperations":{"shape":"ActiveOperations"},
         "KubernetesConfig":{"shape":"ClusterKubernetesConfigDetails"},
@@ -8273,6 +8296,8 @@
         "OverrideVpcConfig":{"shape":"VpcConfig"},
         "ScheduledUpdateConfig":{"shape":"ScheduledUpdateConfig"},
         "ImageId":{"shape":"ImageId"},
+        "AutoPatchConfig":{"shape":"ClusterAutoPatchConfig"},
+        "ImageReleaseVersion":{"shape":"ImageReleaseVersion"},
         "KubernetesConfig":{"shape":"ClusterKubernetesConfig"},
         "SlurmConfig":{"shape":"ClusterSlurmConfig"},
         "CapacityRequirements":{"shape":"ClusterCapacityRequirements"},
@@ -8662,6 +8687,8 @@
         "Placement":{"shape":"ClusterInstancePlacement"},
         "CurrentImageId":{"shape":"ImageId"},
         "DesiredImageId":{"shape":"ImageId"},
+        "CurrentImageReleaseVersion":{"shape":"ImageReleaseVersion"},
+        "DesiredImageReleaseVersion":{"shape":"ImageReleaseVersion"},
         "ImageVersionStatus":{"shape":"ClusterImageVersionStatus"},
         "UltraServerInfo":{"shape":"UltraServerInfo"},
         "KubernetesConfig":{"shape":"ClusterKubernetesConfigNodeDetails"},
@@ -8727,6 +8754,7 @@
         "InstanceStatus":{"shape":"ClusterInstanceStatusDetails"},
         "UltraServerInfo":{"shape":"UltraServerInfo"},
         "PrivateDnsHostname":{"shape":"ClusterPrivateDnsHostname"},
+        "CurrentImageReleaseVersion":{"shape":"ImageReleaseVersion"},
         "ImageVersionStatus":{"shape":"ClusterImageVersionStatus"}
       }
     },
@@ -8770,6 +8798,25 @@
       "member":{"shape":"ClusterPartitionName"},
       "max":1,
       "min":0
+    },
+    "ClusterPatchSchedule":{
+      "type":"structure",
+      "members":{
+        "NextPatchDate":{"shape":"Timestamp"}
+      }
+    },
+    "ClusterPatchScheduleDetails":{
+      "type":"structure",
+      "members":{
+        "NextPatchDate":{"shape":"Timestamp"}
+      }
+    },
+    "ClusterPatchingStrategy":{
+      "type":"string",
+      "enum":[
+        "WhenIdle",
+        "WhenAllIdle"
+      ]
     },
     "ClusterPrivateDnsHostname":{
       "type":"string",
@@ -8982,7 +9029,8 @@
         "ClusterName":{"shape":"ClusterName"},
         "CreationTime":{"shape":"Timestamp"},
         "ClusterStatus":{"shape":"ClusterStatus"},
-        "TrainingPlanArns":{"shape":"TrainingPlanArns"}
+        "TrainingPlanArns":{"shape":"TrainingPlanArns"},
+        "ImageVersionStatus":{"shape":"ClusterImageVersionStatus"}
       }
     },
     "ClusterThreadsPerCore":{
@@ -17937,6 +17985,12 @@
       "max":63,
       "min":0,
       "pattern":"[a-zA-Z0-9\\-.]+"
+    },
+    "ImageReleaseVersion":{
+      "type":"string",
+      "max":64,
+      "min":0,
+      "pattern":"[0-9]+\\.[0-9]+\\.[0-9]+"
     },
     "ImageSortBy":{
       "type":"string",
@@ -30894,7 +30948,8 @@
       "type":"structure",
       "required":["InstanceGroupName"],
       "members":{
-        "InstanceGroupName":{"shape":"ClusterInstanceGroupName"}
+        "InstanceGroupName":{"shape":"ClusterInstanceGroupName"},
+        "ImageReleaseVersion":{"shape":"ImageReleaseVersion"}
       }
     },
     "UpdateClusterSoftwareInstanceGroups":{

@@ -1129,7 +1129,7 @@
       }
     },
     "CustomDomainConfigType": {
-      "base": "<p>The configuration for a hosted UI custom domain.</p>",
+      "base": "<p>The configuration for a custom domain, including the SSL certificate and TLS security policy.</p>",
       "refs": {
         "CreateUserPoolDomainRequest$CustomDomainConfig": "<p>The configuration for a custom domain. Configures your domain with an Certificate Manager certificate in the <code>us-east-1</code> Region.</p> <p>Provide this parameter only if you want to use a <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-add-custom-domain.html\">custom domain</a> for your user pool. Otherwise, you can omit this parameter and use a <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain-prefix.html\">prefix domain</a> instead.</p> <p>When you create a custom domain, the passkey RP ID defaults to the custom domain. If you had a prefix domain active, this will cause passkey integration for your prefix domain to stop working due to a mismatch in RP ID. To keep the prefix domain passkey integration working, you can explicitly set RP ID to the prefix domain.</p>",
         "DomainDescriptionType$CustomDomainConfig": "<p>The configuration for a custom domain that hosts the sign-up and sign-in webpages for your application.</p>",
@@ -2927,6 +2927,12 @@
         "ForgotPasswordRequest$SecretHash": "<p>A keyed-hash message authentication code (HMAC) calculated using the secret key of a user pool client and username plus the client ID in the message. For more information about <code>SecretHash</code>, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html#cognito-user-pools-computing-secret-hash\">Computing secret hash values</a>.</p>",
         "ResendConfirmationCodeRequest$SecretHash": "<p>A keyed-hash message authentication code (HMAC) calculated using the secret key of a user pool client and username plus the client ID in the message. For more information about <code>SecretHash</code>, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html#cognito-user-pools-computing-secret-hash\">Computing secret hash values</a>.</p>",
         "SignUpRequest$SecretHash": "<p>A keyed-hash message authentication code (HMAC) calculated using the secret key of a user pool client and username plus the client ID in the message. For more information about <code>SecretHash</code>, see <a href=\"https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html#cognito-user-pools-computing-secret-hash\">Computing secret hash values</a>.</p>"
+      }
+    },
+    "SecurityPolicyType": {
+      "base": null,
+      "refs": {
+        "CustomDomainConfigType$SecurityPolicy": "<p>The security policy for the custom domain. Defines the minimum TLS version and cipher suites that CloudFront uses when communicating with viewers (clients). Valid values are as follows:</p> <ul> <li> <p> <code>TLS_V1</code>: Supports TLS 1.0 and later. Provides the broadest client compatibility.</p> </li> <li> <p> <code>TLS_V1_2_2021</code>: Supports TLS 1.2 and later with 2021 cipher suites. Recommended minimum for most use cases.</p> </li> <li> <p> <code>TLS_V1_3_2025</code>: Supports TLS 1.3 and later with 2025 cipher suites. Provides the strongest security posture.</p> </li> </ul>"
       }
     },
     "SessionType": {

@@ -30,6 +30,19 @@
       "base": "<p>You don't have permission to perform this operation on this resource.</p>",
       "refs": {}
     },
+    "AddReplicaLocationInput": {
+      "base": "<p>A structure that specifies a replica location for a canary, including the Region and optional VPC configuration.</p>",
+      "refs": {
+        "AddReplicaLocations$member": null
+      }
+    },
+    "AddReplicaLocations": {
+      "base": null,
+      "refs": {
+        "CreateCanaryRequest$AddReplicaLocations": "<p>A list of locations (Amazon Web Services Regions) to add as replicas for the canary. Each location specifies a Region and optional VPC configuration for the replica. You can add up to 50 replica locations.</p>",
+        "UpdateCanaryRequest$AddReplicaLocations": "<p>A list of locations (Amazon Web Services Regions) to add as replicas for the canary. Each location specifies a Region and optional VPC configuration for the replica. You can add up to 50 replica locations.</p>"
+      }
+    },
     "ArtifactConfigInput": {
       "base": "<p>A structure that contains the configuration for canary artifacts, including the encryption-at-rest settings for artifacts that the canary uploads to Amazon S3.</p>",
       "refs": {
@@ -96,8 +109,8 @@
     "BlueprintTypes": {
       "base": null,
       "refs": {
-        "CanaryCodeInput$BlueprintTypes": "<p> <code>BlueprintTypes</code> is a list of templates that enable simplified canary creation. You can create canaries for common monitoring scenarios by providing only a JSON configuration file instead of writing custom scripts. The only supported value is <code>multi-checks</code>.</p> <p>Multi-checks monitors HTTP/DNS/SSL/TCP endpoints with built-in authentication schemes (Basic, API Key, OAuth, SigV4) and assertion capabilities. When you specify <code>BlueprintTypes</code>, the Handler field cannot be specified since the blueprint provides a pre-defined entry point.</p> <p> <code>BlueprintTypes</code> is supported only on canaries for syn-nodejs-3.0 runtime or later.</p>",
-        "CanaryCodeOutput$BlueprintTypes": "<p> <code>BlueprintTypes</code> is a list of templates that enable simplified canary creation. You can create canaries for common monitoring scenarios by providing only a JSON configuration file instead of writing custom scripts. The only supported value is <code>multi-checks</code>.</p> <p>Multi-checks monitors HTTP/DNS/SSL/TCP endpoints with built-in authentication schemes (Basic, API Key, OAuth, SigV4) and assertion capabilities. When you specify <code>BlueprintTypes</code>, the Handler field cannot be specified since the blueprint provides a pre-defined entry point.</p> <p> <code>BlueprintTypes</code> is supported only on canaries for syn-nodejs-3.0 runtime or later.</p>"
+        "CanaryCodeInput$BlueprintTypes": "<p> <code>BlueprintTypes</code> is a list of templates that enable simplified canary creation. You can create canaries for common monitoring scenarios by providing only a JSON configuration file instead of writing custom scripts. The only supported value is <code>multi-checks</code>.</p> <p>Multi-checks monitors HTTP/DNS/SSL/TCP endpoints with built-in authentication schemes (Basic, API Key, OAuth, SigV4) and assertion capabilities. When you specify <code>BlueprintTypes</code>, the <code>Handler</code> field cannot be specified since the blueprint provides a pre-defined entry point.</p> <p> <code>BlueprintTypes</code> is supported only on canaries for syn-nodejs-3.0 runtime or later.</p>",
+        "CanaryCodeOutput$BlueprintTypes": "<p> <code>BlueprintTypes</code> is a list of templates that enable simplified canary creation. You can create canaries for common monitoring scenarios by providing only a JSON configuration file instead of writing custom scripts. The only supported value is <code>multi-checks</code>.</p> <p>Multi-checks monitors HTTP/DNS/SSL/TCP endpoints with built-in authentication schemes (Basic, API Key, OAuth, SigV4) and assertion capabilities. When you specify <code>BlueprintTypes</code>, the <code>Handler</code> field cannot be specified since the blueprint provides a pre-defined entry point.</p> <p> <code>BlueprintTypes</code> is supported only on canaries for syn-nodejs-3.0 runtime or later.</p>"
       }
     },
     "BrowserConfig": {
@@ -271,7 +284,8 @@
     "CanaryState": {
       "base": null,
       "refs": {
-        "CanaryStatus$State": "<p>The current state of the canary.</p>"
+        "CanaryStatus$State": "<p>The current state of the canary.</p>",
+        "Replica$CanaryState": "<p>The current state of the canary in this replica location.</p>"
       }
     },
     "CanaryStateReasonCode": {
@@ -585,6 +599,22 @@
       "base": null,
       "refs": {}
     },
+    "Location": {
+      "base": null,
+      "refs": {
+        "AddReplicaLocationInput$Location": "<p>The Amazon Web Services Region where the canary replica should be created, for example <code>us-east-1</code>.</p>",
+        "CanaryRun$Location": "<p>The Amazon Web Services Region where this canary run was executed.</p>",
+        "MultiLocationConfig$PrimaryLocation": "<p>The Amazon Web Services Region where the primary canary is located.</p>",
+        "RemoveReplicaLocations$member": null,
+        "Replica$Location": "<p>The Amazon Web Services Region where this replica is located.</p>"
+      }
+    },
+    "LocationType": {
+      "base": null,
+      "refs": {
+        "MultiLocationConfig$LocationType": "<p>Indicates whether this canary is the <code>Primary</code> or a <code>Replica</code> in the multi-location configuration.</p>"
+      }
+    },
     "MaxCanaryResults": {
       "base": null,
       "refs": {
@@ -648,6 +678,12 @@
         "CanaryRunConfigOutput$MemoryInMB": "<p>The maximum amount of memory available to the canary while it is running, in MB. This value must be a multiple of 64.</p>"
       }
     },
+    "MultiLocationConfig": {
+      "base": "<p>A structure that contains information about the multi-location configuration of a canary, including whether it is a primary or replica, the primary location, and the list of replicas.</p>",
+      "refs": {
+        "Canary$MultiLocationConfig": "<p>If this canary is part of a multi-location configuration, this structure contains information about the canary's location type, primary location, and replicas.</p>"
+      }
+    },
     "NotFoundException": {
       "base": "<p>The specified resource was not found.</p>",
       "refs": {}
@@ -678,6 +714,37 @@
         "CreateCanaryRequest$ProvisionedResourceCleanup": "<p>Specifies whether to also delete the Lambda functions and layers used by this canary when the canary is deleted. If you omit this parameter, the default of <code>AUTOMATIC</code> is used, which means that the Lambda functions and layers will be deleted when the canary is deleted.</p> <p>If the value of this parameter is <code>OFF</code>, then the value of the <code>DeleteLambda</code> parameter of the <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DeleteCanary.html\">DeleteCanary</a> operation determines whether the Lambda functions and layers will be deleted.</p>",
         "StartCanaryDryRunRequest$ProvisionedResourceCleanup": "<p>Specifies whether to also delete the Lambda functions and layers used by this canary when the canary is deleted. If you omit this parameter, the default of <code>AUTOMATIC</code> is used, which means that the Lambda functions and layers will be deleted when the canary is deleted.</p> <p>If the value of this parameter is <code>OFF</code>, then the value of the <code>DeleteLambda</code> parameter of the <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DeleteCanary.html\">DeleteCanary</a> operation determines whether the Lambda functions and layers will be deleted.</p>",
         "UpdateCanaryRequest$ProvisionedResourceCleanup": "<p>Specifies whether to also delete the Lambda functions and layers used by this canary when the canary is deleted.</p> <p>If the value of this parameter is <code>OFF</code>, then the value of the <code>DeleteLambda</code> parameter of the <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DeleteCanary.html\">DeleteCanary</a> operation determines whether the Lambda functions and layers will be deleted.</p>"
+      }
+    },
+    "RemoveReplicaLocations": {
+      "base": null,
+      "refs": {
+        "UpdateCanaryRequest$RemoveReplicaLocations": "<p>A list of locations (Amazon Web Services Regions) to remove as replicas for the canary. You must specify at least one location to remove. All replicas can be removed in a single API call and you cannot remove the primary location.</p>"
+      }
+    },
+    "Replica": {
+      "base": "<p>A structure that contains information about a canary replica in a specific location.</p>",
+      "refs": {
+        "Replicas$member": null
+      }
+    },
+    "Replicas": {
+      "base": null,
+      "refs": {
+        "MultiLocationConfig$Replicas": "<p>A list of replicas for this canary. This field is present only for the primary location canary.</p>"
+      }
+    },
+    "ReplicationState": {
+      "base": null,
+      "refs": {
+        "MultiLocationConfig$ReplicationState": "<p>The overall replication state of the canary across all replica locations. This field is present only for the primary location canary. Valid values are <code>InProgress</code>, <code>InSync</code>, and <code>Inconsistent</code>.</p>",
+        "ReplicationStatus$State": "<p>The replication state of the replica. Valid values are <code>InProgress</code>, <code>InSync</code>, and <code>Inconsistent</code>.</p>"
+      }
+    },
+    "ReplicationStatus": {
+      "base": "<p>A structure that contains information about the replication status of a canary replica.</p>",
+      "refs": {
+        "Replica$ReplicationStatus": "<p>A structure that contains information about the replication status of this replica.</p>"
       }
     },
     "RequestEntityTooLargeException": {
@@ -823,6 +890,8 @@
         "DryRunConfigOutput$LastDryRunExecutionStatus": "<p>Returns the last execution status for a canary's dry run.</p>",
         "Group$Id": "<p>The unique ID of the group.</p>",
         "GroupSummary$Id": "<p>The unique ID of the group.</p>",
+        "ReplicationStatus$StateReason": "<p>A description that provides more detail about the current replication state.</p>",
+        "ReplicationStatus$StateReasonCode": "<p>A code that provides more detail about the current replication state.</p>",
         "RuntimeVersion$VersionName": "<p>The name of the runtime version. For a list of valid runtime versions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Library.html\"> Canary Runtime Versions</a>.</p>",
         "RuntimeVersion$Description": "<p>A description of the runtime version, created by Amazon.</p>",
         "StartCanaryDryRunRequest$RuntimeVersion": "<p>Specifies the runtime version to use for the canary. For a list of valid runtime versions and for more information about runtime versions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Library.html\"> Canary Runtime Versions</a>.</p>",
@@ -903,6 +972,7 @@
         "CanaryTimeline$LastStopped": "<p>The date and time that the canary's most recent run ended.</p>",
         "Group$CreatedTime": "<p>The date and time that the group was created.</p>",
         "Group$LastModifiedTime": "<p>The date and time that the group was most recently updated.</p>",
+        "Replica$LastModified": "<p>The date and time that the replica was last modified.</p>",
         "RuntimeVersion$ReleaseDate": "<p>The date that the runtime version was released.</p>",
         "RuntimeVersion$DeprecationDate": "<p>If this runtime version is deprecated, this value is the date of deprecation.</p>"
       }
@@ -989,6 +1059,7 @@
     "VpcConfigInput": {
       "base": "<p>If this canary is to test an endpoint in a VPC, this structure contains information about the subnets and security groups of the VPC endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_VPC.html\"> Running a Canary in a VPC</a>.</p>",
       "refs": {
+        "AddReplicaLocationInput$VpcConfig": "<p>The VPC configuration to use for the canary replica in this location. If not specified, the replica runs without VPC connectivity.</p>",
         "CreateCanaryRequest$VpcConfig": "<p>If this canary is to test an endpoint in a VPC, this structure contains information about the subnet and security groups of the VPC endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_VPC.html\"> Running a Canary in a VPC</a>.</p>",
         "StartCanaryDryRunRequest$VpcConfig": null,
         "UpdateCanaryRequest$VpcConfig": "<p>If this canary is to test an endpoint in a VPC, this structure contains information about the subnet and security groups of the VPC endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_VPC.html\"> Running a Canary in a VPC</a>.</p>"
@@ -997,7 +1068,8 @@
     "VpcConfigOutput": {
       "base": "<p>If this canary is to test an endpoint in a VPC, this structure contains information about the subnets and security groups of the VPC endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_VPC.html\"> Running a Canary in a VPC</a>.</p>",
       "refs": {
-        "Canary$VpcConfig": null
+        "Canary$VpcConfig": null,
+        "Replica$VpcConfig": "<p>The VPC configuration for the canary replica in this location.</p>"
       }
     },
     "VpcId": {

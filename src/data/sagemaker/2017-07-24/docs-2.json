@@ -3182,6 +3182,18 @@
         "UpdateClusterSoftwareResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster being updated for security patching.</p>"
       }
     },
+    "ClusterAutoPatchConfig": {
+      "base": "<p>The configuration for automatic patching of the instance group. When configured, the system automatically applies security patch AMI updates to the instance group.</p>",
+      "refs": {
+        "ClusterInstanceGroupSpecification$AutoPatchConfig": "<p>The configuration for automatic OS security patching. If present, the system automatically applies PATCH AMI updates to this instance group.</p>"
+      }
+    },
+    "ClusterAutoPatchConfigDetails": {
+      "base": "<p>The auto-patching configuration details for the instance group, including the patching strategy and schedule.</p>",
+      "refs": {
+        "ClusterInstanceGroupDetails$AutoPatchConfig": "<p>The auto-patching configuration for the instance group, including the current patching strategy and next scheduled patch date.</p>"
+      }
+    },
     "ClusterAutoScalerType": {
       "base": null,
       "refs": {
@@ -3341,11 +3353,12 @@
       }
     },
     "ClusterImageVersionStatus": {
-      "base": "<p>The status of the Amazon Machine Image (AMI) version for the HyperPod cluster instance group, node, or cluster. The AMI version is determined at the instance group level, and all nodes within an instance group run the same AMI. The cluster-level status is aggregated across all instance groups.</p> <ul> <li> <p> <code>UpToDate</code>: The resource is running the latest available AMI version.</p> </li> <li> <p> <code>UpdateAvailable</code>: A newer AMI version is available for the resource.</p> </li> </ul>",
+      "base": "<p>The status of the Amazon Machine Image (AMI) version for the HyperPod cluster instance group, node, or cluster. The AMI version is determined at the instance group level, and all nodes within an instance group run the same AMI. The cluster-level status is aggregated across all instance groups.</p> <ul> <li> <p> <code>UpToDate</code>: The resource is running the latest available AMI version.</p> </li> <li> <p> <code>UpdateAvailable</code>: A newer AMI version is available for the resource.</p> </li> <li> <p> <code>SecurityUpdateRequired</code>: The current AMI has known security vulnerabilities, and a patched version is available.</p> </li> <li> <p> <code>EndOfLife</code>: The AMI variant has reached end of support and an upgrade is required.</p> </li> </ul>",
       "refs": {
         "ClusterInstanceGroupDetails$ImageVersionStatus": "<p>The status of the image version for the instance group. Indicates whether the instance group is running the latest image version or if an update is available.</p>",
         "ClusterNodeDetails$ImageVersionStatus": "<p>The status of the image version for the cluster node.</p>",
-        "ClusterNodeSummary$ImageVersionStatus": "<p>The status of the image version for the cluster node.</p>"
+        "ClusterNodeSummary$ImageVersionStatus": "<p>The status of the image version for the cluster node.</p>",
+        "ClusterSummary$ImageVersionStatus": "<p>The aggregate status of the image version across the cluster's instance groups.</p>"
       }
     },
     "ClusterInstanceCount": {
@@ -3781,6 +3794,26 @@
       "refs": {
         "ClusterSlurmConfig$PartitionNames": "<p>The list of Slurm partition names that the instance group belongs to.</p>",
         "ClusterSlurmConfigDetails$PartitionNames": "<p>The list of Slurm partition names that the instance group belongs to.</p>"
+      }
+    },
+    "ClusterPatchSchedule": {
+      "base": "<p>The schedule configuration for automatic patching.</p>",
+      "refs": {
+        "ClusterAutoPatchConfig$PatchSchedule": "<p>The schedule for automatic patching, including the next patch date.</p>"
+      }
+    },
+    "ClusterPatchScheduleDetails": {
+      "base": "<p>The schedule details for automatic patching, including the next scheduled patch date.</p>",
+      "refs": {
+        "ClusterAutoPatchConfigDetails$CurrentPatchSchedule": "<p>The currently active patch schedule that the system will execute.</p>",
+        "ClusterAutoPatchConfigDetails$DesiredPatchSchedule": "<p>The requested patch schedule. Differs from CurrentPatchSchedule when a reschedule request is pending.</p>"
+      }
+    },
+    "ClusterPatchingStrategy": {
+      "base": "<p>The strategy for applying automatic patches to instances.</p> <ul> <li> <p> <code>WhenIdle</code>: Cordons all instances and patches each instance as it becomes idle (no running jobs). Each instance is uncordoned immediately after patching and becomes available for new jobs. If instances do not become idle, they remain on the previous AMI version. You can then use UpdateClusterSoftware with the desired ImageReleaseVersion to manually update the remaining instances.</p> </li> <li> <p> <code>WhenAllIdle</code>: Cordons all instances and waits for all to become idle before patching. All instances are uncordoned after patching completes. If not all instances become idle, no patching occurs and all instances remain on the previous AMI version.</p> </li> </ul>",
+      "refs": {
+        "ClusterAutoPatchConfig$PatchingStrategy": "<p>The strategy for applying patches to instances in the group.</p>",
+        "ClusterAutoPatchConfigDetails$PatchingStrategy": "<p>The strategy used for applying patches to instances in the group.</p>"
       }
     },
     "ClusterPrivateDnsHostname": {
@@ -5833,6 +5866,8 @@
     "DeploymentConfiguration": {
       "base": "<p>The configuration to use when updating the AMI versions.</p>",
       "refs": {
+        "ClusterAutoPatchConfig$DeploymentConfig": "<p>The deployment configuration for rolling patch updates, including rollback settings and batch sizes. Only applicable when using a rolling patching strategy.</p>",
+        "ClusterAutoPatchConfigDetails$DeploymentConfig": "<p>The deployment configuration for rolling patch updates.</p>",
         "ClusterInstanceGroupDetails$ActiveSoftwareUpdateConfig": null,
         "ScheduledUpdateConfig$DeploymentConfig": "<p>The configuration to use when updating the AMI versions.</p>",
         "UpdateClusterSoftwareRequest$DeploymentConfig": "<p>The configuration to use when updating the AMI versions.</p>"
@@ -9531,6 +9566,18 @@
       "base": null,
       "refs": {
         "ListImagesRequest$NameContains": "<p>A filter that returns only images whose name contains the specified string.</p>"
+      }
+    },
+    "ImageReleaseVersion": {
+      "base": null,
+      "refs": {
+        "ClusterInstanceGroupDetails$CurrentImageReleaseVersion": "<p>The version of the HyperPod-managed AMI currently running on the instance group.</p>",
+        "ClusterInstanceGroupDetails$DesiredImageReleaseVersion": "<p>The desired version of the HyperPod-managed AMI for the instance group. This may differ from the current version when an update is pending.</p>",
+        "ClusterInstanceGroupSpecification$ImageReleaseVersion": "<p>The version of the HyperPod-managed AMI to use for the instance group. Uses semantic versioning in the format <code>MAJOR.MINOR.PATCH</code> (for example, <code>1.2.3</code>). If omitted, the latest available version is used.</p>",
+        "ClusterNodeDetails$CurrentImageReleaseVersion": "<p>The version of the HyperPod-managed AMI currently running on the node.</p>",
+        "ClusterNodeDetails$DesiredImageReleaseVersion": "<p>The desired version of the HyperPod-managed AMI for the node. This may differ from the current version when an update is pending.</p>",
+        "ClusterNodeSummary$CurrentImageReleaseVersion": "<p>The version of the HyperPod-managed AMI currently running on the node.</p>",
+        "UpdateClusterSoftwareInstanceGroupSpecification$ImageReleaseVersion": "<p>The version of the HyperPod-managed AMI to update to for the instance group. Uses semantic versioning in the format <code>MAJOR.MINOR.PATCH</code>.</p>"
       }
     },
     "ImageSortBy": {
@@ -18948,6 +18995,8 @@
         "ClusterNodeDetails$LastSoftwareUpdateTime": "<p>The time when the cluster was last updated.</p>",
         "ClusterNodeSummary$LaunchTime": "<p>The time when the instance is launched.</p>",
         "ClusterNodeSummary$LastSoftwareUpdateTime": "<p>The time when SageMaker last updated the software of the instances in the cluster.</p>",
+        "ClusterPatchSchedule$NextPatchDate": "<p>The date and time of the next scheduled automatic patch. The system sets this automatically when a patch is detected. Use this field to reschedule the patch to a different date.</p>",
+        "ClusterPatchScheduleDetails$NextPatchDate": "<p>The date and time of the next scheduled automatic patch.</p>",
         "ClusterSchedulerConfigSummary$CreationTime": "<p>Creation time of the cluster policy.</p>",
         "ClusterSchedulerConfigSummary$LastModifiedTime": "<p>Last modified time of the cluster policy.</p>",
         "ClusterSummary$CreationTime": "<p>The time when the SageMaker HyperPod cluster is created.</p>",

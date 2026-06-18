@@ -1791,6 +1791,14 @@
         "roleArn":{"shape":"String"}
       }
     },
+    "ControlPlaneEgressModeType":{
+      "type":"string",
+      "enum":[
+        "AWS_MANAGED",
+        "CUSTOMER_ROUTED",
+        "CUSTOMER_ISOLATED"
+      ]
+    },
     "ControlPlanePlacementRequest":{
       "type":"structure",
       "members":{
@@ -4656,7 +4664,8 @@
         "WarmPoolMaxGroupPreparedCapacity",
         "WarmPoolMinSize",
         "WarmPoolState",
-        "WarmPoolReuseOnScaleIn"
+        "WarmPoolReuseOnScaleIn",
+        "ControlPlaneEgressMode"
       ]
     },
     "UpdateParams":{
@@ -4739,7 +4748,8 @@
         "DeletionProtectionUpdate",
         "CapabilityUpdate",
         "ControlPlaneScalingConfigUpdate",
-        "VendedLogsUpdate"
+        "VendedLogsUpdate",
+        "ControlPlaneEgressUpdate"
       ]
     },
     "UpgradePolicyRequest":{
@@ -4769,7 +4779,8 @@
         "securityGroupIds":{"shape":"StringList"},
         "endpointPublicAccess":{"shape":"BoxedBoolean"},
         "endpointPrivateAccess":{"shape":"BoxedBoolean"},
-        "publicAccessCidrs":{"shape":"StringList"}
+        "publicAccessCidrs":{"shape":"StringList"},
+        "controlPlaneEgressMode":{"shape":"ControlPlaneEgressModeType"}
       }
     },
     "VpcConfigResponse":{
@@ -4781,7 +4792,8 @@
         "vpcId":{"shape":"String"},
         "endpointPublicAccess":{"shape":"Boolean"},
         "endpointPrivateAccess":{"shape":"Boolean"},
-        "publicAccessCidrs":{"shape":"StringList"}
+        "publicAccessCidrs":{"shape":"StringList"},
+        "controlPlaneEgressMode":{"shape":"ControlPlaneEgressModeType"}
       }
     },
     "WarmPoolConfig":{
