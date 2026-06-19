@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.385.3 - 2026-06-19
 
 * `Aws\Signature` - Updates signed headers to include `x-amz-user-agent` and `content-type`
 * `Aws\OpenSearchService` - This release introduces data source attachment APIs, enabling users to attach and detach Amazon OpenSearch Service domains and Amazon OpenSearch Serverless collections to an OpenSearch application.
