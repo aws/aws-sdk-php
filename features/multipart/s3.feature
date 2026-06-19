@@ -90,15 +90,11 @@ Feature: S3 Multipart Uploads
     When I call multipartCopy on "tags-replace" with tags_directive "REPLACE" and tagging "Project=Override&Env=prod"
     Then the copied file "tags-replace-copy" should have tags "Project=Override&Env=prod"
 
-
-  # TODO: re-enable once concurrent PutObjectAnnotation behavior enabled.
-  # Tracking: <ticket-id>. ETA: <date>.
-  # @s3annotations
-  # Scenario: annotations_directive=COPY copies annotations to the destination
-  #   Given I have an s3 client and an uploaded file named "annot-default" with annotations
-  #   When I call multipartCopy on "annot-default" with annotations_directive "COPY"
-  #   Then the copied file "annot-default-copy" should have the same annotations as "annot-default"
-
+   @s3annotations
+   Scenario: annotations_directive=COPY copies annotations to the destination
+     Given I have an s3 client and an uploaded file named "annot-default" with annotations
+     When I call multipartCopy on "annot-default" with annotations_directive "COPY"
+     Then the copied file "annot-default-copy" should have the same annotations as "annot-default"
 
   @s3annotations
   Scenario: annotations_directive=EXCLUDE skips annotation copying
