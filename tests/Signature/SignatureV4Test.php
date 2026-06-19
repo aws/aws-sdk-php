@@ -319,6 +319,78 @@ class SignatureV4Test extends TestCase
         $this->assertStringNotContainsString('Content-Type', (string)$presigned->getUri());
     }
 
+    /**
+     * Regression test for github.com/aws/aws-sdk-php/issues/3283.
+     *
+     * `content-type` should be included in SignedHeaders when present on a
+     * request that is signed (not presigned). Other AWS SDKs (botocore,
+     * Java, JS) sign `content-type` by default, so excluding it from the
+     * PHP SDK breaks cross-SDK signature verification.
+     */
+    public function testSignsContentTypeHeader()
+    {
+        $sig = new SignatureV4('foo', 'bar');
+        $creds = new Credentials('a', 'b');
+        $req = new Request('POST', 'http://foo.com', [
+            'host' => 'foo.com',
+            'Content-Type' => 'application/json',
+        ]);
+        $signed = $sig->signRequest($req, $creds);
+        $this->assertStringContainsString(
+            'content-type',
+            $signed->getHeaderLine('Authorization')
+        );
+    }
+
+    /**
+     * Regression test for github.com/aws/aws-sdk-php/issues/3274.
+     *
+     * `x-amz-user-agent` should be included in SignedHeaders when present
+     * on a request that is signed (not presigned). It is an `x-amz-*`
+     * header and AWS services require all such headers to be signed.
+     */
+    public function testSignsXAmzUserAgentHeader()
+    {
+        $sig = new SignatureV4('foo', 'bar');
+        $creds = new Credentials('a', 'b');
+        $req = new Request('POST', 'http://foo.com', [
+            'host' => 'foo.com',
+            'X-Amz-User-Agent' => 'aws-sdk-php/3.x',
+        ]);
+        $signed = $sig->signRequest($req, $creds);
+        $this->assertStringContainsString(
+            'x-amz-user-agent',
+            $signed->getHeaderLine('Authorization')
+        );
+    }
+
+    /**
+     * `content-type` and `x-amz-user-agent` must NOT be included in
+     * presigned URL SignedHeaders, since the consumer of the URL cannot
+     * be expected to reproduce these header values when invoking the URL.
+     */
+    public function testPresignExcludesContentTypeAndUserAgent()
+    {
+        $sig = new SignatureV4('foo', 'bar');
+        $creds = new Credentials('a', 'b');
+        $req = new Request('PUT', 'http://foo.com', [
+            'host' => 'foo.com',
+            'Content-Type' => 'application/json',
+            'X-Amz-User-Agent' => 'aws-sdk-php/3.x',
+            'x-amz-meta-foo' => 'bar',
+        ]);
+        $presigned = $sig->presign($req, $creds, '+5 minutes');
+        $uri = (string)$presigned->getUri();
+        $this->assertStringNotContainsString('content-type', $uri);
+        $this->assertStringNotContainsString('Content-Type', $uri);
+        $this->assertStringNotContainsString('user-agent', $uri);
+        $this->assertStringNotContainsString('User-Agent', $uri);
+        // x-amz-meta-foo is a normal x-amz-* header that should still be
+        // moved to query and signed.
+        $this->assertStringContainsString('x-amz-meta-foo', $uri);
+    }
+
+
     public function testCanonicalQuerySortingOccursAfterEncoding()
     {
         $_SERVER['aws_time'] = '20110909T233600Z';
