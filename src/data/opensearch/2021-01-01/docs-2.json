@@ -8,6 +8,7 @@
     "AddTags": "<p>Attaches tags to an existing Amazon OpenSearch Service domain, data source, or application. </p> <p>Tags are a set of case-sensitive key-value pairs. A domain, data source, or application can have up to 10 tags. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-awsresourcetagging.html\">Tagging Amazon OpenSearch Service resources</a>. </p>",
     "AssociatePackage": "<p>Associates a package with an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "AssociatePackages": "<p>Operation in the Amazon OpenSearch Service API for associating multiple packages with a domain simultaneously.</p>",
+    "AttachDataSource": "<p>Attaches a data source to an OpenSearch application. The data source can be an Amazon OpenSearch Service domain or an Amazon OpenSearch Serverless collection. If both the application and data source are in the <code>ACTIVE</code> state, the attachment completes immediately and returns a status of <code>ATTACHED</code>. If either resource is not yet active, the operation stores the request and returns a status of <code>PENDING</code>. A background process then completes the attachment when both resources become active. Pending attachments that are not completed within 24 hours are marked as <code>FAILED</code>. This operation is idempotent. If a data source is already attached or pending for the same application, the existing attachment is returned.</p>",
     "AuthorizeVpcEndpointAccess": "<p>Provides access to an Amazon OpenSearch Service domain through the use of an interface VPC endpoint.</p>",
     "CancelDomainConfigChange": "<p>Cancels a pending configuration change on an Amazon OpenSearch Service domain.</p>",
     "CancelServiceSoftwareUpdate": "<p>Cancels a scheduled service software update for an Amazon OpenSearch Service domain. You can only perform this operation before the <code>AutomatedUpdateDate</code> and when the domain's <code>UpdateStatus</code> is <code>PENDING_UPDATE</code>. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
@@ -27,6 +28,7 @@
     "DeletePackage": "<p>Deletes an Amazon OpenSearch Service package. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "DeleteVpcEndpoint": "<p>Deletes an Amazon OpenSearch Service-managed interface VPC endpoint.</p>",
     "DeregisterCapability": "<p>Deregisters a capability from an OpenSearch UI application. This operation removes the capability and its associated configuration.</p>",
+    "DescribeDataSourceAttachment": "<p>Returns the current status and details of a specific data source attachment for an OpenSearch application. Throws a <code>ResourceNotFoundException</code> if no attachment record exists for the specified application and data source combination.</p>",
     "DescribeDomain": "<p>Describes the domain configuration for the specified Amazon OpenSearch Service domain, including the domain ID, domain service endpoint, and domain ARN.</p>",
     "DescribeDomainAutoTunes": "<p>Returns the list of optimizations that Auto-Tune has made to an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html\">Auto-Tune for Amazon OpenSearch Service</a>.</p>",
     "DescribeDomainChangeProgress": "<p>Returns information about the current blue/green deployment happening on an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-configuration-changes.html\">Making configuration changes in Amazon OpenSearch Service</a>.</p>",
@@ -43,6 +45,7 @@
     "DescribeReservedInstanceOfferings": "<p>Describes the available Amazon OpenSearch Service Reserved Instance offerings for a given Region. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/ri.html\">Reserved Instances in Amazon OpenSearch Service</a>.</p>",
     "DescribeReservedInstances": "<p>Describes the Amazon OpenSearch Service instances that you have reserved in a given Region. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/ri.html\">Reserved Instances in Amazon OpenSearch Service</a>.</p>",
     "DescribeVpcEndpoints": "<p>Describes one or more Amazon OpenSearch Service-managed VPC endpoints.</p>",
+    "DetachDataSource": "<p>Removes a data source from an OpenSearch application. The application must be in the <code>ACTIVE</code> state. This operation removes the data source saved object from the application and deletes the attachment record. Throws a <code>ConflictException</code> if the specified data source has a <code>PENDING</code> attachment, and a <code>ResourceNotFoundException</code> if the data source is not currently attached to the application.</p>",
     "DissociatePackage": "<p>Removes a package from the specified Amazon OpenSearch Service domain. The package can't be in use with any OpenSearch index for the dissociation to succeed. The package is still available in OpenSearch Service for association later. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "DissociatePackages": "<p>Dissociates multiple packages from a domain simultaneously.</p>",
     "GetApplication": "<p>Retrieves the configuration and status of an existing OpenSearch application.</p>",
@@ -57,6 +60,7 @@
     "GetUpgradeHistory": "<p>Retrieves the complete history of the last 10 upgrades performed on an Amazon OpenSearch Service domain.</p>",
     "GetUpgradeStatus": "<p>Returns the most recent status of the last upgrade or upgrade eligibility check performed on an Amazon OpenSearch Service domain.</p>",
     "ListApplications": "<p>Lists all OpenSearch applications under your account.</p>",
+    "ListDataSourceAttachments": "<p>Returns a paginated list of all data source attachments for an OpenSearch application, including attachments in all states (<code>PENDING</code>, <code>ATTACHED</code>, and <code>FAILED</code>).</p>",
     "ListDataSources": "<p>Lists direct-query data sources for a specific domain. For more information, see For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3.html\">Working with Amazon OpenSearch Service direct queries with Amazon S3</a>.</p>",
     "ListDirectQueryDataSources": "<p> Lists an inventory of all the direct query data sources that you have configured within Amazon OpenSearch Service. </p>",
     "ListDomainMaintenances": "<p>A list of maintenance actions for the domain.</p>",
@@ -131,8 +135,18 @@
       "refs": {
         "AddTagsRequest$ARN": "<p>Amazon Resource Name (ARN) for the OpenSearch Service domain, data source, or application to which you want to attach resource tags.</p>",
         "ApplicationSummary$arn": null,
+        "AttachDataSourceRequest$dataSourceArn": null,
+        "AttachDataSourceResponse$arn": null,
+        "AttachDataSourceResponse$dataSourceArn": null,
         "CreateApplicationResponse$arn": null,
         "DataSource$dataSourceArn": null,
+        "DataSourceAttachmentSummary$dataSourceArn": null,
+        "DescribeDataSourceAttachmentRequest$dataSourceArn": null,
+        "DescribeDataSourceAttachmentResponse$arn": null,
+        "DescribeDataSourceAttachmentResponse$dataSourceArn": null,
+        "DetachDataSourceRequest$dataSourceArn": null,
+        "DetachDataSourceResponse$arn": null,
+        "DetachDataSourceResponse$dataSourceArn": null,
         "DirectQueryOpenSearchARNList$member": null,
         "DomainEndpointOptions$CustomEndpointCertificateArn": "<p>The ARN for your security certificate, managed in Amazon Web Services Certificate Manager (ACM).</p>",
         "DomainStatus$ARN": "<p>The Amazon Resource Name (ARN) of the domain. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html\">IAM identifiers </a> in the <i>Amazon Web Services Identity and Access Management User Guide</i>.</p>",
@@ -363,6 +377,14 @@
       "refs": {}
     },
     "AssociatePackagesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "AttachDataSourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AttachDataSourceResponse": {
       "base": null,
       "refs": {}
     },
@@ -735,6 +757,7 @@
     "ClientToken": {
       "base": null,
       "refs": {
+        "AttachDataSourceRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. If you retry a request with the same client token and the same parameters, the retry succeeds without performing any further actions.</p>",
         "CreateApplicationRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateVpcEndpointRequest$ClientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>"
       }
@@ -928,6 +951,26 @@
         "DataSources$member": null
       }
     },
+    "DataSourceAttachmentStatus": {
+      "base": null,
+      "refs": {
+        "AttachDataSourceResponse$status": "<p>The status of the data source attachment. Valid values are <code>PENDING</code> (waiting for resources to become active), <code>ATTACHED</code> (successfully attached), and <code>FAILED</code> (attachment timed out or encountered a non-retryable error).</p>",
+        "DataSourceAttachmentSummary$status": "<p>The current status of the data source attachment. Valid values are <code>PENDING</code>, <code>ATTACHED</code>, and <code>FAILED</code>.</p>",
+        "DescribeDataSourceAttachmentResponse$status": "<p>The status of the data source attachment. Valid values are <code>PENDING</code>, <code>ATTACHED</code>, and <code>FAILED</code>.</p>"
+      }
+    },
+    "DataSourceAttachmentSummary": {
+      "base": "<p>Summary information about a data source attachment, including its identifier, data source ARN, and current status.</p>",
+      "refs": {
+        "DataSourceAttachmentSummaryList$member": null
+      }
+    },
+    "DataSourceAttachmentSummaryList": {
+      "base": null,
+      "refs": {
+        "ListDataSourceAttachmentsResponse$attachments": "<p>A list of data source attachment summaries for the specified application.</p>"
+      }
+    },
     "DataSourceDescription": {
       "base": null,
       "refs": {
@@ -1107,6 +1150,14 @@
       "base": "<p>The result of a <code>DeregisterCapability</code> request.</p>",
       "refs": {}
     },
+    "DescribeDataSourceAttachmentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeDataSourceAttachmentResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeDomainAutoTunesRequest": {
       "base": "<p>Container for the parameters to the <code>DescribeDomainAutoTunes</code> operation.</p>",
       "refs": {}
@@ -1270,6 +1321,14 @@
       "refs": {
         "ChangeProgressStage$Description": "<p>The description of the stage.</p>"
       }
+    },
+    "DetachDataSourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DetachDataSourceResponse": {
+      "base": null,
+      "refs": {}
     },
     "DirectQueryDataSource": {
       "base": "<p> The configuration details for a data source that can be directly queried. </p>",
@@ -1896,10 +1955,17 @@
       "base": null,
       "refs": {
         "ApplicationSummary$id": "<p>The unique identifier of an OpenSearch application.</p>",
+        "AttachDataSourceRequest$id": "<p>The unique identifier or name of the OpenSearch application to attach the data source to. This is the same identifier used with <code>UpdateApplication</code>, <code>GetApplication</code>, and <code>DeleteApplication</code>.</p>",
+        "AttachDataSourceResponse$id": "<p>The unique identifier of the OpenSearch application.</p>",
         "CreateApplicationResponse$id": "<p>The unique identifier assigned to the OpenSearch application.</p>",
         "DeleteApplicationRequest$id": "<p>The unique identifier of the OpenSearch application to delete.</p>",
+        "DescribeDataSourceAttachmentRequest$id": "<p>The unique identifier or name of the OpenSearch application.</p>",
+        "DescribeDataSourceAttachmentResponse$id": "<p>The unique identifier of the OpenSearch application.</p>",
+        "DetachDataSourceRequest$id": "<p>The unique identifier or name of the OpenSearch application to detach the data source from.</p>",
+        "DetachDataSourceResponse$id": "<p>The unique identifier of the OpenSearch application.</p>",
         "GetApplicationRequest$id": "<p>The unique identifier of the OpenSearch application to retrieve.</p>",
         "GetApplicationResponse$id": "<p>The unique identifier of the OpenSearch application.</p>",
+        "ListDataSourceAttachmentsRequest$id": "<p>The unique identifier or name of the OpenSearch application to list attachments for.</p>",
         "UpdateApplicationRequest$id": "<p>The unique identifier for the OpenSearch application to be updated.</p>",
         "UpdateApplicationResponse$id": "<p>The unique identifier of the updated OpenSearch application.</p>"
       }
@@ -2145,6 +2211,7 @@
     "Integer": {
       "base": null,
       "refs": {
+        "ListDataSourceAttachmentsRequest$maxResults": "<p>The maximum number of results to return per page. The default is 50.</p>",
         "ReservedInstance$Duration": "<p>The duration, in seconds, for which the OpenSearch instance is reserved.</p>",
         "ReservedInstance$InstanceCount": "<p>The number of OpenSearch instances that have been reserved.</p>",
         "ReservedInstanceOffering$Duration": "<p>The duration, in seconds, for which the offering will reserve the OpenSearch instance.</p>"
@@ -2285,6 +2352,14 @@
       "refs": {}
     },
     "ListApplicationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDataSourceAttachmentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDataSourceAttachmentsResponse": {
       "base": null,
       "refs": {}
     },
@@ -3498,6 +3573,8 @@
         "AdvancedOptions$key": null,
         "AdvancedOptions$value": null,
         "ApplicationSummary$endpoint": "<p>The endpoint URL of an OpenSearch application.</p>",
+        "AttachDataSourceRequest$workspaceId": "<p>The identifier of an existing workspace to update with the new data source. Mutually exclusive with <code>workspaceConfiguration</code>.</p>",
+        "AttachDataSourceResponse$attachmentId": "<p>The unique identifier assigned to the data source attachment.</p>",
         "AuthorizedPrincipal$Principal": "<p>The <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html\">IAM principal</a> that is allowed access to the domain.</p>",
         "AutoTuneMaintenanceSchedule$CronExpressionForRecurrence": "<p>A cron expression for a recurring maintenance schedule during which Auto-Tune can deploy changes.</p>",
         "AutoTuneOptionsOutput$ErrorMessage": "<p>Any errors that occurred while enabling or disabling Auto-Tune.</p>",
@@ -3505,7 +3582,9 @@
         "CancelledChangeProperty$PropertyName": "<p>The name of the property whose change was cancelled.</p>",
         "CancelledChangeProperty$CancelledValue": "<p>The pending value of the property that was cancelled. This would have been the eventual value of the property if the chance had not been cancelled.</p>",
         "CancelledChangeProperty$ActiveValue": "<p>The current value of the property, after the change was cancelled.</p>",
+        "DataSourceAttachmentSummary$attachmentId": "<p>The unique identifier assigned to the data source attachment.</p>",
         "DeleteDataSourceResponse$Message": "<p>A message associated with deletion of the data source.</p>",
+        "DescribeDataSourceAttachmentResponse$attachmentId": "<p>The unique identifier assigned to the data source attachment.</p>",
         "DescribePackagesResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "DescribeReservedInstancesResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "DirectQueryDataSource$DataSourceArn": "<p> The unique, system-generated identifier that represents the data source.</p>",
@@ -3524,6 +3603,8 @@
         "JWTOptionsOutput$SubjectKey": "<p>The key used for matching the JWT subject attribute.</p>",
         "JWTOptionsOutput$RolesKey": "<p>The key used for matching the JWT roles attribute.</p>",
         "JWTOptionsOutput$PublicKey": "<p>The key used to verify the signature of incoming JWT requests.</p>",
+        "ListDataSourceAttachmentsRequest$nextToken": "<p>The pagination token from a previous call to retrieve the next set of results.</p>",
+        "ListDataSourceAttachmentsResponse$nextToken": "<p>The pagination token to use in a subsequent call to retrieve the next set of results.</p>",
         "ListDomainsForPackageResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "ListInsightsRequest$NextToken": "<p>If your initial <code>ListInsights</code> operation returns a <code>NextToken</code>, include the returned <code>NextToken</code> in subsequent <code>ListInsights</code> operations to retrieve the next page of results.</p>",
         "ListPackagesForDomainResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
@@ -3556,7 +3637,9 @@
         "ValidationFailure$Code": "<p>The error code of the failure.</p>",
         "ValidationFailure$Message": "<p>A message corresponding to the failure.</p>",
         "VpcEndpointError$ErrorMessage": "<p>A message describing the error.</p>",
-        "VpcEndpointSummary$VpcEndpointOwner": "<p>The creator of the endpoint.</p>"
+        "VpcEndpointSummary$VpcEndpointOwner": "<p>The creator of the endpoint.</p>",
+        "WorkspaceConfigurationInput$name": "<p>The name of the workspace to create. Must be between 1 and 40 characters and can contain alphanumeric characters, parentheses, brackets, hyphens, underscores, and spaces.</p>",
+        "WorkspaceConfigurationInput$workspaceType": "<p>The type of workspace to create, which determines the use-case features enabled for the workspace. Valid values are <code>OBSERVABILITY</code>, <code>SECURITY_ANALYTICS</code>, and <code>SEARCH</code>.</p>"
       }
     },
     "StringList": {
@@ -3984,6 +4067,12 @@
       "base": "<p>The desired start time for an <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/APIReference/API_OffPeakWindow.html\">off-peak maintenance window</a>.</p>",
       "refs": {
         "OffPeakWindow$WindowStartTime": "<p>A custom start time for the off-peak window, in Coordinated Universal Time (UTC). The window length will always be 10 hours, so you can't specify an end time. For example, if you specify 11:00 P.M. UTC as a start time, the end time will automatically be set to 9:00 A.M.</p>"
+      }
+    },
+    "WorkspaceConfigurationInput": {
+      "base": "<p>Configuration for creating a new workspace when attaching a data source to an OpenSearch application. The workspace is created after the data source is successfully attached.</p>",
+      "refs": {
+        "AttachDataSourceRequest$workspaceConfiguration": "<p>Configuration for creating a new workspace during the attachment. If specified, a workspace is created and linked to the data source after the attachment completes. Mutually exclusive with <code>workspaceId</code>.</p>"
       }
     },
     "ZoneAwarenessConfig": {

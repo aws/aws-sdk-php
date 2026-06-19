@@ -1403,7 +1403,8 @@
         "S3BucketArn":{"shape":"S3BucketArn"},
         "ScreenshotsUploadEnabled":{"shape":"BooleanObject"},
         "ScreenResolution":{"shape":"ScreenResolution"},
-        "ScreenImageFormat":{"shape":"ScreenImageFormat"}
+        "ScreenImageFormat":{"shape":"ScreenImageFormat"},
+        "UserControlMode":{"shape":"UserControlMode"}
       }
     },
     "AgentAccessConfigForUpdate":{
@@ -1413,7 +1414,8 @@
         "S3BucketArn":{"shape":"S3BucketArn"},
         "ScreenshotsUploadEnabled":{"shape":"BooleanObject"},
         "ScreenResolution":{"shape":"ScreenResolution"},
-        "ScreenImageFormat":{"shape":"ScreenImageFormat"}
+        "ScreenImageFormat":{"shape":"ScreenImageFormat"},
+        "UserControlMode":{"shape":"UserControlMode"}
       }
     },
     "AgentAccessSetting":{
@@ -1436,7 +1438,8 @@
       "type":"string",
       "enum":[
         "COMPUTER_VISION",
-        "COMPUTER_INPUT"
+        "COMPUTER_INPUT",
+        "FORWARD_MCP_TOOLS"
       ]
     },
     "AgentSoftwareVersion":{
@@ -4430,6 +4433,14 @@
       "max":2048,
       "pattern":"^[A-Za-z0-9_\\-\\s]+$",
       "sensitive":true
+    },
+    "UserControlMode":{
+      "type":"string",
+      "enum":[
+        "VIEW_ONLY",
+        "VIEW_STOP",
+        "DISABLED"
+      ]
     },
     "UserId":{
       "type":"string",

@@ -109,6 +109,24 @@
         {"shape":"DisabledOperationException"}
       ]
     },
+    "AttachDataSource":{
+      "name":"AttachDataSource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/application/{id}/attachDataSource",
+        "responseCode":200
+      },
+      "input":{"shape":"AttachDataSourceRequest"},
+      "output":{"shape":"AttachDataSourceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "AuthorizeVpcEndpointAccess":{
       "name":"AuthorizeVpcEndpointAccess",
       "http":{
@@ -422,6 +440,23 @@
         {"shape":"DisabledOperationException"}
       ]
     },
+    "DescribeDataSourceAttachment":{
+      "name":"DescribeDataSourceAttachment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/application/{id}/describeDataSourceAttachment",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeDataSourceAttachmentRequest"},
+      "output":{"shape":"DescribeDataSourceAttachmentResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "DescribeDomain":{
       "name":"DescribeDomain",
       "http":{
@@ -666,6 +701,24 @@
         {"shape":"BaseException"}
       ]
     },
+    "DetachDataSource":{
+      "name":"DetachDataSource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/application/{id}/detachDataSource",
+        "responseCode":200
+      },
+      "input":{"shape":"DetachDataSourceRequest"},
+      "output":{"shape":"DetachDataSourceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "DissociatePackage":{
       "name":"DissociatePackage",
       "http":{
@@ -897,6 +950,23 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
+    "ListDataSourceAttachments":{
+      "name":"ListDataSourceAttachments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/application/{id}/listDataSourceAttachments",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDataSourceAttachmentsRequest"},
+      "output":{"shape":"ListDataSourceAttachmentsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"DisabledOperationException"}
       ]
     },
@@ -1773,6 +1843,34 @@
         "DomainPackageDetailsList":{"shape":"DomainPackageDetailsList"}
       }
     },
+    "AttachDataSourceRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "dataSourceArn"
+      ],
+      "members":{
+        "id":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "dataSourceArn":{"shape":"ARN"},
+        "workspaceId":{"shape":"String"},
+        "workspaceConfiguration":{"shape":"WorkspaceConfigurationInput"},
+        "clientToken":{"shape":"ClientToken"}
+      }
+    },
+    "AttachDataSourceResponse":{
+      "type":"structure",
+      "members":{
+        "attachmentId":{"shape":"String"},
+        "id":{"shape":"Id"},
+        "arn":{"shape":"ARN"},
+        "dataSourceArn":{"shape":"ARN"},
+        "status":{"shape":"DataSourceAttachmentStatus"}
+      }
+    },
     "AuthorizeVpcEndpointAccessRequest":{
       "type":"structure",
       "required":["DomainName"],
@@ -2435,6 +2533,26 @@
         "iamRoleForDataSourceArn":{"shape":"RoleArn"}
       }
     },
+    "DataSourceAttachmentStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "ATTACHED",
+        "FAILED"
+      ]
+    },
+    "DataSourceAttachmentSummary":{
+      "type":"structure",
+      "members":{
+        "attachmentId":{"shape":"String"},
+        "dataSourceArn":{"shape":"ARN"},
+        "status":{"shape":"DataSourceAttachmentStatus"}
+      }
+    },
+    "DataSourceAttachmentSummaryList":{
+      "type":"list",
+      "member":{"shape":"DataSourceAttachmentSummary"}
+    },
     "DataSourceDescription":{
       "type":"string",
       "max":1000,
@@ -2710,6 +2828,31 @@
       "type":"structure",
       "members":{
         "status":{"shape":"CapabilityStatus"}
+      }
+    },
+    "DescribeDataSourceAttachmentRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "dataSourceArn"
+      ],
+      "members":{
+        "id":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "dataSourceArn":{"shape":"ARN"}
+      }
+    },
+    "DescribeDataSourceAttachmentResponse":{
+      "type":"structure",
+      "members":{
+        "attachmentId":{"shape":"String"},
+        "id":{"shape":"Id"},
+        "arn":{"shape":"ARN"},
+        "dataSourceArn":{"shape":"ARN"},
+        "status":{"shape":"DataSourceAttachmentStatus"}
       }
     },
     "DescribeDomainAutoTunesRequest":{
@@ -3085,6 +3228,29 @@
       }
     },
     "Description":{"type":"string"},
+    "DetachDataSourceRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "dataSourceArn"
+      ],
+      "members":{
+        "id":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "dataSourceArn":{"shape":"ARN"}
+      }
+    },
+    "DetachDataSourceResponse":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"Id"},
+        "arn":{"shape":"ARN"},
+        "dataSourceArn":{"shape":"ARN"}
+      }
+    },
     "DirectQueryDataSource":{
       "type":"structure",
       "members":{
@@ -4289,6 +4455,26 @@
       "members":{
         "ApplicationSummaries":{"shape":"ApplicationSummaries"},
         "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDataSourceAttachmentsRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"Integer"}
+      }
+    },
+    "ListDataSourceAttachmentsResponse":{
+      "type":"structure",
+      "members":{
+        "attachments":{"shape":"DataSourceAttachmentSummaryList"},
+        "nextToken":{"shape":"String"}
       }
     },
     "ListDataSourcesRequest":{
@@ -6382,6 +6568,17 @@
       "members":{
         "Hours":{"shape":"StartTimeHours"},
         "Minutes":{"shape":"StartTimeMinutes"}
+      }
+    },
+    "WorkspaceConfigurationInput":{
+      "type":"structure",
+      "required":[
+        "name",
+        "workspaceType"
+      ],
+      "members":{
+        "name":{"shape":"String"},
+        "workspaceType":{"shape":"String"}
       }
     },
     "ZoneAwarenessConfig":{

@@ -3783,14 +3783,14 @@
         {"shape":"IllegalSessionStateException"}
       ]
     },
-    "Search":{
-      "name":"Search",
+    "SearchAssets":{
+      "name":"SearchAssets",
       "http":{
         "method":"POST",
         "requestUri":"/"
       },
-      "input":{"shape":"SearchInput"},
-      "output":{"shape":"SearchOutput"},
+      "input":{"shape":"SearchAssetsInput"},
+      "output":{"shape":"SearchAssetsOutput"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InvalidInputException"},
@@ -5064,11 +5064,11 @@
     "AssociateGlossaryTermsRequest":{
       "type":"structure",
       "required":[
-        "Identifier",
+        "AssetIdentifier",
         "GlossaryTermIdentifiers"
       ],
       "members":{
-        "Identifier":{"shape":"AssetId"},
+        "AssetIdentifier":{"shape":"AssetId"},
         "GlossaryTermIdentifiers":{"shape":"GlossaryTermIdList"},
         "ClientToken":{
           "shape":"HashString",
@@ -5079,7 +5079,7 @@
     "AssociateGlossaryTermsResponse":{
       "type":"structure",
       "members":{
-        "Identifier":{"shape":"AssetId"},
+        "AssetIdentifier":{"shape":"AssetId"},
         "GlossaryTerms":{"shape":"GlossaryTermIdList"}
       }
     },
@@ -8896,18 +8896,20 @@
     "DeleteAttachmentRequest":{
       "type":"structure",
       "required":[
-        "Identifier",
+        "AssetIdentifier",
         "AttachmentName"
       ],
       "members":{
-        "Identifier":{"shape":"AssetId"},
+        "AssetIdentifier":{"shape":"AssetId"},
+        "IterableFormName":{"shape":"IterableFormName"},
+        "ItemIdentifier":{"shape":"ItemIdentifier"},
         "AttachmentName":{"shape":"AttachmentName"}
       }
     },
     "DeleteAttachmentResponse":{
       "type":"structure",
       "members":{
-        "Identifier":{"shape":"AssetId"}
+        "AssetIdentifier":{"shape":"AssetId"}
       }
     },
     "DeleteBehavior":{
@@ -9674,11 +9676,11 @@
     "DisassociateGlossaryTermsRequest":{
       "type":"structure",
       "required":[
-        "Identifier",
+        "AssetIdentifier",
         "GlossaryTermIdentifiers"
       ],
       "members":{
-        "Identifier":{"shape":"AssetId"},
+        "AssetIdentifier":{"shape":"AssetId"},
         "GlossaryTermIdentifiers":{"shape":"GlossaryTermIdList"},
         "ClientToken":{
           "shape":"HashString",
@@ -9689,7 +9691,7 @@
     "DisassociateGlossaryTermsResponse":{
       "type":"structure",
       "members":{
-        "Identifier":{"shape":"AssetId"},
+        "AssetIdentifier":{"shape":"AssetId"},
         "GlossaryTerms":{"shape":"GlossaryTermIdList"}
       }
     },
@@ -15439,7 +15441,7 @@
     "PutAttachmentResponse":{
       "type":"structure",
       "members":{
-        "AssetId":{"shape":"AssetId"},
+        "AssetIdentifier":{"shape":"AssetId"},
         "IterableFormName":{"shape":"IterableFormName"},
         "ItemIdentifier":{"shape":"ItemIdentifier"},
         "AttachmentName":{"shape":"AttachmentName"},
@@ -16692,6 +16694,23 @@
       "type":"string",
       "max":400000
     },
+    "SearchAssetsInput":{
+      "type":"structure",
+      "members":{
+        "SearchText":{"shape":"SearchText"},
+        "MaxResults":{"shape":"SearchMaxResults"},
+        "NextToken":{"shape":"SearchNextToken"},
+        "Sort":{"shape":"SearchSort"},
+        "FilterClause":{"shape":"SearchFilterClause"}
+      }
+    },
+    "SearchAssetsOutput":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"SearchResultItemList"},
+        "NextToken":{"shape":"SearchNextToken"}
+      }
+    },
     "SearchAttribute":{
       "type":"string",
       "max":128,
@@ -16750,16 +16769,6 @@
       },
       "union":true
     },
-    "SearchInput":{
-      "type":"structure",
-      "members":{
-        "SearchText":{"shape":"SearchText"},
-        "MaxResults":{"shape":"SearchMaxResults"},
-        "NextToken":{"shape":"SearchNextToken"},
-        "Sort":{"shape":"SearchSort"},
-        "FilterClause":{"shape":"SearchFilterClause"}
-      }
-    },
     "SearchMapFilter":{
       "type":"structure",
       "required":[
@@ -16792,13 +16801,6 @@
       "min":1
     },
     "SearchNextToken":{"type":"string"},
-    "SearchOutput":{
-      "type":"structure",
-      "members":{
-        "Items":{"shape":"SearchResultItemList"},
-        "NextToken":{"shape":"SearchNextToken"}
-      }
-    },
     "SearchPropertyPredicates":{
       "type":"list",
       "member":{"shape":"PropertyPredicate"}

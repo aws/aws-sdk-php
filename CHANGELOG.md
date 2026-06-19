@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Signature` - Updates signed headers to include `x-amz-user-agent` and `content-type`
+* `Aws\OpenSearchService` - This release introduces data source attachment APIs, enabling users to attach and detach Amazon OpenSearch Service domains and Amazon OpenSearch Serverless collections to an OpenSearch application.
+* `Aws\AppStream` - Amazon WorkSpaces Agent Access now supports domain-joined fleets for enterprise identity integration, real-time agent observation with instant stop controls, and MCP tool forwarding for lower-latency, cost-effective desktop tool access.
+* `Aws\BedrockAgent` - Add support for metadata-only retrieval on GetFlow, GetFlowVersion, and GetPrompt APIs.
+* `Aws\Connect` - This is the release for point based scoring system and the evaluation form validation project
+* `Aws\Glue` - Adds the SearchAssets operation for discovering assets in the AWS Glue Data Catalog using full-text search and filters. Minor naming refinements across the Glossary Terms and Attachment APIs for consistency.
+
 ## 3.385.2 - 2026-06-18
 
 * `Aws\Batch` - Adds Support for ordered allocation strategies- BEST-FIT-PROGRESSIVE-ORDERED or SPOT-CAPACITY-OPTIMIZED-PRIORITIZED

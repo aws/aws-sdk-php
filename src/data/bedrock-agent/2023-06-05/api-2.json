@@ -4362,6 +4362,11 @@
           "shape":"FlowIdentifier",
           "location":"uri",
           "locationName":"flowIdentifier"
+        },
+        "includedData":{
+          "shape":"IncludedData",
+          "location":"querystring",
+          "locationName":"includedData"
         }
       }
     },
@@ -4408,6 +4413,11 @@
           "shape":"NumericalVersion",
           "location":"uri",
           "locationName":"flowVersion"
+        },
+        "includedData":{
+          "shape":"IncludedData",
+          "location":"querystring",
+          "locationName":"includedData"
         }
       }
     },
@@ -4525,6 +4535,11 @@
           "shape":"Version",
           "location":"querystring",
           "locationName":"promptVersion"
+        },
+        "includedData":{
+          "shape":"IncludedData",
+          "location":"querystring",
+          "locationName":"includedData"
         }
       }
     },
@@ -4657,6 +4672,13 @@
       "enum":[
         "INCLUDE",
         "EXCLUDE"
+      ]
+    },
+    "IncludedData":{
+      "type":"string",
+      "enum":[
+        "ALL_DATA",
+        "METADATA_ONLY"
       ]
     },
     "IncompatibleConnectionDataTypeFlowValidationDetails":{

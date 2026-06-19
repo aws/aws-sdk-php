@@ -239,7 +239,7 @@
     "ResetJobBookmark": "<p>Resets a bookmark entry.</p> <p>For more information about enabling and using job bookmarks, see:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-continuations.html\">Tracking processed data using job bookmarks</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html\">Job parameters used by Glue</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-jobs-job.html#aws-glue-api-jobs-job-Job\">Job structure</a> </p> </li> </ul>",
     "ResumeWorkflowRun": "<p>Restarts selected nodes of a previous partially completed workflow run and resumes the workflow run. The selected nodes and all nodes that are downstream from the selected nodes are run.</p>",
     "RunStatement": "<p>Executes the statement.</p>",
-    "Search": "<p>Searches for assets in Glue Data Catalog using full-text search, filters, sorting, and aggregations. Returns matching assets with relevance-ranked results.</p>",
+    "SearchAssets": "<p>Searches for assets in Glue Data Catalog using full-text search, filters, sorting, and aggregations. Returns matching assets with relevance-ranked results.</p>",
     "SearchTables": "<p>Searches a set of tables based on properties in the table metadata as well as on the parent database. You can search against text or filter conditions. </p> <p>You can only get tables that you have access to based on the security policies defined in Lake Formation. You need at least a read-only access to the table for it to be returned. If you do not have access to all the columns in the table, these columns will not be searched against when returning the list of tables back to you. If you have access to the columns but not the data in the columns, those columns and the associated metadata for those columns will be included in the search. </p>",
     "StartBlueprintRun": "<p>Starts a new run of the specified blueprint.</p>",
     "StartColumnStatisticsTaskRun": "<p>Starts a column statistics task run, for a specified table and columns.</p>",
@@ -560,21 +560,21 @@
     "AssetId": {
       "base": null,
       "refs": {
-        "AssociateGlossaryTermsRequest$Identifier": "<p>The unique identifier of the asset to associate glossary terms with.</p>",
-        "AssociateGlossaryTermsResponse$Identifier": "<p>The unique identifier of the asset.</p>",
+        "AssociateGlossaryTermsRequest$AssetIdentifier": "<p>The unique identifier of the asset to associate glossary terms with.</p>",
+        "AssociateGlossaryTermsResponse$AssetIdentifier": "<p>The unique identifier of the asset.</p>",
         "BatchGetIterableFormsRequest$AssetIdentifier": "<p>The unique identifier of the asset.</p>",
         "DeleteAssetRequest$Identifier": "<p>The unique identifier of the asset to delete.</p>",
-        "DeleteAttachmentRequest$Identifier": "<p>The unique identifier of the asset from which to delete the attachment.</p>",
-        "DeleteAttachmentResponse$Identifier": "<p>The unique identifier of the asset.</p>",
-        "DisassociateGlossaryTermsRequest$Identifier": "<p>The unique identifier of the asset to disassociate glossary terms from.</p>",
-        "DisassociateGlossaryTermsResponse$Identifier": "<p>The unique identifier of the asset.</p>",
+        "DeleteAttachmentRequest$AssetIdentifier": "<p>The unique identifier of the asset from which to delete the attachment.</p>",
+        "DeleteAttachmentResponse$AssetIdentifier": "<p>The unique identifier of the asset.</p>",
+        "DisassociateGlossaryTermsRequest$AssetIdentifier": "<p>The unique identifier of the asset to disassociate glossary terms from.</p>",
+        "DisassociateGlossaryTermsResponse$AssetIdentifier": "<p>The unique identifier of the asset.</p>",
         "GetAssetInput$Identifier": "<p>The unique identifier of the asset to retrieve.</p>",
         "GetAssetOutput$Id": "<p>The unique identifier of the asset.</p>",
         "ListIterableFormsRequest$AssetIdentifier": "<p>The unique identifier of the asset.</p>",
         "PutAssetRequest$Identifier": "<p>The unique identifier of the asset. If an asset with this identifier already exists, it is updated.</p>",
         "PutAssetResponse$Id": "<p>The unique identifier of the asset.</p>",
         "PutAttachmentRequest$AssetIdentifier": "<p>The unique identifier of the asset to attach the form to.</p>",
-        "PutAttachmentResponse$AssetId": "<p>The unique identifier of the asset.</p>",
+        "PutAttachmentResponse$AssetIdentifier": "<p>The unique identifier of the asset.</p>",
         "SearchResultItem$Id": "<p>The unique identifier of the matched asset.</p>"
       }
     },
@@ -6841,6 +6841,7 @@
     "ItemIdentifier": {
       "base": null,
       "refs": {
+        "DeleteAttachmentRequest$ItemIdentifier": "<p>The identifier of the item within the iterable form. Required when <code>iterableFormName</code> is specified.</p>",
         "ItemError$ItemIdentifier": "<p>The identifier of the item that caused the error.</p>",
         "ItemIdentifierList$member": null,
         "PutAttachmentRequest$ItemIdentifier": "<p>The identifier of the item within the iterable form. Required when <code>iterableFormName</code> is specified.</p>",
@@ -6906,6 +6907,7 @@
       "base": null,
       "refs": {
         "BatchGetIterableFormsRequest$IterableFormName": "<p>The name of the iterable form to retrieve items from.</p>",
+        "DeleteAttachmentRequest$IterableFormName": "<p>The name of the iterable form. When specified along with <code>itemIdentifier</code>, the attachment is deleted from an item within the iterable form rather than from the asset itself.</p>",
         "ListIterableFormsRequest$IterableFormName": "<p>The name of the iterable form to list items from.</p>",
         "PutAttachmentRequest$IterableFormName": "<p>The name of the iterable form. When specified along with <code>itemIdentifier</code>, the attachment targets an item within the iterable form rather than the asset itself.</p>",
         "PutAttachmentResponse$IterableFormName": "<p>The name of the iterable form, if the attachment targets an item.</p>"
@@ -10566,6 +10568,14 @@
         "JobCommand$ScriptLocation": "<p>Specifies the Amazon Simple Storage Service (Amazon S3) path to a script that runs a job.</p>"
       }
     },
+    "SearchAssetsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchAssetsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "SearchAttribute": {
       "base": null,
       "refs": {
@@ -10583,8 +10593,8 @@
     "SearchFilterClause": {
       "base": "<p>A filter clause that supports nested boolean logic. Exactly one of <code>andAllFilters</code>, <code>orAnyFilters</code>, <code>attributeFilter</code>, or <code>mapFilter</code> must be specified.</p>",
       "refs": {
-        "SearchFilterClauseList$member": null,
-        "SearchInput$FilterClause": "<p>The filter clause to apply to the search. Supports nested AND/OR logic with attribute-level and map-level filters.</p>"
+        "SearchAssetsInput$FilterClause": "<p>The filter clause to apply to the search. Supports nested AND/OR logic with attribute-level and map-level filters.</p>",
+        "SearchFilterClauseList$member": null
       }
     },
     "SearchFilterClauseList": {
@@ -10619,10 +10629,6 @@
         "SearchAttributeFilter$Value": "<p>The value to compare against.</p>"
       }
     },
-    "SearchInput": {
-      "base": null,
-      "refs": {}
-    },
     "SearchMapFilter": {
       "base": "<p>A filter on a map attribute's key-value pair.</p>",
       "refs": {
@@ -10644,19 +10650,15 @@
     "SearchMaxResults": {
       "base": null,
       "refs": {
-        "SearchInput$MaxResults": "<p>The maximum number of results to return in the response.</p>"
+        "SearchAssetsInput$MaxResults": "<p>The maximum number of results to return in the response.</p>"
       }
     },
     "SearchNextToken": {
       "base": null,
       "refs": {
-        "SearchInput$NextToken": "<p>A continuation token, if this is a continuation call.</p>",
-        "SearchOutput$NextToken": "<p>A continuation token, present if the current segment is not the last.</p>"
+        "SearchAssetsInput$NextToken": "<p>A continuation token, if this is a continuation call.</p>",
+        "SearchAssetsOutput$NextToken": "<p>A continuation token, present if the current segment is not the last.</p>"
       }
-    },
-    "SearchOutput": {
-      "base": null,
-      "refs": {}
     },
     "SearchPropertyPredicates": {
       "base": null,
@@ -10673,7 +10675,7 @@
     "SearchResultItemList": {
       "base": null,
       "refs": {
-        "SearchOutput$Items": "<p>The list of assets matching the search criteria.</p>"
+        "SearchAssetsOutput$Items": "<p>The list of assets matching the search criteria.</p>"
       }
     },
     "SearchResultName": {
@@ -10685,7 +10687,7 @@
     "SearchSort": {
       "base": "<p>The sort criteria for search results.</p>",
       "refs": {
-        "SearchInput$Sort": "<p>The sort criteria for the search results.</p>"
+        "SearchAssetsInput$Sort": "<p>The sort criteria for the search results.</p>"
       }
     },
     "SearchSortOrder": {
@@ -10705,7 +10707,7 @@
     "SearchText": {
       "base": null,
       "refs": {
-        "SearchInput$SearchText": "<p>The text to search for. At least one of <code>searchText</code> or <code>filterClause</code> must be provided.</p>"
+        "SearchAssetsInput$SearchText": "<p>The text to search for. At least one of <code>searchText</code> or <code>filterClause</code> must be provided.</p>"
       }
     },
     "SecretArn": {

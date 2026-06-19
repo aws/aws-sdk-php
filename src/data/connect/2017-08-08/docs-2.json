@@ -168,6 +168,7 @@
     "GetCurrentMetricData": "<p>Gets the real-time metric data from the specified Connect Customer instance.</p> <p>For a description of each metric, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/metrics-definitions.html\">Metrics definitions</a> in the <i>Connect Customer Administrator Guide</i>.</p> <note> <p>When you make a successful API request, you can expect the following metric values in the response:</p> <ol> <li> <p> <b>Metric value is null</b>: The calculation cannot be performed due to divide by zero or insufficient data</p> </li> <li> <p> <b>Metric value is a number (including 0) of defined type</b>: The number provided is the calculation result</p> </li> <li> <p> <b>MetricResult list is empty</b>: The request cannot find any data in the system</p> </li> </ol> <p>The following guidelines can help you work with the API:</p> <ul> <li> <p>Each dimension in the metric response must contain a value</p> </li> <li> <p>Each item in MetricResult must include all requested metrics</p> </li> <li> <p>If the response is slow due to large result sets, try these approaches:</p> <ul> <li> <p>Add filters to reduce the amount of data returned</p> </li> </ul> </li> </ul> </note>",
     "GetCurrentUserData": "<p>Gets the real-time active user data from the specified Connect Customer instance. </p>",
     "GetEffectiveHoursOfOperations": "<p>Get the hours of operations with the effective override applied.</p>",
+    "GetEvaluationFormValidation": "<p>Retrieves the status and results of a validation process started by <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_StartEvaluationFormValidation.html\">StartEvaluationFormValidation</a>. Returns the current execution status (<code>IN_PROGRESS</code>, <code>COMPLETED</code>, or <code>FAILED</code>), the validated form version, and when completed, a list of findings that identify structural issues and quality improvements for the evaluation form, and may include suggested fixes. If the validation failed, a reason is provided indicating the cause of the failure.</p>",
     "GetFederationToken": "<p>Supports SAML sign-in for Connect Customer. Retrieves a token for federation. The token is for the Connect Customer user which corresponds to the IAM credentials that were used to invoke this action. </p> <p>For more information about how SAML sign-in works in Connect Customer, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html \">Configure SAML with IAM for Connect Customer in the <i>Connect Customer Administrator Guide</i>.</a> </p> <note> <p>This API doesn't support root users. If you try to invoke GetFederationToken with root credentials, an error message similar to the following one appears: </p> <p> <code>Provided identity: Principal: .... User: .... cannot be used for federation with Connect Customer</code> </p> </note>",
     "GetFlowAssociation": "<p>Retrieves the flow associated for a given resource.</p>",
     "GetMetricData": "<p>Gets historical metric data from the specified Connect Customer instance.</p> <p>For a description of each historical metric, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/metrics-definitions.html\">Metrics definitions</a> in the <i>Connect Customer Administrator Guide</i>.</p> <note> <p>We recommend using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_GetMetricDataV2.html\">GetMetricDataV2</a> API. It provides more flexibility, features, and the ability to query longer time ranges than <code>GetMetricData</code>. Use it to retrieve historical agent and contact metrics for the last 3 months, at varying intervals. You can also use it to build custom dashboards to measure historical queue and agent performance. For example, you can track the number of incoming contacts for the last 7 days, with data split by day, to see how contact volume changed per day of the week.</p> </note>",
@@ -289,6 +290,7 @@
     "StartContactRecording": "<p>Starts recording the contact: </p> <ul> <li> <p>If the API is called <i>before</i> the agent joins the call, recording starts when the agent joins the call.</p> </li> <li> <p>If the API is called <i>after</i> the agent joins the call, recording starts at the time of the API call.</p> </li> </ul> <p>StartContactRecording is a one-time action. For example, if you use StopContactRecording to stop recording an ongoing call, you can't use StartContactRecording to restart it. For scenarios where the recording has started and you want to suspend and resume it, such as when collecting sensitive information (for example, a credit card number), use SuspendContactRecording and ResumeContactRecording.</p> <p>You can use this API to override the recording behavior configured in the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/set-recording-behavior.html\">Set recording behavior</a> block.</p> <p>Only voice recordings are supported at this time.</p>",
     "StartContactStreaming": "<p> Initiates real-time message streaming for a new chat contact.</p> <p> For more information about message streaming, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-message-streaming.html\">Enable real-time chat message streaming</a> in the <i>Connect Customer Administrator Guide</i>.</p> <p>For more information about chat, see the following topics in the <i>Connect Customer Administrator Guide</i>: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/web-and-mobile-chat.html\">Concepts: Web and mobile messaging capabilities in Connect Customer</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat\">Connect Customer Chat security best practices</a> </p> </li> </ul>",
     "StartEmailContact": "<p>Creates an inbound email contact and initiates a flow to start the email contact for the customer. Response of this API provides the ContactId of the email contact created.</p>",
+    "StartEvaluationFormValidation": "<p>Starts an asynchronous validation process for an evaluation form version in the specified Connect Customer instance. The validation first performs structural checks on the form content (such as verifying required fields, valid scoring configuration, and correct conditional logic), then asynchronously analyzes questions configured for generative AI evaluation against a set of best practices. Use <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_GetEvaluationFormValidation.html\">GetEvaluationFormValidation</a> to retrieve the status and results once the validation completes.</p>",
     "StartOutboundChatContact": "<p>Initiates a new outbound SMS or WhatsApp contact to a customer. Response of this API provides the <code>ContactId</code> of the outbound SMS or WhatsApp contact created.</p> <p> <b>SourceEndpoint</b> only supports Endpoints with <code>CONNECT_PHONENUMBER_ARN</code> as Type and <b>DestinationEndpoint</b> only supports Endpoints with <code>TELEPHONE_NUMBER</code> as Type. <b>ContactFlowId</b> initiates the flow to manage the new contact created.</p> <p>This API can be used to initiate outbound SMS or WhatsApp contacts for an agent, or it can also deflect an ongoing contact to an outbound SMS or WhatsApp contact by using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_StartOutboundChatContact.html\">StartOutboundChatContact</a> Flow Action.</p> <p>For more information about using SMS or WhatsApp in Connect Customer, see the following topics in the <i>Connect Customer Administrator Guide</i>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-sms-messaging.html\">Set up SMS messaging</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/sms-number.html\">Request an SMS-enabled phone number through Amazon Web Services End User Messaging SMS</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/whatsapp-integration.html\">Set up WhatsApp Business messaging</a> </p> </li> </ul>",
     "StartOutboundEmailContact": "<p>Initiates a flow to send an agent reply or outbound email contact (created from the CreateContact API) to a customer.</p>",
     "StartOutboundVoiceContact": "<p>Places an outbound call to a contact, and then initiates the flow. It performs the actions in the flow that's specified (in <code>ContactFlowId</code>).</p> <p>Agents do not initiate the outbound API, which means that they do not dial the contact. If the flow places an outbound call to a contact, and then puts the contact in queue, the call is then routed to the agent, like any other inbound case.</p> <p>Dialing timeout for this operation can be configured with the “RingTimeoutInSeconds” parameter. If not specified, the default dialing timeout will be 60 seconds which means if the call is not connected within 60 seconds, it fails.</p> <note> <p>UK numbers with a 447 prefix are not allowed by default. Before you can dial these UK mobile numbers, you must submit a service quota increase request. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html\">Connect Customer Service Quotas</a> in the <i>Connect Customer Administrator Guide</i>. </p> </note> <note> <p>Campaign calls are not allowed by default. Before you can make a call with <code>TrafficType</code> = <code>CAMPAIGN</code>, you must submit a service quota increase request to the quota <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#outbound-communications-quotas\">Connect Customer campaigns</a>. </p> </note> <note> <p>For Preview dialing mode, only the Amazon Connect outbound campaigns service principal is allowed to assume a role in your account and call this API with OutboundStrategy. </p> </note>",
@@ -547,6 +549,7 @@
         "StartAttachedFileUploadResponse$FileArn": "<p>The unique identifier of the attached file resource (ARN).</p>",
         "StartContactEvaluationResponse$EvaluationArn": "<p>The Amazon Resource Name (ARN) for the contact evaluation resource.</p>",
         "StartContactMediaProcessingRequest$ProcessorArn": "<p> The Amazon Resource Name (ARN) of the Lambda processor. You can find the Amazon Resource Name of the lambda in the lambda console. </p>",
+        "StartEvaluationFormValidationResponse$EvaluationFormArn": "<p>The Amazon Resource Name (ARN) for the evaluation form resource.</p>",
         "SubmitContactEvaluationResponse$EvaluationArn": "<p>The Amazon Resource Name (ARN) for the contact evaluation resource.</p>",
         "SuccessfulBatchAssociationSummary$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that was successfully associated.</p>",
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
@@ -1636,6 +1639,7 @@
     "AutomaticFailConfiguration": {
       "base": "<p>Information about automatic fail configuration for an evaluation form.</p>",
       "refs": {
+        "EvaluationFormMultiSelectQuestionOption$AutomaticFailConfiguration": null,
         "EvaluationFormNumericQuestionOption$AutomaticFailConfiguration": "<p>A configuration for automatic fail.</p>",
         "EvaluationFormSingleSelectQuestionOption$AutomaticFailConfiguration": "<p>Whether automatic fail is configured on a single select question. </p>"
       }
@@ -1863,9 +1867,12 @@
         "EmailAddressSummary$IsDefaultOutboundEmail": "<p>Indicates whether this email address is configured as the default outbound email address for the queue. When set to true, this email address is used as the default sender for outbound email contacts from this queue.</p>",
         "EvaluationAnswerData$NotApplicable": "<p>The flag to mark the question as not applicable.</p>",
         "EvaluationFormAutoEvaluationConfiguration$Enabled": "<p>When automated evaluation is enabled.</p>",
+        "EvaluationFormMultiSelectQuestionOption$AutomaticFail": "<p>The flag to mark the option as automatic fail. If an automatic fail answer is provided, the overall evaluation gets a score of 0.</p>",
         "EvaluationFormNumericQuestionOption$AutomaticFail": "<p>The flag to mark the option as automatic fail. If an automatic fail answer is provided, the overall evaluation gets a score of 0.</p>",
         "EvaluationFormQuestion$NotApplicableEnabled": "<p>The flag to enable not applicable answers to the question.</p>",
+        "EvaluationFormQuestionScoringConfiguration$IsExcludedFromScoring": "<p>The flag to exclude the question from scoring.</p>",
         "EvaluationFormSearchSummary$AutoEvaluationEnabled": "<p>Whether automated evaluation is enabled.</p>",
+        "EvaluationFormSection$IsExcludedFromScoring": "<p>The flag to exclude the section from scoring.</p>",
         "EvaluationFormSingleSelectQuestionOption$AutomaticFail": "<p>The flag to mark the option as automatic fail. If an automatic fail answer is provided, the overall evaluation gets a score of 0.</p>",
         "EvaluationScore$NotApplicable": "<p>The flag to mark the item as not applicable for scoring.</p>",
         "EvaluationScore$AutomaticFail": "<p>The flag that marks the item as automatic fail. If the item or a child item gets an automatic fail answer, this flag will be true.</p>",
@@ -1878,6 +1885,8 @@
         "MetricFilterV2$Negate": "<p>If set to <code>true</code>, the API response contains results that filter out the results matched by the metric-level filters condition. By default, <code>Negate</code> is set to <code>false</code>. </p>",
         "PaletteHeader$InvertActionsColors": "<p>Whether to invert the colors of action buttons in the header.</p>",
         "PaletteNavigation$InvertActionsColors": "<p>Whether to invert the colors of action buttons in the navigation area.</p>",
+        "QuestionOptionPointsConfiguration$IsBonus": "<p>The flag to mark the option as a bonus option.</p>",
+        "QuestionPointsConfiguration$IsBonus": "<p>The flag to mark the question as a bonus question.</p>",
         "RoutingProfile$IsDefault": "<p>Whether this a default routing profile.</p>",
         "SignInDistribution$Enabled": "<p>Whether sign in distribution is enabled.</p>",
         "TrafficDistributionGroup$IsDefault": "<p>Whether this is the default traffic distribution group created during instance replication. The default traffic distribution group cannot be deleted by the <code>DeleteTrafficDistributionGroup</code> API. The default traffic distribution group is deleted as part of the process for deleting a replica.</p> <note> <p>The <code>SignInConfig</code> distribution is available only on a default <code>TrafficDistributionGroup</code> (see the <code>IsDefault</code> parameter in the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_TrafficDistributionGroup.html\">TrafficDistributionGroup</a> data type). If you call <code>UpdateTrafficDistribution</code> with a modified <code>SignInConfig</code> and a non-default <code>TrafficDistributionGroup</code>, an <code>InvalidRequestException</code> is returned.</p> </note>",
@@ -2301,6 +2310,56 @@
       "base": "<p>Information about the contact evaluations where the key is the FormId, which is a unique identifier for the form.</p>",
       "refs": {
         "ContactEvaluations$value": null
+      }
+    },
+    "ContactEvaluationAttributeAndCondition": {
+      "base": "<p>A list of conditions which would be applied together with an <code>AND</code> condition.</p>",
+      "refs": {
+        "ContactEvaluationAttributeFilter$AndCondition": "<p>A list of conditions which would be applied together with an <code>AND</code> condition.</p>",
+        "ContactEvaluationAttributeOrConditionList$member": null
+      }
+    },
+    "ContactEvaluationAttributeComparisonType": {
+      "base": null,
+      "refs": {
+        "ContactEvaluationAttributeCondition$ComparisonType": "<p>The comparison type for the condition.</p>"
+      }
+    },
+    "ContactEvaluationAttributeCondition": {
+      "base": "<p>An attribute condition for contact evaluation filtering.</p>",
+      "refs": {
+        "ContactEvaluationAttributeConditionList$member": null,
+        "ContactEvaluationAttributeFilter$ContactEvaluationAttributeCondition": "<p>An attribute condition to apply.</p>"
+      }
+    },
+    "ContactEvaluationAttributeConditionList": {
+      "base": null,
+      "refs": {
+        "ContactEvaluationAttributeAndCondition$AttributeConditions": "<p>A list of attribute conditions to apply.</p>"
+      }
+    },
+    "ContactEvaluationAttributeFilter": {
+      "base": "<p>An object that can be used to specify tag conditions and attribute conditions inside the <code>SearchFilter</code> for contact evaluations. This accepts an <code>OR</code> or <code>AND</code> (List of List) input where:</p> <ul> <li> <p>The top level list specifies conditions that need to be applied with <code>OR</code> operator.</p> </li> <li> <p>The inner list specifies conditions that need to be applied with <code>AND</code> operator.</p> </li> </ul>",
+      "refs": {
+        "EvaluationSearchFilter$ContactEvaluationAttributeFilter": "<p>An object that can be used to specify tag conditions and attribute conditions for contact evaluations.</p>"
+      }
+    },
+    "ContactEvaluationAttributeKey": {
+      "base": null,
+      "refs": {
+        "ContactEvaluationAttributeCondition$AttributeKey": "<p>The key of the attribute.</p>"
+      }
+    },
+    "ContactEvaluationAttributeOrConditionList": {
+      "base": null,
+      "refs": {
+        "ContactEvaluationAttributeFilter$OrConditions": "<p>A list of conditions which would be applied together with an <code>OR</code> condition.</p>"
+      }
+    },
+    "ContactEvaluationAttributeValue": {
+      "base": "<p>The value of a contact evaluation attribute condition.</p>",
+      "refs": {
+        "ContactEvaluationAttributeCondition$AttributeValue": "<p>The value of the attribute.</p>"
       }
     },
     "ContactEvaluations": {
@@ -2939,7 +2998,7 @@
         "AgentStatusSearchFilter$AttributeFilter": "<p>An object that can be used to specify Tag conditions inside the <code>SearchFilter</code>. This accepts an <code>OR</code> of <code>AND</code> (List of List) input where: </p> <ul> <li> <p>The top level list specifies conditions that need to be applied with <code>OR</code> operator.</p> </li> <li> <p>The inner list specifies conditions that need to be applied with <code>AND</code> operator.</p> </li> </ul>",
         "DataTableSearchFilter$AttributeFilter": null,
         "EvaluationFormSearchFilter$AttributeFilter": null,
-        "EvaluationSearchFilter$AttributeFilter": null,
+        "EvaluationSearchFilter$AttributeFilter": "<p>An object that can be used to specify tag conditions.</p>",
         "NotificationSearchFilter$AttributeFilter": "<p>Attribute-based filters to apply to the search results.</p>",
         "UserHierarchyGroupSearchFilter$AttributeFilter": "<p>An object that can be used to specify Tag conditions inside the SearchFilter. This accepts an OR or AND (List of List) input where:</p> <ul> <li> <p>The top level list specifies conditions that need to be applied with <code>OR</code> operator.</p> </li> <li> <p>The inner list specifies conditions that need to be applied with <code>AND</code> operator.</p> </li> </ul>",
         "ViewSearchFilter$AttributeFilter": null,
@@ -5274,6 +5333,7 @@
     "EvaluationFormQuestionAnswerScore": {
       "base": null,
       "refs": {
+        "EvaluationFormMultiSelectQuestionOption$Score": "<p>The score assigned to the answer option.</p>",
         "EvaluationFormNumericQuestionOption$Score": "<p>The score assigned to answer values within the range option.</p>",
         "EvaluationFormSingleSelectQuestionOption$Score": "<p>The score assigned to the answer option.</p>"
       }
@@ -5300,6 +5360,12 @@
         "EvaluationFormSection$Instructions": "<p>The instructions of the section.</p>"
       }
     },
+    "EvaluationFormQuestionScoringConfiguration": {
+      "base": "<p>Scoring configuration for a question in an evaluation form.</p>",
+      "refs": {
+        "EvaluationFormQuestion$ScoringConfiguration": "<p>The scoring configuration of the question.</p>"
+      }
+    },
     "EvaluationFormQuestionTitle": {
       "base": null,
       "refs": {
@@ -5316,6 +5382,20 @@
       "base": "<p>Information about properties for a question in an evaluation form. The question type properties must be either for a numeric question or a single select question.</p>",
       "refs": {
         "EvaluationFormQuestion$QuestionTypeProperties": "<p>The properties of the type of question. Text questions do not have to define question type properties.</p>"
+      }
+    },
+    "EvaluationFormScoreThreshold": {
+      "base": "<p>Information about a score threshold for a performance category.</p>",
+      "refs": {
+        "EvaluationFormScoreThresholdList$member": null
+      }
+    },
+    "EvaluationFormScoreThresholdList": {
+      "base": null,
+      "refs": {
+        "EvaluationFormQuestionScoringConfiguration$ScoreThresholds": "<p>The score thresholds for performance categories.</p>",
+        "EvaluationFormScoringStrategy$ScoreThresholds": "<p>The score thresholds for performance categories.</p>",
+        "EvaluationFormSection$ScoreThresholds": "<p>The score thresholds for performance categories.</p>"
       }
     },
     "EvaluationFormScoringMode": {
@@ -5477,6 +5557,73 @@
         "UpdateEvaluationFormRequest$Title": "<p>A title of the evaluation form.</p>"
       }
     },
+    "EvaluationFormValidationFailureReason": {
+      "base": null,
+      "refs": {
+        "GetEvaluationFormValidationResponse$FailureReason": "<p>The reason the validation failed. This field is populated only when the status is <code>FAILED</code>.</p>"
+      }
+    },
+    "EvaluationFormValidationFinding": {
+      "base": "<p>Information about a finding from the evaluation form validation process. Each finding identifies a structural issue or quality improvement opportunity for the evaluation form.</p>",
+      "refs": {
+        "EvaluationFormValidationFindingList$member": null
+      }
+    },
+    "EvaluationFormValidationFindingDescription": {
+      "base": null,
+      "refs": {
+        "EvaluationFormValidationFinding$Description": "<p>A description of the validation issue.</p>"
+      }
+    },
+    "EvaluationFormValidationFindingItem": {
+      "base": "<p>Information about an evaluation form item affected by a validation finding.</p>",
+      "refs": {
+        "EvaluationFormValidationFindingItemList$member": null
+      }
+    },
+    "EvaluationFormValidationFindingItemList": {
+      "base": null,
+      "refs": {
+        "EvaluationFormValidationFinding$Items": "<p>A list of evaluation form items affected by this finding.</p>"
+      }
+    },
+    "EvaluationFormValidationFindingItemProperty": {
+      "base": null,
+      "refs": {
+        "EvaluationFormValidationFindingItem$Property": "<p>The specific property of the evaluation form item that the finding relates to.</p>"
+      }
+    },
+    "EvaluationFormValidationFindingList": {
+      "base": null,
+      "refs": {
+        "GetEvaluationFormValidationResponse$Findings": "<p>A list of findings from the validation process. Each finding identifies a structural issue or quality improvement for the evaluation form, and may include a suggested fix. This field is populated when the status is <code>COMPLETED</code>.</p>"
+      }
+    },
+    "EvaluationFormValidationFindingSeverity": {
+      "base": null,
+      "refs": {
+        "EvaluationFormValidationFinding$Severity": "<p>The severity of the finding. Valid values: <code>WARNING</code>, <code>ERROR</code>.</p>"
+      }
+    },
+    "EvaluationFormValidationFindingSuggestion": {
+      "base": null,
+      "refs": {
+        "EvaluationFormValidationFinding$Suggestion": "<p>A suggested fix for the validation issue.</p>"
+      }
+    },
+    "EvaluationFormValidationIssueCode": {
+      "base": null,
+      "refs": {
+        "EvaluationFormValidationFinding$IssueCode": "<p>A code that identifies the type of validation issue found.</p>"
+      }
+    },
+    "EvaluationFormValidationStatus": {
+      "base": null,
+      "refs": {
+        "EvaluationForm$LatestValidationStatus": "<p>The status of the most recent validation run for this evaluation form. Valid values: <code>IN_PROGRESS</code>, <code>COMPLETED</code>, <code>FAILED</code>.</p>",
+        "GetEvaluationFormValidationResponse$Status": "<p>The current status of the validation process. Valid values: <code>IN_PROGRESS</code>, <code>COMPLETED</code>, <code>FAILED</code>.</p>"
+      }
+    },
     "EvaluationFormVersionIsLocked": {
       "base": null,
       "refs": {
@@ -5628,6 +5775,8 @@
     "EvaluationScorePercentage": {
       "base": null,
       "refs": {
+        "EvaluationFormScoreThreshold$MinScorePercentage": "<p>The minimum score percentage for the performance category.</p>",
+        "EvaluationFormScoreThreshold$MaxScorePercentage": "<p>The maximum score percentage for the performance category.</p>",
         "EvaluationScore$Percentage": "<p>The score percentage for an item in a contact evaluation.</p>",
         "EvaluationSearchMetadata$ScorePercentage": "<p>The total evaluation score expressed as a percentage.</p>"
       }
@@ -6022,7 +6171,7 @@
     "FiltersV2List": {
       "base": null,
       "refs": {
-        "GetMetricDataV2Request$Filters": "<p>Filtering is an operation that selects records that match a set of specified criteria. By narrowing the dataset before aggregation, filters ensure that only relevant records are included in the computation.</p> <p> <b>Filter keys</b> </p> <p>The following are valid filter keys for a <code>GetMetricDataV2</code> request:</p> <p> <code>AGENT</code> | <code>AI_AGENT</code> | <code>AI_AGENT_ID</code> | <code>AI_AGENT_NAME</code> | <code>AI_AGENT_TYPE</code> | <code>AI_PROMPT</code> | <code>AI_PROMPT_ID</code> | <code>AI_PROMPT_NAME</code> | <code>AI_PROMPT_TYPE</code> | <code>AI_TOOL_ID</code> | <code>AI_TOOL_NAME</code> | <code>AI_TOOL_TYPE</code> | <code>AI_USE_CASE</code> | <code>AGENT_HIERARCHY_LEVEL_ONE</code> | <code>AGENT_HIERARCHY_LEVEL_TWO</code> | <code>AGENT_HIERARCHY_LEVEL_THREE</code> | <code>AGENT_HIERARCHY_LEVEL_FOUR</code> | <code>AGENT_HIERARCHY_LEVEL_FIVE</code> | <code>ANSWERING_MACHINE_DETECTION_STATUS</code> | <code>BOT_ALIAS</code> | <code>BOT_ID</code> | <code>BOT_INTENT_NAME</code> | <code>BOT_LOCALE</code> | <code>BOT_VERSION</code> | <code>CAMPAIGN</code> | <code>CAMPAIGN_DELIVERY_EVENT_TYPE</code> | <code>CAMPAIGN_EXCLUDED_EVENT_TYPE</code> | <code>CASE_STATUS</code> | <code>CASE_TEMPLATE_ARN</code> | <code>CHANNEL</code> | <code>contact/segmentAttributes/connect:Subtype</code> | <code>contact/segmentAttributes/connect:ValidationTestType</code> | <code>DISCONNECT_REASON</code> | <code>EVALUATION_FORM</code> | <code>EVALUATION_QUESTION</code> | <code>EVALUATION_SECTION</code> | <code>EVALUATION_SOURCE</code> | <code>EVALUATOR_ID</code> | <code>FEATURE</code> | <code>FLOW_ACTION_ID</code> | <code>FLOW_TYPE</code> | <code>FLOWS_MODULE_RESOURCE_ID</code> | <code>FLOWS_NEXT_RESOURCE_ID</code> | <code>FLOWS_NEXT_RESOURCE_QUEUE_ID</code> | <code>FLOWS_OUTCOME_TYPE</code> | <code>FLOWS_RESOURCE_ID</code> | <code>FORM_VERSION</code> | <code>INITIATING_FLOW</code> | <code>INITIATION_METHOD</code> | <code>INVOKING_RESOURCE_PUBLISHED_TIMESTAMP</code> | <code>INVOKING_RESOURCE_TYPE</code> | <code>KNOWLEDGE_BASE_NAME</code> | <code>PARENT_FLOWS_RESOURCE_ID</code> | <code>Q_CONNECT_ENABLED</code> | <code>QUEUE</code> | <code>RESOURCE_PUBLISHED_TIMESTAMP</code> | <code>ROUTING_PROFILE</code> | <code>ROUTING_STEP_EXPRESSION</code> | <code>SESSION_ID</code> | <code>TEST_CASE</code> | <code>TEST_CASE_EXECUTION_FAILURE_REASON</code> | <code>TEST_CASE_EXECUTION_RESULT</code> | <code>TEST_CASE_EXECUTION_STATE</code> </p> <note> <p>The following filter keys correspond to Connect Customer resources and are used for authorizing requests. A <code>GetMetricDataV2</code> request requires at least one of these filters:</p> <p> <code>QUEUE</code>, <code>ROUTING_PROFILE</code>, <code>AGENT</code>, <code>AGENT_HIERARCHY_LEVEL_ONE</code>, <code>AGENT_HIERARCHY_LEVEL_TWO</code>, <code>AGENT_HIERARCHY_LEVEL_THREE</code>, <code>AGENT_HIERARCHY_LEVEL_FOUR</code>, <code>AGENT_HIERARCHY_LEVEL_FIVE</code>, <code>CAMPAIGN</code>, <code>EVALUATION_FORM</code>, <code>EVALUATOR_ID</code> </p> <p>You can use up to 5 filter keys in a single request, and up to 100 filter values across all filter keys.</p> </note> <p> <b>Filter values</b> </p> <ul> <li> <p>VOICE, CHAT, TASK, and EMAIL are valid filter values for the <code>CHANNEL</code> filter key. They do not count towards the limit of 100 filter values. For example, a <code>GetMetricDataV2</code> request can filter by 50 queues, 35 agents, and 15 routing profiles for a total of 100 filter values, along with 4 channel filters.</p> </li> <li> <p> <code>contact_lens_conversational_analytics</code> is a valid filter value for the <code>FEATURE</code> filter key. It is available only for contacts analyzed by Contact Lens conversational analytics.</p> </li> <li> <p> <code>connect:Chat</code>, <code>connect:SMS</code>, <code>connect:Telephony</code>, and <code>connect:WebRTC</code> are valid filter value examples (not exhaustive) for the <code>contact/segmentAttributes/connect:Subtype</code> filter key.</p> </li> <li> <p> <code>ROUTING_STEP_EXPRESSION</code> accepts a filter value up to 3,000 characters in length. This filter is case-sensitive and order-sensitive. JSON string fields must be sorted in ascending order, and JSON array order must be preserved.</p> </li> <li> <p>TRUE and FALSE are the only valid filter values for the <code>Q_CONNECT_ENABLED</code> filter key.</p> <ul> <li> <p>TRUE includes all contacts that had Connect AI Agents enabled as part of the flow.</p> </li> <li> <p>FALSE includes all contacts that did not have Connect AI Agents enabled as part of the flow.</p> </li> </ul> </li> <li> <p> <code>EXPERIENCE_VALIDATION</code> and <code>FLOW_VALIDATION</code> are the only valid filter values for the <code>contact/segmentAttributes/connect:ValidationTestType</code> filter key. This filter is available only for contact record-driven metrics.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-outbound-campaigns_Campaign.html\">Campaign</a> ARNs are valid filter values for the <code>CAMPAIGN</code> filter key.</p> </li> <li> <p>To filter by phone number, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-historical-metrics-report.html\">Create a historical metrics report</a> in the <i>Connect Customer Administrator Guide</i>.</p> </li> </ul>"
+        "GetMetricDataV2Request$Filters": "<p>Filtering is an operation that selects records that match a set of specified criteria. By narrowing the dataset before aggregation, filters ensure that only relevant records are included in the computation.</p> <p> <b>Filter keys</b> </p> <p>The following are valid filter keys for a <code>GetMetricDataV2</code> request:</p> <p> <code>AGENT</code> | <code>AI_AGENT</code> | <code>AI_AGENT_ID</code> | <code>AI_AGENT_NAME</code> | <code>AI_AGENT_TYPE</code> | <code>AI_PROMPT</code> | <code>AI_PROMPT_ID</code> | <code>AI_PROMPT_NAME</code> | <code>AI_PROMPT_TYPE</code> | <code>AI_TOOL_ID</code> | <code>AI_TOOL_NAME</code> | <code>AI_TOOL_TYPE</code> | <code>AI_USE_CASE</code> | <code>AGENT_HIERARCHY_LEVEL_ONE</code> | <code>AGENT_HIERARCHY_LEVEL_TWO</code> | <code>AGENT_HIERARCHY_LEVEL_THREE</code> | <code>AGENT_HIERARCHY_LEVEL_FOUR</code> | <code>AGENT_HIERARCHY_LEVEL_FIVE</code> | <code>ANSWERING_MACHINE_DETECTION_STATUS</code> | <code>BOT_ALIAS</code> | <code>BOT_ID</code> | <code>BOT_INTENT_NAME</code> | <code>BOT_LOCALE</code> | <code>BOT_VERSION</code> | <code>CAMPAIGN</code> | <code>CAMPAIGN_DELIVERY_EVENT_TYPE</code> | <code>CAMPAIGN_EXCLUDED_EVENT_TYPE</code> | <code>CASE_STATUS</code> | <code>CASE_TEMPLATE_ARN</code> | <code>CHANNEL</code> | <code>contact/segmentAttributes/connect:Subtype</code> | <code>contact/segmentAttributes/connect:ValidationTestType</code> | <code>DISCONNECT_REASON</code> | <code>EVALUATION_FORM</code> | <code>EVALUATION_QUESTION</code> | <code>EVALUATION_SECTION</code> | <code>EVALUATION_SOURCE</code> | <code>EVALUATOR_ID</code> | <code>FEATURE</code> | <code>FLOW_ACTION_ID</code> | <code>FLOW_TYPE</code> | <code>FLOWS_MODULE_RESOURCE_ID</code> | <code>FLOWS_NEXT_RESOURCE_ID</code> | <code>FLOWS_NEXT_RESOURCE_QUEUE_ID</code> | <code>FLOWS_OUTCOME_TYPE</code> | <code>FLOWS_RESOURCE_ID</code> | <code>FORM_VERSION</code> | <code>INITIATING_FLOW</code> | <code>INITIATION_METHOD</code> | <code>INVOKING_RESOURCE_PUBLISHED_TIMESTAMP</code> | <code>INVOKING_RESOURCE_TYPE</code> | <code>KNOWLEDGE_BASE_NAME</code> | <code>PARENT_FLOWS_RESOURCE_ID</code> | <code>Q_CONNECT_ENABLED</code> | <code>QUEUE</code> | <code>RESOURCE_PUBLISHED_TIMESTAMP</code> | <code>ROUTING_PROFILE</code> | <code>ROUTING_STEP_EXPRESSION</code> | <code>SESSION_ID</code> | <code>TEST_CASE</code> | <code>TEST_CASE_EXECUTION_FAILURE_REASON</code> | <code>TEST_CASE_EXECUTION_RESULT</code> | <code>TEST_CASE_EXECUTION_STATE</code> </p> <note> <p>The following filter keys correspond to Connect Customer resources and are used for authorizing requests. A <code>GetMetricDataV2</code> request requires at least one of these filters:</p> <p> <code>QUEUE</code>, <code>ROUTING_PROFILE</code>, <code>AGENT</code>, <code>AGENT_HIERARCHY_LEVEL_ONE</code>, <code>AGENT_HIERARCHY_LEVEL_TWO</code>, <code>AGENT_HIERARCHY_LEVEL_THREE</code>, <code>AGENT_HIERARCHY_LEVEL_FOUR</code>, <code>AGENT_HIERARCHY_LEVEL_FIVE</code>, <code>CAMPAIGN</code>, <code>EVALUATION_FORM</code>, <code>EVALUATOR_ID</code> </p> <p>You can use up to 5 filter keys in a single request, and up to 100 filter values across all filter keys.</p> </note> <p> <b>Filter values</b> </p> <ul> <li> <p>VOICE, CHAT, TASK, and EMAIL are valid filter values for the <code>CHANNEL</code> filter key. They do not count towards the limit of 100 filter values. For example, a <code>GetMetricDataV2</code> request can filter by 50 queues, 35 agents, and 15 routing profiles for a total of 100 filter values, along with 4 channel filters.</p> </li> <li> <p> <code>contact_lens_conversational_analytics</code> is a valid filter value for the <code>FEATURE</code> filter key. It is available only for contacts analyzed by Contact Lens conversational analytics.</p> </li> <li> <p> <code>connect:Chat</code>, <code>connect:SMS</code>, <code>connect:Telephony</code>, and <code>connect:WebRTC</code> are valid filter value examples (not exhaustive) for the <code>contact/segmentAttributes/connect:Subtype</code> filter key.</p> </li> <li> <p> <code>ROUTING_STEP_EXPRESSION</code> accepts a filter value up to 3,000 characters in length. Filter values are case-sensitive. JSON object key order and whitespace may be arbitrary; array order and tree structure must be preserved.</p> </li> <li> <p>TRUE and FALSE are the only valid filter values for the <code>Q_CONNECT_ENABLED</code> filter key.</p> <ul> <li> <p>TRUE includes all contacts that had Connect AI Agents enabled as part of the flow.</p> </li> <li> <p>FALSE includes all contacts that did not have Connect AI Agents enabled as part of the flow.</p> </li> </ul> </li> <li> <p> <code>EXPERIENCE_VALIDATION</code> and <code>FLOW_VALIDATION</code> are the only valid filter values for the <code>contact/segmentAttributes/connect:ValidationTestType</code> filter key. This filter is available only for contact record-driven metrics.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-outbound-campaigns_Campaign.html\">Campaign</a> ARNs are valid filter values for the <code>CAMPAIGN</code> filter key.</p> </li> <li> <p>To filter by phone number, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-historical-metrics-report.html\">Create a historical metrics report</a> in the <i>Connect Customer Administrator Guide</i>.</p> </li> </ul>"
       }
     },
     "FlowAssociationResourceType": {
@@ -6172,6 +6321,14 @@
       "refs": {}
     },
     "GetEffectiveHoursOfOperationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetEvaluationFormValidationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetEvaluationFormValidationResponse": {
       "base": null,
       "refs": {}
     },
@@ -7010,6 +7167,7 @@
         "GetCurrentMetricDataRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "GetCurrentUserDataRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "GetEffectiveHoursOfOperationsRequest$InstanceId": "<p>The identifier of the Connect Customer instance.</p>",
+        "GetEvaluationFormValidationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "GetFederationTokenRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "GetFlowAssociationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "GetMetricDataRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -7126,6 +7284,7 @@
         "StartContactRecordingRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "StartContactStreamingRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "StartEmailContactRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "StartEvaluationFormValidationRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "StartOutboundChatContactRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "StartOutboundEmailContactRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "StartOutboundVoiceContactRequest$InstanceId": "<p>The identifier of the Connect Customer instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -7291,7 +7450,11 @@
         "EvaluationFormNumericQuestionOption$MaxValue": "<p>The maximum answer value of the range option.</p>",
         "EvaluationFormNumericQuestionProperties$MinValue": "<p>The minimum answer value.</p>",
         "EvaluationFormNumericQuestionProperties$MaxValue": "<p>The maximum answer value.</p>",
-        "EvaluationReviewConfiguration$EligibilityDays": "<p>Number of days during which a request for review can be submitted for evaluations created from this form.</p>"
+        "EvaluationReviewConfiguration$EligibilityDays": "<p>Number of days during which a request for review can be submitted for evaluations created from this form.</p>",
+        "EvaluationScore$EarnedPoints": "<p>The points earned for the item.</p>",
+        "EvaluationScore$MaxBasePoint": "<p>The maximum base points possible for the item.</p>",
+        "EvaluationSearchMetadata$EarnedPoints": "<p>The points earned for the evaluation.</p>",
+        "EvaluationSearchMetadata$MaxBasePoint": "<p>The maximum base points possible for the evaluation.</p>"
       }
     },
     "IntegerCount": {
@@ -9381,6 +9544,14 @@
         "Distribution$Percentage": "<p>The percentage of the traffic that is distributed, in increments of 10.</p>"
       }
     },
+    "PerformanceCategoryName": {
+      "base": null,
+      "refs": {
+        "EvaluationFormScoreThreshold$PerformanceCategory": "<p>The performance category name.</p>",
+        "EvaluationScore$PerformanceCategory": "<p>The performance category for the score.</p>",
+        "EvaluationSearchMetadata$PerformanceCategory": "<p>The performance category for the evaluation score.</p>"
+      }
+    },
     "Permission": {
       "base": null,
       "refs": {
@@ -9578,6 +9749,14 @@
       "base": null,
       "refs": {
         "DeviceInfo$PlatformVersion": "<p>Version of the platform that the participant used for the call.</p>"
+      }
+    },
+    "PointValue": {
+      "base": null,
+      "refs": {
+        "QuestionOptionPointsConfiguration$PointValue": "<p>The point value assigned to the answer option.</p>",
+        "QuestionPointsConfiguration$MaxPointValue": "<p>The maximum point value.</p>",
+        "QuestionPointsConfiguration$MinPointValue": "<p>The minimum point value.</p>"
       }
     },
     "PositiveAndNegativeDouble": {
@@ -9979,6 +10158,20 @@
       "base": "<p>Information about the quality of the participant's media connection.</p>",
       "refs": {
         "Contact$QualityMetrics": "<p>Information about the quality of the participant's media connection.</p>"
+      }
+    },
+    "QuestionOptionPointsConfiguration": {
+      "base": "<p>Information about the points configuration for an answer option.</p>",
+      "refs": {
+        "EvaluationFormMultiSelectQuestionOption$PointsConfiguration": "<p>The points configuration for point-based scoring.</p>",
+        "EvaluationFormNumericQuestionOption$PointsConfiguration": "<p>The points configuration for point-based scoring.</p>",
+        "EvaluationFormSingleSelectQuestionOption$PointsConfiguration": "<p>The points configuration for point-based scoring.</p>"
+      }
+    },
+    "QuestionPointsConfiguration": {
+      "base": "<p>Information about the points configuration for a question.</p>",
+      "refs": {
+        "EvaluationFormQuestionScoringConfiguration$PointsConfiguration": "<p>The points configuration for point-based scoring.</p>"
       }
     },
     "QuestionRuleCategoryAutomationCondition": {
@@ -10652,6 +10845,7 @@
         "EvaluationFormSection$RefId": "<p>The identifier of the section. An identifier must be unique within the evaluation form.</p>",
         "EvaluationFormSingleSelectQuestionAutomation$DefaultOptionRefId": "<p>The identifier of the default answer option, when none of the automation options match the criteria.</p>",
         "EvaluationFormSingleSelectQuestionOption$RefId": "<p>The identifier of the answer option. An identifier must be unique within the question.</p>",
+        "EvaluationFormValidationFindingItem$RefId": "<p>The identifier of the evaluation form item (question or section) affected by the finding.</p>",
         "ReferenceIdList$member": null,
         "SingleSelectQuestionRuleCategoryAutomation$OptionRefId": "<p>The identifier of the answer option.</p>"
       }
@@ -10917,9 +11111,13 @@
         "EvaluationSummary$EvaluationId": "<p>A unique identifier for the contact evaluation.</p>",
         "EvaluationSummary$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "EvaluationSummary$CalibrationSessionId": "<p>The calibration session ID that this evaluation belongs to.</p>",
+        "GetEvaluationFormValidationRequest$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
+        "GetEvaluationFormValidationResponse$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "ListEvaluationFormVersionsRequest$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "StartContactEvaluationRequest$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "StartContactEvaluationResponse$EvaluationId": "<p>A unique identifier for the contact evaluation.</p>",
+        "StartEvaluationFormValidationRequest$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
+        "StartEvaluationFormValidationResponse$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "SubmitContactEvaluationRequest$EvaluationId": "<p>A unique identifier for the contact evaluation.</p>",
         "SubmitContactEvaluationResponse$EvaluationId": "<p>A unique identifier for the contact evaluation.</p>",
         "UpdateContactEvaluationRequest$EvaluationId": "<p>A unique identifier for the contact evaluation.</p>",
@@ -11052,7 +11250,7 @@
     "RoutingExpressions": {
       "base": null,
       "refs": {
-        "Filters$RoutingStepExpressions": "<p>A list of expressions as a filter, in which an expression is an object of a step in a routing criteria.</p>"
+        "Filters$RoutingStepExpressions": "<p>A list of expressions as a filter, in which an expression is an object of a step in a routing criteria. Accepts filter values up to 3,000 characters in length. Filter values are case-sensitive. JSON object key order and whitespace may be arbitrary; array order and tree structure must be preserved.</p>"
       }
     },
     "RoutingProfile": {
@@ -12129,6 +12327,14 @@
       "base": null,
       "refs": {}
     },
+    "StartEvaluationFormValidationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartEvaluationFormValidationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StartOutboundChatContactRequest": {
       "base": null,
       "refs": {}
@@ -12289,6 +12495,7 @@
         "BatchUpdateDataTableValueFailureResult$Message": "<p>The result's message.</p>",
         "BooleanCondition$FieldName": "<p>A name of the property to be searched.</p>",
         "Contact$DisconnectReason": "<p>The disconnect reason for the contact. For a list and description of all the possible disconnect reasons by channel, see DisconnectReason under <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/ctr-data-model.html#ctr-ContactTraceRecord\">ContactTraceRecord</a> in the <i>Connect Customer Administrator Guide</i>. </p>",
+        "ContactEvaluationAttributeValue$StringValue": "<p>A string value for the attribute.</p>",
         "DataTableEvaluatedValue$EvaluatedValue": "<p>The value's evaluated value.</p>",
         "DataTableLockVersion$DataTable": "<p>The lock version for the data table itself. Used for optimistic locking and table versioning. Changes with each update to the table's metadata or structure.</p>",
         "DataTableLockVersion$Attribute": "<p>The lock version for a specific attribute. When the ValueLockLevel is ATTRIBUTE, this version changes when any value for the attribute changes. For other lock levels, it only changes when the attribute's properties are directly updated.</p>",
@@ -12450,6 +12657,7 @@
       "refs": {
         "AttributeAndCondition$TagConditions": "<p>A leaf node condition which can be used to specify a tag condition.</p>",
         "CommonAttributeAndCondition$TagConditions": "<p>A leaf node condition which can be used to specify a tag condition.</p>",
+        "ContactEvaluationAttributeAndCondition$TagConditions": "<p>A list of tag conditions to apply.</p>",
         "ContactFlowAttributeAndCondition$TagConditions": "<p> Tag-based conditions for contact flow filtering.</p>",
         "ControlPlaneTagFilter$AndConditions": "<p>A list of conditions which would be applied together with an <code>AND</code> condition.</p>",
         "TagOrConditionList$member": null
@@ -12458,6 +12666,7 @@
     "TagCondition": {
       "base": "<p>A leaf node condition which can be used to specify a tag condition, for example, <code>HAVE BPO = 123</code>. </p>",
       "refs": {
+        "ContactEvaluationAttributeFilter$TagCondition": "<p>A tag condition to apply.</p>",
         "ContactFlowAttributeFilter$TagCondition": null,
         "ControlPlaneAttributeFilter$TagCondition": null,
         "ControlPlaneTagFilter$TagCondition": "<p>A leaf node condition which can be used to specify a tag condition.</p>",
@@ -13115,6 +13324,7 @@
         "EvaluationAcknowledgementSummary$AcknowledgedTime": "<p>The time when an agent acknowledged the evaluation.</p>",
         "EvaluationForm$CreatedTime": "<p>The timestamp for when the evaluation form was created.</p>",
         "EvaluationForm$LastModifiedTime": "<p>The timestamp for when the evaluation form was last updated.</p>",
+        "EvaluationForm$LastValidationTime": "<p>The timestamp when the most recent validation was started for this evaluation form.</p>",
         "EvaluationFormSearchSummary$CreatedTime": "<p>When the evaluation form was created.</p>",
         "EvaluationFormSearchSummary$LastModifiedTime": "<p>When the evaluation form was last changed.</p>",
         "EvaluationFormSearchSummary$LastActivatedTime": "<p>When the evaluation format was last activated.</p>",
@@ -13132,6 +13342,7 @@
         "EvaluationSummary$CreatedTime": "<p>The timestamp for when the evaluation was created.</p>",
         "EvaluationSummary$LastModifiedTime": "<p>The timestamp for when the evaluation was last updated.</p>",
         "ExecutionRecord$Timestamp": "<p>The timestamp when the action was executed.</p>",
+        "GetEvaluationFormValidationResponse$StartedTime": "<p>The timestamp when the validation process was started.</p>",
         "GetMetricDataV2Request$StartTime": "<p>The timestamp, in UNIX Epoch time format, at which to start the reporting interval for the retrieval of historical metrics data. The time must be before the end time timestamp. The start and end time depends on the <code>IntervalPeriod</code> selected. By default the time range between start and end time is 35 days. Historical metrics are available for 3 months.</p>",
         "GetMetricDataV2Request$EndTime": "<p>The timestamp, in UNIX Epoch time format, at which to end the reporting interval for the retrieval of historical metrics data. The time must be later than the start time timestamp. It cannot be later than the current timestamp.</p>",
         "GetPromptFileResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
@@ -14145,6 +14356,10 @@
         "EvaluationFormSummary$ActiveVersion": "<p>The version of the active evaluation form version.</p>",
         "EvaluationFormVersionSummary$EvaluationFormVersion": "<p>A version of the evaluation form.</p>",
         "EvaluationSearchSummary$EvaluationFormVersion": "<p>A version of the evaluation form.</p>",
+        "GetEvaluationFormValidationRequest$EvaluationFormVersion": "<p>The version of the evaluation form to retrieve validation results for.</p>",
+        "GetEvaluationFormValidationResponse$EvaluationFormVersion": "<p>A version of the evaluation form.</p>",
+        "StartEvaluationFormValidationRequest$EvaluationFormVersion": "<p>The version of the evaluation form to validate.</p>",
+        "StartEvaluationFormValidationResponse$EvaluationFormVersion": "<p>A version of the evaluation form.</p>",
         "UpdateEvaluationFormRequest$EvaluationFormVersion": "<p>A version of the evaluation form to update.</p>",
         "UpdateEvaluationFormResponse$EvaluationFormVersion": "<p>The version of the updated evaluation form resource.</p>"
       }

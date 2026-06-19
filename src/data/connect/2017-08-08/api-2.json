@@ -2804,6 +2804,21 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "GetEvaluationFormValidation":{
+      "name":"GetEvaluationFormValidation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/evaluation-forms/{InstanceId}/{EvaluationFormId}/validation-results"
+      },
+      "input":{"shape":"GetEvaluationFormValidationRequest"},
+      "output":{"shape":"GetEvaluationFormValidationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "GetFederationToken":{
       "name":"GetFederationToken",
       "http":{
@@ -4777,6 +4792,23 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"IdempotencyException"}
+      ]
+    },
+    "StartEvaluationFormValidation":{
+      "name":"StartEvaluationFormValidation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/evaluation-forms/{InstanceId}/{EvaluationFormId}/validate"
+      },
+      "input":{"shape":"StartEvaluationFormValidationRequest"},
+      "output":{"shape":"StartEvaluationFormValidationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceConflictException"}
       ]
     },
     "StartOutboundChatContact":{
@@ -8385,6 +8417,52 @@
         "EndTimestamp":{"shape":"timestamp"},
         "DeleteTimestamp":{"shape":"timestamp"},
         "ExportLocation":{"shape":"ExportLocation"}
+      }
+    },
+    "ContactEvaluationAttributeAndCondition":{
+      "type":"structure",
+      "members":{
+        "TagConditions":{"shape":"TagAndConditionList"},
+        "AttributeConditions":{"shape":"ContactEvaluationAttributeConditionList"}
+      }
+    },
+    "ContactEvaluationAttributeComparisonType":{
+      "type":"string",
+      "enum":["EXACT"]
+    },
+    "ContactEvaluationAttributeCondition":{
+      "type":"structure",
+      "members":{
+        "AttributeKey":{"shape":"ContactEvaluationAttributeKey"},
+        "AttributeValue":{"shape":"ContactEvaluationAttributeValue"},
+        "ComparisonType":{"shape":"ContactEvaluationAttributeComparisonType"}
+      }
+    },
+    "ContactEvaluationAttributeConditionList":{
+      "type":"list",
+      "member":{"shape":"ContactEvaluationAttributeCondition"}
+    },
+    "ContactEvaluationAttributeFilter":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"ContactEvaluationAttributeOrConditionList"},
+        "AndCondition":{"shape":"ContactEvaluationAttributeAndCondition"},
+        "TagCondition":{"shape":"TagCondition"},
+        "ContactEvaluationAttributeCondition":{"shape":"ContactEvaluationAttributeCondition"}
+      }
+    },
+    "ContactEvaluationAttributeKey":{
+      "type":"string",
+      "enum":["ContactAgentId"]
+    },
+    "ContactEvaluationAttributeOrConditionList":{
+      "type":"list",
+      "member":{"shape":"ContactEvaluationAttributeAndCondition"}
+    },
+    "ContactEvaluationAttributeValue":{
+      "type":"structure",
+      "members":{
+        "StringValue":{"shape":"String"}
       }
     },
     "ContactEvaluations":{
@@ -13446,7 +13524,9 @@
         "ReviewConfiguration":{"shape":"EvaluationReviewConfiguration"},
         "Tags":{"shape":"TagMap"},
         "TargetConfiguration":{"shape":"EvaluationFormTargetConfiguration"},
-        "LanguageConfiguration":{"shape":"EvaluationFormLanguageConfiguration"}
+        "LanguageConfiguration":{"shape":"EvaluationFormLanguageConfiguration"},
+        "LatestValidationStatus":{"shape":"EvaluationFormValidationStatus"},
+        "LastValidationTime":{"shape":"Timestamp"}
       }
     },
     "EvaluationFormAutoEvaluationConfiguration":{
@@ -13648,7 +13728,11 @@
       ],
       "members":{
         "RefId":{"shape":"ReferenceId"},
-        "Text":{"shape":"EvaluationFormMultiSelectQuestionOptionText"}
+        "Text":{"shape":"EvaluationFormMultiSelectQuestionOptionText"},
+        "Score":{"shape":"EvaluationFormQuestionAnswerScore"},
+        "AutomaticFail":{"shape":"Boolean"},
+        "AutomaticFailConfiguration":{"shape":"AutomaticFailConfiguration"},
+        "PointsConfiguration":{"shape":"QuestionOptionPointsConfiguration"}
       }
     },
     "EvaluationFormMultiSelectQuestionOptionList":{
@@ -13688,7 +13772,8 @@
         "MaxValue":{"shape":"Integer"},
         "Score":{"shape":"EvaluationFormQuestionAnswerScore"},
         "AutomaticFail":{"shape":"Boolean"},
-        "AutomaticFailConfiguration":{"shape":"AutomaticFailConfiguration"}
+        "AutomaticFailConfiguration":{"shape":"AutomaticFailConfiguration"},
+        "PointsConfiguration":{"shape":"QuestionOptionPointsConfiguration"}
       }
     },
     "EvaluationFormNumericQuestionOptionList":{
@@ -13723,7 +13808,8 @@
         "QuestionType":{"shape":"EvaluationFormQuestionType"},
         "QuestionTypeProperties":{"shape":"EvaluationFormQuestionTypeProperties"},
         "Enablement":{"shape":"EvaluationFormItemEnablementConfiguration"},
-        "Weight":{"shape":"EvaluationFormItemWeight"}
+        "Weight":{"shape":"EvaluationFormItemWeight"},
+        "ScoringConfiguration":{"shape":"EvaluationFormQuestionScoringConfiguration"}
       }
     },
     "EvaluationFormQuestionAnswerScore":{"type":"integer"},
@@ -13742,6 +13828,14 @@
       ]
     },
     "EvaluationFormQuestionInstructions":{"type":"string"},
+    "EvaluationFormQuestionScoringConfiguration":{
+      "type":"structure",
+      "members":{
+        "PointsConfiguration":{"shape":"QuestionPointsConfiguration"},
+        "IsExcludedFromScoring":{"shape":"Boolean"},
+        "ScoreThresholds":{"shape":"EvaluationFormScoreThresholdList"}
+      }
+    },
     "EvaluationFormQuestionTitle":{"type":"string"},
     "EvaluationFormQuestionType":{
       "type":"string",
@@ -13763,11 +13857,25 @@
       },
       "union":true
     },
+    "EvaluationFormScoreThreshold":{
+      "type":"structure",
+      "required":["PerformanceCategory"],
+      "members":{
+        "PerformanceCategory":{"shape":"PerformanceCategoryName"},
+        "MinScorePercentage":{"shape":"EvaluationScorePercentage"},
+        "MaxScorePercentage":{"shape":"EvaluationScorePercentage"}
+      }
+    },
+    "EvaluationFormScoreThresholdList":{
+      "type":"list",
+      "member":{"shape":"EvaluationFormScoreThreshold"}
+    },
     "EvaluationFormScoringMode":{
       "type":"string",
       "enum":[
         "QUESTION_ONLY",
-        "SECTION_ONLY"
+        "SECTION_ONLY",
+        "POINTS_BASED"
       ]
     },
     "EvaluationFormScoringStatus":{
@@ -13785,7 +13893,8 @@
       ],
       "members":{
         "Mode":{"shape":"EvaluationFormScoringMode"},
-        "Status":{"shape":"EvaluationFormScoringStatus"}
+        "Status":{"shape":"EvaluationFormScoringStatus"},
+        "ScoreThresholds":{"shape":"EvaluationFormScoreThresholdList"}
       }
     },
     "EvaluationFormSearchConditionList":{
@@ -13864,7 +13973,9 @@
         "RefId":{"shape":"ReferenceId"},
         "Instructions":{"shape":"EvaluationFormQuestionInstructions"},
         "Items":{"shape":"EvaluationFormItemsList"},
-        "Weight":{"shape":"EvaluationFormItemWeight"}
+        "Weight":{"shape":"EvaluationFormItemWeight"},
+        "IsExcludedFromScoring":{"shape":"Boolean"},
+        "ScoreThresholds":{"shape":"EvaluationFormScoreThresholdList"}
       }
     },
     "EvaluationFormSectionTitle":{"type":"string"},
@@ -13905,7 +14016,8 @@
         "Text":{"shape":"EvaluationFormSingleSelectQuestionOptionText"},
         "Score":{"shape":"EvaluationFormQuestionAnswerScore"},
         "AutomaticFail":{"shape":"Boolean"},
-        "AutomaticFailConfiguration":{"shape":"AutomaticFailConfiguration"}
+        "AutomaticFailConfiguration":{"shape":"AutomaticFailConfiguration"},
+        "PointsConfiguration":{"shape":"QuestionOptionPointsConfiguration"}
       }
     },
     "EvaluationFormSingleSelectQuestionOptionList":{
@@ -13975,6 +14087,56 @@
       }
     },
     "EvaluationFormTitle":{"type":"string"},
+    "EvaluationFormValidationFailureReason":{"type":"string"},
+    "EvaluationFormValidationFinding":{
+      "type":"structure",
+      "required":[
+        "IssueCode",
+        "Description",
+        "Severity"
+      ],
+      "members":{
+        "IssueCode":{"shape":"EvaluationFormValidationIssueCode"},
+        "Items":{"shape":"EvaluationFormValidationFindingItemList"},
+        "Description":{"shape":"EvaluationFormValidationFindingDescription"},
+        "Suggestion":{"shape":"EvaluationFormValidationFindingSuggestion"},
+        "Severity":{"shape":"EvaluationFormValidationFindingSeverity"}
+      }
+    },
+    "EvaluationFormValidationFindingDescription":{"type":"string"},
+    "EvaluationFormValidationFindingItem":{
+      "type":"structure",
+      "members":{
+        "RefId":{"shape":"ReferenceId"},
+        "Property":{"shape":"EvaluationFormValidationFindingItemProperty"}
+      }
+    },
+    "EvaluationFormValidationFindingItemList":{
+      "type":"list",
+      "member":{"shape":"EvaluationFormValidationFindingItem"}
+    },
+    "EvaluationFormValidationFindingItemProperty":{"type":"string"},
+    "EvaluationFormValidationFindingList":{
+      "type":"list",
+      "member":{"shape":"EvaluationFormValidationFinding"}
+    },
+    "EvaluationFormValidationFindingSeverity":{
+      "type":"string",
+      "enum":[
+        "WARNING",
+        "ERROR"
+      ]
+    },
+    "EvaluationFormValidationFindingSuggestion":{"type":"string"},
+    "EvaluationFormValidationIssueCode":{"type":"string"},
+    "EvaluationFormValidationStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
     "EvaluationFormVersionIsLocked":{"type":"boolean"},
     "EvaluationFormVersionStatus":{
       "type":"string",
@@ -14156,14 +14318,13 @@
         "Percentage":{"shape":"EvaluationScorePercentage"},
         "NotApplicable":{"shape":"Boolean"},
         "AutomaticFail":{"shape":"Boolean"},
-        "AppliedWeight":{"shape":"Double"}
+        "AppliedWeight":{"shape":"Double"},
+        "EarnedPoints":{"shape":"Integer"},
+        "MaxBasePoint":{"shape":"Integer"},
+        "PerformanceCategory":{"shape":"PerformanceCategoryName"}
       }
     },
-    "EvaluationScorePercentage":{
-      "type":"double",
-      "max":100,
-      "min":0
-    },
+    "EvaluationScorePercentage":{"type":"double"},
     "EvaluationScoresMap":{
       "type":"map",
       "key":{"shape":"ResourceId"},
@@ -14189,7 +14350,8 @@
     "EvaluationSearchFilter":{
       "type":"structure",
       "members":{
-        "AttributeFilter":{"shape":"ControlPlaneAttributeFilter"}
+        "AttributeFilter":{"shape":"ControlPlaneAttributeFilter"},
+        "ContactEvaluationAttributeFilter":{"shape":"ContactEvaluationAttributeFilter"}
       }
     },
     "EvaluationSearchMetadata":{
@@ -14214,7 +14376,16 @@
         "SamplingJobId":{"shape":"ResourceId"},
         "ReviewId":{"shape":"ResourceId"},
         "ContactParticipantRole":{"shape":"ContactParticipantRole"},
-        "ContactParticipantId":{"shape":"ResourceId"}
+        "ContactParticipantId":{"shape":"ResourceId"},
+        "EarnedPoints":{
+          "shape":"Integer",
+          "box":true
+        },
+        "MaxBasePoint":{
+          "shape":"Integer",
+          "box":true
+        },
+        "PerformanceCategory":{"shape":"PerformanceCategoryName"}
       }
     },
     "EvaluationSearchSummary":{
@@ -14897,6 +15068,48 @@
         "EffectiveHoursOfOperationList":{"shape":"EffectiveHoursOfOperationList"},
         "EffectiveOverrideHoursList":{"shape":"EffectiveOverrideHoursList"},
         "TimeZone":{"shape":"TimeZone"}
+      }
+    },
+    "GetEvaluationFormValidationRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "EvaluationFormId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "EvaluationFormId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"EvaluationFormId"
+        },
+        "EvaluationFormVersion":{
+          "shape":"VersionNumber",
+          "box":true,
+          "location":"querystring",
+          "locationName":"version"
+        }
+      }
+    },
+    "GetEvaluationFormValidationResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "EvaluationFormId",
+        "EvaluationFormVersion",
+        "StartedTime"
+      ],
+      "members":{
+        "Status":{"shape":"EvaluationFormValidationStatus"},
+        "FailureReason":{"shape":"EvaluationFormValidationFailureReason"},
+        "EvaluationFormId":{"shape":"ResourceId"},
+        "EvaluationFormVersion":{"shape":"VersionNumber"},
+        "StartedTime":{"shape":"Timestamp"},
+        "Findings":{"shape":"EvaluationFormValidationFindingList"}
       }
     },
     "GetFederationTokenRequest":{
@@ -19470,6 +19683,13 @@
       "max":100,
       "min":0
     },
+    "PerformanceCategoryName":{
+      "type":"string",
+      "enum":[
+        "NEEDS_IMPROVEMENT",
+        "EXCEEDS_EXPECTATIONS"
+      ]
+    },
     "Permission":{
       "type":"string",
       "max":128,
@@ -19860,6 +20080,11 @@
       "max":128,
       "min":0
     },
+    "PointValue":{
+      "type":"integer",
+      "max":100,
+      "min":0
+    },
     "PositiveAndNegativeDouble":{"type":"double"},
     "PositiveDouble":{
       "type":"double",
@@ -20238,6 +20463,22 @@
       "members":{
         "Agent":{"shape":"AgentQualityMetrics"},
         "Customer":{"shape":"CustomerQualityMetrics"}
+      }
+    },
+    "QuestionOptionPointsConfiguration":{
+      "type":"structure",
+      "required":["PointValue"],
+      "members":{
+        "PointValue":{"shape":"PointValue"},
+        "IsBonus":{"shape":"Boolean"}
+      }
+    },
+    "QuestionPointsConfiguration":{
+      "type":"structure",
+      "members":{
+        "MaxPointValue":{"shape":"PointValue"},
+        "MinPointValue":{"shape":"PointValue"},
+        "IsBonus":{"shape":"Boolean"}
       }
     },
     "QuestionRuleCategoryAutomationCondition":{
@@ -22941,6 +23182,40 @@
       "type":"structure",
       "members":{
         "ContactId":{"shape":"ContactId"}
+      }
+    },
+    "StartEvaluationFormValidationRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "EvaluationFormId",
+        "EvaluationFormVersion"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "EvaluationFormId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"EvaluationFormId"
+        },
+        "EvaluationFormVersion":{"shape":"VersionNumber"}
+      }
+    },
+    "StartEvaluationFormValidationResponse":{
+      "type":"structure",
+      "required":[
+        "EvaluationFormId",
+        "EvaluationFormArn",
+        "EvaluationFormVersion"
+      ],
+      "members":{
+        "EvaluationFormId":{"shape":"ResourceId"},
+        "EvaluationFormArn":{"shape":"ARN"},
+        "EvaluationFormVersion":{"shape":"VersionNumber"}
       }
     },
     "StartOutboundChatContactRequest":{
