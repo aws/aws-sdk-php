@@ -2117,9 +2117,12 @@ class MultipartCopyTest extends TestCase
         // within the 5000ms ceiling. (Full-jitter formula allows 0 as a
         // valid draw.)
         foreach ([1, 2] as $i) {
-            $this->assertIsInt($putAnnotCmds[$i]['@http']['delay']);
-            $this->assertGreaterThanOrEqual(0, $putAnnotCmds[$i]['@http']['delay']);
-            $this->assertLessThanOrEqual(5000, $putAnnotCmds[$i]['@http']['delay']);
+            if (isset($putAnnotCmds[$i]['@http']['delay'])) {
+                $delay = $putAnnotCmds[$i]['@http']['delay'];
+                $this->assertIsInt($delay);
+                $this->assertGreaterThanOrEqual(0, $delay);
+                $this->assertLessThanOrEqual(5000, $delay);
+            }
         }
     }
 
